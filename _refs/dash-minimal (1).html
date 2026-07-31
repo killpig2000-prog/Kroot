@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kroot — Minimal</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Jua&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FFFFFF;
+  --bg2:#FAFAF9;
+  --ink:#18181B;
+  --dim:#71717A;
+  --faint:#A1A1AA;
+  --line:#E7E5E4;
+  --green:#16A34A;
+  --green-soft:#F0FDF4;
+  --green-brd:#BBF7D0;
+  --amber:#D97706;
+  --amber-soft:#FFFBEB;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  background:var(--bg);color:var(--ink);
+  font-family:'Inter','Noto Sans KR',sans-serif;line-height:1.6;
+  padding-bottom:90px;
+  font-feature-settings:'cv11';
+}
+.kr{font-family:'Jua',sans-serif}
+button{font-family:inherit;cursor:pointer}
+.shell{max-width:820px;margin:0 auto;padding:0 clamp(16px,4vw,24px)}
+
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 0;border-bottom:1px solid var(--line);margin-bottom:28px;
+}
+.logo{display:flex;align-items:center;gap:9px;font-weight:600;font-size:17px;letter-spacing:-.01em}
+.logo .mark{
+  width:30px;height:30px;border-radius:8px;background:var(--green);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Jua',sans-serif;font-size:14px;color:#fff;
+}
+.top-right{display:flex;gap:8px;align-items:center}
+.chip{
+  border:1px solid var(--line);border-radius:8px;padding:6px 12px;
+  font-size:13px;font-weight:500;color:var(--amber);display:flex;gap:6px;align-items:center;
+}
+.avatar{
+  width:34px;height:34px;border-radius:8px;background:var(--bg2);
+  border:1px solid var(--line);
+  display:flex;align-items:center;justify-content:center;font-size:15px;
+}
+
+.hello{font-weight:600;font-size:clamp(20px,3vw,25px);letter-spacing:-.02em;margin-bottom:2px}
+.hello-sub{color:var(--dim);font-size:14px;margin-bottom:26px}
+
+/* tree row */
+.tree-card{
+  border:1px solid var(--line);border-radius:14px;
+  padding:clamp(18px,3.6vw,26px);margin-bottom:14px;
+  display:grid;grid-template-columns:auto 1fr;gap:clamp(18px,4vw,32px);align-items:center;
+  background:var(--bg);
+}
+@media(max-width:600px){.tree-card{grid-template-columns:1fr}}
+.tree-fig{
+  background:var(--bg2);border:1px solid var(--line);border-radius:12px;
+  padding:16px;display:flex;justify-content:center;
+}
+.tree-fig svg{width:clamp(120px,18vw,150px);height:auto}
+.tree-info .eyebrow{
+  font-size:11.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--faint);margin-bottom:6px;
+}
+.tree-info h2{font-weight:600;font-size:18px;letter-spacing:-.01em;margin-bottom:2px}
+.tree-info h2 .lv{
+  display:inline-block;margin-left:8px;font-size:12.5px;font-weight:600;
+  background:var(--green-soft);color:var(--green);border:1px solid var(--green-brd);
+  border-radius:6px;padding:1px 8px;vertical-align:2px;
+}
+.tree-info .desc{font-size:13.5px;color:var(--dim);margin-bottom:16px}
+.lvrow{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.lvbar{flex:1;height:6px;background:var(--line);border-radius:99px;overflow:hidden}
+.lvbar i{display:block;height:100%;width:68%;background:var(--green);border-radius:99px}
+.lvnext{font-size:12.5px;color:var(--dim);font-weight:500;white-space:nowrap}
+.gpath{display:flex;gap:8px}
+.gstep{
+  flex:1;border:1px solid var(--line);border-radius:8px;
+  padding:7px 4px;text-align:center;font-size:14px;
+  filter:grayscale(1);opacity:.45;background:var(--bg);
+}
+.gstep small{display:block;font-size:10.5px;font-weight:600;color:var(--faint);margin-top:1px}
+.gstep.done{filter:none;opacity:1}
+.gstep.done small{color:var(--dim)}
+.gstep.now{
+  filter:none;opacity:1;background:var(--green-soft);border-color:var(--green-brd);
+}
+.gstep.now small{color:var(--green)}
+
+/* quest */
+.quest{
+  border:1px solid var(--line);border-radius:14px;background:var(--bg2);
+  padding:16px 20px;display:flex;align-items:center;gap:14px;margin-bottom:32px;flex-wrap:wrap;
+}
+.quest .qic{
+  width:40px;height:40px;border-radius:10px;background:var(--amber-soft);
+  border:1px solid #FDE68A;
+  display:flex;align-items:center;justify-content:center;font-size:18px;flex:none;
+}
+.quest .qtxt{flex:1;min-width:170px}
+.quest b{display:block;font-weight:600;font-size:14px}
+.quest span{font-size:13px;color:var(--dim)}
+.btn{
+  border:none;border-radius:9px;padding:9px 18px;
+  font-size:13.5px;font-weight:600;color:#fff;background:var(--ink);
+  transition:background .15s;
+}
+.btn:hover{background:#3F3F46}
+
+.sec-row{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:14px}
+.sec-title{font-weight:600;font-size:15px;letter-spacing:-.01em}
+.sec-link{font-size:13px;color:var(--dim);background:none;border:none}
+.sec-link:hover{color:var(--ink)}
+.cat-list{border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.cat{
+  width:100%;display:flex;align-items:center;gap:14px;text-align:left;
+  background:var(--bg);border:none;border-bottom:1px solid var(--line);
+  padding:14px 18px;transition:background .12s;
+}
+.cat:last-child{border-bottom:none}
+.cat:hover{background:var(--bg2)}
+.cat .seed{
+  width:36px;height:36px;border-radius:9px;flex:none;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Jua',sans-serif;font-size:16px;
+}
+.cat .ctxt{flex:1}
+.cat b{display:block;font-weight:600;font-size:14px}
+.cat small{font-size:12.5px;color:var(--dim)}
+.cat .meta{font-size:12.5px;color:var(--faint);display:flex;align-items:center;gap:8px}
+.cat .done-chip{
+  font-size:11.5px;font-weight:600;color:var(--green);
+  background:var(--green-soft);border:1px solid var(--green-brd);
+  border-radius:6px;padding:2px 8px;
+}
+.cat .arrow{color:var(--faint)}
+
+.bnav{
+  position:fixed;left:0;right:0;bottom:0;
+  background:rgba(255,255,255,.92);backdrop-filter:blur(10px);
+  border-top:1px solid var(--line);
+  display:flex;justify-content:center;gap:4px;padding:8px 0;z-index:50;
+}
+.bnav button{
+  display:flex;flex-direction:column;align-items:center;gap:1px;
+  border:none;background:none;border-radius:8px;padding:7px 22px;
+  font-size:11px;font-weight:500;color:var(--faint);
+}
+.bnav button span{font-size:17px;filter:grayscale(1);opacity:.55}
+.bnav button.on{color:var(--ink)}
+.bnav button.on span{filter:none;opacity:1}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="topbar">
+    <span class="logo"><span class="mark">한</span>Kroot</span>
+    <div class="top-right">
+      <span class="chip">🔥 12</span>
+      <span class="avatar">🦊</span>
+    </div>
+  </div>
+
+  <h1 class="hello">Good morning, Maria</h1>
+  <p class="hello-sub">One lesson today keeps your tree growing.</p>
+
+  <div class="tree-card">
+    <div class="tree-fig">
+      <svg viewBox="0 0 150 160" aria-hidden="true">
+        <ellipse cx="75" cy="150" rx="46" ry="7" fill="#E7E5E4"/>
+        <path d="M75 146 C75 122 74 112 74 98" stroke="#8B7355" stroke-width="8" stroke-linecap="round"/>
+        <circle cx="75" cy="72" r="36" fill="#22C55E"/>
+        <circle cx="49" cy="88" r="18" fill="#4ADE80"/>
+        <circle cx="101" cy="88" r="18" fill="#4ADE80"/>
+        <circle cx="64" cy="72" r="3.6" fill="#14532D"/>
+        <circle cx="86" cy="72" r="3.6" fill="#14532D"/>
+        <path d="M68 82 Q75 88 82 82" stroke="#14532D" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <circle cx="50" cy="58" r="5.5" fill="#FACC15"/>
+        <circle cx="102" cy="56" r="5.5" fill="#FB7185"/>
+      </svg>
+    </div>
+    <div class="tree-info">
+      <p class="eyebrow">Your tree</p>
+      <h2>Young Tree<span class="lv">B1</span></h2>
+      <p class="desc">Sturdy roots, growing branches. Fruit unlocks at C2.</p>
+      <div class="lvrow">
+        <div class="lvbar"><i></i></div>
+        <span class="lvnext">68% to B2</span>
+      </div>
+      <div class="gpath">
+        <div class="gstep done">🌰<small>A1</small></div>
+        <div class="gstep done">🌱<small>A2</small></div>
+        <div class="gstep now">🪴<small>B1</small></div>
+        <div class="gstep">🌳<small>B2</small></div>
+        <div class="gstep">🌸<small>C1</small></div>
+        <div class="gstep">🍎<small>C2</small></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="quest">
+    <span class="qic">✏️</span>
+    <div class="qtxt">
+      <b>Today's quest</b>
+      <span>Writing · 5 everyday sentences · ~5 min</span>
+    </div>
+    <button class="btn">Start</button>
+  </div>
+
+  <div class="sec-row">
+    <span class="sec-title">Practice</span>
+    <button class="sec-link">View all →</button>
+  </div>
+  <div class="cat-list">
+    <button class="cat">
+      <span class="seed" style="background:#F0FDF4;color:#16A34A">듣</span>
+      <span class="ctxt"><b>Listening</b><small>Level-matched audio, A1–C2</small></span>
+      <span class="meta"><span class="arrow">→</span></span>
+    </button>
+    <button class="cat">
+      <span class="seed" style="background:#FFF1F2;color:#E11D48">말</span>
+      <span class="ctxt"><b>Speaking</b><small>Say it, get AI feedback</small></span>
+      <span class="meta"><span class="arrow">→</span></span>
+    </button>
+    <button class="cat">
+      <span class="seed" style="background:#FFFBEB;color:#D97706">쓰</span>
+      <span class="ctxt"><b>Writing</b><small>Type sentences, instant fixes</small></span>
+      <span class="meta"><span class="done-chip">Done today</span><span class="arrow">→</span></span>
+    </button>
+    <button class="cat">
+      <span class="seed" style="background:#EFF6FF;color:#2563EB">읽</span>
+      <span class="ctxt"><b>Reading</b><small>Korean articles with word hints</small></span>
+      <span class="meta"><span class="arrow">→</span></span>
+    </button>
+    <button class="cat">
+      <span class="seed" style="background:#F5F3FF;color:#7C3AED">단</span>
+      <span class="ctxt"><b>Vocabulary</b><small>Flip cards by topic</small></span>
+      <span class="meta"><span class="arrow">→</span></span>
+    </button>
+    <button class="cat">
+      <span class="seed" style="background:#FDF2F8;color:#DB2777">슬</span>
+      <span class="ctxt"><b>Slang</b><small>What Koreans actually say</small></span>
+      <span class="meta"><span class="arrow">→</span></span>
+    </button>
+    <button class="cat">
+      <span class="seed" style="background:#F0FDFA;color:#0D9488">발</span>
+      <span class="ctxt"><b>Pronunciation</b><small>Record and get checked</small></span>
+      <span class="meta"><span class="arrow">→</span></span>
+    </button>
+    <button class="cat">
+      <span class="seed" style="background:#F8FAFC">🏕️</span>
+      <span class="ctxt"><b>Community</b><small>Learners worldwide, auto-translated</small></span>
+      <span class="meta"><span class="arrow">→</span></span>
+    </button>
+  </div>
+</div>
+
+<nav class="bnav">
+  <button class="on"><span>🏡</span>Garden</button>
+  <button><span>📊</span>Growth</button>
+  <button><span>🏕️</span>Friends</button>
+  <button><span>🦊</span>Me</button>
+</nav>
+</body>
+</html>

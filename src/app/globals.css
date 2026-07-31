@@ -1,0 +1,539 @@
+@import "tailwindcss";
+
+:root {
+  --sky: #FFF9EC;
+  --cream: #FFFDF6;
+  --mint: #DFF3E4;
+  --leaf: #6BBF8A;
+  --deep: #3E7C59;
+  --sun: #FFD66B;
+  --coral: #FF9E7D;
+  --blue: #BEE3F0;
+  --ink: #4A4237;
+  --soft: #8C8272;
+  --leaf-shadow: #4E9A6D;
+  --leaf-ink: #ffffff;
+  --card-shadow: #EFE7D5;
+  --line-shadow: #E8E0CF;
+  --mint-shadow: #C9E4D0;
+  --tree-g1: #CBEAF4;
+  --tree-g2: #E4F5EC;
+  --tree-g3: #F4EDDA;
+}
+
+/* color themes — a full reskin: page background, card shadows, the hero tree
+   gradient, and the primary (leaf/deep) identity all shift together */
+[data-color-theme="ocean"] {
+  --sky: #F3FAFD;
+  --cream: #F8FCFE;
+  --leaf: #4FA5C6;
+  --deep: #285F76;
+  --mint: #DCF0F6;
+  --leaf-shadow: #357E99;
+  --leaf-ink: #ffffff;
+  --card-shadow: #D8E9F0;
+  --line-shadow: #CFE4EC;
+  --mint-shadow: #B9DCE7;
+  --tree-g1: #BFE0EF;
+  --tree-g2: #DCF0F6;
+  --tree-g3: #EAF6FA;
+}
+[data-color-theme="coral"] {
+  --sky: #FFF7F3;
+  --cream: #FFFAF7;
+  --leaf: #F2825F;
+  --deep: #A8451F;
+  --mint: #FDE6DC;
+  --leaf-shadow: #D96A44;
+  --leaf-ink: #ffffff;
+  --card-shadow: #F5DED2;
+  --line-shadow: #F0D3C4;
+  --mint-shadow: #EFC7B4;
+  --tree-g1: #FBD9C6;
+  --tree-g2: #FDE6DC;
+  --tree-g3: #FFF1E8;
+}
+[data-color-theme="lavender"] {
+  --sky: #F9F6FE;
+  --cream: #FCFAFF;
+  --leaf: #9B7FD4;
+  --deep: #5B3E96;
+  --mint: #ECE4FB;
+  --leaf-shadow: #7C5CC4;
+  --leaf-ink: #ffffff;
+  --card-shadow: #E4D9F5;
+  --line-shadow: #DCCEF0;
+  --mint-shadow: #CFC0EF;
+  --tree-g1: #D8CBF3;
+  --tree-g2: #ECE4FB;
+  --tree-g3: #F5EFFC;
+}
+[data-color-theme="sunshine"] {
+  --sky: #FFFBF0;
+  --cream: #FFFDF6;
+  --leaf: #FFC94D;
+  --deep: #8A5A12;
+  --mint: #FFF3D6;
+  --leaf-shadow: #E0A83D;
+  --leaf-ink: #7A5A12;
+  --card-shadow: #F3E6C4;
+  --line-shadow: #EFDEB0;
+  --mint-shadow: #F0DFA8;
+  --tree-g1: #FCE9B8;
+  --tree-g2: #FFF3D6;
+  --tree-g3: #FFFAEA;
+}
+[data-color-theme="rose"] {
+  --sky: #FFF6F9;
+  --cream: #FFFAFC;
+  --leaf: #F2789A;
+  --deep: #9C3D5C;
+  --mint: #FDE6EE;
+  --leaf-shadow: #D65C82;
+  --leaf-ink: #ffffff;
+  --card-shadow: #F5DCE6;
+  --line-shadow: #F0CFDE;
+  --mint-shadow: #F0C3D6;
+  --tree-g1: #F9D6E3;
+  --tree-g2: #FDE6EE;
+  --tree-g3: #FFF2F6;
+}
+
+@theme inline {
+  --color-sky: var(--sky);
+  --color-cream: var(--cream);
+  --color-mint: var(--mint);
+  --color-leaf: var(--leaf);
+  --color-deep: var(--deep);
+  --color-sun: var(--sun);
+  --color-coral: var(--coral);
+  --color-blue: var(--blue);
+  --color-ink: var(--ink);
+  --color-soft: var(--soft);
+  --font-hand: var(--font-fredoka), var(--font-jua), sans-serif;
+  --font-kr: var(--font-jua), sans-serif;
+  --font-body: var(--font-nunito), "Noto Sans KR", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #fff;
+  color: var(--ink);
+  font-family: var(--font-body);
+  line-height: 1.7;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+@layer base {
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+}
+
+.hand {
+  font-family: var(--font-hand);
+}
+
+.kr {
+  font-family: var(--font-kr);
+}
+
+/* chunky storybook button */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 28px;
+  border-radius: 99px;
+  font-size: 16px;
+  font-weight: 700;
+  border: none;
+  font-family: var(--font-hand);
+  letter-spacing: 0.01em;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+.btn-leaf {
+  background: var(--leaf);
+  color: var(--leaf-ink);
+  box-shadow: 0 5px 0 var(--leaf-shadow);
+}
+.btn-leaf:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 0 var(--leaf-shadow);
+}
+.btn-leaf:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 var(--leaf-shadow);
+}
+.btn-sun {
+  background: var(--sun);
+  color: #7A5A12;
+  box-shadow: 0 5px 0 #E0B23F;
+}
+.btn-sun:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 0 #E0B23F;
+}
+.btn-sun:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 #E0B23F;
+}
+.btn-line {
+  background: #fff;
+  color: var(--deep);
+  box-shadow: 0 5px 0 var(--line-shadow);
+}
+.btn-line:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 0 var(--line-shadow);
+}
+.btn-white {
+  background: #fff;
+  color: var(--deep);
+  box-shadow: 0 5px 0 var(--line-shadow);
+  border: 2.5px solid var(--line-shadow);
+}
+.btn-white:hover {
+  transform: translateY(-2px);
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: all 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.reveal.in {
+  opacity: 1;
+  transform: none;
+}
+
+.float {
+  animation: bob 4s ease-in-out infinite;
+}
+.float.d1 {
+  animation-delay: -1.2s;
+}
+.float.d2 {
+  animation-delay: -2.4s;
+}
+@keyframes bob {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+.bob {
+  animation: bobSmall 4s ease-in-out infinite;
+}
+.bob2 {
+  animation: bobSmall 4s ease-in-out -2s infinite;
+}
+@keyframes bobSmall {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+/* playful character motion: stroll side to side, or pause then tumble.
+   transform-box makes these work on svg <g> groups too. */
+.char-stroll,
+.char-tumble {
+  transform-box: fill-box;
+  transform-origin: 50% 85%;
+}
+.char-stroll {
+  animation: charStroll 7s ease-in-out infinite;
+}
+@keyframes charStroll {
+  0%, 100% { transform: translateX(0) rotate(0); }
+  10% { transform: translateX(-12px) rotate(-4deg); }
+  20% { transform: translateX(-22px) rotate(3deg); }
+  30% { transform: translateX(-12px) rotate(-3deg); }
+  40% { transform: translateX(0) rotate(0); }
+  55% { transform: translateX(14px) rotate(4deg); }
+  65% { transform: translateX(24px) rotate(-3deg); }
+  75% { transform: translateX(12px) rotate(3deg); }
+  85% { transform: translateX(0) rotate(0); }
+}
+.char-tumble {
+  animation: charTumble 8s ease-in-out infinite;
+}
+@keyframes charTumble {
+  0%, 55% { transform: rotate(0) translateY(0); }
+  60% { transform: rotate(90deg) translateY(-14px); }
+  70% { transform: rotate(270deg) translateY(-18px); }
+  80% { transform: rotate(360deg) translateY(0); }
+  86% { transform: rotate(360deg) translateY(-6px); }
+  92%, 100% { transform: rotate(360deg) translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .char-stroll, .char-tumble {
+    animation: none;
+  }
+  .float, .bob, .bob2 {
+    animation: none;
+  }
+}
+
+.leaf-step {
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  opacity: 0;
+  transform: scale(0.6);
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.leaf-step.grown {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.sprout-grow {
+  transform-origin: 85px 118px;
+  transform: scale(0);
+  transition: transform 1s cubic-bezier(0.34, 1.4, 0.4, 1);
+}
+.sprout-grow.up {
+  transform: scale(1);
+}
+
+/* lively characters: gentle sway + occasional blink */
+.sway {
+  animation: sway 5s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+.sway-slow {
+  animation: sway 6.5s ease-in-out infinite -1.5s;
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+@keyframes sway {
+  0%, 100% {
+    transform: rotate(0deg) translateY(0);
+  }
+  25% {
+    transform: rotate(2.5deg) translateY(-3px);
+  }
+  50% {
+    transform: rotate(0deg) translateY(-1px);
+  }
+  75% {
+    transform: rotate(-2.5deg) translateY(-3px);
+  }
+}
+
+.blink {
+  animation: blink 4.6s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+}
+.blink.d2 {
+  animation-delay: -1.8s;
+}
+@keyframes blink {
+  0%, 90%, 100% {
+    transform: scaleY(1);
+  }
+  93% {
+    transform: scaleY(0.1);
+  }
+  96% {
+    transform: scaleY(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sway, .sway-slow, .blink {
+    animation: none;
+  }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* listening player waveform: bars pulse while audio is speaking */
+@keyframes wavePulse {
+  0%, 100% { transform: scaleY(0.55); }
+  50% { transform: scaleY(1.15); }
+}
+.wave-on i {
+  animation: wavePulse 0.9s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .wave-on i { animation: none; }
+}
+
+.speech-pop {
+  animation: speechPop 6s ease-in-out infinite;
+}
+@keyframes speechPop {
+  0%, 8% {
+    opacity: 0;
+    transform: translateY(6px) scale(0.9);
+  }
+  14%, 78% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  86%, 100% {
+    opacity: 0;
+    transform: translateY(6px) scale(0.9);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .speech-pop {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+/* grading celebration: intensity scales with the score */
+.cheer-big {
+  animation: cheerBig 1.1s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+@keyframes cheerBig {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  20% { transform: translateY(-16px) rotate(-6deg); }
+  40% { transform: translateY(0) rotate(0); }
+  60% { transform: translateY(-16px) rotate(6deg); }
+  80% { transform: translateY(0) rotate(0); }
+}
+.cheer-small {
+  animation: cheerSmall 1.6s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+@keyframes cheerSmall {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px) rotate(2deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cheer-big, .cheer-small { animation: none; }
+}
+
+/* extreme celebration tiers */
+.cheer-wild {
+  animation: cheerWild 0.85s cubic-bezier(.35,1.3,.45,1) infinite;
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+@keyframes cheerWild {
+  0%   { transform: translateY(0) rotate(0) scaleY(1) scaleX(1); }
+  12%  { transform: translateY(2px) rotate(0) scaleY(0.92) scaleX(1.06); }
+  38%  { transform: translateY(-30px) rotate(-7deg) scaleY(1.06) scaleX(0.96); }
+  50%  { transform: translateY(-34px) rotate(0) scaleY(1.03) scaleX(0.98); }
+  62%  { transform: translateY(-30px) rotate(7deg) scaleY(1.06) scaleX(0.96); }
+  88%  { transform: translateY(2px) rotate(0) scaleY(0.92) scaleX(1.06); }
+  100% { transform: translateY(0) rotate(0) scaleY(1) scaleX(1); }
+}
+.cheer-sad {
+  animation: cheerSad 2.6s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+@keyframes cheerSad {
+  0%, 100% { transform: rotate(0) translateY(0); }
+  25% { transform: rotate(-5deg) translateY(2px); }
+  50% { transform: rotate(0) translateY(0); }
+  75% { transform: rotate(5deg) translateY(2px); }
+}
+.confetti-pop {
+  animation: confettiFloat 2.4s linear infinite;
+}
+.confetti-pop.d2 { animation-delay: -0.8s; }
+.confetti-pop.d3 { animation-delay: -1.6s; }
+@keyframes confettiFloat {
+  0%   { transform: translateY(6px) scale(0.6); opacity: 0; }
+  15%  { transform: translateY(-8px) scale(1); opacity: 1; }
+  60%  { transform: translateY(-42px) scale(1.05); opacity: 0.9; }
+  100% { transform: translateY(-72px) scale(0.9); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cheer-wild, .cheer-sad, .confetti-pop { animation: none; }
+}
+
+/* Course player: stroke-order drawing */
+@keyframes courseDraw {
+  to { stroke-dashoffset: 0; }
+}
+.course-stroke {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+}
+@media (prefers-reduced-motion: reduce) {
+  .course-stroke { animation: none !important; stroke-dashoffset: 0 !important; }
+}
+
+/* Dark mode: a "smart invert" pass over the whole UI. The palette is
+   hardcoded per-component, so inverting + rotating hue keeps every accent
+   in its own family (greens stay green) while flipping lightness. Photos
+   and videos are re-inverted so they stay natural. */
+html[data-mode="dark"] {
+  background: #101211;
+}
+html[data-mode="dark"] body {
+  filter: invert(0.94) hue-rotate(180deg);
+  background: #0b0d0c;
+}
+html[data-mode="dark"] img,
+html[data-mode="dark"] video {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+/* Seasonal particle drift (SeasonalEffects) */
+.season-particle {
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+@keyframes seasonFall {
+  0%   { transform: translateY(-10px) translateX(0) rotate(0); }
+  100% { transform: translateY(105vh) translateX(38px) rotate(180deg); }
+}
+@keyframes seasonRise {
+  0%   { transform: translateY(10px) translateX(0) scale(.85); opacity: .85; }
+  100% { transform: translateY(-105vh) translateX(-30px) scale(1.1); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .season-particle { animation: none !important; display: none; }
+}
+
+/* Dark mode: counter-invert the seasonal layer (like img/video) so the
+   wash and particles keep their real colors over the dark surface. */
+html[data-mode="dark"] .season-layer {
+  filter: invert(1) hue-rotate(180deg);
+  opacity: 0.85;
+}
+html[data-mode="dark"] .season-layer.opacity-0 {
+  opacity: 0;
+}
+
+/* Dark mode: the invert filter flips white button text to black while
+   mid-luminance button backgrounds (brand green) stay colored. Setting the
+   source color near-black makes it render as white after inversion. */
+html[data-mode="dark"] .text-white,
+html[data-mode="dark"] .btn-leaf {
+  color: #101010;
+}

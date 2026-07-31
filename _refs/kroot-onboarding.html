@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kroot — Plant your seed</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Jua&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sky:#FFF9EC;
+  --mint:#DFF3E4;
+  --leaf:#6BBF8A;
+  --deep:#3E7C59;
+  --sun:#FFD66B;
+  --coral:#FF9E7D;
+  --blue:#BEE3F0;
+  --ink:#4A4237;
+  --soft:#8C8272;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  background:var(--sky);color:var(--ink);
+  font-family:'Nunito','Noto Sans KR',sans-serif;line-height:1.65;
+  min-height:100vh;display:flex;flex-direction:column;
+  background-image:radial-gradient(circle at 12% 18%, rgba(223,243,228,.8) 0 140px, transparent 141px),
+                   radial-gradient(circle at 88% 82%, rgba(190,227,240,.55) 0 170px, transparent 171px);
+}
+.kr{font-family:'Jua',sans-serif}
+button{font-family:inherit;cursor:pointer}
+
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px clamp(18px,5vw,44px);
+}
+.logo{display:flex;align-items:center;gap:9px;font-family:'Fredoka',sans-serif;font-weight:600;font-size:21px;color:var(--deep)}
+.logo svg{width:34px;height:34px}
+.trail{display:flex;align-items:center;gap:6px}
+.trail .stone{
+  width:26px;height:26px;border-radius:99px;
+  background:#fff;box-shadow:0 3px 0 #EFE7D5;
+  display:flex;align-items:center;justify-content:center;font-size:13px;
+  transition:all .3s;filter:grayscale(1);opacity:.55;
+}
+.trail .stone.on{filter:none;opacity:1;background:var(--mint);box-shadow:0 3px 0 #B8DCC3}
+
+.stage{flex:1;display:flex;align-items:center;justify-content:center;padding:clamp(20px,4vw,44px) 18px}
+.panel{width:min(520px,100%)}
+.step{display:none;animation:fade .45s cubic-bezier(.2,.8,.2,1)}
+.step.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.step{animation:none}}
+
+.card{
+  background:#fff;border-radius:28px;
+  padding:clamp(24px,5vw,38px);
+  box-shadow:0 10px 0 #EFE7D5;
+}
+h1{
+  font-family:'Fredoka',sans-serif;font-weight:600;
+  font-size:clamp(23px,3.4vw,28px);color:var(--deep);line-height:1.25;margin-bottom:6px;
+}
+.sub{color:var(--soft);font-size:15px;margin-bottom:24px;font-weight:600}
+.sub .kr{color:var(--coral)}
+
+.mascot{display:flex;justify-content:center;margin-bottom:14px}
+.mascot svg{width:86px;height:86px}
+.bob{animation:bob 3.5s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@media(prefers-reduced-motion:reduce){.bob{animation:none}}
+
+/* form */
+.field{margin-bottom:15px}
+.field label{display:block;font-size:13.5px;font-weight:700;margin-bottom:7px;color:var(--deep)}
+.field input,.field select{
+  width:100%;padding:13px 16px;font-size:15px;font-family:inherit;font-weight:600;
+  border:2.5px solid #F0E6CF;border-radius:16px;background:var(--sky);color:var(--ink);
+  transition:border-color .15s, background .15s;
+}
+.field input:focus,.field select:focus{outline:none;border-color:var(--leaf);background:#fff}
+.field input::placeholder{color:#C4BBA8;font-weight:600}
+.hint{font-size:12.5px;color:#B0A794;margin-top:5px;font-weight:600}
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  width:100%;padding:15px 24px;border-radius:99px;font-size:16px;font-weight:600;border:none;
+  font-family:'Fredoka',sans-serif;
+  transition:transform .12s, box-shadow .12s;
+}
+.btn-leaf{background:var(--leaf);color:#fff;box-shadow:0 5px 0 #4E9A6D}
+.btn-leaf:hover{transform:translateY(-2px);box-shadow:0 7px 0 #4E9A6D}
+.btn-leaf:active{transform:translateY(3px);box-shadow:0 2px 0 #4E9A6D}
+.btn-sun{background:var(--sun);color:#7A5A12;box-shadow:0 5px 0 #E0B23F}
+.btn-sun:hover{transform:translateY(-2px);box-shadow:0 7px 0 #E0B23F}
+.btn-white{background:#fff;color:var(--deep);box-shadow:0 5px 0 #E8E0CF;border:2.5px solid #F0E6CF}
+.btn-white:hover{transform:translateY(-2px)}
+.or{display:flex;align-items:center;gap:14px;margin:18px 0;font-size:12.5px;font-weight:700;color:#C4BBA8}
+.or::before,.or::after{content:"";flex:1;height:2px;background:#F3EDDD;border-radius:99px}
+.foot-link{text-align:center;font-size:13.5px;color:var(--soft);margin-top:18px;font-weight:600}
+.foot-link a{color:var(--deep);font-weight:700;text-decoration:none}
+
+/* choice */
+.choice{display:grid;gap:14px}
+.choice-card{
+  text-align:left;background:var(--sky);border:2.5px solid #F0E6CF;border-radius:20px;
+  padding:20px 22px;transition:all .15s;position:relative;
+}
+.choice-card:hover{border-color:var(--leaf);background:var(--mint);transform:translateY(-2px)}
+.choice-card .emoji{font-size:26px;display:block;margin-bottom:8px}
+.choice-card b{display:flex;align-items:center;gap:8px;font-family:'Fredoka',sans-serif;font-weight:600;font-size:17px;color:var(--deep);margin-bottom:4px}
+.choice-card .rec{
+  font-family:'Jua',sans-serif;font-size:12px;color:#fff;background:var(--coral);
+  border-radius:99px;padding:3px 10px;
+}
+.choice-card span{font-size:14px;color:var(--soft);font-weight:600}
+.choice-card .time{
+  display:inline-block;margin-top:10px;font-size:12px;font-weight:700;
+  color:var(--deep);background:#fff;padding:4px 12px;border-radius:99px;box-shadow:0 2px 0 #E8E0CF;
+}
+
+/* quiz */
+.quiz-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;font-size:13px;font-weight:700;color:var(--soft)}
+.qbar{height:14px;background:var(--mint);border-radius:99px;overflow:hidden;margin-bottom:6px;position:relative}
+.qbar i{
+  display:block;height:100%;width:0;background:var(--leaf);border-radius:99px;
+  transition:width .4s cubic-bezier(.2,.8,.2,1);
+}
+.qwalker{
+  position:relative;height:26px;margin-bottom:16px;
+}
+.qwalker span{
+  position:absolute;top:0;left:0;font-size:20px;
+  transform:translateX(-50%);transition:left .4s cubic-bezier(.2,.8,.2,1);
+}
+.qtype{
+  display:inline-block;font-size:12.5px;font-weight:700;color:#fff;
+  background:var(--coral);border-radius:99px;padding:4px 14px;margin-bottom:12px;
+  font-family:'Fredoka',sans-serif;
+}
+.qword{font-family:'Jua',sans-serif;font-size:clamp(26px,4vw,34px);color:var(--deep);margin-bottom:6px;line-height:1.3}
+.qask{font-size:14.5px;color:var(--soft);margin-bottom:18px;font-weight:600}
+.opts{display:grid;gap:10px}
+.opt{
+  text-align:left;padding:14px 18px;border-radius:16px;font-size:15px;font-weight:600;
+  background:var(--sky);border:2.5px solid #F0E6CF;color:var(--ink);
+  transition:all .12s;
+}
+.opt:hover{border-color:var(--leaf);background:var(--mint)}
+.audio-chip{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--blue);color:#2E5D6E;
+  border:none;border-radius:99px;padding:12px 24px;font-size:15px;font-weight:700;
+  margin-bottom:18px;box-shadow:0 4px 0 #9FCCDD;
+  transition:transform .12s;
+}
+.audio-chip:hover{transform:translateY(-2px)}
+.skip-test{display:block;text-align:center;margin:16px auto 0;font-size:13px;font-weight:700;color:#C4BBA8;background:none;border:none}
+.skip-test:hover{color:var(--deep)}
+
+/* result */
+.result-center{text-align:center}
+.pot{margin:0 auto 16px;width:170px}
+.result-lv{
+  font-family:'Fredoka',sans-serif;font-weight:600;font-size:15px;color:var(--soft);
+}
+.result-lv b{
+  display:block;font-size:52px;color:var(--deep);line-height:1.1;
+}
+.result-desc{font-size:14.5px;color:var(--soft);max-width:380px;margin:12px auto 24px;font-weight:600}
+.result-desc b{color:var(--deep)}
+.mini-note{font-size:12.5px;color:#B0A794;margin-top:14px;font-weight:600}
+.sprout-grow{transform-origin:85px 118px;transform:scale(0);transition:transform 1s cubic-bezier(.34,1.4,.4,1)}
+.sprout-grow.up{transform:scale(1)}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="logo">
+    <svg viewBox="0 0 40 40" aria-hidden="true">
+      <circle cx="20" cy="24" r="13" fill="#6BBF8A"/>
+      <path d="M20 22 C20 14 24 10 30 9 C29 16 26 20 20 22Z" fill="#3E7C59"/>
+      <path d="M20 22 C20 16 16 12 11 11 C12 17 15 20 20 22Z" fill="#4E9A6D"/>
+      <circle cx="15.5" cy="25" r="1.8" fill="#2E5B41"/>
+      <circle cx="24.5" cy="25" r="1.8" fill="#2E5B41"/>
+      <path d="M16.5 29 Q20 32 23.5 29" stroke="#2E5B41" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+    </svg>
+    Kroot
+  </span>
+  <div class="trail" aria-label="progress">
+    <span class="stone on" id="d1">🌰</span>
+    <span class="stone" id="d2">🌱</span>
+    <span class="stone" id="d3">🪴</span>
+    <span class="stone" id="d4">🌳</span>
+  </div>
+</div>
+
+<main class="stage">
+<div class="panel">
+
+  <!-- STEP 1 : Sign up -->
+  <section class="step on" id="step-signup">
+    <div class="card">
+      <div class="mascot">
+        <svg class="bob" viewBox="0 0 100 100" aria-hidden="true">
+          <ellipse cx="50" cy="88" rx="30" ry="6" fill="#EFE7D5"/>
+          <path d="M50 78 C50 62 50 56 50 50" stroke="#4E9A6D" stroke-width="6" stroke-linecap="round"/>
+          <circle cx="50" cy="38" r="24" fill="#6BBF8A"/>
+          <path d="M50 20 C50 8 58 2 70 1 C68 13 61 19 50 20Z" fill="#3E7C59"/>
+          <circle cx="42" cy="38" r="3" fill="#2E5B41"/>
+          <circle cx="58" cy="38" r="3" fill="#2E5B41"/>
+          <circle cx="37" cy="45" r="3.4" fill="#FF9E7D" opacity=".5"/>
+          <circle cx="63" cy="45" r="3.4" fill="#FF9E7D" opacity=".5"/>
+          <path d="M44 47 Q50 52 56 47" stroke="#2E5B41" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h1 style="text-align:center">Plant your seed!</h1>
+      <p class="sub" style="text-align:center">Every big tree starts tiny. <span class="kr">환영해요!</span></p>
+
+      <button class="btn btn-white" style="margin-bottom:8px">Continue with Google</button>
+      <div class="or">or with email</div>
+
+      <div class="field">
+        <label for="name">What should we call you?</label>
+        <input id="name" type="text" placeholder="Maria" autocomplete="name">
+      </div>
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" type="email" placeholder="maria@email.com" autocomplete="email">
+      </div>
+      <div class="field">
+        <label for="pw">Password</label>
+        <input id="pw" type="password" placeholder="8+ characters, shhh 🤫" autocomplete="new-password">
+      </div>
+      <div class="field">
+        <label for="lang">Your native language</label>
+        <select id="lang">
+          <option>English</option>
+          <option>Español</option>
+          <option>Português</option>
+          <option>日本語</option>
+          <option>中文</option>
+          <option>Tiếng Việt</option>
+          <option>Bahasa Indonesia</option>
+          <option>Français</option>
+          <option>Deutsch</option>
+          <option>العربية</option>
+          <option>हिन्दी</option>
+          <option>Other</option>
+        </select>
+        <p class="hint">We'll explain things in this language 🌍</p>
+      </div>
+
+      <button class="btn btn-leaf" onclick="go('choice',2)">🌱 Plant my seed</button>
+      <p class="foot-link">Already growing here? <a href="#">Log in</a></p>
+    </div>
+  </section>
+
+  <!-- STEP 2 : Choice -->
+  <section class="step" id="step-choice">
+    <div class="card">
+      <h1 style="text-align:center">Where does your story begin?</h1>
+      <p class="sub" style="text-align:center">A quick test finds your chapter — or start from page one.</p>
+
+      <div class="choice">
+        <button class="choice-card" onclick="startQuiz()">
+          <span class="emoji">🗺️</span>
+          <b>Find my chapter <span class="rec">추천!</span></b>
+          <span>10 tiny questions — words, grammar, and listening. Start right where you belong.</span>
+          <span class="time">⏱️ ~ 3 minutes</span>
+        </button>
+        <button class="choice-card" onclick="skipToA1()">
+          <span class="emoji">📖</span>
+          <b>Start from page one</b>
+          <span>Begin fresh at A1. You can find your chapter anytime from your profile.</span>
+          <span class="time">🌰 Start at A1</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 3 : Quiz -->
+  <section class="step" id="step-quiz">
+    <div class="card">
+      <div class="quiz-top">
+        <span id="qcount">Question 1 of 10</span>
+        <span>≈ 3 min</span>
+      </div>
+      <div class="qwalker"><span id="walker">🐌</span></div>
+      <div class="qbar"><i id="qfill"></i></div>
+      <div style="height:14px"></div>
+
+      <div id="qbody"></div>
+
+      <button class="skip-test" onclick="skipToA1()">Not now — start at page one (A1)</button>
+    </div>
+  </section>
+
+  <!-- STEP 4 : Result -->
+  <section class="step" id="step-result">
+    <div class="card result-center">
+      <h1>Your seed is planted! 🎉</h1>
+      <p class="sub">Here's the chapter where your story begins.</p>
+
+      <div class="pot">
+        <svg viewBox="0 0 170 150" aria-hidden="true">
+          <path d="M45 100 L125 100 L115 145 L55 145 Z" fill="#FF9E7D"/>
+          <rect x="40" y="94" width="90" height="14" rx="7" fill="#F28B66"/>
+          <g class="sprout-grow" id="sprout">
+            <path d="M85 96 C85 78 85 70 85 62" stroke="#4E9A6D" stroke-width="6" stroke-linecap="round"/>
+            <circle cx="85" cy="46" r="20" fill="#6BBF8A"/>
+            <path d="M85 30 C85 18 93 12 104 11 C102 22 95 28 85 30Z" fill="#3E7C59"/>
+            <circle cx="78" cy="46" r="2.6" fill="#2E5B41"/>
+            <circle cx="92" cy="46" r="2.6" fill="#2E5B41"/>
+            <path d="M80 53 Q85 57 90 53" stroke="#2E5B41" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+          </g>
+        </svg>
+      </div>
+
+      <p class="result-lv">Your chapter<b id="lvLabel">B1</b></p>
+      <p class="result-desc" id="lvDesc"></p>
+      <button class="btn btn-sun" onclick="finish()">🌞 Start my story</button>
+      <p class="mini-note">Retake the test anytime — your chapter grows as you do!</p>
+    </div>
+  </section>
+
+</div>
+</main>
+
+<script>
+const steps={signup:'step-signup',choice:'step-choice',quiz:'step-quiz',result:'step-result'};
+function go(name,dotN){
+  document.querySelectorAll('.step').forEach(s=>s.classList.remove('on'));
+  document.getElementById(steps[name]).classList.add('on');
+  for(let i=1;i<=4;i++)document.getElementById('d'+i).classList.toggle('on',i<=dotN);
+  window.scrollTo({top:0});
+}
+
+const QUESTIONS=[
+ {type:'Words',lv:1,word:'"안녕하세요"',ask:'What does this mean?',opts:['Hello 👋','Goodbye','Thank you','Sorry'],ans:0},
+ {type:'Words',lv:1,word:'"물"',ask:'Pick the right meaning!',opts:['Fire','Water 💧','Food','House'],ans:1},
+ {type:'Grammar',lv:2,word:'저는 학생___.',ask:'Fill in the blank.',opts:['이에요','예요','있어요','해요'],ans:0},
+ {type:'Words',lv:2,word:'"괜찮아요"',ask:'What does this mean?',opts:["It's okay 😊",'It\'s expensive','See you tomorrow','I don\'t know'],ans:0},
+ {type:'Listening',lv:3,audio:'지금 몇 시예요?',ask:'You heard a question — what is being asked?',opts:['The time ⏰','The price','The weather','Your name'],ans:0},
+ {type:'Grammar',lv:3,word:'비가 와___ 우산을 가져왔어요.',ask:'Choose the right connector.',opts:['서','고','면','지만'],ans:0},
+ {type:'Words',lv:4,word:'"번거롭다"',ask:'Closest in meaning?',opts:['Troublesome','Delicious','Peaceful','Generous'],ans:0},
+ {type:'Grammar',lv:4,word:'그 일은 이미 끝났___ 걱정하지 마세요.',ask:'Fill in the blank.',opts:['으니까','는데도','기 위해','자마자'],ans:0},
+ {type:'Listening',lv:5,audio:'회의가 연기됐다는 소식 들으셨어요?',ask:'What happened to the meeting?',opts:['It was postponed','It was cancelled','It ended early','It went well'],ans:0},
+ {type:'Words',lv:6,word:'"미봉책"',ask:'This word refers to…',opts:['A stopgap measure','A grand strategy','A final decision','An old custom'],ans:0},
+];
+let qi=0, score=0, weighted=0;
+
+function startQuiz(){
+  qi=0;score=0;weighted=0;
+  go('quiz',3);
+  renderQ();
+}
+function renderQ(){
+  const q=QUESTIONS[qi];
+  document.getElementById('qcount').textContent=`Question ${qi+1} of ${QUESTIONS.length}`;
+  const pct=qi/QUESTIONS.length*100;
+  document.getElementById('qfill').style.width=pct+'%';
+  document.getElementById('walker').style.left=`calc(${pct}% )`;
+  let html=`<span class="qtype">${q.type}</span>`;
+  if(q.audio){
+    html+=`<div><button class="audio-chip" onclick="speak('${q.audio}')">🔊 Play the sound</button></div>`;
+    html+=`<p class="qask">${q.ask}</p>`;
+  }else{
+    html+=`<p class="qword">${q.word}</p><p class="qask">${q.ask}</p>`;
+  }
+  html+=`<div class="opts">`+q.opts.map((o,i)=>`<button class="opt" onclick="answer(${i})">${o}</button>`).join('')+`</div>`;
+  document.getElementById('qbody').innerHTML=html;
+}
+function speak(t){
+  if(!('speechSynthesis' in window))return;
+  const u=new SpeechSynthesisUtterance(t);u.lang='ko-KR';u.rate=.9;
+  speechSynthesis.cancel();speechSynthesis.speak(u);
+}
+function answer(i){
+  const q=QUESTIONS[qi];
+  if(i===q.ans){score++;weighted+=q.lv;}
+  qi++;
+  if(qi<QUESTIONS.length){renderQ();}
+  else{showResult();}
+}
+const LEVELS=[
+ {code:'A1',min:0, desc:'You\'re at the very first page — the coziest place to start! We\'ll begin with Hangul, greetings, and little survival phrases.'},
+ {code:'A2',min:5, desc:'You know the basics! Simple everyday chats are yours. Next we\'ll grow longer sentences and everyday words.'},
+ {code:'B1',min:11,desc:'Solid roots! You can hold everyday conversations. Now for connectors, nuance, and real-life listening.'},
+ {code:'B2',min:18,desc:'Wow — you handle most situations with confidence! Time to polish natural expression and faster listening.'},
+ {code:'C1',min:25,desc:'Tall branches! You speak fluently across many topics. Let\'s refine idioms and formal Korean.'},
+ {code:'C2',min:31,desc:'A mighty tree! Near-native mastery. We\'ll keep you sharp with fresh media, slang, and pro-level Korean.'},
+];
+function showResult(){
+  let lv=LEVELS[0];
+  for(const L of LEVELS){if(weighted>=L.min)lv=L;}
+  document.getElementById('lvLabel').textContent=lv.code;
+  document.getElementById('lvDesc').innerHTML=`You got <b>${score} of ${QUESTIONS.length}</b> right! ${lv.desc}`;
+  go('result',4);
+  setTimeout(()=>document.getElementById('sprout').classList.add('up'),250);
+}
+function skipToA1(){
+  document.getElementById('lvLabel').textContent='A1';
+  document.getElementById('lvDesc').innerHTML=LEVELS[0].desc+' You can find your chapter anytime from your profile.';
+  go('result',4);
+  setTimeout(()=>document.getElementById('sprout').classList.add('up'),250);
+}
+function finish(){
+  alert('→ 홈 대시보드로 이동 (다음 단계에서 연결됩니다)');
+}
+</script>
+</body>
+</html>

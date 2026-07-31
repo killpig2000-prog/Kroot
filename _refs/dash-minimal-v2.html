@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kroot — Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Jua&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FFFFFF;
+  --bg2:#FAFAF9;
+  --ink:#18181B;
+  --dim:#71717A;
+  --faint:#A1A1AA;
+  --line:#E7E5E4;
+  --green:#16A34A;
+  --green-soft:#F0FDF4;
+  --green-brd:#BBF7D0;
+  --amber:#D97706;
+  --amber-soft:#FFFBEB;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  background:var(--bg);color:var(--ink);
+  font-family:'Inter','Noto Sans KR',sans-serif;line-height:1.6;
+  font-feature-settings:'cv11';
+}
+.kr{font-family:'Jua',sans-serif}
+button{font-family:inherit;cursor:pointer}
+
+/* ===== 3-column app frame ===== */
+.frame{
+  display:grid;
+  grid-template-columns:230px minmax(0,1fr) 290px;
+  max-width:1360px;margin:0 auto;min-height:100vh;
+}
+
+/* ---------- left sidebar ---------- */
+.sidebar{
+  border-right:1px solid var(--line);
+  padding:20px 14px;
+  display:flex;flex-direction:column;gap:4px;
+  position:sticky;top:0;height:100vh;
+}
+.logo{display:flex;align-items:center;gap:9px;font-weight:600;font-size:17px;letter-spacing:-.01em;padding:4px 10px 18px}
+.logo .mark{
+  width:30px;height:30px;border-radius:8px;background:var(--green);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Jua',sans-serif;font-size:14px;color:#fff;
+}
+.nav-item{
+  display:flex;align-items:center;gap:11px;
+  border:none;background:none;border-radius:9px;
+  padding:10px 12px;font-size:14px;font-weight:500;color:var(--dim);
+  text-align:left;transition:background .12s,color .12s;
+}
+.nav-item span{font-size:16px;filter:grayscale(1);opacity:.6}
+.nav-item:hover{background:var(--bg2);color:var(--ink)}
+.nav-item.on{background:var(--green-soft);color:var(--green);font-weight:600}
+.nav-item.on span{filter:none;opacity:1}
+.nav-sec{
+  font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--faint);padding:18px 12px 6px;
+}
+.side-bottom{margin-top:auto;display:flex;flex-direction:column;gap:4px}
+.streak-side{
+  display:flex;align-items:center;gap:10px;
+  border:1px solid var(--line);border-radius:10px;padding:11px 13px;margin-bottom:6px;
+}
+.streak-side b{font-size:13.5px;font-weight:600;display:block;line-height:1.2}
+.streak-side small{font-size:11.5px;color:var(--dim)}
+.profile-item{
+  display:flex;align-items:center;gap:10px;
+  border:none;background:none;border-radius:9px;padding:9px 12px;text-align:left;
+}
+.profile-item:hover{background:var(--bg2)}
+.profile-item .avatar{
+  width:30px;height:30px;border-radius:8px;background:var(--bg2);
+  border:1px solid var(--line);
+  display:flex;align-items:center;justify-content:center;font-size:14px;
+}
+.profile-item b{font-size:13.5px;font-weight:600;display:block;line-height:1.2}
+.profile-item small{font-size:11.5px;color:var(--dim)}
+
+/* ---------- main column ---------- */
+.main{
+  padding:26px clamp(20px,3vw,36px) 60px;
+  min-width:0;
+}
+.hello{font-weight:600;font-size:clamp(20px,2.4vw,24px);letter-spacing:-.02em;margin-bottom:2px}
+.hello-sub{color:var(--dim);font-size:14px;margin-bottom:24px}
+
+.tree-card{
+  border:1px solid var(--line);border-radius:14px;
+  padding:clamp(18px,2.6vw,24px);margin-bottom:14px;
+  display:grid;grid-template-columns:auto 1fr;gap:clamp(18px,3vw,30px);align-items:center;
+}
+@media(max-width:600px){.tree-card{grid-template-columns:1fr}}
+.tree-fig{
+  background:var(--bg2);border:1px solid var(--line);border-radius:12px;
+  padding:16px;display:flex;justify-content:center;
+}
+.tree-fig svg{width:clamp(110px,12vw,140px);height:auto}
+.eyebrow{
+  font-size:11.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--faint);margin-bottom:6px;
+}
+.tree-info h2{font-weight:600;font-size:18px;letter-spacing:-.01em;margin-bottom:2px}
+.tree-info h2 .lv{
+  display:inline-block;margin-left:8px;font-size:12.5px;font-weight:600;
+  background:var(--green-soft);color:var(--green);border:1px solid var(--green-brd);
+  border-radius:6px;padding:1px 8px;vertical-align:2px;
+}
+.tree-info .desc{font-size:13.5px;color:var(--dim);margin-bottom:16px}
+.lvrow{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.lvbar{flex:1;height:6px;background:var(--line);border-radius:99px;overflow:hidden}
+.lvbar i{display:block;height:100%;width:68%;background:var(--green);border-radius:99px}
+.lvnext{font-size:12.5px;color:var(--dim);font-weight:500;white-space:nowrap}
+.gpath{display:flex;gap:8px}
+.gstep{
+  flex:1;border:1px solid var(--line);border-radius:8px;
+  padding:7px 4px;text-align:center;font-size:14px;
+  filter:grayscale(1);opacity:.45;background:var(--bg);
+}
+.gstep small{display:block;font-size:10.5px;font-weight:600;color:var(--faint);margin-top:1px}
+.gstep.done{filter:none;opacity:1}
+.gstep.done small{color:var(--dim)}
+.gstep.now{filter:none;opacity:1;background:var(--green-soft);border-color:var(--green-brd)}
+.gstep.now small{color:var(--green)}
+
+.quest{
+  border:1px solid var(--line);border-radius:14px;background:var(--bg2);
+  padding:16px 20px;display:flex;align-items:center;gap:14px;margin-bottom:30px;flex-wrap:wrap;
+}
+.quest .qic{
+  width:40px;height:40px;border-radius:10px;background:var(--amber-soft);
+  border:1px solid #FDE68A;
+  display:flex;align-items:center;justify-content:center;font-size:18px;flex:none;
+}
+.quest .qtxt{flex:1;min-width:170px}
+.quest b{display:block;font-weight:600;font-size:14px}
+.quest span{font-size:13px;color:var(--dim)}
+.btn{
+  border:none;border-radius:9px;padding:9px 18px;
+  font-size:13.5px;font-weight:600;color:#fff;background:var(--ink);
+  transition:background .15s;
+}
+.btn:hover{background:#3F3F46}
+
+.sec-row{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:14px}
+.sec-title{font-weight:600;font-size:15px;letter-spacing:-.01em}
+.sec-link{font-size:13px;color:var(--dim);background:none;border:none}
+.sec-link:hover{color:var(--ink)}
+.cat-list{border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.cat{
+  width:100%;display:flex;align-items:center;gap:14px;text-align:left;
+  background:var(--bg);border:none;border-bottom:1px solid var(--line);
+  padding:13px 18px;transition:background .12s;
+}
+.cat:last-child{border-bottom:none}
+.cat:hover{background:var(--bg2)}
+.cat .seed{
+  width:36px;height:36px;border-radius:9px;flex:none;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Jua',sans-serif;font-size:16px;
+}
+.cat .ctxt{flex:1}
+.cat b{display:block;font-weight:600;font-size:14px}
+.cat small{font-size:12.5px;color:var(--dim)}
+.cat .meta{font-size:12.5px;color:var(--faint);display:flex;align-items:center;gap:8px}
+.cat .done-chip{
+  font-size:11.5px;font-weight:600;color:var(--green);
+  background:var(--green-soft);border:1px solid var(--green-brd);
+  border-radius:6px;padding:2px 8px;
+}
+.cat .arrow{color:var(--faint)}
+
+/* ---------- right widgets ---------- */
+.widgets{
+  border-left:1px solid var(--line);
+  padding:26px 20px;
+  display:flex;flex-direction:column;gap:16px;
+  position:sticky;top:0;height:100vh;overflow-y:auto;
+}
+.wcard{border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.wcard .whead{
+  display:flex;align-items:baseline;justify-content:space-between;margin-bottom:12px;
+}
+.wcard .whead b{font-size:13.5px;font-weight:600}
+.wcard .whead small{font-size:11.5px;color:var(--faint)}
+
+/* word of the day */
+.wotd .word{font-family:'Jua',sans-serif;font-size:24px;margin-bottom:2px}
+.wotd .roman{font-size:12.5px;color:var(--faint);margin-bottom:6px}
+.wotd .mean{font-size:13.5px;color:var(--dim);margin-bottom:10px}
+.wotd .ex{
+  background:var(--bg2);border-radius:9px;padding:9px 12px;
+  font-size:12.5px;color:var(--dim);
+}
+.wotd .ex .kr{color:var(--ink);font-size:13.5px;display:block;margin-bottom:1px}
+
+/* weekly grass calendar */
+.grass{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.grass .day{
+  aspect-ratio:1;border-radius:6px;background:var(--bg2);border:1px solid var(--line);
+  display:flex;align-items:center;justify-content:center;
+  font-size:10px;font-weight:600;color:var(--faint);
+}
+.grass .day.g1{background:#DCFCE7;border-color:#BBF7D0;color:#15803D}
+.grass .day.g2{background:#86EFAC;border-color:#4ADE80;color:#14532D}
+.grass .day.g3{background:var(--green);border-color:var(--green);color:#fff}
+.grass-note{font-size:12px;color:var(--dim);margin-top:10px}
+.grass-note b{color:var(--green)}
+
+/* community feed */
+.feed{display:flex;flex-direction:column}
+.feed .post{
+  display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);
+  align-items:flex-start;
+}
+.feed .post:last-child{border-bottom:none;padding-bottom:0}
+.feed .pav{
+  width:28px;height:28px;border-radius:8px;flex:none;
+  display:flex;align-items:center;justify-content:center;font-size:13px;
+  background:var(--bg2);border:1px solid var(--line);
+}
+.feed .post p{font-size:12.5px;color:var(--ink);line-height:1.45}
+.feed .post small{font-size:11px;color:var(--faint)}
+.wlink{
+  display:block;width:100%;text-align:center;background:none;border:none;
+  font-size:12.5px;font-weight:500;color:var(--dim);padding-top:12px;
+}
+.wlink:hover{color:var(--ink)}
+
+/* challenge */
+.challenge .ch-row{display:flex;align-items:center;gap:12px}
+.challenge .ring{position:relative;width:52px;height:52px;flex:none}
+.challenge .ring svg{transform:rotate(-90deg)}
+.challenge .ring b{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:700;color:var(--green);
+}
+.challenge p{font-size:12.5px;color:var(--dim)}
+.challenge p b{color:var(--ink)}
+
+/* ---------- responsive ---------- */
+.bnav{display:none}
+@media(max-width:1120px){
+  .frame{grid-template-columns:220px minmax(0,1fr)}
+  .widgets{display:none}
+}
+@media(max-width:820px){
+  .frame{grid-template-columns:1fr}
+  .sidebar{display:none}
+  .main{padding:22px 18px 100px}
+  .bnav{
+    display:flex;position:fixed;left:0;right:0;bottom:0;
+    background:rgba(255,255,255,.92);backdrop-filter:blur(10px);
+    border-top:1px solid var(--line);
+    justify-content:center;gap:4px;padding:8px 0;z-index:50;
+  }
+  .bnav button{
+    display:flex;flex-direction:column;align-items:center;gap:1px;
+    border:none;background:none;border-radius:8px;padding:7px 22px;
+    font-size:11px;font-weight:500;color:var(--faint);
+  }
+  .bnav button span{font-size:17px;filter:grayscale(1);opacity:.55}
+  .bnav button.on{color:var(--ink)}
+  .bnav button.on span{filter:none;opacity:1}
+}
+</style>
+</head>
+<body>
+
+<div class="frame">
+
+  <!-- LEFT SIDEBAR -->
+  <aside class="sidebar">
+    <span class="logo"><span class="mark">한</span>Kroot</span>
+
+    <button class="nav-item on"><span>🏡</span>Garden</button>
+    <button class="nav-item"><span>📊</span>My growth</button>
+    <button class="nav-item"><span>🏕️</span>Community</button>
+
+    <p class="nav-sec">Practice</p>
+    <button class="nav-item"><span>🎧</span>Listening</button>
+    <button class="nav-item"><span>🎙️</span>Speaking</button>
+    <button class="nav-item"><span>✏️</span>Writing</button>
+    <button class="nav-item"><span>📰</span>Reading</button>
+    <button class="nav-item"><span>🃏</span>Vocabulary</button>
+    <button class="nav-item"><span>💬</span>Slang</button>
+    <button class="nav-item"><span>🔊</span>Pronunciation</button>
+
+    <div class="side-bottom">
+      <div class="streak-side">
+        <span style="font-size:18px">🔥</span>
+        <div><b>12-day streak</b><small>Keep it alive today!</small></div>
+      </div>
+      <button class="profile-item">
+        <span class="avatar">🦊</span>
+        <div><b>Maria</b><small>maria@email.com</small></div>
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+    <h1 class="hello">Good morning, Maria</h1>
+    <p class="hello-sub">One lesson today keeps your tree growing.</p>
+
+    <div class="tree-card">
+      <div class="tree-fig">
+        <svg viewBox="0 0 150 160" aria-hidden="true">
+          <ellipse cx="75" cy="150" rx="46" ry="7" fill="#E7E5E4"/>
+          <path d="M75 146 C75 122 74 112 74 98" stroke="#8B7355" stroke-width="8" stroke-linecap="round"/>
+          <circle cx="75" cy="72" r="36" fill="#22C55E"/>
+          <circle cx="49" cy="88" r="18" fill="#4ADE80"/>
+          <circle cx="101" cy="88" r="18" fill="#4ADE80"/>
+          <circle cx="64" cy="72" r="3.6" fill="#14532D"/>
+          <circle cx="86" cy="72" r="3.6" fill="#14532D"/>
+          <path d="M68 82 Q75 88 82 82" stroke="#14532D" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <circle cx="50" cy="58" r="5.5" fill="#FACC15"/>
+          <circle cx="102" cy="56" r="5.5" fill="#FB7185"/>
+        </svg>
+      </div>
+      <div class="tree-info">
+        <p class="eyebrow">Your tree</p>
+        <h2>Young Tree<span class="lv">B1</span></h2>
+        <p class="desc">Sturdy roots, growing branches. Fruit unlocks at C2.</p>
+        <div class="lvrow">
+          <div class="lvbar"><i></i></div>
+          <span class="lvnext">68% to B2</span>
+        </div>
+        <div class="gpath">
+          <div class="gstep done">🌰<small>A1</small></div>
+          <div class="gstep done">🌱<small>A2</small></div>
+          <div class="gstep now">🪴<small>B1</small></div>
+          <div class="gstep">🌳<small>B2</small></div>
+          <div class="gstep">🌸<small>C1</small></div>
+          <div class="gstep">🍎<small>C2</small></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quest">
+      <span class="qic">✏️</span>
+      <div class="qtxt">
+        <b>Today's quest</b>
+        <span>Writing · 5 everyday sentences · ~5 min</span>
+      </div>
+      <button class="btn">Start</button>
+    </div>
+
+    <div class="sec-row">
+      <span class="sec-title">Practice</span>
+      <button class="sec-link">View all →</button>
+    </div>
+    <div class="cat-list">
+      <button class="cat">
+        <span class="seed" style="background:#F0FDF4;color:#16A34A">듣</span>
+        <span class="ctxt"><b>Listening</b><small>Level-matched audio, A1–C2</small></span>
+        <span class="meta"><span class="arrow">→</span></span>
+      </button>
+      <button class="cat">
+        <span class="seed" style="background:#FFF1F2;color:#E11D48">말</span>
+        <span class="ctxt"><b>Speaking</b><small>Say it, get AI feedback</small></span>
+        <span class="meta"><span class="arrow">→</span></span>
+      </button>
+      <button class="cat">
+        <span class="seed" style="background:#FFFBEB;color:#D97706">쓰</span>
+        <span class="ctxt"><b>Writing</b><small>Type sentences, instant fixes</small></span>
+        <span class="meta"><span class="done-chip">Done today</span><span class="arrow">→</span></span>
+      </button>
+      <button class="cat">
+        <span class="seed" style="background:#EFF6FF;color:#2563EB">읽</span>
+        <span class="ctxt"><b>Reading</b><small>Korean articles with word hints</small></span>
+        <span class="meta"><span class="arrow">→</span></span>
+      </button>
+      <button class="cat">
+        <span class="seed" style="background:#F5F3FF;color:#7C3AED">단</span>
+        <span class="ctxt"><b>Vocabulary</b><small>Flip cards by topic</small></span>
+        <span class="meta"><span class="arrow">→</span></span>
+      </button>
+      <button class="cat">
+        <span class="seed" style="background:#FDF2F8;color:#DB2777">슬</span>
+        <span class="ctxt"><b>Slang</b><small>What Koreans actually say</small></span>
+        <span class="meta"><span class="arrow">→</span></span>
+      </button>
+      <button class="cat">
+        <span class="seed" style="background:#F0FDFA;color:#0D9488">발</span>
+        <span class="ctxt"><b>Pronunciation</b><small>Record and get checked</small></span>
+        <span class="meta"><span class="arrow">→</span></span>
+      </button>
+    </div>
+  </main>
+
+  <!-- RIGHT WIDGETS -->
+  <aside class="widgets">
+
+    <div class="wcard wotd">
+      <div class="whead"><b>Word of the day</b><small>단어</small></div>
+      <p class="word">뿌리</p>
+      <p class="roman">ppu-ri</p>
+      <p class="mean">root — the part that grows underground 🌱</p>
+      <div class="ex">
+        <span class="kr">나무는 뿌리가 튼튼해야 해요.</span>
+        A tree needs strong roots.
+      </div>
+    </div>
+
+    <div class="wcard">
+      <div class="whead"><b>This week</b><small>Jul 20–26</small></div>
+      <div class="grass">
+        <span class="day g2">M</span>
+        <span class="day g1">T</span>
+        <span class="day g3">W</span>
+        <span class="day g2">T</span>
+        <span class="day g1">F</span>
+        <span class="day g3">S</span>
+        <span class="day">S</span>
+      </div>
+      <p class="grass-note"><b>6 of 7 days</b> watered — finish today for a full week!</p>
+    </div>
+
+    <div class="wcard challenge">
+      <div class="whead"><b>July challenge</b><small>D-4</small></div>
+      <div class="ch-row">
+        <div class="ring">
+          <svg width="52" height="52" viewBox="0 0 52 52">
+            <circle cx="26" cy="26" r="22" fill="none" stroke="#E7E5E4" stroke-width="5"/>
+            <circle cx="26" cy="26" r="22" fill="none" stroke="#16A34A" stroke-width="5"
+              stroke-linecap="round" stroke-dasharray="138.2" stroke-dashoffset="27.6"/>
+          </svg>
+          <b>80%</b>
+        </div>
+        <p><b>20-lesson month</b><br>16 done · 4 to go</p>
+      </div>
+    </div>
+
+    <div class="wcard feed">
+      <div class="whead"><b>Community</b><small>live</small></div>
+      <div class="post">
+        <span class="pav">🦊</span>
+        <div>
+          <p>What's the difference between 은/는 and 이/가?</p>
+          <small>Maria · Brazil · 12 min ago</small>
+        </div>
+      </div>
+      <div class="post">
+        <span class="pav">🐻</span>
+        <div>
+          <p>Passed TOPIK Level 3 today!! 🎉</p>
+          <small>Kenta · Japan · 1 h ago</small>
+        </div>
+      </div>
+      <div class="post">
+        <span class="pav">🐰</span>
+        <div>
+          <p>Looking for a speaking buddy, 30 min/week!</p>
+          <small>Amara · Nigeria · 3 h ago</small>
+        </div>
+      </div>
+      <button class="wlink">Open community →</button>
+    </div>
+
+  </aside>
+</div>
+
+<!-- mobile bottom nav -->
+<nav class="bnav">
+  <button class="on"><span>🏡</span>Garden</button>
+  <button><span>📊</span>Growth</button>
+  <button><span>🏕️</span>Friends</button>
+  <button><span>🦊</span>Me</button>
+</nav>
+
+</body>
+</html>

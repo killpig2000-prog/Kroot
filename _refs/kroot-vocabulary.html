@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kroot — Vocabulary</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Jua&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FFFFFF;--bg2:#FAFAF9;--ink:#18181B;--dim:#71717A;--faint:#A1A1AA;--line:#E7E5E4;
+  --green:#16A34A;--green-soft:#F0FDF4;--green-brd:#BBF7D0;
+  --amber:#D97706;--amber-soft:#FFFBEB;--amber-brd:#FDE68A;
+  --purple:#7C3AED;--purple-soft:#F5F3FF;--purple-brd:#DDD6FE;
+  --red:#DC2626;--red-soft:#FEF2F2;--red-brd:#FECACA;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:'Inter','Noto Sans KR',sans-serif;line-height:1.6;font-feature-settings:'cv11'}
+.kr{font-family:'Jua',sans-serif}
+button{font-family:inherit;cursor:pointer}
+
+.frame{display:grid;grid-template-columns:230px minmax(0,1fr);max-width:1180px;margin:0 auto;min-height:100vh}
+.sidebar{border-right:1px solid var(--line);padding:20px 14px;display:flex;flex-direction:column;gap:4px;position:sticky;top:0;height:100vh}
+.logo{display:flex;align-items:center;gap:9px;font-weight:600;font-size:17px;padding:4px 10px 18px}
+.logo .mark{width:30px;height:30px;border-radius:8px;background:var(--green);display:flex;align-items:center;justify-content:center;font-family:'Jua',sans-serif;font-size:14px;color:#fff}
+.nav-item{display:flex;align-items:center;gap:11px;border:none;background:none;border-radius:9px;padding:10px 12px;font-size:14px;font-weight:500;color:var(--dim);text-align:left}
+.nav-item span{font-size:16px;filter:grayscale(1);opacity:.6}
+.nav-item:hover{background:var(--bg2);color:var(--ink)}
+.nav-item.on{background:var(--purple-soft);color:var(--purple);font-weight:600}
+.nav-item.on span{filter:none;opacity:1}
+.nav-sec{font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--faint);padding:18px 12px 6px}
+.side-bottom{margin-top:auto}
+.streak-side{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:10px;padding:11px 13px}
+.streak-side b{font-size:13.5px;font-weight:600;display:block;line-height:1.2}
+.streak-side small{font-size:11.5px;color:var(--dim)}
+
+.main{padding:24px clamp(20px,4vw,44px) 60px;min-width:0}
+.crumb{display:flex;gap:8px;font-size:13px;color:var(--faint);margin-bottom:18px;flex-wrap:wrap}
+.crumb a{color:var(--faint);background:none;border:none;font-size:13px;font-family:inherit;cursor:pointer;padding:0}
+.crumb a:hover{color:var(--ink)}
+.crumb b{color:var(--ink);font-weight:600}
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:20px;font-size:12.5px;color:var(--dim)}
+
+/* ===== LEVEL VIEW (default entry) ===== */
+.lv-hero{
+  max-width:760px;border:1px solid var(--line);border-radius:16px;padding:24px 26px;margin-bottom:22px;
+  display:flex;align-items:center;gap:20px;
+}
+.lv-hero .badge{
+  width:64px;height:64px;border-radius:16px;background:var(--green-soft);border:1px solid var(--green-brd);
+  display:flex;align-items:center;justify-content:center;font-size:30px;flex:none;
+}
+.lv-hero-info{flex:1;min-width:0}
+.lv-hero-info b{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:19px;letter-spacing:-.01em;display:block}
+.lv-hero-info span{font-size:13.5px;color:var(--dim)}
+.lv-bar-row{display:flex;align-items:center;gap:10px;margin-top:12px}
+.lv-bar{flex:1;height:8px;background:var(--line);border-radius:99px;overflow:hidden}
+.lv-bar i{display:block;height:100%;width:0;background:var(--green);border-radius:99px;transition:width .4s ease}
+.lv-pct{font-size:12.5px;font-weight:600;color:var(--green);white-space:nowrap}
+.lv-switch{display:flex;gap:6px;flex:none}
+.lv-mini{
+  border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:6px 11px;
+  font-size:12px;font-weight:600;color:var(--faint);
+}
+.lv-mini.cur{background:var(--green);border-color:var(--green);color:#fff}
+.lv-mini.locked{opacity:.4;cursor:default}
+
+.units-title{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:15px;margin-bottom:12px}
+.unit-list{max-width:760px;display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
+.unit{
+  border:1px solid var(--line);border-radius:14px;padding:16px 18px;
+  display:flex;align-items:center;gap:14px;text-align:left;background:var(--bg);
+  transition:border-color .13s, background .13s;
+}
+.unit:hover:not(.locked){border-color:var(--purple);background:var(--purple-soft)}
+.unit .uic{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:19px;flex:none}
+.unit-body{flex:1;min-width:0}
+.unit-body b{display:block;font-weight:600;font-size:14.5px}
+.unit-body small{font-size:12.5px;color:var(--dim)}
+.unit-right{text-align:right;flex:none}
+.unit-status{font-size:11.5px;font-weight:600;border-radius:6px;padding:3px 9px;display:inline-block;margin-bottom:4px}
+.unit-status.done{background:var(--green-soft);color:var(--green);border:1px solid var(--green-brd)}
+.unit-status.progress{background:var(--amber-soft);color:var(--amber);border:1px solid var(--amber-brd)}
+.unit-status.new{background:var(--bg2);color:var(--faint);border:1px solid var(--line)}
+.unit-count{font-size:12px;color:var(--faint)}
+.unit.locked{opacity:.55}
+.unit.locked .unit-right::after{content:"🔒"}
+
+.levelup-note{
+  max-width:760px;border:1px dashed var(--green-brd);background:var(--green-soft);border-radius:14px;
+  padding:16px 20px;font-size:13.5px;color:#166534;display:flex;align-items:center;gap:10px;
+}
+
+/* ===== CARD VIEW ===== */
+#cardView, #quizView, #unitDoneView, #levelUpView{display:none;max-width:640px}
+.dots{display:flex;gap:7px;margin-bottom:18px}
+.dot{width:26px;height:6px;border-radius:99px;background:var(--line)}
+.dot.done{background:var(--purple)}
+.dot.now{background:var(--purple);opacity:.4}
+.phase-tag{font-size:12px;font-weight:600;color:var(--purple);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+
+.wcard{border:1px solid var(--line);border-radius:16px;padding:clamp(24px,4vw,34px);text-align:center;position:relative}
+.stage-badge{position:absolute;top:20px;right:20px;display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;border-radius:99px;padding:5px 12px}
+.stage-badge.s0{background:var(--amber-soft);color:var(--amber)}
+.stage-badge.s1{background:var(--green-soft);color:var(--green)}
+.wcard .word{font-family:'Jua',sans-serif;font-size:46px;margin:6px 0 4px}
+.wcard .roman{font-size:13.5px;color:var(--faint);margin-bottom:16px}
+.wcard .mean{display:none;font-size:19px;font-weight:600;margin-bottom:16px}
+.wcard .mean.show{display:block;animation:fade .3s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.reveal-btn{border:1.5px dashed var(--purple-brd);border-radius:10px;background:var(--purple-soft);padding:12px 22px;font-size:13.5px;font-weight:600;color:var(--purple);margin-bottom:16px}
+.ex-box{display:none;background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-bottom:22px;text-align:left}
+.ex-box.show{display:block;animation:fade .3s ease}
+.ex-box .k{font-size:15px;font-weight:500;margin-bottom:3px}
+.ex-box .e{font-size:13px;color:var(--dim)}
+.wcard-actions{display:flex;gap:10px;justify-content:center}
+.btn{border:none;border-radius:9px;padding:11px 22px;font-size:14px;font-weight:600;transition:background .15s}
+.btn-outline{background:var(--bg);border:1.5px solid var(--line);color:var(--dim)}
+.btn-purple{background:var(--purple);color:#fff}
+.btn-purple:hover{background:#6D28D9}
+.btn-green{background:var(--green);color:#fff}
+.btn-green:hover{background:#15803D}
+
+/* quiz */
+.qcard{border:1px solid var(--line);border-radius:16px;padding:clamp(22px,3.5vw,30px)}
+.q-progress{display:flex;justify-content:space-between;font-size:12.5px;color:var(--dim);margin-bottom:10px}
+.qbar{height:6px;background:var(--line);border-radius:99px;overflow:hidden;margin-bottom:22px}
+.qbar i{display:block;height:100%;width:0;background:var(--purple);border-radius:99px;transition:width .3s}
+.q-text{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:16.5px;margin-bottom:6px}
+.q-word{font-family:'Jua',sans-serif;font-size:30px;margin-bottom:18px}
+.qopts{display:grid;gap:10px}
+.qopt{text-align:left;padding:13px 16px;border-radius:10px;font-size:14.5px;font-weight:500;background:var(--bg);border:1.5px solid var(--line);transition:all .12s}
+.qopt:hover:not(:disabled){border-color:var(--purple);background:var(--purple-soft)}
+.qopt.correct{border-color:var(--green);background:var(--green-soft)}
+.qopt.wrong{border-color:var(--red);background:var(--red-soft)}
+.qopt:disabled{cursor:default}
+
+/* unit done / quiz result */
+.result-card{border:1px solid var(--line);border-radius:16px;padding:40px 28px;text-align:center}
+.result-card.pass{border-color:var(--green-brd)}
+.result-card.fail{border-color:var(--amber-brd)}
+.result-ring{width:110px;height:110px;margin:0 auto 16px;position:relative}
+.result-ring svg{transform:rotate(-90deg)}
+.result-ring b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;font-family:'Plus Jakarta Sans',sans-serif}
+.result-card h2{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:20px;margin-bottom:6px}
+.result-card p{color:var(--dim);font-size:14px;margin-bottom:22px}
+.result-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+
+/* level up celebration */
+.levelup-card{border:1px solid var(--green-brd);background:var(--green-soft);border-radius:18px;padding:44px 28px;text-align:center}
+.levelup-card .stagejump{display:flex;align-items:center;justify-content:center;gap:14px;font-size:44px;margin-bottom:16px}
+.levelup-card .arrow{font-size:24px;color:var(--green)}
+.levelup-card h2{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:23px;color:#166534;margin-bottom:6px}
+.levelup-card p{color:#166534;font-size:14.5px;margin-bottom:24px}
+
+@media(max-width:820px){.frame{grid-template-columns:1fr}.sidebar{display:none}.main{padding:20px 18px 60px}}
+</style>
+</head>
+<body>
+
+<div class="frame">
+  <aside class="sidebar">
+    <span class="logo"><span class="mark">한</span>Kroot</span>
+    <button class="nav-item"><span>🏡</span>Garden</button>
+    <button class="nav-item"><span>📊</span>My growth</button>
+    <button class="nav-item"><span>🏕️</span>Community</button>
+    <p class="nav-sec">Practice</p>
+    <button class="nav-item"><span>🎧</span>Listening</button>
+    <button class="nav-item"><span>🎙️</span>Speaking</button>
+    <button class="nav-item"><span>✏️</span>Writing</button>
+    <button class="nav-item"><span>📰</span>Reading</button>
+    <button class="nav-item on"><span>🃏</span>Vocabulary</button>
+    <button class="nav-item"><span>💬</span>Slang</button>
+    <button class="nav-item"><span>🔊</span>Pronunciation</button>
+    <div class="side-bottom">
+      <div class="streak-side"><span style="font-size:18px">🔥</span><div><b>12-day streak</b><small>Keep it alive today!</small></div></div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="crumb"><a onclick="backToLevel()" id="crumbLevel">Garden</a> / <a id="crumbUnit" style="display:none" onclick="backToLevel()">Vocabulary</a><b id="crumbNow">Vocabulary</b></div>
+
+    <!-- ===== LEVEL VIEW ===== -->
+    <div id="levelView">
+      <div class="legend">
+        <span>🌰 Seed</span><span>🌱 Sprout</span><span>🌿 Rooting</span><span>🌳 Settled</span>
+      </div>
+
+      <div class="lv-hero">
+        <span class="badge">🪴</span>
+        <div class="lv-hero-info">
+          <b>Level B1 vocabulary</b>
+          <span>Finish every unit to grow into B2</span>
+          <div class="lv-bar-row">
+            <div class="lv-bar"><i id="lvFill"></i></div>
+            <span class="lv-pct" id="lvPct">0/6 units</span>
+          </div>
+        </div>
+        <div class="lv-switch">
+          <button class="lv-mini locked">A2</button>
+          <button class="lv-mini cur">B1</button>
+          <button class="lv-mini locked">B2</button>
+        </div>
+      </div>
+
+      <p class="units-title">Units in B1</p>
+      <div class="unit-list" id="unitList"></div>
+
+      <div class="levelup-note">🌳 Complete all 6 units above to grow your tree into <b>B2</b>.</div>
+    </div>
+
+    <!-- ===== CARD VIEW ===== -->
+    <div id="cardView">
+      <div class="phase-tag">📖 Phase 1 — Learn the words</div>
+      <div class="dots" id="dots"></div>
+      <div class="wcard" id="wcard">
+        <span class="stage-badge" id="stageBadge"></span>
+        <p class="word kr" id="word"></p>
+        <p class="roman" id="roman"></p>
+        <p class="mean" id="mean"></p>
+        <button class="reveal-btn" id="revealBtn">👀 Reveal meaning</button>
+        <div class="ex-box" id="exBox"><p class="k" id="exK"></p><p class="e" id="exE"></p></div>
+        <div class="wcard-actions" id="actions" style="display:none">
+          <button class="btn btn-outline" id="againBtn">One more look</button>
+          <button class="btn btn-purple" id="knowBtn">Got it →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== QUIZ VIEW ===== -->
+    <div id="quizView">
+      <div class="phase-tag">✅ Phase 2 — Prove you know them</div>
+      <div class="qcard">
+        <div class="q-progress"><span id="qCount">Question 1 of 6</span><span id="qScoreLive"></span></div>
+        <div class="qbar"><i id="qFill"></i></div>
+        <p class="q-text" id="qAsk"></p>
+        <p class="q-word kr" id="qWord"></p>
+        <div class="qopts" id="qOpts"></div>
+      </div>
+    </div>
+
+    <!-- ===== UNIT RESULT VIEW ===== -->
+    <div id="unitDoneView">
+      <div class="result-card" id="resultCard">
+        <div class="result-ring">
+          <svg width="110" height="110" viewBox="0 0 110 110">
+            <circle cx="55" cy="55" r="46" fill="none" stroke="#E7E5E4" stroke-width="9"/>
+            <circle id="resultArc" cx="55" cy="55" r="46" fill="none" stroke="#16A34A" stroke-width="9" stroke-linecap="round" stroke-dasharray="289" stroke-dashoffset="289"/>
+          </svg>
+          <b id="resultPct">0%</b>
+        </div>
+        <h2 id="resultTitle"></h2>
+        <p id="resultSub"></p>
+        <div class="result-actions" id="resultActions"></div>
+      </div>
+    </div>
+
+    <!-- ===== LEVEL UP VIEW ===== -->
+    <div id="levelUpView">
+      <div class="levelup-card">
+        <div class="stagejump">🪴<span class="arrow">→</span>🌳</div>
+        <h2>Level up! You're B2 now 🎉</h2>
+        <p>Every B1 unit complete — your tree just grew a stage.</p>
+        <button class="btn btn-green" onclick="location.reload()">Continue in B2</button>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+
+/* ---- unit + word data (mock) ---- */
+const UNITS=[
+ {id:'conv',name:'Conversation basics',icon:'💬',color:'#F0FDF4',
+  words:[
+   {w:'그리워요',r:'geu-ri-wo-yo',m:'I miss (you/it)',ex:'가족이 <b>그리워요</b>.',en:'I miss my family.'},
+   {w:'다행이다',r:'da-haeng-i-da',m:"that's a relief",ex:'다 괜찮다니 <b>다행이다</b>.',en:"It's a relief that everything's okay."},
+   {w:'눈치',r:'nun-chi',m:'social sense / tact',ex:'그는 <b>눈치</b>가 빨라요.',en:"He's quick to read the room."},
+   {w:'설레다',r:'seol-le-da',m:'to feel excited/fluttery',ex:'내일 여행 생각에 <b>설레요</b>.',en:"I'm excited thinking about tomorrow's trip."},
+   {w:'편하다',r:'pyeon-ha-da',m:'to be comfortable',ex:'이 의자가 정말 <b>편해요</b>.',en:'This chair is really comfortable.'},
+   {w:'답답하다',r:'dap-dap-ha-da',m:'to feel frustrated',ex:'설명을 들어도 <b>답답해요</b>.',en:"It's frustrating even after the explanation."}
+  ]},
+ {id:'biz',name:'Business essentials',icon:'💼',color:'#EFF6FF',
+  words:[
+   {w:'담당자',r:'dam-dang-ja',m:'person in charge',ex:'이 건은 <b>담당자</b>에게 문의하세요.',en:'Please ask the person in charge about this.'},
+   {w:'보고서',r:'bo-go-seo',m:'report',ex:'오늘까지 <b>보고서</b>를 제출해야 해요.',en:'I need to submit the report by today.'},
+   {w:'거래처',r:'geo-rae-cheo',m:'business partner/client',ex:'<b>거래처</b>와 미팅이 있어요.',en:'I have a meeting with a client.'},
+   {w:'연차',r:'yeon-cha',m:'annual paid leave',ex:'다음 주에 <b>연차</b>를 썼어요.',en:'I took a day off next week.'},
+   {w:'회식',r:'hoe-sik',m:'company dinner',ex:'오늘 저녁에 <b>회식</b>이 있어요.',en:"There's a company dinner tonight."},
+   {w:'협상하다',r:'hyeop-sang-ha-da',m:'to negotiate',ex:'가격을 <b>협상했어요</b>.',en:'We negotiated the price.'}
+  ]},
+ {id:'travel',name:'Travel & directions',icon:'✈️',color:'#F5F3FF',
+  words:[
+   {w:'환승',r:'hwan-seung',m:'transfer (transit)',ex:'다음 역에서 <b>환승</b>하세요.',en:'Transfer at the next station.'},
+   {w:'숙소',r:'suk-so',m:'accommodation',ex:'<b>숙소</b>는 예약했어요.',en:"I've booked accommodation."},
+   {w:'분실물',r:'bun-sil-mul',m:'lost item',ex:'<b>분실물</b> 센터가 어디예요?',en:'Where is the lost-and-found?'},
+   {w:'환전',r:'hwan-jeon',m:'currency exchange',ex:'공항에서 <b>환전</b>했어요.',en:'I exchanged currency at the airport.'},
+   {w:'입국심사',r:'ip-guk-sim-sa',m:'immigration check',ex:'<b>입국심사</b>가 오래 걸렸어요.',en:'Immigration took a long time.'}
+  ]},
+ {id:'food',name:'Food & dining',icon:'🍜',color:'#FDF2F8',
+  words:[
+   {w:'양념',r:'yang-nyeom',m:'seasoning/sauce',ex:'<b>양념</b>이 정말 맛있어요.',en:'The seasoning is really tasty.'},
+   {w:'포장',r:'po-jang',m:'takeout/packaging',ex:'<b>포장</b>해 주세요.',en:'Please pack it to go.'},
+   {w:'담백하다',r:'dam-baek-ha-da',m:'to be light (taste)',ex:'이 국은 <b>담백해요</b>.',en:'This soup has a light flavor.'},
+   {w:'푸짐하다',r:'pu-jim-ha-da',m:'to be generous (portion)',ex:'양이 정말 <b>푸짐해요</b>.',en:'The portion is really generous.'}
+  ]},
+ {id:'med',name:'Medical & health',icon:'🩺',color:'#FEF2F2',
+  words:[
+   {w:'몸살',r:'mom-sal',m:'body aches (fatigue)',ex:'<b>몸살</b> 기운이 있어요.',en:"I feel like I'm coming down with something."},
+   {w:'처방전',r:'cheo-bang-jeon',m:'prescription',ex:'약국에 <b>처방전</b>을 냈어요.',en:'I gave the prescription to the pharmacy.'},
+   {w:'어지럽다',r:'eo-ji-reop-da',m:'to feel dizzy',ex:'일어나니까 <b>어지러워요</b>.',en:'I feel dizzy when I stand up.'},
+   {w:'응급실',r:'eung-geup-sil',m:'emergency room',ex:'<b>응급실</b>로 가야 해요.',en:'We need to go to the ER.'}
+  ]},
+ {id:'sport',name:'Sports & hobbies',icon:'⚽',color:'#FFFBEB',
+  words:[
+   {w:'경기',r:'gyeong-gi',m:'match / game',ex:'오늘 축구 <b>경기</b>가 있어요.',en:"There's a soccer match today."},
+   {w:'응원하다',r:'eung-won-ha-da',m:'to cheer for',ex:'우리 팀을 <b>응원해요</b>.',en:'We cheer for our team.'},
+   {w:'승부차기',r:'seung-bu-cha-gi',m:'penalty shootout',ex:'결국 <b>승부차기</b>까지 갔어요.',en:'It went all the way to a shootout.'},
+   {w:'역전',r:'yeok-jeon',m:'comeback',ex:'후반전에 <b>역전</b>했어요.',en:'We made a comeback in the second half.'}
+  ]}
+];
+/* progress state: 'new' | 'progress' | 'done' */
+const progress={conv:'progress',biz:'new',travel:'new',food:'new',med:'new',sport:'new'};
+
+function renderLevelView(){
+  const doneCount=Object.values(progress).filter(s=>s==='done').length;
+  $('lvFill').style.width=(doneCount/UNITS.length*100)+'%';
+  $('lvPct').textContent=doneCount+'/'+UNITS.length+' units';
+
+  const list=$('unitList');list.innerHTML='';
+  UNITS.forEach(u=>{
+    const st=progress[u.id];
+    const div=document.createElement('button');
+    div.className='unit';
+    const statusLabel = st==='done' ? '<span class="unit-status done">✓ Complete</span>' :
+                        st==='progress' ? '<span class="unit-status progress">In progress</span>' :
+                        '<span class="unit-status new">Not started</span>';
+    div.innerHTML=`
+      <span class="uic" style="background:${u.color}">${u.icon}</span>
+      <div class="unit-body"><b>${u.name}</b><small>${u.words.length} words</small></div>
+      <div class="unit-right">${statusLabel}<div class="unit-count">${st==='done'?u.words.length:0}/${u.words.length} known</div></div>`;
+    div.onclick=()=>openUnit(u.id);
+    list.appendChild(div);
+  });
+}
+
+let curUnit=null, ci=0, qi=0, qScore=0;
+function showOnly(id){
+  ['levelView','cardView','quizView','unitDoneView','levelUpView'].forEach(v=>{
+    $(v).style.display = v===id ? 'block' : 'none';
+  });
+}
+function backToLevel(){
+  showOnly('levelView');
+  $('crumbUnit').style.display='none';
+  $('crumbNow').textContent='Vocabulary';
+  renderLevelView();
+}
+function openUnit(id){
+  curUnit=UNITS.find(u=>u.id===id);
+  ci=0;
+  $('crumbUnit').style.display='inline';
+  $('crumbUnit').textContent='Vocabulary';
+  $('crumbNow').textContent=curUnit.name;
+  showOnly('cardView');
+  loadCard();
+}
+function buildDots(total,idx){
+  const d=$('dots');d.innerHTML='';
+  for(let k=0;k<total;k++){const s=document.createElement('span');s.className='dot'+(k<idx?' done':k===idx?' now':'');d.appendChild(s)}
+}
+function loadCard(){
+  const c=curUnit.words[ci];
+  $('word').textContent=c.w;
+  $('roman').textContent=c.r;
+  $('mean').textContent=c.m;
+  $('mean').classList.remove('show');
+  $('exK').innerHTML=c.ex;
+  $('exE').textContent=c.en;
+  $('exBox').classList.remove('show');
+  $('revealBtn').style.display='inline-block';
+  $('actions').style.display='none';
+  $('stageBadge').className='stage-badge s0';
+  $('stageBadge').textContent='🌰 Seed';
+  buildDots(curUnit.words.length,ci);
+}
+$('revealBtn').addEventListener('click',()=>{
+  $('mean').classList.add('show');
+  $('exBox').classList.add('show');
+  $('revealBtn').style.display='none';
+  $('actions').style.display='flex';
+});
+function cardNext(){
+  ci++;
+  if(ci<curUnit.words.length){loadCard();}
+  else{startQuiz();}
+}
+$('againBtn').addEventListener('click',cardNext);
+$('knowBtn').addEventListener('click',cardNext);
+
+/* ---- quiz phase ---- */
+let quizQs=[];
+function startQuiz(){
+  quizQs=shuffle(curUnit.words.map((w,idx)=>idx)).map(idx=>{
+    const w=curUnit.words[idx];
+    const distractors=shuffle(curUnit.words.filter((_,i2)=>i2!==idx)).slice(0,3).map(d=>d.m);
+    const opts=shuffle([w.m,...distractors]);
+    return {word:w.w,answer:w.m,opts};
+  });
+  qi=0;qScore=0;
+  showOnly('quizView');
+  loadQuiz();
+}
+function shuffle(arr){return [...arr].sort(()=>Math.random()-0.5)}
+function loadQuiz(){
+  const q=quizQs[qi];
+  $('qCount').textContent='Question '+(qi+1)+' of '+quizQs.length;
+  $('qScoreLive').textContent=qScore+' correct so far';
+  $('qFill').style.width=(qi/quizQs.length*100)+'%';
+  $('qAsk').textContent='What does this word mean?';
+  $('qWord').textContent=q.word;
+  const opts=$('qOpts');opts.innerHTML='';
+  q.opts.forEach(o=>{
+    const b=document.createElement('button');
+    b.className='qopt';
+    b.textContent=o;
+    b.onclick=()=>answerQuiz(o,q.answer,b);
+    opts.appendChild(b);
+  });
+}
+function answerQuiz(chosen,answer,btn){
+  const opts=[...document.querySelectorAll('.qopt')];
+  opts.forEach(o=>o.disabled=true);
+  if(chosen===answer){qScore++;btn.classList.add('correct')}
+  else{
+    btn.classList.add('wrong');
+    opts.find(o=>o.textContent===answer).classList.add('correct');
+  }
+  setTimeout(()=>{
+    qi++;
+    if(qi<quizQs.length){loadQuiz();}
+    else{showQuizResult();}
+  },650);
+}
+function showQuizResult(){
+  const pct=Math.round(qScore/quizQs.length*100);
+  const pass=pct>=80;
+  showOnly('unitDoneView');
+  const card=$('resultCard');
+  card.className='result-card '+(pass?'pass':'fail');
+  const arc=$('resultArc');
+  arc.setAttribute('stroke', pass?'#16A34A':'#D97706');
+  const circumference=289;
+  requestAnimationFrame(()=>{
+    setTimeout(()=>{arc.style.transition='stroke-dashoffset 1s ease';arc.style.strokeDashoffset=circumference*(1-pct/100)},100);
+  });
+  $('resultPct').textContent=pct+'%';
+  if(pass){
+    progress[curUnit.id]='done';
+    $('resultTitle').textContent='Unit complete! 🌱';
+    $('resultSub').textContent=qScore+' of '+quizQs.length+' correct — these words are rooting in.';
+    $('resultActions').innerHTML=`<button class="btn btn-green" onclick="finishUnit()">Back to units</button>`;
+  }else{
+    progress[curUnit.id]='progress';
+    $('resultTitle').textContent='Almost there';
+    $('resultSub').textContent=qScore+' of '+quizQs.length+' correct — review the cards once more before it counts.';
+    $('resultActions').innerHTML=`
+      <button class="btn btn-outline" onclick="finishUnit()">Back to units</button>
+      <button class="btn btn-purple" onclick="reviewUnit()">Review cards again</button>`;
+  }
+}
+function reviewUnit(){ci=0;showOnly('cardView');loadCard();}
+function finishUnit(){
+  const allDone=UNITS.every(u=>progress[u.id]==='done');
+  if(allDone){showOnly('levelUpView');}
+  else{backToLevel();}
+}
+
+renderLevelView();
+</script>
+</body>
+</html>

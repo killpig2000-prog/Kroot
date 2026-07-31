@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kroot — My garden</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Jua&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sky:#FFF9EC;
+  --mint:#DFF3E4;
+  --leaf:#6BBF8A;
+  --deep:#3E7C59;
+  --sun:#FFD66B;
+  --coral:#FF9E7D;
+  --blue:#BEE3F0;
+  --ink:#4A4237;
+  --soft:#8C8272;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  background:var(--sky);color:var(--ink);
+  font-family:'Nunito','Noto Sans KR',sans-serif;line-height:1.6;
+  min-height:100vh;padding-bottom:90px;
+}
+.kr{font-family:'Jua',sans-serif}
+button{font-family:inherit;cursor:pointer}
+a{text-decoration:none;color:inherit}
+
+.shell{max-width:960px;margin:0 auto;padding:0 clamp(16px,4vw,28px)}
+
+/* top bar */
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 0 6px;
+}
+.logo{display:flex;align-items:center;gap:9px;font-family:'Fredoka',sans-serif;font-weight:600;font-size:21px;color:var(--deep)}
+.logo svg{width:34px;height:34px}
+.top-right{display:flex;align-items:center;gap:10px}
+.streak{
+  display:flex;align-items:center;gap:7px;
+  background:#fff;border-radius:99px;padding:8px 16px;
+  font-family:'Fredoka',sans-serif;font-weight:600;font-size:14px;color:#C77B2B;
+  box-shadow:0 3px 0 #EFE7D5;
+}
+.avatar-btn{
+  width:40px;height:40px;border-radius:99px;background:var(--mint);
+  display:flex;align-items:center;justify-content:center;font-size:19px;
+  box-shadow:0 3px 0 #C9E4D0;border:none;
+}
+
+.hello{
+  font-family:'Fredoka',sans-serif;font-weight:600;
+  font-size:clamp(21px,3.4vw,26px);color:var(--deep);
+  margin:18px 0 4px;
+}
+.hello .kr{color:var(--coral);font-size:.85em}
+.hello-sub{color:var(--soft);font-weight:600;font-size:14px;margin-bottom:20px}
+
+/* ===== my tree card ===== */
+.tree-card{
+  background:linear-gradient(180deg,#CBEAF4 0%,#E4F5EC 58%,#F4EDDA 100%);
+  border-radius:30px;box-shadow:0 8px 0 #E4D9C0;
+  padding:clamp(20px,4vw,30px);
+  display:grid;grid-template-columns:auto 1fr;gap:clamp(16px,4vw,34px);
+  align-items:center;position:relative;overflow:hidden;
+  margin-bottom:22px;
+}
+@media(max-width:640px){.tree-card{grid-template-columns:1fr;text-align:center}}
+.tree-stage{position:relative;display:flex;justify-content:center}
+.tree-stage svg{width:clamp(170px,26vw,220px);height:auto}
+.bob{animation:bob 4s ease-in-out infinite}
+.bob2{animation:bob 4s ease-in-out -2s infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+@media(prefers-reduced-motion:reduce){.bob,.bob2{animation:none}}
+
+.tree-info h2{
+  font-family:'Fredoka',sans-serif;font-weight:600;font-size:clamp(19px,2.6vw,23px);
+  color:var(--deep);margin-bottom:2px;
+}
+.tree-info .lvname{color:var(--coral)}
+.tree-info .desc{font-size:14px;color:#6E7E68;font-weight:600;margin-bottom:16px}
+.lvbar-row{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.lvbadge{
+  font-family:'Fredoka',sans-serif;font-weight:600;font-size:15px;
+  background:#fff;color:var(--deep);border-radius:12px;padding:5px 13px;
+  box-shadow:0 3px 0 rgba(78,154,109,.25);
+}
+.lvbar{flex:1;height:16px;background:rgba(255,255,255,.7);border-radius:99px;overflow:hidden}
+.lvbar i{display:block;height:100%;width:68%;background:var(--leaf);border-radius:99px;transition:width 1s cubic-bezier(.2,.8,.2,1)}
+.lvnext{font-family:'Fredoka',sans-serif;font-weight:500;font-size:13.5px;color:#7FA98E}
+.water-note{
+  display:inline-flex;align-items:center;gap:8px;margin-top:14px;
+  background:#fff;border-radius:99px;padding:8px 16px;
+  font-size:13px;font-weight:700;color:#4C8AA5;box-shadow:0 3px 0 #B5D9E6;
+}
+@media(max-width:640px){.water-note{margin-left:auto;margin-right:auto}}
+
+/* growth path */
+.gpath{
+  display:flex;align-items:center;justify-content:space-between;
+  margin:20px 6px 4px;position:relative;
+}
+.gpath::before{
+  content:"";position:absolute;left:16px;right:16px;top:15px;height:4px;
+  background:rgba(255,255,255,.75);border-radius:99px;
+}
+.gstep{position:relative;display:flex;flex-direction:column;align-items:center;gap:5px;z-index:1}
+.gstep .ic{
+  width:32px;height:32px;border-radius:99px;background:#fff;
+  display:flex;align-items:center;justify-content:center;font-size:15px;
+  box-shadow:0 2px 0 rgba(0,0,0,.06);
+  filter:grayscale(1);opacity:.5;
+}
+.gstep small{font-family:'Fredoka',sans-serif;font-weight:500;font-size:11px;color:#98A78F}
+.gstep.done .ic{filter:none;opacity:1}
+.gstep.done small{color:#5E8A6E;font-weight:600}
+.gstep.now .ic{
+  filter:none;opacity:1;transform:scale(1.28);background:var(--sun);
+  box-shadow:0 3px 0 #E0B23F;
+}
+.gstep.now small{color:#B07E1B;font-weight:600}
+
+/* ===== today's quest ===== */
+.quest{
+  background:#fff;border-radius:24px;box-shadow:0 6px 0 #EFE7D5;
+  padding:18px 22px;display:flex;align-items:center;gap:16px;
+  margin-bottom:26px;flex-wrap:wrap;
+}
+.quest .qic{
+  flex:none;width:52px;height:52px;border-radius:18px;background:#FFF3D6;
+  display:flex;align-items:center;justify-content:center;font-size:25px;
+}
+.quest .qtxt{flex:1;min-width:180px}
+.quest b{display:block;font-family:'Fredoka',sans-serif;font-weight:600;font-size:16px;color:var(--deep)}
+.quest span{font-size:13px;color:var(--soft);font-weight:600}
+.btn{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:11px 22px;border-radius:99px;font-size:14.5px;font-weight:600;border:none;
+  font-family:'Fredoka',sans-serif;transition:transform .12s, box-shadow .12s;
+}
+.btn-leaf{background:var(--leaf);color:#fff;box-shadow:0 4px 0 #4E9A6D}
+.btn-leaf:hover{transform:translateY(-2px);box-shadow:0 6px 0 #4E9A6D}
+.btn-leaf:active{transform:translateY(2px);box-shadow:0 2px 0 #4E9A6D}
+
+/* ===== categories ===== */
+.sec-title{
+  font-family:'Fredoka',sans-serif;font-weight:600;font-size:17px;color:var(--deep);
+  margin-bottom:12px;display:flex;align-items:center;gap:8px;
+}
+.cat-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;margin-bottom:8px;
+}
+.cat{
+  background:#fff;border-radius:22px;padding:18px 16px;
+  box-shadow:0 5px 0 #EFE7D5;border:none;text-align:left;
+  transition:transform .14s ease;position:relative;
+}
+.cat:hover{transform:translateY(-4px) rotate(-.6deg)}
+.cat .seed{
+  width:44px;height:44px;border-radius:15px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Jua',sans-serif;font-size:20px;color:#fff;margin-bottom:10px;
+}
+.cat b{display:block;font-family:'Fredoka',sans-serif;font-weight:600;font-size:15px;color:var(--deep)}
+.cat small{font-size:12px;color:var(--soft);font-weight:600}
+.cat .done-chip{
+  position:absolute;top:12px;right:12px;font-size:12px;
+  background:var(--mint);border-radius:99px;padding:3px 8px;font-weight:700;color:var(--deep);
+}
+
+/* bottom nav */
+.bnav{
+  position:fixed;left:50%;bottom:14px;transform:translateX(-50%);
+  background:#fff;border-radius:99px;box-shadow:0 6px 0 #E4D9C0, 0 10px 30px rgba(74,66,55,.10);
+  display:flex;gap:6px;padding:8px;z-index:50;
+}
+.bnav button{
+  display:flex;flex-direction:column;align-items:center;gap:2px;
+  border:none;background:none;border-radius:99px;padding:8px 18px;
+  font-family:'Fredoka',sans-serif;font-size:11px;font-weight:500;color:#B0A794;
+  transition:background .15s,color .15s;
+}
+.bnav button span{font-size:19px;filter:grayscale(1);opacity:.6}
+.bnav button.on{background:var(--mint);color:var(--deep)}
+.bnav button.on span{filter:none;opacity:1}
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <div class="topbar">
+    <span class="logo">
+      <svg viewBox="0 0 40 40" aria-hidden="true">
+        <circle cx="20" cy="24" r="13" fill="#6BBF8A"/>
+        <path d="M20 22 C20 14 24 10 30 9 C29 16 26 20 20 22Z" fill="#3E7C59"/>
+        <path d="M20 22 C20 16 16 12 11 11 C12 17 15 20 20 22Z" fill="#4E9A6D"/>
+        <circle cx="15.5" cy="25" r="1.8" fill="#2E5B41"/>
+        <circle cx="24.5" cy="25" r="1.8" fill="#2E5B41"/>
+        <path d="M16.5 29 Q20 32 23.5 29" stroke="#2E5B41" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+      </svg>
+      Kroot
+    </span>
+    <div class="top-right">
+      <span class="streak">🔥 12 days</span>
+      <button class="avatar-btn" aria-label="My page">🦊</button>
+    </div>
+  </div>
+
+  <h1 class="hello">Good morning, Maria! <span class="kr">좋은 아침!</span></h1>
+  <p class="hello-sub">Your tree is thirsty for today's lesson 💧</p>
+
+  <!-- MY TREE -->
+  <div class="tree-card">
+    <div class="tree-stage">
+      <svg viewBox="0 0 220 230" aria-hidden="true">
+        <ellipse cx="110" cy="212" rx="82" ry="14" fill="#E2D5B8"/>
+        <g class="bob2">
+          <ellipse cx="38" cy="34" rx="22" ry="10" fill="#fff" opacity=".9"/>
+          <ellipse cx="54" cy="29" rx="16" ry="9" fill="#fff" opacity=".9"/>
+        </g>
+        <circle cx="192" cy="26" r="17" fill="#FFD66B"/>
+        <g stroke="#FFD66B" stroke-width="3" stroke-linecap="round">
+          <line x1="192" y1="1" x2="192" y2="7"/><line x1="192" y1="45" x2="192" y2="51"/>
+          <line x1="167" y1="26" x2="173" y2="26"/><line x1="211" y1="26" x2="217" y2="26"/>
+        </g>
+        <path d="M110 205 C110 175 108 160 108 142" stroke="#8A6B4A" stroke-width="13" stroke-linecap="round"/>
+        <path d="M108 168 C92 162 82 150 80 136 C96 140 105 152 108 164Z" fill="#8A6B4A"/>
+        <circle cx="110" cy="108" r="46" fill="#6BBF8A"/>
+        <circle cx="76" cy="126" r="26" fill="#7FCB99"/>
+        <circle cx="144" cy="126" r="26" fill="#7FCB99"/>
+        <circle cx="110" cy="76" r="26" fill="#5AB07E"/>
+        <circle cx="96" cy="108" r="5" fill="#2E5B41"/>
+        <circle cx="124" cy="108" r="5" fill="#2E5B41"/>
+        <circle cx="86" cy="120" r="6" fill="#FF9E7D" opacity=".55"/>
+        <circle cx="134" cy="120" r="6" fill="#FF9E7D" opacity=".55"/>
+        <path d="M100 122 Q110 131 120 122" stroke="#2E5B41" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <g class="bob">
+          <circle cx="70" cy="84" r="8" fill="#FFD66B"/>
+          <circle cx="70" cy="84" r="3.4" fill="#FF9E7D"/>
+        </g>
+        <g class="bob2">
+          <circle cx="152" cy="88" r="8" fill="#F2A0B9"/>
+          <circle cx="152" cy="88" r="3.4" fill="#fff"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="tree-info">
+      <h2>Your tree is a <span class="lvname">Young Tree</span> 🪴</h2>
+      <p class="desc">Level B1 — sturdy roots, growing branches. Fruit comes at C2!</p>
+
+      <div class="lvbar-row">
+        <span class="lvbadge">B1</span>
+        <div class="lvbar"><i id="lvfill"></i></div>
+        <span class="lvnext">68% → B2</span>
+      </div>
+
+      <div class="gpath" aria-label="growth path">
+        <div class="gstep done"><span class="ic">🌰</span><small>A1</small></div>
+        <div class="gstep done"><span class="ic">🌱</span><small>A2</small></div>
+        <div class="gstep now"><span class="ic">🪴</span><small>B1</small></div>
+        <div class="gstep"><span class="ic">🌳</span><small>B2</small></div>
+        <div class="gstep"><span class="ic">🌸</span><small>C1</small></div>
+        <div class="gstep"><span class="ic">🍎</span><small>C2</small></div>
+      </div>
+
+      <span class="water-note">💧 Water your tree — finish 1 lesson today</span>
+    </div>
+  </div>
+
+  <!-- TODAY'S QUEST -->
+  <div class="quest">
+    <span class="qic">✏️</span>
+    <div class="qtxt">
+      <b>Today's little quest</b>
+      <span>Writing — 5 everyday sentences · about 5 minutes</span>
+    </div>
+    <button class="btn btn-leaf">Start ▸</button>
+  </div>
+
+  <!-- CATEGORIES -->
+  <p class="sec-title">🌱 Seven little seeds</p>
+  <div class="cat-grid">
+    <button class="cat">
+      <span class="seed" style="background:#6BBF8A">듣</span>
+      <b>Listening</b><small>A1–C2 audio</small>
+    </button>
+    <button class="cat">
+      <span class="seed" style="background:#FF9E7D">말</span>
+      <b>Speaking</b><small>Your voice + AI</small>
+    </button>
+    <button class="cat">
+      <span class="done-chip">✓ today</span>
+      <span class="seed" style="background:#FFD66B;color:#7A5A12">쓰</span>
+      <b>Writing</b><small>Type &amp; get fixes</small>
+    </button>
+    <button class="cat">
+      <span class="seed" style="background:#8FCBDF">읽</span>
+      <b>Reading</b><small>Stories &amp; articles</small>
+    </button>
+    <button class="cat">
+      <span class="seed" style="background:#B7A6E3">단</span>
+      <b>Vocabulary</b><small>Flip word cards</small>
+    </button>
+    <button class="cat">
+      <span class="seed" style="background:#F2A0B9">슬</span>
+      <b>Slang</b><small>Real fun Korean</small>
+    </button>
+    <button class="cat">
+      <span class="seed" style="background:#7FB8A4">발</span>
+      <b>Pronunciation</b><small>Record &amp; check</small>
+    </button>
+    <button class="cat">
+      <span class="seed" style="background:#94B8E3">🏕️</span>
+      <b>Community</b><small>Friends worldwide</small>
+    </button>
+  </div>
+
+</div>
+
+<!-- bottom nav -->
+<nav class="bnav" aria-label="main">
+  <button class="on"><span>🏡</span>Garden</button>
+  <button><span>📊</span>Growth</button>
+  <button><span>🏕️</span>Friends</button>
+  <button><span>🦊</span>Me</button>
+</nav>
+
+<script>
+requestAnimationFrame(()=>{
+  const f=document.getElementById('lvfill');
+  f.style.width='0%';
+  setTimeout(()=>f.style.width='68%',200);
+});
+</script>
+</body>
+</html>

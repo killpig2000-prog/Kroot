@@ -1,0 +1,469 @@
+"use client";
+
+import { useEffect, useMemo, useRef, useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { createClient } from "@/lib/supabase/client";
+import { recordCompletion, type ProgressResult } from "@/lib/activity";
+import {
+  MINUTES_PER_SESSION,
+  VOCAB_ROOTS,
+  buildQuizQuestions,
+  type QuizQuestion,
+  type VocabWordWithProgress,
+} from "@/lib/vocabulary";
+
+const QUIZ_BONUS_MINUTES = 3;
+
+type Phase = "flip" | "quizIntro" | "quiz" | "summary";
+type Counts = { correct: number; incorrect: number };
+
+// Growth stage of a word, from how many times it's been reviewed.
+const STAGE_META = [
+  { label: "🌰 Seed", cls: "bg-[#FFFBEB] text-[#D97706]" },
+  { label: "🌱 Sprout", cls: "bg-[#F0FDF4] text-[#16A34A]" },
+  { label: "🌿 Rooting", cls: "bg-[#DCFCE7] text-[#15803D]" },
+  { label: "🌳 Settled", cls: "bg-[#166534] text-white" },
+];
+
+function stageFor(reviews: number): number {
+  if (reviews <= 0) return 0;
+  if (reviews === 1) return 1;
+  if (reviews <= 3) return 2;
+  return 3;
+}
+
+const BTN_VIOLET =
+  "rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-[#7C3AED] hover:bg-[#6D28D9] transition-colors disabled:opacity-60";
+const BTN_INK =
+  "rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-[#18181B] hover:bg-[#3F3F46] transition-colors disabled:opacity-60";
+const BTN_LINE =
+  "rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-[#18181B] bg-white border border-[#E7E5E4] hover:bg-[#FAFAF9] transition-colors disabled:opacity-60";
+const CARD = "max-w-[560px] border border-[#E7E5E4] rounded-[14px] p-[clamp(20px,3vw,28px)]";
+
+export default function VocabSession({
+  words,
+  userId,
+  topicLabel,
+  topicKey,
+  chapterIndex,
+  hasNextChapter,
+}: {
+  words: VocabWordWithProgress[];
+  userId: string;
+  topicLabel: string;
+  topicKey: string;
+  chapterIndex: number;
+  hasNextChapter: boolean;
+}) {
+  const router = useRouter();
+  const supabase = useMemo(() => createClient(), []);
+
+  const [phase, setPhase] = useState<Phase>("flip");
+  const [index, setIndex] = useState(0);
+  const [flipped, setFlipped] = useState(false);
+  const [known, setKnown] = useState(0);
+  const [tricky, setTricky] = useState(0);
+  const [navigating, setNavigating] = useState(false);
+
+  // Local source of truth for each word's counts, seeded from props and kept
+  // current across both the flip pass and the quiz pass on the same words.
+  const [counts, setCounts] = useState<Record<string, Counts>>(() =>
+    Object.fromEntries(words.map((w) => [w.key, { correct: w.correct_count, incorrect: w.incorrect_count }]))
+  );
+
+  const [quizQuestions, setQuizQuestions] = useState<QuizQuestion[]>([]);
+  const [quizIndex, setQuizIndex] = useState(0);
+  const [quizKnown, setQuizKnown] = useState(0);
+  const [quizTricky, setQuizTricky] = useState(0);
+  const [selected, setSelected] = useState<string | null>(null);
+  const [tookQuiz, setTookQuiz] = useState(false);
+  const [levelUp, setLevelUp] = useState<ProgressResult | null>(null);
+  const [rootOpen, setRootOpen] = useState(false);
+  const loggedMinutes = useRef(false);
+
+  const word = words[index];
+
+  async function saveProgress(wordKey: string, gotIt: boolean) {
+    const prev = counts[wordKey] ?? { correct: 0, incorrect: 0 };
+    const next: Counts = {
+      correct: prev.correct + (gotIt ? 1 : 0),
+      incorrect: prev.incorrect + (gotIt ? 0 : 1),
+    };
+    setCounts((c) => ({ ...c, [wordKey]: next }));
+
+    await supabase.from("vocabulary_progress").upsert(
+      {
+        user_id: userId,
+        word_key: wordKey,
+        correct_count: next.correct,
+        incorrect_count: next.incorrect,
+        last_reviewed_at: new Date().toISOString(),
+      },
+      { onConflict: "user_id,word_key" }
+    );
+  }
+
+  async function answerFlip(gotIt: boolean) {
+    await saveProgress(word.key, gotIt);
+    if (gotIt) setKnown((k) => k + 1);
+    else setTricky((t) => t + 1);
+
+    setFlipped(false);
+    setRootOpen(false);
+    if (index + 1 < words.length) {
+      setIndex((i) => i + 1);
+    } else {
+      setPhase("quizIntro");
+    }
+  }
+
+  function startQuiz() {
+    setQuizQuestions(buildQuizQuestions(words));
+    setQuizIndex(0);
+    setQuizKnown(0);
+    setQuizTricky(0);
+    setTookQuiz(true);
+    setPhase("quiz");
+  }
+
+  async function answerQuiz(option: string) {
+    if (selected) return;
+    setSelected(option);
+    const q = quizQuestions[quizIndex];
+    const gotIt = option === (q.mode === "meaning" ? q.word.meaning_en : q.word.korean);
+    await saveProgress(q.word.key, gotIt);
+    if (gotIt) setQuizKnown((k) => k + 1);
+    else setQuizTricky((t) => t + 1);
+
+    setTimeout(() => {
+      setSelected(null);
+      if (quizIndex + 1 < quizQuestions.length) {
+        setQuizIndex((i) => i + 1);
+      } else {
+        setPhase("summary");
+      }
+    }, 700);
+  }
+
+  async function logMinutesOnce() {
+    if (loggedMinutes.current) return;
+    loggedMinutes.current = true;
+
+    const minutes = MINUTES_PER_SESSION + (tookQuiz ? QUIZ_BONUS_MINUTES : 0);
+    const result = await recordCompletion(supabase, "vocabulary", minutes);
+    if (result?.leveled_up) setLevelUp(result);
+  }
+
+  // Save as soon as the session ends, so the level-up line can show on the summary.
+  useEffect(() => {
+    if (phase === "summary") void logMinutesOnce();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [phase]);
+
+  async function goTo(href: string) {
+    setNavigating(true);
+    await logMinutesOnce();
+    router.push(href);
+    router.refresh();
+  }
+
+  if (words.length === 0) {
+    return (
+      <div className={`${CARD} text-center`}>
+        <p className="font-bold text-[17px] tracking-[-0.01em] mb-1.5">No words here yet</p>
+        <p className="text-sm text-[#71717A] mb-5">This chapter doesn&apos;t have cards yet — try another one.</p>
+        <Link href="/vocabulary" className={BTN_INK}>
+          Back to topics
+        </Link>
+      </div>
+    );
+  }
+
+  if (phase === "quizIntro") {
+    return (
+      <div className={`${CARD} text-center`} style={{ animation: "fadeUp .35s ease" }}>
+        <p className="text-3xl mb-2">🎯</p>
+        <h2 className="font-bold text-[19px] tracking-[-0.02em] mb-1.5">Chapter quiz</h2>
+        <p className="text-sm text-[#71717A] mb-6">
+          {known} of {words.length} felt easy. Ready to fill in the blanks?
+        </p>
+        <div className="flex justify-center gap-2.5 flex-wrap">
+          <button className={BTN_VIOLET} onClick={startQuiz}>
+            Start the quiz →
+          </button>
+          <button className={BTN_LINE} onClick={() => setPhase("summary")}>
+            Skip the quiz
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  if (phase === "quiz") {
+    const q = quizQuestions[quizIndex];
+    const quizPct = quizQuestions.length ? (quizIndex / quizQuestions.length) * 100 : 0;
+    return (
+      <div className={CARD}>
+        <div className="flex justify-between items-center mb-2.5 text-[12.5px] font-medium text-[#A1A1AA]">
+          <span>
+            Quiz · Question {quizIndex + 1} of {quizQuestions.length}
+          </span>
+          <span>{quizKnown} correct</span>
+        </div>
+        <div className="h-1.5 bg-[#E7E5E4] rounded-full overflow-hidden mb-6">
+          <i
+            className="not-italic block h-full bg-[#7C3AED] rounded-full transition-[width] duration-300"
+            style={{ width: `${quizPct}%` }}
+          />
+        </div>
+
+        {q.mode === "meaning" ? (
+          <>
+            <p className="kr text-[clamp(30px,5vw,40px)] text-center mb-1">{q.prompt}</p>
+            <p className="text-[13px] text-[#71717A] mb-6 text-center">{q.word.romanization}</p>
+          </>
+        ) : (
+          <>
+            <p className="kr text-[clamp(18px,3vw,22px)] leading-[1.6] mb-1.5 text-center">{q.prompt}</p>
+            {q.word.example_en && (
+              <p className="text-[13px] text-[#71717A] mb-6 text-center">{q.word.example_en}</p>
+            )}
+          </>
+        )}
+
+        <div className={q.mode === "meaning" ? "grid grid-cols-1 gap-2.5" : "grid grid-cols-2 gap-2.5"}>
+          {q.options.map((opt) => {
+            const correctAnswer = q.mode === "meaning" ? q.word.meaning_en : q.word.korean;
+            const isCorrect = opt === correctAnswer;
+            const show = selected !== null;
+            const state = !show ? "idle" : isCorrect ? "correct" : opt === selected ? "wrong" : "idle";
+            return (
+              <button
+                key={opt}
+                onClick={() => answerQuiz(opt)}
+                disabled={show}
+                className={`${
+                  q.mode === "blank" ? "kr text-base" : "text-[14.5px]"
+                } text-left px-4 py-[13px] rounded-[10px] font-medium transition-all border-[1.5px] disabled:cursor-default ${
+                  state === "correct"
+                    ? "border-[#16A34A] bg-[#F0FDF4]"
+                    : state === "wrong"
+                    ? "border-[#DC2626] bg-[#FEF2F2]"
+                    : show
+                    ? "border-[#E7E5E4] bg-white opacity-90"
+                    : "border-[#E7E5E4] bg-white hover:border-[#7C3AED] hover:bg-[#F5F3FF]"
+                }`}
+              >
+                {opt}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    );
+  }
+
+  if (phase === "summary") {
+    return (
+      <div className={`${CARD} text-center`} style={{ animation: "fadeUp .4s ease" }}>
+        <svg width="104" height="104" viewBox="0 0 150 160" aria-hidden="true" className="inline-block">
+          <ellipse cx="75" cy="150" rx="46" ry="7" fill="#E7E5E4" />
+          <path d="M75 146 C75 122 74 112 74 98" stroke="#8B7355" strokeWidth="8" strokeLinecap="round" />
+          <g className="sway">
+            <circle cx="75" cy="72" r="36" fill="#22C55E" />
+            <circle cx="49" cy="88" r="18" fill="#4ADE80" />
+            <circle cx="101" cy="88" r="18" fill="#4ADE80" />
+            <circle className="blink" cx="64" cy="72" r="3.6" fill="#14532D" />
+            <circle className="blink d2" cx="86" cy="72" r="3.6" fill="#14532D" />
+            <path d="M66 82 Q75 90 84 82" stroke="#14532D" strokeWidth="3" fill="none" strokeLinecap="round" />
+            <circle cx="50" cy="58" r="5.5" fill="#FACC15" />
+            <circle cx="102" cy="56" r="5.5" fill="#FB7185" />
+          </g>
+        </svg>
+        <h2 className="font-bold text-[21px] tracking-[-0.02em] mt-3 mb-1.5">
+          {words.length} words watered today! 🌱
+        </h2>
+        <p className="text-sm text-[#71717A] mb-[22px]">Those words are rooted a little deeper now.</p>
+        {levelUp && (
+          <p className="text-sm font-semibold text-[#16A34A] mb-[22px] -mt-3">
+            🎉 Level up! You&apos;re now Lv. {levelUp.new_level}
+          </p>
+        )}
+
+        <div className="flex justify-center gap-3 mb-6 flex-wrap">
+          <div className="border border-[#E7E5E4] rounded-[10px] px-5 py-3 min-w-[100px]">
+            <b className="block text-[19px] font-bold text-[#16A34A]">{known}</b>
+            <small className="text-xs text-[#71717A]">Marked known</small>
+          </div>
+          <div className="border border-[#E7E5E4] rounded-[10px] px-5 py-3 min-w-[100px]">
+            <b className="block text-[19px] font-bold">{tricky}</b>
+            <small className="text-xs text-[#71717A]">Still learning</small>
+          </div>
+          {tookQuiz && (
+            <div className="border border-[#E7E5E4] rounded-[10px] px-5 py-3 min-w-[100px]">
+              <b className="block text-[19px] font-bold text-[#16A34A]">
+                {quizKnown}/{quizKnown + quizTricky}
+              </b>
+              <small className="text-xs text-[#71717A]">Quiz</small>
+            </div>
+          )}
+        </div>
+
+        <span className="inline-flex items-center gap-2 bg-[#F0FDF4] border border-[#BBF7D0] rounded-full px-[18px] py-2 text-[13.5px] font-semibold text-[#16A34A] mb-6">
+          💧 Vocabulary · chapter watered
+        </span>
+
+        <div className="flex justify-center gap-2.5 flex-wrap">
+          <button
+            className="rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-[#16A34A] hover:bg-[#15803D] transition-colors disabled:opacity-60"
+            onClick={() => goTo(`/vocabulary?level=${words[0].level}`)}
+            disabled={navigating}
+          >
+            {navigating ? "Saving…" : "Choose another unit"}
+          </button>
+          {hasNextChapter && (
+            <button
+              className={BTN_LINE}
+              onClick={() =>
+                goTo(`/vocabulary/${topicKey}/session?chapter=${chapterIndex + 1}&level=${words[0].level}`)
+              }
+              disabled={navigating}
+            >
+              {navigating ? "Saving…" : `${words.length} more words`}
+            </button>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  const wordCounts = counts[word.key] ?? { correct: 0, incorrect: 0 };
+  const stage = STAGE_META[stageFor(wordCounts.correct + wordCounts.incorrect)];
+  const root = word.root ? VOCAB_ROOTS[word.root] : undefined;
+
+  return (
+    <div className="max-w-[640px]">
+      {/* progress dots + daily counter */}
+      <div className="flex items-center justify-between gap-3 mb-[18px]">
+        <div className="flex gap-[7px]">
+          {words.map((w, k) => (
+            <span
+              key={w.key}
+              className={`w-[26px] h-1.5 rounded-full ${
+                k < index ? "bg-[#7C3AED]" : k === index ? "bg-[#7C3AED] opacity-40" : "bg-[#E7E5E4]"
+              }`}
+            />
+          ))}
+        </div>
+        <span className="text-[13px] text-[#71717A] flex-none">
+          Today: <b className="text-[#7C3AED]">{index}</b> of {words.length} words
+        </span>
+      </div>
+
+      {/* word card */}
+      <div className="relative border border-[#E7E5E4] rounded-[16px] p-[clamp(24px,4vw,34px)] text-center">
+        <span
+          className={`absolute top-5 right-5 inline-flex items-center gap-1.5 text-xs font-semibold rounded-full px-3 py-[5px] ${stage.cls}`}
+        >
+          {stage.label}
+        </span>
+
+        <p className="text-xs font-semibold text-[#7C3AED] mb-1.5">
+          {topicLabel} · {word.level} · word {index + 1} of {words.length}
+        </p>
+        <p className="kr text-[clamp(36px,6vw,46px)] mt-1.5 mb-1">{word.korean}</p>
+        <p className="text-[13.5px] text-[#A1A1AA] mb-4">{word.romanization}</p>
+
+        {flipped ? (
+          <>
+            <p
+              className="text-[19px] font-semibold mb-4"
+              style={{ animation: "fadeUp .3s ease" }}
+            >
+              {word.meaning_en}
+            </p>
+            <div
+              className="bg-[#FAFAF9] border border-[#E7E5E4] rounded-[10px] px-4 py-3.5 mb-[22px] text-left"
+              style={{ animation: "fadeUp .3s ease" }}
+            >
+              <p className="kr text-[15px] font-medium mb-[3px]">{word.example_kr}</p>
+              <p className="text-[13px] text-[#71717A]">{word.example_en}</p>
+            </div>
+            <div className="flex gap-2.5 justify-center flex-wrap">
+              <button
+                className="rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-[#DC2626] bg-white border-[1.5px] border-[#FECACA] hover:bg-[#FEF2F2] transition-colors"
+                onClick={() => answerFlip(false)}
+              >
+                Still learning
+              </button>
+              <button className={BTN_VIOLET} onClick={() => answerFlip(true)}>
+                I know this →
+              </button>
+            </div>
+          </>
+        ) : (
+          <button
+            className="border-[1.5px] border-dashed border-[#DDD6FE] rounded-[10px] bg-[#F5F3FF] px-[22px] py-3 text-[13.5px] font-semibold text-[#7C3AED] mb-1"
+            onClick={() => setFlipped(true)}
+          >
+            👀 Reveal meaning
+          </button>
+        )}
+      </div>
+
+      {/* bonus root banner */}
+      {root && !rootOpen && (
+        <div className="mt-4 border border-dashed border-[#DDD6FE] rounded-[14px] bg-[#F5F3FF] px-5 py-4 flex items-center gap-3.5">
+          <span className="w-[38px] h-[38px] rounded-[10px] bg-[#7C3AED] text-white flex items-center justify-center font-bold text-[17px] flex-none kr">
+            {root.syllable}
+          </span>
+          <div className="min-w-0">
+            <b className="block text-[13.5px] font-semibold">Bonus root: {root.name}</b>
+            <span className="text-[12.5px] text-[#6D28D9]">A few more words that share this root</span>
+          </div>
+          <button
+            className="ml-auto flex-none bg-[#7C3AED] hover:bg-[#6D28D9] text-white rounded-lg px-4 py-2 text-[12.5px] font-semibold transition-colors"
+            onClick={() => setRootOpen(true)}
+          >
+            Explore →
+          </button>
+        </div>
+      )}
+
+      {/* root explore panel */}
+      {root && rootOpen && (
+        <div className="mt-2.5 border border-[#DDD6FE] rounded-[14px] bg-white px-[22px] py-5" style={{ animation: "fadeUp .3s ease" }}>
+          <div className="flex items-start justify-between mb-4">
+            <div className="flex items-center gap-3">
+              <span className="w-11 h-11 rounded-xl bg-[#F5F3FF] text-[#7C3AED] flex items-center justify-center kr text-xl flex-none">
+                {root.syllable}
+              </span>
+              <div>
+                <b className="block text-[15px] font-bold">{root.name}</b>
+                <span className="text-[12.5px] text-[#71717A]">{root.desc}</span>
+              </div>
+            </div>
+            <button
+              className="border-none bg-[#FAFAF9] w-7 h-7 rounded-lg text-[#A1A1AA] hover:text-[#18181B] text-[13px]"
+              onClick={() => setRootOpen(false)}
+              aria-label="Close root panel"
+            >
+              ✕
+            </button>
+          </div>
+          <div className="grid gap-2.5">
+            {root.words.map(([kr, meaning]) => (
+              <div key={kr} className="flex items-center gap-3 border border-[#E7E5E4] rounded-[10px] px-3.5 py-[11px] bg-[#FAFAF9]">
+                <span className="kr text-lg flex-none min-w-[52px]">{kr}</span>
+                <span className="text-[13px] text-[#71717A]">
+                  <b className="text-[#18181B] font-semibold">{meaning}</b>
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}

@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kroot — Listening</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Jua&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FFFFFF;
+  --bg2:#FAFAF9;
+  --ink:#18181B;
+  --dim:#71717A;
+  --faint:#A1A1AA;
+  --line:#E7E5E4;
+  --green:#16A34A;
+  --green-soft:#F0FDF4;
+  --green-brd:#BBF7D0;
+  --teal:#0D9488;
+  --teal-soft:#F0FDFA;
+  --teal-brd:#99F6E4;
+  --amber:#D97706;
+  --amber-soft:#FFFBEB;
+  --red:#DC2626;
+  --red-soft:#FEF2F2;
+  --red-brd:#FECACA;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  background:var(--bg);color:var(--ink);
+  font-family:'Inter','Noto Sans KR',sans-serif;line-height:1.6;
+  font-feature-settings:'cv11';
+}
+.kr{font-family:'Jua',sans-serif}
+button{font-family:inherit;cursor:pointer}
+
+.frame{
+  display:grid;grid-template-columns:230px minmax(0,1fr);
+  max-width:1180px;margin:0 auto;min-height:100vh;
+}
+
+/* sidebar */
+.sidebar{
+  border-right:1px solid var(--line);padding:20px 14px;
+  display:flex;flex-direction:column;gap:4px;
+  position:sticky;top:0;height:100vh;
+}
+.logo{display:flex;align-items:center;gap:9px;font-weight:600;font-size:17px;padding:4px 10px 18px}
+.logo .mark{
+  width:30px;height:30px;border-radius:8px;background:var(--green);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Jua',sans-serif;font-size:14px;color:#fff;
+}
+.nav-item{
+  display:flex;align-items:center;gap:11px;border:none;background:none;border-radius:9px;
+  padding:10px 12px;font-size:14px;font-weight:500;color:var(--dim);text-align:left;
+  transition:background .12s,color .12s;
+}
+.nav-item span{font-size:16px;filter:grayscale(1);opacity:.6}
+.nav-item:hover{background:var(--bg2);color:var(--ink)}
+.nav-item.on{background:var(--teal-soft);color:var(--teal);font-weight:600}
+.nav-item.on span{filter:none;opacity:1}
+.nav-sec{font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--faint);padding:18px 12px 6px}
+.side-bottom{margin-top:auto}
+.streak-side{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:10px;padding:11px 13px}
+.streak-side b{font-size:13.5px;font-weight:600;display:block;line-height:1.2}
+.streak-side small{font-size:11.5px;color:var(--dim)}
+
+/* main */
+.main{padding:24px clamp(20px,4vw,44px) 60px;min-width:0}
+.crumb{display:flex;gap:8px;font-size:13px;color:var(--faint);margin-bottom:18px;flex-wrap:wrap}
+.crumb a{color:var(--faint);text-decoration:none;background:none;border:none;font-size:13px;font-family:inherit;cursor:pointer;padding:0}
+.crumb a:hover{color:var(--ink)}
+.crumb b{color:var(--ink);font-weight:600}
+
+.head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px;flex-wrap:wrap}
+.head h1{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:22px;letter-spacing:-.02em}
+.head h1 .seed{
+  display:inline-flex;width:30px;height:30px;border-radius:8px;
+  background:var(--teal-soft);color:var(--teal);border:1px solid var(--teal-brd);
+  align-items:center;justify-content:center;
+  font-family:'Jua',sans-serif;font-size:15px;margin-right:9px;vertical-align:-6px;
+}
+.daily{font-size:13px;color:var(--dim)}
+.daily b{color:var(--teal)}
+
+/* level tabs */
+.lv-tabs{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap}
+.lv-tab{
+  border:1px solid var(--line);background:var(--bg);border-radius:9px;
+  padding:8px 18px;font-size:13.5px;font-weight:600;color:var(--dim);
+  transition:all .12s;
+}
+.lv-tab:hover{border-color:var(--faint)}
+.lv-tab.on{background:var(--teal);border-color:var(--teal);color:#fff}
+.lv-tab .rec{font-size:10.5px;font-weight:700;margin-left:6px;opacity:.85}
+
+/* ===== category picker ===== */
+.topic-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;max-width:900px}
+.topic{
+  border:1px solid var(--line);border-radius:14px;background:var(--bg);
+  padding:20px 18px;text-align:left;transition:all .13s;position:relative;
+}
+.topic:hover{border-color:var(--teal);background:var(--teal-soft);transform:translateY(-2px)}
+.topic .tic{
+  width:42px;height:42px;border-radius:11px;
+  display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:12px;
+}
+.topic b{display:block;font-weight:600;font-size:15px;margin-bottom:2px}
+.topic small{font-size:12.5px;color:var(--dim);display:block;line-height:1.5}
+.topic .tmeta{
+  display:inline-block;margin-top:12px;font-size:11.5px;font-weight:600;
+  color:var(--teal);background:var(--teal-soft);border:1px solid var(--teal-brd);
+  border-radius:99px;padding:3px 10px;
+}
+.topic .tdone{
+  position:absolute;top:14px;right:14px;font-size:11.5px;font-weight:600;
+  color:var(--green);background:var(--green-soft);border:1px solid var(--green-brd);
+  border-radius:6px;padding:2px 8px;
+}
+
+/* ===== player view ===== */
+#playerView{display:block}
+.player{
+  max-width:680px;border:1px solid var(--line);border-radius:14px;
+  padding:clamp(20px,3vw,28px);margin-bottom:14px;
+}
+.clip-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;gap:10px;flex-wrap:wrap}
+.clip-title{font-weight:600;font-size:15.5px}
+.clip-title small{display:block;font-size:12.5px;color:var(--dim);font-weight:400}
+.clip-no{font-size:12.5px;color:var(--faint);font-weight:500}
+.player-row{
+  display:flex;align-items:center;gap:14px;
+  background:var(--bg2);border:1px solid var(--line);border-radius:12px;
+  padding:16px 18px;margin-bottom:10px;
+}
+.play-btn{
+  width:52px;height:52px;border-radius:99px;border:none;flex:none;
+  background:var(--teal);color:#fff;font-size:19px;
+  display:flex;align-items:center;justify-content:center;
+  transition:transform .12s, background .12s;
+}
+.play-btn:hover{transform:scale(1.05);background:#0F766E}
+.wave{flex:1;display:flex;align-items:center;gap:3px;height:36px;min-width:80px}
+.wave i{flex:1;background:#D6D3CC;border-radius:99px;height:30%;transition:background .18s}
+.wave.playing i{background:var(--teal)}
+.speed{
+  border:1px solid var(--line);background:var(--bg);border-radius:8px;
+  padding:6px 12px;font-size:12.5px;font-weight:600;color:var(--dim);flex:none;
+}
+
+/* subtitle toggle + live subtitle */
+.sub-row{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  margin-bottom:16px;flex-wrap:wrap;
+}
+.replays{font-size:12px;color:var(--faint)}
+.sub-toggle{
+  display:flex;align-items:center;gap:9px;
+  background:none;border:none;font-size:13px;font-weight:600;color:var(--dim);
+}
+.switch{
+  width:38px;height:22px;border-radius:99px;background:var(--line);
+  position:relative;transition:background .18s;flex:none;
+}
+.switch::after{
+  content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:99px;
+  background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2);transition:left .18s;
+}
+.sub-toggle.on{color:var(--teal)}
+.sub-toggle.on .switch{background:var(--teal)}
+.sub-toggle.on .switch::after{left:19px}
+.subtitle{
+  display:none;
+  background:var(--teal-soft);border:1px solid var(--teal-brd);border-radius:10px;
+  padding:13px 16px;margin-bottom:16px;
+}
+.subtitle.show{display:block;animation:fade .3s ease}
+.subtitle .kr-line{font-size:16.5px;font-weight:500}
+.subtitle .cc{font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--teal);margin-bottom:3px;display:block}
+
+/* quiz */
+.q-label{font-size:11.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-bottom:8px}
+.q-text{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:17px;margin-bottom:14px;letter-spacing:-.01em}
+.opts{display:grid;gap:10px;margin-bottom:4px}
+.opt{
+  text-align:left;padding:13px 16px;border-radius:10px;font-size:14.5px;font-weight:500;
+  background:var(--bg);border:1.5px solid var(--line);color:var(--ink);
+  transition:all .12s;display:flex;align-items:center;gap:10px;
+}
+.opt:hover:not(:disabled){border-color:var(--teal);background:var(--teal-soft)}
+.opt .abc{
+  width:24px;height:24px;border-radius:7px;flex:none;
+  background:var(--bg2);border:1px solid var(--line);
+  display:flex;align-items:center;justify-content:center;
+  font-size:11.5px;font-weight:700;color:var(--dim);
+}
+.opt.correct{border-color:var(--green);background:var(--green-soft)}
+.opt.correct .abc{background:var(--green);border-color:var(--green);color:#fff}
+.opt.wrong{border-color:var(--red);background:var(--red-soft)}
+.opt.wrong .abc{background:var(--red);border-color:var(--red);color:#fff}
+.opt:disabled{cursor:default;opacity:.9}
+
+.reveal{display:none;margin-top:18px;border-top:1px solid var(--line);padding-top:18px}
+.reveal.show{display:block;animation:fade .35s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.verdict{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:13px;font-weight:600;border-radius:8px;padding:6px 12px;margin-bottom:14px;
+}
+.verdict.good{background:var(--green-soft);color:var(--green);border:1px solid var(--green-brd)}
+.verdict.bad{background:var(--red-soft);color:var(--red);border:1px solid var(--red-brd)}
+.script-box{
+  background:var(--bg2);border:1px solid var(--line);border-radius:10px;
+  padding:14px 16px;margin-bottom:12px;
+}
+.script-box .kr-line{font-size:16px;font-weight:500;margin-bottom:2px}
+.script-box .kr-line .hi{background:var(--teal-soft);color:var(--teal);border-radius:3px;padding:0 3px;font-weight:700}
+.script-box .en-line{font-size:13px;color:var(--dim)}
+.word-chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:6px}
+.wchip{
+  border:1px solid var(--line);background:var(--bg);border-radius:99px;
+  padding:5px 13px;font-size:12.5px;font-weight:500;color:var(--dim);
+}
+.wchip b{color:var(--ink);font-weight:600;margin-right:5px}
+.next-row{display:flex;justify-content:flex-end;margin-top:14px}
+.btn{
+  border:none;border-radius:9px;padding:10px 22px;
+  font-size:14px;font-weight:600;color:#fff;background:var(--ink);
+  transition:background .15s;
+}
+.btn:hover{background:#3F3F46}
+.btn-teal{background:var(--teal)}
+.btn-teal:hover{background:#0F766E}
+.btn-line{background:var(--bg);color:var(--ink);border:1px solid var(--line)}
+.btn-line:hover{background:var(--bg2)}
+
+.dots{display:flex;gap:7px;margin-bottom:20px}
+.dot{width:26px;height:6px;border-radius:99px;background:var(--line)}
+.dot.done{background:var(--teal)}
+.dot.now{background:var(--teal);opacity:.45}
+
+/* completion */
+.done-card{
+  display:none;max-width:680px;text-align:center;
+  border:1px solid var(--line);border-radius:14px;padding:40px 28px;
+}
+.done-card.show{display:block;animation:fade .4s ease}
+.done-card h2{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:21px;letter-spacing:-.02em;margin:12px 0 6px}
+.done-card .sub{font-size:14px;color:var(--dim);margin-bottom:22px}
+.done-stats{display:flex;justify-content:center;gap:12px;margin-bottom:24px;flex-wrap:wrap}
+.dstat{border:1px solid var(--line);border-radius:10px;padding:12px 20px;min-width:100px}
+.dstat b{display:block;font-size:19px;font-weight:700}
+.dstat.green b{color:var(--green)}
+.dstat small{font-size:12px;color:var(--dim)}
+.water-msg{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--green-soft);border:1px solid var(--green-brd);border-radius:99px;
+  padding:8px 18px;font-size:13.5px;font-weight:600;color:var(--green);margin-bottom:24px;
+}
+.done-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+
+@media(max-width:820px){
+  .frame{grid-template-columns:1fr}
+  .sidebar{display:none}
+  .main{padding:20px 18px 60px}
+}
+</style>
+</head>
+<body>
+
+<div class="frame">
+
+  <aside class="sidebar">
+    <span class="logo"><span class="mark">한</span>Kroot</span>
+    <button class="nav-item"><span>🏡</span>Garden</button>
+    <button class="nav-item"><span>📊</span>My growth</button>
+    <button class="nav-item"><span>🏕️</span>Community</button>
+    <p class="nav-sec">Practice</p>
+    <button class="nav-item on"><span>🎧</span>Listening</button>
+    <button class="nav-item"><span>🎙️</span>Speaking</button>
+    <button class="nav-item"><span>✏️</span>Writing</button>
+    <button class="nav-item"><span>📰</span>Reading</button>
+    <button class="nav-item"><span>🃏</span>Vocabulary</button>
+    <button class="nav-item"><span>💬</span>Slang</button>
+    <button class="nav-item"><span>🔊</span>Pronunciation</button>
+    <div class="side-bottom">
+      <div class="streak-side">
+        <span style="font-size:18px">🔥</span>
+        <div><b>12-day streak</b><small>Keep it alive today!</small></div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="crumb">
+      <a href="#">Garden</a> / <a id="crumbCat" onclick="backToTopics()">Listening</a> / <b id="crumbNow">Cafe &amp; Food</b>
+    </div>
+
+    <div class="head">
+      <h1><span class="seed">듣</span><span id="pageTitle">Cafe &amp; Food</span></h1>
+      <span class="daily">Today: <b id="dailyCount">0</b> of 3 clips</span>
+    </div>
+
+    <div class="lv-tabs" id="lvTabs">
+      <button class="lv-tab" data-lv="A1">A1</button>
+      <button class="lv-tab" data-lv="A2">A2</button>
+      <button class="lv-tab on" data-lv="B1">B1<span class="rec">· your level</span></button>
+      <button class="lv-tab" data-lv="B2">B2</button>
+      <button class="lv-tab" data-lv="C1">C1</button>
+      <button class="lv-tab" data-lv="C2">C2</button>
+    </div>
+
+    <!-- ===== PLAYER VIEW ===== -->
+    <div id="playerView">
+      <div class="dots" id="dots"></div>
+
+      <div class="player" id="playerCard">
+        <div class="clip-head">
+          <div class="clip-title" id="clipTitle"></div>
+          <span class="clip-no" id="clipNo"></span>
+        </div>
+
+        <div class="player-row">
+          <button class="play-btn" id="playBtn" aria-label="Play">▶</button>
+          <div class="wave" id="wave"></div>
+          <button class="speed" id="speedBtn">1.0×</button>
+        </div>
+
+        <div class="sub-row">
+          <span class="replays">🎧 Listen as many times as you need.</span>
+          <button class="sub-toggle" id="subToggle">
+            <span class="switch"></span> Subtitles
+          </button>
+        </div>
+
+        <div class="subtitle" id="subtitle">
+          <span class="cc">CC · Korean</span>
+          <p class="kr-line" id="subText"></p>
+        </div>
+
+        <p class="q-label">Question</p>
+        <p class="q-text" id="qText"></p>
+        <div class="opts" id="opts"></div>
+
+        <div class="reveal" id="reveal">
+          <span class="verdict" id="verdict"></span>
+          <p class="q-label">What you heard</p>
+          <div class="script-box" id="scriptBox"></div>
+          <p class="q-label">Key words</p>
+          <div class="word-chips" id="chips"></div>
+          <div class="next-row">
+            <button class="btn btn-teal" id="nextBtn">Next clip →</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="done-card" id="doneCard">
+        <svg width="104" height="104" viewBox="0 0 150 160" aria-hidden="true">
+          <ellipse cx="75" cy="150" rx="46" ry="7" fill="#E7E5E4"/>
+          <path d="M75 146 C75 122 74 112 74 98" stroke="#8B7355" stroke-width="8" stroke-linecap="round"/>
+          <circle cx="75" cy="72" r="36" fill="#22C55E"/>
+          <circle cx="49" cy="88" r="18" fill="#4ADE80"/>
+          <circle cx="101" cy="88" r="18" fill="#4ADE80"/>
+          <circle cx="64" cy="72" r="3.6" fill="#14532D"/>
+          <circle cx="86" cy="72" r="3.6" fill="#14532D"/>
+          <path d="M66 82 Q75 90 84 82" stroke="#14532D" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <circle cx="50" cy="58" r="5.5" fill="#FACC15"/>
+          <circle cx="102" cy="56" r="5.5" fill="#FB7185"/>
+          <text x="116" y="54" font-size="20">💧</text>
+        </svg>
+        <h2>Great listening!</h2>
+        <p class="sub">Three clips done — your ears (and your tree) grew today.</p>
+        <div class="done-stats">
+          <div class="dstat green"><b id="statGood">2/3</b><small>Correct</small></div>
+          <div class="dstat"><b id="statLv">B1</b><small>Level</small></div>
+          <div class="dstat green"><b>+10 XP</b><small>Earned</small></div>
+        </div>
+        <span class="water-msg">💧 Listening · 100% done for today</span>
+        <div class="done-actions">
+          <button class="btn btn-teal" onclick="backToTopics()">Choose another topic</button>
+          <button class="btn btn-line" id="againBtn">3 more clips</button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+/* ---- clip banks: level → topic → clips (mock; real app = AI-generated + TTS) ---- */
+const TOPICS={
+ daily:{name:'Daily Life',icon:'🏠'},
+ cafe:{name:'Cafe & Food',icon:'☕'},
+ travel:{name:'Travel',icon:'✈️'},
+ work:{name:'Work & Office',icon:'💼'},
+ drama:{name:'K-Drama Style',icon:'🎬'},
+ news:{name:'News & Society',icon:'📺'}
+};
+const CLIPS={
+ daily:[
+  {title:'Making weekend plans',script:'이번 주말에 시간 있으면 같이 영화 볼래요?',en:'If you have time this weekend, want to watch a movie together?',hi:'볼래요',
+   q:'What is the speaker suggesting?',opts:['Watching a movie together','Going hiking','Studying together','Cooking dinner'],ans:0,
+   chips:[['이번 주말','this weekend'],['시간 있으면','if you have time'],['-(으)ㄹ래요?','want to...?']]},
+  {title:'Running late',script:'차가 너무 막혀서 조금 늦을 것 같아요.',en:'Traffic is so bad, I think I\'ll be a little late.',hi:'늦을 것 같아요',
+   q:'Why will the speaker be late?',opts:['They overslept','Traffic is heavy','They lost their keys','The bus broke down'],ans:1,
+   chips:[['차가 막히다','traffic is jammed'],['늦다','to be late'],['-(으)ㄹ 것 같다','I think... will']]},
+  {title:'Weather chat',script:'요즘 날씨가 갑자기 추워져서 감기 조심하세요.',en:'The weather suddenly got cold these days, so be careful not to catch a cold.',hi:'조심하세요',
+   q:'What advice does the speaker give?',opts:['Drink more water','Be careful of colds','Exercise more','Wear a hat'],ans:1,
+   chips:[['갑자기','suddenly'],['추워지다','to get cold'],['조심하세요','be careful']]}
+ ],
+ cafe:[
+  {title:'Ordering a drink',script:'아이스 아메리카노 한 잔이랑 치즈케이크 하나 주세요.',en:'One iced americano and one cheesecake, please.',hi:'주세요',
+   q:'What did the customer order?',opts:['Hot latte and cookie','Iced americano and cheesecake','Tea and sandwich','Juice and muffin'],ans:1,
+   chips:[['한 잔','one cup'],['이랑','and (casual)'],['주세요','please give me']]},
+  {title:'To stay or to go',script:'드시고 가세요, 아니면 포장해 드릴까요?',en:'Will you have it here, or shall I pack it to go?',hi:'포장해',
+   q:'What is the staff asking?',opts:['Payment method','Stay or take out','Size of drink','Membership card'],ans:1,
+   chips:[['드시다','to eat (honorific)'],['포장하다','to pack/take out'],['-아/어 드릴까요?','shall I... for you?']]},
+  {title:'Recommending a menu',script:'여기 수제 딸기라떼가 진짜 유명해요. 한번 드셔보세요.',en:'The handmade strawberry latte here is really famous. Give it a try.',hi:'유명해요',
+   q:'What is being recommended?',opts:['Strawberry latte','Green tea','Chocolate cake','Espresso'],ans:0,
+   chips:[['수제','handmade'],['유명하다','to be famous'],['드셔보세요','please try (honorific)']]}
+ ],
+ travel:[
+  {title:'Asking directions',script:'실례합니다, 지하철역이 어디에 있어요?',en:'Excuse me, where is the subway station?',hi:'어디에',
+   q:'What is the speaker looking for?',opts:['A bus stop','A subway station','A taxi','A hotel'],ans:1,
+   chips:[['실례합니다','excuse me'],['지하철역','subway station'],['어디에 있어요?','where is...?']]},
+  {title:'Checking in',script:'예약하신 성함이 어떻게 되세요?',en:'What is the name on the reservation?',hi:'성함',
+   q:'What is the staff asking for?',opts:['Passport number','Reservation name','Room preference','Payment'],ans:1,
+   chips:[['예약하다','to reserve'],['성함','name (honorific)'],['어떻게 되세요?','may I ask...?']]},
+  {title:'Buying a ticket',script:'부산까지 가는 기차표 두 장 주세요.',en:'Two train tickets to Busan, please.',hi:'두 장',
+   q:'How many tickets does the speaker want?',opts:['One','Two','Three','Four'],ans:1,
+   chips:[['-까지','to/until'],['기차표','train ticket'],['두 장','two (flat items)']]}
+ ],
+ work:[
+  {title:'Scheduling a meeting',script:'내일 오후 세 시에 회의 가능하실까요?',en:'Would you be available for a meeting tomorrow at 3 PM?',hi:'가능하실까요',
+   q:'When is the proposed meeting?',opts:['Tomorrow 3 PM','Today 3 PM','Tomorrow morning','Next week'],ans:0,
+   chips:[['오후 세 시','3 PM'],['회의','meeting'],['가능하실까요?','would it be possible? (polite)']]},
+  {title:'Polite request',script:'번거로우시겠지만 다시 한번 확인해 주시면 감사하겠습니다.',en:'I know it\'s a hassle, but I\'d appreciate it if you could check once more.',hi:'번거로우시겠지만',
+   q:'What is the speaker asking for?',opts:['A refund','A meeting','Checking again','A day off'],ans:2,
+   chips:[['번거롭다','to be a hassle'],['확인하다','to check'],['감사하겠습니다','I would appreciate it']]},
+  {title:'Meeting postponed',script:'회의가 갑자기 연기되는 바람에 일정이 다 꼬여버렸어요.',en:'Because the meeting was suddenly postponed, my whole schedule got tangled up.',hi:'연기되는 바람에',
+   q:'What happened to the schedule?',opts:['It got messed up','It became lighter','It was cancelled','Nothing changed'],ans:0,
+   chips:[['연기되다','to be postponed'],['-는 바람에','because of (unexpected)'],['꼬이다','to get tangled']]}
+ ],
+ drama:[
+  {title:'Dramatic confession',script:'처음 본 순간부터 계속 생각났어요.',en:'I couldn\'t stop thinking about you from the moment I first saw you.',hi:'생각났어요',
+   q:'What is the speaker expressing?',opts:['Anger','Romantic feelings','Confusion','Gratitude'],ans:1,
+   chips:[['순간','moment'],['-부터','from/since'],['생각나다','to come to mind']]},
+  {title:'Family drama',script:'어떻게 나한테 이럴 수가 있어?',en:'How could you do this to me?',hi:'이럴 수가',
+   q:'How does the speaker feel?',opts:['Happy','Betrayed/upset','Sleepy','Excited'],ans:1,
+   chips:[['어떻게','how'],['나한테','to me'],['-(으)ㄹ 수가 있어?','how could you...?']]},
+  {title:'Cliffhanger line',script:'사실은... 제가 그날 거기에 있었어요.',en:'The truth is... I was there that day.',hi:'사실은',
+   q:'What is the speaker revealing?',opts:['A secret about that day','A recipe','Their name','A phone number'],ans:0,
+   chips:[['사실은','the truth is'],['그날','that day'],['거기에','there']]}
+ ],
+ news:[
+  {title:'Economy report',script:'물가가 계속 오르면서 소비 심리가 위축되고 있습니다.',en:'As prices keep rising, consumer sentiment is shrinking.',hi:'위축되고',
+   q:'What is happening to consumer sentiment?',opts:['It is improving','It is shrinking','It is unchanged','It is unpredictable'],ans:1,
+   chips:[['물가','prices (cost of living)'],['소비 심리','consumer sentiment'],['위축되다','to shrink']]},
+  {title:'Weather forecast',script:'내일은 전국이 대체로 맑겠으나 미세먼지 농도가 높겠습니다.',en:'Tomorrow will be mostly clear nationwide, but fine-dust levels will be high.',hi:'미세먼지',
+   q:'What will be high tomorrow?',opts:['Rainfall','Fine dust levels','Temperature','Wind speed'],ans:1,
+   chips:[['전국','nationwide'],['대체로','mostly'],['미세먼지','fine dust']]},
+  {title:'Traffic news',script:'출근길 고속도로 정체가 평소보다 심한 상황입니다.',en:'Morning-commute highway congestion is worse than usual.',hi:'정체',
+   q:'What is worse than usual?',opts:['Air quality','Highway congestion','Rain','Noise'],ans:1,
+   chips:[['출근길','morning commute'],['정체','congestion'],['평소보다','than usual']]}
+ ]
+};
+
+let level='B1', topic='cafe', ci=0, good=0, rate=1.0, subOn=false;
+const $=id=>document.getElementById(id);
+
+const wave=$('wave');
+for(let i=0;i<26;i++){const b=document.createElement('i');b.style.height=(18+Math.random()*70)+'%';wave.appendChild(b)}
+
+function openTopic(t){
+  topic=t;ci=0;good=0;
+  $('topicView').style.display='none';
+  $('playerView').style.display='block';
+  $('doneCard').classList.remove('show');
+  $('playerCard').style.display='block';
+  $('dots').style.display='flex';
+  $('pageTitle').textContent=TOPICS[t].name;
+  $('crumbCat').style.display='inline';
+  $('crumbNow').textContent=TOPICS[t].name;
+  loadClip();
+}
+function backToTopics(){alert("→ 카테고리 선택 화면으로 이동 (실제 앱에서 연결)")}
+function buildDots(){
+  const d=$('dots');d.innerHTML='';
+  for(let i=0;i<3;i++){
+    const s=document.createElement('span');
+    s.className='dot'+(i<ci?' done':i===ci?' now':'');
+    d.appendChild(s);
+  }
+}
+function loadClip(){
+  const c=CLIPS[topic][ci];
+  $('clipTitle').innerHTML=c.title+'<small>'+TOPICS[topic].name+' · '+level+'</small>';
+  $('clipNo').textContent='Clip '+(ci+1)+' of 3';
+  $('qText').textContent=c.q;
+  $('subText').textContent=c.script;
+  const opts=$('opts');opts.innerHTML='';
+  const abc=['A','B','C','D'];
+  c.opts.forEach((o,i)=>{
+    const b=document.createElement('button');
+    b.className='opt';
+    b.innerHTML='<span class="abc">'+abc[i]+'</span>'+o;
+    b.onclick=()=>answer(i,b);
+    opts.appendChild(b);
+  });
+  $('reveal').classList.remove('show');
+  buildDots();
+}
+function speak(){
+  if(!('speechSynthesis' in window))return;
+  const c=CLIPS[topic][ci];
+  const u=new SpeechSynthesisUtterance(c.script);
+  u.lang='ko-KR';u.rate=rate*0.92;
+  speechSynthesis.cancel();
+  wave.classList.add('playing');
+  u.onend=()=>wave.classList.remove('playing');
+  speechSynthesis.speak(u);
+}
+$('playBtn').addEventListener('click',speak);
+$('speedBtn').addEventListener('click',()=>{
+  rate = rate===1.0?0.7:1.0;
+  $('speedBtn').textContent=rate.toFixed(1)+'×';
+});
+$('subToggle').addEventListener('click',()=>{
+  subOn=!subOn;
+  $('subToggle').classList.toggle('on',subOn);
+  $('subtitle').classList.toggle('show',subOn);
+});
+function answer(i,btn){
+  const c=CLIPS[topic][ci];
+  const buttons=[...document.querySelectorAll('.opt')];
+  buttons.forEach(b=>b.disabled=true);
+  const correct=i===c.ans;
+  if(correct){good++;btn.classList.add('correct')}
+  else{btn.classList.add('wrong');buttons[c.ans].classList.add('correct')}
+  const v=$('verdict');
+  v.className='verdict '+(correct?'good':'bad');
+  v.textContent=correct?'🌱 Correct! Sharp ears.':'💧 Not quite — read what you heard below.';
+  $('scriptBox').innerHTML=
+    '<p class="kr-line">'+c.script.replace(c.hi,'<span class="hi">'+c.hi+'</span>')+'</p>'+
+    '<p class="en-line">'+c.en+'</p>';
+  const chips=$('chips');chips.innerHTML='';
+  c.chips.forEach(([k,e])=>{
+    const s=document.createElement('span');
+    s.className='wchip';s.innerHTML='<b>'+k+'</b>'+e;
+    chips.appendChild(s);
+  });
+  $('nextBtn').textContent = ci===2 ? 'Finish →' : 'Next clip →';
+  $('reveal').classList.add('show');
+}
+$('nextBtn').addEventListener('click',()=>{
+  ci++;
+  $('dailyCount').textContent=Math.min(ci,3);
+  if(ci<3){loadClip();}
+  else{
+    $('playerCard').style.display='none';
+    $('dots').style.display='none';
+    $('statGood').textContent=good+'/3';
+    $('statLv').textContent=level;
+    $('doneCard').classList.add('show');
+  }
+});
+$('againBtn').addEventListener('click',()=>{
+  ci=0;good=0;
+  $('doneCard').classList.remove('show');
+  $('playerCard').style.display='block';
+  $('dots').style.display='flex';
+  loadClip();
+});
+document.querySelectorAll('.lv-tab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('.lv-tab').forEach(x=>x.classList.remove('on'));
+    t.classList.add('on');
+    level=t.dataset.lv;
+    if(topic){ci=0;good=0;
+      $('doneCard').classList.remove('show');
+      $('playerCard').style.display='block';
+      $('dots').style.display='flex';
+      loadClip();
+    }
+  });
+});
+loadClip();
+</script>
+</body>
+</html>

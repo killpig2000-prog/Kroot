@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kroot — Writing</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Jua&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EDEAE3;
+  --paper:#FFFDF8;
+  --paper2:#FBF8F0;
+  --ink:#18181B;
+  --dim:#71717A;
+  --faint:#A1A1AA;
+  --line:#E7E5E4;
+  --rule:#EFE9DC;
+  --green:#16A34A;
+  --green-soft:#F0FDF4;
+  --green-brd:#BBF7D0;
+  --amber:#D97706;
+  --amber-soft:#FFFBEB;
+  --amber-brd:#FDE68A;
+  --red:#DC2626;
+  --red-soft:#FEF2F2;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  background:var(--bg);color:var(--ink);
+  font-family:'Inter','Noto Sans KR',sans-serif;line-height:1.6;
+  font-feature-settings:'cv11';
+  min-height:100vh;display:flex;flex-direction:column;
+}
+.kr{font-family:'Jua',sans-serif}
+button{font-family:inherit;cursor:pointer}
+
+/* ---------- top bar ---------- */
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+  padding:14px clamp(16px,3vw,32px);
+}
+.tb-left{display:flex;align-items:center;gap:16px}
+.back{
+  display:flex;align-items:center;gap:7px;background:var(--paper);
+  border:1px solid var(--line);border-radius:9px;padding:8px 14px;
+  font-size:13.5px;font-weight:500;color:var(--dim);
+}
+.back:hover{color:var(--ink)}
+.book-title{display:flex;align-items:center;gap:10px}
+.book-title .seed{
+  width:30px;height:30px;border-radius:8px;background:var(--amber-soft);color:var(--amber);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Jua',sans-serif;font-size:15px;border:1px solid var(--amber-brd);
+}
+.book-title b{font-weight:600;font-size:15.5px;letter-spacing:-.01em}
+.book-title small{display:block;font-size:12px;color:var(--dim);font-weight:400;line-height:1.3}
+.tb-right{display:flex;align-items:center;gap:10px}
+.streak{
+  background:var(--paper);border:1px solid var(--line);border-radius:9px;
+  padding:8px 14px;font-size:13px;font-weight:600;color:var(--amber);
+}
+.pagecount{font-size:13px;color:var(--dim);font-weight:500}
+
+/* ---------- the book ---------- */
+.book-zone{
+  flex:1;display:flex;align-items:center;justify-content:center;
+  padding:10px clamp(12px,2.5vw,28px) 26px;
+}
+.book{
+  width:min(1240px,100%);
+  display:grid;grid-template-columns:1fr 1fr;
+  background:var(--paper);
+  border-radius:6px 14px 14px 6px;
+  box-shadow:
+    0 1px 0 #D9D4C8,
+    0 10px 24px rgba(60,52,36,.16),
+    0 26px 60px rgba(60,52,36,.14);
+  position:relative;
+  min-height:min(76vh,660px);
+}
+/* stacked page edges on the right */
+.book::after{
+  content:"";position:absolute;right:-7px;top:8px;bottom:8px;width:7px;
+  background:
+    linear-gradient(90deg,#E8E2D2 0 2px,transparent 2px 3px,
+                    #E8E2D2 3px 5px,transparent 5px 6px,#DFD8C5 6px 7px);
+  border-radius:0 4px 4px 0;
+}
+/* spine */
+.book::before{
+  content:"";position:absolute;left:50%;top:0;bottom:0;width:44px;transform:translateX(-50%);
+  background:linear-gradient(90deg,transparent, rgba(76,64,40,.08) 38%, rgba(76,64,40,.14) 50%, rgba(76,64,40,.08) 62%, transparent);
+  pointer-events:none;z-index:2;
+}
+.page{
+  padding:clamp(24px,3.4vw,42px) clamp(22px,3vw,46px);
+  display:flex;flex-direction:column;position:relative;min-width:0;
+}
+.page.left{
+  border-radius:6px 0 0 6px;
+  background:
+    linear-gradient(0deg,var(--paper),var(--paper)),
+    var(--paper);
+}
+.page.right{
+  border-radius:0 14px 14px 0;
+  background:var(--paper);
+}
+/* ruled lines on right page */
+.page.right .ruled{
+  background-image:repeating-linear-gradient(transparent 0 31px, var(--rule) 31px 32px);
+}
+.pageno{
+  position:absolute;bottom:14px;font-size:12px;color:var(--faint);font-weight:500;
+}
+.page.left .pageno{left:clamp(22px,3vw,46px)}
+.page.right .pageno{right:clamp(22px,3vw,46px)}
+
+/* ----- left page: the prompt ----- */
+.chapter{
+  font-size:11.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--faint);margin-bottom:20px;
+}
+.chapter b{color:var(--amber)}
+.prompt-en{
+  font-family:'Plus Jakarta Sans','Noto Sans KR',sans-serif;
+  font-size:clamp(21px,2.5vw,27px);line-height:1.45;font-weight:800;
+  letter-spacing:-.02em;
+  margin-bottom:16px;
+}
+.prompt-en::before{content:"“";color:var(--amber);margin-right:2px}
+.prompt-en::after{content:"”";color:var(--amber);margin-left:2px}
+.prompt-task{font-size:14px;color:var(--dim);margin-bottom:auto}
+.hint-box{
+  border:1px dashed #E2D9C4;border-radius:10px;background:var(--paper2);
+  padding:14px 16px;margin-top:22px;
+}
+.hint-box .hb-head{
+  display:flex;align-items:center;justify-content:space-between;
+  font-size:12.5px;font-weight:600;color:var(--dim);
+}
+.hint-btn{background:none;border:none;font-size:12.5px;font-weight:600;color:var(--amber)}
+.hint-btn:hover{text-decoration:underline}
+.hint-body{display:none;margin-top:8px;font-size:14px;color:var(--ink)}
+.hint-body.show{display:block}
+.hint-body .kr{color:var(--amber);font-size:15px}
+.vocab-note{
+  margin-top:14px;font-size:12.5px;color:var(--faint);line-height:1.7;
+}
+.vocab-note b{color:var(--dim);font-weight:600}
+
+/* ----- right page: writing area ----- */
+.write-label{
+  font-size:11.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--faint);margin-bottom:14px;
+}
+textarea{
+  width:100%;flex:0 0 auto;min-height:128px;resize:none;
+  border:none;background:transparent;
+  font-size:19px;font-family:'Inter','Noto Sans KR',sans-serif;
+  color:var(--ink);line-height:32px;
+  padding:0 2px;
+}
+textarea:focus{outline:none}
+textarea::placeholder{color:#C9C2B2}
+.q-actions{
+  display:flex;align-items:center;justify-content:flex-end;gap:12px;
+  padding-top:14px;
+}
+.btn{
+  border:none;border-radius:9px;padding:10px 24px;
+  font-size:14px;font-weight:600;color:#fff;background:var(--ink);
+  transition:background .15s;
+}
+.btn:hover{background:#3F3F46}
+.btn:disabled{background:#DDD8CC;color:#A69F8E;cursor:default}
+.btn-green{background:var(--green)}
+.btn-green:hover{background:#15803D}
+
+/* feedback (right page, replaces actions) */
+.feedback{display:none;margin-top:6px}
+.feedback.show{display:block;animation:fade .4s ease}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.fb-verdict{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:13px;font-weight:600;border-radius:8px;padding:6px 12px;margin-bottom:14px;
+}
+.fb-verdict.good{background:var(--green-soft);color:var(--green);border:1px solid var(--green-brd)}
+.fb-verdict.fix{background:var(--amber-soft);color:var(--amber);border:1px solid var(--amber-brd)}
+.fb-label{
+  font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--faint);margin:12px 0 5px;
+}
+.fb-yours{font-size:16px;line-height:1.7}
+.fb-yours del{color:var(--red);background:var(--red-soft);text-decoration-color:var(--red);border-radius:3px;padding:0 2px}
+.fb-yours ins{color:var(--green);background:var(--green-soft);text-decoration:none;border-radius:3px;padding:0 2px;font-weight:600}
+.fb-best{
+  font-family:'Plus Jakarta Sans','Noto Sans KR',sans-serif;font-weight:700;font-size:18px;line-height:1.6;
+}
+.fb-best small{display:block;font-family:'Inter',sans-serif;font-weight:400;font-size:12.5px;color:var(--faint);margin-top:2px}
+.fb-why{
+  font-size:13.5px;color:var(--dim);line-height:1.7;
+  border-left:3px solid var(--amber-brd);padding-left:13px;margin-top:4px;
+}
+.fb-why b{color:var(--ink)}
+.fb-next{display:flex;justify-content:flex-end;margin-top:16px}
+
+/* page-turn corner */
+.corner{
+  position:absolute;right:0;bottom:0;width:54px;height:54px;
+  background:linear-gradient(135deg, transparent 50%, #F1ECDF 50%);
+  border-radius:0 0 14px 0;
+  cursor:pointer;opacity:0;transition:opacity .3s;
+  pointer-events:none;
+}
+.corner.show{opacity:1;pointer-events:auto}
+.corner:hover{background:linear-gradient(135deg, transparent 50%, #E9E2D0 50%)}
+
+/* ----- completion spread ----- */
+.done-spread{display:none;grid-column:1/-1;padding:clamp(30px,5vw,56px);text-align:center}
+.done-spread.show{display:flex;flex-direction:column;align-items:center;justify-content:center;animation:fade .4s ease}
+.done-spread h2{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;letter-spacing:-.02em;font-size:clamp(23px,3vw,30px);margin:14px 0 6px}
+.done-spread .sub{font-size:14.5px;color:var(--dim);margin-bottom:24px}
+.done-stats{display:flex;justify-content:center;gap:12px;margin-bottom:24px;flex-wrap:wrap}
+.dstat{border:1px solid var(--line);background:var(--paper2);border-radius:10px;padding:12px 22px;min-width:104px}
+.dstat b{display:block;font-size:20px;font-weight:700}
+.dstat.green b{color:var(--green)}
+.dstat small{font-size:12px;color:var(--dim)}
+.water-msg{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--green-soft);border:1px solid var(--green-brd);border-radius:99px;
+  padding:8px 18px;font-size:13.5px;font-weight:600;color:var(--green);margin-bottom:26px;
+}
+.done-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.btn-line{background:var(--paper);color:var(--ink);border:1px solid var(--line)}
+.btn-line:hover{background:var(--paper2)}
+
+/* bookmark ribbon = progress */
+.ribbon{
+  position:absolute;top:-6px;right:clamp(40px,8vw,90px);width:34px;z-index:3;
+  filter:drop-shadow(0 3px 4px rgba(60,52,36,.2));
+}
+.ribbon svg{display:block;width:100%}
+.ribbon .rb-num{
+  position:absolute;top:16px;left:0;right:0;text-align:center;
+  font-size:12.5px;font-weight:700;color:#fff;
+}
+
+@media(max-width:760px){
+  .book{grid-template-columns:1fr;min-height:0}
+  .book::before{display:none}
+  .page.left{border-radius:6px 6px 0 0;border-bottom:1px dashed var(--rule)}
+  .page.right{border-radius:0 0 14px 14px}
+  .prompt-task{margin-bottom:16px}
+  .pageno{display:none}
+  .book-title small{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="tb-left">
+    <button class="back">← Garden</button>
+    <div class="book-title">
+      <span class="seed">쓰</span>
+      <div>
+        <b>Everyday Sentences</b>
+        <small>Writing workbook · Level B1</small>
+      </div>
+    </div>
+  </div>
+  <div class="tb-right">
+    <span class="pagecount">Page <b id="qnum">1</b> of 5</span>
+    <span class="streak">🔥 12</span>
+  </div>
+</div>
+
+<div class="book-zone">
+  <div class="book" id="book">
+
+    <div class="ribbon" aria-hidden="true">
+      <svg viewBox="0 0 34 62"><path d="M0 0 H34 V54 L17 42 L0 54 Z" fill="#16A34A"/></svg>
+      <span class="rb-num" id="rbNum">1/5</span>
+    </div>
+
+    <!-- LEFT PAGE -->
+    <section class="page left" id="leftPage">
+      <p class="chapter">Chapter 3 · <b>Daily life</b></p>
+      <p class="prompt-en" id="prompt"></p>
+      <p class="prompt-task">Write this sentence in Korean on the right page. ✍️</p>
+
+      <div class="hint-box">
+        <div class="hb-head">
+          <span>Stuck on a word?</span>
+          <button class="hint-btn" id="hintBtn">💡 Peek at hints</button>
+        </div>
+        <div class="hint-body" id="hintBody"></div>
+      </div>
+      <p class="vocab-note" id="vocabNote"></p>
+
+      <span class="pageno" id="pnoL">5</span>
+    </section>
+
+    <!-- RIGHT PAGE -->
+    <section class="page right" id="rightPage">
+      <p class="write-label">Your answer</p>
+      <div class="ruled">
+        <textarea id="answer" rows="4" placeholder="한국어로 써보세요..." autocomplete="off" spellcheck="false"></textarea>
+      </div>
+
+      <div class="q-actions" id="qActions">
+        <button class="btn" id="checkBtn" disabled>Check my sentence</button>
+      </div>
+
+      <div class="feedback" id="feedback">
+        <span class="fb-verdict" id="verdict"></span>
+
+        <div id="yoursRow">
+          <p class="fb-label">Your sentence</p>
+          <p class="fb-yours" id="yours"></p>
+        </div>
+
+        <p class="fb-label">Natural way to say it</p>
+        <p class="fb-best" id="best"></p>
+
+        <p class="fb-label">Why</p>
+        <p class="fb-why" id="why"></p>
+
+        <div class="fb-next">
+          <button class="btn btn-green" id="nextBtn">Turn the page →</button>
+        </div>
+      </div>
+
+      <span class="pageno" id="pnoR">6</span>
+      <div class="corner" id="corner" title="Turn the page"></div>
+    </section>
+
+    <!-- COMPLETION SPREAD -->
+    <section class="done-spread" id="doneCard">
+      <svg width="120" height="120" viewBox="0 0 150 160" aria-hidden="true">
+        <ellipse cx="75" cy="150" rx="46" ry="7" fill="#E7E5E4"/>
+        <path d="M75 146 C75 122 74 112 74 98" stroke="#8B7355" stroke-width="8" stroke-linecap="round"/>
+        <circle cx="75" cy="72" r="36" fill="#22C55E"/>
+        <circle cx="49" cy="88" r="18" fill="#4ADE80"/>
+        <circle cx="101" cy="88" r="18" fill="#4ADE80"/>
+        <circle cx="64" cy="72" r="3.6" fill="#14532D"/>
+        <circle cx="86" cy="72" r="3.6" fill="#14532D"/>
+        <path d="M66 82 Q75 90 84 82" stroke="#14532D" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <circle cx="50" cy="58" r="5.5" fill="#FACC15"/>
+        <circle cx="102" cy="56" r="5.5" fill="#FB7185"/>
+        <text x="116" y="54" font-size="20">💧</text>
+      </svg>
+      <h2>Chapter complete!</h2>
+      <p class="sub">You filled 5 pages — your tree got a good drink today.</p>
+      <div class="done-stats">
+        <div class="dstat green"><b id="statGood">4/5</b><small>Natural</small></div>
+        <div class="dstat"><b id="statFix">1</b><small>Fixed</small></div>
+        <div class="dstat green"><b>+10 XP</b><small>Earned</small></div>
+      </div>
+      <span class="water-msg">💧 Writing · 100% done for today</span>
+      <div class="done-actions">
+        <button class="btn btn-green">Back to Garden</button>
+        <button class="btn btn-line" id="againBtn">Write 5 more pages</button>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script>
+const SESSION=[
+ {
+  prompt:'I usually drink coffee in the morning.',
+  hint:'usually = <span class="kr">보통</span> · morning = <span class="kr">아침</span> · drink = <span class="kr">마시다</span>',
+  vocab:'<b>Pattern:</b> [time]에 + [object]를/을 + verb',
+  match:['저는 보통 아침에 커피를 마셔요','보통 아침에 커피를 마셔요','저는 보통 아침에 커피를 마십니다'],
+  best:'저는 보통 아침에 커피를 마셔요.',
+  bestRoman:'jeoneun botong achime keopireul masyeoyo',
+  fixDiff:'저는 보통 아침에 커피를 <del>마셔</del> <ins>마셔요</ins>.',
+  why:'<b>마셔요</b> is the polite present form of 마시다 (to drink). Time expressions like 아침에 usually come before the object. Your word order was good!'
+ },
+ {
+  prompt:'The weather is really nice today.',
+  hint:'weather = <span class="kr">날씨</span> · really = <span class="kr">정말/진짜</span> · nice/good = <span class="kr">좋다</span>',
+  vocab:'<b>Pattern:</b> 오늘 + [subject]가 + adverb + adjective',
+  match:['오늘 날씨가 정말 좋아요','오늘 날씨가 진짜 좋아요','오늘은 날씨가 정말 좋아요'],
+  best:'오늘 날씨가 정말 좋아요.',
+  bestRoman:'oneul nalssiga jeongmal joayo',
+  fixDiff:'오늘 날씨가 정말 <del>좋다</del> <ins>좋아요</ins>.',
+  why:'<b>좋아요</b> is the polite form — 좋다 is the dictionary form, used in writing or casual notes. 정말 and 진짜 both mean "really"; 진짜 sounds a bit more casual.'
+ },
+ {
+  prompt:'Can you recommend a good restaurant?',
+  hint:'recommend = <span class="kr">추천하다</span> · restaurant = <span class="kr">식당/맛집</span>',
+  vocab:'<b>Pattern:</b> polite request -아/어 주시겠어요?',
+  match:['좋은 식당을 추천해 주시겠어요','좋은 식당 추천해 주세요','맛집 추천해 주세요','좋은 식당을 추천해 줄 수 있어요'],
+  best:'좋은 식당 추천해 주시겠어요?',
+  bestRoman:'joeun sikdang chucheonhae jusigesseoyo?',
+  fixDiff:'좋은 식당을 <del>추천해요</del> <ins>추천해 주시겠어요</ins>?',
+  why:'For polite requests, <b>-아/어 주시겠어요?</b> ("would you...?") is more natural than a plain statement. Koreans also often say <b>맛집</b> (tasty-food spot) instead of 좋은 식당.'
+ },
+ {
+  prompt:'I have been learning Korean for six months.',
+  hint:'six months = <span class="kr">6개월</span> · duration = <span class="kr">동안</span> · learn = <span class="kr">배우다</span>',
+  vocab:'<b>Pattern:</b> -(으)ㄴ 지 [time] 됐어요 = "it\'s been [time] since..."',
+  match:['한국어를 6개월 동안 배우고 있어요','6개월 동안 한국어를 배우고 있어요','한국어를 배운 지 6개월 됐어요'],
+  best:'한국어를 배운 지 6개월 됐어요.',
+  bestRoman:'hangugeoreul baeun ji yukgaewol dwaesseoyo',
+  fixDiff:'한국어를 6개월 동안 <del>배웠어요</del> <ins>배우고 있어요</ins>.',
+  why:'Two natural options: <b>배우고 있어요</b> (am learning, ongoing) or the very Korean pattern <b>-(으)ㄴ 지 ... 됐어요</b> ("it has been X since I started"). Past tense 배웠어요 alone sounds finished.'
+ },
+ {
+  prompt:'Let\'s meet in front of the subway station.',
+  hint:'in front of = <span class="kr">앞에서</span> · subway station = <span class="kr">지하철역</span>',
+  vocab:'<b>Pattern:</b> [place] 앞에서 만나요',
+  match:['지하철역 앞에서 만나요','지하철역 앞에서 만납시다','지하철역 앞에서 봐요'],
+  best:'지하철역 앞에서 만나요.',
+  bestRoman:'jihacheollyeok apeseo mannayo',
+  fixDiff:'지하철역 <del>앞에</del> <ins>앞에서</ins> 만나요.',
+  why:'Actions happen <b>앞에서</b> (에서 marks where an action takes place), while 앞에 marks static position. 만나요 or 봐요 both work for "let\'s meet" among friends.'
+ }
+];
+
+let qi=0, good=0, fixed=0;
+const $=id=>document.getElementById(id);
+const answer=$('answer'), checkBtn=$('checkBtn');
+
+function loadQ(){
+  const q=SESSION[qi];
+  $('qnum').textContent=qi+1;
+  $('rbNum').textContent=(qi+1)+'/5';
+  $('pnoL').textContent=5+qi*2;
+  $('pnoR').textContent=6+qi*2;
+  $('prompt').textContent=q.prompt;
+  $('hintBody').innerHTML=q.hint;
+  $('hintBody').classList.remove('show');
+  $('vocabNote').innerHTML=q.vocab;
+  answer.value='';
+  answer.disabled=false;
+  checkBtn.disabled=true;
+  $('qActions').style.display='flex';
+  $('feedback').classList.remove('show');
+  $('corner').classList.remove('show');
+  answer.focus();
+}
+answer.addEventListener('input',()=>{checkBtn.disabled=answer.value.trim().length===0});
+$('hintBtn').addEventListener('click',()=>{$('hintBody').classList.toggle('show')});
+function norm(s){return s.replace(/[\s.!?~]/g,'')}
+
+checkBtn.addEventListener('click',()=>{
+  const q=SESSION[qi];
+  const user=answer.value.trim();
+  const isGood=q.match.some(m=>norm(m)===norm(user));
+  answer.disabled=true;
+  $('qActions').style.display='none';
+
+  const v=$('verdict');
+  if(isGood){
+    good++;
+    v.className='fb-verdict good';
+    v.textContent='🌱 Natural! Beautifully written.';
+    $('yoursRow').style.display='none';
+  }else{
+    fixed++;
+    v.className='fb-verdict fix';
+    v.textContent='💧 Almost — one small fix.';
+    $('yoursRow').style.display='block';
+    $('yours').innerHTML=q.fixDiff;
+  }
+  $('best').innerHTML=q.best+'<small>'+q.bestRoman+'</small>';
+  $('why').innerHTML=q.why;
+  $('feedback').classList.add('show');
+  $('corner').classList.add('show');
+  $('nextBtn').textContent = qi===SESSION.length-1 ? 'Finish the chapter →' : 'Turn the page →';
+});
+function nextPage(){
+  qi++;
+  if(qi<SESSION.length){loadQ();}
+  else{
+    $('leftPage').style.display='none';
+    $('rightPage').style.display='none';
+    document.querySelector('.ribbon').style.display='none';
+    $('statGood').textContent=good+'/'+SESSION.length;
+    $('statFix').textContent=fixed;
+    $('doneCard').classList.add('show');
+  }
+}
+$('nextBtn').addEventListener('click',nextPage);
+$('corner').addEventListener('click',nextPage);
+$('againBtn').addEventListener('click',()=>{
+  qi=0;good=0;fixed=0;
+  $('doneCard').classList.remove('show');
+  $('leftPage').style.display='flex';
+  $('rightPage').style.display='flex';
+  document.querySelector('.ribbon').style.display='block';
+  loadQ();
+});
+loadQ();
+</script>
+</body>
+</html>
