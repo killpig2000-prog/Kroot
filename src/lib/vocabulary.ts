@@ -94,12 +94,12 @@ export function getWordsForTopic(topicKey: string, level?: CefrLevel): VocabWord
 // Display metadata for each unit (= chapter) of the daily-life track, curated
 // to match the words that actually land in that slice. Falls back to "Unit N".
 const UNIT_TITLES: Record<string, string[]> = {
-  A1: ["First words", "People & time", "Around the house", "Home objects"],
-  A2: ["Plans & weather", "Getting around", "Around town", "Free time"],
-  B1: ["Life & habits", "People & feelings", "Mind & mood", "Goals & mistakes"],
-  B2: ["Getting along", "Character traits", "Working together", "Life balance"],
-  C1: ["Critical thinking", "Argument & logic", "Public discourse", "Open minds"],
-  C2: ["Idioms of fate", "Idioms of effort", "Hard moments", "Mastery"],
+  A1: ["First words", "People & time", "Around the house", "Home objects", "Things you carry", "Food & drink", "At the table", "Cooking basics", "Dishes & rooms", "People at home", "Body & day", "Time & place"],
+  A2: ["Plans & weather", "Getting around", "Around town", "Free time & errands", "Out and about", "Places & activities", "Hobbies", "Chores & routines", "Travel basics", "Shopping & money", "Paying & feeling ill", "Health & work"],
+  B1: ["Life & habits", "People & feelings", "Mind & mood", "Goals & effort", "Growth & ability", "Talking & helping", "Memory & hope", "Inner strength", "Moods & manners", "Strengths & choices", "Cause & result", "Order & reaction"],
+  B2: ["Getting along", "Character traits", "Working together", "Balance & priorities", "Skills at work", "Motivation & structure", "Careers", "Pay & workload", "Pressure & self-worth", "Belonging & identity", "Fairness & persuasion", "Conflict & repair"],
+  C1: ["Critical thinking", "Argument & logic", "Public discourse", "Open minds & logic", "Reasoning", "Necessity & chance", "Beliefs & worldviews", "Context & norms", "Social ills", "Power & inequality", "Rhetoric", "Isms & justification"],
+  C2: ["Idioms of fate", "Idioms of effort", "Hard moments", "Wisdom & growth", "Fortune turns", "Warnings", "Learning & listening", "Cunning & resolve", "People & empathy", "Pride & anxiety", "Despair & progress", "Rare & literary"],
 };
 
 export const UNIT_ICONS: { icon: string; bg: string }[] = [
