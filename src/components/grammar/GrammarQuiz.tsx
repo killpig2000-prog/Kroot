@@ -4,7 +4,6 @@ import { useMemo, useRef, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { recordCompletion } from "@/lib/activity";
 import type { GrammarQuiz as Quiz } from "@/lib/grammar";
-import type { CefrLevel } from "@/lib/tree";
 
 const ABC = ["A", "B", "C", "D"];
 const Q_LABEL = "text-[11.5px] font-semibold tracking-[.06em] uppercase text-[#A1A1AA] mb-2";

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
@@ -41,7 +41,7 @@ export default function SpeakingSession({
   const [heard, setHeard] = useState<string | null>(null);
   const [score, setScore] = useState(0);
   const [typed, setTyped] = useState("");
-  const [showFallback, setShowFallback] = useState(false);
+  const [typedFallback, setTypedFallback] = useState(false);
   const [nailed, setNailed] = useState<string[]>([]);
   const [finished, setFinished] = useState(false);
   const [levelUp, setLevelUp] = useState<ProgressResult | null>(null);
@@ -52,16 +52,14 @@ export default function SpeakingSession({
 
   const prompt = prompts[index];
 
+  const showFallback = typedFallback || !micOk;
+
   // reset the answer state whenever we move to a new prompt
-  useEffect(() => {
+  function resetAnswer() {
     setHeard(null);
     setTyped("");
     setError(null);
-  }, [index, setError]);
-
-  useEffect(() => {
-    if (!micOk) setShowFallback(true);
-  }, [micOk]);
+  }
 
   if (prompts.length === 0) {
     return (
@@ -108,8 +106,10 @@ export default function SpeakingSession({
   }
 
   function next() {
-    if (index + 1 < prompts.length) setIndex(index + 1);
-    else {
+    if (index + 1 < prompts.length) {
+      setIndex(index + 1);
+      resetAnswer();
+    } else {
       setFinished(true);
       void logMinutesOnce();
     }
@@ -175,7 +175,7 @@ export default function SpeakingSession({
             onClick={() => {
               setIndex(0);
               setNailed([]);
-              setHeard(null);
+              resetAnswer();
               setFinished(false);
             }}
           >
@@ -276,7 +276,7 @@ export default function SpeakingSession({
             {!showFallback ? (
               <button
                 className="text-[12.5px] font-semibold text-[#71717A] hover:text-[#18181B] transition-colors"
-                onClick={() => setShowFallback(true)}
+                onClick={() => setTypedFallback(true)}
               >
                 Type your answer instead
               </button>

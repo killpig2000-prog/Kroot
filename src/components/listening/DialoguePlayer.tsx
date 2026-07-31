@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { recordCompletion } from "@/lib/activity";
 import { useSpeechSynthesis } from "@/hooks/useSpeechSynthesis";
@@ -38,9 +38,8 @@ export default function DialoguePlayer({
   const speakers = useMemo(() => Array.from(new Set(lines.map((l) => l.speaker))), [lines]);
   const currentLine = currentIndex >= 0 ? lines[currentIndex] : null;
 
-  useEffect(() => {
-    if (hasFinished) setRevealed(true);
-  }, [hasFinished]);
+  // A completed first listen-through reveals the script, no effect needed.
+  const scriptRevealed = revealed || hasFinished;
 
   async function markHeard() {
     if (done || saving) return;
@@ -73,7 +72,7 @@ export default function DialoguePlayer({
         </p>
       )}
 
-      {!revealed ? (
+      {!scriptRevealed ? (
         <div className="border border-[#E7E5E4] rounded-[14px] overflow-hidden text-center mb-3.5">
           {/* stage: situation photo backdrop with the two characters in front */}
           <div

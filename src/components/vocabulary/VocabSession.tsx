@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
@@ -142,6 +142,7 @@ export default function VocabSession({
         setQuizIndex((i) => i + 1);
       } else {
         setPhase("summary");
+        void logMinutesOnce();
       }
     }, 700);
   }
@@ -154,12 +155,6 @@ export default function VocabSession({
     const result = await recordCompletion(supabase, "vocabulary", minutes);
     if (result?.leveled_up) setLevelUp(result);
   }
-
-  // Save as soon as the session ends, so the level-up line can show on the summary.
-  useEffect(() => {
-    if (phase === "summary") void logMinutesOnce();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [phase]);
 
   async function goTo(href: string) {
     setNavigating(true);
@@ -192,7 +187,13 @@ export default function VocabSession({
           <button className={BTN_VIOLET} onClick={startQuiz}>
             Start the quiz →
           </button>
-          <button className={BTN_LINE} onClick={() => setPhase("summary")}>
+          <button
+            className={BTN_LINE}
+            onClick={() => {
+              setPhase("summary");
+              void logMinutesOnce();
+            }}
+          >
             Skip the quiz
           </button>
         </div>

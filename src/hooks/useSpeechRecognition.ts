@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useBrowserSupport } from "@/hooks/useBrowserSupport";
 
 // SpeechRecognition isn't in lib.dom, so the bits we use are declared here.
 type SpeechRecognitionResultLike = { 0: { transcript: string }; isFinal: boolean };
@@ -32,7 +33,7 @@ function getCtor(): SpeechRecognitionCtor | null {
 }
 
 export function useSpeechRecognition(lang = "ko-KR") {
-  const [isSupported, setIsSupported] = useState(true);
+  const isSupported = useBrowserSupport(() => getCtor() !== null);
   const [isListening, setIsListening] = useState(false);
   const [interim, setInterim] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -40,7 +41,6 @@ export function useSpeechRecognition(lang = "ko-KR") {
   const onFinalRef = useRef<((t: string) => void) | null>(null);
 
   useEffect(() => {
-    setIsSupported(getCtor() !== null);
     return () => recRef.current?.abort();
   }, []);
 
@@ -52,10 +52,8 @@ export function useSpeechRecognition(lang = "ko-KR") {
   const listen = useCallback(
     (onFinal: (transcript: string) => void) => {
       const Ctor = getCtor();
-      if (!Ctor) {
-        setIsSupported(false);
-        return;
-      }
+      if (!Ctor) return; // isSupported already reflects this
+
       recRef.current?.abort();
       onFinalRef.current = onFinal;
       setInterim("");
@@ -109,10 +107,9 @@ export function useSpeechRecognition(lang = "ko-KR") {
 /** Speaks a single Korean string with the Web Speech API. */
 export function useKoreanSpeaker() {
   const [isSpeaking, setIsSpeaking] = useState(false);
-  const [isSupported, setIsSupported] = useState(true);
+  const isSupported = useBrowserSupport(() => "speechSynthesis" in window);
 
   useEffect(() => {
-    setIsSupported(typeof window !== "undefined" && "speechSynthesis" in window);
     return () => {
       if (typeof window !== "undefined") window.speechSynthesis.cancel();
     };

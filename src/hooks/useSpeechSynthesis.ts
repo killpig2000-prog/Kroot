@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useBrowserSupport } from "@/hooks/useBrowserSupport";
 import type { DialogueLine } from "@/lib/listening-dialogues";
 
 // Speaks dialogue lines in order using the browser's Web Speech API. Distinct
@@ -8,15 +9,14 @@ import type { DialogueLine } from "@/lib/listening-dialogues";
 export function useSpeechSynthesis(lines: DialogueLine[], rate = 0.9) {
   const [currentIndex, setCurrentIndex] = useState(-1);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isSupported, setIsSupported] = useState(true);
+  const isSupported = useBrowserSupport(() => "speechSynthesis" in window);
   const [hasFinished, setHasFinished] = useState(false);
   const indexRef = useRef(-1);
   const rateRef = useRef(rate);
-  rateRef.current = rate;
 
   useEffect(() => {
-    setIsSupported(typeof window !== "undefined" && "speechSynthesis" in window);
-  }, []);
+    rateRef.current = rate;
+  }, [rate]);
 
   useEffect(() => {
     return () => {

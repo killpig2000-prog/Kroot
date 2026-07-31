@@ -64,7 +64,7 @@ export default function Widgets({
     return () => clearTimeout(t);
   }, [pct]);
 
-  const dayIndex = Math.floor(Date.now() / 86_400_000) % WORDS.length;
+  const [dayIndex] = useState(() => Math.floor(Date.now() / 86_400_000) % WORDS.length);
   const wotd = WORDS[dayIndex];
   const wateredDays = weekMinutes.filter((m) => m > 0).length;
 

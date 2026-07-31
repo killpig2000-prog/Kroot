@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useBrowserSupport } from "@/hooks/useBrowserSupport";
 
 // Small 🔊 button that reads a Korean string aloud with the Web Speech API.
 // Lives on both card faces, so it stops click-through to the flip handler.
@@ -13,11 +13,7 @@ export default function SpeakButton({
   label?: string;
   className?: string;
 }) {
-  const [supported, setSupported] = useState(true);
-
-  useEffect(() => {
-    setSupported(typeof window !== "undefined" && "speechSynthesis" in window);
-  }, []);
+  const supported = useBrowserSupport(() => "speechSynthesis" in window);
 
   if (!supported) return null;
 
