@@ -5,7 +5,7 @@ import Sidebar from "@/components/dashboard/Sidebar";
 import TestRunner from "@/components/level-test/TestRunner";
 import { createClient } from "@/lib/supabase/server";
 import { computeEligibility } from "@/lib/promotion-server";
-import { SKILL_LABELS, testForGrade, type SkillScores } from "@/lib/promotion-test";
+import { SKILL_LABELS, buildServedTest, testForGrade, type SkillScores } from "@/lib/promotion-test";
 import type { CefrLevel } from "@/lib/tree";
 
 // Promotion test hub: shows eligibility progress for the current grade and,
@@ -72,7 +72,7 @@ export default async function LevelTestPage() {
                 : `The ${grade} level-up test is coming soon.`}
             </div>
           ) : !elig ? null : elig.eligible ? (
-            <TestRunner userId={user.id} spec={spec} />
+            <TestRunner userId={user.id} spec={buildServedTest(spec)} />
           ) : (
             <div className="grid gap-4">
               <div className="border border-[#E7E5E4] rounded-[14px] p-5 grid gap-3.5">

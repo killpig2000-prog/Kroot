@@ -9,7 +9,7 @@ import {
   SKILL_LABELS,
   testVerdict,
   type McqQuestion,
-  type PromotionTestSpec,
+  type ServedPromotionTest,
   type SkillScores,
 } from "@/lib/promotion-test";
 
@@ -108,13 +108,15 @@ function Mcq({
   );
 }
 
-export default function TestRunner({ userId, spec }: { userId: string; spec: PromotionTestSpec }) {
+export default function TestRunner({ userId, spec }: { userId: string; spec: ServedPromotionTest }) {
   const supabase = useMemo(() => createClient(), []);
   const router = useRouter();
   const speech = useSpeechRecognition("ko-KR");
+  const totalReadingQuestions = spec.reading.reduce((n, set) => n + set.questions.length, 0);
 
   const [stage, setStage] = useState<Stage>("intro");
   const [listeningCorrect, setListeningCorrect] = useState(0);
+  const [readingSet, setReadingSet] = useState(0);
   const [readingCorrect, setReadingCorrect] = useState(0);
   const [writingText, setWritingText] = useState("");
   const [transcript, setTranscript] = useState("");
@@ -143,7 +145,7 @@ export default function TestRunner({ userId, spec }: { userId: string; spec: Pro
       ]);
       const skillScores: SkillScores = {
         listening: Math.round((listeningCorrect / spec.listening.length) * 100),
-        reading: Math.round((readingCorrect / spec.reading.questions.length) * 100),
+        reading: Math.round((readingCorrect / totalReadingQuestions) * 100),
         writing: w.score,
         speaking: s.score,
       };
@@ -185,7 +187,7 @@ export default function TestRunner({ userId, spec }: { userId: string; spec: Pro
           {spec.from} → {spec.to} Level-Up Test
         </b>
         <p className="text-[13.5px] text-[#71717A] mb-3">
-          Listening ({spec.listening.length}) → Reading ({spec.reading.questions.length}) → Writing (1) → Speaking (1). Writing and speaking are graded by an AI teacher. About 10 minutes.
+          Listening ({spec.listening.length}) → Reading ({totalReadingQuestions} questions over {spec.reading.length} passage{spec.reading.length > 1 ? "s" : ""}) → Writing (1) → Speaking (1). Writing and speaking are graded by an AI teacher. Questions are drawn at random each attempt.
         </p>
         <p className="text-[12.5px] text-[#A1A1AA] mb-4">
           To pass: 70+ average with every skill at 60+. Failing is fine — practice your weakest skill and retake after 48 hours.
@@ -214,16 +216,19 @@ export default function TestRunner({ userId, spec }: { userId: string; spec: Pro
   }
 
   if (stage === "reading") {
+    const set = spec.reading[readingSet];
     return (
       <div className="border border-[#E7E5E4] rounded-[14px] p-6">
         <Mcq
-          title="2 · Reading — read, then answer"
-          questions={spec.reading.questions}
+          key={readingSet}
+          title={`2 · Reading — passage ${readingSet + 1}/${spec.reading.length}`}
+          questions={set.questions}
           showKr
-          passage={spec.reading.passage}
+          passage={set.passage}
           onDone={(c) => {
-            setReadingCorrect(c);
-            setStage("writing");
+            setReadingCorrect((total) => total + c);
+            if (readingSet + 1 < spec.reading.length) setReadingSet(readingSet + 1);
+            else setStage("writing");
           }}
         />
       </div>
