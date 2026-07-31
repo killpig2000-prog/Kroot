@@ -5,7 +5,7 @@ import Sidebar from "@/components/dashboard/Sidebar";
 import { createClient } from "@/lib/supabase/server";
 import { UNIT_ICONS, getChaptersForTopic, getUnitTitle, unlockedVocabTiers } from "@/lib/vocabulary";
 import { LEVEL_ORDER, nextLevel, type CefrLevel } from "@/lib/tree";
-import { DIFFICULTY_UNLOCK_LEVEL, levelFromXp } from "@/lib/level";
+
 
 function isCefrLevel(value: string | undefined): value is CefrLevel {
   return !!value && (LEVEL_ORDER as string[]).includes(value);
@@ -32,7 +32,6 @@ export default async function VocabularyPage({
     .single();
 
   const myLevel = (profile?.current_level ?? "A1") as CefrLevel;
-  const playerLevel = levelFromXp(profile?.xp ?? 0);
   const sp = await searchParams;
 
   const { data: progressRows } = await supabase
@@ -42,7 +41,7 @@ export default async function VocabularyPage({
     .not("last_reviewed_at", "is", null);
   const reviewedKeys = new Set((progressRows ?? []).map((r) => r.word_key));
 
-  const unlockedTiers = unlockedVocabTiers(TOPIC_KEY, reviewedKeys, myLevel, playerLevel);
+  const unlockedTiers = unlockedVocabTiers(myLevel);
 
   const requested = isCefrLevel(sp.level) ? sp.level : myLevel;
   const level = unlockedTiers.has(requested) ? requested : myLevel;
@@ -133,11 +132,7 @@ export default async function VocabularyPage({
                     className="rounded-[10px] px-3.5 py-2 text-[13.5px] font-bold border bg-[#FAFAF9] border-[#E7E5E4] text-[#A1A1AA] grayscale opacity-60 cursor-not-allowed select-none text-center leading-tight"
                   >
                     🔒 {lv}
-                    <small className="block text-[10.5px] font-bold">
-                      {playerLevel < DIFFICULTY_UNLOCK_LEVEL[lv]
-                        ? `Lv. ${DIFFICULTY_UNLOCK_LEVEL[lv]}`
-                        : `Finish ${LEVEL_ORDER[LEVEL_ORDER.indexOf(lv) - 1]}`}
-                    </small>
+                    <small className="block text-[10.5px] font-bold">promotion test</small>
                   </div>
                 )
               )}

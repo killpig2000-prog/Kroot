@@ -93,15 +93,14 @@ describe("treeStageForLevel", () => {
 });
 
 describe("isDifficultyUnlocked", () => {
-  it("everything at or below the tested CEFR is open regardless of level", () => {
-    expect(isDifficultyUnlocked("B1", 1, "B1")).toBe(true);
-    expect(isDifficultyUnlocked("A1", 1, "C2")).toBe(true);
+  it("everything at or below the tested CEFR is open", () => {
+    expect(isDifficultyUnlocked("B1", "B1")).toBe(true);
+    expect(isDifficultyUnlocked("A1", "C2")).toBe(true);
   });
 
-  it("harder tiers gate on player level", () => {
-    expect(isDifficultyUnlocked("B1", 7, "A1")).toBe(false);
-    expect(isDifficultyUnlocked("B1", 8, "A1")).toBe(true);
-    expect(isDifficultyUnlocked("C2", 25, "A1")).toBe(false);
-    expect(isDifficultyUnlocked("C2", 26, "A1")).toBe(true);
+  it("anything above the tested CEFR stays locked — player level never unlocks content", () => {
+    expect(isDifficultyUnlocked("A2", "A1")).toBe(false);
+    expect(isDifficultyUnlocked("B1", "A2")).toBe(false);
+    expect(isDifficultyUnlocked("C2", "C1")).toBe(false);
   });
 });

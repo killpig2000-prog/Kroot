@@ -12,7 +12,6 @@ import {
   type VocabWordWithProgress,
 } from "@/lib/vocabulary";
 import { LEVEL_ORDER, type CefrLevel } from "@/lib/tree";
-import { levelFromXp } from "@/lib/level";
 
 function isCefrLevel(value: string | undefined): value is CefrLevel {
   return !!value && (LEVEL_ORDER as string[]).includes(value);
@@ -46,15 +45,8 @@ export default async function VocabChapterSessionPage({
     .single();
 
   const myLevel = (profile?.current_level ?? "A1") as CefrLevel;
-  const playerLevel = levelFromXp(profile?.xp ?? 0);
 
-  const { data: allProgress } = await supabase
-    .from("vocabulary_progress")
-    .select("word_key")
-    .eq("user_id", user.id)
-    .not("last_reviewed_at", "is", null);
-  const reviewedKeys = new Set((allProgress ?? []).map((p) => p.word_key));
-  const unlockedTiers = unlockedVocabTiers(topicKey, reviewedKeys, myLevel, playerLevel);
+  const unlockedTiers = unlockedVocabTiers(myLevel);
 
   const requested = isCefrLevel(sp.level) ? sp.level : myLevel;
   const level = unlockedTiers.has(requested) ? requested : myLevel;

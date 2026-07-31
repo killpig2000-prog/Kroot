@@ -33,23 +33,9 @@ export function treeStageForLevel(level: number): CefrLevel {
   return LEVEL_ORDER[stage];
 }
 
-// Content-difficulty gates: harder CEFR tiers unlock as the player levels up
-// (a level test can still set current_level directly and implies readiness).
-export const DIFFICULTY_UNLOCK_LEVEL: Record<CefrLevel, number> = {
-  A1: 1,
-  A2: 1,
-  B1: 8,
-  B2: 14,
-  C1: 20,
-  C2: 26,
-};
-
-export function isDifficultyUnlocked(
-  difficulty: CefrLevel,
-  playerLevel: number,
-  cefrFromTest: CefrLevel
-): boolean {
-  // Anything at or below the tested CEFR level is always open.
-  if (LEVEL_ORDER.indexOf(difficulty) <= LEVEL_ORDER.indexOf(cefrFromTest)) return true;
-  return playerLevel >= DIFFICULTY_UNLOCK_LEVEL[difficulty];
+// Content-difficulty gate: harder CEFR tiers open only by proving skill in a
+// level/promotion test (current_level). Player level never unlocks content —
+// it's a reward axis only.
+export function isDifficultyUnlocked(difficulty: CefrLevel, cefrFromTest: CefrLevel): boolean {
+  return LEVEL_ORDER.indexOf(difficulty) <= LEVEL_ORDER.indexOf(cefrFromTest);
 }

@@ -2,7 +2,6 @@ import { notFound, redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { VOCAB_TOPICS, getChapterStatuses, getChaptersForTopic, unlockedVocabTiers } from "@/lib/vocabulary";
 import { LEVEL_ORDER, type CefrLevel } from "@/lib/tree";
-import { levelFromXp } from "@/lib/level";
 
 function isCefrLevel(value: string | undefined): value is CefrLevel {
   return !!value && (LEVEL_ORDER as string[]).includes(value);
@@ -35,7 +34,6 @@ export default async function VocabularyTopicPage({
     .single();
 
   const myLevel = (profile?.current_level ?? "A1") as CefrLevel;
-  const playerLevel = levelFromXp(profile?.xp ?? 0);
   const sp = await searchParams;
 
   const { data: progress } = await supabase
@@ -45,7 +43,7 @@ export default async function VocabularyTopicPage({
     .not("last_reviewed_at", "is", null);
 
   const reviewedKeys = new Set((progress ?? []).map((p) => p.word_key));
-  const unlockedTiers = unlockedVocabTiers(topicKey, reviewedKeys, myLevel, playerLevel);
+  const unlockedTiers = unlockedVocabTiers(myLevel);
   const requested = isCefrLevel(sp.level) ? sp.level : myLevel;
   const level = unlockedTiers.has(requested) ? requested : myLevel;
   const chapters = getChaptersForTopic(topicKey, level);

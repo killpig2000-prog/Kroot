@@ -4,7 +4,7 @@ import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import { createClient } from "@/lib/supabase/server";
 import { LEVEL_ORDER, type CefrLevel } from "@/lib/tree";
-import { DIFFICULTY_UNLOCK_LEVEL, isDifficultyUnlocked, levelFromXp } from "@/lib/level";
+import { isDifficultyUnlocked } from "@/lib/level";
 import { SITUATIONS } from "@/lib/listening";
 import { dialoguesFor } from "@/lib/listening-dialogues";
 import { fetchUnsplashImage } from "@/lib/unsplash";
@@ -43,10 +43,9 @@ export default async function ListeningPage({
     .single();
 
   const myLevel = (profile?.current_level ?? "A1") as CefrLevel;
-  const playerLevel = levelFromXp(profile?.xp ?? 0);
   const sp = await searchParams;
   const requested = isCefrLevel(sp.level) ? sp.level : myLevel;
-  const level = isDifficultyUnlocked(requested, playerLevel, myLevel) ? requested : myLevel;
+  const level = isDifficultyUnlocked(requested, myLevel) ? requested : myLevel;
 
   const photos = await Promise.all(SITUATIONS.map((s) => fetchUnsplashImage(s.photoQuery)));
   const photoByKey = new Map(SITUATIONS.map((s, i) => [s.key, photos[i]]));
@@ -87,7 +86,7 @@ export default async function ListeningPage({
           {/* level tabs */}
           <div className="flex gap-2 mb-6 flex-wrap">
             {LEVEL_ORDER.map((lv) =>
-              isDifficultyUnlocked(lv, playerLevel, myLevel) ? (
+              isDifficultyUnlocked(lv, myLevel) ? (
                 <Link
                   key={lv}
                   href={`/listening?level=${lv}`}
@@ -109,7 +108,7 @@ export default async function ListeningPage({
                 >
                   🔒 {lv}
                   <span className="text-[10.5px] font-bold ml-1.5">
-                    · Lv. {DIFFICULTY_UNLOCK_LEVEL[lv]}
+                    · promotion test
                   </span>
                 </div>
               )

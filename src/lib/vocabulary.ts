@@ -130,31 +130,10 @@ export function getChaptersForTopic(topicKey: string, level: CefrLevel): VocabWo
   return chapters;
 }
 
-// A vocabulary difficulty tier opens once every unit of the previous tier is
-// finished AND the XP level floor is met — unless the level test already placed
-// the user at/above it.
-export function unlockedVocabTiers(
-  topicKey: string,
-  reviewedKeys: Set<string>,
-  myLevel: CefrLevel,
-  playerLevel: number
-): Set<CefrLevel> {
-  const tierComplete = (lv: CefrLevel) =>
-    getChaptersForTopic(topicKey, lv).every((unit) => unit.every((w) => reviewedKeys.has(w.key)));
-
-  const unlocked = new Set<CefrLevel>();
-  for (let i = 0; i < LEVEL_ORDER.length; i++) {
-    const lv = LEVEL_ORDER[i];
-    if (i === 0 || i <= LEVEL_ORDER.indexOf(myLevel)) {
-      unlocked.add(lv);
-      continue;
-    }
-    const prev = LEVEL_ORDER[i - 1];
-    if (unlocked.has(prev) && tierComplete(prev) && isDifficultyUnlocked(lv, playerLevel, myLevel)) {
-      unlocked.add(lv);
-    }
-  }
-  return unlocked;
+// Tiers at/below the tested CEFR level are open; anything above requires a
+// promotion test — finishing the words alone never unlocks harder content.
+export function unlockedVocabTiers(myLevel: CefrLevel): Set<CefrLevel> {
+  return new Set(LEVEL_ORDER.filter((lv) => isDifficultyUnlocked(lv, myLevel)));
 }
 
 export type ChapterStatus = "done" | "current" | "locked";

@@ -5,7 +5,7 @@ import Sidebar from "@/components/dashboard/Sidebar";
 import { createClient } from "@/lib/supabase/server";
 import { getChapterStatuses, getChaptersForLevel } from "@/lib/writing";
 import { LEVEL_ORDER, type CefrLevel } from "@/lib/tree";
-import { DIFFICULTY_UNLOCK_LEVEL, isDifficultyUnlocked, levelFromXp } from "@/lib/level";
+import { isDifficultyUnlocked } from "@/lib/level";
 
 function isCefrLevel(value: string | undefined): value is CefrLevel {
   return !!value && (LEVEL_ORDER as string[]).includes(value);
@@ -42,10 +42,9 @@ export default async function WritingMapPage({
     .single();
 
   const myLevel = (profile?.current_level ?? "A1") as CefrLevel;
-  const playerLevel = levelFromXp(profile?.xp ?? 0);
   const sp = await searchParams;
   const requested = isCefrLevel(sp.level) ? sp.level : myLevel;
-  const level = isDifficultyUnlocked(requested, playerLevel, myLevel) ? requested : myLevel;
+  const level = isDifficultyUnlocked(requested, myLevel) ? requested : myLevel;
   const chapters = getChaptersForLevel(level);
 
   const { data: progress } = await supabase
@@ -93,7 +92,7 @@ export default async function WritingMapPage({
           {/* level tabs */}
           <div className="flex gap-2 mb-6 flex-wrap">
             {LEVEL_ORDER.map((lv) =>
-              isDifficultyUnlocked(lv, playerLevel, myLevel) ? (
+              isDifficultyUnlocked(lv, myLevel) ? (
                 <Link
                   key={lv}
                   href={`/writing?level=${lv}`}
@@ -115,7 +114,7 @@ export default async function WritingMapPage({
                 >
                   🔒 {lv}
                   <span className="text-[10.5px] font-bold ml-1.5">
-                    · Lv. {DIFFICULTY_UNLOCK_LEVEL[lv]}
+                    · promotion test
                   </span>
                 </div>
               )
