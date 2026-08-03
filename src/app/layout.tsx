@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import "./globals.css";
 import { DEFAULT_MODE, MODE_COOKIE, isModeKey } from "@/lib/mode";
 import { SEASON_COOKIE, seasonForDate } from "@/lib/seasons";
+import { SITE_URL } from "@/lib/site";
 import SeasonalEffects from "@/components/ui/SeasonalEffects";
 
 const fredoka = Fredoka({
@@ -25,6 +26,7 @@ const nunito = Nunito({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: "Kroot — Grow your Korean, one little sprout at a time",
   description:
     "Kroot is a cozy garden where your Korean grows every day — with a friendly AI tutor, tiny lessons, and friends from all over the world.",
