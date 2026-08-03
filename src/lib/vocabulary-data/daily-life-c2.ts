@@ -703,4 +703,13 @@ export const C2_WORDS: RawVocabWord[] = [
   { level: "C2", korean: "각자도생", romanization: "gakjadosaeng", meaning_en: "each fending for themselves", example_kr: "결국 각자도생하는 분위기예요.", example_en: "In the end it's every man for himself." },
   { level: "C2", korean: "경국지색", romanization: "gyeonggukjisaek", meaning_en: "beauty that could topple a kingdom", example_kr: "경국지색이라 불릴 만해요.", example_en: "She deserves to be called a peerless beauty." },
   { level: "C2", korean: "계륵", romanization: "gyeryuk", meaning_en: "something too minor to keep, too wasteful to toss", example_kr: "이 사업은 계륵 같은 존재예요.", example_en: "This project is neither worth keeping nor worth dropping." },
+  { level: "C2", korean: "기개", romanization: "gigae", meaning_en: "spirit, mettle", example_kr: "젊은이의 기개가 느껴졌어요.", example_en: "I could feel the young man's mettle." },
+  { level: "C2", korean: "논박", romanization: "nonbak", meaning_en: "point-by-point refutation", example_kr: "그 주장을 조목조목 논박했어요.", example_en: "He refuted the claim point by point." },
+  { level: "C2", korean: "뇌리", romanization: "noeri", meaning_en: "the recesses of one's mind", example_kr: "그 장면이 뇌리에 박혔어요.", example_en: "That scene is burned into my mind." },
+  { level: "C2", korean: "반향", romanization: "banhyang", meaning_en: "repercussions, resonance", example_kr: "큰 반향을 불러일으켰어요.", example_en: "It stirred up a big response." },
+  { level: "C2", korean: "야심", romanization: "yasim", meaning_en: "ambition", example_kr: "야심 찬 계획을 내놨어요.", example_en: "He put forward an ambitious plan." },
+  { level: "C2", korean: "예단", romanization: "yedan", meaning_en: "judging prematurely", example_kr: "결과를 예단하기는 일러요.", example_en: "It's too early to prejudge the outcome." },
+  { level: "C2", korean: "숙고", romanization: "sukgo", meaning_en: "deep deliberation", example_kr: "오랜 숙고 끝에 결정했어요.", example_en: "He decided after long deliberation." },
+  { level: "C2", korean: "각인", romanization: "gagin", meaning_en: "being engraved on the mind", example_kr: "그 장면이 각인됐어요.", example_en: "That scene is etched into my memory." },
+  { level: "C2", korean: "심사숙고", romanization: "simsasukgo", meaning_en: "long and careful deliberation", example_kr: "심사숙고 끝에 내린 결정이에요.", example_en: "It's a decision made after long deliberation." },
 ];
