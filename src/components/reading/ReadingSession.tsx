@@ -16,8 +16,8 @@ const BTN_BLUE =
 const BTN_INK =
   "rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-[#18181B] hover:bg-[#3F3F46] transition-colors disabled:opacity-60";
 const BTN_LINE =
-  "rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-[#18181B] bg-white border border-[#E7E5E4] hover:bg-[#FAFAF9] transition-colors disabled:opacity-60";
-const LABEL = "text-[11.5px] font-semibold tracking-[.06em] uppercase text-[#A1A1AA] mb-2";
+  "rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-[#18181B] bg-white border border-[#E3DDD0] hover:bg-[#FAF7EF] transition-colors disabled:opacity-60";
+const LABEL = "text-[11.5px] font-semibold tracking-[.06em] uppercase text-[#A19A8C] mb-2";
 
 export default function ReadingSession({
   passage,
@@ -104,24 +104,24 @@ export default function ReadingSession({
     const lines = krLines.map((kr, i) => ({ kr, en: enLines[i] ?? "" }));
 
     return (
-      <div className="max-w-[760px] border border-[#E7E5E4] rounded-[14px] p-[clamp(20px,3vw,28px)]">
+      <div className="max-w-[760px] border border-[#E3DDD0] rounded-[14px] p-[clamp(20px,3vw,28px)]">
         <div className="flex items-center justify-between gap-3 mb-4 flex-wrap">
           <span className="text-[11.5px] font-semibold text-[#2563EB] bg-[#EFF6FF] border border-[#BFDBFE] rounded-md px-2 py-0.5">
             Chapter {chapterIndex + 1}
           </span>
           <button
             onClick={() => setShowTranslation((s) => !s)}
-            className="text-[12.5px] font-semibold text-[#71717A] hover:text-[#18181B] transition-colors"
+            className="text-[12.5px] font-semibold text-[#6B6560] hover:text-[#18181B] transition-colors"
           >
             {showTranslation ? "Hide translation" : "Show translation"}
           </button>
         </div>
 
         {/* book spread */}
-        <div className="rounded-[10px] border border-[#E7E5E4] overflow-hidden bg-[#FAFAF9]">
+        <div className="rounded-[10px] border border-[#E3DDD0] overflow-hidden bg-[#FAF7EF]">
           <div className="grid grid-cols-1 sm:grid-cols-2">
             {/* left page: Korean */}
-            <div className="p-[clamp(14px,2.5vw,22px)] bg-white sm:border-r border-b sm:border-b-0 border-[#E7E5E4]">
+            <div className="p-[clamp(14px,2.5vw,22px)] bg-white sm:border-r border-b sm:border-b-0 border-[#E3DDD0]">
               <p className={LABEL}>Korean</p>
               <h2 className="kr text-[17px] font-medium mb-3">{passage.title_kr}</h2>
               {lines.map((line, i) => (
@@ -133,13 +133,13 @@ export default function ReadingSession({
             {/* right page: translation */}
             <div className="p-[clamp(14px,2.5vw,22px)]">
               <p className={LABEL}>English</p>
-              <h2 className="text-[15px] font-semibold text-[#71717A] mb-3">{passage.title_en}</h2>
+              <h2 className="text-[15px] font-semibold text-[#6B6560] mb-3">{passage.title_en}</h2>
               {lines.map((line, i) => (
                 <p
                   key={i}
                   className={`text-sm leading-[2.15] mb-1.5 rounded transition-all ${
                     showTranslation
-                      ? "text-[#71717A]"
+                      ? "text-[#6B6560]"
                       : "text-transparent bg-[#F4F4F5] select-none"
                   }`}
                 >
@@ -162,14 +162,14 @@ export default function ReadingSession({
   if (phase === "quiz") {
     const pct = (qIndex / passage.questions.length) * 100;
     return (
-      <div className="max-w-[680px] border border-[#E7E5E4] rounded-[14px] p-[clamp(20px,3vw,28px)]">
-        <div className="flex justify-between items-center mb-2.5 text-[12.5px] font-medium text-[#A1A1AA]">
+      <div className="max-w-[680px] border border-[#E3DDD0] rounded-[14px] p-[clamp(20px,3vw,28px)]">
+        <div className="flex justify-between items-center mb-2.5 text-[12.5px] font-medium text-[#A19A8C]">
           <span>
             Question {qIndex + 1} of {passage.questions.length}
           </span>
           <span>{correct} correct</span>
         </div>
-        <div className="h-1.5 bg-[#E7E5E4] rounded-full overflow-hidden mb-6">
+        <div className="h-1.5 bg-[#E3DDD0] rounded-full overflow-hidden mb-6">
           <i
             className="not-italic block h-full bg-[#2563EB] rounded-full transition-[width] duration-300"
             style={{ width: `${pct}%` }}
@@ -195,8 +195,8 @@ export default function ReadingSession({
                     : state === "wrong"
                     ? "border-[#DC2626] bg-[#FEF2F2]"
                     : show
-                    ? "border-[#E7E5E4] bg-white opacity-90"
-                    : "border-[#E7E5E4] bg-white hover:border-[#2563EB] hover:bg-[#EFF6FF]"
+                    ? "border-[#E3DDD0] bg-white opacity-90"
+                    : "border-[#E3DDD0] bg-white hover:border-[#2563EB] hover:bg-[#EFF6FF]"
                 }`}
               >
                 <span
@@ -205,7 +205,7 @@ export default function ReadingSession({
                       ? "bg-[#16A34A] border-[#16A34A] text-white"
                       : state === "wrong"
                       ? "bg-[#DC2626] border-[#DC2626] text-white"
-                      : "bg-[#FAFAF9] border-[#E7E5E4] text-[#71717A]"
+                      : "bg-[#FAF7EF] border-[#E3DDD0] text-[#6B6560]"
                   }`}
                 >
                   {ABC[i]}
@@ -221,11 +221,11 @@ export default function ReadingSession({
 
   return (
     <div
-      className="max-w-[680px] text-center border border-[#E7E5E4] rounded-[14px] px-7 py-10"
+      className="max-w-[680px] text-center border border-[#E3DDD0] rounded-[14px] px-7 py-10"
       style={{ animation: "fadeUp .4s ease" }}
     >
       <svg width="104" height="104" viewBox="0 0 150 160" aria-hidden="true" className="inline-block">
-        <ellipse cx="75" cy="150" rx="46" ry="7" fill="#E7E5E4" />
+        <ellipse cx="75" cy="150" rx="46" ry="7" fill="#E3DDD0" />
         <path d="M75 146 C75 122 74 112 74 98" stroke="#8B7355" strokeWidth="8" strokeLinecap="round" />
         <g className="sway">
           <circle cx="75" cy="72" r="36" fill="#22C55E" />
@@ -242,7 +242,7 @@ export default function ReadingSession({
         </text>
       </svg>
       <h2 className="font-bold text-[21px] tracking-[-0.02em] mt-3 mb-1.5">Chapter {chapterIndex + 1} complete!</h2>
-      <p className="text-sm text-[#71717A] mb-[22px]">
+      <p className="text-sm text-[#6B6560] mb-[22px]">
         You read the whole story — your tree grew a little today.
       </p>
       {levelUp && (
@@ -252,19 +252,19 @@ export default function ReadingSession({
       )}
 
       <div className="flex justify-center gap-3 mb-6 flex-wrap">
-        <div className="border border-[#E7E5E4] rounded-[10px] px-5 py-3 min-w-[100px]">
+        <div className="border border-[#E3DDD0] rounded-[10px] px-5 py-3 min-w-[100px]">
           <b className="block text-[19px] font-bold text-[#2563EB]">
             {correct}/{passage.questions.length}
           </b>
-          <small className="text-xs text-[#71717A]">Correct</small>
+          <small className="text-xs text-[#6B6560]">Correct</small>
         </div>
-        <div className="border border-[#E7E5E4] rounded-[10px] px-5 py-3 min-w-[100px]">
+        <div className="border border-[#E3DDD0] rounded-[10px] px-5 py-3 min-w-[100px]">
           <b className="block text-[19px] font-bold">{incorrect}</b>
-          <small className="text-xs text-[#71717A]">To review</small>
+          <small className="text-xs text-[#6B6560]">To review</small>
         </div>
-        <div className="border border-[#E7E5E4] rounded-[10px] px-5 py-3 min-w-[100px]">
+        <div className="border border-[#E3DDD0] rounded-[10px] px-5 py-3 min-w-[100px]">
           <b className="block text-[19px] font-bold text-[#16A34A]">+10 XP</b>
-          <small className="text-xs text-[#71717A]">Earned</small>
+          <small className="text-xs text-[#6B6560]">Earned</small>
         </div>
       </div>
 
@@ -295,9 +295,9 @@ export default function ReadingSession({
 
 export function ReadingEmpty() {
   return (
-    <div className="max-w-[680px] border border-[#E7E5E4] rounded-[14px] px-7 py-10 text-center">
+    <div className="max-w-[680px] border border-[#E3DDD0] rounded-[14px] px-7 py-10 text-center">
       <p className="font-bold text-[17px] tracking-[-0.01em] mb-1.5">No story here yet</p>
-      <p className="text-sm text-[#71717A] mb-5">This chapter isn&apos;t written yet.</p>
+      <p className="text-sm text-[#6B6560] mb-5">This chapter isn&apos;t written yet.</p>
       <Link href="/reading" className={BTN_INK}>
         Back to the map
       </Link>

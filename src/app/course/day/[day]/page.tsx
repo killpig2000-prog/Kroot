@@ -8,7 +8,7 @@ import CompleteButton from "@/components/course/CompleteButton";
 import ExampleList from "@/components/course/ExampleList";
 import StrokeGrid from "@/components/course/StrokeGrid";
 import WritingTest from "@/components/course/WritingTest";
-import { createClient } from "@/lib/supabase/server";
+import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { COURSE_TOTAL_DAYS, DAY_QUIZZES, getCourseDay } from "@/lib/course";
 import { COURSE_DEEP_DIVES, lessonByKey } from "@/lib/grammar";
 
@@ -26,9 +26,7 @@ export default async function CourseDayPage({
   if (!day) notFound();
 
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getClaimsUser(supabase);
   if (!user) redirect("/onboarding");
   const uid = user.id;
 
@@ -50,7 +48,7 @@ export default async function CourseDayPage({
   const sections = day.phases.filter((p) => p.type !== "intro");
 
   return (
-    <div className="min-h-screen bg-white text-[#18181B]">
+    <div className="min-h-screen bg-[#FDFBF7] text-[#18181B]">
       <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
         <Sidebar
           displayName={profile?.display_name ?? "there"}
@@ -61,7 +59,7 @@ export default async function CourseDayPage({
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] md:pb-[60px]">
           {/* breadcrumb */}
-          <div className="flex gap-2 text-[13px] text-[#A1A1AA] mb-[18px] flex-wrap">
+          <div className="flex gap-2 text-[13px] text-[#A19A8C] mb-[18px] flex-wrap">
             <Link href="/dashboard" className="hover:text-[#18181B] transition-colors">
               Garden
             </Link>
@@ -81,7 +79,7 @@ export default async function CourseDayPage({
               </span>
               <span className="kr">{day.titleKr}</span>
             </h1>
-            <span className="text-[13px] text-[#71717A]">
+            <span className="text-[13px] text-[#6B6560]">
               Day {day.day}/{COURSE_TOTAL_DAYS} · ~{day.minutes} min · {day.title}
             </span>
           </div>
@@ -99,7 +97,7 @@ export default async function CourseDayPage({
               </span>
               <div className="flex-1 min-w-[220px]">
                 <p className="kr font-extrabold text-[16px]">{intro.kr}</p>
-                <p className="text-[13.5px] text-[#71717A]">{intro.en}</p>
+                <p className="text-[13.5px] text-[#6B6560]">{intro.en}</p>
               </div>
             </div>
           )}
@@ -128,7 +126,7 @@ export default async function CourseDayPage({
                   <section key={i}>
                     {heading("Stroke order — tap a card to replay it with sound")}
                     <StrokeGrid chars={phase.chars} />
-                    <p className="text-[13px] text-[#71717A] mt-2.5">{phase.note}</p>
+                    <p className="text-[13px] text-[#6B6560] mt-2.5">{phase.note}</p>
                   </section>
                 );
               }
@@ -137,7 +135,7 @@ export default async function CourseDayPage({
                   <section key={i}>
                     {heading(phase.title)}
                     <ExampleList items={phase.items} />
-                    <p className="text-[12.5px] text-[#A1A1AA] mt-2">
+                    <p className="text-[12.5px] text-[#A19A8C] mt-2">
                       Tap 🔊 to listen, then read it out loud.
                     </p>
                   </section>
@@ -164,7 +162,7 @@ export default async function CourseDayPage({
             {COURSE_DEEP_DIVES[day.day] && (
               <section className="border border-[#C7D2FE] bg-[#EEF2FF] rounded-[14px] px-5 py-4">
                 <b className="block text-[13.5px] mb-2">
-                  Go deeper <span className="text-[#71717A] font-medium">· Grammar deep dives</span>
+                  Go deeper <span className="text-[#6B6560] font-medium">· Grammar deep dives</span>
                 </b>
                 <div className="grid gap-1.5">
                   {COURSE_DEEP_DIVES[day.day].map((key) => {
@@ -177,7 +175,7 @@ export default async function CourseDayPage({
                         className="flex items-center gap-2 text-[13.5px] font-semibold text-[#4F46E5] hover:underline"
                       >
                         <span>→ {lesson.title}</span>
-                        <span className="kr text-[12px] font-medium text-[#71717A]">{lesson.krTitle}</span>
+                        <span className="kr text-[12px] font-medium text-[#6B6560]">{lesson.krTitle}</span>
                       </Link>
                     );
                   })}
@@ -190,7 +188,7 @@ export default async function CourseDayPage({
 
             {/* completion — day 16 completes via the test instead */}
             {!day.phases.some((p) => p.type === "quiz") && (
-              <section className="border-t border-[#E7E5E4] pt-6">
+              <section className="border-t border-[#E3DDD0] pt-6">
                 <CompleteButton
                   userId={uid}
                   stepKey={day.key}

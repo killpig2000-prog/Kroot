@@ -2,7 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
-import { createClient } from "@/lib/supabase/server";
+import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { getChapterStatuses, getChaptersForLevel } from "@/lib/reading";
 import { LEVEL_ORDER, type CefrLevel } from "@/lib/tree";
 import { isDifficultyUnlocked } from "@/lib/level";
@@ -23,8 +23,8 @@ const STATUS_STYLE: Record<string, { badge: string; seed: string; icon: string }
     icon: "📖",
   },
   locked: {
-    badge: "text-[#A1A1AA] bg-[#FAFAF9] border-[#E7E5E4]",
-    seed: "bg-[#FAFAF9] text-[#A1A1AA] border-[#E7E5E4]",
+    badge: "text-[#A19A8C] bg-[#FAF7EF] border-[#E3DDD0]",
+    seed: "bg-[#FAF7EF] text-[#A19A8C] border-[#E3DDD0]",
     icon: "🔒",
   },
 };
@@ -35,36 +35,35 @@ export default async function ReadingMapPage({
   searchParams: Promise<{ level?: string }>;
 }) {
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getClaimsUser(supabase);
 
   if (!user) redirect("/onboarding");
 
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("display_name, current_level, streak_days, avatar_url, xp")
-    .eq("id", user.id)
-    .single();
+  const [{ data: profile }, { data: progress }, sp] = await Promise.all([
+    supabase
+      .from("profiles")
+      .select("display_name, current_level, streak_days, avatar_url, xp")
+      .eq("id", user.id)
+      .single(),
+    supabase
+      .from("reading_progress")
+      .select("passage_key")
+      .eq("user_id", user.id)
+      .not("last_reviewed_at", "is", null),
+    searchParams,
+  ]);
 
   const myLevel = (profile?.current_level ?? "A1") as CefrLevel;
-  const sp = await searchParams;
   const requested = isCefrLevel(sp.level) ? sp.level : myLevel;
   const level = isDifficultyUnlocked(requested, myLevel) ? requested : myLevel;
   const chapters = getChaptersForLevel(level);
-
-  const { data: progress } = await supabase
-    .from("reading_progress")
-    .select("passage_key")
-    .eq("user_id", user.id)
-    .not("last_reviewed_at", "is", null);
 
   const completedKeys = new Set((progress ?? []).map((p) => p.passage_key));
   const statuses = getChapterStatuses(chapters, completedKeys);
   const doneCount = statuses.filter((s) => s === "done").length;
 
   return (
-    <div className="min-h-screen bg-white text-[#18181B]">
+    <div className="min-h-screen bg-[#FDFBF7] text-[#18181B]">
       <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
         <Sidebar
           displayName={profile?.display_name ?? "there"}
@@ -75,7 +74,7 @@ export default async function ReadingMapPage({
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] md:pb-[60px]">
           {/* breadcrumb */}
-          <div className="flex gap-2 text-[13px] text-[#A1A1AA] mb-[18px]">
+          <div className="flex gap-2 text-[13px] text-[#A19A8C] mb-[18px]">
             <Link href="/dashboard" className="hover:text-[#18181B] transition-colors">
               Garden
             </Link>
@@ -91,12 +90,12 @@ export default async function ReadingMapPage({
               </span>
               Story Grove
             </h1>
-            <span className="text-[13px] text-[#71717A]">
+            <span className="text-[13px] text-[#6B6560]">
               Level {level} · <b className="text-[#2563EB]">{doneCount}</b> of {chapters.length} chapters read
             </span>
           </div>
 
-          <p className="text-[13px] text-[#71717A] mb-6">
+          <p className="text-[13px] text-[#6B6560] mb-6">
             Read the story, then answer the questions — each chapter unlocks the next.
           </p>
 
@@ -110,7 +109,7 @@ export default async function ReadingMapPage({
                   className={`rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold transition-all border ${
                     lv === level
                       ? "bg-[#2563EB] border-[#2563EB] text-white"
-                      : "bg-white border-[#E7E5E4] text-[#71717A] hover:border-[#A1A1AA]"
+                      : "bg-white border-[#E3DDD0] text-[#6B6560] hover:border-[#A19A8C]"
                   }`}
                 >
                   {lv}
@@ -121,7 +120,7 @@ export default async function ReadingMapPage({
               ) : (
                 <div
                   key={lv}
-                  className="rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold border bg-[#FAFAF9] border-[#E7E5E4] text-[#A1A1AA] grayscale opacity-60 cursor-not-allowed select-none"
+                  className="rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold border bg-[#FAF7EF] border-[#E3DDD0] text-[#A19A8C] grayscale opacity-60 cursor-not-allowed select-none"
                 >
                   🔒 {lv}
                   <span className="text-[10.5px] font-bold ml-1.5">
@@ -132,13 +131,13 @@ export default async function ReadingMapPage({
             )}
           </div>
 
-          <div className="border border-[#E7E5E4] rounded-[14px] overflow-hidden max-w-[720px]">
+          <div className="border border-[#E3DDD0] rounded-[14px] overflow-hidden max-w-[720px]">
             {chapters.map((chapter, i) => {
               const passage = chapter[0];
               const status = statuses[i];
               const style = STATUS_STYLE[status];
               const rowClass =
-                "w-full flex items-center gap-3.5 text-left bg-white border-b border-[#E7E5E4] last:border-b-0 px-[18px] py-[13px] transition-colors group";
+                "w-full flex items-center gap-3.5 text-left bg-white border-b border-[#E3DDD0] last:border-b-0 px-[18px] py-[13px] transition-colors group";
               const content = (
                 <>
                   <span
@@ -148,7 +147,7 @@ export default async function ReadingMapPage({
                   </span>
                   <span className="flex-1 min-w-0">
                     <b className="block font-semibold text-sm">Chapter {i + 1}</b>
-                    <small className="block kr text-[12.5px] text-[#71717A] truncate">{passage.title_kr}</small>
+                    <small className="block kr text-[12.5px] text-[#6B6560] truncate">{passage.title_kr}</small>
                   </span>
                   <span
                     className={`text-[11.5px] font-semibold rounded-md px-2 py-0.5 border ${style.badge}`}

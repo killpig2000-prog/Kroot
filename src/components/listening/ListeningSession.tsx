@@ -13,8 +13,8 @@ const ABC = ["A", "B", "C", "D"];
 const BTN_TEAL =
   "rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-[#0D9488] hover:bg-[#0F766E] transition-colors disabled:opacity-60";
 const BTN_LINE =
-  "rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-[#18181B] bg-white border border-[#E7E5E4] hover:bg-[#FAFAF9] transition-colors";
-const Q_LABEL = "text-[11.5px] font-semibold tracking-[.06em] uppercase text-[#A1A1AA] mb-2";
+  "rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-[#18181B] bg-white border border-[#E3DDD0] hover:bg-[#FAF7EF] transition-colors";
+const Q_LABEL = "text-[11.5px] font-semibold tracking-[.06em] uppercase text-[#A19A8C] mb-2";
 
 // deterministic bar heights so SSR and client render match
 const WAVE_BARS = Array.from({ length: 26 }, (_, i) => 20 + ((i * 37) % 68));
@@ -43,22 +43,22 @@ function ClipPlayer({
   const currentLine = currentIndex >= 0 ? dialogue.lines[currentIndex] : null;
 
   return (
-    <div className="max-w-[680px] border border-[#E7E5E4] rounded-[14px] p-[clamp(20px,3vw,28px)] mb-3.5">
+    <div className="max-w-[680px] border border-[#E3DDD0] rounded-[14px] p-[clamp(20px,3vw,28px)] mb-3.5">
       {/* clip head */}
       <div className="flex items-center justify-between mb-4 gap-2.5 flex-wrap">
         <div className="font-semibold text-[15.5px]">
           {dialogue.title}
-          <small className="block text-[12.5px] text-[#71717A] font-normal">
+          <small className="block text-[12.5px] text-[#6B6560] font-normal">
             {dialogue.level} · {dialogue.lines.length} lines
           </small>
         </div>
-        <span className="text-[12.5px] text-[#A1A1AA] font-medium">
+        <span className="text-[12.5px] text-[#A19A8C] font-medium">
           Clip {clipNo} of {clipCount}
         </span>
       </div>
 
       {/* player row */}
-      <div className="flex items-center gap-3.5 bg-[#FAFAF9] border border-[#E7E5E4] rounded-xl px-[18px] py-4 mb-2.5">
+      <div className="flex items-center gap-3.5 bg-[#FAF7EF] border border-[#E3DDD0] rounded-xl px-[18px] py-4 mb-2.5">
         <button
           aria-label={isPlaying ? "Stop" : "Play"}
           className="w-[52px] h-[52px] rounded-full flex-none bg-[#0D9488] text-white text-[19px] flex items-center justify-center transition-all hover:scale-105 hover:bg-[#0F766E] disabled:opacity-50"
@@ -79,7 +79,7 @@ function ClipPlayer({
           ))}
         </div>
         <button
-          className="flex-none border border-[#E7E5E4] bg-white rounded-lg px-3 py-1.5 text-[12.5px] font-semibold text-[#71717A] hover:border-[#A1A1AA] transition-colors"
+          className="flex-none border border-[#E3DDD0] bg-white rounded-lg px-3 py-1.5 text-[12.5px] font-semibold text-[#6B6560] hover:border-[#A19A8C] transition-colors"
           onClick={() => setRate((r) => (r === 1.0 ? 0.7 : 1.0))}
         >
           {rate.toFixed(1)}×
@@ -88,16 +88,16 @@ function ClipPlayer({
 
       {/* subtitle row */}
       <div className="flex items-center justify-between gap-3 mb-4 flex-wrap">
-        <span className="text-xs text-[#A1A1AA]">🎧 Listen as many times as you need.</span>
+        <span className="text-xs text-[#A19A8C]">🎧 Listen as many times as you need.</span>
         <button
           className={`flex items-center gap-[9px] text-[13px] font-semibold transition-colors ${
-            subOn ? "text-[#0D9488]" : "text-[#71717A]"
+            subOn ? "text-[#0D9488]" : "text-[#6B6560]"
           }`}
           onClick={() => setSubOn((v) => !v)}
         >
           <span
             className={`relative w-[38px] h-[22px] rounded-full flex-none transition-colors ${
-              subOn ? "bg-[#0D9488]" : "bg-[#E7E5E4]"
+              subOn ? "bg-[#0D9488]" : "bg-[#E3DDD0]"
             }`}
           >
             <span
@@ -143,8 +143,8 @@ function ClipPlayer({
                       : state === "wrong"
                       ? "border-[#DC2626] bg-[#FEF2F2]"
                       : answered
-                      ? "border-[#E7E5E4] bg-white opacity-90"
-                      : "border-[#E7E5E4] bg-white hover:border-[#0D9488] hover:bg-[#F0FDFA]"
+                      ? "border-[#E3DDD0] bg-white opacity-90"
+                      : "border-[#E3DDD0] bg-white hover:border-[#0D9488] hover:bg-[#F0FDFA]"
                   }`}
                 >
                   <span
@@ -153,7 +153,7 @@ function ClipPlayer({
                         ? "bg-[#16A34A] border-[#16A34A] text-white"
                         : state === "wrong"
                         ? "bg-[#DC2626] border-[#DC2626] text-white"
-                        : "bg-[#FAFAF9] border-[#E7E5E4] text-[#71717A]"
+                        : "bg-[#FAF7EF] border-[#E3DDD0] text-[#6B6560]"
                     }`}
                   >
                     {ABC[i]}
@@ -167,7 +167,7 @@ function ClipPlayer({
       )}
 
       {(answered || !quiz) && (
-        <div className="border-t border-[#E7E5E4] pt-[18px] mt-[18px]" style={{ animation: "fadeUp .35s ease" }}>
+        <div className="border-t border-[#E3DDD0] pt-[18px] mt-[18px]" style={{ animation: "fadeUp .35s ease" }}>
           {quiz && (
             <span
               className={`inline-flex items-center gap-2 text-[13px] font-semibold rounded-lg px-3 py-1.5 mb-3.5 border ${
@@ -184,19 +184,19 @@ function ClipPlayer({
               What you heard
             </p>
             <button
-              className="text-[12.5px] font-semibold text-[#71717A] hover:text-[#18181B] transition-colors"
+              className="text-[12.5px] font-semibold text-[#6B6560] hover:text-[#18181B] transition-colors"
               onClick={() => setShowEn((v) => !v)}
             >
               {showEn ? "Hide English" : "Show English"}
             </button>
           </div>
-          <div className="bg-[#FAFAF9] border border-[#E7E5E4] rounded-[10px] px-4 py-3.5 mb-3 grid gap-2.5">
+          <div className="bg-[#FAF7EF] border border-[#E3DDD0] rounded-[10px] px-4 py-3.5 mb-3 grid gap-2.5">
             {dialogue.lines.map((line, i) => (
               <div key={i} className="flex items-start justify-between gap-3">
                 <div>
                   <b
                     className={`block text-[11px] font-bold mb-px ${
-                      i === currentIndex ? "text-[#0D9488]" : "text-[#A1A1AA]"
+                      i === currentIndex ? "text-[#0D9488]" : "text-[#A19A8C]"
                     }`}
                   >
                     {line.speaker}
@@ -208,11 +208,11 @@ function ClipPlayer({
                   >
                     {line.kr}
                   </p>
-                  {showEn && <p className="text-[13px] text-[#71717A]">{line.en}</p>}
+                  {showEn && <p className="text-[13px] text-[#6B6560]">{line.en}</p>}
                 </div>
                 <button
                   aria-label="Replay this line"
-                  className="flex-none text-sm text-[#A1A1AA] hover:text-[#0D9488] transition-colors disabled:opacity-40 mt-1"
+                  className="flex-none text-sm text-[#A19A8C] hover:text-[#0D9488] transition-colors disabled:opacity-40 mt-1"
                   onClick={() => replayLine(i)}
                   disabled={!isSupported}
                 >
@@ -268,11 +268,11 @@ export default function ListeningSession({
   if (finished) {
     return (
       <div
-        className="max-w-[680px] text-center border border-[#E7E5E4] rounded-[14px] px-7 py-10"
+        className="max-w-[680px] text-center border border-[#E3DDD0] rounded-[14px] px-7 py-10"
         style={{ animation: "fadeUp .4s ease" }}
       >
         <svg width="104" height="104" viewBox="0 0 150 160" aria-hidden="true" className="inline-block">
-          <ellipse cx="75" cy="150" rx="46" ry="7" fill="#E7E5E4" />
+          <ellipse cx="75" cy="150" rx="46" ry="7" fill="#E3DDD0" />
           <path d="M75 146 C75 122 74 112 74 98" stroke="#8B7355" strokeWidth="8" strokeLinecap="round" />
           <g className="sway">
             <circle cx="75" cy="72" r="36" fill="#22C55E" />
@@ -289,23 +289,23 @@ export default function ListeningSession({
           </text>
         </svg>
         <h2 className="font-bold text-[21px] tracking-[-0.02em] mt-3 mb-1.5">Great listening!</h2>
-        <p className="text-sm text-[#71717A] mb-[22px]">
+        <p className="text-sm text-[#6B6560] mb-[22px]">
           {dialogues.length} clip{dialogues.length > 1 ? "s" : ""} done — your ears (and your tree) grew today.
         </p>
         <div className="flex justify-center gap-3 mb-6 flex-wrap">
-          <div className="border border-[#E7E5E4] rounded-[10px] px-5 py-3 min-w-[100px]">
+          <div className="border border-[#E3DDD0] rounded-[10px] px-5 py-3 min-w-[100px]">
             <b className="block text-[19px] font-bold text-[#16A34A]">
               {good}/{dialogues.length}
             </b>
-            <small className="text-xs text-[#71717A]">Correct</small>
+            <small className="text-xs text-[#6B6560]">Correct</small>
           </div>
-          <div className="border border-[#E7E5E4] rounded-[10px] px-5 py-3 min-w-[100px]">
+          <div className="border border-[#E3DDD0] rounded-[10px] px-5 py-3 min-w-[100px]">
             <b className="block text-[19px] font-bold">{level}</b>
-            <small className="text-xs text-[#71717A]">Level</small>
+            <small className="text-xs text-[#6B6560]">Level</small>
           </div>
-          <div className="border border-[#E7E5E4] rounded-[10px] px-5 py-3 min-w-[100px]">
+          <div className="border border-[#E3DDD0] rounded-[10px] px-5 py-3 min-w-[100px]">
             <b className="block text-[19px] font-bold text-[#16A34A]">+10 XP</b>
-            <small className="text-xs text-[#71717A]">Earned</small>
+            <small className="text-xs text-[#6B6560]">Earned</small>
           </div>
         </div>
         <span className="inline-flex items-center gap-2 bg-[#F0FDF4] border border-[#BBF7D0] rounded-full px-[18px] py-2 text-[13.5px] font-semibold text-[#16A34A] mb-6">
@@ -343,7 +343,7 @@ export default function ListeningSession({
           <span
             key={d.id}
             className={`w-[26px] h-1.5 rounded-full ${
-              i < clipIndex ? "bg-[#0D9488]" : i === clipIndex ? "bg-[#0D9488] opacity-45" : "bg-[#E7E5E4]"
+              i < clipIndex ? "bg-[#0D9488]" : i === clipIndex ? "bg-[#0D9488] opacity-45" : "bg-[#E3DDD0]"
             }`}
           />
         ))}

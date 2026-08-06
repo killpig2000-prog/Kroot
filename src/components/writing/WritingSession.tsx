@@ -18,14 +18,14 @@ type GradeResult = {
   corrected_kr: string;
 };
 
-const CARD = "border border-[#E7E5E4] rounded-[14px] bg-white max-w-[900px]";
-const LABEL = "text-[11.5px] font-semibold tracking-[.1em] uppercase text-[#A1A1AA]";
+const CARD = "border border-[#E3DDD0] rounded-[14px] bg-white max-w-[900px]";
+const LABEL = "text-[11.5px] font-semibold tracking-[.1em] uppercase text-[#A19A8C]";
 const BTN_INK =
-  "rounded-[9px] px-[18px] py-[9px] text-sm font-semibold text-white bg-[#18181B] hover:bg-[#3F3F46] transition-colors disabled:bg-[#E7E5E4] disabled:text-[#A1A1AA]";
+  "rounded-[9px] px-[18px] py-[9px] text-sm font-semibold text-white bg-[#18181B] hover:bg-[#3F3F46] transition-colors disabled:bg-[#E3DDD0] disabled:text-[#A19A8C]";
 const BTN_AMBER =
   "rounded-[9px] px-[18px] py-[9px] text-sm font-semibold text-white bg-[#D97706] hover:bg-[#B45309] transition-colors disabled:opacity-60";
 const BTN_LINE =
-  "rounded-[9px] px-[18px] py-[9px] text-sm font-semibold text-[#18181B] bg-white border border-[#E7E5E4] hover:bg-[#FAFAF9] transition-colors disabled:opacity-60";
+  "rounded-[9px] px-[18px] py-[9px] text-sm font-semibold text-[#18181B] bg-white border border-[#E3DDD0] hover:bg-[#FAF7EF] transition-colors disabled:opacity-60";
 
 function reactionFor(score: number) {
   if (score >= 90)
@@ -164,7 +164,7 @@ export default function WritingSession({
       <div className={`${CARD} overflow-hidden`}>
         <div className="grid grid-cols-1 md:grid-cols-2">
           {/* left page — the prompt */}
-          <div className="p-[clamp(20px,3vw,32px)] flex flex-col border-b md:border-b-0 md:border-r border-dashed border-[#E7E5E4]">
+          <div className="p-[clamp(20px,3vw,32px)] flex flex-col border-b md:border-b-0 md:border-r border-dashed border-[#E3DDD0]">
             <p className={`${LABEL} mb-5`}>
               Page {chapterIndex + 1} · <b className="text-[#D97706] font-semibold">Daily life</b>
             </p>
@@ -173,10 +173,10 @@ export default function WritingSession({
               {prompt.prompt_en}
               <span className="text-[#D97706]">”</span>
             </p>
-            <p className="kr text-[15px] text-[#71717A] leading-[1.8] mb-auto">{prompt.prompt_kr}</p>
+            <p className="kr text-[15px] text-[#6B6560] leading-[1.8] mb-auto">{prompt.prompt_kr}</p>
 
-            <div className="border border-dashed border-[#E7E5E4] rounded-[10px] bg-[#FAFAF9] px-4 py-3.5 mt-6">
-              <div className="flex items-center justify-between gap-3 text-[12.5px] font-semibold text-[#71717A]">
+            <div className="border border-dashed border-[#E3DDD0] rounded-[10px] bg-[#FAF7EF] px-4 py-3.5 mt-6">
+              <div className="flex items-center justify-between gap-3 text-[12.5px] font-semibold text-[#6B6560]">
                 <span>Stuck on a word?</span>
                 <button
                   className="text-[12.5px] font-semibold text-[#D97706] hover:underline"
@@ -216,7 +216,7 @@ export default function WritingSession({
             </div>
 
             <div className="flex items-center justify-between gap-3 pt-3.5 mt-auto flex-wrap">
-              <span className="text-xs text-[#A1A1AA]">
+              <span className="text-xs text-[#A19A8C]">
                 {ready ? "Ready when you are ✍️" : "Write a little more…"}
               </span>
               <button className={BTN_INK} onClick={submit} disabled={submitting || !ready}>
@@ -238,7 +238,7 @@ export default function WritingSession({
           </g>
         </svg>
         <h2 className="font-bold text-[19px] tracking-[-0.02em] mt-3 mb-1.5">Reading your writing…</h2>
-        <p className="text-sm text-[#71717A]">Your tree teacher is checking the grammar 🧐</p>
+        <p className="text-sm text-[#6B6560]">Your tree teacher is checking the grammar 🧐</p>
       </div>
     );
   }
@@ -279,19 +279,19 @@ export default function WritingSession({
             >
               {reaction.verdict}
             </span>
-            <span className="inline-flex items-center gap-2 text-[13px] font-semibold rounded-lg border border-[#E7E5E4] bg-[#FAFAF9] px-3 py-1.5 text-[#71717A]">
+            <span className="inline-flex items-center gap-2 text-[13px] font-semibold rounded-lg border border-[#E3DDD0] bg-[#FAF7EF] px-3 py-1.5 text-[#6B6560]">
               Grammar <b className="text-[#18181B] text-[15px]">{grade.score}</b> / 100
             </span>
           </div>
 
-          <p className="text-sm text-[#71717A] max-w-[460px] mx-auto leading-[1.7]">
+          <p className="text-sm text-[#6B6560] max-w-[460px] mx-auto leading-[1.7]">
             {grade.feedback_en}
           </p>
         </div>
       ) : (
         <div className="text-center mb-6">
           <h2 className="font-bold text-[21px] tracking-[-0.02em] mb-1.5">Nice writing!</h2>
-          <p className="text-sm text-[#71717A]">Here&apos;s one natural way to say it.</p>
+          <p className="text-sm text-[#6B6560]">Here&apos;s one natural way to say it.</p>
         </div>
       )}
 
@@ -316,7 +316,7 @@ export default function WritingSession({
         </div>
       </div>
 
-      <div className="flex justify-end gap-2.5 flex-wrap border-t border-[#E7E5E4] pt-5">
+      <div className="flex justify-end gap-2.5 flex-wrap border-t border-[#E3DDD0] pt-5">
         <button className={BTN_LINE} onClick={() => goTo("/dashboard")} disabled={navigating}>
           Back to Garden
         </button>
@@ -341,7 +341,7 @@ export function WritingEmpty() {
   return (
     <div className={`${CARD} px-7 py-10 text-center`}>
       <h2 className="font-bold text-[19px] tracking-[-0.02em] mb-1.5">No prompt here yet</h2>
-      <p className="text-sm text-[#71717A] mb-6">This page hasn&apos;t been written yet.</p>
+      <p className="text-sm text-[#6B6560] mb-6">This page hasn&apos;t been written yet.</p>
       <Link href="/writing" className={BTN_INK}>
         Back to all pages
       </Link>

@@ -15,7 +15,7 @@ export default function PostFeed({ posts }: { posts: CommunityPost[] }) {
     `rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold transition-all border ${
       active
         ? "bg-[#334155] border-[#334155] text-white"
-        : "bg-white border-[#E7E5E4] text-[#71717A] hover:border-[#A1A1AA]"
+        : "bg-white border-[#E3DDD0] text-[#6B6560] hover:border-[#A19A8C]"
     }`;
 
   return (
@@ -37,10 +37,10 @@ export default function PostFeed({ posts }: { posts: CommunityPost[] }) {
       </div>
 
       {shown.length === 0 ? (
-        <div className="border border-[#E7E5E4] rounded-[14px] bg-[#FAFAF9] p-8 text-center max-w-[980px]">
+        <div className="border border-[#E3DDD0] rounded-[14px] bg-[#FAF7EF] p-8 text-center max-w-[980px]">
           <span className="text-[26px] block mb-2">🌱</span>
           <b className="block font-semibold text-[15px] mb-1">Nothing here yet</b>
-          <small className="text-[13px] text-[#71717A]">
+          <small className="text-[13px] text-[#6B6560]">
             Be the first to post on this board.
           </small>
         </div>
@@ -50,10 +50,10 @@ export default function PostFeed({ posts }: { posts: CommunityPost[] }) {
             <div
               key={p.id}
               style={{ animation: "fadeUp .3s ease" }}
-              className="border border-[#E7E5E4] rounded-[14px] bg-white p-[18px] transition-all duration-150 hover:border-[#334155] hover:-translate-y-0.5"
+              className="border border-[#E3DDD0] rounded-[14px] bg-white p-[18px] transition-all duration-150 hover:border-[#334155] hover:-translate-y-0.5"
             >
               <div className="flex items-center gap-2.5 mb-2.5">
-                <span className="w-8 h-8 rounded-[9px] bg-[#FAFAF9] border border-[#E7E5E4] flex items-center justify-center text-sm shrink-0">
+                <span className="w-8 h-8 rounded-[9px] bg-[#FAF7EF] border border-[#E3DDD0] flex items-center justify-center text-sm shrink-0">
                   {p.author_emoji ?? "🦊"}
                 </span>
                 <div className="min-w-0">
@@ -61,7 +61,7 @@ export default function PostFeed({ posts }: { posts: CommunityPost[] }) {
                     {p.author_name}
                     {p.country ? ` · ${p.country}` : ""}
                   </b>
-                  <span className="text-[11.5px] text-[#A1A1AA]">
+                  <span className="text-[11.5px] text-[#A19A8C]">
                     {boardLabel(p.board)} · {timeAgo(p.created_at)}
                   </span>
                 </div>

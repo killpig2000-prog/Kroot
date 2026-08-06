@@ -2,7 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
-import { createClient } from "@/lib/supabase/server";
+import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { getChapterStatuses, getChaptersForLevel } from "@/lib/writing";
 import { LEVEL_ORDER, type CefrLevel } from "@/lib/tree";
 import { isDifficultyUnlocked } from "@/lib/level";
@@ -20,7 +20,7 @@ const STATUS_LABEL: Record<string, string> = {
 const STATUS_BADGE: Record<string, string> = {
   done: "bg-[#F0FDF4] text-[#16A34A] border-[#BBF7D0]",
   current: "bg-[#FFFBEB] text-[#D97706] border-[#FDE68A]",
-  locked: "bg-[#FAFAF9] text-[#A1A1AA] border-[#E7E5E4]",
+  locked: "bg-[#FAF7EF] text-[#A19A8C] border-[#E3DDD0]",
 };
 
 export default async function WritingMapPage({
@@ -29,35 +29,31 @@ export default async function WritingMapPage({
   searchParams: Promise<{ level?: string }>;
 }) {
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getClaimsUser(supabase);
 
   if (!user) redirect("/onboarding");
 
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("display_name, current_level, streak_days, avatar_url, xp")
-    .eq("id", user.id)
-    .single();
+  const [{ data: profile }, { data: progress }, sp] = await Promise.all([
+    supabase
+      .from("profiles")
+      .select("display_name, current_level, streak_days, avatar_url, xp")
+      .eq("id", user.id)
+      .single(),
+    supabase.from("writing_progress").select("prompt_key").eq("user_id", user.id),
+    searchParams,
+  ]);
 
   const myLevel = (profile?.current_level ?? "A1") as CefrLevel;
-  const sp = await searchParams;
   const requested = isCefrLevel(sp.level) ? sp.level : myLevel;
   const level = isDifficultyUnlocked(requested, myLevel) ? requested : myLevel;
   const chapters = getChaptersForLevel(level);
-
-  const { data: progress } = await supabase
-    .from("writing_progress")
-    .select("prompt_key")
-    .eq("user_id", user.id);
 
   const completedKeys = new Set((progress ?? []).map((p) => p.prompt_key));
   const statuses = getChapterStatuses(chapters, completedKeys);
   const doneCount = statuses.filter((s) => s === "done").length;
 
   return (
-    <div className="min-h-screen bg-white text-[#18181B]">
+    <div className="min-h-screen bg-[#FDFBF7] text-[#18181B]">
       <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
         <Sidebar
           displayName={profile?.display_name ?? "there"}
@@ -68,7 +64,7 @@ export default async function WritingMapPage({
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] md:pb-[60px]">
           {/* breadcrumb */}
-          <div className="flex gap-2 text-[13px] text-[#A1A1AA] mb-[18px]">
+          <div className="flex gap-2 text-[13px] text-[#A19A8C] mb-[18px]">
             <Link href="/dashboard" className="hover:text-[#18181B] transition-colors">
               Garden
             </Link>
@@ -84,7 +80,7 @@ export default async function WritingMapPage({
               </span>
               Writing
             </h1>
-            <span className="text-[13px] text-[#71717A]">
+            <span className="text-[13px] text-[#6B6560]">
               Level {level} · write a little, see one natural way to say it
             </span>
           </div>
@@ -99,7 +95,7 @@ export default async function WritingMapPage({
                   className={`rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold transition-all border ${
                     lv === level
                       ? "bg-[#D97706] border-[#D97706] text-white"
-                      : "bg-white border-[#E7E5E4] text-[#71717A] hover:border-[#A1A1AA]"
+                      : "bg-white border-[#E3DDD0] text-[#6B6560] hover:border-[#A19A8C]"
                   }`}
                 >
                   {lv}
@@ -110,7 +106,7 @@ export default async function WritingMapPage({
               ) : (
                 <div
                   key={lv}
-                  className="rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold border bg-[#FAFAF9] border-[#E7E5E4] text-[#A1A1AA] grayscale opacity-60 cursor-not-allowed select-none"
+                  className="rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold border bg-[#FAF7EF] border-[#E3DDD0] text-[#A19A8C] grayscale opacity-60 cursor-not-allowed select-none"
                 >
                   🔒 {lv}
                   <span className="text-[10.5px] font-bold ml-1.5">
@@ -123,13 +119,13 @@ export default async function WritingMapPage({
 
           {/* progress */}
           <div className="max-w-[720px] mb-6">
-            <div className="flex items-center justify-between text-[12.5px] text-[#71717A] mb-2">
+            <div className="flex items-center justify-between text-[12.5px] text-[#6B6560] mb-2">
               <span>
                 {doneCount} of {chapters.length} pages written
               </span>
-              <span className="text-[#A1A1AA]">Chapter · Daily life</span>
+              <span className="text-[#A19A8C]">Chapter · Daily life</span>
             </div>
-            <div className="h-1.5 rounded-full bg-[#E7E5E4] overflow-hidden">
+            <div className="h-1.5 rounded-full bg-[#E3DDD0] overflow-hidden">
               <div
                 className="h-full rounded-full bg-[#D97706] transition-all"
                 style={{ width: `${chapters.length ? (doneCount / chapters.length) * 100 : 0}%` }}
@@ -150,14 +146,14 @@ export default async function WritingMapPage({
                         ? "bg-[#F0FDF4] text-[#16A34A] border-[#BBF7D0]"
                         : status === "current"
                         ? "bg-[#FFFBEB] text-[#D97706] border-[#FDE68A]"
-                        : "bg-[#FAFAF9] text-[#A1A1AA] border-[#E7E5E4]"
+                        : "bg-[#FAF7EF] text-[#A19A8C] border-[#E3DDD0]"
                     }`}
                   >
                     {status === "done" ? "✓" : i + 1}
                   </span>
                   <div className="min-w-0 flex-1">
                     <b className="block font-semibold text-[14.5px]">Page {i + 1}</b>
-                    <small className="block text-[12.5px] text-[#71717A] leading-[1.5] truncate">
+                    <small className="block text-[12.5px] text-[#6B6560] leading-[1.5] truncate">
                       {prompt.prompt_en}
                     </small>
                   </div>
@@ -172,7 +168,7 @@ export default async function WritingMapPage({
               return status === "locked" ? (
                 <div
                   key={i}
-                  className="border border-[#E7E5E4] rounded-[14px] bg-[#FAFAF9] px-[18px] py-3.5 flex items-center gap-3.5 opacity-70"
+                  className="border border-[#E3DDD0] rounded-[14px] bg-[#FAF7EF] px-[18px] py-3.5 flex items-center gap-3.5 opacity-70"
                 >
                   {content}
                 </div>
@@ -180,7 +176,7 @@ export default async function WritingMapPage({
                 <Link
                   key={i}
                   href={`/writing/session?chapter=${i}&level=${level}`}
-                  className="border border-[#E7E5E4] rounded-[14px] bg-white px-[18px] py-3.5 flex items-center gap-3.5 transition-all duration-150 hover:border-[#D97706] hover:bg-[#FFFBEB] hover:-translate-y-0.5"
+                  className="border border-[#E3DDD0] rounded-[14px] bg-white px-[18px] py-3.5 flex items-center gap-3.5 transition-all duration-150 hover:border-[#D97706] hover:bg-[#FFFBEB] hover:-translate-y-0.5"
                 >
                   {content}
                 </Link>

@@ -13,11 +13,11 @@ export default function SpeechStrip() {
   const track = [...PHRASES, ...PHRASES];
   return (
     <>
-      <div className="border-y border-[#E7E5E4] bg-[#FAFAF9] py-3.5 overflow-hidden" aria-hidden="true">
+      <div className="border-y border-dashed border-[#DDD6C8] bg-[#FAF7EF] py-3.5 overflow-hidden" aria-hidden="true">
         <div className="flex gap-10 w-max animate-[scroll_30s_linear_infinite] whitespace-nowrap motion-reduce:animate-none">
           {track.map((p, i) => (
-            <span key={i} className="text-[13.5px] text-[#71717A] font-medium">
-              <span className="kr text-[#18181B] text-[15px] mr-[7px]">{p.kr}</span>
+            <span key={i} className="text-[13.5px] text-[#8A8478] font-medium">
+              <span className="kr text-[#221F1B] text-[15px] mr-[7px]">{p.kr}</span>
               {p.en}
             </span>
           ))}

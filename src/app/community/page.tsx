@@ -4,7 +4,7 @@ import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import Composer from "@/components/community/Composer";
 import PostList from "@/components/community/PostList";
-import { createClient } from "@/lib/supabase/server";
+import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { BOARDS, SAMPLE_POSTS, isBoardKey, type CommunityPost } from "@/lib/community";
 
 export default async function CommunityPage({
@@ -13,9 +13,7 @@ export default async function CommunityPage({
   searchParams: Promise<{ board?: string }>;
 }) {
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getClaimsUser(supabase);
 
   if (!user) redirect("/onboarding");
 
@@ -41,20 +39,24 @@ export default async function CommunityPage({
   // other failure shows a real notice rather than posts that don't exist.
   const tableMissing = error?.code === "42P01";
   const loadFailed = !!error && !tableMissing;
+  // Strip user_id before it reaches the client — ownership becomes a boolean.
   const posts: CommunityPost[] = tableMissing
     ? SAMPLE_POSTS.filter((p) => !board || p.board === board)
-    : ((rows ?? []) as CommunityPost[]);
+    : (rows ?? []).map(({ user_id, ...post }) => ({
+        ...post,
+        mine: user_id === user.id,
+      })) as CommunityPost[];
   const displayName = profile?.display_name ?? "there";
 
   const tab = (active: boolean) =>
     `rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold transition-all border ${
       active
         ? "bg-[#334155] border-[#334155] text-white"
-        : "bg-white border-[#E7E5E4] text-[#71717A] hover:border-[#A1A1AA]"
+        : "bg-white border-[#E3DDD0] text-[#6B6560] hover:border-[#A19A8C]"
     }`;
 
   return (
-    <div className="min-h-screen bg-white text-[#18181B]">
+    <div className="min-h-screen bg-[#FDFBF7] text-[#18181B]">
       <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
         <Sidebar
           displayName={displayName}
@@ -65,7 +67,7 @@ export default async function CommunityPage({
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] md:pb-[60px]">
           {/* breadcrumb */}
-          <div className="flex gap-2 text-[13px] text-[#A1A1AA] mb-[18px]">
+          <div className="flex gap-2 text-[13px] text-[#A19A8C] mb-[18px]">
             <Link href="/dashboard" className="hover:text-[#18181B] transition-colors">
               Garden
             </Link>
@@ -81,7 +83,7 @@ export default async function CommunityPage({
               </span>
               Community
             </h1>
-            <span className="text-[13px] text-[#71717A]">
+            <span className="text-[13px] text-[#6B6560]">
               Ask questions, share wins, find a practice partner
             </span>
           </div>
@@ -105,17 +107,17 @@ export default async function CommunityPage({
           {tableMissing && (
             <div className="border border-[#CBD5E1] rounded-[14px] bg-[#F1F5F9] p-[18px] mb-5 max-w-[980px]">
               <b className="block font-semibold text-[14px] mb-1">Community opens soon</b>
-              <small className="block text-[13px] text-[#71717A] leading-[1.55]">
+              <small className="block text-[13px] text-[#6B6560] leading-[1.55]">
                 Run the included migration{" "}
-                <code className="text-[12px]">supabase/migrations/0010_community_posts.sql</code> to
+                <code className="text-[12px]">supabase/migrations/0012_community_posts.sql</code> to
                 turn the board on. Until then, here&apos;s a peek at what it looks like.
               </small>
             </div>
           )}
 
           {loadFailed && (
-            <div className="border border-[#E7E5E4] rounded-[14px] bg-[#FAFAF9] px-[18px] py-3.5 mb-5 max-w-[980px]">
-              <small className="text-[13px] text-[#71717A]">
+            <div className="border border-[#E3DDD0] rounded-[14px] bg-[#FAF7EF] px-[18px] py-3.5 mb-5 max-w-[980px]">
+              <small className="text-[13px] text-[#6B6560]">
                 Couldn&apos;t load posts. Try refreshing in a moment.
               </small>
             </div>
@@ -127,7 +129,7 @@ export default async function CommunityPage({
             defaultBoard={board ?? undefined}
             disabled={tableMissing}
           />
-          <PostList posts={posts} currentUserId={user.id} readOnly={tableMissing} />
+          <PostList posts={posts} readOnly={tableMissing} />
         </main>
       </div>
 

@@ -63,7 +63,7 @@ export default function CompleteButton({
       )}
       <Link
         href="/course"
-        className="rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-[#18181B] bg-white border border-[#E7E5E4] hover:bg-[#FAFAF9] transition-colors"
+        className="rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-[#18181B] bg-white border border-[#E3DDD0] hover:bg-[#FAF7EF] transition-colors"
       >
         Course list
       </Link>

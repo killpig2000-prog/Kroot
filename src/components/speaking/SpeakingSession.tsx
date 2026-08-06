@@ -15,8 +15,8 @@ const MINUTES_PER_SESSION = 5;
 const BTN_ROSE =
   "rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-[#E11D48] hover:bg-[#BE123C] transition-colors disabled:opacity-60";
 const BTN_LINE =
-  "rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-[#18181B] bg-white border border-[#E7E5E4] hover:bg-[#FAFAF9] transition-colors";
-const LABEL = "text-[11.5px] font-semibold tracking-[.06em] uppercase text-[#A1A1AA] mb-2";
+  "rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-[#18181B] bg-white border border-[#E3DDD0] hover:bg-[#FAF7EF] transition-colors";
+const LABEL = "text-[11.5px] font-semibold tracking-[.06em] uppercase text-[#A19A8C] mb-2";
 
 const VERDICTS: Record<Verdict, { text: string; fg: string; bg: string; brd: string }> = {
   great: { text: "🌱 Sounds great!", fg: "#16A34A", bg: "#F0FDF4", brd: "#BBF7D0" },
@@ -63,9 +63,9 @@ export default function SpeakingSession({
 
   if (prompts.length === 0) {
     return (
-      <div className="max-w-[680px] border border-[#E7E5E4] rounded-[14px] px-7 py-10 text-center">
+      <div className="max-w-[680px] border border-[#E3DDD0] rounded-[14px] px-7 py-10 text-center">
         <p className="text-[15px] font-semibold mb-1.5">No prompts at {level} yet</p>
-        <p className="text-sm text-[#71717A] mb-5">Try another level while we plant more here.</p>
+        <p className="text-sm text-[#6B6560] mb-5">Try another level while we plant more here.</p>
         <div className="flex justify-center gap-2 flex-wrap">
           {LEVEL_ORDER.filter((lv) => lv !== level).map((lv) => (
             <Link key={lv} href={`/speaking?level=${lv}`} className={BTN_LINE}>
@@ -118,11 +118,11 @@ export default function SpeakingSession({
   if (finished) {
     return (
       <div
-        className="max-w-[680px] text-center border border-[#E7E5E4] rounded-[14px] px-7 py-10"
+        className="max-w-[680px] text-center border border-[#E3DDD0] rounded-[14px] px-7 py-10"
         style={{ animation: "fadeUp .4s ease" }}
       >
         <svg width="104" height="104" viewBox="0 0 150 160" aria-hidden="true" className="inline-block">
-          <ellipse cx="75" cy="150" rx="46" ry="7" fill="#E7E5E4" />
+          <ellipse cx="75" cy="150" rx="46" ry="7" fill="#E3DDD0" />
           <path d="M75 146 C75 122 74 112 74 98" stroke="#8B7355" strokeWidth="8" strokeLinecap="round" />
           <g className="sway">
             <circle cx="75" cy="72" r="36" fill="#22C55E" />
@@ -139,7 +139,7 @@ export default function SpeakingSession({
           </text>
         </svg>
         <h2 className="font-bold text-[21px] tracking-[-0.02em] mt-3 mb-1.5">You said it out loud!</h2>
-        <p className="text-sm text-[#71717A] mb-[22px]">
+        <p className="text-sm text-[#6B6560] mb-[22px]">
           {prompts.length} prompt{prompts.length > 1 ? "s" : ""} spoken — your mouth is learning the shapes.
         </p>
         {levelUp && (
@@ -148,19 +148,19 @@ export default function SpeakingSession({
           </p>
         )}
         <div className="flex justify-center gap-3 mb-6 flex-wrap">
-          <div className="border border-[#E7E5E4] rounded-[10px] px-5 py-3 min-w-[100px]">
+          <div className="border border-[#E3DDD0] rounded-[10px] px-5 py-3 min-w-[100px]">
             <b className="block text-[19px] font-bold text-[#16A34A]">
               {nailed.length}/{prompts.length}
             </b>
-            <small className="text-xs text-[#71717A]">Nailed</small>
+            <small className="text-xs text-[#6B6560]">Nailed</small>
           </div>
-          <div className="border border-[#E7E5E4] rounded-[10px] px-5 py-3 min-w-[100px]">
+          <div className="border border-[#E3DDD0] rounded-[10px] px-5 py-3 min-w-[100px]">
             <b className="block text-[19px] font-bold">{level}</b>
-            <small className="text-xs text-[#71717A]">Level</small>
+            <small className="text-xs text-[#6B6560]">Level</small>
           </div>
-          <div className="border border-[#E7E5E4] rounded-[10px] px-5 py-3 min-w-[100px]">
+          <div className="border border-[#E3DDD0] rounded-[10px] px-5 py-3 min-w-[100px]">
             <b className="block text-[19px] font-bold text-[#16A34A]">+10 XP</b>
-            <small className="text-xs text-[#71717A]">Earned</small>
+            <small className="text-xs text-[#6B6560]">Earned</small>
           </div>
         </div>
         <span className="inline-flex items-center gap-2 bg-[#FFF1F2] border border-[#FECDD3] rounded-full px-[18px] py-2 text-[13.5px] font-semibold text-[#E11D48] mb-6">
@@ -196,7 +196,7 @@ export default function SpeakingSession({
           <span
             key={p.id}
             className={`w-[26px] h-1.5 rounded-full transition-colors ${
-              i < index ? "bg-[#E11D48]" : i === index ? "bg-[#E11D48] opacity-45" : "bg-[#E7E5E4]"
+              i < index ? "bg-[#E11D48]" : i === index ? "bg-[#E11D48] opacity-45" : "bg-[#E3DDD0]"
             }`}
           />
         ))}
@@ -204,14 +204,14 @@ export default function SpeakingSession({
 
       <div
         key={prompt.id}
-        className="max-w-[680px] border border-[#E7E5E4] rounded-[14px] p-[clamp(20px,3vw,28px)]"
+        className="max-w-[680px] border border-[#E3DDD0] rounded-[14px] p-[clamp(20px,3vw,28px)]"
         style={{ animation: "fadeUp .35s ease" }}
       >
         <div className="flex items-center justify-between mb-5 gap-2.5 flex-wrap">
           <span className="inline-flex items-center gap-1.5 text-[11.5px] font-semibold text-[#E11D48] bg-[#FFF1F2] border border-[#FECDD3] rounded-full px-2.5 py-[3px]">
             {topicIcon(prompt.topic)} {topicLabel(prompt.topic)}
           </span>
-          <span className="text-[12.5px] text-[#A1A1AA] font-medium">
+          <span className="text-[12.5px] text-[#A19A8C] font-medium">
             Prompt {index + 1} of {prompts.length}
           </span>
         </div>
@@ -220,7 +220,7 @@ export default function SpeakingSession({
         <p className="font-bold text-[19px] tracking-[-0.01em] leading-[1.45] mb-5">{prompt.en}</p>
 
         {/* model answer player */}
-        <div className="flex items-center gap-3 bg-[#FAFAF9] border border-[#E7E5E4] rounded-xl px-[18px] py-3.5 mb-5">
+        <div className="flex items-center gap-3 bg-[#FAF7EF] border border-[#E3DDD0] rounded-xl px-[18px] py-3.5 mb-5">
           <button
             aria-label="Hear the model answer"
             className="w-11 h-11 rounded-full flex-none bg-[#E11D48] text-white text-[17px] flex items-center justify-center transition-transform hover:scale-105 disabled:opacity-50"
@@ -230,8 +230,8 @@ export default function SpeakingSession({
             🔊
           </button>
           <div className="min-w-0">
-            <b className="block text-[11px] font-bold tracking-[.06em] text-[#A1A1AA]">MODEL ANSWER</b>
-            <p className="text-[13px] text-[#71717A]">
+            <b className="block text-[11px] font-bold tracking-[.06em] text-[#A19A8C]">MODEL ANSWER</b>
+            <p className="text-[13px] text-[#6B6560]">
               {heard === null
                 ? "Listen first if you'd like — then say it yourself."
                 : "Compare it with what you said."}
@@ -259,7 +259,7 @@ export default function SpeakingSession({
                 >
                   🎤
                 </button>
-                <p className="text-[13px] text-[#71717A] min-h-[20px] text-center">
+                <p className="text-[13px] text-[#6B6560] min-h-[20px] text-center">
                   {isListening ? (
                     <span className="kr text-[15px] text-[#18181B]">{interim || "Listening…"}</span>
                   ) : (
@@ -275,7 +275,7 @@ export default function SpeakingSession({
 
             {!showFallback ? (
               <button
-                className="text-[12.5px] font-semibold text-[#71717A] hover:text-[#18181B] transition-colors"
+                className="text-[12.5px] font-semibold text-[#6B6560] hover:text-[#18181B] transition-colors"
                 onClick={() => setTypedFallback(true)}
               >
                 Type your answer instead
@@ -283,7 +283,7 @@ export default function SpeakingSession({
             ) : (
               <div className="w-full max-w-[460px]">
                 {!micOk && (
-                  <p className="text-[12.5px] text-[#71717A] mb-2 text-center">
+                  <p className="text-[12.5px] text-[#6B6560] mb-2 text-center">
                     Your browser doesn&apos;t support speech recognition — type your answer instead.
                   </p>
                 )}
@@ -292,7 +292,7 @@ export default function SpeakingSession({
                   onChange={(e) => setTyped(e.target.value)}
                   placeholder="한국어로 입력하세요…"
                   rows={2}
-                  className="kr w-full resize-none rounded-[10px] border border-[#E7E5E4] bg-white px-3.5 py-2.5 text-[16px] outline-none focus:border-[#E11D48] transition-colors"
+                  className="kr w-full resize-none rounded-[10px] border border-[#E3DDD0] bg-white px-3.5 py-2.5 text-[16px] outline-none focus:border-[#E11D48] transition-colors"
                 />
                 <div className="flex justify-end mt-2">
                   <button
@@ -310,7 +310,7 @@ export default function SpeakingSession({
 
         {/* verdict */}
         {heard !== null && verdict && (
-          <div className="border-t border-[#E7E5E4] pt-[18px]" style={{ animation: "fadeUp .35s ease" }}>
+          <div className="border-t border-[#E3DDD0] pt-[18px]" style={{ animation: "fadeUp .35s ease" }}>
             <span
               className="inline-flex items-center gap-2 text-[13px] font-semibold rounded-lg px-3 py-1.5 mb-3.5 border"
               style={{ color: verdict.fg, background: verdict.bg, borderColor: verdict.brd }}
@@ -319,8 +319,8 @@ export default function SpeakingSession({
             </span>
 
             <div className="grid gap-2.5 mb-4">
-              <div className="bg-[#FAFAF9] border border-[#E7E5E4] rounded-[10px] px-4 py-3">
-                <b className="block text-[11px] font-bold tracking-[.06em] text-[#A1A1AA] mb-1">YOU SAID</b>
+              <div className="bg-[#FAF7EF] border border-[#E3DDD0] rounded-[10px] px-4 py-3">
+                <b className="block text-[11px] font-bold tracking-[.06em] text-[#A19A8C] mb-1">YOU SAID</b>
                 <p className="kr text-[17px] font-medium">{heard}</p>
               </div>
               <div className="bg-[#FFF1F2] border border-[#FECDD3] rounded-[10px] px-4 py-3">
@@ -331,14 +331,14 @@ export default function SpeakingSession({
                     </b>
                     <p className="kr text-[17px] font-medium">{prompt.kr}</p>
                     {prompt.altAnswers && prompt.altAnswers.length > 0 && (
-                      <p className="kr text-[13px] text-[#71717A] mt-1">
+                      <p className="kr text-[13px] text-[#6B6560] mt-1">
                         also fine: {prompt.altAnswers.join(" · ")}
                       </p>
                     )}
                   </div>
                   <button
                     aria-label="Replay the model answer"
-                    className="flex-none text-sm text-[#A1A1AA] hover:text-[#E11D48] transition-colors disabled:opacity-40"
+                    className="flex-none text-sm text-[#A19A8C] hover:text-[#E11D48] transition-colors disabled:opacity-40"
                     onClick={() => speak(prompt.kr)}
                     disabled={!ttsOk}
                   >
@@ -349,7 +349,7 @@ export default function SpeakingSession({
             </div>
 
             <div className="flex items-center justify-between gap-3 flex-wrap">
-              <span className="text-[12.5px] text-[#A1A1AA] font-medium">
+              <span className="text-[12.5px] text-[#A19A8C] font-medium">
                 {Math.round(score * 100)}% match
               </span>
               <div className="flex gap-2.5">

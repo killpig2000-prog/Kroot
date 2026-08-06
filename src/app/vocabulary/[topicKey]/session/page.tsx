@@ -3,7 +3,7 @@ import { notFound, redirect } from "next/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import VocabSession from "@/components/vocabulary/VocabSession";
-import { createClient } from "@/lib/supabase/server";
+import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import {
   VOCAB_TOPICS,
   getChaptersForTopic,
@@ -32,9 +32,7 @@ export default async function VocabChapterSessionPage({
   const chapterIndex = Number(sp.chapter ?? 0);
 
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getClaimsUser(supabase);
 
   if (!user) redirect("/onboarding");
 
@@ -53,9 +51,10 @@ export default async function VocabChapterSessionPage({
   const chapters = getChaptersForTopic(topicKey, level);
   const chapterWords = chapters[chapterIndex] ?? [];
 
+  // select("*") stays valid whether or not migration 0022 (box columns) is applied.
   const { data: progress } = await supabase
     .from("vocabulary_progress")
-    .select("word_key, correct_count, incorrect_count, last_reviewed_at")
+    .select("*")
     .eq("user_id", user.id)
     .in(
       "word_key",
@@ -71,6 +70,7 @@ export default async function VocabChapterSessionPage({
       correct_count: p?.correct_count ?? 0,
       incorrect_count: p?.incorrect_count ?? 0,
       last_reviewed_at: p?.last_reviewed_at ?? null,
+      box: p?.box ?? null,
     };
   });
 
@@ -78,7 +78,7 @@ export default async function VocabChapterSessionPage({
   const hasNextChapter = chapterIndex + 1 < chapters.length;
 
   return (
-    <div className="min-h-screen bg-white text-[#18181B]">
+    <div className="min-h-screen bg-[#FDFBF7] text-[#18181B]">
       <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
         <Sidebar
           displayName={profile?.display_name ?? "there"}
@@ -89,7 +89,7 @@ export default async function VocabChapterSessionPage({
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] md:pb-[60px]">
           {/* breadcrumb */}
-          <div className="flex gap-2 text-[13px] text-[#A1A1AA] mb-[18px] flex-wrap">
+          <div className="flex gap-2 text-[13px] text-[#A19A8C] mb-[18px] flex-wrap">
             <Link href="/dashboard" className="hover:text-[#18181B] transition-colors">
               Garden
             </Link>
@@ -109,7 +109,7 @@ export default async function VocabChapterSessionPage({
               </span>
               {topic.label}
             </h1>
-            <span className="text-[13px] text-[#71717A]">
+            <span className="text-[13px] text-[#6B6560]">
               Level {level} · set {chapterIndex + 1} of {chapters.length}
             </span>
           </div>

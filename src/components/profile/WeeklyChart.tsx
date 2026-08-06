@@ -10,10 +10,10 @@ export default function WeeklyChart({ days }: { days: DayMinutes[] }) {
   const peakIndex = max > 0 ? days.findIndex((d) => d.minutes === max) : -1;
 
   return (
-    <div className="border border-[#E7E5E4] rounded-[14px] px-[22px] py-5">
+    <div className="border border-[#E3DDD0] rounded-[14px] px-[22px] py-5">
       <div className="flex justify-between items-baseline mb-4 gap-3">
         <b className="font-semibold text-[15px] tracking-[-0.01em]">This week&apos;s watering</b>
-        <span className="text-[12px] text-[#A1A1AA] font-medium">minutes / day</span>
+        <span className="text-[12px] text-[#A19A8C] font-medium">minutes / day</span>
       </div>
 
       <div className="flex items-end gap-2" style={{ height: PLOT_HEIGHT }} aria-hidden="true">
@@ -30,14 +30,14 @@ export default function WeeklyChart({ days }: { days: DayMinutes[] }) {
             >
               <span
                 className={`text-[11px] leading-none font-semibold tabular-nums ${
-                  isToday ? "text-[#16A34A]" : "text-[#A1A1AA]"
+                  isToday ? "text-[#16A34A]" : "text-[#A19A8C]"
                 } ${showValue ? "" : "invisible"}`}
               >
                 {d.minutes}
               </span>
               <div
                 className={`w-full max-w-[26px] rounded-t-[4px] ${
-                  isToday ? "bg-[#16A34A]" : d.minutes > 0 ? "bg-[#BBF7D0]" : "bg-[#E7E5E4]"
+                  isToday ? "bg-[#16A34A]" : d.minutes > 0 ? "bg-[#BBF7D0]" : "bg-[#E3DDD0]"
                 }`}
                 style={{ height: barHeight }}
               />
@@ -46,12 +46,12 @@ export default function WeeklyChart({ days }: { days: DayMinutes[] }) {
         })}
       </div>
 
-      <div className="flex gap-2 mt-2 border-t border-[#E7E5E4] pt-2" aria-hidden="true">
+      <div className="flex gap-2 mt-2 border-t border-[#E3DDD0] pt-2" aria-hidden="true">
         {days.map((d, i) => (
           <div
             key={d.date}
             className={`flex-1 text-center text-[11px] leading-none ${
-              i === todayIndex ? "text-[#18181B] font-semibold" : "text-[#A1A1AA] font-medium"
+              i === todayIndex ? "text-[#18181B] font-semibold" : "text-[#A19A8C] font-medium"
             }`}
           >
             {d.label}

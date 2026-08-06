@@ -42,25 +42,39 @@ export default function TreeCard({
   const maxed = level >= MAX_LEVEL;
 
   return (
-    <div className="border border-[#E7E5E4] rounded-[14px] p-[clamp(18px,3.6vw,26px)] mb-3.5 grid grid-cols-1 sm:grid-cols-[auto_1fr] gap-[clamp(18px,4vw,32px)] items-center bg-white">
-      <div className="relative bg-[#FAFAF9] border border-[#E7E5E4] rounded-xl p-4 flex justify-center">
+    <div className="relative border border-[#E3DDD0] p-[clamp(18px,3.6vw,26px)] mb-3.5 grid grid-cols-1 sm:grid-cols-[auto_1fr] gap-[clamp(18px,4vw,32px)] items-center bg-white rotate-[-0.4deg] shadow-[0_14px_30px_-18px_rgba(60,50,30,.35)]">
+      <span
+        aria-hidden="true"
+        className="absolute -top-2 left-9 -rotate-3 w-[56px] h-[17px] border z-10"
+        style={{ background: "rgba(190,227,248,.65)", borderColor: "rgba(150,200,230,.45)" }}
+      />
+      {/* the tree, as a polaroid in the album */}
+      <figure className="relative m-0 bg-white border border-[#E3DDD0] p-1.5 pb-6 rotate-[1.2deg] shadow-[0_10px_22px_-12px_rgba(60,50,30,.35)]">
         <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
           <SpeechBubble phrases={TREE_PHRASES} />
         </div>
-        <svg viewBox="0 0 220 230" className="w-[clamp(130px,20vw,170px)] h-auto" aria-hidden="true">
-          <LevelCreature level={stage} costumeIds={costumeIds} />
-          <g className="bob">
-            <circle cx="60" cy="78" r="6" fill="#FACC15" />
-          </g>
-          <g className="bob2">
-            <circle cx="164" cy="72" r="6" fill="#FB7185" />
-          </g>
-        </svg>
-      </div>
+        <div
+          className="flex justify-center px-3 pt-3"
+          style={{ background: "linear-gradient(180deg,#EAF6FF 0%,#F0FDF4 70%,#E8F5DF 100%)" }}
+        >
+          <svg viewBox="0 0 220 230" className="w-[clamp(120px,18vw,158px)] h-auto" aria-hidden="true">
+            <LevelCreature level={stage} costumeIds={costumeIds} />
+            <g className="bob">
+              <circle cx="60" cy="78" r="6" fill="#FACC15" />
+            </g>
+            <g className="bob2">
+              <circle cx="164" cy="72" r="6" fill="#FB7185" />
+            </g>
+          </svg>
+        </div>
+        <figcaption className="absolute bottom-1 left-0 right-0 text-center text-[10px] font-bold text-[#8A8478]">
+          오늘의 나무 🌱
+        </figcaption>
+      </figure>
 
       <div>
-        <p className="text-[11.5px] font-semibold tracking-[.06em] uppercase text-[#A1A1AA] mb-1.5">
-          Your tree
+        <p className="text-[11.5px] font-extrabold tracking-[.08em] uppercase text-[#B7AE9C] mb-1.5">
+          Your tree · 성장 앨범
         </p>
         <h2 className="font-semibold text-lg tracking-[-0.01em] mb-0.5">
           {treeName}
@@ -68,16 +82,16 @@ export default function TreeCard({
             Lv. {level}
           </span>
         </h2>
-        <p className="text-[13.5px] text-[#71717A] mb-4">{blurb}</p>
+        <p className="text-[13.5px] text-[#6B6560] mb-4">{blurb}</p>
 
         <div className="flex items-center gap-3 mb-4">
-          <div className="flex-1 h-1.5 bg-[#E7E5E4] rounded-full overflow-hidden">
+          <div className="flex-1 h-1.5 bg-[#EFE9DB] rounded-full overflow-hidden">
             <i
               className="not-italic block h-full bg-[#16A34A] rounded-full transition-[width] duration-1000"
               style={{ width: `${fill}%` }}
             />
           </div>
-          <span className="text-[12.5px] text-[#71717A] font-medium whitespace-nowrap">
+          <span className="text-[12.5px] text-[#6B6560] font-medium whitespace-nowrap">
             {maxed ? "Fully grown 🎉" : `${xpInto}/${xpNeeded} XP to Lv. ${level + 1}`}
           </span>
         </div>
@@ -92,8 +106,8 @@ export default function TreeCard({
                   state === "now"
                     ? "bg-[#F0FDF4] border-[#BBF7D0]"
                     : state === "done"
-                    ? "bg-white border-[#E7E5E4]"
-                    : "bg-white border-[#E7E5E4] grayscale opacity-45"
+                    ? "bg-white border-[#E3DDD0]"
+                    : "bg-white border-[#E3DDD0] grayscale opacity-45"
                 }`}
               >
                 <span className={state === "now" ? "inline-block bob" : undefined}>
@@ -101,7 +115,7 @@ export default function TreeCard({
                 </span>
                 <small
                   className={`block text-[10.5px] font-semibold mt-px ${
-                    state === "now" ? "text-[#16A34A]" : state === "done" ? "text-[#71717A]" : "text-[#A1A1AA]"
+                    state === "now" ? "text-[#16A34A]" : state === "done" ? "text-[#6B6560]" : "text-[#A19A8C]"
                   }`}
                 >
                   {STAGE_RANGES[idx]}

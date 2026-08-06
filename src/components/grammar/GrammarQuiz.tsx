@@ -6,7 +6,7 @@ import { recordCompletion } from "@/lib/activity";
 import type { GrammarQuiz as Quiz } from "@/lib/grammar";
 
 const ABC = ["A", "B", "C", "D"];
-const Q_LABEL = "text-[11.5px] font-semibold tracking-[.06em] uppercase text-[#A1A1AA] mb-2";
+const Q_LABEL = "text-[11.5px] font-semibold tracking-[.06em] uppercase text-[#A19A8C] mb-2";
 
 function QuestionCard({
   quiz,
@@ -24,12 +24,12 @@ function QuestionCard({
   const correct = picked === quiz.ans;
 
   return (
-    <div className="border border-[#E7E5E4] rounded-[14px] p-[clamp(18px,2.5vw,24px)] mb-3.5">
+    <div className="border border-[#E3DDD0] rounded-[14px] p-[clamp(18px,2.5vw,24px)] mb-3.5">
       <div className="flex items-center justify-between gap-2 mb-2 flex-wrap">
         <p className={Q_LABEL} style={{ marginBottom: 0 }}>
           Question {no}
         </p>
-        <span className="text-[12.5px] text-[#A1A1AA] font-medium">
+        <span className="text-[12.5px] text-[#A19A8C] font-medium">
           {no} of {total}
         </span>
       </div>
@@ -54,8 +54,8 @@ function QuestionCard({
                   : state === "wrong"
                   ? "border-[#DC2626] bg-[#FEF2F2]"
                   : answered
-                  ? "border-[#E7E5E4] bg-white opacity-90"
-                  : "border-[#E7E5E4] bg-white hover:border-[#4F46E5] hover:bg-[#EEF2FF]"
+                  ? "border-[#E3DDD0] bg-white opacity-90"
+                  : "border-[#E3DDD0] bg-white hover:border-[#4F46E5] hover:bg-[#EEF2FF]"
               }`}
             >
               <span
@@ -64,7 +64,7 @@ function QuestionCard({
                     ? "bg-[#16A34A] border-[#16A34A] text-white"
                     : state === "wrong"
                     ? "bg-[#DC2626] border-[#DC2626] text-white"
-                    : "bg-[#FAFAF9] border-[#E7E5E4] text-[#71717A]"
+                    : "bg-[#FAF7EF] border-[#E3DDD0] text-[#6B6560]"
                 }`}
               >
                 {ABC[i]}

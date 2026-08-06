@@ -22,7 +22,7 @@ export default function RankCard({ grade }: { grade: string }) {
   }, [supabase]);
 
   if (!ready) {
-    return <div className="border border-[#E7E5E4] rounded-[14px] px-5 py-4 min-h-[74px]" />;
+    return <div className="border border-[#E3DDD0] rounded-[14px] px-5 py-4 min-h-[74px]" />;
   }
 
   const active = my && my.xp_week > 0;
@@ -34,7 +34,7 @@ export default function RankCard({ grade }: { grade: string }) {
   return (
     <Link
       href="/league"
-      className="border border-[#E7E5E4] rounded-[14px] px-5 py-4 block hover:border-[#16A34A] transition-colors"
+      className="border border-[#E3DDD0] rounded-[14px] px-5 py-4 block hover:border-[#16A34A] transition-colors"
     >
       <b className="block text-[20px] font-bold tracking-[-0.02em] tabular-nums">
         {active ? `#${my.rank}` : "—"}
@@ -42,7 +42,7 @@ export default function RankCard({ grade }: { grade: string }) {
           <span className="text-[12px] font-semibold text-[#16A34A] ml-1.5">top {pct}%</span>
         )}
       </b>
-      <small className="text-[12.5px] text-[#71717A]">
+      <small className="text-[12.5px] text-[#6B6560]">
         {active ? `${grade} league this week →` : `${grade} league — earn XP to rank →`}
       </small>
     </Link>

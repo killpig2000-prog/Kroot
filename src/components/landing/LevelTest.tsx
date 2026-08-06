@@ -1,84 +1,74 @@
 import Link from "next/link";
 
-const POINTS = [
-  {
-    title: "Optional, always",
-    desc: "Not ready? Begin at A1 and retake it from your profile whenever you like.",
-  },
-  {
-    title: "Mixed & quick",
-    desc: "Vocabulary, grammar, and listening — about 18 seconds per question.",
-  },
-  {
-    title: "An honest level",
-    desc: "Placed on the CEFR scale used by learners and employers worldwide.",
-  },
+const OPTIONS = [
+  { label: "It's okay / I'm fine", on: true },
+  { label: "It's expensive", on: false },
+  { label: "See you tomorrow", on: false },
 ];
-
-const OPTIONS = ["It's okay / I'm fine", "It's expensive", "See you tomorrow", "I don't know"];
 
 export default function LevelTest() {
   return (
-    <section className="border-y border-[#E7E5E4] bg-[#FAFAF9] py-[clamp(56px,8vw,96px)]">
-      <div className="max-w-[1080px] mx-auto px-[clamp(18px,4vw,28px)]">
-        <div className="max-w-[560px] mb-[clamp(30px,4.5vw,48px)]">
-          <span className="inline-block text-xs font-semibold uppercase tracking-[0.06em] text-[#16A34A] mb-3">
-            Find your level
-          </span>
-          <h2 className="font-extrabold text-[clamp(25px,3.2vw,36px)] leading-[1.2] tracking-[-0.025em] text-[#18181B]">
-            Three minutes.
-            <br />
-            Your true starting point.
-          </h2>
-          <p className="text-[#71717A] mt-3 text-[15px]">
-            Ten quick questions place you on the CEFR scale (A1–C2). Or skip it, start at A1, and
-            test anytime later.
+    <section className="relative bg-[#FDFBF7] border-t border-dashed border-[#DDD6C8] py-[clamp(52px,8vw,88px)] px-6 overflow-hidden">
+      <span aria-hidden="true" className="absolute left-[8%] bottom-[40px] font-black text-[#F0EBDD] text-[80px] -rotate-[8deg] select-none">
+        가
+      </span>
+
+      <div className="text-center mb-1.5">
+        <span className="inline-block bg-white border-[1.5px] border-dashed border-[#CFC8B8] rounded-full px-4 py-[5px] text-xs font-extrabold text-[#15803D] -rotate-1">
+          쪽지시험 · pop quiz
+        </span>
+      </div>
+      <h2 className="text-center font-black text-[clamp(22px,3vw,30px)] tracking-[-0.02em] text-[#221F1B] mb-2 text-balance">
+        3분이면 당신의 레벨이 나와요
+      </h2>
+      <p className="text-center text-[#6B6560] text-[13.5px] max-w-[52ch] mx-auto mb-8">
+        Ten questions place you on the CEFR scale (A1–C2). Or skip it and start at A1 — retake it
+        anytime from your profile.
+      </p>
+
+      <div className="relative max-w-[840px] mx-auto flex justify-center items-start gap-6 flex-wrap">
+        {/* the quiz, on ruled paper */}
+        <div
+          className="relative z-10 w-[min(410px,100%)] bg-white border border-[#E3DDD0] px-6 pt-6 pb-5 -rotate-1 shadow-[0_18px_36px_-18px_rgba(60,50,30,.35)]"
+          style={{ backgroundImage: "repeating-linear-gradient(#fff 0 27px,#F2EEE4 27px 28px)" }}
+        >
+          <span aria-hidden="true" className="absolute -top-2 left-1/2 -translate-x-1/2 -rotate-2 w-[64px] h-[17px] border z-10" style={{ background: "rgba(253,230,138,.6)", borderColor: "rgba(217,180,90,.45)" }} />
+          <div className="flex justify-between items-baseline border-b-2 border-[#221F1B] pb-1.5 mb-3">
+            <b className="text-[15px]">레벨 테스트 · Q3</b>
+            <span className="text-[11px] text-[#8A8478]">vocabulary</span>
+          </div>
+          <p className="text-sm font-bold mb-2.5 text-left">
+            <span className="kr">&quot;괜찮아요&quot;</span> — what does it mean?
           </p>
+          {OPTIONS.map((o) => (
+            <span
+              key={o.label}
+              className={`block text-left text-[13px] rounded-[9px] px-3.5 py-2.5 mb-[7px] border-[1.5px] ${
+                o.on ? "border-[#16A34A] bg-[#F0FDF4] font-bold" : "border-[#E3DDD0] bg-[#FDFBF7]"
+              }`}
+            >
+              <span
+                className={`inline-block w-[15px] h-[15px] rounded-full border-2 mr-2 align-[-2px] ${
+                  o.on ? "border-[#16A34A] bg-[#16A34A]" : "border-[#CFC8B8]"
+                }`}
+              />
+              {o.label}
+            </span>
+          ))}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-[clamp(24px,4vw,56px)] items-center">
-          <div className="reveal border border-[#E7E5E4] rounded-[14px] bg-white p-6 shadow-[0_1px_2px_rgba(0,0,0,.03)]">
-            <p className="text-[12.5px] font-semibold text-[#A1A1AA] mb-2.5">
-              Question 3 of 10 · Vocabulary
-            </p>
-            <p className="kr text-[28px] text-[#18181B] mb-4">&quot;괜찮아요&quot;</p>
-            <div className="grid gap-[9px]">
-              {OPTIONS.map((opt) => (
-                <button
-                  key={opt}
-                  className="px-[15px] py-3 rounded-[10px] text-sm font-medium text-left bg-white border-[1.5px] border-[#E7E5E4] text-[#18181B] transition-all hover:border-[#16A34A] hover:bg-[#F0FDF4]"
-                >
-                  {opt}
-                </button>
-              ))}
-            </div>
-            <div className="flex justify-between mt-3.5 text-xs text-[#A1A1AA] font-medium">
-              <span>~3 min total</span>
-              <span>●●●○○○○○○○</span>
-            </div>
+        {/* sticky note + CTA */}
+        <div className="relative z-10 w-[min(240px,100%)]">
+          <div className="bg-[#FEF9C3] border border-[#ECD98A] px-4 py-3.5 text-[12px] leading-[1.55] rotate-2 shadow-[0_10px_22px_-12px_rgba(120,100,30,.4)] text-left mb-5">
+            <b className="block mb-0.5">✏️ 채점 기준</b>
+            어휘·문법·듣기를 섞어 약 18초/문제. 결과는 학습자·기업이 쓰는 CEFR 기준!
           </div>
-
-          <div className="reveal">
-            <ul className="grid gap-4 list-none mb-[26px]">
-              {POINTS.map((p, i) => (
-                <li key={p.title} className="flex gap-[13px] items-start">
-                  <span className="flex-none w-[26px] h-[26px] mt-0.5 rounded-lg bg-[#F0FDF4] border border-[#BBF7D0] text-[#16A34A] flex items-center justify-center text-[12.5px] font-bold">
-                    {i + 1}
-                  </span>
-                  <div>
-                    <b className="block text-[15px] font-semibold text-[#18181B]">{p.title}</b>
-                    <span className="text-[#71717A] text-[13.5px]">{p.desc}</span>
-                  </div>
-                </li>
-              ))}
-            </ul>
-            <Link
-              href="/onboarding"
-              className="inline-flex items-center rounded-[10px] bg-[#16A34A] px-[26px] py-[13px] text-[14.5px] font-semibold text-white hover:bg-[#15803D] transition-colors"
-            >
-              Start the level test
-            </Link>
-          </div>
+          <Link
+            href="/onboarding"
+            className="inline-block rounded-[10px] bg-[#16A34A] px-[24px] py-3 text-sm font-bold text-white shadow-[0_5px_0_#15803D] hover:translate-y-[2px] hover:shadow-[0_3px_0_#15803D] transition-all"
+          >
+            Start the level test
+          </Link>
         </div>
       </div>
     </section>

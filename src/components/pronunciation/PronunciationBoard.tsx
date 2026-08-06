@@ -37,7 +37,7 @@ function WordRow({
   return (
     <div
       className={`rounded-[10px] border px-4 py-3 transition-colors ${
-        nailed ? "border-[#BBF7D0] bg-[#F0FDF4]" : "border-[#E7E5E4] bg-white hover:border-[#99F6E4]"
+        nailed ? "border-[#BBF7D0] bg-[#F0FDF4]" : "border-[#E3DDD0] bg-white hover:border-[#99F6E4]"
       }`}
     >
       <div className="flex items-center gap-3 flex-wrap">
@@ -52,7 +52,7 @@ function WordRow({
 
         <div className="min-w-0 flex-1">
           <p className="kr text-[19px] font-medium leading-tight">{word.kr}</p>
-          <p className="text-[12.5px] text-[#71717A]">
+          <p className="text-[12.5px] text-[#6B6560]">
             <span className="italic">{word.romanization}</span> · {word.en}
           </p>
         </div>
@@ -64,7 +64,7 @@ function WordRow({
           className={`w-10 h-10 rounded-full flex-none text-[15px] flex items-center justify-center border transition-all ${
             isListening
               ? "bg-[#0D9488] border-[#0D9488] text-white scale-110 wave-on"
-              : "bg-white border-[#E7E5E4] text-[#71717A] hover:border-[#0D9488] hover:text-[#0D9488] hover:scale-110"
+              : "bg-white border-[#E3DDD0] text-[#6B6560] hover:border-[#0D9488] hover:text-[#0D9488] hover:scale-110"
           } disabled:opacity-40 disabled:hover:scale-100`}
         >
           🎤
@@ -76,7 +76,7 @@ function WordRow({
       {(isListening || heard !== null || error) && (
         <div className="mt-2.5 pl-[52px]" style={{ animation: "fadeUp .3s ease" }}>
           {isListening ? (
-            <p className="text-[13px] text-[#71717A]">
+            <p className="text-[13px] text-[#6B6560]">
               Listening… <span className="kr text-[#18181B]">{interim}</span>
             </p>
           ) : heard !== null ? (
@@ -107,7 +107,7 @@ function WordRow({
       )}
 
       {!micOk && heard === null && (
-        <p className="mt-2 pl-[52px] text-[12px] text-[#A1A1AA]">
+        <p className="mt-2 pl-[52px] text-[12px] text-[#A19A8C]">
           Recording needs Chrome or Edge — you can still listen and repeat.
         </p>
       )}
@@ -132,7 +132,7 @@ function GroupCard({
     <section
       id={group.key}
       className={`border rounded-[14px] bg-white overflow-hidden transition-colors scroll-mt-6 ${
-        open ? "border-[#0D9488]" : "border-[#E7E5E4] hover:border-[#99F6E4]"
+        open ? "border-[#0D9488]" : "border-[#E3DDD0] hover:border-[#99F6E4]"
       }`}
     >
       <button
@@ -151,12 +151,12 @@ function GroupCard({
         </span>
         <div className="min-w-0 flex-1">
           <b className="block font-semibold text-[15.5px] kr">{group.title}</b>
-          <small className="block text-[12.5px] text-[#71717A]">
+          <small className="block text-[12.5px] text-[#6B6560]">
             {group.items.length} words · {nailed.length} of {group.items.length} nailed
           </small>
         </div>
         <span
-          className={`flex-none text-[#A1A1AA] text-[13px] transition-transform ${open ? "rotate-180" : ""}`}
+          className={`flex-none text-[#A19A8C] text-[13px] transition-transform ${open ? "rotate-180" : ""}`}
         >
           ▾
         </span>
@@ -173,7 +173,7 @@ function GroupCard({
           </div>
 
           {/* progress bar */}
-          <div className="h-1.5 rounded-full bg-[#E7E5E4] mb-3.5 overflow-hidden">
+          <div className="h-1.5 rounded-full bg-[#E3DDD0] mb-3.5 overflow-hidden">
             <div
               className="h-full rounded-full transition-all duration-300"
               style={{
@@ -232,7 +232,7 @@ export default function PronunciationBoard() {
             className={`kr rounded-full px-3.5 py-1.5 text-[12.5px] font-semibold border transition-all ${
               openKey === g.key
                 ? "bg-[#0D9488] border-[#0D9488] text-white"
-                : "bg-white border-[#E7E5E4] text-[#71717A] hover:border-[#0D9488] hover:text-[#0D9488] hover:bg-[#F0FDFA]"
+                : "bg-white border-[#E3DDD0] text-[#6B6560] hover:border-[#0D9488] hover:text-[#0D9488] hover:bg-[#F0FDFA]"
             }`}
           >
             {g.title.split(" — ")[0]}

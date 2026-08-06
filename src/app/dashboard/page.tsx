@@ -6,10 +6,18 @@ import QuestButton from "@/components/dashboard/QuestButton";
 import Sidebar from "@/components/dashboard/Sidebar";
 import SkillBar from "@/components/dashboard/SkillBar";
 import Widgets from "@/components/dashboard/Widgets";
-import { createClient } from "@/lib/supabase/server";
+import Greeting from "@/components/dashboard/Greeting";
+import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { levelProgress } from "@/lib/level";
 import { COURSE_DAYS, nextCourseDay } from "@/lib/course";
 import CourseCard from "@/components/dashboard/CourseCard";
+import { DIALOGUES } from "@/lib/listening-dialogues";
+import { getPassagesForLevel } from "@/lib/reading";
+import { getPromptsForLevel } from "@/lib/writing";
+import { promptsFor } from "@/lib/speaking";
+import { getWordsForTopic } from "@/lib/vocabulary";
+import { timeAgo } from "@/lib/community";
+import type { CefrLevel } from "@/lib/tree";
 
 type Category = { key: string; kr: string; en: string; sub: string; bg: string; color: string };
 
@@ -39,18 +47,21 @@ const GROUPS: { title: string; sub: string; items: Category[] }[] = [
     sub: "Wind down without stopping",
     items: [
       { key: "slang", kr: "슬", en: "Slang", sub: "What Koreans actually say", bg: "#FDF2F8", color: "#DB2777" },
-      { key: "community", kr: "🏕️", en: "Community", sub: "Learners worldwide, auto-translated", bg: "#F8FAFC", color: "#334155" },
+      { key: "community", kr: "🏕️", en: "Community", sub: "Learners worldwide, one board", bg: "#F8FAFC", color: "#334155" },
     ],
   },
 ];
 
 const MONTH_GOAL = 20;
 
-const DEFAULT_QUEST = {
-  skill_key: "writing",
-  title: "Today's quest",
-  description: "Writing · 5 everyday sentences · ~5 min",
-};
+// One quest per day, rotating through the four practice skills.
+const QUEST_ROTATION = [
+  { skill_key: "writing", title: "Today's quest", description: "Writing · 5 everyday sentences · ~5 min" },
+  { skill_key: "vocabulary", title: "Today's quest", description: "Watering · review your due words · ~5 min" },
+  { skill_key: "listening", title: "Today's quest", description: "Listening · one dialogue at your level · ~5 min" },
+  { skill_key: "reading", title: "Today's quest", description: "Reading · one short passage · ~4 min" },
+  { skill_key: "speaking", title: "Today's quest", description: "Speaking · 3 prompts out loud · ~5 min" },
+];
 
 function iso(d: Date) {
   return d.toISOString().slice(0, 10);
@@ -73,57 +84,133 @@ function weekDates(now: Date) {
 
 export default async function DashboardPage() {
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getClaimsUser(supabase);
 
   if (!user) redirect("/onboarding");
 
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("display_name, current_level, xp, streak_days, last_active_date, avatar_url, path_hidden")
-    .eq("id", user.id)
-    .single();
-
   const today = todayISO();
-  // touch_streak bumps (or resets) the streak server-side and returns its new value.
-  const { data: streakValue, error: streakError } = await supabase.rpc("touch_streak");
-  const streakDays = streakError ? profile?.streak_days ?? 0 : (streakValue as number) ?? 0;
 
-  const { data: equippedRows } = await supabase
-    .from("user_costumes")
-    .select("costume_id")
-    .eq("user_id", user.id)
-    .eq("equipped", true);
-  const equippedIds = (equippedRows ?? []).map((r) => r.costume_id);
-
-  let { data: quest } = await supabase
-    .from("daily_quests")
-    .select("id, skill_key, title, description, completed_at")
-    .eq("user_id", user.id)
-    .eq("quest_date", today)
-    .maybeSingle();
-
-  if (!quest) {
-    const { data: created } = await supabase
-      .from("daily_quests")
-      .insert({ user_id: user.id, quest_date: today, ...DEFAULT_QUEST })
-      .select("id, skill_key, title, description, completed_at")
-      .single();
-    quest = created ?? null;
-  }
-
-  // right-panel widget data: this week's watering + this month's lesson days
+  // right-panel widget data window, computed up front so every query can run
+  // in one parallel batch — from Korea to us-east-1 each round trip is
+  // ~300ms, so sequential awaits were the whole reason this page felt slow.
   const now = new Date();
   const week = weekDates(now);
   const monthStart = iso(new Date(now.getFullYear(), now.getMonth(), 1));
   const rangeStart = week[0] < new Date(monthStart) ? iso(week[0]) : monthStart;
 
-  const { data: activity } = await supabase
-    .from("daily_activity")
-    .select("activity_date, minutes")
-    .eq("user_id", user.id)
-    .gte("activity_date", rangeStart);
+  const [
+    { data: profile },
+    { data: streakValue, error: streakError },
+    { data: equippedRows },
+    questRes,
+    { data: listeningRows },
+    { data: readingRows },
+    { data: writingRows },
+    { data: speakingRows },
+    { data: recentPosts },
+    dueRes,
+    { data: activity },
+    { data: courseRows },
+  ] = await Promise.all([
+    supabase
+      .from("profiles")
+      .select("display_name, current_level, xp, streak_days, last_active_date, avatar_url, path_hidden")
+      .eq("id", user.id)
+      .single(),
+    // touch_streak bumps (or resets) the streak server-side and returns its new value.
+    supabase.rpc("touch_streak"),
+    supabase.from("user_costumes").select("costume_id").eq("user_id", user.id).eq("equipped", true),
+    supabase
+      .from("daily_quests")
+      .select("id, skill_key, title, description, completed_at")
+      .eq("user_id", user.id)
+      .eq("quest_date", today)
+      .maybeSingle(),
+    supabase.from("listening_progress").select("dialogue_id").eq("user_id", user.id).not("completed_at", "is", null),
+    supabase.from("reading_progress").select("passage_key").eq("user_id", user.id),
+    supabase.from("writing_progress").select("prompt_key").eq("user_id", user.id),
+    supabase.from("speaking_progress").select("prompt_key").eq("user_id", user.id),
+    supabase
+      .from("community_posts")
+      .select("author_name, author_emoji, content, created_at")
+      .order("created_at", { ascending: false })
+      .limit(3),
+    supabase
+      .from("vocabulary_progress")
+      .select("id", { count: "exact", head: true })
+      .eq("user_id", user.id)
+      .lte("next_review_at", new Date().toISOString()),
+    supabase
+      .from("daily_activity")
+      .select("activity_date, minutes")
+      .eq("user_id", user.id)
+      .gte("activity_date", rangeStart),
+    supabase.from("path_progress").select("step_key").eq("user_id", user.id),
+  ]);
+
+  const streakDays = streakError ? profile?.streak_days ?? 0 : (streakValue as number) ?? 0;
+  const equippedIds = (equippedRows ?? []).map((r) => r.costume_id);
+
+  let quest = questRes.data;
+  const questOfTheDay = QUEST_ROTATION[Math.floor(Date.parse(today) / 86_400_000) % QUEST_ROTATION.length];
+  if (!quest) {
+    const { data: created } = await supabase
+      .from("daily_quests")
+      .insert({ user_id: user.id, quest_date: today, ...questOfTheDay })
+      .select("id, skill_key, title, description, completed_at")
+      .single();
+    quest = created ?? null;
+  }
+
+  // Real per-skill progress: completed items at the user's difficulty tier.
+  const cefr = (profile?.current_level ?? "A1") as CefrLevel;
+  // Errors (e.g. migration 0022 not applied yet) just hide the watering card.
+  const dueCount = dueRes.error ? 0 : dueRes.count ?? 0;
+
+  const tally = (doneKeys: Set<string>, levelKeys: string[]) => {
+    const done = levelKeys.filter((k) => doneKeys.has(k)).length;
+    const total = levelKeys.length;
+    return { done, total, percent: total ? Math.round((done / total) * 100) : 0 };
+  };
+  const skillProgress: Record<string, { done: number; total: number; percent: number }> = {
+    listening: tally(
+      new Set((listeningRows ?? []).map((r) => r.dialogue_id)),
+      DIALOGUES.filter((d) => d.level === cefr).map((d) => d.id)
+    ),
+    reading: tally(
+      new Set((readingRows ?? []).map((r) => r.passage_key)),
+      getPassagesForLevel(cefr).map((p) => p.key)
+    ),
+    writing: tally(
+      new Set((writingRows ?? []).map((r) => r.prompt_key)),
+      getPromptsForLevel(cefr).map((p) => p.key)
+    ),
+    speaking: tally(
+      new Set((speakingRows ?? []).map((r) => r.prompt_key)),
+      promptsFor(cefr).map((p) => p.id)
+    ),
+  };
+
+  // Word of the day from the real vocabulary deck, rotating daily.
+  const allWords = getWordsForTopic("daily-life");
+  const wotdRaw = allWords.length
+    ? allWords[Math.floor(Date.parse(today) / 86_400_000) % allWords.length]
+    : null;
+  const wotd = wotdRaw
+    ? {
+        word: wotdRaw.korean,
+        roman: wotdRaw.romanization,
+        mean: wotdRaw.meaning_en,
+        exKr: wotdRaw.example_kr,
+        exEn: wotdRaw.example_en,
+      }
+    : null;
+
+  const feed = (recentPosts ?? []).map((p) => ({
+    av: p.author_emoji ?? "🌱",
+    text: p.content.split("\n")[0],
+    meta: `${p.author_name} · ${timeAgo(p.created_at)}`,
+  }));
 
   const byDate = new Map((activity ?? []).map((a) => [a.activity_date, a.minutes ?? 0]));
   const weekMinutes = week.map((d) => byDate.get(iso(d)) ?? 0);
@@ -143,17 +230,13 @@ export default async function DashboardPage() {
   let courseNext: ReturnType<typeof nextCourseDay> = null;
   let courseDoneDays: number[] = [];
   if (showCourse) {
-    const { data: courseRows } = await supabase
-      .from("path_progress")
-      .select("step_key")
-      .eq("user_id", user.id);
     const doneKeys = new Set((courseRows ?? []).map((r) => r.step_key));
     courseNext = nextCourseDay(doneKeys);
     courseDoneDays = COURSE_DAYS.filter((d) => doneKeys.has(d.key)).map((d) => d.day);
   }
 
   return (
-    <div className="min-h-screen bg-white text-[#18181B]">
+    <div className="min-h-screen bg-[#FDFBF7] text-[#221F1B]">
       <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] xl:grid-cols-[clamp(200px,17%,280px)_minmax(0,1fr)_clamp(260px,22%,340px)] w-full min-h-screen">
         <Sidebar
           displayName={displayName}
@@ -163,12 +246,33 @@ export default async function DashboardPage() {
         />
 
         <main className="min-w-0 px-[clamp(18px,3vw,36px)] pt-[26px] pb-[100px] md:pb-[60px]">
-          <h1 className="font-semibold text-[clamp(20px,2.4vw,24px)] tracking-[-0.02em] mb-0.5">
-            Good morning, {displayName}
-          </h1>
-          <p className="text-[#71717A] text-sm mb-6">One lesson today keeps your tree growing.</p>
+          <Greeting name={displayName} />
+          <p className="text-[#6B6560] text-sm mb-6">One lesson today keeps your tree growing.</p>
 
           <TreeCard level={level} progressPct={pct} xpInto={into} xpNeeded={needed} costumeIds={equippedIds} />
+
+          {/* watering (spaced-repetition review) */}
+          {dueCount > 0 && (
+            <Link
+              href="/review"
+              className="flex items-center gap-3.5 border border-[#BFDBFE] bg-[#EFF6FF] rounded-[14px] px-5 py-4 mb-[30px] transition-all hover:-translate-y-0.5 group"
+            >
+              <span className="flex-none w-10 h-10 rounded-[10px] bg-white border border-[#BFDBFE] flex items-center justify-center text-lg transition-transform group-hover:scale-110">
+                💧
+              </span>
+              <span className="flex-1 min-w-[170px]">
+                <b className="block font-semibold text-sm text-[#1D4ED8]">
+                  {dueCount} {dueCount === 1 ? "word is" : "words are"} getting thirsty
+                </b>
+                <span className="text-[13px] text-[#3B82F6]">
+                  Water them before they wilt — a quick review keeps them rooted.
+                </span>
+              </span>
+              <span className="text-[13px] font-semibold text-[#2563EB] transition-transform group-hover:translate-x-0.5">
+                Water now →
+              </span>
+            </Link>
+          )}
 
           {courseNext && (
             <CourseCard
@@ -181,14 +285,14 @@ export default async function DashboardPage() {
             />
           )}
 
-          {/* quest */}
-          <div className="border border-[#E7E5E4] rounded-[14px] bg-[#FAFAF9] px-5 py-4 flex items-center gap-3.5 mb-[30px] flex-wrap">
-            <span className="flex-none w-10 h-10 rounded-[10px] bg-[#FFFBEB] border border-[#FDE68A] flex items-center justify-center text-lg">
+          {/* quest — a checklist slip pinned under the course note */}
+          <div className="border border-dashed border-[#CFC8B8] rounded-[12px] bg-white px-5 py-4 flex items-center gap-3.5 mb-[30px] flex-wrap">
+            <span className="flex-none w-10 h-10 rounded-[10px] bg-[#FEF9C3] border border-[#ECD98A] flex items-center justify-center text-lg">
               ✏️
             </span>
             <div className="flex-1 min-w-[170px]">
-              <b className="block font-semibold text-sm">{quest?.title ?? DEFAULT_QUEST.title}</b>
-              <span className="text-[13px] text-[#71717A]">{quest?.description ?? DEFAULT_QUEST.description}</span>
+              <b className="block font-semibold text-sm">{quest?.title ?? questOfTheDay.title}</b>
+              <span className="text-[13px] text-[#6B6560]">{quest?.description ?? questOfTheDay.description}</span>
             </div>
             {quest && <QuestButton questId={quest.id} completed={!!quest.completed_at} />}
           </div>
@@ -216,18 +320,18 @@ export default async function DashboardPage() {
           {GROUPS.map((group) => (
             <div key={group.title} className="mb-[30px]">
               <div className="flex items-baseline justify-between mb-3.5">
-                <span className="font-semibold text-[15px] tracking-[-0.01em]">{group.title}</span>
-                <span className="text-[12.5px] text-[#A1A1AA] font-medium">{group.sub}</span>
+                <span className="font-extrabold text-[15px] tracking-[-0.01em]">{group.title}</span>
+                <span className="text-[12.5px] text-[#A19A8C] font-medium">{group.sub}</span>
               </div>
-              <div className="border border-[#E7E5E4] rounded-[14px] overflow-hidden">
+              <div className="border border-[#E3DDD0] rounded-[14px] overflow-hidden shadow-[0_10px_24px_-18px_rgba(60,50,30,.3)]">
                 {group.items.map((c) => {
                   const done = quest?.skill_key === c.key && !!quest?.completed_at;
-                  const percent = done ? 100 : 0;
+                  const prog = skillProgress[c.key];
                   return (
                     <Link
                       key={c.en}
                       href={`/${c.key}`}
-                      className="w-full flex items-center gap-3.5 text-left bg-white border-b border-[#E7E5E4] last:border-b-0 px-[18px] py-[13px] transition-colors hover:bg-[#FAFAF9] group"
+                      className="w-full flex items-center gap-3.5 text-left bg-white border-b border-dashed border-[#E3DDD0] last:border-b-0 px-[18px] py-[13px] transition-colors hover:bg-[#FAF7EF] group"
                     >
                       <span
                         className="w-9 h-9 rounded-[9px] flex-none flex items-center justify-center kr text-base transition-transform group-hover:scale-110"
@@ -237,13 +341,16 @@ export default async function DashboardPage() {
                       </span>
                       <span className="flex-1 min-w-0">
                         <b className="block font-semibold text-sm">{c.en}</b>
-                        {group.title === "Practice" ? (
-                          <SkillBar percent={percent} note={done ? "done ✓" : "needs water 💧"} />
+                        {group.title === "Practice" && prog ? (
+                          <SkillBar
+                            percent={prog.percent}
+                            note={prog.done > 0 ? `${prog.done}/${prog.total} · ${cefr}` : "needs water 💧"}
+                          />
                         ) : (
-                          <small className="text-[12.5px] text-[#71717A]">{c.sub}</small>
+                          <small className="text-[12.5px] text-[#6B6560]">{c.sub}</small>
                         )}
                       </span>
-                      <span className="flex items-center gap-2 text-[12.5px] text-[#A1A1AA]">
+                      <span className="flex items-center gap-2 text-[12.5px] text-[#A19A8C]">
                         {done && (
                           <span className="text-[11.5px] font-semibold text-[#16A34A] bg-[#F0FDF4] border border-[#BBF7D0] rounded-md px-2 py-0.5">
                             +10 XP
@@ -266,6 +373,8 @@ export default async function DashboardPage() {
           monthGoal={MONTH_GOAL}
           monthLabel={monthLabel}
           daysLeft={daysLeft}
+          wotd={wotd}
+          feed={feed}
         />
       </div>
 

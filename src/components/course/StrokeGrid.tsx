@@ -38,7 +38,7 @@ export default function StrokeGrid({ chars }: { chars: string[] }) {
               speak(char === "ㅇ" ? "이응" : char);
               setCycle((c) => c + 1);
             }}
-            className="w-[104px] bg-white border-[1.5px] border-[#E7E5E4] rounded-[16px] pt-2 pb-2.5 flex flex-col items-center hover:border-[#16A34A] transition-colors"
+            className="w-[104px] bg-white border-[1.5px] border-[#E3DDD0] rounded-[16px] pt-2 pb-2.5 flex flex-col items-center hover:border-[#16A34A] transition-colors"
             aria-label={`${char} stroke order`}
           >
             {glyph ? (
@@ -63,9 +63,9 @@ export default function StrokeGrid({ chars }: { chars: string[] }) {
             ) : (
               <span className="kr text-[52px] font-extrabold leading-[76px]">{char}</span>
             )}
-            <span className="text-[12px] font-bold text-[#71717A]">
+            <span className="text-[12px] font-bold text-[#6B6560]">
               {char}
-              {glyph && <span className="text-[#A1A1AA] font-semibold"> · {glyph.sound}</span>}
+              {glyph && <span className="text-[#A19A8C] font-semibold"> · {glyph.sound}</span>}
             </span>
           </button>
         );

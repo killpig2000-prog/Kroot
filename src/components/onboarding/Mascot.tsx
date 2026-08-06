@@ -8,12 +8,12 @@ const MASCOT_PHRASES = [
 export default function Mascot() {
   return (
     <div className="relative flex justify-center mb-4">
-      <div className="border border-[#E7E5E4] rounded-[12px] bg-[#FAFAF9] px-6 pt-7 pb-3 relative">
+      <div className="border border-[#E3DDD0] rounded-[12px] bg-[#FAF7EF] px-6 pt-7 pb-3 relative">
         <div className="absolute -top-2 left-1/2 -translate-x-1/2 z-10">
           <SpeechBubble phrases={MASCOT_PHRASES} />
         </div>
         <svg className="bob w-[76px] h-[76px]" viewBox="0 0 100 100" aria-hidden="true">
-          <ellipse cx="50" cy="88" rx="28" ry="5" fill="#E7E5E4" />
+          <ellipse cx="50" cy="88" rx="28" ry="5" fill="#E3DDD0" />
           <g className="sway">
             <path d="M50 78 C50 62 50 56 50 50" stroke="#8B7355" strokeWidth="6" strokeLinecap="round" />
             <circle cx="50" cy="38" r="24" fill="#22C55E" />

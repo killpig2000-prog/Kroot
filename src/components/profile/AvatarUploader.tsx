@@ -68,7 +68,7 @@ export default function AvatarUploader({
         type="button"
         onClick={() => inputRef.current?.click()}
         aria-label="Change profile photo"
-        className="relative w-14 h-14 rounded-full overflow-hidden bg-[#F0FDF4] border border-[#E7E5E4] flex items-center justify-center text-2xl group"
+        className="relative w-14 h-14 rounded-full overflow-hidden bg-[#F0FDF4] border border-[#E3DDD0] flex items-center justify-center text-2xl group"
       >
         {preview ? (
           // eslint-disable-next-line @next/next/no-img-element

@@ -1,63 +1,56 @@
 const POSTS = [
   {
-    avatar: "🦊",
-    name: "Maria · Brazil",
-    board: "Question board",
-    text: "What's the difference between 은/는 and 이/가? I keep mixing them up 😅",
-    tr: "⇄ Translated from Portuguese",
+    stamp: "🇧🇷",
+    from: "MARIA · BRAZIL",
+    text: "“은/는 vs 이/가 차이를 여기서 드디어 이해했어요. 세 달째 매일 하는 중!”",
+    meta: "Question board · translated from Portuguese",
+    tilt: "-rotate-2",
   },
   {
-    avatar: "🐻",
-    name: "Kenta · Japan",
-    board: "Free board",
-    text: "Passed TOPIK Level 3 today!! Six months of daily streaks paid off 🎉",
-    tr: "⇄ Translated from Japanese",
+    stamp: "🇯🇵",
+    from: "KENTA · JAPAN",
+    text: "“오늘 TOPIK 3급 합격! 매일 물 주기 스트릭 6개월이 답이었다.”",
+    meta: "Free board · translated from Japanese",
+    tilt: "rotate-1 mt-3",
   },
   {
-    avatar: "🐰",
-    name: "Amara · Nigeria",
-    board: "Language exchange",
-    text: "Looking for a partner to practice speaking 30 min a week — I can help with English!",
-    tr: "⇄ Original in English",
+    stamp: "🇳🇬",
+    from: "AMARA · NIGERIA",
+    text: "“주 30분 말하기 연습 파트너 구해요 — 영어 도와드릴 수 있어요!”",
+    meta: "Language exchange · original in English",
+    tilt: "-rotate-1",
   },
 ];
 
 export default function Community() {
   return (
-    <section id="community" className="py-[clamp(56px,8vw,96px)]">
-      <div className="max-w-[1080px] mx-auto px-[clamp(18px,4vw,28px)]">
-        <div className="max-w-[560px] mx-auto text-center mb-[clamp(30px,4.5vw,48px)]">
-          <span className="inline-block text-xs font-semibold uppercase tracking-[0.06em] text-[#16A34A] mb-3">
-            You&apos;re not learning alone
-          </span>
-          <h2 className="font-extrabold text-[clamp(25px,3.2vw,36px)] leading-[1.2] tracking-[-0.025em] text-[#18181B]">
-            Every language, one community.
-          </h2>
-          <p className="text-[#71717A] mt-3 text-[15px]">
-            Ask questions, share wins, find practice partners — every post translates with one tap.
-          </p>
-        </div>
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-3.5">
-          {POSTS.map((p) => (
-            <div key={p.name} className="reveal border border-[#E7E5E4] rounded-[14px] bg-white p-[18px]">
-              <div className="flex items-center gap-2.5 mb-2.5">
-                <span className="w-8 h-8 rounded-[9px] bg-[#FAFAF9] border border-[#E7E5E4] flex items-center justify-center text-sm">
-                  {p.avatar}
-                </span>
-                <div>
-                  <b className="text-[13.5px] font-semibold block leading-[1.25] text-[#18181B]">
-                    {p.name}
-                  </b>
-                  <span className="text-[11.5px] text-[#A1A1AA]">{p.board}</span>
-                </div>
-              </div>
-              <p className="text-[13.5px] text-[#18181B]">{p.text}</p>
-              <span className="inline-block mt-2.5 text-[11.5px] font-semibold text-[#16A34A] bg-[#F0FDF4] border border-[#BBF7D0] rounded-md px-2 py-0.5">
-                {p.tr}
-              </span>
-            </div>
-          ))}
-        </div>
+    <section id="community" className="bg-[#FAF7EF] border-t border-dashed border-[#DDD6C8] py-[clamp(52px,8vw,88px)] px-6">
+      <div className="text-center mb-1.5">
+        <span className="inline-block bg-white border-[1.5px] border-dashed border-[#CFC8B8] rounded-full px-4 py-[5px] text-xs font-extrabold text-[#15803D] rotate-1">
+          받은 엽서 · from learners
+        </span>
+      </div>
+      <h2 className="text-center font-black text-[clamp(22px,3vw,30px)] tracking-[-0.02em] text-[#221F1B] mb-2 text-balance">
+        전 세계에서 도착한 소식
+      </h2>
+      <p className="text-center text-[#6B6560] text-[13.5px] mb-8">
+        혼자 배우지 않아요 — 질문 보드, 자유 보드, 언어교환.
+      </p>
+
+      <div className="flex justify-center gap-5 flex-wrap max-w-[900px] mx-auto">
+        {POSTS.map((p) => (
+          <div
+            key={p.from}
+            className={`reveal relative w-[250px] bg-white border border-[#E3DDD0] px-[17px] pt-4 pb-3.5 text-left shadow-[0_14px_30px_-16px_rgba(60,50,30,.35)] ${p.tilt}`}
+          >
+            <span aria-hidden="true" className="absolute top-2.5 right-[11px] w-[34px] h-[40px] border-2 border-dashed border-[#D3C9B4] grid place-items-center text-[15px] bg-[#FDFBF7]">
+              {p.stamp}
+            </span>
+            <p className="text-[11px] font-extrabold text-[#15803D] tracking-[.04em] mb-1.5">{p.from}</p>
+            <p className="text-[12.5px] leading-[1.6] text-[#4A453D] mb-2.5 pr-9">{p.text}</p>
+            <p className="text-[10.5px] text-[#A19A8C] border-t border-dashed border-[#E3DDD0] pt-[7px]">{p.meta}</p>
+          </div>
+        ))}
       </div>
     </section>
   );

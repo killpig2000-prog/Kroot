@@ -48,13 +48,13 @@ export default function Composer({
   }
 
   return (
-    <div className="border border-[#E7E5E4] rounded-[14px] bg-white p-[18px] mb-5 max-w-[980px]">
+    <div className="border border-[#E3DDD0] rounded-[14px] bg-white p-[18px] mb-5 max-w-[980px]">
       <div className="flex items-center gap-2.5 mb-3">
-        <span className="w-8 h-8 rounded-[9px] bg-[#FAFAF9] border border-[#E7E5E4] flex items-center justify-center text-sm">
+        <span className="w-8 h-8 rounded-[9px] bg-[#FAF7EF] border border-[#E3DDD0] flex items-center justify-center text-sm">
           🦊
         </span>
         <b className="text-[13.5px] font-semibold">{displayName}</b>
-        <span className="text-[12.5px] text-[#A1A1AA]">— say something to the garden</span>
+        <span className="text-[12.5px] text-[#A19A8C]">— say something to the garden</span>
       </div>
 
       <textarea
@@ -64,7 +64,7 @@ export default function Composer({
         maxLength={600}
         disabled={disabled}
         placeholder="First line is the title — then write the rest below it."
-        className="w-full rounded-[10px] border border-[#E7E5E4] bg-[#FAFAF9] px-3.5 py-3 text-[14px] leading-[1.55] outline-none transition-colors resize-y focus:border-[#334155] focus:bg-white disabled:opacity-60"
+        className="w-full rounded-[10px] border border-[#E3DDD0] bg-[#FAF7EF] px-3.5 py-3 text-[14px] leading-[1.55] outline-none transition-colors resize-y focus:border-[#334155] focus:bg-white disabled:opacity-60"
       />
 
       <div className="flex items-center gap-2.5 mt-3 flex-wrap">
@@ -72,7 +72,7 @@ export default function Composer({
           value={board}
           onChange={(e) => setBoard(e.target.value as BoardKey)}
           disabled={disabled}
-          className="rounded-[9px] border border-[#E7E5E4] bg-white px-3 py-2 text-[13.5px] font-semibold text-[#71717A] outline-none focus:border-[#334155] disabled:opacity-60"
+          className="rounded-[9px] border border-[#E3DDD0] bg-white px-3 py-2 text-[13.5px] font-semibold text-[#6B6560] outline-none focus:border-[#334155] disabled:opacity-60"
         >
           {BOARDS.map((b) => (
             <option key={b.key} value={b.key}>
@@ -81,7 +81,7 @@ export default function Composer({
           ))}
         </select>
 
-        <span className="text-[12px] text-[#A1A1AA]">{content.length}/600</span>
+        <span className="text-[12px] text-[#A19A8C]">{content.length}/600</span>
 
         <button
           type="button"

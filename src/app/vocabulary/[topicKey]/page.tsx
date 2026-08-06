@@ -1,5 +1,5 @@
 import { notFound, redirect } from "next/navigation";
-import { createClient } from "@/lib/supabase/server";
+import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { VOCAB_TOPICS, getChapterStatuses, getChaptersForTopic, unlockedVocabTiers } from "@/lib/vocabulary";
 import { LEVEL_ORDER, type CefrLevel } from "@/lib/tree";
 
@@ -21,9 +21,7 @@ export default async function VocabularyTopicPage({
   if (!topic) notFound();
 
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getClaimsUser(supabase);
 
   if (!user) redirect("/onboarding");
 

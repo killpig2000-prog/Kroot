@@ -35,25 +35,26 @@ export default function CourseCard({
   const doneSet = new Set(doneDays);
 
   return (
-    <div className="relative border-[1.5px] border-[#BBF7D0] bg-[#F0FDF4] rounded-[14px] px-5 py-[18px] mb-[30px]">
+    <div className="relative border border-[#ECD98A] bg-[#FEF9C3] px-5 py-[18px] mb-[30px] rotate-[0.4deg] shadow-[0_12px_24px_-14px_rgba(120,100,30,.4)]">
+      <span aria-hidden="true" className="absolute -top-2 right-14 rotate-2 w-[50px] h-[16px] border z-10" style={{ background: "rgba(251,207,232,.6)", borderColor: "rgba(230,150,190,.45)" }} />
       <button
         onClick={hide}
         title="Hide — resume anytime at /course"
         aria-label="Hide course card"
-        className="absolute top-2.5 right-2.5 w-[26px] h-[26px] rounded-lg text-[13px] text-[#A1A1AA] hover:bg-white hover:text-[#18181B] transition-colors"
+        className="absolute top-2.5 right-2.5 w-[26px] h-[26px] rounded-lg text-[13px] text-[#A19A8C] hover:bg-white hover:text-[#18181B] transition-colors"
       >
         ✕
       </button>
 
       <div className="flex items-center gap-4 flex-wrap">
         <div className="flex-1 min-w-[220px]">
-          <p className="text-[11px] font-bold tracking-[.08em] uppercase text-[#16A34A] mb-0.5">
-            Day {nextDay} of {COURSE_TOTAL_DAYS} · Hangul 7 days + Grammar 9 days
+          <p className="text-[11px] font-extrabold tracking-[.08em] uppercase text-[#A16207] mb-0.5">
+            📌 Day {nextDay} of {COURSE_TOTAL_DAYS} · Hangul 7 days + Grammar 9 days
           </p>
           <b className="block font-bold text-[15.5px] tracking-[-0.01em]">
             Today: <span className="kr">{nextTitleKr}</span>
           </b>
-          <span className="text-[12.5px] text-[#71717A]">
+          <span className="text-[12.5px] text-[#6B6560]">
             {nextTitle} · ~{nextMinutes} min, hands-free
           </span>
           <div className="flex gap-1 mt-2.5 flex-wrap" aria-hidden="true">
@@ -63,7 +64,7 @@ export default function CourseCard({
                 ? "bg-[#16A34A]"
                 : d === nextDay
                   ? "bg-[#FF9E7D]"
-                  : "bg-[#D6D3D1]";
+                  : "bg-[#E8D9A0]";
               return <span key={d} className={`w-[18px] h-[5px] rounded-full ${cls}`} />;
             })}
           </div>
@@ -71,7 +72,7 @@ export default function CourseCard({
 
         <Link
           href="/course"
-          className="flex-none bg-[#16A34A] hover:bg-[#15803D] text-white rounded-[9px] px-[18px] py-2.5 text-[13.5px] font-semibold transition-colors"
+          className="flex-none bg-[#16A34A] text-white rounded-[9px] px-[18px] py-2.5 text-[13.5px] font-bold shadow-[0_4px_0_#15803D] hover:translate-y-[2px] hover:shadow-[0_2px_0_#15803D] transition-all"
         >
           Open course →
         </Link>

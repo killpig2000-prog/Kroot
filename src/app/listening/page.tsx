@@ -2,7 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
-import { createClient } from "@/lib/supabase/server";
+import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { LEVEL_ORDER, type CefrLevel } from "@/lib/tree";
 import { isDifficultyUnlocked } from "@/lib/level";
 import { SITUATIONS } from "@/lib/listening";
@@ -30,9 +30,7 @@ export default async function ListeningPage({
   searchParams: Promise<{ level?: string }>;
 }) {
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getClaimsUser(supabase);
 
   if (!user) redirect("/onboarding");
 
@@ -51,7 +49,7 @@ export default async function ListeningPage({
   const photoByKey = new Map(SITUATIONS.map((s, i) => [s.key, photos[i]]));
 
   return (
-    <div className="min-h-screen bg-white text-[#18181B]">
+    <div className="min-h-screen bg-[#FDFBF7] text-[#18181B]">
       <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
         <Sidebar
           displayName={profile?.display_name ?? "there"}
@@ -62,7 +60,7 @@ export default async function ListeningPage({
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] md:pb-[60px]">
           {/* breadcrumb */}
-          <div className="flex gap-2 text-[13px] text-[#A1A1AA] mb-[18px]">
+          <div className="flex gap-2 text-[13px] text-[#A19A8C] mb-[18px]">
             <Link href="/dashboard" className="hover:text-[#18181B] transition-colors">
               Garden
             </Link>
@@ -78,7 +76,7 @@ export default async function ListeningPage({
               </span>
               Listening
             </h1>
-            <span className="text-[13px] text-[#71717A]">
+            <span className="text-[13px] text-[#6B6560]">
               Pick a situation, listen, and follow the script
             </span>
           </div>
@@ -93,7 +91,7 @@ export default async function ListeningPage({
                   className={`rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold transition-all border ${
                     lv === level
                       ? "bg-[#0D9488] border-[#0D9488] text-white"
-                      : "bg-white border-[#E7E5E4] text-[#71717A] hover:border-[#A1A1AA]"
+                      : "bg-white border-[#E3DDD0] text-[#6B6560] hover:border-[#A19A8C]"
                   }`}
                 >
                   {lv}
@@ -104,7 +102,7 @@ export default async function ListeningPage({
               ) : (
                 <div
                   key={lv}
-                  className="rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold border bg-[#FAFAF9] border-[#E7E5E4] text-[#A1A1AA] grayscale opacity-60 cursor-not-allowed select-none"
+                  className="rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold border bg-[#FAF7EF] border-[#E3DDD0] text-[#A19A8C] grayscale opacity-60 cursor-not-allowed select-none"
                 >
                   🔒 {lv}
                   <span className="text-[10.5px] font-bold ml-1.5">
@@ -124,23 +122,23 @@ export default async function ListeningPage({
                 <Link
                   key={s.key}
                   href={`/listening/${s.key}?level=${level}`}
-                  className="border border-[#E7E5E4] rounded-[14px] bg-white overflow-hidden text-left transition-all duration-150 hover:border-[#0D9488] hover:bg-[#F0FDFA] hover:-translate-y-0.5 group"
+                  className="border border-[#E3DDD0] rounded-[14px] bg-white overflow-hidden text-left transition-all duration-150 hover:border-[#0D9488] hover:bg-[#F0FDFA] hover:-translate-y-0.5 group"
                 >
                   <div
-                    className="relative aspect-[16/9] bg-[#FAFAF9]"
+                    className="relative aspect-[16/9] bg-[#FAF7EF]"
                     style={
                       photo
                         ? { background: `url(${photo}) center/cover` }
                         : { background: s.bg }
                     }
                   >
-                    <span className="absolute left-3 bottom-3 w-9 h-9 rounded-[10px] flex items-center justify-center text-lg bg-white/95 border border-[#E7E5E4] shadow-sm transition-transform group-hover:scale-110">
+                    <span className="absolute left-3 bottom-3 w-9 h-9 rounded-[10px] flex items-center justify-center text-lg bg-white/95 border border-[#E3DDD0] shadow-sm transition-transform group-hover:scale-110">
                       {s.icon}
                     </span>
                   </div>
                   <div className="px-[18px] py-4">
                     <b className="block font-semibold text-[15px] mb-0.5">{s.label}</b>
-                    <small className="block text-[12.5px] text-[#71717A] leading-[1.5]">
+                    <small className="block text-[12.5px] text-[#6B6560] leading-[1.5]">
                       {SUBS[s.key] ?? s.krLabel}
                     </small>
                     <span className="inline-block mt-3 text-[11.5px] font-semibold text-[#0D9488] bg-[#F0FDFA] border border-[#99F6E4] rounded-full px-2.5 py-[3px]">

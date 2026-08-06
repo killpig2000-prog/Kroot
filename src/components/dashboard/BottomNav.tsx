@@ -15,7 +15,7 @@ export default function BottomNav() {
 
   return (
     <nav
-      className="md:hidden fixed left-0 right-0 bottom-0 bg-white/90 backdrop-blur-[10px] border-t border-[#E7E5E4] flex justify-center gap-1 py-2 z-50"
+      className="md:hidden fixed left-0 right-0 bottom-0 bg-white/90 backdrop-blur-[10px] border-t border-[#E3DDD0] flex justify-center gap-1 py-2 z-50"
       aria-label="main"
     >
       {ITEMS.map((item) => {
@@ -25,7 +25,7 @@ export default function BottomNav() {
             key={item.label}
             href={item.href}
             className={`flex flex-col items-center gap-px rounded-lg px-[22px] py-[7px] text-[11px] font-medium transition-colors ${
-              on ? "text-[#18181B]" : "text-[#A1A1AA] hover:text-[#71717A]"
+              on ? "text-[#18181B]" : "text-[#A19A8C] hover:text-[#6B6560]"
             }`}
           >
             <span

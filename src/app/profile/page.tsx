@@ -8,11 +8,12 @@ import Wardrobe from "@/components/profile/Wardrobe";
 import RankCard from "@/components/profile/RankCard";
 import MonthlyGrass from "@/components/profile/MonthlyGrass";
 import LeagueBoard from "@/components/league/LeagueBoard";
-import { createClient } from "@/lib/supabase/server";
+import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { LEVEL_PATH, type CefrLevel } from "@/lib/tree";
 import { levelProgress, treeStageForLevel, MAX_LEVEL } from "@/lib/level";
 import { COURSE_TOTAL_DAYS } from "@/lib/course";
 import { computeEligibility } from "@/lib/promotion-server";
+import { isPlus } from "@/lib/plus";
 import { testForGrade } from "@/lib/promotion-test";
 
 function isoDate(d: Date) {
@@ -46,15 +47,13 @@ function bestStreak(dates: string[]): number {
 
 export default async function ProfilePage() {
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getClaimsUser(supabase);
 
   if (!user) redirect("/onboarding");
 
   const { data: profile } = await supabase
     .from("profiles")
-    .select("display_name, native_language, current_level, streak_days, created_at, avatar_url, coins, xp, path_hidden")
+    .select("display_name, native_language, current_level, streak_days, created_at, avatar_url, coins, xp, path_hidden, plus_until")
     .eq("id", user.id)
     .single();
 
@@ -79,17 +78,19 @@ export default async function ProfilePage() {
   };
   let stats = (Array.isArray(statsRes.data) ? statsRes.data[0] : statsRes.data) as GrowthStats | null;
   if (statsRes.error || !stats) {
-    const [courseQ, listeningQ, writingQ] = await Promise.all([
+    const [courseQ, listeningQ, writingQ, speakingQ] = await Promise.all([
       supabase.from("path_progress").select("step_key").eq("user_id", user.id).like("step_key", "course-day-%"),
       supabase.from("listening_progress").select("dialogue_id").eq("user_id", user.id).not("completed_at", "is", null),
       supabase.from("writing_progress").select("prompt_key").eq("user_id", user.id),
+      supabase.from("speaking_progress").select("prompt_key").eq("user_id", user.id),
     ]);
     stats = {
       course_done: (courseQ.data ?? []).length,
       listening_done: (listeningQ.data ?? []).length,
       writing_done: (writingQ.data ?? []).length,
-      speaking_done: 0,
+      speaking_done: (speakingQ.data ?? []).length,
       total_minutes: (allActivity ?? []).reduce((sum, a) => sum + (a.minutes ?? 0), 0),
+      // Recomputed below from the full daily_activity history.
       best_streak: 0,
     };
   }
@@ -146,7 +147,7 @@ export default async function ProfilePage() {
 
 
   return (
-    <div className="min-h-screen bg-white text-[#18181B]">
+    <div className="min-h-screen bg-[#FDFBF7] text-[#18181B]">
       <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] xl:grid-cols-[clamp(200px,17%,280px)_minmax(0,1fr)_clamp(320px,28%,440px)] w-full min-h-screen">
         <Sidebar
           displayName={profile?.display_name ?? "there"}
@@ -157,7 +158,7 @@ export default async function ProfilePage() {
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] md:pb-[60px]">
           {/* breadcrumb */}
-          <div className="flex gap-2 text-[13px] text-[#A1A1AA] mb-[18px]">
+          <div className="flex gap-2 text-[13px] text-[#A19A8C] mb-[18px]">
             <Link href="/dashboard" className="hover:text-[#18181B] transition-colors">
               Garden
             </Link>
@@ -177,11 +178,18 @@ export default async function ProfilePage() {
 
           <div className="max-w-[820px] grid gap-3.5">
             {/* identity card */}
-            <div className="border border-[#E7E5E4] rounded-[14px] px-[22px] py-5 flex items-center gap-4 flex-wrap">
+            <div className="border border-[#E3DDD0] rounded-[14px] px-[22px] py-5 flex items-center gap-4 flex-wrap">
               <AvatarUploader userId={user.id} avatarUrl={profile?.avatar_url ?? null} />
               <div className="flex-1 min-w-[180px]">
-                <b className="block font-semibold text-base">{profile?.display_name ?? "Learner"}</b>
-                <span className="text-[13px] text-[#71717A]">
+                <b className="font-semibold text-base flex items-center gap-2">
+                  {profile?.display_name ?? "Learner"}
+                  {isPlus(profile?.plus_until) && (
+                    <span className="text-[10.5px] font-bold tracking-[.04em] text-[#92400E] bg-[#FFFBEB] border border-[#FDE68A] rounded-md px-1.5 py-0.5">
+                      🌟 PLUS
+                    </span>
+                  )}
+                </b>
+                <span className="text-[13px] text-[#6B6560]">
                   {treeStage.treeName} {treeStage.icon} · Lv. {playerLevel} · {level} difficulty · growing since{" "}
                   {memberSince}
                 </span>
@@ -189,7 +197,7 @@ export default async function ProfilePage() {
                   <div className="h-[6px] rounded-full bg-[#F0FDF4] border border-[#BBF7D0] overflow-hidden">
                     <div className="h-full rounded-full bg-[#16A34A]" style={{ width: `${pct}%` }} />
                   </div>
-                  <small className="block mt-1 text-[12px] text-[#71717A]">
+                  <small className="block mt-1 text-[12px] text-[#6B6560]">
                     {atMaxLevel ? "Max level 🎉" : `${into}/${needed} XP to Lv. ${playerLevel + 1}`}
                   </small>
                 </div>
@@ -198,7 +206,7 @@ export default async function ProfilePage() {
                 <span className="text-[12.5px] font-semibold text-[#16A34A] bg-[#F0FDF4] border border-[#BBF7D0] rounded-full px-3 py-1">
                   🔥 {profile?.streak_days ?? 0} day streak
                 </span>
-                <span className="text-[12.5px] font-semibold text-[#71717A] bg-[#FAFAF9] border border-[#E7E5E4] rounded-full px-3 py-1">
+                <span className="text-[12.5px] font-semibold text-[#6B6560] bg-[#FAF7EF] border border-[#E3DDD0] rounded-full px-3 py-1">
                   🌰 {profile?.coins ?? 0} coins
                 </span>
               </div>
@@ -207,7 +215,7 @@ export default async function ProfilePage() {
             <Wardrobe userId={user.id} level={level} ownedIds={ownedIds} equippedIds={equippedIds} />
 
             {/* ---- growth: course + skills ---- */}
-            <div className="border border-[#E7E5E4] rounded-[14px] px-[22px] py-5">
+            <div className="border border-[#E3DDD0] rounded-[14px] px-[22px] py-5">
               <div className="flex items-center justify-between gap-3 mb-3 flex-wrap">
                 <b className="font-semibold text-[15px]">📈 Learning progress</b>
                 {(showCourseGauge || courseFinished) && (
@@ -219,7 +227,7 @@ export default async function ProfilePage() {
 
               {showCourseGauge && (
                 <div className="flex items-center gap-3 mb-4">
-                  <span className="flex-none text-[12.5px] font-semibold text-[#71717A] w-[92px]">
+                  <span className="flex-none text-[12.5px] font-semibold text-[#6B6560] w-[92px]">
                     Course {courseDone}/{COURSE_TOTAL_DAYS}
                   </span>
                   <span className="flex-1 h-2.5 rounded-full bg-[#F5F5F4] overflow-hidden">
@@ -239,7 +247,7 @@ export default async function ProfilePage() {
                 </p>
               )}
 
-              <div className="flex gap-x-4 gap-y-1 flex-wrap text-[12.5px] text-[#71717A]">
+              <div className="flex gap-x-4 gap-y-1 flex-wrap text-[12.5px] text-[#6B6560]">
                 <span>🃏 {elig.wordsReviewed}/{elig.wordsRequired} words · {accuracyLabel} accuracy</span>
                 <span>🎧 {listeningDone} listened</span>
                 <span>📰 {elig.readingDone} read</span>
@@ -255,7 +263,7 @@ export default async function ProfilePage() {
                 className={`rounded-[14px] px-[22px] py-4 flex items-center gap-4 flex-wrap border-[1.5px] transition-colors ${
                   elig.eligible
                     ? "border-[#16A34A] bg-[#F0FDF4] hover:bg-[#DCFCE7]"
-                    : "border-[#E7E5E4] bg-white hover:border-[#16A34A]"
+                    : "border-[#E3DDD0] bg-white hover:border-[#16A34A]"
                 }`}
               >
                 <span className="text-[24px] flex-none">🎯</span>
@@ -269,7 +277,7 @@ export default async function ProfilePage() {
                     {promoChecks.map((c) => (
                       <small
                         key={c.label}
-                        className={`text-[12px] font-semibold ${c.ok ? "text-[#16A34A]" : "text-[#A1A1AA]"}`}
+                        className={`text-[12px] font-semibold ${c.ok ? "text-[#16A34A]" : "text-[#A19A8C]"}`}
                       >
                         {c.ok ? "✓" : "○"} {c.label} {c.value}
                       </small>

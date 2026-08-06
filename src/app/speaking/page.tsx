@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import SpeakingSession from "@/components/speaking/SpeakingSession";
-import { createClient } from "@/lib/supabase/server";
+import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { promptsFor } from "@/lib/speaking";
 import { LEVEL_ORDER, type CefrLevel } from "@/lib/tree";
 import { isDifficultyUnlocked } from "@/lib/level";
@@ -18,9 +18,7 @@ export default async function SpeakingPage({
   searchParams: Promise<{ level?: string }>;
 }) {
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getClaimsUser(supabase);
 
   if (!user) redirect("/onboarding");
 
@@ -37,7 +35,7 @@ export default async function SpeakingPage({
   const count = promptsFor(level).length;
 
   return (
-    <div className="min-h-screen bg-white text-[#18181B]">
+    <div className="min-h-screen bg-[#FDFBF7] text-[#18181B]">
       <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
         <Sidebar
           displayName={profile?.display_name ?? "there"}
@@ -48,7 +46,7 @@ export default async function SpeakingPage({
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] md:pb-[60px]">
           {/* breadcrumb */}
-          <div className="flex gap-2 text-[13px] text-[#A1A1AA] mb-[18px]">
+          <div className="flex gap-2 text-[13px] text-[#A19A8C] mb-[18px]">
             <Link href="/dashboard" className="hover:text-[#18181B] transition-colors">
               Garden
             </Link>
@@ -64,7 +62,7 @@ export default async function SpeakingPage({
               </span>
               Speaking
             </h1>
-            <span className="text-[13px] text-[#71717A]">
+            <span className="text-[13px] text-[#6B6560]">
               Read the English, say it in Korean — out loud
             </span>
           </div>
@@ -79,7 +77,7 @@ export default async function SpeakingPage({
                   className={`rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold transition-all border ${
                     lv === level
                       ? "bg-[#E11D48] border-[#E11D48] text-white"
-                      : "bg-white border-[#E7E5E4] text-[#71717A] hover:border-[#A1A1AA]"
+                      : "bg-white border-[#E3DDD0] text-[#6B6560] hover:border-[#A19A8C]"
                   }`}
                 >
                   {lv}
@@ -90,7 +88,7 @@ export default async function SpeakingPage({
               ) : (
                 <div
                   key={lv}
-                  className="rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold border bg-[#FAFAF9] border-[#E7E5E4] text-[#A1A1AA] grayscale opacity-60 cursor-not-allowed select-none"
+                  className="rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold border bg-[#FAF7EF] border-[#E3DDD0] text-[#A19A8C] grayscale opacity-60 cursor-not-allowed select-none"
                 >
                   🔒 {lv}
                   <span className="text-[10.5px] font-bold ml-1.5">
@@ -101,7 +99,7 @@ export default async function SpeakingPage({
             )}
           </div>
 
-          <p className="text-[12.5px] text-[#A1A1AA] mb-4 max-w-[680px]">
+          <p className="text-[12.5px] text-[#A19A8C] mb-4 max-w-[680px]">
             {count > 0
               ? `${count} prompt${count > 1 ? "s" : ""} at ${level} · about 5 minutes`
               : `Nothing planted at ${level} yet`}

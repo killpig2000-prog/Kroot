@@ -38,12 +38,12 @@ export default function SlangCard({ entry }: { entry: SlangEntry }) {
         style={{ transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)" }}
       >
         {/* front */}
-        <div className={`${FACE} border border-[#E7E5E4] bg-[#FAFAF9] transition-colors hover:bg-[#FDF2F8]`}>
+        <div className={`${FACE} border border-[#E3DDD0] bg-[#FAF7EF] transition-colors hover:bg-[#FDF2F8]`}>
           <span className="kr text-[clamp(28px,5vw,38px)] leading-tight">{entry.kr}</span>
-          <span className="mt-2 text-[13px] text-[#71717A]">{entry.romanization}</span>
+          <span className="mt-2 text-[13px] text-[#6B6560]">{entry.romanization}</span>
           <div className="mt-4 flex items-center gap-2">
             <SpeakButton text={entry.kr} />
-            <span className="text-[11.5px] font-semibold tracking-[.06em] uppercase text-[#A1A1AA]">
+            <span className="text-[11.5px] font-semibold tracking-[.06em] uppercase text-[#A19A8C]">
               Tap to flip
             </span>
           </div>
@@ -57,7 +57,7 @@ export default function SlangCard({ entry }: { entry: SlangEntry }) {
             <b className="kr text-[19px] text-[#DB2777]">{entry.kr}</b>
             <SpeakButton text={entry.kr} />
           </div>
-          <span className="mt-1 text-[11.5px] text-[#A1A1AA] italic">
+          <span className="mt-1 text-[11.5px] text-[#A19A8C] italic">
             literally &ldquo;{entry.literal}&rdquo;
           </span>
           <b className="mt-1.5 font-bold text-[15px] tracking-[-0.01em] text-[#18181B] leading-snug">
@@ -68,7 +68,7 @@ export default function SlangCard({ entry }: { entry: SlangEntry }) {
               <span className="kr text-[13px] text-[#18181B] leading-snug flex-1">{entry.example.kr}</span>
               <SpeakButton text={entry.example.kr} className="shrink-0 w-6 h-6 text-[11px]" />
             </div>
-            <span className="block text-[11.5px] text-[#71717A] mt-0.5 leading-snug">
+            <span className="block text-[11.5px] text-[#6B6560] mt-0.5 leading-snug">
               {entry.example.en}
             </span>
           </div>

@@ -2,7 +2,6 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { applyModeToDocument, type ModeKey } from "@/lib/mode";
 import { SEASONS, applySeasonToDocument, seasonForDate } from "@/lib/seasons";
@@ -19,7 +18,6 @@ export default function AccountMenu({
   avatarUrl?: string | null;
 }) {
   const supabase = useMemo(() => createClient(), []);
-  const router = useRouter();
   const [open, setOpen] = useState(false);
   // Initial values come off the <html> attributes the layout rendered.
   const [mode, setMode] = useState<ModeKey>(() =>
@@ -58,31 +56,33 @@ export default function AccountMenu({
 
   async function logout() {
     setLeaving(true);
-    await supabase.auth.signOut();
-    router.push("/");
-    router.refresh();
+    // Clear local storage state, then let the server expire the auth cookies —
+    // the browser client can't reliably delete cookies set with server options.
+    await supabase.auth.signOut({ scope: "local" }).catch(() => {});
+    await fetch("/auth/signout", { method: "POST" }).catch(() => {});
+    window.location.assign("/");
   }
 
   return (
     <div className="relative" ref={ref}>
       {open && (
-        <div className="absolute bottom-full left-0 right-0 mb-2 bg-white border border-[#E7E5E4] rounded-[14px] shadow-[0_8px_24px_rgba(0,0,0,.10)] p-2 z-50">
+        <div className="absolute bottom-full left-0 right-0 mb-2 bg-white border border-[#E3DDD0] rounded-[14px] shadow-[0_8px_24px_rgba(0,0,0,.10)] p-2 z-50">
           <Link
             href="/profile"
             onClick={() => setOpen(false)}
-            className="flex items-center gap-2.5 rounded-[9px] px-3 py-2 text-[13px] font-medium text-[#3F3F46] hover:bg-[#FAFAF9]"
+            className="flex items-center gap-2.5 rounded-[9px] px-3 py-2 text-[13px] font-medium text-[#3F3F46] hover:bg-[#FAF7EF]"
           >
             📊 My growth
           </Link>
 
           <button
             onClick={toggleMode}
-            className="w-full flex items-center justify-between rounded-[9px] px-3 py-2 text-[13px] font-medium text-[#3F3F46] hover:bg-[#FAFAF9]"
+            className="w-full flex items-center justify-between rounded-[9px] px-3 py-2 text-[13px] font-medium text-[#3F3F46] hover:bg-[#FAF7EF]"
           >
             <span>{mode === "dark" ? "🌙 Dark mode" : "☀️ Light mode"}</span>
             <span
               className={`w-9 h-5 rounded-full relative transition-colors ${
-                mode === "dark" ? "bg-[#16A34A]" : "bg-[#E7E5E4]"
+                mode === "dark" ? "bg-[#16A34A]" : "bg-[#E3DDD0]"
               }`}
               aria-hidden="true"
             >
@@ -97,14 +97,14 @@ export default function AccountMenu({
 
           <button
             onClick={toggleSeason}
-            className="w-full flex items-center justify-between rounded-[9px] px-3 py-2 text-[13px] font-medium text-[#3F3F46] hover:bg-[#FAFAF9]"
+            className="w-full flex items-center justify-between rounded-[9px] px-3 py-2 text-[13px] font-medium text-[#3F3F46] hover:bg-[#FAF7EF]"
           >
             <span>
               {SEASONS[seasonForDate(new Date())].emoji} Seasonal theme
             </span>
             <span
               className={`w-9 h-5 rounded-full relative transition-colors ${
-                seasonOn ? "bg-[#16A34A]" : "bg-[#E7E5E4]"
+                seasonOn ? "bg-[#16A34A]" : "bg-[#E3DDD0]"
               }`}
               aria-hidden="true"
             >
@@ -132,10 +132,10 @@ export default function AccountMenu({
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
         className={`w-full flex items-center gap-2.5 rounded-[9px] px-3 py-[9px] text-left transition-colors ${
-          open ? "bg-[#FAFAF9]" : "hover:bg-[#FAFAF9]"
+          open ? "bg-[#FAF7EF]" : "hover:bg-[#FAF7EF]"
         }`}
       >
-        <span className="w-[30px] h-[30px] rounded-lg bg-[#FAFAF9] border border-[#E7E5E4] flex items-center justify-center text-sm overflow-hidden flex-none">
+        <span className="w-[30px] h-[30px] rounded-lg bg-[#FAF7EF] border border-[#E3DDD0] flex items-center justify-center text-sm overflow-hidden flex-none">
           {avatarUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img src={avatarUrl} alt="" className="w-full h-full object-cover" />
@@ -145,9 +145,9 @@ export default function AccountMenu({
         </span>
         <span className="min-w-0 flex-1">
           <b className="block text-[13.5px] font-semibold leading-tight truncate">{displayName}</b>
-          <small className="block text-[11.5px] text-[#71717A] truncate">{email}</small>
+          <small className="block text-[11.5px] text-[#6B6560] truncate">{email}</small>
         </span>
-        <span className="flex-none text-[11px] text-[#A1A1AA]">⚙️</span>
+        <span className="flex-none text-[11px] text-[#A19A8C]">⚙️</span>
       </button>
     </div>
   );

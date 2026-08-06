@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import ListeningSession from "@/components/listening/ListeningSession";
-import { createClient } from "@/lib/supabase/server";
+import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { LEVEL_ORDER, type CefrLevel } from "@/lib/tree";
 import { situationByKey } from "@/lib/listening";
 import { dialoguesFor } from "@/lib/listening-dialogues";
@@ -20,9 +20,7 @@ export default async function SituationPage({
   searchParams: Promise<{ level?: string }>;
 }) {
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getClaimsUser(supabase);
 
   if (!user) redirect("/onboarding");
 
@@ -55,7 +53,7 @@ export default async function SituationPage({
   const label = situation?.label ?? situationKey;
 
   return (
-    <div className="min-h-screen bg-white text-[#18181B]">
+    <div className="min-h-screen bg-[#FDFBF7] text-[#18181B]">
       <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
         <Sidebar
           displayName={profile?.display_name ?? "there"}
@@ -66,7 +64,7 @@ export default async function SituationPage({
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] md:pb-[60px]">
           {/* breadcrumb */}
-          <div className="flex gap-2 text-[13px] text-[#A1A1AA] mb-[18px] flex-wrap">
+          <div className="flex gap-2 text-[13px] text-[#A19A8C] mb-[18px] flex-wrap">
             <Link href="/dashboard" className="hover:text-[#18181B] transition-colors">
               Garden
             </Link>
@@ -86,7 +84,7 @@ export default async function SituationPage({
               </span>
               {label}
             </h1>
-            <span className="text-[13px] text-[#71717A]">
+            <span className="text-[13px] text-[#6B6560]">
               {dialogues.length > 0 && (
                 <>
                   <b className="text-[#0D9488]">{completedIds.length}</b> of {dialogues.length} clips heard
@@ -104,7 +102,7 @@ export default async function SituationPage({
                 className={`rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold transition-all border ${
                   lv === level
                     ? "bg-[#0D9488] border-[#0D9488] text-white"
-                    : "bg-white border-[#E7E5E4] text-[#71717A] hover:border-[#A1A1AA]"
+                    : "bg-white border-[#E3DDD0] text-[#6B6560] hover:border-[#A19A8C]"
                 }`}
               >
                 {lv}
@@ -116,8 +114,8 @@ export default async function SituationPage({
           </div>
 
           {dialogues.length === 0 ? (
-            <div className="max-w-[680px] border border-[#E7E5E4] rounded-[14px] p-8 text-center">
-              <p className="text-sm text-[#71717A]">
+            <div className="max-w-[680px] border border-[#E3DDD0] rounded-[14px] p-8 text-center">
+              <p className="text-sm text-[#6B6560]">
                 No dialogues for this level yet — try another level above.
               </p>
             </div>

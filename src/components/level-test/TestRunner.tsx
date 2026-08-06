@@ -21,7 +21,7 @@ type Stage = "intro" | "listening" | "reading" | "writing" | "speaking" | "gradi
 const BTN_GREEN =
   "rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-[#16A34A] hover:bg-[#15803D] transition-colors disabled:opacity-60";
 const BTN_LINE =
-  "rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-[#18181B] bg-white border border-[#E7E5E4] hover:bg-[#FAFAF9] transition-colors";
+  "rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-[#18181B] bg-white border border-[#E3DDD0] hover:bg-[#FAF7EF] transition-colors";
 
 function speak(text: string) {
   if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
@@ -64,11 +64,11 @@ function Mcq({
 
   return (
     <div>
-      <p className="text-[11px] font-bold tracking-[.07em] uppercase text-[#A1A1AA] mb-2">
+      <p className="text-[11px] font-bold tracking-[.07em] uppercase text-[#A19A8C] mb-2">
         {title} · {index + 1}/{questions.length}
       </p>
       {passage && (
-        <p className="kr border border-[#E7E5E4] bg-[#FAFAF9] rounded-[12px] px-4 py-3 text-[15.5px] leading-[1.8] mb-4">
+        <p className="kr border border-[#E3DDD0] bg-[#FAF7EF] rounded-[12px] px-4 py-3 text-[15.5px] leading-[1.8] mb-4">
           {passage}
         </p>
       )}
@@ -87,12 +87,12 @@ function Mcq({
           const isAnswer = opt === qq.answer;
           const cls =
             selected === null
-              ? "border-[#E7E5E4] bg-white hover:border-[#16A34A]"
+              ? "border-[#E3DDD0] bg-white hover:border-[#16A34A]"
               : isAnswer
                 ? "border-[#16A34A] bg-[#F0FDF4] font-bold"
                 : selected === opt
                   ? "border-[#EF4444] bg-[#FEF2F2]"
-                  : "border-[#E7E5E4] bg-white opacity-60";
+                  : "border-[#E3DDD0] bg-white opacity-60";
           return (
             <button
               key={opt}
@@ -182,14 +182,14 @@ export default function TestRunner({ userId, spec }: { userId: string; spec: Ser
 
   if (stage === "intro") {
     return (
-      <div className="border border-[#E7E5E4] rounded-[14px] p-6">
+      <div className="border border-[#E3DDD0] rounded-[14px] p-6">
         <b className="block text-[16px] mb-1.5">
           {spec.from} → {spec.to} Level-Up Test
         </b>
-        <p className="text-[13.5px] text-[#71717A] mb-3">
+        <p className="text-[13.5px] text-[#6B6560] mb-3">
           Listening ({spec.listening.length}) → Reading ({totalReadingQuestions} questions over {spec.reading.length} passage{spec.reading.length > 1 ? "s" : ""}) → Writing (1) → Speaking (1). Writing and speaking are graded by an AI teacher. Questions are drawn at random each attempt.
         </p>
-        <p className="text-[12.5px] text-[#A1A1AA] mb-4">
+        <p className="text-[12.5px] text-[#A19A8C] mb-4">
           To pass: 70+ average with every skill at 60+. Failing is fine — practice your weakest skill and retake after 48 hours.
         </p>
         <button onClick={() => setStage("listening")} className={BTN_GREEN}>
@@ -201,7 +201,7 @@ export default function TestRunner({ userId, spec }: { userId: string; spec: Ser
 
   if (stage === "listening") {
     return (
-      <div className="border border-[#E7E5E4] rounded-[14px] p-6">
+      <div className="border border-[#E3DDD0] rounded-[14px] p-6">
         <Mcq
           title="1 · Listening — tap 🔊, then answer"
           questions={spec.listening}
@@ -218,7 +218,7 @@ export default function TestRunner({ userId, spec }: { userId: string; spec: Ser
   if (stage === "reading") {
     const set = spec.reading[readingSet];
     return (
-      <div className="border border-[#E7E5E4] rounded-[14px] p-6">
+      <div className="border border-[#E3DDD0] rounded-[14px] p-6">
         <Mcq
           key={readingSet}
           title={`2 · Reading — passage ${readingSet + 1}/${spec.reading.length}`}
@@ -237,15 +237,15 @@ export default function TestRunner({ userId, spec }: { userId: string; spec: Ser
 
   if (stage === "writing") {
     return (
-      <div className="border border-[#E7E5E4] rounded-[14px] p-6">
-        <p className="text-[11px] font-bold tracking-[.07em] uppercase text-[#A1A1AA] mb-2">3 · Writing</p>
+      <div className="border border-[#E3DDD0] rounded-[14px] p-6">
+        <p className="text-[11px] font-bold tracking-[.07em] uppercase text-[#A19A8C] mb-2">3 · Writing</p>
         <p className="font-bold text-[15.5px] mb-1">{spec.writing.promptKr}</p>
-        <p className="text-[13px] text-[#71717A] mb-3">{spec.writing.prompt}</p>
+        <p className="text-[13px] text-[#6B6560] mb-3">{spec.writing.prompt}</p>
         <textarea
           value={writingText}
           onChange={(e) => setWritingText(e.target.value)}
           rows={5}
-          className="kr w-full border-[1.5px] border-[#E7E5E4] rounded-[12px] px-4 py-3 text-[15px] focus:border-[#16A34A] outline-none"
+          className="kr w-full border-[1.5px] border-[#E3DDD0] rounded-[12px] px-4 py-3 text-[15px] focus:border-[#16A34A] outline-none"
           placeholder="Write your answer in Korean…"
         />
         <div className="mt-3">
@@ -264,10 +264,10 @@ export default function TestRunner({ userId, spec }: { userId: string; spec: Ser
   if (stage === "speaking" || stage === "grading") {
     const grading = stage === "grading";
     return (
-      <div className="border border-[#E7E5E4] rounded-[14px] p-6">
-        <p className="text-[11px] font-bold tracking-[.07em] uppercase text-[#A1A1AA] mb-2">4 · Speaking</p>
+      <div className="border border-[#E3DDD0] rounded-[14px] p-6">
+        <p className="text-[11px] font-bold tracking-[.07em] uppercase text-[#A19A8C] mb-2">4 · Speaking</p>
         <p className="kr font-bold text-[15.5px] mb-1">{spec.speaking.promptKr}</p>
-        <p className="text-[13px] text-[#71717A] mb-3">{spec.speaking.prompt}</p>
+        <p className="text-[13px] text-[#6B6560] mb-3">{spec.speaking.prompt}</p>
 
         {speech.isSupported ? (
           <div className="flex items-center gap-3 mb-3">
@@ -284,12 +284,12 @@ export default function TestRunner({ userId, spec }: { userId: string; spec: Ser
             >
               {speech.isListening ? "⏹" : "🎙"}
             </button>
-            <span className="text-[13px] text-[#71717A]">
+            <span className="text-[13px] text-[#6B6560]">
               {speech.isListening ? "Listening… tap ⏹ when you finish" : "Tap 🎙 and answer in Korean"}
             </span>
           </div>
         ) : (
-          <p className="text-[12.5px] text-[#A1A1AA] mb-2">
+          <p className="text-[12.5px] text-[#A19A8C] mb-2">
             This browser doesn&apos;t support speech recognition — type your answer instead.
           </p>
         )}
@@ -298,7 +298,7 @@ export default function TestRunner({ userId, spec }: { userId: string; spec: Ser
           value={speech.isListening && speech.interim ? `${transcript} ${speech.interim}`.trim() : transcript}
           onChange={(e) => setTranscript(e.target.value)}
           rows={3}
-          className="kr w-full border-[1.5px] border-[#E7E5E4] rounded-[12px] px-4 py-3 text-[15px] focus:border-[#16A34A] outline-none"
+          className="kr w-full border-[1.5px] border-[#E3DDD0] rounded-[12px] px-4 py-3 text-[15px] focus:border-[#16A34A] outline-none"
           placeholder="Your recognized speech appears here"
         />
         {error && <p className="text-[13px] text-[#EF4444] mt-2">{error}</p>}
@@ -306,7 +306,7 @@ export default function TestRunner({ userId, spec }: { userId: string; spec: Ser
           <button onClick={finish} disabled={grading || transcript.trim().length < 5} className={BTN_GREEN}>
             {grading ? "AI grading…" : "Submit for grading"}
           </button>
-          {grading && <span className="text-[12.5px] text-[#A1A1AA]">Grading your writing & speaking (~10s)</span>}
+          {grading && <span className="text-[12.5px] text-[#A19A8C]">Grading your writing & speaking (~10s)</span>}
         </div>
       </div>
     );
@@ -315,12 +315,12 @@ export default function TestRunner({ userId, spec }: { userId: string; spec: Ser
   // result
   const verdict = scores ? testVerdict(scores) : null;
   return (
-    <div className="border border-[#E7E5E4] rounded-[14px] p-6">
+    <div className="border border-[#E3DDD0] rounded-[14px] p-6">
       {verdict?.passed ? (
         <div className="text-center mb-5">
           <p className="text-[34px] mb-1">🎉</p>
           <b className="text-[19px]">Congratulations! You leveled up to {spec.to}!</b>
-          <p className="text-[13.5px] text-[#71717A] mt-1">
+          <p className="text-[13.5px] text-[#6B6560] mt-1">
             {promoted
               ? `${spec.to} content and the ${spec.to} league are now open.`
               : "We couldn\u2019t apply the promotion — check your profile shortly."}
@@ -330,7 +330,7 @@ export default function TestRunner({ userId, spec }: { userId: string; spec: Ser
         <div className="text-center mb-5">
           <p className="text-[34px] mb-1">🌱</p>
           <b className="text-[19px]">Not quite yet — but you&apos;re close!</b>
-          <p className="text-[13.5px] text-[#71717A] mt-1">You can try again in 48 hours.</p>
+          <p className="text-[13.5px] text-[#6B6560] mt-1">You can try again in 48 hours.</p>
         </div>
       )}
 
@@ -354,7 +354,7 @@ export default function TestRunner({ userId, spec }: { userId: string; spec: Ser
       )}
 
       {(feedback.writing || feedback.speaking) && (
-        <div className="bg-[#FAFAF9] border border-[#E7E5E4] rounded-[12px] px-4 py-3 text-[13px] text-[#3F3F46] grid gap-1.5 mb-4">
+        <div className="bg-[#FAF7EF] border border-[#E3DDD0] rounded-[12px] px-4 py-3 text-[13px] text-[#3F3F46] grid gap-1.5 mb-4">
           {feedback.writing && <p>✏️ {feedback.writing}</p>}
           {feedback.speaking && <p>🎙 {feedback.speaking}</p>}
         </div>

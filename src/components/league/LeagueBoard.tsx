@@ -18,7 +18,7 @@ type MyRank = { rank: number; total_players: number; xp_week: number };
 type Reward = { coins: number; rank: number; total_players: number; already_claimed: boolean };
 
 // The weekly league board. All reads go through SECURITY DEFINER RPCs from
-// migration 0014; until that migration is applied we show a friendly notice
+// migration 0016; until that migration is applied we show a friendly notice
 // instead of crashing.
 export default function LeagueBoard({ grade }: { grade: string }) {
   const supabase = useMemo(() => createClient(), []);
@@ -27,12 +27,14 @@ export default function LeagueBoard({ grade }: { grade: string }) {
   const [reward, setReward] = useState<Reward | null>(null);
   const [claiming, setClaiming] = useState(false);
   const [unavailable, setUnavailable] = useState(false);
+  const [joinedThisWeek, setJoinedThisWeek] = useState(false);
 
   useEffect(() => {
     void (async () => {
-      const [league, mine] = await Promise.all([
+      const [league, mine, auth] = await Promise.all([
         supabase.rpc("get_weekly_league"),
         supabase.rpc("get_my_weekly_rank"),
+        supabase.auth.getUser(),
       ]);
       if (league.error || mine.error) {
         setUnavailable(true);
@@ -41,6 +43,16 @@ export default function LeagueBoard({ grade }: { grade: string }) {
       setRows((league.data ?? []) as Row[]);
       const m = Array.isArray(mine.data) ? mine.data[0] : mine.data;
       setMy(m as MyRank);
+
+      // No "claim last week" button for accounts younger than the week —
+      // there is no last week to claim.
+      const createdAt = auth.data.user?.created_at;
+      if (createdAt) {
+        const monday = new Date();
+        monday.setHours(0, 0, 0, 0);
+        monday.setDate(monday.getDate() - ((monday.getDay() + 6) % 7));
+        if (new Date(createdAt) >= monday) setJoinedThisWeek(true);
+      }
     })();
   }, [supabase]);
 
@@ -56,7 +68,7 @@ export default function LeagueBoard({ grade }: { grade: string }) {
   if (unavailable) {
     return (
       <div className="border border-[#FDE68A] bg-[#FFFBEB] rounded-[14px] px-5 py-4 text-[13.5px]">
-        The league opens after database update 0014 is applied.
+        The league opens after database update 0016 is applied.
       </div>
     );
   }
@@ -79,13 +91,17 @@ export default function LeagueBoard({ grade }: { grade: string }) {
               : "No XP yet this week — one session puts you on the board!"}
           </b>
           {my && my.xp_week > 0 && (
-            <span className="block text-[12.5px] text-[#71717A] tabular-nums">
+            <span className="block text-[12.5px] text-[#6B6560] tabular-nums">
               {my.xp_week} XP this week
             </span>
           )}
         </div>
         <div className="flex-none text-right">
-          {reward ? (
+          {joinedThisWeek ? (
+            <span className="text-[13px] font-semibold text-[#6B6560]">
+              First week — rewards unlock Monday 🌱
+            </span>
+          ) : reward ? (
             <span className="text-[13.5px] font-bold text-[#16A34A]">
               {reward.already_claimed
                 ? `Last week's reward claimed (${reward.coins}🪙)`
@@ -108,17 +124,17 @@ export default function LeagueBoard({ grade }: { grade: string }) {
       {/* reward tiers */}
       <div className="flex gap-2 flex-wrap text-[12px] font-semibold">
         <span className="rounded-full border border-[#FDE68A] bg-[#FFFBEB] px-3 py-1">Top 10% → 100🪙</span>
-        <span className="rounded-full border border-[#E7E5E4] bg-white px-3 py-1">Top 30% → 50🪙</span>
-        <span className="rounded-full border border-[#E7E5E4] bg-white px-3 py-1">Top 60% → 20🪙</span>
-        <span className="rounded-full border border-[#E7E5E4] bg-white px-3 py-1">Joined → 5🪙</span>
+        <span className="rounded-full border border-[#E3DDD0] bg-white px-3 py-1">Top 30% → 50🪙</span>
+        <span className="rounded-full border border-[#E3DDD0] bg-white px-3 py-1">Top 60% → 20🪙</span>
+        <span className="rounded-full border border-[#E3DDD0] bg-white px-3 py-1">Joined → 5🪙</span>
       </div>
 
       {/* board */}
-      <div className="border border-[#E7E5E4] rounded-[14px] overflow-hidden">
+      <div className="border border-[#E3DDD0] rounded-[14px] overflow-hidden">
         {rows === null ? (
-          <p className="px-5 py-6 text-[13.5px] text-[#A1A1AA]">Loading…</p>
+          <p className="px-5 py-6 text-[13.5px] text-[#A19A8C]">Loading…</p>
         ) : rows.length === 0 ? (
-          <p className="px-5 py-6 text-[13.5px] text-[#A1A1AA]">
+          <p className="px-5 py-6 text-[13.5px] text-[#A19A8C]">
             Nobody has XP this week yet — first place is wide open!
           </p>
         ) : (
@@ -140,8 +156,8 @@ export default function LeagueBoard({ grade }: { grade: string }) {
                   r.rank === 1
                     ? "bg-[#FFFBEB] border border-[#FDE68A]"
                     : r.rank <= 3
-                      ? "bg-[#FAFAF9] border border-[#E7E5E4]"
-                      : "text-[#A1A1AA]"
+                      ? "bg-[#FAF7EF] border border-[#E3DDD0]"
+                      : "text-[#A19A8C]"
                 }`}
               >
                 {r.rank === 1 ? "🥇" : r.rank === 2 ? "🥈" : r.rank === 3 ? "🥉" : r.rank}
@@ -156,7 +172,7 @@ export default function LeagueBoard({ grade }: { grade: string }) {
                   {r.display_name}
                   {r.is_me && <span className="text-[#16A34A] text-[12px] font-bold ml-1.5">you</span>}
                 </b>
-                <span className="text-[12px] text-[#A1A1AA]">Lv.{r.level}</span>
+                <span className="text-[12px] text-[#A19A8C]">Lv.{r.level}</span>
               </span>
                 <b className="flex-none text-[14px] tabular-nums">{r.xp_week} XP</b>
               </div>
@@ -165,7 +181,7 @@ export default function LeagueBoard({ grade }: { grade: string }) {
         )}
       </div>
 
-      <p className="text-[12px] text-[#A1A1AA]">
+      <p className="text-[12px] text-[#A19A8C]">
         Rankings compare learners in your grade ({grade}) by XP earned this week (weeks start Monday). You see the top 10 plus the ranks around you, and every Monday you can claim last week&apos;s reward.
       </p>
     </div>

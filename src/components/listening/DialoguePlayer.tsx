@@ -12,7 +12,7 @@ const BTN_TEAL =
 const BTN_INK =
   "rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-[#18181B] hover:bg-[#3F3F46] transition-colors disabled:opacity-60";
 const BTN_LINE =
-  "rounded-[9px] px-4 py-2 text-[13px] font-semibold text-[#71717A] bg-white border border-[#E7E5E4] hover:border-[#A1A1AA] transition-colors";
+  "rounded-[9px] px-4 py-2 text-[13px] font-semibold text-[#6B6560] bg-white border border-[#E3DDD0] hover:border-[#A19A8C] transition-colors";
 
 export default function DialoguePlayer({
   dialogueId,
@@ -67,16 +67,16 @@ export default function DialoguePlayer({
   return (
     <div className="max-w-[680px]">
       {!isSupported && (
-        <p className="border border-[#E7E5E4] bg-[#FAFAF9] rounded-[10px] px-4 py-3 text-[13px] text-[#71717A] mb-3.5">
+        <p className="border border-[#E3DDD0] bg-[#FAF7EF] rounded-[10px] px-4 py-3 text-[13px] text-[#6B6560] mb-3.5">
           Your browser doesn&apos;t support text-to-speech playback — you can still read the script below.
         </p>
       )}
 
       {!scriptRevealed ? (
-        <div className="border border-[#E7E5E4] rounded-[14px] overflow-hidden text-center mb-3.5">
+        <div className="border border-[#E3DDD0] rounded-[14px] overflow-hidden text-center mb-3.5">
           {/* stage: situation photo backdrop with the two characters in front */}
           <div
-            className="relative px-6 pt-24 pb-3 bg-[#FAFAF9]"
+            className="relative px-6 pt-24 pb-3 bg-[#FAF7EF]"
             style={
               photoUrl
                 ? {
@@ -94,7 +94,7 @@ export default function DialoguePlayer({
                     {bubbleOn && (
                       <div className="absolute bottom-[calc(100%+2px)] left-1/2 -translate-x-1/2 z-10 w-max max-w-[280px]">
                         <div
-                          className="bg-white border border-[#E7E5E4] rounded-[10px] px-4 py-2.5 text-left shadow-sm"
+                          className="bg-white border border-[#E3DDD0] rounded-[10px] px-4 py-2.5 text-left shadow-sm"
                           style={{ animation: "fadeUp .25s ease" }}
                         >
                           <p className="kr text-[17px] font-medium leading-snug">{currentLine.kr}</p>
@@ -107,7 +107,7 @@ export default function DialoguePlayer({
                       className={`text-[11.5px] font-semibold mt-1.5 rounded-md px-2 py-0.5 border transition-colors ${
                         active
                           ? "bg-[#F0FDFA] text-[#0D9488] border-[#99F6E4]"
-                          : "bg-white/90 text-[#71717A] border-[#E7E5E4]"
+                          : "bg-white/90 text-[#6B6560] border-[#E3DDD0]"
                       }`}
                     >
                       {sp}
@@ -118,8 +118,8 @@ export default function DialoguePlayer({
             </div>
           </div>
 
-          <div className="px-6 pb-6 pt-4 border-t border-[#E7E5E4]">
-            <p className="text-[13px] text-[#71717A] mb-3.5">
+          <div className="px-6 pb-6 pt-4 border-t border-[#E3DDD0]">
+            <p className="text-[13px] text-[#6B6560] mb-3.5">
               Listen first — the script unlocks once you&apos;ve heard the whole thing.
             </p>
 
@@ -128,7 +128,7 @@ export default function DialoguePlayer({
                 <span
                   key={i}
                   className={`w-[26px] h-1.5 rounded-full transition-colors ${
-                    i <= currentIndex ? "bg-[#0D9488]" : "bg-[#E7E5E4]"
+                    i <= currentIndex ? "bg-[#0D9488]" : "bg-[#E3DDD0]"
                   }`}
                 />
               ))}
@@ -142,7 +142,7 @@ export default function DialoguePlayer({
                 className={`rounded-[9px] px-4 py-2 text-[13px] font-semibold border transition-colors ${
                   showCaption
                     ? "bg-[#F0FDFA] text-[#0D9488] border-[#99F6E4]"
-                    : "bg-white text-[#71717A] border-[#E7E5E4] hover:border-[#A1A1AA]"
+                    : "bg-white text-[#6B6560] border-[#E3DDD0] hover:border-[#A19A8C]"
                 }`}
                 onClick={() => setShowCaption((v) => !v)}
               >
@@ -165,11 +165,11 @@ export default function DialoguePlayer({
             </button>
           </div>
 
-          <div className="border border-[#E7E5E4] rounded-[14px] overflow-hidden mb-3.5">
+          <div className="border border-[#E3DDD0] rounded-[14px] overflow-hidden mb-3.5">
             {lines.map((line, i) => (
               <div
                 key={i}
-                className={`px-[18px] py-3.5 border-b border-[#E7E5E4] last:border-b-0 transition-colors ${
+                className={`px-[18px] py-3.5 border-b border-[#E3DDD0] last:border-b-0 transition-colors ${
                   i === currentIndex ? "bg-[#F0FDFA]" : "bg-white"
                 }`}
               >
@@ -186,18 +186,18 @@ export default function DialoguePlayer({
                     <div>
                       <b
                         className={`block text-[11px] font-bold mb-px ${
-                          i === currentIndex ? "text-[#0D9488]" : "text-[#A1A1AA]"
+                          i === currentIndex ? "text-[#0D9488]" : "text-[#A19A8C]"
                         }`}
                       >
                         {line.speaker}
                       </b>
                       <p className="kr text-base font-medium">{line.kr}</p>
-                      {showEn && <p className="text-[13px] text-[#71717A] mt-0.5">{line.en}</p>}
+                      {showEn && <p className="text-[13px] text-[#6B6560] mt-0.5">{line.en}</p>}
                     </div>
                   </div>
                   <button
                     aria-label="Replay this line"
-                    className="flex-none text-sm text-[#A1A1AA] hover:text-[#0D9488] transition-colors disabled:opacity-40 mt-1"
+                    className="flex-none text-sm text-[#A19A8C] hover:text-[#0D9488] transition-colors disabled:opacity-40 mt-1"
                     onClick={() => replayLine(i)}
                     disabled={!isSupported}
                   >

@@ -41,13 +41,15 @@ const SECTIONS: { title: string; items: { icon: string; label: string; href: str
 ];
 
 function NavItem({ icon, label, href, on }: { icon: string; label: string; href: string; on: boolean }) {
+  // Active item reads like a notebook index tab: white paper, dashed edge,
+  // open on the right so it "connects" to the page.
   return (
     <Link
       href={href}
-      className={`flex items-center gap-[11px] rounded-[9px] px-3 py-2.5 text-sm transition-colors ${
+      className={`flex items-center gap-[11px] px-3 py-2.5 text-sm transition-colors ${
         on
-          ? "bg-[#F0FDF4] text-[#16A34A] font-semibold"
-          : "text-[#3F3F46] font-medium hover:bg-[#F0FDF4] hover:text-[#16A34A]"
+          ? "bg-white border border-dashed border-[#CFC8B8] border-r-0 rounded-l-[10px] -mr-3.5 text-[#15803D] font-bold"
+          : "rounded-[9px] text-[#4A453D] font-medium hover:bg-white hover:text-[#15803D]"
       }`}
     >
       <span className="text-base">{icon}</span>
@@ -70,8 +72,8 @@ export default function Sidebar({
   const pathname = usePathname();
 
   return (
-    <aside className="hidden md:flex flex-col gap-1 border-r border-[#E7E5E4] px-3.5 py-5 sticky top-0 h-screen overflow-y-auto">
-      <Link href="/dashboard" className="flex items-center gap-[9px] font-semibold text-[17px] tracking-[-0.01em] px-2.5 pb-[18px]">
+    <aside className="hidden md:flex flex-col gap-1 border-r border-dashed border-[#DDD6C8] bg-[#FAF7EF] px-3.5 py-5 sticky top-0 h-screen overflow-y-auto">
+      <Link href="/dashboard" className="flex items-center gap-[9px] font-extrabold text-[17px] tracking-[-0.01em] px-2.5 pb-[18px] text-[#221F1B]">
         <span className="w-[30px] h-[30px] rounded-lg bg-[#16A34A] flex items-center justify-center kr text-sm text-white">
           한
         </span>
@@ -84,7 +86,7 @@ export default function Sidebar({
 
       {SECTIONS.map((section) => (
         <div key={section.title} className="flex flex-col gap-1">
-          <p className="text-[11px] font-bold tracking-[.07em] uppercase text-[#16A34A]/70 px-3 pt-3.5 pb-1.5">
+          <p className="text-[11px] font-extrabold tracking-[.1em] uppercase text-[#B7AE9C] px-3 pt-3.5 pb-1.5">
             {section.title}
           </p>
           {section.items.map((item) => (
@@ -94,11 +96,11 @@ export default function Sidebar({
       ))}
 
       <div className="mt-auto flex flex-col gap-1">
-        <div className="flex items-center gap-2.5 border border-[#FDE68A] bg-[#FFFBEB] rounded-[10px] px-[13px] py-[11px] mb-1.5">
+        <div className="flex items-center gap-2.5 border border-[#ECD98A] bg-[#FEF9C3] px-[13px] py-[11px] mb-1.5 rotate-[-1deg] shadow-[0_8px_18px_-12px_rgba(120,100,30,.4)]">
           <span className="text-lg">🔥</span>
           <div>
             <b className="block text-[13.5px] font-semibold leading-tight">{streakDays}-day streak</b>
-            <small className="text-[11.5px] text-[#71717A]">Keep it alive today!</small>
+            <small className="text-[11.5px] text-[#6B6560]">Keep it alive today!</small>
           </div>
         </div>
         <AccountMenu displayName={displayName} email={email} avatarUrl={avatarUrl} />

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
-import { createClient } from "@/lib/supabase/server";
+import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { COURSE_SECTIONS, COURSE_TOTAL_DAYS, nextCourseDay } from "@/lib/course";
 
 // Course overview: the whole 16-day chain at a glance, grouped into the
@@ -10,9 +10,7 @@ import { COURSE_SECTIONS, COURSE_TOTAL_DAYS, nextCourseDay } from "@/lib/course"
 // hands-free; this page is the only "map".
 export default async function CourseOverviewPage() {
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getClaimsUser(supabase);
   if (!user) redirect("/onboarding");
   const uid = user.id;
 
@@ -30,7 +28,7 @@ export default async function CourseOverviewPage() {
   const doneCount = COURSE_SECTIONS.flatMap((s) => s.days).filter((d) => doneKeys.has(d.key)).length;
 
   return (
-    <div className="min-h-screen bg-white text-[#18181B]">
+    <div className="min-h-screen bg-[#FDFBF7] text-[#18181B]">
       <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
         <Sidebar
           displayName={profile?.display_name ?? "there"}
@@ -41,7 +39,7 @@ export default async function CourseOverviewPage() {
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] md:pb-[60px] max-w-[760px]">
           {/* breadcrumb */}
-          <div className="flex gap-2 text-[13px] text-[#A1A1AA] mb-[18px]">
+          <div className="flex gap-2 text-[13px] text-[#A19A8C] mb-[18px]">
             <Link href="/dashboard" className="hover:text-[#18181B] transition-colors">
               Garden
             </Link>
@@ -50,7 +48,7 @@ export default async function CourseOverviewPage() {
           </div>
 
           {/* hero */}
-          <div className="border border-[#E7E5E4] rounded-[16px] p-6 flex gap-[18px] items-center flex-wrap mb-7">
+          <div className="border border-[#E3DDD0] rounded-[16px] p-6 flex gap-[18px] items-center flex-wrap mb-7">
             <span className="w-16 h-16 rounded-[14px] bg-[#F0FDF4] border border-[#BBF7D0] flex items-center justify-center text-[30px] flex-none">
               🧭
             </span>
@@ -58,7 +56,7 @@ export default async function CourseOverviewPage() {
               <h1 className="font-extrabold text-[21px] tracking-[-0.02em] [text-wrap:balance]">
                 16-Day Course — from the alphabet to if-clauses
               </h1>
-              <p className="text-[13.5px] text-[#71717A]">
+              <p className="text-[13.5px] text-[#6B6560]">
                 {doneCount}/{COURSE_TOTAL_DAYS} days done · read-style lessons, binge as many as you like
               </p>
             </div>
@@ -77,11 +75,11 @@ export default async function CourseOverviewPage() {
             <section key={section.key} className="mb-8">
               <h2 className="font-extrabold text-[16px] tracking-[-0.01em]">
                 <span className="kr">{section.titleKr}</span>
-                <span className="text-[#A1A1AA] font-semibold text-[13px]"> · {section.title}</span>
+                <span className="text-[#A19A8C] font-semibold text-[13px]"> · {section.title}</span>
               </h2>
-              <p className="text-[12.5px] text-[#71717A] mb-4">{section.sub}</p>
+              <p className="text-[12.5px] text-[#6B6560] mb-4">{section.sub}</p>
 
-              <ol className="relative ml-[18px] border-l-2 border-[#E7E5E4]">
+              <ol className="relative ml-[18px] border-l-2 border-[#E3DDD0]">
                 {section.days.map((d) => {
                   const isDone = doneKeys.has(d.key);
                   const isNext = next?.day === d.day;
@@ -94,7 +92,7 @@ export default async function CourseOverviewPage() {
                             ? "border-[#16A34A] bg-[#16A34A] text-white"
                             : isNext
                               ? "border-[#FF9E7D] text-[#FF9E7D]"
-                              : "border-[#E7E5E4] text-[#A1A1AA]"
+                              : "border-[#E3DDD0] text-[#A19A8C]"
                         }`}
                       >
                         {isDone ? "✓" : d.day}
@@ -107,7 +105,7 @@ export default async function CourseOverviewPage() {
                             ? "border-[#FF9E7D] bg-[#FFF7ED] hover:border-[#f08560]"
                             : isDone
                               ? "border-[#BBF7D0] bg-[#F0FDF4] hover:border-[#16A34A]"
-                              : "border-[#E7E5E4] bg-white hover:border-[#16A34A]"
+                              : "border-[#E3DDD0] bg-white hover:border-[#16A34A]"
                         }`}
                       >
                         <div className="flex items-center gap-3 flex-wrap">
@@ -115,9 +113,9 @@ export default async function CourseOverviewPage() {
                             <b className="block text-[14.5px] tracking-[-0.01em]">
                               <span className="kr">{d.titleKr}</span>
                             </b>
-                            <span className="text-[12.5px] text-[#71717A]">{d.title}</span>
+                            <span className="text-[12.5px] text-[#6B6560]">{d.title}</span>
                           </div>
-                          <span className="flex-none text-[12px] text-[#A1A1AA] font-semibold tabular-nums">
+                          <span className="flex-none text-[12px] text-[#A19A8C] font-semibold tabular-nums">
                             {isNext ? "← up next" : isDone ? "done" : `~${d.minutes} min`}
                           </span>
                         </div>

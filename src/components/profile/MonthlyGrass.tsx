@@ -56,16 +56,16 @@ export default function MonthlyGrass({
   });
 
   return (
-    <div className="border border-[#E7E5E4] rounded-[14px] px-[22px] py-5">
+    <div className="border border-[#E3DDD0] rounded-[14px] px-[22px] py-5">
       <div className="flex items-center justify-between gap-3 mb-3.5 flex-wrap">
         <b className="font-semibold text-[15px]">🌿 Study garden · {year}</b>
         <div className="flex gap-2 flex-wrap">
           {headline.map((h) => (
             <span
               key={h.label}
-              className="text-[12px] font-semibold text-[#3F3F46] bg-[#FAFAF9] border border-[#E7E5E4] rounded-full px-2.5 py-[3px] tabular-nums"
+              className="text-[12px] font-semibold text-[#3F3F46] bg-[#FAF7EF] border border-[#E3DDD0] rounded-full px-2.5 py-[3px] tabular-nums"
             >
-              {h.value} <span className="text-[#A1A1AA] font-medium">{h.label}</span>
+              {h.value} <span className="text-[#A19A8C] font-medium">{h.label}</span>
             </span>
           ))}
         </div>
@@ -73,7 +73,7 @@ export default function MonthlyGrass({
 
       <div className="overflow-x-auto">
         <div className="inline-flex flex-col gap-[2px]">
-          <div className="flex gap-[2px] text-[9px] text-[#A1A1AA] h-[11px]">
+          <div className="flex gap-[2px] text-[9px] text-[#A19A8C] h-[11px]">
             {monthLabels.map((m, i) => (
               <span key={i} className="w-[11px] leading-[11px] overflow-visible whitespace-nowrap">
                 {m}
@@ -101,7 +101,7 @@ export default function MonthlyGrass({
         </div>
       </div>
 
-      <div className="flex items-center gap-1.5 mt-3 text-[11px] text-[#A1A1AA]">
+      <div className="flex items-center gap-1.5 mt-3 text-[11px] text-[#A19A8C]">
         less
         {CELL_COLORS.map((c) => (
           <span key={c} className="w-[10px] h-[10px] rounded-[3px]" style={{ background: c }} />

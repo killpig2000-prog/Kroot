@@ -60,12 +60,12 @@ export default function Wardrobe({
   }
 
   return (
-    <div className="border border-[#E7E5E4] rounded-[14px] px-[22px] py-5">
+    <div className="border border-[#E3DDD0] rounded-[14px] px-[22px] py-5">
       <div className="flex justify-between items-baseline mb-2 gap-3">
         <b className="font-semibold text-[15px] tracking-[-0.01em]">My costume</b>
         <Link
           href="/shop"
-          className="text-[12.5px] font-semibold text-[#71717A] hover:text-[#18181B] transition-colors"
+          className="text-[12.5px] font-semibold text-[#6B6560] hover:text-[#18181B] transition-colors"
         >
           Shop for more →
         </Link>
@@ -78,7 +78,7 @@ export default function Wardrobe({
       </div>
 
       {owned.length === 0 ? (
-        <p className="text-[13px] text-[#71717A] text-center">
+        <p className="text-[13px] text-[#6B6560] text-center">
           No costumes yet — visit the shop and treat your tree.
         </p>
       ) : (
@@ -93,7 +93,7 @@ export default function Wardrobe({
                 className={`flex items-center gap-1.5 rounded-[9px] px-3 py-1.5 text-[12.5px] font-semibold border transition-all disabled:opacity-60 ${
                   on
                     ? "bg-[#F0FDF4] border-[#BBF7D0] text-[#16A34A]"
-                    : "bg-white border-[#E7E5E4] text-[#71717A] hover:border-[#A1A1AA]"
+                    : "bg-white border-[#E3DDD0] text-[#6B6560] hover:border-[#A19A8C]"
                 }`}
               >
                 <svg viewBox="-40 -30 80 60" className="w-[30px] h-[22px]">

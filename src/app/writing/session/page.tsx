@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import WritingSession, { WritingEmpty } from "@/components/writing/WritingSession";
-import { createClient } from "@/lib/supabase/server";
+import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { getChaptersForLevel } from "@/lib/writing";
 import { LEVEL_ORDER, type CefrLevel } from "@/lib/tree";
 
@@ -20,9 +20,7 @@ export default async function WritingChapterSessionPage({
   const chapterIndex = Number(sp.chapter ?? 0);
 
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getClaimsUser(supabase);
 
   if (!user) redirect("/onboarding");
 
@@ -39,7 +37,7 @@ export default async function WritingChapterSessionPage({
   const hasNextChapter = chapterIndex + 1 < chapters.length;
 
   return (
-    <div className="min-h-screen bg-white text-[#18181B]">
+    <div className="min-h-screen bg-[#FDFBF7] text-[#18181B]">
       <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
         <Sidebar
           displayName={profile?.display_name ?? "there"}
@@ -50,7 +48,7 @@ export default async function WritingChapterSessionPage({
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] md:pb-[60px]">
           {/* breadcrumb */}
-          <div className="flex gap-2 text-[13px] text-[#A1A1AA] mb-[18px] flex-wrap">
+          <div className="flex gap-2 text-[13px] text-[#A19A8C] mb-[18px] flex-wrap">
             <Link href="/dashboard" className="hover:text-[#18181B] transition-colors">
               Garden
             </Link>
@@ -70,7 +68,7 @@ export default async function WritingChapterSessionPage({
               </span>
               Writing
             </h1>
-            <span className="text-[13px] text-[#71717A]">
+            <span className="text-[13px] text-[#6B6560]">
               Level {level} · page {chapterIndex + 1} of {chapters.length}
             </span>
           </div>

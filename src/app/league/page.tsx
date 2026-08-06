@@ -3,14 +3,12 @@ import { redirect } from "next/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import LeagueBoard from "@/components/league/LeagueBoard";
-import { createClient } from "@/lib/supabase/server";
+import { createClient, getClaimsUser } from "@/lib/supabase/server";
 
 // Weekly XP league within the user's CEFR grade.
 export default async function LeaguePage() {
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getClaimsUser(supabase);
   if (!user) redirect("/onboarding");
 
   const { data: profile } = await supabase
@@ -22,7 +20,7 @@ export default async function LeaguePage() {
   const grade = profile?.current_level ?? "A1";
 
   return (
-    <div className="min-h-screen bg-white text-[#18181B]">
+    <div className="min-h-screen bg-[#FDFBF7] text-[#18181B]">
       <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
         <Sidebar
           displayName={profile?.display_name ?? "there"}
@@ -33,7 +31,7 @@ export default async function LeaguePage() {
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] md:pb-[60px] max-w-[720px]">
           {/* breadcrumb */}
-          <div className="flex gap-2 text-[13px] text-[#A1A1AA] mb-[18px]">
+          <div className="flex gap-2 text-[13px] text-[#A19A8C] mb-[18px]">
             <Link href="/dashboard" className="hover:text-[#18181B] transition-colors">
               Garden
             </Link>
@@ -49,7 +47,7 @@ export default async function LeaguePage() {
               </span>
               {grade} League
             </h1>
-            <span className="text-[13px] text-[#71717A]">
+            <span className="text-[13px] text-[#6B6560]">
               Weekly XP ranking · resets Monday ·{" "}
               <Link href="/level-test" className="font-semibold text-[#16A34A] hover:underline">
                 Level-up test →

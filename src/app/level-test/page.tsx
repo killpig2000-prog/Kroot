@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import TestRunner from "@/components/level-test/TestRunner";
-import { createClient } from "@/lib/supabase/server";
+import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { computeEligibility } from "@/lib/promotion-server";
 import { SKILL_LABELS, buildServedTest, testForGrade, type SkillScores } from "@/lib/promotion-test";
 import type { CefrLevel } from "@/lib/tree";
@@ -12,9 +12,7 @@ import type { CefrLevel } from "@/lib/tree";
 // once every requirement is met, the actual four-skill test.
 export default async function LevelTestPage() {
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getClaimsUser(supabase);
   if (!user) redirect("/onboarding");
 
   const { data: profile } = await supabase
@@ -39,7 +37,7 @@ export default async function LevelTestPage() {
   );
 
   return (
-    <div className="min-h-screen bg-white text-[#18181B]">
+    <div className="min-h-screen bg-[#FDFBF7] text-[#18181B]">
       <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
         <Sidebar
           displayName={profile?.display_name ?? "there"}
@@ -50,7 +48,7 @@ export default async function LevelTestPage() {
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] md:pb-[60px] max-w-[680px]">
           {/* breadcrumb */}
-          <div className="flex gap-2 text-[13px] text-[#A1A1AA] mb-[18px]">
+          <div className="flex gap-2 text-[13px] text-[#A19A8C] mb-[18px]">
             <Link href="/dashboard" className="hover:text-[#18181B] transition-colors">
               Garden
             </Link>
@@ -61,12 +59,12 @@ export default async function LevelTestPage() {
           <h1 className="font-bold text-[22px] tracking-[-0.02em] mb-1">
             🎯 Level-Up Test {spec && `— ${spec.from} → ${spec.to}`}
           </h1>
-          <p className="text-[13.5px] text-[#71717A] mb-6">
+          <p className="text-[13.5px] text-[#6B6560] mb-6">
             Study enough at your current grade — with good accuracy — and the test unlocks. Pass it to open the next grade&apos;s content and league.
           </p>
 
           {!spec ? (
-            <div className="border border-[#E7E5E4] rounded-[14px] px-5 py-5 text-[14px]">
+            <div className="border border-[#E3DDD0] rounded-[14px] px-5 py-5 text-[14px]">
               {grade === "C2"
                 ? "You\u2019re already at the top grade (C2)! 🏆"
                 : `The ${grade} level-up test is coming soon.`}
@@ -75,7 +73,7 @@ export default async function LevelTestPage() {
             <TestRunner userId={user.id} spec={buildServedTest(spec)} />
           ) : (
             <div className="grid gap-4">
-              <div className="border border-[#E7E5E4] rounded-[14px] p-5 grid gap-3.5">
+              <div className="border border-[#E3DDD0] rounded-[14px] p-5 grid gap-3.5">
                 <b className="text-[14.5px]">Requirements — how much and how well you studied at {grade}</b>
                 <div className="flex items-center gap-3 text-[13px]">
                   <span className="flex-none w-[130px]">Words reviewed</span>
@@ -124,7 +122,7 @@ export default async function LevelTestPage() {
                   )}
                 </div>
               ) : (
-                <p className="text-[13px] text-[#71717A]">
+                <p className="text-[13px] text-[#6B6560]">
                   Keep studying {grade} vocabulary and reading to fill the gauges. When every bar is full, the test opens right here.
                 </p>
               )}

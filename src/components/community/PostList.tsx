@@ -15,11 +15,9 @@ function splitPost(content: string): { title: string; body: string } {
 
 export default function PostList({
   posts,
-  currentUserId,
   readOnly = false,
 }: {
   posts: CommunityPost[];
-  currentUserId: string;
   readOnly?: boolean;
 }) {
   const router = useRouter();
@@ -45,10 +43,10 @@ export default function PostList({
 
   if (posts.length === 0) {
     return (
-      <div className="border border-[#E7E5E4] rounded-[14px] bg-[#FAFAF9] p-8 text-center max-w-[980px]">
+      <div className="border border-[#E3DDD0] rounded-[14px] bg-[#FAF7EF] p-8 text-center max-w-[980px]">
         <span className="text-[26px] block mb-2">🌱</span>
         <b className="block font-semibold text-[15px] mb-1">Nothing here yet</b>
-        <small className="text-[13px] text-[#71717A]">Be the first to post on this board.</small>
+        <small className="text-[13px] text-[#6B6560]">Be the first to post on this board.</small>
       </div>
     );
   }
@@ -57,30 +55,30 @@ export default function PostList({
     <>
       {error && <p className="text-[12.5px] text-[#DB2777] mb-2.5">{error}</p>}
 
-      <div className="border border-[#E7E5E4] rounded-[14px] bg-white max-w-[980px] overflow-hidden">
+      <div className="border border-[#E3DDD0] rounded-[14px] bg-white max-w-[980px] overflow-hidden">
         {posts.map((p, i) => {
           const { title, body } = splitPost(p.content);
           const open = openId === p.id;
-          const mine = !readOnly && p.user_id === currentUserId;
+          const mine = !readOnly && !!p.mine;
 
           return (
-            <div key={p.id} className={i > 0 ? "border-t border-[#E7E5E4]" : ""}>
+            <div key={p.id} className={i > 0 ? "border-t border-[#E3DDD0]" : ""}>
               <button
                 type="button"
                 onClick={() => setOpenId(open ? null : p.id)}
                 aria-expanded={open}
                 className={`w-full text-left px-[18px] py-3 flex items-center gap-3 transition-colors ${
-                  open ? "bg-[#F8FAFC]" : "hover:bg-[#FAFAF9]"
+                  open ? "bg-[#F8FAFC]" : "hover:bg-[#FAF7EF]"
                 }`}
               >
                 <span className="text-[11.5px] font-semibold rounded-full border border-[#CBD5E1] bg-[#F1F5F9] text-[#334155] px-2.5 py-[3px] flex-none">
                   {boardLabel(p.board)}
                 </span>
                 <b className="min-w-0 flex-1 font-semibold text-[14px] truncate">{title}</b>
-                <span className="text-[12.5px] text-[#71717A] flex-none hidden sm:inline truncate max-w-[140px]">
+                <span className="text-[12.5px] text-[#6B6560] flex-none hidden sm:inline truncate max-w-[140px]">
                   {p.author_name}
                 </span>
-                <span className="text-[12px] text-[#A1A1AA] flex-none w-[64px] text-right">
+                <span className="text-[12px] text-[#A19A8C] flex-none w-[64px] text-right">
                   {timeAgo(p.created_at)}
                 </span>
               </button>
@@ -91,7 +89,7 @@ export default function PostList({
                     {body || title}
                   </p>
                   <div className="flex items-center gap-2.5 mt-3">
-                    <span className="text-[12px] text-[#A1A1AA]">
+                    <span className="text-[12px] text-[#A19A8C]">
                       {p.author_emoji ?? "🦊"} {p.author_name}
                       {p.country ? ` · ${p.country}` : ""}
                     </span>
@@ -100,7 +98,7 @@ export default function PostList({
                         type="button"
                         onClick={() => remove(p.id)}
                         disabled={deletingId === p.id}
-                        className="ml-auto rounded-[9px] border border-[#E7E5E4] px-3 py-1.5 text-[12.5px] font-semibold text-[#DB2777] transition-colors hover:border-[#DB2777] disabled:opacity-40"
+                        className="ml-auto rounded-[9px] border border-[#E3DDD0] px-3 py-1.5 text-[12.5px] font-semibold text-[#DB2777] transition-colors hover:border-[#DB2777] disabled:opacity-40"
                       >
                         {deletingId === p.id ? "Deleting…" : "Delete"}
                       </button>

@@ -16,7 +16,7 @@ export default function SlangBoard({ entries }: { entries: SlangEntry[] }) {
     `rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold transition-all border ${
       active
         ? "bg-[#DB2777] border-[#DB2777] text-white"
-        : "bg-white border-[#E7E5E4] text-[#71717A] hover:border-[#A1A1AA]"
+        : "bg-white border-[#E3DDD0] text-[#6B6560] hover:border-[#A19A8C]"
     }`;
 
   return (

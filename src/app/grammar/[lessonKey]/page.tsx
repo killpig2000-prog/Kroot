@@ -4,7 +4,7 @@ import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import ExampleBox from "@/components/grammar/ExampleBox";
 import GrammarQuizBlock from "@/components/grammar/GrammarQuiz";
-import { createClient } from "@/lib/supabase/server";
+import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { lessonByKey, lessonIndex, nextLesson } from "@/lib/grammar";
 
 export default async function GrammarLessonPage({
@@ -13,9 +13,7 @@ export default async function GrammarLessonPage({
   params: Promise<{ lessonKey: string }>;
 }) {
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getClaimsUser(supabase);
 
   if (!user) redirect("/onboarding");
 
@@ -33,7 +31,7 @@ export default async function GrammarLessonPage({
   const next = nextLesson(lesson.key);
 
   return (
-    <div className="min-h-screen bg-white text-[#18181B]">
+    <div className="min-h-screen bg-[#FDFBF7] text-[#18181B]">
       <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
         <Sidebar
           displayName={profile?.display_name ?? "there"}
@@ -44,7 +42,7 @@ export default async function GrammarLessonPage({
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] md:pb-[60px]">
           {/* breadcrumb */}
-          <div className="flex gap-2 text-[13px] text-[#A1A1AA] mb-[18px] flex-wrap">
+          <div className="flex gap-2 text-[13px] text-[#A19A8C] mb-[18px] flex-wrap">
             <Link href="/dashboard" className="hover:text-[#18181B] transition-colors">
               Garden
             </Link>
@@ -64,7 +62,7 @@ export default async function GrammarLessonPage({
               </span>
               {lesson.title}
             </h1>
-            <span className="text-[13px] text-[#71717A]">
+            <span className="text-[13px] text-[#6B6560]">
               Lesson {no} · <b className="text-[#4F46E5]">{lesson.level}</b> ·{" "}
               <span className="kr">{lesson.krTitle}</span>
             </span>
@@ -80,7 +78,7 @@ export default async function GrammarLessonPage({
             {lesson.sections.map((section, i) => (
               <section
                 key={i}
-                className="border border-[#E7E5E4] rounded-[14px] p-[clamp(18px,2.5vw,26px)] mb-3.5"
+                className="border border-[#E3DDD0] rounded-[14px] p-[clamp(18px,2.5vw,26px)] mb-3.5"
               >
                 <div className="flex items-center gap-2.5 mb-2.5">
                   <span className="flex-none w-[22px] h-[22px] rounded-md bg-[#EEF2FF] border border-[#C7D2FE] text-[#4F46E5] flex items-center justify-center text-[11px] font-bold">
@@ -88,7 +86,7 @@ export default async function GrammarLessonPage({
                   </span>
                   <h2 className="font-bold text-[16.5px] tracking-[-0.01em]">{section.heading}</h2>
                 </div>
-                <p className="text-[14px] text-[#71717A] leading-[1.7] mb-4">
+                <p className="text-[14px] text-[#6B6560] leading-[1.7] mb-4">
                   {section.explanation}
                 </p>
                 <ExampleBox examples={section.examples} />
@@ -97,10 +95,10 @@ export default async function GrammarLessonPage({
 
             {/* quiz */}
             <div className="flex items-center gap-2.5 mt-8 mb-3.5">
-              <span className="text-[11.5px] font-semibold tracking-[.06em] uppercase text-[#A1A1AA]">
+              <span className="text-[11.5px] font-semibold tracking-[.06em] uppercase text-[#A19A8C]">
                 Check yourself
               </span>
-              <span className="h-px flex-1 bg-[#E7E5E4]" />
+              <span className="h-px flex-1 bg-[#E3DDD0]" />
             </div>
             <GrammarQuizBlock quiz={lesson.quiz} />
 
@@ -108,7 +106,7 @@ export default async function GrammarLessonPage({
             <div className="flex items-center justify-between gap-3 mt-6 flex-wrap">
               <Link
                 href="/grammar"
-                className="rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-[#18181B] bg-white border border-[#E7E5E4] hover:bg-[#FAFAF9] transition-colors"
+                className="rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-[#18181B] bg-white border border-[#E3DDD0] hover:bg-[#FAF7EF] transition-colors"
               >
                 ← All lessons
               </Link>
