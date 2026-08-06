@@ -2,17 +2,19 @@
 -- plus_until / stripe_customer_id are written ONLY by the Stripe webhook
 -- (service role); clients keep owner-only read access via existing policies.
 
-alter table public.profiles add column plus_until timestamptz;
-alter table public.profiles add column stripe_customer_id text;
+-- Idempotent: safe to re-run after a partial apply.
+alter table public.profiles add column if not exists plus_until timestamptz;
+alter table public.profiles add column if not exists stripe_customer_id text;
 
-create index profiles_stripe_customer_idx on public.profiles (stripe_customer_id);
+create index if not exists profiles_stripe_customer_idx on public.profiles (stripe_customer_id);
 
-alter table public.costume_catalog add column plus_only boolean not null default false;
+alter table public.costume_catalog add column if not exists plus_only boolean not null default false;
 
 insert into public.costume_catalog (id, price, min_level, plus_only) values
   ('gardener-halo', 0, null, true),
   ('star-glasses', 0, null, true),
-  ('golden-scarf', 0, null, true);
+  ('golden-scarf', 0, null, true)
+on conflict (id) do update set plus_only = excluded.plus_only, price = excluded.price;
 
 -- Re-create buy_costume with the Plus gate.
 create or replace function public.buy_costume(p_costume_id text)
