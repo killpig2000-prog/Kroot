@@ -8,6 +8,7 @@ function friendlyError(raw: string) {
   if (raw.includes("already owned")) return "You already own this.";
   if (raw.includes("level too low")) return "Reach a higher level first.";
   if (raw.includes("not enough coins")) return "Not enough coins.";
+  if (raw.includes("plus required")) return "This outfit needs Kroot Plus.";
   if (raw.includes("unknown costume")) return "This item is unavailable.";
   return "Purchase failed. Try again.";
 }
@@ -18,12 +19,14 @@ export default function BuyButton({
   coins,
   owned,
   locked,
+  plusLocked = false,
 }: {
   costumeId: string;
   price: number;
   coins: number;
   owned: boolean;
   locked: boolean;
+  plusLocked?: boolean;
 }) {
   const router = useRouter();
   const supabase = useMemo(() => createClient(), []);
@@ -35,7 +38,7 @@ export default function BuyButton({
   const affordable = balance >= price;
 
   async function handleBuy() {
-    if (isOwned || loading || locked) return;
+    if (isOwned || loading || locked || plusLocked) return;
     setLoading(true);
     setMessage(null);
 
@@ -63,9 +66,19 @@ export default function BuyButton({
   }
   if (locked) {
     return (
-      <span className="text-[11.5px] font-semibold text-[#A1A1AA] bg-[#FAFAF9] border border-[#E7E5E4] rounded-md px-2.5 py-1">
+      <span className="text-[11.5px] font-semibold text-[#A19A8C] bg-[#FAF7EF] border border-[#E3DDD0] rounded-md px-2.5 py-1">
         🔒 Level locked
       </span>
+    );
+  }
+  if (plusLocked) {
+    return (
+      <a
+        href="/pricing"
+        className="text-[11.5px] font-semibold text-[#D97706] bg-[#FFFBEB] border border-[#FDE68A] rounded-md px-2.5 py-1 hover:border-[#D97706] transition-colors"
+      >
+        🌟 Plus only
+      </a>
     );
   }
 
@@ -76,7 +89,7 @@ export default function BuyButton({
         onClick={handleBuy}
         disabled={loading || !affordable}
       >
-        {loading ? "Buying…" : `🌰 ${price}`}
+        {loading ? "Buying…" : price === 0 ? "Claim free" : `🌰 ${price}`}
       </button>
       {message && <span className="text-[11.5px] font-medium text-[#DC2626]">{message}</span>}
     </div>
