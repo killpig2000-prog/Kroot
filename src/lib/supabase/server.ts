@@ -1,6 +1,19 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
+// Lightweight auth for server pages: verifies the JWT locally (cached JWKS)
+// instead of a ~300ms /auth/v1/user round trip per page. The middleware has
+// already gated protected routes and refreshed tokens; pages only need the id
+// and email out of the claims.
+export async function getClaimsUser(
+  supabase: Awaited<ReturnType<typeof createClient>>
+): Promise<{ id: string; email: string | null } | null> {
+  const { data } = await supabase.auth.getClaims();
+  const claims = data?.claims;
+  if (!claims?.sub) return null;
+  return { id: claims.sub, email: (claims.email as string | undefined) ?? null };
+}
+
 export async function createClient() {
   const cookieStore = await cookies();
 

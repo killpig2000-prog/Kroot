@@ -27,9 +27,11 @@ export async function proxy(request: NextRequest) {
     }
   );
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  // getClaims() verifies the JWT locally against the project's cached JWKS —
+  // no ~300ms auth round trip per request like getUser(). It still refreshes
+  // expired sessions through the ssr client, keeping the cookie logic below.
+  const { data: claimsData } = await supabase.auth.getClaims();
+  const user = claimsData?.claims ?? null;
 
   const { pathname } = request.nextUrl;
 
@@ -47,13 +49,19 @@ export async function proxy(request: NextRequest) {
     pathname.startsWith("/pronunciation") ||
     pathname.startsWith("/slang") ||
     pathname.startsWith("/community") ||
+    pathname.startsWith("/review") ||
     pathname.startsWith("/course") ||
     pathname.startsWith("/league") ||
     pathname.startsWith("/level-test");
   if (!user && isProtected) {
     const url = request.nextUrl.clone();
-    url.pathname = "/onboarding";
-    return NextResponse.redirect(url);
+    url.pathname = "/auth/login";
+    url.search = `?next=${encodeURIComponent(pathname)}`;
+    // Carry over any auth cookies the claims check refreshed above — a bare
+    // redirect would drop the rotated refresh token and invalidate the session.
+    const redirect = NextResponse.redirect(url);
+    supabaseResponse.cookies.getAll().forEach((cookie) => redirect.cookies.set(cookie));
+    return redirect;
   }
 
   return supabaseResponse;
