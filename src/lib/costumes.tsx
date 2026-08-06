@@ -11,6 +11,8 @@ export type Costume = {
   price: number;
   // Minimum tree level required to wear it (costumes scale with the tree).
   minLevel?: CefrLevel;
+  // Claimable only with an active Kroot Plus subscription (enforced server-side).
+  plusOnly?: boolean;
   // Drawn centered on (0,0) in a roughly 70x40 box; scaled/positioned per level.
   render: () => ReactNode;
 };
@@ -116,6 +118,54 @@ export const COSTUMES: Costume[] = [
         <path d="M-16 -3 Q0 6 16 -3 L16 4 Q0 13 -16 4 Z" fill="#FF9E7D" />
         <rect x="6" y="2" width="9" height="16" rx="4" fill="#FF9E7D" />
         <path d="M6 14 L15 14" stroke="#E0805F" strokeWidth="2" />
+      </>
+    ),
+  },
+  {
+    id: "gardener-halo",
+    name: "Gardener's Halo",
+    krName: "정원사의 후광",
+    slot: "hat",
+    price: 0,
+    plusOnly: true,
+    render: () => (
+      <>
+        <ellipse cx="0" cy="-12" rx="20" ry="6" fill="none" stroke="#FFD66B" strokeWidth="4" />
+        <ellipse cx="0" cy="-12" rx="20" ry="6" fill="none" stroke="#FFF3C4" strokeWidth="1.5" />
+        <circle cx="-14" cy="-16" r="1.6" fill="#FFF3C4" />
+        <circle cx="15" cy="-9" r="1.4" fill="#FFF3C4" />
+      </>
+    ),
+  },
+  {
+    id: "star-glasses",
+    name: "Star Glasses",
+    krName: "별 안경",
+    slot: "face",
+    price: 0,
+    plusOnly: true,
+    render: () => (
+      <>
+        <path d="M-11 -8 L-8.5 -2.5 L-3 -2 L-7 2 L-6 8 L-11 5 L-16 8 L-15 2 L-19 -2 L-13.5 -2.5 Z" fill="#FFD66B" stroke="#E0B23F" strokeWidth="1.5" />
+        <path d="M11 -8 L13.5 -2.5 L19 -2 L15 2 L16 8 L11 5 L6 8 L7 2 L3 -2 L8.5 -2.5 Z" fill="#FFD66B" stroke="#E0B23F" strokeWidth="1.5" />
+        <path d="M-3 0 Q0 -3 3 0" stroke="#E0B23F" strokeWidth="2.5" fill="none" />
+      </>
+    ),
+  },
+  {
+    id: "golden-scarf",
+    name: "Golden Scarf",
+    krName: "황금 목도리",
+    slot: "neck",
+    price: 0,
+    plusOnly: true,
+    render: () => (
+      <>
+        <path d="M-16 -3 Q0 6 16 -3 L16 4 Q0 13 -16 4 Z" fill="#FFD66B" />
+        <rect x="6" y="2" width="9" height="16" rx="4" fill="#FFD66B" />
+        <path d="M6 14 L15 14" stroke="#E0B23F" strokeWidth="2" />
+        <circle cx="-8" cy="2" r="1.5" fill="#FFF3C4" />
+        <circle cx="2" cy="4" r="1.5" fill="#FFF3C4" />
       </>
     ),
   },

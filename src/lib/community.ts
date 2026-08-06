@@ -2,7 +2,9 @@ export type BoardKey = "question" | "free" | "exchange";
 
 export type CommunityPost = {
   id: string;
-  user_id: string;
+  // Whether the signed-in viewer wrote this post. Computed server-side so raw
+  // user ids never reach the client.
+  mine?: boolean;
   author_name: string;
   author_emoji: string | null;
   country: string | null;
@@ -30,7 +32,6 @@ export function boardLabel(key: string): string {
 export const SAMPLE_POSTS: CommunityPost[] = [
   {
     id: "sample-1",
-    user_id: "sample-user",
     author_name: "Maria",
     author_emoji: "🦊",
     country: "Brazil",
@@ -40,7 +41,6 @@ export const SAMPLE_POSTS: CommunityPost[] = [
   },
   {
     id: "sample-2",
-    user_id: "sample-user",
     author_name: "Kenta",
     author_emoji: "🐻",
     country: "Japan",
@@ -50,7 +50,6 @@ export const SAMPLE_POSTS: CommunityPost[] = [
   },
   {
     id: "sample-3",
-    user_id: "sample-user",
     author_name: "Amara",
     author_emoji: "🐰",
     country: "Nigeria",
