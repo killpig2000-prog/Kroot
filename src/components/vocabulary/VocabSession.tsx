@@ -1,10 +1,11 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { recordCompletion, type ProgressResult } from "@/lib/activity";
+import { nextBox, nextReviewAt } from "@/lib/srs";
 import {
   MINUTES_PER_SESSION,
   VOCAB_ROOTS,
@@ -38,8 +39,8 @@ const BTN_VIOLET =
 const BTN_INK =
   "rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-[#18181B] hover:bg-[#3F3F46] transition-colors disabled:opacity-60";
 const BTN_LINE =
-  "rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-[#18181B] bg-white border border-[#E7E5E4] hover:bg-[#FAFAF9] transition-colors disabled:opacity-60";
-const CARD = "max-w-[560px] border border-[#E7E5E4] rounded-[14px] p-[clamp(20px,3vw,28px)]";
+  "rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-[#18181B] bg-white border border-[#E3DDD0] hover:bg-[#FAF7EF] transition-colors disabled:opacity-60";
+const CARD = "max-w-[560px] border border-[#E3DDD0] rounded-[14px] p-[clamp(20px,3vw,28px)]";
 
 export default function VocabSession({
   words,
@@ -66,10 +67,50 @@ export default function VocabSession({
   const [tricky, setTricky] = useState(0);
   const [navigating, setNavigating] = useState(false);
 
+  // A refresh mid-session shouldn't restart the chapter — restore the flip-pass
+  // position from sessionStorage. Restored in an effect (not the initializer)
+  // so server and client render the same first frame.
+  const resumeKey = `kroot-vocab-${topicKey}-${chapterIndex}-${words[0]?.level ?? ""}`;
+  useEffect(() => {
+    void Promise.resolve().then(() => {
+      try {
+        const raw = sessionStorage.getItem(resumeKey);
+        if (!raw) return;
+        const saved = JSON.parse(raw) as { index: number; known: number; tricky: number; phase: Phase };
+        if (saved.phase === "quizIntro" || (saved.phase === "flip" && saved.index > 0 && saved.index < words.length)) {
+          setIndex(Math.min(saved.index, words.length - 1));
+          setKnown(saved.known);
+          setTricky(saved.tricky);
+          setPhase(saved.phase === "quizIntro" ? "quizIntro" : "flip");
+        }
+      } catch {
+        // Corrupt or unavailable storage — just start fresh.
+      }
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  function saveResume(next: { index: number; known: number; tricky: number; phase: Phase }) {
+    try {
+      sessionStorage.setItem(resumeKey, JSON.stringify(next));
+    } catch {}
+  }
+
+  function clearResume() {
+    try {
+      sessionStorage.removeItem(resumeKey);
+    } catch {}
+  }
+
   // Local source of truth for each word's counts, seeded from props and kept
   // current across both the flip pass and the quiz pass on the same words.
   const [counts, setCounts] = useState<Record<string, Counts>>(() =>
     Object.fromEntries(words.map((w) => [w.key, { correct: w.correct_count, incorrect: w.incorrect_count }]))
+  );
+  // Leitner boxes for spaced repetition; answering twice in one session
+  // (flip + quiz) legitimately moves a word two boxes.
+  const [boxes, setBoxes] = useState<Record<string, number>>(() =>
+    Object.fromEntries(words.map((w) => [w.key, w.box ?? 1]))
   );
 
   const [quizQuestions, setQuizQuestions] = useState<QuizQuestion[]>([]);
@@ -92,29 +133,51 @@ export default function VocabSession({
     };
     setCounts((c) => ({ ...c, [wordKey]: next }));
 
-    await supabase.from("vocabulary_progress").upsert(
+    const box = nextBox(boxes[wordKey] ?? 1, gotIt);
+    setBoxes((b) => ({ ...b, [wordKey]: box }));
+
+    const { error } = await supabase.from("vocabulary_progress").upsert(
       {
         user_id: userId,
         word_key: wordKey,
         correct_count: next.correct,
         incorrect_count: next.incorrect,
         last_reviewed_at: new Date().toISOString(),
+        box,
+        next_review_at: nextReviewAt(box),
       },
       { onConflict: "user_id,word_key" }
     );
+    // Before migration 0022 the box columns don't exist — keep counts working.
+    if (error) {
+      await supabase.from("vocabulary_progress").upsert(
+        {
+          user_id: userId,
+          word_key: wordKey,
+          correct_count: next.correct,
+          incorrect_count: next.incorrect,
+          last_reviewed_at: new Date().toISOString(),
+        },
+        { onConflict: "user_id,word_key" }
+      );
+    }
   }
 
   async function answerFlip(gotIt: boolean) {
     await saveProgress(word.key, gotIt);
-    if (gotIt) setKnown((k) => k + 1);
-    else setTricky((t) => t + 1);
+    const nextKnown = known + (gotIt ? 1 : 0);
+    const nextTricky = tricky + (gotIt ? 0 : 1);
+    if (gotIt) setKnown(nextKnown);
+    else setTricky(nextTricky);
 
     setFlipped(false);
     setRootOpen(false);
     if (index + 1 < words.length) {
       setIndex((i) => i + 1);
+      saveResume({ index: index + 1, known: nextKnown, tricky: nextTricky, phase: "flip" });
     } else {
       setPhase("quizIntro");
+      saveResume({ index, known: nextKnown, tricky: nextTricky, phase: "quizIntro" });
     }
   }
 
@@ -150,6 +213,7 @@ export default function VocabSession({
   async function logMinutesOnce() {
     if (loggedMinutes.current) return;
     loggedMinutes.current = true;
+    clearResume();
 
     const minutes = MINUTES_PER_SESSION + (tookQuiz ? QUIZ_BONUS_MINUTES : 0);
     const result = await recordCompletion(supabase, "vocabulary", minutes);
@@ -167,7 +231,7 @@ export default function VocabSession({
     return (
       <div className={`${CARD} text-center`}>
         <p className="font-bold text-[17px] tracking-[-0.01em] mb-1.5">No words here yet</p>
-        <p className="text-sm text-[#71717A] mb-5">This chapter doesn&apos;t have cards yet — try another one.</p>
+        <p className="text-sm text-[#6B6560] mb-5">This chapter doesn&apos;t have cards yet — try another one.</p>
         <Link href="/vocabulary" className={BTN_INK}>
           Back to topics
         </Link>
@@ -180,7 +244,7 @@ export default function VocabSession({
       <div className={`${CARD} text-center`} style={{ animation: "fadeUp .35s ease" }}>
         <p className="text-3xl mb-2">🎯</p>
         <h2 className="font-bold text-[19px] tracking-[-0.02em] mb-1.5">Chapter quiz</h2>
-        <p className="text-sm text-[#71717A] mb-6">
+        <p className="text-sm text-[#6B6560] mb-6">
           {known} of {words.length} felt easy. Ready to fill in the blanks?
         </p>
         <div className="flex justify-center gap-2.5 flex-wrap">
@@ -206,13 +270,13 @@ export default function VocabSession({
     const quizPct = quizQuestions.length ? (quizIndex / quizQuestions.length) * 100 : 0;
     return (
       <div className={CARD}>
-        <div className="flex justify-between items-center mb-2.5 text-[12.5px] font-medium text-[#A1A1AA]">
+        <div className="flex justify-between items-center mb-2.5 text-[12.5px] font-medium text-[#A19A8C]">
           <span>
             Quiz · Question {quizIndex + 1} of {quizQuestions.length}
           </span>
           <span>{quizKnown} correct</span>
         </div>
-        <div className="h-1.5 bg-[#E7E5E4] rounded-full overflow-hidden mb-6">
+        <div className="h-1.5 bg-[#E3DDD0] rounded-full overflow-hidden mb-6">
           <i
             className="not-italic block h-full bg-[#7C3AED] rounded-full transition-[width] duration-300"
             style={{ width: `${quizPct}%` }}
@@ -222,13 +286,13 @@ export default function VocabSession({
         {q.mode === "meaning" ? (
           <>
             <p className="kr text-[clamp(30px,5vw,40px)] text-center mb-1">{q.prompt}</p>
-            <p className="text-[13px] text-[#71717A] mb-6 text-center">{q.word.romanization}</p>
+            <p className="text-[13px] text-[#6B6560] mb-6 text-center">{q.word.romanization}</p>
           </>
         ) : (
           <>
             <p className="kr text-[clamp(18px,3vw,22px)] leading-[1.6] mb-1.5 text-center">{q.prompt}</p>
             {q.word.example_en && (
-              <p className="text-[13px] text-[#71717A] mb-6 text-center">{q.word.example_en}</p>
+              <p className="text-[13px] text-[#6B6560] mb-6 text-center">{q.word.example_en}</p>
             )}
           </>
         )}
@@ -252,8 +316,8 @@ export default function VocabSession({
                     : state === "wrong"
                     ? "border-[#DC2626] bg-[#FEF2F2]"
                     : show
-                    ? "border-[#E7E5E4] bg-white opacity-90"
-                    : "border-[#E7E5E4] bg-white hover:border-[#7C3AED] hover:bg-[#F5F3FF]"
+                    ? "border-[#E3DDD0] bg-white opacity-90"
+                    : "border-[#E3DDD0] bg-white hover:border-[#7C3AED] hover:bg-[#F5F3FF]"
                 }`}
               >
                 {opt}
@@ -269,7 +333,7 @@ export default function VocabSession({
     return (
       <div className={`${CARD} text-center`} style={{ animation: "fadeUp .4s ease" }}>
         <svg width="104" height="104" viewBox="0 0 150 160" aria-hidden="true" className="inline-block">
-          <ellipse cx="75" cy="150" rx="46" ry="7" fill="#E7E5E4" />
+          <ellipse cx="75" cy="150" rx="46" ry="7" fill="#E3DDD0" />
           <path d="M75 146 C75 122 74 112 74 98" stroke="#8B7355" strokeWidth="8" strokeLinecap="round" />
           <g className="sway">
             <circle cx="75" cy="72" r="36" fill="#22C55E" />
@@ -285,7 +349,7 @@ export default function VocabSession({
         <h2 className="font-bold text-[21px] tracking-[-0.02em] mt-3 mb-1.5">
           {words.length} words watered today! 🌱
         </h2>
-        <p className="text-sm text-[#71717A] mb-[22px]">Those words are rooted a little deeper now.</p>
+        <p className="text-sm text-[#6B6560] mb-[22px]">Those words are rooted a little deeper now.</p>
         {levelUp && (
           <p className="text-sm font-semibold text-[#16A34A] mb-[22px] -mt-3">
             🎉 Level up! You&apos;re now Lv. {levelUp.new_level}
@@ -293,20 +357,20 @@ export default function VocabSession({
         )}
 
         <div className="flex justify-center gap-3 mb-6 flex-wrap">
-          <div className="border border-[#E7E5E4] rounded-[10px] px-5 py-3 min-w-[100px]">
+          <div className="border border-[#E3DDD0] rounded-[10px] px-5 py-3 min-w-[100px]">
             <b className="block text-[19px] font-bold text-[#16A34A]">{known}</b>
-            <small className="text-xs text-[#71717A]">Marked known</small>
+            <small className="text-xs text-[#6B6560]">Marked known</small>
           </div>
-          <div className="border border-[#E7E5E4] rounded-[10px] px-5 py-3 min-w-[100px]">
+          <div className="border border-[#E3DDD0] rounded-[10px] px-5 py-3 min-w-[100px]">
             <b className="block text-[19px] font-bold">{tricky}</b>
-            <small className="text-xs text-[#71717A]">Still learning</small>
+            <small className="text-xs text-[#6B6560]">Still learning</small>
           </div>
           {tookQuiz && (
-            <div className="border border-[#E7E5E4] rounded-[10px] px-5 py-3 min-w-[100px]">
+            <div className="border border-[#E3DDD0] rounded-[10px] px-5 py-3 min-w-[100px]">
               <b className="block text-[19px] font-bold text-[#16A34A]">
                 {quizKnown}/{quizKnown + quizTricky}
               </b>
-              <small className="text-xs text-[#71717A]">Quiz</small>
+              <small className="text-xs text-[#6B6560]">Quiz</small>
             </div>
           )}
         </div>
@@ -352,18 +416,18 @@ export default function VocabSession({
             <span
               key={w.key}
               className={`w-[26px] h-1.5 rounded-full ${
-                k < index ? "bg-[#7C3AED]" : k === index ? "bg-[#7C3AED] opacity-40" : "bg-[#E7E5E4]"
+                k < index ? "bg-[#7C3AED]" : k === index ? "bg-[#7C3AED] opacity-40" : "bg-[#E3DDD0]"
               }`}
             />
           ))}
         </div>
-        <span className="text-[13px] text-[#71717A] flex-none">
+        <span className="text-[13px] text-[#6B6560] flex-none">
           Today: <b className="text-[#7C3AED]">{index}</b> of {words.length} words
         </span>
       </div>
 
       {/* word card */}
-      <div className="relative border border-[#E7E5E4] rounded-[16px] p-[clamp(24px,4vw,34px)] text-center">
+      <div className="relative border border-[#E3DDD0] rounded-[16px] p-[clamp(24px,4vw,34px)] text-center">
         <span
           className={`absolute top-5 right-5 inline-flex items-center gap-1.5 text-xs font-semibold rounded-full px-3 py-[5px] ${stage.cls}`}
         >
@@ -374,7 +438,7 @@ export default function VocabSession({
           {topicLabel} · {word.level} · word {index + 1} of {words.length}
         </p>
         <p className="kr text-[clamp(36px,6vw,46px)] mt-1.5 mb-1">{word.korean}</p>
-        <p className="text-[13.5px] text-[#A1A1AA] mb-4">{word.romanization}</p>
+        <p className="text-[13.5px] text-[#A19A8C] mb-4">{word.romanization}</p>
 
         {flipped ? (
           <>
@@ -385,11 +449,11 @@ export default function VocabSession({
               {word.meaning_en}
             </p>
             <div
-              className="bg-[#FAFAF9] border border-[#E7E5E4] rounded-[10px] px-4 py-3.5 mb-[22px] text-left"
+              className="bg-[#FAF7EF] border border-[#E3DDD0] rounded-[10px] px-4 py-3.5 mb-[22px] text-left"
               style={{ animation: "fadeUp .3s ease" }}
             >
               <p className="kr text-[15px] font-medium mb-[3px]">{word.example_kr}</p>
-              <p className="text-[13px] text-[#71717A]">{word.example_en}</p>
+              <p className="text-[13px] text-[#6B6560]">{word.example_en}</p>
             </div>
             <div className="flex gap-2.5 justify-center flex-wrap">
               <button
@@ -442,11 +506,11 @@ export default function VocabSession({
               </span>
               <div>
                 <b className="block text-[15px] font-bold">{root.name}</b>
-                <span className="text-[12.5px] text-[#71717A]">{root.desc}</span>
+                <span className="text-[12.5px] text-[#6B6560]">{root.desc}</span>
               </div>
             </div>
             <button
-              className="border-none bg-[#FAFAF9] w-7 h-7 rounded-lg text-[#A1A1AA] hover:text-[#18181B] text-[13px]"
+              className="border-none bg-[#FAF7EF] w-7 h-7 rounded-lg text-[#A19A8C] hover:text-[#18181B] text-[13px]"
               onClick={() => setRootOpen(false)}
               aria-label="Close root panel"
             >
@@ -455,9 +519,9 @@ export default function VocabSession({
           </div>
           <div className="grid gap-2.5">
             {root.words.map(([kr, meaning]) => (
-              <div key={kr} className="flex items-center gap-3 border border-[#E7E5E4] rounded-[10px] px-3.5 py-[11px] bg-[#FAFAF9]">
+              <div key={kr} className="flex items-center gap-3 border border-[#E3DDD0] rounded-[10px] px-3.5 py-[11px] bg-[#FAF7EF]">
                 <span className="kr text-lg flex-none min-w-[52px]">{kr}</span>
-                <span className="text-[13px] text-[#71717A]">
+                <span className="text-[13px] text-[#6B6560]">
                   <b className="text-[#18181B] font-semibold">{meaning}</b>
                 </span>
               </div>

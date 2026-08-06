@@ -82,6 +82,8 @@ export type VocabWordWithProgress = VocabWord & {
   correct_count: number;
   incorrect_count: number;
   last_reviewed_at: string | null;
+  // Leitner box (1-5); missing until migration 0022 / first review.
+  box?: number | null;
 };
 
 export function getWordsForTopic(topicKey: string, level?: CefrLevel): VocabWord[] {
