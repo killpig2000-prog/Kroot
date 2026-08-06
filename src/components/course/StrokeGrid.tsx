@@ -2,14 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { STROKE_SECONDS, getGlyphStrokes } from "@/lib/hangul-strokes";
+import { speakKorean } from "@/lib/tts";
 
 function speak(text: string) {
-  if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
-  window.speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(text);
-  u.lang = "ko-KR";
-  u.rate = 0.8;
-  window.speechSynthesis.speak(u);
+  speakKorean(text, { rate: 0.8 });
 }
 
 // Grid of glyph cards. Each card loops its stroke-order animation; tapping a

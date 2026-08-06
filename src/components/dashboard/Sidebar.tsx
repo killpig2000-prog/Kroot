@@ -36,6 +36,7 @@ const SECTIONS: { title: string; items: { icon: string; label: string; href: str
       { icon: "💬", label: "Slang", href: "/slang" },
       { icon: "🏕️", label: "Community", href: "/community" },
       { icon: "🛍️", label: "Shop", href: "/shop" },
+      { icon: "🌟", label: "Kroot Plus", href: "/pricing" },
     ],
   },
 ];

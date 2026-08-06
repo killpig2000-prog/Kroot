@@ -13,6 +13,29 @@ export type CommunityPost = {
   created_at: string;
 };
 
+export type CommunityComment = {
+  id: string;
+  mine?: boolean;
+  author_name: string;
+  author_emoji: string | null;
+  content: string;
+  created_at: string;
+};
+
+// Postgres raises 42P01 for a missing table, but PostgREST answers from its
+// schema cache first and reports the miss as PGRST205.
+export function isTableMissing(error: { code?: string } | null): boolean {
+  return error?.code === "42P01" || error?.code === "PGRST205";
+}
+
+// A post has no title column — the first line doubles as the title and the
+// rest is the body.
+export function splitPost(content: string): { title: string; body: string } {
+  const newline = content.indexOf("\n");
+  if (newline === -1) return { title: content, body: "" };
+  return { title: content.slice(0, newline), body: content.slice(newline + 1).trim() };
+}
+
 export const BOARDS: { key: BoardKey; label: string; emoji: string }[] = [
   { key: "question", label: "Question board", emoji: "❓" },
   { key: "free", label: "Free board", emoji: "💬" },

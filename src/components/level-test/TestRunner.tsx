@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
+import { speakKorean } from "@/lib/tts";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { useSpeechRecognition } from "@/hooks/useSpeechRecognition";
@@ -24,12 +25,7 @@ const BTN_LINE =
   "rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-[#18181B] bg-white border border-[#E3DDD0] hover:bg-[#FAF7EF] transition-colors";
 
 function speak(text: string) {
-  if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
-  window.speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(text);
-  u.lang = "ko-KR";
-  u.rate = 0.85;
-  window.speechSynthesis.speak(u);
+  speakKorean(text);
 }
 
 function Mcq({

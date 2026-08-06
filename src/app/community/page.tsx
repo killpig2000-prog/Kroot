@@ -2,10 +2,15 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
-import Composer from "@/components/community/Composer";
 import PostList from "@/components/community/PostList";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
-import { BOARDS, SAMPLE_POSTS, isBoardKey, type CommunityPost } from "@/lib/community";
+import {
+  BOARDS,
+  SAMPLE_POSTS,
+  isBoardKey,
+  isTableMissing,
+  type CommunityPost,
+} from "@/lib/community";
 
 export default async function CommunityPage({
   searchParams,
@@ -37,7 +42,7 @@ export default async function CommunityPage({
 
   // Only the "table hasn't been migrated yet" case gets the sample board; any
   // other failure shows a real notice rather than posts that don't exist.
-  const tableMissing = error?.code === "42P01";
+  const tableMissing = isTableMissing(error);
   const loadFailed = !!error && !tableMissing;
   // Strip user_id before it reaches the client — ownership becomes a boolean.
   const posts: CommunityPost[] = tableMissing
@@ -47,6 +52,18 @@ export default async function CommunityPage({
         mine: user_id === user.id,
       })) as CommunityPost[];
   const displayName = profile?.display_name ?? "there";
+
+  // Best-effort comment counts for the list; missing table just means zeros.
+  const commentCounts: Record<string, number> = {};
+  if (!tableMissing && posts.length > 0) {
+    const { data: commentRows } = await supabase
+      .from("community_comments")
+      .select("post_id")
+      .in("post_id", posts.map((p) => p.id));
+    for (const row of commentRows ?? []) {
+      commentCounts[row.post_id] = (commentCounts[row.post_id] ?? 0) + 1;
+    }
+  }
 
   const tab = (active: boolean) =>
     `rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold transition-all border ${
@@ -83,9 +100,12 @@ export default async function CommunityPage({
               </span>
               Community
             </h1>
-            <span className="text-[13px] text-[#6B6560]">
-              Ask questions, share wins, find a practice partner
-            </span>
+            <Link
+              href="/community/new"
+              className="rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold text-white bg-[#334155] border border-[#334155] transition-all hover:-translate-y-0.5"
+            >
+              ✍️ New post
+            </Link>
           </div>
 
           {/* board tabs */}
@@ -123,13 +143,7 @@ export default async function CommunityPage({
             </div>
           )}
 
-          <Composer
-            userId={user.id}
-            displayName={displayName}
-            defaultBoard={board ?? undefined}
-            disabled={tableMissing}
-          />
-          <PostList posts={posts} readOnly={tableMissing} />
+          <PostList posts={posts} commentCounts={commentCounts} />
         </main>
       </div>
 

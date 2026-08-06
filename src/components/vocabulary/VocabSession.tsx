@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { recordCompletion, type ProgressResult } from "@/lib/activity";
 import { nextBox, nextReviewAt } from "@/lib/srs";
+import { speakKorean } from "@/lib/tts";
 import {
   MINUTES_PER_SESSION,
   VOCAB_ROOTS,
@@ -437,7 +438,17 @@ export default function VocabSession({
         <p className="text-xs font-semibold text-[#7C3AED] mb-1.5">
           {topicLabel} · {word.level} · word {index + 1} of {words.length}
         </p>
-        <p className="kr text-[clamp(36px,6vw,46px)] mt-1.5 mb-1">{word.korean}</p>
+        <p className="kr text-[clamp(36px,6vw,46px)] mt-1.5 mb-1">
+          <button
+            type="button"
+            onClick={() => speakKorean(word.korean)}
+            title="Hear it"
+            className="inline-flex items-baseline gap-2.5 hover:text-[#7C3AED] transition-colors"
+          >
+            {word.korean}
+            <span aria-hidden="true" className="text-[20px] translate-y-[-4px]">🔊</span>
+          </button>
+        </p>
         <p className="text-[13.5px] text-[#A19A8C] mb-4">{word.romanization}</p>
 
         {flipped ? (
@@ -452,7 +463,16 @@ export default function VocabSession({
               className="bg-[#FAF7EF] border border-[#E3DDD0] rounded-[10px] px-4 py-3.5 mb-[22px] text-left"
               style={{ animation: "fadeUp .3s ease" }}
             >
-              <p className="kr text-[15px] font-medium mb-[3px]">{word.example_kr}</p>
+              <p className="kr text-[15px] font-medium mb-[3px]">
+                <button
+                  type="button"
+                  onClick={() => speakKorean(word.example_kr)}
+                  title="Hear the sentence"
+                  className="text-left hover:text-[#7C3AED] transition-colors"
+                >
+                  {word.example_kr} <span aria-hidden="true" className="text-[12px]">🔊</span>
+                </button>
+              </p>
               <p className="text-[13px] text-[#6B6560]">{word.example_en}</p>
             </div>
             <div className="flex gap-2.5 justify-center flex-wrap">

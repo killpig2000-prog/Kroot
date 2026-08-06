@@ -5,6 +5,8 @@ import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { BOARDS, type BoardKey } from "@/lib/community";
 
+// Full new-post form for /community/new. The first line of `content` is the
+// title by convention, so the separate title field is joined in on submit.
 export default function Composer({
   userId,
   displayName,
@@ -17,38 +19,44 @@ export default function Composer({
   disabled?: boolean;
 }) {
   const router = useRouter();
-  const [content, setContent] = useState("");
+  const [title, setTitle] = useState("");
+  const [body, setBody] = useState("");
   const [board, setBoard] = useState<BoardKey>(defaultBoard ?? "free");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const canPost = content.trim().length > 0 && !busy && !disabled;
+  const canPost = title.trim().length > 0 && !busy && !disabled;
 
   async function post() {
     if (!canPost) return;
     setBusy(true);
     setError(null);
 
+    const content = [title.trim().replace(/\n/g, " "), body.trim()].filter(Boolean).join("\n");
     const supabase = createClient();
-    const { error: insertError } = await supabase.from("community_posts").insert({
-      user_id: userId,
-      author_name: displayName,
-      author_emoji: "🦊",
-      board,
-      content: content.trim(),
-    });
+    const { data, error: insertError } = await supabase
+      .from("community_posts")
+      .insert({
+        user_id: userId,
+        author_name: displayName,
+        author_emoji: "🦊",
+        board,
+        content,
+      })
+      .select("id")
+      .single();
 
     setBusy(false);
-    if (insertError) {
+    if (insertError || !data) {
       setError("Couldn't post just yet — the community table may not be set up.");
       return;
     }
-    setContent("");
+    router.push(`/community/${data.id}`);
     router.refresh();
   }
 
   return (
-    <div className="border border-[#E3DDD0] rounded-[14px] bg-white p-[18px] mb-5 max-w-[980px]">
+    <div className="border border-[#E3DDD0] rounded-[14px] bg-white p-[18px] max-w-[980px]">
       <div className="flex items-center gap-2.5 mb-3">
         <span className="w-8 h-8 rounded-[9px] bg-[#FAF7EF] border border-[#E3DDD0] flex items-center justify-center text-sm">
           🦊
@@ -57,17 +65,7 @@ export default function Composer({
         <span className="text-[12.5px] text-[#A19A8C]">— say something to the garden</span>
       </div>
 
-      <textarea
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-        rows={3}
-        maxLength={600}
-        disabled={disabled}
-        placeholder="First line is the title — then write the rest below it."
-        className="w-full rounded-[10px] border border-[#E3DDD0] bg-[#FAF7EF] px-3.5 py-3 text-[14px] leading-[1.55] outline-none transition-colors resize-y focus:border-[#334155] focus:bg-white disabled:opacity-60"
-      />
-
-      <div className="flex items-center gap-2.5 mt-3 flex-wrap">
+      <div className="flex items-center gap-2.5 mb-2.5 flex-wrap">
         <select
           value={board}
           onChange={(e) => setBoard(e.target.value as BoardKey)}
@@ -80,9 +78,28 @@ export default function Composer({
             </option>
           ))}
         </select>
+        <input
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          maxLength={100}
+          disabled={disabled}
+          placeholder="Title"
+          className="flex-1 min-w-[200px] rounded-[10px] border border-[#E3DDD0] bg-[#FAF7EF] px-3.5 py-2.5 text-[14px] font-semibold outline-none transition-colors focus:border-[#334155] focus:bg-white disabled:opacity-60"
+        />
+      </div>
 
-        <span className="text-[12px] text-[#A19A8C]">{content.length}/600</span>
+      <textarea
+        value={body}
+        onChange={(e) => setBody(e.target.value)}
+        rows={6}
+        maxLength={2000}
+        disabled={disabled}
+        placeholder="Write your post…"
+        className="w-full rounded-[10px] border border-[#E3DDD0] bg-[#FAF7EF] px-3.5 py-3 text-[14px] leading-[1.55] outline-none transition-colors resize-y focus:border-[#334155] focus:bg-white disabled:opacity-60"
+      />
 
+      <div className="flex items-center gap-2.5 mt-3 flex-wrap">
+        <span className="text-[12px] text-[#A19A8C]">{body.length}/2000</span>
         <button
           type="button"
           onClick={post}

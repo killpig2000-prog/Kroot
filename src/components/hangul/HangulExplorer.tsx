@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { speakKorean } from "@/lib/tts";
 import {
   BASIC_CONSONANTS,
   BASIC_VOWELS,
@@ -19,12 +20,7 @@ const SOFT = "#F0FDF4";
 const BRD = "#BBF7D0";
 
 function speak(text: string) {
-  if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
-  window.speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(text);
-  u.lang = "ko-KR";
-  u.rate = 0.85;
-  window.speechSynthesis.speak(u);
+  speakKorean(text);
 }
 
 const TABS = [

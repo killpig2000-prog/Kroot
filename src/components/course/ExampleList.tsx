@@ -1,14 +1,10 @@
 "use client";
 
 import type { Example } from "@/lib/course";
+import { speakKorean } from "@/lib/tts";
 
 function speak(text: string) {
-  if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
-  window.speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(text.replace(/[=+→]/g, ","));
-  u.lang = "ko-KR";
-  u.rate = 0.85;
-  window.speechSynthesis.speak(u);
+  speakKorean(text);
 }
 
 // Example sentences in the same reading style as the grammar lesson pages.

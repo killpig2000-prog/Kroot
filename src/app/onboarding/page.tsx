@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { speakKorean } from "@/lib/tts";
 import Mascot from "@/components/onboarding/Mascot";
 import CuteError from "@/components/ui/CuteError";
 import Pot from "@/components/onboarding/Pot";
@@ -52,12 +53,7 @@ const BTN_OUTLINE =
   "inline-flex items-center justify-center rounded-[9px] border border-[#E3DDD0] bg-white px-[18px] py-[9px] text-[13.5px] font-semibold text-[#18181B] hover:bg-[#FAF7EF] transition-colors";
 
 function speak(text: string) {
-  if (!("speechSynthesis" in window)) return;
-  const u = new SpeechSynthesisUtterance(text);
-  u.lang = "ko-KR";
-  u.rate = 0.9;
-  speechSynthesis.cancel();
-  speechSynthesis.speak(u);
+  speakKorean(text, { rate: 0.9 });
 }
 
 export default function OnboardingPage() {

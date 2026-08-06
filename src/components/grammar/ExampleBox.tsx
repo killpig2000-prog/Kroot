@@ -1,14 +1,10 @@
 "use client";
 
 import type { GrammarExample } from "@/lib/grammar";
+import { speakKorean } from "@/lib/tts";
 
 function speak(text: string) {
-  if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
-  window.speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(text);
-  u.lang = "ko-KR";
-  u.rate = 0.85;
-  window.speechSynthesis.speak(u);
+  speakKorean(text);
 }
 
 export default function ExampleBox({ examples }: { examples: GrammarExample[] }) {

@@ -4,6 +4,7 @@ import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import WeeklyChart, { type DayMinutes } from "@/components/profile/WeeklyChart";
 import AvatarUploader from "@/components/profile/AvatarUploader";
+import NameEditor from "@/components/profile/NameEditor";
 import Wardrobe from "@/components/profile/Wardrobe";
 import RankCard from "@/components/profile/RankCard";
 import MonthlyGrass from "@/components/profile/MonthlyGrass";
@@ -182,7 +183,7 @@ export default async function ProfilePage() {
               <AvatarUploader userId={user.id} avatarUrl={profile?.avatar_url ?? null} />
               <div className="flex-1 min-w-[180px]">
                 <b className="font-semibold text-base flex items-center gap-2">
-                  {profile?.display_name ?? "Learner"}
+                  <NameEditor userId={user.id} name={profile?.display_name ?? "Learner"} />
                   {isPlus(profile?.plus_until) && (
                     <span className="text-[10.5px] font-bold tracking-[.04em] text-[#92400E] bg-[#FFFBEB] border border-[#FDE68A] rounded-md px-1.5 py-0.5">
                       🌟 PLUS
@@ -211,6 +212,23 @@ export default async function ProfilePage() {
                 </span>
               </div>
             </div>
+
+            {!isPlus(profile?.plus_until) && (
+              <div className="border border-[#FDE68A] bg-[#FFFBEB] rounded-[14px] px-[22px] py-4 flex items-center gap-4 flex-wrap">
+                <div className="flex-1 min-w-[220px]">
+                  <b className="font-semibold text-[14.5px] block mb-0.5">🌟 Kroot Plus</b>
+                  <span className="text-[13px] text-[#6B6560]">
+                    Exclusive outfits, a golden badge, early access — every lesson stays free.
+                  </span>
+                </div>
+                <Link
+                  href="/pricing"
+                  className="rounded-[9px] bg-[#16A34A] px-4 py-2 text-[13px] font-bold text-white hover:bg-[#15803D] transition-colors"
+                >
+                  See plans →
+                </Link>
+              </div>
+            )}
 
             <Wardrobe userId={user.id} level={level} ownedIds={ownedIds} equippedIds={equippedIds} />
 

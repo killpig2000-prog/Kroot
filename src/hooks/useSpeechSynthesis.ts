@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useBrowserSupport } from "@/hooks/useBrowserSupport";
 import type { DialogueLine } from "@/lib/listening-dialogues";
+import { speakKorean } from "@/lib/tts";
 
 // Speaks dialogue lines in order using the browser's Web Speech API. Distinct
 // speakers get a different pitch so two-person dialogues are easier to follow.
@@ -49,12 +50,11 @@ export function useSpeechSynthesis(lines: DialogueLine[], rate = 0.9) {
         indexRef.current = i;
         setCurrentIndex(i);
 
-        const utterance = new SpeechSynthesisUtterance(lines[i].kr);
-        utterance.lang = "ko-KR";
-        utterance.rate = rateRef.current;
-        utterance.pitch = speakerPitch(lines[i].speaker);
-        utterance.onend = () => speakNext(i + 1);
-        window.speechSynthesis.speak(utterance);
+        speakKorean(lines[i].kr, {
+          rate: rateRef.current,
+          pitch: speakerPitch(lines[i].speaker),
+          onend: () => speakNext(i + 1),
+        });
       };
 
       setIsPlaying(true);
