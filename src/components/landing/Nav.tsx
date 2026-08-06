@@ -53,7 +53,7 @@ export default function Nav() {
             </Link>
             <Link
               href="/onboarding"
-              className="inline-flex rounded-full bg-[#221F1B] px-[14px] sm:px-[17px] py-[8px] text-[12.5px] font-bold text-white hover:bg-[#3F3A33] transition-colors"
+              className="inline-flex rounded-full bg-[#16A34A] px-[14px] sm:px-[17px] py-[8px] text-[12.5px] font-bold text-white hover:bg-[#15803D] transition-colors"
             >
               Start free 🌱
             </Link>

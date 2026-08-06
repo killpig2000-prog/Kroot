@@ -2,21 +2,21 @@ const POSTS = [
   {
     stamp: "🇧🇷",
     from: "MARIA · BRAZIL",
-    text: "“은/는 vs 이/가 차이를 여기서 드디어 이해했어요. 세 달째 매일 하는 중!”",
+    text: "“은/는 vs 이/가 finally clicked for me here. Three months of daily practice and counting!”",
     meta: "Question board · translated from Portuguese",
     tilt: "-rotate-2",
   },
   {
     stamp: "🇯🇵",
     from: "KENTA · JAPAN",
-    text: "“오늘 TOPIK 3급 합격! 매일 물 주기 스트릭 6개월이 답이었다.”",
+    text: "“Passed TOPIK Level 3 today! Six months of daily watering streaks was the answer.”",
     meta: "Free board · translated from Japanese",
     tilt: "rotate-1 mt-3",
   },
   {
     stamp: "🇳🇬",
     from: "AMARA · NIGERIA",
-    text: "“주 30분 말하기 연습 파트너 구해요 — 영어 도와드릴 수 있어요!”",
+    text: "“Looking for a 30-min-a-week speaking partner — happy to help with your English!”",
     meta: "Language exchange · original in English",
     tilt: "-rotate-1",
   },
@@ -27,14 +27,14 @@ export default function Community() {
     <section id="community" className="bg-[#FAF7EF] border-t border-dashed border-[#DDD6C8] py-[clamp(52px,8vw,88px)] px-6">
       <div className="text-center mb-1.5">
         <span className="inline-block bg-white border-[1.5px] border-dashed border-[#CFC8B8] rounded-full px-4 py-[5px] text-xs font-extrabold text-[#15803D] rotate-1">
-          받은 엽서 · from learners
+          from learners · <span className="kr">받은 엽서</span>
         </span>
       </div>
       <h2 className="text-center font-black text-[clamp(22px,3vw,30px)] tracking-[-0.02em] text-[#221F1B] mb-2 text-balance">
-        전 세계에서 도착한 소식
+        Postcards from around the world
       </h2>
       <p className="text-center text-[#6B6560] text-[13.5px] mb-8">
-        혼자 배우지 않아요 — 질문 보드, 자유 보드, 언어교환.
+        You&apos;re never learning alone — question board, free board, language exchange.
       </p>
 
       <div className="flex justify-center gap-5 flex-wrap max-w-[900px] mx-auto">

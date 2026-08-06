@@ -15,11 +15,11 @@ export default function LevelTest() {
 
       <div className="text-center mb-1.5">
         <span className="inline-block bg-white border-[1.5px] border-dashed border-[#CFC8B8] rounded-full px-4 py-[5px] text-xs font-extrabold text-[#15803D] -rotate-1">
-          쪽지시험 · pop quiz
+          pop quiz · <span className="kr">쪽지시험</span>
         </span>
       </div>
       <h2 className="text-center font-black text-[clamp(22px,3vw,30px)] tracking-[-0.02em] text-[#221F1B] mb-2 text-balance">
-        3분이면 당신의 레벨이 나와요
+        Find your level in 3 minutes
       </h2>
       <p className="text-center text-[#6B6560] text-[13.5px] max-w-[52ch] mx-auto mb-8">
         Ten questions place you on the CEFR scale (A1–C2). Or skip it and start at A1 — retake it
@@ -34,7 +34,7 @@ export default function LevelTest() {
         >
           <span aria-hidden="true" className="absolute -top-2 left-1/2 -translate-x-1/2 -rotate-2 w-[64px] h-[17px] border z-10" style={{ background: "rgba(253,230,138,.6)", borderColor: "rgba(217,180,90,.45)" }} />
           <div className="flex justify-between items-baseline border-b-2 border-[#221F1B] pb-1.5 mb-3">
-            <b className="text-[15px]">레벨 테스트 · Q3</b>
+            <b className="text-[15px]">Level test · Q3</b>
             <span className="text-[11px] text-[#8A8478]">vocabulary</span>
           </div>
           <p className="text-sm font-bold mb-2.5 text-left">
@@ -60,8 +60,9 @@ export default function LevelTest() {
         {/* sticky note + CTA */}
         <div className="relative z-10 w-[min(240px,100%)]">
           <div className="bg-[#FEF9C3] border border-[#ECD98A] px-4 py-3.5 text-[12px] leading-[1.55] rotate-2 shadow-[0_10px_22px_-12px_rgba(120,100,30,.4)] text-left mb-5">
-            <b className="block mb-0.5">✏️ 채점 기준</b>
-            어휘·문법·듣기를 섞어 약 18초/문제. 결과는 학습자·기업이 쓰는 CEFR 기준!
+            <b className="block mb-0.5">✏️ How it&apos;s scored</b>
+            Vocabulary, grammar and listening mixed — about 18s per question. Results on the CEFR
+            scale learners and employers actually use!
           </div>
           <Link
             href="/onboarding"

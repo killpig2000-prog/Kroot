@@ -11,14 +11,16 @@ export default function Final() {
           요
         </span>
         <h2 className="relative z-10 font-black text-[clamp(24px,3.4vw,34px)] tracking-[-0.02em] text-[#221F1B] mb-2 text-balance">
-          오늘, 첫 페이지를 붙여보세요
+          Paste in your first page today
         </h2>
-        <p className="relative z-10 kr text-[15px] font-extrabold text-[#15803D] mb-5">오늘, 뿌리를 내리세요 🌱</p>
+        <p className="relative z-10 text-[15px] font-extrabold text-[#15803D] mb-5">
+          <span className="kr">오늘, 뿌리를 내리세요</span> — put down roots today 🌱
+        </p>
         <Link
           href="/onboarding"
           className="relative z-10 inline-block rounded-[10px] bg-[#16A34A] px-[28px] py-[13px] text-[14.5px] font-bold text-white shadow-[0_6px_0_#15803D] hover:translate-y-[2px] hover:shadow-[0_4px_0_#15803D] transition-all"
         >
-          Start free — 3분 레벨 테스트
+          Start free — 3-min level test
         </Link>
         <p className="relative z-10 mt-3.5 text-[12px] italic text-[#8A8478]">
           every lesson free · no credit card · from Hangul to fluency
