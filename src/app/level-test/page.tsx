@@ -5,6 +5,7 @@ import Sidebar from "@/components/dashboard/Sidebar";
 import TestRunner from "@/components/level-test/TestRunner";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { computeEligibility } from "@/lib/promotion-server";
+import { levelFromXp } from "@/lib/level";
 import { SKILL_LABELS, buildServedTest, testForGrade, type SkillScores } from "@/lib/promotion-test";
 import type { CefrLevel } from "@/lib/tree";
 
@@ -17,7 +18,7 @@ export default async function LevelTestPage() {
 
   const { data: profile } = await supabase
     .from("profiles")
-    .select("display_name, streak_days, avatar_url, current_level")
+    .select("display_name, streak_days, avatar_url, current_level, xp")
     .eq("id", user.id)
     .single();
 
@@ -70,7 +71,7 @@ export default async function LevelTestPage() {
                 : `The ${grade} level-up test is coming soon.`}
             </div>
           ) : !elig ? null : elig.eligible ? (
-            <TestRunner userId={user.id} spec={buildServedTest(spec)} />
+            <TestRunner userId={user.id} spec={buildServedTest(spec)} playerLevel={levelFromXp(profile?.xp ?? 0)} />
           ) : (
             <div className="grid gap-4">
               <div className="border border-[#E3DDD0] rounded-[14px] p-5 grid gap-3.5">

@@ -13,6 +13,9 @@ import {
   type ServedPromotionTest,
   type SkillScores,
 } from "@/lib/promotion-test";
+import { SPECIES } from "@/lib/tree";
+import { treeStageForLevel } from "@/lib/level";
+import TreeEvolution from "@/components/level-test/TreeEvolution";
 
 // The promotion test: listening MCQ → reading MCQ → writing (AI) → speaking
 // (AI over a speech transcript) → verdict. Pass → apply_level_test RPC.
@@ -104,7 +107,16 @@ function Mcq({
   );
 }
 
-export default function TestRunner({ userId, spec }: { userId: string; spec: ServedPromotionTest }) {
+export default function TestRunner({
+  userId,
+  spec,
+  playerLevel = 1,
+}: {
+  userId: string;
+  spec: ServedPromotionTest;
+  /** Numeric Lv.1-30 — sizes the tree in the pass animation. */
+  playerLevel?: number;
+}) {
   const supabase = useMemo(() => createClient(), []);
   const router = useRouter();
   const speech = useSpeechRecognition("ko-KR");
@@ -166,7 +178,12 @@ export default function TestRunner({ userId, spec }: { userId: string; spec: Ser
 
       if (verdict.passed) {
         const { error: applyErr } = await supabase.rpc("apply_level_test", { p_level: spec.to });
-        if (!applyErr) setPromoted(true);
+        if (!applyErr) {
+          setPromoted(true);
+          // The big evolution moment happens right here — don't repeat the
+          // dashboard's promotion banner on top of it.
+          localStorage.setItem("kroot-tree-species", spec.to);
+        }
         router.refresh();
       }
       setStage("result");
@@ -314,9 +331,10 @@ export default function TestRunner({ userId, spec }: { userId: string; spec: Ser
     <div className="border border-[#E3DDD0] rounded-[14px] p-6">
       {verdict?.passed ? (
         <div className="text-center mb-5">
-          <p className="text-[34px] mb-1">🎉</p>
-          <b className="text-[19px]">Congratulations! You leveled up to {spec.to}!</b>
+          <TreeEvolution from={spec.from} to={spec.to} stage={treeStageForLevel(playerLevel)} />
+          <b className="text-[19px] block mt-2">Congratulations! You leveled up to {spec.to}!</b>
           <p className="text-[13.5px] text-[#6B6560] mt-1">
+            Your {SPECIES[spec.from].name} grew into a <b>{SPECIES[spec.to].name}</b>.{" "}
             {promoted
               ? `${spec.to} content and the ${spec.to} league are now open.`
               : "We couldn\u2019t apply the promotion — check your profile shortly."}
