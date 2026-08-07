@@ -8,6 +8,7 @@ import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import {
   SAMPLE_POSTS,
   boardLabel,
+  findNotice,
   isTableMissing,
   splitPost,
   timeAgo,
@@ -31,6 +32,63 @@ export default async function CommunityPostPage({
     .single();
 
   const { id } = await params;
+  const displayNameEarly = profile?.display_name ?? "there";
+
+  // Official pinned notices live in code, not the DB — no comments, no delete.
+  const notice = findNotice(id);
+  if (notice) {
+    return (
+      <div className="min-h-screen bg-[#FDFBF7] text-[#18181B]">
+        <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
+          <Sidebar
+            displayName={displayNameEarly}
+            email={user.email ?? ""}
+            streakDays={profile?.streak_days ?? 0}
+            avatarUrl={profile?.avatar_url}
+          />
+
+          <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] md:pb-[60px]">
+            <div className="flex gap-2 text-[13px] text-[#A19A8C] mb-[18px]">
+              <Link href="/dashboard" className="hover:text-[#18181B] transition-colors">
+                Garden
+              </Link>
+              <span>/</span>
+              <Link href="/community" className="hover:text-[#18181B] transition-colors">
+                Community
+              </Link>
+              <span>/</span>
+              <b className="text-[#18181B] font-semibold truncate max-w-[240px]">{notice.title}</b>
+            </div>
+
+            <article className="border border-[#BBF7D0] rounded-[14px] bg-white max-w-[980px] px-[22px] py-5">
+              <div className="flex items-center gap-2.5 mb-2 flex-wrap">
+                <span className="text-[11.5px] font-bold rounded-full border border-[#86EFAC] bg-[#F0FDF4] text-[#15803D] px-2.5 py-[3px]">
+                  📌 Official notice
+                </span>
+                <span className="text-[12.5px] text-[#6B6560]">🌱 Kroot team</span>
+              </div>
+              <h1 className="font-bold text-[20px] tracking-[-0.01em] mb-2.5">
+                {notice.emoji} {notice.title}
+              </h1>
+              <p className="text-[14px] leading-[1.75] whitespace-pre-wrap break-words">{notice.body}</p>
+            </article>
+
+            <p className="text-[12.5px] text-[#A19A8C] mt-4 max-w-[980px]">
+              Comments are closed on notices — got a question about this?{" "}
+              <Link
+                href="/community/new?board=question"
+                className="font-semibold text-[#16A34A] hover:underline"
+              >
+                Ask it on the Question board →
+              </Link>
+            </p>
+          </main>
+        </div>
+
+        <BottomNav />
+      </div>
+    );
+  }
 
   const { data: row, error } = await supabase
     .from("community_posts")

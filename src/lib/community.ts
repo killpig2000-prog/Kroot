@@ -50,6 +50,71 @@ export function boardLabel(key: string): string {
   return BOARDS.find((b) => b.key === key)?.label ?? "Free board";
 }
 
+// Official pinned notices, defined in code so they need no admin tooling or
+// DB rows. They sit above every board, get their own detail page at
+// /community/<id>, and never take comments or deletes.
+export type CommunityNotice = {
+  /** Also the /community/[id] slug — keep it prefixed so it can't collide with a UUID. */
+  id: string;
+  emoji: string;
+  title: string;
+  body: string;
+};
+
+export const NOTICES: CommunityNotice[] = [
+  {
+    id: "notice-welcome",
+    emoji: "🌱",
+    title: "Welcome to the Kroot garden — how this community works",
+    body: `Hello, learner! This is the place to grow together. A quick tour:
+
+❓ Question board — anything about Korean: grammar, vocabulary, nuance, culture. No question is too small; today's "silly" question is exactly what ten other learners were wondering.
+
+💬 Free board — wins, streak milestones, K-drama talk, study setups, or just saying hi. Celebrating a passed promotion test counts double.
+
+🤝 Language exchange — find practice partners. Say your level, your time zone, and what you can offer in return.
+
+House rules (short version): be kind, be patient, and remember everyone here is brave enough to learn a new language. Answer in the language you're comfortable with — Korean, English, or both. Corrections are welcome when they're gentle.
+
+See you in the garden! 🌳
+— The Kroot team`,
+  },
+  {
+    id: "notice-ranking",
+    emoji: "🏆",
+    title: "Levels, leagues & your tree — how ranking works",
+    body: `Three systems grow side by side, and none of them can be bought — only learned.
+
+🌳 Level (Lv 1–30) — every lesson, quiz, and review earns XP. Your tree grows through six stages as you level: seed → sprout → young tree → growing tree → blossoming → fully grown.
+
+📚 Grade (A1–C2) — your proven skill level. Review enough words, keep your accuracy up, finish some reading, then pass the four-skill Level-Up Test (70+ average, every skill 60+). Pass it and your tree transforms into a new species: azalea → forsythia → cherry blossom → persimmon → ginkgo → pine. 진달래부터 소나무까지!
+
+🏆 Weekly league — you're ranked by XP earned this week against learners in YOUR grade only, so it's always a fair race. Resets every Monday. Rewards: top 10% → 100 coins, top 30% → 50, top 60% → 20, and 5 just for playing. Coins buy costumes in the shop.
+
+Failed a promotion test? Totally normal — practice your weakest skill and retake it after 48 hours.`,
+  },
+  {
+    id: "notice-start",
+    emoji: "🧭",
+    title: "New to Korean? Start here",
+    body: `The path that works, in order:
+
+1. Hangul first (1–2 days) — the alphabet takes an afternoon, not a year. Do the Hangul module until you can sound out any word, even slowly.
+
+2. The 16-Day Course — one short lesson a day: Hangul rules, core grammar, and your first real sentences. It auto-advances, so just show up.
+
+3. Water your tree daily — the Review tab resurfaces words right before you'd forget them (spaced repetition). Five minutes a day beats two hours on Sunday.
+
+4. Add one skill at a time — Listening and Reading first, then Writing and Speaking when you're comfortable. The AI teacher grades your writing and speaking with feedback.
+
+5. Keep the streak — your tree notices. 화이팅! 🔥`,
+  },
+];
+
+export function findNotice(id: string): CommunityNotice | undefined {
+  return NOTICES.find((n) => n.id === id);
+}
+
 // Shown when the community_posts table hasn't been migrated yet, so the page
 // still looks like the real thing instead of an empty error state.
 export const SAMPLE_POSTS: CommunityPost[] = [

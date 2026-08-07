@@ -6,6 +6,7 @@ import PostList from "@/components/community/PostList";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import {
   BOARDS,
+  NOTICES,
   SAMPLE_POSTS,
   isBoardKey,
   isTableMissing,
@@ -142,6 +143,29 @@ export default async function CommunityPage({
               </small>
             </div>
           )}
+
+          {/* pinned official notices — defined in code, shown on every board */}
+          <div className="border border-[#BBF7D0] rounded-[14px] bg-[#F0FDF4] max-w-[980px] overflow-hidden mb-3.5">
+            {NOTICES.map((n, i) => (
+              <Link
+                key={n.id}
+                href={`/community/${n.id}`}
+                className={`px-[18px] py-[11px] flex items-center gap-3 transition-colors hover:bg-[#DCFCE7] ${
+                  i > 0 ? "border-t border-[#BBF7D0]" : ""
+                }`}
+              >
+                <span className="text-[11.5px] font-bold rounded-full border border-[#86EFAC] bg-white text-[#15803D] px-2.5 py-[3px] flex-none">
+                  📌 Notice
+                </span>
+                <b className="min-w-0 flex-1 font-semibold text-[14px] truncate">
+                  {n.emoji} {n.title}
+                </b>
+                <span className="text-[12.5px] text-[#15803D] font-semibold flex-none hidden sm:inline">
+                  Kroot team
+                </span>
+              </Link>
+            ))}
+          </div>
 
           <PostList posts={posts} commentCounts={commentCounts} />
         </main>
