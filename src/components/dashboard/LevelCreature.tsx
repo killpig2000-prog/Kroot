@@ -248,7 +248,7 @@ export default function LevelCreature({
               </>
             )}
             {(conifer ? CONIFER_SPOTS_B2 : ROUND_SPOTS_B2).map(([bx, by], i) => (
-              <g key={i} transform={`translate(${bx} ${by}) scale(.8)`}>
+              <g key={i} transform={`translate(${bx} ${by})`}>
                 <Ornament theme={theme} alt={i % 2 === 1} />
               </g>
             ))}
@@ -276,7 +276,7 @@ export default function LevelCreature({
             <path d="M108 176 C130 172 144 158 146 142 C126 146 114 160 108 172Z" fill="#8A6B4A" />
             {conifer ? <ConiferCanopy theme={theme} size="lg" /> : <RoundCanopy theme={theme} size="lg" />}
             {(conifer ? CONIFER_SPOTS : ROUND_SPOTS_C1).map(([bx, by], i) => (
-              <g key={i} transform={`translate(${bx} ${by}) scale(.85)`}>
+              <g key={i} transform={`translate(${bx} ${by}) scale(1.1)`}>
                 <Ornament theme={theme} alt={i % 2 === 1} />
               </g>
             ))}
@@ -309,7 +309,7 @@ export default function LevelCreature({
             <path d="M108 176 C130 172 144 158 146 142 C126 146 114 160 108 172Z" fill="#8A6B4A" />
             {conifer ? <ConiferCanopy theme={theme} size="lg" /> : <RoundCanopy theme={theme} size="lg" />}
             {(conifer ? CONIFER_SPOTS : ROUND_SPOTS_C2).map(([fx, fy], i) => (
-              <g key={i} transform={`translate(${fx} ${fy}) scale(1.05)`}>
+              <g key={i} transform={`translate(${fx} ${fy}) scale(1.35)`}>
                 <Ornament theme={theme} alt={i % 3 === 2} />
               </g>
             ))}

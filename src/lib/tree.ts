@@ -67,7 +67,7 @@ export const SPECIES: Record<CefrLevel, TreeSpecies> = {
   C1: {
     name: "Ginkgo", krName: "은행나무", emoji: "🍂",
     canopy: ["#F5C824", "#FAD95A", "#EBB914"],
-    petal: "#FDE68A", petal2: "#FACC15", center: "#F59E0B",
+    petal: "#FFF3BF", petal2: "#E8940A", center: "#F59E0B",
     ink: "#713F12", deco: "ginkgo", shape: "round",
     blurb: "A golden avenue tree that lives a thousand years.",
   },
