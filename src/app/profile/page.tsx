@@ -10,7 +10,7 @@ import RankCard from "@/components/profile/RankCard";
 import MonthlyGrass from "@/components/profile/MonthlyGrass";
 import LeagueBoard from "@/components/league/LeagueBoard";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
-import { LEVEL_PATH, type CefrLevel } from "@/lib/tree";
+import { LEVEL_PATH, SPECIES, type CefrLevel } from "@/lib/tree";
 import { levelProgress, treeStageForLevel, MAX_LEVEL } from "@/lib/level";
 import { COURSE_TOTAL_DAYS } from "@/lib/course";
 import { computeEligibility } from "@/lib/promotion-server";
@@ -191,7 +191,7 @@ export default async function ProfilePage() {
                   )}
                 </b>
                 <span className="text-[13px] text-[#6B6560]">
-                  {treeStage.treeName} {treeStage.icon} · Lv. {playerLevel} · {level} difficulty · growing since{" "}
+                  {SPECIES[level].name} {SPECIES[level].emoji} · {treeStage.treeName} · Lv. {playerLevel} · {level} difficulty · growing since{" "}
                   {memberSince}
                 </span>
                 <div className="mt-2 max-w-[280px]">

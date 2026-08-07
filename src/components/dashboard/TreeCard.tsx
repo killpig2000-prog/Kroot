@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { LEVEL_ORDER, LEVEL_PATH } from "@/lib/tree";
+import { LEVEL_ORDER, LEVEL_PATH, SPECIES, type CefrLevel } from "@/lib/tree";
 import { MAX_LEVEL, treeStageForLevel } from "@/lib/level";
 import SpeechBubble from "@/components/ui/SpeechBubble";
 import LevelCreature from "@/components/dashboard/LevelCreature";
@@ -22,22 +22,37 @@ export default function TreeCard({
   xpInto,
   xpNeeded,
   costumeIds = [],
+  species,
 }: {
   level: number;
   progressPct: number;
   xpInto: number;
   xpNeeded: number;
   costumeIds?: string[];
+  /** CEFR grade — decides the tree species; promotion transforms the garden. */
+  species?: CefrLevel;
 }) {
   const [fill, setFill] = useState(0);
+  const [evolved, setEvolved] = useState(false);
 
   useEffect(() => {
     const t = setTimeout(() => setFill(progressPct), 200);
     return () => clearTimeout(t);
   }, [progressPct]);
 
+  // Celebrate the species transformation once after a promotion.
+  useEffect(() => {
+    if (!species) return;
+    const prev = localStorage.getItem("kroot-tree-species");
+    localStorage.setItem("kroot-tree-species", species);
+    if (!prev || prev === species || LEVEL_ORDER.indexOf(species) <= LEVEL_ORDER.indexOf(prev as CefrLevel)) return;
+    const t = setTimeout(() => setEvolved(true), 400);
+    return () => clearTimeout(t);
+  }, [species]);
+
   const stage = treeStageForLevel(level);
   const { treeName, blurb } = LEVEL_PATH[stage];
+  const sp = SPECIES[species ?? stage];
   const stageIdx = LEVEL_ORDER.indexOf(stage);
   const maxed = level >= MAX_LEVEL;
 
@@ -58,7 +73,7 @@ export default function TreeCard({
           style={{ background: "linear-gradient(180deg,#EAF6FF 0%,#F0FDF4 70%,#E8F5DF 100%)" }}
         >
           <svg viewBox="0 0 220 230" className="w-[clamp(120px,18vw,158px)] h-auto" aria-hidden="true">
-            <LevelCreature level={stage} costumeIds={costumeIds} />
+            <LevelCreature level={stage} costumeIds={costumeIds} species={species} />
             <g className="bob">
               <circle cx="60" cy="78" r="6" fill="#FACC15" />
             </g>
@@ -77,12 +92,34 @@ export default function TreeCard({
           Your tree · 성장 앨범
         </p>
         <h2 className="font-semibold text-lg tracking-[-0.01em] mb-0.5">
-          {treeName}
+          {sp.name} <span className="text-[#A19A8C] font-medium">· {treeName}</span>
           <span className="inline-block ml-2 text-[12.5px] font-semibold bg-[#F0FDF4] text-[#16A34A] border border-[#BBF7D0] rounded-md px-2 py-px align-[2px]">
             Lv. {level}
           </span>
         </h2>
-        <p className="text-[13.5px] text-[#6B6560] mb-4">{blurb}</p>
+        <p className="text-[13.5px] text-[#6B6560] mb-4">
+          <span className="kr font-semibold">{sp.krName}</span> — {blurb}
+        </p>
+
+        {evolved && (
+          <div
+            className="flex items-center gap-2.5 border border-[#FDE68A] bg-[#FFFBEB] rounded-[10px] px-3.5 py-2.5 mb-4"
+            style={{ animation: "fadeUp .35s ease" }}
+          >
+            <span className="text-[18px]" aria-hidden="true">{sp.emoji}</span>
+            <span className="flex-1 text-[13px] text-[#92400E]">
+              <b>Promotion!</b> Your tree transformed into a {sp.name}{" "}
+              <span className="kr">({sp.krName})</span>.
+            </span>
+            <button
+              type="button"
+              onClick={() => setEvolved(false)}
+              className="text-[12px] font-bold text-[#92400E] hover:underline"
+            >
+              Nice!
+            </button>
+          </div>
+        )}
 
         <div className="flex items-center gap-3 mb-4">
           <div className="flex-1 h-1.5 bg-[#EFE9DB] rounded-full overflow-hidden">

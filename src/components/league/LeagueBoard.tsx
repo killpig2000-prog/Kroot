@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import LevelCreature from "@/components/dashboard/LevelCreature";
 import { treeStageForLevel } from "@/lib/level";
+import { LEVEL_ORDER, type CefrLevel } from "@/lib/tree";
 
 type Row = {
   rank: number;
@@ -21,6 +22,7 @@ type Reward = { coins: number; rank: number; total_players: number; already_clai
 // migration 0016; until that migration is applied we show a friendly notice
 // instead of crashing.
 export default function LeagueBoard({ grade }: { grade: string }) {
+  const species = (LEVEL_ORDER as readonly string[]).includes(grade) ? (grade as CefrLevel) : undefined;
   const supabase = useMemo(() => createClient(), []);
   const [rows, setRows] = useState<Row[] | null>(null);
   const [my, setMy] = useState<MyRank | null>(null);
@@ -164,7 +166,7 @@ export default function LeagueBoard({ grade }: { grade: string }) {
               </span>
               <span className="flex-none w-[52px] h-[52px] rounded-[12px] bg-[#F0FDF4] border border-[#BBF7D0] overflow-hidden flex items-end justify-center">
                 <svg viewBox="30 60 160 160" className="w-[46px] h-[46px]" aria-hidden="true">
-                  <LevelCreature level={treeStageForLevel(r.level)} costumeIds={r.costume_ids ?? []} />
+                  <LevelCreature level={treeStageForLevel(r.level)} costumeIds={r.costume_ids ?? []} species={species} />
                 </svg>
               </span>
               <span className="flex-1 min-w-0">

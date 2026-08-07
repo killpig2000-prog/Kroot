@@ -249,7 +249,7 @@ export default async function DashboardPage() {
           <Greeting name={displayName} />
           <p className="text-[#6B6560] text-sm mb-6">One lesson today keeps your tree growing.</p>
 
-          <TreeCard level={level} progressPct={pct} xpInto={into} xpNeeded={needed} costumeIds={equippedIds} />
+          <TreeCard level={level} progressPct={pct} xpInto={into} xpNeeded={needed} costumeIds={equippedIds} species={cefr} />
 
           {/* watering (spaced-repetition review) */}
           {dueCount > 0 && (
