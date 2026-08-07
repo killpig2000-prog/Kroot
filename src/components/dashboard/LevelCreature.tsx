@@ -127,6 +127,10 @@ const ROUND_SPOTS_C2: [number, number][] = [
 const CONIFER_SPOTS: [number, number][] = [
   [110, 46], [92, 98], [128, 98], [72, 148], [148, 148], [110, 150],
 ];
+// A lighter sprinkle for the growing stage, so the species reads before the
+// blossoming stage arrives.
+const ROUND_SPOTS_B2: [number, number][] = [[80, 62], [148, 72], [58, 112]];
+const CONIFER_SPOTS_B2: [number, number][] = [[110, 70], [88, 122], [136, 128]];
 
 export default function LevelCreature({
   level,
@@ -243,6 +247,11 @@ export default function LevelCreature({
                 <Face cx={110} cy={100} spread={16} size={5.6} ink={theme.ink} />
               </>
             )}
+            {(conifer ? CONIFER_SPOTS_B2 : ROUND_SPOTS_B2).map(([bx, by], i) => (
+              <g key={i} transform={`translate(${bx} ${by}) scale(.8)`}>
+                <Ornament theme={theme} alt={i % 2 === 1} />
+              </g>
+            ))}
             {/* a bluebird friend has moved in */}
             <g transform="translate(166 52)">
               <path d="M0 0 C0 -7 5 -10 10 -10 C14 -10 17 -7 17 -3 C17 3 11 6 6 6 L-2 6 Z" fill="#7FB5E8" />

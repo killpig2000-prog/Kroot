@@ -45,9 +45,9 @@ export const SPECIES: Record<CefrLevel, TreeSpecies> = {
   },
   A2: {
     name: "Forsythia", krName: "개나리", emoji: "🌼",
-    canopy: ["#8FCB8F", "#A5D6A5", "#7FBF7F"],
+    canopy: ["#A9C86A", "#C0D687", "#97B957"],
     petal: "#FACC15", petal2: "#FDE047", center: "#FFF8C4",
-    ink: "#2E5B41", deco: "blossom", shape: "round",
+    ink: "#3F4D1C", deco: "blossom", shape: "round",
     blurb: "Bright yellow along every wall — spring is picking up speed.",
   },
   B1: {
