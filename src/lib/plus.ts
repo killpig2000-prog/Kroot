@@ -5,6 +5,12 @@ export function isPlus(plusUntil: string | null | undefined): boolean {
   return !!plusUntil && new Date(plusUntil).getTime() > Date.now();
 }
 
+// Gate on new subscriptions. Stripe runs in TEST mode (Korea can't activate
+// live Stripe), so real cards would be declined — keep checkout closed in
+// production until a merchant-of-record integration goes live. Existing
+// subscribers keep their perks and the billing portal either way.
+export const PAYMENTS_LIVE = process.env.NEXT_PUBLIC_PAYMENTS_LIVE === "true";
+
 export type PlanKey = "monthly" | "yearly";
 
 export const PLANS: Record<

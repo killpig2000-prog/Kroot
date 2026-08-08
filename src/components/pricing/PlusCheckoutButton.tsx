@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import type { PlanKey } from "@/lib/plus";
+import { PAYMENTS_LIVE, type PlanKey } from "@/lib/plus";
 
 export default function PlusCheckoutButton({
   plan,
@@ -38,6 +38,25 @@ export default function PlusCheckoutButton({
     }
     setBusy(false);
     setMessage(data?.error ?? "Couldn't start checkout. Try again in a moment.");
+  }
+
+  if (!PAYMENTS_LIVE) {
+    return (
+      <div className="flex flex-col items-center gap-1.5">
+        <span
+          className={`w-full inline-flex items-center justify-center rounded-[10px] px-[22px] py-[11px] text-[14px] font-semibold ${
+            highlight
+              ? "bg-[#F0FDF4] text-[#15803D] border border-[#BBF7D0]"
+              : "border border-[#E3DDD0] bg-[#FAF7EF] text-[#6B6560]"
+          }`}
+        >
+          Coming soon 🌱
+        </span>
+        <span className="text-[11.5px] text-[#A19A8C] text-center">
+          Subscriptions open shortly — every lesson is free meanwhile.
+        </span>
+      </div>
+    );
   }
 
   return (

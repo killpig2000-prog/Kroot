@@ -32,6 +32,9 @@ export const metadata: Metadata = {
   title: "Kroot — Grow your Korean, one little sprout at a time",
   description:
     "Kroot is a cozy garden where your Korean grows every day — with a friendly AI tutor, tiny lessons, and friends from all over the world.",
+  verification: {
+    google: "9_zaAq2WS5tU8bwdzzy7MF64LuKXCwJThp-S2V5ObPM",
+  },
 };
 
 export default async function RootLayout({

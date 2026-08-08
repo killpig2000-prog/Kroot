@@ -12,6 +12,15 @@ const PRICE_ENV: Record<string, string | undefined> = {
 };
 
 export async function POST(request: Request) {
+  // Backend guard for the same flag PlusCheckoutButton reads — checkout stays
+  // closed until payments go live, even if someone posts here directly.
+  if (process.env.NEXT_PUBLIC_PAYMENTS_LIVE !== "true") {
+    return NextResponse.json(
+      { error: "Plus subscriptions haven't opened yet — every lesson is free meanwhile." },
+      { status: 503 }
+    );
+  }
+
   const secretKey = process.env.STRIPE_SECRET_KEY;
   if (!secretKey) {
     return NextResponse.json(
