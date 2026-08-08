@@ -192,12 +192,14 @@ export function costumeById(id: string) {
 // Where each slot sits on the level creature (TreeCard's 220x230 viewBox).
 // The creature's head moves and grows with the level, so anchors do too.
 export const COSTUME_ANCHORS: Record<CefrLevel, Record<CostumeSlot, { x: number; y: number; s: number }>> = {
-  A1: { hat: { x: 110, y: 163, s: 0.8 }, face: { x: 110, y: 186, s: 0.65 }, neck: { x: 110, y: 205, s: 0.7 } },
-  A2: { hat: { x: 110, y: 121, s: 0.75 }, face: { x: 110, y: 139, s: 0.6 }, neck: { x: 110, y: 157, s: 0.65 } },
-  B1: { hat: { x: 110, y: 52, s: 1 }, face: { x: 110, y: 108, s: 1 }, neck: { x: 110, y: 132, s: 1 } },
-  B2: { hat: { x: 110, y: 32, s: 1.1 }, face: { x: 110, y: 100, s: 1.1 }, neck: { x: 110, y: 126, s: 1.1 } },
-  C1: { hat: { x: 110, y: 32, s: 1.1 }, face: { x: 110, y: 100, s: 1.1 }, neck: { x: 110, y: 126, s: 1.1 } },
-  C2: { hat: { x: 110, y: 32, s: 1.1 }, face: { x: 110, y: 100, s: 1.1 }, neck: { x: 110, y: 126, s: 1.1 } },
+  // Sized so a hat reads as headwear, not a pin: at every stage the hat brim
+  // spans most of the head/canopy it sits on.
+  A1: { hat: { x: 110, y: 156, s: 1.5 }, face: { x: 110, y: 186, s: 1.0 }, neck: { x: 110, y: 203, s: 1.1 } },
+  A2: { hat: { x: 110, y: 115, s: 1.4 }, face: { x: 110, y: 139, s: 0.9 }, neck: { x: 110, y: 156, s: 1.0 } },
+  B1: { hat: { x: 110, y: 56, s: 2.2 }, face: { x: 110, y: 108, s: 1.5 }, neck: { x: 110, y: 134, s: 1.7 } },
+  B2: { hat: { x: 110, y: 38, s: 2.6 }, face: { x: 110, y: 100, s: 1.7 }, neck: { x: 110, y: 127, s: 2.0 } },
+  C1: { hat: { x: 110, y: 38, s: 2.6 }, face: { x: 110, y: 100, s: 1.7 }, neck: { x: 110, y: 127, s: 2.0 } },
+  C2: { hat: { x: 110, y: 38, s: 2.6 }, face: { x: 110, y: 100, s: 1.7 }, neck: { x: 110, y: 127, s: 2.0 } },
 };
 
 // Renders equipped costumes at the right spot for the level. Place inside the
