@@ -1,12 +1,14 @@
 import Link from "next/link";
 import Nav from "@/components/landing/Nav";
 import PlusCheckoutButton from "@/components/pricing/PlusCheckoutButton";
+import ManageSubscriptionButton from "@/components/plus/ManageSubscriptionButton";
+import ManageSubscriptionButton from "@/components/plus/ManageSubscriptionButton";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { PLANS, PLUS_PERKS, isPlus, type PlanKey } from "@/lib/plus";
 
 export const metadata = {
   title: "Pricing — Kroot",
-  description: "Core Korean lessons are free forever. Kroot Plus adds unlimited AI grading, a streak shield, weekend XP boosts, insights, and exclusive outfits.",
+  description: "Core Korean lessons are free forever. Kroot Plus adds unlimited writing with detailed corrections, a streak shield, weekend XP boosts, insights, and exclusive outfits.",
 };
 
 const FREE_FEATURES = [
@@ -46,7 +48,7 @@ export default async function PricingPage() {
           </h1>
           <p className="text-[15px] text-[#6B6560] max-w-[520px] mx-auto">
             No paywalled lessons, no locked levels. Kroot Plus keeps your streak safe, boosts your
-            weekends, grades without limits — and helps keep the garden free for everyone.
+            weekends, writes without limits — and helps keep the garden free for everyone.
           </p>
         </div>
 
@@ -60,6 +62,9 @@ export default async function PricingPage() {
               </Link>
               .
             </span>
+            <div className="mt-3">
+              <ManageSubscriptionButton />
+            </div>
           </div>
         )}
 
@@ -139,10 +144,15 @@ export default async function PricingPage() {
           ))}
         </div>
 
-        <div className="text-center text-[12.5px] text-[#A19A8C]">
-          Cancel anytime — Plus perks last until the end of the paid period.
+        <div className="text-center text-[12.5px] text-[#A19A8C] leading-[1.7]">
+          <b className="font-semibold text-[#6B6560]">Refunds & cancellation</b>
           <br />
-          Payments are processed securely by Stripe.
+          Not for you? Get a full refund within 14 days of any payment — just reply to your
+          receipt email or write to support. After 14 days you can cancel anytime and keep
+          Plus until the end of the paid period; the next renewal simply doesn&apos;t happen.
+          <br />
+          Payments are processed securely by Stripe. Subscribers can cancel self-serve via
+          “Manage subscription”.
         </div>
       </main>
     </div>
