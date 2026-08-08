@@ -73,6 +73,9 @@ export default async function ReadingChapterSessionPage({
 
           {passage ? (
             <ReadingSession
+              // Remount when the chapter changes — otherwise React reuses the
+              // instance and the old chapter's summary state sticks around.
+              key={`${level}-${chapterIndex}`}
               passage={passage}
               userId={user.id}
               chapterIndex={chapterIndex}

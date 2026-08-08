@@ -75,6 +75,9 @@ export default async function WritingChapterSessionPage({
 
           {prompt ? (
             <WritingSession
+              // Remount when the chapter changes so the previous chapter's
+              // summary state doesn't survive the navigation.
+              key={`${level}-${chapterIndex}`}
               prompt={prompt}
               userId={user.id}
               level={level}

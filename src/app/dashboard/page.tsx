@@ -294,7 +294,7 @@ export default async function DashboardPage() {
               <b className="block font-semibold text-sm">{quest?.title ?? questOfTheDay.title}</b>
               <span className="text-[13px] text-[#6B6560]">{quest?.description ?? questOfTheDay.description}</span>
             </div>
-            {quest && <QuestButton questId={quest.id} completed={!!quest.completed_at} />}
+            {quest && <QuestButton skillKey={quest.skill_key} completed={!!quest.completed_at} />}
           </div>
 
           {/* new to Korean? */}

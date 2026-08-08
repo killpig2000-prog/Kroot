@@ -46,6 +46,27 @@ export async function awardProgress(
   return (row as ProgressResult) ?? null;
 }
 
+/**
+ * If today's daily quest asks for this skill and isn't done yet, complete it
+ * and pay out its reward. Runs on real activity completion — the dashboard
+ * button only navigates, it never completes.
+ */
+async function completeMatchingQuest(supabase: SupabaseClient, skill: string): Promise<void> {
+  const today = new Date().toISOString().slice(0, 10);
+  const { data, error } = await supabase
+    .from("daily_quests")
+    .update({ completed_at: new Date().toISOString() })
+    .eq("quest_date", today)
+    .eq("skill_key", skill)
+    .is("completed_at", null)
+    .select("id");
+  if (error || !data || data.length === 0) return;
+
+  const { error: coinError } = await supabase.rpc("earn_coins", { p_amount: 10 });
+  if (coinError) console.error("earn_coins failed:", coinError.message);
+  await awardProgress(supabase, "quest");
+}
+
 /** Convenience: log minutes + award XP for one completed unit. */
 export async function recordCompletion(
   supabase: SupabaseClient,
@@ -53,5 +74,7 @@ export async function recordCompletion(
   minutes: number,
 ): Promise<ProgressResult | null> {
   await logActivity(supabase, minutes);
-  return awardProgress(supabase, skill);
+  const result = await awardProgress(supabase, skill);
+  await completeMatchingQuest(supabase, skill);
+  return result;
 }

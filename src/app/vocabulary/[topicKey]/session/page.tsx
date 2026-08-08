@@ -115,6 +115,9 @@ export default async function VocabChapterSessionPage({
           </div>
 
           <VocabSession
+            // Remount when the set changes so the previous set's summary
+            // state doesn't survive the navigation.
+            key={`${topicKey}-${level}-${chapterIndex}`}
             words={sessionWords}
             userId={user.id}
             topicLabel={topic.label}
