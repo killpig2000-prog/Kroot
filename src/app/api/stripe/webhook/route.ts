@@ -47,6 +47,20 @@ async function fetchSubscription(id: string) {
   return res.ok ? res.json() : null;
 }
 
+// Newer Stripe API versions moved current_period_end off the subscription
+// onto its items — read both places or a cancel event wipes Plus instantly.
+type SubLike = {
+  current_period_end?: number;
+  items?: { data?: { current_period_end?: number }[] };
+};
+function periodEndSeconds(sub: SubLike): number | null {
+  if (typeof sub.current_period_end === "number") return sub.current_period_end;
+  const ends = (sub.items?.data ?? [])
+    .map((item) => item.current_period_end)
+    .filter((n): n is number => typeof n === "number");
+  return ends.length ? Math.max(...ends) : null;
+}
+
 export async function POST(request: Request) {
   const secret = process.env.STRIPE_WEBHOOK_SECRET;
   if (!secret || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
@@ -72,9 +86,8 @@ export async function POST(request: Request) {
     let plusUntil = new Date(Date.now() + 35 * 86_400_000).toISOString();
     if (session.subscription) {
       const sub = await fetchSubscription(session.subscription);
-      if (sub?.current_period_end) {
-        plusUntil = new Date(sub.current_period_end * 1000).toISOString();
-      }
+      const end = sub ? periodEndSeconds(sub) : null;
+      if (end) plusUntil = new Date(end * 1000).toISOString();
     }
 
     const { error } = await supabase
@@ -87,17 +100,24 @@ export async function POST(request: Request) {
   if (event.type === "customer.subscription.updated" || event.type === "customer.subscription.deleted") {
     const sub = event.data.object;
     const active = sub.status === "active" || sub.status === "trialing";
-    // On cancel/expiry, access runs to the end of the paid period.
-    const plusUntil =
-      active || sub.status === "canceled"
-        ? new Date((sub.current_period_end ?? Date.now() / 1000) * 1000).toISOString()
-        : new Date().toISOString();
+    const end = periodEndSeconds(sub);
+    // On cancel/expiry, access runs to the end of the paid period. If Stripe
+    // didn't include the period end, keep the stored value rather than
+    // guessing — never shorten a member's paid time.
+    let plusUntil: string | null = null;
+    if (active || sub.status === "canceled") {
+      plusUntil = end ? new Date(end * 1000).toISOString() : null;
+    } else {
+      plusUntil = new Date().toISOString();
+    }
 
-    const { error } = await supabase
-      .from("profiles")
-      .update({ plus_until: plusUntil })
-      .eq("stripe_customer_id", sub.customer);
-    if (error) console.error("plus update failed:", error.message);
+    if (plusUntil) {
+      const { error } = await supabase
+        .from("profiles")
+        .update({ plus_until: plusUntil })
+        .eq("stripe_customer_id", sub.customer);
+      if (error) console.error("plus update failed:", error.message);
+    }
   }
 
   return NextResponse.json({ received: true });
