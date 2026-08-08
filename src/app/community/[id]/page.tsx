@@ -92,7 +92,7 @@ export default async function CommunityPostPage({
 
   const { data: row, error } = await supabase
     .from("community_posts")
-    .select("id, user_id, author_name, author_emoji, country, board, content, created_at")
+    .select("id, user_id, author_name, author_emoji, author_plus, country, board, content, created_at")
     .eq("id", id)
     .maybeSingle();
 
@@ -106,7 +106,7 @@ export default async function CommunityPostPage({
   if (commentsAvailable) {
     const { data: commentRows, error: commentsError } = await supabase
       .from("community_comments")
-      .select("id, user_id, author_name, author_emoji, content, created_at")
+      .select("id, user_id, author_name, author_emoji, author_plus, content, created_at")
       .eq("post_id", id)
       .order("created_at", { ascending: true })
       .limit(200);
@@ -151,8 +151,15 @@ export default async function CommunityPostPage({
               <span className="text-[11.5px] font-semibold rounded-full border border-[#CBD5E1] bg-[#F1F5F9] text-[#334155] px-2.5 py-[3px]">
                 {boardLabel(post.board)}
               </span>
-              <span className="text-[12.5px] text-[#6B6560]">
+              <span
+                className={`text-[12.5px] ${
+                  "author_plus" in post && post.author_plus
+                    ? "font-semibold text-[#B45309]"
+                    : "text-[#6B6560]"
+                }`}
+              >
                 {post.author_emoji ?? "🦊"} {post.author_name}
+                {"author_plus" in post && post.author_plus && " 🌟"}
                 {post.country ? ` · ${post.country}` : ""}
               </span>
               <span className="text-[12px] text-[#A19A8C]">{timeAgo(post.created_at)}</span>

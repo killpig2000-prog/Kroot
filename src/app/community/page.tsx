@@ -34,7 +34,7 @@ export default async function CommunityPage({
 
   let query = supabase
     .from("community_posts")
-    .select("id, user_id, author_name, author_emoji, country, board, content, created_at")
+    .select("id, user_id, author_name, author_emoji, author_plus, country, board, content, created_at")
     .order("created_at", { ascending: false })
     .limit(50);
   if (board) query = query.eq("board", board);

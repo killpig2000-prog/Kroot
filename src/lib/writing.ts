@@ -29,5 +29,22 @@ export function getChapterStatuses(chapters: Prompt[][], completedKeys: Set<stri
   return statuses;
 }
 
+/** UTC start of today, as an ISO string — the writing day boundary. */
+export function utcDayStartISO(): string {
+  return new Date().toISOString().slice(0, 10) + "T00:00:00.000Z";
+}
+
+/**
+ * Free plan writes one chapter per UTC day. Returns the prompt_key completed
+ * today (so re-grading that same chapter stays allowed), or null if the user
+ * hasn't written yet today.
+ */
+export function chapterWrittenToday(
+  rows: { prompt_key: string; completed_at: string }[] | null | undefined
+): string | null {
+  const dayStart = utcDayStartISO();
+  return rows?.find((r) => r.completed_at >= dayStart)?.prompt_key ?? null;
+}
+
 export const MINUTES_PER_PROMPT = 5;
 export const MIN_RESPONSE_LENGTH = 5;

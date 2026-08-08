@@ -170,6 +170,125 @@ export const COSTUMES: Costume[] = [
     ),
   },
   {
+    id: "blossom-crown",
+    name: "Blossom Crown",
+    krName: "벚꽃 화관",
+    slot: "hat",
+    price: 0,
+    plusOnly: true,
+    render: () => (
+      <>
+        <path d="M-18 2 Q0 -10 18 2" stroke="#7FA86B" strokeWidth="3.5" fill="none" />
+        {[-15, -7.5, 0, 7.5, 15].map((x, i) => {
+          const y = -2 - Math.cos((x / 15) * 1.2) * 5;
+          return (
+            <g key={i} transform={`translate(${x} ${y})`}>
+              <circle cx="0" cy="-3" r="2.6" fill="#F9C4D4" />
+              <circle cx="2.8" cy="-0.9" r="2.6" fill="#F9C4D4" />
+              <circle cx="1.7" cy="2.4" r="2.6" fill="#FBD5E0" />
+              <circle cx="-1.7" cy="2.4" r="2.6" fill="#F9C4D4" />
+              <circle cx="-2.8" cy="-0.9" r="2.6" fill="#FBD5E0" />
+              <circle cx="0" cy="0" r="1.4" fill="#F2789A" />
+            </g>
+          );
+        })}
+      </>
+    ),
+  },
+  {
+    id: "seonbi-gat",
+    name: "Scholar's Gat",
+    krName: "선비 갓",
+    slot: "hat",
+    price: 0,
+    plusOnly: true,
+    render: () => (
+      <>
+        <ellipse cx="0" cy="5" rx="30" ry="7" fill="#2E2A26" opacity=".92" />
+        <path d="M-11 5 C-11 -14 11 -14 11 5 Z" fill="#3E3226" />
+        <path d="M-11 5 C-11 -14 11 -14 11 5 Z" fill="none" stroke="#5E4A34" strokeWidth="1" />
+        <ellipse cx="0" cy="5" rx="30" ry="7" fill="none" stroke="#5E4A34" strokeWidth="1" />
+        <path d="M-8 9 L-6 20 M8 9 L6 20" stroke="#3E3226" strokeWidth="1.5" />
+      </>
+    ),
+  },
+  {
+    id: "moon-spectacles",
+    name: "Moon Spectacles",
+    krName: "달 안경",
+    slot: "face",
+    price: 0,
+    plusOnly: true,
+    render: () => (
+      <>
+        <path d="M-11 -8 A8 8 0 1 0 -11 8 A6.2 6.2 0 1 1 -11 -8 Z" fill="#FFD66B" stroke="#E0B23F" strokeWidth="1.5" />
+        <path d="M11 -8 A8 8 0 1 1 11 8 A6.2 6.2 0 1 0 11 -8 Z" fill="#FFD66B" stroke="#E0B23F" strokeWidth="1.5" />
+        <path d="M-4 0 Q0 -3 4 0" stroke="#E0B23F" strokeWidth="2.5" fill="none" />
+        <circle cx="-16" cy="-6" r="1.2" fill="#FFF3C4" />
+        <circle cx="16" cy="6" r="1.2" fill="#FFF3C4" />
+      </>
+    ),
+  },
+  {
+    id: "cherry-blush",
+    name: "Cherry Blush",
+    krName: "앵두 볼터치",
+    slot: "face",
+    price: 0,
+    plusOnly: true,
+    render: () => (
+      <>
+        <ellipse cx="-13" cy="3" rx="5.5" ry="3.8" fill="#F2789A" opacity=".55" />
+        <ellipse cx="13" cy="3" rx="5.5" ry="3.8" fill="#F2789A" opacity=".55" />
+        <path d="M-15 1 L-11 1 M13.5 1 L10.5 4" stroke="#E4557E" strokeWidth="1.2" opacity=".5" strokeLinecap="round" />
+        <path d="M0 -7 L1.2 -4.6 L3.6 -4.4 L1.8 -2.8 L2.3 -0.4 L0 -1.7 L-2.3 -0.4 L-1.8 -2.8 L-3.6 -4.4 L-1.2 -4.6 Z" fill="#FFD66B" />
+      </>
+    ),
+  },
+  {
+    id: "hanbok-ribbon",
+    name: "Hanbok Ribbon",
+    krName: "한복 고름",
+    slot: "neck",
+    price: 0,
+    plusOnly: true,
+    render: () => (
+      <>
+        <path d="M-16 -3 Q0 5 16 -3 L16 3 Q0 11 -16 3 Z" fill="#FBD5E0" />
+        <path d="M-2 2 L-13 -4 L-13 6 Z" fill="#E4557E" />
+        <circle cx="0" cy="3" r="3.2" fill="#DB2777" />
+        <path d="M2 4 C6 6 7 12 6 19 L1 18 C2 12 2 8 2 4 Z" fill="#E4557E" />
+        <path d="M2 4 C5 6 5 12 4 18" stroke="#C13A63" strokeWidth="1" fill="none" />
+      </>
+    ),
+  },
+  {
+    id: "maple-garland",
+    name: "Maple Garland",
+    krName: "단풍 목걸이",
+    slot: "neck",
+    price: 0,
+    plusOnly: true,
+    render: () => (
+      <>
+        <path d="M-16 -2 Q0 8 16 -2" stroke="#8A6B4A" strokeWidth="2" fill="none" />
+        {[
+          { x: -13, y: 0, c: "#EFA75C" },
+          { x: -6.5, y: 3, c: "#D96A44" },
+          { x: 0, y: 4, c: "#C94F35" },
+          { x: 6.5, y: 3, c: "#EFA75C" },
+          { x: 13, y: 0, c: "#D96A44" },
+        ].map((leaf, i) => (
+          <path
+            key={i}
+            d={`M${leaf.x} ${leaf.y} l-3 3 l2.2 0.4 l-1 3 l1.8 -1 l0 2.6 l1.6 -2 l1.6 2 l0 -2.6 l1.8 1 l-1 -3 l2.2 -0.4 Z`}
+            fill={leaf.c}
+          />
+        ))}
+      </>
+    ),
+  },
+  {
     id: "bow-tie",
     name: "Bow Tie",
     krName: "나비넥타이",

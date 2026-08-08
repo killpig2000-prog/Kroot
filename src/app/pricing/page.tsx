@@ -6,7 +6,7 @@ import { PLANS, PLUS_PERKS, isPlus, type PlanKey } from "@/lib/plus";
 
 export const metadata = {
   title: "Pricing — Kroot",
-  description: "Core Korean lessons are free forever. Kroot Plus adds exclusive outfits, a golden badge, and early access.",
+  description: "Core Korean lessons are free forever. Kroot Plus adds unlimited AI grading, a streak shield, weekend XP boosts, insights, and exclusive outfits.",
 };
 
 const FREE_FEATURES = [
@@ -45,8 +45,8 @@ export default async function PricingPage() {
             <span className="text-[#16A34A]">Plus</span> makes your garden shine.
           </h1>
           <p className="text-[15px] text-[#6B6560] max-w-[520px] mx-auto">
-            No paywalled lessons, no locked levels. Kroot Plus is for learners who want to support
-            the project — and get some golden perks for it.
+            No paywalled lessons, no locked levels. Kroot Plus keeps your streak safe, boosts your
+            weekends, grades without limits — and helps keep the garden free for everyone.
           </p>
         </div>
 

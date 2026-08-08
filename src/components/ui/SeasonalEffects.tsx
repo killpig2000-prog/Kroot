@@ -16,13 +16,17 @@ const TINTS: Record<SeasonKey, string> = {
 };
 
 const PARTICLE_COUNT = 6;
+// Plus members get a denser drift with golden sparkles mixed in.
+const PLUS_PARTICLE_COUNT = 14;
 
 export default function SeasonalEffects({
   season,
   initialEnabled,
+  plus = false,
 }: {
   season: SeasonKey;
   initialEnabled: boolean;
+  plus?: boolean;
 }) {
   const [enabled, setEnabled] = useState(initialEnabled);
 
@@ -39,13 +43,16 @@ export default function SeasonalEffects({
   const seeds = useMemo(() => {
     const { particles } = SEASONS[season];
     const base = rise ? 18 : 11; // bubbles drift up slowly
-    return Array.from({ length: PARTICLE_COUNT }, (_, i) => ({
+    const count = plus ? PLUS_PARTICLE_COUNT : PARTICLE_COUNT;
+    // Plus mixes a golden sparkle into every fourth particle.
+    const pool = plus ? [...particles, "✨"] : particles;
+    return Array.from({ length: count }, (_, i) => ({
       left: (i * 97 + 13) % 100,
       dur: base + ((i * 53) % 80) / 10,
       delay: -((i * 31) % 160) / 10,
-      char: particles[i % particles.length],
+      char: plus && i % 4 === 3 ? "✨" : pool[i % particles.length],
     }));
-  }, [season, rise]);
+  }, [season, rise, plus]);
 
   return (
     <div

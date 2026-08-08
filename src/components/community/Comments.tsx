@@ -88,8 +88,11 @@ export default function Comments({
                   className={`px-[18px] py-3 ${i > 0 ? "border-t border-[#E3DDD0]" : ""}`}
                 >
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="text-[12.5px] font-semibold">
+                    <span
+                      className={`text-[12.5px] font-semibold ${c.author_plus ? "text-[#B45309]" : ""}`}
+                    >
                       {c.author_emoji ?? "🦊"} {c.author_name}
+                      {c.author_plus && " 🌟"}
                     </span>
                     <span className="text-[11.5px] text-[#A19A8C]">{timeAgo(c.created_at)}</span>
                     {c.mine && (

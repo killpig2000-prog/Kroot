@@ -3,7 +3,8 @@ import { redirect } from "next/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
-import { getChapterStatuses, getChaptersForLevel } from "@/lib/writing";
+import { chapterWrittenToday, getChapterStatuses, getChaptersForLevel } from "@/lib/writing";
+import { isPlus } from "@/lib/plus";
 import { LEVEL_ORDER, type CefrLevel } from "@/lib/tree";
 import { isDifficultyUnlocked } from "@/lib/level";
 
@@ -36,10 +37,10 @@ export default async function WritingMapPage({
   const [{ data: profile }, { data: progress }, sp] = await Promise.all([
     supabase
       .from("profiles")
-      .select("display_name, current_level, streak_days, avatar_url, xp")
+      .select("display_name, current_level, streak_days, avatar_url, xp, plus_until")
       .eq("id", user.id)
       .single(),
-    supabase.from("writing_progress").select("prompt_key").eq("user_id", user.id),
+    supabase.from("writing_progress").select("prompt_key, completed_at").eq("user_id", user.id),
     searchParams,
   ]);
 
@@ -51,6 +52,11 @@ export default async function WritingMapPage({
   const completedKeys = new Set((progress ?? []).map((p) => p.prompt_key));
   const statuses = getChapterStatuses(chapters, completedKeys);
   const doneCount = statuses.filter((s) => s === "done").length;
+
+  // Free plan writes one chapter per UTC day — after today's page, the next
+  // one waits for tomorrow (today's own page stays open for re-reading).
+  const plus = isPlus(profile?.plus_until);
+  const dailyDone = !plus && !!chapterWrittenToday(progress);
 
   return (
     <div className="min-h-screen bg-[#FDFBF7] text-[#18181B]">
@@ -131,6 +137,14 @@ export default async function WritingMapPage({
                 style={{ width: `${chapters.length ? (doneCount / chapters.length) * 100 : 0}%` }}
               />
             </div>
+            {dailyDone && (
+              <p className="text-[12.5px] text-[#6B6560] mt-2.5">
+                🌙 Today&apos;s page is written — the next one opens tomorrow.{" "}
+                <Link href="/pricing" className="font-semibold text-[#D97706] hover:underline">
+                  Turn pages freely with Plus →
+                </Link>
+              </p>
+            )}
           </div>
 
           {/* chapter list */}
@@ -138,6 +152,7 @@ export default async function WritingMapPage({
             {chapters.map((chapter, i) => {
               const prompt = chapter[0];
               const status = statuses[i];
+              const waitTomorrow = dailyDone && status === "current";
               const content = (
                 <>
                   <span
@@ -158,14 +173,16 @@ export default async function WritingMapPage({
                     </small>
                   </div>
                   <span
-                    className={`text-[11.5px] font-semibold rounded-full border px-2.5 py-[3px] flex-none ${STATUS_BADGE[status]}`}
+                    className={`text-[11.5px] font-semibold rounded-full border px-2.5 py-[3px] flex-none ${
+                      waitTomorrow ? STATUS_BADGE.locked : STATUS_BADGE[status]
+                    }`}
                   >
-                    {STATUS_LABEL[status]}
+                    {waitTomorrow ? "🌙 Tomorrow" : STATUS_LABEL[status]}
                   </span>
                 </>
               );
 
-              return status === "locked" ? (
+              return status === "locked" || waitTomorrow ? (
                 <div
                   key={i}
                   className="border border-[#E3DDD0] rounded-[14px] bg-[#FAF7EF] px-[18px] py-3.5 flex items-center gap-3.5 opacity-70"

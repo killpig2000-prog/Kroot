@@ -4,7 +4,8 @@ import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import WritingSession, { WritingEmpty } from "@/components/writing/WritingSession";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
-import { getChaptersForLevel } from "@/lib/writing";
+import { chapterWrittenToday, getChaptersForLevel, utcDayStartISO } from "@/lib/writing";
+import { isPlus } from "@/lib/plus";
 import { LEVEL_ORDER, type CefrLevel } from "@/lib/tree";
 
 function isCefrLevel(value: string | undefined): value is CefrLevel {
@@ -24,17 +25,30 @@ export default async function WritingChapterSessionPage({
 
   if (!user) redirect("/onboarding");
 
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("display_name, current_level, streak_days, avatar_url")
-    .eq("id", user.id)
-    .single();
+  const [{ data: profile }, { data: todayRows }] = await Promise.all([
+    supabase
+      .from("profiles")
+      .select("display_name, current_level, streak_days, avatar_url, plus_until")
+      .eq("id", user.id)
+      .single(),
+    supabase
+      .from("writing_progress")
+      .select("prompt_key, completed_at")
+      .eq("user_id", user.id)
+      .gte("completed_at", utcDayStartISO())
+      .limit(1),
+  ]);
 
   const myLevel = (profile?.current_level ?? "A1") as CefrLevel;
   const level = isCefrLevel(sp.level) ? sp.level : myLevel;
   const chapters = getChaptersForLevel(level);
   const prompt = chapters[chapterIndex]?.[0];
   const hasNextChapter = chapterIndex + 1 < chapters.length;
+
+  // Free plan writes one chapter per UTC day; today's own chapter stays open.
+  const plus = isPlus(profile?.plus_until);
+  const todayKey = chapterWrittenToday(todayRows);
+  const dailyDone = !plus && !!todayKey && todayKey !== prompt?.key;
 
   return (
     <div className="min-h-screen bg-[#FDFBF7] text-[#18181B]">
@@ -73,7 +87,34 @@ export default async function WritingChapterSessionPage({
             </span>
           </div>
 
-          {prompt ? (
+          {!prompt ? (
+            <WritingEmpty />
+          ) : dailyDone ? (
+            <div className="border border-[#E3DDD0] rounded-[14px] bg-white max-w-[900px] px-7 py-10 text-center">
+              <p className="text-[40px] mb-2">🌙</p>
+              <h2 className="font-bold text-[19px] tracking-[-0.02em] mb-1.5">
+                Today&apos;s page is already written
+              </h2>
+              <p className="text-sm text-[#6B6560] mb-6 max-w-[420px] mx-auto leading-[1.7]">
+                The free plan writes one page a day — this one opens tomorrow. Kroot
+                Plus turns pages without limits.
+              </p>
+              <div className="flex justify-center gap-2.5 flex-wrap">
+                <Link
+                  href={`/writing?level=${level}`}
+                  className="rounded-[9px] px-[18px] py-[9px] text-sm font-semibold text-[#18181B] bg-white border border-[#E3DDD0] hover:bg-[#FAF7EF] transition-colors"
+                >
+                  All pages
+                </Link>
+                <Link
+                  href="/pricing"
+                  className="rounded-[9px] px-[18px] py-[9px] text-sm font-semibold text-white bg-[#D97706] hover:bg-[#B45309] transition-colors"
+                >
+                  🌟 Go unlimited with Plus
+                </Link>
+              </div>
+            </div>
+          ) : (
             <WritingSession
               // Remount when the chapter changes so the previous chapter's
               // summary state doesn't survive the navigation.
@@ -83,9 +124,8 @@ export default async function WritingChapterSessionPage({
               level={level}
               chapterIndex={chapterIndex}
               hasNextChapter={hasNextChapter}
+              plus={plus}
             />
-          ) : (
-            <WritingEmpty />
           )}
         </main>
       </div>

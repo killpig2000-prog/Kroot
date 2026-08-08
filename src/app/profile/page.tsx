@@ -155,6 +155,7 @@ export default async function ProfilePage() {
           email={user.email ?? ""}
           streakDays={profile?.streak_days ?? 0}
           avatarUrl={profile?.avatar_url}
+          plus={isPlus(profile?.plus_until)}
         />
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] md:pb-[60px]">
@@ -213,12 +214,28 @@ export default async function ProfilePage() {
               </div>
             </div>
 
-            {!isPlus(profile?.plus_until) && (
+            {isPlus(profile?.plus_until) ? (
+              <Link
+                href="/stats"
+                className="border border-[#FDE68A] bg-[#FFFBEB] rounded-[14px] px-[22px] py-4 flex items-center gap-4 flex-wrap transition-all hover:-translate-y-0.5 group"
+              >
+                <div className="flex-1 min-w-[220px]">
+                  <b className="font-semibold text-[14.5px] block mb-0.5">📊 Insights</b>
+                  <span className="text-[13px] text-[#6B6560]">
+                    Your Plus stats page — accuracy by skill, weakest words, XP timeline.
+                  </span>
+                </div>
+                <span className="text-[13px] font-bold text-[#D97706] transition-transform group-hover:translate-x-0.5">
+                  Open →
+                </span>
+              </Link>
+            ) : (
               <div className="border border-[#FDE68A] bg-[#FFFBEB] rounded-[14px] px-[22px] py-4 flex items-center gap-4 flex-wrap">
                 <div className="flex-1 min-w-[220px]">
                   <b className="font-semibold text-[14.5px] block mb-0.5">🌟 Kroot Plus</b>
                   <span className="text-[13px] text-[#6B6560]">
-                    Exclusive outfits, a golden badge, early access — every lesson stays free.
+                    Streak shield, weekend XP boost, unlimited AI grading, insights & exclusive
+                    outfits — every lesson stays free.
                   </span>
                 </div>
                 <Link

@@ -5,6 +5,8 @@ import "./globals.css";
 import { DEFAULT_MODE, MODE_COOKIE, isModeKey } from "@/lib/mode";
 import { SEASON_COOKIE, seasonForDate } from "@/lib/seasons";
 import { SITE_URL } from "@/lib/site";
+import { createClient, getClaimsUser } from "@/lib/supabase/server";
+import { isPlus } from "@/lib/plus";
 import SeasonalEffects from "@/components/ui/SeasonalEffects";
 
 const fredoka = Fredoka({
@@ -43,6 +45,21 @@ export default async function RootLayout({
   const seasonEnabled = cookieStore.get(SEASON_COOKIE)?.value === "on"; // default off
   const season = seasonForDate(new Date());
 
+  // Plus members get a denser seasonal drift with golden sparkles.
+  let plusActive = false;
+  if (seasonEnabled) {
+    const supabase = await createClient();
+    const user = await getClaimsUser(supabase);
+    if (user) {
+      const { data } = await supabase
+        .from("profiles")
+        .select("plus_until")
+        .eq("id", user.id)
+        .single();
+      plusActive = isPlus(data?.plus_until);
+    }
+  }
+
   return (
     <html
       lang="en"
@@ -52,7 +69,7 @@ export default async function RootLayout({
     >
       <body>
         {children}
-        <SeasonalEffects season={season} initialEnabled={seasonEnabled} />
+        <SeasonalEffects season={season} initialEnabled={seasonEnabled} plus={plusActive} />
       </body>
     </html>
   );

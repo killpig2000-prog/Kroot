@@ -16,8 +16,10 @@ export const PLANS: Record<
 };
 
 export const PLUS_PERKS = [
-  { icon: "🎩", title: "Exclusive outfits", desc: "Plus-only costumes for your tree — free to claim while subscribed." },
-  { icon: "🌟", title: "Plus badge", desc: "A golden badge on your profile and in the weekly league." },
-  { icon: "🚀", title: "Early access", desc: "New topics, features, and seasonal events land on Plus first." },
-  { icon: "💚", title: "Keep Kroot growing", desc: "Core lessons stay free for everyone — Plus pays the water bill." },
+  { icon: "✍️", title: "Unlimited writing", desc: "Free writes one page a day — Plus turns as many pages as you like, with sentence-by-sentence corrections on every one." },
+  { icon: "🛡️", title: "Streak shield", desc: "Miss a day? Your streak survives — one skipped day never breaks the run." },
+  { icon: "⚡", title: "Weekend XP boost", desc: "Earn 1.5x XP every Saturday and Sunday — climb the weekly league faster." },
+  { icon: "📊", title: "Learning insights", desc: "A detailed stats page: accuracy by skill, weakest words, and your XP timeline." },
+  { icon: "🎩", title: "Exclusive outfits", desc: "Nine Plus-only costumes for your tree — free to claim while subscribed." },
+  { icon: "🌟", title: "Plus badge", desc: "A golden name on your profile, in the community, and in the weekly league." },
 ];

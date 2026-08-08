@@ -17,6 +17,7 @@ import { getPromptsForLevel } from "@/lib/writing";
 import { promptsFor } from "@/lib/speaking";
 import { getWordsForTopic } from "@/lib/vocabulary";
 import { timeAgo } from "@/lib/community";
+import { isPlus } from "@/lib/plus";
 import type { CefrLevel } from "@/lib/tree";
 
 type Category = { key: string; kr: string; en: string; sub: string; bg: string; color: string };
@@ -114,7 +115,7 @@ export default async function DashboardPage() {
   ] = await Promise.all([
     supabase
       .from("profiles")
-      .select("display_name, current_level, xp, streak_days, last_active_date, avatar_url, path_hidden")
+      .select("display_name, current_level, xp, streak_days, last_active_date, avatar_url, path_hidden, plus_until")
       .eq("id", user.id)
       .single(),
     // touch_streak bumps (or resets) the streak server-side and returns its new value.
@@ -132,7 +133,7 @@ export default async function DashboardPage() {
     supabase.from("speaking_progress").select("prompt_key").eq("user_id", user.id),
     supabase
       .from("community_posts")
-      .select("author_name, author_emoji, content, created_at")
+      .select("author_name, author_emoji, author_plus, content, created_at")
       .order("created_at", { ascending: false })
       .limit(3),
     supabase
@@ -209,7 +210,7 @@ export default async function DashboardPage() {
   const feed = (recentPosts ?? []).map((p) => ({
     av: p.author_emoji ?? "🌱",
     text: p.content.split("\n")[0],
-    meta: `${p.author_name} · ${timeAgo(p.created_at)}`,
+    meta: `${p.author_name}${p.author_plus ? " 🌟" : ""} · ${timeAgo(p.created_at)}`,
   }));
 
   const byDate = new Map((activity ?? []).map((a) => [a.activity_date, a.minutes ?? 0]));
@@ -224,6 +225,10 @@ export default async function DashboardPage() {
 
   const displayName = profile?.display_name ?? "there";
   const { level, into, needed, pct } = levelProgress(profile?.xp ?? 0);
+
+  const plusActive = isPlus(profile?.plus_until);
+  const day = now.getDay();
+  const weekendBoost = plusActive && (day === 0 || day === 6);
 
   // 16-day course card: shown until dismissed or the course is finished.
   const showCourse = !profile?.path_hidden;
@@ -243,11 +248,19 @@ export default async function DashboardPage() {
           email={user.email ?? ""}
           streakDays={streakDays}
           avatarUrl={profile?.avatar_url}
+          plus={plusActive}
         />
 
         <main className="min-w-0 px-[clamp(18px,3vw,36px)] pt-[26px] pb-[100px] md:pb-[60px]">
           <Greeting name={displayName} />
-          <p className="text-[#6B6560] text-sm mb-6">One lesson today keeps your tree growing.</p>
+          <p className="text-[#6B6560] text-sm mb-6">
+            One lesson today keeps your tree growing.
+            {weekendBoost && (
+              <span className="ml-2 inline-flex items-center gap-1 text-[12px] font-bold text-[#B45309] bg-[#FFFBEB] border border-[#FDE68A] rounded-full px-2.5 py-[3px] align-middle">
+                ⚡ Weekend boost — 1.5x XP all weekend
+              </span>
+            )}
+          </p>
 
           <TreeCard level={level} progressPct={pct} xpInto={into} xpNeeded={needed} costumeIds={equippedIds} species={cefr} />
 

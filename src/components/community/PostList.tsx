@@ -39,8 +39,13 @@ export default function PostList({
               {title}
               {count > 0 && <span className="ml-1.5 text-[12px] font-bold text-[#334155]">[{count}]</span>}
             </b>
-            <span className="text-[12.5px] text-[#6B6560] flex-none hidden sm:inline truncate max-w-[140px]">
+            <span
+              className={`text-[12.5px] flex-none hidden sm:inline truncate max-w-[140px] ${
+                p.author_plus ? "font-semibold text-[#B45309]" : "text-[#6B6560]"
+              }`}
+            >
               {p.author_emoji ?? "🦊"} {p.author_name}
+              {p.author_plus && " 🌟"}
             </span>
             <span className="text-[12px] text-[#A19A8C] flex-none w-[64px] text-right">
               {timeAgo(p.created_at)}

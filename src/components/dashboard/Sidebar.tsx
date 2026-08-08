@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 const MAIN_ITEMS = [
   { icon: "🏡", label: "Garden", href: "/dashboard" },
   { icon: "📊", label: "My growth", href: "/profile" },
+  { icon: "🔍", label: "Insights", href: "/stats" },
 ];
 
 const SECTIONS: { title: string; items: { icon: string; label: string; href: string }[] }[] = [
@@ -64,11 +65,14 @@ export default function Sidebar({
   email,
   streakDays,
   avatarUrl,
+  plus = false,
 }: {
   displayName: string;
   email: string;
   streakDays: number;
   avatarUrl?: string | null;
+  /** Active Kroot Plus — shows the streak shield note. */
+  plus?: boolean;
 }) {
   const pathname = usePathname();
 
@@ -101,7 +105,9 @@ export default function Sidebar({
           <span className="text-lg">🔥</span>
           <div>
             <b className="block text-[13.5px] font-semibold leading-tight">{streakDays}-day streak</b>
-            <small className="text-[11.5px] text-[#6B6560]">Keep it alive today!</small>
+            <small className="text-[11.5px] text-[#6B6560]">
+              {plus ? "🛡️ Shielded by Plus" : "Keep it alive today!"}
+            </small>
           </div>
         </div>
         <AccountMenu displayName={displayName} email={email} avatarUrl={avatarUrl} />

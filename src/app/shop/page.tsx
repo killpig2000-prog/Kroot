@@ -79,7 +79,7 @@ export default async function ShopPage() {
               <span className="flex-1 min-w-[170px]">
                 <b className="block font-semibold text-sm text-[#92400E]">Kroot Plus</b>
                 <span className="text-[13px] text-[#A16207]">
-                  Golden outfits, a Plus badge, and early access — while every lesson stays free.
+                  Nine golden outfits, a streak shield, weekend XP boosts — while every lesson stays free.
                 </span>
               </span>
               <span className="text-[13px] font-semibold text-[#D97706] transition-transform group-hover:translate-x-0.5">

@@ -37,7 +37,11 @@ export async function awardProgress(
   skill: keyof typeof XP_POINTS,
 ): Promise<ProgressResult | null> {
   const points = XP_POINTS[skill] ?? 5;
-  const { data, error } = await supabase.rpc("award_xp", { p_points: points });
+  let { data, error } = await supabase.rpc("award_xp", { p_points: points, p_skill: skill });
+  if (error?.code === "PGRST202") {
+    // Migration 0024 not applied yet — the deployed function has no p_skill.
+    ({ data, error } = await supabase.rpc("award_xp", { p_points: points }));
+  }
   if (error) {
     console.error("award_xp failed:", error.message);
     return null;

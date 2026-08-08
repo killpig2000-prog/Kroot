@@ -7,6 +7,8 @@ export type CommunityPost = {
   mine?: boolean;
   author_name: string;
   author_emoji: string | null;
+  /** Set by a DB trigger at insert time — golden name for Plus members. */
+  author_plus?: boolean;
   country: string | null;
   board: BoardKey;
   content: string;
@@ -18,6 +20,7 @@ export type CommunityComment = {
   mine?: boolean;
   author_name: string;
   author_emoji: string | null;
+  author_plus?: boolean;
   content: string;
   created_at: string;
 };

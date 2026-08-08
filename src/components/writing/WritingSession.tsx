@@ -16,6 +16,8 @@ type GradeResult = {
   score: number;
   feedback_en: string;
   corrected_kr: string;
+  /** Plus only: sentence-by-sentence corrections. */
+  corrections?: { original: string; corrected: string; note: string }[];
 };
 
 const CARD = "border border-[#E3DDD0] rounded-[14px] bg-white max-w-[900px]";
@@ -87,12 +89,14 @@ export default function WritingSession({
   level,
   chapterIndex,
   hasNextChapter,
+  plus,
 }: {
   prompt: Prompt;
   userId: string;
   level: CefrLevel;
   chapterIndex: number;
   hasNextChapter: boolean;
+  plus: boolean;
 }) {
   const router = useRouter();
   const supabase = useMemo(() => createClient(), []);
@@ -103,26 +107,18 @@ export default function WritingSession({
   const [navigating, setNavigating] = useState(false);
   const [showHint, setShowHint] = useState(false);
   const [grade, setGrade] = useState<GradeResult | null>(null);
+  const [limitMessage, setLimitMessage] = useState<string | null>(null);
   const [levelUp, setLevelUp] = useState<ProgressResult | null>(null);
   const loggedMinutes = useRef(false);
 
   async function submit() {
     if (response.trim().length < MIN_RESPONSE_LENGTH) return;
     setSubmitting(true);
-
-    await supabase.from("writing_progress").upsert(
-      {
-        user_id: userId,
-        prompt_key: prompt.key,
-        response_text: response.trim(),
-        completed_at: new Date().toISOString(),
-      },
-      { onConflict: "user_id,prompt_key" }
-    );
-
-    setSubmitting(false);
     setPhase("grading");
 
+    // Grade first: a free user who already wrote a different chapter today
+    // gets daily_limit back, and the chapter must NOT be marked complete.
+    let dailyLimited = false;
     try {
       const res = await fetch("/api/writing/grade", {
         method: "POST",
@@ -130,16 +126,42 @@ export default function WritingSession({
         body: JSON.stringify({
           prompt_kr: prompt.prompt_kr,
           prompt_en: prompt.prompt_en,
+          prompt_key: prompt.key,
           response_text: response.trim(),
           level,
         }),
       });
-      if (res.ok) setGrade(await res.json());
+      if (res.ok) {
+        setGrade(await res.json());
+      } else if (res.status === 429) {
+        const body = await res.json().catch(() => null);
+        if (body?.error === "daily_limit") {
+          dailyLimited = true;
+          setLimitMessage(body.message);
+        }
+      }
     } catch {
       // grading is best-effort — fall through to the compare screen without it
     }
+
+    if (dailyLimited) {
+      // Nothing was completed — don't let the nav buttons award minutes/XP.
+      loggedMinutes.current = true;
+    } else {
+      await supabase.from("writing_progress").upsert(
+        {
+          user_id: userId,
+          prompt_key: prompt.key,
+          response_text: response.trim(),
+          completed_at: new Date().toISOString(),
+        },
+        { onConflict: "user_id,prompt_key" }
+      );
+      await logMinutesOnce();
+    }
+
+    setSubmitting(false);
     setPhase("compare");
-    await logMinutesOnce();
   }
 
   async function logMinutesOnce() {
@@ -292,6 +314,17 @@ export default function WritingSession({
         <div className="text-center mb-6">
           <h2 className="font-bold text-[21px] tracking-[-0.02em] mb-1.5">Nice writing!</h2>
           <p className="text-sm text-[#6B6560]">Here&apos;s one natural way to say it.</p>
+          {limitMessage && (
+            <div className="inline-flex items-center gap-2.5 border border-[#FDE68A] bg-[#FFFBEB] rounded-[10px] px-4 py-2.5 mt-3 text-left">
+              <span className="text-base">🌟</span>
+              <span className="text-[12.5px] text-[#92400E]">
+                {limitMessage}{" "}
+                <Link href="/pricing" className="font-semibold underline">
+                  See Kroot Plus →
+                </Link>
+              </span>
+            </div>
+          )}
         </div>
       )}
 
@@ -314,16 +347,50 @@ export default function WritingSession({
             {grade ? grade.corrected_kr : prompt.example_kr}
           </p>
         </div>
+
+        {/* Plus: sentence-by-sentence corrections */}
+        {grade?.corrections && grade.corrections.length > 0 && (
+          <div>
+            <p className={`${LABEL} mb-1.5`}>🌟 Sentence by sentence</p>
+            <div className="border border-[#FDE68A] rounded-[10px] overflow-hidden">
+              {grade.corrections.map((c, i) => (
+                <div
+                  key={i}
+                  className={`px-4 py-3 bg-[#FFFBEB] ${i > 0 ? "border-t border-[#FDE68A]" : ""}`}
+                >
+                  {c.original !== c.corrected && (
+                    <p className="kr text-[14px] text-[#A19A8C] line-through leading-[1.6]">
+                      {c.original}
+                    </p>
+                  )}
+                  <p className="kr text-[15px] font-medium text-[#18181B] leading-[1.6]">
+                    {c.corrected}
+                  </p>
+                  <p className="text-[12.5px] text-[#92400E] mt-1">{c.note}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
       </div>
 
-      <div className="flex justify-end gap-2.5 flex-wrap border-t border-[#E3DDD0] pt-5">
+      <div className="flex items-center justify-end gap-2.5 flex-wrap border-t border-[#E3DDD0] pt-5">
+        {hasNextChapter && !plus && !limitMessage && (
+          <span className="mr-auto text-[12.5px] text-[#6B6560]">
+            🌙 That&apos;s today&apos;s page — the next one opens tomorrow.{" "}
+            <Link href="/pricing" className="font-semibold text-[#D97706] hover:underline">
+              Turn pages freely with Plus →
+            </Link>
+          </span>
+        )}
         <button className={BTN_LINE} onClick={() => goTo("/dashboard")} disabled={navigating}>
           Back to Garden
         </button>
         <button className={BTN_LINE} onClick={() => goTo(`/writing?level=${level}`)} disabled={navigating}>
           {navigating ? "Saving…" : "All pages"}
         </button>
-        {hasNextChapter && (
+        {hasNextChapter && plus && (
           <button
             className={BTN_AMBER}
             onClick={() => goTo(`/writing/session?chapter=${chapterIndex + 1}&level=${level}`)}
