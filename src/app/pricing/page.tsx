@@ -2,7 +2,6 @@ import Link from "next/link";
 import Nav from "@/components/landing/Nav";
 import PlusCheckoutButton from "@/components/pricing/PlusCheckoutButton";
 import ManageSubscriptionButton from "@/components/plus/ManageSubscriptionButton";
-import ManageSubscriptionButton from "@/components/plus/ManageSubscriptionButton";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { PLANS, PLUS_PERKS, isPlus, type PlanKey } from "@/lib/plus";
 
