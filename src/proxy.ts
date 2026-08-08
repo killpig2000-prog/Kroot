@@ -52,7 +52,8 @@ export async function proxy(request: NextRequest) {
     pathname.startsWith("/review") ||
     pathname.startsWith("/course") ||
     pathname.startsWith("/league") ||
-    pathname.startsWith("/level-test");
+    pathname.startsWith("/level-test") ||
+    pathname.startsWith("/admin");
   if (!user && isProtected) {
     const url = request.nextUrl.clone();
     url.pathname = "/auth/login";
