@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { applyModeToDocument, type ModeKey } from "@/lib/mode";
 import { MAIN_ITEMS, SECTIONS } from "@/components/dashboard/navItems";
 
 const ITEMS = [
@@ -38,6 +39,13 @@ export default function BottomNav() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [streakDays, setStreakDays] = useState<number | null>(null);
+  // Mirrors AccountMenu (desktop sidebar): initial value comes off the <html>
+  // attribute the layout rendered from the kroot-mode cookie.
+  const [mode, setMode] = useState<ModeKey>(() =>
+    typeof document !== "undefined" && document.documentElement.getAttribute("data-mode") === "dark"
+      ? "dark"
+      : "light",
+  );
   const supabase = useMemo(() => createClient(), []);
 
   // The streak note is a nice-to-have; fetch it lazily the first time the
@@ -75,6 +83,11 @@ export default function BottomNav() {
   }, [open]);
 
   const close = () => setOpen(false);
+  const toggleMode = () => {
+    const next: ModeKey = mode === "dark" ? "light" : "dark";
+    setMode(next);
+    applyModeToDocument(next);
+  };
   const sheetSections = [{ title: "My page", items: MAIN_ITEMS }, ...SECTIONS];
 
   return (
@@ -113,6 +126,25 @@ export default function BottomNav() {
                 </div>
               </div>
             ))}
+
+            <button
+              onClick={toggleMode}
+              className="w-full flex items-center justify-between rounded-[12px] border border-[#EFE9DC] bg-white px-3.5 py-2.5 mt-4 text-[13px] font-semibold text-[#4A453D]"
+            >
+              <span>{mode === "dark" ? "🌙 Dark mode" : "☀️ Light mode"}</span>
+              <span
+                className={`w-9 h-5 rounded-full relative transition-colors ${
+                  mode === "dark" ? "bg-[#16A34A]" : "bg-[#E3DDD0]"
+                }`}
+                aria-hidden="true"
+              >
+                <span
+                  className={`absolute top-0.5 w-4 h-4 rounded-full bg-white shadow transition-all ${
+                    mode === "dark" ? "left-[18px]" : "left-0.5"
+                  }`}
+                />
+              </span>
+            </button>
 
             {streakDays !== null && (
               <div className="flex items-center gap-2.5 border border-[#ECD98A] bg-[#FEF9C3] px-[13px] py-[10px] mt-4 rotate-[-1deg] shadow-[0_8px_18px_-12px_rgba(120,100,30,.4)]">

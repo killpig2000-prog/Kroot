@@ -506,12 +506,16 @@ button {
    hardcoded per-component, so inverting + rotating hue keeps every accent
    in its own family (greens stay green) while flipping lightness. Photos
    and videos are re-inverted so they stay natural. */
+/* The filter lives on the root element on purpose: a filter on <body> would
+   turn body into the containing block for position:fixed descendants (the
+   mobile bottom nav would stick to the page bottom instead of the viewport).
+   The root element is spec-exempt from that containing-block rule. */
 html[data-mode="dark"] {
-  background: #101211;
+  background: #FDFBF7; /* renders near-black once inverted */
+  filter: invert(0.94) hue-rotate(180deg);
 }
 html[data-mode="dark"] body {
-  filter: invert(0.94) hue-rotate(180deg);
-  background: #0b0d0c;
+  background: #FDFBF7;
 }
 html[data-mode="dark"] img,
 html[data-mode="dark"] video {
