@@ -121,6 +121,9 @@
 
 html {
   scroll-behavior: smooth;
+  /* Stay light even when the browser/OS prefers dark; in-app dark mode is
+     applied separately via html[data-mode="dark"]. */
+  color-scheme: only light;
 }
 
 body {
@@ -365,6 +368,18 @@ button {
   .sway, .sway-slow, .blink {
     animation: none;
   }
+}
+
+/* mobile menu bottom sheet */
+.sheet-up {
+  animation: sheetUp 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+@keyframes sheetUp {
+  from { transform: translateY(24px); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sheet-up { animation: none; }
 }
 
 @keyframes fadeUp {

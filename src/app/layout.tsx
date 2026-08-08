@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Fredoka, Jua, Nunito } from "next/font/google";
 import { cookies } from "next/headers";
 import "./globals.css";
@@ -26,6 +26,12 @@ const nunito = Nunito({
   subsets: ["latin"],
   weight: ["400", "600", "700"],
 });
+
+// The palette is light-only; dark is our own invert filter behind the in-app
+// toggle. "only light" opts out of Chrome Android's forced Auto Dark Theme.
+export const viewport: Viewport = {
+  colorScheme: "only light",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

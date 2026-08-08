@@ -227,7 +227,7 @@ export default async function StatsPage() {
     : null;
 
   return shell(
-    <div className="max-w-[820px] grid gap-3.5">
+    <div className="max-w-[820px] grid grid-cols-1 gap-3.5">
       {/* headline tiles */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {[

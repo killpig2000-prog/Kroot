@@ -3,44 +3,7 @@
 import Link from "next/link";
 import AccountMenu from "@/components/dashboard/AccountMenu";
 import { usePathname } from "next/navigation";
-
-const MAIN_ITEMS = [
-  { icon: "🏡", label: "Garden", href: "/dashboard" },
-  { icon: "📊", label: "My growth", href: "/profile" },
-  { icon: "🔍", label: "Insights", href: "/stats" },
-];
-
-const SECTIONS: { title: string; items: { icon: string; label: string; href: string }[] }[] = [
-  {
-    title: "Basics",
-    items: [
-      { icon: "🧭", label: "16-Day Course", href: "/course" },
-      { icon: "🔤", label: "Hangul", href: "/hangul" },
-      { icon: "📖", label: "Grammar", href: "/grammar" },
-      { icon: "🔊", label: "Pronunciation", href: "/pronunciation" },
-      { icon: "🃏", label: "Vocabulary", href: "/vocabulary" },
-    ],
-  },
-  {
-    title: "Practice",
-    items: [
-      { icon: "🎧", label: "Listening", href: "/listening" },
-      { icon: "🎙️", label: "Speaking", href: "/speaking" },
-      { icon: "✏️", label: "Writing", href: "/writing" },
-      { icon: "📰", label: "Reading", href: "/reading" },
-    ],
-  },
-  {
-    title: "Relax",
-    items: [
-      { icon: "🏆", label: "League", href: "/league" },
-      { icon: "💬", label: "Slang", href: "/slang" },
-      { icon: "🏕️", label: "Community", href: "/community" },
-      { icon: "🛍️", label: "Shop", href: "/shop" },
-      { icon: "🌟", label: "Kroot Plus", href: "/pricing" },
-    ],
-  },
-];
+import { MAIN_ITEMS, SECTIONS } from "@/components/dashboard/navItems";
 
 function NavItem({ icon, label, href, on }: { icon: string; label: string; href: string; on: boolean }) {
   // Active item reads like a notebook index tab: white paper, dashed edge,

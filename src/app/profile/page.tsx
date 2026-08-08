@@ -179,7 +179,9 @@ export default async function ProfilePage() {
             </h1>
           </div>
 
-          <div className="max-w-[820px] grid gap-3.5">
+          {/* grid-cols-1 pins the track to minmax(0,1fr); a bare auto track
+              grows to the widest card's max-content and overflows on mobile */}
+          <div className="max-w-[820px] grid grid-cols-1 gap-3.5">
             {/* identity card */}
             <div className="border border-[#E3DDD0] rounded-[14px] px-[22px] py-5 flex items-center gap-4 flex-wrap">
               <AvatarUploader userId={user.id} avatarUrl={profile?.avatar_url ?? null} />
