@@ -4,6 +4,7 @@ import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import WeeklyChart, { type DayMinutes } from "@/components/profile/WeeklyChart";
 import AvatarUploader from "@/components/profile/AvatarUploader";
+import ManageSubscriptionButton from "@/components/plus/ManageSubscriptionButton";
 import NameEditor from "@/components/profile/NameEditor";
 import Wardrobe from "@/components/profile/Wardrobe";
 import RankCard from "@/components/profile/RankCard";
@@ -229,6 +230,14 @@ export default async function ProfilePage() {
                   Open →
                 </span>
               </Link>
+            ) : null}
+            {isPlus(profile?.plus_until) ? (
+              <div className="flex items-center justify-end gap-3 -mt-2">
+                <span className="text-[12px] text-[#A19A8C]">
+                  🌟 Kroot Plus active — cancel or switch plans anytime.
+                </span>
+                <ManageSubscriptionButton />
+              </div>
             ) : (
               <div className="border border-[#FDE68A] bg-[#FFFBEB] rounded-[14px] px-[22px] py-4 flex items-center gap-4 flex-wrap">
                 <div className="flex-1 min-w-[220px]">
