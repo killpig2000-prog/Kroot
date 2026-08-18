@@ -56,6 +56,9 @@ export default function LoginPage() {
       provider: "google",
       options: {
         redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}`,
+        // Always show Google's account chooser instead of silently reusing
+        // the last session — many learners share devices or test accounts.
+        queryParams: { prompt: "select_account" },
       },
     });
     if (error) setError(error.message);

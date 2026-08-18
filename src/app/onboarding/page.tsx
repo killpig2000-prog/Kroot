@@ -105,7 +105,12 @@ export default function OnboardingPage() {
     setSignupError(null);
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
-      options: { redirectTo: `${window.location.origin}/auth/callback?next=/onboarding` },
+      options: {
+        redirectTo: `${window.location.origin}/auth/callback?next=/onboarding`,
+        // Always show Google's account chooser instead of silently reusing
+        // the last session — many learners share devices or test accounts.
+        queryParams: { prompt: "select_account" },
+      },
     });
     if (error) setSignupError(error.message);
   }
