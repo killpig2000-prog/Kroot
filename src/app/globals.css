@@ -110,9 +110,9 @@
   --color-blue: var(--blue);
   --color-ink: var(--ink);
   --color-soft: var(--soft);
-  --font-hand: var(--font-fredoka), var(--font-jua), sans-serif;
-  --font-kr: var(--font-jua), sans-serif;
-  --font-body: var(--font-nunito), "Noto Sans KR", sans-serif;
+  --font-hand: var(--font-fredoka), var(--font-noto-kr), sans-serif;
+  --font-kr: var(--font-noto-kr), sans-serif;
+  --font-body: var(--font-nunito), var(--font-noto-kr), sans-serif;
 }
 
 * {

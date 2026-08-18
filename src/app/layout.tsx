@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Fredoka, Jua, Nunito } from "next/font/google";
+import { Fredoka, Noto_Sans_KR, Nunito } from "next/font/google";
 import { cookies } from "next/headers";
 import "./globals.css";
 import { DEFAULT_MODE, MODE_COOKIE, isModeKey } from "@/lib/mode";
@@ -15,10 +15,12 @@ const fredoka = Fredoka({
   weight: ["400", "500", "600"],
 });
 
-const jua = Jua({
-  variable: "--font-jua",
+// Learning content must stay legible to absolute beginners, so all Korean
+// renders in a textbook-shape sans (Noto Sans KR) rather than a display font.
+const notoSansKr = Noto_Sans_KR({
+  variable: "--font-noto-kr",
   subsets: ["latin"],
-  weight: "400",
+  weight: ["400", "500", "700"],
 });
 
 const nunito = Nunito({
@@ -74,7 +76,7 @@ export default async function RootLayout({
       lang="en"
       data-mode={mode}
       {...(seasonEnabled ? { "data-season": season } : {})}
-      className={`${fredoka.variable} ${jua.variable} ${nunito.variable}`}
+      className={`${fredoka.variable} ${notoSansKr.variable} ${nunito.variable}`}
     >
       <body>
         {children}

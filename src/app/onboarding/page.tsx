@@ -130,7 +130,13 @@ export default function OnboardingPage() {
     setSubmitting(false);
 
     if (error) {
-      setSignupError(error.message);
+      // Supabase's built-in mailer allows only a couple of emails per hour;
+      // surface that as something a learner can act on.
+      setSignupError(
+        /rate limit/i.test(error.message)
+          ? "We’ve sent too many emails just now — please wait a few minutes and try again, or continue with Google instead."
+          : error.message
+      );
       return;
     }
 
@@ -479,6 +485,12 @@ export default function OnboardingPage() {
                         {opt}
                       </button>
                     ))}
+                    <button
+                      onClick={() => answer(-1)}
+                      className="text-left px-[14px] py-[11px] rounded-[9px] text-[13.5px] font-medium bg-[#FAF7EF] border border-dashed border-[#CFC8B8] text-[#6B6560] transition-colors hover:border-[#A19A8C] hover:text-[#18181B]"
+                    >
+                      🤷 I don&apos;t know yet
+                    </button>
                   </div>
                 </div>
 
