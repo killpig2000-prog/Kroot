@@ -1,8 +1,8 @@
 "use client";
 
-// Single Korean TTS path for the whole app. Web Speech quality varies wildly
-// by voice — the OS default is often a robotic non-native voice, so we rank
-// the installed ko-KR voices and always speak with the best one available.
+// Single Korean TTS path for the whole app. Primary voice is neural audio
+// from /api/tts (Gemini, cached in Supabase Storage); any failure — signed
+// out, offline, rate-limited — falls back to the browser's Web Speech API.
 
 let voice: SpeechSynthesisVoice | null = null;
 let voicesReady = false;
@@ -60,12 +60,52 @@ export type SpeakOptions = {
   onerror?: () => void;
 };
 
-export function speakKorean(text: string, opts: SpeakOptions = {}): boolean {
-  if (typeof window === "undefined" || !("speechSynthesis" in window)) return false;
+// Bumped on every speak/stop so a slow fetch can't play over newer audio.
+let generation = 0;
+let currentAudio: HTMLAudioElement | null = null;
+const urlCache = new Map<string, string>();
+const pending = new Map<string, Promise<string | null>>();
+
+async function fetchAudioUrl(text: string, apiVoice: "f" | "m"): Promise<string | null> {
+  const key = `${apiVoice}|${text}`;
+  const hit = urlCache.get(key);
+  if (hit) return hit;
+  const inflight = pending.get(key);
+  if (inflight) return inflight;
+
+  const p = (async () => {
+    try {
+      const res = await fetch("/api/tts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text, voice: apiVoice }),
+        signal: AbortSignal.timeout(12_000),
+      });
+      if (!res.ok) return null;
+      const url = (res.headers.get("content-type") ?? "").includes("json")
+        ? ((await res.json()).url as string | undefined)
+        : URL.createObjectURL(await res.blob());
+      if (!url) return null;
+      urlCache.set(key, url);
+      return url;
+    } catch {
+      return null;
+    } finally {
+      pending.delete(key);
+    }
+  })();
+  pending.set(key, p);
+  return p;
+}
+
+function speakWithBrowser(text: string, opts: SpeakOptions) {
+  if (!("speechSynthesis" in window)) {
+    opts.onerror?.();
+    return;
+  }
   ensureVoice();
   window.speechSynthesis.cancel();
-  const clean = sanitizeKorean(text);
-  const u = new SpeechSynthesisUtterance(JAMO_SOUND[clean] ?? clean);
+  const u = new SpeechSynthesisUtterance(text);
   u.lang = "ko-KR";
   if (voice) u.voice = voice;
   u.rate = opts.rate ?? 0.85;
@@ -73,11 +113,49 @@ export function speakKorean(text: string, opts: SpeakOptions = {}): boolean {
   if (opts.onend) u.onend = opts.onend;
   if (opts.onerror) u.onerror = opts.onerror;
   window.speechSynthesis.speak(u);
+}
+
+export function speakKorean(text: string, opts: SpeakOptions = {}): boolean {
+  if (typeof window === "undefined") return false;
+  const clean = sanitizeKorean(text);
+  const spoken = JAMO_SOUND[clean] ?? clean;
+
+  const gen = ++generation;
+  currentAudio?.pause();
+  currentAudio = null;
+  if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+
+  // The pitch knob only ever distinguishes dialogue speakers — map the low
+  // one to the male neural voice.
+  const apiVoice = (opts.pitch ?? 1) < 0.9 ? "m" : "f";
+
+  void (async () => {
+    const url = await fetchAudioUrl(spoken, apiVoice);
+    if (gen !== generation) return; // a newer speak/stop superseded this one
+    if (!url) {
+      speakWithBrowser(spoken, opts);
+      return;
+    }
+    const audio = new Audio(url);
+    // Neural audio is already natural-paced; only honor explicit slowdowns.
+    audio.playbackRate = opts.rate ?? 1;
+    audio.onended = () => opts.onend?.();
+    audio.onerror = () => {
+      if (gen === generation) speakWithBrowser(spoken, opts);
+    };
+    currentAudio = audio;
+    audio.play().catch(() => {
+      if (gen === generation) speakWithBrowser(spoken, opts);
+    });
+  })();
+
   return true;
 }
 
 export function stopSpeaking() {
-  if (typeof window !== "undefined" && "speechSynthesis" in window) {
-    window.speechSynthesis.cancel();
-  }
+  if (typeof window === "undefined") return;
+  generation++;
+  currentAudio?.pause();
+  currentAudio = null;
+  if ("speechSynthesis" in window) window.speechSynthesis.cancel();
 }

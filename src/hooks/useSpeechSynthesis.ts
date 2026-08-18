@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useBrowserSupport } from "@/hooks/useBrowserSupport";
 import type { DialogueLine } from "@/lib/listening-dialogues";
-import { speakKorean } from "@/lib/tts";
+import { speakKorean, stopSpeaking } from "@/lib/tts";
 
 // Speaks dialogue lines in order using the browser's Web Speech API. Distinct
 // speakers get a different pitch so two-person dialogues are easier to follow.
@@ -21,7 +21,7 @@ export function useSpeechSynthesis(lines: DialogueLine[], rate = 0.9) {
 
   useEffect(() => {
     return () => {
-      if (typeof window !== "undefined") window.speechSynthesis.cancel();
+      if (typeof window !== "undefined") stopSpeaking();
     };
   }, []);
 
@@ -37,7 +37,7 @@ export function useSpeechSynthesis(lines: DialogueLine[], rate = 0.9) {
   const speakFrom = useCallback(
     (start: number, { trackCompletion = false }: { trackCompletion?: boolean } = {}) => {
       if (!isSupported) return;
-      window.speechSynthesis.cancel();
+      stopSpeaking();
 
       const speakNext = (i: number) => {
         if (i >= lines.length) {
@@ -71,7 +71,7 @@ export function useSpeechSynthesis(lines: DialogueLine[], rate = 0.9) {
 
   const stop = useCallback(() => {
     if (!isSupported) return;
-    window.speechSynthesis.cancel();
+    stopSpeaking();
     indexRef.current = -1;
     setCurrentIndex(-1);
     setIsPlaying(false);

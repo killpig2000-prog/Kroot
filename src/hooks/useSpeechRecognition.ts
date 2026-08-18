@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useBrowserSupport } from "@/hooks/useBrowserSupport";
-import { speakKorean } from "@/lib/tts";
+import { speakKorean, stopSpeaking } from "@/lib/tts";
 
 // SpeechRecognition isn't in lib.dom, so the bits we use are declared here.
 type SpeechRecognitionResultLike = { 0: { transcript: string }; isFinal: boolean };
@@ -112,7 +112,7 @@ export function useKoreanSpeaker() {
 
   useEffect(() => {
     return () => {
-      if (typeof window !== "undefined") window.speechSynthesis.cancel();
+      if (typeof window !== "undefined") stopSpeaking();
     };
   }, []);
 
