@@ -73,8 +73,10 @@ export const COURSE_DAYS: CourseDay[] = [
         title: "Say the vowels (ㅇ is a silent placeholder)",
         items: [
           { kr: "아", en: "a — like 'father'" },
+          { kr: "어", en: "eo — like 'u' in 'up'" },
           { kr: "오", en: "o — like 'go'" },
           { kr: "우", en: "u — like 'moon'" },
+          { kr: "으", en: "eu — a relaxed 'uh' with teeth almost closed" },
           { kr: "이", en: "i — like 'see'" },
         ],
       },
@@ -95,10 +97,10 @@ export const COURSE_DAYS: CourseDay[] = [
       {
         type: "concept",
         title: "Picture the shapes",
-        body: "Each letter looks like something. ㄱ is a corner (g/k). ㄴ is a foot pointing forward (n). ㅁ is a door frame (m). ㄷ is an open box (d). ㄹ is a winding road (r/l).",
+        body: "Each letter's SHAPE is a memory hook (the letter doesn't mean the thing — it just looks like it). ㄱ is a corner (g/k). ㄴ is a foot pointing forward (n). ㄷ is an open box (d). ㄹ is a winding road (r/l). ㅁ is a square door frame (m).",
         examples: [
-          { kr: "ㅁ = door → 문", en: "mun means door — really!" },
-          { kr: "ㄴ = foot → 나", en: "na means me" },
+          { kr: "문", en: "mun — door. Starts with the m-sound ㅁ, and the letter even looks like a door frame!" },
+          { kr: "나", en: "na — me. Starts with the n-sound ㄴ." },
         ],
       },
       {
@@ -198,7 +200,7 @@ export const COURSE_DAYS: CourseDay[] = [
     day: 5,
     key: "course-day-5",
     title: "Strong sounds — 달/탈/딸",
-    titleKr: "격음·경음 ㅋㅌㅍㅊ / ㄲㄸㅆ",
+    titleKr: "격음·경음 ㅋㅌㅍㅊ / ㄲㄸㅃㅆㅉ",
     minutes: 10,
     phases: [
       {
@@ -209,7 +211,7 @@ export const COURSE_DAYS: CourseDay[] = [
       {
         type: "concept",
         title: "Plain, breathy, tense",
-        body: "Add a line to a consonant → a puff of air: ㄱ→ㅋ, ㄷ→ㅌ, ㅂ→ㅍ, ㅈ→ㅊ. Double it → a tense, tight sound: ㄲ, ㄸ, ㅆ. Hold your palm in front of your mouth: 카 puffs air, 까 doesn't.",
+        body: "Add a line to a consonant → a puff of air: ㄱ→ㅋ, ㄷ→ㅌ, ㅂ→ㅍ, ㅈ→ㅊ. Double it → a tense, tight sound: ㄲ, ㄸ, ㅃ, ㅆ, ㅉ. Hold your palm in front of your mouth: 카 puffs air, 까 doesn't.",
         examples: [
           { kr: "달 / 탈 / 딸", en: "moon / mask / daughter" },
           { kr: "불 / 풀 / 뿔", en: "fire / grass / horn" },
@@ -247,10 +249,10 @@ export const COURSE_DAYS: CourseDay[] = [
       {
         type: "concept",
         title: "The bottom floor",
-        body: "밥 = ㅂ + ㅏ + ㅂ. The bottom ㅂ closes the syllable: 'bap'. At the bottom, ㅇ is no longer silent — it's the 'ng' in 'song': 강 = kang.",
+        body: "밥 = ㅂ + ㅏ + ㅂ. The bottom ㅂ closes the syllable: 'bap'. At the bottom, ㅇ is no longer silent — it's the 'ng' in 'song': 강 = gang.",
         examples: [
           { kr: "밥 = ba + p", en: "bap — rice, a meal" },
-          { kr: "강 = ka + ng", en: "kang — river" },
+          { kr: "강 = ga + ng", en: "gang — river" },
         ],
       },
       {
@@ -261,7 +263,7 @@ export const COURSE_DAYS: CourseDay[] = [
           { kr: "물", en: "mul — water" },
           { kr: "집", en: "jip — house" },
           { kr: "산", en: "san — mountain" },
-          { kr: "강", en: "kang — river" },
+          { kr: "강", en: "gang — river" },
         ],
       },
     ],
@@ -382,7 +384,7 @@ export const COURSE_DAYS: CourseDay[] = [
       {
         type: "concept",
         title: "Learn verbs as ready-to-use chunks",
-        body: "Dictionary form ends in -다 (먹다 to eat), but people speak in the -요 form: 먹어요. Just learn the -요 form whole. For 'can': verb + -(으)ㄹ 수 있어요. For 'must': verb + -야 해요.",
+        body: "Dictionary form ends in -다 (먹다 to eat), but people speak in the -요 form: 먹어요. Just learn the -요 form whole. For 'can': verb + -(으)ㄹ 수 있어요. For 'must': verb + -아/어야 해요 (가야 해요, 먹어야 해요).",
         examples: [
           { kr: "저는 밥을 먹어요.", en: "I eat (rice)." },
           { kr: "저는 학교에 가요.", en: "I go to school." },
@@ -624,7 +626,7 @@ export const DAY_QUIZZES: Record<number, QuizQuestion[]> = {
     q("물 (ㅁ+ㅜ+ㄹ) is how many syllable blocks?", ["1", "2", "3"], "1"),
   ],
   2: [
-    q("Which letter is the 'm' sound (the door)?", ["ㄱ", "ㅁ", "ㄴ"], "ㅁ"),
+    q("Which letter is the 'm' sound (shaped like a door frame)?", ["ㄱ", "ㅁ", "ㄴ"], "ㅁ"),
     q("나무 means…", ["tree", "head", "water"], "tree"),
     q("Read this: 너", ["na", "neo", "no"], "neo"),
     q("ㄱ sounds like…", ["g/k", "m", "n"], "g/k"),
@@ -677,7 +679,7 @@ export const DAY_QUIZZES: Record<number, QuizQuestion[]> = {
     q("물 means…", ["rice", "house", "water"], "water"),
     q("집 means…", ["house", "rice", "mountain"], "house"),
     q("A batchim sits at the … of the block", ["bottom", "top", "right"], "bottom"),
-    q("Read this: 강", ["kang", "kan", "kam"], "kang"),
+    q("Read this: 강", ["gang", "gan", "gam"], "gang"),
     q("밥 means…", ["rice", "water", "river"], "rice"),
     q("산 ends with which sound?", ["n", "m", "p"], "n"),
     q("Read this: 물", ["mul", "mun", "mu"], "mul"),
