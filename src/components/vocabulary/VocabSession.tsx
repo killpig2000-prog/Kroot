@@ -7,6 +7,7 @@ import { createClient } from "@/lib/supabase/client";
 import { recordCompletion, type ProgressResult } from "@/lib/activity";
 import { nextBox, nextReviewAt } from "@/lib/srs";
 import { prefetchKorean, speakKorean } from "@/lib/tts";
+import WORD_NOTES from "@/lib/vocabulary-data/word-notes.json";
 import {
   MINUTES_PER_SESSION,
   VOCAB_ROOTS,
@@ -42,6 +43,61 @@ const BTN_INK =
 const BTN_LINE =
   "rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-[#18181B] bg-white border border-[#E3DDD0] hover:bg-[#FAF7EF] transition-colors disabled:opacity-60";
 const CARD = "max-w-[560px] border border-[#E3DDD0] rounded-[14px] p-[clamp(20px,3vw,28px)]";
+
+// A generated word note is either a hanja breakdown like
+// "시(試 to test) + 험(驗 to examine)" or a loanword origin like
+// "from English \"coffee\"" — parse it back into structure for the memo note.
+type Morpheme = { syllable: string; hanja: string; gloss: string };
+function parseMorphemeNote(
+  note: string
+): { parts: Morpheme[]; origin?: never } | { origin: string; parts?: never } | null {
+  if (note.startsWith("from ")) return { origin: note.slice(5) };
+  const parts = Array.from(note.matchAll(/([가-힣]+)\(([^\s)]+) ([^)]+)\)/g)).map((m) => ({
+    syllable: m[1],
+    hanja: m[2],
+    gloss: m[3],
+  }));
+  return parts.length >= 2 ? { parts } : null;
+}
+
+// Sticky-note memo showing the word's building blocks (시 = 試 "to test" …).
+function MorphemeNote({
+  data,
+  className = "",
+}: {
+  data: NonNullable<ReturnType<typeof parseMorphemeNote>>;
+  className?: string;
+}) {
+  return (
+    <div className={className}>
+      <div className="relative bg-[#FFF9DB] border border-[#EDE3B4] rounded-[6px] px-4 pt-4 pb-3 text-left shadow-[0_5px_12px_rgba(0,0,0,0.07)]">
+        {/* washi-tape strip */}
+        <span
+          aria-hidden="true"
+          className="absolute -top-2.5 left-1/2 -translate-x-1/2 w-[58px] h-[15px] bg-[#D8F0DD] opacity-90 rounded-[2px] rotate-[-3deg]"
+        />
+        <p className="text-[10.5px] font-bold tracking-[0.08em] uppercase text-[#A08F4E] mb-2">
+          {data.parts ? "Word parts" : "Word origin"}
+        </p>
+        {data.parts ? (
+          <div className="flex flex-col gap-1.5">
+            {data.parts.map((p) => (
+              <div key={p.syllable + p.hanja} className="flex items-baseline gap-2">
+                <span className="kr text-[17px] font-bold text-[#18181B] leading-none">
+                  {p.syllable}
+                </span>
+                <span className="kr text-[13px] text-[#A08F4E]">{p.hanja}</span>
+                <span className="text-[12px] text-[#6B6560] leading-[1.4]">{p.gloss}</span>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="text-[12.5px] text-[#6B6560] leading-[1.5]">from {data.origin}</p>
+        )}
+      </div>
+    </div>
+  );
+}
 
 export default function VocabSession({
   words,
@@ -414,6 +470,10 @@ export default function VocabSession({
   const wordCounts = counts[word.key] ?? { correct: 0, incorrect: 0 };
   const stage = STAGE_META[stageFor(wordCounts.correct + wordCounts.incorrect)];
   const root = word.root ? VOCAB_ROOTS[word.root] : undefined;
+  // Generated morpheme memo — hanja breakdown for Sino-Korean words,
+  // origin for loanwords ("" for native/uncertain words).
+  const morphemeNote = (WORD_NOTES as Record<string, string>)[word.korean] || null;
+  const morpheme = morphemeNote ? parseMorphemeNote(morphemeNote) : null;
 
   return (
     <div className="max-w-[640px]">
@@ -436,6 +496,13 @@ export default function VocabSession({
 
       {/* word card */}
       <div className="relative border border-[#E3DDD0] rounded-[16px] p-[clamp(24px,4vw,34px)] text-center">
+        {/* desktop: sticky-note memo in the empty space to the right */}
+        {flipped && morpheme && (
+          <MorphemeNote
+            data={morpheme}
+            className="hidden xl:block absolute left-full top-8 ml-7 w-[220px] rotate-[1.5deg]"
+          />
+        )}
         <span
           className={`absolute top-5 right-5 inline-flex items-center gap-1.5 text-xs font-semibold rounded-full px-3 py-[5px] ${stage.cls}`}
         >
@@ -466,6 +533,12 @@ export default function VocabSession({
             >
               {word.meaning_en}
             </p>
+            {morpheme && (
+              <MorphemeNote
+                data={morpheme}
+                className="xl:hidden -mt-1 mb-5 mx-auto w-[min(260px,100%)] rotate-[-1deg]"
+              />
+            )}
             <div
               className="bg-[#FAF7EF] border border-[#E3DDD0] rounded-[10px] px-4 py-3.5 mb-[22px] text-left"
               style={{ animation: "fadeUp .3s ease" }}
