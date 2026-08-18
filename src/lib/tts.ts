@@ -69,17 +69,17 @@ const pending = new Map<string, Promise<string | null>>();
 // Must mirror the constants in /api/tts — the client rebuilds the same cache
 // filename so already-synthesized phrases play straight from storage without
 // a function invocation.
-const GEMINI_MODEL = "gemini-3.1-flash-tts-preview";
+const ENGINE = "edge-tts";
 
 async function cachedPublicUrl(text: string, apiVoice: "f" | "m"): Promise<string | null> {
   const base = process.env.NEXT_PUBLIC_SUPABASE_URL;
   if (!base || !crypto?.subtle) return null;
-  const bytes = new TextEncoder().encode(`${GEMINI_MODEL}|${apiVoice}|${text}`);
+  const bytes = new TextEncoder().encode(`${ENGINE}|${apiVoice}|${text}`);
   const digest = await crypto.subtle.digest("SHA-256", bytes);
   const hash = Array.from(new Uint8Array(digest))
     .map((b) => b.toString(16).padStart(2, "0"))
     .join("");
-  const url = `${base}/storage/v1/object/public/tts/${hash}.wav`;
+  const url = `${base}/storage/v1/object/public/tts/${hash}.mp3`;
   const res = await fetch(url, { method: "HEAD" }).catch(() => null);
   return res?.ok ? url : null;
 }

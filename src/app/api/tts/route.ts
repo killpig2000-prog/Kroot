@@ -1,20 +1,22 @@
 import { createHash } from "crypto";
 import { NextResponse, after } from "next/server";
+import { MsEdgeTTS, OUTPUT_FORMAT } from "msedge-tts";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 
-// Natural Korean TTS via Gemini, cached forever in the public `tts` storage
-// bucket (content-hash filenames), so each phrase costs one API call total
-// across all learners. The client falls back to Web Speech on any failure.
+// Natural Korean TTS via Edge neural voices (free, no quota), cached forever
+// in the public `tts` storage bucket under content-hash filenames. The client
+// falls back to Web Speech on any failure. The whole content library is also
+// pre-generated into the bucket, so this route mostly serves cache misses for
+// brand-new content.
 
-const GEMINI_MODEL = "gemini-3.1-flash-tts-preview";
-
-// Kore is the clear female default; Charon is the lower male counterpart used
-// to tell dialogue speakers apart.
-const VOICES = { f: "Kore", m: "Charon" } as const;
+// Must mirror the constants in src/lib/tts.ts — the client rebuilds the same
+// cache filename to play straight from storage.
+const ENGINE = "edge-tts";
+const VOICES = { f: "ko-KR-SunHiNeural", m: "ko-KR-InJoonNeural" } as const;
 type VoiceKey = keyof typeof VOICES;
 
 const MAX_CHARS = 300;
-const RATE_LIMIT = 30;
+const RATE_LIMIT = 60;
 const RATE_WINDOW_MS = 60_000;
 const recentRequests = new Map<string, number[]>();
 
@@ -27,29 +29,22 @@ function isRateLimited(userId: string) {
   return false;
 }
 
-// Gemini returns raw PCM (s16le mono); browsers need a WAV header around it.
-function wavFromPcm(pcm: Buffer, sampleRate: number): Buffer {
-  const header = Buffer.alloc(44);
-  header.write("RIFF", 0);
-  header.writeUInt32LE(36 + pcm.length, 4);
-  header.write("WAVE", 8);
-  header.write("fmt ", 12);
-  header.writeUInt32LE(16, 16);
-  header.writeUInt16LE(1, 20); // PCM
-  header.writeUInt16LE(1, 22); // mono
-  header.writeUInt32LE(sampleRate, 24);
-  header.writeUInt32LE(sampleRate * 2, 28); // byte rate
-  header.writeUInt16LE(2, 32); // block align
-  header.writeUInt16LE(16, 34); // bits per sample
-  header.write("data", 36);
-  header.writeUInt32LE(pcm.length, 40);
-  return Buffer.concat([header, pcm]);
+async function synthesize(text: string, voice: VoiceKey): Promise<Buffer | null> {
+  try {
+    const tts = new MsEdgeTTS();
+    await tts.setMetadata(VOICES[voice], OUTPUT_FORMAT.AUDIO_24KHZ_48KBITRATE_MONO_MP3);
+    const { audioStream } = tts.toStream(text);
+    const chunks: Buffer[] = [];
+    for await (const chunk of audioStream) chunks.push(chunk as Buffer);
+    const audio = Buffer.concat(chunks);
+    return audio.length > 0 ? audio : null;
+  } catch (e) {
+    console.error("edge tts failed:", e instanceof Error ? e.message : e);
+    return null;
+  }
 }
 
 export async function POST(request: Request) {
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey) return NextResponse.json({ error: "tts_unconfigured" }, { status: 503 });
-
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
   if (!user) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
@@ -68,45 +63,23 @@ export async function POST(request: Request) {
   }
   const voice: VoiceKey = body.voice === "m" ? "m" : "f";
 
-  const hash = createHash("sha256").update(`${GEMINI_MODEL}|${voice}|${text}`).digest("hex");
-  const objectPath = `${hash}.wav`;
+  const hash = createHash("sha256").update(`${ENGINE}|${voice}|${text}`).digest("hex");
+  const objectPath = `${hash}.mp3`;
   const publicUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/tts/${objectPath}`;
 
   const cached = await fetch(publicUrl, { method: "HEAD" }).catch(() => null);
   if (cached?.ok) return NextResponse.json({ url: publicUrl });
 
-  const geminiRes = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${apiKey}`,
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        contents: [{ parts: [{ text }] }],
-        generationConfig: {
-          responseModalities: ["AUDIO"],
-          speechConfig: {
-            voiceConfig: { prebuiltVoiceConfig: { voiceName: VOICES[voice] } },
-          },
-        },
-      }),
-    }
-  ).catch(() => null);
-  if (!geminiRes?.ok) return NextResponse.json({ error: "tts_failed" }, { status: 502 });
-
-  const data = await geminiRes.json();
-  const inline = data?.candidates?.[0]?.content?.parts?.[0]?.inlineData;
-  if (!inline?.data) return NextResponse.json({ error: "tts_failed" }, { status: 502 });
-
-  const sampleRate = Number(/rate=(\d+)/.exec(inline.mimeType ?? "")?.[1] ?? 24000);
-  const wav = wavFromPcm(Buffer.from(inline.data, "base64"), sampleRate);
+  const audio = await synthesize(text, voice);
+  if (!audio) return NextResponse.json({ error: "tts_failed" }, { status: 502 });
 
   // Stream the audio back immediately; the cache write can happen after the
   // response — the next listener gets the public URL either way.
   after(async () => {
     const { error } = await supabase.storage
       .from("tts")
-      .upload(objectPath, wav, { contentType: "audio/wav", upsert: true });
+      .upload(objectPath, audio, { contentType: "audio/mpeg", upsert: true });
     if (error) console.error("tts cache write failed:", error.message);
   });
-  return new NextResponse(new Uint8Array(wav), { headers: { "Content-Type": "audio/wav" } });
+  return new NextResponse(new Uint8Array(audio), { headers: { "Content-Type": "audio/mpeg" } });
 }
