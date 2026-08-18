@@ -43,3 +43,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local TTS pregen credentials
+scripts/.pregen-auth
+pregen-failed.txt
