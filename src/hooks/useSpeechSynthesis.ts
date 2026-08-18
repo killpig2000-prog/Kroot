@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useBrowserSupport } from "@/hooks/useBrowserSupport";
 import type { DialogueLine } from "@/lib/listening-dialogues";
-import { speakKorean, stopSpeaking } from "@/lib/tts";
+import { prefetchKorean, speakKorean, stopSpeaking } from "@/lib/tts";
 
 // Speaks dialogue lines in order using the browser's Web Speech API. Distinct
 // speakers get a different pitch so two-person dialogues are easier to follow.
@@ -24,6 +24,14 @@ export function useSpeechSynthesis(lines: DialogueLine[], rate = 0.9) {
       if (typeof window !== "undefined") stopSpeaking();
     };
   }, []);
+
+  // Warm every line's audio (per-speaker voice) so playback has no gaps.
+  useEffect(() => {
+    const speakers = Array.from(new Set(lines.map((l) => l.speaker)));
+    for (const line of lines) {
+      prefetchKorean([line.kr], speakers.indexOf(line.speaker) % 2 === 0 ? "f" : "m");
+    }
+  }, [lines]);
 
   const speakerPitch = useCallback(
     (speaker: string) => {

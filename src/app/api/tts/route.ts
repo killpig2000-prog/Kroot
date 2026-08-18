@@ -1,5 +1,5 @@
 import { createHash } from "crypto";
-import { NextResponse } from "next/server";
+import { NextResponse, after } from "next/server";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 
 // Natural Korean TTS via Gemini, cached forever in the public `tts` storage
@@ -100,14 +100,13 @@ export async function POST(request: Request) {
   const sampleRate = Number(/rate=(\d+)/.exec(inline.mimeType ?? "")?.[1] ?? 24000);
   const wav = wavFromPcm(Buffer.from(inline.data, "base64"), sampleRate);
 
-  const { error: uploadError } = await supabase.storage
-    .from("tts")
-    .upload(objectPath, wav, { contentType: "audio/wav", upsert: true });
-
-  // Cache write failing (bucket missing, quota) shouldn't cost the learner
-  // their audio — stream the bytes straight back instead.
-  if (uploadError) {
-    return new NextResponse(new Uint8Array(wav), { headers: { "Content-Type": "audio/wav" } });
-  }
-  return NextResponse.json({ url: publicUrl });
+  // Stream the audio back immediately; the cache write can happen after the
+  // response — the next listener gets the public URL either way.
+  after(async () => {
+    const { error } = await supabase.storage
+      .from("tts")
+      .upload(objectPath, wav, { contentType: "audio/wav", upsert: true });
+    if (error) console.error("tts cache write failed:", error.message);
+  });
+  return new NextResponse(new Uint8Array(wav), { headers: { "Content-Type": "audio/wav" } });
 }

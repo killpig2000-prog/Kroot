@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { recordCompletion, type ProgressResult } from "@/lib/activity";
 import { nextBox, nextReviewAt } from "@/lib/srs";
-import { speakKorean } from "@/lib/tts";
+import { prefetchKorean, speakKorean } from "@/lib/tts";
 import {
   MINUTES_PER_SESSION,
   VOCAB_ROOTS,
@@ -125,6 +125,13 @@ export default function VocabSession({
   const loggedMinutes = useRef(false);
 
   const word = words[index];
+
+  // Warm the next few cards' audio so the speaker button plays instantly.
+  useEffect(() => {
+    prefetchKorean(
+      words.slice(index, index + 3).flatMap((w) => [w.korean, w.example_kr].filter(Boolean))
+    );
+  }, [index, words]);
 
   async function saveProgress(wordKey: string, gotIt: boolean) {
     const prev = counts[wordKey] ?? { correct: 0, incorrect: 0 };
