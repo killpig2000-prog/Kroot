@@ -129,7 +129,12 @@ export default function OnboardingPage() {
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
-      options: { data: { display_name: name, native_language: nativeLanguage } },
+      options: {
+        data: { display_name: name, native_language: nativeLanguage },
+        // The confirmation link must land back here, not on the dashboard —
+        // a confirmed learner still needs to pick a starting level.
+        emailRedirectTo: `${window.location.origin}/auth/callback?next=/onboarding`,
+      },
     });
 
     setSubmitting(false);

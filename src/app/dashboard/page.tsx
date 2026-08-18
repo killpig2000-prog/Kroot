@@ -112,6 +112,7 @@ export default async function DashboardPage() {
     dueRes,
     { data: activity },
     { data: courseRows },
+    levelTestRes,
   ] = await Promise.all([
     supabase
       .from("profiles")
@@ -147,7 +148,16 @@ export default async function DashboardPage() {
       .eq("user_id", user.id)
       .gte("activity_date", rangeStart),
     supabase.from("path_progress").select("step_key").eq("user_id", user.id),
+    supabase
+      .from("level_test_results")
+      .select("id", { count: "exact", head: true })
+      .eq("user_id", user.id),
   ]);
+
+  // Confirmed-email signups land here without ever picking a starting level
+  // (the confirmation link used to skip onboarding). Send them back; a query
+  // error must not lock anyone out of the dashboard.
+  if (!levelTestRes.error && (levelTestRes.count ?? 0) === 0) redirect("/onboarding");
 
   const streakDays = streakError ? profile?.streak_days ?? 0 : (streakValue as number) ?? 0;
   const equippedIds = (equippedRows ?? []).map((r) => r.costume_id);
