@@ -19,6 +19,8 @@ const MODELS = [
 ];
 let modelIndex = 0;
 const BATCH = 40;
+// Free-tier RPM allows a few requests in flight; 3 workers stay well under it.
+const CONCURRENCY = 3;
 const OUT = new URL("../src/lib/vocabulary-data/word-notes.json", import.meta.url);
 
 const apiKey = readFileSync(new URL("../.env.local", import.meta.url), "utf8")
@@ -90,20 +92,13 @@ function render(n: Note): string | null {
   return null;
 }
 
-for (let i = 0; i < words.length; i += BATCH) {
-  const batch = words.slice(i, i + BATCH);
-  const prompt = `You are a Korean etymology expert helping English-speaking learners.
-For each word, classify it and (for Sino-Korean compounds) break it into its hanja morphemes with short English glosses.
-Be conservative: if you are not fully certain of the hanja for a word, return kind "unsure" instead of guessing.
-Particles/suffixes that are native (like 하다, 스럽다, 어치) are not hanja morphemes — a word like 공부하다 is sino with parts 공+부 only if the stem is Sino-Korean; glosses describe the hanja meaning, not the whole word.
-
-Words (korean — english meaning):
-${batch.map((w) => `${w.korean} — ${w.meaning_en}`).join("\n")}`;
-
-  let res: Response | null = null;
-  for (let attempt = 0; attempt < 5 && modelIndex < MODELS.length; attempt++) {
-    res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/${MODELS[modelIndex]}:generateContent?key=${apiKey}`,
+async function callGemini(prompt: string, tag: string): Promise<Response | null> {
+  let transient = 0;
+  while (modelIndex < MODELS.length) {
+    const idx = modelIndex;
+    const model = MODELS[idx];
+    const res = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -117,56 +112,90 @@ ${batch.map((w) => `${w.korean} — ${w.meaning_en}`).join("\n")}`;
         }),
       }
     ).catch(() => null);
-    if (res?.ok) break;
-    if (res?.status === 429) {
-      // Quota for this model is likely spent for the day — move to the next.
-      modelIndex++;
-      console.error(`batch ${i / BATCH}: 429, switching to ${MODELS[modelIndex] ?? "(none left)"}`);
-      attempt = -1; // fresh retry budget for the new model
+    if (res?.ok) return res;
+    if (!res) {
+      // Stale keep-alive socket (WSL2 drops idle connections) — a fresh
+      // attempt reconnects instantly, so no backoff.
+      if (++transient > 10) return null;
       continue;
     }
-    // 503 (overloaded) is transient — back off and retry the same model.
-    console.error(`batch ${i / BATCH}: HTTP ${res?.status ?? "network"}, retry ${attempt + 1}`);
-    await new Promise((r) => setTimeout(r, 15_000 * (attempt + 1)));
-  }
-  if (!res?.ok) {
-    // This model isn't cooperating (persistent 5xx/network) — retire it and
-    // retry the same batch on the next one.
-    modelIndex++;
-    if (modelIndex >= MODELS.length) {
-      console.error(`batch ${i / BATCH}: all models exhausted — rerun the script to resume`);
-      break;
+    if (res.status === 429) {
+      // Quota for this model is likely spent for the day — move to the next.
+      // Guard the increment: another worker may have already rotated.
+      if (modelIndex === idx) {
+        modelIndex++;
+        console.error(`${tag}: 429 on ${model}, switching to ${MODELS[modelIndex] ?? "(none left)"}`);
+      }
+      transient = 0;
+      continue;
     }
-    console.error(`batch ${i / BATCH}: retiring model, retrying on ${MODELS[modelIndex]}`);
-    i -= BATCH;
-    continue;
+    // 5xx (overloaded) is transient — brief backoff, retire the model if it persists.
+    transient++;
+    console.error(`${tag}: HTTP ${res.status}, retry ${transient}`);
+    if (transient >= 4) {
+      if (modelIndex === idx) {
+        modelIndex++;
+        console.error(`${tag}: retiring ${model}, next: ${MODELS[modelIndex] ?? "(none left)"}`);
+      }
+      transient = 0;
+      continue;
+    }
+    await new Promise((r) => setTimeout(r, 10_000 * transient));
   }
-  const data = await res.json();
-  const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-  if (!text) {
-    console.error(`batch ${i / BATCH}: empty response, skipping`);
-    continue;
-  }
-  let parsed: Note[];
-  try {
-    parsed = JSON.parse(text);
-  } catch {
-    console.error(`batch ${i / BATCH}: bad JSON, skipping`);
-    continue;
-  }
-  const wanted = new Set(batch.map((w) => w.korean));
-  let added = 0;
-  for (const n of parsed) {
-    if (!wanted.has(n.korean)) continue;
-    const line = render(n);
-    // Store "" for native/unsure so reruns don't re-ask about them.
-    notes[n.korean] = line ?? "";
-    added++;
-  }
-  writeFileSync(OUT, JSON.stringify(notes, null, 0));
-  console.log(`batch ${Math.floor(i / BATCH) + 1}/${Math.ceil(words.length / BATCH)}: +${added}`);
-  await new Promise((r) => setTimeout(r, 5000));
+  return null;
 }
+
+const batches: (typeof words)[] = [];
+for (let i = 0; i < words.length; i += BATCH) batches.push(words.slice(i, i + BATCH));
+let nextBatch = 0;
+let done = 0;
+
+async function worker(): Promise<void> {
+  for (;;) {
+    const bi = nextBatch++;
+    if (bi >= batches.length) return;
+    const batch = batches[bi];
+    const prompt = `You are a Korean etymology expert helping English-speaking learners.
+For each word, classify it and (for Sino-Korean compounds) break it into its hanja morphemes with short English glosses.
+Be conservative: if you are not fully certain of the hanja for a word, return kind "unsure" instead of guessing.
+Particles/suffixes that are native (like 하다, 스럽다, 어치) are not hanja morphemes — a word like 공부하다 is sino with parts 공+부 only if the stem is Sino-Korean; glosses describe the hanja meaning, not the whole word.
+
+Words (korean — english meaning):
+${batch.map((w) => `${w.korean} — ${w.meaning_en}`).join("\n")}`;
+
+    const res = await callGemini(prompt, `batch ${bi}`);
+    if (!res) {
+      console.error(`batch ${bi}: all models exhausted — rerun the script to resume`);
+      return;
+    }
+    const data = await res.json();
+    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+    if (!text) {
+      console.error(`batch ${bi}: empty response, skipping`);
+      continue;
+    }
+    let parsed: Note[];
+    try {
+      parsed = JSON.parse(text);
+    } catch {
+      console.error(`batch ${bi}: bad JSON, skipping`);
+      continue;
+    }
+    const wanted = new Set(batch.map((w) => w.korean));
+    let added = 0;
+    for (const n of parsed) {
+      if (!wanted.has(n.korean)) continue;
+      const line = render(n);
+      // Store "" for native/unsure so reruns don't re-ask about them.
+      notes[n.korean] = line ?? "";
+      added++;
+    }
+    writeFileSync(OUT, JSON.stringify(notes, null, 0));
+    console.log(`batch ${++done}/${batches.length}: +${added}`);
+  }
+}
+
+await Promise.all(Array.from({ length: CONCURRENCY }, worker));
 
 const withNote = Object.values(notes).filter(Boolean).length;
 console.log(`DONE: ${Object.keys(notes).length} analyzed, ${withNote} with a note`);
