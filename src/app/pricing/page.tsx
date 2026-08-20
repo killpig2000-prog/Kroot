@@ -14,7 +14,7 @@ const FREE_FEATURES = [
   "4,000+ vocabulary words, A1–C2",
   "Grammar, reading, writing, listening & speaking practice",
   "Level tests, promotion tests & the 16-day starter course",
-  "Streaks, XP, weekly league & community",
+  "Streaks, XP & the weekly league",
 ];
 
 export default async function PricingPage() {

@@ -33,7 +33,6 @@ export default function Nav() {
         <div className="hidden md:flex gap-7 text-[13px] font-semibold text-[#7A746A]">
           <a href="#learn" className="hover:text-[#221F1B] transition-colors">Practice</a>
           <a href="#grow" className="hover:text-[#221F1B] transition-colors">How it grows</a>
-          <a href="#community" className="hover:text-[#221F1B] transition-colors">Community</a>
         </div>
 
         {loggedIn ? (

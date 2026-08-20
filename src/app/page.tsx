@@ -7,7 +7,6 @@ import SpeechStrip from "@/components/landing/SpeechStrip";
 import LevelTest from "@/components/landing/LevelTest";
 import Categories from "@/components/landing/Categories";
 import Growth from "@/components/landing/Growth";
-import Community from "@/components/landing/Community";
 import Final from "@/components/landing/Final";
 
 export default function LandingPage() {
@@ -21,7 +20,6 @@ export default function LandingPage() {
       <LevelTest />
       <Categories />
       <Growth />
-      <Community />
       <Final />
     </div>
   );

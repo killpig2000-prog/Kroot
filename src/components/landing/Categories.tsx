@@ -5,8 +5,6 @@ const CATEGORIES = [
   { kr: "읽", en: "Reading", sticker: "📖", bg: "#2563EB", desc: "Tap any word for a hint" },
   { kr: "단", en: "Vocabulary", sticker: "🃏", bg: "#7C3AED", desc: "4,000+ flashcards by topic" },
   { kr: "슬", en: "Slang", sticker: "💬", bg: "#DB2777", desc: "Real phrases textbooks skip" },
-  { kr: "발", en: "Pronunciation", sticker: "🗣️", bg: "#0D9488", desc: "Record yourself and compare" },
-  { kr: "함", en: "Community", sticker: "🏕️", bg: "#334155", desc: "One board, learners worldwide" },
 ];
 
 export default function Categories() {
@@ -18,13 +16,13 @@ export default function Categories() {
         </span>
       </div>
       <h2 className="text-center font-black text-[clamp(22px,3vw,30px)] tracking-[-0.02em] text-[#221F1B] mb-2 text-balance">
-        8 tools you&apos;ll reach for every day
+        6 tools you&apos;ll reach for every day
       </h2>
       <p className="text-center text-[#6B6560] text-[13.5px] mb-8">
         All free — collect them one by one, like stickers.
       </p>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3.5 max-w-[880px] mx-auto">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-3.5 max-w-[700px] mx-auto">
         {CATEGORIES.map((c, i) => (
           <div
             key={c.en}
