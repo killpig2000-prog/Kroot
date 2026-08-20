@@ -33,7 +33,6 @@ export const SECTIONS: { title: string; items: NavItem[] }[] = [
       { icon: "🏆", label: "League", href: "/league" },
       { icon: "💬", label: "Slang", href: "/slang" },
       { icon: "🛍️", label: "Shop", href: "/shop" },
-      { icon: "🌟", label: "Kroot Plus", href: "/pricing" },
     ],
   },
 ];
