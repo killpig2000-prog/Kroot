@@ -4,8 +4,9 @@ import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import LeagueBoard from "@/components/league/LeagueBoard";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
+import { leagueTier } from "@/lib/league";
 
-// Weekly XP league within the user's CEFR grade.
+// Weekly XP league within the user's activity tier (Sprout → Diamond).
 export default async function LeaguePage() {
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
@@ -18,6 +19,15 @@ export default async function LeaguePage() {
     .single();
 
   const grade = profile?.current_level ?? "A1";
+
+  // Separate query: league_tier only exists once migration 0026 is applied,
+  // and a missing column must not take down the whole profile read.
+  const { data: tierRow } = await supabase
+    .from("profiles")
+    .select("league_tier")
+    .eq("id", user.id)
+    .single();
+  const tier = leagueTier(tierRow?.league_tier);
 
   return (
     <div className="min-h-screen bg-[#FDFBF7] text-[#18181B]">
@@ -43,12 +53,12 @@ export default async function LeaguePage() {
           <div className="flex items-center justify-between gap-4 mb-5 flex-wrap">
             <h1 className="font-bold text-[22px] tracking-[-0.02em] flex items-center">
               <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[#FFFBEB] border border-[#FDE68A] items-center justify-center text-[15px] mr-[9px]">
-                🏆
+                {tier.emoji}
               </span>
-              {grade} League
+              {tier.name} League
             </h1>
             <span className="text-[13px] text-[#6B6560]">
-              Weekly XP ranking · resets Monday ·{" "}
+              Weekly XP ranking · top 20% climb, bottom 20% drop · resets Monday ·{" "}
               <Link href="/level-test" className="font-semibold text-[#16A34A] hover:underline">
                 Level-up test →
               </Link>

@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import LevelCreature from "@/components/dashboard/LevelCreature";
 import { treeStageForLevel } from "@/lib/level";
+import { leagueTier, LEAGUE_TIERS } from "@/lib/league";
 import { LEVEL_ORDER, type CefrLevel } from "@/lib/tree";
 
 type Row = {
@@ -15,12 +16,19 @@ type Row = {
   is_me: boolean;
   costume_ids?: string[]; // arrives with migration 0015
 };
-type MyRank = { rank: number; total_players: number; xp_week: number };
+type MyRank = {
+  rank: number;
+  total_players: number;
+  xp_week: number;
+  tier: number;
+  movement: number; // last week: +1 promoted · -1 demoted · 0 stayed
+};
 type Reward = { coins: number; rank: number; total_players: number; already_claimed: boolean };
 
-// The weekly league board. All reads go through SECURITY DEFINER RPCs from
-// migration 0016; until that migration is applied we show a friendly notice
-// instead of crashing.
+// The weekly league board: activity-based tiers (Sprout → Diamond), ranked by
+// this week's XP. All reads go through SECURITY DEFINER RPCs from migration
+// 0026; until that migration is applied we show a friendly notice instead of
+// crashing. `grade` only picks the tree species for the creatures.
 export default function LeagueBoard({ grade }: { grade: string }) {
   const species = (LEVEL_ORDER as readonly string[]).includes(grade) ? (grade as CefrLevel) : undefined;
   const supabase = useMemo(() => createClient(), []);
@@ -33,6 +41,12 @@ export default function LeagueBoard({ grade }: { grade: string }) {
 
   useEffect(() => {
     void (async () => {
+      // Settle any elapsed weeks first so tiers/rankings reflect the new week.
+      const settle = await supabase.rpc("settle_league_weeks");
+      if (settle.error) {
+        setUnavailable(true);
+        return;
+      }
       const [league, mine, auth] = await Promise.all([
         supabase.rpc("get_weekly_league"),
         supabase.rpc("get_my_weekly_rank"),
@@ -70,22 +84,46 @@ export default function LeagueBoard({ grade }: { grade: string }) {
   if (unavailable) {
     return (
       <div className="border border-[#FDE68A] bg-[#FFFBEB] rounded-[14px] px-5 py-4 text-[13.5px]">
-        The league opens after database update 0016 is applied.
+        The league opens after database update 0026 is applied.
       </div>
     );
   }
 
+  const tier = leagueTier(my?.tier);
+  const tierIdx = Math.min(Math.max(my?.tier ?? 0, 0), LEAGUE_TIERS.length - 1);
   const pct =
     my && my.total_players > 0 ? Math.max(1, Math.round((my.rank / my.total_players) * 100)) : null;
 
+  // Promotion/demotion zones over active players (mirrors settle_league_weeks:
+  // ceil for promotion, floor for demotion).
+  const total = my?.total_players ?? 0;
+  const promoteCut = tierIdx < LEAGUE_TIERS.length - 1 ? Math.ceil(total * 0.2) : 0;
+  const demoteFrom = tierIdx > 0 ? total - Math.floor(total * 0.2) : Number.POSITIVE_INFINITY;
+
   return (
     <div className="grid gap-5">
+      {/* last week's movement */}
+      {my && my.movement !== 0 && (
+        <div
+          className="border-[1.5px] rounded-[14px] px-5 py-3 text-[13.5px] font-semibold"
+          style={
+            my.movement > 0
+              ? { borderColor: tier.border, background: tier.bg, color: tier.accent }
+              : { borderColor: "#FECACA", background: "#FEF2F2", color: "#B91C1C" }
+          }
+        >
+          {my.movement > 0
+            ? `Promoted! You climbed to the ${tier.name} league ${tier.emoji}`
+            : `You dropped to the ${tier.name} league — one strong week climbs right back ${tier.emoji}`}
+        </div>
+      )}
+
       {/* my standing */}
       <div className="border-[1.5px] border-[#BBF7D0] bg-[#F0FDF4] rounded-[14px] px-5 py-4 flex items-center gap-4 flex-wrap">
-        <span className="text-[28px]">🏆</span>
+        <span className="text-[28px]">{tier.emoji}</span>
         <div className="flex-1 min-w-[200px]">
           <p className="text-[11px] font-bold tracking-[.08em] uppercase text-[#16A34A]">
-            {grade} League · this week
+            {tier.name} League · this week
           </p>
           <b className="text-[16px]">
             {my && my.xp_week > 0
@@ -123,6 +161,23 @@ export default function LeagueBoard({ grade }: { grade: string }) {
         </div>
       </div>
 
+      {/* tier ladder */}
+      <div className="flex gap-2 flex-wrap text-[12px] font-semibold items-center">
+        {LEAGUE_TIERS.map((t, i) => (
+          <span
+            key={t.name}
+            className="rounded-full border px-3 py-1"
+            style={
+              i === tierIdx
+                ? { borderColor: t.border, background: t.bg, color: t.accent }
+                : { borderColor: "#E3DDD0", background: "#fff", color: "#A19A8C" }
+            }
+          >
+            {t.emoji} {t.name}
+          </span>
+        ))}
+      </div>
+
       {/* reward tiers */}
       <div className="flex gap-2 flex-wrap text-[12px] font-semibold">
         <span className="rounded-full border border-[#FDE68A] bg-[#FFFBEB] px-3 py-1">Top 10% → 100🪙</span>
@@ -140,7 +195,10 @@ export default function LeagueBoard({ grade }: { grade: string }) {
             Nobody has XP this week yet — first place is wide open!
           </p>
         ) : (
-          rows.map((r, i) => (
+          rows.map((r, i) => {
+            const inPromoteZone = r.xp_week > 0 && r.rank <= promoteCut;
+            const inDemoteZone = r.xp_week > 0 && r.rank > demoteFrom;
+            return (
             <div key={`${r.rank}-${r.display_name}`}>
               {/* rank gap → the "…" divider between top-10 and my window */}
               {i > 0 && r.rank - rows[i - 1].rank > 1 && (
@@ -176,15 +234,28 @@ export default function LeagueBoard({ grade }: { grade: string }) {
                 </b>
                 <span className="text-[12px] text-[#A19A8C]">Lv.{r.level}</span>
               </span>
+                {inPromoteZone && (
+                  <span className="flex-none text-[12px] font-bold text-[#16A34A]" title="Promotion zone">
+                    ▲
+                  </span>
+                )}
+                {inDemoteZone && (
+                  <span className="flex-none text-[12px] font-bold text-[#DC2626]" title="Demotion zone">
+                    ▼
+                  </span>
+                )}
                 <b className="flex-none text-[14px] tabular-nums">{r.xp_week} XP</b>
               </div>
             </div>
-          ))
+            );
+          })
         )}
       </div>
 
       <p className="text-[12px] text-[#A19A8C]">
-        Rankings compare learners in your grade ({grade}) by XP earned this week (weeks start Monday). You see the top 10 plus the ranks around you, and every Monday you can claim last week&apos;s reward.
+        Everyone in the {tier.name} league races by XP earned this week (weeks start Monday). Each
+        Monday the top 20% (▲) climb to the next league, the bottom 20% (▼) drop one, and you can
+        claim last week&apos;s reward. You see the top 10 plus the ranks around you.
       </p>
     </div>
   );

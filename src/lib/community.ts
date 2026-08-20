@@ -92,7 +92,7 @@ See you in the garden! 🌳
 
 📚 Grade (A1–C2) — your proven skill level. Review enough words, keep your accuracy up, finish some reading, then pass the four-skill Level-Up Test (70+ average, every skill 60+). Pass it and your tree transforms into a new species: azalea → forsythia → cherry blossom → persimmon → ginkgo → pine. 진달래부터 소나무까지!
 
-🏆 Weekly league — you're ranked by XP earned this week against learners in YOUR grade only, so it's always a fair race. Resets every Monday. Rewards: top 10% → 100 coins, top 30% → 50, top 60% → 20, and 5 just for playing. Coins buy costumes in the shop.
+🏆 Weekly league — five leagues: Sprout 🌱 → Bronze 🥉 → Silver 🥈 → Gold 🥇 → Diamond 💎. Everyone starts in Sprout and races by XP earned this week. Every Monday the top 20% of your league climb to the next one, the bottom 20% drop down one — so you always compete with learners as active as you. Rewards: top 10% → 100 coins, top 30% → 50, top 60% → 20, and 5 just for playing. Coins buy costumes in the shop.
 
 Failed a promotion test? Totally normal — practice your weakest skill and retake it after 48 hours.`,
   },

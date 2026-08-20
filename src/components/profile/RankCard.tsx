@@ -3,18 +3,21 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
+import { leagueTier } from "@/lib/league";
 
-type MyRank = { rank: number; total_players: number; xp_week: number };
+type MyRank = { rank: number; total_players: number; xp_week: number; tier?: number };
 
 // Compact weekly-league standing for the My growth page. Quietly renders
 // nothing if the league RPCs aren't available yet.
-export default function RankCard({ grade }: { grade: string }) {
+export default function RankCard() {
   const supabase = useMemo(() => createClient(), []);
   const [my, setMy] = useState<MyRank | null>(null);
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
     void (async () => {
+      // Settle elapsed weeks so the tier is current (no-op mid-week).
+      await supabase.rpc("settle_league_weeks");
       const { data, error } = await supabase.rpc("get_my_weekly_rank");
       if (!error) setMy((Array.isArray(data) ? data[0] : data) as MyRank);
       setReady(true);
@@ -25,6 +28,7 @@ export default function RankCard({ grade }: { grade: string }) {
     return <div className="border border-[#E3DDD0] rounded-[14px] px-5 py-4 min-h-[74px]" />;
   }
 
+  const tier = leagueTier(my?.tier);
   const active = my && my.xp_week > 0;
   const pct =
     active && my.total_players > 0
@@ -43,7 +47,9 @@ export default function RankCard({ grade }: { grade: string }) {
         )}
       </b>
       <small className="text-[12.5px] text-[#6B6560]">
-        {active ? `${grade} league this week →` : `${grade} league — earn XP to rank →`}
+        {active
+          ? `${tier.emoji} ${tier.name} league this week →`
+          : `${tier.emoji} ${tier.name} league — earn XP to rank →`}
       </small>
     </Link>
   );

@@ -336,7 +336,7 @@ export default async function ProfilePage() {
               </Link>
             )}
 
-            <span className="xl:hidden"><RankCard grade={level} /></span>
+            <span className="xl:hidden"><RankCard /></span>
 
             <WeeklyChart days={chartDays} />
 
@@ -355,7 +355,7 @@ export default async function ProfilePage() {
         {/* right rail: the full league view, embedded (xl and up) */}
         <aside className="hidden xl:block pt-6 pr-[clamp(18px,2vw,28px)] pb-[60px]">
           <div className="sticky top-6 max-h-[calc(100vh-48px)] overflow-y-auto pr-1">
-            <h2 className="font-bold text-[15px] tracking-[-0.01em] mb-3">🏆 {level} League</h2>
+            <h2 className="font-bold text-[15px] tracking-[-0.01em] mb-3">🏆 Weekly League</h2>
             <LeagueBoard grade={level} />
           </div>
         </aside>
