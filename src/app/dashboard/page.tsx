@@ -16,6 +16,7 @@ import { getPassagesForLevel } from "@/lib/reading";
 import { getPromptsForLevel } from "@/lib/writing";
 import { promptsFor } from "@/lib/speaking";
 import { getWordsForTopic } from "@/lib/vocabulary";
+import { slangOfTheDay } from "@/lib/slang";
 import { timeAgo } from "@/lib/community";
 import { isPlus } from "@/lib/plus";
 import type { CefrLevel } from "@/lib/tree";
@@ -217,6 +218,8 @@ export default async function DashboardPage() {
       }
     : null;
 
+  const slang = slangOfTheDay();
+
   const feed = (recentPosts ?? []).map((p) => ({
     av: p.author_emoji ?? "🌱",
     text: p.content.split("\n")[0],
@@ -319,6 +322,28 @@ export default async function DashboardPage() {
             </div>
             {quest && <QuestButton skillKey={quest.skill_key} completed={!!quest.completed_at} />}
           </div>
+
+          {/* today's slang — a daily reason to peek at Street Talk */}
+          <Link
+            href="/slang"
+            className="flex items-center gap-3.5 border border-[#FBCFE8] bg-[#FDF2F8] rounded-[14px] px-5 py-4 mb-[30px] transition-all hover:-translate-y-0.5 group"
+          >
+            <span className="flex-none w-10 h-10 rounded-[10px] bg-white border border-[#FBCFE8] flex items-center justify-center text-lg transition-transform group-hover:scale-110">
+              💬
+            </span>
+            <span className="flex-1 min-w-[170px]">
+              <b className="block font-semibold text-sm text-[#BE185D]">
+                Today&apos;s slang · <span className="kr">{slang.kr}</span>{" "}
+                <span className="font-medium text-[#DB2777]">({slang.romanization})</span>
+              </b>
+              <span className="text-[13px] text-[#9D5C79]">
+                {slang.meaning} — hear it in context →
+              </span>
+            </span>
+            <span className="text-[13px] font-semibold text-[#DB2777] transition-transform group-hover:translate-x-0.5">
+              Flip it →
+            </span>
+          </Link>
 
           {/* new to Korean? */}
           <Link
