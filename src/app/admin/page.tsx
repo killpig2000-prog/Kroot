@@ -59,6 +59,33 @@ type RecentUser = {
   plus_until: string | null;
 };
 
+type ActivityEvent = {
+  name: string;
+  label: string;
+  points: number;
+  at: string;
+};
+
+type UserActivity = {
+  name: string;
+  skills: { label: string; count: number }[];
+  completions: number;
+  xp: number;
+  lastAt: string;
+};
+
+// Timestamps rendered for the (Korea-based) admin, not the visitor's locale.
+function kst(at: string) {
+  return new Date(at).toLocaleString("en-CA", {
+    timeZone: "Asia/Seoul",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
+}
+
 async function loadStats() {
   const db = adminClient();
   const nowISO = new Date().toISOString();
@@ -71,6 +98,7 @@ async function loadStats() {
     recentRes,
     activityRes,
     usageRes,
+    eventsRes,
     ...levelCounts
   ] = await Promise.all([
     db.from("profiles").select("id", { count: "exact", head: true }),
@@ -96,6 +124,12 @@ async function loadStats() {
       .select("skill, user_id, created_at")
       .gte("created_at", daysAgo(29).toISOString())
       .limit(20000),
+    db
+      .from("xp_events")
+      .select("user_id, skill, points, created_at")
+      .gte("created_at", daysAgo(6).toISOString())
+      .order("created_at", { ascending: false })
+      .limit(5000),
     ...LEVELS.map((lvl) =>
       db
         .from("profiles")
@@ -151,6 +185,60 @@ async function loadStats() {
     }))
     .sort((a, b) => b.completions30 - a.completions30);
 
+  // Who used which feature: per-user rollup + a raw feed, both over 7 days.
+  const events = (eventsRes.data ?? []) as {
+    user_id: string;
+    skill: string | null;
+    points: number;
+    created_at: string;
+  }[];
+  const nameById = new Map<string, string>();
+  const eventUserIds = [...new Set(events.map((e) => e.user_id))];
+  if (eventUserIds.length > 0) {
+    const { data: nameRows } = await db
+      .from("profiles")
+      .select("id, display_name")
+      .in("id", eventUserIds);
+    for (const p of nameRows ?? []) nameById.set(p.id, p.display_name);
+  }
+  const label = (skill: string | null) => (skill && SKILL_LABELS[skill]) || skill || "⭐ Other";
+
+  const feed: ActivityEvent[] = events.slice(0, 30).map((e) => ({
+    name: nameById.get(e.user_id) ?? "?",
+    label: label(e.skill),
+    points: e.points,
+    at: e.created_at,
+  }));
+
+  const byUser = new Map<
+    string,
+    { skills: Map<string, number>; completions: number; xp: number; lastAt: string }
+  >();
+  for (const e of events) {
+    let entry = byUser.get(e.user_id);
+    if (!entry) {
+      // Events arrive newest-first, so the first one seen is the last activity.
+      entry = { skills: new Map(), completions: 0, xp: 0, lastAt: e.created_at };
+      byUser.set(e.user_id, entry);
+    }
+    const l = label(e.skill);
+    entry.skills.set(l, (entry.skills.get(l) ?? 0) + 1);
+    entry.completions += 1;
+    entry.xp += e.points;
+  }
+  const userActivity: UserActivity[] = [...byUser.entries()]
+    .map(([id, e]) => ({
+      name: nameById.get(id) ?? "?",
+      skills: [...e.skills.entries()]
+        .map(([l, count]) => ({ label: l, count }))
+        .sort((a, b) => b.count - a.count),
+      completions: e.completions,
+      xp: e.xp,
+      lastAt: e.lastAt,
+    }))
+    .sort((a, b) => (a.lastAt < b.lastAt ? 1 : -1))
+    .slice(0, 25);
+
   return {
     totalUsers: total.count ?? 0,
     plusUsers: plus.count ?? 0,
@@ -165,6 +253,8 @@ async function loadStats() {
     recent: (recentRes.data ?? []) as RecentUser[],
     byLevel: LEVELS.map((lvl, i) => ({ level: lvl, count: levelCounts[i].count ?? 0 })),
     usage,
+    userActivity,
+    feed,
   };
 }
 
@@ -279,6 +369,78 @@ export default async function AdminPage() {
           </div>
         )}
       </section>
+
+      <div className="mt-8 grid gap-6 lg:grid-cols-[3fr_2fr]">
+        <section className="rounded-2xl border border-slate-200 bg-white p-5">
+          <h2 className="text-sm font-semibold text-slate-700">Who did what · 7d</h2>
+          <p className="mt-0.5 text-xs text-slate-400">
+            Per-user feature usage, most recently active first
+          </p>
+          <div className="mt-3 overflow-x-auto">
+            <table className="w-full min-w-[420px] text-sm">
+              <thead>
+                <tr className="text-left text-xs uppercase tracking-wide text-slate-400">
+                  <th className="pb-2 font-medium">User</th>
+                  <th className="pb-2 font-medium">Features used</th>
+                  <th className="pb-2 pr-2 text-right font-medium">XP</th>
+                  <th className="pb-2 font-medium">Last active</th>
+                </tr>
+              </thead>
+              <tbody>
+                {stats.userActivity.map((u) => (
+                  <tr key={u.name + u.lastAt} className="border-t border-slate-100 align-top">
+                    <td className="py-2 pr-3 font-medium text-slate-800">{u.name}</td>
+                    <td className="py-2 pr-3">
+                      <div className="flex flex-wrap gap-1">
+                        {u.skills.map((s) => (
+                          <span
+                            key={s.label}
+                            className="whitespace-nowrap rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-600"
+                          >
+                            {s.label} ×{s.count}
+                          </span>
+                        ))}
+                      </div>
+                    </td>
+                    <td className="py-2 pr-2 text-right text-slate-600">{u.xp}</td>
+                    <td className="py-2 whitespace-nowrap text-slate-500">{kst(u.lastAt)}</td>
+                  </tr>
+                ))}
+                {stats.userActivity.length === 0 && (
+                  <tr>
+                    <td colSpan={4} className="py-4 text-center text-slate-400">
+                      No activity in the last 7 days
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section className="rounded-2xl border border-slate-200 bg-white p-5">
+          <h2 className="text-sm font-semibold text-slate-700">Recent activity</h2>
+          <p className="mt-0.5 text-xs text-slate-400">Latest completed activities (KST)</p>
+          <ul className="mt-3 max-h-[440px] space-y-1 overflow-y-auto pr-1">
+            {stats.feed.map((e, i) => (
+              <li
+                key={e.name + e.at + i}
+                className="flex items-baseline justify-between gap-3 border-t border-slate-100 py-1.5 text-sm first:border-t-0"
+              >
+                <span className="min-w-0 truncate">
+                  <span className="font-medium text-slate-800">{e.name}</span>{" "}
+                  <span className="text-slate-600">{e.label}</span>{" "}
+                  <span className="text-xs text-emerald-600">+{e.points}</span>
+                </span>
+                <span className="whitespace-nowrap text-xs text-slate-400">{kst(e.at)}</span>
+              </li>
+            ))}
+            {stats.feed.length === 0 && (
+              <li className="py-4 text-center text-sm text-slate-400">No activity yet</li>
+            )}
+          </ul>
+        </section>
+      </div>
 
       <div className="mt-8 grid gap-6 md:grid-cols-[2fr_1fr]">
         <section className="rounded-2xl border border-slate-200 bg-white p-5">
