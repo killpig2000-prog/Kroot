@@ -253,7 +253,7 @@ export default function LeagueBoard({ grade }: { grade: string }) {
       </div>
 
       <p className="text-[12px] text-[#A19A8C]">
-        Everyone in the {tier.name} league races by XP earned this week (weeks start Monday). Each
+        Everyone in the {tier.name}{" "}league races by XP earned this week (weeks start Monday). Each
         Monday the top 20% (▲) climb to the next league, the bottom 20% (▼) drop one, and you can
         claim last week&apos;s reward. You see the top 10 plus the ranks around you.
       </p>
