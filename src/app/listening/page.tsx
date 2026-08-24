@@ -45,8 +45,16 @@ export default async function ListeningPage({
   const requested = isCefrLevel(sp.level) ? sp.level : myLevel;
   const level = isDifficultyUnlocked(requested, myLevel) ? requested : myLevel;
 
-  const photos = await Promise.all(SITUATIONS.map((s) => fetchUnsplashImage(s.photoQuery)));
+  const [photos, { data: progressRows }] = await Promise.all([
+    Promise.all(SITUATIONS.map((s) => fetchUnsplashImage(s.photoQuery))),
+    supabase
+      .from("listening_progress")
+      .select("dialogue_id")
+      .eq("user_id", user.id)
+      .not("completed_at", "is", null),
+  ]);
   const photoByKey = new Map(SITUATIONS.map((s, i) => [s.key, photos[i]]));
+  const completedIds = new Set((progressRows ?? []).map((r) => r.dialogue_id));
 
   return (
     <div className="min-h-screen bg-[#FDFBF7] text-[#18181B]">
@@ -116,7 +124,9 @@ export default async function ListeningPage({
           {/* topic grid */}
           <div className="grid grid-cols-[repeat(auto-fill,minmax(220px,1fr))] gap-3.5 max-w-[980px]">
             {SITUATIONS.map((s) => {
-              const count = dialoguesFor(level, s.key).length;
+              const dialogues = dialoguesFor(level, s.key);
+              const count = dialogues.length;
+              const done = dialogues.filter((d) => completedIds.has(d.id)).length;
               const photo = photoByKey.get(s.key);
               return (
                 <Link
@@ -141,8 +151,21 @@ export default async function ListeningPage({
                     <small className="block text-[12.5px] text-[#6B6560] leading-[1.5]">
                       {SUBS[s.key] ?? s.krLabel}
                     </small>
-                    <span className="inline-block mt-3 text-[11.5px] font-semibold text-[#0D9488] bg-[#F0FDFA] border border-[#99F6E4] rounded-full px-2.5 py-[3px]">
-                      {s.krLabel} · {count > 0 ? `${count} dialogue${count > 1 ? "s" : ""}` : "coming soon"}
+                    <span
+                      className={`inline-block mt-3 text-[11.5px] font-semibold rounded-full px-2.5 py-[3px] border ${
+                        done > 0 && done === count
+                          ? "text-[#16A34A] bg-[#F0FDF4] border-[#BBF7D0]"
+                          : "text-[#0D9488] bg-[#F0FDFA] border-[#99F6E4]"
+                      }`}
+                    >
+                      {s.krLabel} ·{" "}
+                      {count === 0
+                        ? "coming soon"
+                        : done === count
+                          ? `all ${count} done ✓`
+                          : done > 0
+                            ? `${done}/${count} done`
+                            : `${count} dialogue${count > 1 ? "s" : ""}`}
                     </span>
                   </div>
                 </Link>

@@ -4,6 +4,7 @@ import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import SlangBoard from "@/components/slang/SlangBoard";
 import SlangHero from "@/components/slang/SlangHero";
+import SlangQuiz from "@/components/slang/SlangQuiz";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { SLANG, slangOfTheDay } from "@/lib/slang";
 
@@ -55,6 +56,7 @@ export default async function SlangPage() {
           </div>
 
           <SlangHero entry={daily} />
+          <SlangQuiz />
           <SlangBoard entries={SLANG} />
         </main>
       </div>

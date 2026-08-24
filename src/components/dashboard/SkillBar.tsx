@@ -20,8 +20,10 @@ export default function SkillBar({ percent, note }: { percent: number; note: str
           style={{ width: `${fill}%` }}
         />
       </span>
+      {/* Counts, not percentages — "1/40" reads as progress where "3%" reads
+          as failure, especially after the content library grew. */}
       <span className="text-[11.5px] font-semibold text-[#6B6560] whitespace-nowrap">
-        {percent}% · {note}
+        {note}
       </span>
     </span>
   );

@@ -4,6 +4,7 @@ import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { UNIT_ICONS, getChaptersForTopic, getUnitTitle, unlockedVocabTiers } from "@/lib/vocabulary";
+import VocabSearch from "@/components/vocabulary/VocabSearch";
 import { LEVEL_ORDER, nextLevel, type CefrLevel } from "@/lib/tree";
 
 
@@ -95,6 +96,8 @@ export default async function VocabularyPage({
             <span>/</span>
             <b className="text-[#18181B] font-semibold">Vocabulary</b>
           </div>
+
+          <VocabSearch unlockedLevels={[...unlockedTiers]} />
 
           {/* growth-stage legend */}
           <div className="flex gap-4 flex-wrap mb-5 text-[13px] text-[#6B6560]">

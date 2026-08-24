@@ -186,6 +186,13 @@ export default function LeagueBoard({ grade }: { grade: string }) {
         <span className="rounded-full border border-[#E3DDD0] bg-white px-3 py-1">Joined → 5🪙</span>
       </div>
 
+      {/* fresh week: everyone is back to zero */}
+      {rows !== null && rows.length > 0 && rows.every((r) => r.xp_week <= 0) && (
+        <div className="flex items-center gap-2.5 border border-[#FDE68A] bg-[#FFFBEB] rounded-[12px] px-4 py-2.5 text-[12.5px] font-semibold text-[#B45309]">
+          🌅 Fresh week — everyone starts at 0. The first session takes #1!
+        </div>
+      )}
+
       {/* board */}
       <div className="border border-[#E3DDD0] rounded-[14px] overflow-hidden">
         {rows === null ? (
@@ -213,14 +220,22 @@ export default function LeagueBoard({ grade }: { grade: string }) {
               >
               <span
                 className={`flex-none w-8 h-8 rounded-full flex items-center justify-center text-[13px] font-extrabold ${
-                  r.rank === 1
+                  r.xp_week > 0 && r.rank === 1
                     ? "bg-[#FFFBEB] border border-[#FDE68A]"
-                    : r.rank <= 3
+                    : r.xp_week > 0 && r.rank <= 3
                       ? "bg-[#FAF7EF] border border-[#E3DDD0]"
                       : "text-[#A19A8C]"
                 }`}
               >
-                {r.rank === 1 ? "🥇" : r.rank === 2 ? "🥈" : r.rank === 3 ? "🥉" : r.rank}
+                {r.xp_week <= 0
+                  ? r.rank
+                  : r.rank === 1
+                    ? "🥇"
+                    : r.rank === 2
+                      ? "🥈"
+                      : r.rank === 3
+                        ? "🥉"
+                        : r.rank}
               </span>
               <span className="flex-none w-[52px] h-[52px] rounded-[12px] bg-[#F0FDF4] border border-[#BBF7D0] overflow-hidden flex items-end justify-center">
                 <svg viewBox="30 60 160 160" className="w-[46px] h-[46px]" aria-hidden="true">

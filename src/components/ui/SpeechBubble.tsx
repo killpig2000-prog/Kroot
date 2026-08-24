@@ -44,10 +44,10 @@ export default function SpeechBubble({
           large ? "rounded-3xl px-6 py-3.5" : "rounded-2xl px-3.5 py-2"
         }`}
       >
-        <span className={`kr text-deep ${large ? "text-[20px] mr-2.5" : "text-[13px] mr-1.5"}`}>
+        <span className={`kr text-deep ${large ? "text-[20px] mr-3" : "text-[13px] mr-2"}`}>
           {current.kr}
         </span>
-        <span className={`text-soft font-semibold ${large ? "text-[14px]" : "text-[11px]"}`}>
+        <span className={`text-soft font-semibold opacity-80 ${large ? "text-[14px]" : "text-[11px]"}`}>
           {current.en}
         </span>
         <span
