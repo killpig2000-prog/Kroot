@@ -97,29 +97,43 @@ export default function FeedbackWidget() {
           role="dialog"
           aria-modal="true"
           aria-label="Feedback"
-          className="pointer-events-auto w-full max-w-[380px] bg-[#FAF7EF] border-[1.5px] border-dashed border-[#DDD6C8] rounded-[18px] shadow-[0_24px_60px_-20px_rgba(40,35,25,.4)] px-6 py-6 rotate-[-0.4deg]"
+          className={`pointer-events-auto w-full bg-white rounded-[24px] shadow-[0_30px_70px_-20px_rgba(40,35,25,.35)] ${
+            view === "announce" ? "max-w-[420px] px-8 pt-9 pb-8 text-center" : "max-w-[380px] px-6 py-6"
+          }`}
         >
           {view === "announce" && (
             <>
-              <span className="text-[26px] block mb-2">🌱</span>
-              <b className="block text-[16px] font-extrabold text-[#221F1B] mb-1.5">
-                Kroot is brand new!
+              <svg className="bob w-[92px] h-[92px] mx-auto mb-4" viewBox="0 0 100 100" aria-hidden="true">
+                <ellipse cx="50" cy="88" rx="28" ry="5" fill="#F1EEE4" />
+                <g className="sway">
+                  <path d="M50 78 C50 62 50 56 50 50" stroke="#8B7355" strokeWidth="6" strokeLinecap="round" />
+                  <circle cx="50" cy="38" r="24" fill="#22C55E" />
+                  <path d="M50 20 C50 8 58 2 70 1 C68 13 61 19 50 20Z" fill="#16A34A" />
+                  <circle className="blink" cx="42" cy="38" r="3" fill="#14532D" />
+                  <circle className="blink d2" cx="58" cy="38" r="3" fill="#14532D" />
+                  <circle cx="37" cy="45" r="3.4" fill="#FB7185" opacity=".45" />
+                  <circle cx="63" cy="45" r="3.4" fill="#FB7185" opacity=".45" />
+                  <path d="M44 47 Q50 52 56 47" stroke="#14532D" strokeWidth="2.4" fill="none" strokeLinecap="round" />
+                </g>
+              </svg>
+              <b className="block text-[22px] font-extrabold text-[#221F1B] mb-2 tracking-tight">
+                We just opened! 🎉
               </b>
-              <p className="text-[13.5px] text-[#6B6560] leading-relaxed mb-5">
-                We just launched, so things may be rough around the edges. If something&apos;s
-                broken, confusing, or missing — tell us. Every note helps us build the app you
-                actually want.
+              <p className="text-[14.5px] text-[#6B6560] leading-relaxed mb-7">
+                Kroot is brand new, so things may be rough around the edges. Tell us what&apos;s
+                broken, confusing, or missing — every note helps us build the app you actually
+                want.
               </p>
-              <div className="flex gap-2.5">
+              <div className="flex flex-col gap-2.5">
                 <button
                   onClick={() => setView("form")}
-                  className="flex-1 rounded-[11px] bg-[#16A34A] text-white font-semibold text-[13.5px] py-2.5 hover:bg-[#15803D] transition-colors"
+                  className="w-full rounded-[13px] bg-[#16A34A] text-white font-bold text-[14.5px] py-3.5 hover:bg-[#15803D] transition-colors"
                 >
                   Send feedback
                 </button>
                 <button
                   onClick={dismissAnnouncement}
-                  className="rounded-[11px] border border-[#E3DDD0] bg-white text-[#6B6560] font-semibold text-[13.5px] px-4 py-2.5 hover:border-[#CFC8B8] transition-colors"
+                  className="w-full rounded-[13px] text-[#A19A8C] font-semibold text-[13px] py-1.5 hover:text-[#6B6560] transition-colors"
                 >
                   Maybe later
                 </button>
