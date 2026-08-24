@@ -6,6 +6,7 @@ import QuestButton from "@/components/dashboard/QuestButton";
 import Sidebar from "@/components/dashboard/Sidebar";
 import SkillBar from "@/components/dashboard/SkillBar";
 import Widgets from "@/components/dashboard/Widgets";
+import FeedbackWidget from "@/components/dashboard/FeedbackWidget";
 import Greeting from "@/components/dashboard/Greeting";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { levelProgress } from "@/lib/level";
@@ -493,6 +494,7 @@ export default async function DashboardPage() {
       </div>
 
       <BottomNav />
+      <FeedbackWidget />
     </div>
   );
 }

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import LeagueWidget from "@/components/dashboard/LeagueWidget";
 import QuestButton from "@/components/dashboard/QuestButton";
+import { OPEN_FEEDBACK_EVENT } from "@/components/dashboard/FeedbackWidget";
 
 export type WordOfTheDay = {
   word: string;
@@ -105,6 +106,21 @@ export default function Widgets({
       <WCard title="Weekly league" tag="🏆" index={3}>
         <LeagueWidget />
       </WCard>
+
+      <button
+        type="button"
+        onClick={() => window.dispatchEvent(new CustomEvent(OPEN_FEEDBACK_EVENT))}
+        className="flex items-center gap-2.5 border-[1.5px] border-dashed border-[#BBF7D0] bg-[#F0FDF4] rounded-[12px] px-4 py-3 text-left transition-colors hover:bg-[#DCFCE7] group"
+      >
+        <span className="text-lg flex-none">💌</span>
+        <span className="flex-1 min-w-0">
+          <b className="block text-[12.5px] font-bold text-[#15803D]">We&apos;re just getting started</b>
+          <span className="block text-[12px] text-[#4D7C5F]">Got feedback? We&apos;d love to hear it.</span>
+        </span>
+        <span className="flex-none text-[12px] font-semibold text-[#16A34A] transition-transform group-hover:translate-x-0.5">
+          Go →
+        </span>
+      </button>
     </aside>
   );
 }
