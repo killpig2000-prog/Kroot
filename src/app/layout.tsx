@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Fredoka, Noto_Sans_KR, Nunito } from "next/font/google";
 import { cookies } from "next/headers";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { DEFAULT_MODE, MODE_COOKIE, isModeKey } from "@/lib/mode";
 import { SEASON_COOKIE, seasonForDate } from "@/lib/seasons";
@@ -81,6 +82,7 @@ export default async function RootLayout({
       <body>
         {children}
         <SeasonalEffects season={season} initialEnabled={seasonEnabled} plus={plusActive} />
+        <Analytics />
       </body>
     </html>
   );

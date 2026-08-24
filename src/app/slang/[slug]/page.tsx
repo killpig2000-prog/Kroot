@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { SITE_URL } from "@/lib/site";
 import { VIBES } from "@/lib/slang";
 import { PUBLIC_SLANG, getSlangBySlug, relatedSlang } from "@/lib/slang-slugs";
+import ShareCta from "@/components/slang/ShareCta";
 
 // Public share page — one statically generated page per slang term, no
 // login required. This is the growth loop: real Korean slang, explained,
@@ -65,12 +66,12 @@ export default async function SlangSharePage({ params }: Props) {
         <Link href="/" className="font-bold text-[#221F1B] text-xl">
           Kroot
         </Link>
-        <Link
-          href="/onboarding"
+        <ShareCta
+          slug={entry.slug}
           className="rounded-full bg-[#DB2777] px-4 py-2 text-sm font-semibold text-white shadow-[0_3px_0_#9D174D] hover:bg-[#C2185F] transition-colors"
         >
           Start learning
-        </Link>
+        </ShareCta>
       </header>
 
       <main className="mx-auto max-w-3xl px-6 pb-16">
@@ -130,12 +131,12 @@ export default async function SlangSharePage({ params }: Props) {
             Flip through them all, hear how they sound, and start learning the Korean that&apos;s
             actually spoken today — not just textbook Korean.
           </p>
-          <Link
-            href="/onboarding"
+          <ShareCta
+            slug={entry.slug}
             className="mt-5 inline-block rounded-full bg-[#DB2777] px-6 py-3 font-semibold text-white shadow-[0_3px_0_#9D174D] hover:bg-[#C2185F] transition-colors"
           >
             Start free →
-          </Link>
+          </ShareCta>
         </section>
       </main>
     </div>
