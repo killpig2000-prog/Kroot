@@ -3,9 +3,8 @@
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
-// Bumping this reshows the announcement to everyone, even people who
-// dismissed an earlier version — use for a genuinely new announcement.
-const ANNOUNCEMENT_KEY = "kroot-feedback-announcement-v1-seen";
+// Early-launch notice: shows on every dashboard load (not just once) while
+// we're actively soliciting feedback — no dismissal is persisted.
 export const OPEN_FEEDBACK_EVENT = "kroot:open-feedback";
 
 type View = "closed" | "announce" | "form" | "sent";
@@ -18,14 +17,8 @@ export default function FeedbackWidget() {
   const pathname = usePathname();
 
   useEffect(() => {
-    try {
-      if (!localStorage.getItem(ANNOUNCEMENT_KEY)) {
-        const t = setTimeout(() => setView("announce"), 600);
-        return () => clearTimeout(t);
-      }
-    } catch {
-      // localStorage unavailable — just skip the announcement.
-    }
+    const t = setTimeout(() => setView("announce"), 600);
+    return () => clearTimeout(t);
   }, []);
 
   useEffect(() => {
@@ -43,14 +36,7 @@ export default function FeedbackWidget() {
     };
   }, [view]);
 
-  const dismissAnnouncement = () => {
-    try {
-      localStorage.setItem(ANNOUNCEMENT_KEY, "1");
-    } catch {
-      // ignore
-    }
-    setView("closed");
-  };
+  const dismissAnnouncement = () => setView("closed");
 
   const close = () => {
     setView("closed");
@@ -69,11 +55,6 @@ export default function FeedbackWidget() {
         body: JSON.stringify({ message: trimmed, page: pathname }),
       });
       if (!res.ok) throw new Error("failed");
-      try {
-        localStorage.setItem(ANNOUNCEMENT_KEY, "1");
-      } catch {
-        // ignore
-      }
       setMessage("");
       setView("sent");
     } catch {
