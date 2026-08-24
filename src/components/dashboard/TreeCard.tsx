@@ -8,6 +8,7 @@ import { LEVEL_ORDER, LEVEL_PATH, SPECIES, type CefrLevel } from "@/lib/tree";
 import { MAX_LEVEL, treeStageForLevel } from "@/lib/level";
 import SpeechBubble from "@/components/ui/SpeechBubble";
 import LevelCreature from "@/components/dashboard/LevelCreature";
+import TreeGrowthPopup from "@/components/dashboard/TreeGrowthPopup";
 
 const TREE_PHRASES = [
   { kr: "화이팅!", en: "you got this!" },
@@ -42,7 +43,6 @@ export default function TreeCard({
 }) {
   const supabase = useMemo(() => createClient(), []);
   const [fill, setFill] = useState(0);
-  const [evolved, setEvolved] = useState(false);
   const [equipped, setEquipped] = useState<string[]>(costumeIds);
   const [busy, setBusy] = useState(false);
 
@@ -88,16 +88,6 @@ export default function TreeCard({
     return () => clearTimeout(t);
   }, [progressPct]);
 
-  // Celebrate the species transformation once after a promotion.
-  useEffect(() => {
-    if (!species) return;
-    const prev = localStorage.getItem("kroot-tree-species");
-    localStorage.setItem("kroot-tree-species", species);
-    if (!prev || prev === species || LEVEL_ORDER.indexOf(species) <= LEVEL_ORDER.indexOf(prev as CefrLevel)) return;
-    const t = setTimeout(() => setEvolved(true), 400);
-    return () => clearTimeout(t);
-  }, [species]);
-
   const stage = treeStageForLevel(level);
   const { treeName, blurb } = LEVEL_PATH[stage];
   const sp = SPECIES[species ?? stage];
@@ -106,6 +96,7 @@ export default function TreeCard({
 
   return (
     <div className="relative border border-[#E3DDD0] p-[clamp(18px,3.6vw,26px)] mb-3.5 grid grid-cols-1 sm:grid-cols-[auto_1fr] gap-[clamp(18px,4vw,32px)] items-center bg-white rotate-[-0.4deg] shadow-[0_14px_30px_-18px_rgba(60,50,30,.35)]">
+      <TreeGrowthPopup level={level} species={species} />
       <span
         aria-hidden="true"
         className="absolute -top-2 left-9 -rotate-3 w-[56px] h-[17px] border z-10"
@@ -168,26 +159,6 @@ export default function TreeCard({
         <p className="text-[13.5px] text-[#6B6560] mb-4">
           <span className="kr font-semibold">{sp.krName}</span> — {blurb}
         </p>
-
-        {evolved && (
-          <div
-            className="flex items-center gap-2.5 border border-[#FDE68A] bg-[#FFFBEB] rounded-[10px] px-3.5 py-2.5 mb-4"
-            style={{ animation: "fadeUp .35s ease" }}
-          >
-            <span className="text-[18px]" aria-hidden="true">{sp.emoji}</span>
-            <span className="flex-1 text-[13px] text-[#92400E]">
-              <b>Promotion!</b> Your tree transformed into a {sp.name}{" "}
-              <span className="kr">({sp.krName})</span>.
-            </span>
-            <button
-              type="button"
-              onClick={() => setEvolved(false)}
-              className="text-[12px] font-bold text-[#92400E] hover:underline"
-            >
-              Nice!
-            </button>
-          </div>
-        )}
 
         <div className="flex items-center gap-3 mb-4">
           <div className="flex-1 h-1.5 bg-[#EFE9DB] rounded-full overflow-hidden">

@@ -28,15 +28,17 @@ export async function logActivity(supabase: SupabaseClient, minutes: number): Pr
 }
 
 /**
- * Award XP for a completed unit of the given skill.
+ * Award a specific number of XP points for a skill (used both for a full
+ * completed unit and for partial credit — see `awardPartialCredit` below).
  * Returns the new XP state (so callers can show a level-up celebration),
- * or null if the call failed.
+ * or null if the call failed or there was nothing to award.
  */
-export async function awardProgress(
+export async function awardPoints(
   supabase: SupabaseClient,
+  points: number,
   skill: keyof typeof XP_POINTS,
 ): Promise<ProgressResult | null> {
-  const points = XP_POINTS[skill] ?? 5;
+  if (points <= 0) return null;
   let { data, error } = await supabase.rpc("award_xp", { p_points: points, p_skill: skill });
   if (error?.code === "PGRST202") {
     // Migration 0024 not applied yet — the deployed function has no p_skill.
@@ -48,6 +50,40 @@ export async function awardProgress(
   }
   const row = Array.isArray(data) ? data[0] : data;
   return (row as ProgressResult) ?? null;
+}
+
+/**
+ * Award XP for a completed unit of the given skill.
+ * Returns the new XP state (so callers can show a level-up celebration),
+ * or null if the call failed.
+ */
+export async function awardProgress(
+  supabase: SupabaseClient,
+  skill: keyof typeof XP_POINTS,
+): Promise<ProgressResult | null> {
+  return awardPoints(supabase, XP_POINTS[skill] ?? 5, skill);
+}
+
+/**
+ * Award proportional XP for progress made on a unit the learner didn't
+ * finish (e.g. left a dialogue partway through). `ratio` is 0-1 progress
+ * within the unit; `alreadyAwardedRatio` is how much of that ratio has
+ * already been paid out in an earlier partial award for the same unit, so
+ * repeated exits only pay the newly-made progress. Returns the new ratio to
+ * remember, and the XP result if any points were actually awarded.
+ */
+export async function awardPartialCredit(
+  supabase: SupabaseClient,
+  skill: keyof typeof XP_POINTS,
+  ratio: number,
+  alreadyAwardedRatio: number,
+): Promise<{ newAwardedRatio: number; result: ProgressResult | null }> {
+  const clamped = Math.max(0, Math.min(1, ratio));
+  if (clamped <= alreadyAwardedRatio) return { newAwardedRatio: alreadyAwardedRatio, result: null };
+  const full = XP_POINTS[skill] ?? 5;
+  const delta = Math.round(full * clamped) - Math.round(full * alreadyAwardedRatio);
+  const result = delta > 0 ? await awardPoints(supabase, delta, skill) : null;
+  return { newAwardedRatio: clamped, result };
 }
 
 /**
@@ -71,14 +107,22 @@ async function completeMatchingQuest(supabase: SupabaseClient, skill: string): P
   await awardProgress(supabase, "quest");
 }
 
-/** Convenience: log minutes + award XP for one completed unit. */
+/**
+ * Convenience: log minutes + award XP for one completed unit. If some of
+ * this unit's XP was already paid out via `awardPartialCredit` (the learner
+ * left partway through, came back, and finished it), pass that ratio so
+ * only the remaining points are awarded.
+ */
 export async function recordCompletion(
   supabase: SupabaseClient,
   skill: keyof typeof XP_POINTS,
   minutes: number,
+  alreadyAwardedRatio = 0,
 ): Promise<ProgressResult | null> {
   await logActivity(supabase, minutes);
-  const result = await awardProgress(supabase, skill);
+  const full = XP_POINTS[skill] ?? 5;
+  const remaining = Math.max(0, full - Math.round(full * Math.max(0, Math.min(1, alreadyAwardedRatio))));
+  const result = await awardPoints(supabase, remaining, skill);
   await completeMatchingQuest(supabase, skill);
   return result;
 }

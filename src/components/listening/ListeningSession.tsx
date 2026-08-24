@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
-import { recordCompletion } from "@/lib/activity";
+import { recordCompletion, awardPartialCredit } from "@/lib/activity";
 import { useSpeechSynthesis } from "@/hooks/useSpeechSynthesis";
 import { QUIZZES, type Dialogue } from "@/lib/listening-dialogues";
 import type { CefrLevel } from "@/lib/tree";
@@ -42,6 +42,35 @@ function saveHeard(dialogueId: string, heard: number) {
 function clearHeard(dialogueId: string) {
   try {
     window.localStorage.removeItem(heardKey(dialogueId));
+  } catch {
+    // ignore
+  }
+}
+
+// How much of this dialogue's XP has already been paid out as partial
+// credit for leaving mid-clip, so resuming (or finishing later) doesn't
+// double-pay the same progress.
+function awardedKey(dialogueId: string) {
+  return `kroot-listen-xp-awarded:${dialogueId}`;
+}
+
+function loadAwardedRatio(dialogueId: string): number {
+  if (typeof window === "undefined") return 0;
+  const n = Number(window.localStorage.getItem(awardedKey(dialogueId)) ?? 0);
+  return Number.isFinite(n) ? Math.max(0, Math.min(1, n)) : 0;
+}
+
+function saveAwardedRatio(dialogueId: string, ratio: number) {
+  try {
+    window.localStorage.setItem(awardedKey(dialogueId), String(ratio));
+  } catch {
+    // ignore
+  }
+}
+
+function clearAwardedRatio(dialogueId: string) {
+  try {
+    window.localStorage.removeItem(awardedKey(dialogueId));
   } catch {
     // ignore
   }
@@ -389,7 +418,9 @@ export default function ListeningSession({
   const resumeTarget = dialogues.find((d) => !completed.has(d.id) && (heardMap[d.id] ?? 0) > 0);
 
   async function completeClip(dialogue: Dialogue) {
+    const awardedRatio = loadAwardedRatio(dialogue.id);
     clearHeard(dialogue.id);
+    clearAwardedRatio(dialogue.id);
     setHeardMap((m) => {
       const next = { ...m };
       delete next[dialogue.id];
@@ -409,9 +440,29 @@ export default function ListeningSession({
         { user_id: user.id, dialogue_id: dialogue.id, completed_at: new Date().toISOString() },
         { onConflict: "user_id,dialogue_id" }
       );
-      const res = await recordCompletion(supabase, "listening", 3);
+      const res = await recordCompletion(supabase, "listening", 3, awardedRatio);
       if (res?.leveled_up) setNewLevel(res.new_level);
     }
+  }
+
+  // Left a clip before finishing it: pay out XP for the lines actually
+  // heard so far, proportional to the dialogue's full reward.
+  async function awardListeningPartial(dialogue: Dialogue, heard: number) {
+    if (completed.has(dialogue.id) || heard <= 0) return;
+    const ratio = heard / dialogue.lines.length;
+    const awardedRatio = loadAwardedRatio(dialogue.id);
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user) return;
+    const { newAwardedRatio, result } = await awardPartialCredit(
+      supabase,
+      "listening",
+      ratio,
+      awardedRatio
+    );
+    saveAwardedRatio(dialogue.id, newAwardedRatio);
+    if (result?.leveled_up) setNewLevel(result.new_level);
   }
 
   const open = openId ? dialogues.find((d) => d.id === openId) : null;
@@ -424,8 +475,10 @@ export default function ListeningSession({
         clipCount={dialogues.length}
         initialHeard={heardMap[open.id] ?? 0}
         onExit={() => {
-          setHeardMap((m) => ({ ...m, [open.id]: loadHeard(open.id, open.lines.length) }))
+          const finalHeard = loadHeard(open.id, open.lines.length);
+          setHeardMap((m) => ({ ...m, [open.id]: finalHeard }));
           setOpenId(null);
+          void awardListeningPartial(open, finalHeard);
         }}
         onFinished={() => void completeClip(open)}
       />

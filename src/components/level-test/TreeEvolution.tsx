@@ -10,11 +10,14 @@ export default function TreeEvolution({
   from,
   to,
   stage,
+  fromStage,
 }: {
   from: CefrLevel;
   to: CefrLevel;
-  /** Growth stage (player level band) — size carries over, only the species changes. */
+  /** Growth stage (player level band) for the new creature. */
   stage: CefrLevel;
+  /** Growth stage for the outgoing creature, if it's also growing bigger — defaults to `stage`. */
+  fromStage?: CefrLevel;
 }) {
   const [phase, setPhase] = useState<"old" | "flash" | "new">("old");
 
@@ -48,7 +51,7 @@ export default function TreeEvolution({
         ) : (
           <>
             <g className={phase === "flash" ? "evolve-out" : "sway"}>
-              <LevelCreature level={stage} species={from} />
+              <LevelCreature level={fromStage ?? stage} species={from} />
             </g>
             {phase === "flash" && (
               <circle className="evolve-glow" cx="110" cy="130" r="86" fill="#FDE68A" opacity="0" />
