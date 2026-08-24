@@ -58,6 +58,24 @@ export default async function WritingMapPage({
   const plus = isPlus(profile?.plus_until);
   const dailyDone = !plus && !!chapterWrittenToday(progress);
 
+  // 160 flat page rows is an endless scroll — group into collapsible sets of
+  // ten, with the set containing the current page open.
+  const GROUP_SIZE = 10;
+  const groups: { chapter: (typeof chapters)[number]; status: string; index: number }[][] = [];
+  for (let g = 0; g < chapters.length; g += GROUP_SIZE) {
+    groups.push(
+      chapters.slice(g, g + GROUP_SIZE).map((chapter, gi) => ({
+        chapter,
+        status: statuses[g + gi],
+        index: g + gi,
+      }))
+    );
+  }
+  const continueIndex = statuses.findIndex((s) => s === "current");
+  const openGroupIndex = continueIndex >= 0 ? Math.floor(continueIndex / GROUP_SIZE) : -1;
+  const continuePrompt = continueIndex >= 0 ? chapters[continueIndex][0] : null;
+  const continueWaitsTomorrow = dailyDone && continueIndex >= 0;
+
   return (
     <div className="min-h-screen bg-[#FDFBF7] text-[#18181B]">
       <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
@@ -147,56 +165,113 @@ export default async function WritingMapPage({
             )}
           </div>
 
-          {/* chapter list */}
-          <div className="grid gap-2.5 max-w-[720px]">
-            {chapters.map((chapter, i) => {
-              const prompt = chapter[0];
-              const status = statuses[i];
-              const waitTomorrow = dailyDone && status === "current";
-              const content = (
-                <>
-                  <span
-                    className={`w-[38px] h-[38px] rounded-[10px] flex-none flex items-center justify-center text-[13px] font-bold border ${
-                      status === "done"
-                        ? "bg-[#F0FDF4] text-[#16A34A] border-[#BBF7D0]"
-                        : status === "current"
-                        ? "bg-[#FFFBEB] text-[#D97706] border-[#FDE68A]"
-                        : "bg-[#FAF7EF] text-[#A19A8C] border-[#E3DDD0]"
-                    }`}
-                  >
-                    {status === "done" ? "✓" : i + 1}
-                  </span>
-                  <div className="min-w-0 flex-1">
-                    <b className="block font-semibold text-[14.5px]">Page {i + 1}</b>
-                    <small className="block text-[12.5px] text-[#6B6560] leading-[1.5] truncate">
-                      {prompt.prompt_en}
-                    </small>
-                  </div>
-                  <span
-                    className={`text-[11.5px] font-semibold rounded-full border px-2.5 py-[3px] flex-none ${
-                      waitTomorrow ? STATUS_BADGE.locked : STATUS_BADGE[status]
-                    }`}
-                  >
-                    {waitTomorrow ? "🌙 Tomorrow" : STATUS_LABEL[status]}
-                  </span>
-                </>
-              );
+          {/* continue card: one obvious next step above the page groups */}
+          {continuePrompt && (
+            <Link
+              href={`/writing/session?chapter=${continueIndex}&level=${level}`}
+              className={`flex items-center gap-3.5 border-[1.5px] rounded-[14px] px-5 py-4 mb-6 max-w-[720px] transition-all ${
+                continueWaitsTomorrow
+                  ? "border-[#E3DDD0] bg-[#FAF7EF] opacity-70 pointer-events-none"
+                  : "border-[#FDE68A] bg-[#FFFBEB] hover:-translate-y-0.5 group"
+              }`}
+            >
+              <span className="flex-none w-10 h-10 rounded-[10px] bg-white border border-[#FDE68A] flex items-center justify-center text-lg transition-transform group-hover:scale-110">
+                {continueWaitsTomorrow ? "🌙" : "✏️"}
+              </span>
+              <span className="flex-1 min-w-[170px]">
+                <b className="block font-semibold text-sm text-[#B45309]">
+                  {continueWaitsTomorrow ? "Tomorrow's page" : `Continue · Page ${continueIndex + 1}`}
+                </b>
+                <span className="text-[13px] text-[#92702B] truncate block">{continuePrompt.prompt_en}</span>
+              </span>
+              {!continueWaitsTomorrow && (
+                <span className="text-[13px] font-semibold text-[#D97706] transition-transform group-hover:translate-x-0.5">
+                  Write →
+                </span>
+              )}
+            </Link>
+          )}
 
-              return status === "locked" || waitTomorrow ? (
-                <div
-                  key={i}
-                  className="border border-[#E3DDD0] rounded-[14px] bg-[#FAF7EF] px-[18px] py-3.5 flex items-center gap-3.5 opacity-70"
+          <div className="grid gap-3 max-w-[720px]">
+            {groups.map((group, gi) => {
+              const first = group[0].index + 1;
+              const last = group[group.length - 1].index + 1;
+              const groupDone = group.filter((g) => g.status === "done").length;
+              return (
+                <details
+                  key={gi}
+                  open={gi === openGroupIndex}
+                  className="border border-[#E3DDD0] rounded-[14px] bg-white overflow-hidden"
                 >
-                  {content}
-                </div>
-              ) : (
-                <Link
-                  key={i}
-                  href={`/writing/session?chapter=${i}&level=${level}`}
-                  className="border border-[#E3DDD0] rounded-[14px] bg-white px-[18px] py-3.5 flex items-center gap-3.5 transition-all duration-150 hover:border-[#D97706] hover:bg-[#FFFBEB] hover:-translate-y-0.5"
-                >
-                  {content}
-                </Link>
+                  <summary className="flex items-center gap-3 px-5 py-3.5 cursor-pointer select-none list-none [&::-webkit-details-marker]:hidden hover:bg-[#FAF7EF] transition-colors">
+                    <b className="flex-1 font-bold text-[14.5px]">
+                      Pages {first}–{last}
+                    </b>
+                    <span className="flex-none flex items-center gap-2">
+                      <span className="w-[74px] h-1.5 rounded-full bg-[#E3DDD0] overflow-hidden">
+                        <span
+                          className="block h-full rounded-full bg-[#D97706]"
+                          style={{ width: `${(groupDone / group.length) * 100}%` }}
+                        />
+                      </span>
+                      <small className="text-[12px] text-[#6B6560] font-semibold tabular-nums">
+                        {groupDone}/{group.length}
+                      </small>
+                      <span className="text-[#A19A8C] text-[11px]">▾</span>
+                    </span>
+                  </summary>
+                  <div className="grid gap-2.5 px-3.5 pb-3.5 pt-1 border-t border-dashed border-[#E3DDD0]">
+                    {group.map(({ chapter, status, index: i }) => {
+                      const prompt = chapter[0];
+                      const waitTomorrow = dailyDone && status === "current";
+                      const content = (
+                        <>
+                          <span
+                            className={`w-[34px] h-[34px] rounded-[10px] flex-none flex items-center justify-center text-[12.5px] font-bold border ${
+                              status === "done"
+                                ? "bg-[#F0FDF4] text-[#16A34A] border-[#BBF7D0]"
+                                : status === "current"
+                                ? "bg-[#FFFBEB] text-[#D97706] border-[#FDE68A]"
+                                : "bg-[#FAF7EF] text-[#A19A8C] border-[#E3DDD0]"
+                            }`}
+                          >
+                            {status === "done" ? "✓" : i + 1}
+                          </span>
+                          <div className="min-w-0 flex-1">
+                            <b className="block font-semibold text-[13.5px]">Page {i + 1}</b>
+                            <small className="block text-[12px] text-[#6B6560] leading-[1.5] truncate">
+                              {prompt.prompt_en}
+                            </small>
+                          </div>
+                          <span
+                            className={`text-[11px] font-semibold rounded-full border px-2.5 py-[3px] flex-none ${
+                              waitTomorrow ? STATUS_BADGE.locked : STATUS_BADGE[status]
+                            }`}
+                          >
+                            {waitTomorrow ? "🌙 Tomorrow" : STATUS_LABEL[status]}
+                          </span>
+                        </>
+                      );
+
+                      return status === "locked" || waitTomorrow ? (
+                        <div
+                          key={i}
+                          className="border border-[#E3DDD0] rounded-[10px] bg-[#FAF7EF] px-3 py-2.5 flex items-center gap-3 opacity-70"
+                        >
+                          {content}
+                        </div>
+                      ) : (
+                        <Link
+                          key={i}
+                          href={`/writing/session?chapter=${i}&level=${level}`}
+                          className="border border-[#F5F1E8] rounded-[10px] bg-white px-3 py-2.5 flex items-center gap-3 transition-all duration-150 hover:border-[#D97706] hover:bg-[#FFFBEB]"
+                        >
+                          {content}
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </details>
               );
             })}
           </div>

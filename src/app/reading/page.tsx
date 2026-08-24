@@ -62,6 +62,23 @@ export default async function ReadingMapPage({
   const statuses = getChapterStatuses(chapters, completedKeys);
   const doneCount = statuses.filter((s) => s === "done").length;
 
+  // 160 flat chapter rows is an endless scroll — group into collapsible sets
+  // of ten, with the set containing the current chapter open.
+  const GROUP_SIZE = 10;
+  const groups: { chapter: (typeof chapters)[number]; status: string; index: number }[][] = [];
+  for (let g = 0; g < chapters.length; g += GROUP_SIZE) {
+    groups.push(
+      chapters.slice(g, g + GROUP_SIZE).map((chapter, gi) => ({
+        chapter,
+        status: statuses[g + gi],
+        index: g + gi,
+      }))
+    );
+  }
+  const continueIndex = statuses.findIndex((s) => s === "current");
+  const openGroupIndex = continueIndex >= 0 ? Math.floor(continueIndex / GROUP_SIZE) : -1;
+  const continueChapter = continueIndex >= 0 ? chapters[continueIndex][0] : null;
+
   return (
     <div className="min-h-screen bg-[#FDFBF7] text-[#18181B]">
       <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
@@ -131,44 +148,98 @@ export default async function ReadingMapPage({
             )}
           </div>
 
-          <div className="border border-[#E3DDD0] rounded-[14px] overflow-hidden max-w-[720px]">
-            {chapters.map((chapter, i) => {
-              const passage = chapter[0];
-              const status = statuses[i];
-              const style = STATUS_STYLE[status];
-              const rowClass =
-                "w-full flex items-center gap-3.5 text-left bg-white border-b border-[#E3DDD0] last:border-b-0 px-[18px] py-[13px] transition-colors group";
-              const content = (
-                <>
-                  <span
-                    className={`w-9 h-9 rounded-[9px] flex-none flex items-center justify-center text-base border transition-transform group-hover:scale-110 ${style.seed}`}
-                  >
-                    {style.icon}
-                  </span>
-                  <span className="flex-1 min-w-0">
-                    <b className="block font-semibold text-sm">Chapter {i + 1}</b>
-                    <small className="block kr text-[12.5px] text-[#6B6560] truncate">{passage.title_kr}</small>
-                  </span>
-                  <span
-                    className={`text-[11.5px] font-semibold rounded-md px-2 py-0.5 border ${style.badge}`}
-                  >
-                    {status === "done" ? "Done" : status === "current" ? "Read" : "Locked"}
-                  </span>
-                </>
-              );
+          {/* continue card: one obvious next step above the chapter groups */}
+          {continueChapter && (
+            <Link
+              href={`/reading/session?chapter=${continueIndex}&level=${level}`}
+              className="flex items-center gap-3.5 border-[1.5px] border-[#BFDBFE] bg-[#EFF6FF] rounded-[14px] px-5 py-4 mb-6 max-w-[720px] transition-all hover:-translate-y-0.5 group"
+            >
+              <span className="flex-none w-10 h-10 rounded-[10px] bg-white border border-[#BFDBFE] flex items-center justify-center text-lg transition-transform group-hover:scale-110">
+                📖
+              </span>
+              <span className="flex-1 min-w-[170px]">
+                <b className="block font-semibold text-sm text-[#1D4ED8]">
+                  Continue · Chapter {continueIndex + 1}
+                </b>
+                <span className="kr text-[13px] text-[#3B82F6] truncate block">{continueChapter.title_kr}</span>
+              </span>
+              <span className="text-[13px] font-semibold text-[#2563EB] transition-transform group-hover:translate-x-0.5">
+                Start →
+              </span>
+            </Link>
+          )}
 
-              return status === "locked" ? (
-                <div key={i} className={`${rowClass} opacity-60`}>
-                  {content}
-                </div>
-              ) : (
-                <Link
-                  key={i}
-                  href={`/reading/session?chapter=${i}&level=${level}`}
-                  className={`${rowClass} hover:bg-[#EFF6FF]`}
+          <div className="grid gap-3 max-w-[720px]">
+            {groups.map((group, gi) => {
+              const first = group[0].index + 1;
+              const last = group[group.length - 1].index + 1;
+              const groupDone = group.filter((g) => g.status === "done").length;
+              return (
+                <details
+                  key={gi}
+                  open={gi === openGroupIndex}
+                  className="border border-[#E3DDD0] rounded-[14px] bg-white overflow-hidden"
                 >
-                  {content}
-                </Link>
+                  <summary className="flex items-center gap-3 px-5 py-3.5 cursor-pointer select-none list-none [&::-webkit-details-marker]:hidden hover:bg-[#FAF7EF] transition-colors">
+                    <b className="flex-1 font-bold text-[14.5px]">
+                      Chapters {first}–{last}
+                    </b>
+                    <span className="flex-none flex items-center gap-2">
+                      <span className="w-[74px] h-1.5 rounded-full bg-[#E3DDD0] overflow-hidden">
+                        <span
+                          className="block h-full rounded-full bg-[#2563EB]"
+                          style={{ width: `${(groupDone / group.length) * 100}%` }}
+                        />
+                      </span>
+                      <small className="text-[12px] text-[#6B6560] font-semibold tabular-nums">
+                        {groupDone}/{group.length}
+                      </small>
+                      <span className="text-[#A19A8C] text-[11px]">▾</span>
+                    </span>
+                  </summary>
+                  <div className="grid px-3.5 pb-3.5 pt-1 border-t border-dashed border-[#E3DDD0]">
+                    {group.map(({ chapter, status, index: i }) => {
+                      const passage = chapter[0];
+                      const style = STATUS_STYLE[status];
+                      const rowClass =
+                        "w-full flex items-center gap-3 text-left bg-white rounded-[10px] px-3 py-2.5 mt-2.5 transition-colors group border border-[#F5F1E8]";
+                      const content = (
+                        <>
+                          <span
+                            className={`w-8 h-8 rounded-[9px] flex-none flex items-center justify-center text-[13px] border transition-transform group-hover:scale-110 ${style.seed}`}
+                          >
+                            {style.icon}
+                          </span>
+                          <span className="flex-1 min-w-0">
+                            <b className="block font-semibold text-[13.5px]">Chapter {i + 1}</b>
+                            <small className="block kr text-[12px] text-[#6B6560] truncate">
+                              {passage.title_kr}
+                            </small>
+                          </span>
+                          <span
+                            className={`text-[11px] font-semibold rounded-md px-2 py-0.5 border ${style.badge}`}
+                          >
+                            {status === "done" ? "Done" : status === "current" ? "Read" : "Locked"}
+                          </span>
+                        </>
+                      );
+
+                      return status === "locked" ? (
+                        <div key={i} className={`${rowClass} opacity-60`}>
+                          {content}
+                        </div>
+                      ) : (
+                        <Link
+                          key={i}
+                          href={`/reading/session?chapter=${i}&level=${level}`}
+                          className={`${rowClass} hover:bg-[#EFF6FF] hover:border-[#BFDBFE]`}
+                        >
+                          {content}
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </details>
               );
             })}
           </div>
