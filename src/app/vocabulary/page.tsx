@@ -64,6 +64,14 @@ export default async function VocabularyPage({
   });
   const doneUnits = units.filter((u) => u.status === "done").length;
 
+  // 120 flat unit rows were an endless scroll — group them into collapsible
+  // sets of ten, with the set you're currently working through open.
+  const GROUP_SIZE = 10;
+  const groups: (typeof units)[] = [];
+  for (let g = 0; g < units.length; g += GROUP_SIZE) groups.push(units.slice(g, g + GROUP_SIZE));
+  const continueUnit = units.find((u) => u.status !== "done") ?? null;
+  const openGroupIndex = continueUnit ? Math.floor(continueUnit.index / GROUP_SIZE) : -1;
+
   // The three level pills shown in the hero: previous · current · next.
   const levelIdx = LEVEL_ORDER.indexOf(level);
   const pillLevels = LEVEL_ORDER.slice(Math.max(0, levelIdx - 1), levelIdx + 2);
@@ -147,54 +155,115 @@ export default async function VocabularyPage({
             </div>
           </div>
 
-          {/* units */}
+          {/* continue card: one obvious next step above the unit groups */}
+          {continueUnit && (
+            <Link
+              href={`/vocabulary/${TOPIC_KEY}/session?chapter=${continueUnit.index}&level=${level}`}
+              className="flex items-center gap-3.5 border-[1.5px] border-[#BBF7D0] bg-[#F0FDF4] rounded-[14px] px-5 py-4 mb-6 transition-all hover:-translate-y-0.5 group"
+            >
+              <span className="flex-none w-10 h-10 rounded-[10px] bg-white border border-[#BBF7D0] flex items-center justify-center text-lg transition-transform group-hover:scale-110">
+                ▶
+              </span>
+              <span className="flex-1 min-w-[170px]">
+                <b className="block font-semibold text-sm text-[#15803D]">
+                  Continue · {getUnitTitle(level, continueUnit.index)}
+                </b>
+                <span className="text-[13px] text-[#4D7C5F]">
+                  {continueUnit.known}/{continueUnit.words.length} known — pick up where you left off
+                </span>
+              </span>
+              <span className="text-[13px] font-semibold text-[#16A34A] transition-transform group-hover:translate-x-0.5">
+                Start →
+              </span>
+            </Link>
+          )}
+
+          {/* units, grouped ten at a time */}
           <h2 className="font-bold text-[16px] tracking-[-0.01em] mb-3.5">Units in {level}</h2>
           <div className="grid gap-3 mb-7">
-            {units.map((u) => {
-              const meta = UNIT_ICONS[u.index % UNIT_ICONS.length];
+            {groups.map((group, gi) => {
+              const first = group[0].index + 1;
+              const last = group[group.length - 1].index + 1;
+              const groupDone = group.filter((u) => u.status === "done").length;
+              const groupThirsty = group.reduce((sum, u) => sum + u.thirsty, 0);
               return (
-                <Link
-                  key={u.index}
-                  href={`/vocabulary/${TOPIC_KEY}/session?chapter=${u.index}&level=${level}`}
-                  className="border border-[#E3DDD0] rounded-[14px] bg-white px-5 py-4 flex items-center gap-4 transition-all duration-150 hover:border-[#16A34A] hover:bg-[#F0FDF4] hover:-translate-y-0.5 group"
+                <details
+                  key={gi}
+                  open={gi === openGroupIndex}
+                  className="border border-[#E3DDD0] rounded-[14px] bg-white overflow-hidden"
                 >
-                  <span
-                    className="w-[46px] h-[46px] rounded-[12px] flex items-center justify-center text-[21px] flex-none transition-transform group-hover:scale-110"
-                    style={{ background: meta.bg }}
-                  >
-                    {meta.icon}
-                  </span>
-                  <span className="flex-1 min-w-0">
-                    <b className="block font-bold text-[15.5px]">{getUnitTitle(level, u.index)}</b>
-                    <small className="block text-[13px] text-[#6B6560]">
-                      {u.words.length} word{u.words.length === 1 ? "" : "s"}
-                    </small>
-                  </span>
-                  <span className="text-right flex-none">
-                    <span
-                      className={`inline-block text-[12px] font-semibold rounded-full border px-3 py-[3px] mb-1.5 ${
-                        u.thirsty > 0
-                          ? "text-[#2563EB] bg-[#EFF6FF] border-[#BFDBFE]"
-                          : u.status === "done"
-                          ? "text-[#16A34A] bg-[#F0FDF4] border-[#BBF7D0]"
-                          : u.status === "in-progress"
-                          ? "text-[#D97706] bg-[#FFFBEB] border-[#FDE68A]"
-                          : "text-[#A19A8C] bg-[#FAF7EF] border-[#E3DDD0]"
-                      }`}
-                    >
-                      {u.thirsty > 0
-                        ? `💧 ${u.thirsty} thirsty`
-                        : u.status === "done"
-                        ? "Done"
-                        : u.status === "in-progress"
-                        ? "In progress"
-                        : "Not started"}
+                  <summary className="flex items-center gap-3 px-5 py-3.5 cursor-pointer select-none list-none [&::-webkit-details-marker]:hidden hover:bg-[#FAF7EF] transition-colors">
+                    <b className="flex-1 font-bold text-[14.5px]">
+                      Units {first}–{last}
+                    </b>
+                    {groupThirsty > 0 && (
+                      <span className="text-[11.5px] font-semibold text-[#2563EB] bg-[#EFF6FF] border border-[#BFDBFE] rounded-full px-2.5 py-[2px]">
+                        💧 {groupThirsty}
+                      </span>
+                    )}
+                    <span className="flex-none flex items-center gap-2">
+                      <span className="w-[74px] h-1.5 rounded-full bg-[#E3DDD0] overflow-hidden">
+                        <span
+                          className="block h-full rounded-full bg-[#16A34A]"
+                          style={{ width: `${(groupDone / group.length) * 100}%` }}
+                        />
+                      </span>
+                      <small className="text-[12px] text-[#6B6560] font-semibold tabular-nums">
+                        {groupDone}/{group.length}
+                      </small>
+                      <span className="text-[#A19A8C] text-[11px]">▾</span>
                     </span>
-                    <small className="block text-[12.5px] text-[#A19A8C]">
-                      {u.known}/{u.words.length} known
-                    </small>
-                  </span>
-                </Link>
+                  </summary>
+                  <div className="grid gap-2.5 px-3.5 pb-3.5 pt-1 border-t border-dashed border-[#E3DDD0]">
+                    {group.map((u) => {
+                      const meta = UNIT_ICONS[u.index % UNIT_ICONS.length];
+                      return (
+                        <Link
+                          key={u.index}
+                          href={`/vocabulary/${TOPIC_KEY}/session?chapter=${u.index}&level=${level}`}
+                          className="border border-[#E3DDD0] rounded-[12px] bg-white px-4 py-3 flex items-center gap-3.5 transition-all duration-150 hover:border-[#16A34A] hover:bg-[#F0FDF4] hover:-translate-y-0.5 group"
+                        >
+                          <span
+                            className="w-[40px] h-[40px] rounded-[11px] flex items-center justify-center text-[19px] flex-none transition-transform group-hover:scale-110"
+                            style={{ background: meta.bg }}
+                          >
+                            {meta.icon}
+                          </span>
+                          <span className="flex-1 min-w-0">
+                            <b className="block font-bold text-[14.5px]">{getUnitTitle(level, u.index)}</b>
+                            <small className="block text-[12.5px] text-[#6B6560]">
+                              {u.words.length} word{u.words.length === 1 ? "" : "s"}
+                            </small>
+                          </span>
+                          <span className="text-right flex-none">
+                            <span
+                              className={`inline-block text-[12px] font-semibold rounded-full border px-3 py-[3px] mb-1 ${
+                                u.thirsty > 0
+                                  ? "text-[#2563EB] bg-[#EFF6FF] border-[#BFDBFE]"
+                                  : u.status === "done"
+                                  ? "text-[#16A34A] bg-[#F0FDF4] border-[#BBF7D0]"
+                                  : u.status === "in-progress"
+                                  ? "text-[#D97706] bg-[#FFFBEB] border-[#FDE68A]"
+                                  : "text-[#A19A8C] bg-[#FAF7EF] border-[#E3DDD0]"
+                              }`}
+                            >
+                              {u.thirsty > 0
+                                ? `💧 ${u.thirsty} thirsty`
+                                : u.status === "done"
+                                ? "Done"
+                                : u.status === "in-progress"
+                                ? "In progress"
+                                : "Not started"}
+                            </span>
+                            <small className="block text-[12px] text-[#A19A8C]">
+                              {u.known}/{u.words.length} known
+                            </small>
+                          </span>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </details>
               );
             })}
           </div>

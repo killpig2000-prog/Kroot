@@ -9,8 +9,8 @@ import { MAIN_ITEMS, SECTIONS } from "@/components/dashboard/navItems";
 
 const ITEMS = [
   { icon: "🏡", label: "Garden", href: "/dashboard" },
-  { icon: "📊", label: "Growth", href: "/profile" },
-  { icon: "🏕️", label: "Friends", href: "/community" },
+  { icon: "👤", label: "Me", href: "/profile" },
+  { icon: "🏆", label: "League", href: "/league" },
   { icon: "🛍️", label: "Shop", href: "/shop" },
 ];
 

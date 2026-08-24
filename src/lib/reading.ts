@@ -18,15 +18,20 @@ export function getChaptersForLevel(level: CefrLevel): Passage[][] {
 
 export type ChapterStatus = "done" | "current" | "locked";
 
+// Chapters open in a rolling window: the first unfinished one plus the next
+// few, so one hard chapter never blocks the whole library.
+const OPEN_WINDOW = 3;
+
 export function getChapterStatuses(chapters: Passage[][], completedKeys: Set<string>): ChapterStatus[] {
-  const statuses: ChapterStatus[] = [];
-  let previousDone = true;
-  for (const chapter of chapters) {
-    const done = chapter.length > 0 && chapter.every((p) => completedKeys.has(p.key));
-    statuses.push(done ? "done" : previousDone ? "current" : "locked");
-    previousDone = done;
-  }
-  return statuses;
+  const done = chapters.map(
+    (chapter) => chapter.length > 0 && chapter.every((p) => completedKeys.has(p.key))
+  );
+  const firstOpen = done.findIndex((d) => !d);
+  return done.map((d, i) => {
+    if (d) return "done";
+    if (firstOpen >= 0 && i < firstOpen + OPEN_WINDOW) return "current";
+    return "locked";
+  });
 }
 
 export const MINUTES_PER_PASSAGE = 4;

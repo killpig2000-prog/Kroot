@@ -18,15 +18,20 @@ export function getChaptersForLevel(level: CefrLevel): Prompt[][] {
 
 export type ChapterStatus = "done" | "current" | "locked";
 
+// Pages open in a rolling window: the first unwritten one plus the next few,
+// so one awkward prompt never blocks the whole notebook.
+const OPEN_WINDOW = 3;
+
 export function getChapterStatuses(chapters: Prompt[][], completedKeys: Set<string>): ChapterStatus[] {
-  const statuses: ChapterStatus[] = [];
-  let previousDone = true;
-  for (const chapter of chapters) {
-    const done = chapter.length > 0 && chapter.every((p) => completedKeys.has(p.key));
-    statuses.push(done ? "done" : previousDone ? "current" : "locked");
-    previousDone = done;
-  }
-  return statuses;
+  const done = chapters.map(
+    (chapter) => chapter.length > 0 && chapter.every((p) => completedKeys.has(p.key))
+  );
+  const firstOpen = done.findIndex((d) => !d);
+  return done.map((d, i) => {
+    if (d) return "done";
+    if (firstOpen >= 0 && i < firstOpen + OPEN_WINDOW) return "current";
+    return "locked";
+  });
 }
 
 /** UTC start of today, as an ISO string — the writing day boundary. */

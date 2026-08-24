@@ -96,7 +96,7 @@ export default async function ReadingMapPage({
           </div>
 
           <p className="text-[13px] text-[#6B6560] mb-6">
-            Read the story, then answer the questions — each chapter unlocks the next.
+            Read the story, then answer the questions — finishing chapters keeps the next few open.
           </p>
 
           {/* level tabs */}
