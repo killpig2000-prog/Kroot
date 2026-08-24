@@ -72,7 +72,7 @@ export default function AccountMenu({
             onClick={() => setOpen(false)}
             className="flex items-center gap-2.5 rounded-[9px] px-3 py-2 text-[13px] font-medium text-[#3F3F46] hover:bg-[#FAF7EF]"
           >
-            📊 My growth
+            👤 My account
           </Link>
 
           <button

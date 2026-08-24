@@ -3,9 +3,10 @@
 
 export type NavItem = { icon: string; label: string; href: string };
 
+// "My growth" merged into the Garden (2026-08): grass, costume, and progress
+// now live on /dashboard; /profile is account settings, reached via AccountMenu.
 export const MAIN_ITEMS: NavItem[] = [
   { icon: "🏡", label: "Garden", href: "/dashboard" },
-  { icon: "📊", label: "My growth", href: "/profile" },
 ];
 
 export const SECTIONS: { title: string; items: NavItem[] }[] = [

@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
 
 export type WordOfTheDay = {
   word: string;
@@ -12,17 +11,6 @@ export type WordOfTheDay = {
 };
 
 export type FeedItem = { av: string; text: string; meta: string };
-
-const DAY_LABELS = ["M", "T", "W", "T", "F", "S", "S"];
-
-const RING_C = 138.2; // circumference of r=22 circle
-
-function grassClass(minutes: number) {
-  if (minutes >= 15) return "bg-[#16A34A] border-[#16A34A] text-white";
-  if (minutes >= 8) return "bg-[#86EFAC] border-[#4ADE80] text-[#14532D]";
-  if (minutes > 0) return "bg-[#DCFCE7] border-[#BBF7D0] text-[#15803D]";
-  return "bg-[#FAF7EF] border-[#E3DDD0] text-[#A19A8C]";
-}
 
 const TAPES = [
   { background: "rgba(190,227,248,.65)", borderColor: "rgba(150,200,230,.45)" },
@@ -52,35 +40,15 @@ function WCard({ title, tag, index = 0, children }: { title: string; tag: string
   );
 }
 
+// Weekly grass and the monthly challenge ring used to live here; both were
+// absorbed into the Study garden card's headline pills on the main column.
 export default function Widgets({
-  weekMinutes,
-  weekLabel,
-  monthDone,
-  monthGoal,
-  monthLabel,
-  daysLeft,
   wotd,
   feed,
 }: {
-  weekMinutes: number[];
-  weekLabel: string;
-  monthDone: number;
-  monthGoal: number;
-  monthLabel: string;
-  daysLeft: number;
   wotd: WordOfTheDay | null;
   feed: FeedItem[];
 }) {
-  const [ringFill, setRingFill] = useState(0);
-  const pct = Math.min(100, Math.round((monthDone / monthGoal) * 100));
-
-  useEffect(() => {
-    const t = setTimeout(() => setRingFill(pct), 300);
-    return () => clearTimeout(t);
-  }, [pct]);
-
-  const wateredDays = weekMinutes.filter((m) => m > 0).length;
-
   return (
     <aside className="hidden xl:flex flex-col gap-5 border-l border-dashed border-[#DDD6C8] bg-[#FAF7EF] px-5 py-[26px] sticky top-0 h-screen overflow-y-auto">
       {wotd && (
@@ -95,56 +63,7 @@ export default function Widgets({
         </WCard>
       )}
 
-      <WCard title="This week" tag={weekLabel} index={1}>
-        <div className="grid grid-cols-7 gap-[5px]">
-          {weekMinutes.map((m, i) => (
-            <span
-              key={i}
-              className={`aspect-square rounded-md border flex items-center justify-center text-[10px] font-semibold transition-transform hover:scale-110 ${grassClass(m)}`}
-            >
-              {DAY_LABELS[i]}
-            </span>
-          ))}
-        </div>
-        <p className="text-xs text-[#6B6560] mt-2.5">
-          <b className="text-[#16A34A]">
-            {wateredDays} of 7 days
-          </b>{" "}
-          watered — {wateredDays >= 7 ? "a full week! 🎉" : "finish today for a full week!"}
-        </p>
-      </WCard>
-
-      <WCard title={`${monthLabel} challenge`} tag={`D-${daysLeft}`} index={2}>
-        <div className="flex items-center gap-3">
-          <div className="relative w-[52px] h-[52px] flex-none">
-            <svg width="52" height="52" viewBox="0 0 52 52" className="-rotate-90">
-              <circle cx="26" cy="26" r="22" fill="none" stroke="#E3DDD0" strokeWidth="5" />
-              <circle
-                cx="26"
-                cy="26"
-                r="22"
-                fill="none"
-                stroke="#16A34A"
-                strokeWidth="5"
-                strokeLinecap="round"
-                strokeDasharray={RING_C}
-                strokeDashoffset={RING_C * (1 - ringFill / 100)}
-                style={{ transition: "stroke-dashoffset 1s cubic-bezier(.2,.8,.2,1)" }}
-              />
-            </svg>
-            <b className="absolute inset-0 flex items-center justify-center text-xs font-bold text-[#16A34A]">
-              {pct}%
-            </b>
-          </div>
-          <p className="text-[12.5px] text-[#6B6560]">
-            <b className="text-[#18181B]">{monthGoal}-lesson month</b>
-            <br />
-            {monthDone} done · {Math.max(0, monthGoal - monthDone)} to go
-          </p>
-        </div>
-      </WCard>
-
-      <WCard title="Community" tag="recent" index={3}>
+      <WCard title="Community" tag="recent" index={1}>
         <div className="flex flex-col">
           {feed.length === 0 && (
             <p className="text-[12.5px] text-[#6B6560] py-1">

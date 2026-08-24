@@ -1,6 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import Link from "next/link";
+import { createClient } from "@/lib/supabase/client";
+import { COSTUMES, costumeById } from "@/lib/costumes";
 import { LEVEL_ORDER, LEVEL_PATH, SPECIES, type CefrLevel } from "@/lib/tree";
 import { MAX_LEVEL, treeStageForLevel } from "@/lib/level";
 import SpeechBubble from "@/components/ui/SpeechBubble";
@@ -23,6 +26,8 @@ export default function TreeCard({
   xpNeeded,
   costumeIds = [],
   species,
+  userId,
+  ownedIds,
 }: {
   level: number;
   progressPct: number;
@@ -31,9 +36,52 @@ export default function TreeCard({
   costumeIds?: string[];
   /** CEFR grade — decides the tree species; promotion transforms the garden. */
   species?: CefrLevel;
+  /** With ownedIds, the card grows a wardrobe strip: tap a chip to dress the tree in place. */
+  userId?: string;
+  ownedIds?: string[];
 }) {
+  const supabase = useMemo(() => createClient(), []);
   const [fill, setFill] = useState(0);
   const [evolved, setEvolved] = useState(false);
+  const [equipped, setEquipped] = useState<string[]>(costumeIds);
+  const [busy, setBusy] = useState(false);
+
+  const owned = COSTUMES.filter((c) => (ownedIds ?? []).includes(c.id));
+
+  async function toggleCostume(costumeId: string) {
+    if (busy || !userId) return;
+    const costume = costumeById(costumeId);
+    if (!costume) return;
+    setBusy(true);
+
+    const isOn = equipped.includes(costumeId);
+    if (isOn) {
+      await supabase
+        .from("user_costumes")
+        .update({ equipped: false })
+        .eq("user_id", userId)
+        .eq("costume_id", costumeId);
+      setEquipped((prev) => prev.filter((id) => id !== costumeId));
+    } else {
+      // One item per slot: unequip anything else occupying it first.
+      await supabase
+        .from("user_costumes")
+        .update({ equipped: false })
+        .eq("user_id", userId)
+        .eq("slot", costume.slot);
+      await supabase
+        .from("user_costumes")
+        .update({ equipped: true })
+        .eq("user_id", userId)
+        .eq("costume_id", costumeId);
+      setEquipped((prev) => [
+        ...prev.filter((id) => costumeById(id)?.slot !== costume.slot),
+        costumeId,
+      ]);
+    }
+
+    setBusy(false);
+  }
 
   useEffect(() => {
     const t = setTimeout(() => setFill(progressPct), 200);
@@ -70,10 +118,30 @@ export default function TreeCard({
         </div>
         <div
           className="flex justify-center px-3 pt-3"
-          style={{ background: "linear-gradient(180deg,#EAF6FF 0%,#F0FDF4 70%,#E8F5DF 100%)" }}
+          style={{ background: "linear-gradient(180deg,#DFF1FF 0%,#F0FBF1 62%,#E4F3DA 100%)" }}
         >
-          <svg viewBox="0 0 220 230" className="w-[clamp(120px,18vw,158px)] h-auto" aria-hidden="true">
-            <LevelCreature level={stage} costumeIds={costumeIds} species={species} />
+          <svg viewBox="0 0 220 230" className="w-[clamp(140px,20vw,190px)] h-auto" aria-hidden="true">
+            {/* garden backdrop: sun, clouds, and a grass hill under the soil */}
+            <defs>
+              <radialGradient id="tc-sun" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stopColor="#FFE9A8" />
+                <stop offset="55%" stopColor="#FFE9A8" stopOpacity=".55" />
+                <stop offset="100%" stopColor="#FFE9A8" stopOpacity="0" />
+              </radialGradient>
+              <linearGradient id="tc-hill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#CDE8C2" />
+                <stop offset="100%" stopColor="#BBDCAE" />
+              </linearGradient>
+            </defs>
+            <circle cx="182" cy="34" r="30" fill="url(#tc-sun)" />
+            <circle cx="182" cy="34" r="12" fill="#FFDE7A" />
+            <g fill="#FFFFFF" opacity=".85">
+              <ellipse cx="46" cy="36" rx="16" ry="6" />
+              <ellipse cx="60" cy="32" rx="11" ry="5" />
+              <ellipse cx="140" cy="60" rx="12" ry="4.6" opacity=".7" />
+            </g>
+            <ellipse cx="110" cy="234" rx="150" ry="34" fill="url(#tc-hill)" />
+            <LevelCreature level={stage} costumeIds={equipped} species={species} />
             <g className="bob">
               <circle cx="60" cy="78" r="6" fill="#FACC15" />
             </g>
@@ -161,6 +229,46 @@ export default function TreeCard({
             );
           })}
         </div>
+
+        {/* wardrobe strip — dress the tree without leaving the garden */}
+        {userId && ownedIds && (
+          <div className="mt-4 pt-3.5 border-t border-dashed border-[#E3DDD0] flex items-center gap-2 flex-wrap">
+            <b className="text-[12.5px] font-bold mr-0.5">My costume</b>
+            {owned.length === 0 ? (
+              <span className="text-[12.5px] text-[#6B6560]">
+                No costumes yet — treat your tree at the shop.
+              </span>
+            ) : (
+              owned.map((c) => {
+                const on = equipped.includes(c.id);
+                return (
+                  <button
+                    key={c.id}
+                    onClick={() => toggleCostume(c.id)}
+                    disabled={busy}
+                    className={`flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[12px] font-semibold border transition-all disabled:opacity-60 ${
+                      on
+                        ? "bg-[#F0FDF4] border-[#BBF7D0] text-[#15803D]"
+                        : "bg-[#FAF7EF] border-[#E3DDD0] text-[#6B6560] hover:border-[#A19A8C]"
+                    }`}
+                  >
+                    <svg viewBox="-40 -30 80 60" className="w-[26px] h-[19px]" aria-hidden="true">
+                      {c.render()}
+                    </svg>
+                    {c.name}
+                    {on && " ✓"}
+                  </button>
+                );
+              })
+            )}
+            <Link
+              href="/shop"
+              className="ml-auto text-[12.5px] font-semibold text-[#6B6560] hover:text-[#18181B] transition-colors whitespace-nowrap"
+            >
+              Shop for more →
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -9,8 +9,11 @@ import Widgets from "@/components/dashboard/Widgets";
 import Greeting from "@/components/dashboard/Greeting";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { levelProgress } from "@/lib/level";
-import { COURSE_DAYS, nextCourseDay } from "@/lib/course";
+import { COURSE_DAYS, COURSE_TOTAL_DAYS, nextCourseDay } from "@/lib/course";
 import CourseCard from "@/components/dashboard/CourseCard";
+import MonthlyGrass from "@/components/profile/MonthlyGrass";
+import { computeEligibility } from "@/lib/promotion-server";
+import { testForGrade } from "@/lib/promotion-test";
 import { DIALOGUES } from "@/lib/listening-dialogues";
 import { getPassagesForLevel } from "@/lib/reading";
 import { getPromptsForLevel } from "@/lib/writing";
@@ -21,37 +24,13 @@ import { timeAgo } from "@/lib/community";
 import { isPlus } from "@/lib/plus";
 import type { CefrLevel } from "@/lib/tree";
 
-type Category = { key: string; kr: string; en: string; sub: string; bg: string; color: string };
-
-const GROUPS: { title: string; sub: string; items: Category[] }[] = [
-  {
-    title: "Basics",
-    sub: "Start from zero — letters, sounds, and rules",
-    items: [
-      { key: "hangul", kr: "ㄱ", en: "Hangul", sub: "The Korean alphabet, with audio", bg: "#F0FDF4", color: "#16A34A" },
-      { key: "grammar", kr: "문", en: "Grammar", sub: "Bite-size rules with examples", bg: "#EEF2FF", color: "#4F46E5" },
-      { key: "pronunciation", kr: "발", en: "Pronunciation", sub: "Record and get checked", bg: "#F0FDFA", color: "#0D9488" },
-      { key: "vocabulary", kr: "단", en: "Vocabulary", sub: "Flip cards by topic", bg: "#F5F3FF", color: "#7C3AED" },
-    ],
-  },
-  {
-    title: "Practice",
-    sub: "Daily training for the four big skills",
-    items: [
-      { key: "listening", kr: "듣", en: "Listening", sub: "Level-matched audio, A1–C2", bg: "#F0FDF4", color: "#16A34A" },
-      { key: "speaking", kr: "말", en: "Speaking", sub: "Say it, get AI feedback", bg: "#FFF1F2", color: "#E11D48" },
-      { key: "writing", kr: "쓰", en: "Writing", sub: "Type sentences, instant fixes", bg: "#FFFBEB", color: "#D97706" },
-      { key: "reading", kr: "읽", en: "Reading", sub: "Korean articles with word hints", bg: "#EFF6FF", color: "#2563EB" },
-    ],
-  },
-  {
-    title: "Relax",
-    sub: "Wind down without stopping",
-    items: [
-      { key: "slang", kr: "슬", en: "Slang", sub: "What Koreans actually say", bg: "#FDF2F8", color: "#DB2777" },
-      { key: "community", kr: "🏕️", en: "Community", sub: "Learners worldwide, one board", bg: "#F8FAFC", color: "#334155" },
-    ],
-  },
+// The old Basics/Practice/Relax card list duplicated the sidebar; only the
+// four practice skills keep an in-page presence, as compact progress rows.
+const PRACTICE_SKILLS = [
+  { key: "listening", kr: "듣", en: "Listening", bg: "#F0FDF4", color: "#16A34A" },
+  { key: "reading", kr: "읽", en: "Reading", bg: "#EFF6FF", color: "#2563EB" },
+  { key: "writing", kr: "쓰", en: "Writing", bg: "#FFFBEB", color: "#D97706" },
+  { key: "speaking", kr: "말", en: "Speaking", bg: "#FFF1F2", color: "#E11D48" },
 ];
 
 const MONTH_GOAL = 20;
@@ -73,6 +52,21 @@ function todayISO() {
   return iso(new Date());
 }
 
+/** Longest run of consecutive study days across the whole history. */
+function bestStreak(dates: string[]): number {
+  const sorted = [...new Set(dates)].sort();
+  let best = 0;
+  let run = 0;
+  let prev: Date | null = null;
+  for (const isoDay of sorted) {
+    const d = new Date(isoDay);
+    run = prev && d.getTime() - prev.getTime() === 86_400_000 ? run + 1 : 1;
+    best = Math.max(best, run);
+    prev = d;
+  }
+  return best;
+}
+
 /* Monday-start week of `now`, as 7 ISO dates */
 function weekDates(now: Date) {
   const monday = new Date(now);
@@ -92,18 +86,17 @@ export default async function DashboardPage() {
 
   const today = todayISO();
 
-  // right-panel widget data window, computed up front so every query can run
-  // in one parallel batch — from Korea to us-east-1 each round trip is
-  // ~300ms, so sequential awaits were the whole reason this page felt slow.
+  // Date windows computed up front so every query can run in one parallel
+  // batch — from Korea to us-east-1 each round trip is ~300ms, so sequential
+  // awaits were the whole reason this page felt slow.
   const now = new Date();
   const week = weekDates(now);
   const monthStart = iso(new Date(now.getFullYear(), now.getMonth(), 1));
-  const rangeStart = week[0] < new Date(monthStart) ? iso(week[0]) : monthStart;
 
   const [
     { data: profile },
     { data: streakValue, error: streakError },
-    { data: equippedRows },
+    { data: costumeRows },
     questRes,
     { data: listeningRows },
     { data: readingRows },
@@ -122,7 +115,7 @@ export default async function DashboardPage() {
       .single(),
     // touch_streak bumps (or resets) the streak server-side and returns its new value.
     supabase.rpc("touch_streak"),
-    supabase.from("user_costumes").select("costume_id").eq("user_id", user.id).eq("equipped", true),
+    supabase.from("user_costumes").select("costume_id, equipped").eq("user_id", user.id),
     supabase
       .from("daily_quests")
       .select("id, skill_key, title, description, completed_at")
@@ -143,11 +136,11 @@ export default async function DashboardPage() {
       .select("id", { count: "exact", head: true })
       .eq("user_id", user.id)
       .lte("next_review_at", new Date().toISOString()),
+    // Full history: the year grass + lifetime totals need every study day.
     supabase
       .from("daily_activity")
       .select("activity_date, minutes")
-      .eq("user_id", user.id)
-      .gte("activity_date", rangeStart),
+      .eq("user_id", user.id),
     supabase.from("path_progress").select("step_key").eq("user_id", user.id),
     supabase
       .from("level_test_results")
@@ -161,7 +154,8 @@ export default async function DashboardPage() {
   if (!levelTestRes.error && (levelTestRes.count ?? 0) === 0) redirect("/onboarding");
 
   const streakDays = streakError ? profile?.streak_days ?? 0 : (streakValue as number) ?? 0;
-  const equippedIds = (equippedRows ?? []).map((r) => r.costume_id);
+  const ownedIds = (costumeRows ?? []).map((r) => r.costume_id);
+  const equippedIds = (costumeRows ?? []).filter((r) => r.equipped).map((r) => r.costume_id);
 
   let quest = questRes.data;
   const questOfTheDay = QUEST_ROTATION[Math.floor(Date.parse(today) / 86_400_000) % QUEST_ROTATION.length];
@@ -176,6 +170,18 @@ export default async function DashboardPage() {
 
   // Real per-skill progress: completed items at the user's difficulty tier.
   const cefr = (profile?.current_level ?? "A1") as CefrLevel;
+
+  // Promotion eligibility runs after the main batch (it needs the grade);
+  // internally it fans out its own queries in parallel.
+  const elig = await computeEligibility(supabase, user.id, cefr);
+  const promo = testForGrade(cefr);
+  const accuracyPct = Math.round(elig.accuracy * 100);
+  const accuracyLabel = elig.hasAccuracyData ? `${accuracyPct}%` : "—";
+  const promoChecks = [
+    { label: "Words", ok: elig.wordsReviewed >= elig.wordsRequired, value: `${elig.wordsReviewed}/${elig.wordsRequired}` },
+    { label: "Accuracy", ok: elig.hasAccuracyData && accuracyPct >= Math.round(elig.accuracyRequired * 100), value: accuracyLabel },
+    { label: "Reading", ok: elig.readingDone >= elig.readingRequired, value: `${elig.readingDone}/${elig.readingRequired}` },
+  ];
   // Errors (e.g. migration 0022 not applied yet) just hide the watering card.
   const dueCount = dueRes.error ? 0 : dueRes.count ?? 0;
 
@@ -226,15 +232,15 @@ export default async function DashboardPage() {
     meta: `${p.author_name}${p.author_plus ? " 🌟" : ""} · ${timeAgo(p.created_at)}`,
   }));
 
-  const byDate = new Map((activity ?? []).map((a) => [a.activity_date, a.minutes ?? 0]));
-  const weekMinutes = week.map((d) => byDate.get(iso(d)) ?? 0);
+  // Study-garden numbers (lived on My growth before the merge): the year
+  // grass plus lifetime pills, with the old week/month widgets folded in.
+  const minutesByDate = new Map((activity ?? []).map((a) => [a.activity_date, a.minutes ?? 0]));
+  const weekTotal = week.reduce((sum, d) => sum + (minutesByDate.get(iso(d)) ?? 0), 0);
+  const totalMinutes = (activity ?? []).reduce((sum, a) => sum + (a.minutes ?? 0), 0);
+  const activeDates = (activity ?? []).filter((a) => (a.minutes ?? 0) > 0).map((a) => a.activity_date);
+  const longestStreak = Math.max(bestStreak(activeDates), streakDays);
   const monthDone = (activity ?? []).filter((a) => a.activity_date >= monthStart && (a.minutes ?? 0) > 0).length;
-
-  const monthEnd = new Date(now.getFullYear(), now.getMonth() + 1, 0);
-  const daysLeft = monthEnd.getDate() - now.getDate();
-  const fmt = (d: Date) => d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
-  const weekLabel = `${fmt(week[0])}–${week[6].getDate()}`;
-  const monthLabel = now.toLocaleDateString("en-US", { month: "long" });
+  const monthShort = now.toLocaleDateString("en-US", { month: "short" });
 
   const displayName = profile?.display_name ?? "there";
   const { level, into, needed, pct } = levelProgress(profile?.xp ?? 0);
@@ -252,6 +258,13 @@ export default async function DashboardPage() {
     courseNext = nextCourseDay(doneKeys);
     courseDoneDays = COURSE_DAYS.filter((d) => doneKeys.has(d.key)).map((d) => d.day);
   }
+
+  // Course gauge inside Learning progress (mirrors the old My growth rules):
+  // A1 learners only; hidden if dismissed and never started; a finished
+  // course collapses to a one-line badge.
+  const courseDone = (courseRows ?? []).filter((r) => r.step_key.startsWith("course-day-")).length;
+  const courseFinished = courseDone >= COURSE_TOTAL_DAYS;
+  const showCourseGauge = cefr === "A1" && !courseFinished && (courseDone > 0 || !profile?.path_hidden);
 
   return (
     <div className="min-h-screen bg-[#FDFBF7] text-[#221F1B]">
@@ -275,7 +288,16 @@ export default async function DashboardPage() {
             )}
           </p>
 
-          <TreeCard level={level} progressPct={pct} xpInto={into} xpNeeded={needed} costumeIds={equippedIds} species={cefr} />
+          <TreeCard
+            level={level}
+            progressPct={pct}
+            xpInto={into}
+            xpNeeded={needed}
+            costumeIds={equippedIds}
+            species={cefr}
+            userId={user.id}
+            ownedIds={ownedIds}
+          />
 
           {/* watering (spaced-repetition review) */}
           {dueCount > 0 && (
@@ -364,66 +386,116 @@ export default async function DashboardPage() {
             </span>
           </Link>
 
-          {/* grouped skill list */}
-          {GROUPS.map((group) => (
-            <div key={group.title} className="mb-[30px]">
-              <div className="flex items-baseline justify-between mb-3.5">
-                <span className="font-extrabold text-[15px] tracking-[-0.01em]">{group.title}</span>
-                <span className="text-[12.5px] text-[#A19A8C] font-medium">{group.sub}</span>
-              </div>
-              <div className="border border-[#E3DDD0] rounded-[14px] overflow-hidden shadow-[0_10px_24px_-18px_rgba(60,50,30,.3)]">
-                {group.items.map((c) => {
-                  const done = quest?.skill_key === c.key && !!quest?.completed_at;
-                  const prog = skillProgress[c.key];
-                  return (
-                    <Link
-                      key={c.en}
-                      href={`/${c.key}`}
-                      className="w-full flex items-center gap-3.5 text-left bg-white border-b border-dashed border-[#E3DDD0] last:border-b-0 px-[18px] py-[13px] transition-colors hover:bg-[#FAF7EF] group"
+          {/* learning progress — replaces the old category card list (the
+              sidebar already covers navigation); SkillBars live on here */}
+          <div className="border border-[#E3DDD0] rounded-[14px] bg-white px-[22px] py-5 mb-[14px]">
+            <div className="flex items-baseline justify-between gap-3 mb-3.5 flex-wrap">
+              <b className="font-semibold text-[15px]">📈 Learning progress</b>
+              <small className="text-[12.5px] text-[#A19A8C] font-medium">{cefr} difficulty</small>
+            </div>
+
+            {showCourseGauge && (
+              <Link href="/course" className="flex items-center gap-3 mb-4 group">
+                <span className="flex-none text-[12.5px] font-semibold text-[#6B6560] w-[92px]">
+                  Course {courseDone}/{COURSE_TOTAL_DAYS}
+                </span>
+                <span className="flex-1 h-2.5 rounded-full bg-[#F5F5F4] overflow-hidden">
+                  <span
+                    className="block h-full rounded-full bg-[#16A34A] transition-all"
+                    style={{ width: `${Math.round((courseDone / COURSE_TOTAL_DAYS) * 100)}%` }}
+                  />
+                </span>
+                <b className="flex-none text-[12.5px] tabular-nums transition-transform group-hover:translate-x-0.5">
+                  {Math.round((courseDone / COURSE_TOTAL_DAYS) * 100)}%
+                </b>
+              </Link>
+            )}
+            {courseFinished && (
+              <p className="text-[12.5px] font-semibold text-[#16A34A] mb-4">
+                ✓ 16-Day Course complete 🎉
+              </p>
+            )}
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2.5">
+              {PRACTICE_SKILLS.map((c) => {
+                const done = quest?.skill_key === c.key && !!quest?.completed_at;
+                const prog = skillProgress[c.key];
+                return (
+                  <Link key={c.key} href={`/${c.key}`} className="flex items-center gap-3 group">
+                    <span
+                      className="w-[30px] h-[30px] rounded-lg flex-none flex items-center justify-center kr text-[13px] transition-transform group-hover:scale-110"
+                      style={{ background: c.bg, color: c.color }}
                     >
-                      <span
-                        className="w-9 h-9 rounded-[9px] flex-none flex items-center justify-center kr text-base transition-transform group-hover:scale-110"
-                        style={{ background: c.bg, color: c.color }}
-                      >
-                        {c.kr}
-                      </span>
-                      <span className="flex-1 min-w-0">
-                        <b className="block font-semibold text-sm">{c.en}</b>
-                        {group.title === "Practice" && prog ? (
-                          <SkillBar
-                            percent={prog.percent}
-                            note={prog.done > 0 ? `${prog.done}/${prog.total} · ${cefr}` : "needs water 💧"}
-                          />
-                        ) : (
-                          <small className="text-[12.5px] text-[#6B6560]">{c.sub}</small>
-                        )}
-                      </span>
-                      <span className="flex items-center gap-2 text-[12.5px] text-[#A19A8C]">
+                      {c.kr}
+                    </span>
+                    <span className="flex-1 min-w-0">
+                      <b className="font-semibold text-[13px] flex items-center gap-2">
+                        {c.en}
                         {done && (
-                          <span className="text-[11.5px] font-semibold text-[#16A34A] bg-[#F0FDF4] border border-[#BBF7D0] rounded-md px-2 py-0.5">
+                          <span className="text-[10.5px] font-semibold text-[#16A34A] bg-[#F0FDF4] border border-[#BBF7D0] rounded-md px-1.5 py-px">
                             +10 XP
                           </span>
                         )}
-                        <span className="transition-transform group-hover:translate-x-0.5">→</span>
-                      </span>
-                    </Link>
-                  );
-                })}
-              </div>
+                      </b>
+                      <SkillBar
+                        percent={prog.percent}
+                        note={prog.done > 0 ? `${prog.done}/${prog.total} · ${cefr}` : "needs water 💧"}
+                      />
+                    </span>
+                  </Link>
+                );
+              })}
             </div>
-          ))}
+          </div>
+
+          {/* promotion status — moved in from My growth */}
+          {promo && (
+            <Link
+              href="/level-test"
+              className={`rounded-[14px] px-[22px] py-4 mb-[14px] flex items-center gap-4 flex-wrap border-[1.5px] transition-colors ${
+                elig.eligible
+                  ? "border-[#16A34A] bg-[#F0FDF4] hover:bg-[#DCFCE7]"
+                  : "border-[#E3DDD0] bg-white hover:border-[#16A34A]"
+              }`}
+            >
+              <span className="text-[24px] flex-none">🎯</span>
+              <span className="flex-1 min-w-[200px]">
+                <b className="block text-[14.5px]">
+                  {elig.eligible
+                    ? `You're ready — take the ${promo.from} → ${promo.to} level-up test!`
+                    : `On the way to ${promo.to}`}
+                </b>
+                <span className="flex gap-2.5 mt-1 flex-wrap">
+                  {promoChecks.map((c) => (
+                    <small
+                      key={c.label}
+                      className={`text-[12px] font-semibold ${c.ok ? "text-[#16A34A]" : "text-[#A19A8C]"}`}
+                    >
+                      {c.ok ? "✓" : "○"} {c.label} {c.value}
+                    </small>
+                  ))}
+                </span>
+              </span>
+              <span className="flex-none text-[13px] font-bold text-[#16A34A]">
+                {elig.eligible ? "Start →" : "Details →"}
+              </span>
+            </Link>
+          )}
+
+          {/* study garden — the year grass, moved in from My growth; its
+              pills absorb the old This week / month challenge widgets */}
+          <MonthlyGrass
+            minutesByDate={minutesByDate}
+            headline={[
+              { label: "this week", value: `${weekTotal}m` },
+              { label: "total", value: totalMinutes >= 90 ? `${Math.round(totalMinutes / 6) / 10}h` : `${totalMinutes}m` },
+              { label: "best streak", value: `${longestStreak}d` },
+              { label: `${monthShort} goal`, value: `${monthDone}/${MONTH_GOAL}` },
+            ]}
+          />
         </main>
 
-        <Widgets
-          weekMinutes={weekMinutes}
-          weekLabel={weekLabel}
-          monthDone={monthDone}
-          monthGoal={MONTH_GOAL}
-          monthLabel={monthLabel}
-          daysLeft={daysLeft}
-          wotd={wotd}
-          feed={feed}
-        />
+        <Widgets wotd={wotd} feed={feed} />
       </div>
 
       <BottomNav />

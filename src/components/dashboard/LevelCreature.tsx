@@ -2,6 +2,18 @@ import type { CefrLevel } from "@/lib/tree";
 import { SPECIES, type TreeSpecies } from "@/lib/tree";
 import { CostumeLayer } from "@/lib/costumes";
 
+/** Shift a #rrggbb color toward black (f<0) or white (f>0). */
+function shade(hex: string, f: number): string {
+  const n = parseInt(hex.slice(1), 16);
+  const ch = (x: number) => {
+    const v = Math.round(f < 0 ? x * (1 + f) : x + (255 - x) * f);
+    return Math.min(255, Math.max(0, v));
+  };
+  return `#${[(n >> 16) & 255, (n >> 8) & 255, n & 255]
+    .map((x) => ch(x).toString(16).padStart(2, "0"))
+    .join("")}`;
+}
+
 function Face({
   cx,
   cy,
@@ -15,10 +27,18 @@ function Face({
   size: number;
   ink: string;
 }) {
+  const glintR = size * 0.35;
   return (
     <>
-      <circle className="blink" cx={cx - spread} cy={cy} r={size} fill={ink} />
-      <circle className="blink d2" cx={cx + spread} cy={cy} r={size} fill={ink} />
+      {/* eyes carry their glint so both blink together */}
+      <g className="blink">
+        <circle cx={cx - spread} cy={cy} r={size} fill={ink} />
+        <circle cx={cx - spread + glintR} cy={cy - glintR} r={glintR} fill="#fff" />
+      </g>
+      <g className="blink d2">
+        <circle cx={cx + spread} cy={cy} r={size} fill={ink} />
+        <circle cx={cx + spread + glintR} cy={cy - glintR} r={glintR} fill="#fff" />
+      </g>
       <circle cx={cx - spread * 1.7} cy={cy + size * 2.2} r={size * 1.2} fill="#FF9E7D" opacity=".55" />
       <circle cx={cx + spread * 1.7} cy={cy + size * 2.2} r={size * 1.2} fill="#FF9E7D" opacity=".55" />
       <path
@@ -28,6 +48,24 @@ function Face({
         fill="none"
         strokeLinecap="round"
       />
+    </>
+  );
+}
+
+// Soil mound with grass tufts and pebbles. `rx` matches the old bare ellipse
+// so shadows stay under the character's footprint.
+function Ground({ id, rx, cy }: { id: string; rx: number; cy: number }) {
+  const lx = 110 - rx + 12;
+  const rxx = 110 + rx - 12;
+  return (
+    <>
+      <ellipse cx="110" cy={cy} rx={rx} ry={rx * 0.16} fill={`url(#${id}-soil)`} />
+      <g stroke="#7BA05B" strokeWidth="2" strokeLinecap="round" fill="none">
+        <path d={`M${lx} ${cy - 3} q-1 -6 3 -9 M${lx + 4} ${cy - 2} q2 -5 6 -6`} />
+        <path d={`M${rxx} ${cy - 4} q1 -6 -3 -9 M${rxx - 4} ${cy - 3} q-2 -5 -6 -6`} />
+      </g>
+      <circle cx={110 - rx * 0.55} cy={cy + 2} r="2.4" fill="#CBB08A" />
+      <circle cx={110 + rx * 0.62} cy={cy + 3} r="2" fill="#D8C39C" />
     </>
   );
 }
@@ -51,7 +89,7 @@ function Ornament({ theme, alt }: { theme: TreeSpecies; alt: boolean }) {
         <>
           <path d="M0 -10 L0 -6" stroke="#4E9A6D" strokeWidth="2" strokeLinecap="round" />
           <path d="M-4 -7 L4 -7 L0 -3 Z" fill="#5FA97C" />
-          <circle cx="0" cy="0" r="6.5" fill={alt ? theme.petal2 : theme.petal} />
+          <circle cx="0" cy="0" r="6.5" fill={alt ? theme.petal2 : theme.petal} stroke="#D9731F" strokeWidth="1" />
           <circle cx="-2" cy="-2" r="1.8" fill={theme.center} />
         </>
       );
@@ -73,25 +111,37 @@ function Ornament({ theme, alt }: { theme: TreeSpecies; alt: boolean }) {
   }
 }
 
-// Broadleaf canopy shared by the four tree-shaped stages.
+// Broadleaf canopy shared by the four tree-shaped stages: a rim shadow
+// underneath for depth, the cluster itself, then a soft gloss top-left.
 function RoundCanopy({ theme, size }: { theme: TreeSpecies; size: "sm" | "lg" }) {
+  const rim = shade(theme.canopy[2], -0.16);
   if (size === "sm") {
     return (
       <>
+        <circle cx="110" cy="111" r="47" fill={rim} />
+        <circle cx="76" cy="129" r="27" fill={rim} />
+        <circle cx="144" cy="129" r="27" fill={rim} />
         <circle cx="110" cy="108" r="46" fill={theme.canopy[0]} />
         <circle cx="76" cy="126" r="26" fill={theme.canopy[1]} />
         <circle cx="144" cy="126" r="26" fill={theme.canopy[1]} />
         <circle cx="110" cy="76" r="26" fill={theme.canopy[2]} />
+        <circle cx="92" cy="84" r="16" fill="#FFFFFF" opacity=".26" />
+        <circle cx="72" cy="118" r="7" fill="#FFFFFF" opacity=".2" />
       </>
     );
   }
   return (
     <>
+      <circle cx="110" cy="101" r="55" fill={rim} />
+      <circle cx="66" cy="121" r="29" fill={rim} />
+      <circle cx="154" cy="121" r="29" fill={rim} />
       <circle cx="110" cy="98" r="54" fill={theme.canopy[0]} />
       <circle cx="66" cy="118" r="28" fill={theme.canopy[1]} />
       <circle cx="154" cy="118" r="28" fill={theme.canopy[1]} />
       <circle cx="110" cy="60" r="30" fill={theme.canopy[2]} />
       <circle cx="80" cy="70" r="20" fill={theme.canopy[2]} opacity=".85" />
+      <circle cx="90" cy="70" r="20" fill="#FFFFFF" opacity=".22" />
+      <circle cx="62" cy="110" r="9" fill="#FFFFFF" opacity=".16" />
     </>
   );
 }
@@ -99,19 +149,34 @@ function RoundCanopy({ theme, size }: { theme: TreeSpecies; size: "sm" | "lg" })
 // Layered conifer silhouette (pine). Same footprint as the round canopy so
 // costume anchors still land sensibly.
 function ConiferCanopy({ theme, size }: { theme: TreeSpecies; size: "sm" | "lg" }) {
+  const rim = shade(theme.canopy[2], -0.16);
   if (size === "sm") {
     return (
       <>
+        <path d="M110 83 L156 143 L64 143 Z" fill={rim} />
         <path d="M110 80 L154 140 L66 140 Z" fill={theme.canopy[0]} />
         <path d="M110 52 L142 102 L78 102 Z" fill={theme.canopy[1]} />
+        <path d="M110 56 L94 82 L110 82 Z" fill="#FFFFFF" opacity=".18" />
       </>
     );
   }
   return (
     <>
+      <path d="M110 95 L178 171 L42 171 Z" fill={rim} />
       <path d="M110 92 L176 168 L44 168 Z" fill={theme.canopy[2]} />
       <path d="M110 56 L162 124 L58 124 Z" fill={theme.canopy[0]} />
       <path d="M110 26 L146 84 L74 84 Z" fill={theme.canopy[1]} />
+      <path d="M110 30 L88 66 L110 66 Z" fill="#FFFFFF" opacity=".16" />
+    </>
+  );
+}
+
+// Trunk with a lit left edge and a couple of bark curves.
+function Trunk({ id, d, width, bark }: { id: string; d: string; width: number; bark?: string }) {
+  return (
+    <>
+      <path d={d} stroke={`url(#${id}-trunk)`} strokeWidth={width} strokeLinecap="round" />
+      {bark && <path d={bark} stroke="#6E5238" strokeWidth="1.7" fill="none" strokeLinecap="round" />}
     </>
   );
 }
@@ -132,6 +197,17 @@ const CONIFER_SPOTS: [number, number][] = [
 const ROUND_SPOTS_B2: [number, number][] = [[80, 62], [148, 72], [58, 112]];
 const CONIFER_SPOTS_B2: [number, number][] = [[110, 70], [88, 122], [136, 128]];
 
+// Small stages get zoomed so they fill the 220x230 frame instead of hugging
+// the bottom third. Costumes sit inside the group, so anchors scale along.
+const STAGE_ZOOM: Record<CefrLevel, { s: number; cy: number }> = {
+  A1: { s: 1.45, cy: 206 },
+  A2: { s: 1.28, cy: 212 },
+  B1: { s: 1.1, cy: 212 },
+  B2: { s: 1, cy: 216 },
+  C1: { s: 1, cy: 216 },
+  C2: { s: 1, cy: 216 },
+};
+
 export default function LevelCreature({
   level,
   costumeIds = [],
@@ -147,27 +223,72 @@ export default function LevelCreature({
   const conifer = theme.shape === "conifer";
   const outfit = <CostumeLayer level={level} costumeIds={costumeIds} />;
 
+  // Gradient ids vary by species+stage so several different creatures can
+  // share one page (league board); identical instances share identical defs.
+  const id = `lc-${species ?? level}-${level}`;
+  const zoom = STAGE_ZOOM[level];
+  const defs = (
+    <defs>
+      <linearGradient id={`${id}-soil`} x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor="#E6D3AC" />
+        <stop offset="100%" stopColor="#C9AC7E" />
+      </linearGradient>
+      <linearGradient id={`${id}-trunk`} x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stopColor="#9B7B57" />
+        <stop offset="55%" stopColor="#8A6B4A" />
+        <stop offset="100%" stopColor="#6E5238" />
+      </linearGradient>
+      <radialGradient id={`${id}-seed`} cx="38%" cy="28%" r="78%">
+        <stop offset="0%" stopColor="#B39066" />
+        <stop offset="55%" stopColor="#8A6B4A" />
+        <stop offset="100%" stopColor="#66492F" />
+      </radialGradient>
+      <radialGradient id={`${id}-head`} cx="38%" cy="30%" r="75%">
+        <stop offset="0%" stopColor={shade(theme.canopy[1], 0.18)} />
+        <stop offset="60%" stopColor={theme.canopy[0]} />
+        <stop offset="100%" stopColor={shade(theme.canopy[2], -0.06)} />
+      </radialGradient>
+    </defs>
+  );
+
+  const frame = (children: React.ReactNode) => (
+    <>
+      {defs}
+      <g transform={`translate(110 ${zoom.cy + zoom.s * 2}) scale(${zoom.s}) translate(-110 -${zoom.cy})`}>
+        {children}
+      </g>
+    </>
+  );
+
   switch (level) {
     case "A1":
       // Seed — half-buried in a soil mound, fast asleep. zzz floats above.
-      return (
+      return frame(
         <>
-          <ellipse cx="110" cy="207" rx="42" ry="10" fill="#C9A97C" />
-          <ellipse cx="110" cy="202" rx="34" ry="8" fill="#D8C39C" />
+          <Ground id={id} rx={46} cy={206} />
+          <ellipse cx="110" cy="202" rx="34" ry="7" fill="#DCC79E" />
           <g className="char-tumble">
             <g className="sway">
-              <ellipse cx="110" cy="186" rx="24" ry="27" fill="#8A6B4A" />
-              <ellipse cx="102" cy="175" rx="8" ry="10" fill="#A9865E" opacity=".6" />
+              <ellipse cx="110" cy="185" rx="25" ry="28" fill={`url(#${id}-seed)`} stroke="#5E4A34" strokeWidth="2" />
+              <ellipse cx="101" cy="171" rx="7.5" ry="10" fill="#C8A87E" opacity=".55" />
+              <path d="M104 190 q-8 1 -11 6" stroke="#6E5238" strokeWidth="1.4" fill="none" strokeLinecap="round" opacity=".6" />
               <path
-                d="M110 159 C110 149 116 143 126 141 C124 151 118 157 110 159Z"
+                d="M110 158 C110 147 117 141 128 139 C126 150 119 156 110 158Z"
                 fill={theme.canopy[0]}
+                stroke={shade(theme.canopy[2], -0.2)}
+                strokeWidth="1.6"
+                strokeLinejoin="round"
               />
+              <path d="M112 156 C116 151 120 146 124 143" stroke={shade(theme.canopy[2], -0.2)} strokeWidth="1.2" fill="none" strokeLinecap="round" />
               {/* closed sleepy eyes */}
-              <path d="M98 184 Q102 187 106 184" stroke="#5E4A34" strokeWidth="2.4" fill="none" strokeLinecap="round" />
-              <path d="M114 184 Q118 187 122 184" stroke="#5E4A34" strokeWidth="2.4" fill="none" strokeLinecap="round" />
-              <ellipse cx="110" cy="193" rx="2.6" ry="1.8" fill="#5E4A34" />
-              <text x="138" y="160" fontSize="13" fontWeight="800" fill="#B9A88C">z</text>
-              <text x="147" y="148" fontSize="17" fontWeight="800" fill="#CBBB9E">z</text>
+              <path d="M97 183 Q101 186.5 105 183" stroke="#4A3826" strokeWidth="2.6" fill="none" strokeLinecap="round" />
+              <path d="M115 183 Q119 186.5 123 183" stroke="#4A3826" strokeWidth="2.6" fill="none" strokeLinecap="round" />
+              <circle cx="93" cy="190" r="4" fill="#FF9E7D" opacity=".5" />
+              <circle cx="127" cy="190" r="4" fill="#FF9E7D" opacity=".5" />
+              <ellipse cx="110" cy="192" rx="2.6" ry="1.9" fill="#4A3826" />
+              <text x="136" y="160" fontSize="12" fontWeight="800" fill="#A9987C" opacity=".9">z</text>
+              <text x="145" y="149" fontSize="15" fontWeight="800" fill="#B9A88C" opacity=".7">z</text>
+              <text x="155" y="138" fontSize="18" fontWeight="800" fill="#CBBB9E" opacity=".5">z</text>
               {outfit}
             </g>
           </g>
@@ -176,22 +297,34 @@ export default function LevelCreature({
 
     case "A2":
       // Sprout — cotyledon leaves spread like arms, sparkly first-day eyes.
-      return (
+      return frame(
         <>
-          <ellipse cx="110" cy="212" rx="46" ry="11" fill="#E2D5B8" />
+          <Ground id={id} rx={48} cy={212} />
           <g className="char-stroll">
             <g className="sway">
-            <path d="M110 200 C110 178 110 168 110 156" stroke="#4E9A6D" strokeWidth="6" strokeLinecap="round" />
-            <path d="M110 178 C94 174 84 164 82 152 C98 154 108 164 110 176Z" fill={theme.canopy[0]} />
-            <path d="M110 168 C126 164 136 154 138 142 C122 144 112 154 110 166Z" fill={theme.canopy[1]} />
-            <circle cx="110" cy="140" r="20" fill={theme.canopy[0]} />
-            <Face cx={110} cy={138} spread={6} size={2.6} ink={theme.ink} />
-            {/* sparkle glints — everything is new and exciting */}
-            <circle cx="105.5" cy="136.5" r="1" fill="#fff" />
-            <circle cx="117.5" cy="136.5" r="1" fill="#fff" />
-            <path d="M140 120 L142 125 L147 127 L142 129 L140 134 L138 129 L133 127 L138 125Z" fill="#FFD66B" />
-            <path d="M84 128 L85.5 131.5 L89 133 L85.5 134.5 L84 138 L82.5 134.5 L79 133 L82.5 131.5Z" fill="#FFD66B" opacity=".8" />
-            {outfit}
+              <path d="M110 205 C110 180 110 168 110 156" stroke="#4E9A6D" strokeWidth="6.5" strokeLinecap="round" />
+              <path
+                d="M110 178 C94 174 84 164 82 152 C98 154 108 164 110 176Z"
+                fill={theme.canopy[0]}
+                stroke={shade(theme.canopy[2], -0.18)}
+                strokeWidth="1.6"
+                strokeLinejoin="round"
+              />
+              <path d="M108 172 C100 168 93 162 89 156" stroke={shade(theme.canopy[2], -0.18)} strokeWidth="1.2" fill="none" strokeLinecap="round" />
+              <path
+                d="M110 168 C126 164 136 154 138 142 C122 144 112 154 110 166Z"
+                fill={theme.canopy[1]}
+                stroke={shade(theme.canopy[2], -0.12)}
+                strokeWidth="1.6"
+                strokeLinejoin="round"
+              />
+              <path d="M112 162 C120 158 127 152 131 146" stroke={shade(theme.canopy[2], -0.12)} strokeWidth="1.2" fill="none" strokeLinecap="round" />
+              <circle cx="110" cy="140" r="21" fill={`url(#${id}-head)`} stroke={shade(theme.canopy[2], -0.18)} strokeWidth="1.8" />
+              <circle cx="104" cy="133" r="6" fill="#FFFFFF" opacity=".3" />
+              <Face cx={110} cy={138} spread={6} size={2.6} ink={theme.ink} />
+              <path d="M140 118 L142.4 124 L148.4 126.4 L142.4 128.8 L140 134.8 L137.6 128.8 L131.6 126.4 L137.6 124Z" fill="#FFD66B" stroke="#E8B93E" strokeWidth="1" />
+              <path d="M83 126 L84.6 129.8 L88.4 131.4 L84.6 133 L83 136.8 L81.4 133 L77.6 131.4 L81.4 129.8Z" fill="#FFD66B" opacity=".85" />
+              {outfit}
             </g>
           </g>
         </>
@@ -199,11 +332,11 @@ export default function LevelCreature({
 
     case "B1":
       // Young tree — one waving branch and the species' first blossom.
-      return (
+      return frame(
         <>
-          <ellipse cx="110" cy="212" rx="82" ry="14" fill="#E2D5B8" />
+          <Ground id={id} rx={82} cy={212} />
           <g className="sway">
-            <path d="M110 205 C110 175 108 160 108 142" stroke="#8A6B4A" strokeWidth="13" strokeLinecap="round" />
+            <Trunk id={id} d="M110 205 C110 175 108 160 108 142" width={13} bark="M106 196 q3 -3 6 0 M107 184 q3 -3 6 0" />
             {conifer ? (
               <>
                 <ConiferCanopy theme={theme} size="sm" />
@@ -212,7 +345,7 @@ export default function LevelCreature({
             ) : (
               <>
                 {/* waving branch — saying its first 안녕 */}
-                <path d="M109 170 C126 166 136 158 140 148" stroke="#8A6B4A" strokeWidth="8" strokeLinecap="round" />
+                <path d="M109 170 C126 166 136 158 140 148" stroke={`url(#${id}-trunk)`} strokeWidth="8" strokeLinecap="round" />
                 <circle cx="146" cy="142" r="13" fill={theme.canopy[1]} />
                 <RoundCanopy theme={theme} size="sm" />
                 <Face cx={110} cy={108} spread={14} size={5} ink={theme.ink} />
@@ -229,13 +362,13 @@ export default function LevelCreature({
 
     case "B2":
       // Growing tree — bigger canopy, taller trunk, a bluebird friend.
-      return (
+      return frame(
         <>
-          <ellipse cx="110" cy="216" rx="88" ry="14" fill="#E2D5B8" />
+          <Ground id={id} rx={88} cy={216} />
           <g className="sway">
-            <path d="M110 208 C110 172 108 152 108 128" stroke="#8A6B4A" strokeWidth="15" strokeLinecap="round" />
-            <path d="M108 160 C88 154 76 140 74 124 C92 128 103 142 108 156Z" fill="#8A6B4A" />
-            <path d="M108 176 C130 172 144 158 146 142 C126 146 114 160 108 172Z" fill="#8A6B4A" />
+            <Trunk id={id} d="M110 208 C110 172 108 152 108 128" width={15} bark="M105 196 q4 -3 8 0 M106 182 q4 -3 8 0" />
+            <path d="M108 160 C88 154 76 140 74 124 C92 128 103 142 108 156Z" fill={`url(#${id}-trunk)`} />
+            <path d="M108 176 C130 172 144 158 146 142 C126 146 114 160 108 172Z" fill={`url(#${id}-trunk)`} />
             {conifer ? (
               <>
                 <ConiferCanopy theme={theme} size="lg" />
@@ -267,13 +400,13 @@ export default function LevelCreature({
 
     case "C1":
       // Blossoming — the canopy dotted with the species' blossoms or young fruit.
-      return (
+      return frame(
         <>
-          <ellipse cx="110" cy="216" rx="88" ry="14" fill="#E2D5B8" />
+          <Ground id={id} rx={88} cy={216} />
           <g className="sway">
-            <path d="M110 208 C110 172 108 152 108 128" stroke="#8A6B4A" strokeWidth="15" strokeLinecap="round" />
-            <path d="M108 160 C88 154 76 140 74 124 C92 128 103 142 108 156Z" fill="#8A6B4A" />
-            <path d="M108 176 C130 172 144 158 146 142 C126 146 114 160 108 172Z" fill="#8A6B4A" />
+            <Trunk id={id} d="M110 208 C110 172 108 152 108 128" width={15} bark="M105 196 q4 -3 8 0 M106 182 q4 -3 8 0" />
+            <path d="M108 160 C88 154 76 140 74 124 C92 128 103 142 108 156Z" fill={`url(#${id}-trunk)`} />
+            <path d="M108 176 C130 172 144 158 146 142 C126 146 114 160 108 172Z" fill={`url(#${id}-trunk)`} />
             {conifer ? <ConiferCanopy theme={theme} size="lg" /> : <RoundCanopy theme={theme} size="lg" />}
             {(conifer ? CONIFER_SPOTS : ROUND_SPOTS_C1).map(([bx, by], i) => (
               <g key={i} transform={`translate(${bx} ${by}) scale(1.1)`}>
@@ -300,13 +433,13 @@ export default function LevelCreature({
 
     case "C2":
       // Fully grown — the full harvest, a little crown, mastery sparkles.
-      return (
+      return frame(
         <>
-          <ellipse cx="110" cy="216" rx="88" ry="14" fill="#E2D5B8" />
+          <Ground id={id} rx={88} cy={216} />
           <g className="sway">
-            <path d="M110 208 C110 172 108 152 108 128" stroke="#8A6B4A" strokeWidth="15" strokeLinecap="round" />
-            <path d="M108 160 C88 154 76 140 74 124 C92 128 103 142 108 156Z" fill="#8A6B4A" />
-            <path d="M108 176 C130 172 144 158 146 142 C126 146 114 160 108 172Z" fill="#8A6B4A" />
+            <Trunk id={id} d="M110 208 C110 172 108 152 108 128" width={15} bark="M105 196 q4 -3 8 0 M106 182 q4 -3 8 0" />
+            <path d="M108 160 C88 154 76 140 74 124 C92 128 103 142 108 156Z" fill={`url(#${id}-trunk)`} />
+            <path d="M108 176 C130 172 144 158 146 142 C126 146 114 160 108 172Z" fill={`url(#${id}-trunk)`} />
             {conifer ? <ConiferCanopy theme={theme} size="lg" /> : <RoundCanopy theme={theme} size="lg" />}
             {(conifer ? CONIFER_SPOTS : ROUND_SPOTS_C2).map(([fx, fy], i) => (
               <g key={i} transform={`translate(${fx} ${fy}) scale(1.35)`}>
