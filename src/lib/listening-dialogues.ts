@@ -1,4 +1,12 @@
 import type { CefrLevel } from "@/lib/tree";
+import { CAFE_EXPANSION, CAFE_QUIZZES } from "@/lib/listening-data/cafe-expansion";
+import { RESTAURANT_EXPANSION, RESTAURANT_QUIZZES } from "@/lib/listening-data/restaurant-expansion";
+import { AIRPORT_EXPANSION, AIRPORT_QUIZZES } from "@/lib/listening-data/airport-expansion";
+import { SHOPPING_EXPANSION, SHOPPING_QUIZZES } from "@/lib/listening-data/shopping-expansion";
+import { DIRECTIONS_EXPANSION, DIRECTIONS_QUIZZES } from "@/lib/listening-data/directions-expansion";
+import { HOSPITAL_EXPANSION, HOSPITAL_QUIZZES } from "@/lib/listening-data/hospital-expansion";
+import { HOTEL_EXPANSION, HOTEL_QUIZZES } from "@/lib/listening-data/hotel-expansion";
+import { PHONE_EXPANSION, PHONE_QUIZZES } from "@/lib/listening-data/phone-expansion";
 
 export type DialogueLine = {
   speaker: string;
@@ -14,7 +22,9 @@ export type Dialogue = {
   lines: DialogueLine[];
 };
 
-export const DIALOGUES: Dialogue[] = [
+// Hand-authored base dialogues, plus per-situation expansions (2026-08) that
+// bring every situation to 20 dialogues at each of A1/A2/B1/B2.
+const BASE_DIALOGUES: Dialogue[] = [
   {
     id: "cafe-a1-order",
     situationKey: "cafe",
@@ -2695,6 +2705,18 @@ export const DIALOGUES: Dialogue[] = [
   },
 ];
 
+export const DIALOGUES: Dialogue[] = [
+  ...BASE_DIALOGUES,
+  ...CAFE_EXPANSION,
+  ...RESTAURANT_EXPANSION,
+  ...AIRPORT_EXPANSION,
+  ...SHOPPING_EXPANSION,
+  ...DIRECTIONS_EXPANSION,
+  ...HOSPITAL_EXPANSION,
+  ...HOTEL_EXPANSION,
+  ...PHONE_EXPANSION,
+];
+
 export type DialogueQuiz = {
   q: string;
   opts: string[];
@@ -2702,7 +2724,7 @@ export type DialogueQuiz = {
 };
 
 // One comprehension question per dialogue, keyed by dialogue id.
-export const QUIZZES: Record<string, DialogueQuiz> = {
+const BASE_QUIZZES: Record<string, DialogueQuiz> = {
   "cafe-a1-order": {
     q: "What did the customer order?",
     opts: ["A hot americano", "An iced americano", "A caffè latte", "A green tea"],
@@ -3983,6 +4005,18 @@ export const QUIZZES: Record<string, DialogueQuiz> = {
     opts: ["Electricity", "Water", "Gas", "Internet"],
     ans: 1,
   },
+};
+
+export const QUIZZES: Record<string, DialogueQuiz> = {
+  ...BASE_QUIZZES,
+  ...CAFE_QUIZZES,
+  ...RESTAURANT_QUIZZES,
+  ...AIRPORT_QUIZZES,
+  ...SHOPPING_QUIZZES,
+  ...DIRECTIONS_QUIZZES,
+  ...HOSPITAL_QUIZZES,
+  ...HOTEL_QUIZZES,
+  ...PHONE_QUIZZES,
 };
 
 export function dialogueById(id: string) {
