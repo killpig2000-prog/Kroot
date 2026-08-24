@@ -313,7 +313,7 @@ export const SHOPPING_C_EXPANSION: Dialogue[] = [
 
 export const SHOPPING_C_QUIZZES: Record<string, DialogueQuiz> = {
   "shopping-c1y-fastfashion": {
-    q: "What solution does 수진 say she has personally shifted toward regarding fast fashion?",
+    q: "What solution does Sujin say she has personally shifted toward regarding fast fashion?",
     opts: [
       "Buying only from brands with resale or repair services",
       "Boycotting all clothing purchases entirely",
@@ -333,7 +333,7 @@ export const SHOPPING_C_QUIZZES: Record<string, DialogueQuiz> = {
     ans: 2,
   },
   "shopping-c1y-dynamicpricing": {
-    q: "According to 은영, what can trigger a price increase under dynamic/algorithmic pricing?",
+    q: "According to Eunyoung, what can trigger a price increase under dynamic/algorithmic pricing?",
     opts: [
       "Paying with a specific credit card",
       "Repeated searches signaling high demand",
@@ -353,7 +353,7 @@ export const SHOPPING_C_QUIZZES: Record<string, DialogueQuiz> = {
     ans: 1,
   },
   "shopping-c1y-minimalism": {
-    q: "How did 소라 eventually moderate her approach to minimalism?",
+    q: "How did Sora eventually moderate her approach to minimalism?",
     opts: [
       "By refusing to buy anything for a full year",
       "By donating all her belongings at once",
@@ -393,7 +393,7 @@ export const SHOPPING_C_QUIZZES: Record<string, DialogueQuiz> = {
     ans: 1,
   },
   "shopping-c1y-counterfeit": {
-    q: "According to 혜린, what changes the legal consequences of bringing counterfeit goods into the country?",
+    q: "According to Hyerin, what changes the legal consequences of bringing counterfeit goods into the country?",
     opts: [
       "Whether the goods are intended for personal use or resale",
       "The country the goods were purchased in",
@@ -403,7 +403,7 @@ export const SHOPPING_C_QUIZZES: Record<string, DialogueQuiz> = {
     ans: 0,
   },
   "shopping-c2y-brickmortar": {
-    q: "What does 평론가B argue is the deeper reason behind brick-and-mortar decline, beyond online convenience?",
+    q: "What does Critic B argue is the deeper reason behind brick-and-mortar decline, beyond online convenience?",
     opts: [
       "Rising minimum wage for retail staff",
       "Stores failing to redefine the experiential value they offer",
@@ -433,7 +433,7 @@ export const SHOPPING_C_QUIZZES: Record<string, DialogueQuiz> = {
     ans: 1,
   },
   "shopping-c2y-personaldata": {
-    q: "What does 패널B argue is the fundamental flaw in current consent processes for personalized retail?",
+    q: "What does Panelist B argue is the fundamental flaw in current consent processes for personalized retail?",
     opts: [
       "Consent forms are too short to read",
       "Consent isn't a real choice because refusing blocks access to the service entirely",

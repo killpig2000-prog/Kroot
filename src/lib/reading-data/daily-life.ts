@@ -1,6 +1,21 @@
 import type { RawPassage } from "./types";
+import { READING_A1_A } from "./a1-a";
+import { READING_A1_B } from "./a1-b";
+import { READING_A2_A } from "./a2-a";
+import { READING_A2_B } from "./a2-b";
+import { READING_B1_A } from "./b1-a";
+import { READING_B1_B } from "./b1-b";
+import { READING_B2_A } from "./b2-a";
+import { READING_B2_B } from "./b2-b";
+import { READING_C1_A } from "./c1-a";
+import { READING_C1_B } from "./c1-b";
+import { READING_C2_A } from "./c2-a";
 
-export const DAILY_LIFE_PASSAGES: RawPassage[] = [
+// Hand-authored base passages, plus 2026-08 per-level expansions (see
+// a1-a.ts etc.) that push A1/A2/B1/B2 toward parity with the listening
+// library's per-level scale. C2 batch 2 (c2-b.ts) is still in progress and
+// not yet wired in — see [[reading-writing-expansion-paused]] memory.
+const BASE_PASSAGES: RawPassage[] = [
   {
     level: "A1",
     title_kr: "카페에서",
@@ -2040,4 +2055,19 @@ export const DAILY_LIFE_PASSAGES: RawPassage[] = [
       { question_en: "What is the analog comeback, according to the passage?", options: ["Nostalgia for the past", "Rediscovering the satisfaction of finite things", "A marketing trick", "A rejection of technology"], answerIndex: 1 },
     ],
   },
+];
+
+export const DAILY_LIFE_PASSAGES: RawPassage[] = [
+  ...BASE_PASSAGES,
+  ...READING_A1_A,
+  ...READING_A1_B,
+  ...READING_A2_A,
+  ...READING_A2_B,
+  ...READING_B1_A,
+  ...READING_B1_B,
+  ...READING_B2_A,
+  ...READING_B2_B,
+  ...READING_C1_A,
+  ...READING_C1_B,
+  ...READING_C2_A,
 ];
