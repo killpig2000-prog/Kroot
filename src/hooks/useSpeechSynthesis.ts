@@ -76,6 +76,29 @@ export function useSpeechSynthesis(lines: DialogueLine[], rate = 0.9) {
   // single line for confirmation shouldn't re-trigger the script reveal.
   const play = useCallback(() => speakFrom(0, { trackCompletion: true }), [speakFrom]);
   const replayLine = useCallback((i: number) => speakFrom(i), [speakFrom]);
+  // Resume support: continue from a saved line, still counting completion.
+  const playFrom = useCallback((i: number) => speakFrom(i, { trackCompletion: true }), [speakFrom]);
+
+  // Speak exactly one line, without chaining into the rest of the dialogue.
+  const speakOne = useCallback(
+    (i: number) => {
+      if (!isSupported || !lines[i]) return;
+      stopSpeaking();
+      indexRef.current = i;
+      setCurrentIndex(i);
+      setIsPlaying(true);
+      speakKorean(lines[i].kr, {
+        rate: rateRef.current,
+        pitch: speakerPitch(lines[i].speaker),
+        onend: () => {
+          indexRef.current = -1;
+          setCurrentIndex(-1);
+          setIsPlaying(false);
+        },
+      });
+    },
+    [isSupported, lines, speakerPitch]
+  );
 
   const stop = useCallback(() => {
     if (!isSupported) return;
@@ -85,5 +108,5 @@ export function useSpeechSynthesis(lines: DialogueLine[], rate = 0.9) {
     setIsPlaying(false);
   }, [isSupported]);
 
-  return { currentIndex, isPlaying, isSupported, hasFinished, play, replayLine, stop };
+  return { currentIndex, isPlaying, isSupported, hasFinished, play, playFrom, replayLine, speakOne, stop };
 }

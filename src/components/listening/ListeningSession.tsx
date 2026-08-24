@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { recordCompletion } from "@/lib/activity";
@@ -16,68 +16,109 @@ const BTN_LINE =
   "rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-[#18181B] bg-white border border-[#E3DDD0] hover:bg-[#FAF7EF] transition-colors";
 const Q_LABEL = "text-[11.5px] font-semibold tracking-[.06em] uppercase text-[#A19A8C] mb-2";
 
-// deterministic bar heights so SSR and client render match
-const WAVE_BARS = Array.from({ length: 26 }, (_, i) => 20 + ((i * 37) % 68));
+// ---------------------------------------------------------------------------
+// Mid-clip resume: how many lines of a dialogue have been heard, kept in
+// localStorage so a refresh or detour resumes at the same line. Clip-level
+// completion stays in the DB (listening_progress) as before.
+// ---------------------------------------------------------------------------
+function heardKey(dialogueId: string) {
+  return `kroot-listen-heard:${dialogueId}`;
+}
 
+function loadHeard(dialogueId: string, lineCount: number): number {
+  if (typeof window === "undefined") return 0;
+  const n = Number(window.localStorage.getItem(heardKey(dialogueId)) ?? 0);
+  return Number.isFinite(n) ? Math.min(Math.max(n, 0), lineCount) : 0;
+}
+
+function saveHeard(dialogueId: string, heard: number) {
+  try {
+    window.localStorage.setItem(heardKey(dialogueId), String(heard));
+  } catch {
+    // storage full/blocked — resume just won't survive a reload
+  }
+}
+
+function clearHeard(dialogueId: string) {
+  try {
+    window.localStorage.removeItem(heardKey(dialogueId));
+  } catch {
+    // ignore
+  }
+}
+
+function estMinutes(d: Dialogue) {
+  return Math.max(1, Math.round(d.lines.length / 4));
+}
+
+// ---------------------------------------------------------------------------
+// Player: one clip at a time. The current line sits on a "stage"; the script
+// below reveals karaoke-style as lines are heard, and unheard lines stay
+// masked. The quiz appears once every line has played.
+// ---------------------------------------------------------------------------
 function ClipPlayer({
   dialogue,
   clipNo,
   clipCount,
+  initialHeard,
+  onExit,
   onFinished,
 }: {
   dialogue: Dialogue;
   clipNo: number;
   clipCount: number;
+  initialHeard: number;
+  onExit: () => void;
   onFinished: (correct: boolean) => void;
 }) {
+  const lines = dialogue.lines;
   const [rate, setRate] = useState(1.0);
-  const [subOn, setSubOn] = useState(false);
-  const [picked, setPicked] = useState<number | null>(null);
   const [showEn, setShowEn] = useState(false);
-  const { currentIndex, isPlaying, isSupported, play, replayLine, stop } =
-    useSpeechSynthesis(dialogue.lines, 0.9 * rate);
+  const [heard, setHeard] = useState(() => Math.min(initialHeard, lines.length));
+  const [picked, setPicked] = useState<number | null>(null);
+  const [saving, setSaving] = useState(false);
+  const { currentIndex, isPlaying, isSupported, playFrom, speakOne, stop } =
+    useSpeechSynthesis(lines, 0.9 * rate);
 
   const quiz = QUIZZES[dialogue.id];
   const answered = picked !== null;
   const correct = quiz ? picked === quiz.ans : true;
-  const currentLine = currentIndex >= 0 ? dialogue.lines[currentIndex] : null;
+  const allHeard = heard >= lines.length;
+
+  // A line counts as heard the moment it starts playing (adjusted during
+  // render, per the React "derive state from changing values" pattern)…
+  if (currentIndex + 1 > heard) setHeard(currentIndex + 1);
+  // …and persisted so leaving mid-clip resumes at the right line.
+  useEffect(() => {
+    if (heard > 0 && heard < lines.length) saveHeard(dialogue.id, heard);
+  }, [heard, lines.length, dialogue.id]);
+
+  // The line shown on the stage: the one playing, else the last heard one.
+  const stageIndex = currentIndex >= 0 ? currentIndex : Math.min(heard, lines.length) - 1;
+  const stageLine = stageIndex >= 0 ? lines[stageIndex] : null;
+
+  function handleMainButton() {
+    if (isPlaying) {
+      stop();
+      return;
+    }
+    // Resume at the first unheard line; replay from the top once done.
+    playFrom(allHeard ? 0 : heard);
+  }
 
   return (
-    <div className="max-w-[680px] border border-[#E3DDD0] rounded-[14px] p-[clamp(20px,3vw,28px)] mb-3.5">
-      {/* clip head */}
-      <div className="flex items-center justify-between mb-4 gap-2.5 flex-wrap">
-        <div className="font-semibold text-[15.5px]">
-          {dialogue.title}
-          <small className="block text-[12.5px] text-[#6B6560] font-normal">
-            {dialogue.level} · {dialogue.lines.length} lines
-          </small>
-        </div>
-        <span className="text-[12.5px] text-[#A19A8C] font-medium">
-          Clip {clipNo} of {clipCount}
-        </span>
-      </div>
-
-      {/* player row */}
-      <div className="flex items-center gap-3.5 bg-[#FAF7EF] border border-[#E3DDD0] rounded-xl px-[18px] py-4 mb-2.5">
+    <div className="max-w-[680px]">
+      {/* header: back + title + rate */}
+      <div className="flex items-center justify-between gap-3 mb-3 flex-wrap">
         <button
-          aria-label={isPlaying ? "Stop" : "Play"}
-          className="w-[52px] h-[52px] rounded-full flex-none bg-[#0D9488] text-white text-[19px] flex items-center justify-center transition-all hover:scale-105 hover:bg-[#0F766E] disabled:opacity-50"
-          onClick={isPlaying ? stop : play}
-          disabled={!isSupported}
+          className="text-[13px] font-semibold text-[#6B6560] hover:text-[#18181B] transition-colors"
+          onClick={() => {
+            stop();
+            onExit();
+          }}
         >
-          {isPlaying ? "⏸" : "▶"}
+          ← All clips
         </button>
-        <div className={`flex-1 flex items-center gap-[3px] h-9 min-w-[80px] ${isPlaying ? "wave-on" : ""}`}>
-          {WAVE_BARS.map((h, i) => (
-            <i
-              key={i}
-              className={`flex-1 rounded-full transition-colors duration-200 ${
-                isPlaying ? "bg-[#0D9488]" : "bg-[#D6D3CC]"
-              }`}
-              style={{ height: `${h}%`, animationDelay: `${(i % 7) * 0.09}s` }}
-            />
-          ))}
-        </div>
         <button
           className="flex-none border border-[#E3DDD0] bg-white rounded-lg px-3 py-1.5 text-[12.5px] font-semibold text-[#6B6560] hover:border-[#A19A8C] transition-colors"
           onClick={() => setRate((r) => (r === 1.0 ? 0.7 : 1.0))}
@@ -86,189 +127,316 @@ function ClipPlayer({
         </button>
       </div>
 
-      {/* subtitle row */}
-      <div className="flex items-center justify-between gap-3 mb-4 flex-wrap">
-        <span className="text-xs text-[#A19A8C]">🎧 Listen as many times as you need.</span>
-        <button
-          className={`flex items-center gap-[9px] text-[13px] font-semibold transition-colors ${
-            subOn ? "text-[#0D9488]" : "text-[#6B6560]"
-          }`}
-          onClick={() => setSubOn((v) => !v)}
-        >
-          <span
-            className={`relative w-[38px] h-[22px] rounded-full flex-none transition-colors ${
-              subOn ? "bg-[#0D9488]" : "bg-[#E3DDD0]"
-            }`}
-          >
+      <div className="border border-[#E3DDD0] rounded-[14px] p-[clamp(20px,3vw,28px)] mb-3.5 bg-white">
+        <div className="flex items-center justify-between mb-3 gap-2.5 flex-wrap">
+          <div className="font-semibold text-[15.5px]">
+            {dialogue.title}
+            <small className="block text-[12.5px] text-[#6B6560] font-normal">
+              Clip {clipNo} of {clipCount} · {lines.length} lines
+            </small>
+          </div>
+          <span className="text-[12.5px] text-[#A19A8C] font-medium tabular-nums">
+            line {Math.min(heard, lines.length)}/{lines.length}
+          </span>
+        </div>
+
+        {/* per-line progress bar */}
+        <div className="flex gap-1 mb-4">
+          {lines.map((_, i) => (
             <span
-              className={`absolute top-[3px] w-4 h-4 rounded-full bg-white shadow-sm transition-all ${
-                subOn ? "left-[19px]" : "left-[3px]"
+              key={i}
+              className={`flex-1 h-[5px] rounded-full ${
+                i === currentIndex
+                  ? "bg-[#0D9488] opacity-45"
+                  : i < heard
+                    ? "bg-[#0D9488]"
+                    : "bg-[#E3DDD0]"
               }`}
             />
-          </span>
-          Subtitles
-        </button>
-      </div>
-
-      {/* live subtitle */}
-      {subOn && (
-        <div className="bg-[#F0FDFA] border border-[#99F6E4] rounded-[10px] px-4 py-[13px] mb-4">
-          <span className="block text-[11px] font-bold tracking-[.06em] text-[#0D9488] mb-[3px]">
-            CC · Korean
-          </span>
-          <p className="kr text-[16.5px] font-medium min-h-[26px]">
-            {currentLine ? currentLine.kr : "Press play to see live subtitles."}
-          </p>
+          ))}
         </div>
-      )}
 
-      {/* question */}
-      {quiz && (
-        <>
-          <p className={Q_LABEL}>Question</p>
-          <p className="font-bold text-[17px] tracking-[-0.01em] mb-3.5">{quiz.q}</p>
-          <div className="grid gap-2.5 mb-1">
-            {quiz.opts.map((opt, i) => {
-              const isAns = i === quiz.ans;
-              const isPicked = i === picked;
-              const state = !answered ? "idle" : isAns ? "correct" : isPicked ? "wrong" : "idle";
-              return (
-                <button
-                  key={i}
-                  disabled={answered}
-                  onClick={() => setPicked(i)}
-                  className={`text-left px-4 py-[13px] rounded-[10px] text-[14.5px] font-medium flex items-center gap-2.5 transition-all border-[1.5px] disabled:cursor-default ${
-                    state === "correct"
-                      ? "border-[#16A34A] bg-[#F0FDF4]"
-                      : state === "wrong"
-                      ? "border-[#DC2626] bg-[#FEF2F2]"
-                      : answered
-                      ? "border-[#E3DDD0] bg-white opacity-90"
-                      : "border-[#E3DDD0] bg-white hover:border-[#0D9488] hover:bg-[#F0FDFA]"
-                  }`}
-                >
-                  <span
-                    className={`w-6 h-6 rounded-[7px] flex-none flex items-center justify-center text-[11.5px] font-bold border ${
-                      state === "correct"
-                        ? "bg-[#16A34A] border-[#16A34A] text-white"
-                        : state === "wrong"
-                        ? "bg-[#DC2626] border-[#DC2626] text-white"
-                        : "bg-[#FAF7EF] border-[#E3DDD0] text-[#6B6560]"
-                    }`}
-                  >
-                    {ABC[i]}
-                  </span>
-                  {opt}
-                </button>
-              );
-            })}
-          </div>
-        </>
-      )}
-
-      {(answered || !quiz) && (
-        <div className="border-t border-[#E3DDD0] pt-[18px] mt-[18px]" style={{ animation: "fadeUp .35s ease" }}>
-          {quiz && (
-            <span
-              className={`inline-flex items-center gap-2 text-[13px] font-semibold rounded-lg px-3 py-1.5 mb-3.5 border ${
-                correct
-                  ? "bg-[#F0FDF4] text-[#16A34A] border-[#BBF7D0]"
-                  : "bg-[#FEF2F2] text-[#DC2626] border-[#FECACA]"
-              }`}
-            >
-              {correct ? "🌱 Correct! Sharp ears." : "💧 Not quite — read what you heard below."}
-            </span>
-          )}
-          <div className="flex items-center justify-between gap-3 mb-2 flex-wrap">
-            <p className={Q_LABEL} style={{ marginBottom: 0 }}>
-              What you heard
-            </p>
+        {/* stage */}
+        <div className="border-[1.5px] border-[#99F6E4] bg-[#F0FDFA] rounded-[14px] px-5 py-5 text-center mb-4">
+          <span className="block text-[11px] font-bold tracking-[.07em] uppercase text-[#0D9488]">
+            {stageLine ? stageLine.speaker : "Ready?"}
+            {isPlaying && " · playing"}
+          </span>
+          <p className="kr text-[19px] font-medium min-h-[29px] mt-1.5 mb-0.5">
+            {stageLine ? stageLine.kr : "Press play — lines appear as you hear them."}
+          </p>
+          <p className="text-[12.5px] text-[#6B6560] min-h-[19px]">
+            {stageLine && showEn ? stageLine.en : " "}
+          </p>
+          <div className="flex items-center justify-center gap-3.5 mt-3 mb-1">
             <button
-              className="text-[12.5px] font-semibold text-[#6B6560] hover:text-[#18181B] transition-colors"
-              onClick={() => setShowEn((v) => !v)}
+              aria-label="Replay previous line"
+              className="w-10 h-10 rounded-full border border-[#E3DDD0] bg-white text-[13px] text-[#6B6560] hover:border-[#0D9488] hover:text-[#0D9488] transition-colors disabled:opacity-40"
+              onClick={() => stageIndex > 0 && speakOne(stageIndex - 1)}
+              disabled={!isSupported || stageIndex <= 0}
             >
-              {showEn ? "Hide English" : "Show English"}
+              ⏮
+            </button>
+            <button
+              aria-label={isPlaying ? "Pause" : allHeard ? "Play again" : heard > 0 ? "Resume" : "Play"}
+              className="w-[58px] h-[58px] rounded-full bg-[#0D9488] text-white text-[21px] flex items-center justify-center transition-all hover:scale-105 hover:bg-[#0F766E] disabled:opacity-50"
+              onClick={handleMainButton}
+              disabled={!isSupported}
+            >
+              {isPlaying ? "⏸" : "▶"}
+            </button>
+            <button
+              aria-label="Replay this line"
+              className="w-10 h-10 rounded-full border border-[#E3DDD0] bg-white text-[13px] text-[#6B6560] hover:border-[#0D9488] hover:text-[#0D9488] transition-colors disabled:opacity-40"
+              onClick={() => stageIndex >= 0 && speakOne(stageIndex)}
+              disabled={!isSupported || stageIndex < 0}
+            >
+              🔁
             </button>
           </div>
-          <div className="bg-[#FAF7EF] border border-[#E3DDD0] rounded-[10px] px-4 py-3.5 mb-3 grid gap-2.5">
-            {dialogue.lines.map((line, i) => (
-              <div key={i} className="flex items-start justify-between gap-3">
-                <div>
+          {!isPlaying && heard > 0 && !allHeard && (
+            <span className="text-[11.5px] font-semibold text-[#0D9488]">
+              ▶ resumes at line {heard + 1}
+            </span>
+          )}
+          <div className="flex justify-center mt-1.5">
+            <button
+              className={`text-[12px] font-semibold transition-colors ${
+                showEn ? "text-[#0D9488]" : "text-[#A19A8C] hover:text-[#6B6560]"
+              }`}
+              onClick={() => setShowEn((v) => !v)}
+            >
+              English {showEn ? "on" : "off"}
+            </button>
+          </div>
+        </div>
+
+        {/* karaoke script: heard lines revealed, unheard masked */}
+        <div className="grid gap-1.5">
+          {lines.map((line, i) => {
+            const revealed = i < heard;
+            const playing = i === currentIndex;
+            return (
+              <div
+                key={i}
+                className={`flex items-start gap-2.5 px-3 py-2 rounded-[10px] border transition-colors ${
+                  playing
+                    ? "bg-[#F0FDFA] border-[#99F6E4]"
+                    : revealed
+                      ? "bg-[#FAF7EF] border-transparent"
+                      : "border-transparent"
+                }`}
+              >
+                <span
+                  className={`flex-none w-5 h-5 rounded-full text-[10.5px] font-bold flex items-center justify-center mt-0.5 ${
+                    playing ? "bg-[#0D9488] text-white" : "bg-[#E3DDD0] text-[#6B6560]"
+                  }`}
+                >
+                  {i + 1}
+                </span>
+                <div className="flex-1 min-w-0">
                   <b
-                    className={`block text-[11px] font-bold mb-px ${
-                      i === currentIndex ? "text-[#0D9488]" : "text-[#A19A8C]"
+                    className={`block text-[10.5px] font-bold ${
+                      playing ? "text-[#0D9488]" : "text-[#A19A8C]"
                     }`}
                   >
                     {line.speaker}
                   </b>
-                  <p
-                    className={`kr text-base font-medium rounded px-1 -mx-1 transition-colors ${
-                      i === currentIndex ? "bg-[#F0FDFA] text-[#0D9488]" : ""
+                  {revealed ? (
+                    <>
+                      <p className="kr text-[14.5px] font-medium">{line.kr}</p>
+                      {showEn && <p className="text-[12px] text-[#6B6560]">{line.en}</p>}
+                    </>
+                  ) : (
+                    <p className="text-[12px] tracking-[.2em] text-[#D6D3CC] select-none">
+                      {"●".repeat(Math.min(8, Math.max(3, Math.round(line.kr.length / 4))))}
+                    </p>
+                  )}
+                </div>
+                {revealed && (
+                  <button
+                    aria-label="Replay this line"
+                    className="flex-none text-[13px] text-[#A19A8C] hover:text-[#0D9488] transition-colors disabled:opacity-40 mt-0.5"
+                    onClick={() => speakOne(i)}
+                    disabled={!isSupported}
+                  >
+                    🔁
+                  </button>
+                )}
+              </div>
+            );
+          })}
+        </div>
+        {!allHeard && (
+          <p className="text-[11.5px] text-[#A19A8C] text-center mt-3">
+            Unheard lines unlock as they play — leave anytime, you&apos;ll resume right here.
+          </p>
+        )}
+
+        {/* quiz, once everything has played */}
+        {allHeard && quiz && (
+          <div className="border-t border-[#E3DDD0] pt-[18px] mt-[18px]" style={{ animation: "fadeUp .35s ease" }}>
+            <p className={Q_LABEL}>Check your ears</p>
+            <p className="font-bold text-[17px] tracking-[-0.01em] mb-3.5">{quiz.q}</p>
+            <div className="grid gap-2.5 mb-1">
+              {quiz.opts.map((opt, i) => {
+                const isAns = i === quiz.ans;
+                const isPicked = i === picked;
+                const state = !answered ? "idle" : isAns ? "correct" : isPicked ? "wrong" : "idle";
+                return (
+                  <button
+                    key={i}
+                    disabled={answered}
+                    onClick={() => setPicked(i)}
+                    className={`text-left px-4 py-[13px] rounded-[10px] text-[14.5px] font-medium flex items-center gap-2.5 transition-all border-[1.5px] disabled:cursor-default ${
+                      state === "correct"
+                        ? "border-[#16A34A] bg-[#F0FDF4]"
+                        : state === "wrong"
+                          ? "border-[#DC2626] bg-[#FEF2F2]"
+                          : answered
+                            ? "border-[#E3DDD0] bg-white opacity-90"
+                            : "border-[#E3DDD0] bg-white hover:border-[#0D9488] hover:bg-[#F0FDFA]"
                     }`}
                   >
-                    {line.kr}
-                  </p>
-                  {showEn && <p className="text-[13px] text-[#6B6560]">{line.en}</p>}
-                </div>
-                <button
-                  aria-label="Replay this line"
-                  className="flex-none text-sm text-[#A19A8C] hover:text-[#0D9488] transition-colors disabled:opacity-40 mt-1"
-                  onClick={() => replayLine(i)}
-                  disabled={!isSupported}
-                >
-                  🔁
-                </button>
-              </div>
-            ))}
+                    <span
+                      className={`w-6 h-6 rounded-[7px] flex-none flex items-center justify-center text-[11.5px] font-bold border ${
+                        state === "correct"
+                          ? "bg-[#16A34A] border-[#16A34A] text-white"
+                          : state === "wrong"
+                            ? "bg-[#DC2626] border-[#DC2626] text-white"
+                            : "bg-[#FAF7EF] border-[#E3DDD0] text-[#6B6560]"
+                      }`}
+                    >
+                      {ABC[i]}
+                    </span>
+                    {opt}
+                  </button>
+                );
+              })}
+            </div>
           </div>
-          <div className="flex justify-end mt-3.5">
-            <button className={BTN_TEAL} onClick={() => onFinished(correct)}>
-              {clipNo === clipCount ? "Finish →" : "Next clip →"}
-            </button>
+        )}
+
+        {allHeard && (answered || !quiz) && (
+          <div className="pt-4" style={{ animation: "fadeUp .35s ease" }}>
+            {quiz && (
+              <span
+                className={`inline-flex items-center gap-2 text-[13px] font-semibold rounded-lg px-3 py-1.5 mb-3 border ${
+                  correct
+                    ? "bg-[#F0FDF4] text-[#16A34A] border-[#BBF7D0]"
+                    : "bg-[#FEF2F2] text-[#DC2626] border-[#FECACA]"
+                }`}
+              >
+                {correct ? "🌱 Correct! Sharp ears." : "💧 Not quite — replay the lines above."}
+              </span>
+            )}
+            <div className="flex justify-end">
+              <button
+                className={BTN_TEAL}
+                disabled={saving}
+                onClick={() => {
+                  setSaving(true);
+                  onFinished(correct);
+                }}
+              >
+                {saving ? "Saving…" : clipNo === clipCount ? "Finish →" : "Done — next clip →"}
+              </button>
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }
 
+// ---------------------------------------------------------------------------
+// Session: a clip list with per-clip status (done / in progress / not started)
+// and a resume banner; picking a clip opens the player above.
+// ---------------------------------------------------------------------------
 export default function ListeningSession({
   dialogues,
   level,
   situationLabel,
+  completedIds,
 }: {
   dialogues: Dialogue[];
   level: CefrLevel;
   situationLabel: string;
+  completedIds: string[];
 }) {
   const supabase = useMemo(() => createClient(), []);
-  const [clipIndex, setClipIndex] = useState(0);
-  const [finished, setFinished] = useState(false);
-  const [good, setGood] = useState(0);
+  const [completed, setCompleted] = useState<Set<string>>(() => new Set(completedIds));
+  const [openId, setOpenId] = useState<string | null>(null);
+  const [heardMap, setHeardMap] = useState<Record<string, number>>({});
   const [newLevel, setNewLevel] = useState<number | null>(null);
+  const [justFinishedAll, setJustFinishedAll] = useState(false);
 
-  async function completeClip(correct: boolean) {
-    if (correct) setGood((g) => g + 1);
-    const d = dialogues[clipIndex];
+  // localStorage is client-only — read the resume positions after mount
+  // (async, so hydration matches the server-rendered "no resume" state).
+  useEffect(() => {
+    const t = setTimeout(() => {
+      const map: Record<string, number> = {};
+      for (const d of dialogues) {
+        const h = loadHeard(d.id, d.lines.length);
+        if (h > 0) map[d.id] = h;
+      }
+      setHeardMap(map);
+    }, 0);
+    return () => clearTimeout(t);
+  }, [dialogues]);
+
+  const doneCount = dialogues.filter((d) => completed.has(d.id)).length;
+  const resumeTarget = dialogues.find((d) => !completed.has(d.id) && (heardMap[d.id] ?? 0) > 0);
+
+  async function completeClip(dialogue: Dialogue) {
+    clearHeard(dialogue.id);
+    setHeardMap((m) => {
+      const next = { ...m };
+      delete next[dialogue.id];
+      return next;
+    });
+    const nowDone = new Set(completed);
+    nowDone.add(dialogue.id);
+    setCompleted(nowDone);
+    setOpenId(null);
+    if (dialogues.every((d) => nowDone.has(d.id))) setJustFinishedAll(true);
+
     const {
       data: { user },
     } = await supabase.auth.getUser();
     if (user) {
       await supabase.from("listening_progress").upsert(
-        { user_id: user.id, dialogue_id: d.id, completed_at: new Date().toISOString() },
+        { user_id: user.id, dialogue_id: dialogue.id, completed_at: new Date().toISOString() },
         { onConflict: "user_id,dialogue_id" }
       );
       const res = await recordCompletion(supabase, "listening", 3);
       if (res?.leveled_up) setNewLevel(res.new_level);
     }
-    if (clipIndex + 1 < dialogues.length) setClipIndex(clipIndex + 1);
-    else setFinished(true);
   }
 
-  if (finished) {
+  const open = openId ? dialogues.find((d) => d.id === openId) : null;
+  if (open) {
+    return (
+      <ClipPlayer
+        key={open.id}
+        dialogue={open}
+        clipNo={dialogues.indexOf(open) + 1}
+        clipCount={dialogues.length}
+        initialHeard={heardMap[open.id] ?? 0}
+        onExit={() => {
+          setHeardMap((m) => ({ ...m, [open.id]: loadHeard(open.id, open.lines.length) }))
+          setOpenId(null);
+        }}
+        onFinished={() => void completeClip(open)}
+      />
+    );
+  }
+
+  // all-done celebration (shown right after the last clip completes)
+  if (justFinishedAll) {
     return (
       <div
-        className="max-w-[680px] text-center border border-[#E3DDD0] rounded-[14px] px-7 py-10"
+        className="max-w-[680px] text-center border border-[#E3DDD0] rounded-[14px] px-7 py-10 bg-white"
         style={{ animation: "fadeUp .4s ease" }}
       >
         <svg width="104" height="104" viewBox="0 0 150 160" aria-hidden="true" className="inline-block">
@@ -289,30 +457,12 @@ export default function ListeningSession({
           </text>
         </svg>
         <h2 className="font-bold text-[21px] tracking-[-0.02em] mt-3 mb-1.5">Great listening!</h2>
-        <p className="text-sm text-[#6B6560] mb-[22px]">
-          {dialogues.length} clip{dialogues.length > 1 ? "s" : ""} done — your ears (and your tree) grew today.
+        <p className="text-sm text-[#6B6560] mb-5">
+          {situationLabel} · all {dialogues.length} clips done at {level}. Your ears (and your tree)
+          grew today.
         </p>
-        <div className="flex justify-center gap-3 mb-6 flex-wrap">
-          <div className="border border-[#E3DDD0] rounded-[10px] px-5 py-3 min-w-[100px]">
-            <b className="block text-[19px] font-bold text-[#16A34A]">
-              {good}/{dialogues.length}
-            </b>
-            <small className="text-xs text-[#6B6560]">Correct</small>
-          </div>
-          <div className="border border-[#E3DDD0] rounded-[10px] px-5 py-3 min-w-[100px]">
-            <b className="block text-[19px] font-bold">{level}</b>
-            <small className="text-xs text-[#6B6560]">Level</small>
-          </div>
-          <div className="border border-[#E3DDD0] rounded-[10px] px-5 py-3 min-w-[100px]">
-            <b className="block text-[19px] font-bold text-[#16A34A]">+10 XP</b>
-            <small className="text-xs text-[#6B6560]">Earned</small>
-          </div>
-        </div>
-        <span className="inline-flex items-center gap-2 bg-[#F0FDF4] border border-[#BBF7D0] rounded-full px-[18px] py-2 text-[13.5px] font-semibold text-[#16A34A] mb-6">
-          💧 {situationLabel} · all clips done
-        </span>
         {newLevel && (
-          <p className="text-[13.5px] font-semibold text-[#16A34A] mb-6 -mt-3">
+          <p className="text-[13.5px] font-semibold text-[#16A34A] mb-5">
             🎉 Level up! Now Lv. {newLevel}
           </p>
         )}
@@ -320,42 +470,103 @@ export default function ListeningSession({
           <Link href={`/listening?level=${level}`} className={BTN_TEAL}>
             Choose another topic
           </Link>
-          <button
-            className={BTN_LINE}
-            onClick={() => {
-              setClipIndex(0);
-              setGood(0);
-              setFinished(false);
-            }}
-          >
-            Listen again
+          <button className={BTN_LINE} onClick={() => setJustFinishedAll(false)}>
+            Back to the clips
           </button>
         </div>
       </div>
     );
   }
 
+  // clip list
   return (
-    <div>
-      {/* progress dots */}
-      <div className="flex gap-[7px] mb-5">
-        {dialogues.map((d, i) => (
-          <span
-            key={d.id}
-            className={`w-[26px] h-1.5 rounded-full ${
-              i < clipIndex ? "bg-[#0D9488]" : i === clipIndex ? "bg-[#0D9488] opacity-45" : "bg-[#E3DDD0]"
-            }`}
-          />
-        ))}
+    <div className="max-w-[680px]">
+      {/* situation progress */}
+      <div className="h-[7px] rounded-full bg-[#FAF7EF] border border-[#E3DDD0] overflow-hidden mb-4">
+        <div
+          className="h-full bg-[#0D9488] rounded-full transition-all"
+          style={{ width: `${dialogues.length ? (doneCount / dialogues.length) * 100 : 0}%` }}
+        />
       </div>
 
-      <ClipPlayer
-        key={dialogues[clipIndex].id}
-        dialogue={dialogues[clipIndex]}
-        clipNo={clipIndex + 1}
-        clipCount={dialogues.length}
-        onFinished={completeClip}
-      />
+      {/* resume banner */}
+      {resumeTarget && (
+        <button
+          className="w-full flex items-center gap-3 border-[1.5px] border-[#99F6E4] bg-[#F0FDFA] rounded-[13px] px-4 py-3 mb-3.5 text-left transition-all hover:-translate-y-0.5"
+          onClick={() => setOpenId(resumeTarget.id)}
+        >
+          <span className="text-[20px] flex-none">🎧</span>
+          <span className="flex-1 min-w-0">
+            <b className="block text-[13.5px] font-bold text-[#0D9488]">
+              Continue where you left off
+            </b>
+            <span className="text-[12.5px] text-[#6B6560]">
+              {resumeTarget.title} · line {(heardMap[resumeTarget.id] ?? 0) + 1} of{" "}
+              {resumeTarget.lines.length}
+            </span>
+          </span>
+          <span className="flex-none text-[13px] font-bold text-[#0D9488]">Resume ▶</span>
+        </button>
+      )}
+
+      {newLevel && (
+        <p className="text-[13px] font-semibold text-[#16A34A] mb-3">🎉 Level up! Now Lv. {newLevel}</p>
+      )}
+
+      {/* clip cards */}
+      <div className="grid gap-2.5">
+        {dialogues.map((d, i) => {
+          const done = completed.has(d.id);
+          const heard = heardMap[d.id] ?? 0;
+          const inProgress = !done && heard > 0;
+          return (
+            <button
+              key={d.id}
+              onClick={() => setOpenId(d.id)}
+              className={`w-full flex items-center gap-3 rounded-[13px] px-3.5 py-3 text-left border-[1.5px] transition-all hover:border-[#0D9488] hover:-translate-y-0.5 ${
+                inProgress ? "border-[#99F6E4] bg-[#F0FDFA]" : "border-[#E3DDD0] bg-white"
+              }`}
+            >
+              <span
+                className={`flex-none w-[34px] h-[34px] rounded-full flex items-center justify-center text-[14px] font-extrabold ${
+                  done
+                    ? "bg-[#F0FDF4] border-[1.5px] border-[#BBF7D0] text-[#16A34A]"
+                    : inProgress
+                      ? "bg-[#0D9488] text-white"
+                      : "bg-[#FAF7EF] border-[1.5px] border-[#E3DDD0] text-[#A19A8C]"
+                }`}
+              >
+                {done ? "✓" : inProgress ? "▶" : i + 1}
+              </span>
+              <span className="flex-1 min-w-0">
+                <b className="block text-[14px] font-bold truncate">{d.title}</b>
+                <small className="text-[11.5px] text-[#A19A8C]">
+                  {d.lines.length} lines · ~{estMinutes(d)} min
+                </small>
+              </span>
+              <span className="flex-none text-right text-[11.5px] text-[#A19A8C]">
+                {done ? (
+                  <span className="inline-block rounded-full border border-[#BBF7D0] bg-[#F0FDF4] text-[#16A34A] font-bold px-2.5 py-0.5 text-[10.5px]">
+                    Done
+                  </span>
+                ) : inProgress ? (
+                  <>
+                    <b className="block text-[#0D9488] font-bold">line {heard}/{d.lines.length}</b>
+                    <span className="inline-block w-[74px] h-1 rounded-full bg-[#E3DDD0] overflow-hidden mt-1">
+                      <span
+                        className="block h-full bg-[#0D9488]"
+                        style={{ width: `${(heard / d.lines.length) * 100}%` }}
+                      />
+                    </span>
+                  </>
+                ) : (
+                  "Not started"
+                )}
+              </span>
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 }

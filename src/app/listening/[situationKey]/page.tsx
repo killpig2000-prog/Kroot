@@ -120,7 +120,13 @@ export default async function SituationPage({
               </p>
             </div>
           ) : (
-            <ListeningSession key={level} dialogues={dialogues} level={level} situationLabel={label} />
+            <ListeningSession
+              key={level}
+              dialogues={dialogues}
+              level={level}
+              situationLabel={label}
+              completedIds={completedIds}
+            />
           )}
         </main>
       </div>
