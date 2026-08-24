@@ -7,6 +7,14 @@ import { DIRECTIONS_EXPANSION, DIRECTIONS_QUIZZES } from "@/lib/listening-data/d
 import { HOSPITAL_EXPANSION, HOSPITAL_QUIZZES } from "@/lib/listening-data/hospital-expansion";
 import { HOTEL_EXPANSION, HOTEL_QUIZZES } from "@/lib/listening-data/hotel-expansion";
 import { PHONE_EXPANSION, PHONE_QUIZZES } from "@/lib/listening-data/phone-expansion";
+import { CAFE_C_EXPANSION, CAFE_C_QUIZZES } from "@/lib/listening-data/cafe-c-expansion";
+import { RESTAURANT_C_EXPANSION, RESTAURANT_C_QUIZZES } from "@/lib/listening-data/restaurant-c-expansion";
+import { AIRPORT_C_EXPANSION, AIRPORT_C_QUIZZES } from "@/lib/listening-data/airport-c-expansion";
+import { SHOPPING_C_EXPANSION, SHOPPING_C_QUIZZES } from "@/lib/listening-data/shopping-c-expansion";
+import { DIRECTIONS_C_EXPANSION, DIRECTIONS_C_QUIZZES } from "@/lib/listening-data/directions-c-expansion";
+import { HOSPITAL_C_EXPANSION, HOSPITAL_C_QUIZZES } from "@/lib/listening-data/hospital-c-expansion";
+import { HOTEL_C_EXPANSION, HOTEL_C_QUIZZES } from "@/lib/listening-data/hotel-c-expansion";
+import { PHONE_C_EXPANSION, PHONE_C_QUIZZES } from "@/lib/listening-data/phone-c-expansion";
 
 export type DialogueLine = {
   speaker: string;
@@ -2715,6 +2723,14 @@ export const DIALOGUES: Dialogue[] = [
   ...HOSPITAL_EXPANSION,
   ...HOTEL_EXPANSION,
   ...PHONE_EXPANSION,
+  ...CAFE_C_EXPANSION,
+  ...RESTAURANT_C_EXPANSION,
+  ...AIRPORT_C_EXPANSION,
+  ...SHOPPING_C_EXPANSION,
+  ...DIRECTIONS_C_EXPANSION,
+  ...HOSPITAL_C_EXPANSION,
+  ...HOTEL_C_EXPANSION,
+  ...PHONE_C_EXPANSION,
 ];
 
 export type DialogueQuiz = {
@@ -4017,6 +4033,14 @@ export const QUIZZES: Record<string, DialogueQuiz> = {
   ...HOSPITAL_QUIZZES,
   ...HOTEL_QUIZZES,
   ...PHONE_QUIZZES,
+  ...CAFE_C_QUIZZES,
+  ...RESTAURANT_C_QUIZZES,
+  ...AIRPORT_C_QUIZZES,
+  ...SHOPPING_C_QUIZZES,
+  ...DIRECTIONS_C_QUIZZES,
+  ...HOSPITAL_C_QUIZZES,
+  ...HOTEL_C_QUIZZES,
+  ...PHONE_C_QUIZZES,
 };
 
 export function dialogueById(id: string) {
