@@ -1,6 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import LeagueWidget from "@/components/dashboard/LeagueWidget";
+import QuestButton from "@/components/dashboard/QuestButton";
 
 export type WordOfTheDay = {
   word: string;
@@ -8,6 +10,19 @@ export type WordOfTheDay = {
   mean: string;
   exKr: string;
   exEn: string;
+};
+
+export type QuestInfo = {
+  skill_key: string;
+  title: string;
+  description: string;
+  completed_at: string | null;
+};
+
+export type SlangTeaser = {
+  kr: string;
+  romanization: string;
+  meaning: string;
 };
 
 const TAPES = [
@@ -40,11 +55,43 @@ function WCard({ title, tag, index = 0, children }: { title: string; tag: string
 
 // Weekly grass and the monthly challenge ring used to live here; both were
 // absorbed into the Study garden card's headline pills on the main column.
-export default function Widgets({ wotd }: { wotd: WordOfTheDay | null }) {
+// The daily quest and slang cards live here on xl+ (and inline on smaller
+// screens) so the garden stays above the fold.
+export default function Widgets({
+  wotd,
+  quest,
+  slang,
+}: {
+  wotd: WordOfTheDay | null;
+  quest?: QuestInfo | null;
+  slang?: SlangTeaser | null;
+}) {
   return (
     <aside className="hidden xl:flex flex-col gap-5 border-l border-dashed border-[#DDD6C8] bg-[#FAF7EF] px-5 py-[26px] sticky top-0 h-screen overflow-y-auto">
+      {quest && (
+        <WCard title="Today's quest" tag="✏️" index={0}>
+          <p className="text-[13px] text-[#6B6560] mb-3">{quest.description}</p>
+          <QuestButton skillKey={quest.skill_key} completed={!!quest.completed_at} />
+        </WCard>
+      )}
+
+      {slang && (
+        <WCard title="Today's slang" tag="💬" index={1}>
+          <Link href="/slang" className="block group">
+            <p className="kr text-[21px] font-bold text-[#BE185D] mb-0.5">
+              {slang.kr}{" "}
+              <span className="text-[12px] font-medium text-[#DB2777]">({slang.romanization})</span>
+            </p>
+            <p className="text-[12.5px] text-[#6B6560] mb-2">{slang.meaning}</p>
+            <span className="text-[12.5px] font-semibold text-[#DB2777] transition-transform inline-block group-hover:translate-x-0.5">
+              Flip it →
+            </span>
+          </Link>
+        </WCard>
+      )}
+
       {wotd && (
-        <WCard title="Word of the day" tag="단어" index={0}>
+        <WCard title="Word of the day" tag="단어" index={2}>
           <p className="kr text-2xl mb-0.5">{wotd.word}</p>
           <p className="text-[12.5px] text-[#A19A8C] mb-1.5">{wotd.roman}</p>
           <p className="text-[13.5px] text-[#6B6560] mb-2.5">{wotd.mean}</p>
@@ -55,7 +102,7 @@ export default function Widgets({ wotd }: { wotd: WordOfTheDay | null }) {
         </WCard>
       )}
 
-      <WCard title="Weekly league" tag="🏆" index={1}>
+      <WCard title="Weekly league" tag="🏆" index={3}>
         <LeagueWidget />
       </WCard>
     </aside>

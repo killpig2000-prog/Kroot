@@ -320,8 +320,9 @@ export default async function DashboardPage() {
             />
           )}
 
-          {/* quest — a checklist slip pinned under the course note */}
-          <div className="border border-dashed border-[#CFC8B8] rounded-[12px] bg-white px-5 py-4 flex items-center gap-3.5 mb-[30px] flex-wrap">
+          {/* quest — a checklist slip pinned under the course note.
+              On xl+ it moves to the right rail so the garden stays above the fold. */}
+          <div className="xl:hidden border border-dashed border-[#CFC8B8] rounded-[12px] bg-white px-5 py-4 flex items-center gap-3.5 mb-[30px] flex-wrap">
             <span className="flex-none w-10 h-10 rounded-[10px] bg-[#FEF9C3] border border-[#ECD98A] flex items-center justify-center text-lg">
               ✏️
             </span>
@@ -332,10 +333,10 @@ export default async function DashboardPage() {
             {quest && <QuestButton skillKey={quest.skill_key} completed={!!quest.completed_at} />}
           </div>
 
-          {/* today's slang — a daily reason to peek at Street Talk */}
+          {/* today's slang — a daily reason to peek at Street Talk (rail on xl+) */}
           <Link
             href="/slang"
-            className="flex items-center gap-3.5 border border-[#FBCFE8] bg-[#FDF2F8] rounded-[14px] px-5 py-4 mb-[30px] transition-all hover:-translate-y-0.5 group"
+            className="xl:hidden flex items-center gap-3.5 border border-[#FBCFE8] bg-[#FDF2F8] rounded-[14px] px-5 py-4 mb-[30px] transition-all hover:-translate-y-0.5 group"
           >
             <span className="flex-none w-10 h-10 rounded-[10px] bg-white border border-[#FBCFE8] flex items-center justify-center text-lg transition-transform group-hover:scale-110">
               💬
@@ -354,7 +355,8 @@ export default async function DashboardPage() {
             </span>
           </Link>
 
-          {/* new to Korean? */}
+          {/* new to Korean? — only for true beginners who haven't started the course */}
+          {cefr === "A1" && courseDoneDays.length === 0 && (
           <Link
             href="/hangul"
             className="flex items-center gap-3.5 border border-[#BBF7D0] bg-[#F0FDF4] rounded-[14px] px-5 py-4 mb-[30px] transition-all hover:-translate-y-0.5 group"
@@ -372,6 +374,7 @@ export default async function DashboardPage() {
               Start here →
             </span>
           </Link>
+          )}
 
           {/* learning progress — replaces the old category card list (the
               sidebar already covers navigation); SkillBars live on here */}
@@ -482,7 +485,11 @@ export default async function DashboardPage() {
           />
         </main>
 
-        <Widgets wotd={wotd} />
+        <Widgets
+          wotd={wotd}
+          quest={quest}
+          slang={{ kr: slang.kr, romanization: slang.romanization, meaning: slang.meaning }}
+        />
       </div>
 
       <BottomNav />
