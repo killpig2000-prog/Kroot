@@ -79,6 +79,13 @@ export default async function SituationPage({
           {/* head */}
           <div className="flex items-center justify-between gap-4 mb-[18px] flex-wrap">
             <h1 className="font-bold text-[22px] tracking-[-0.02em] flex items-center">
+              <Link
+                href={`/listening?level=${level}`}
+                aria-label="Back to all situations"
+                className="inline-flex w-[30px] h-[30px] rounded-lg bg-white text-[#6B6560] border border-[#E3DDD0] items-center justify-center text-[15px] mr-[9px] transition-colors hover:border-[#0D9488] hover:text-[#0D9488]"
+              >
+                ←
+              </Link>
               <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[#F0FDFA] text-[#0D9488] border border-[#99F6E4] items-center justify-center text-[15px] mr-[9px]">
                 {situation?.icon ?? "🎧"}
               </span>
