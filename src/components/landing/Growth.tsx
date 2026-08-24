@@ -14,7 +14,7 @@ const CARD = [
 
 export default function Growth() {
   return (
-    <section id="grow" className="relative bg-[#FDFBF7] border-t border-dashed border-[#DDD6C8] py-[clamp(52px,8vw,88px)] px-6 overflow-hidden">
+    <section id="grow" className="relative bg-[#FFFFFF] border-t border-dashed border-[#DDD6C8] py-[clamp(52px,8vw,88px)] px-6 overflow-hidden">
       <div className="text-center mb-1.5">
         <span className="inline-block bg-white border-[1.5px] border-dashed border-[#CFC8B8] rounded-full px-4 py-[5px] text-xs font-extrabold text-[#15803D] -rotate-1">
           growth album · <span className="kr">성장 앨범</span>

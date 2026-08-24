@@ -78,7 +78,7 @@ export default async function VocabularyPage({
   const pillLevels = LEVEL_ORDER.slice(Math.max(0, levelIdx - 1), levelIdx + 2);
 
   return (
-    <div className="min-h-screen bg-[#FDFBF7] text-[#18181B]">
+    <div className="min-h-screen bg-[#FFFFFF] text-[#18181B]">
       <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
         <Sidebar
           displayName={profile?.display_name ?? "there"}

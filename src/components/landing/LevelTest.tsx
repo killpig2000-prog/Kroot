@@ -8,7 +8,7 @@ const OPTIONS = [
 
 export default function LevelTest() {
   return (
-    <section className="relative bg-[#FDFBF7] border-t border-dashed border-[#DDD6C8] py-[clamp(52px,8vw,88px)] px-6 overflow-hidden">
+    <section className="relative bg-[#FFFFFF] border-t border-dashed border-[#DDD6C8] py-[clamp(52px,8vw,88px)] px-6 overflow-hidden">
       <span aria-hidden="true" className="absolute left-[8%] bottom-[40px] font-black text-[#F0EBDD] text-[80px] -rotate-[8deg] select-none">
         가
       </span>
@@ -44,7 +44,7 @@ export default function LevelTest() {
             <span
               key={o.label}
               className={`block text-left text-[13px] rounded-[9px] px-3.5 py-2.5 mb-[7px] border-[1.5px] ${
-                o.on ? "border-[#16A34A] bg-[#F0FDF4] font-bold" : "border-[#E3DDD0] bg-[#FDFBF7]"
+                o.on ? "border-[#16A34A] bg-[#F0FDF4] font-bold" : "border-[#E3DDD0] bg-[#FFFFFF]"
               }`}
             >
               <span

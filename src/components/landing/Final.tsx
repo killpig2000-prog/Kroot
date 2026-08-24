@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function Final() {
   return (
     <>
-      <section className="relative bg-[#FDFBF7] border-t border-dashed border-[#DDD6C8] text-center py-[clamp(56px,9vw,92px)] px-6 overflow-hidden">
+      <section className="relative bg-[#FFFFFF] border-t border-dashed border-[#DDD6C8] text-center py-[clamp(56px,9vw,92px)] px-6 overflow-hidden">
         <span aria-hidden="true" className="absolute font-black text-[#F0EBDD] leading-none select-none top-[-8px] left-[8%] text-[clamp(70px,10vw,120px)]">
           가
         </span>
@@ -27,7 +27,7 @@ export default function Final() {
         </p>
       </section>
 
-      <footer className="bg-[#FDFBF7] border-t border-dashed border-[#DDD6C8]">
+      <footer className="bg-[#FFFFFF] border-t border-dashed border-[#DDD6C8]">
         <div className="max-w-[1080px] mx-auto px-[clamp(18px,4vw,28px)] py-6 flex justify-between items-center gap-4 flex-wrap text-[12px] text-[#A19A8C]">
           <span className="flex items-center gap-[9px] font-bold text-[13.5px] text-[#221F1B]">
             <span className="w-[24px] h-[24px] rounded-lg bg-[#16A34A] text-white flex items-center justify-center kr text-[11px]">

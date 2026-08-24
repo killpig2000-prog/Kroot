@@ -18,7 +18,7 @@ export default function Nav() {
   }, [supabase]);
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-dashed border-[#DDD6C8] bg-[#FDFBF7]/95 backdrop-blur-sm">
+    <nav className="sticky top-0 z-50 border-b border-dashed border-[#DDD6C8] bg-[#FFFFFF]/95 backdrop-blur-sm">
       <div className="max-w-[1160px] mx-auto flex items-center justify-between gap-4 px-[clamp(18px,5vw,56px)] py-3">
         <Link
           href="/"

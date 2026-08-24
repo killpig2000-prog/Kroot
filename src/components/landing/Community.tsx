@@ -43,7 +43,7 @@ export default function Community() {
             key={p.from}
             className={`reveal relative w-[250px] bg-white border border-[#E3DDD0] px-[17px] pt-4 pb-3.5 text-left shadow-[0_14px_30px_-16px_rgba(60,50,30,.35)] ${p.tilt}`}
           >
-            <span aria-hidden="true" className="absolute top-2.5 right-[11px] w-[34px] h-[40px] border-2 border-dashed border-[#D3C9B4] grid place-items-center text-[15px] bg-[#FDFBF7]">
+            <span aria-hidden="true" className="absolute top-2.5 right-[11px] w-[34px] h-[40px] border-2 border-dashed border-[#D3C9B4] grid place-items-center text-[15px] bg-[#FFFFFF]">
               {p.stamp}
             </span>
             <p className="text-[11px] font-extrabold text-[#15803D] tracking-[.04em] mb-1.5">{p.from}</p>

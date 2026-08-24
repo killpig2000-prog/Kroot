@@ -3,7 +3,7 @@ import Polaroid from "@/components/landing/Polaroid";
 
 export default function Hero() {
   return (
-    <header className="relative overflow-hidden bg-[#FDFBF7] text-center px-6 pt-[clamp(56px,9vw,96px)] pb-[clamp(72px,10vw,120px)]">
+    <header className="relative overflow-hidden bg-[#FFFFFF] text-center px-6 pt-[clamp(56px,9vw,96px)] pb-[clamp(72px,10vw,120px)]">
       {/* giant hangul letterforms in the paper */}
       <span aria-hidden="true" className="absolute font-black text-[#F0EBDD] leading-none select-none top-[-20px] left-[38%] text-[clamp(90px,15vw,170px)]">
         한

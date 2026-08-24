@@ -28,7 +28,7 @@ export default async function CourseOverviewPage() {
   const doneCount = COURSE_SECTIONS.flatMap((s) => s.days).filter((d) => doneKeys.has(d.key)).length;
 
   return (
-    <div className="min-h-screen bg-[#FDFBF7] text-[#18181B]">
+    <div className="min-h-screen bg-[#FFFFFF] text-[#18181B]">
       <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
         <Sidebar
           displayName={profile?.display_name ?? "there"}

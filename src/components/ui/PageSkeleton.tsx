@@ -3,7 +3,7 @@
 // instead of a blank screen.
 export default function PageSkeleton({ rows = 5 }: { rows?: number }) {
   return (
-    <div className="min-h-screen bg-[#FDFBF7]">
+    <div className="min-h-screen bg-[#FFFFFF]">
       <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
         <div className="hidden md:block border-r border-dashed border-[#DDD6C8] bg-[#FAF7EF]" />
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[60px] w-full max-w-[760px]">

@@ -255,7 +255,7 @@ export default async function DashboardPage() {
   const showCourseGauge = cefr === "A1" && !courseFinished && (courseDone > 0 || !profile?.path_hidden);
 
   return (
-    <div className="min-h-screen bg-[#FDFBF7] text-[#221F1B]">
+    <div className="min-h-screen bg-[#FFFFFF] text-[#221F1B]">
       <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] xl:grid-cols-[clamp(200px,17%,280px)_minmax(0,1fr)_clamp(260px,22%,340px)] w-full min-h-screen">
         <Sidebar
           displayName={displayName}
