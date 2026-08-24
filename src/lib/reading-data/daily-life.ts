@@ -10,6 +10,7 @@ import { READING_B2_B } from "./b2-b";
 import { READING_C1_A } from "./c1-a";
 import { READING_C1_B } from "./c1-b";
 import { READING_C2_A } from "./c2-a";
+import { READING_C2_B } from "./c2-b";
 
 // Hand-authored base passages, plus 2026-08 per-level expansions (see
 // a1-a.ts etc.) that push A1/A2/B1/B2 toward parity with the listening
@@ -2070,4 +2071,5 @@ export const DAILY_LIFE_PASSAGES: RawPassage[] = [
   ...READING_C1_A,
   ...READING_C1_B,
   ...READING_C2_A,
+  ...READING_C2_B,
 ];
