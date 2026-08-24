@@ -15,6 +15,14 @@ import { DIRECTIONS_C_EXPANSION, DIRECTIONS_C_QUIZZES } from "@/lib/listening-da
 import { HOSPITAL_C_EXPANSION, HOSPITAL_C_QUIZZES } from "@/lib/listening-data/hospital-c-expansion";
 import { HOTEL_C_EXPANSION, HOTEL_C_QUIZZES } from "@/lib/listening-data/hotel-c-expansion";
 import { PHONE_C_EXPANSION, PHONE_C_QUIZZES } from "@/lib/listening-data/phone-c-expansion";
+import { CAFE_C2_EXPANSION, CAFE_C2_QUIZZES } from "@/lib/listening-data/cafe-c2-expansion";
+import { RESTAURANT_C2_EXPANSION, RESTAURANT_C2_QUIZZES } from "@/lib/listening-data/restaurant-c2-expansion";
+import { AIRPORT_C2_EXPANSION, AIRPORT_C2_QUIZZES } from "@/lib/listening-data/airport-c2-expansion";
+import { SHOPPING_C2_EXPANSION, SHOPPING_C2_QUIZZES } from "@/lib/listening-data/shopping-c2-expansion";
+import { DIRECTIONS_C2_EXPANSION, DIRECTIONS_C2_QUIZZES } from "@/lib/listening-data/directions-c2-expansion";
+import { HOSPITAL_C2_EXPANSION, HOSPITAL_C2_QUIZZES } from "@/lib/listening-data/hospital-c2-expansion";
+import { HOTEL_C2_EXPANSION, HOTEL_C2_QUIZZES } from "@/lib/listening-data/hotel-c2-expansion";
+import { PHONE_C2_EXPANSION, PHONE_C2_QUIZZES } from "@/lib/listening-data/phone-c2-expansion";
 
 export type DialogueLine = {
   speaker: string;
@@ -2731,6 +2739,14 @@ export const DIALOGUES: Dialogue[] = [
   ...HOSPITAL_C_EXPANSION,
   ...HOTEL_C_EXPANSION,
   ...PHONE_C_EXPANSION,
+  ...CAFE_C2_EXPANSION,
+  ...RESTAURANT_C2_EXPANSION,
+  ...AIRPORT_C2_EXPANSION,
+  ...SHOPPING_C2_EXPANSION,
+  ...DIRECTIONS_C2_EXPANSION,
+  ...HOSPITAL_C2_EXPANSION,
+  ...HOTEL_C2_EXPANSION,
+  ...PHONE_C2_EXPANSION,
 ];
 
 export type DialogueQuiz = {
@@ -4041,6 +4057,14 @@ export const QUIZZES: Record<string, DialogueQuiz> = {
   ...HOSPITAL_C_QUIZZES,
   ...HOTEL_C_QUIZZES,
   ...PHONE_C_QUIZZES,
+  ...CAFE_C2_QUIZZES,
+  ...RESTAURANT_C2_QUIZZES,
+  ...AIRPORT_C2_QUIZZES,
+  ...SHOPPING_C2_QUIZZES,
+  ...DIRECTIONS_C2_QUIZZES,
+  ...HOSPITAL_C2_QUIZZES,
+  ...HOTEL_C2_QUIZZES,
+  ...PHONE_C2_QUIZZES,
 };
 
 export function dialogueById(id: string) {
