@@ -51,7 +51,7 @@ export default async function SlangPage() {
               Slang
             </h1>
             <span className="text-[13px] text-[#6B6560]">
-              The words textbooks skip — flip a card, hear it, use it
+              The words textbooks skip — straight from K-dramas, K-pop, and group chats
             </span>
           </div>
 

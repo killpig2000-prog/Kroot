@@ -20,7 +20,6 @@ import { getPromptsForLevel } from "@/lib/writing";
 import { promptsFor } from "@/lib/speaking";
 import { getWordsForTopic } from "@/lib/vocabulary";
 import { slangOfTheDay } from "@/lib/slang";
-import { timeAgo } from "@/lib/community";
 import { isPlus } from "@/lib/plus";
 import type { CefrLevel } from "@/lib/tree";
 
@@ -102,7 +101,6 @@ export default async function DashboardPage() {
     { data: readingRows },
     { data: writingRows },
     { data: speakingRows },
-    { data: recentPosts },
     dueRes,
     { data: activity },
     { data: courseRows },
@@ -126,11 +124,6 @@ export default async function DashboardPage() {
     supabase.from("reading_progress").select("passage_key").eq("user_id", user.id),
     supabase.from("writing_progress").select("prompt_key").eq("user_id", user.id),
     supabase.from("speaking_progress").select("prompt_key").eq("user_id", user.id),
-    supabase
-      .from("community_posts")
-      .select("author_name, author_emoji, author_plus, content, created_at")
-      .order("created_at", { ascending: false })
-      .limit(3),
     supabase
       .from("vocabulary_progress")
       .select("id", { count: "exact", head: true })
@@ -225,12 +218,6 @@ export default async function DashboardPage() {
     : null;
 
   const slang = slangOfTheDay();
-
-  const feed = (recentPosts ?? []).map((p) => ({
-    av: p.author_emoji ?? "🌱",
-    text: p.content.split("\n")[0],
-    meta: `${p.author_name}${p.author_plus ? " 🌟" : ""} · ${timeAgo(p.created_at)}`,
-  }));
 
   // Study-garden numbers (lived on My growth before the merge): the year
   // grass plus lifetime pills, with the old week/month widgets folded in.
@@ -495,7 +482,7 @@ export default async function DashboardPage() {
           />
         </main>
 
-        <Widgets wotd={wotd} feed={feed} />
+        <Widgets wotd={wotd} />
       </div>
 
       <BottomNav />

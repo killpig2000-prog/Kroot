@@ -16,19 +16,34 @@ export function VibeChip({ vibe }: { vibe: SlangEntry["vibe"] }) {
   );
 }
 
-export default function SlangCard({ entry }: { entry: SlangEntry }) {
+export default function SlangCard({
+  entry,
+  collected = false,
+  onReveal,
+}: {
+  entry: SlangEntry;
+  /** Shows a small "collected" check on the card front. */
+  collected?: boolean;
+  /** Fired the first time the card is flipped to its meaning. */
+  onReveal?: () => void;
+}) {
   const [flipped, setFlipped] = useState(false);
+
+  function flip() {
+    if (!flipped) onReveal?.();
+    setFlipped((f) => !f);
+  }
 
   return (
     <div
       role="button"
       tabIndex={0}
       aria-label={flipped ? `Flip ${entry.kr} back` : `Reveal the meaning of ${entry.kr}`}
-      onClick={() => setFlipped((f) => !f)}
+      onClick={flip}
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
-          setFlipped((f) => !f);
+          flip();
         }
       }}
       className="w-full h-[210px] [perspective:1200px] block cursor-pointer transition-transform duration-150 hover:-translate-y-0.5"
@@ -39,6 +54,14 @@ export default function SlangCard({ entry }: { entry: SlangEntry }) {
       >
         {/* front */}
         <div className={`${FACE} border border-[#E3DDD0] bg-[#FAF7EF] transition-colors hover:bg-[#FDF2F8]`}>
+          {collected && (
+            <span
+              className="absolute top-2.5 right-2.5 w-6 h-6 rounded-full bg-[#FDF2F8] border border-[#FBCFE8] text-[#DB2777] text-[12px] font-bold flex items-center justify-center"
+              title="Collected"
+            >
+              ✓
+            </span>
+          )}
           <span className="kr text-[clamp(28px,5vw,38px)] leading-tight">{entry.kr}</span>
           <span className="mt-2 text-[13px] text-[#6B6560]">{entry.romanization}</span>
           <div className="mt-4 flex items-center gap-2">

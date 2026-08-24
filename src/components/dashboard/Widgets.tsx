@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import LeagueWidget from "@/components/dashboard/LeagueWidget";
 
 export type WordOfTheDay = {
   word: string;
@@ -9,8 +9,6 @@ export type WordOfTheDay = {
   exKr: string;
   exEn: string;
 };
-
-export type FeedItem = { av: string; text: string; meta: string };
 
 const TAPES = [
   { background: "rgba(190,227,248,.65)", borderColor: "rgba(150,200,230,.45)" },
@@ -42,13 +40,7 @@ function WCard({ title, tag, index = 0, children }: { title: string; tag: string
 
 // Weekly grass and the monthly challenge ring used to live here; both were
 // absorbed into the Study garden card's headline pills on the main column.
-export default function Widgets({
-  wotd,
-  feed,
-}: {
-  wotd: WordOfTheDay | null;
-  feed: FeedItem[];
-}) {
+export default function Widgets({ wotd }: { wotd: WordOfTheDay | null }) {
   return (
     <aside className="hidden xl:flex flex-col gap-5 border-l border-dashed border-[#DDD6C8] bg-[#FAF7EF] px-5 py-[26px] sticky top-0 h-screen overflow-y-auto">
       {wotd && (
@@ -63,34 +55,8 @@ export default function Widgets({
         </WCard>
       )}
 
-      <WCard title="Community" tag="recent" index={1}>
-        <div className="flex flex-col">
-          {feed.length === 0 && (
-            <p className="text-[12.5px] text-[#6B6560] py-1">
-              No posts yet — be the first to say hi 👋
-            </p>
-          )}
-          {feed.map((post, i) => (
-            <div
-              key={i}
-              className="flex items-start gap-2.5 py-2.5 border-b border-[#E3DDD0] last:border-b-0 last:pb-0 first:pt-0"
-            >
-              <span className="w-7 h-7 rounded-lg flex-none flex items-center justify-center text-[13px] bg-[#FAF7EF] border border-[#E3DDD0]">
-                {post.av}
-              </span>
-              <div>
-                <p className="text-[12.5px] leading-[1.45]">{post.text}</p>
-                <small className="text-[11px] text-[#A19A8C]">{post.meta}</small>
-              </div>
-            </div>
-          ))}
-          <Link
-            href="/community"
-            className="w-full text-center text-[12.5px] font-medium text-[#6B6560] pt-3 hover:text-[#18181B]"
-          >
-            Open community →
-          </Link>
-        </div>
+      <WCard title="Weekly league" tag="🏆" index={1}>
+        <LeagueWidget />
       </WCard>
     </aside>
   );
