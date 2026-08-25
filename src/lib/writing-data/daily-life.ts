@@ -1,6 +1,18 @@
 import type { RawPrompt } from "./types";
+import { WRITING_A1_A } from "./a1-a";
+import { WRITING_A1_B } from "./a1-b";
+import { WRITING_A2_A } from "./a2-a";
+import { WRITING_A2_B } from "./a2-b";
+import { WRITING_B1_A } from "./b1-a";
+import { WRITING_B1_B } from "./b1-b";
+import { WRITING_B2_A } from "./b2-a";
+import { WRITING_B2_B } from "./b2-b";
+import { WRITING_C1_A } from "./c1-a";
+import { WRITING_C1_B } from "./c1-b";
+import { WRITING_C2_A } from "./c2-a";
+import { WRITING_C2_B } from "./c2-b";
 
-export const DAILY_LIFE_PROMPTS: RawPrompt[] = [
+const BASE_PROMPTS: RawPrompt[] = [
   {
     level: "A1",
     prompt_kr: "오늘 아침에 무엇을 먹었어요? 한 문장으로 써 보세요.",
@@ -1106,4 +1118,20 @@ export const DAILY_LIFE_PROMPTS: RawPrompt[] = [
     prompt_en: "If you ran a company, what work system would you create? Write six or more sentences including reasons and expected problems.",
     example_kr: "저라면 출퇴근 시간을 직원이 정하는 제도를 만들고 싶습니다. 사람마다 집중이 잘되는 시간이 다르기 때문입니다. 아침형 인간은 일찍 와서 일찍 가면 됩니다. 다만 회의 시간을 잡기 어렵다는 문제가 있을 것입니다. 그래서 오후 한 시부터 네 시까지는 모두가 일하는 공통 시간으로 두겠습니다. 자유에는 규칙이 함께 있어야 오래간다고 생각합니다.",
   },
+];
+
+export const DAILY_LIFE_PROMPTS: RawPrompt[] = [
+  ...BASE_PROMPTS,
+  ...WRITING_A1_A,
+  ...WRITING_A1_B,
+  ...WRITING_A2_A,
+  ...WRITING_A2_B,
+  ...WRITING_B1_A,
+  ...WRITING_B1_B,
+  ...WRITING_B2_A,
+  ...WRITING_B2_B,
+  ...WRITING_C1_A,
+  ...WRITING_C1_B,
+  ...WRITING_C2_A,
+  ...WRITING_C2_B,
 ];

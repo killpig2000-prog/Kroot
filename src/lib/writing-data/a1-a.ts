@@ -1,0 +1,373 @@
+import type { RawPrompt } from "./types";
+
+export const WRITING_A1_A: RawPrompt[] = [
+  // Household objects and routines
+  {
+    level: "A1",
+    prompt_kr: "집에 있는 가구에 대해 써 보세요.",
+    prompt_en: "Write about the furniture in your house. Write two sentences.",
+    example_kr: "우리 집에는 소파가 있어요. 소파는 크고 편해요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "냉장고 안에 무엇이 있어요? '-에 있어요'를 사용해서 써 보세요.",
+    prompt_en: "What is inside your refrigerator? Write two sentences using '-에 있어요'.",
+    example_kr: "냉장고 안에 우유가 있어요. 계란도 있어요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "아침에 집에서 무엇을 해요? '-고'를 사용해서 두 가지 일을 연결해서 써 보세요.",
+    prompt_en: "What do you do at home in the morning? Write one sentence connecting two actions with '-고'.",
+    example_kr: "저는 아침에 이를 닦고 세수해요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "어제 집을 청소했어요? 과거형 '-았어요/었어요'를 사용해서 써 보세요.",
+    prompt_en: "Did you clean your house yesterday? Write two sentences using the past tense '-았어요/었어요'.",
+    example_kr: "저는 어제 방을 청소했어요. 창문도 닦았어요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "이번 주말에 집에서 무엇을 할 거예요? '-을/ㄹ 거예요'를 사용해서 써 보세요.",
+    prompt_en: "What will you do at home this weekend? Write two sentences using the future tense '-을/ㄹ 거예요'.",
+    example_kr: "저는 주말에 빨래를 할 거예요. 그리고 청소도 할 거예요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "부엌에서 가장 많이 쓰는 물건은 무엇이에요?",
+    prompt_en: "What is the item you use most in your kitchen? Write two sentences.",
+    example_kr: "저는 부엌에서 냄비를 가장 많이 써요. 매일 밥을 해요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "집에 없는 물건이 있어요? '-지 않아요'를 사용해서 써 보세요.",
+    prompt_en: "Is there something you don't have at home? Write two sentences using '-지 않아요'.",
+    example_kr: "우리 집에는 텔레비전이 없어요. 그래서 텔레비전을 보지 않아요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "열쇠가 보통 어디에 있어요? '-에 있어요'를 사용해서 써 보세요.",
+    prompt_en: "Where are your keys usually? Write two sentences using '-에 있어요'.",
+    example_kr: "제 열쇠는 보통 가방 안에 있어요. 가끔 테이블 위에 있어요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "집에 식물이 있어요?",
+    prompt_en: "Do you have plants at home? Write two or three sentences.",
+    example_kr: "저는 집에 작은 화분이 있어요. 화분에 예쁜 꽃이 있어요. 저는 매일 물을 줘요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "집에 있는 물건 중에서 무엇을 고칠 수 있어요? '-을 수 있어요'를 사용해서 써 보세요.",
+    prompt_en: "Which household item can you fix yourself? Write two sentences using '-을 수 있어요' (can).",
+    example_kr: "저는 전구를 갈 수 있어요. 그렇지만 컴퓨터는 고칠 수 없어요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "얼마나 자주 빨래를 해요? '-마다'를 사용해서 써 보세요.",
+    prompt_en: "How often do you do laundry? Write two sentences using '-마다' (every).",
+    example_kr: "저는 삼 일마다 빨래를 해요. 주말마다 이불도 빨아요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "쓰레기를 언제 버려요?",
+    prompt_en: "When do you take out the trash? Write two sentences.",
+    example_kr: "저는 저녁마다 쓰레기를 버려요. 재활용은 화요일에 버려요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "집을 위해 무엇을 사고 싶어요? '-고 싶어요'를 사용해서 써 보세요.",
+    prompt_en: "What do you want to buy for your house? Write two sentences using '-고 싶어요' (want to).",
+    example_kr: "저는 새 소파를 사고 싶어요. 그리고 예쁜 커튼도 사고 싶어요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "화장실에서 무엇을 해요? '-에서'를 사용해서 써 보세요.",
+    prompt_en: "What do you do in the bathroom? Write two sentences using '-에서' (location of an action).",
+    example_kr: "저는 화장실에서 샤워해요. 그리고 이를 닦아요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "집안일 중에서 무엇을 제일 싫어해요?",
+    prompt_en: "Which household chore do you dislike the most? Write two sentences.",
+    example_kr: "저는 설거지를 제일 싫어해요. 청소는 괜찮아요.",
+  },
+
+  // Family members
+  {
+    level: "A1",
+    prompt_kr: "가족 중에서 누구와 가장 친해요?",
+    prompt_en: "Who in your family are you closest to? Write two sentences.",
+    example_kr: "저는 언니와 가장 친해요. 언니와 자주 이야기해요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "가족과 무엇을 같이 해요? '-와/과 같이'를 사용해서 써 보세요.",
+    prompt_en: "What do you do together with your family? Write two sentences using '-와/과 같이' (together with).",
+    example_kr: "저는 아빠와 같이 텔레비전을 봐요. 엄마와 같이 요리도 해요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "형제자매 중에서 누가 더 커요? '-보다'를 사용해서 써 보세요.",
+    prompt_en: "Who is taller among your siblings? Write two sentences using '-보다' (comparison). If you have no siblings, compare yourself to a parent.",
+    example_kr: "오빠가 저보다 키가 커요. 저는 언니보다 작아요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "가족 중에서 요리를 제일 잘하는 사람은 누구예요?",
+    prompt_en: "Who cooks best in your family? Write two sentences.",
+    example_kr: "우리 엄마가 요리를 제일 잘해요. 엄마 음식은 항상 맛있어요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "가족에게 자주 무엇을 해 줘요? '-에게' 또는 '-한테'를 사용해서 써 보세요.",
+    prompt_en: "What do you often do for a family member? Write two sentences using '-에게' or '-한테' (to/for someone).",
+    example_kr: "저는 동생에게 책을 읽어 줘요. 엄마한테 전화를 자주 해요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "가족 중에서 누가 매운 음식을 좋아해요?",
+    prompt_en: "Who in your family likes spicy food? Write two sentences.",
+    example_kr: "아빠가 매운 음식을 좋아해요. 저는 매운 음식을 잘 못 먹어요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "지금 가족들은 각자 무엇을 하고 있어요? '-고 있어요'를 사용해서 써 보세요.",
+    prompt_en: "What is each family member doing right now? Write two sentences using '-고 있어요' (present continuous).",
+    example_kr: "아빠는 신문을 읽고 있어요. 엄마는 요리하고 있어요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "집에서 가족을 어떻게 도와줘요? '-아/어 줘요'를 사용해서 써 보세요.",
+    prompt_en: "How do you help your family at home? Write two sentences using '-아/어 줘요' (do something for someone).",
+    example_kr: "저는 엄마 청소를 도와줘요. 동생 숙제도 도와줘요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "부모님은 무슨 일을 하세요?",
+    prompt_en: "What do your parents do for work? Write two sentences.",
+    example_kr: "아빠는 회사원이에요. 엄마는 선생님이에요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "가족들의 성격이 어때요? '-지만'을 사용해서 써 보세요.",
+    prompt_en: "What are your family members' personalities like? Write two sentences using '-지만' (but/contrast).",
+    example_kr: "언니는 조용하지만 저는 시끄러워요. 아빠는 엄격하지만 다정해요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "가족사진이 어디에 있어요?",
+    prompt_en: "Where is your family photo? Write two sentences.",
+    example_kr: "가족사진은 거실 벽에 있어요. 오래된 사진은 상자 안에 있어요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "가족 중에서 요즘 누가 제일 바빠요?",
+    prompt_en: "Who in your family is busiest these days? Write two sentences.",
+    example_kr: "요즘 아빠가 제일 바빠요. 아빠는 매일 늦게 집에 와요.",
+  },
+
+  // Simple daily activities
+  {
+    level: "A1",
+    prompt_kr: "점심을 먹은 후에 보통 무엇을 해요? '-은/ㄴ 후에'를 사용해서 써 보세요.",
+    prompt_en: "What do you usually do after eating lunch? Write two sentences using '-은/ㄴ 후에' (after doing something).",
+    example_kr: "저는 점심을 먹은 후에 커피를 마셔요. 커피를 마신 후에 다시 일해요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "집을 나가기 전에 무엇을 확인해요? '-기 전에'를 사용해서 써 보세요.",
+    prompt_en: "What do you check before leaving the house? Write two sentences using '-기 전에' (before doing something).",
+    example_kr: "저는 집을 나가기 전에 문을 잠가요. 나가기 전에 지갑도 확인해요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "이번 주에 제일 바쁜 날은 언제예요? 왜 바빠요?",
+    prompt_en: "Which day this week is your busiest, and why? Write two sentences.",
+    example_kr: "수요일이 제일 바빠요. 회의가 많아요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "시간이 없어서 못 하는 일이 있어요? '-을 수 없어요'를 사용해서 써 보세요.",
+    prompt_en: "Is there something you can't do because you're busy? Write two sentences using '-을 수 없어요' (cannot).",
+    example_kr: "저는 시간이 없어서 운동을 할 수 없어요. 책도 읽을 수 없어요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "하루 중에서 가장 좋아하는 시간은 언제예요?",
+    prompt_en: "What is your favorite time of day? Write two sentences.",
+    example_kr: "저는 저녁 시간을 제일 좋아해요. 그때 편하게 쉬어요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "오늘 어디에 무엇을 하러 가요? '-러 가요'를 사용해서 써 보세요.",
+    prompt_en: "Where are you going today, and for what purpose? Write two sentences using '-러 가요' (go in order to).",
+    example_kr: "저는 오늘 도서관에 책을 읽으러 가요. 그다음에 마트에 장을 보러 가요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "하루에 전화 통화를 몇 번 해요? 누구랑 통화해요?",
+    prompt_en: "How many phone calls do you make a day, and with whom? Write two sentences.",
+    example_kr: "저는 하루에 두 번 통화해요. 보통 엄마와 통화해요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "오늘 꼭 해야 하는 일이 있어요? '-아/어야 해요'를 사용해서 써 보세요.",
+    prompt_en: "Is there something you must do today? Write two sentences using '-아/어야 해요' (should/must).",
+    example_kr: "저는 오늘 숙제를 해야 해요. 방도 청소해야 해요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "일주일에 책을 몇 권 읽어요?",
+    prompt_en: "How many books do you read in a week? Write two sentences.",
+    example_kr: "저는 일주일에 한 권 읽어요. 주로 밤에 읽어요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "아침에 보통 하지 않는 일이 있어요?",
+    prompt_en: "Is there something you usually don't do in the morning? Write two sentences.",
+    example_kr: "저는 아침에 텔레비전을 안 봐요. 신문도 안 읽어요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "집에 오면 제일 먼저 무엇을 해요?",
+    prompt_en: "What's the first thing you do when you get home? Write two sentences.",
+    example_kr: "저는 집에 오면 손을 씻어요. 그다음에 옷을 갈아입어요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "스트레스를 받으면 무엇을 해요? '-거나'를 사용해서 써 보세요.",
+    prompt_en: "What do you do when you're stressed? Write two sentences using '-거나' (or).",
+    example_kr: "저는 스트레스를 받으면 음악을 듣거나 산책해요. 가끔 잠을 자거나 친구와 이야기해요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "하루에 핸드폰을 얼마나 자주 봐요?",
+    prompt_en: "How often do you check your phone in a day? Write two sentences.",
+    example_kr: "저는 핸드폰을 자주 봐요. 한 시간마다 확인해요.",
+  },
+
+  // Food and drink
+  {
+    level: "A1",
+    prompt_kr: "무슨 간식을 좋아해요? '-을/를 좋아해요'를 사용해서 써 보세요.",
+    prompt_en: "What snacks do you like? Write two sentences using '-을/를 좋아해요' (like).",
+    example_kr: "저는 과자를 좋아해요. 초콜릿도 좋아해요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "매운 음식을 잘 먹어요?",
+    prompt_en: "Can you eat spicy food well? Write two sentences.",
+    example_kr: "저는 매운 음식을 잘 먹어요. 떡볶이를 아주 좋아해요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "자주 먹는 음식이 있어요? '-는데'를 사용해서 써 보세요.",
+    prompt_en: "Is there a food you eat often? Write two sentences using '-는데' (background/contrast).",
+    example_kr: "저는 라면을 좋아하는데 자주 안 먹어요. 건강에 안 좋아요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "간식으로 무엇을 자주 먹어요?",
+    prompt_en: "What do you often eat as a snack? Write two sentences.",
+    example_kr: "저는 간식으로 과일을 자주 먹어요. 가끔 빵도 먹어요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "지난 주말에 무슨 음식을 만들었어요? '-았어요/었어요'를 사용해서 써 보세요.",
+    prompt_en: "What food did you make last weekend? Write two sentences using the past tense '-았어요/었어요'.",
+    example_kr: "저는 지난 주말에 김치볶음밥을 만들었어요. 정말 맛있었어요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "밥을 먹을 때 보통 누구와 같이 먹어요?",
+    prompt_en: "Who do you usually eat meals with? Write two sentences.",
+    example_kr: "저는 저녁에 가족과 같이 먹어요. 점심은 혼자 먹어요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "그 음식을 좋아하는 이유가 뭐예요? '-기 때문에'를 사용해서 써 보세요.",
+    prompt_en: "Why do you like that food? Write two sentences using '-기 때문에' (because).",
+    example_kr: "저는 비빔밥을 좋아해요. 채소가 많이 들어 있기 때문에 건강에 좋아요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "요리할 때 무슨 재료를 자주 써요?",
+    prompt_en: "What ingredients do you often use when cooking? Write two sentences.",
+    example_kr: "저는 요리할 때 마늘을 자주 써요. 양파도 많이 써요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "배가 고플 때 무엇을 먹어요? '-을 때'를 사용해서 써 보세요.",
+    prompt_en: "What do you eat when you're hungry? Write two sentences using '-을 때' (when).",
+    example_kr: "저는 배가 고플 때 라면을 먹어요. 밤에는 과일을 먹어요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "가장 좋아하는 국이나 찌개는 뭐예요?",
+    prompt_en: "What is your favorite soup or stew? Write two sentences.",
+    example_kr: "저는 된장찌개를 제일 좋아해요. 엄마가 만든 된장찌개가 최고예요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "단 음식과 짠 음식 중에서 뭘 더 좋아해요? '-보다'를 사용해서 써 보세요.",
+    prompt_en: "Do you prefer sweet food or salty food? Write two sentences using '-보다' (comparison).",
+    example_kr: "저는 단 음식이 짠 음식보다 더 좋아요. 그래서 초콜릿을 자주 먹어요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "하루에 물을 몇 잔 마셔요?",
+    prompt_en: "How many glasses of water do you drink a day? Write two sentences.",
+    example_kr: "저는 하루에 다섯 잔 마셔요. 아침에 물을 제일 많이 마셔요.",
+  },
+
+  // Basic shopping
+  {
+    level: "A1",
+    prompt_kr: "시장에 가면 보통 무엇을 사요?",
+    prompt_en: "When you go to the market, what do you usually buy? Write two sentences.",
+    example_kr: "저는 시장에 가면 과일을 사요. 채소도 사요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "마트는 몇 시부터 몇 시까지 열어요? '-부터/-까지'를 사용해서 써 보세요.",
+    prompt_en: "What time does the supermarket open and close? Write two sentences using '-부터...까지' (from...to).",
+    example_kr: "우리 동네 마트는 아침 아홉 시부터 밤 열한 시까지 열어요. 저는 보통 저녁에 가요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "물건을 살 때 가격을 확인해요?",
+    prompt_en: "Do you check the price when you buy things? Write two sentences.",
+    example_kr: "저는 물건을 살 때 가격을 항상 확인해요. 싼 물건을 좋아해요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "다음에 마트에서 무엇을 살 거예요? '-을게요'를 사용해서 써 보세요.",
+    prompt_en: "What will you buy next time at the store? Write two sentences using '-을게요' (intention).",
+    example_kr: "다음에 우유를 살게요. 계란도 살게요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "온라인 쇼핑을 자주 해요?",
+    prompt_en: "Do you shop online often? Write two sentences.",
+    example_kr: "저는 온라인 쇼핑을 자주 해요. 옷을 많이 사요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "지갑에 돈이 얼마나 있어요? '-밖에'를 사용해서 써 보세요.",
+    prompt_en: "How much money do you have in your wallet? Write two sentences using '-밖에' (only, with a negative verb).",
+    example_kr: "지갑에 돈이 조금밖에 없어요. 만 원밖에 없어요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "옷을 살 때 무엇을 제일 중요하게 생각해요?",
+    prompt_en: "What matters most to you when buying clothes? Write two sentences.",
+    example_kr: "저는 옷을 살 때 편한 것을 제일 중요하게 생각해요. 색깔도 중요해요.",
+  },
+  {
+    level: "A1",
+    prompt_kr: "슈퍼마켓과 편의점 중에서 어디에 더 자주 가요?",
+    prompt_en: "Which do you go to more often, the supermarket or the convenience store? Write two sentences.",
+    example_kr: "저는 편의점에 더 자주 가요. 집에서 가깝고 편해요.",
+  },
+];
