@@ -183,7 +183,7 @@ export default async function InsightsSection({
         {[
           { label: "word accuracy", value: vocabAccuracy !== null ? `${vocabAccuracy}%` : "—" },
           { label: "reading accuracy", value: readingAccuracy !== null ? `${readingAccuracy}%` : "—" },
-          { label: "avg speaking score", value: speakingAvg !== null ? `${speakingAvg}` : "—" },
+          { label: "avg pronunciation score", value: speakingAvg !== null ? `${speakingAvg}` : "—" },
           { label: "XP · 14 days", value: `${xpTotal14}` },
         ].map((s) => (
           <div key={s.label} className={`${CARD} !px-4 !py-3.5 text-center`}>

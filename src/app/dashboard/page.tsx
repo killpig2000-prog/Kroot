@@ -18,7 +18,7 @@ import { testForGrade } from "@/lib/promotion-test";
 import { DIALOGUES } from "@/lib/listening-dialogues";
 import { getPassagesForLevel } from "@/lib/reading";
 import { getPromptsForLevel } from "@/lib/writing";
-import { promptsFor } from "@/lib/speaking";
+import { chapterClearStats, NAILED_THRESHOLD } from "@/lib/pronunciation";
 import { getWordsForTopic } from "@/lib/vocabulary";
 import { slangOfTheDay } from "@/lib/slang";
 import { isPlus } from "@/lib/plus";
@@ -27,10 +27,10 @@ import type { CefrLevel } from "@/lib/tree";
 // The old Basics/Practice/Relax card list duplicated the sidebar; only the
 // four practice skills keep an in-page presence, as compact progress rows.
 const PRACTICE_SKILLS = [
-  { key: "listening", kr: "듣", en: "Listening", bg: "#F0FDF4", color: "#16A34A" },
-  { key: "reading", kr: "읽", en: "Reading", bg: "#EFF6FF", color: "#2563EB" },
-  { key: "writing", kr: "쓰", en: "Writing", bg: "#FFFBEB", color: "#D97706" },
-  { key: "speaking", kr: "말", en: "Speaking", bg: "#FFF1F2", color: "#E11D48" },
+  { key: "listening", href: "/listening", kr: "듣", en: "Listening", bg: "#F0FDF4", color: "#16A34A" },
+  { key: "reading", href: "/reading", kr: "읽", en: "Reading", bg: "#EFF6FF", color: "#2563EB" },
+  { key: "writing", href: "/writing", kr: "쓰", en: "Writing", bg: "#FFFBEB", color: "#D97706" },
+  { key: "pronunciation", href: "/speaking", kr: "발", en: "Pronunciation", bg: "#F0FDFA", color: "#0D9488" },
 ];
 
 const MONTH_GOAL = 20;
@@ -41,7 +41,7 @@ const QUEST_ROTATION = [
   { skill_key: "vocabulary", title: "Today's quest", description: "Watering · review your due words · ~5 min" },
   { skill_key: "listening", title: "Today's quest", description: "Listening · one dialogue at your level · ~5 min" },
   { skill_key: "reading", title: "Today's quest", description: "Reading · one short passage · ~4 min" },
-  { skill_key: "speaking", title: "Today's quest", description: "Speaking · 3 prompts out loud · ~5 min" },
+  { skill_key: "pronunciation", title: "Today's quest", description: "Pronunciation · clear one chapter · ~4 min" },
 ];
 
 function iso(d: Date) {
@@ -124,7 +124,7 @@ export default async function DashboardPage() {
     supabase.from("listening_progress").select("dialogue_id").eq("user_id", user.id).not("completed_at", "is", null),
     supabase.from("reading_progress").select("passage_key").eq("user_id", user.id),
     supabase.from("writing_progress").select("prompt_key").eq("user_id", user.id),
-    supabase.from("speaking_progress").select("prompt_key").eq("user_id", user.id),
+    supabase.from("speaking_progress").select("prompt_key, best_score").eq("user_id", user.id),
     supabase
       .from("vocabulary_progress")
       .select("id", { count: "exact", head: true })
@@ -197,10 +197,13 @@ export default async function DashboardPage() {
       new Set((writingRows ?? []).map((r) => r.prompt_key)),
       getPromptsForLevel(cefr).map((p) => p.key)
     ),
-    speaking: tally(
-      new Set((speakingRows ?? []).map((r) => r.prompt_key)),
-      promptsFor(cefr).map((p) => p.id)
-    ),
+    pronunciation: (() => {
+      const nailedIds = new Set(
+        (speakingRows ?? []).filter((r) => (r.best_score ?? 0) >= NAILED_THRESHOLD).map((r) => r.prompt_key)
+      );
+      const { done, total } = chapterClearStats(nailedIds);
+      return { done, total, percent: total ? Math.round((done / total) * 100) : 0 };
+    })(),
   };
 
   // Word of the day from the real vocabulary deck, rotating daily.
@@ -412,7 +415,7 @@ export default async function DashboardPage() {
                 const done = quest?.skill_key === c.key && !!quest?.completed_at;
                 const prog = skillProgress[c.key];
                 return (
-                  <Link key={c.key} href={`/${c.key}`} className="flex items-center gap-3 group">
+                  <Link key={c.key} href={c.href} className="flex items-center gap-3 group">
                     <span
                       className="w-[30px] h-[30px] rounded-lg flex-none flex items-center justify-center kr text-[13px] transition-transform group-hover:scale-110"
                       style={{ background: c.bg, color: c.color }}
@@ -430,7 +433,11 @@ export default async function DashboardPage() {
                       </b>
                       <SkillBar
                         percent={prog.percent}
-                        note={prog.done > 0 ? `${prog.done}/${prog.total} · ${cefr}` : "needs water 💧"}
+                        note={
+                          prog.done > 0
+                            ? `${prog.done}/${prog.total}${c.key === "pronunciation" ? "" : ` · ${cefr}`}`
+                            : "needs water 💧"
+                        }
                       />
                     </span>
                   </Link>

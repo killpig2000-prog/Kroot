@@ -23,7 +23,7 @@ export const SECTIONS: { title: string; items: NavItem[] }[] = [
     title: "Practice",
     items: [
       { icon: "🎧", label: "Listening", href: "/listening" },
-      { icon: "🎙️", label: "Speaking", href: "/speaking" },
+      { icon: "🌶️", label: "Pronunciation", href: "/speaking" },
       { icon: "✏️", label: "Writing", href: "/writing" },
       { icon: "📰", label: "Reading", href: "/reading" },
     ],

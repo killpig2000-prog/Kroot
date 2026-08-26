@@ -357,3 +357,119 @@ export const SOUND_GROUPS: SoundGroup[] = [
 export function groupByKey(key: string) {
   return SOUND_GROUPS.find((g) => g.key === key);
 }
+
+// Challenge tiers, easy to brutal — vowel contrasts and single consonant
+// families first, connected-speech rules (assimilation, insertion, melody)
+// last, since those only make sense once the basics are solid.
+export type ChallengeTier = 1 | 2 | 3 | 4 | 5;
+
+export const GROUP_TIER: Record<string, ChallengeTier> = {
+  "eo-o": 1,
+  "eu-u": 1,
+  "ae-e": 1,
+  "y-vowels": 1,
+  batchim: 1,
+  tense: 2,
+  aspirated: 2,
+  "triplet-k": 2,
+  "triplet-t": 2,
+  "triplet-p": 2,
+  "triplet-s": 2,
+  "batchim-seven": 3,
+  "double-batchim": 3,
+  ui: 3,
+  rieul: 3,
+  linking: 4,
+  hieut: 4,
+  nasal: 4,
+  lateral: 4,
+  palatal: 5,
+  fortition: 5,
+  "n-insertion": 5,
+  intonation: 5,
+};
+
+export const TIER_META: { tier: ChallengeTier; name: string; emoji: string }[] = [
+  { tier: 1, name: "Warm-up", emoji: "🌱" },
+  { tier: 2, name: "Spicy", emoji: "🌶️" },
+  { tier: 3, name: "Hardcore", emoji: "🔥" },
+  { tier: 4, name: "Brutal", emoji: "💀" },
+  { tier: 5, name: "Legendary", emoji: "👑" },
+];
+
+export function groupsForTier(tier: ChallengeTier): SoundGroup[] {
+  return SOUND_GROUPS.filter((g) => GROUP_TIER[g.key] === tier);
+}
+
+// A friendlier name shown as the chapter's headline; the full linguistic
+// title (e.g. "구개음화 — ㄷ/ㅌ become ㅈ/ㅊ") stays available as a hover tooltip
+// so the trail doesn't read like a phonology textbook at a glance.
+export const CHAPTER_BLURB: Record<string, string> = {
+  rieul: "R or L?",
+  tense: "Snap it tight",
+  aspirated: "Add a puff of air",
+  "triplet-k": "가 · 카 · 까",
+  "triplet-t": "다 · 타 · 따",
+  "triplet-p": "바 · 파 · 빠",
+  "triplet-s": "사 vs 싸",
+  "eo-o": "uh vs oh",
+  "eu-u": "eu vs oo",
+  "ae-e": "ae vs e",
+  "y-vowels": "Quick y-glides",
+  ui: "The tricky ㅢ",
+  batchim: "Closed-mouth endings",
+  "batchim-seven": "Seven ending sounds",
+  "double-batchim": "Two letters, one sound",
+  linking: "Sounds that slide together",
+  hieut: "The vanishing h",
+  nasal: "Through your nose",
+  lateral: "ㄴ becomes ㄹ",
+  palatal: "ㄷ/ㅌ soften up",
+  fortition: "Sounds that toughen up",
+  "n-insertion": "A surprise n",
+  intonation: "Say it with feeling",
+};
+
+export function chapterBlurb(key: string): string {
+  return CHAPTER_BLURB[key] ?? groupByKey(key)?.title ?? key;
+}
+
+// A word counts as "nailed" once its best recorded score clears this bar —
+// used consistently for chapter-clear/unlock logic and for deciding which
+// words a returning learner can skip.
+export const NAILED_THRESHOLD = 80;
+
+export function chapterClearStats(nailedIds: Set<string>): { done: number; total: number } {
+  const chapters = orderedChapters();
+  const done = chapters.filter((c) => c.items.every((w) => nailedIds.has(`${c.key}:${w.kr}`))).length;
+  return { done, total: chapters.length };
+}
+
+export type ChallengeWord = PronWord & { id: string; groupTitle: string; tip: string };
+
+export function allChallengeWordIds(): string[] {
+  return SOUND_GROUPS.flatMap((g) => g.items.map((w) => `${g.key}:${w.kr}`));
+}
+
+// A chapter is one sound-rule group, played as a ~7-word round. Chapters are
+// globally ordered tier-by-tier (their `index` drives the unlock chain — a
+// chapter opens once the one before it in this list is fully cleared).
+export type Chapter = SoundGroup & { tier: ChallengeTier; index: number };
+
+export function orderedChapters(): Chapter[] {
+  const chapters: Chapter[] = [];
+  for (const { tier } of TIER_META) {
+    for (const g of groupsForTier(tier)) chapters.push({ ...g, tier, index: chapters.length });
+  }
+  return chapters;
+}
+
+export function chapterByKey(key: string): Chapter | undefined {
+  return orderedChapters().find((c) => c.key === key);
+}
+
+export function wordsForChapter(key: string): ChallengeWord[] {
+  const g = groupByKey(key);
+  if (!g) return [];
+  return g.items.map((w) => ({ ...w, id: `${key}:${w.kr}`, groupTitle: g.title, tip: g.tip }));
+}

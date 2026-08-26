@@ -33,16 +33,21 @@ function getCtor(): SpeechRecognitionCtor | null {
   return w.SpeechRecognition ?? w.webkitSpeechRecognition ?? null;
 }
 
-export function useSpeechRecognition(lang = "ko-KR") {
+export function useSpeechRecognition(lang = "ko-KR", maxDurationMs?: number) {
   const isSupported = useBrowserSupport(() => getCtor() !== null);
   const [isListening, setIsListening] = useState(false);
+  const [listenStartedAt, setListenStartedAt] = useState<number | null>(null);
   const [interim, setInterim] = useState("");
   const [error, setError] = useState<string | null>(null);
   const recRef = useRef<SpeechRecognitionLike | null>(null);
   const onFinalRef = useRef<((t: string) => void) | null>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    return () => recRef.current?.abort();
+    return () => {
+      recRef.current?.abort();
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
   }, []);
 
   const stop = useCallback(() => {
@@ -56,6 +61,7 @@ export function useSpeechRecognition(lang = "ko-KR") {
       if (!Ctor) return; // isSupported already reflects this
 
       recRef.current?.abort();
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
       onFinalRef.current = onFinal;
       setInterim("");
       setError(null);
@@ -84,7 +90,9 @@ export function useSpeechRecognition(lang = "ko-KR") {
         );
       };
       rec.onend = () => {
+        if (timeoutRef.current) clearTimeout(timeoutRef.current);
         setIsListening(false);
+        setListenStartedAt(null);
         const heard = finalText.trim();
         if (heard) onFinalRef.current?.(heard);
         else setError((prev) => prev ?? "Nothing heard — try speaking a little louder.");
@@ -92,17 +100,28 @@ export function useSpeechRecognition(lang = "ko-KR") {
 
       recRef.current = rec;
       setIsListening(true);
+      setListenStartedAt(performance.now());
       try {
         rec.start();
+        if (maxDurationMs) {
+          timeoutRef.current = setTimeout(() => {
+            try {
+              rec.stop();
+            } catch {
+              // already stopped
+            }
+          }, maxDurationMs);
+        }
       } catch {
         setIsListening(false);
+        setListenStartedAt(null);
         setError("Couldn't start the microphone. Try again.");
       }
     },
-    [lang]
+    [lang, maxDurationMs]
   );
 
-  return { isSupported, isListening, interim, error, listen, stop, setError };
+  return { isSupported, isListening, listenStartedAt, interim, error, listen, stop, setError };
 }
 
 /** Speaks a single Korean string with the Web Speech API. */

@@ -2,37 +2,49 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
-import SpeakingSession from "@/components/speaking/SpeakingSession";
+import PronunciationChallenge from "@/components/pronunciation/PronunciationChallenge";
+import PronunciationTrail, { type ChapterProgress } from "@/components/pronunciation/PronunciationTrail";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
-import { promptsFor } from "@/lib/speaking";
-import { LEVEL_ORDER, type CefrLevel } from "@/lib/tree";
-import { isDifficultyUnlocked } from "@/lib/level";
-
-function isCefrLevel(value: string | undefined): value is CefrLevel {
-  return !!value && (LEVEL_ORDER as string[]).includes(value);
-}
+import { orderedChapters, NAILED_THRESHOLD } from "@/lib/pronunciation";
 
 export default async function SpeakingPage({
   searchParams,
 }: {
-  searchParams: Promise<{ level?: string }>;
+  searchParams: Promise<{ chapter?: string }>;
 }) {
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
 
   if (!user) redirect("/onboarding");
 
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("display_name, current_level, streak_days, avatar_url, xp")
-    .eq("id", user.id)
-    .single();
+  const [{ data: profile }, { data: progressRows }] = await Promise.all([
+    supabase
+      .from("profiles")
+      .select("display_name, streak_days, avatar_url")
+      .eq("id", user.id)
+      .single(),
+    supabase.from("speaking_progress").select("prompt_key, best_score").eq("user_id", user.id),
+  ]);
 
-  const myLevel = (profile?.current_level ?? "A1") as CefrLevel;
+  const bestScores: Record<string, number> = {};
+  for (const r of progressRows ?? []) bestScores[r.prompt_key] = r.best_score;
+  const nailedIds = new Set(Object.keys(bestScores).filter((k) => bestScores[k] >= NAILED_THRESHOLD));
+
+  const chapters: ChapterProgress[] = orderedChapters().reduce<ChapterProgress[]>((acc, c) => {
+    const total = c.items.length;
+    const nailed = c.items.filter((w) => nailedIds.has(`${c.key}:${w.kr}`)).length;
+    const cleared = total > 0 && nailed === total;
+    const locked = acc.length > 0 && (acc[acc.length - 1].locked || !acc[acc.length - 1].cleared);
+    return [...acc, { ...c, total, nailed, cleared, locked }];
+  }, []);
+
+  const current = chapters.find((c) => !c.locked && !c.cleared) ?? null;
+  const totalWords = chapters.reduce((n, c) => n + c.total, 0);
+  const totalCleared = chapters.filter((c) => c.cleared).length;
+
   const sp = await searchParams;
-  const requested = isCefrLevel(sp.level) ? sp.level : myLevel;
-  const level = isDifficultyUnlocked(requested, myLevel) ? requested : myLevel;
-  const count = promptsFor(level).length;
+  const requested = sp.chapter ? chapters.find((c) => c.key === sp.chapter) : undefined;
+  const playable = requested && !requested.locked ? requested : undefined;
 
   return (
     <div className="min-h-screen bg-[#FFFFFF] text-[#18181B]">
@@ -51,61 +63,32 @@ export default async function SpeakingPage({
               Garden
             </Link>
             <span>/</span>
-            <b className="text-[#18181B] font-semibold">Speaking</b>
+            <b className="text-[#18181B] font-semibold">Pronunciation</b>
           </div>
 
           {/* head */}
           <div className="flex items-center justify-between gap-4 mb-[18px] flex-wrap">
             <h1 className="font-bold text-[22px] tracking-[-0.02em] flex items-center">
-              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[#FFF1F2] text-[#E11D48] border border-[#FECDD3] items-center justify-center kr text-[15px] mr-[9px]">
-                말
+              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[#F0FDFA] text-[#0D9488] border border-[#99F6E4] items-center justify-center kr text-[15px] mr-[9px]">
+                발
               </span>
-              Speaking
+              Pronunciation Trail
             </h1>
             <span className="text-[13px] text-[#6B6560]">
-              Read the English, say it in Korean — out loud
+              {playable ? "Can you say it?" : `${totalCleared}/${chapters.length} chapters · ${totalWords} words`}
             </span>
           </div>
 
-          {/* level tabs */}
-          <div className="flex gap-2 mb-6 flex-wrap">
-            {LEVEL_ORDER.map((lv) =>
-              isDifficultyUnlocked(lv, myLevel) ? (
-                <Link
-                  key={lv}
-                  href={`/speaking?level=${lv}`}
-                  className={`rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold transition-all border ${
-                    lv === level
-                      ? "bg-[#E11D48] border-[#E11D48] text-white"
-                      : "bg-white border-[#E3DDD0] text-[#6B6560] hover:border-[#A19A8C]"
-                  }`}
-                >
-                  {lv}
-                  {lv === myLevel && (
-                    <span className="text-[10.5px] font-bold ml-1.5 opacity-85">· your level</span>
-                  )}
-                </Link>
-              ) : (
-                <div
-                  key={lv}
-                  className="rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold border bg-[#FAF7EF] border-[#E3DDD0] text-[#A19A8C] grayscale opacity-60 cursor-not-allowed select-none"
-                >
-                  🔒 {lv}
-                  <span className="text-[10.5px] font-bold ml-1.5">
-                    · promotion test
-                  </span>
-                </div>
-              )
-            )}
-          </div>
-
-          <p className="text-[12.5px] text-[#A19A8C] mb-4 max-w-[680px]">
-            {count > 0
-              ? `${count} prompt${count > 1 ? "s" : ""} at ${level} · about 5 minutes`
-              : `Nothing planted at ${level} yet`}
-          </p>
-
-          <SpeakingSession key={level} level={level} userId={user.id} />
+          {playable ? (
+            <PronunciationChallenge
+              key={playable.key}
+              chapterKey={playable.key}
+              userId={user.id}
+              initialBestScores={bestScores}
+            />
+          ) : (
+            <PronunciationTrail chapters={chapters} currentKey={current?.key ?? null} />
+          )}
         </main>
       </div>
 

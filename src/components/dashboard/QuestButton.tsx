@@ -6,11 +6,10 @@ const SKILL_HREF: Record<string, string> = {
   listening: "/listening",
   reading: "/reading",
   writing: "/writing",
-  speaking: "/speaking",
   vocabulary: "/review",
   grammar: "/grammar",
   hangul: "/hangul",
-  pronunciation: "/pronunciation",
+  pronunciation: "/speaking",
   slang: "/slang",
 };
 
