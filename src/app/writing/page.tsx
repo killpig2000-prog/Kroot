@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
+import ChapterPathGroup from "@/components/chapters/ChapterPathGroup";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { chapterWrittenToday, getChapterStatuses, getChaptersForLevel } from "@/lib/writing";
 import { isPlus } from "@/lib/plus";
@@ -220,56 +221,33 @@ export default async function WritingMapPage({
                       <span className="text-[#A19A8C] text-[11px]">▾</span>
                     </span>
                   </summary>
-                  <div className="grid gap-2.5 px-3.5 pb-3.5 pt-1 border-t border-dashed border-[#E3DDD0]">
-                    {group.map(({ chapter, status, index: i }) => {
-                      const prompt = chapter[0];
-                      const waitTomorrow = dailyDone && status === "current";
-                      const content = (
-                        <>
-                          <span
-                            className={`w-[34px] h-[34px] rounded-[10px] flex-none flex items-center justify-center text-[12.5px] font-bold border ${
-                              status === "done"
-                                ? "bg-[#F0FDF4] text-[#16A34A] border-[#BBF7D0]"
-                                : status === "current"
-                                ? "bg-[#FFFBEB] text-[#D97706] border-[#FDE68A]"
-                                : "bg-[#FAF7EF] text-[#A19A8C] border-[#E3DDD0]"
-                            }`}
-                          >
-                            {status === "done" ? "✓" : i + 1}
-                          </span>
-                          <div className="min-w-0 flex-1">
-                            <b className="block font-semibold text-[13.5px]">Page {i + 1}</b>
-                            <small className="block text-[12px] text-[#6B6560] leading-[1.5] truncate">
-                              {prompt.prompt_en}
-                            </small>
-                          </div>
-                          <span
-                            className={`text-[11px] font-semibold rounded-full border px-2.5 py-[3px] flex-none ${
-                              waitTomorrow ? STATUS_BADGE.locked : STATUS_BADGE[status]
-                            }`}
-                          >
-                            {waitTomorrow ? "🌙 Tomorrow" : STATUS_LABEL[status]}
-                          </span>
-                        </>
-                      );
-
-                      return status === "locked" || waitTomorrow ? (
-                        <div
-                          key={i}
-                          className="border border-[#E3DDD0] rounded-[10px] bg-[#FAF7EF] px-3 py-2.5 flex items-center gap-3 opacity-70"
-                        >
-                          {content}
-                        </div>
-                      ) : (
-                        <Link
-                          key={i}
-                          href={`/writing/session?chapter=${i}&level=${level}`}
-                          className="border border-[#F5F1E8] rounded-[10px] bg-white px-3 py-2.5 flex items-center gap-3 transition-all duration-150 hover:border-[#D97706] hover:bg-[#FFFBEB]"
-                        >
-                          {content}
-                        </Link>
-                      );
-                    })}
+                  <div className="px-3.5 pb-3.5 pt-2 border-t border-dashed border-[#E3DDD0]">
+                    <ChapterPathGroup
+                      lineColorClassName="border-[#FDE68A]"
+                      hoverClassName="hover:bg-[#FFFBEB]"
+                      nodes={group.map(({ chapter, status, index: i }) => {
+                        const prompt = chapter[0];
+                        const waitTomorrow = dailyDone && status === "current";
+                        const dim = status === "locked" || waitTomorrow;
+                        return {
+                          key: i,
+                          href: dim ? undefined : `/writing/session?chapter=${i}&level=${level}`,
+                          circleClassName:
+                            status === "done"
+                              ? "bg-[#F0FDF4] text-[#16A34A] border-[#BBF7D0]"
+                              : status === "current"
+                              ? "bg-[#FFFBEB] text-[#D97706] border-[#FDE68A]"
+                              : "bg-[#FAF7EF] text-[#A19A8C] border-[#E3DDD0]",
+                          ringClassName: status === "current" && !waitTomorrow ? "ring-4 ring-[#FDE68A]/60" : undefined,
+                          circleContent: status === "done" ? "✓" : i + 1,
+                          title: `Page ${i + 1}`,
+                          subtitle: prompt.prompt_en,
+                          badgeClassName: waitTomorrow ? STATUS_BADGE.locked : STATUS_BADGE[status],
+                          badgeLabel: waitTomorrow ? "🌙 Tomorrow" : STATUS_LABEL[status],
+                          dim,
+                        };
+                      })}
+                    />
                   </div>
                 </details>
               );

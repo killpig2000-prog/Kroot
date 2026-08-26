@@ -1,283 +1,9 @@
 import type { RawPassage } from "./types";
 
-export const READING_C2_A: RawPassage[] = [
+export const READING_C2_EDITORIAL: RawPassage[] = [
   {
     level: "C2",
-    title_kr: "사소한 거짓말의 윤리",
-    title_en: "The ethics of small lies",
-    body_kr: "누군가의 안부를 물을 때 우리는 대개 진심을 다 말하지 않습니다. 괜찮지 않아도 괜찮다고 답하는 것은 거짓말이라기보다 사회적 윤활유에 가깝습니다. 문제는 이 관행이 어디까지 확장될 수 있는가입니다. 상대를 배려하려는 의도가 있다고 해서 모든 왜곡이 정당화되지는 않습니다. 특히 정보의 불균형이 클 때, 사소한 거짓은 상대의 판단을 조용히 왜곡합니다. 의료 현장에서 예후를 완곡하게 전달하는 관행이 대표적인 예입니다. 환자를 배려한다는 명분 아래 정작 환자의 자기결정권이 침해될 수 있습니다. 반대로 모든 진실을 가감 없이 전달하는 것도 능사는 아닙니다. 진실은 전달 방식과 시점에 따라 전혀 다른 효과를 냅니다. 결국 중요한 것은 거짓과 진실의 이분법이 아니라 누구를 위한 배려인가라는 질문입니다. 상대의 이익을 가장한 자기 편의는 정당화되기 어렵습니다.",
-    body_en: "When we ask after someone's wellbeing, we usually do not say the whole truth. Answering that we are fine when we are not is less a lie than social lubricant. The question is how far this practice can be stretched. Having a caring intention does not justify every distortion. Especially when there is a large information gap, a small lie quietly distorts the other person's judgment. Softening a prognosis in medical settings is a representative example. Under the name of caring for the patient, the patient's right to self-determination can in fact be violated. Conversely, delivering the whole truth without any tact is not always the answer either. Truth produces entirely different effects depending on how and when it is delivered. In the end, what matters is not the binary of lie versus truth but the question of whose interest the tact serves. Convenience disguised as concern for the other is hard to justify.",
-    questions: [
-      { question_en: "What is given as a representative example of tactful untruth?", options: ["Softening a medical prognosis","Advertising slogans","Job interview answers","Political campaign promises"], answerIndex: 0 },
-      { question_en: "What question does the writer say ultimately matters?", options: ["Whether lying is illegal","How often people lie","Whose interest the tact serves","Whether the statement is technically false"], answerIndex: 2 },
-    ],
-  },
-  {
-    level: "C2",
-    title_kr: "익명성과 책임",
-    title_en: "Anonymity and responsibility",
-    body_kr: "온라인 공간에서 익명성은 오랫동안 표현의 자유를 지키는 방패로 여겨져 왔습니다. 신원을 밝히기 어려운 이들이 부당한 권력을 고발할 수 있었던 것도 이 덕분입니다. 그러나 같은 익명성이 책임을 지우지 않는 발언의 온상이 되기도 합니다. 얼굴이 드러나지 않을 때 사람들은 평소라면 삼갔을 말을 훨씬 쉽게 내뱉습니다. 심리학에서는 이를 탈개인화라는 개념으로 설명해 왔습니다. 자신을 집단의 일부로 인식할수록 개별 행위에 대한 책임감은 옅어진다는 것입니다. 실명제를 도입하면 문제가 해결될 것이라는 기대는 여러 나라에서 시험되었지만 효과는 제한적이었습니다. 표현의 위축이라는 부작용만 남긴 사례도 적지 않습니다. 결국 핵심은 신원 공개 여부가 아니라 행위와 결과를 연결하는 구조에 있습니다. 플랫폼이 발언의 이력과 맥락을 추적 가능하게 설계할 때 책임은 비로소 실질화됩니다. 익명성 자체를 없애기보다 익명성이 남용되는 조건을 줄이는 편이 더 현실적인 접근입니다.",
-    body_en: "In online spaces, anonymity has long been regarded as a shield protecting freedom of expression. It is thanks to anonymity that those unable to reveal their identity could expose unjust power. Yet the same anonymity also becomes a hotbed for speech that carries no accountability. When faces are not shown, people say things far more easily than they would normally hold back. Psychology has explained this through the concept of deindividuation. The more a person perceives themselves as part of a group, the thinner their sense of responsibility for individual acts becomes. The expectation that a real-name system would solve the problem was tested in several countries, but its effect proved limited. Not a few cases left behind only the side effect of chilled expression. In the end, the key lies not in whether identity is disclosed but in the structure that links act to consequence. Accountability becomes substantive only when a platform is designed to make the history and context of speech traceable. Reducing the conditions under which anonymity is abused is a more realistic approach than eliminating anonymity itself.",
-    questions: [
-      { question_en: "What concept explains reduced responsibility in anonymous groups?", options: ["Confirmation bias","Deindividuation","Groupthink","Cognitive dissonance"], answerIndex: 1 },
-      { question_en: "What does the writer conclude is the more realistic approach?", options: ["Banning anonymous accounts entirely","Reducing the conditions under which anonymity is abused","Requiring government ID for all speech","Ignoring the problem"], answerIndex: 1 },
-    ],
-  },
-  {
-    level: "C2",
-    title_kr: "관용의 한계",
-    title_en: "The limits of tolerance",
-    body_kr: "관용은 다른 신념과 생활 방식을 존중하는 태도로 오랫동안 자유주의 사회의 미덕이었습니다. 그러나 관용이 무제한으로 확장될 수 있는지는 별개의 문제입니다. 관용 자체를 파괴하려는 세력에게도 관용을 베풀어야 하는가라는 질문이 그 지점에서 등장합니다. 철학자들은 이를 관용의 역설이라 불러왔습니다. 모든 견해를 동등하게 존중한다면 관용을 부정하는 견해까지 보호받게 되고, 그 결과 관용의 토대 자체가 무너질 수 있습니다. 그렇다고 관용의 경계를 아무나 임의로 정할 수 있다면 그것대로 위험합니다. 소수자를 억압하는 명분으로 관용의 이름이 악용된 사례는 역사에 드물지 않습니다. 결국 경계는 신념의 내용이 아니라 그 신념이 타인의 자유를 실질적으로 침해하는가라는 기준으로 그어져야 합니다. 말로 그치는 불쾌한 주장과 폭력을 선동하는 발언은 같은 잣대로 다룰 수 없습니다. 관용은 무제한의 수용이 아니라 갈등을 규율하는 조건부 원칙으로 이해될 때 비로소 지속 가능해집니다.",
-    body_en: "Tolerance, as an attitude of respecting different beliefs and ways of life, has long been a virtue of liberal societies. But whether tolerance can be extended without limit is a separate question. The question of whether tolerance should even be granted to forces seeking to destroy tolerance itself arises at that point. Philosophers have called this the paradox of tolerance. If every view is respected equally, then even views that deny tolerance come to be protected, and the very foundation of tolerance can collapse as a result. Yet it is equally dangerous if anyone can arbitrarily set the boundary of tolerance. Cases in which the name of tolerance was abused as a pretext for oppressing minorities are not rare in history. In the end, the boundary must be drawn not by the content of a belief but by the standard of whether that belief actually infringes on others' freedom. An unpleasant claim that remains mere speech and speech that incites violence cannot be treated by the same measure. Tolerance becomes sustainable only when it is understood not as unlimited acceptance but as a conditional principle that regulates conflict.",
-    questions: [
-      { question_en: "What do philosophers call the problem of unlimited tolerance?", options: ["The consent dilemma","The freedom fallacy","The paradox of tolerance","The liberty trap"], answerIndex: 2 },
-      { question_en: "By what standard does the writer say boundaries should be drawn?", options: ["Whether a belief is old","Whether a belief is religious","Whether a belief actually infringes on others' freedom","Whether a belief is popular"], answerIndex: 2 },
-    ],
-  },
-  {
-    level: "C2",
-    title_kr: "소유와 정체성",
-    title_en: "Ownership and identity",
-    body_kr: "우리는 종종 소유물을 통해 자신을 설명합니다. 어떤 차를 몰고 어떤 동네에 사는지가 정체성의 일부처럼 여겨지곤 합니다. 이러한 경향은 소비 사회에서 새롭게 만들어진 것이 아니라 오래된 심리적 기제에 뿌리를 두고 있습니다. 심리학자들은 사람과 소유물 사이의 이러한 결합을 확장된 자아라는 개념으로 설명해 왔습니다. 물건을 잃어버릴 때 단순한 손실 이상의 상실감을 느끼는 이유도 여기에 있습니다. 문제는 이 결합이 자본에 의해 손쉽게 동원된다는 점입니다. 광고 산업은 물건이 곧 자아를 완성한다는 메시지를 정교하게 반복해 왔습니다. 그 결과 소비는 필요를 채우는 행위에서 정체성을 증명하는 행위로 변질됩니다. 흥미로운 점은 경험에 대한 지출이 물건에 대한 지출보다 만족감을 더 오래 지속시킨다는 연구 결과입니다. 경험은 소유물처럼 비교당하지 않고 기억으로 재구성되기 때문입니다. 소유가 정체성을 대신할 수 없다는 사실을 자각하는 것이야말로 소비주의에서 벗어나는 첫걸음입니다.",
-    body_en: "We often explain ourselves through our possessions. What car we drive and what neighborhood we live in are often treated as part of our identity. This tendency was not newly created by consumer society but is rooted in an old psychological mechanism. Psychologists have explained this bond between a person and their possessions through the concept of the extended self. This is also why losing an object makes us feel a loss greater than the mere material one. The problem is that this bond is easily mobilized by capital. The advertising industry has elaborately repeated the message that objects complete the self. As a result, consumption is transformed from an act that fills a need into an act that proves identity. An interesting finding is that spending on experiences sustains satisfaction longer than spending on objects. That is because experiences, unlike possessions, are not compared but reconstructed as memory. Recognizing that ownership cannot substitute for identity is the first step toward escaping consumerism.",
-    questions: [
-      { question_en: "What concept explains the bond between people and possessions?", options: ["Social proof","The endowment effect","Cognitive dissonance","The extended self"], answerIndex: 3 },
-      { question_en: "Why does spending on experiences sustain satisfaction longer?", options: ["Experiences are cheaper","Experiences do not fade","Experiences are shared more often","Experiences are reconstructed as memory rather than compared"], answerIndex: 3 },
-    ],
-  },
-  {
-    level: "C2",
-    title_kr: "약속의 구속력",
-    title_en: "The binding force of a promise",
-    body_kr: "약속은 법적 강제력이 없어도 사람을 움직이는 힘을 지닙니다. 왜 우리는 지키지 않아도 처벌받지 않을 말에 스스로를 묶는 것일까요. 철학자들은 약속의 구속력이 미래의 자신을 현재의 자신이 통제하려는 시도라고 설명해 왔습니다. 불확실한 세계에서 상대가 예측 가능하게 행동하리라는 믿음은 관계를 지탱하는 최소한의 기반입니다. 그 기반이 없다면 매번 계약과 담보를 동원해야 하고, 그 비용은 감당하기 어려울 만큼 커집니다. 약속을 지키는 관행이 사회 전체의 거래 비용을 낮추는 셈입니다. 그렇다고 모든 약속이 절대적으로 지켜져야 하는 것은 아닙니다. 상황이 근본적으로 변했을 때조차 약속을 고집하는 것은 오히려 관계를 해칠 수 있습니다. 중요한 것은 약속을 어길 때 그 이유를 투명하게 밝히고 상대의 손실을 인정하는 태도입니다. 침묵 속의 파기가 신뢰를 무너뜨리는 반면, 설명이 동반된 파기는 신뢰를 완전히 파괴하지 않습니다. 약속의 진정한 가치는 지키는 행위 자체보다 그것을 대하는 정직함에 있는지도 모릅니다.",
-    body_en: "A promise has the power to move people even without legal force behind it. Why do we bind ourselves to words we will not be punished for breaking? Philosophers have explained that the binding force of a promise is an attempt by the present self to control the future self. In an uncertain world, the belief that the other party will act predictably is the minimal foundation that sustains a relationship. Without that foundation, contracts and collateral would have to be mobilized every time, and the cost would grow unbearably large. The practice of keeping promises, in effect, lowers the transaction costs of society as a whole. That does not mean every promise must be kept absolutely. Insisting on a promise even when circumstances have fundamentally changed can in fact harm the relationship. What matters is the attitude of transparently disclosing the reason when breaking a promise and acknowledging the other party's loss. While a silent breach destroys trust, a breach accompanied by an explanation does not destroy it completely. The true value of a promise may lie not in the act of keeping it itself but in the honesty with which it is treated.",
-    questions: [
-      { question_en: "What does keeping promises do for society, according to the passage?", options: ["Eliminates the need for trust","Increases legal disputes","Lowers overall transaction costs","Reduces the need for communication"], answerIndex: 2 },
-      { question_en: "What matters most when a promise must be broken?", options: ["Breaking it silently to avoid conflict","Transparently explaining the reason and acknowledging loss","Never breaking it under any circumstance","Offering monetary compensation only"], answerIndex: 1 },
-    ],
-  },
-  {
-    level: "C2",
-    title_kr: "죄책감과 수치심",
-    title_en: "Guilt and shame",
-    body_kr: "죄책감과 수치심은 흔히 같은 감정으로 혼동되지만 심리학은 둘을 명확히 구분합니다. 죄책감은 특정한 행위에 대한 후회이고, 수치심은 존재 전체에 대한 부정적 평가입니다. 잘못을 저질렀을 때 죄책감을 느끼는 사람은 그 행위를 바로잡으려 노력합니다. 반면 수치심을 느끼는 사람은 자신을 숨기거나 방어하는 데 에너지를 씁니다. 이 차이는 사소해 보이지만 행동의 결과에서 극명하게 갈립니다. 죄책감은 관계를 회복시키는 방향으로 작동하는 반면, 수치심은 오히려 고립을 심화시킵니다. 그럼에도 많은 교육과 훈육이 수치심을 지렛대로 삼아 왔습니다. 아이를 나무랄 때 행동이 아니라 인격을 지적하는 말이 대표적인 예입니다. 그런 말은 단기적으로 순응을 이끌어 낼 수 있지만 장기적으로는 자존감을 갉아먹습니다. 건강한 도덕적 발달은 행위와 자아를 분리하는 언어에서 시작됩니다. 잘못을 지적하되 존재를 부정하지 않는 화법이 그래서 중요합니다.",
-    body_en: "Guilt and shame are often confused as the same emotion, but psychology draws a clear distinction between the two. Guilt is regret over a specific act, while shame is a negative evaluation of one's entire being. A person who feels guilt after doing something wrong tends to work to correct that act. A person who feels shame, by contrast, spends energy hiding or defending themselves. This difference looks trivial but diverges sharply in its behavioral consequences. Guilt tends to operate in a direction that restores relationships, while shame instead deepens isolation. Even so, much education and discipline have used shame as a lever. A representative example is criticizing a child's character rather than their behavior when scolding them. Such words can produce compliance in the short term but erode self-esteem in the long run. Healthy moral development begins with language that separates the act from the self. That is why it matters to point out a wrong without denying the person's worth.",
-    questions: [
-      { question_en: "How does guilt differ from shame according to the passage?", options: ["Guilt targets a specific act; shame targets the whole self","Guilt lasts longer than shame","Guilt is rare; shame is common","Guilt is public; shame is private"], answerIndex: 0 },
-      { question_en: "What is a representative example of shame-based discipline?", options: ["Criticizing a child's character rather than their behavior","Offering rewards for good behavior","Ignoring misbehavior","Explaining consequences calmly"], answerIndex: 0 },
-    ],
-  },
-  {
-    level: "C2",
-    title_kr: "선의의 거짓말과 신뢰",
-    title_en: "White lies and trust",
-    body_kr: "선의의 거짓말은 관계를 부드럽게 만든다는 통념이 널리 퍼져 있습니다. 그러나 최근 연구들은 이 통념에 의문을 제기합니다. 작은 거짓말이 발각되었을 때 상대가 느끼는 배신감은 거짓말의 크기와 비례하지 않는다는 것입니다. 오히려 사소한 거짓일수록 왜 굳이 그랬는지에 대한 의문이 신뢰 전반으로 번지는 경우가 많습니다. 이는 사람들이 거짓말의 내용보다 거짓말을 하는 성향 자체를 판단의 근거로 삼기 때문입니다. 한 번의 작은 거짓이 발견되면 상대는 다른 발언들도 소급하여 의심하기 시작합니다. 그렇다고 모든 진실을 여과 없이 전달하는 것이 대안이 되지는 못합니다. 연구자들이 제안하는 절충안은 침묵할 자유를 넓히는 것입니다. 굳이 답하지 않아도 되는 질문에는 답을 피할 수 있어야 한다는 것입니다. 거짓을 말하지 않으면서도 모든 것을 말하지 않을 권리를 인정할 때, 관계는 오히려 더 정직해질 수 있습니다. 정직은 침묵을 배제하지 않습니다.",
-    body_en: "The common belief that white lies smooth over relationships is widespread. Recent research, however, questions this belief. The betrayal a person feels upon discovering a small lie is not proportional to the size of the lie. In fact, the smaller the lie, the more often the question of why it was necessary at all spreads into doubt about trust as a whole. This is because people use the tendency to lie itself, rather than the content of the lie, as the basis for judgment. Once a single small lie is discovered, the other party begins to retroactively doubt other statements as well. That does not mean delivering the unfiltered truth in every instance becomes the alternative. The compromise researchers propose is to widen the freedom to remain silent. Questions one need not answer should be allowed to go unanswered. When the right not to say everything is recognized without ever lying, relationships can actually become more honest. Honesty does not exclude silence.",
-    questions: [
-      { question_en: "What do people use as the basis for judging a small lie, per the research?", options: ["The tendency to lie itself, not the content","The size of the lie only","The relationship's length","The listener's mood"], answerIndex: 0 },
-      { question_en: "What compromise do researchers propose?", options: ["Widening the freedom to remain silent","Requiring full disclosure at all times","Banning small talk","Legal penalties for white lies"], answerIndex: 0 },
-    ],
-  },
-  {
-    level: "C2",
-    title_kr: "공정함이라는 감각",
-    title_en: "The sense of fairness",
-    body_kr: "공정함에 대한 감각은 이성적 계산 이전에 직관적으로 작동합니다. 원숭이에게 같은 과제를 시키고 서로 다른 보상을 주는 실험은 이를 잘 보여줍니다. 더 적은 보상을 받은 개체는 과제 자체를 거부하며 분노에 가까운 반응을 보였습니다. 이는 공정함이 인간만의 학습된 규범이 아니라 오래된 진화적 유산일 가능성을 시사합니다. 문제는 이 직관이 절대적 기준에 대한 것이 아니라 상대적 비교에 대한 것이라는 점입니다. 사람들은 자신의 처지가 개선되었더라도 남과 비교해 뒤처졌다고 느끼면 불공정하다고 판단합니다. 이러한 경향은 정책 설계자에게 까다로운 과제를 안깁니다. 총량이 늘어도 배분의 격차가 눈에 띄면 정책은 지지를 얻기 어렵습니다. 반대로 절차가 투명하게 공개될 때 사람들은 결과의 불평등을 더 쉽게 받아들입니다. 결과의 공정함 못지않게 과정의 공정함이 수용 여부를 좌우하는 셈입니다. 정책이 성공하려면 무엇을 나눌지보다 어떻게 나누는지를 설명하는 데 더 많은 공을 들여야 합니다.",
-    body_en: "The sense of fairness operates intuitively before any rational calculation. An experiment giving monkeys the same task but different rewards demonstrates this well. The individual receiving the smaller reward rejected the task itself, showing a response close to anger. This suggests that fairness may not be a norm learned uniquely by humans but an old evolutionary inheritance. The problem is that this intuition concerns not an absolute standard but a relative comparison. People judge a situation as unfair when they feel they have fallen behind others, even if their own condition has improved. This tendency poses a tricky challenge for policy designers. Even when the total pie grows, a policy struggles to gain support if the gap in distribution is visible. Conversely, when the process is transparently disclosed, people accept inequality of outcome more readily. The fairness of the process, no less than the fairness of the outcome, determines whether it is accepted. For a policy to succeed, more effort must go into explaining how the pie is divided than into explaining what is divided.",
-    questions: [
-      { question_en: "What did the monkey experiment suggest about fairness?", options: ["It disappears with training","It may be an old evolutionary inheritance","It is purely a human cultural invention","It only applies to monetary rewards"], answerIndex: 1 },
-      { question_en: "What helps people accept an unequal outcome, per the passage?", options: ["A transparently disclosed process","Government mandates","Anonymity of recipients","A larger total pie only"], answerIndex: 0 },
-    ],
-  },
-  {
-    level: "C2",
-    title_kr: "용서의 조건",
-    title_en: "The conditions for forgiveness",
-    body_kr: "용서는 종종 관계를 회복하는 미덕으로 칭송받지만 그 조건을 따져 보면 훨씬 복잡한 문제입니다. 가해자가 진심으로 반성하지 않은 상태에서 이루어지는 용서는 피해자에게 또 다른 짐을 지웁니다. 화해를 강요받는 분위기 속에서 피해자는 감정을 억누르고 관계를 이어가야 한다는 압박을 느낍니다. 이는 용서를 사회적 규범으로 만들 때 특히 두드러지는 부작용입니다. 반면 진정한 용서는 강요가 아니라 시간과 자율성 속에서 자연스럽게 형성됩니다. 심리학 연구는 용서가 가해자를 위한 것이 아니라 피해자 자신을 위한 것일 때 지속 가능하다고 말합니다. 분노를 계속 품는 것이 정신 건강에 미치는 부담을 줄이려는 선택으로서의 용서입니다. 그렇다고 모든 잘못을 반드시 용서해야 하는 것은 아닙니다. 용서하지 않을 권리 또한 존중받아야 할 선택지입니다. 사과와 반성이 결여된 상태에서 성급하게 이루어지는 화해는 오히려 같은 잘못을 반복시킬 위험이 있습니다. 결국 용서는 결과가 아니라 피해자가 스스로 선택할 수 있는 과정으로 이해되어야 합니다.",
-    body_en: "Forgiveness is often praised as a virtue that restores relationships, but examining its conditions reveals a far more complex issue. Forgiveness granted while the offender has not truly reflected places yet another burden on the victim. Under pressure to reconcile, the victim feels compelled to suppress their feelings and continue the relationship. This is a side effect that becomes especially pronounced when forgiveness is turned into a social norm. Genuine forgiveness, by contrast, forms naturally through time and autonomy rather than compulsion. Psychological research says forgiveness is sustainable when it is for the victim's own sake rather than for the offender's. It is forgiveness chosen as a way to reduce the burden that continued anger places on mental health. That does not mean every wrong must necessarily be forgiven. The right not to forgive is also an option that deserves respect. Reconciliation rushed in the absence of apology and reflection risks repeating the same wrong. In the end, forgiveness should be understood not as an outcome but as a process the victim can choose for themselves.",
-    questions: [
-      { question_en: "When is forgiveness described as sustainable?", options: ["When it is demanded by society","When it happens immediately","When the offender requests it","When it is for the victim's own sake"], answerIndex: 3 },
-      { question_en: "What risk does rushed reconciliation carry?", options: ["It eliminates anger permanently","It guarantees an apology","It risks repeating the same wrong","It always heals relationships"], answerIndex: 2 },
-    ],
-  },
-  {
-    level: "C2",
-    title_kr: "게으름에 대한 오해",
-    title_en: "Misunderstanding laziness",
-    body_kr: "게으름은 흔히 의지박약의 문제로 취급됩니다. 그러나 행동을 미루는 현상을 자세히 들여다보면 단순한 나태와는 거리가 멉니다. 많은 경우 미루기는 과제 자체보다 실패에 대한 두려움에서 비롯됩니다. 시도했다가 못하는 것보다 아예 시도하지 않는 편이 자존감을 덜 다치게 한다는 방어적 계산이 작동하는 것입니다. 완벽하게 해내야 한다는 압박이 클수록 이러한 회피는 더 심해지는 경향이 있습니다. 이는 게으름이 능력의 문제가 아니라 감정 조절의 문제에 가깝다는 것을 보여줍니다. 실제로 미루는 사람에게 의지력을 더 발휘하라고 다그치는 접근은 대체로 효과가 없습니다. 오히려 과제를 작게 쪼개고 실패의 기준을 낮추는 전략이 더 큰 효과를 낸다는 연구 결과가 축적되어 왔습니다. 자신을 탓하는 것이 습관이 되면 다음 시도는 더욱 미뤄집니다. 자기 비난의 악순환을 끊는 것이야말로 생산성을 회복하는 첫걸음입니다. 게으름을 도덕적 결함으로 낙인찍기 전에 그 이면의 두려움을 먼저 살펴야 하는 이유입니다.",
-    body_en: "Laziness is commonly treated as a problem of weak will. But looking closely at the phenomenon of procrastination reveals something far from simple idleness. In many cases, procrastination stems not from the task itself but from fear of failure. A defensive calculation operates in which not trying at all hurts self-esteem less than trying and failing. The greater the pressure to perform perfectly, the more this avoidance tends to intensify. This shows that laziness is closer to a problem of emotional regulation than of ability. In fact, pushing a procrastinator to exert more willpower is generally ineffective. Research has instead accumulated showing that breaking a task into small pieces and lowering the bar for failure produces a greater effect. When self-blame becomes a habit, the next attempt is delayed even further. Breaking the vicious cycle of self-criticism is the first step toward restoring productivity. This is why the fear behind laziness must be examined before it is stigmatized as a moral flaw.",
-    questions: [
-      { question_en: "What does procrastination often stem from, per the passage?", options: ["Lack of deadlines","Poor time management tools","Low intelligence","Fear of failure"], answerIndex: 3 },
-      { question_en: "What strategy is shown to be more effective than demanding willpower?", options: ["Monetary punishment","Public shaming","Stricter deadlines","Breaking tasks into small pieces and lowering the bar for failure"], answerIndex: 3 },
-    ],
-  },
-  {
-    level: "C2",
-    title_kr: "완벽주의의 대가",
-    title_en: "The cost of perfectionism",
-    body_kr: "완벽주의는 흔히 높은 성취와 동일시되지만 그 이면에는 상당한 대가가 숨어 있습니다. 완벽주의자는 결과가 아무리 좋아도 부족한 부분에만 시선을 고정합니다. 이러한 성향은 단기적으로 성과를 끌어올리는 것처럼 보이지만 장기적으로는 만성적인 불안과 소진으로 이어집니다. 연구자들은 완벽주의를 자기 지향형과 타인 지향형, 사회 부과형으로 구분해 왔습니다. 특히 타인의 기준에 맞추려는 사회 부과형 완벽주의가 정신 건강에 가장 해롭다는 것이 여러 연구에서 확인되었습니다. 실패를 용납하지 않는 환경에서 자란 사람일수록 이러한 성향을 내면화하기 쉽습니다. 문제는 완벽을 추구하는 태도와 탁월함을 추구하는 태도가 겉으로는 비슷해 보인다는 점입니다. 탁월함을 추구하는 사람은 실수에서 배우지만, 완벽을 추구하는 사람은 실수를 존재 자체의 결함으로 받아들입니다. 이 차이는 회복 탄력성에서 극명하게 드러납니다. 완벽주의에서 벗어나는 첫걸음은 충분히 좋다는 기준을 스스로 정의하는 데 있습니다. 성취의 크기보다 그 과정을 견디는 마음의 여유가 결국 지속 가능성을 좌우합니다.",
-    body_en: "Perfectionism is commonly equated with high achievement, but a considerable cost hides behind it. A perfectionist fixates on what is lacking no matter how good the result is. This tendency seems to boost performance in the short term but leads to chronic anxiety and burnout in the long run. Researchers have divided perfectionism into self-oriented, other-oriented, and socially prescribed types. Multiple studies have confirmed that socially prescribed perfectionism, the drive to meet others' standards, is the most harmful to mental health. People raised in environments that do not tolerate failure are more likely to internalize this tendency. The problem is that the attitude of pursuing perfection and the attitude of pursuing excellence look similar on the surface. A person pursuing excellence learns from mistakes, while a person pursuing perfection takes mistakes as a flaw in their very being. This difference shows up sharply in resilience. The first step out of perfectionism lies in defining for oneself a standard of good enough. In the end, it is not the size of the achievement but the ease of mind to endure the process that determines sustainability.",
-    questions: [
-      { question_en: "Which type of perfectionism is most harmful to mental health?", options: ["Task-oriented perfectionism","Socially prescribed perfectionism","Time-oriented perfectionism","Self-oriented perfectionism"], answerIndex: 1 },
-      { question_en: "How does a person pursuing excellence differ from one pursuing perfection?", options: ["They avoid all risk","They learn from mistakes rather than seeing them as personal flaws","They ignore feedback","They achieve less overall"], answerIndex: 1 },
-    ],
-  },
-  {
-    level: "C2",
-    title_kr: "침묵의 무게",
-    title_en: "The weight of silence",
-    body_kr: "회의 자리에서 아무도 반대하지 않았다는 사실이 곧 모두가 동의했다는 증거는 아닙니다. 침묵은 종종 동의보다 두려움이나 체념의 표현일 때가 많습니다. 조직 심리학에서는 이러한 현상을 조직적 침묵이라 부릅니다. 발언이 자신에게 불이익으로 돌아올 것이라는 학습된 믿음이 반복되면 구성원들은 점차 입을 닫습니다. 문제는 이 침묵이 조용히 조직 전체의 위험을 키운다는 점입니다. 재난이나 대형 사고의 사후 조사에서 반복적으로 발견되는 패턴이 바로 이것입니다. 위험 신호를 감지한 누군가가 있었지만 발언하지 못했다는 사실이 뒤늦게 드러나는 경우가 많습니다. 침묵을 깨는 문화를 만들기 위해서는 발언 자체를 장려하는 것만으로는 부족합니다. 발언한 사람이 실제로 불이익을 받지 않는다는 경험이 축적되어야 신뢰가 형성됩니다. 권한을 가진 사람이 먼저 자신의 실수를 인정하는 태도도 이러한 신뢰 형성에 중요한 역할을 합니다. 침묵이 안전을 의미하지 않는다는 사실을 조직이 받아들일 때 비로소 진짜 위험이 드러날 수 있습니다.",
-    body_en: "The fact that no one objected in a meeting is not proof that everyone agreed. Silence is often an expression of fear or resignation rather than consent. Organizational psychology calls this phenomenon organizational silence. When the learned belief that speaking up will bring personal disadvantage repeats itself, members gradually stop speaking. The problem is that this silence quietly grows the risk to the whole organization. This is exactly the pattern repeatedly found in post-mortem investigations of disasters and major accidents. It is often revealed too late that someone had detected a warning sign but could not speak up. To build a culture that breaks silence, merely encouraging people to speak is not enough. Trust forms only once the experience accumulates that those who speak up do not actually suffer disadvantage. The attitude of those in power admitting their own mistakes first also plays an important role in building this trust. Only when an organization accepts that silence does not mean safety can the real danger come to light.",
-    questions: [
-      { question_en: "What is organizational silence often an expression of?", options: ["Fear or resignation rather than consent","Boredom","Genuine agreement","Efficiency"], answerIndex: 0 },
-      { question_en: "What pattern is repeatedly found in disaster investigations?", options: ["Someone detected a risk but could not speak up","Too many people spoke at once","No one noticed any risk","Warnings were ignored intentionally by leadership"], answerIndex: 0 },
-    ],
-  },
-  {
-    level: "C2",
-    title_kr: "후회와 결정",
-    title_en: "Regret and decision",
-    body_kr: "후회는 흔히 피해야 할 감정으로 여겨지지만 그 기능을 들여다보면 이야기가 달라집니다. 심리학 연구에 따르면 사람들이 가장 오래 후회하는 것은 저지른 행동이 아니라 하지 않은 행동입니다. 시간이 지날수록 실패한 시도에 대한 후회는 옅어지는 반면 시도조차 하지 않은 일에 대한 후회는 오히려 짙어집니다. 이는 인간의 마음이 완결된 사건보다 미완의 가능성을 더 오래 붙들기 때문입니다. 이러한 비대칭은 의사 결정의 순간에 유용한 지침이 될 수 있습니다. 선택의 갈림길에서 두려움이 앞설 때, 몇 년 후 어느 쪽을 더 후회할지 자문해 보는 방법이 그것입니다. 다만 후회를 두려워한 나머지 무모한 결정을 정당화하는 함정도 경계해야 합니다. 모든 시도가 옳은 것은 아니며, 신중한 판단 없이 감행한 선택은 그 자체로 새로운 후회를 낳습니다. 결국 후회는 회피할 감정이 아니라 다음 선택을 위한 정보로 활용될 때 가치를 갖습니다. 지나간 선택을 곱씹는 데 머무르지 않고 그로부터 기준을 추출하는 태도가 중요합니다.",
-    body_en: "Regret is commonly seen as an emotion to avoid, but looking at its function tells a different story. Psychological research shows that what people regret longest is not the actions they took but the actions they did not take. Regret over failed attempts fades over time, while regret over things not even attempted grows deeper instead. This is because the human mind holds onto unfinished possibilities longer than completed events. This asymmetry can become a useful guide at the moment of decision. At a fork in the road where fear takes the lead, one method is to ask which side one would regret more a few years from now. Still, one must also guard against the trap of justifying reckless decisions out of fear of regret. Not every attempt is right, and a choice ventured without careful judgment produces new regret of its own. In the end, regret has value not when avoided but when used as information for the next choice. What matters is not dwelling on a past choice but extracting a standard from it.",
-    questions: [
-      { question_en: "What do people regret longest, according to the research?", options: ["Nothing, over time","Actions they did not take","Actions they took and failed at","Decisions made by others"], answerIndex: 1 },
-      { question_en: "What trap should be guarded against?", options: ["Never making decisions","Regretting too little","Avoiding all risk","Justifying reckless decisions out of fear of regret"], answerIndex: 3 },
-    ],
-  },
-  {
-    level: "C2",
-    title_kr: "동정과 연민의 차이",
-    title_en: "The difference between pity and compassion",
-    body_kr: "동정과 연민은 흔히 같은 뜻으로 쓰이지만 그 구조는 사뭇 다릅니다. 동정은 상대를 자신보다 낮은 위치에 두고 내려다보는 시선을 전제합니다. 반면 연민은 상대의 고통을 자신도 겪을 수 있는 일로 받아들이는 동등한 시선에서 출발합니다. 이 차이는 상대가 받아들이는 태도에서도 극명하게 드러납니다. 동정을 받은 사람은 종종 수치심을 느끼며 관계에서 위축됩니다. 반면 연민을 받은 사람은 존중받는다는 느낌 속에서 위로를 얻습니다. 문제는 두 감정이 표면적으로 비슷한 표정과 언어로 표현된다는 점입니다. 위로의 말을 건네는 사람조차 자신이 동정하는지 연민하는지 명확히 구분하지 못하는 경우가 많습니다. 연민을 실천하기 위해서는 상대의 처지를 상상하는 데서 그치지 않고 자신의 취약함을 함께 인정해야 합니다. 이는 자신도 언제든 같은 처지에 놓일 수 있다는 겸허함을 요구합니다. 결국 연민은 우월한 위치에서 베푸는 시혜가 아니라 같은 인간으로서의 연대에서 비롯됩니다.",
-    body_en: "Pity and compassion are often used interchangeably, but their structures are quite different. Pity presupposes a gaze that looks down on the other from a position above them. Compassion, by contrast, starts from an equal gaze that accepts the other's suffering as something one could experience oneself. This difference is also starkly revealed in how the recipient responds. A person who receives pity often feels shame and withdraws from the relationship. A person who receives compassion, by contrast, finds comfort in feeling respected. The problem is that the two emotions are expressed through similar expressions and words on the surface. Even the person offering words of comfort often cannot clearly tell whether they are pitying or feeling compassion. To practice compassion, one must not stop at imagining the other's situation but also acknowledge one's own vulnerability together with it. This requires the humility of recognizing that one could be in the same situation at any time. In the end, compassion springs not from charity granted from a superior position but from solidarity as a fellow human being.",
-    questions: [
-      { question_en: "What does pity presuppose, according to the passage?", options: ["Complete equality","A gaze that looks down on the other","Shared suffering only","Financial superiority"], answerIndex: 1 },
-      { question_en: "What does practicing compassion require, beyond imagining the other's situation?", options: ["Acknowledging one's own vulnerability","Public recognition","Avoiding eye contact","Offering money"], answerIndex: 0 },
-    ],
-  },
-  {
-    level: "C2",
-    title_kr: "자율성과 개입",
-    title_en: "Autonomy and intervention",
-    body_kr: "타인의 선택이 어리석어 보일 때 개입해야 하는가라는 질문은 오래된 윤리적 딜레마입니다. 자율성을 존중하는 전통은 성인이 자신의 삶을 스스로 결정할 권리를 최우선으로 둡니다. 그러나 그 결정이 명백히 해로운 결과로 이어질 것이 예견될 때조차 침묵해야 하는가라는 반문이 뒤따릅니다. 흡연이나 위험한 스포츠처럼 본인에게만 해가 미치는 행위와 타인에게 피해를 주는 행위를 구분하는 것이 전통적인 접근이었습니다. 그러나 현실에서는 이 구분이 생각만큼 깔끔하지 않습니다. 개인의 건강 악화는 결국 가족과 의료 체계에 부담을 전가하기 때문입니다. 자유주의 철학은 이러한 간접적 영향까지 개입의 근거로 삼을 경우 개입의 범위가 무한히 확장될 위험을 경고해 왔습니다. 그래서 등장한 절충안이 온정적 간섭주의를 최소화하되 정보 제공은 극대화하자는 원칙입니다. 선택을 대신해 주는 대신 선택의 결과를 명료하게 보여 주는 방식입니다. 넛지라 불리는 정책 설계가 이러한 절충의 대표적인 시도입니다. 결국 자율성 존중과 보호 사이의 균형점은 고정된 답이 아니라 매 사안마다 다시 그어야 하는 선입니다.",
-    body_en: "The question of whether to intervene when another person's choice seems foolish is an old ethical dilemma. The tradition of respecting autonomy places the right of an adult to determine their own life above all else. But a counter-question follows: should one stay silent even when a decision is foreseen to lead to clearly harmful consequences? The traditional approach distinguished between acts that harm only oneself, such as smoking or dangerous sports, and acts that harm others. In reality, however, this distinction is not as clean as it seems. Deteriorating personal health ultimately shifts a burden onto family and the healthcare system. Liberal philosophy has warned that if such indirect effects are also taken as grounds for intervention, the scope of intervention risks expanding without limit. The compromise that emerged is the principle of minimizing paternalistic interference while maximizing the provision of information. It is a method of clearly showing the consequences of a choice rather than making the choice on someone's behalf. Policy design known as the nudge is a representative attempt at this kind of compromise. In the end, the balance between respecting autonomy and protection is not a fixed answer but a line that must be redrawn for each case.",
-    questions: [
-      { question_en: "What compromise principle emerged in the passage?", options: ["Ignoring indirect societal effects entirely","Minimizing paternalism while maximizing information provision","Legal punishment for poor choices","Banning all risky personal behavior"], answerIndex: 1 },
-      { question_en: "What is given as a representative attempt at this compromise?", options: ["Mandatory health insurance","Nudge-based policy design","Public shaming campaigns","Total deregulation"], answerIndex: 1 },
-    ],
-  },
-  {
-    level: "C2",
-    title_kr: "습관의 도덕성",
-    title_en: "The morality of habit",
-    body_kr: "도덕적 행위를 논할 때 우리는 흔히 의식적인 선택을 전제합니다. 그러나 실제 행동의 상당수는 숙고 없이 습관에 의해 자동으로 실행됩니다. 아리스토텔레스는 이미 오래전에 덕이란 반복된 행위를 통해 형성되는 성품이라고 보았습니다. 옳은 일을 매번 의지로 선택하는 사람보다 옳은 일이 몸에 밴 사람이 더 안정적으로 덕을 실천한다는 것입니다. 이 관점은 도덕 교육의 방향에 중요한 시사점을 던집니다. 규칙을 암기시키는 것만으로는 충분하지 않으며, 반복된 경험을 통해 좋은 습관을 형성하도록 돕는 것이 더 근본적인 접근이라는 것입니다. 문제는 나쁜 습관 역시 같은 방식으로 형성된다는 점입니다. 차별적인 언행이나 무심한 태도가 반복을 통해 성찰 없이 굳어지는 경우가 대표적입니다. 이러한 습관은 당사자조차 자신이 잘못하고 있다는 인식 없이 지속됩니다. 습관을 교정하려면 그 행위가 일어나는 맥락 자체를 바꾸는 개입이 필요합니다. 결국 도덕성은 순간의 결단이 아니라 오랜 시간에 걸쳐 축적된 반복의 총합으로 완성됩니다.",
-    body_en: "When we discuss moral action, we usually presuppose a conscious choice. In reality, however, a considerable portion of our behavior is executed automatically by habit, without deliberation. Aristotle already held long ago that virtue is a character formed through repeated action. A person for whom doing the right thing has become second nature practices virtue more stably than one who chooses it by will each time. This view offers an important implication for the direction of moral education. Merely having rules memorized is not enough; helping good habits form through repeated experience is the more fundamental approach. The problem is that bad habits are formed the same way. Discriminatory speech or an indifferent attitude hardening through repetition without reflection is a representative case. Such habits persist even without the person themselves recognizing that they are doing wrong. Correcting a habit requires intervention that changes the very context in which the behavior occurs. In the end, morality is completed not by a moment's decision but by the sum of repetition accumulated over a long time.",
-    questions: [
-      { question_en: "What did Aristotle consider virtue to be?", options: ["An innate trait","A character formed through repeated action","A single moral decision","A legal obligation"], answerIndex: 1 },
-      { question_en: "What is needed to correct a bad habit, per the passage?", options: ["Memorizing more rules","Punishing the person publicly","Intervention that changes the context in which it occurs","Ignoring the behavior"], answerIndex: 2 },
-    ],
-  },
-  {
-    level: "C2",
-    title_kr: "비교의 함정",
-    title_en: "The trap of comparison",
-    body_kr: "인간은 절대적인 기준보다 상대적인 위치로 자신의 처지를 가늠하는 경향이 있습니다. 소득이 늘어도 주변 사람의 소득이 더 빨리 늘면 만족감은 오히려 줄어듭니다. 경제학자들은 이를 상대 소득 가설이라는 개념으로 설명해 왔습니다. 이러한 성향은 진화적으로 뿌리 깊은 것이어서 의지만으로 극복하기 어렵습니다. 문제는 이 비교의 대상이 디지털 환경에서 극적으로 확장되었다는 점입니다. 과거에는 이웃이나 동료가 비교의 준거였다면, 지금은 전 세계에서 가장 화려한 삶을 사는 소수가 그 자리를 차지합니다. 소셜 미디어에 노출되는 시간이 늘수록 삶의 만족도가 하락한다는 연구 결과는 이와 무관하지 않습니다. 사람들이 접하는 것은 타인의 편집된 순간일 뿐 전체 삶이 아니라는 사실을 알면서도 비교는 멈추지 않습니다. 이 함정에서 벗어나는 방법으로 제안되는 것이 비교의 방향을 바꾸는 것입니다. 타인과 비교하는 대신 과거의 자신과 비교하는 습관이 그 대안입니다. 비교 자체를 없앨 수 없다면 그 기준을 스스로 선택하는 것이 남은 유일한 통제력입니다.",
-    body_en: "Humans tend to gauge their situation by relative position rather than an absolute standard. Even if one's income rises, satisfaction can actually fall if the incomes of those around them rise faster. Economists have explained this through the concept of the relative income hypothesis. This tendency is evolutionarily deep-rooted and hard to overcome by willpower alone. The problem is that the object of this comparison has expanded dramatically in the digital environment. While neighbors or colleagues once served as the reference point for comparison, that place is now occupied by a small number of people living the most glamorous lives worldwide. The research finding that life satisfaction declines as time spent on social media increases is not unrelated to this. Even knowing that what people encounter is only others' edited moments rather than their whole lives, the comparison does not stop. What is proposed as a way out of this trap is changing the direction of comparison. Comparing oneself to one's past self instead of to others is the alternative offered. If comparison itself cannot be eliminated, choosing its standard for oneself is the only control that remains.",
-    questions: [
-      { question_en: "What concept explains why satisfaction can fall despite rising income?", options: ["Diminishing marginal utility","The endowment effect","Loss aversion","The relative income hypothesis"], answerIndex: 3 },
-      { question_en: "What alternative is proposed to escape the comparison trap?", options: ["Increasing income further","Ignoring statistics","Comparing oneself to one's past self","Avoiding all social contact"], answerIndex: 2 },
-    ],
-  },
-  {
-    level: "C2",
-    title_kr: "겸손이라는 미덕",
-    title_en: "Humility as a virtue",
-    body_kr: "겸손은 흔히 자신을 낮추는 태도로 오해되지만 철학적으로는 훨씬 정교한 개념입니다. 진정한 겸손은 자신을 과소평가하는 것이 아니라 자신의 능력과 한계를 정확하게 인식하는 태도입니다. 자신을 지나치게 낮추는 것도, 지나치게 높이는 것도 모두 현실을 왜곡하는 방식이라는 점에서 겸손의 반대편에 있습니다. 지적 겸손이라는 개념은 이러한 정의를 더 구체화합니다. 자신의 신념이 틀릴 수 있다는 가능성을 항상 열어 두는 태도가 그것입니다. 흥미로운 점은 지적 겸손이 자신감의 결여가 아니라는 것입니다. 오히려 자신의 판단에 근거가 있다는 것을 알면서도 새로운 증거 앞에서 기존 입장을 수정할 수 있는 유연함이 지적 겸손의 핵심입니다. 이러한 태도가 부족한 사람일수록 반대 의견을 위협으로 받아들이고 방어적으로 반응하는 경향을 보입니다. 조직에서 지적 겸손을 갖춘 리더가 이끄는 팀은 실수를 더 빨리 인정하고 학습 속도도 빠르다는 연구 결과가 있습니다. 결국 겸손은 자신을 축소하는 기술이 아니라 진실 앞에서 자신을 열어 두는 훈련입니다.",
-    body_en: "Humility is often misunderstood as an attitude of lowering oneself, but philosophically it is a far more refined concept. True humility is not underestimating oneself but accurately recognizing one's own abilities and limits. Both excessively lowering and excessively elevating oneself distort reality, placing them on the opposite side of humility. The concept of intellectual humility further specifies this definition. It is the attitude of always keeping open the possibility that one's own belief could be wrong. Interestingly, intellectual humility is not a lack of confidence. Rather, the core of intellectual humility is the flexibility to revise one's existing position in the face of new evidence, even while knowing one's judgment has grounds. People who lack this attitude tend to take opposing opinions as threats and respond defensively. Research has found that teams led by leaders with intellectual humility admit mistakes faster and learn faster. In the end, humility is not a technique for shrinking oneself but a training in staying open to the truth.",
-    questions: [
-      { question_en: "What is intellectual humility, per the passage?", options: ["Always agreeing with others","Lacking confidence in one's judgment","Keeping open the possibility that one's belief could be wrong","Avoiding decisions"], answerIndex: 2 },
-      { question_en: "What did research find about teams led by intellectually humble leaders?", options: ["They make fewer decisions","They avoid conflict entirely","They have lower morale","They admit mistakes and learn faster"], answerIndex: 3 },
-    ],
-  },
-  {
-    level: "C2",
-    title_kr: "익숙함과 무관심",
-    title_en: "Familiarity and indifference",
-    body_kr: "우리는 처음 마주하는 부조리에는 분노하지만 그 부조리가 반복되면 점차 무감각해집니다. 이러한 현상은 도덕적 나태가 아니라 인지적 적응이라는 보편적 기제에서 비롯됩니다. 뇌는 반복되는 자극에 대한 반응을 효율화하기 위해 감각의 강도를 낮추도록 설계되어 있습니다. 문제는 이 기제가 신체적 자극뿐 아니라 도덕적 판단에도 똑같이 적용된다는 점입니다. 매일 접하는 빈곤이나 불평등의 이미지는 처음의 충격을 점차 잃어 갑니다. 언론이 같은 문제를 반복해서 보도할수록 대중의 관심이 오히려 줄어드는 역설이 여기서 발생합니다. 활동가들은 이 무관심을 깨기 위해 익숙한 문제를 낯설게 보여 주는 전략을 고민해 왔습니다. 통계 대신 한 사람의 구체적인 이야기를 전면에 내세우는 방식이 대표적입니다. 추상적인 숫자보다 얼굴을 가진 개인의 서사가 감정적 반응을 더 강하게 불러일으키기 때문입니다. 그러나 이러한 전략도 반복되면 같은 무뎌짐을 겪습니다. 결국 무관심을 완전히 없앨 수는 없으며, 관심을 지속적으로 갱신하려는 의식적인 노력만이 그 간격을 메울 수 있습니다.",
-    body_en: "We are outraged by an injustice the first time we encounter it, but as that injustice repeats, we gradually grow numb. This phenomenon springs not from moral laziness but from the universal mechanism of cognitive adaptation. The brain is designed to lower the intensity of sensation in order to make its response to repeated stimuli more efficient. The problem is that this mechanism applies equally to moral judgment, not just physical stimuli. Images of poverty or inequality encountered daily gradually lose their initial shock. The paradox arises here that the more the media repeatedly reports the same problem, the more public interest actually declines. Activists have pondered strategies to make familiar problems look unfamiliar again in order to break through this indifference. Foregrounding one person's concrete story instead of statistics is a representative example. This is because a narrative with a face evokes a stronger emotional response than an abstract number. But even this strategy suffers the same dulling once repeated. In the end, indifference cannot be eliminated entirely, and only a conscious effort to continually renew attention can fill the gap.",
-    questions: [
-      { question_en: "What mechanism causes moral numbness to repeated injustice?", options: ["Cognitive adaptation","Economic scarcity","Deliberate moral laziness","Legal desensitization"], answerIndex: 0 },
-      { question_en: "What strategy do activists use to break through indifference?", options: ["Repeating the same statistics more often","Using louder advertising","Increasing news frequency","Foregrounding one person's concrete story"], answerIndex: 3 },
-    ],
-  },
-  {
-    level: "C2",
-    title_kr: "선택의 피로",
-    title_en: "Decision fatigue",
-    body_kr: "하루 동안 내려야 하는 선택의 수는 상상보다 훨씬 많습니다. 아침에 무엇을 입을지부터 저녁에 무엇을 먹을지까지, 의식하지 못하는 사이에도 의사 결정은 끊임없이 소모됩니다. 심리학자들은 이러한 소모를 결정 피로라는 개념으로 설명해 왔습니다. 의지력이 유한한 자원처럼 소진된다는 이 관점에 따르면 하루가 저물수록 판단의 질은 떨어질 수밖에 없습니다. 실제로 판사들이 오전에 내리는 가석방 결정이 오후보다 관대하다는 연구는 이 개념을 뒷받침하는 대표적인 사례로 인용되어 왔습니다. 물론 이 연구의 해석을 둘러싸고 학계에서는 여전히 논쟁이 있습니다. 그럼에도 불구하고 사소한 선택을 줄이는 것이 중요한 판단의 질을 지키는 전략이 될 수 있다는 함의는 널리 받아들여지고 있습니다. 일부 기업가들이 매일 같은 옷을 입는 관행을 택하는 이유도 여기에 있습니다. 사소한 결정을 자동화함으로써 중요한 결정에 쓸 에너지를 아끼려는 것입니다. 그러나 모든 선택을 없애는 것이 능사는 아니며, 어떤 선택은 그 자체로 삶의 활력을 제공하기도 합니다. 핵심은 선택을 완전히 제거하는 것이 아니라 무엇에 에너지를 쓸지 의식적으로 배분하는 데 있습니다.",
-    body_en: "The number of decisions we must make in a day is far greater than we imagine. From what to wear in the morning to what to eat in the evening, decision-making is constantly consumed even without our awareness. Psychologists have explained this consumption through the concept of decision fatigue. According to this view, which treats willpower as a finite resource that depletes, the quality of judgment inevitably declines as the day wears on. In fact, the finding that judges' parole decisions are more lenient in the morning than in the afternoon has been cited as a representative case supporting this concept. Of course, debate over how to interpret this study still continues in academia. Nevertheless, the implication that reducing trivial choices can be a strategy for protecting the quality of important judgments is widely accepted. This is also why some entrepreneurs adopt the practice of wearing the same clothes every day. By automating trivial decisions, they aim to save energy for important ones. But eliminating all choice is not the answer either, since some choices themselves provide vitality to life. The key lies not in removing choice entirely but in consciously allocating where energy is spent.",
-    questions: [
-      { question_en: "What does the parole-decision study suggest?", options: ["Judges are inherently unfair","Judgment quality can decline as the day wears on","Willpower is unlimited","Morning decisions are always wrong"], answerIndex: 1 },
-      { question_en: "Why do some entrepreneurs wear the same clothes daily?", options: ["To save money","To save decision energy for important choices","To follow a company policy","To appear humble"], answerIndex: 1 },
-    ],
-  },
-  {
-    level: "C2",
-    title_kr: "감사의 계산법",
-    title_en: "The arithmetic of gratitude",
-    body_kr: "감사는 순수한 감정처럼 보이지만 그 이면에는 은밀한 계산이 작동할 때가 많습니다. 선물이나 호의를 받았을 때 느끼는 감사가 순수한 기쁨인지, 아니면 갚아야 한다는 부담의 다른 이름인지는 생각만큼 명확하지 않습니다. 인류학자들은 오래전부터 선물 교환이 대가 없는 행위처럼 보여도 실제로는 정교한 호혜의 규범 위에서 작동한다고 지적해 왔습니다. 지나치게 큰 선물을 받았을 때 사람들이 오히려 불편함을 느끼는 이유도 여기에 있습니다. 갚을 수 없는 크기의 호의는 감사보다 부채감을 남기기 때문입니다. 이러한 계산은 관계의 권력 구조와도 무관하지 않습니다. 대가를 바라지 않는다고 말하는 호의조차 은연중에 상대의 복종이나 충성을 기대하는 경우가 있습니다. 그렇다고 모든 감사를 계산으로 환원하는 것은 지나친 냉소입니다. 진정한 감사는 갚음을 전제하지 않고도 존재할 수 있으며, 이는 대개 권력 차이가 크지 않은 관계에서 더 순수하게 나타납니다. 결국 감사의 질을 가늠하는 기준은 감정의 크기가 아니라 그 감정이 부담 없이 표현될 수 있는 관계의 조건입니다.",
-    body_en: "Gratitude looks like a pure emotion, but a covert calculation often operates beneath it. Whether the gratitude felt upon receiving a gift or favor is pure joy or another name for the burden of having to repay is not as clear as it seems. Anthropologists have long pointed out that gift exchange, even when it looks like an act with no expectation of return, actually operates on an elaborate norm of reciprocity. This is also why people feel uncomfortable upon receiving an excessively large gift. A favor too large to repay leaves behind a sense of debt rather than gratitude. This calculation is not unrelated to the power structure of a relationship either. Even a favor said to expect nothing in return sometimes implicitly expects the other's submission or loyalty. That said, reducing all gratitude to calculation is excessive cynicism. Genuine gratitude can exist without presupposing repayment, and this tends to appear more purely in relationships where the power gap is not large. In the end, the standard for gauging the quality of gratitude is not the size of the emotion but the condition of the relationship that allows it to be expressed without burden.",
-    questions: [
-      { question_en: "Why do people feel uncomfortable receiving an excessively large gift?", options: ["It is illegal in most places","It is against etiquette","It leaves a sense of debt rather than gratitude","It always signals romantic interest"], answerIndex: 2 },
-      { question_en: "Where does genuine, unburdened gratitude tend to appear more purely?", options: ["In anonymous transactions","In relationships where the power gap is not large","In relationships with strict hierarchy","In business contracts"], answerIndex: 1 },
-    ],
-  },
-  {
-    level: "C2",
-    title_kr: "이기심의 재평가",
-    title_en: "Reassessing selfishness",
-    body_kr: "이기심은 오랫동안 도덕적으로 경계해야 할 대상으로 취급되어 왔습니다. 그러나 경제학과 진화 생물학은 이기심에 대해 훨씬 복잡한 그림을 제시합니다. 애덤 스미스는 개인이 자신의 이익을 추구하는 과정이 의도치 않게 사회 전체의 이익으로 이어질 수 있음을 지적했습니다. 이는 이기심을 옹호한 것이 아니라 이기심이 작동하는 구조적 조건을 설명한 것입니다. 시장이 투명하고 경쟁이 공정할 때 개인의 이익 추구는 자원의 효율적 배분으로 이어질 수 있습니다. 그러나 그 조건이 무너지면 같은 이기심은 독점과 착취로 귀결됩니다. 진화 생물학 역시 순수한 이타심이란 존재하지 않으며 모든 협력은 결국 유전자의 생존 전략이라는 관점을 제시해 왔습니다. 이 관점은 냉소적으로 들리지만 협력의 진화적 기원을 설명하는 데는 유용합니다. 중요한 것은 동기의 순수성을 따지는 것보다 이기심이 사회에 이로운 방향으로 작동하도록 제도를 설계하는 일입니다. 이기심을 도덕적으로 비난하는 데 그친다면 그 힘을 건설적으로 활용할 기회를 놓치게 됩니다. 결국 이기심은 억압할 대상이 아니라 방향을 설계해야 할 힘입니다.",
-    body_en: "Selfishness has long been treated as something to be morally guarded against. Economics and evolutionary biology, however, offer a far more complex picture of it. Adam Smith pointed out that the process of individuals pursuing their own interest can unintentionally lead to the benefit of society as a whole. This was not an endorsement of selfishness but an explanation of the structural conditions under which selfishness operates. When markets are transparent and competition is fair, the pursuit of individual interest can lead to efficient allocation of resources. But when those conditions collapse, the same selfishness results in monopoly and exploitation. Evolutionary biology has likewise offered the view that pure altruism does not exist and that all cooperation is ultimately a gene's survival strategy. This view sounds cynical but is useful for explaining the evolutionary origin of cooperation. What matters more than questioning the purity of motive is designing institutions so that selfishness operates in a direction beneficial to society. Stopping at moral condemnation of selfishness forfeits the chance to put that force to constructive use. In the end, selfishness is not something to suppress but a force whose direction must be designed.",
-    questions: [
-      { question_en: "What did Adam Smith point out about self-interest?", options: ["It is unrelated to markets","It should be morally condemned","It can unintentionally benefit society under the right conditions","It always leads to monopoly"], answerIndex: 2 },
-      { question_en: "What does the writer say matters more than judging motive purity?", options: ["Praising altruism publicly","Banning self-interest","Designing institutions to direct selfishness beneficially","Ignoring economic theory"], answerIndex: 2 },
-    ],
-  },
-  {
-    level: "C2",
-    title_kr: "사생활의 경계",
-    title_en: "The boundaries of privacy",
-    body_kr: "사생활은 오랫동안 물리적 공간의 문제로 이해되어 왔습니다. 문을 닫으면 그 안의 일은 타인의 시선에서 벗어난다는 전제가 그것입니다. 그러나 데이터가 삶의 모든 흔적을 기록하는 시대에 이 전제는 더 이상 유효하지 않습니다. 우리가 어디를 가고 무엇을 검색하고 누구와 연락하는지는 물리적 문과 무관하게 축적됩니다. 문제는 이러한 정보가 개별적으로는 사소해 보여도 결합되었을 때 매우 구체적인 초상을 만들어 낸다는 점입니다. 위치 정보와 검색 기록만으로도 건강 상태나 인간관계를 상당히 정확하게 추정할 수 있습니다. 이 때문에 현대적 사생활 논의는 감출 것이 있는지 없는지의 문제에서 벗어나야 합니다. 감출 것이 없다는 이유로 감시를 감수해야 한다는 논리는 사생활을 개인의 결백을 증명하는 도구로 축소시킵니다. 사생활은 결백의 문제가 아니라 정보에 대한 통제권의 문제입니다. 누가 나에 대한 정보를 언제 어떤 목적으로 사용하는지 스스로 결정할 수 있는 권한이 핵심입니다. 결국 사생활 보호는 무언가를 숨기는 기술이 아니라 자기 정보에 대한 주권을 지키는 문제로 재정의되어야 합니다.",
-    body_en: "Privacy has long been understood as a matter of physical space. The premise was that what happens behind a closed door escapes others' view. But in an age when data records every trace of life, this premise no longer holds. Where we go, what we search for, and whom we contact accumulate regardless of any physical door. The problem is that such information, however trivial it looks individually, produces a highly specific portrait when combined. Location data and search history alone can quite accurately estimate a person's health status or relationships. For this reason, contemporary discussions of privacy must move beyond the question of whether one has something to hide. The logic that surveillance must be accepted because one has nothing to hide reduces privacy to a tool for proving personal innocence. Privacy is not a matter of innocence but a matter of control over information. What matters most is the authority to decide for oneself who uses information about oneself, when, and for what purpose. In the end, privacy protection must be redefined not as the technique of hiding something but as the matter of defending sovereignty over one's own information.",
-    questions: [
-      { question_en: "What does combining seemingly trivial data points produce?", options: ["Legal immunity","Only marketing noise","Nothing significant","A highly specific portrait of a person"], answerIndex: 3 },
-      { question_en: "How does the writer redefine privacy?", options: ["As physical isolation","As the ability to hide wrongdoing","As a purely legal category","As sovereignty over one's own information"], answerIndex: 3 },
-    ],
-  },
-  {
-    level: "C2",
-    title_kr: "도덕적 운",
-    title_en: "Moral luck",
-    body_kr: "같은 부주의로 운전을 했더라도 한 사람은 무사히 귀가하고 다른 사람은 보행자를 치어 사망에 이르게 할 수 있습니다. 두 사람의 행위는 동일했지만 결과는 하늘과 땅 차이입니다. 철학에서는 이러한 현상을 도덕적 운이라는 개념으로 다루어 왔습니다. 우리의 도덕적 평가가 순전히 행위자의 의도와 노력만이 아니라 통제할 수 없는 우연의 결과에도 좌우된다는 역설을 가리키는 말입니다. 전통적인 윤리 이론은 도덕적 책임이 오직 행위자가 통제할 수 있는 것에만 근거해야 한다고 주장해 왔습니다. 그러나 실제 법과 여론은 결과의 차이에 따라 명백히 다른 책임을 묻습니다. 사망 사고를 낸 운전자는 아무 일도 없었던 운전자보다 훨씬 무거운 처벌을 받습니다. 이러한 불일치는 우리의 직관과 원칙 사이의 간극을 드러냅니다. 일부 철학자는 이 간극이 도덕적 판단의 결함이 아니라 인간이 결과에 대해 느끼는 책임의 본질적인 부분이라고 주장합니다. 결과를 완전히 배제한 도덕 평가는 오히려 비현실적이라는 것입니다. 도덕적 운의 문제는 명쾌한 해결책보다 우리가 내리는 판단의 한계를 겸허하게 인정하도록 요구합니다.",
-    body_en: "Two people can drive with the same degree of carelessness, yet one arrives home safely while the other strikes and kills a pedestrian. Their actions were identical, but the outcomes are worlds apart. Philosophy has treated this phenomenon through the concept of moral luck. The term points to the paradox that our moral evaluation is shaped not purely by an agent's intention and effort but also by the outcome of chance beyond their control. Traditional ethical theory has argued that moral responsibility should rest only on what the agent can control. In reality, however, law and public opinion clearly assign different responsibility depending on the difference in outcome. A driver who causes a fatal accident receives a far heavier punishment than a driver to whom nothing happened. This inconsistency reveals a gap between our intuitions and our principles. Some philosophers argue that this gap is not a flaw in moral judgment but an essential part of the responsibility humans feel toward outcomes. A moral evaluation that entirely excludes outcomes would be unrealistic. The problem of moral luck demands, rather than a neat solution, humble recognition of the limits of the judgments we make.",
-    questions: [
-      { question_en: "What paradox does moral luck describe?", options: ["All moral judgments are equally valid","Moral evaluation is shaped by outcomes beyond an agent's control","Intentions never matter","Luck determines legal guilt entirely"], answerIndex: 1 },
-      { question_en: "What does traditional ethical theory argue responsibility should rest on?", options: ["What the agent can control","Legal precedent","The final outcome only","Public opinion"], answerIndex: 0 },
-    ],
-  },
-  {
-    level: "C2",
-    title_kr: "배심원 제도의 딜레마",
-    title_en: "The dilemma of the jury system",
-    body_kr: "배심원 제도는 법률 전문가가 아닌 일반 시민이 유무죄를 판단하도록 함으로써 사법 권력을 시민에게 분산시키는 장치로 설계되었습니다. 이 제도의 정당성은 평범한 시민의 상식이 법률가의 편향을 견제할 수 있다는 믿음에 근거합니다. 그러나 현실에서 배심원의 판단이 항상 그 이상을 실현하는 것은 아닙니다. 복잡한 과학적 증거나 금융 범죄처럼 전문 지식이 필요한 사건에서 배심원은 정보의 비대칭에 취약합니다. 검사와 변호사가 제시하는 증거를 있는 그대로 이해하기보다 발표의 설득력에 좌우되는 경우도 적지 않습니다. 인종이나 계층에 대한 무의식적 편향이 판단에 스며든다는 연구도 꾸준히 축적되어 왔습니다. 그렇다고 배심원 제도를 폐지하고 판사 단독 심리로 돌아가자는 주장이 설득력을 얻는 것도 아닙니다. 전문가 집단만의 판단이 오히려 대중의 상식과 괴리되어 정당성을 잃을 위험이 있기 때문입니다. 절충안으로 제시되는 것이 배심원에게 전문가의 설명을 충분히 제공하고 평의 과정을 구조화하는 방안입니다. 결국 배심원 제도의 가치는 완벽한 판단을 보장하는 데 있는 것이 아니라 사법 권력이 소수에게 독점되지 않도록 하는 견제 장치라는 점에 있습니다.",
-    body_en: "The jury system was designed to disperse judicial power to citizens by having ordinary people, rather than legal professionals, judge guilt or innocence. The legitimacy of this system rests on the belief that the common sense of ordinary citizens can check the biases of lawyers. In reality, however, jury judgment does not always realize that ideal. In cases requiring expertise, such as complex scientific evidence or financial crime, jurors are vulnerable to information asymmetry. It is not uncommon for jurors to be swayed by the persuasiveness of a presentation rather than fully understanding the evidence presented by prosecution and defense as it is. Research has also steadily accumulated showing that unconscious bias about race or class seeps into judgment. That does not mean the argument for abolishing the jury system and returning to judge-only trials gains much traction either. This is because judgment left solely to a group of experts risks losing legitimacy by drifting away from public common sense. The compromise proposed is to provide jurors with sufficient expert explanation and to structure the deliberation process. In the end, the value of the jury system lies not in guaranteeing a perfect judgment but in serving as a check that keeps judicial power from being monopolized by a few.",
-    questions: [
-      { question_en: "What are jurors vulnerable to in complex cases, per the passage?", options: ["Information asymmetry","Legal immunity","Overpayment","Excessive training"], answerIndex: 0 },
-      { question_en: "What is proposed as a compromise rather than abolishing juries?", options: ["Eliminating cross-examination","Providing sufficient expert explanation and structuring deliberation","Reducing jury size to one person","Replacing jurors with algorithms"], answerIndex: 1 },
-    ],
-  },
-  {
-    level: "C2",
+    genre: "editorial",
     title_kr: "벌금형의 형평성",
     title_en: "The equity of fines",
     body_kr: "벌금형은 신체의 자유를 제한하지 않으면서 위법 행위를 제재하는 효율적인 수단으로 여겨져 왔습니다. 그러나 정액 벌금 제도는 뜻밖의 불공평을 낳습니다. 동일한 위반에 동일한 금액을 부과하는 방식은 형식적으로는 평등해 보이지만 실질적으로는 전혀 다른 무게로 작동합니다. 고소득자에게는 무시할 만한 액수가 저소득자에게는 생계를 위협하는 부담이 될 수 있기 때문입니다. 이러한 문제의식에서 일부 국가는 소득에 비례하는 일수 벌금제를 도입했습니다. 위반의 경중에 따라 벌금 일수를 정하고 개인의 일일 소득에 따라 하루치 금액을 산정하는 방식입니다. 이 제도는 억제 효과를 소득 계층과 무관하게 균등화한다는 장점이 있습니다. 그러나 소득을 정확히 파악하기 어려운 자영업자나 비공식 경제 종사자에게는 적용이 까다롭다는 한계도 함께 지적됩니다. 벌금이 국가 재정 확보의 수단으로 오용될 위험도 경계해야 할 지점입니다. 결국 벌금형의 목적이 제재인지 징수인지에 대한 명확한 정의가 제도 설계의 출발점이 되어야 합니다.",
@@ -289,6 +15,7 @@ export const READING_C2_A: RawPassage[] = [
   },
   {
     level: "C2",
+    genre: "editorial",
     title_kr: "행정 재량의 그늘",
     title_en: "The shadow of administrative discretion",
     body_kr: "법은 모든 상황을 예측하여 규정할 수 없기 때문에 행정 기관에 일정한 재량을 부여합니다. 재량은 경직된 법 적용이 초래할 수 있는 부당한 결과를 막는 완충 장치로 기능합니다. 그러나 같은 재량이 자의적이고 불투명한 결정의 통로가 될 위험도 함께 지니고 있습니다. 인허가나 복지 급여 심사 같은 영역에서 담당자의 재량이 지나치게 넓을 경우, 유사한 조건의 신청자가 전혀 다른 결과를 받는 사례가 발생합니다. 이러한 불일치는 개인의 신뢰를 훼손할 뿐 아니라 제도 전체의 공정성에 대한 의문으로 이어집니다. 문제는 재량을 완전히 없애는 것이 대안이 될 수 없다는 데 있습니다. 모든 상황을 규칙으로 못박으면 오히려 현실에 맞지 않는 경직된 적용이 반복됩니다. 그래서 논의되는 절충안이 재량의 범위를 명시적인 기준과 가이드라인으로 좁히는 방식입니다. 결정의 이유를 문서로 남기고 이의 제기 절차를 보장하는 것도 재량 남용을 견제하는 실질적인 장치입니다. 결국 재량은 없애야 할 결함이 아니라 투명성과 함께 설계되어야 할 권한입니다.",
@@ -300,17 +27,7 @@ export const READING_C2_A: RawPassage[] = [
   },
   {
     level: "C2",
-    title_kr: "공소시효를 둘러싼 논쟁",
-    title_en: "The debate over statutes of limitations",
-    body_kr: "공소시효는 일정 기간이 지나면 범죄에 대한 처벌권을 소멸시키는 제도입니다. 시간이 지날수록 증거가 훼손되고 기억이 왜곡되어 공정한 재판이 어려워진다는 것이 전통적인 근거입니다. 또한 오랜 시간 안정적으로 살아온 개인의 법적 지위를 보호해야 한다는 논리도 뒷받침됩니다. 그러나 이 제도는 특정 범죄, 특히 강력 범죄나 반인도적 범죄에서 심각한 딜레마를 낳습니다. 피해자가 사건을 신고할 심리적 준비를 갖추는 데 오랜 시간이 걸리는 경우, 공소시효는 정의 실현의 문턱이 아니라 장벽으로 작동합니다. 성범죄나 아동 학대처럼 피해자가 침묵할 수밖에 없는 구조적 이유가 있는 범죄가 대표적입니다. 이러한 문제의식에서 여러 나라가 특정 범죄에 대해 공소시효를 연장하거나 아예 폐지하는 방향으로 법을 개정해 왔습니다. 그러나 소급 적용의 문제는 여전히 논쟁적입니다. 이미 시효가 완성된 사건에 새로운 법을 적용하는 것은 법적 안정성을 흔들 수 있기 때문입니다. 결국 공소시효 논쟁은 정의와 안정성이라는 두 가치의 충돌을 어떻게 조율할 것인가의 문제로 귀결됩니다.",
-    body_en: "A statute of limitations is a system that extinguishes the power to prosecute a crime once a set period has passed. The traditional rationale is that as time passes, evidence deteriorates and memory distorts, making a fair trial difficult. The logic that the legal status of an individual who has lived stably for a long time should be protected also supports it. But this system creates a serious dilemma for certain crimes, especially violent or crimes against humanity. When it takes a victim a long time to become psychologically ready to report an incident, the statute of limitations functions not as a threshold to justice but as a barrier. Crimes such as sexual violence or child abuse, where structural reasons force the victim into silence, are representative examples. Out of this concern, several countries have revised their laws to extend or entirely abolish the statute of limitations for certain crimes. Yet the question of retroactive application remains contentious. Applying a new law to a case whose limitation period has already run out can undermine legal stability. In the end, the debate over statutes of limitations comes down to how to reconcile the clash between the two values of justice and stability.",
-    questions: [
-      { question_en: "What crimes are given as examples where statutes of limitations act as a barrier?", options: ["Sexual violence and child abuse","Traffic violations","Property theft","Tax evasion"], answerIndex: 0 },
-      { question_en: "What remains contentious about extending limitation periods?", options: ["The cost of prosecution","Sentencing length","Jury selection","The question of retroactive application"], answerIndex: 3 },
-    ],
-  },
-  {
-    level: "C2",
+    genre: "editorial",
     title_kr: "임대차 보호의 딜레마",
     title_en: "The dilemma of tenant protection",
     body_kr: "임대차 보호 법제는 세입자를 임대인의 일방적인 계약 해지나 급격한 임대료 인상으로부터 지키기 위해 설계되었습니다. 계약 갱신 청구권과 인상률 상한제가 대표적인 수단으로 자리 잡아 왔습니다. 그러나 이러한 보호가 항상 세입자 전체의 이익으로 이어지는 것은 아니라는 지적이 꾸준히 제기됩니다. 임대인이 규제로 인한 손실을 예상할 경우, 신규 계약 시점에 임대료를 큰 폭으로 선반영하는 경향이 나타나기 때문입니다. 그 결과 기존 세입자는 보호받지만 새로 진입하는 세입자는 오히려 더 높은 문턱을 마주하게 됩니다. 일부 연구는 규제가 임대 주택의 공급 자체를 위축시킨다는 결과를 제시하기도 합니다. 수익성이 낮아진 임대인이 매매나 다른 용도로 전환하기 때문입니다. 반대로 규제가 없는 시장에서는 급격한 임대료 상승이 저소득 가구를 도심에서 밀어내는 문제가 반복됩니다. 이러한 상충 관계 앞에서 정책은 단순한 상한 규제를 넘어 공급 확대와 병행되어야 한다는 합의가 점차 확산되고 있습니다. 결국 임대차 보호는 기존 세입자와 잠재적 세입자 사이의 이해를 함께 고려하는 정교한 설계를 요구합니다.",
@@ -322,17 +39,7 @@ export const READING_C2_A: RawPassage[] = [
   },
   {
     level: "C2",
-    title_kr: "최저임금의 이중 효과",
-    title_en: "The dual effect of the minimum wage",
-    body_kr: "최저임금 인상은 저임금 노동자의 생활 수준을 끌어올리는 직관적인 정책으로 여겨져 왔습니다. 그러나 경제학자들 사이에서도 그 효과에 대한 합의는 생각보다 견고하지 않습니다. 전통적인 수요 공급 이론은 최저임금이 균형 임금보다 높게 설정될 경우 고용이 줄어들 것이라고 예측합니다. 그러나 실증 연구들은 이러한 예측이 언제나 들어맞지는 않는다는 것을 보여 왔습니다. 일부 노동 시장에서는 고용주가 사실상 임금 결정권을 독점하는 구조 때문에 최저임금 인상이 오히려 고용을 늘리는 결과로 이어지기도 합니다. 이는 노동 시장이 교과서적인 완전 경쟁과는 거리가 멀다는 것을 보여 주는 증거로 해석됩니다. 문제는 인상의 폭과 속도, 그리고 지역별 경제 여건에 따라 효과가 크게 갈린다는 점입니다. 생계비가 높은 대도시와 그렇지 않은 지역에 동일한 최저임금을 적용하면 후자에서 더 큰 고용 충격이 발생할 수 있습니다. 이러한 지역 편차를 고려하지 않은 획일적인 정책은 정책의 취지를 오히려 훼손할 위험이 있습니다. 결국 최저임금 정책은 단일한 정답이 아니라 지역과 산업의 조건을 반영하는 세밀한 설계를 요구합니다.",
-    body_en: "Raising the minimum wage has been seen as an intuitive policy for lifting the living standards of low-wage workers. Yet consensus on its effects, even among economists, is less solid than one might think. Traditional supply-and-demand theory predicts that employment will fall if the minimum wage is set above the equilibrium wage. Empirical studies, however, have shown that this prediction does not always hold. In some labor markets, because employers effectively monopolize wage-setting power, a minimum wage increase can actually lead to an increase in employment. This is interpreted as evidence that labor markets are far from textbook perfect competition. The problem is that the effect varies greatly depending on the size and speed of the increase and on regional economic conditions. Applying the same minimum wage to a high-cost metropolis and a lower-cost region can produce a much greater employment shock in the latter. A uniform policy that ignores such regional variation risks undermining the very purpose of the policy. In the end, minimum wage policy demands not a single correct answer but a fine-grained design that reflects regional and industrial conditions.",
-    questions: [
-      { question_en: "Why can a minimum wage increase sometimes raise employment?", options: ["Workers always demand less pay","Government subsidies increase automatically","Prices fall immediately","Employers effectively monopolize wage-setting power in some markets"], answerIndex: 3 },
-      { question_en: "What risk does a uniform national minimum wage carry?", options: ["Higher wages everywhere equally","Automatic regional adjustment","A greater employment shock in lower-cost regions","No effect on employment anywhere"], answerIndex: 2 },
-    ],
-  },
-  {
-    level: "C2",
+    genre: "editorial",
     title_kr: "규제 포획의 문제",
     title_en: "The problem of regulatory capture",
     body_kr: "규제 기관은 산업을 감독하기 위해 설립되지만 시간이 흐르면서 오히려 그 산업의 이해를 대변하게 되는 역설적인 현상이 반복적으로 관찰되어 왔습니다. 학계는 이를 규제 포획이라는 개념으로 설명합니다. 규제 대상 산업은 규제 기관보다 훨씬 많은 전문 지식과 자원을 갖추고 있어 정보의 비대칭이 구조적으로 존재합니다. 규제 담당자가 산업 출신이거나 향후 그 산업으로 이직을 염두에 둘 경우, 판단이 은연중에 산업 쪽으로 기울 위험이 커집니다. 이른바 회전문 인사가 대표적인 통로로 지목되어 왔습니다. 문제는 이러한 유착이 노골적인 부패의 형태가 아니라 정상적인 절차처럼 보이는 방식으로 이루어진다는 점입니다. 규제 완화를 요구하는 논리 자체가 전문적이고 타당해 보이기 때문에 대중이 그 이면의 이해관계를 포착하기 어렵습니다. 이를 견제하기 위한 방안으로 이직 제한 기간을 두거나 의사 결정 과정을 공개하는 제도가 도입되어 왔습니다. 그러나 이러한 장치만으로 포획을 완전히 막을 수는 없다는 회의적인 시각도 여전히 존재합니다. 결국 규제 포획을 줄이는 근본적인 방법은 제도적 장치와 함께 감시하는 시민 사회와 언론의 역할을 강화하는 데 있습니다.",
@@ -344,6 +51,7 @@ export const READING_C2_A: RawPassage[] = [
   },
   {
     level: "C2",
+    genre: "editorial",
     title_kr: "신용 정보와 개인의 삶",
     title_en: "Credit information and personal life",
     body_kr: "신용 점수는 본래 대출 상환 능력을 예측하기 위해 고안된 금융 지표였습니다. 그러나 그 활용 범위는 이제 대출 심사를 훨씬 넘어섭니다. 임대 계약이나 채용 심사, 심지어 보험 가입 여부까지 신용 정보가 개입하는 영역이 꾸준히 확대되어 왔습니다. 문제는 신용 점수가 개인의 신뢰성 전반을 대변하는 지표로 오인되기 쉽다는 데 있습니다. 실제로는 과거 상환 이력이라는 좁은 데이터에 기반한 예측일 뿐인데도, 낮은 점수는 마치 인격적 결함의 증거처럼 취급되곤 합니다. 더 심각한 문제는 신용 점수의 하락이 다시 새로운 불이익을 낳는 악순환입니다. 낮은 점수 때문에 대출을 거절당하고, 대출을 거절당해 급전을 마련하지 못한 사람이 다시 연체에 빠지는 구조입니다. 이러한 순환은 애초에 경제적으로 취약한 계층에서 더 강하게 나타납니다. 알고리즘이 점수 산정에 관여하면서 그 판단 근거가 불투명해지는 것도 새로운 우려입니다. 당사자가 무엇 때문에 점수가 낮아졌는지조차 알기 어려운 경우가 적지 않습니다. 결국 신용 정보 제도는 예측의 정확성뿐 아니라 그 정보가 낳는 사회적 결과에 대한 책임까지 함께 고려해야 할 시점에 와 있습니다.",
@@ -355,6 +63,7 @@ export const READING_C2_A: RawPassage[] = [
   },
   {
     level: "C2",
+    genre: "editorial",
     title_kr: "국선 변호의 현실",
     title_en: "The reality of public defense",
     body_kr: "형사 사법 제도에서 변호를 받을 권리는 유무죄를 가리는 절차의 근간으로 여겨집니다. 그러나 그 권리가 실질적으로 실현되는지는 별개의 문제입니다. 사선 변호인을 선임할 여력이 없는 피고인에게 국가가 변호인을 지정하는 제도가 이러한 격차를 메우기 위해 마련되었습니다. 문제는 국선 변호인 한 명이 감당해야 하는 사건의 수가 지나치게 많다는 데 있습니다. 제한된 시간 안에 수십 건의 사건을 처리해야 하는 변호인은 개별 사건에 충분한 조사와 준비를 할 여유를 갖기 어렵습니다. 그 결과 재정 능력이 있는 피고인과 그렇지 못한 피고인 사이에 실질적인 변호의 질이 벌어지는 현상이 반복됩니다. 이는 법 앞의 평등이라는 원칙과 정면으로 충돌하는 지점입니다. 일부 지역에서는 국선 변호인의 보수를 사건 수가 아니라 소요 시간에 비례하도록 개편하는 시도가 이루어져 왔습니다. 변호인의 독립성을 보장하기 위해 선정 권한을 법원이 아닌 독립된 기구에 맡기자는 제안도 논의되고 있습니다. 결국 국선 변호 제도의 개혁은 형사 절차의 공정성을 지키는 문제인 동시에 사법 신뢰 전체의 기반을 다지는 문제입니다.",
@@ -366,6 +75,7 @@ export const READING_C2_A: RawPassage[] = [
   },
   {
     level: "C2",
+    genre: "editorial",
     title_kr: "세금 신고의 복잡성",
     title_en: "The complexity of tax filing",
     body_kr: "세금 신고 제도는 소득이 있는 모든 사람에게 적용되지만 그 복잡성은 결코 균등하게 분배되지 않습니다. 공제 항목과 특례 조항이 늘어날수록 세제는 정교해지지만 동시에 이해하기 어려워집니다. 이러한 복잡성 앞에서 전문적인 세무 자문을 구할 여력이 있는 고소득층은 합법적인 절세 수단을 충분히 활용할 수 있습니다. 반면 그런 여력이 없는 다수는 신고 자체를 부담스러워하거나 받을 수 있는 공제를 놓치는 경우가 많습니다. 흥미로운 것은 이러한 복잡성이 우연이 아니라 이해관계의 결과로 누적되었다는 지적입니다. 특정 산업이나 계층에 유리한 공제 조항이 매번 새로 추가되면서 세법은 점점 더 두꺼워져 왔습니다. 일부 국가는 소득이 단순한 납세자를 위해 정부가 미리 계산한 세액을 제시하고 확인만 하도록 하는 간편 신고 제도를 도입했습니다. 이러한 제도는 행정 비용을 줄이는 동시에 신고 과정의 불평등을 완화하는 효과를 냈습니다. 그러나 세무 업계의 반발이 이러한 개혁을 가로막는 경우도 적지 않습니다. 결국 세금 신고의 복잡성을 줄이는 문제는 단순한 행정 효율의 문제가 아니라 누구의 이익이 제도 설계에 반영되는가라는 정치적인 문제입니다.",
@@ -377,17 +87,7 @@ export const READING_C2_A: RawPassage[] = [
   },
   {
     level: "C2",
-    title_kr: "공공 서비스의 민영화",
-    title_en: "The privatization of public services",
-    body_kr: "공공 서비스를 민간에 위탁하는 정책은 효율성 제고라는 명분으로 오랫동안 추진되어 왔습니다. 경쟁 원리가 도입되면 비용이 절감되고 서비스 품질이 개선될 것이라는 기대가 그 근거였습니다. 실제로 일부 영역에서는 이러한 기대가 실현되기도 했습니다. 그러나 상수도나 교정 시설처럼 대체재가 사실상 존재하지 않는 영역에서는 이야기가 달라집니다. 이용자가 서비스 제공자를 선택할 수 없는 구조에서는 경쟁 원리가 애초에 작동하지 않기 때문입니다. 민간 사업자가 이윤을 추구하는 것은 자연스러운 일이지만, 그 이윤이 서비스 질 저하나 취약 계층 배제로 이어지는 사례가 반복적으로 보고되어 왔습니다. 계약 초기에는 낮은 비용을 제시했다가 계약이 갱신될 무렵 요금을 대폭 인상하는 행태도 자주 지적되는 문제입니다. 이러한 부작용을 막기 위해서는 정교한 계약 설계와 지속적인 감독이 필수적입니다. 그러나 감독 역량 자체가 부족한 상태에서 민영화가 추진되면 감시의 공백만 남게 됩니다. 결국 민영화의 성패는 이념적 선호가 아니라 해당 서비스의 성격과 감독 체계의 정교함에 달려 있습니다.",
-    body_en: "Policies outsourcing public services to the private sector have long been pursued under the banner of improving efficiency. The expectation was that introducing competition would cut costs and improve service quality. In some areas, this expectation was indeed realized. But the story changes in areas such as water supply or correctional facilities, where substitutes effectively do not exist. This is because, in a structure where users cannot choose their service provider, the principle of competition does not operate in the first place. It is natural for a private operator to pursue profit, but cases in which that profit leads to declining service quality or the exclusion of vulnerable groups have been repeatedly reported. The pattern of offering a low cost at the start of a contract and then sharply raising rates when the contract comes up for renewal is also a frequently pointed-out problem. Preventing such side effects requires sophisticated contract design and continuous oversight. But if privatization is pursued while oversight capacity itself is lacking, only a gap in monitoring is left behind. In the end, the success or failure of privatization depends not on ideological preference but on the nature of the service and the sophistication of the oversight system.",
-    questions: [
-      { question_en: "Why does competition fail to operate in services like water supply?", options: ["Users cannot choose their service provider","There are too many providers","Prices are always regulated","Government owns all infrastructure"], answerIndex: 0 },
-      { question_en: "What does the writer say privatization's success depends on?", options: ["The size of the company involved","The nature of the service and sophistication of oversight","Ideological preference alone","The speed of implementation"], answerIndex: 1 },
-    ],
-  },
-  {
-    level: "C2",
+    genre: "editorial",
     title_kr: "층간소음과 이웃 분쟁",
     title_en: "Floor noise and neighbor disputes",
     body_kr: "공동 주택에서 발생하는 층간소음 분쟁은 사소해 보이지만 실제로는 법과 감정이 복잡하게 얽힌 문제입니다. 소음의 객관적인 크기를 측정하는 기준이 마련되어 있음에도 분쟁이 줄지 않는 이유는 소음에 대한 반응이 순전히 물리적 수치로 환원되지 않기 때문입니다. 같은 데시벨의 소리라도 그것을 낸 사람과의 관계, 그리고 소음이 발생한 맥락에 따라 감내할 수 있는 정도는 크게 달라집니다. 문제가 발생했을 때 초기에 소통이 이루어지지 않으면 상호 불신이 쌓이고, 이후에는 실제 소음 여부와 무관하게 갈등이 자기 강화적으로 커집니다. 법적 기준을 마련해 두었다고 해서 분쟁이 해결되는 것도 아닙니다. 소송으로 이어지는 경우 시간과 비용이 상당히 소요되는 반면, 판결이 나온 뒤에도 이웃 관계는 회복되기 어려운 경우가 많습니다. 이 때문에 여러 지방자치단체가 소송 이전 단계에서 중재를 담당하는 기구를 운영해 왔습니다. 중재자는 소음 측정 결과뿐 아니라 양측의 감정을 조율하는 역할까지 함께 수행합니다. 이러한 접근은 완전한 해결책은 아니지만 분쟁이 걷잡을 수 없이 확대되는 것을 막는 완충 장치로 기능해 왔습니다. 결국 층간소음 문제는 기술적 기준의 정비 못지않게 관계를 회복하는 절차의 설계가 중요한 사안입니다.",
@@ -399,28 +99,7 @@ export const READING_C2_A: RawPassage[] = [
   },
   {
     level: "C2",
-    title_kr: "반려동물과 법의 공백",
-    title_en: "Pets and the gaps in law",
-    body_kr: "많은 사람에게 반려동물은 가족이나 다름없는 존재이지만 법률상으로는 여전히 물건에 준하는 지위를 갖습니다. 이러한 간극은 여러 상황에서 예상치 못한 문제를 낳습니다. 이혼 시 반려동물의 양육을 둘러싼 분쟁이 대표적입니다. 자녀 양육권처럼 정서적 유대나 복리를 고려하는 기준이 아니라 재산 분할의 논리로 처리되는 경우가 많기 때문입니다. 반려동물이 사고로 다치거나 죽었을 때 배상 범위도 비슷한 문제를 드러냅니다. 법원은 대개 반려동물의 시가만을 손해로 인정할 뿐, 보호자가 느끼는 정신적 고통은 부수적인 것으로 취급해 왔습니다. 이러한 판단은 반려동물을 대체 가능한 물건으로 전제하는 법리에서 비롯됩니다. 일부 국가와 지방자치단체는 이러한 간극을 좁히기 위해 반려동물을 물건과 구별되는 독자적인 법적 지위로 규정하는 개정을 시도해 왔습니다. 그러나 지위를 상향하는 것이 곧바로 소유자의 책임을 명확히 하는 것은 아니라는 반론도 있습니다. 학대나 유기에 대한 처벌 수위를 높이는 것과 법적 지위를 재정의하는 것은 별개의 과제로 다루어져야 한다는 지적입니다. 결국 반려동물을 둘러싼 법의 공백은 정서적 현실과 법적 범주 사이의 간극을 어떻게 메울 것인가라는 질문을 남깁니다.",
-    body_en: "For many people, a pet is as good as family, but under the law it still holds a status equivalent to property. This gap creates unexpected problems in various situations. Disputes over pet custody in divorce are a representative case. This is because they are often handled by the logic of property division rather than by a standard that considers emotional bonds and welfare, as with child custody. The scope of compensation when a pet is injured or killed in an accident reveals a similar problem. Courts have generally recognized only the market value of the pet as damage, treating the guardian's mental anguish as incidental. This judgment stems from legal doctrine that presupposes a pet as a replaceable object. Some countries and local governments have attempted reforms defining pets as having an independent legal status distinct from property in order to narrow this gap. But there is also a counterargument that raising this status does not immediately clarify the owner's responsibility. The point made is that raising the level of punishment for abuse or abandonment and redefining legal status should be treated as separate tasks. In the end, the legal gap surrounding pets leaves the question of how to bridge the divide between emotional reality and legal category.",
-    questions: [
-      { question_en: "How are pet custody disputes typically handled in divorce, per the passage?", options: ["By a special pet court","By the logic of property division","By standards identical to child custody","By the pet's own preference"], answerIndex: 1 },
-      { question_en: "What have courts generally recognized as compensable damage for an injured pet?", options: ["Only the market value of the pet","Nothing at all","Future veterinary costs only","The owner's full emotional distress"], answerIndex: 0 },
-    ],
-  },
-  {
-    level: "C2",
-    title_kr: "착한 사마리아인 법",
-    title_en: "Good Samaritan laws",
-    body_kr: "위험에 처한 타인을 구조할 법적 의무가 있는가라는 질문은 법철학의 오랜 논쟁거리입니다. 대다수 관습법 전통은 개인에게 적극적인 구조 의무를 부과하지 않습니다. 자신의 안전을 해치지 않는 범위 내에서도 타인을 도와야 할 법적 강제는 없다는 것이 원칙입니다. 이는 개인의 자유를 침해하지 않으려는 자유주의적 전통에 뿌리를 둡니다. 반면 일부 대륙법 국가는 구조 불이행 자체를 처벌하는 조항을 두고 있습니다. 위험에 처한 사람을 목격하고도 합리적인 비용 없이 도울 수 있었음에도 돕지 않았다면 형사 책임을 물을 수 있다는 것입니다. 이러한 차이는 단순한 입법 기술의 차이가 아니라 공동체와 개인 사이의 관계를 바라보는 철학의 차이를 반영합니다. 흥미로운 점은 구조 의무를 강제하지 않는 국가에서도 구조 행위를 장려하기 위한 별도의 법이 존재한다는 것입니다. 구조자가 선의로 행동하다 발생한 손해에 대해 책임을 면제해 주는 조항이 그것입니다. 이는 의무를 부과하는 대신 구조를 가로막는 두려움을 제거하는 방식으로 같은 목표에 접근하는 것입니다. 결국 두 접근 모두 위험에 처한 사람을 외면하지 않는 사회를 지향하지만, 그 방법론에서는 뚜렷한 철학적 차이를 드러냅니다.",
-    body_en: "Whether there is a legal duty to rescue another person in danger is a longstanding debate in legal philosophy. Most common law traditions do not impose an affirmative duty to rescue on individuals. The principle is that there is no legal compulsion to help another even within the bounds of not endangering oneself. This is rooted in a liberal tradition wary of infringing on individual freedom. Some civil law countries, by contrast, have provisions that punish the failure to rescue itself. The idea is that if someone witnessed a person in danger and could have helped at no unreasonable cost but did not, criminal liability can be imposed. This difference is not merely a difference in legislative technique but reflects a difference in philosophy about the relationship between community and individual. What is interesting is that even in countries that do not compel a duty to rescue, separate laws exist to encourage rescue. These are provisions that immunize a rescuer from liability for harm arising while acting in good faith. This approaches the same goal not by imposing a duty but by removing the fear that discourages rescue. In the end, both approaches aim at a society that does not turn away from people in danger, but they reveal a clear philosophical difference in their methodology.",
-    questions: [
-      { question_en: "What do most common law traditions say about a duty to rescue?", options: ["They mandate rescue in all cases","They require payment for rescue","They do not impose an affirmative duty to rescue","They only apply to public officials"], answerIndex: 2 },
-      { question_en: "What do Good Samaritan immunity provisions do?", options: ["Require rescuers to be certified","Punish failure to rescue","Mandate insurance for bystanders","Protect rescuers from liability for good-faith harm"], answerIndex: 3 },
-    ],
-  },
-  {
-    level: "C2",
+    genre: "editorial",
     title_kr: "실업 급여의 설계",
     title_en: "Designing unemployment benefits",
     body_kr: "실업 급여는 갑작스러운 소득 상실로부터 노동자를 보호하는 사회 안전망으로 기능해 왔습니다. 그러나 급여의 수준과 기간을 어떻게 설계하느냐에 따라 그 효과는 크게 달라집니다. 급여가 지나치게 관대하면 구직 활동에 대한 유인이 약해질 수 있다는 우려가 오랫동안 제기되어 왔습니다. 실제로 일부 실증 연구는 급여 수급 기간이 끝나기 직전에 재취업률이 급격히 높아진다는 패턴을 보여 줍니다. 이는 급여가 구직을 늦추는 유인으로 작동할 가능성을 시사합니다. 그러나 이러한 해석을 전적으로 받아들이는 것은 위험합니다. 급여가 부족하면 실직자는 자신의 숙련과 무관한 저임금 일자리로 서둘러 이동하게 되고, 이는 장기적으로 노동 생산성 전체에 손실을 가져올 수 있습니다. 적절한 수준의 급여는 오히려 구직자가 자신에게 맞는 일자리를 신중하게 탐색할 여유를 제공한다는 것입니다. 여러 나라가 이 균형을 맞추기 위해 급여를 시간이 지날수록 점진적으로 줄이는 체감식 구조를 채택해 왔습니다. 초기에는 충분한 급여로 안정을 제공하고, 후반부로 갈수록 구직 유인을 강화하는 방식입니다. 결국 실업 급여 설계의 핵심은 보호와 유인이라는 두 목표를 시간의 흐름 속에서 조화시키는 데 있습니다.",
@@ -432,6 +111,7 @@ export const READING_C2_A: RawPassage[] = [
   },
   {
     level: "C2",
+    genre: "editorial",
     title_kr: "누진세의 논리",
     title_en: "The logic of progressive taxation",
     body_kr: "누진세는 소득이 높을수록 더 높은 세율을 적용하는 제도로 대부분의 현대 국가에서 채택되어 왔습니다. 그 정당화 근거는 단순한 산술적 형평이 아니라 한계 효용 체감이라는 경제학적 개념에 있습니다. 동일한 금액이라도 소득이 낮은 사람에게는 생존과 직결된 자원이지만 소득이 높은 사람에게는 상대적으로 부담이 적은 여윳돈이라는 것입니다. 이러한 논리에 따르면 누진세는 단순히 부자에게 벌을 주는 제도가 아니라 세금이 유발하는 실질적인 고통을 계층 간에 균등화하려는 시도로 이해될 수 있습니다. 그러나 누진세율이 지나치게 높아질 경우 근로와 투자에 대한 의욕을 꺾을 수 있다는 반론도 만만치 않습니다. 고소득층의 자본과 인력이 세율이 낮은 지역으로 이동하는 현상은 이러한 우려를 뒷받침하는 사례로 자주 인용됩니다. 문제는 이러한 이동의 규모가 실제로 얼마나 큰가에 대한 실증적 합의가 부족하다는 데 있습니다. 일부 연구는 세율 변화가 근로 의욕에 미치는 영향이 통념보다 훨씬 작다고 보고합니다. 결국 적정 누진세율을 둘러싼 논쟁은 이념의 문제라기보다 실증 데이터를 어떻게 해석하느냐의 문제로 좁혀지고 있습니다. 조세 정책은 언제나 형평과 효율이라는 두 목표 사이에서 균형점을 다시 찾아야 하는 과제를 안고 있습니다.",
@@ -443,17 +123,7 @@ export const READING_C2_A: RawPassage[] = [
   },
   {
     level: "C2",
-    title_kr: "지방 소멸과 재정 배분",
-    title_en: "Regional decline and fiscal allocation",
-    body_kr: "인구가 대도시로 집중되면서 지방의 소규모 지역은 소멸 위기에 직면해 있습니다. 젊은 세대가 일자리를 찾아 떠나면 남은 인구는 고령화되고, 세수가 줄어든 지역은 다시 필요한 공공 서비스를 유지하기 어려워집니다. 이러한 악순환은 한번 시작되면 스스로 가속화되는 경향을 보입니다. 병원이나 학교가 문을 닫으면 남아 있던 젊은 가구마저 떠날 유인이 커지기 때문입니다. 중앙 정부는 대개 재정 이전을 통해 이러한 격차를 완화하려 해 왔습니다. 그러나 단순한 보조금 지급은 지역의 자생력을 키우기보다 의존을 고착시킨다는 비판을 받아 왔습니다. 반대로 지역이 스스로 재원을 마련하도록 방치하면 이미 벌어진 격차는 더욱 커질 뿐입니다. 일부 국가는 균등한 배분 대신 지역별 특성에 맞춘 차등적 투자 전략을 시도해 왔습니다. 모든 지역을 살리려 하기보다 거점이 될 수 있는 곳에 자원을 집중하는 방식입니다. 이러한 전략은 효율적이지만 동시에 특정 지역의 소멸을 사실상 용인하는 것이라는 윤리적 비판에서 자유롭지 못합니다. 결국 지방 소멸 대응은 형평과 효율 사이에서 어느 쪽에 얼마나 무게를 둘 것인가라는 정치적 선택의 문제로 귀결됩니다.",
-    body_en: "As population concentrates in large cities, small regional areas face a crisis of decline. When the younger generation leaves in search of jobs, the remaining population ages, and a region with shrinking tax revenue finds it harder to maintain the public services it still needs. This vicious cycle tends to accelerate on its own once it begins. When hospitals or schools close, the incentive for even remaining young households to leave grows larger. Central governments have generally tried to ease this gap through fiscal transfers. But simple subsidy payments have been criticized for entrenching dependency rather than building a region's self-sustaining capacity. Conversely, leaving regions to raise their own funds only widens a gap that has already opened. Some countries have tried a differentiated investment strategy tailored to regional characteristics instead of equal distribution. It is a method of concentrating resources on places that can become hubs rather than trying to save every region. This strategy is efficient but is not free from the ethical criticism that it effectively condones the decline of certain regions. In the end, responding to regional decline comes down to the political choice of how much weight to place on equity versus efficiency.",
-    questions: [
-      { question_en: "Why does the decline cycle tend to accelerate once begun?", options: ["Closing hospitals and schools drives out remaining young households","Population always grows in declining regions","Tax revenue increases automatically","Central government transfers stop entirely"], answerIndex: 0 },
-      { question_en: "What criticism does the hub-concentration strategy face?", options: ["It has no measurable effect","It applies equally to all regions","It costs too little to implement","It effectively condones the decline of certain regions"], answerIndex: 3 },
-    ],
-  },
-  {
-    level: "C2",
+    genre: "editorial",
     title_kr: "소비자 보호의 역설",
     title_en: "The paradox of consumer protection",
     body_kr: "소비자를 보호하기 위한 규제는 정보의 비대칭이 소비자에게 불리하게 작용한다는 전제에서 출발합니다. 표시 의무나 환불 규정, 계약 해지권 등이 이러한 전제 아래 마련되어 왔습니다. 그러나 규제가 촘촘해질수록 그 준수 비용은 시장에 새로 진입하려는 작은 사업자에게 불균형하게 무거운 부담으로 작용합니다. 대기업은 전담 법무 인력을 통해 규제를 손쉽게 소화하지만 소규모 사업자는 그 비용을 감당하지 못해 시장에서 밀려나는 경우가 발생합니다. 그 결과 소비자를 보호하려는 규제가 역설적으로 소수의 대형 사업자에게 시장을 집중시키는 결과를 낳기도 합니다. 경쟁이 줄어든 시장에서는 결국 소비자가 다시 손해를 보는 구조가 만들어집니다. 이러한 역설은 규제의 필요성을 부정하는 근거가 아니라 규제 설계의 정교함이 필요하다는 신호로 읽어야 합니다. 사업자의 규모에 따라 의무의 수준을 차등화하는 방안이 여러 나라에서 시도되어 왔습니다. 또한 규제 준수를 돕는 표준화된 도구나 지침을 제공하는 것도 소규모 사업자의 부담을 줄이는 방법으로 제시됩니다. 결국 소비자 보호의 목표를 지키면서도 시장의 다양성을 해치지 않는 규제 설계가 관건입니다.",
@@ -465,6 +135,7 @@ export const READING_C2_A: RawPassage[] = [
   },
   {
     level: "C2",
+    genre: "editorial",
     title_kr: "공익 신고자의 딜레마",
     title_en: "The whistleblower's dilemma",
     body_kr: "조직 내부의 불법이나 비리를 외부에 알리는 행위는 공동체 전체의 이익에 기여하지만 신고자 개인에게는 상당한 위험을 수반합니다. 소속 조직으로부터의 보복은 해고나 인사상 불이익처럼 명백한 형태로 나타나기도 하지만, 동료들 사이의 배제나 경력에 대한 은밀한 훼손처럼 입증하기 어려운 방식으로 이루어지는 경우도 많습니다. 이 때문에 많은 국가가 공익 신고자를 보호하기 위한 법을 마련해 왔습니다. 그러나 법적 보호가 존재한다는 사실만으로 신고자가 실제로 안전을 느끼는 것은 아닙니다. 보복의 존재를 입증하는 책임이 여전히 신고자에게 있는 경우가 많고, 소송은 시간과 비용을 요구하기 때문입니다. 더 근본적인 문제는 신고 이후에도 신고자가 같은 업계에서 계속 일해야 한다는 현실적 제약입니다. 법적으로 보복이 금지되어 있어도 평판의 훼손까지 막을 수는 없습니다. 이러한 현실은 많은 잠재적 신고자가 침묵을 선택하게 만듭니다. 일부 국가는 금전적 보상을 제공하여 신고의 유인을 높이는 제도를 시도해 왔습니다. 그러나 보상이 신고의 진정성을 훼손할 수 있다는 우려도 함께 제기됩니다. 결국 공익 신고 제도의 실효성은 법 조문의 존재 여부가 아니라 신고자가 감당해야 하는 실질적인 위험을 얼마나 줄일 수 있는가에 달려 있습니다.",
@@ -476,6 +147,7 @@ export const READING_C2_A: RawPassage[] = [
   },
   {
     level: "C2",
+    genre: "editorial",
     title_kr: "감시 카메라와 안전",
     title_en: "Surveillance cameras and safety",
     body_kr: "거리와 건물 곳곳에 설치된 감시 카메라는 범죄 예방과 수사에 기여한다는 이유로 꾸준히 확대되어 왔습니다. 실제로 카메라가 설치된 이후 특정 유형의 범죄가 감소했다는 연구 결과들이 이러한 확대를 뒷받침해 왔습니다. 그러나 감시의 효과가 모든 범죄 유형에 동일하게 나타나는 것은 아닙니다. 계획적이고 재산과 관련된 범죄에서는 억제 효과가 뚜렷하지만 충동적이거나 대인관계에서 발생하는 범죄에서는 그 효과가 제한적입니다. 문제는 이러한 실증적 한계와 별개로 감시 카메라의 확산이 만들어 내는 사회적 비용입니다. 공공장소에서 개인의 동선이 지속적으로 기록되는 것에 대한 우려가 그것입니다. 수집된 영상이 본래 목적과 다른 용도로 활용될 가능성, 그리고 그 데이터에 대한 접근 권한이 충분히 통제되고 있는가라는 질문이 뒤따릅니다. 안전을 이유로 감시를 정당화하는 논리는 감시의 범위를 확장하는 데 있어 견제받기 어려운 구조를 만듭니다. 일부 도시는 카메라의 설치 위치와 데이터 보관 기간을 시민에게 공개하는 방식으로 이러한 우려에 대응해 왔습니다. 결국 감시 카메라 정책의 핵심은 설치 여부가 아니라 그것이 만들어 내는 정보에 대한 통제와 투명성을 어떻게 확보하는가에 있습니다.",
@@ -487,17 +159,7 @@ export const READING_C2_A: RawPassage[] = [
   },
   {
     level: "C2",
-    title_kr: "상속과 세대 간 불평등",
-    title_en: "Inheritance and intergenerational inequality",
-    body_kr: "상속은 오랫동안 가족 간의 사적인 문제로 취급되어 왔지만 그 사회적 파급력은 결코 사적이지 않습니다. 부모 세대가 축적한 자산이 자녀에게 이전되는 규모가 커질수록 개인의 노력과 무관한 경제적 격차가 세대를 넘어 고착됩니다. 이는 능력과 노력에 따라 보상이 주어진다는 능력주의의 전제 자체를 흔드는 지점입니다. 태어난 가정에 따라 출발선이 이미 크게 다르다면 이후의 경쟁은 공정하다고 보기 어렵습니다. 상속세는 이러한 격차를 완화하기 위한 대표적인 정책 수단으로 여겨져 왔습니다. 그러나 상속세를 둘러싼 논쟁은 좀처럼 가라앉지 않습니다. 이미 소득세를 낸 자산에 다시 세금을 매기는 것이 이중 과세라는 반론과, 상속은 상속인에게 발생하는 새로운 소득이므로 별개의 과세 대상이라는 반박이 팽팽하게 맞섭니다. 실증적으로는 높은 상속세율이 기업의 승계를 어렵게 하여 고용에 부정적 영향을 미친다는 우려도 제기되어 왔습니다. 이 때문에 일부 국가는 가업 승계에 대해 예외적인 공제를 두는 방식으로 절충을 시도합니다. 결국 상속을 둘러싼 정책은 세대 간 기회의 공정성과 자산 형성의 자유라는 두 가치를 어떻게 저울질할 것인가의 문제로 수렴합니다.",
-    body_en: "Inheritance has long been treated as a private family matter, but its social impact is never private. As the scale of assets accumulated by the parent generation transferred to children grows, an economic gap unrelated to individual effort becomes fixed across generations. This is a point that shakes the very premise of meritocracy, that reward is given according to ability and effort. If the starting line already differs greatly depending on the family one was born into, subsequent competition is hard to call fair. Inheritance tax has been regarded as a representative policy tool to ease this gap. But the debate over inheritance tax rarely settles down. The counterargument that taxing assets that have already had income tax paid on them constitutes double taxation stands in tense opposition to the rebuttal that inheritance is new income arising for the heir and thus a separate taxable event. Empirically, concern has also been raised that a high inheritance tax rate makes business succession difficult and negatively affects employment. For this reason, some countries attempt a compromise by placing exceptional deductions on family business succession. In the end, policy surrounding inheritance converges on the question of how to weigh the two values of intergenerational fairness of opportunity and freedom to build assets.",
-    questions: [
-      { question_en: "What premise does large intergenerational inheritance transfer shake, per the passage?", options: ["The premise of free trade","The premise of meritocracy","The premise of democracy","The premise of taxation itself"], answerIndex: 1 },
-      { question_en: "What concern is raised about high inheritance tax rates?", options: ["They always increase government revenue","They can make business succession difficult, hurting employment","They eliminate all family wealth","They have no economic effect"], answerIndex: 1 },
-    ],
-  },
-  {
-    level: "C2",
+    genre: "editorial",
     title_kr: "재난 지원금의 기준",
     title_en: "The criteria for disaster relief",
     body_kr: "재난이 발생했을 때 정부가 피해자에게 지급하는 지원금은 신속한 회복을 돕는 필수적인 장치로 여겨집니다. 그러나 지원금의 기준을 어떻게 설정할 것인가는 매번 새로운 논쟁을 불러일으킵니다. 동일한 재난이라도 피해 규모를 객관적으로 측정하는 것 자체가 쉽지 않기 때문입니다. 주택의 파손 정도는 비교적 명확하게 파악할 수 있지만 소득 상실이나 정신적 피해처럼 눈에 보이지 않는 손실은 평가 기준을 세우기가 까다롭습니다. 이 때문에 지원금이 실제 피해와 비례하지 않는다는 불만이 반복적으로 제기되어 왔습니다. 더 복잡한 문제는 형평성입니다. 동일한 재난 안에서도 보험에 가입된 사람과 그렇지 않은 사람이 받는 실질적인 도움은 크게 달라집니다. 정부가 보험 미가입자에게 더 많은 지원을 하면 형평에는 맞지만 보험 가입을 게을리한 것에 대한 도덕적 해이를 조장한다는 비판이 뒤따릅니다. 반대로 지원을 균등하게 하면 이미 보험으로 보호받는 사람에게 이중의 혜택이 돌아갑니다. 여러 나라가 이 딜레마를 해소하기 위해 기본 지원과 보험 연계형 지원을 분리하여 설계해 왔습니다. 결국 재난 지원금 제도는 신속성과 형평성, 그리고 장기적인 유인 구조를 동시에 고려해야 하는 복합적인 설계 과제입니다.",
@@ -509,6 +171,7 @@ export const READING_C2_A: RawPassage[] = [
   },
   {
     level: "C2",
+    genre: "editorial",
     title_kr: "노동 시간 단축의 함정",
     title_en: "The trap of shortened work hours",
     body_kr: "노동 시간을 줄이자는 논의는 삶의 질을 개선한다는 명분으로 폭넓은 지지를 얻어 왔습니다. 실제로 여러 실험적 도입 사례는 생산성 손실 없이 노동 시간을 줄일 수 있음을 보여 주었습니다. 그러나 이러한 성공 사례가 모든 산업과 직군에 균등하게 적용되는 것은 아닙니다. 지식 노동처럼 업무의 밀도를 조정할 여지가 큰 직군에서는 단축이 상대적으로 수월하게 이루어질 수 있습니다. 반면 교대 근무나 대면 서비스처럼 인력의 물리적 존재가 필수적인 업종에서는 같은 시간을 단축하려면 그만큼 인력을 늘려야 하고, 이는 비용 상승으로 직결됩니다. 이러한 산업별 격차를 고려하지 않고 일률적인 제도를 도입하면 오히려 노동 시간 단축의 혜택이 일부 직군에만 집중되는 역설이 발생합니다. 더 심각한 문제는 시간외 수당에 의존해 온 저임금 노동자에게 노동 시간 단축이 실질 소득 감소로 이어질 수 있다는 점입니다. 제도의 취지와 달리 가장 보호가 필요한 계층이 오히려 손해를 보는 상황이 생기는 것입니다. 이 때문에 정책 설계자들은 산업별 유예 기간과 임금 보전 방안을 함께 마련해야 한다는 점을 강조해 왔습니다. 결국 노동 시간 단축은 획일적인 목표가 아니라 산업과 소득 구조의 차이를 반영한 정교한 이행 전략을 필요로 합니다.",
@@ -520,6 +183,7 @@ export const READING_C2_A: RawPassage[] = [
   },
   {
     level: "C2",
+    genre: "editorial",
     title_kr: "독점의 그림자",
     title_en: "The shadow of monopoly",
     body_kr: "독점은 흔히 가격을 높게 매기는 기업의 문제로만 이해되지만 그 폐해는 훨씬 넓게 퍼져 있습니다. 경쟁이 사라진 시장에서 기업은 가격뿐 아니라 품질과 혁신에서도 긴장을 늦출 유인을 갖습니다. 대체재가 없는 소비자는 불만이 있어도 이탈할 곳이 없기 때문입니다. 더 은밀한 문제는 독점 기업이 시장에서의 지위를 정치적 영향력으로 전환할 수 있다는 점입니다. 막대한 이윤은 로비와 법률 대응에 투입될 자원을 낳고, 이는 다시 규제 완화나 진입 장벽 강화로 이어지는 순환을 만듭니다. 이러한 순환이 반복되면 시장의 문제가 아니라 정치의 문제로 확장됩니다. 전통적인 반독점 정책은 소비자 가격에 미치는 영향을 주된 판단 기준으로 삼아 왔습니다. 그러나 플랫폼 경제에서는 서비스가 무료로 제공되는 경우가 많아 가격 기준만으로는 독점의 폐해를 포착하기 어렵다는 지적이 늘고 있습니다. 데이터 독점이나 경쟁사 인수를 통한 잠재적 위협의 사전 제거 같은 새로운 형태의 반경쟁 행위가 그 대표적인 예입니다. 이 때문에 여러 나라의 경쟁 당국이 반독점 심사의 기준 자체를 재검토하고 있습니다. 결국 독점을 규율하는 문제는 가격의 문제를 넘어 시장의 개방성 전체를 지키는 문제로 확장되고 있습니다.",
@@ -531,6 +195,7 @@ export const READING_C2_A: RawPassage[] = [
   },
   {
     level: "C2",
+    genre: "editorial",
     title_kr: "부동산 가격과 기대 심리",
     title_en: "Real estate prices and expectations",
     body_kr: "부동산 가격은 수요와 공급이라는 경제학의 기본 원리로 설명되곤 하지만 현실의 움직임은 그보다 훨씬 복잡합니다. 주택은 거주라는 실질적 효용과 동시에 미래 가격 상승을 기대하는 투자 자산으로서의 성격을 함께 지니기 때문입니다. 가격이 오를 것이라는 기대가 형성되면 사람들은 지금 사지 않으면 손해라는 조바심에 매수를 서두르고, 이 매수 자체가 다시 가격을 밀어 올리는 자기실현적 순환이 만들어집니다. 이러한 순환은 실제 거주 수요와 무관하게 진행될 수 있다는 점에서 위험합니다. 반대로 가격이 하락할 것이라는 기대가 확산되면 매수를 미루는 관망세가 커지고 거래는 급격히 위축됩니다. 이는 시장이 근본 가치보다 심리에 의해 더 크게 움직일 수 있음을 보여 줍니다. 정책 당국이 금리나 대출 규제 같은 수단으로 시장에 개입하는 이유도 여기에 있습니다. 그러나 이러한 개입은 종종 의도한 지역이 아닌 다른 지역으로 수요를 이동시키는 부작용을 낳습니다. 규제가 강한 지역을 피해 자금이 흘러가는 현상이 대표적입니다. 결국 부동산 정책의 실효성은 개별 정책 수단 하나가 아니라 기대 심리 전체를 어떻게 관리하는가에 달려 있습니다.",
@@ -542,6 +207,7 @@ export const READING_C2_A: RawPassage[] = [
   },
   {
     level: "C2",
+    genre: "editorial",
     title_kr: "인플레이션의 재분배 효과",
     title_en: "The redistributive effect of inflation",
     body_kr: "인플레이션은 흔히 물가가 전반적으로 오르는 중립적인 현상으로 설명되지만 그 충격은 결코 균등하게 배분되지 않습니다. 자산을 보유한 사람과 현금성 소득에 의존하는 사람이 인플레이션을 겪는 방식은 근본적으로 다릅니다. 부동산이나 주식 같은 실물 자산을 보유한 사람은 인플레이션 속에서도 자산 가치가 함께 상승하며 구매력을 어느 정도 지킬 수 있습니다. 반면 고정된 임금이나 연금에 의존하는 사람은 같은 물가 상승 속에서 실질 소득이 그대로 잠식됩니다. 채무자와 채권자 사이의 관계에서도 비슷한 비대칭이 발생합니다. 인플레이션은 화폐의 실질 가치를 떨어뜨리기 때문에 고정 금리로 돈을 빌린 채무자는 상대적으로 유리해지고 채권자는 손해를 봅니다. 이러한 재분배는 누구도 명시적으로 의도하지 않았지만 실질적으로는 매우 정치적인 결과를 낳습니다. 자산이 없는 젊은 세대나 저소득층이 인플레이션의 부담을 더 크게 떠안는 경향이 반복적으로 관찰되어 온 이유입니다. 중앙은행이 물가 안정을 최우선 목표로 삼는 이유도 이러한 재분배 효과가 사회적 신뢰를 잠식하기 때문입니다. 결국 인플레이션 관리는 총량 지표를 다루는 기술적 문제를 넘어 누가 그 비용을 부담하는가라는 분배의 문제입니다.",
@@ -553,6 +219,7 @@ export const READING_C2_A: RawPassage[] = [
   },
   {
     level: "C2",
+    genre: "editorial",
     title_kr: "노동 시장의 이중구조",
     title_en: "The dual structure of the labor market",
     body_kr: "많은 나라의 노동 시장은 안정적인 정규직과 불안정한 비정규직으로 뚜렷하게 나뉘어 있습니다. 이러한 이중구조는 우연히 생겨난 것이 아니라 기업이 경기 변동에 대응하기 위해 고안한 합리적 전략의 결과입니다. 핵심 인력은 정규직으로 두어 숙련과 조직 충성도를 지키는 한편, 주변부 인력은 비정규직으로 채용해 경기 침체 시 손쉽게 조정하려는 것입니다. 문제는 이러한 구조가 한번 자리 잡으면 스스로 강화되는 경향을 보인다는 점입니다. 기업은 정규직 채용을 늘릴수록 해고에 따르는 법적, 사회적 비용이 커지기 때문에 비정규직 활용을 선호하게 됩니다. 그 결과 동일한 업무를 수행하면서도 고용 형태에 따라 임금과 복지의 격차가 고착되는 현상이 나타납니다. 이러한 격차는 개인의 생애 전체에 영향을 미칩니다. 비정규직으로 노동 시장에 진입한 청년이 정규직으로 전환될 확률은 시간이 지나도 크게 개선되지 않는다는 연구 결과가 이를 뒷받침합니다. 일부 국가는 동일노동 동일임금 원칙을 법제화하여 이 격차를 좁히려 시도해 왔습니다. 그러나 원칙의 도입만으로는 현장에서의 실질적인 격차를 없애기 어렵다는 한계도 함께 지적됩니다. 결국 이중구조의 해소는 법적 원칙과 더불어 기업의 고용 전략 자체를 바꾸는 유인 구조의 재설계를 요구합니다.",
@@ -564,6 +231,7 @@ export const READING_C2_A: RawPassage[] = [
   },
   {
     level: "C2",
+    genre: "editorial",
     title_kr: "금리 인상의 파급 효과",
     title_en: "The ripple effects of rate hikes",
     body_kr: "중앙은행이 기준금리를 올리는 결정은 물가 상승을 억제하기 위한 조치로 발표되지만 그 파급 효과는 경제 전반으로 고르게 퍼지지 않습니다. 금리가 오르면 대출 이자 부담이 커져 소비와 투자가 위축되고, 이를 통해 수요를 줄여 물가를 낮추는 것이 정책의 의도입니다. 그러나 이 과정에서 가장 먼저, 가장 크게 충격을 받는 것은 이미 대출을 많이 짊어진 가계와 소규모 자영업자입니다. 이들은 소득에서 이자 지급이 차지하는 비중이 크기 때문에 금리 인상에 훨씬 민감하게 반응합니다. 반면 부채가 적거나 오히려 예금과 채권을 보유한 계층은 금리 인상으로 이자 수익이 늘어나는 혜택을 봅니다. 이러한 비대칭은 금리 정책이 물가 안정이라는 거시적 목표를 달성하는 동시에 계층 간 자산과 소득의 재편을 일으킨다는 것을 보여 줍니다. 더 나아가 금리 인상은 국내 시장에만 머물지 않습니다. 자본이 더 높은 수익을 좇아 이동하면서 신흥국의 통화 가치가 급락하는 부작용이 반복적으로 관찰되어 왔습니다. 이는 한 나라의 통화 정책이 국경을 넘어 취약한 경제에 충격을 전이시킬 수 있음을 보여 줍니다. 결국 금리 인상이라는 단일한 정책 수단은 물가라는 하나의 지표 뒤에 숨겨진 복잡한 분배와 국제적 파급의 문제를 동반합니다.",
@@ -575,6 +243,7 @@ export const READING_C2_A: RawPassage[] = [
   },
   {
     level: "C2",
+    genre: "editorial",
     title_kr: "하청 구조와 가격 전가",
     title_en: "Subcontracting and price pass-through",
     body_kr: "제조업의 하청 구조는 대기업이 핵심 역량에 집중하고 나머지 공정을 외부화함으로써 효율을 높인다는 논리로 정당화되어 왔습니다. 그러나 원자재 가격이 급등하는 시기에 이 구조는 예상치 못한 취약성을 드러냅니다. 원청 기업은 시장에서의 협상력을 바탕으로 인상된 비용을 하청 기업에 전가할 여지를 갖지만, 하청 기업은 그 비용을 다시 전가할 대상이 마땅치 않은 경우가 많습니다. 계약 관계에서 상대적으로 약한 위치에 있는 하청 기업은 납품 단가 인상을 요구하기가 현실적으로 어렵습니다. 거래처를 잃을지 모른다는 두려움이 협상 자체를 위축시키기 때문입니다. 그 결과 원자재 가격 상승의 부담은 산업 전체에 고르게 분산되지 못하고 하청 구조의 하단으로 갈수록 집중되는 경향을 보입니다. 이러한 왜곡은 단기적으로는 원청 기업의 수익성을 지켜 주지만 장기적으로는 하청 기업의 투자 여력을 갉아먹어 산업 전체의 경쟁력을 훼손합니다. 일부 국가는 원자재 가격 변동을 납품 단가에 자동으로 반영하는 연동제를 도입해 이 문제에 대응해 왔습니다. 그러나 연동제가 실효성을 가지려면 계약 이행을 감시하는 별도의 장치가 함께 마련되어야 합니다. 결국 하청 구조의 지속 가능성은 협상력의 불균형을 제도적으로 얼마나 보완할 수 있는가에 달려 있습니다.",
@@ -586,6 +255,7 @@ export const READING_C2_A: RawPassage[] = [
   },
   {
     level: "C2",
+    genre: "editorial",
     title_kr: "자산 격차의 확대",
     title_en: "The widening asset gap",
     body_kr: "소득 격차는 오랫동안 불평등 논의의 중심에 있었지만 최근에는 자산 격차가 그보다 더 근본적인 문제로 주목받고 있습니다. 소득은 매달 벌어들이는 흐름인 반면 자산은 시간이 지나며 축적되는 저량이기 때문에 격차가 한번 벌어지면 좀처럼 좁혀지지 않습니다. 자산을 보유한 사람은 그 자산에서 발생하는 임대료나 배당, 시세 차익을 통해 노동 소득과 무관하게 부를 늘려 갈 수 있습니다. 반면 자산이 없는 사람은 오직 노동 소득에 의존해야 하고, 그 소득의 상당 부분을 주거비로 지출하며 자산을 형성할 기회 자체를 얻기 어렵습니다. 이러한 구조는 세대를 거치며 더욱 굳어집니다. 부모의 자산이 자녀의 교육과 주거, 창업의 초기 자본으로 이어지면서 격차는 단순한 산술적 차이를 넘어 기회 자체의 불평등으로 전환됩니다. 경제학자들은 이러한 현상을 자본 수익률이 경제 성장률을 웃도는 구조에서 비롯된 것으로 설명해 왔습니다. 자산을 통한 부의 증식 속도가 노동을 통한 소득 증가 속도를 항상 앞선다면 격차는 시간이 지날수록 구조적으로 벌어질 수밖에 없습니다. 이러한 진단은 단순한 소득세 조정을 넘어 자산에 대한 과세 체계 전반을 재검토해야 한다는 논의로 이어지고 있습니다.",
@@ -597,6 +267,7 @@ export const READING_C2_A: RawPassage[] = [
   },
   {
     level: "C2",
+    genre: "editorial",
     title_kr: "외주화와 책임의 분산",
     title_en: "Outsourcing and diffused responsibility",
     body_kr: "기업이 위험하거나 부담스러운 업무를 외주화하는 관행은 비용 절감이라는 경제적 논리로 설명되어 왔습니다. 그러나 그 이면에는 책임을 분산시키려는 또 다른 동기가 자리하고 있습니다. 산업 재해가 발생했을 때 원청 기업은 계약 관계상 직접적인 사용자가 아니라는 이유로 책임에서 벗어날 여지를 갖습니다. 실제로 위험한 공정일수록 외주화되는 비율이 높다는 통계는 이러한 동기를 뒷받침합니다. 문제는 이러한 구조가 위험을 줄이는 것이 아니라 위험을 가장 취약한 위치로 이전시킬 뿐이라는 데 있습니다. 하청 노동자는 원청 노동자와 같은 공간에서 같은 위험에 노출되면서도 안전 교육이나 보호 장비에서 상대적으로 열악한 대우를 받는 경우가 많습니다. 사고가 발생했을 때 원청과 하청 사이의 책임 소재를 가리는 데 시간이 소요되는 동안 피해자에 대한 실질적인 구제는 지연됩니다. 이러한 문제의식에서 여러 나라가 위험의 외주화라는 개념을 도입하여 원청 기업에도 안전 관리에 대한 연대 책임을 부과하는 방향으로 법을 개정해 왔습니다. 그러나 법적 책임을 확대하는 것만으로 현장의 관행이 즉각 바뀌지는 않는다는 한계도 지적됩니다. 결국 외주화된 위험을 실질적으로 줄이려면 법적 책임의 확대와 더불어 현장의 안전 문화 자체를 바꾸는 지속적인 감독이 함께 이루어져야 합니다.",
@@ -608,6 +279,7 @@ export const READING_C2_A: RawPassage[] = [
   },
   {
     level: "C2",
+    genre: "editorial",
     title_kr: "플랫폼 독과점의 딜레마",
     title_en: "The platform oligopoly dilemma",
     body_kr: "디지털 플랫폼 산업은 소수의 대형 사업자가 시장을 장악하는 구조로 빠르게 수렴해 왔습니다. 이러한 집중은 우연이 아니라 플랫폼 산업 특유의 경제적 속성에서 비롯됩니다. 이용자가 많을수록 서비스의 가치가 커지는 네트워크 효과 때문에 한번 앞선 사업자는 격차를 더욱 벌리기 쉽습니다. 여기에 이용자의 데이터가 축적될수록 서비스가 정교해지는 데이터 효과까지 더해지면 후발 주자가 따라잡기는 갈수록 어려워집니다. 문제는 이러한 구조가 전통적인 반독점 이론이 상정하는 시장과 다르다는 점입니다. 가격이 낮거나 심지어 무료인 서비스도 독점적 지위를 이용해 이용자의 선택권을 제한하고 데이터를 독점적으로 활용할 수 있습니다. 경쟁 당국이 가격 인상 여부만을 기준으로 삼는다면 이러한 폐해를 포착하지 못합니다. 일부 국가는 플랫폼 사업자가 자사 서비스를 부당하게 우대하는 행위나 경쟁사의 접근을 차단하는 행위를 별도로 규율하는 법을 마련해 왔습니다. 그러나 국경을 넘나드는 플랫폼 산업의 특성상 개별 국가의 규제만으로는 실효성에 한계가 있다는 지적도 꾸준히 제기됩니다. 결국 플랫폼 독과점 문제는 한 나라의 경쟁법을 넘어 국제적인 공조를 요구하는 새로운 과제로 떠오르고 있습니다.",
@@ -619,6 +291,7 @@ export const READING_C2_A: RawPassage[] = [
   },
   {
     level: "C2",
+    genre: "editorial",
     title_kr: "청년 실업의 구조적 원인",
     title_en: "The structural causes of youth unemployment",
     body_kr: "청년 실업은 흔히 개인의 역량이나 노력 부족으로 설명되지만 그 이면에는 뚜렷한 구조적 원인이 자리하고 있습니다. 산업 구조가 자동화와 디지털 전환을 거치면서 신입 인력이 전통적으로 담당해 온 단순 업무의 수요가 빠르게 줄어들었습니다. 동시에 정규직 노동자에 대한 강한 고용 보호는 기업이 신규 채용을 신중하게 만드는 요인으로 작용합니다. 이미 고용된 인력을 해고하기 어려운 구조에서 기업은 경기 불확실성 앞에서 신규 채용부터 줄이는 방식으로 대응하기 때문입니다. 그 결과 노동 시장에 이미 진입한 세대와 새로 진입하려는 세대 사이에 뚜렷한 단절이 생깁니다. 교육 체계와 산업 현장이 요구하는 역량 사이의 불일치도 이 문제를 심화시킵니다. 대학 진학률이 높아지면서 노동 시장이 필요로 하는 것보다 더 많은 고학력 인력이 배출되지만, 정작 현장은 실무 경험을 갖춘 인력을 원하는 미스매치가 반복됩니다. 첫 일자리를 구하지 못한 채 보내는 시간이 길어질수록 이력서의 공백은 오히려 다음 취업을 더 어렵게 만드는 악순환으로 이어집니다. 이러한 구조적 문제는 개인의 노력만으로는 해소되기 어렵습니다. 결국 청년 실업 대책은 개인의 역량 강화를 넘어 고용 보호 제도와 산업 전환 속도를 함께 고려하는 종합적인 접근을 요구합니다.",
@@ -630,6 +303,7 @@ export const READING_C2_A: RawPassage[] = [
   },
   {
     level: "C2",
+    genre: "editorial",
     title_kr: "환율과 서민 경제",
     title_en: "Exchange rates and ordinary households",
     body_kr: "환율은 국제 무역과 금융을 다루는 거시경제 지표처럼 보이지만 그 여파는 서민의 일상 경제까지 직접적으로 파고듭니다. 자국 통화 가치가 하락하면 수입 원자재와 에너지의 가격이 오르고, 이는 곧바로 생활 물가 전반에 반영됩니다. 특히 에너지와 식량처럼 수입 의존도가 높은 품목일수록 환율 변동의 충격이 소비자에게 빠르게 전가됩니다. 문제는 이러한 충격이 소득 계층에 따라 다르게 체감된다는 점입니다. 저소득 가구는 소득에서 식료품과 에너지가 차지하는 비중이 높기 때문에 동일한 물가 상승률이라도 체감하는 부담은 훨씬 큽니다. 반면 통화 가치 하락은 수출 기업의 가격 경쟁력을 높여 수익성을 개선하는 효과를 낳기도 합니다. 이 때문에 정책 당국은 환율을 관리할 때 수출 기업의 이익과 서민 가계의 부담이라는 상반된 목표 사이에서 균형을 찾아야 하는 딜레마에 놓입니다. 지나치게 통화 가치를 방어하려는 개입은 외환 보유고를 소진시키는 부담을 낳고, 반대로 시장에 맡기면 서민 경제의 충격이 커집니다. 여러 나라가 이러한 딜레마 속에서 에너지 보조금이나 취약 계층 지원과 같은 보완책을 병행해 왔습니다. 결국 환율 관리의 성패는 거시 지표의 안정만이 아니라 그 충격이 가계에 어떻게 분배되는가를 함께 고려하는 데 달려 있습니다.",
@@ -641,6 +315,7 @@ export const READING_C2_A: RawPassage[] = [
   },
   {
     level: "C2",
+    genre: "editorial",
     title_kr: "저출생과 노동 공급",
     title_en: "Low birthrate and labor supply",
     body_kr: "저출생 문제는 흔히 인구 감소라는 총량의 문제로 논의되지만 그 경제적 파급은 노동 공급의 구조 자체를 바꾸는 데 있습니다. 생산 가능 인구가 줄어들면 동일한 산출을 유지하기 위해 필요한 노동력을 확보하기가 점점 어려워집니다. 특히 노동 집약적인 산업이나 대면 서비스업에서 이러한 공급 부족이 먼저 나타나는 경향이 있습니다. 기업은 이에 대응해 자동화 투자를 늘리거나 외국인 노동력에 대한 의존도를 높이는 방향으로 전략을 조정해 왔습니다. 문제는 이러한 대응이 산업별로 균등하게 이루어지지 않는다는 점입니다. 자본 여력이 있는 대기업은 자동화로 전환할 수 있지만 영세한 사업장은 그럴 여력이 부족해 인력난에 더 취약합니다. 노동 공급 감소는 임금에도 영향을 미칩니다. 이론적으로는 노동력이 희소해질수록 임금이 상승해야 하지만, 실제로는 산업별 협상력의 차이 때문에 그 효과가 균등하게 나타나지 않습니다. 더 근본적인 문제는 부양해야 할 고령 인구가 늘어나는 동시에 이를 지탱할 생산 인구는 줄어드는 이중의 압박입니다. 이러한 압박은 연금과 의료 재정의 지속 가능성에 대한 근본적인 재검토를 요구합니다. 결국 저출생에 대한 대응은 출산 장려책 하나로 환원될 수 없으며 노동 시장과 재정 구조 전반의 재설계를 필요로 합니다.",
@@ -652,6 +327,7 @@ export const READING_C2_A: RawPassage[] = [
   },
   {
     level: "C2",
+    genre: "editorial",
     title_kr: "가계 부채의 누적",
     title_en: "The accumulation of household debt",
     body_kr: "가계 부채는 경기 침체기마다 소비를 지탱하는 완충 장치로 활용되어 왔습니다. 소득이 정체된 상황에서도 가계는 대출을 통해 소비 수준을 유지할 수 있기 때문입니다. 그러나 이러한 완충 효과는 지속 가능하지 않은 방식으로 위험을 미래로 이전할 뿐이라는 지적이 꾸준히 제기되어 왔습니다. 부채로 지탱된 소비는 결국 상환의 의무를 동반하며, 그 상환 부담은 미래의 소비 여력을 갉아먹습니다. 문제는 이러한 누적이 개별 가계의 재무 건전성을 넘어 경제 전체의 취약성으로 확대된다는 점입니다. 금리가 인상되거나 자산 가격이 하락하는 국면에서 부채가 과도한 가계는 소비를 급격히 줄일 수밖에 없고, 이는 다시 경기를 위축시키는 연쇄 반응을 일으킵니다. 특히 부동산 담보 대출에 의존한 가계 부채는 자산 가격과 밀접하게 연동되어 있어 위기 국면에서 그 취약성이 두드러집니다. 자산 가격이 하락하면 담보 가치가 줄어들고, 금융기관은 추가 담보나 상환을 요구하며, 이는 가계의 유동성 위기로 이어지는 악순환을 만듭니다. 정책 당국이 가계 부채의 총량뿐 아니라 그 구성과 상환 능력의 분포까지 함께 살펴야 하는 이유가 여기에 있습니다. 결국 가계 부채 문제는 단순한 규모의 문제가 아니라 위험이 어디에 집중되어 있는가를 파악하는 문제입니다.",
@@ -663,6 +339,7 @@ export const READING_C2_A: RawPassage[] = [
   },
   {
     level: "C2",
+    genre: "editorial",
     title_kr: "보조금의 역설",
     title_en: "The paradox of subsidies",
     body_kr: "정부 보조금은 특정 산업이나 계층을 지원하기 위한 직관적인 정책 수단으로 널리 활용되어 왔습니다. 그러나 보조금이 의도한 효과를 내지 못하고 오히려 시장을 왜곡하는 사례는 적지 않습니다. 대표적인 문제는 보조금이 가격 신호를 왜곡한다는 점입니다. 특정 산업에 지속적으로 보조금이 투입되면 그 산업은 경쟁력이 없어도 시장에서 생존할 수 있게 되고, 이는 자원이 더 생산적인 곳으로 이동하는 것을 가로막습니다. 더 심각한 문제는 보조금이 수혜자의 행동을 장기적으로 왜곡한다는 점입니다. 보조금에 의존하는 기업은 혁신과 효율화에 대한 유인을 잃고, 보조금이 축소되거나 중단될 경우 오히려 더 큰 충격을 받게 됩니다. 이러한 의존은 정치적으로도 보조금을 되돌리기 어렵게 만드는 결과를 낳습니다. 일단 도입된 보조금은 수혜 집단의 조직적인 반발 때문에 폐지하기가 처음 도입하는 것보다 훨씬 어렵습니다. 이 때문에 경제학자들은 보조금을 설계할 때부터 명확한 종료 시점과 성과 기준을 함께 마련해야 한다고 강조해 왔습니다. 목표를 달성하면 자동으로 축소되는 일몰 조항이 대표적인 장치입니다. 결국 보조금은 그 자체로 선의의 정책일 수 있지만, 설계의 정교함이 없다면 의도와 정반대의 결과를 낳을 위험을 항상 안고 있습니다.",
@@ -674,6 +351,7 @@ export const READING_C2_A: RawPassage[] = [
   },
   {
     level: "C2",
+    genre: "editorial",
     title_kr: "임금 격차의 뿌리",
     title_en: "The roots of the wage gap",
     body_kr: "동일한 노동 시간을 투입해도 누군가는 훨씬 더 많은 임금을 받는 현실은 흔히 개인의 능력 차이로 설명됩니다. 그러나 임금 격차의 상당 부분은 개인의 역량이 아니라 산업과 기업의 구조적 위치에서 비롯됩니다. 대기업과 중소기업 사이의 임금 격차가 대표적입니다. 유사한 업무를 수행하더라도 대기업에 소속된 노동자는 시장 지배력에서 비롯된 초과 이윤의 일부를 임금으로 분배받는 반면, 중소기업 노동자는 그러한 이윤 자체가 존재하지 않아 격차가 구조적으로 발생합니다. 이러한 격차는 개인이 아무리 노력해도 소속된 조직을 바꾸지 않는 한 좁혀지기 어렵다는 점에서 더욱 문제적입니다. 성별에 따른 임금 격차 역시 비슷한 구조적 요인을 지닙니다. 동일한 직급이라도 여성이 상대적으로 낮은 임금을 받는 현상은 노골적인 차별뿐 아니라 승진 경로에서의 은밀한 배제와 경력 단절의 누적 효과가 겹쳐서 나타납니다. 문제는 이러한 구조적 요인이 통계에서 명확히 드러나지 않고 개인의 선택으로 은폐되는 경우가 많다는 점입니다. 임금 격차를 줄이기 위한 정책이 개인의 역량 강화에만 초점을 맞춘다면 이러한 구조적 뿌리를 건드리지 못합니다. 결국 임금 격차 해소는 개인의 노력을 넘어 산업 구조와 조직 내 관행을 함께 조정하는 문제로 다루어져야 합니다.",
@@ -685,6 +363,7 @@ export const READING_C2_A: RawPassage[] = [
   },
   {
     level: "C2",
+    genre: "editorial",
     title_kr: "자동화와 일자리의 재편",
     title_en: "Automation and the reshuffling of jobs",
     body_kr: "자동화가 일자리를 없앨 것이라는 우려는 산업혁명 이래 반복되어 온 오래된 주제입니다. 그러나 역사적으로 자동화는 일자리의 총량을 줄이기보다 그 구성을 재편해 왔습니다. 특정 업무가 기계로 대체되는 동안 그 기계를 설계하고 운영하고 유지하는 새로운 업무가 함께 생겨났기 때문입니다. 문제는 이러한 재편의 과정이 모두에게 동일한 방식으로 작동하지 않는다는 점입니다. 반복적이고 정형화된 업무에 종사하던 노동자는 자동화의 직접적인 충격을 받는 반면, 창의성과 대면 소통이 요구되는 업무는 상대적으로 자동화의 영향에서 자유롭습니다. 이러한 비대칭은 노동 시장을 양극화시키는 결과를 낳습니다. 중간 수준의 숙련을 요구하던 일자리가 사라지면서 고숙련과 저숙련 일자리만 남는 현상이 여러 나라에서 관찰되어 왔습니다. 더 심각한 문제는 대체된 노동자가 새로 생겨난 일자리로 곧바로 이동하지 못한다는 데 있습니다. 새로운 업무가 요구하는 역량과 기존 노동자가 보유한 역량 사이에는 상당한 간극이 존재하기 때문입니다. 이러한 전환 비용을 개인에게만 떠넘긴다면 자동화의 이익은 소수에게 집중되고 그 충격은 다수가 감당하는 구조가 고착됩니다. 결국 자동화의 성패는 기술 자체가 아니라 전환기 노동자를 재교육하고 지원하는 제도적 장치에 달려 있습니다.",
@@ -696,6 +375,7 @@ export const READING_C2_A: RawPassage[] = [
   },
   {
     level: "C2",
+    genre: "editorial",
     title_kr: "프랜차이즈 경제의 그늘",
     title_en: "The shadow of the franchise economy",
     body_kr: "프랜차이즈 사업은 표준화된 상품과 브랜드 인지도를 활용해 창업의 위험을 줄여 준다는 명분으로 확산되어 왔습니다. 본사는 검증된 사업 모델을 제공하고 가맹점은 그 모델을 따르는 대가로 초기 위험을 줄인다는 것이 이 구조의 기본 논리입니다. 그러나 실제 계약 관계를 들여다보면 위험의 분담이 결코 대등하지 않다는 것이 드러납니다. 본사는 가맹점의 매출과 무관하게 로열티와 물류 마진을 통해 안정적인 수익을 확보하는 반면, 가맹점은 임대료와 인건비 상승 같은 외부 충격을 고스란히 떠안습니다. 상권이 과열되어 인근에 동일 브랜드 매장이 추가로 들어서는 상황에서도 가맹점은 계약상 이를 저지할 수단이 마땅치 않은 경우가 많습니다. 본사의 입장에서는 매장 수 증가가 곧 로열티 수익의 증가이기 때문에 개별 가맹점의 손실과 본사의 이익이 구조적으로 상충하는 지점이 발생합니다. 이러한 비대칭은 계약서의 세부 조항에 숨어 있어 창업 초기에는 쉽게 인지되지 않습니다. 여러 나라가 이러한 문제에 대응해 정보 공개를 의무화하고 인근 출점을 제한하는 규정을 도입해 왔습니다. 그러나 규제가 계약의 세부까지 촘촘하게 다루지 못하는 한 가맹점의 구조적 취약성은 쉽게 해소되지 않습니다. 결국 프랜차이즈 경제의 지속 가능성은 본사와 가맹점 사이의 위험 분담을 얼마나 균형 있게 재설계하는가에 달려 있습니다.",
@@ -707,6 +387,7 @@ export const READING_C2_A: RawPassage[] = [
   },
   {
     level: "C2",
+    genre: "editorial",
     title_kr: "공급망의 취약성",
     title_en: "The fragility of supply chains",
     body_kr: "글로벌 공급망은 오랫동안 비용 절감의 성공적인 사례로 여겨져 왔습니다. 각 생산 단계를 비용이 가장 낮은 지역에 배치함으로써 기업은 효율을 극대화할 수 있었습니다. 그러나 이러한 효율의 이면에는 예상치 못한 충격에 취약하다는 대가가 숨어 있었습니다. 특정 부품을 단일 지역이나 소수의 공급업체에 의존하는 구조는 평상시에는 비용을 낮추지만 그 지역에 문제가 생기면 전체 생산 라인이 동시에 멈추는 위험을 안고 있습니다. 재고를 최소화하여 자본 효율을 높이는 적시 생산 방식 역시 같은 취약성을 심화시킵니다. 여유 재고가 없다는 것은 공급이 잠시라도 끊기면 완충할 여력이 전혀 없다는 뜻이기 때문입니다. 이러한 취약성은 평상시에는 드러나지 않다가 위기 상황에서 한꺼번에 표면화되는 특징을 지닙니다. 이후 여러 기업이 공급망을 다변화하고 일부 재고를 다시 늘리는 방향으로 전략을 수정해 왔습니다. 그러나 이러한 조정은 필연적으로 비용 상승을 동반하며, 이는 결국 소비자 가격에 전가될 가능성을 낳습니다. 효율과 회복력은 서로 상충하는 목표이기 때문에 기업은 두 가치 사이에서 새로운 균형점을 찾아야 하는 과제를 안게 되었습니다. 결국 공급망 설계는 평상시의 비용만이 아니라 위기 상황에서의 복원력까지 함께 계산하는 방향으로 재편되고 있습니다.",
@@ -718,6 +399,7 @@ export const READING_C2_A: RawPassage[] = [
   },
   {
     level: "C2",
+    genre: "editorial",
     title_kr: "중산층의 축소",
     title_en: "The shrinking middle class",
     body_kr: "중산층은 오랫동안 안정적인 사회를 지탱하는 완충 계층으로 여겨져 왔습니다. 소득 분포에서 중간 지점에 위치한 이들은 극단적인 계층 갈등을 완화하고 소비를 통해 경제 순환을 뒷받침하는 역할을 해 왔습니다. 그러나 최근 수십 년간 여러 선진국에서 중산층의 비중이 눈에 띄게 줄어드는 현상이 관찰되어 왔습니다. 이러한 축소는 소득 분포가 양극단으로 벌어지는 과정과 맞물려 있습니다. 기술 발전과 세계화는 고도의 숙련이나 자본을 가진 이들에게 유리하게 작동한 반면, 중간 숙련의 일자리는 자동화와 해외 이전의 압력 속에서 빠르게 사라졌습니다. 그 결과 과거에는 안정적인 중산층 일자리로 여겨졌던 직종이 저임금 서비스업으로 전환되거나 아예 사라지는 현상이 반복되었습니다. 중산층의 축소는 단순한 통계상의 변화가 아니라 사회적 신뢰와 정치적 안정에도 영향을 미칩니다. 중간 계층이 두터운 사회는 극단적인 정치 세력이 힘을 얻기 어려운 반면, 중산층이 얇아진 사회에서는 계층 간 불신과 갈등이 정치적 양극화로 이어지기 쉽습니다. 정책 대응으로는 재교육을 통한 숙련 전환 지원과 사회 안전망 강화가 함께 논의되어 왔습니다. 결국 중산층의 회복은 단일한 정책이 아니라 노동 시장과 교육, 조세 제도 전반을 아우르는 장기적인 과제입니다.",
@@ -729,6 +411,7 @@ export const READING_C2_A: RawPassage[] = [
   },
   {
     level: "C2",
+    genre: "editorial",
     title_kr: "관세 전쟁의 파급",
     title_en: "The fallout of tariff wars",
     body_kr: "관세는 자국 산업을 보호하려는 정치적 명분 아래 오랫동안 무역 정책의 수단으로 활용되어 왔습니다. 특정 국가의 수입품에 높은 관세를 부과하면 해당 산업의 국내 경쟁력이 단기적으로 보호받는 효과가 나타납니다. 그러나 이러한 조치는 대개 상대국의 보복 관세를 불러오고, 두 나라 사이의 무역은 서로 위축되는 결과로 이어집니다. 관세로 인한 비용 상승은 결국 소비자와 그 부품을 사용하는 국내 기업에게 전가됩니다. 완제품을 수출하는 기업이 관세로 보호받는 동안 그 원자재나 부품을 수입해야 하는 다른 국내 기업은 오히려 비용 부담을 떠안는 모순적인 상황이 발생합니다. 이러한 파급은 국경 안에서 그치지 않습니다. 글로벌 공급망으로 얽힌 현대 산업 구조에서 한 나라의 관세는 여러 나라를 거치는 생산 과정 전체에 파문을 일으킵니다. 예측 불가능한 관세 정책은 기업의 장기 투자 결정을 위축시키는 효과도 낳습니다. 투자를 어느 나라에 배치할지 결정하는 기업 입장에서 관세라는 변수가 자주 바뀐다면 안정적인 계획을 세우기 어렵기 때문입니다. 이러한 불확실성은 관세 자체의 세율보다 더 큰 경제적 비용을 유발한다는 지적이 뒤따릅니다. 결국 관세 정책은 특정 산업을 단기적으로 보호할 수는 있어도 경제 전체의 효율과 예측 가능성을 대가로 치르는 경우가 많습니다.",
@@ -740,17 +423,7 @@ export const READING_C2_A: RawPassage[] = [
   },
   {
     level: "C2",
-    title_kr: "부의 대물림과 교육",
-    title_en: "Inherited wealth and education",
-    body_kr: "교육은 흔히 계층 이동을 가능하게 하는 사다리로 여겨져 왔습니다. 노력과 재능이 있다면 출신 배경과 무관하게 더 나은 삶으로 나아갈 수 있다는 믿음이 그 근거였습니다. 그러나 교육에 대한 투자 자체가 이미 부모의 경제력에 크게 좌우된다는 사실은 이 믿음을 무색하게 만듭니다. 사교육과 다양한 경험을 제공할 여력이 있는 가정의 자녀는 학업 성취에서부터 유리한 위치에서 출발합니다. 이러한 격차는 대학 진학 단계에서 더욱 뚜렷해집니다. 입시 제도가 시험 성적뿐 아니라 다양한 활동과 경험을 평가에 반영할수록 그러한 활동을 준비할 자원을 가진 가정의 자녀가 유리해지는 역설이 발생합니다. 본래 다양성을 반영하려던 제도가 오히려 자원의 격차를 더 정교하게 반영하는 도구로 작동하는 것입니다. 명문 대학 졸업장은 다시 노동 시장에서의 기회로 이어지고, 이는 다음 세대의 자산 축적으로 연결되는 순환을 만듭니다. 이러한 순환이 반복되면 교육은 계층 이동의 통로가 아니라 기존 계층을 재생산하는 장치로 변질될 위험이 있습니다. 일부 국가는 저소득 가정 학생을 위한 별도의 입학 전형이나 장학 제도를 통해 이러한 격차를 완화하려 시도해 왔습니다. 그러나 이러한 보완책만으로 교육이 만들어 내는 구조적 불평등을 완전히 해소하기는 어렵다는 냉정한 평가가 함께 존재합니다.",
-    body_en: "Education has long been regarded as a ladder enabling class mobility. The belief that talent and effort could lead to a better life regardless of one's background was its basis. But the fact that investment in education itself is already heavily shaped by parents' economic power undermines this belief. Children of families that can afford private tutoring and diverse experiences start from an advantageous position even in academic achievement. This gap becomes even more pronounced at the stage of university admission. As admission systems reflect not just exam scores but a variety of activities and experiences in evaluation, the paradox arises that children of families with the resources to prepare such activities gain the advantage. A system originally meant to reflect diversity instead ends up functioning as a tool that reflects the gap in resources even more precisely. A prestigious university diploma in turn leads to opportunity in the labor market, creating a cycle that connects to the next generation's asset accumulation. Once this cycle repeats, education risks being transformed from a channel of class mobility into a device that reproduces existing class. Some countries have tried to ease this gap through separate admission tracks or scholarship programs for students from low-income families. But a sober assessment also exists that such complementary measures alone cannot fully resolve the structural inequality education produces.",
-    questions: [
-      { question_en: "What paradox emerges when admissions weigh diverse activities, per the passage?", options: ["Low-income students always benefit more","Test scores become irrelevant entirely","All students become equally competitive","Families with resources to prepare such activities gain the advantage"], answerIndex: 3 },
-      { question_en: "What cycle does the passage describe connecting education to future generations?", options: ["Prestigious degrees lead to labor market opportunity, feeding asset accumulation","Education always eliminates wealth gaps","Scholarships remove the need for admission exams","Universities redistribute wealth directly"], answerIndex: 0 },
-    ],
-  },
-  {
-    level: "C2",
+    genre: "editorial",
     title_kr: "긱 경제의 소득 불안정",
     title_en: "Income insecurity in the gig economy",
     body_kr: "긱 경제는 원하는 시간에 원하는 만큼 일할 수 있다는 유연성을 내세우며 빠르게 확산되어 왔습니다. 전통적인 고용 관계에 얽매이지 않고 여러 일감을 자유롭게 선택할 수 있다는 점은 분명한 매력으로 작용합니다. 그러나 이러한 유연성은 소득의 예측 가능성을 대가로 치르는 경우가 많습니다. 정규직 노동자가 매달 일정한 급여를 기대할 수 있는 반면, 긱 노동자의 소득은 일감의 유무와 플랫폼의 배분 방식에 따라 큰 폭으로 출렁입니다. 이러한 변동성은 개인의 재무 계획을 세우기 어렵게 만들고, 예상치 못한 지출 앞에서 완충 여력을 갖기 힘들게 합니다. 더 심각한 문제는 소득의 변동이 노동자 개인의 선택이 아니라 플랫폼의 알고리즘에 의해 상당 부분 결정된다는 점입니다. 일감의 배정 기준이 불투명한 상태에서 노동자는 소득을 안정시키기 위한 전략조차 세우기 어렵습니다. 전통적인 사회 안전망 역시 정규 고용을 전제로 설계되어 있어 긱 노동자는 실업 보험이나 상병 수당 같은 보호에서 소외되는 경우가 많습니다. 이러한 공백은 소득이 끊기는 시기에 노동자를 곧바로 취약한 상태로 몰아넣습니다. 몇몇 국가가 소득에 비례하는 사회 보험료 납부 체계를 도입해 이 공백을 메우려 시도해 왔습니다. 결국 긱 경제가 지속 가능한 노동 형태로 자리 잡으려면 유연성이라는 장점과 함께 소득 안정성을 보완하는 제도적 장치가 반드시 뒤따라야 합니다.",
@@ -762,6 +435,7 @@ export const READING_C2_A: RawPassage[] = [
   },
   {
     level: "C2",
+    genre: "editorial",
     title_kr: "시장 실패와 공공재",
     title_en: "Market failure and public goods",
     body_kr: "시장은 자원을 효율적으로 배분하는 강력한 기제로 여겨지지만 모든 영역에서 동일하게 작동하지는 않습니다. 가로등이나 국방처럼 한 사람이 소비해도 다른 사람의 소비가 줄어들지 않고 대가를 지불하지 않은 사람을 배제하기도 어려운 재화를 경제학에서는 공공재라 부릅니다. 이러한 재화는 시장의 가격 기제에 맡겨 두면 충분히 공급되지 않는 경향을 보입니다. 각 개인은 자신이 비용을 부담하지 않아도 다른 사람이 제공한 재화의 혜택을 누릴 수 있다는 계산 아래 스스로 비용을 부담하기를 꺼리기 때문입니다. 이러한 현상을 경제학에서는 무임승차 문제라 부릅니다. 이 문제는 개인의 도덕성 부족에서 비롯되는 것이 아니라 공공재라는 재화의 속성 자체에서 필연적으로 발생하는 구조적 문제입니다. 그래서 정부가 세금을 통해 재원을 마련하고 직접 공급에 나서는 것이 오랫동안 표준적인 해법으로 여겨져 왔습니다. 그러나 정부 공급이 항상 효율적인 것은 아니며, 수요를 정확히 반영하지 못하거나 관료제의 비효율에 시달리는 경우도 있습니다. 최근에는 일부 공공재적 성격의 재화에 대해 이용료를 부과하거나 민간과 협력하는 다양한 방식이 시도되고 있습니다. 결국 공공재 공급의 핵심 과제는 시장이냐 정부냐라는 이분법이 아니라 각 재화의 속성에 맞는 공급 방식을 찾는 데 있습니다.",
@@ -769,6 +443,42 @@ export const READING_C2_A: RawPassage[] = [
     questions: [
       { question_en: "What defines a public good, per the passage?", options: ["It has no economic value","It is always free to produce","One person's use doesn't reduce another's, and non-payers are hard to exclude","It can only be provided by government"], answerIndex: 2 },
       { question_en: "What does the writer say is the core task of supplying public goods?", options: ["Banning private participation entirely","Eliminating all taxation","Finding a supply method suited to each good's nature","Choosing market or government exclusively"], answerIndex: 2 },
+    ],
+  },
+  {
+    level: "C2",
+    genre: "editorial",
+    title_kr: "고용 계약의 강제 중재 조항",
+    title_en: "Mandatory arbitration clauses in employment contracts",
+    body_kr: "많은 기업이 채용 과정에서 근로자에게 분쟁이 발생하면 법원이 아닌 중재로 해결하겠다는 조항에 서명하도록 요구합니다. 이러한 강제 중재 조항은 채용의 전제 조건으로 제시되기 때문에 근로자는 사실상 선택의 여지 없이 서명하게 됩니다. 기업은 중재가 소송보다 신속하고 비용이 적게 든다는 점을 근거로 이 제도를 옹호해 왔습니다. 그러나 중재 절차는 비공개로 진행되기 때문에 동일한 기업을 상대로 한 다른 근로자의 유사한 사건이 외부에 알려지지 않습니다. 그 결과 반복적인 차별이나 괴롭힘 같은 조직적인 문제가 개별 사건으로 흩어져 축소되는 효과가 나타납니다. 더 심각한 문제는 중재인의 선정 방식에 있습니다. 중재 기관이 특정 기업으로부터 반복적으로 사건을 위탁받는 구조이기 때문에 중재인은 장기적인 관계를 고려해 기업 쪽에 유리한 판단을 내릴 유인을 갖게 됩니다. 실제로 여러 실증 연구는 근로자가 법원보다 중재에서 승소율이 낮고 배상액도 더 적다는 결과를 반복적으로 보여 줍니다. 집단 소송을 금지하는 조항이 함께 포함되는 경우도 많아 다수의 근로자가 공동으로 대응할 통로 자체가 막힙니다. 이러한 구조적 불균형을 고려할 때, 적어도 차별이나 성희롱처럼 공익적 성격이 강한 사건에 대해서는 채용 시점에 서명을 강요하는 사전 강제 중재 조항을 법으로 금지해야 합니다. 분쟁이 실제로 발생한 이후에 근로자가 자발적으로 중재를 선택할 수 있도록 제도를 전환하는 것이 옳은 방향입니다. 결국 중재 자체를 없앨 필요는 없지만, 그것이 강요가 아닌 진정한 선택의 결과일 때만 정당성을 가질 수 있습니다.",
+    body_en: "Many companies require workers, during the hiring process, to sign a clause agreeing to resolve disputes through arbitration rather than the courts. Because this mandatory arbitration clause is presented as a precondition of employment, workers in effect sign it with no real choice. Companies have defended the system on the grounds that arbitration is faster and less costly than litigation. But because arbitration proceedings are conducted confidentially, similar cases brought by other workers against the same company never become known outside. As a result, organizational problems such as repeated discrimination or harassment end up scattered and diminished as isolated individual cases. A more serious problem lies in how arbitrators are selected. Because arbitration organizations repeatedly receive cases referred by the same companies, arbitrators have an incentive, out of concern for the long-term relationship, to rule in the company's favor. Indeed, numerous empirical studies repeatedly show that workers win less often and receive smaller awards in arbitration than in court. Clauses banning class actions are also frequently included, blocking the very channel through which multiple workers could respond jointly. Given this structural imbalance, mandatory pre-dispute arbitration clauses forced upon signature at the point of hiring should be prohibited by law, at least for cases with a strong public interest, such as discrimination or sexual harassment. The right direction is to convert the system so that a worker can voluntarily choose arbitration only after a dispute has actually arisen. In the end, arbitration itself need not be abolished, but it can claim legitimacy only when it is the result of genuine choice rather than compulsion.",
+    questions: [
+      { question_en: "Why does the confidentiality of arbitration matter, per the passage?", options: ["It speeds up every case automatically","It hides recurring patterns like repeated discrimination or harassment across cases","It lowers arbitrator fees","It guarantees a fair outcome"], answerIndex: 1 },
+      { question_en: "What does the passage recommend?", options: ["Banning arbitration in all contexts","Requiring all disputes to go to court instead","Prohibiting pre-dispute mandatory arbitration for discrimination/harassment and allowing only voluntary post-dispute arbitration","Letting companies choose arbitrators without restriction"], answerIndex: 2 },
+    ],
+  },
+  {
+    level: "C2",
+    genre: "editorial",
+    title_kr: "금융 사기와 공소시효",
+    title_en: "Statute of limitations for financial fraud",
+    body_kr: "공소시효는 일정 기간이 지난 범죄에 대해 더 이상 처벌하지 않는 제도로, 증거의 소실을 방지하고 법적 안정성을 확보하기 위해 마련되었습니다. 그러나 금융 사기에 이 일반 원칙을 그대로 적용하는 것이 타당한지에 대한 의문이 꾸준히 제기되어 왔습니다. 일반적인 범죄는 발생 시점이 비교적 명확하고 피해자가 곧바로 피해를 인지하는 경우가 많습니다. 반면 금융 사기, 특히 복잡한 구조를 통한 다단계 사기나 회계 조작은 그 설계 자체가 발각을 늦추는 방식으로 이루어집니다. 가해자가 배당금이나 허위 수익률로 피해자를 안심시키는 동안 범행이 계속되고, 공소시효는 이미 범행이 시작된 시점부터 흘러가고 있습니다. 그 결과 피해자가 사기를 인지했을 때는 이미 공소시효가 만료되어 형사 처벌이 불가능한 상황이 반복적으로 발생합니다. 일부 논자는 시효 제도가 없다면 오래된 증거를 둘러싼 분쟁이 끝없이 이어질 것이라 우려하지만, 금융 사기는 통상 서류와 자금 흐름 같은 객관적 기록이 남는다는 점에서 증거 소실의 우려가 상대적으로 낮습니다. 이러한 특수성을 고려할 때 금융 사기에 대해서는 범행 시점이 아니라 피해자가 사기를 실제로 인지하거나 인지할 수 있었던 시점부터 공소시효를 기산하는 인식 기준을 도입해야 합니다. 결국 공소시효의 목적이 증거 보전과 법적 안정성에 있다면, 그 목적이 무의미해지는 은폐형 범죄에는 예외적인 기산 방식이 적용되어야 마땅합니다.",
+    body_en: "A statute of limitations is a system that no longer punishes a crime after a certain period has passed, established to prevent the loss of evidence and secure legal stability. But the question of whether it is appropriate to apply this general principle unchanged to financial fraud has been repeatedly raised. In an ordinary crime, the moment it occurs is relatively clear, and the victim often recognizes the harm right away. Financial fraud, however — especially multi-layered schemes built on complex structures or accounting manipulation — is designed from the outset in a way that delays detection. While the perpetrator reassures victims with dividends or fabricated rates of return, the offense continues, and the statute of limitations has already been running since the offense began. As a result, a situation repeatedly arises in which, by the time a victim recognizes the fraud, the statute of limitations has already expired and criminal punishment is no longer possible. Some argue that without a limitations system, disputes over old evidence would drag on endlessly, but financial fraud typically leaves objective records such as documents and money flows, so the concern over lost evidence is comparatively low. Given this particularity, for financial fraud the statute of limitations should be calculated not from when the offense occurred but from when the victim actually discovered, or could reasonably have discovered, the fraud — a discovery-based standard. In the end, if the purpose of a statute of limitations lies in preserving evidence and securing legal stability, an exceptional method of calculation should apply to concealment-based crimes for which that purpose becomes meaningless.",
+    questions: [
+      { question_en: "Why is the evidence-loss rationale for statutes of limitations weaker for financial fraud, per the passage?", options: ["Financial fraud is rarely investigated","Financial fraud typically leaves objective records like documents and money flows","Victims never come forward","Fraud cases have no witnesses"], answerIndex: 1 },
+      { question_en: "What does the passage recommend for financial fraud's statute of limitations?", options: ["Abolishing statutes of limitations for all crimes","Starting the clock from when the victim discovered or could have discovered the fraud","Shortening the limitations period further","Starting the clock only after conviction"], answerIndex: 1 },
+    ],
+  },
+  {
+    level: "C2",
+    genre: "editorial",
+    title_kr: "직업 면허와 진입장벽",
+    title_en: "Occupational licensing and barriers to entry",
+    body_kr: "직업 면허 제도는 소비자를 자격이 부족한 사업자로부터 보호한다는 명분으로 의료나 법률처럼 위험이 큰 직종에서 오랫동안 유지되어 왔습니다. 그러나 최근 수십 년 사이 면허가 요구되는 직종의 범위는 위험성과 무관하게 빠르게 확대되어 왔습니다. 미용사나 실내 장식가, 심지어 짐꾼처럼 소비자 안전에 미치는 위험이 제한적인 직종까지 수백 시간의 교육과 시험을 요구하는 사례가 늘고 있습니다. 이러한 확대의 배경에는 소비자 보호보다 기존 종사자의 이해관계가 자리한 경우가 많다는 지적이 반복적으로 제기됩니다. 이미 자격을 취득한 종사자는 진입 장벽이 높아질수록 경쟁에서 보호받기 때문입니다. 면허 요건을 정하는 위원회에 흔히 해당 업계 종사자가 다수 포함된다는 사실은 이러한 자기 강화적 구조를 뒷받침합니다. 실증 연구들은 과도한 면허 요건이 해당 직종의 임금을 인위적으로 높이는 동시에 서비스 가격을 상승시키고, 특히 저소득층과 이민자처럼 자격 취득에 필요한 시간과 비용을 감당하기 어려운 계층의 진입을 가로막는다는 결과를 반복적으로 보여 줍니다. 소비자 안전 효과 자체도 뚜렷하지 않다는 연구도 상당수입니다. 이러한 근거를 종합할 때, 정부는 소비자 안전에 대한 실질적 위험이 명확히 입증되지 않는 직종에 대해서는 면허제를 자격증이나 등록제 같은 부담이 적은 대안으로 전환하고, 기존 면허 요건에 대해서도 주기적인 재검토를 의무화해야 합니다. 결국 직업 면허는 소비자를 보호하는 최소한의 장치로 되돌아가야 하며, 기존 종사자를 경쟁으로부터 보호하는 수단으로 남아서는 안 됩니다.",
+    body_en: "Occupational licensing has long been maintained in high-risk fields such as medicine and law on the grounds of protecting consumers from underqualified practitioners. But over recent decades, the range of occupations requiring a license has rapidly expanded regardless of actual risk. Cases have grown in which even occupations with limited risk to consumer safety — hairdressers, interior decorators, even movers — are required to complete hundreds of hours of training and pass exams. It is repeatedly pointed out that behind this expansion often lies the interest of incumbent practitioners rather than consumer protection. This is because practitioners who have already obtained a license are shielded from competition as entry barriers rise. The fact that committees that set licensing requirements commonly include a majority of practitioners from the industry itself supports this self-reinforcing structure. Empirical studies repeatedly show that excessive licensing requirements artificially raise wages in the occupation while also raising service prices, and block entry particularly for groups such as low-income individuals and immigrants who cannot afford the time and cost required to obtain the credential. A considerable number of studies also find no clear effect on consumer safety itself. Taking this evidence together, the government should convert licensing to less burdensome alternatives such as certification or registration for occupations where a substantive risk to consumer safety has not been clearly demonstrated, and should mandate periodic review of existing licensing requirements as well. In the end, occupational licensing must return to being a minimal device for protecting consumers, and must not remain a means of shielding incumbent practitioners from competition.",
+    questions: [
+      { question_en: "What does the passage say often really drives the expansion of licensing requirements?", options: ["Rising consumer complaints","New scientific safety evidence","The interest of incumbent practitioners in being shielded from competition","Government efficiency goals"], answerIndex: 2 },
+      { question_en: "What does the passage recommend for occupations without demonstrated safety risk?", options: ["Banning the occupation entirely","Converting licensing to lighter alternatives like certification or registration, with periodic review", "Doubling the required training hours","Removing all oversight"], answerIndex: 1 },
     ],
   },
 ];

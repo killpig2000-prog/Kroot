@@ -1,8 +1,9 @@
 import type { RawPassage } from "./types";
 
-export const READING_B2_A: RawPassage[] = [
+export const READING_B2_ARTICLE: RawPassage[] = [
   {
     level: "B2",
+    genre: "article",
     title_kr: "혼밥의 확산",
     title_en: "The spread of solo dining",
     body_kr: "예전에는 혼자 식당에서 밥을 먹는 사람이 드물었다. 하지만 최근에는 혼자 밥을 먹는 이른바 혼밥이 흔한 풍경이 되었다. 1인 가구가 늘어나면서 혼자 외식하는 것이 자연스러운 일이 되었다. 식당들도 이러한 변화에 맞춰 1인용 좌석과 메뉴를 준비하고 있다. 특히 대학가나 오피스 상권에서는 혼밥 손님을 위한 칸막이 좌석이 인기를 끈다. 전문가들은 혼밥 문화가 개인주의의 확산과 관련이 있다고 분석한다. 동시에 혼자 먹는 시간을 오히려 편안하게 여기는 사람도 많아졌다. 앞으로 혼밥 손님을 겨냥한 서비스는 더욱 다양해질 전망이다.",
@@ -14,6 +15,7 @@ export const READING_B2_A: RawPassage[] = [
   },
   {
     level: "B2",
+    genre: "article",
     title_kr: "비혼 인구의 증가",
     title_en: "The rise of the unmarried population",
     body_kr: "결혼을 하지 않기로 선택하는 사람들이 점점 늘어나고 있다. 통계에 따르면 지난 십 년간 미혼 인구 비율이 꾸준히 상승했다. 경제적 부담과 개인의 자유를 중시하는 가치관이 이러한 변화의 주요 원인으로 꼽힌다. 특히 젊은 세대는 결혼을 인생의 필수 과정으로 여기지 않는 경향이 강하다. 일부 지자체는 비혼자를 위한 주거 지원 정책을 마련하기 시작했다. 그러나 여전히 사회 제도는 기혼 가구 중심으로 설계된 경우가 많다. 비혼 인구가 늘어나면서 1인 가구를 위한 서비스 시장도 함께 성장하고 있다. 전문가들은 이 흐름이 앞으로도 지속될 것으로 내다본다.",
@@ -25,6 +27,7 @@ export const READING_B2_A: RawPassage[] = [
   },
   {
     level: "B2",
+    genre: "article",
     title_kr: "명절이 낯선 세대",
     title_en: "A generation unfamiliar with holiday traditions",
     body_kr: "설날과 추석 같은 명절은 오랫동안 가족이 모이는 중요한 행사였다. 그러나 최근 젊은 세대 사이에서는 명절을 부담스럽게 느끼는 경우가 늘고 있다. 장시간 이동과 차례 준비, 친척과의 어색한 대화가 스트레스의 원인으로 꼽힌다. 일부 젊은이들은 명절 대신 혼자 여행을 떠나거나 집에서 쉬는 것을 선택한다. 이런 변화에 대해 기성세대는 아쉬움을 나타내기도 한다. 반면 명절 문화가 시대에 맞게 바뀌어야 한다는 목소리도 커지고 있다. 최근에는 간소화된 차례상이나 온라인 성묘 같은 대안이 등장했다. 명절을 둘러싼 가족 문화는 앞으로도 계속 변화할 것으로 보인다.",
@@ -36,6 +39,7 @@ export const READING_B2_A: RawPassage[] = [
   },
   {
     level: "B2",
+    genre: "article",
     title_kr: "지방대의 위기",
     title_en: "The crisis facing regional universities",
     body_kr: "학령 인구가 줄어들면서 지방 대학들이 신입생 모집에 어려움을 겪고 있다. 수도권으로의 인구 집중은 이러한 위기를 더욱 심화시키는 요인이다. 일부 지방 대학은 정원을 채우지 못해 학과를 통폐합하거나 문을 닫기도 했다. 지역 경제 역시 대학이 사라지면서 큰 타격을 입고 있다. 대학 주변 상권은 학생 수 감소로 매출이 급감했다. 정부는 지방 대학을 살리기 위한 지원책을 발표했지만 효과는 제한적이다. 전문가들은 근본적으로 지역 균형 발전이 필요하다고 지적한다. 지방대의 위기는 단순한 교육 문제를 넘어 지역 소멸 문제와도 맞닿아 있다.",
@@ -47,6 +51,7 @@ export const READING_B2_A: RawPassage[] = [
   },
   {
     level: "B2",
+    genre: "article",
     title_kr: "명품 소비의 대중화",
     title_en: "The mainstreaming of luxury consumption",
     body_kr: "한때 명품은 소수 상류층만 소비하는 특별한 물건으로 여겨졌다. 그러나 최근에는 명품을 구매하는 소비층이 크게 넓어졌다. 특히 이십 대와 삼십 대 젊은 소비자들이 명품 시장의 주요 고객으로 떠올랐다. 소셜 미디어를 통해 명품을 소개하는 콘텐츠가 늘어난 것도 이러한 흐름에 영향을 주었다. 일부 소비자는 무리한 지출을 감수하면서까지 명품을 구매하기도 한다. 백화점들은 명품 매장을 확대하며 이러한 수요에 대응하고 있다. 그러나 과도한 명품 소비가 상대적 박탈감을 키운다는 비판도 제기된다. 전문가들은 건전한 소비 습관에 대한 사회적 논의가 필요하다고 말한다.",
@@ -58,6 +63,7 @@ export const READING_B2_A: RawPassage[] = [
   },
   {
     level: "B2",
+    genre: "article",
     title_kr: "청년 창업의 확산",
     title_en: "The spread of youth entrepreneurship",
     body_kr: "최근 몇 년간 청년층의 창업 도전이 눈에 띄게 늘어났다. 취업 시장이 어려워지면서 안정적인 직장 대신 창업을 선택하는 젊은이들이 많아졌다. 정부와 지자체는 청년 창업을 지원하기 위한 자금과 교육 프로그램을 확대하고 있다. 특히 온라인 플랫폼을 활용한 소규모 창업이 진입 장벽을 낮추는 데 기여했다. 그러나 준비 부족과 자금 부족으로 폐업하는 사례도 적지 않다. 성공한 청년 창업가들은 실패를 두려워하지 말라고 조언한다. 전문가들은 지속 가능한 창업 생태계를 위해 실질적인 지원이 필요하다고 강조한다. 청년 창업은 앞으로 한국 경제의 새로운 동력으로 주목받고 있다.",
@@ -69,6 +75,7 @@ export const READING_B2_A: RawPassage[] = [
   },
   {
     level: "B2",
+    genre: "article",
     title_kr: "고령 운전자와 안전 논쟁",
     title_en: "The debate over elderly drivers and safety",
     body_kr: "고령 인구가 늘어나면서 고령 운전자의 안전 문제가 사회적 관심사로 떠올랐다. 일부 지자체는 일정 나이 이상 운전자에게 면허 자진 반납을 권장하는 제도를 운영하고 있다. 면허를 반납하면 교통비 지원이나 상품권 같은 혜택을 제공하는 경우도 있다. 그러나 대중교통이 부족한 지역에서는 면허 반납이 이동권 제약으로 이어질 수 있다는 우려가 나온다. 고령 운전자 단체는 나이만으로 운전 능력을 판단하는 것이 부당하다고 주장한다. 반면 일부 전문가는 정기적인 인지 능력 검사를 의무화해야 한다고 제안한다. 이 논쟁은 안전과 이동권이라는 두 가치 사이의 균형을 요구한다. 사회는 여전히 합의된 해답을 찾지 못하고 있다.",
@@ -80,17 +87,7 @@ export const READING_B2_A: RawPassage[] = [
   },
   {
     level: "B2",
-    title_kr: "명절 선물의 변화",
-    title_en: "Changing trends in holiday gifts",
-    body_kr: "명절이 다가오면 백화점과 대형 마트는 다양한 선물 세트를 선보인다. 예전에는 과일이나 정육 세트가 대표적인 선물이었지만 최근에는 선택의 폭이 크게 넓어졌다. 건강 기능 식품이나 친환경 제품을 선물로 고르는 소비자가 늘고 있다. 또한 가격대와 취향에 따라 맞춤형 선물을 고를 수 있는 서비스도 등장했다. 온라인으로 선물을 주문하고 받는 사람의 주소로 바로 배송하는 방식도 일반화되었다. 이러한 변화는 명절 문화가 간소화되는 흐름과도 맞닿아 있다. 일부 소비자는 선물 대신 현금이나 상품권을 주고받는 것을 선호하기도 한다. 유통업계는 이러한 소비 트렌드에 발맞춰 상품 구성을 계속 조정하고 있다.",
-    body_en: "As holidays approach, department stores and large marts unveil various gift sets. In the past, fruit or meat sets were typical gifts, but recently the range of options has widened greatly. More consumers are choosing health supplements or eco-friendly products as gifts. Services offering customized gifts based on price range and taste have also emerged. It has become common to order gifts online and ship them directly to the recipient's address. This change is connected to the broader trend of simplifying holiday customs. Some consumers prefer exchanging cash or gift certificates instead of physical gifts. The retail industry continues to adjust its product lineup in line with these consumption trends.",
-    questions: [
-      { question_en: "What kind of gifts are more consumers choosing recently?", options: ["Expensive jewelry","Health supplements or eco-friendly products","Handwritten letters","Only traditional fruit sets"], answerIndex: 1 },
-      { question_en: "What has become common regarding gift delivery?", options: ["Ordering online and shipping directly to recipients","Gifts are banned","In-person delivery only","Only cash gifts are allowed"], answerIndex: 0 },
-    ],
-  },
-  {
-    level: "B2",
+    genre: "article",
     title_kr: "청년층의 탈서울 현상",
     title_en: "Young people leaving Seoul",
     body_kr: "높은 집값과 치열한 경쟁에 지친 일부 청년들이 서울을 떠나 지방으로 향하고 있다. 이들은 상대적으로 저렴한 주거비와 여유로운 생활을 이유로 지방 이주를 선택한다. 원격 근무가 확산되면서 회사 위치와 상관없이 거주지를 정할 수 있게 된 것도 영향을 주었다. 일부 지자체는 청년 인구 유입을 위해 정착 지원금과 주거 혜택을 제공하고 있다. 그러나 지방에는 일자리와 문화 시설이 부족해 정착에 어려움을 겪는 경우도 많다. 실제로 이주 후 다시 서울로 돌아가는 청년도 적지 않다. 전문가들은 단순한 지원금보다 안정적인 일자리 창출이 더 중요하다고 지적한다. 청년층의 탈서울 현상은 지역 균형 발전의 실마리가 될 수 있을지 주목받고 있다.",
@@ -102,6 +99,7 @@ export const READING_B2_A: RawPassage[] = [
   },
   {
     level: "B2",
+    genre: "article",
     title_kr: "결혼식 문화의 간소화",
     title_en: "The simplification of wedding culture",
     body_kr: "최근 결혼식을 간소하게 치르는 부부가 늘어나고 있다. 예전에는 대규모 예식장에서 많은 하객을 초대하는 것이 일반적이었다. 그러나 높은 결혼 비용에 부담을 느낀 젊은 세대는 작은 결혼식을 선호하기 시작했다. 가까운 가족과 친구만 초대하는 스몰 웨딩이 대표적인 예다. 일부 부부는 예식장 대신 야외나 특별한 장소에서 결혼식을 올리기도 한다. 이러한 변화는 형식보다 의미를 중시하는 가치관과도 관련이 있다. 웨딩 업계는 이에 맞춰 소규모 맞춤형 상품을 개발하고 있다. 전문가들은 결혼식 문화의 변화가 앞으로도 계속될 것으로 전망한다.",
@@ -113,6 +111,7 @@ export const READING_B2_A: RawPassage[] = [
   },
   {
     level: "B2",
+    genre: "article",
     title_kr: "무인 매장의 확산",
     title_en: "The spread of unmanned stores",
     body_kr: "최근 직원 없이 운영되는 무인 매장이 곳곳에 등장하고 있다. 무인 아이스크림 가게부터 무인 세탁소, 무인 카페까지 종류도 다양해졌다. 인건비 상승과 최저임금 인상은 자영업자들이 무인 매장을 선택하는 주요 이유다. 소비자들도 눈치 보지 않고 편하게 이용할 수 있다는 점에서 무인 매장을 선호한다. 그러나 도난이나 시설 파손 같은 문제도 함께 늘어나고 있다. 일부 매장은 이를 방지하기 위해 폐쇄 회로 카메라와 인공지능 감시 시스템을 도입했다. 무인화가 일자리 감소로 이어질 수 있다는 우려의 목소리도 나온다. 전문가들은 무인 매장이 앞으로 더욱 다양한 업종으로 확산될 것으로 예상한다.",
@@ -124,6 +123,7 @@ export const READING_B2_A: RawPassage[] = [
   },
   {
     level: "B2",
+    genre: "article",
     title_kr: "재테크 열풍과 청년 세대",
     title_en: "The investment craze among young people",
     body_kr: "최근 몇 년 사이 재테크에 관심을 갖는 청년들이 크게 늘어났다. 저금리 시대와 불안정한 고용 환경 속에서 스스로 자산을 늘리려는 시도가 활발해졌다. 주식과 가상 자산 투자에 뛰어드는 이십 대와 삼십 대가 특히 눈에 띈다. 온라인 커뮤니티와 유튜브를 통해 투자 정보를 쉽게 접할 수 있게 된 점도 이러한 흐름을 부추겼다. 그러나 충분한 지식 없이 무리하게 투자했다가 손실을 입는 사례도 적지 않다. 일부 청년은 빚을 내서 투자하는 이른바 빚투에 나서기도 한다. 전문가들은 장기적인 관점에서 신중한 투자 습관을 기르는 것이 중요하다고 조언한다. 재테크 열풍은 청년 세대의 경제 불안을 반영하는 현상이기도 하다.",
@@ -135,6 +135,7 @@ export const READING_B2_A: RawPassage[] = [
   },
   {
     level: "B2",
+    genre: "article",
     title_kr: "명함 없는 시대",
     title_en: "An era without business cards",
     body_kr: "디지털 기술이 발전하면서 전통적인 종이 명함의 사용이 줄어들고 있다. 최근에는 스마트폰 애플리케이션으로 명함 정보를 주고받는 사람이 늘어나고 있다. 큐알 코드를 스캔하면 연락처와 회사 정보가 자동으로 저장되는 방식도 인기를 끈다. 이러한 변화는 환경 보호와 편의성이라는 두 가지 이유에서 비롯되었다. 종이 명함을 인쇄하고 보관하는 데 드는 비용과 시간도 줄일 수 있다. 그러나 여전히 격식을 중시하는 자리에서는 종이 명함이 필요하다는 의견도 있다. 일부 기업은 디지털 명함과 종이 명함을 함께 사용하는 절충안을 택했다. 명함 문화의 변화는 업무 방식 전반의 디지털화를 보여주는 사례로 꼽힌다.",
@@ -146,6 +147,7 @@ export const READING_B2_A: RawPassage[] = [
   },
   {
     level: "B2",
+    genre: "article",
     title_kr: "공유 오피스의 인기",
     title_en: "The popularity of shared offices",
     body_kr: "최근 도심 곳곳에 공유 오피스가 빠르게 늘어나고 있다. 프리랜서와 스타트업 종사자들이 주요 이용자로 자리 잡았다. 공유 오피스는 개인 사무실을 마련하는 것보다 비용이 훨씬 저렴하다는 장점이 있다. 회의실과 사무 기기를 함께 사용할 수 있어 초기 투자 부담도 줄일 수 있다. 또한 다양한 업종의 사람들과 자연스럽게 교류할 수 있는 점도 매력으로 꼽힌다. 대기업들도 유연 근무를 위해 공유 오피스를 활용하는 사례가 늘고 있다. 그러나 소음과 개인 정보 보호 문제는 여전히 해결해야 할 과제로 남아 있다. 전문가들은 공유 오피스 시장이 앞으로도 꾸준히 성장할 것으로 예상한다.",
@@ -157,17 +159,7 @@ export const READING_B2_A: RawPassage[] = [
   },
   {
     level: "B2",
-    title_kr: "지역 화폐의 명암",
-    title_en: "The pros and cons of local currency",
-    body_kr: "많은 지자체가 지역 경제 활성화를 위해 지역 화폐를 발행하고 있다. 지역 화폐는 정해진 구역 안에서만 사용할 수 있는 결제 수단이다. 주민들은 할인 혜택을 받을 수 있어 지역 화폐 사용을 선호하는 편이다. 소상공인들도 대형 마트로 소비가 몰리는 것을 막을 수 있다는 점에서 이를 환영한다. 그러나 지역 화폐 발행과 운영에는 상당한 예산이 소요된다는 지적이 있다. 일부 지역에서는 부정 유통이나 불법 환전 문제가 발생하기도 했다. 전문가들은 지역 화폐가 단기적 효과에 그치지 않도록 제도를 보완해야 한다고 말한다. 지역 화폐의 성공 여부는 지역 경제의 지속 가능성과 직결된다.",
-    body_en: "Many local governments issue local currencies to revitalize regional economies. Local currency is a payment method that can only be used within a designated area. Residents tend to prefer using local currency because they receive discount benefits. Small business owners also welcome it because it can prevent spending from concentrating at large marts. However, there are criticisms that issuing and managing local currency requires a considerable budget. In some areas, problems such as illegal circulation or currency exchange have occurred. Experts say the system must be improved so that local currency does not remain only a short-term effect. The success of local currency is directly tied to the sustainability of regional economies.",
-    questions: [
-      { question_en: "Why do small business owners welcome local currency?", options: ["It prevents spending from concentrating at large marts","It eliminates taxes","It increases rent","It replaces all national currency"], answerIndex: 0 },
-      { question_en: "What problem has occurred in some areas?", options: ["Bank closures","Complete currency collapse","Illegal circulation or currency exchange","Higher inflation nationwide"], answerIndex: 2 },
-    ],
-  },
-  {
-    level: "B2",
+    genre: "article",
     title_kr: "고시원에서 사는 사람들",
     title_en: "People living in goshiwons",
     body_kr: "높은 집값 때문에 좁은 고시원에서 생활하는 사람들이 여전히 많다. 고시원은 원래 시험을 준비하는 학생들을 위한 공간이었지만 지금은 주거 취약 계층의 거처가 되었다. 저렴한 임대료 때문에 청년과 저소득층이 고시원을 선택하는 경우가 많다. 그러나 좁은 공간과 열악한 환경은 여전히 개선이 필요한 문제로 지적된다. 화재 등 안전사고의 위험도 고시원의 오랜 문제 중 하나다. 정부는 고시원 거주자를 위한 공공 임대 주택 공급을 확대하겠다고 밝혔다. 그러나 실제로 이주까지 이어지는 경우는 많지 않다. 고시원 문제는 한국 사회의 주거 불평등을 보여주는 대표적인 사례로 꼽힌다.",
@@ -179,6 +171,7 @@ export const READING_B2_A: RawPassage[] = [
   },
   {
     level: "B2",
+    genre: "article",
     title_kr: "명예퇴직과 인생 이모작",
     title_en: "Early retirement and starting a second career",
     body_kr: "평균 수명이 늘어나면서 정년 이후의 삶을 준비하는 사람들이 많아졌다. 명예퇴직을 선택한 중장년층 가운데 새로운 직업이나 사업에 도전하는 사례가 늘고 있다. 이른바 인생 이모작이라 불리는 이러한 흐름은 경제적 필요와 자아실현이라는 두 가지 동기에서 비롯된다. 일부는 자신의 경력을 살려 창업을 하거나 강의를 시작한다. 다른 이들은 전혀 새로운 분야에서 처음부터 배움을 시작하기도 한다. 정부와 지자체는 중장년 재취업을 돕기 위한 교육 프로그램을 마련하고 있다. 그러나 나이에 대한 편견 때문에 재취업에 어려움을 겪는 경우도 여전히 많다. 전문가들은 사회 전반의 인식 변화가 함께 이루어져야 한다고 강조한다.",
@@ -190,17 +183,7 @@ export const READING_B2_A: RawPassage[] = [
   },
   {
     level: "B2",
-    title_kr: "명절 대신 여행을 떠나는 사람들",
-    title_en: "Travelers who skip family gatherings",
-    body_kr: "최근 명절 연휴를 이용해 해외나 국내 여행을 떠나는 사람들이 늘고 있다. 예전에는 명절이면 고향을 찾는 것이 당연하게 여겨졌지만 지금은 선택의 문제가 되었다. 항공사와 여행사들은 명절 연휴에 맞춰 다양한 특가 상품을 내놓는다. 일부 사람들은 명절 준비의 부담을 피하기 위해 여행을 선택한다고 말한다. 반면 가족과의 시간을 소중히 여기는 사람들은 이러한 흐름을 아쉬워하기도 한다. 항공권과 숙박 가격은 명절 연휴 기간에 크게 오르는 경향이 있다. 여행업계는 이 기간을 한 해 중 가장 중요한 성수기로 여긴다. 명절을 보내는 방식의 변화는 가족 문화 전반의 변화를 반영한다.",
-    body_en: "Recently, more people are using holiday breaks to travel abroad or domestically. In the past, visiting one's hometown during holidays was taken for granted, but now it has become a matter of choice. Airlines and travel agencies offer various special deals timed to holiday breaks. Some people say they choose travel to avoid the burden of holiday preparations. Meanwhile, those who value family time express regret over this trend. Flight and accommodation prices tend to rise sharply during holiday periods. The travel industry considers this period the most important peak season of the year. The changing way people spend holidays reflects a broader shift in family culture.",
-    questions: [
-      { question_en: "Why do some people choose to travel during holidays?", options: ["Because relatives ask them to","To avoid the burden of holiday preparations","Because flights are cheaper then","Because it is mandatory"], answerIndex: 1 },
-      { question_en: "How does the travel industry view the holiday period?", options: ["As the least busy time","As a time to close operations","As irrelevant to business","As the most important peak season"], answerIndex: 3 },
-    ],
-  },
-  {
-    level: "B2",
+    genre: "article",
     title_kr: "취미로 돈을 버는 사람들",
     title_en: "People earning money from hobbies",
     body_kr: "최근 자신의 취미를 살려 부수입을 올리는 사람들이 늘고 있다. 이른바 사이드 프로젝트라 불리는 이러한 활동은 본업 외에 추가 수입을 얻기 위한 수단으로 자리 잡았다. 그림을 그려 온라인에서 판매하거나 손으로 만든 소품을 팔아 수익을 내는 사례가 대표적이다. 소셜 미디어와 온라인 판매 플랫폼의 발달은 이러한 흐름을 뒷받침하는 요인이다. 일부는 취미가 본업보다 더 큰 수익을 가져다주면서 완전히 직업을 바꾸기도 한다. 그러나 취미가 돈벌이 수단이 되면서 부담과 스트레스로 변하는 경우도 있다. 전문가들은 취미와 수익 활동 사이의 균형을 유지하는 것이 중요하다고 조언한다. 사이드 프로젝트는 불안정한 고용 환경 속에서 새로운 생존 전략으로 떠오르고 있다.",
@@ -212,6 +195,7 @@ export const READING_B2_A: RawPassage[] = [
   },
   {
     level: "B2",
+    genre: "article",
     title_kr: "취업 재수생의 증가",
     title_en: "The rise of job-seeking retakers",
     body_kr: "졸업 후 곧바로 취업하지 못하고 다시 준비 기간을 갖는 청년들이 늘고 있다. 이들은 흔히 취업 재수생이라 불리며 시험과 자격증 준비에 상당한 시간을 투자한다. 대기업과 공기업의 채용 경쟁이 치열해지면서 재도전을 선택하는 청년이 많아졌다. 일부는 졸업을 미루면서까지 취업 준비에 집중하기도 한다. 이러한 현상은 청년 실업률 통계에도 영향을 미친다. 취업 재수 기간이 길어질수록 경제적, 심리적 부담도 함께 커진다. 전문가들은 청년들이 조급함 때문에 잘못된 선택을 하지 않도록 상담과 지원이 필요하다고 말한다. 취업 재수생 문제는 청년 고용 시장의 구조적 어려움을 보여준다.",
@@ -223,6 +207,7 @@ export const READING_B2_A: RawPassage[] = [
   },
   {
     level: "B2",
+    genre: "article",
     title_kr: "택배 없는 삶은 가능할까",
     title_en: "Is a life without delivery possible?",
     body_kr: "온라인 쇼핑이 일상이 되면서 택배 없는 삶을 상상하기 어려운 시대가 되었다. 새벽 배송과 당일 배송 서비스는 소비자들에게 큰 편리함을 제공한다. 그러나 이러한 편리함 뒤에는 과도한 포장재 사용과 물류 노동자의 과로 문제가 숨어 있다. 일부 소비자는 환경 부담을 줄이기 위해 배송 횟수를 줄이려는 노력을 시작했다. 필요한 물건을 한꺼번에 주문하는 습관도 이러한 흐름의 하나다. 기업들도 재사용 포장재나 친환경 배송 방식을 도입하며 대응하고 있다. 그러나 소비자의 편리함에 대한 기대가 여전히 높아 근본적인 변화는 쉽지 않다. 택배 산업의 지속 가능성은 앞으로 중요한 사회적 과제로 남아 있다.",
@@ -234,6 +219,7 @@ export const READING_B2_A: RawPassage[] = [
   },
   {
     level: "B2",
+    genre: "article",
     title_kr: "구인난에 시달리는 제조업",
     title_en: "Manufacturing struggling with labor shortages",
     body_kr: "제조업 현장에서는 오랫동안 인력 부족 문제가 이어지고 있다. 젊은 세대는 힘들고 위험하다는 인식 때문에 제조업 취업을 꺼리는 경향이 있다. 이로 인해 많은 중소 제조업체는 외국인 노동자에게 의존해 인력 부족을 메우고 있다. 그러나 언어 장벽과 문화 차이는 여전히 해결해야 할 과제로 남아 있다. 일부 기업은 자동화 설비를 도입해 인력난에 대응하고 있다. 그러나 초기 투자 비용이 커서 영세 업체는 도입이 쉽지 않다. 정부는 제조업 인력난 해소를 위한 지원 정책을 검토하고 있다. 제조업의 구인난은 한국 경제의 근간을 흔드는 문제로 지적된다.",
@@ -245,17 +231,7 @@ export const READING_B2_A: RawPassage[] = [
   },
   {
     level: "B2",
-    title_kr: "명품 리셀 시장의 성장",
-    title_en: "The growth of the luxury resale market",
-    body_kr: "한정판 명품과 운동화를 되파는 리셀 시장이 빠르게 성장하고 있다. 특정 제품이 출시되자마자 매진되고 웃돈이 붙어 거래되는 경우도 흔해졌다. 이러한 현상은 이른바 리셀테크라는 신조어까지 만들어 냈다. 젊은 세대는 한정판 제품을 구매해 되파는 것을 새로운 재테크 수단으로 여기기도 한다. 온라인 리셀 플랫폼은 안전한 거래를 보장하며 시장 성장을 뒷받침했다. 그러나 인위적으로 가격을 부풀리는 행위는 소비자 사이에서 비판을 받는다. 일부 브랜드는 리셀 시장의 과열을 우려해 판매 방식을 바꾸기도 했다. 리셀 시장의 확대는 소비문화와 투자 문화가 결합된 새로운 현상으로 평가된다.",
-    body_en: "The resale market for limited-edition luxury goods and sneakers is growing rapidly. It has become common for certain products to sell out immediately and trade at inflated prices. This phenomenon has even given rise to a new term, 'reselltech.' Young generations see buying and reselling limited-edition items as a new form of investment. Online resale platforms have supported the market's growth by guaranteeing safe transactions. However, artificially inflating prices draws criticism from consumers. Some brands have changed their sales methods out of concern about overheating in the resale market. The expansion of the resale market is regarded as a new phenomenon combining consumption culture and investment culture.",
-    questions: [
-      { question_en: "What new term has emerged from the resale trend?", options: ["E-commerce","Reselltech","Bulk buying","Fast fashion"], answerIndex: 1 },
-      { question_en: "What draws criticism from consumers regarding resale?", options: ["Artificially inflated prices","Lack of variety","Slow shipping","Poor product quality"], answerIndex: 0 },
-    ],
-  },
-  {
-    level: "B2",
+    genre: "article",
     title_kr: "농촌 유학의 재조명",
     title_en: "A fresh look at rural study programs",
     body_kr: "도시의 학업 경쟁에 지친 일부 부모들이 농촌 유학을 선택하고 있다. 농촌 유학은 자녀를 일정 기간 시골 학교에 보내 자연 속에서 배우게 하는 제도다. 작은 학교와 여유로운 환경은 아이들에게 정서적 안정을 준다는 평가를 받는다. 농촌 지역 학교들도 학생 수 감소 문제를 해결할 방법으로 이 제도를 반긴다. 일부 지자체는 농촌 유학 가정에 주거와 생활비를 지원하기도 한다. 그러나 학부모들은 대학 입시를 앞두고 다시 도시로 돌아가야 하는 현실적인 고민을 안고 있다. 교육 전문가들은 농촌 유학이 아이들의 전인적 성장에 도움이 된다고 평가한다. 농촌 유학은 도시와 농촌이 상생할 수 있는 방법으로 주목받고 있다.",
@@ -267,6 +243,7 @@ export const READING_B2_A: RawPassage[] = [
   },
   {
     level: "B2",
+    genre: "article",
     title_kr: "무제한 요금제의 함정",
     title_en: "The trap of unlimited plans",
     body_kr: "통신사와 스트리밍 업체들은 무제한 요금제를 내세워 소비자를 끌어들인다. 소비자들은 정해진 한도 없이 마음껏 사용할 수 있다는 점에서 무제한 요금제를 선호한다. 그러나 실제로는 데이터 속도 제한이나 이용 조건이 붙는 경우가 많다. 약관을 자세히 읽지 않은 소비자들은 예상치 못한 요금이 청구되기도 한다. 일부 업체는 무제한이라는 표현을 마케팅 수단으로만 활용한다는 비판을 받는다. 소비자 단체는 무제한 요금제의 세부 조건을 명확히 표시하라고 요구하고 있다. 정부도 소비자 보호를 위한 가이드라인 마련을 검토 중이다. 무제한이라는 단어가 주는 안심과 실제 서비스 사이의 간극은 여전히 좁혀지지 않고 있다.",
@@ -278,6 +255,7 @@ export const READING_B2_A: RawPassage[] = [
   },
   {
     level: "B2",
+    genre: "article",
     title_kr: "명절 노동과 성 역할 논쟁",
     title_en: "The debate over holiday labor and gender roles",
     body_kr: "명절이 되면 음식 준비와 집안일이 여성에게 집중되는 현상이 여전히 나타난다. 이러한 불균형은 오랫동안 명절 스트레스의 주요 원인으로 지적되어 왔다. 최근에는 남녀 구분 없이 함께 명절 준비를 하는 가정이 늘고 있다는 조사 결과도 있다. 일부 가족은 아예 명절 음식을 간소화하거나 외식으로 대체하기도 한다. 젊은 세대를 중심으로 성 역할에 대한 인식이 변화하고 있다는 분석이 나온다. 그러나 여전히 전통적인 역할 분담을 당연하게 여기는 가정도 많다. 사회학자들은 명절 노동 문제가 단순한 집안일이 아니라 성평등 문제와 연결된다고 설명한다. 명절 문화의 변화는 가족 내 역할 분담 방식의 변화를 동반하고 있다.",
@@ -289,6 +267,7 @@ export const READING_B2_A: RawPassage[] = [
   },
   {
     level: "B2",
+    genre: "article",
     title_kr: "저출생 시대의 유치원",
     title_en: "Kindergartens in an era of low birth rates",
     body_kr: "출생아 수가 계속 줄어들면서 문을 닫는 유치원과 어린이집이 늘어나고 있다. 원생을 채우지 못한 시설들은 운영難을 겪다가 결국 폐업을 선택하기도 한다. 이러한 현상은 특히 지방 소도시에서 두드러지게 나타난다. 남은 유치원들은 원생 유치를 위해 특색 있는 교육 프로그램을 도입하고 있다. 일부 시설은 어린이집과 노인 시설을 함께 운영하는 새로운 방식을 시도한다. 정부는 보육 시설 통폐합에 따른 혼란을 줄이기 위한 대책을 마련 중이다. 학부모들은 가까운 시설이 사라지면서 아이를 멀리 보내야 하는 불편을 겪고 있다. 저출생은 보육 산업 전반의 구조 변화를 이끄는 핵심 요인으로 작용하고 있다.",
@@ -300,6 +279,7 @@ export const READING_B2_A: RawPassage[] = [
   },
   {
     level: "B2",
+    genre: "article",
     title_kr: "패스트 패션의 그늘",
     title_en: "The shadow of fast fashion",
     body_kr: "저렴한 가격과 빠른 유행 반영으로 패스트 패션 브랜드들이 큰 인기를 끌고 있다. 소비자들은 최신 유행 옷을 부담 없이 구매할 수 있다는 점에서 이를 선호한다. 그러나 패스트 패션의 빠른 생산 속도는 값싼 노동력 착취 문제와 맞물려 있다. 일부 생산 공장에서는 열악한 노동 환경이 지속적으로 지적되어 왔다. 또한 짧은 유행 주기 때문에 옷이 쉽게 버려지면서 환경 문제도 함께 제기된다. 일부 소비자는 이러한 문제의식에서 옷을 오래 입는 소비 습관으로 전환하고 있다. 브랜드들도 지속 가능성을 강조하는 라인을 출시하며 대응하고 있다. 그러나 근본적인 생산 구조가 바뀌지 않는 한 문제 해결은 쉽지 않다는 지적이 나온다.",
@@ -311,28 +291,7 @@ export const READING_B2_A: RawPassage[] = [
   },
   {
     level: "B2",
-    title_kr: "명절 물가와 서민 경제",
-    title_en: "Holiday prices and the everyday economy",
-    body_kr: "명절이 다가오면 차례상에 오르는 식재료 가격이 크게 오르는 경향이 있다. 과일과 채소, 육류 등 주요 품목의 수요가 몰리면서 가격 상승이 반복된다. 서민들은 매년 반복되는 명절 물가 상승에 부담을 느낀다고 토로한다. 정부는 명절을 앞두고 성수품 수급 안정 대책을 발표하곤 한다. 대형 마트와 전통 시장은 할인 행사를 열어 소비자 부담을 줄이려 한다. 그러나 실질적인 물가 안정 효과는 크지 않다는 지적도 나온다. 일부 가정은 차례상 규모를 줄이거나 대체 식품을 활용해 비용을 절감한다. 명절 물가 문제는 해마다 반복되는 서민 경제의 오랜 숙제로 남아 있다.",
-    body_en: "As holidays approach, the prices of ingredients used for ancestral rite tables tend to rise sharply. Repeated price increases occur as demand for key items like fruit, vegetables, and meat surges. Ordinary citizens say they feel burdened by the holiday price hikes that recur every year. The government usually announces measures to stabilize the supply of seasonal goods ahead of holidays. Large marts and traditional markets hold discount events to ease the burden on consumers. However, some point out that the actual effect on price stabilization is not significant. Some households reduce the cost by shrinking their rite tables or using substitute foods. The issue of holiday prices remains a long-standing challenge for the everyday economy, recurring every year.",
-    questions: [
-      { question_en: "Why do ingredient prices rise before holidays?", options: ["Import taxes increase","Demand for key items surges","Farmers stop production","Stores run out of space"], answerIndex: 1 },
-      { question_en: "What do some households do to reduce holiday costs?", options: ["Shrink rite tables or use substitute foods","Borrow money from banks","Move to another city","Cancel holidays entirely"], answerIndex: 0 },
-    ],
-  },
-  {
-    level: "B2",
-    title_kr: "가성비를 넘어선 가심비",
-    title_en: "Beyond value for money: emotional value",
-    body_kr: "소비 트렌드가 단순한 가성비를 넘어 가심비를 중시하는 방향으로 변화하고 있다. 가심비는 가격 대비 성능보다 만족감과 심리적 가치를 우선하는 소비 방식을 말한다. 소비자들은 다소 비싸더라도 자신에게 즐거움을 주는 제품이나 경험에 기꺼이 지출한다. 이러한 흐름은 특히 취향을 중시하는 젊은 세대 사이에서 두드러진다. 소소하지만 확실한 행복을 뜻하는 표현과도 맞닿아 있다는 분석이 나온다. 기업들은 감성적인 마케팅과 개인 맞춤형 상품으로 이러한 소비자를 공략하고 있다. 그러나 과도한 가심비 소비가 충동구매로 이어질 수 있다는 우려도 있다. 전문가들은 가심비 소비가 합리적인 소비와 균형을 이루어야 한다고 조언한다.",
-    body_en: "Consumption trends are shifting beyond simple value for money toward emphasizing emotional satisfaction. This concept prioritizes satisfaction and psychological value over price-to-performance ratio. Consumers are willing to spend on products or experiences that bring them joy, even if somewhat expensive. This trend is especially pronounced among younger generations who prioritize personal taste. Analysts note it is connected to the idea of small but certain happiness. Companies are targeting these consumers with emotional marketing and personalized products. However, there are concerns that excessive emotional-value spending could lead to impulsive purchases. Experts advise that this kind of consumption should be balanced with rational spending.",
-    questions: [
-      { question_en: "What does 'emotional value' spending prioritize?", options: ["Satisfaction and psychological value over price-performance","Only the lowest possible price","Bulk quantity over quality","Brand loyalty above all"], answerIndex: 0 },
-      { question_en: "What concern is raised about this consumption trend?", options: ["It reduces consumer choice","It lowers product quality","It eliminates all marketing","It could lead to impulsive purchases"], answerIndex: 3 },
-    ],
-  },
-  {
-    level: "B2",
+    genre: "article",
     title_kr: "지방 공항의 딜레마",
     title_en: "The dilemma of regional airports",
     body_kr: "여러 지자체가 지역 경제 활성화를 목표로 공항을 건설했지만 이용객 부족으로 어려움을 겪고 있다. 일부 지방 공항은 하루에 몇 편의 항공기만 운항하며 적자를 면치 못하고 있다. 항공사들은 수익성이 낮다는 이유로 지방 노선을 축소하거나 폐지하는 경우가 많다. 지자체는 공항 활성화를 위해 저비용 항공사 유치와 지원금 지급에 나서고 있다. 그러나 근본적인 수요 부족 문제는 쉽게 해결되지 않는다. 일부 전문가는 지방 공항 난립이 예산 낭비로 이어졌다고 비판한다. 반면 지역 균형 발전을 위해 지방 공항이 필요하다는 반론도 있다. 지방 공항 문제는 지역 개발 정책의 신중함이 요구되는 대표적인 사례로 꼽힌다.",
@@ -344,17 +303,7 @@ export const READING_B2_A: RawPassage[] = [
   },
   {
     level: "B2",
-    title_kr: "명절 대이동의 풍경",
-    title_en: "The scene of the great holiday migration",
-    body_kr: "설날과 추석이 되면 고향을 찾는 사람들로 도로와 기차역이 붐빈다. 이른바 명절 대이동은 해마다 반복되는 한국 사회의 독특한 풍경이다. 고속도로는 평소보다 몇 배 긴 정체를 겪고 귀성길과 귀경길 모두 몸살을 앓는다. 철도공사와 항공사는 명절 특별 수송 대책을 마련해 승객을 분산시키려 한다. 일부 사람들은 혼잡을 피하기 위해 새벽이나 늦은 밤 시간대를 선택하기도 한다. 최근에는 온라인 예매 시스템의 발달로 표를 구하는 방식도 크게 달라졌다. 그러나 여전히 인기 있는 시간대의 표는 순식간에 매진된다. 명절 대이동은 가족을 향한 그리움과 번거로움이 공존하는 한국의 독특한 문화로 남아 있다.",
-    body_en: "During Seollal and Chuseok, roads and train stations are crowded with people heading to their hometowns. This so-called great holiday migration is a unique scene of Korean society that repeats every year. Highways experience traffic jams several times longer than usual, and both the trip home and the trip back are grueling. The railway corporation and airlines prepare special holiday transportation measures to disperse passengers. Some people choose early morning or late-night time slots to avoid congestion. Recently, the development of online reservation systems has greatly changed how tickets are obtained. However, tickets for popular time slots still sell out instantly. The great holiday migration remains a unique Korean culture where longing for family and inconvenience coexist.",
-    questions: [
-      { question_en: "What do railway and airline companies do ahead of holidays?", options: ["Cancel all regional routes","Prepare special transportation measures to disperse passengers","Stop selling tickets","Raise all ticket prices"], answerIndex: 1 },
-      { question_en: "What has changed how tickets are obtained recently?", options: ["Cash-only booths","Paper lottery tickets","Mandatory group bookings","Online reservation systems"], answerIndex: 3 },
-    ],
-  },
-  {
-    level: "B2",
+    genre: "article",
     title_kr: "프랜차이즈 자영업의 명암",
     title_en: "The pros and cons of franchise self-employment",
     body_kr: "직장을 그만두고 프랜차이즈 창업에 나서는 사람들이 꾸준히 늘고 있다. 검증된 브랜드와 체계적인 운영 시스템은 초보 창업자에게 매력적으로 다가온다. 본사의 교육과 마케팅 지원 덕분에 초기 정착이 상대적으로 수월하다는 장점도 있다. 그러나 가맹비와 로열티 부담은 수익성을 낮추는 요인으로 작용한다. 일부 가맹점주는 본사의 일방적인 정책 변경에 어려움을 겪었다고 토로한다. 동일 브랜드 매장이 인근에 계속 생기면서 경쟁이 심화되는 경우도 흔하다. 공정거래위원회는 가맹점주 보호를 위한 제도를 지속적으로 강화하고 있다. 프랜차이즈 창업은 안정성과 위험성이 공존하는 선택으로 평가된다.",
@@ -366,17 +315,7 @@ export const READING_B2_A: RawPassage[] = [
   },
   {
     level: "B2",
-    title_kr: "명퇴 후 귀농을 택한 사람들",
-    title_en: "People who chose farming after early retirement",
-    body_kr: "도시 생활을 정리하고 농촌으로 향하는 은퇴자들이 늘고 있다. 이들은 복잡한 도시를 벗어나 자연 속에서 여생을 보내고 싶다는 이유로 귀농을 선택한다. 정부와 지자체는 귀농 희망자를 위한 교육과 정착 지원금을 제공하고 있다. 그러나 농사 경험이 없는 상태에서 시작하는 귀농은 예상보다 훨씬 힘들다는 후기가 많다. 낯선 지역 공동체에 적응하는 것도 만만치 않은 과제로 꼽힌다. 일부 귀농인은 몇 년을 버티지 못하고 다시 도시로 돌아가기도 한다. 반면 철저한 준비를 통해 안정적으로 정착한 성공 사례도 존재한다. 전문가들은 귀농 전 충분한 정보 수집과 현실적인 계획이 필요하다고 조언한다.",
-    body_en: "More retirees are leaving city life behind and heading to rural areas. They choose to farm, wanting to spend their remaining years amid nature away from the complexity of cities. Governments and local authorities offer education and settlement subsidies for those wishing to farm. However, many report that starting farming without prior experience is far harder than expected. Adapting to an unfamiliar local community is also cited as no small challenge. Some who move to farming cannot endure more than a few years and return to the city. On the other hand, there are success stories of stable settlement through thorough preparation. Experts advise gathering sufficient information and making realistic plans before moving to farming.",
-    questions: [
-      { question_en: "Why do some retirees choose to move to farming?", options: ["To spend their remaining years amid nature","Because cities are banning retirees","To earn more money quickly","To avoid taxes"], answerIndex: 0 },
-      { question_en: "What do experts advise before moving to farming?", options: ["Gathering sufficient information and realistic planning","Avoiding all government programs","Buying the most expensive land available","Quitting immediately without preparation"], answerIndex: 0 },
-    ],
-  },
-  {
-    level: "B2",
+    genre: "article",
     title_kr: "택시 대란과 심야 이동권",
     title_en: "The taxi shortage and late-night mobility",
     body_kr: "심야 시간대에 택시를 잡기 어려운 현상이 도시 곳곳에서 반복되고 있다. 특히 주말 늦은 밤에는 승차 거부와 장시간 대기가 흔한 문제로 지적된다. 택시 기사 고령화와 낮은 처우로 인한 인력 이탈이 이러한 대란의 주요 원인으로 꼽힌다. 정부는 심야 요금 할증 확대와 택시 기사 처우 개선 방안을 검토해 왔다. 일부 지자체는 심야 버스 노선을 늘려 대안을 마련하려 한다. 그러나 여전히 많은 시민들은 늦은 밤 안전한 이동 수단을 찾는 데 어려움을 겪는다. 플랫폼 택시와 공유 차량 서비스도 대안으로 떠올랐지만 규제 문제로 확산에 제한이 있다. 심야 이동권 문제는 도시 생활의 안전과 직결된 과제로 남아 있다.",
@@ -388,6 +327,7 @@ export const READING_B2_A: RawPassage[] = [
   },
   {
     level: "B2",
+    genre: "article",
     title_kr: "명함보다 중요해진 팔로워 수",
     title_en: "Follower counts that outweigh business cards",
     body_kr: "소셜 미디어 팔로워 수가 새로운 사회적 자산으로 여겨지는 시대가 되었다. 많은 팔로워를 보유한 개인은 기업의 협찬과 광고 제안을 받는 인플루언서로 활동한다. 일부 청년들은 안정적인 직장 대신 인플루언서를 새로운 직업으로 선택하기도 한다. 기업들도 전통적인 광고보다 인플루언서 마케팅에 더 많은 예산을 투입하는 추세다. 그러나 팔로워 수를 늘리기 위한 무리한 콘텐츠 제작이 사회적 문제로 이어지기도 한다. 일부는 허위 정보나 과장된 리뷰로 논란을 일으키기도 했다. 소비자 보호를 위한 인플루언서 광고 표시 규정도 강화되고 있다. 팔로워 수 중심의 사회적 평가는 새로운 성공의 기준으로 자리 잡고 있다.",
@@ -399,17 +339,7 @@ export const READING_B2_A: RawPassage[] = [
   },
   {
     level: "B2",
-    title_kr: "명절 이후의 이혼율 변화",
-    title_en: "Changes in divorce rates after holidays",
-    body_kr: "명절이 지난 직후 이혼 상담이나 신청이 늘어난다는 통계가 매년 발표된다. 오랜 시간 가족과 함께 지내면서 쌓인 갈등이 명절 이후 표면화되는 경우가 많다는 분석이다. 특히 명절 노동의 불균형과 고부 갈등은 이러한 현상의 주요 원인으로 꼽힌다. 상담 전문가들은 명절 전후로 부부 갈등 상담 문의가 급증한다고 말한다. 일부 부부는 명절을 계기로 그동안 억눌러 온 문제를 마주하게 된다. 최근에는 명절 스트레스를 줄이기 위한 상담 프로그램도 늘어나고 있다. 전문가들은 명절 문화 자체의 변화가 근본적인 해결책이 될 수 있다고 조언한다. 이러한 현상은 한국 사회의 가족 문화가 지닌 부담을 보여주는 사례로 꼽힌다.",
-    body_en: "Statistics released every year show that divorce consultations or filings increase right after holidays. Analysts explain that conflicts accumulated from spending long periods with family often surface after holidays. In particular, the imbalance of holiday labor and conflicts with in-laws are cited as major causes of this phenomenon. Counseling experts say inquiries about marital conflict counseling spike around holidays. Some couples confront issues they had suppressed, triggered by the holiday. Recently, counseling programs to reduce holiday stress have also increased. Experts advise that changing holiday culture itself could be a fundamental solution. This phenomenon is cited as an example showing the burden inherent in Korean family culture.",
-    questions: [
-      { question_en: "What is cited as a major cause of the post-holiday divorce spike?", options: ["Imbalance of holiday labor and in-law conflicts","Lack of holiday food","Rising travel costs","Weather changes"], answerIndex: 0 },
-      { question_en: "What do experts suggest as a fundamental solution?", options: ["Requiring separate holidays for each spouse","Changing holiday culture itself","Banning holidays","Increasing holiday length"], answerIndex: 1 },
-    ],
-  },
-  {
-    level: "B2",
+    genre: "article",
     title_kr: "학원 없이 자란 아이들",
     title_en: "Children raised without private academies",
     body_kr: "사교육 의존도가 높은 한국에서 학원을 보내지 않는 부모들이 조금씩 늘고 있다. 이들은 아이들이 스스로 배우는 힘을 기르는 것이 더 중요하다고 믿는다. 학원 대신 도서관이나 자연 체험 활동을 통해 배움의 기회를 제공하는 경우가 많다. 그러나 주변 아이들 대부분이 학원에 다니는 현실 속에서 이러한 선택은 쉽지 않다. 일부 부모는 자녀가 또래보다 뒤처질까 봐 불안감을 느끼기도 한다. 반면 학원 없이 자란 아이들이 오히려 자기 주도 학습 능력을 갖추었다는 사례도 있다. 교육 전문가들은 획일적인 사교육 의존에서 벗어나 다양한 교육 방식을 고민할 필요가 있다고 말한다. 학원 없는 교육에 대한 사회적 논의는 앞으로도 계속될 전망이다.",
@@ -421,6 +351,7 @@ export const READING_B2_A: RawPassage[] = [
   },
   {
     level: "B2",
+    genre: "article",
     title_kr: "무너지는 평생직장의 신화",
     title_en: "The crumbling myth of lifetime employment",
     body_kr: "한때 하나의 직장에서 평생을 근무하는 것이 이상적인 삶으로 여겨졌다. 그러나 최근에는 이직을 자연스러운 경력 관리의 일부로 받아들이는 사람들이 늘고 있다. 평생직장이라는 개념이 흔들리면서 청년들은 더 나은 조건을 찾아 자유롭게 이동한다. 기업의 구조 조정과 고용 불안정성도 이러한 변화에 영향을 미쳤다. 일부 전문가는 잦은 이직이 오히려 경력 발전에 도움이 된다고 평가한다. 반면 지나치게 잦은 이직은 채용 담당자에게 부정적인 인상을 줄 수 있다는 지적도 있다. 기업들도 인재를 붙잡기 위해 복지와 근무 환경 개선에 힘쓰고 있다. 평생직장의 신화가 사라진 자리에는 유연하고 개인 중심적인 경력관이 자리 잡고 있다.",
@@ -432,17 +363,7 @@ export const READING_B2_A: RawPassage[] = [
   },
   {
     level: "B2",
-    title_kr: "무인 아파트 관리의 확산",
-    title_en: "The spread of unmanned apartment management",
-    body_kr: "최근 신축 아파트 단지에 무인 택배함과 인공지능 관리 시스템이 늘어나고 있다. 경비원 인건비 절감을 목표로 도입된 이러한 시스템은 관리비 절감 효과도 함께 가져온다. 입주민들은 스마트폰 앱으로 방문객을 확인하고 출입문을 원격으로 제어할 수 있다. 그러나 경비원 감축이 고령 노동자의 일자리 감소로 이어진다는 비판도 있다. 일부 아파트는 기존 경비원의 역할을 다른 관리 업무로 전환하며 절충안을 마련했다. 보안 사고 발생 시 신속한 대응이 어렵다는 우려도 제기된다. 건설사들은 스마트 관리 시스템을 새 아파트의 주요 홍보 요소로 내세우고 있다. 무인화된 아파트 관리는 편리함과 일자리 문제 사이의 균형을 요구하는 과제로 남아 있다.",
-    body_en: "Recently, newly built apartment complexes have seen an increase in unmanned parcel boxes and AI management systems. Introduced to reduce security guard labor costs, these systems also lower management fees. Residents can check visitors and remotely control entrance doors through a smartphone app. However, criticism has arisen that reducing security guards leads to fewer jobs for elderly workers. Some apartments have found a compromise by shifting former guards' roles to other management tasks. Concerns are also raised about slower responses in the event of a security incident. Construction companies are promoting smart management systems as a key selling point for new apartments. Unmanned apartment management remains a task requiring balance between convenience and job concerns.",
-    questions: [
-      { question_en: "What criticism is raised about reducing security guards?", options: ["It reduces apartment prices","It increases management fees","It leads to fewer jobs for elderly workers","It requires more construction"], answerIndex: 2 },
-      { question_en: "How are construction companies promoting these systems?", options: ["As a key selling point for new apartments","As a cost increase for buyers","As a temporary trial only","As a legal requirement"], answerIndex: 0 },
-    ],
-  },
-  {
-    level: "B2",
+    genre: "article",
     title_kr: "지역 상권을 살리는 로컬 크리에이터",
     title_en: "Local creators reviving neighborhood business districts",
     body_kr: "쇠퇴하던 골목 상권이 로컬 크리에이터의 활동으로 다시 활기를 찾는 사례가 늘고 있다. 이들은 지역의 독특한 이야기와 자원을 활용해 카페나 소품 가게 같은 새로운 공간을 만든다. 단순한 창업을 넘어 지역 정체성을 살리는 콘텐츠를 함께 기획하는 것이 특징이다. 지자체는 이러한 로컬 크리에이터를 지원하기 위한 공모전과 창업 자금을 마련하고 있다. 성공적인 사례는 관광객 유입으로 이어져 지역 경제에 긍정적인 영향을 준다. 그러나 임대료 상승으로 정작 원주민 상인들이 밀려나는 부작용도 나타난다. 이른바 젠트리피케이션 문제는 로컬 크리에이터 활동의 그늘로 지적된다. 지역 재생과 상권 보호를 동시에 고려하는 정책적 접근이 필요하다는 목소리가 커지고 있다.",
@@ -454,39 +375,7 @@ export const READING_B2_A: RawPassage[] = [
   },
   {
     level: "B2",
-    title_kr: "직장인의 점심시간 풍경 변화",
-    title_en: "Changing lunch-hour habits among office workers",
-    body_kr: "직장인들의 점심시간 풍경이 예전과 사뭇 달라지고 있다. 동료들과 함께 식당을 찾던 문화에서 벗어나 혼자 시간을 보내는 직장인이 늘고 있다. 짧은 점심시간을 이용해 운동이나 낮잠으로 재충전하는 사람도 많아졌다. 도시락을 준비해 사무실에서 간단히 해결하는 직장인도 눈에 띄게 증가했다. 이러한 변화는 물가 상승으로 인한 외식비 부담과도 관련이 있다. 일부 기업은 직원들의 다양한 점심시간 활용을 위해 사내 휴게 공간을 마련했다. 점심시간을 오롯이 자신을 위해 쓰려는 경향은 개인주의 확산과도 맞닿아 있다. 전문가들은 이러한 변화가 직장 문화 전반의 유연화를 보여준다고 분석한다.",
-    body_en: "The lunch-hour scene among office workers is changing quite noticeably from before. More workers are moving away from the culture of dining with colleagues to spending time alone. Many also use the short lunch break to recharge through exercise or a nap. The number of workers preparing lunch boxes and eating simply at their desks has also noticeably increased. This change is also related to the burden of dining-out costs amid rising prices. Some companies have set up in-office rest spaces to accommodate diverse lunch-hour uses. The tendency to use lunchtime entirely for oneself is also connected to the spread of individualism. Experts analyze that this change reflects the broader flexibility of workplace culture.",
-    questions: [
-      { question_en: "What is one reason cited for the change in lunch habits?", options: ["The burden of rising dining-out costs","Mandatory office closures","New government regulations","A shortage of restaurants"], answerIndex: 0 },
-      { question_en: "What have some companies set up for employees?", options: ["Mandatory group lunches","Longer work hours","In-office rest spaces","Fewer break rooms"], answerIndex: 2 },
-    ],
-  },
-  {
-    level: "B2",
-    title_kr: "명함 대신 포트폴리오",
-    title_en: "Portfolios instead of resumes",
-    body_kr: "채용 시장에서 정형화된 이력서 대신 개인 포트폴리오를 중시하는 흐름이 확산되고 있다. 특히 디자인이나 개발 같은 창의적 분야에서는 실제 결과물을 보여주는 것이 더 중요해졌다. 기업들도 학력이나 경력보다 실무 능력을 직접 확인할 수 있는 방식을 선호한다. 온라인 포트폴리오 플랫폼은 구직자들이 자신의 작업물을 쉽게 공유할 수 있도록 돕는다. 이러한 변화는 획일적인 채용 기준에서 벗어나려는 시도로 해석된다. 그러나 포트폴리오를 준비할 시간과 자원이 부족한 지원자에게는 오히려 부담이 될 수 있다는 지적도 있다. 일부 전문가는 포트폴리오 중심 채용이 특정 분야에만 적합할 수 있다고 말한다. 채용 문화의 변화는 인재를 평가하는 기준 자체의 다양화를 보여준다.",
-    body_en: "In the job market, a trend of valuing personal portfolios over standardized resumes is spreading. Especially in creative fields like design or development, showing actual work has become more important. Companies also prefer methods that let them directly verify practical skills rather than academic background or career history. Online portfolio platforms help job seekers easily share their work. This change is interpreted as an attempt to move away from uniform hiring standards. However, some point out it could become a burden for applicants who lack the time and resources to prepare a portfolio. Some experts say portfolio-centered hiring may only suit certain fields. This change in hiring culture shows a diversification of the standards used to evaluate talent.",
-    questions: [
-      { question_en: "Why do companies prefer portfolios in creative fields?", options: ["Resumes are banned","Portfolios are legally required","Portfolios are cheaper to produce","They can directly verify practical skills"], answerIndex: 3 },
-      { question_en: "What burden is mentioned regarding portfolios?", options: ["They require no skill at all","Portfolios are too easy to make","Some applicants lack time and resources to prepare one","Companies refuse to review them"], answerIndex: 2 },
-    ],
-  },
-  {
-    level: "B2",
-    title_kr: "부업이 된 유튜브",
-    title_en: "YouTube as a side job",
-    body_kr: "본업 외에 유튜브 채널을 운영하며 부수입을 올리는 직장인이 늘어나고 있다. 이들은 퇴근 후 시간을 활용해 취미나 전문 지식을 콘텐츠로 제작한다. 유튜브 수익 구조는 광고 수익뿐 아니라 협찬과 상품 판매 등 다양한 방식으로 확대되었다. 일부는 부업으로 시작한 채널이 본업보다 더 큰 수익을 가져다주기도 한다. 그러나 콘텐츠 제작에 드는 시간과 에너지가 본업에 지장을 줄 수 있다는 우려도 있다. 일부 회사는 직원의 겸업을 금지하는 규정을 두고 있어 갈등이 발생하기도 한다. 전문가들은 유튜브를 통한 부업이 새로운 노동 형태로 자리 잡고 있다고 분석한다. 부업 문화의 확산은 일과 삶에 대한 사람들의 인식 변화를 반영한다.",
-    body_en: "More office workers are running YouTube channels alongside their main jobs to earn extra income. They use after-work time to turn hobbies or expertise into content. YouTube's revenue structure has expanded beyond ad revenue to include sponsorships and product sales. For some, a channel started as a side job ends up earning more than their main job. However, there are concerns that the time and energy spent on content creation could interfere with the main job. Some companies have rules banning employees from holding side jobs, leading to conflicts. Experts analyze that side jobs through YouTube are establishing themselves as a new form of labor. The spread of side-job culture reflects changing perceptions about work and life.",
-    questions: [
-      { question_en: "What concern is raised about YouTube side jobs?", options: ["They are illegal everywhere","They could interfere with the main job","They always fail","They require no time investment"], answerIndex: 1 },
-      { question_en: "What does the spread of side-job culture reflect?", options: ["A shortage of full-time jobs","Changing perceptions about work and life","A decline in internet use","Stricter labor laws"], answerIndex: 1 },
-    ],
-  },
-  {
-    level: "B2",
+    genre: "article",
     title_kr: "패스트푸드점의 키오스크 세대",
     title_en: "The kiosk generation at fast food restaurants",
     body_kr: "패스트푸드점을 비롯한 여러 매장에서 무인 주문 기기인 키오스크가 빠르게 확산되고 있다. 젊은 세대는 대체로 키오스크 사용에 익숙해 빠르고 편리하게 주문한다. 그러나 고령층이나 디지털 기기에 익숙하지 않은 사람들은 주문 과정에서 어려움을 겪는다. 일부 매장에서는 뒤에 줄 선 사람들의 눈치를 보며 서둘러 취소하는 경우도 발생한다. 이러한 문제를 해결하기 위해 일부 지자체는 키오스크 사용법 교육을 제공하고 있다. 기업들도 음성 안내나 큰 글씨 모드 같은 기능을 추가해 접근성을 높이려 한다. 키오스크 도입은 인건비 절감이라는 기업의 이익과 디지털 소외라는 사회적 문제를 동시에 드러낸다. 디지털 전환 속에서 세대 간 격차를 줄이는 노력이 계속 요구되고 있다.",
@@ -498,17 +387,7 @@ export const READING_B2_A: RawPassage[] = [
   },
   {
     level: "B2",
-    title_kr: "청년 농부의 도전",
-    title_en: "Young farmers take on a new challenge",
-    body_kr: "농업을 새로운 진로로 선택하는 청년들이 조금씩 늘어나고 있다. 이들은 전통적인 농사 방식에서 벗어나 스마트 농업 기술을 적극적으로 도입한다. 온도와 습도를 자동으로 조절하는 스마트팜은 청년 농부들에게 특히 인기가 있다. 정부는 청년 농업인을 육성하기 위한 정착 자금과 교육 프로그램을 확대하고 있다. 그러나 초기 투자 비용과 농지 확보의 어려움은 여전히 큰 진입 장벽으로 남아 있다. 일부 청년 농부는 온라인 직거래를 통해 판로를 개척하며 안정적인 수익을 올리고 있다. 이러한 성공 사례는 다른 청년들에게 농업에 대한 새로운 인식을 심어 주고 있다. 청년 농업인의 증가는 고령화된 농촌에 활력을 불어넣는 요소로 기대를 모은다.",
-    body_en: "A growing number of young people are choosing agriculture as a new career path. They actively adopt smart farming technology instead of traditional farming methods. Smart farms that automatically control temperature and humidity are especially popular among young farmers. The government is expanding settlement funds and education programs to nurture young farmers. However, initial investment costs and difficulty securing farmland remain major entry barriers. Some young farmers achieve stable income by pioneering direct online sales channels. These success stories are instilling a new perception of agriculture among other young people. The increase in young farmers is expected to bring vitality to the aging countryside.",
-    questions: [
-      { question_en: "What technology is especially popular among young farmers?", options: ["Smart farms that automatically control temperature and humidity","Paper record-keeping","Manual irrigation systems","Horse-drawn plows"], answerIndex: 0 },
-      { question_en: "What remains a major entry barrier for young farmers?", options: ["Initial investment costs and securing farmland","Too many government subsidies","Lack of interest in farming","Overproduction of crops"], answerIndex: 0 },
-    ],
-  },
-  {
-    level: "B2",
+    genre: "article",
     title_kr: "회식 문화가 사라지는 이유",
     title_en: "Why after-work dinners are disappearing",
     body_kr: "예전에는 퇴근 후 회식이 직장 생활의 자연스러운 일부로 여겨졌다. 그러나 최근에는 회식을 부담스러워하거나 참석을 꺼리는 직장인이 크게 늘었다. 개인 시간을 중시하는 가치관의 변화가 이러한 흐름의 주요 배경으로 꼽힌다. 회식에서 발생하는 위계적인 분위기와 음주 강요 문화도 부정적인 인식을 키운 요인이다. 많은 기업은 회식 대신 점심 모임이나 문화 활동으로 대체하는 방안을 시도하고 있다. 일부 직장인은 이러한 변화를 반기지만 세대 간 소통이 줄어든다는 아쉬움을 표하는 사람도 있다. 회식의 형태도 술자리 중심에서 벗어나 다양하게 바뀌고 있다. 회식 문화의 변화는 직장 내 인간관계 방식이 재편되고 있음을 보여준다.",
@@ -520,17 +399,7 @@ export const READING_B2_A: RawPassage[] = [
   },
   {
     level: "B2",
-    title_kr: "명절 뒤 늘어나는 이별 상담",
-    title_en: "The rise in breakup counseling after holidays",
-    body_kr: "명절이 지나면 연인 관계를 정리하려는 상담 문의가 늘어난다는 조사 결과가 있다. 오랜만에 가족과 시간을 보내며 결혼이나 미래에 대한 압박을 느낀 것이 원인으로 꼽힌다. 특히 상대방과의 미래를 진지하게 고민하게 되는 계기가 되는 경우가 많다는 분석이다. 명절 동안 친척들의 질문과 비교가 연인 관계에 부담을 준다는 목소리도 있다. 상담 전문가들은 명절이 관계를 되돌아보는 계기가 되기도 한다고 설명한다. 일부 연인은 명절을 함께 보내는 과정에서 서로의 가치관 차이를 발견하기도 한다. 이러한 현상은 결혼과 가족에 대한 사회적 압박이 여전히 존재함을 보여준다. 전문가들은 명절을 계기로 한 관계 점검이 반드시 부정적인 것만은 아니라고 조언한다.",
-    body_en: "Surveys show that inquiries about relationship counseling for breakups increase after holidays. It is attributed to the pressure people feel about marriage and the future after spending time with family. Analysts note it often becomes an occasion to seriously consider the future with a partner. Some say relatives' questions and comparisons during holidays put pressure on relationships. Counseling experts explain that holidays can also become an opportunity to reflect on a relationship. Some couples discover differences in values while spending the holiday together. This phenomenon shows that social pressure surrounding marriage and family still exists. Experts advise that using holidays as a chance to reassess a relationship is not necessarily negative.",
-    questions: [
-      { question_en: "What is cited as a cause of increased breakup counseling after holidays?", options: ["Pressure about marriage and the future from family time","Bad weather during holidays","Higher travel costs","New relationship laws"], answerIndex: 0 },
-      { question_en: "What do experts say about reassessing relationships during holidays?", options: ["It is not necessarily negative","It should never happen","It always leads to breakups","It has no social meaning"], answerIndex: 0 },
-    ],
-  },
-  {
-    level: "B2",
+    genre: "article",
     title_kr: "지방 병원의 의료 공백",
     title_en: "The medical gap in regional hospitals",
     body_kr: "지방 병원들이 의사 부족으로 심각한 운영난을 겪고 있다. 특히 응급실이나 산부인과 같은 필수 진료과는 의사를 구하기가 더욱 어렵다. 젊은 의사들이 수도권 대형 병원을 선호하면서 지방 근무를 기피하는 경향이 뚜렷하다. 낮은 임금과 열악한 근무 환경도 지방 병원 기피의 주요 원인으로 꼽힌다. 일부 지역 주민들은 응급 상황에서도 먼 거리의 병원까지 이동해야 하는 어려움을 겪는다. 정부는 지방 의료 공백을 해소하기 위해 공공 의대 설립을 검토해 왔다. 그러나 의료계 내부에서는 이에 대한 찬반 의견이 팽팽하게 맞서고 있다. 지방 의료 공백 문제는 국민의 생명과 직결된 시급한 과제로 지적된다.",
@@ -542,6 +411,7 @@ export const READING_B2_A: RawPassage[] = [
   },
   {
     level: "B2",
+    genre: "article",
     title_kr: "명품보다 경험을 사는 세대",
     title_en: "The generation that buys experiences over luxury",
     body_kr: "물건 대신 경험에 돈을 쓰는 소비 트렌드가 젊은 세대 사이에서 확산되고 있다. 여행이나 공연 관람, 색다른 액티비티에 지갑을 여는 사람들이 늘고 있다. 이러한 흐름은 소유보다 순간의 만족을 중시하는 가치관과 맞닿아 있다. 소셜 미디어에 공유할 수 있는 특별한 경험이 특히 인기를 끈다. 여행업계와 공연업계는 이러한 소비 트렌드에 맞춰 다양한 상품을 내놓고 있다. 일부 전문가는 경험 소비가 물질적 소유보다 심리적 만족도가 높다는 연구 결과를 제시한다. 그러나 과도한 경험 소비 역시 충동적인 지출로 이어질 수 있다는 지적도 있다. 소유에서 경험으로 이동하는 소비문화는 시대의 가치관 변화를 반영하는 현상으로 평가된다.",
@@ -553,6 +423,7 @@ export const READING_B2_A: RawPassage[] = [
   },
   {
     level: "B2",
+    genre: "article",
     title_kr: "청년 부채와 신용 불량의 그림자",
     title_en: "The shadow of youth debt and credit trouble",
     body_kr: "학자금 대출과 생활비 부담으로 빚을 지는 청년들이 늘어나고 있다. 취업이 늦어지면서 대출 상환 기간이 길어지는 경우도 흔하다. 일부 청년은 투자 실패나 무리한 소비로 인해 빚이 눈덩이처럼 불어나기도 한다. 신용 불량 상태에 빠진 청년들은 금융 거래에서 여러 제약을 겪는다. 이러한 상황은 결혼이나 주택 마련 같은 인생의 다음 단계를 미루는 요인이 되기도 한다. 정부는 청년 채무자를 위한 상담과 재기 지원 프로그램을 마련하고 있다. 그러나 근본적인 원인인 불안정한 고용 구조가 해결되지 않으면 효과는 제한적이라는 지적이 나온다. 청년 부채 문제는 개인의 실패가 아니라 사회 구조적 문제로 다뤄져야 한다는 목소리가 커지고 있다.",
@@ -564,39 +435,7 @@ export const READING_B2_A: RawPassage[] = [
   },
   {
     level: "B2",
-    title_kr: "온라인 동창회의 등장",
-    title_en: "The rise of online alumni gatherings",
-    body_kr: "졸업 후 오랫동안 연락이 끊겼던 동창들이 온라인 플랫폼을 통해 다시 모이고 있다. 소셜 미디어와 동창 찾기 애플리케이션은 이러한 재회를 가능하게 한 주요 수단이다. 예전에는 정해진 장소에 모여야 했던 동창회가 이제는 화상 통화로도 열린다. 시간과 장소의 제약이 줄어들면서 참여율도 높아졌다는 평가가 있다. 그러나 온라인으로 이루어지는 만남이 오프라인 만남만큼 깊은 유대감을 주지 못한다는 아쉬움도 있다. 일부는 온라인 모임을 계기로 실제 만남까지 이어가기도 한다. 동창회 문화의 변화는 인간관계를 맺는 방식이 디지털 환경에 맞게 진화하고 있음을 보여준다. 전문가들은 이러한 흐름이 다른 형태의 사회적 모임에도 확산될 것으로 전망한다.",
-    body_en: "Classmates who had lost contact for years after graduation are reuniting through online platforms. Social media and alumni-finding apps are the main tools enabling these reunions. Alumni gatherings that once required meeting in a set location are now also held via video call. Reduced constraints of time and place are said to have raised participation rates. However, some feel that online meetings do not provide as deep a bond as in-person meetings. Some use online gatherings as a starting point that leads to actual in-person meetings. This change in alumni culture shows that ways of forming relationships are evolving to fit the digital environment. Experts predict this trend will spread to other forms of social gatherings as well.",
-    questions: [
-      { question_en: "What has raised participation rates in alumni gatherings?", options: ["Fewer social media users","Higher membership fees","Reduced constraints of time and place","Mandatory attendance rules"], answerIndex: 2 },
-      { question_en: "What concern is raised about online meetings?", options: ["They require special equipment","They cost too much money","They may not provide as deep a bond as in-person meetings","They are illegal in some regions"], answerIndex: 2 },
-    ],
-  },
-  {
-    level: "B2",
-    title_kr: "저성장 시대의 청년 소비",
-    title_en: "Youth consumption in an era of slow growth",
-    body_kr: "경제 성장률이 둔화되면서 청년층의 소비 패턴도 눈에 띄게 변화하고 있다. 미래에 대한 불확실성이 커지면서 무리한 소비를 자제하는 청년이 늘어났다. 대신 필요한 물건만 신중하게 구매하는 이른바 실속 소비가 주목받고 있다. 중고 거래와 할인 정보를 적극적으로 활용하는 것도 이러한 흐름의 일부다. 일부는 소비를 줄이는 대신 저축과 투자에 집중하는 모습을 보인다. 그러나 여전히 소셜 미디어의 영향으로 과시적 소비를 하는 청년들도 존재한다. 전문가들은 이러한 소비 양극화가 경제적 불안 속에서 나타나는 자연스러운 현상이라고 분석한다. 저성장 시대의 청년 소비 패턴은 앞으로의 경제 흐름을 가늠하는 지표로도 주목받고 있다.",
-    body_en: "As economic growth slows, consumption patterns among young people are also changing noticeably. As uncertainty about the future grows, more young people refrain from excessive spending. Instead, so-called practical consumption, carefully buying only necessary items, is drawing attention. Actively using secondhand trading and discount information is also part of this trend. Some focus on saving and investing instead of reducing spending. However, some young people still engage in conspicuous consumption under the influence of social media. Experts analyze that this polarization of consumption is a natural phenomenon appearing amid economic anxiety. Youth consumption patterns in this era of slow growth are also drawing attention as an indicator for gauging future economic trends.",
-    questions: [
-      { question_en: "What is 'practical consumption' as described in the passage?", options: ["Spending without any planning","Refusing to buy anything at all","Carefully buying only necessary items","Buying only luxury goods"], answerIndex: 2 },
-      { question_en: "How do experts describe the polarization of youth consumption?", options: ["A temporary trend with no significance","A sign of economic recovery","An entirely government-caused issue","A natural phenomenon amid economic anxiety"], answerIndex: 3 },
-    ],
-  },
-  {
-    level: "B2",
-    title_kr: "명절 세뱃돈의 경제학",
-    title_en: "The economics of New Year's money",
-    body_kr: "설날이 되면 아이들에게 세뱃돈을 주는 풍습이 여전히 이어지고 있다. 그러나 최근에는 세뱃돈의 액수와 형식을 둘러싼 고민도 함께 커지고 있다. 물가 상승으로 인해 적정한 세뱃돈 액수에 대한 사회적 기준도 계속 바뀌고 있다. 일부 부모는 아이들에게 세뱃돈을 직접 관리하며 저축 습관을 기르도록 지도한다. 최근에는 현금 대신 계좌 이체나 모바일 상품권으로 세뱃돈을 주는 경우도 늘고 있다. 이러한 변화는 간편 결제 문화의 확산과도 관련이 있다. 일부 어른들은 세뱃돈 부담이 명절 지출을 늘리는 요인이라고 토로하기도 한다. 세뱃돈 문화의 변화는 전통과 현대적 편의성이 공존하는 모습을 보여준다.",
-    body_en: "The custom of giving children New Year's money during Seollal still continues. Recently, however, concerns about the amount and format of this money have also grown. Due to rising prices, the socially accepted standard for an appropriate amount keeps changing. Some parents manage the money on their children's behalf, teaching them saving habits. Recently, more people give the money via bank transfer or mobile gift cards instead of cash. This change is also related to the spread of simple payment culture. Some adults say the burden of giving New Year's money is a factor that increases holiday spending. The change in this custom shows tradition and modern convenience coexisting.",
-    questions: [
-      { question_en: "What has changed about how New Year's money is given?", options: ["It must be given in foreign currency","It is no longer given at all","More people give it via bank transfer or mobile gift cards","It is now only given to adults"], answerIndex: 2 },
-      { question_en: "What do some adults say about the custom?", options: ["It is a factor that increases holiday spending","It has completely disappeared","It is now mandatory by law","It only applies to relatives"], answerIndex: 0 },
-    ],
-  },
-  {
-    level: "B2",
+    genre: "article",
     title_kr: "지방 이전 공공기관과 인구 유입",
     title_en: "Relocated public agencies and population inflow",
     body_kr: "정부는 수도권 집중을 완화하기 위해 여러 공공기관을 지방으로 이전해 왔다. 이러한 정책은 혁신도시라는 이름으로 지역 균형 발전의 핵심 전략이 되었다. 공공기관 이전은 해당 지역에 새로운 일자리와 인구 유입을 가져왔다는 평가를 받는다. 그러나 직원 상당수가 가족과 떨어져 혼자 지방에서 근무하는 경우도 많다. 자녀 교육이나 배우자의 직장 문제로 가족 전체가 이주하지 못하는 경우가 흔하기 때문이다. 이로 인해 지역 정착률이 기대만큼 높지 않다는 지적이 나온다. 지자체는 정착률을 높이기 위해 주거와 교육 인프라 개선에 나서고 있다. 공공기관 지방 이전의 성패는 단순한 건물 이전을 넘어 삶의 질 개선에 달려 있다는 분석이 나온다.",
@@ -608,6 +447,7 @@ export const READING_B2_A: RawPassage[] = [
   },
   {
     level: "B2",
+    genre: "article",
     title_kr: "무너지는 자영업의 벽",
     title_en: "The crumbling wall of self-employment",
     body_kr: "높은 임대료와 인건비 부담으로 폐업하는 자영업자가 매년 늘어나고 있다. 특히 경기 침체와 소비 심리 위축은 소상공인들에게 직접적인 타격을 준다. 대출로 창업 자금을 마련한 자영업자들은 빚을 갚지 못해 어려움을 겪기도 한다. 정부는 소상공인을 위한 저금리 대출과 세금 감면 정책을 시행하고 있다. 그러나 근본적인 매출 회복 없이는 지원 정책의 효과가 제한적이라는 지적이 나온다. 일부 자영업자는 온라인 판매와 배달 서비스로 활로를 모색하고 있다. 프랜차이즈에 비해 개인 창업의 생존율이 낮다는 통계도 자영업의 어려움을 보여준다. 자영업 위기는 서민 경제 전반의 건전성과 직결된 문제로 다뤄지고 있다.",
@@ -619,28 +459,7 @@ export const READING_B2_A: RawPassage[] = [
   },
   {
     level: "B2",
-    title_kr: "명절 이후 다이어트 열풍",
-    title_en: "The post-holiday diet craze",
-    body_kr: "명절 연휴가 끝나면 다이어트를 결심하는 사람들이 눈에 띄게 늘어난다. 명절 동안 기름진 음식과 잦은 술자리로 체중이 늘었다는 사람이 많기 때문이다. 헬스장과 다이어트 관련 애플리케이션은 명절 직후 이용자 수가 급증하는 경향을 보인다. 일부 사람들은 명절 후 며칠간 단식이나 절식을 시도하기도 한다. 그러나 무리한 다이어트는 오히려 건강에 부담을 줄 수 있다는 전문가의 경고도 있다. 영양 전문가들은 급격한 체중 감량보다 꾸준한 식습관 개선이 중요하다고 조언한다. 명절 다이어트 열풍은 매년 반복되는 흥미로운 사회 현상으로 자리 잡았다. 이러한 흐름은 명절 문화와 건강에 대한 관심이 맞물려 나타나는 결과로 분석된다.",
-    body_en: "Right after holiday breaks end, the number of people deciding to diet noticeably increases. This is because many people report gaining weight from fatty foods and frequent drinking during the holidays. Gyms and diet-related apps tend to see a surge in users right after holidays. Some people even try fasting or restricted eating for a few days after holidays. However, experts warn that overly strict dieting can actually burden one's health. Nutrition experts advise that steady improvement in eating habits matters more than rapid weight loss. The post-holiday diet craze has become an interesting social phenomenon that repeats every year. This trend is analyzed as a result of holiday culture intersecting with growing interest in health.",
-    questions: [
-      { question_en: "Why do many people decide to diet after holidays?", options: ["Gyms offer free memberships","Doctors require it by law","They gained weight from fatty foods and drinking","Holiday food becomes unavailable"], answerIndex: 2 },
-      { question_en: "What do nutrition experts advise?", options: ["Steady improvement in eating habits over rapid weight loss","Only exercising once a year","Fasting for weeks at a time","Ignoring diet entirely"], answerIndex: 0 },
-    ],
-  },
-  {
-    level: "B2",
-    title_kr: "청년 세대의 저축 포기 현상",
-    title_en: "The trend of young people giving up on saving",
-    body_kr: "부동산 가격 급등과 낮은 임금 상승률로 인해 저축을 포기하는 청년들이 늘어나고 있다. 이들은 열심히 저축해도 집을 마련하기 어렵다는 현실적인 판단에서 이러한 선택을 한다. 대신 소비를 통해 현재의 만족을 추구하는 경향이 뚜렷해지고 있다. 이러한 현상은 이른바 욜로 문화의 확산과도 관련이 있다는 분석이 나온다. 반면 일부 청년들은 오히려 극단적인 절약을 실천하며 조기 은퇴를 목표로 삼기도 한다. 두 가지 상반된 태도는 모두 불확실한 미래에 대한 반응으로 해석된다. 금융 전문가들은 저축을 포기하기보다 현실적인 재무 목표를 세우는 것이 중요하다고 조언한다. 청년 세대의 저축 포기 현상은 세대 간 경제적 격차를 보여주는 단면으로 평가된다.",
-    body_en: "More young people are giving up on saving due to soaring real estate prices and low wage growth. They make this choice based on the realistic judgment that even diligent saving won't be enough to buy a home. Instead, a clear tendency toward pursuing present satisfaction through spending has emerged. Analysts note this phenomenon is also related to the spread of so-called YOLO culture. On the other hand, some young people practice extreme frugality, aiming for early retirement instead. These two opposing attitudes are both interpreted as reactions to an uncertain future. Financial experts advise that setting realistic financial goals matters more than giving up on saving altogether. The trend of young people giving up on saving is regarded as a facet reflecting the economic gap between generations.",
-    questions: [
-      { question_en: "Why do some young people give up on saving?", options: ["They have no income at all","Banks refuse their deposits","They judge that saving won't be enough to buy a home","Saving is now illegal"], answerIndex: 2 },
-      { question_en: "What opposing attitude do some young people practice instead?", options: ["Refusing all employment","Unlimited borrowing","Avoiding banks entirely","Extreme frugality aiming for early retirement"], answerIndex: 3 },
-    ],
-  },
-  {
-    level: "B2",
+    genre: "article",
     title_kr: "명절 대체 공휴일 논쟁",
     title_en: "The debate over substitute holidays",
     body_kr: "명절이 주말과 겹칠 경우 대체 공휴일을 지정하는 제도가 오랫동안 시행되어 왔다. 이 제도는 근로자들이 충분한 휴식을 취할 수 있도록 마련되었다. 그러나 대체 공휴일 적용 범위를 둘러싼 논쟁은 여전히 계속되고 있다. 일부 중소기업 근로자들은 대체 공휴일 혜택을 제대로 누리지 못한다는 불만을 제기한다. 대기업과 공공기관에 비해 소규모 사업장의 휴무 이행률이 낮다는 조사 결과도 있다. 노동계는 모든 근로자에게 동일한 휴식권이 보장되어야 한다고 주장한다. 반면 경영계는 소규모 사업장의 인력 운영 어려움을 고려해야 한다고 반박한다. 대체 공휴일 제도는 근로자 권익과 기업 현실 사이의 균형을 요구하는 과제로 남아 있다.",
@@ -652,28 +471,7 @@ export const READING_B2_A: RawPassage[] = [
   },
   {
     level: "B2",
-    title_kr: "명함 없는 프리랜서의 시대",
-    title_en: "The era of freelancers without a company title",
-    body_kr: "정규직 대신 프리랜서로 일하는 사람들이 여러 분야에서 늘어나고 있다. 이들은 특정 회사에 소속되지 않고 여러 고객과 프로젝트 단위로 일한다. 디지털 플랫폼의 발달은 프리랜서들이 일감을 쉽게 찾을 수 있는 환경을 만들었다. 자유로운 근무 시간과 장소 선택은 프리랜서를 선택하는 주요 이유로 꼽힌다. 그러나 소속이 없다는 이유로 대출이나 신용카드 발급 같은 금융 서비스에서 불이익을 겪기도 한다. 일정하지 않은 수입과 사회 보험 사각지대 문제도 프리랜서들이 겪는 어려움이다. 정부는 프리랜서를 위한 사회 안전망 강화를 추진하고 있다. 프리랜서의 증가는 고용 형태의 다양화를 보여주는 동시에 새로운 제도적 보완이 필요함을 시사한다.",
-    body_en: "The number of people working as freelancers instead of full-time employees is growing across various fields. They are not affiliated with a specific company and work with multiple clients on a project basis. The development of digital platforms has created an environment where freelancers can easily find work. Flexible working hours and choice of location are cited as major reasons for choosing freelancing. However, freelancers sometimes face disadvantages in financial services like loans or credit card issuance because they lack company affiliation. Irregular income and gaps in social insurance coverage are also difficulties freelancers face. The government is working to strengthen the social safety net for freelancers. The rise of freelancing shows the diversification of employment forms while also suggesting the need for new institutional support.",
-    questions: [
-      { question_en: "What disadvantage do freelancers sometimes face in financial services?", options: ["Higher interest rates only for freelancers","Being forced to open extra accounts","Automatic loan approval","Difficulty with loans or credit card issuance"], answerIndex: 3 },
-      { question_en: "What is the government working to strengthen for freelancers?", options: ["A single-employer system","The social safety net","Fixed working hours","Mandatory office attendance"], answerIndex: 1 },
-    ],
-  },
-  {
-    level: "B2",
-    title_kr: "지방 소도시의 빈 상가 문제",
-    title_en: "The problem of empty storefronts in small towns",
-    body_kr: "인구 감소가 이어지는 지방 소도시에서는 빈 상가가 눈에 띄게 늘어나고 있다. 한때 활기를 띠던 시장 거리와 상점가도 이제는 문을 닫은 가게가 대부분을 차지한다. 젊은 인구의 유출과 대형 마트, 온라인 쇼핑의 확산이 이러한 현상의 주요 원인으로 꼽힌다. 지자체는 빈 상가를 활용해 청년 창업 공간이나 문화 공간으로 바꾸는 사업을 추진하고 있다. 일부 지역은 예술가들을 유치해 빈 상가를 갤러리나 공방으로 탈바꿈시켰다. 그러나 근본적인 인구 유입 없이는 이러한 시도의 효과가 제한적이라는 지적도 있다. 상인들은 정부의 실질적인 지원과 함께 지역 소비 촉진 정책이 필요하다고 호소한다. 빈 상가 문제는 지방 소도시가 직면한 인구 위기의 상징적인 모습으로 여겨진다.",
-    body_en: "In small regional towns with continuing population decline, empty storefronts are noticeably increasing. Market streets and shopping districts that were once lively are now mostly filled with closed shops. The outflow of young people and the spread of large marts and online shopping are cited as main causes of this phenomenon. Local governments are pursuing projects to convert empty storefronts into youth startup spaces or cultural spaces. Some areas have attracted artists, transforming empty storefronts into galleries or workshops. However, it is also pointed out that such attempts have limited effect without a fundamental inflow of population. Merchants appeal for practical government support along with policies to boost local consumption. The problem of empty storefronts is regarded as a symbolic image of the population crisis facing small regional towns.",
-    questions: [
-      { question_en: "What are cited as main causes of empty storefronts?", options: ["Too many new businesses opening","Rising local population","Excessive government regulation","Outflow of young people and spread of online shopping"], answerIndex: 3 },
-      { question_en: "What have some areas done with empty storefronts?", options: ["Demolished them entirely","Attracted artists to create galleries or workshops","Left them permanently sealed","Turned them into parking lots only"], answerIndex: 1 },
-    ],
-  },
-  {
-    level: "B2",
+    genre: "article",
     title_kr: "육아휴직을 대하는 두 가지 시선",
     title_en: "Two perspectives on parental leave",
     body_kr: "육아휴직 제도는 일과 가정을 병행할 수 있도록 돕는 중요한 정책으로 자리 잡았다. 그러나 실제 현장에서는 이를 자유롭게 사용하기 어렵다는 목소리가 여전히 존재한다. 일부 직장인은 육아휴직 사용이 승진이나 평가에서 불이익으로 이어질까 봐 눈치를 본다. 특히 중소기업에서는 대체 인력을 구하기 어려워 육아휴직 사용률이 낮은 편이다. 반면 육아휴직을 적극적으로 권장하는 기업 문화를 갖춘 곳도 늘어나고 있다. 이러한 기업은 우수한 인재를 유치하는 데 유리하다는 평가를 받는다. 정부는 육아휴직 급여 인상과 대체 인력 지원금을 통해 제도 활성화를 꾀하고 있다. 육아휴직을 둘러싼 두 가지 상반된 현실은 제도와 문화 사이의 간극을 보여준다.",
@@ -681,28 +479,6 @@ export const READING_B2_A: RawPassage[] = [
     questions: [
       { question_en: "Why do some workers hesitate to use parental leave?", options: ["Fear of disadvantages in promotion or evaluation","It is too expensive to take","It is banned for men","It requires quitting the job"], answerIndex: 0 },
       { question_en: "What advantage do companies encouraging parental leave gain?", options: ["Fewer employees needed","Lower taxes","Reduced office space","Attracting top talent"], answerIndex: 3 },
-    ],
-  },
-  {
-    level: "B2",
-    title_kr: "무인 세탁소가 바꾼 동네 풍경",
-    title_en: "How unmanned laundromats changed the neighborhood",
-    body_kr: "최근 동네마다 24시간 운영되는 무인 세탁소가 빠르게 늘어나고 있다. 1인 가구가 증가하면서 세탁기를 따로 두지 않는 사람들이 이러한 서비스를 자주 이용한다. 원하는 시간에 방문해 큰 이불이나 운동화까지 손쉽게 세탁할 수 있다는 점이 장점으로 꼽힌다. 무인 세탁소는 인건비 부담이 적어 소자본으로도 창업할 수 있는 업종으로 주목받는다. 그러나 야간 시간대 관리 소홀로 인한 안전 문제가 종종 제기된다. 일부 지역에서는 폐쇄 회로 카메라와 비상벨을 설치해 이용객 안전을 강화했다. 세탁소 주인들은 기계 고장이나 도난 문제로 어려움을 겪기도 한다고 말한다. 무인 세탁소의 확산은 생활 서비스 전반이 무인화되는 큰 흐름의 한 단면을 보여준다.",
-    body_en: "Recently, 24-hour unmanned laundromats have been rapidly increasing in neighborhoods. As single-person households grow, people who don't keep their own washing machine frequently use this service. A key advantage is being able to visit at any time and easily wash even large blankets or sneakers. Unmanned laundromats are drawing attention as a business that can be started with small capital due to low labor costs. However, safety issues from poor management during nighttime hours are sometimes raised. Some areas have installed CCTV and emergency buttons to strengthen user safety. Laundromat owners say they also struggle with machine breakdowns and theft. The spread of unmanned laundromats shows one facet of the larger trend toward unmanned service businesses.",
-    questions: [
-      { question_en: "Why do unmanned laundromats attract entrepreneurs?", options: ["They require no equipment at all","They can be started with small capital due to low labor costs","They are subsidized entirely by the government","They guarantee high profits instantly"], answerIndex: 1 },
-      { question_en: "What safety issue is raised about unmanned laundromats?", options: ["Poor management during nighttime hours","Excessive noise complaints","Overcrowding during the day","High water bills"], answerIndex: 0 },
-    ],
-  },
-  {
-    level: "B2",
-    title_kr: "명절 이후 택배 대란",
-    title_en: "The post-holiday delivery surge",
-    body_kr: "명절 연휴가 끝나면 택배 물량이 평소보다 크게 늘어나는 현상이 반복된다. 온라인으로 선물을 주문했던 소비자들의 물량이 한꺼번에 몰리기 때문이다. 물류센터는 명절 직후 며칠간 평소보다 몇 배 많은 물량을 처리해야 한다. 택배 기사들은 이 기간 동안 극심한 업무 강도에 시달린다고 호소한다. 일부 배송이 지연되면서 소비자들의 불만이 쏟아지기도 한다. 물류업체들은 임시 인력을 투입하고 배송 경로를 재조정하며 대응에 나선다. 그러나 근본적인 인력난 문제는 매년 명절마다 반복되고 있다. 명절 이후 택배 대란은 물류 산업의 구조적 문제를 드러내는 사례로 지적된다.",
-    body_en: "Right after holiday breaks, the volume of parcel deliveries repeatedly surges far beyond normal levels. This happens because orders from consumers who bought gifts online all arrive at once. Logistics centers must process several times their usual volume in the days right after holidays. Delivery workers say they suffer from extreme workloads during this period. Some deliveries get delayed, drawing a flood of consumer complaints. Logistics companies respond by deploying temporary staff and readjusting delivery routes. However, the underlying labor shortage problem repeats every holiday season. The post-holiday delivery surge is pointed out as a case revealing structural problems in the logistics industry.",
-    questions: [
-      { question_en: "Why does parcel volume surge right after holidays?", options: ["Stores close for the season","Delivery prices drop sharply","Orders from online gift purchases all arrive at once","Workers take extended vacations"], answerIndex: 2 },
-      { question_en: "What problem repeats every holiday season, according to the passage?", options: ["Falling delivery prices","The underlying labor shortage","A lack of delivery trucks","Excess warehouse space"], answerIndex: 1 },
     ],
   },
 ];

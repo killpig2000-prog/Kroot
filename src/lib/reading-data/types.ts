@@ -6,8 +6,12 @@ export type ReadingQuestion = {
   answerIndex: number;
 };
 
+// Genre taxonomy scales with level: A1-A2 use diary/notice/dialogue/story;
+// B1-B2 use email/explainer/review/story; C1-C2 use editorial/article/essay/story.
+// Optional so older un-tagged levels keep compiling while each level is migrated.
 export type RawPassage = {
   level: CefrLevel;
+  genre?: string;
   title_kr: string;
   title_en: string;
   body_kr: string;

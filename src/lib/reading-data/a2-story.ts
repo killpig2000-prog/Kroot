@@ -1,8 +1,9 @@
 import type { RawPassage } from "./types";
 
-export const READING_A2_A: RawPassage[] = [
+export const READING_A2_STORY: RawPassage[] = [
   {
     level: "A2",
+    genre: "story",
     title_kr: "우산을 잃어버렸어요",
     title_en: "I lost my umbrella",
     body_kr: "어제 비가 많이 왔어요. 저는 지하철역에서 우산을 샀어요. 카페에서 커피를 마시고 우산을 놓고 나왔어요. 오늘 아침에 우산이 없어서 다시 비를 맞았어요. 내일은 우산을 꼭 챙길 거예요.",
@@ -14,17 +15,7 @@ export const READING_A2_A: RawPassage[] = [
   },
   {
     level: "A2",
-    title_kr: "비 오는 날 산책",
-    title_en: "A walk on a rainy day",
-    body_kr: "오늘은 비가 조용히 내렸어요. 저는 우산을 쓰고 동네를 산책했어요. 길에서 작은 개구리를 봤어요. 비 냄새가 좋아서 기분이 상쾌했어요. 다음에 비가 오면 또 산책할 거예요.",
-    body_en: "It rained quietly today. I took a walk around the neighborhood with an umbrella. I saw a small frog on the road. I felt refreshed because I liked the smell of the rain. Next time it rains, I will take a walk again.",
-    questions: [
-      { question_en: "What did the narrator see on the road?", options: ["A cat","A bird","A frog","A dog"], answerIndex: 2 },
-      { question_en: "How did the narrator feel?", options: ["Angry","Tired","Bored","Refreshed"], answerIndex: 3 },
-    ],
-  },
-  {
-    level: "A2",
+    genre: "story",
     title_kr: "놀이공원에서",
     title_en: "At the amusement park",
     body_kr: "지난 주말에 친구와 놀이공원에 갔어요. 우리는 무서운 롤러코스터를 탔어요. 저는 너무 무서워서 소리를 질렀어요. 그래도 재미있어서 세 번이나 더 탔어요. 다음에는 부모님과 같이 갈 거예요.",
@@ -36,6 +27,7 @@ export const READING_A2_A: RawPassage[] = [
   },
   {
     level: "A2",
+    genre: "story",
     title_kr: "그림을 그렸어요",
     title_en: "I drew a picture",
     body_kr: "지난주에 처음으로 유화를 그렸어요. 색을 고르는 것이 생각보다 어려웠어요. 실수로 물감을 옷에 묻혔어요. 그래도 완성된 그림이 마음에 들었어요. 이번 주말에도 새 그림을 그릴 거예요.",
@@ -47,28 +39,7 @@ export const READING_A2_A: RawPassage[] = [
   },
   {
     level: "A2",
-    title_kr: "도서관에서 책을 빌렸어요",
-    title_en: "I borrowed a book from the library",
-    body_kr: "오늘 오후에 도서관에 갔어요. 재미있는 소설을 찾고 싶었어요. 사서 선생님이 좋은 책을 추천해 주셨어요. 저는 책 두 권을 빌렸어요. 이번 주말에 집에서 천천히 읽을 거예요.",
-    body_en: "I went to the library this afternoon. I wanted to find an interesting novel. The librarian recommended a good book. I borrowed two books. This weekend I will read them slowly at home.",
-    questions: [
-      { question_en: "Who recommended the book?", options: ["A teacher","A stranger","A friend","The librarian"], answerIndex: 3 },
-      { question_en: "How many books did the narrator borrow?", options: ["Three","One","Four","Two"], answerIndex: 3 },
-    ],
-  },
-  {
-    level: "A2",
-    title_kr: "강아지를 산책시켰어요",
-    title_en: "I walked the dog",
-    body_kr: "오늘 아침에 강아지와 공원에 갔어요. 강아지가 갑자기 다른 개를 보고 뛰어갔어요. 저는 놀라서 강아지 이름을 크게 불렀어요. 다행히 강아지는 곧 돌아왔어요. 내일은 목줄을 더 꼭 잡을 거예요.",
-    body_en: "This morning I went to the park with my dog. The dog suddenly ran off after seeing another dog. I was surprised and called its name loudly. Fortunately, the dog came back soon. Tomorrow I will hold the leash more tightly.",
-    questions: [
-      { question_en: "Why did the dog run off?", options: ["It saw food","It heard a loud noise","It was scared of the narrator","It saw another dog"], answerIndex: 3 },
-      { question_en: "What will the narrator do tomorrow?", options: ["Buy a new leash","Get a new dog","Hold the leash more tightly","Stay home"], answerIndex: 2 },
-    ],
-  },
-  {
-    level: "A2",
+    genre: "story",
     title_kr: "처음 요가를 했어요",
     title_en: "My first yoga class",
     body_kr: "어제 처음으로 요가 수업에 갔어요. 동작이 생각보다 어려워서 몸이 많이 아팠어요. 선생님이 천천히 하라고 말씀하셨어요. 수업이 끝난 후에 마음이 편안해졌어요. 다음 주에도 요가 수업을 들을 거예요.",
@@ -80,6 +51,7 @@ export const READING_A2_A: RawPassage[] = [
   },
   {
     level: "A2",
+    genre: "story",
     title_kr: "계단에서 넘어졌어요",
     title_en: "I fell on the stairs",
     body_kr: "오늘 아침에 급하게 계단을 내려갔어요. 신발끈이 풀려서 그만 넘어졌어요. 무릎을 조금 다쳤지만 크게 다치지 않았어요. 친구가 걱정하면서 저를 도와줬어요. 다음부터는 계단에서 천천히 걸을 거예요.",
@@ -91,6 +63,7 @@ export const READING_A2_A: RawPassage[] = [
   },
   {
     level: "A2",
+    genre: "story",
     title_kr: "버스를 잘못 탔어요",
     title_en: "I took the wrong bus",
     body_kr: "오늘 아침에 급하게 버스를 탔어요. 버스가 반대 방향으로 가는 것을 나중에 알았어요. 저는 다음 정류장에서 급히 내렸어요. 결국 학교에 조금 늦게 도착했어요. 내일부터는 버스 번호를 잘 확인할 거예요.",
@@ -102,6 +75,7 @@ export const READING_A2_A: RawPassage[] = [
   },
   {
     level: "A2",
+    genre: "story",
     title_kr: "편지를 썼어요",
     title_en: "I wrote a letter",
     body_kr: "어제 오랜만에 할머니께 편지를 썼어요. 손으로 쓰는 것이 어색해서 시간이 오래 걸렸어요. 그래도 마음을 담아 천천히 썼어요. 오늘 우체국에서 편지를 보냈어요. 할머니가 편지를 받으면 기뻐하실 거예요.",
@@ -113,6 +87,7 @@ export const READING_A2_A: RawPassage[] = [
   },
   {
     level: "A2",
+    genre: "story",
     title_kr: "공원에서 만난 고양이",
     title_en: "The cat I met at the park",
     body_kr: "오늘 공원을 산책하다가 작은 고양이를 만났어요. 고양이가 저를 무서워하지 않고 다가왔어요. 저는 가지고 있던 간식을 조금 줬어요. 고양이는 제 옆에서 한참 동안 놀았어요. 내일도 같은 자리에서 고양이를 만나고 싶어요.",
@@ -124,6 +99,7 @@ export const READING_A2_A: RawPassage[] = [
   },
   {
     level: "A2",
+    genre: "story",
     title_kr: "눈사람을 만들었어요",
     title_en: "I made a snowman",
     body_kr: "어제 눈이 많이 내렸어요. 저는 조카와 함께 마당에서 눈사람을 만들었어요. 눈사람의 눈이 자꾸 떨어져서 다시 만들었어요. 완성된 눈사람을 보고 조카가 활짝 웃었어요. 눈이 녹기 전에 사진을 많이 찍을 거예요.",
@@ -135,6 +111,7 @@ export const READING_A2_A: RawPassage[] = [
   },
   {
     level: "A2",
+    genre: "story",
     title_kr: "열쇠를 잃어버렸어요",
     title_en: "I lost my keys",
     body_kr: "오늘 퇴근 후에 집 앞에서 열쇠를 찾을 수 없었어요. 가방을 다 뒤졌지만 열쇠가 없었어요. 결국 관리실에 가서 도움을 받았어요. 나중에 코트 주머니에서 열쇠를 찾았어요. 다음부터는 열쇠를 항상 같은 곳에 둘 거예요.",
@@ -146,17 +123,7 @@ export const READING_A2_A: RawPassage[] = [
   },
   {
     level: "A2",
-    title_kr: "목욕탕에 갔어요",
-    title_en: "I went to the bathhouse",
-    body_kr: "지난 주말에 동네 목욕탕에 처음 갔어요. 뜨거운 물이 처음에는 조금 부담스러웠어요. 시간이 지나자 몸이 편안해졌어요. 목욕탕에서 나온 후에 식혜를 마셨어요. 다음에도 시간이 있으면 또 갈 거예요.",
-    body_en: "Last weekend I went to a neighborhood bathhouse for the first time. The hot water felt a bit overwhelming at first. As time passed, my body felt relaxed. After leaving the bathhouse, I drank sikhye. I will go again next time if I have time.",
-    questions: [
-      { question_en: "How did the hot water feel at first?", options: ["Boring","Just right","Cold","A bit overwhelming"], answerIndex: 3 },
-      { question_en: "What did the narrator drink afterward?", options: ["Tea","Coffee","Sikhye","Water"], answerIndex: 2 },
-    ],
-  },
-  {
-    level: "A2",
+    genre: "story",
     title_kr: "산에 올라갔어요",
     title_en: "I climbed a mountain",
     body_kr: "지난 일요일에 친구들과 뒷산에 올라갔어요. 길이 생각보다 가팔라서 힘들었어요. 정상에서 본 풍경은 정말 아름다웠어요. 우리는 정상에서 사진을 많이 찍었어요. 다음 달에는 더 높은 산에 갈 거예요.",
@@ -168,17 +135,7 @@ export const READING_A2_A: RawPassage[] = [
   },
   {
     level: "A2",
-    title_kr: "우체국에서",
-    title_en: "At the post office",
-    body_kr: "오늘 오전에 소포를 보내려고 우체국에 갔어요. 사람이 많아서 삼십 분이나 기다렸어요. 직원이 상자 포장을 도와줬어요. 결국 무사히 소포를 부쳤어요. 친구가 소포를 받으면 연락해 줄 거예요.",
-    body_en: "This morning I went to the post office to send a package. There were many people, so I waited thirty minutes. The clerk helped me pack the box. In the end, I sent the package safely. My friend will contact me when she receives it.",
-    questions: [
-      { question_en: "Why did the narrator wait long?", options: ["The office was closed","There were many people","The clerk was late","It started raining"], answerIndex: 1 },
-      { question_en: "Who helped pack the box?", options: ["No one","A friend","The clerk","A stranger"], answerIndex: 2 },
-    ],
-  },
-  {
-    level: "A2",
+    genre: "story",
     title_kr: "처음 낚시를 했어요",
     title_en: "My first time fishing",
     body_kr: "지난 토요일에 아버지와 처음 낚시를 갔어요. 몇 시간 동안 아무것도 잡지 못했어요. 저는 조금 지루하고 실망스러웠어요. 그런데 마지막에 작은 물고기를 한 마리 잡았어요. 다음에는 더 큰 물고기를 잡고 싶어요.",
@@ -190,28 +147,7 @@ export const READING_A2_A: RawPassage[] = [
   },
   {
     level: "A2",
-    title_kr: "아침 조깅",
-    title_en: "Morning jogging",
-    body_kr: "요즘 저는 매일 아침에 조깅을 해요. 오늘은 늦잠을 자서 조깅을 못 했어요. 대신 저녁에 공원에서 뛰었어요. 저녁 공기가 시원해서 기분이 좋았어요. 내일부터는 다시 아침에 뛸 거예요.",
-    body_en: "These days I jog every morning. Today I overslept and couldn't jog. Instead, I ran in the park in the evening. The evening air was cool, so I felt good. From tomorrow, I will run in the mornings again.",
-    questions: [
-      { question_en: "Why couldn't the narrator jog in the morning?", options: ["Was sick","It was raining","Had no time","Overslept"], answerIndex: 3 },
-      { question_en: "When did the narrator run instead?", options: ["Not at all","Night","Afternoon","Evening"], answerIndex: 3 },
-    ],
-  },
-  {
-    level: "A2",
-    title_kr: "텃밭을 가꿔요",
-    title_en: "Tending a small garden",
-    body_kr: "저는 지난봄부터 작은 텃밭을 가꾸고 있어요. 상추와 토마토를 심었어요. 며칠 전에는 벌레 때문에 상추가 조금 상했어요. 그래도 토마토는 잘 자라고 있어요. 다음 달에는 첫 토마토를 수확할 거예요.",
-    body_en: "I have been tending a small garden since last spring. I planted lettuce and tomatoes. A few days ago, the lettuce got a little damaged because of insects. Still, the tomatoes are growing well. Next month I will harvest the first tomatoes.",
-    questions: [
-      { question_en: "What did the narrator plant?", options: ["Carrots","Lettuce and tomatoes","Only tomatoes","Only lettuce"], answerIndex: 1 },
-      { question_en: "What damaged the lettuce?", options: ["A dog","Sunlight","Insects","Rain"], answerIndex: 2 },
-    ],
-  },
-  {
-    level: "A2",
+    genre: "story",
     title_kr: "이웃과의 오해",
     title_en: "A misunderstanding with a neighbor",
     body_kr: "지난주에 이웃 아저씨가 저에게 화를 내셨어요. 저는 이유를 몰라서 당황했어요. 나중에 알고 보니 주차 문제 때문이었어요. 저는 직접 찾아가서 오해를 풀었어요. 지금은 이웃 아저씨와 사이가 좋아요.",
@@ -223,6 +159,7 @@ export const READING_A2_A: RawPassage[] = [
   },
   {
     level: "A2",
+    genre: "story",
     title_kr: "지하철에서 잠들었어요",
     title_en: "I fell asleep on the subway",
     body_kr: "어제 너무 피곤해서 지하철에서 깜빡 잠들었어요. 눈을 떠보니 이미 종점이었어요. 저는 급하게 반대 방향 지하철을 탔어요. 결국 집에 한 시간이나 늦게 도착했어요. 다음부터는 알람을 맞추고 잘 거예요.",
@@ -234,17 +171,7 @@ export const READING_A2_A: RawPassage[] = [
   },
   {
     level: "A2",
-    title_kr: "새벽에 깼어요",
-    title_en: "I woke up before dawn",
-    body_kr: "오늘 새벽에 이상한 소리 때문에 잠에서 깼어요. 처음에는 조금 무서웠어요. 알고 보니 창밖에 고양이가 있었어요. 저는 안심하고 다시 잠들었어요. 내일은 창문을 꼭 닫고 잘 거예요.",
-    body_en: "I woke up before dawn today because of a strange noise. At first I was a bit scared. It turned out there was a cat outside the window. I felt relieved and fell back asleep. Tomorrow I will make sure to close the window before sleeping.",
-    questions: [
-      { question_en: "What caused the noise?", options: ["The wind","A cat","A dog","A person"], answerIndex: 1 },
-      { question_en: "What will the narrator do tomorrow?", options: ["Close the window","Leave the window open","Move houses","Stay awake"], answerIndex: 0 },
-    ],
-  },
-  {
-    level: "A2",
+    genre: "story",
     title_kr: "우산을 나눠 썼어요",
     title_en: "We shared an umbrella",
     body_kr: "오늘 갑자기 비가 내렸어요. 저는 우산이 없어서 곤란했어요. 모르는 학생이 우산을 같이 쓰자고 했어요. 우리는 이야기를 나누며 같이 걸었어요. 다음에 또 만나면 고맙다고 말할 거예요.",
@@ -256,17 +183,7 @@ export const READING_A2_A: RawPassage[] = [
   },
   {
     level: "A2",
-    title_kr: "빨래를 널었어요",
-    title_en: "I hung the laundry",
-    body_kr: "오늘 아침에 빨래를 마당에 널었어요. 오후에 갑자기 비가 내리기 시작했어요. 저는 급하게 빨래를 걷으러 뛰어갔어요. 다행히 빨래가 많이 젖지 않았어요. 앞으로는 일기 예보를 먼저 확인할 거예요.",
-    body_en: "This morning I hung the laundry in the yard. In the afternoon, it suddenly started to rain. I ran hurriedly to bring in the laundry. Fortunately, the laundry didn't get very wet. From now on, I will check the weather forecast first.",
-    questions: [
-      { question_en: "What happened in the afternoon?", options: ["It suddenly rained","The wind stopped","It got sunny","Nothing happened"], answerIndex: 0 },
-      { question_en: "What will the narrator do from now on?", options: ["Dry laundry inside","Stop doing laundry","Check the weather forecast","Buy a dryer"], answerIndex: 2 },
-    ],
-  },
-  {
-    level: "A2",
+    genre: "story",
     title_kr: "도자기 만들기 체험",
     title_en: "A pottery-making experience",
     body_kr: "지난 주말에 친구와 도자기 만들기 체험을 했어요. 물레를 처음 다뤄서 손이 자꾸 미끄러졌어요. 컵 모양이 조금 삐뚤어졌지만 재미있었어요. 두 주 후에 완성된 컵을 받을 거예요. 다음에는 접시도 만들어 보고 싶어요.",
@@ -278,17 +195,7 @@ export const READING_A2_A: RawPassage[] = [
   },
   {
     level: "A2",
-    title_kr: "놀이터에서 놀았어요",
-    title_en: "Playing at the playground",
-    body_kr: "오늘 오후에 조카와 놀이터에 갔어요. 조카가 그네를 타다가 조금 무서워했어요. 저는 옆에서 천천히 밀어 줬어요. 나중에는 조카가 혼자서도 잘 탔어요. 다음 주에도 같이 놀이터에 갈 거예요.",
-    body_en: "This afternoon I went to the playground with my niece. My niece got a bit scared while on the swing. I pushed it slowly next to her. Later, she was able to swing well by herself. We will go to the playground together next week too.",
-    questions: [
-      { question_en: "What happened while the niece was on the swing?", options: ["She laughed","She got tired","She fell","She got scared"], answerIndex: 3 },
-      { question_en: "What happened later?", options: ["They went home","She cried","She swung well alone","She stopped swinging"], answerIndex: 2 },
-    ],
-  },
-  {
-    level: "A2",
+    genre: "story",
     title_kr: "처음 캠핑을 갔어요",
     title_en: "My first camping trip",
     body_kr: "지난달에 가족과 처음 캠핑을 갔어요. 텐트를 치는 것이 생각보다 오래 걸렸어요. 밤에는 별이 정말 많이 보였어요. 아침에는 이슬 때문에 텐트가 축축했어요. 다음에는 더 좋은 텐트를 준비할 거예요.",
@@ -300,6 +207,7 @@ export const READING_A2_A: RawPassage[] = [
   },
   {
     level: "A2",
+    genre: "story",
     title_kr: "손을 다쳤어요",
     title_en: "I hurt my hand",
     body_kr: "오늘 요리를 하다가 칼에 손을 베였어요. 피가 조금 나서 놀랐어요. 룸메이트가 급하게 약을 발라 줬어요. 다행히 상처가 깊지 않았어요. 내일부터는 요리할 때 더 조심할 거예요.",
@@ -311,17 +219,7 @@ export const READING_A2_A: RawPassage[] = [
   },
   {
     level: "A2",
-    title_kr: "계란을 깨뜨렸어요",
-    title_en: "I broke an egg",
-    body_kr: "오늘 아침에 계란을 꺼내다가 하나를 떨어뜨렸어요. 바닥이 온통 계란으로 지저분해졌어요. 저는 서둘러서 걸레로 닦았어요. 결국 아침 식사 시간이 늦어졌어요. 다음부터는 계란을 더 조심히 꺼낼 거예요.",
-    body_en: "This morning while taking out eggs, I dropped one. The floor became messy with egg all over it. I hurriedly cleaned it with a rag. In the end, breakfast was delayed. From now on, I will take out eggs more carefully.",
-    questions: [
-      { question_en: "What made the floor messy?", options: ["Flour","Spilled milk","A dropped egg","Water"], answerIndex: 2 },
-      { question_en: "What was delayed?", options: ["Breakfast","Getting to work","Shopping","Cleaning"], answerIndex: 0 },
-    ],
-  },
-  {
-    level: "A2",
+    genre: "story",
     title_kr: "화분을 깨뜨렸어요",
     title_en: "I broke a flowerpot",
     body_kr: "오늘 청소를 하다가 실수로 화분을 떨어뜨렸어요. 화분이 깨지고 흙이 바닥에 쏟아졌어요. 저는 깜짝 놀랐지만 천천히 치웠어요. 화분 안의 꽃은 다행히 괜찮았어요. 내일 새 화분을 사러 갈 거예요.",
@@ -333,6 +231,7 @@ export const READING_A2_A: RawPassage[] = [
   },
   {
     level: "A2",
+    genre: "story",
     title_kr: "발을 삐었어요",
     title_en: "I sprained my ankle",
     body_kr: "어제 계단을 내려가다가 발을 삐었어요. 발목이 많이 부어서 걷기가 힘들었어요. 친구가 저를 병원까지 데려다줬어요. 의사 선생님이 며칠 쉬어야 한다고 하셨어요. 다음 주까지는 운동을 쉴 거예요.",
@@ -344,6 +243,7 @@ export const READING_A2_A: RawPassage[] = [
   },
   {
     level: "A2",
+    genre: "story",
     title_kr: "서점에서 길을 잃었어요",
     title_en: "I got lost in a bookstore",
     body_kr: "오늘 큰 서점에 처음 갔어요. 서점이 너무 넓어서 출구를 못 찾았어요. 저는 십 분 동안 이리저리 헤맸어요. 결국 직원에게 물어봐서 겨우 나왔어요. 다음에는 지도를 먼저 확인할 거예요.",
@@ -355,17 +255,7 @@ export const READING_A2_A: RawPassage[] = [
   },
   {
     level: "A2",
-    title_kr: "우편물을 잘못 받았어요",
-    title_en: "I received someone else's mail",
-    body_kr: "오늘 우편함에서 낯선 이름의 편지를 발견했어요. 처음에는 제 편지인 줄 알고 뜯을 뻔했어요. 자세히 보니 옆집 주소였어요. 저는 직접 옆집에 가져다줬어요. 옆집 사람이 정말 고마워했어요.",
-    body_en: "Today I found a letter with an unfamiliar name in the mailbox. At first, I almost opened it, thinking it was mine. Looking closely, I saw it was for the house next door. I brought it to the neighbor myself. The neighbor was very thankful.",
-    questions: [
-      { question_en: "What did the narrator almost do?", options: ["Open it","Call the post office","Throw it away","Return it"], answerIndex: 0 },
-      { question_en: "Whose mail was it?", options: ["The neighbor's","A friend's","A stranger's","The narrator's"], answerIndex: 0 },
-    ],
-  },
-  {
-    level: "A2",
+    genre: "story",
     title_kr: "자전거가 고장 났어요",
     title_en: "My bicycle broke",
     body_kr: "오늘 출근길에 자전거 체인이 갑자기 빠졌어요. 저는 길에서 당황해서 어쩔 줄 몰랐어요. 지나가던 아저씨가 고쳐 주셨어요. 저는 감사 인사를 하고 다시 출발했어요. 이번 주말에는 자전거를 정비소에 맡길 거예요.",
@@ -377,6 +267,7 @@ export const READING_A2_A: RawPassage[] = [
   },
   {
     level: "A2",
+    genre: "story",
     title_kr: "산책 중에 비를 만났어요",
     title_en: "Caught in the rain during a walk",
     body_kr: "오늘 오후에 산책을 하다가 갑자기 비가 왔어요. 우산이 없어서 근처 가게로 뛰어갔어요. 가게 주인이 친절하게 자리를 내주셨어요. 비가 그칠 때까지 잠시 기다렸어요. 다음부터는 날씨를 미리 확인할 거예요.",
@@ -388,6 +279,7 @@ export const READING_A2_A: RawPassage[] = [
   },
   {
     level: "A2",
+    genre: "story",
     title_kr: "오래된 사진을 찾았어요",
     title_en: "I found an old photo",
     body_kr: "오늘 방을 정리하다가 오래된 사진을 발견했어요. 사진 속에는 어릴 때 저와 부모님이 있었어요. 저는 그때 기억이 잘 나지 않아서 부모님께 여쭤봤어요. 부모님이 재미있는 이야기를 많이 해 주셨어요. 이번 주말에 그 사진을 액자에 넣을 거예요.",
@@ -399,6 +291,7 @@ export const READING_A2_A: RawPassage[] = [
   },
   {
     level: "A2",
+    genre: "story",
     title_kr: "처음 스케이트를 탔어요",
     title_en: "My first time ice skating",
     body_kr: "지난 겨울에 처음 스케이트장에 갔어요. 처음에는 계속 넘어져서 힘들었어요. 시간이 지나자 조금씩 균형을 잡을 수 있었어요. 마지막에는 혼자서 천천히 탈 수 있었어요. 다음 겨울에도 스케이트를 타러 갈 거예요.",
@@ -410,17 +303,7 @@ export const READING_A2_A: RawPassage[] = [
   },
   {
     level: "A2",
-    title_kr: "안경을 잃어버렸어요",
-    title_en: "I lost my glasses",
-    body_kr: "오늘 아침에 안경이 갑자기 보이지 않았어요. 온 집을 다 찾아봤지만 없었어요. 결국 머리 위에 안경을 쓰고 있는 것을 발견했어요. 저는 웃음이 났지만 조금 부끄러웠어요. 다음부터는 안경을 벗으면 바로 케이스에 넣을 거예요.",
-    body_en: "This morning my glasses suddenly couldn't be found. I searched the whole house, but they weren't there. In the end, I discovered they were on top of my head. I laughed but felt a bit embarrassed. From now on, I will put my glasses in their case right after taking them off.",
-    questions: [
-      { question_en: "Where were the glasses?", options: ["On top of the head","In the bag","In the kitchen","Under the bed"], answerIndex: 0 },
-      { question_en: "How did the narrator feel?", options: ["Sad","Angry","Scared","Embarrassed"], answerIndex: 3 },
-    ],
-  },
-  {
-    level: "A2",
+    genre: "story",
     title_kr: "목도리를 떴어요",
     title_en: "I knitted a scarf",
     body_kr: "지난달부터 겨울을 위해 목도리를 뜨기 시작했어요. 처음에는 실이 자꾸 엉켜서 힘들었어요. 유튜브를 보면서 조금씩 방법을 배웠어요. 오늘 드디어 목도리를 완성했어요. 이 목도리는 동생에게 선물할 거예요.",
@@ -432,6 +315,7 @@ export const READING_A2_A: RawPassage[] = [
   },
   {
     level: "A2",
+    genre: "story",
     title_kr: "이른 아침 시장",
     title_en: "An early-morning market",
     body_kr: "오늘 새벽에 처음으로 새벽 시장에 가 봤어요. 사람들이 벌써 활기차게 물건을 팔고 있었어요. 저는 신선한 생선과 채소를 샀어요. 상인 아저씨가 덤으로 채소를 더 주셨어요. 다음에도 일찍 일어나서 시장에 갈 거예요.",
@@ -443,6 +327,7 @@ export const READING_A2_A: RawPassage[] = [
   },
   {
     level: "A2",
+    genre: "story",
     title_kr: "강아지를 잃어버렸어요",
     title_en: "I lost my dog",
     body_kr: "오늘 공원에서 목줄이 풀려서 강아지가 뛰어갔어요. 저는 놀라서 강아지 이름을 부르며 뛰어다녔어요. 삼십 분 후에 나무 뒤에서 강아지를 찾았어요. 강아지를 안았을 때 정말 안심이 됐어요. 앞으로는 목줄을 더 단단히 확인할 거예요.",
@@ -454,6 +339,7 @@ export const READING_A2_A: RawPassage[] = [
   },
   {
     level: "A2",
+    genre: "story",
     title_kr: "계획에 없던 여행",
     title_en: "An unplanned trip",
     body_kr: "지난 금요일에 친구가 갑자기 여행을 가자고 했어요. 저는 계획이 없었지만 바로 가방을 쌌어요. 우리는 기차를 타고 바닷가 마을로 갔어요. 예정에 없던 여행이었지만 정말 즐거웠어요. 다음에도 이런 즉흥 여행을 또 하고 싶어요.",
@@ -465,6 +351,7 @@ export const READING_A2_A: RawPassage[] = [
   },
   {
     level: "A2",
+    genre: "story",
     title_kr: "우연히 만난 친구",
     title_en: "A friend I met by chance",
     body_kr: "오늘 시내에서 우연히 고등학교 친구를 만났어요. 우리는 몇 년 만에 처음 보는 거였어요. 반가운 마음에 근처 카페에서 오래 이야기했어요. 서로 연락처를 다시 교환했어요. 다음 달에 다시 만나기로 약속했어요.",
@@ -476,6 +363,7 @@ export const READING_A2_A: RawPassage[] = [
   },
   {
     level: "A2",
+    genre: "story",
     title_kr: "비행기를 놓쳤어요",
     title_en: "I missed my flight",
     body_kr: "오늘 공항에 늦게 도착해서 비행기를 놓쳤어요. 저는 너무 당황해서 어떻게 해야 할지 몰랐어요. 항공사 직원이 다음 비행기 표를 도와줬어요. 결국 두 시간 늦게 출발할 수 있었어요. 다음부터는 공항에 더 일찍 도착할 거예요.",
@@ -487,17 +375,7 @@ export const READING_A2_A: RawPassage[] = [
   },
   {
     level: "A2",
-    title_kr: "낮잠을 잤어요",
-    title_en: "I took a nap",
-    body_kr: "오늘 오후에 소파에서 잠깐 낮잠을 잤어요. 잠깐 잔다고 생각했는데 세 시간이나 잤어요. 일어나 보니 밖이 벌써 어두워져 있었어요. 저녁 약속에 늦을까 봐 서둘러 준비했어요. 다음부터는 알람을 맞추고 낮잠을 잘 거예요.",
-    body_en: "This afternoon I took a short nap on the sofa. I thought I would nap briefly, but I slept for three hours. When I woke up, it was already dark outside. I hurried to get ready, worried I would be late for my evening appointment. From now on, I will set an alarm before napping.",
-    questions: [
-      { question_en: "How long did the narrator sleep?", options: ["All day","Three hours","Ten minutes","One hour"], answerIndex: 1 },
-      { question_en: "Why did the narrator hurry?", options: ["Cold","Late for work","Late for an evening appointment","Hungry"], answerIndex: 2 },
-    ],
-  },
-  {
-    level: "A2",
+    genre: "story",
     title_kr: "처음 등산을 했어요",
     title_en: "My first hike",
     body_kr: "지난 주말에 회사 동료들과 처음 등산을 했어요. 초반에는 숨이 차서 많이 힘들었어요. 동료들이 천천히 함께 걸어 줘서 고마웠어요. 정상에 도착했을 때 성취감을 느꼈어요. 다음 달에도 다른 산으로 등산을 갈 거예요.",
@@ -509,6 +387,7 @@ export const READING_A2_A: RawPassage[] = [
   },
   {
     level: "A2",
+    genre: "story",
     title_kr: "물건을 실수로 바꿨어요",
     title_en: "I mixed up items by mistake",
     body_kr: "오늘 헬스장에서 다른 사람의 가방을 제 것으로 착각했어요. 집에 와서야 가방이 바뀐 것을 알았어요. 저는 헬스장에 다시 전화해서 상황을 설명했어요. 다행히 주인을 찾아서 가방을 바꿀 수 있었어요. 다음부터는 가방에 이름표를 붙일 거예요.",
@@ -520,6 +399,7 @@ export const READING_A2_A: RawPassage[] = [
   },
   {
     level: "A2",
+    genre: "story",
     title_kr: "창문을 깼어요",
     title_en: "I broke a window",
     body_kr: "오늘 마당에서 공을 차다가 실수로 창문을 깼어요. 저는 너무 놀라서 부모님께 바로 말씀드렸어요. 부모님은 화내지 않고 침착하게 정리해 주셨어요. 저는 죄송한 마음에 방 청소를 도왔어요. 다음부터는 마당에서 공을 조심히 찰 거예요.",
@@ -531,39 +411,7 @@ export const READING_A2_A: RawPassage[] = [
   },
   {
     level: "A2",
-    title_kr: "손님이 오셨어요",
-    title_en: "A guest came over",
-    body_kr: "오늘 갑자기 이모가 저희 집에 오셨어요. 집이 조금 지저분해서 급하게 청소했어요. 이모와 함께 맛있는 저녁을 만들어 먹었어요. 이모는 다음에 또 오겠다고 말씀하셨어요. 다음번에는 미리 청소를 해 놓을 거예요.",
-    body_en: "My aunt suddenly came to our house today. Since the house was a little messy, I cleaned it in a hurry. My aunt and I made and ate a delicious dinner together. My aunt said she would come again next time. Next time, I will clean the house in advance.",
-    questions: [
-      { question_en: "Why did the narrator clean in a hurry?", options: ["Guests were coming later","It was cleaning day","Nothing special","The house was messy when the aunt arrived"], answerIndex: 3 },
-      { question_en: "What will the narrator do next time?", options: ["Ask the aunt not to come","Move houses","Not clean at all","Clean in advance"], answerIndex: 3 },
-    ],
-  },
-  {
-    level: "A2",
-    title_kr: "문을 잠그고 나왔어요",
-    title_en: "I locked myself out",
-    body_kr: "오늘 아침에 급하게 나오다가 열쇠를 안에 두고 문을 잠갔어요. 저는 밖에서 어찌할 바를 몰라 당황했어요. 다행히 룸메이트가 여분 열쇠를 가지고 있었어요. 룸메이트가 회사에서 열쇠를 가져다줬어요. 이제부터는 열쇠를 항상 주머니에 넣고 다닐 거예요.",
-    body_en: "This morning, in a hurry to leave, I locked the door with the keys left inside. I was flustered outside, not knowing what to do. Fortunately, my roommate had a spare key. My roommate brought the key from work. From now on, I will always carry my keys in my pocket.",
-    questions: [
-      { question_en: "What did the narrator leave inside?", options: ["Nothing","A wallet","A phone","The keys"], answerIndex: 3 },
-      { question_en: "Who had a spare key?", options: ["The roommate","The landlord","A friend","A neighbor"], answerIndex: 0 },
-    ],
-  },
-  {
-    level: "A2",
-    title_kr: "우연히 옛 친구를 만났어요",
-    title_en: "I ran into an old friend by chance",
-    body_kr: "오늘 마트에서 예상치 못하게 초등학교 동창을 만났어요. 처음에는 서로 알아보지 못했어요. 이름을 듣고서야 누구인지 기억이 났어요. 우리는 옛날 이야기를 하며 크게 웃었어요. 다음 주에 같이 저녁을 먹기로 했어요.",
-    body_en: "Today, unexpectedly, I met an elementary school classmate at the mart. At first, we didn't recognize each other. Only after hearing the name did I remember who it was. We laughed a lot talking about old times. We decided to have dinner together next week.",
-    questions: [
-      { question_en: "Where did they meet?", options: ["At school","At home","At the mart","At a park"], answerIndex: 2 },
-      { question_en: "What did they decide?", options: ["To never meet again","To have dinner next week","To move away","To call daily"], answerIndex: 1 },
-    ],
-  },
-  {
-    level: "A2",
+    genre: "story",
     title_kr: "아기 고양이를 발견했어요",
     title_en: "I found a kitten",
     body_kr: "오늘 퇴근길에 골목에서 작은 아기 고양이를 발견했어요. 고양이가 혼자 울고 있어서 마음이 아팠어요. 저는 근처 동물병원에 데려갔어요. 수의사 선생님이 고양이가 건강하다고 하셨어요. 앞으로 이 고양이를 제가 키울 거예요.",
@@ -575,6 +423,7 @@ export const READING_A2_A: RawPassage[] = [
   },
   {
     level: "A2",
+    genre: "story",
     title_kr: "소풍을 갔어요",
     title_en: "I went on a picnic",
     body_kr: "지난 주말에 가족과 근처 공원으로 소풍을 갔어요. 저는 김밥과 과일을 준비했어요. 돗자리를 펴자마자 갑자기 바람이 세게 불었어요. 우리는 나무 아래로 자리를 옮겼어요. 다음 소풍에는 날씨를 미리 확인할 거예요.",
@@ -586,6 +435,7 @@ export const READING_A2_A: RawPassage[] = [
   },
   {
     level: "A2",
+    genre: "story",
     title_kr: "태풍이 왔어요",
     title_en: "A typhoon came",
     body_kr: "어제 태풍 때문에 밤새 바람이 세게 불었어요. 저는 걱정이 되어 창문을 단단히 닫았어요. 아침에 일어나 보니 마당의 화분이 넘어져 있었어요. 다행히 큰 피해는 없었어요. 다음 태풍이 오기 전에 미리 준비를 해 둘 거예요.",
@@ -597,28 +447,7 @@ export const READING_A2_A: RawPassage[] = [
   },
   {
     level: "A2",
-    title_kr: "처음 그림 수업을 들었어요",
-    title_en: "My first painting class",
-    body_kr: "지난주에 처음으로 수채화 수업을 들었어요. 물의 양을 조절하는 것이 생각보다 어려웠어요. 선생님이 옆에서 하나씩 알려 주셨어요. 완성된 그림이 생각보다 마음에 들었어요. 다음 주에도 계속 수업을 들을 거예요.",
-    body_en: "Last week I took a watercolor class for the first time. Controlling the amount of water was harder than expected. The teacher taught me step by step next to me. I liked the finished painting more than I expected. I will continue taking the class next week too.",
-    questions: [
-      { question_en: "What was harder than expected?", options: ["Finding the class","Controlling the water amount","Buying supplies","Choosing subjects"], answerIndex: 1 },
-      { question_en: "How did the narrator feel about the finished painting?", options: ["Liked it","Disappointed","Indifferent","Embarrassed"], answerIndex: 0 },
-    ],
-  },
-  {
-    level: "A2",
-    title_kr: "늦은 밤 산책",
-    title_en: "A late-night walk",
-    body_kr: "어제 잠이 오지 않아서 밤늦게 산책을 나갔어요. 거리가 조용하고 공기가 시원했어요. 걷다가 우연히 별이 가득한 하늘을 봤어요. 마음이 편안해져서 집에 돌아왔어요. 앞으로 잠이 안 올 때마다 산책을 할 거예요.",
-    body_en: "Yesterday I couldn't sleep, so I went for a walk late at night. The street was quiet and the air was cool. While walking, I happened to see a sky full of stars. I felt relaxed and returned home. From now on, I will take a walk whenever I can't sleep.",
-    questions: [
-      { question_en: "Why did the narrator go for a walk?", options: ["Was hungry","Wanted exercise","Couldn't sleep","Met a friend"], answerIndex: 2 },
-      { question_en: "What did the narrator see?", options: ["Rain","A cat","A sky full of stars","Nothing special"], answerIndex: 2 },
-    ],
-  },
-  {
-    level: "A2",
+    genre: "story",
     title_kr: "화재 경보가 울렸어요",
     title_en: "The fire alarm went off",
     body_kr: "오늘 새벽에 갑자기 화재 경보가 울렸어요. 저는 깜짝 놀라서 급하게 밖으로 나갔어요. 알고 보니 이웃이 요리하다가 연기를 낸 것이었어요. 다행히 진짜 불은 아니었어요. 다음부터는 요리할 때 더 조심해야겠다고 생각했어요.",
@@ -630,6 +459,7 @@ export const READING_A2_A: RawPassage[] = [
   },
   {
     level: "A2",
+    genre: "story",
     title_kr: "첫 마라톤",
     title_en: "My first marathon",
     body_kr: "지난달에 처음으로 십 킬로미터 마라톤에 참가했어요. 중간에 다리가 아파서 포기하고 싶었어요. 옆에서 뛰던 사람이 저를 응원해 줬어요. 저는 끝까지 완주할 수 있었어요. 다음에는 더 긴 거리에 도전할 거예요.",
@@ -641,6 +471,7 @@ export const READING_A2_A: RawPassage[] = [
   },
   {
     level: "A2",
+    genre: "story",
     title_kr: "지붕에서 비가 새요",
     title_en: "The roof leaked",
     body_kr: "어제 밤에 비가 많이 와서 지붕에서 물이 샜어요. 저는 놀라서 양동이를 급하게 가져다 놓았어요. 아침에 관리인 아저씨께 바로 연락드렸어요. 오늘 오후에 아저씨가 오셔서 지붕을 고쳐 주셨어요. 이제는 비가 와도 걱정하지 않아도 돼요.",
@@ -648,17 +479,6 @@ export const READING_A2_A: RawPassage[] = [
     questions: [
       { question_en: "What did the narrator do first?", options: ["Went back to sleep","Left the house","Called the manager","Brought a bucket"], answerIndex: 3 },
       { question_en: "When was the roof fixed?", options: ["Never","That night","That afternoon","The next morning"], answerIndex: 2 },
-    ],
-  },
-  {
-    level: "A2",
-    title_kr: "겨울 방학 계획이 바뀌었어요",
-    title_en: "My winter break plan changed",
-    body_kr: "원래 겨울 방학에 제주도로 여행을 갈 계획이었어요. 그런데 갑자기 몸이 아파서 여행을 취소했어요. 저는 실망했지만 집에서 푹 쉬었어요. 며칠 후에 몸이 다 나아서 기분이 좋아졌어요. 다음 방학에는 꼭 제주도에 갈 거예요.",
-    body_en: "I originally planned to travel to Jeju Island during winter break. But I suddenly got sick and canceled the trip. I was disappointed but rested well at home. A few days later, I fully recovered and felt good. I will definitely go to Jeju Island next break.",
-    questions: [
-      { question_en: "Why was the trip canceled?", options: ["Missed the flight","Bad weather","No money","Got sick"], answerIndex: 3 },
-      { question_en: "What will the narrator do next break?", options: ["Travel abroad","Stay home again","Go to Jeju Island","Nothing planned"], answerIndex: 2 },
     ],
   },
 ];

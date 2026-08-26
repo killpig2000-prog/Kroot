@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
+import ChapterPathGroup from "@/components/chapters/ChapterPathGroup";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { getChapterStatuses, getChaptersForLevel } from "@/lib/reading";
 import { LEVEL_ORDER, type CefrLevel } from "@/lib/tree";
@@ -10,6 +11,27 @@ import { isDifficultyUnlocked } from "@/lib/level";
 function isCefrLevel(value: string | undefined): value is CefrLevel {
   return !!value && (LEVEL_ORDER as string[]).includes(value);
 }
+
+// Genre keys are unique across all levels (diary/story repeat at every level;
+// the other two slots change per level to match real-world text types that
+// get harder as CEFR level rises — see [[chapter-list-garden-path]] memory).
+const GENRE_META: Record<string, { icon: string; label: string; blurb: string }> = {
+  diary: { icon: "📔", label: "Diary", blurb: "Everyday life, told as it happens" },
+  story: { icon: "🎈", label: "Story", blurb: "Something specific happens — a small event" },
+  notice: { icon: "📌", label: "Notices", blurb: "Real signs and postings you'd see around town" },
+  dialogue: { icon: "💬", label: "Dialogue", blurb: "Two people talking — practice following a conversation" },
+  message: { icon: "📱", label: "Messages", blurb: "A text chat between two people" },
+  instruction: { icon: "📋", label: "Instructions", blurb: "Step-by-step — a recipe, a how-to, a set of directions" },
+  email: { icon: "✉️", label: "Emails", blurb: "Real correspondence — work, landlords, RSVPs" },
+  explainer: { icon: "📚", label: "Explainers", blurb: "How something works, or a Korean custom explained" },
+  review: { icon: "⭐", label: "Reviews", blurb: "An opinion piece — what's good, what's not, the verdict" },
+  article: { icon: "📰", label: "Articles", blurb: "A short news piece on a social trend" },
+  opinion: { icon: "🗣️", label: "Opinion", blurb: "A writer argues a stance, and weighs the other side" },
+  editorial: { icon: "🏛️", label: "Editorials", blurb: "A newspaper opinion column on a policy or social issue" },
+  essay: { icon: "🖋️", label: "Essays", blurb: "A reflective piece on identity, work, or modern life" },
+  academic: { icon: "🎓", label: "Academic", blurb: "A scholarly explainer on history, language, or ideas" },
+  interview: { icon: "🎙️", label: "Interviews", blurb: "A Q&A with an expert, writer, or public figure" },
+};
 
 const STATUS_STYLE: Record<string, { badge: string; seed: string; icon: string }> = {
   done: {
@@ -174,6 +196,9 @@ export default async function ReadingMapPage({
               const first = group[0].index + 1;
               const last = group[group.length - 1].index + 1;
               const groupDone = group.filter((g) => g.status === "done").length;
+              const firstGenre = group[0].chapter[0].genre;
+              const genre = group.every((g) => g.chapter[0].genre === firstGenre) ? firstGenre : undefined;
+              const meta = genre ? GENRE_META[genre] : undefined;
               return (
                 <details
                   key={gi}
@@ -181,9 +206,22 @@ export default async function ReadingMapPage({
                   className="border border-[#E3DDD0] rounded-[14px] bg-white overflow-hidden"
                 >
                   <summary className="flex items-center gap-3 px-5 py-3.5 cursor-pointer select-none list-none [&::-webkit-details-marker]:hidden hover:bg-[#FAF7EF] transition-colors">
-                    <b className="flex-1 font-bold text-[14.5px]">
-                      Chapters {first}–{last}
-                    </b>
+                    <span className="flex-1 min-w-0">
+                      {meta ? (
+                        <>
+                          <b className="font-bold text-[14.5px]">
+                            {meta.icon} {meta.label}
+                          </b>
+                          <small className="block text-[11.5px] text-[#A19A8C] font-normal truncate">
+                            {meta.blurb} · Chapters {first}–{last}
+                          </small>
+                        </>
+                      ) : (
+                        <b className="font-bold text-[14.5px]">
+                          Chapters {first}–{last}
+                        </b>
+                      )}
+                    </span>
                     <span className="flex-none flex items-center gap-2">
                       <span className="w-[74px] h-1.5 rounded-full bg-[#E3DDD0] overflow-hidden">
                         <span
@@ -197,47 +235,27 @@ export default async function ReadingMapPage({
                       <span className="text-[#A19A8C] text-[11px]">▾</span>
                     </span>
                   </summary>
-                  <div className="grid px-3.5 pb-3.5 pt-1 border-t border-dashed border-[#E3DDD0]">
-                    {group.map(({ chapter, status, index: i }) => {
-                      const passage = chapter[0];
-                      const style = STATUS_STYLE[status];
-                      const rowClass =
-                        "w-full flex items-center gap-3 text-left bg-white rounded-[10px] px-3 py-2.5 mt-2.5 transition-colors group border border-[#F5F1E8]";
-                      const content = (
-                        <>
-                          <span
-                            className={`w-8 h-8 rounded-[9px] flex-none flex items-center justify-center text-[13px] border transition-transform group-hover:scale-110 ${style.seed}`}
-                          >
-                            {style.icon}
-                          </span>
-                          <span className="flex-1 min-w-0">
-                            <b className="block font-semibold text-[13.5px]">Chapter {i + 1}</b>
-                            <small className="block kr text-[12px] text-[#6B6560] truncate">
-                              {passage.title_kr}
-                            </small>
-                          </span>
-                          <span
-                            className={`text-[11px] font-semibold rounded-md px-2 py-0.5 border ${style.badge}`}
-                          >
-                            {status === "done" ? "Done" : status === "current" ? "Read" : "Locked"}
-                          </span>
-                        </>
-                      );
-
-                      return status === "locked" ? (
-                        <div key={i} className={`${rowClass} opacity-60`}>
-                          {content}
-                        </div>
-                      ) : (
-                        <Link
-                          key={i}
-                          href={`/reading/session?chapter=${i}&level=${level}`}
-                          className={`${rowClass} hover:bg-[#EFF6FF] hover:border-[#BFDBFE]`}
-                        >
-                          {content}
-                        </Link>
-                      );
-                    })}
+                  <div className="px-3.5 pb-3.5 pt-2 border-t border-dashed border-[#E3DDD0]">
+                    <ChapterPathGroup
+                      lineColorClassName="border-[#BFDBFE]"
+                      hoverClassName="hover:bg-[#EFF6FF]"
+                      nodes={group.map(({ chapter, status, index: i }) => {
+                        const passage = chapter[0];
+                        const style = STATUS_STYLE[status];
+                        return {
+                          key: i,
+                          href: status === "locked" ? undefined : `/reading/session?chapter=${i}&level=${level}`,
+                          circleClassName: style.seed,
+                          ringClassName: status === "current" ? "ring-4 ring-[#BFDBFE]/60" : undefined,
+                          circleContent: style.icon,
+                          title: `Chapter ${i + 1}`,
+                          subtitle: <span className="kr">{passage.title_kr}</span>,
+                          badgeClassName: style.badge,
+                          badgeLabel: status === "done" ? "Done" : status === "current" ? "Read" : "Locked",
+                          dim: status === "locked",
+                        };
+                      })}
+                    />
                   </div>
                 </details>
               );
