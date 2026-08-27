@@ -7,6 +7,7 @@ import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { chapterWrittenToday, getChaptersForLevel, utcDayStartISO } from "@/lib/writing";
 import { isPlus } from "@/lib/plus";
 import { LEVEL_ORDER, type CefrLevel } from "@/lib/tree";
+import { levelProgress, treeStageForLevel } from "@/lib/level";
 
 function isCefrLevel(value: string | undefined): value is CefrLevel {
   return !!value && (LEVEL_ORDER as string[]).includes(value);
@@ -25,10 +26,10 @@ export default async function WritingChapterSessionPage({
 
   if (!user) redirect("/onboarding");
 
-  const [{ data: profile }, { data: todayRows }] = await Promise.all([
+  const [{ data: profile }, { data: todayRows }, { data: costumeRows }] = await Promise.all([
     supabase
       .from("profiles")
-      .select("display_name, current_level, streak_days, avatar_url, plus_until")
+      .select("display_name, current_level, streak_days, avatar_url, plus_until, xp")
       .eq("id", user.id)
       .single(),
     supabase
@@ -37,7 +38,11 @@ export default async function WritingChapterSessionPage({
       .eq("user_id", user.id)
       .gte("completed_at", utcDayStartISO())
       .limit(1),
+    supabase.from("user_costumes").select("costume_id").eq("user_id", user.id).eq("equipped", true),
   ]);
+
+  const equippedIds = (costumeRows ?? []).map((r) => r.costume_id);
+  const treeStage = treeStageForLevel(levelProgress(profile?.xp ?? 0).level);
 
   const myLevel = (profile?.current_level ?? "A1") as CefrLevel;
   const level = isCefrLevel(sp.level) ? sp.level : myLevel;
@@ -125,6 +130,9 @@ export default async function WritingChapterSessionPage({
               chapterIndex={chapterIndex}
               hasNextChapter={hasNextChapter}
               plus={plus}
+              species={myLevel}
+              costumeIds={equippedIds}
+              treeStage={treeStage}
             />
           )}
         </main>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
@@ -28,6 +28,14 @@ const BTN_AMBER =
   "rounded-[9px] px-[18px] py-[9px] text-sm font-semibold text-white bg-[#D97706] hover:bg-[#B45309] transition-colors disabled:opacity-60";
 const BTN_LINE =
   "rounded-[9px] px-[18px] py-[9px] text-sm font-semibold text-[#18181B] bg-white border border-[#E3DDD0] hover:bg-[#FAF7EF] transition-colors disabled:opacity-60";
+
+// Cycled every ~3.2s while grading is in flight (a real 5-15s API round
+// trip) so a slow check reads as "still working" instead of "stuck".
+const GRADING_STEPS = [
+  { title: "Reading your writing…", subtitle: "Your tree teacher is checking the grammar 🧐" },
+  { title: "Looking closely…", subtitle: "Comparing it to how a native speaker would say it" },
+  { title: "Almost there…", subtitle: "Writing up feedback just for you ✍️" },
+];
 
 function reactionFor(score: number) {
   if (score >= 90)
@@ -90,6 +98,9 @@ export default function WritingSession({
   chapterIndex,
   hasNextChapter,
   plus,
+  species,
+  costumeIds,
+  treeStage,
 }: {
   prompt: Prompt;
   userId: string;
@@ -97,6 +108,11 @@ export default function WritingSession({
   chapterIndex: number;
   hasNextChapter: boolean;
   plus: boolean;
+  /** The learner's actual CEFR grade — keeps the tree's species matching their real garden. */
+  species?: CefrLevel;
+  costumeIds?: string[];
+  /** The learner's real growth-stage silhouette (from their Lv, like the dashboard tree) — falls back to `level` if omitted. */
+  treeStage?: CefrLevel;
 }) {
   const router = useRouter();
   const supabase = useMemo(() => createClient(), []);
@@ -109,7 +125,20 @@ export default function WritingSession({
   const [grade, setGrade] = useState<GradeResult | null>(null);
   const [limitMessage, setLimitMessage] = useState<string | null>(null);
   const [levelUp, setLevelUp] = useState<ProgressResult | null>(null);
+  const [gradingStep, setGradingStep] = useState(0);
   const loggedMinutes = useRef(false);
+
+  // Grading is a real API round-trip (often 5-15s) — cycle through a few
+  // reassuring lines instead of one static caption so a slow check doesn't
+  // read as stuck.
+  useEffect(() => {
+    if (phase !== "grading") {
+      setGradingStep(0);
+      return;
+    }
+    const id = setInterval(() => setGradingStep((s) => s + 1), 3200);
+    return () => clearInterval(id);
+  }, [phase]);
 
   async function submit() {
     if (response.trim().length < MIN_RESPONSE_LENGTH) return;
@@ -269,15 +298,25 @@ export default function WritingSession({
   }
 
   if (phase === "grading") {
+    const step = GRADING_STEPS[Math.min(gradingStep, GRADING_STEPS.length - 1)];
     return (
       <div className={`${CARD} px-7 py-10 text-center`} style={{ animation: "fadeUp .35s ease" }}>
         <svg viewBox="0 0 220 230" className="w-[180px] h-auto mx-auto" aria-hidden="true">
           <g className="sway">
-            <LevelCreature level={level} />
+            <LevelCreature level={treeStage ?? level} species={species} costumeIds={costumeIds} />
           </g>
         </svg>
-        <h2 className="font-bold text-[19px] tracking-[-0.02em] mt-3 mb-1.5">Reading your writing…</h2>
-        <p className="text-sm text-[#6B6560]">Your tree teacher is checking the grammar 🧐</p>
+        <h2 key={step.title} className="font-bold text-[19px] tracking-[-0.02em] mt-3 mb-1.5" style={{ animation: "fadeUp .3s ease" }}>
+          {step.title}
+        </h2>
+        <p key={step.subtitle} className="text-sm text-[#6B6560]" style={{ animation: "fadeUp .3s ease" }}>
+          {step.subtitle}
+        </p>
+        {gradingStep >= GRADING_STEPS.length - 1 && (
+          <p className="text-[12.5px] text-[#A19A8C] mt-4">
+            Taking a little longer than usual — hang tight, it&apos;s still working.
+          </p>
+        )}
       </div>
     );
   }
@@ -301,7 +340,7 @@ export default function WritingSession({
                 </g>
               )}
               <g className={reaction.anim}>
-                <LevelCreature level={level} />
+                <LevelCreature level={treeStage ?? level} species={species} costumeIds={costumeIds} />
               </g>
             </svg>
           </div>
