@@ -53,6 +53,367 @@ const SUNBEAM_RAYS: string[] = Array.from({ length: 12 }, (_, i) => {
   return `M110 120 L${f(110 + Math.cos(a) * 160)} ${f(120 + Math.sin(a) * 160)} L${f(110 + Math.cos(a + 0.18) * 160)} ${f(120 + Math.sin(a + 0.18) * 160)}Z`;
 });
 
+// Shared gradients/pattern/filters for the "spirit" companions (dragon, deer,
+// dokkaebi). objectBoundingBox gradients (the default) so each shape gets its
+// own light-to-dark ramp regardless of where it's positioned or scaled — a
+// userSpaceOnUse gradient would go flat or misaligned in a shop thumbnail.
+function SpiritDefs() {
+  return (
+    <defs>
+      <linearGradient id="sp-body" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor="#A5F3FC" />
+        <stop offset="55%" stopColor="#3B82F6" />
+        <stop offset="100%" stopColor="#4C1D95" />
+      </linearGradient>
+      <linearGradient id="sp-fin" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor="#E0F2FE" stopOpacity=".9" />
+        <stop offset="100%" stopColor="#67E8F9" stopOpacity=".25" />
+      </linearGradient>
+      <linearGradient id="sp-horn" x1="0" y1="1" x2="0" y2="0">
+        <stop offset="0%" stopColor="#22D3EE" />
+        <stop offset="100%" stopColor="#ECFEFF" />
+      </linearGradient>
+      <linearGradient id="sp-deer" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor="#FFFFFF" />
+        <stop offset="100%" stopColor="#C7D2FE" />
+      </linearGradient>
+      <radialGradient id="sp-hoof" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stopColor="#A5F3FC" stopOpacity=".8" />
+        <stop offset="100%" stopColor="#A5F3FC" stopOpacity="0" />
+      </radialGradient>
+      <pattern id="sp-scale" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(-20)">
+        <path
+          d="M0 7 a3.5 3.5 0 0 1 7 0 M-3.5 3.5 a3.5 3.5 0 0 1 7 0 M3.5 3.5 a3.5 3.5 0 0 1 7 0"
+          fill="none"
+          stroke="#fff"
+          strokeWidth=".9"
+          opacity=".35"
+        />
+      </pattern>
+      <filter id="sp-glow" x="-40%" y="-40%" width="180%" height="180%">
+        <feGaussianBlur stdDeviation="2.2" result="b" />
+        <feMerge>
+          <feMergeNode in="b" />
+          <feMergeNode in="SourceGraphic" />
+        </feMerge>
+      </filter>
+      <filter id="sp-glow-soft" x="-60%" y="-60%" width="220%" height="220%">
+        <feGaussianBlur stdDeviation="4" />
+      </filter>
+    </defs>
+  );
+}
+const SP = { indigo: "#312E81", cyan: "#67E8F9", ice: "#CFFAFE", gold: "#FDE68A", star: "#FDE68A" };
+
+// ── Baby Spirit Dragon: big head, tiny body, two small fluttering wings ──
+function DragonWing({ x, y, s, cls }: { x: number; y: number; s: number; cls: string }) {
+  return (
+    <g transform={`translate(${x} ${y}) scale(${s})`} className={cls}>
+      <path
+        d="M0 0 C-10 -4 -18 -2 -22 6 C-16 4 -10 5 -6 9 C-12 10 -17 14 -18 20 C-11 16 -5 15 0 17 C-3 20 -4 25 -2 29 C2 24 6 20 9 15 C10 10 8 4 0 0Z"
+        fill="url(#sp-fin)"
+      />
+      <path
+        d="M0 0 C-10 -4 -18 -2 -22 6 M-6 9 C-12 10 -17 14 -18 20 M0 17 C-3 20 -4 25 -2 29"
+        stroke="#fff"
+        strokeWidth="1.1"
+        opacity=".55"
+        fill="none"
+        strokeLinecap="round"
+      />
+    </g>
+  );
+}
+
+function BabyDragon() {
+  return (
+    <g>
+      <ellipse cx="0" cy="27" rx="19" ry="5" fill={SP.cyan} opacity=".18" />
+      <g className="sp-hop">
+        <g filter="url(#sp-glow-soft)" opacity=".4">
+          <ellipse cx="0" cy="0" rx="22" ry="22" fill={SP.cyan} />
+        </g>
+        {/* tail, curls out front */}
+        <path d="M12 18 C24 20 30 12 26 4 C24 10 20 14 14 15Z" fill="url(#sp-body)" />
+        <path d="M23 8 l4 -2 l1 4.5 l-4 1.5z" fill="url(#sp-fin)" />
+        <DragonWing x={-10} y={-6} s={0.85} cls="sp-wisp" />
+        {/* body */}
+        <ellipse cx="0" cy="10" rx="14" ry="12" fill="url(#sp-body)" />
+        <ellipse cx="0" cy="12" rx="9" ry="8" fill="#E0F2FE" opacity=".9" />
+        <path
+          d="M0 6 q2 2 0 4 M-4 8 q2 1.6 0 3.2 M4 8 q2 1.6 0 3.2"
+          stroke={SP.cyan}
+          strokeWidth="1"
+          opacity=".7"
+          fill="none"
+          strokeLinecap="round"
+        />
+        {/* back spikes */}
+        <path
+          d="M-3 -1 l-3 -5 l4 2 M3 -3 l-1 -6 l4 3 M8 -1 l2 -5 l3 4"
+          stroke="url(#sp-horn)"
+          strokeWidth="2.2"
+          strokeLinecap="round"
+          fill="none"
+        />
+        {/* arms */}
+        <path d="M-13 6 C-19 4 -22 8 -20 13 C-17 10 -14 9 -11 10Z" fill="url(#sp-body)" />
+        <path d="M13 6 C19 4 22 9 19 13 C16 10 14 9 12 9Z" fill="url(#sp-body)" />
+        {/* legs */}
+        <ellipse cx="-8" cy="21" rx="5.5" ry="4" fill="url(#sp-body)" />
+        <ellipse cx="8" cy="21" rx="5.5" ry="4" fill="url(#sp-body)" />
+        <path
+          d="M-11 23 l-2 2 M-8 24 l0 2.4 M-5 23 l2 2 M5 23 l-2 2 M8 24 l0 2.4 M11 23 l2 2"
+          stroke={SP.gold}
+          strokeWidth="1.3"
+          strokeLinecap="round"
+        />
+        {/* head */}
+        <circle cx="0" cy="-11" r="15" fill="url(#sp-body)" />
+        <path d="M-9 -20 q9 -6 20 -3" stroke="#fff" strokeWidth="2.4" opacity=".4" strokeLinecap="round" fill="none" />
+        {/* snout */}
+        <ellipse cx="1" cy="-3" rx="8" ry="5.5" fill="#E0F2FE" opacity=".95" />
+        <path d="M-2 -1 q3 2.4 6 0" stroke={SP.indigo} strokeWidth="1.4" fill="none" strokeLinecap="round" />
+        <circle cx="-3" cy="-4" r=".8" fill={SP.indigo} opacity=".8" />
+        <circle cx="5" cy="-4" r=".8" fill={SP.indigo} opacity=".8" />
+        {/* horn nubs */}
+        <path d="M-6 -23 q-2 -5 -6 -6 q2 4 3 8Z M5 -24 q1 -5 5 -7 q-2 4 -2 8Z" fill="url(#sp-horn)" />
+        {/* ears/frills */}
+        <path d="M-13 -14 C-19 -13 -20 -6 -15 -3 C-15 -8 -14 -12 -11 -14Z" fill="url(#sp-fin)" opacity=".9" />
+        <path d="M12 -15 C18 -14 19 -7 14 -4 C14 -9 13 -13 10 -15Z" fill="url(#sp-fin)" opacity=".9" />
+        {/* eyes */}
+        <g className="blink">
+          <ellipse cx="-6.5" cy="-12" rx="4.6" ry="5.2" fill="#fff" />
+          <ellipse cx="6.5" cy="-12" rx="4.6" ry="5.2" fill="#fff" />
+          <circle cx="-5.8" cy="-11.4" r="2.7" fill={SP.indigo} />
+          <circle cx="7.2" cy="-11.4" r="2.7" fill={SP.indigo} />
+          <circle cx="-4.8" cy="-12.6" r=".9" fill="#fff" />
+          <circle cx="8.2" cy="-12.6" r=".9" fill="#fff" />
+        </g>
+        <circle cx="-10" cy="-6" r="2.6" fill="#F9A8D4" opacity=".5" />
+        <circle cx="10" cy="-6" r="2.6" fill="#F9A8D4" opacity=".5" />
+        {/* little fire puff */}
+        <g className="sp-flick">
+          <path d="M8 -1 q6 -2 9 3 q-4 2 -9 0z" fill="#F97316" opacity=".9" />
+          <path d="M9 -1 q3.4 -1 5 1.4 q-2.4 1 -5 0z" fill="#FDE68A" />
+        </g>
+        <DragonWing x={9} y={-4} s={1} cls="sp-wisp2" />
+      </g>
+    </g>
+  );
+}
+
+// ── Spirit Dokkaebi: glowing goblin friend with a lumpy club and dokkaebi-fire ──
+function DokkaebiFire({ x, y, s, cls }: { x: number; y: number; s: number; cls: string }) {
+  return (
+    <g transform={`translate(${x} ${y}) scale(${s})`} className={cls}>
+      <g filter="url(#sp-glow)">
+        <path
+          d="M0 6 C-6 2 -7 -6 -2 -12 C-3 -7 -1 -4 2 -3 C1 -7 3 -11 8 -13 C6 -8 8 -4 11 -2 C9 2 6 6 0 6Z"
+          fill="url(#sp-fin)"
+        />
+      </g>
+      <path d="M0 4 C-3 1 -4 -4 -1 -8" stroke="#fff" strokeWidth="1" opacity=".6" fill="none" />
+    </g>
+  );
+}
+
+function SpiritDokkaebi() {
+  return (
+    <g>
+      <ellipse cx="0" cy="24" rx="20" ry="5" fill={SP.cyan} opacity=".18" />
+      <DokkaebiFire x={-24} y={-30} s={1.1} cls="sp-rise" />
+      <DokkaebiFire x={24} y={-24} s={1} cls="sp-rise2" />
+      <g className="sp-hop">
+        <g filter="url(#sp-glow-soft)" opacity=".45">
+          <ellipse cx="0" cy="-6" rx="19" ry="21" fill={SP.cyan} />
+        </g>
+        <path d="M-10 8 C-14 16 -12 22 -6 22 C-7 17 -8 12 -7 8Z" fill="url(#sp-body)" />
+        <path d="M9 6 C15 12 15 20 9 22 C9 17 8 12 7 8Z" fill="url(#sp-body)" />
+        <ellipse cx="0" cy="-2" rx="15" ry="17" fill="url(#sp-body)" />
+        <ellipse cx="0" cy="-2" rx="15" ry="17" fill="url(#sp-scale)" />
+        <path d="M-9 -14 q9 -8 18 -2" stroke="#fff" strokeWidth="2.4" opacity=".4" strokeLinecap="round" fill="none" />
+        <path d="M-11 6 C-15 4 -15 12 -10 14 C-13 16 -17 13 -16 8 C-15 4 -13 3 -11 6Z" fill="#F59E0B" opacity=".9" />
+        <path d="M11 8 C15 6 16 13 11 15 C14 17 18 13 17 9 C16 5 13 5 11 8Z" fill="#F59E0B" opacity=".9" />
+        <path d="M-2 -20 l1.6 -8 l3.6 6.5z" fill={SP.gold} filter="url(#sp-glow)" />
+        <path d="M6 -21 l2.4 -7 l3 6.8z" fill={SP.gold} filter="url(#sp-glow)" />
+        <path
+          d="M-9 -18 q-2 -5 1 -8 M-2 -21 q0 -5 3 -7"
+          stroke={SP.ice}
+          strokeWidth="1.6"
+          fill="none"
+          strokeLinecap="round"
+          opacity=".8"
+        />
+        <g className="blink">
+          <ellipse cx="-5" cy="-6" rx="3.6" ry="4.2" fill="#fff" />
+          <ellipse cx="6" cy="-6" rx="3.6" ry="4.2" fill="#fff" />
+          <circle cx="-4.4" cy="-5.4" r="2" fill={SP.indigo} />
+          <circle cx="6.6" cy="-5.4" r="2" fill={SP.indigo} />
+          <circle cx="-3.8" cy="-6.2" r=".6" fill="#fff" />
+          <circle cx="7.2" cy="-6.2" r=".6" fill="#fff" />
+        </g>
+        <path d="M-6 1 q6 6 12 0" stroke={SP.indigo} strokeWidth="1.8" fill="none" strokeLinecap="round" />
+        <path
+          d="M-6 1.5 l-2 3 M-3 3 l-1.5 3.4 M0 3.4 l0 3.6 M3 3 l1.5 3.4 M6 1.5 l2 3"
+          stroke="#fff"
+          strokeWidth="1.3"
+          strokeLinecap="round"
+          opacity=".9"
+        />
+        <path d="M-16 8 l-9 8" stroke="url(#sp-body)" strokeWidth="4" strokeLinecap="round" />
+        <g transform="translate(-27 14) rotate(-30)">
+          <path d="M-3 -14 h6 v18 h-6z" fill="#B45309" />
+          <circle cx="0" cy="-16" r="5" fill="#92400E" />
+          <circle cx="-3" cy="-18" r="1.6" fill="#D97706" />
+          <circle cx="3" cy="-14" r="1.6" fill="#D97706" />
+          <circle cx="1" cy="-19" r="1.4" fill="#D97706" />
+        </g>
+        <path
+          d="M-5 15 C-8 19 -7 23 -3 23 C-4 20 -4 17 -3 15Z M5 15 C8 19 7 23 3 23 C4 20 4 17 3 15Z"
+          fill="#F59E0B"
+        />
+        <g stroke={SP.ice} strokeWidth="1.3" opacity=".7">
+          <path d="M-4 16 l1.5 4 M0 17 l0 4.5 M4 16 l-1.5 4" />
+        </g>
+      </g>
+    </g>
+  );
+}
+
+// ── Forest Spirit Deer: glowing white deer with a spotted back and antlers ──
+const DEER_SPOTS: [number, number][] = [
+  [-11, -6], [-3, -9], [6, -7], [-7, -1], [2, -3], [10, -2], [-13, 3], [8, 4], [-1, 7],
+];
+const DEER_ANTLER_STARS: [number, number][] = [
+  [-9, -21], [12, -21], [-12, -25], [16, -25], [-8, -29], [12, -30],
+];
+const DEER_HOOVES: [number, number][] = [[-15, 22], [-8, 24], [10, 22], [17, 20]];
+
+function DeerAntler({ x, y, s }: { x: number; y: number; s: number }) {
+  return (
+    <g transform={`translate(${x} ${y}) scale(${s} 1)`}>
+      <g filter="url(#sp-glow)" className="sp-antler">
+        <path
+          d="M0 0 C-1 -9 -4 -16 -9 -21 M0 -6 C3 -13 7 -18 12 -21 M-2 -12 C-7 -14 -11 -18 -12 -25 M2 -11 C4 -18 10 -23 16 -25 M-5 -17 C-8 -21 -9 -25 -8 -29 M7 -17 C10 -22 12 -26 12 -30"
+          stroke="url(#sp-horn)"
+          strokeWidth="2.4"
+          strokeLinecap="round"
+          fill="none"
+        />
+      </g>
+      {DEER_ANTLER_STARS.map(([px, py], i) => (
+        <g key={i}>
+          <animateTransform
+            attributeName="transform"
+            type="translate"
+            values="0 0;0 1.5;0 0"
+            dur={`${(2.4 + i * 0.3).toFixed(1)}s`}
+            repeatCount="indefinite"
+          />
+          <path
+            d={`M${px} ${py - 3} l1.1 2.4 l2.4 1.1 l-2.4 1.1 l-1.1 2.4 l-1.1 -2.4 l-2.4 -1.1 l2.4 -1.1z`}
+            fill={SP.star}
+          />
+          <circle cx={px} cy={py} r="4" fill={SP.star} opacity=".18" />
+        </g>
+      ))}
+    </g>
+  );
+}
+
+function SpiritDeer() {
+  return (
+    <g>
+      <ellipse cx="0" cy="26" rx="26" ry="6" fill={SP.cyan} opacity=".18" />
+      {DEER_HOOVES.map(([x, y], i) => (
+        <ellipse key={i} cx={x} cy={y + 3} rx="6" ry="2.4" fill="url(#sp-hoof)" />
+      ))}
+      <g className="sp-breath">
+        <g filter="url(#sp-glow-soft)" opacity=".5">
+          <ellipse cx="4" cy="-8" rx="26" ry="18" fill={SP.ice} />
+        </g>
+        <g className="sp-tailflick">
+          <path d="M-20 -2 C-27 -5 -30 3 -22 5" fill="#fff" />
+          <path d="M-22 -1 C-28 -3 -29 2 -23 3" stroke={SP.cyan} strokeWidth="1" fill="none" opacity=".7" />
+        </g>
+        <path d="M-14 6 l-2 16 M-8 8 l-1 16" stroke="url(#sp-deer)" strokeWidth="3.6" strokeLinecap="round" />
+        <path d="M-16 22 h3 M-9 24 h3" stroke={SP.cyan} strokeWidth="2.4" strokeLinecap="round" />
+        <ellipse cx="0" cy="0" rx="21" ry="12" fill="url(#sp-deer)" />
+        <path d="M-14 -8 q10 -6 24 -3" stroke="#fff" strokeWidth="2.6" opacity=".9" strokeLinecap="round" fill="none" />
+        <ellipse cx="2" cy="5" rx="15" ry="6" fill="#fff" opacity=".85" />
+        {DEER_SPOTS.map(([x, y], i) => (
+          <g key={i}>
+            <circle cx={x} cy={y} r="1.7" fill={SP.cyan} className="sp-glowp" style={{ animationDelay: `${(i * 0.35).toFixed(2)}s` }} />
+            <circle cx={x} cy={y} r="3.4" fill={SP.cyan} opacity=".18" />
+          </g>
+        ))}
+        <path d="M10 6 l1 16 M16 4 l2 16" stroke="url(#sp-deer)" strokeWidth="3.8" strokeLinecap="round" />
+        <path d="M9 22 h3.5 M16 20 h3.5" stroke={SP.cyan} strokeWidth="2.4" strokeLinecap="round" />
+        <path
+          d="M12 -2 q3 2 5 6 M14 -6 q3 2 5 6"
+          stroke="#fff"
+          strokeWidth="1.4"
+          opacity=".6"
+          strokeLinecap="round"
+          fill="none"
+        />
+        {/* neck + head, pivoting from the chest joint to graze every 8s */}
+        <g transform="translate(14 -4)">
+          <g>
+            <animateTransform
+              attributeName="transform"
+              type="rotate"
+              values="0;0;36;36;0;0"
+              keyTimes="0;.5;.62;.82;.92;1"
+              dur="8s"
+              repeatCount="indefinite"
+              calcMode="spline"
+              keySplines=".4 0 .2 1;.4 0 .2 1;.4 0 .2 1;.4 0 .2 1;.4 0 .2 1"
+            />
+            <path d="M0 0 C6 -8 10 -18 16 -26" stroke="url(#sp-deer)" strokeWidth="11" strokeLinecap="round" fill="none" />
+            <path d="M-1 -1 C5 -9 9 -19 15 -27" stroke="#fff" strokeWidth="3" strokeLinecap="round" fill="none" opacity=".6" />
+            <ellipse cx="19" cy="-30" rx="10" ry="8.5" fill="url(#sp-deer)" />
+            <path d="M22 -28 C30 -28 32 -23 30 -20 C28 -17 22 -18 20 -20Z" fill="#EEF2FF" />
+            <ellipse cx="27" cy="-21" rx="2.6" ry="1.9" fill="#fff" />
+            <circle cx="31" cy="-21" r="1.7" fill={SP.indigo} />
+            <path d="M13 -36 q4 -5 8 -3" stroke="#fff" strokeWidth="2" opacity=".9" strokeLinecap="round" fill="none" />
+            <g className="sp-ear">
+              <path d="M12 -36 C8 -44 10 -48 16 -44 C17 -40 16 -37 14 -35Z" fill="#EEF2FF" />
+              <path d="M13 -37 C11 -42 12 -44 15 -42 C15.5 -40 15 -38 14 -37Z" fill={SP.ice} />
+            </g>
+            <path d="M22 -37 C24 -45 28 -47 30 -42 C29 -39 26 -37 24 -36Z" fill="#EEF2FF" />
+            <path d="M23.5 -38 C25 -43 27 -44 28 -41 C27.5 -39.5 26 -38.5 25 -38Z" fill={SP.ice} />
+            <DeerAntler x={15} y={-38} s={1} />
+            <path
+              d="M19 -31 q3 2.6 6 0"
+              stroke={SP.indigo}
+              strokeWidth="1.6"
+              fill="none"
+              strokeLinecap="round"
+            />
+            <path
+              d="M19.5 -30.6 l-1 1.4 M22 -29.6 l0 1.6 M24.5 -30.6 l1 1.4"
+              stroke={SP.indigo}
+              strokeWidth=".9"
+              strokeLinecap="round"
+            />
+            <circle cx="16" cy="-27" r="2.2" fill={SP.cyan} opacity=".35" />
+            <path
+              d="M4 -3 q-2 3 -1 6 M8 -9 q-2 3 -1 6"
+              stroke="#fff"
+              strokeWidth="1.6"
+              opacity=".7"
+              strokeLinecap="round"
+              fill="none"
+            />
+          </g>
+        </g>
+      </g>
+    </g>
+  );
+}
+
 export const COSTUMES: Costume[] = [
   {
     id: "straw-hat",
@@ -955,28 +1316,41 @@ export const COSTUMES: Costume[] = [
   },
   {
     id: "dokkaebi",
-    name: "Dokkaebi Spirit",
-    krName: "도깨비",
+    name: "Spirit Dokkaebi",
+    krName: "정령 도깨비",
     slot: "friend",
     price: 0,
     rarity: "legendary",
     plusOnly: true,
-    icon: "👹",
+    icon: "\ud83d\udc79",
     scene: {
       layer: "front",
       draw: () => (
-        <g transform="translate(44 186) scale(1.6)">
-          <g className="bob">
-            <circle cx="0" cy="8" r="9" fill="#60A5FA" opacity=".3" />
-            <ellipse cx="0" cy="4" rx="8" ry="9" fill="#3B82F6" />
-            <path d="M-4 -4 l-2 -7 l5 3z M4 -4 l2 -7 l-5 3z" fill="#FDE68A" />
-            <circle cx="-3" cy="2" r="1.6" fill="#fff" />
-            <circle cx="3" cy="2" r="1.6" fill="#fff" />
-            <circle cx="-3" cy="2" r=".8" fill="#1E3A8A" />
-            <circle cx="3" cy="2" r=".8" fill="#1E3A8A" />
-            <path d="M-3 7 q3 3 6 0" stroke="#1E3A8A" strokeWidth="1.2" fill="none" strokeLinecap="round" />
-            <path d="M8 2 l6 -6" stroke="#92400E" strokeWidth="2.4" strokeLinecap="round" />
-            <circle cx="14" cy="-4" r="2.5" fill="#B45309" />
+        <g>
+          <SpiritDefs />
+          <g transform="translate(160 200) scale(1.35)">
+            <SpiritDokkaebi />
+          </g>
+        </g>
+      ),
+    },
+  },
+  {
+    id: "spirit-deer",
+    name: "Forest Spirit Deer",
+    krName: "정령 사슴",
+    slot: "friend",
+    price: 260,
+    rarity: "epic",
+    minPlayerLevel: 40,
+    icon: "\ud83e\udd8c",
+    scene: {
+      layer: "front",
+      draw: () => (
+        <g>
+          <SpiritDefs />
+          <g transform="translate(42 196) scale(1)">
+            <SpiritDeer />
           </g>
         </g>
       ),
@@ -984,8 +1358,8 @@ export const COSTUMES: Costume[] = [
   },
   {
     id: "dragon",
-    name: "Guardian Dragon",
-    krName: "용",
+    name: "Baby Spirit Dragon",
+    krName: "아기 드래곤",
     slot: "friend",
     price: 520,
     rarity: "legendary",
@@ -993,71 +1367,14 @@ export const COSTUMES: Costume[] = [
     icon: "\ud83d\udc09",
     scene: {
       layer: "front",
-      draw: () => {
-        // Tail-to-neck beads, each a little smaller than the last, tracing
-        // a rearing S-curve. The head is drawn separately, bigger, on top.
-        const body: { x: number; y: number; r: number }[] = [
-          { x: 6, y: 8, r: 5 },
-          { x: 1, y: -6, r: 6.5 },
-          { x: -6, y: -19, r: 8 },
-          { x: -3, y: -33, r: 10 },
-          { x: 8, y: -46, r: 11.5 },
-          { x: 18, y: -60, r: 10 },
-          { x: 21, y: -75, r: 8.5 },
-        ];
-        return (
-          <g transform="translate(170 210)">
-            <g className="friend-float">
-              {/* clouds at the base — a dragon is never far from them */}
-              <g opacity=".8">
-                <ellipse cx="-8" cy="10" rx="14" ry="5" fill="#fff" />
-                <ellipse cx="7" cy="15" rx="10" ry="4" fill="#fff" />
-              </g>
-              {body.map((seg, i) => (
-                <circle key={i} cx={seg.x} cy={seg.y} r={seg.r} fill={i % 2 ? "#0D9488" : "#14B8A6"} />
-              ))}
-              {/* back ridge, every other segment */}
-              {body
-                .filter((_, i) => i % 2 === 0)
-                .map((seg, i) => (
-                  <path
-                    key={i}
-                    d={`M${seg.x - 4} ${seg.y - seg.r * 0.5} L${seg.x} ${seg.y - seg.r * 1.5} L${seg.x + 4} ${seg.y - seg.r * 0.5}Z`}
-                    fill="#F59E0B"
-                  />
-                ))}
-              {/* golden belly scutes along the chest */}
-              {body.slice(0, 5).map((seg, i) => (
-                <rect
-                  key={i}
-                  x={seg.x - 3}
-                  y={seg.y + seg.r * 0.3}
-                  width="6"
-                  height="3"
-                  rx="1"
-                  fill="#FDE68A"
-                  transform={`rotate(${-20 + i * 8} ${seg.x} ${seg.y})`}
-                />
-              ))}
-              {/* head */}
-              <circle cx="24" cy="-90" r="13" fill="#0D9488" />
-              <path d="M18 -100 Q13 -113 9 -117" stroke="#92400E" strokeWidth="2.6" fill="none" strokeLinecap="round" />
-              <path d="M29 -101 Q34 -114 39 -117" stroke="#92400E" strokeWidth="2.6" fill="none" strokeLinecap="round" />
-              <path d="M14 -86 Q4 -84 -3 -78" stroke="#F59E0B" strokeWidth="1.6" fill="none" strokeLinecap="round" />
-              <path d="M15 -82 Q6 -78 1 -70" stroke="#F59E0B" strokeWidth="1.6" fill="none" strokeLinecap="round" />
-              <circle cx="19" cy="-92" r="2.1" fill="#1F2937" />
-              <circle cx="19.7" cy="-92.7" r=".7" fill="#fff" />
-              <circle cx="29" cy="-92" r="2.1" fill="#1F2937" />
-              <circle cx="29.7" cy="-92.7" r=".7" fill="#fff" />
-              <path d="M20 -85 Q24 -82 28 -85" stroke="#134E4A" strokeWidth="1.6" fill="none" strokeLinecap="round" />
-              {/* 여의주 — the wish-granting pearl */}
-              <circle cx="41" cy="-88" r="5.5" fill="#FDE68A" />
-              <circle cx="39" cy="-90" r="2" fill="#fff" opacity=".85" />
-              <path d="M41 -98 l1.6 4 l4 1.6 l-4 1.6 l-1.6 4 l-1.6 -4 l-4 -1.6 l4 -1.6z" fill="#FFD66B" opacity=".9" />
-            </g>
+      draw: () => (
+        <g>
+          <SpiritDefs />
+          <g transform="translate(180 205) scale(1.4)">
+            <BabyDragon />
           </g>
-        );
-      },
+        </g>
+      ),
     },
   },
 ];

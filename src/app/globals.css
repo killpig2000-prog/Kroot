@@ -634,3 +634,85 @@ html[data-mode="dark"] .btn-leaf {
   .aura-spin, .aura-twinkle, .aura-twinkle-2, .aura-fall, .aura-fall-2,
   .friend-float, .friend-float-2 { animation: none; }
 }
+
+/* spirit companions: hop, wing flutter, breathing glow, ear/tail twitch */
+.sp-hop {
+  animation: sp-hop 2.6s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+@keyframes sp-hop {
+  0%, 70%, 100% { transform: translateY(0) scaleY(1); }
+  78% { transform: translateY(-7px) scaleY(1.06); }
+  86% { transform: translateY(0) scaleY(.94); }
+}
+.sp-flick {
+  animation: sp-flick 1.4s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+@keyframes sp-flick {
+  0%, 100% { transform: scale(1, 1); opacity: .85; }
+  50% { transform: scale(.85, 1.2); opacity: 1; }
+}
+.sp-wisp {
+  animation: sp-wisp 2.8s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: 100% 50%;
+}
+.sp-wisp2 {
+  animation: sp-wisp 2.8s ease-in-out -1.4s infinite;
+  transform-box: fill-box;
+  transform-origin: 0% 50%;
+}
+@keyframes sp-wisp {
+  0%, 100% { transform: rotate(-6deg) scaleX(1); }
+  50% { transform: rotate(6deg) scaleX(1.08); }
+}
+.sp-breath {
+  animation: sp-breath 4s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+@keyframes sp-breath {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+}
+.sp-glowp { animation: sp-glowp 3s ease-in-out infinite; }
+.sp-antler { animation: sp-glowp 2.6s ease-in-out infinite; }
+@keyframes sp-glowp {
+  0%, 100% { opacity: .35; }
+  50% { opacity: .9; }
+}
+.sp-ear {
+  animation: sp-ear 4.5s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+@keyframes sp-ear {
+  0%, 86%, 100% { transform: rotate(0); }
+  90% { transform: rotate(-18deg); }
+  94% { transform: rotate(6deg); }
+}
+.sp-tailflick {
+  animation: sp-tailflick 3s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: 0% 50%;
+}
+@keyframes sp-tailflick {
+  0%, 80%, 100% { transform: rotate(0); }
+  88% { transform: rotate(-25deg); }
+}
+.sp-rise { animation: sp-rise 6s linear infinite; }
+.sp-rise2 { animation: sp-rise 8s linear -3s infinite; }
+@keyframes sp-rise {
+  0% { transform: translateY(0); opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: .8; }
+  100% { transform: translateY(-24px); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sp-hop, .sp-flick, .sp-wisp, .sp-wisp2, .sp-breath, .sp-glowp, .sp-antler,
+  .sp-ear, .sp-tailflick, .sp-rise, .sp-rise2 { animation: none; }
+}
