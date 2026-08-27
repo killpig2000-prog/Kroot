@@ -27,5 +27,6 @@ export const PLUS_PERKS = [
   { icon: "⚡", title: "Weekend XP boost", desc: "Earn 1.5x XP every Saturday and Sunday — climb the weekly league faster." },
   { icon: "📊", title: "Learning insights", desc: "A detailed stats page: accuracy by skill, weakest words, and your XP timeline." },
   { icon: "🎩", title: "Exclusive outfits", desc: "Nine Plus-only costumes for your tree — free to claim while subscribed." },
+  { icon: "🔓", title: "No level locks", desc: "Every level-gated shop item — auras, companions, hats — unlocks early. Still pay coins, just skip the wait." },
   { icon: "🌟", title: "Plus badge", desc: "A golden name on your profile, in the community, and in the weekly league." },
 ];

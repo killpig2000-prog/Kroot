@@ -1145,6 +1145,9 @@ export function isAvailable(c: Costume, now: Date = new Date()): boolean {
   return true;
 }
 
-export function isLevelLocked(c: Costume, playerLevel: number): boolean {
+// Kroot Plus waives every player-level gate — a subscriber never sees "Unlocks
+// at Lv.X" (matches buy_costume(), which does the same server-side).
+export function isLevelLocked(c: Costume, playerLevel: number, hasPlus = false): boolean {
+  if (hasPlus) return false;
   return !!c.minPlayerLevel && playerLevel < c.minPlayerLevel;
 }

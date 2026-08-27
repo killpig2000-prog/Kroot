@@ -167,7 +167,7 @@ export default function ShopClient({
     if (isOwned) cta = { label: worn[selected.slot] === selected.id ? "Take off" : "Wear it" };
     else if (isAdmin) cta = { label: "Claim & wear · admin" };
     else if (selected.plusOnly && !hasPlus) cta = { label: "Kroot Plus only · See plans", href: "/pricing" };
-    else if (isLevelLocked(selected, playerLevel)) cta = { label: `Unlocks at Lv.${selected.minPlayerLevel}`, disabled: true };
+    else if (isLevelLocked(selected, playerLevel, hasPlus)) cta = { label: `Unlocks at Lv.${selected.minPlayerLevel}`, disabled: true };
     else if (balance < selected.price) cta = { label: `Need ${selected.price - balance} more 🌰`, disabled: true };
     else cta = { label: selected.price === 0 ? "Claim & wear" : `Buy & wear · 🌰 ${selected.price}` };
   }
@@ -239,7 +239,7 @@ export default function ShopClient({
             {visible.map((c) => {
               const on = preview[c.slot] === c.id;
               const isOwned = ownedSet.has(c.id);
-              const locked = isLevelLocked(c, playerLevel);
+              const locked = isLevelLocked(c, playerLevel, hasPlus);
               const ids = Object.values({ ...preview, [c.slot]: c.id }).filter((v): v is string => !!v);
               const rs = RARITY_STYLE[c.rarity];
               let price: React.ReactNode;
