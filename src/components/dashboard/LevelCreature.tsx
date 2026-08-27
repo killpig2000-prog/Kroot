@@ -146,27 +146,79 @@ function RoundCanopy({ theme, size }: { theme: TreeSpecies; size: "sm" | "lg" })
   );
 }
 
-// Layered conifer silhouette (pine). Same footprint as the round canopy so
-// costume anchors still land sensibly.
-function ConiferCanopy({ theme, size }: { theme: TreeSpecies; size: "sm" | "lg" }) {
-  const rim = shade(theme.canopy[2], -0.16);
+// ── Cloud pine (민화 소나무) ─────────────────────────────────────────────
+// The conifer species draws needle "cloud pads" on curved branches instead of
+// stacked triangles: a bumpy bright top lobe over a darker underside. Pads are
+// placed so the stage's costume anchors still land (hat on the top tuft, face
+// on the crown cluster).
+function bumpPath(cx: number, cy: number, w: number, h: number, n: number): string {
+  let d = `M${cx - w / 2} ${cy}`;
+  for (let i = 0; i < n; i++) {
+    const x0 = cx - w / 2 + i * (w / n);
+    const x1 = x0 + w / n;
+    const k = i === 0 || i === n - 1 ? 1.25 : i % 2 ? 1.9 : 1.65;
+    d += ` Q${(x0 + x1) / 2} ${cy - h * k} ${x1} ${cy}`;
+  }
+  return d;
+}
+
+export function Pad({ id, theme, cx, cy, w, h, tone }: { id: string; theme: TreeSpecies; cx: number; cy: number; w: number; h: number; tone: 0 | 1 | 2 }) {
+  const n = Math.max(3, Math.round(w / 16));
+  const under = bumpPath(cx, cy + h * 0.55, w * 1.02, h * 0.55, n + 1) + ` Q${cx + w * 0.1} ${cy + h * 1.15} ${cx - w / 2} ${cy + h * 0.55} Z`;
+  const top = bumpPath(cx, cy, w, h, n) + ` Q${cx} ${cy + h * 0.6} ${cx - w / 2} ${cy} Z`;
+  const fill = tone === 0 ? `url(#${id}-pine)` : tone === 1 ? theme.canopy[1] : `url(#${id}-pine2)`;
+  const dark = shade(theme.canopy[2], -0.3);
+  return (
+    <>
+      <path d={under} fill={dark} />
+      <path d={top} fill={fill} />
+      <path d={`M${cx - w * 0.3} ${cy - h * 1.05} q${w * 0.1} -${h * 0.45} ${w * 0.24} -${h * 0.3}`} stroke="#FFFFFF" strokeWidth="2.2" opacity=".3" fill="none" strokeLinecap="round" />
+      <path d={`M${cx - w * 0.42} ${cy + h * 0.15} q${w * 0.15} ${h * 0.25} ${w * 0.32} ${h * 0.12}`} stroke={dark} strokeWidth="1.4" opacity=".5" fill="none" strokeLinecap="round" />
+    </>
+  );
+}
+
+export function PineCone({ x, y, s = 1 }: { x: number; y: number; s?: number }) {
+  return (
+    <g transform={`translate(${x} ${y}) scale(${s})`}>
+      <ellipse cx="0" cy="0" rx="4.6" ry="6.4" fill="#8A6B4A" />
+      <path d="M-3.4 -2.4 Q0 -0.6 3.4 -2.4 M-3.4 1.2 Q0 3 3.4 1.2 M-2.6 4 Q0 5.4 2.6 4" stroke="#5C4630" strokeWidth="1.3" fill="none" />
+    </g>
+  );
+}
+
+// Trunk + branches + pads for the young (sm) and grown (lg) pine. Face goes
+// on the crown cluster at (110,108) for sm and (110,100) for lg — the same
+// spots the round canopy uses, so COSTUME_ANCHORS stay valid.
+function PineCanopy({ id, theme, size }: { id: string; theme: TreeSpecies; size: "sm" | "lg" }) {
+  const bark = "#7A5A3A";
   if (size === "sm") {
     return (
       <>
-        <path d="M110 83 L156 143 L64 143 Z" fill={rim} />
-        <path d="M110 80 L154 140 L66 140 Z" fill={theme.canopy[0]} />
-        <path d="M110 52 L142 102 L78 102 Z" fill={theme.canopy[1]} />
-        <path d="M110 56 L94 82 L110 82 Z" fill="#FFFFFF" opacity=".18" />
+        <path d="M110 205 C112 180 104 165 108 140 C110 120 106 100 108 68" stroke={`url(#${id}-trunk)`} strokeWidth="12" fill="none" strokeLinecap="round" />
+        <path d="M109 150 C122 146 132 140 142 134" stroke={bark} strokeWidth="6" fill="none" strokeLinecap="round" />
+        <path d="M108 168 C96 164 86 158 76 150" stroke={bark} strokeWidth="6" fill="none" strokeLinecap="round" />
+        <Pad id={id} theme={theme} cx={146} cy={136} w={44} h={14} tone={1} />
+        <Pad id={id} theme={theme} cx={74} cy={152} w={46} h={14} tone={0} />
+        <Pad id={id} theme={theme} cx={98} cy={122} w={58} h={16} tone={2} />
+        <Pad id={id} theme={theme} cx={124} cy={118} w={52} h={15} tone={1} />
+        <Pad id={id} theme={theme} cx={110} cy={100} w={50} h={14} tone={0} />
+        <Pad id={id} theme={theme} cx={110} cy={72} w={36} h={12} tone={1} />
       </>
     );
   }
   return (
     <>
-      <path d="M110 95 L178 171 L42 171 Z" fill={rim} />
-      <path d="M110 92 L176 168 L44 168 Z" fill={theme.canopy[2]} />
-      <path d="M110 56 L162 124 L58 124 Z" fill={theme.canopy[0]} />
-      <path d="M110 26 L146 84 L74 84 Z" fill={theme.canopy[1]} />
-      <path d="M110 30 L88 66 L110 66 Z" fill="#FFFFFF" opacity=".16" />
+      <path d="M110 208 C114 178 102 160 106 132 C110 110 100 92 106 70 C107 66 107 62 108 60" stroke={`url(#${id}-trunk)`} strokeWidth="15" fill="none" strokeLinecap="round" />
+      <path d="M105 196 q4 -3 9 0 M104 178 q4 -3 9 0" stroke="#6E5238" strokeWidth="1.7" fill="none" strokeLinecap="round" />
+      <path d="M108 170 C120 166 140 160 156 150" stroke={bark} strokeWidth="7" fill="none" strokeLinecap="round" />
+      <Pad id={id} theme={theme} cx={156} cy={150} w={78} h={19} tone={1} />
+      <path d="M106 150 C94 146 74 138 60 124" stroke={bark} strokeWidth="7" fill="none" strokeLinecap="round" />
+      <Pad id={id} theme={theme} cx={62} cy={122} w={70} h={18} tone={0} />
+      <Pad id={id} theme={theme} cx={94} cy={116} w={72} h={20} tone={2} />
+      <Pad id={id} theme={theme} cx={128} cy={110} w={66} h={19} tone={1} />
+      <Pad id={id} theme={theme} cx={110} cy={90} w={64} h={18} tone={0} />
+      <Pad id={id} theme={theme} cx={108} cy={62} w={48} h={15} tone={1} />
     </>
   );
 }
@@ -190,12 +242,12 @@ const ROUND_SPOTS_C2: [number, number][] = [
   [76, 70], [144, 64], [58, 112], [162, 110], [100, 42], [122, 134], [88, 148],
 ];
 const CONIFER_SPOTS: [number, number][] = [
-  [110, 46], [92, 98], [128, 98], [72, 148], [148, 148], [110, 150],
+  [40, 108], [184, 140], [132, 50], [82, 82], [148, 100], [140, 138],
 ];
 // A lighter sprinkle for the growing stage, so the species reads before the
 // blossoming stage arrives.
 const ROUND_SPOTS_B2: [number, number][] = [[80, 62], [148, 72], [58, 112]];
-const CONIFER_SPOTS_B2: [number, number][] = [[110, 70], [88, 122], [136, 128]];
+const CONIFER_SPOTS_B2: [number, number][] = [[40, 108], [184, 140], [132, 50]];
 
 // Small stages get zoomed so they fill the 220x230 frame instead of hugging
 // the bottom third. Costumes sit inside the group, so anchors scale along.
@@ -240,6 +292,14 @@ export default function LevelCreature({
         <stop offset="0%" stopColor="#9B7B57" />
         <stop offset="55%" stopColor="#8A6B4A" />
         <stop offset="100%" stopColor="#6E5238" />
+      </linearGradient>
+      <linearGradient id={`${id}-pine`} x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor={shade(theme.canopy[1], 0.25)} />
+        <stop offset="100%" stopColor={theme.canopy[0]} />
+      </linearGradient>
+      <linearGradient id={`${id}-pine2`} x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor={theme.canopy[1]} />
+        <stop offset="100%" stopColor={shade(theme.canopy[2], -0.3)} />
       </linearGradient>
       <radialGradient id={`${id}-seed`} cx="38%" cy="28%" r="78%">
         <stop offset="0%" stopColor="#B39066" />
@@ -339,11 +399,11 @@ export default function LevelCreature({
         <>
           {!hideGround && <Ground id={id} rx={82} cy={212} />}
           <g className="sway">
-            <Trunk id={id} d="M110 205 C110 175 108 160 108 142" width={13} bark="M106 196 q3 -3 6 0 M107 184 q3 -3 6 0" />
+            {!conifer && <Trunk id={id} d="M110 205 C110 175 108 160 108 142" width={13} bark="M106 196 q3 -3 6 0 M107 184 q3 -3 6 0" />}
             {conifer ? (
               <>
-                <ConiferCanopy theme={theme} size="sm" />
-                <Face cx={110} cy={118} spread={12} size={4.4} ink={theme.ink} />
+                <PineCanopy id={id} theme={theme} size="sm" />
+                <Face cx={110} cy={108} spread={11} size={4.2} ink="#F1EDE6" />
               </>
             ) : (
               <>
@@ -355,7 +415,7 @@ export default function LevelCreature({
               </>
             )}
             {/* first ornament, worn on the side of the canopy */}
-            <g transform={conifer ? "translate(110 90) scale(.9)" : "translate(74 76)"}>
+            <g transform={conifer ? "translate(150 122) scale(.9)" : "translate(74 76)"}>
               <Ornament theme={theme} alt={false} />
             </g>
             {outfit}
@@ -369,13 +429,17 @@ export default function LevelCreature({
         <>
           {!hideGround && <Ground id={id} rx={88} cy={216} />}
           <g className="sway">
-            <Trunk id={id} d="M110 208 C110 172 108 152 108 128" width={15} bark="M105 196 q4 -3 8 0 M106 182 q4 -3 8 0" />
-            <path d="M108 160 C88 154 76 140 74 124 C92 128 103 142 108 156Z" fill={`url(#${id}-trunk)`} />
-            <path d="M108 176 C130 172 144 158 146 142 C126 146 114 160 108 172Z" fill={`url(#${id}-trunk)`} />
+            {!conifer && (
+              <>
+                <Trunk id={id} d="M110 208 C110 172 108 152 108 128" width={15} bark="M105 196 q4 -3 8 0 M106 182 q4 -3 8 0" />
+                <path d="M108 160 C88 154 76 140 74 124 C92 128 103 142 108 156Z" fill={`url(#${id}-trunk)`} />
+                <path d="M108 176 C130 172 144 158 146 142 C126 146 114 160 108 172Z" fill={`url(#${id}-trunk)`} />
+              </>
+            )}
             {conifer ? (
               <>
-                <ConiferCanopy theme={theme} size="lg" />
-                <Face cx={110} cy={140} spread={14} size={5} ink={theme.ink} />
+                <PineCanopy id={id} theme={theme} size="lg" />
+                <Face cx={110} cy={100} spread={13} size={4.8} ink="#F1EDE6" />
               </>
             ) : (
               <>
@@ -407,10 +471,14 @@ export default function LevelCreature({
         <>
           {!hideGround && <Ground id={id} rx={88} cy={216} />}
           <g className="sway">
-            <Trunk id={id} d="M110 208 C110 172 108 152 108 128" width={15} bark="M105 196 q4 -3 8 0 M106 182 q4 -3 8 0" />
-            <path d="M108 160 C88 154 76 140 74 124 C92 128 103 142 108 156Z" fill={`url(#${id}-trunk)`} />
-            <path d="M108 176 C130 172 144 158 146 142 C126 146 114 160 108 172Z" fill={`url(#${id}-trunk)`} />
-            {conifer ? <ConiferCanopy theme={theme} size="lg" /> : <RoundCanopy theme={theme} size="lg" />}
+            {!conifer && (
+              <>
+                <Trunk id={id} d="M110 208 C110 172 108 152 108 128" width={15} bark="M105 196 q4 -3 8 0 M106 182 q4 -3 8 0" />
+                <path d="M108 160 C88 154 76 140 74 124 C92 128 103 142 108 156Z" fill={`url(#${id}-trunk)`} />
+                <path d="M108 176 C130 172 144 158 146 142 C126 146 114 160 108 172Z" fill={`url(#${id}-trunk)`} />
+              </>
+            )}
+            {conifer ? <PineCanopy id={id} theme={theme} size="lg" /> : <RoundCanopy theme={theme} size="lg" />}
             {(conifer ? CONIFER_SPOTS : ROUND_SPOTS_C1).map(([bx, by], i) => (
               <g key={i} transform={`translate(${bx} ${by}) scale(1.1)`}>
                 <Ornament theme={theme} alt={i % 2 === 1} />
@@ -425,7 +493,7 @@ export default function LevelCreature({
               </>
             )}
             {conifer ? (
-              <Face cx={110} cy={140} spread={14} size={5} ink={theme.ink} />
+              <Face cx={110} cy={100} spread={13} size={4.8} ink="#F1EDE6" />
             ) : (
               <Face cx={110} cy={100} spread={16} size={5.6} ink={theme.ink} />
             )}
@@ -440,17 +508,21 @@ export default function LevelCreature({
         <>
           {!hideGround && <Ground id={id} rx={88} cy={216} />}
           <g className="sway">
-            <Trunk id={id} d="M110 208 C110 172 108 152 108 128" width={15} bark="M105 196 q4 -3 8 0 M106 182 q4 -3 8 0" />
-            <path d="M108 160 C88 154 76 140 74 124 C92 128 103 142 108 156Z" fill={`url(#${id}-trunk)`} />
-            <path d="M108 176 C130 172 144 158 146 142 C126 146 114 160 108 172Z" fill={`url(#${id}-trunk)`} />
-            {conifer ? <ConiferCanopy theme={theme} size="lg" /> : <RoundCanopy theme={theme} size="lg" />}
+            {!conifer && (
+              <>
+                <Trunk id={id} d="M110 208 C110 172 108 152 108 128" width={15} bark="M105 196 q4 -3 8 0 M106 182 q4 -3 8 0" />
+                <path d="M108 160 C88 154 76 140 74 124 C92 128 103 142 108 156Z" fill={`url(#${id}-trunk)`} />
+                <path d="M108 176 C130 172 144 158 146 142 C126 146 114 160 108 172Z" fill={`url(#${id}-trunk)`} />
+              </>
+            )}
+            {conifer ? <PineCanopy id={id} theme={theme} size="lg" /> : <RoundCanopy theme={theme} size="lg" />}
             {(conifer ? CONIFER_SPOTS : ROUND_SPOTS_C2).map(([fx, fy], i) => (
               <g key={i} transform={`translate(${fx} ${fy}) scale(1.35)`}>
                 <Ornament theme={theme} alt={i % 3 === 2} />
               </g>
             ))}
             {conifer ? (
-              <Face cx={110} cy={140} spread={14} size={5} ink={theme.ink} />
+              <Face cx={110} cy={100} spread={13} size={4.8} ink="#F1EDE6" />
             ) : (
               <Face cx={110} cy={100} spread={16} size={5.6} ink={theme.ink} />
             )}

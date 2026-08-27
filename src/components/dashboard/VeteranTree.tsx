@@ -1,7 +1,7 @@
 import type { CefrLevel } from "@/lib/tree";
 import { SPECIES } from "@/lib/tree";
 import { FULLY_GROWN_LEVEL, MAX_LEVEL, VETERAN_TIER_SPAN, treeHeightMetres, veteranTiers } from "@/lib/level";
-import LevelCreature from "@/components/dashboard/LevelCreature";
+import LevelCreature, { Pad } from "@/components/dashboard/LevelCreature";
 
 // Keepsakes hung on the tree, one per canopy tier past fully grown.
 export const VETERAN_MILESTONES: { level: number; name: string; kr: string }[] = [
@@ -127,7 +127,8 @@ export default function VeteranTree({
       side,
       conifer,
       fill: theme.canopy[fromGround % 2 ? 1 : 0],
-      kx: 110 + side * w * 0.55,
+      tone: (fromGround % 3) as 0 | 1 | 2,
+      kx: conifer ? 110 + side * 40 : 110 + side * w * 0.55,
     };
   };
 
@@ -170,7 +171,10 @@ export default function VeteranTree({
         {tierYs.map((y, i) => {
           const t = tierInfo(i);
           return t.conifer ? (
-            <path key={t.level} d={`M110 ${y - 30} L${110 - t.w} ${y + 6} Q110 ${y - 2} ${110 + t.w} ${y + 6} Z`} fill={t.fill} />
+            <g key={t.level}>
+              <path d={`M108 ${y + 8} C${110 + t.side * 20} ${y + 4} ${110 + t.side * 36} ${y} ${110 + t.side * 46} ${y - 6}`} stroke="#7A5A3A" strokeWidth="7" fill="none" strokeLinecap="round" />
+              <Pad id="lc-C2-C2" theme={theme} cx={110 + t.side * 42} cy={y - 8} w={t.w + 10} h={19} tone={t.tone} />
+            </g>
           ) : (
             <g key={t.level}>
               <circle cx={110 - t.w * 0.6} cy={y} r={t.w * 0.44} fill={theme.canopy[1]} />
@@ -181,7 +185,7 @@ export default function VeteranTree({
         })}
         {tierYs.map((y, i) => {
           const t = tierInfo(i);
-          return <Keepsake key={t.level} level={t.level} x={t.level === 100 ? 110 : t.kx} y={y - 4} dir={t.side} />;
+          return <Keepsake key={t.level} level={t.level} x={t.level === 100 ? 110 : t.kx} y={t.conifer ? y - 30 : y - 4} dir={t.side} />;
         })}
 
         {/* the fully-grown creature, untouched, at the top */}
