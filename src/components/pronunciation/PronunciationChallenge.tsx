@@ -2,35 +2,26 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { buttonClassName } from "@/components/ui/Button";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
-import { recordCompletion, XP_POINTS, type ProgressResult } from "@/lib/activity";
+import { recordCompletion, type ProgressResult } from "@/lib/activity";
 import { useKoreanSpeaker, useSpeechRecognition } from "@/hooks/useSpeechRecognition";
-import { bestSimilarity, verdictFor, type Verdict } from "@/lib/speech-match";
+import { bestSimilarity, verdictFor } from "@/lib/speech-match";
 import { wordsForChapter, orderedChapters, TIER_META, NAILED_THRESHOLD } from "@/lib/pronunciation";
 import { playCorrect, playWrong, playStreak, playChapterClear } from "@/lib/sfx";
+import FinishedCard from "@/components/pronunciation/FinishedCard";
+import AnswerCapture from "@/components/pronunciation/AnswerCapture";
+import ScoreResult, { VERDICTS } from "@/components/pronunciation/ScoreResult";
 
 const MINUTES_PER_SESSION = 4;
-const TEAL = "#0D9488";
 // The mic stays open this long before we force it to stop and grade whatever
 // it heard — browsers vary a lot in when they'd otherwise cut off on their
 // own, so this keeps the countdown ring honest.
 const MAX_LISTEN_MS = 6000;
-const RING_R = 47;
-const RING_C = 2 * Math.PI * RING_R;
-const RAINBOW =
-  "conic-gradient(from 0deg, #EF4444, #F97316, #EAB308, #22C55E, #06B6D4, #6366F1, #A855F7, #EF4444)";
 
-const BTN_TEAL = buttonClassName("teal");
 const BTN_LINE = buttonClassName("line");
 const LABEL = "text-[11.5px] font-semibold tracking-[.06em] uppercase text-faint mb-2";
-
-const VERDICTS: Record<Verdict, { text: string; fg: string }> = {
-  great: { text: "🔥 Nailed it!", fg: "#16A34A" },
-  close: { text: "😬 So close", fg: "#B45309" },
-  again: { text: "💥 Try again", fg: "#E11D48" },
-};
 
 export default function PronunciationChallenge({
   chapterKey,
@@ -193,105 +184,24 @@ export default function PronunciationChallenge({
   }
 
   if (finished) {
-    const cleared = nailed.length === words.length;
-    const weakWords = words
-      .filter((w) => (attempts[w.id]?.count ?? 0) > 1)
-      .sort((a, b) => (attempts[a.id]?.best ?? 0) - (attempts[b.id]?.best ?? 0))
-      .slice(0, 4);
-
     return (
-      <div
-        className="max-w-[680px] text-center border border-line rounded-[14px] px-7 py-10"
-        style={{ animation: "fadeUp .4s ease" }}
-      >
-        <div
-          className="w-[104px] h-[104px] mx-auto mb-3 rounded-full flex items-center justify-center"
-          style={{
-            background: cleared
-              ? RAINBOW
-              : `conic-gradient(${TEAL} ${(nailed.length / words.length) * 360}deg, #E3DDD0 0)`,
-          }}
-        >
-          <div className="w-[84px] h-[84px] rounded-full bg-white flex items-center justify-center text-[34px]">
-            {cleared ? "🎉" : meta.emoji}
-          </div>
-        </div>
-        <h2 className="font-bold text-[21px] tracking-[-0.02em] mt-1 mb-1.5">
-          {cleared ? "Chapter cleared!" : "Round finished!"}
-        </h2>
-        <p className="text-sm text-muted mb-[22px]">
-          {words.length} word{words.length > 1 ? "s" : ""} attempted — your mouth is learning the shapes.
-        </p>
-        {levelUp && (
-          <p className="text-sm font-semibold text-success mb-[22px] -mt-3">
-            🎉 Level up! You&apos;re now Lv. {levelUp.new_level}
-          </p>
-        )}
-        <div className="flex justify-center gap-3 mb-6 flex-wrap">
-          <div className="border border-line rounded-[10px] px-5 py-3 min-w-[100px]">
-            <b className="block text-[19px] font-bold text-success">
-              {nailed.length}/{words.length}
-            </b>
-            <small className="text-xs text-muted">Nailed</small>
-          </div>
-          <div className="border border-line rounded-[10px] px-5 py-3 min-w-[100px]">
-            <b className="block text-[19px] font-bold">🔥 {bestStreak}</b>
-            <small className="text-xs text-muted">Best streak</small>
-          </div>
-          <div className="border border-line rounded-[10px] px-5 py-3 min-w-[100px]">
-            <b className="block text-[19px] font-bold text-success">+{XP_POINTS.pronunciation} XP</b>
-            <small className="text-xs text-muted">Earned</small>
-          </div>
-        </div>
-
-        {weakWords.length > 0 && (
-          <div className="text-left bg-[#FFFBEB] border border-amber-line rounded-[10px] px-4 py-3 mb-6">
-            <b className="block text-[11px] font-bold tracking-[.06em] text-[#B45309] mb-2">
-              TOOK A FEW TRIES
-            </b>
-            <div className="flex flex-wrap gap-2">
-              {weakWords.map((w) => (
-                <span
-                  key={w.id}
-                  className="kr inline-flex items-center gap-1.5 text-[13px] font-medium bg-white border border-amber-line rounded-full px-2.5 py-1"
-                >
-                  {w.kr}
-                  <span className="text-[11px] text-faint">{attempts[w.id]?.best ?? 0}%</span>
-                </span>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {saveError && (
-          <p className="text-[12px] text-[#E11D48] bg-[#FFF1F2] border border-[#FECDD3] rounded-[8px] px-3 py-2 mb-5">
-            ⚠️ {saveError}
-          </p>
-        )}
-
-        <div className="flex justify-center gap-2.5 flex-wrap">
-          <Link href="/speaking" className={BTN_TEAL}>
-            Back to the trail
-          </Link>
-          <button
-            className={BTN_LINE}
-            onClick={() => {
-              setIndex(0);
-              setNailed([]);
-              setStreak(0);
-              resetAnswer();
-              setFinished(false);
-            }}
-          >
-            Run it back
-          </button>
-          {cleared && nextChapter && (
-            <Link href={`/speaking?chapter=${nextChapter.key}`} className={BTN_LINE}>
-              Next: {TIER_META.find((t) => t.tier === nextChapter.tier)!.emoji} {nextChapter.title} →
-            </Link>
-          )}
-        </div>
-      </div>
+      <FinishedCard
+        words={words}
+        nailed={nailed}
+        bestStreak={bestStreak}
+        levelUp={levelUp}
+        attempts={attempts}
+        saveError={saveError}
+        meta={meta}
+        nextChapter={nextChapter}
+        onRunItBack={() => {
+          setIndex(0);
+          setNailed([]);
+          setStreak(0);
+          resetAnswer();
+          setFinished(false);
+        }}
+      />
     );
   }
 
@@ -362,171 +272,39 @@ export default function PronunciationChallenge({
         </div>
 
         {heard === null && (
-          <div className="flex flex-col items-center gap-3 mb-2">
-            {(bestScores[word.id] ?? 0) >= NAILED_THRESHOLD && (
-              <div className="inline-flex items-center gap-2.5 text-[12.5px] font-semibold text-success bg-success-bg border border-success-line rounded-full pl-3 pr-1.5 py-1.5">
-                ✓ You&apos;ve nailed this before
-                <button
-                  className="text-[11.5px] font-bold bg-white border border-success-line rounded-full px-2.5 py-1 hover:bg-success-bg transition-colors"
-                  onClick={skip}
-                >
-                  Skip →
-                </button>
-              </div>
-            )}
-            {micOk && (
-              <>
-                <div className="relative w-[104px] h-[104px]">
-                  {isListening && (
-                    <svg viewBox="0 0 104 104" className="absolute inset-0 -rotate-90">
-                      <circle cx="52" cy="52" r={RING_R} fill="none" stroke="#E3DDD0" strokeWidth="5" />
-                      <circle
-                        cx="52"
-                        cy="52"
-                        r={RING_R}
-                        fill="none"
-                        strokeWidth="5"
-                        strokeLinecap="round"
-                        stroke={
-                          micElapsedMs / MAX_LISTEN_MS < 0.55
-                            ? "#16A34A"
-                            : micElapsedMs / MAX_LISTEN_MS < 0.8
-                              ? "#B45309"
-                              : "#E11D48"
-                        }
-                        strokeDasharray={RING_C}
-                        strokeDashoffset={RING_C * Math.min(1, micElapsedMs / MAX_LISTEN_MS)}
-                        style={{ transition: "stroke .2s linear" }}
-                      />
-                    </svg>
-                  )}
-                  <button
-                    aria-label={isListening ? "Listening — tap to stop" : "Tap and speak"}
-                    onClick={() => listen(grade)}
-                    disabled={isListening}
-                    className={`absolute rounded-full text-[30px] flex items-center justify-center border-[3px] transition-all ${
-                      isListening
-                        ? "inset-[9px] bg-teal border-transparent text-white wave-on"
-                        : "inset-0 bg-[#F0FDFA] border-[#99F6E4] text-teal hover:scale-105 hover:bg-[#CCFBF1]"
-                    }`}
-                  >
-                    🎤
-                  </button>
-                </div>
-                <p className="text-[13px] text-muted min-h-[20px] text-center">
-                  {isListening ? (
-                    <>
-                      <span className="kr text-[15px] text-charcoal">{interim || "Listening…"}</span>
-                      <span className="block text-[11.5px] text-faint mt-0.5 tabular-nums">
-                        auto-stops in {Math.max(0, (MAX_LISTEN_MS - micElapsedMs) / 1000).toFixed(1)}s
-                      </span>
-                    </>
-                  ) : (
-                    "Tap the mic and say it out loud"
-                  )}
-                </p>
-              </>
-            )}
-
-            {error && <p className="text-[12.5px] text-[#E11D48] text-center max-w-[420px]">{error}</p>}
-
-            {!showFallback ? (
-              <button
-                className="text-[12.5px] font-semibold text-muted hover:text-charcoal transition-colors"
-                onClick={() => setTypedFallback(true)}
-              >
-                Type your answer instead
-              </button>
-            ) : (
-              <div className="w-full max-w-[460px]">
-                {!micOk && (
-                  <p className="text-[12.5px] text-muted mb-2 text-center">
-                    Your browser doesn&apos;t support speech recognition — type your answer instead.
-                  </p>
-                )}
-                <textarea
-                  value={typed}
-                  onChange={(e) => setTyped(e.target.value)}
-                  placeholder="한국어로 입력하세요…"
-                  rows={2}
-                  className="kr w-full resize-none rounded-[10px] border border-line bg-white px-3.5 py-2.5 text-[16px] outline-none focus:border-teal transition-colors"
-                />
-                <div className="flex justify-end mt-2">
-                  <button className={BTN_TEAL} disabled={!typed.trim()} onClick={() => grade(typed.trim())}>
-                    Check it
-                  </button>
-                </div>
-              </div>
-            )}
-          </div>
+          <AnswerCapture
+            bestScore={bestScores[word.id] ?? 0}
+            micOk={micOk}
+            isListening={isListening}
+            micElapsedMs={micElapsedMs}
+            interim={interim}
+            error={error}
+            typed={typed}
+            setTyped={setTyped}
+            showFallback={showFallback}
+            setTypedFallback={setTypedFallback}
+            onListen={() => listen(grade)}
+            onSkip={skip}
+            onCheck={() => grade(typed.trim())}
+          />
         )}
 
         {heard !== null && verdict && (
-          <div
-            className="border-t border-line pt-6 flex flex-col items-center"
-            style={{ animation: "fadeUp .35s ease" }}
-          >
-            <div
-              className="w-[220px] h-[220px] rounded-full flex items-center justify-center mb-3"
-              style={{ background: `conic-gradient(${verdict.fg} ${animScore * 3.6}deg, #E3DDD0 0)` }}
-            >
-              <div className="w-[184px] h-[184px] rounded-full bg-white flex flex-col items-center justify-center">
-                <span
-                  className="font-bold text-[64px] leading-none tabular-nums"
-                  style={{ fontFamily: "var(--font-hand)", color: verdict.fg }}
-                >
-                  {animScore}
-                </span>
-                <span className="text-[13px] text-faint font-semibold mt-1">% match</span>
-              </div>
-            </div>
-            <span className="text-[18px] font-bold text-center mb-6" style={{ color: verdict.fg }}>
-              {verdict.text}
-            </span>
-
-            <div className="grid gap-2.5 mb-4 w-full max-w-[420px]">
-              <div className="bg-warm border border-line rounded-[10px] px-4 py-3">
-                <b className="block text-[11px] font-bold tracking-[.06em] text-faint mb-1">YOU SAID</b>
-                <p className="kr text-[17px] font-medium">{heard}</p>
-              </div>
-              <div className="bg-[#F0FDFA] border border-[#99F6E4] rounded-[10px] px-4 py-3">
-                <div className="flex items-start justify-between gap-3">
-                  <div className="min-w-0">
-                    <b className="block text-[11px] font-bold tracking-[.06em] mb-1" style={{ color: TEAL }}>
-                      TARGET
-                    </b>
-                    <p className="kr text-[17px] font-medium">{word.kr}</p>
-                  </div>
-                  <button
-                    aria-label="Replay"
-                    className="flex-none text-sm text-faint hover:text-teal transition-colors disabled:opacity-40"
-                    onClick={() => speak(word.kr)}
-                    disabled={!ttsOk}
-                  >
-                    🔁
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {saveError && (
-              <p className="text-[11.5px] text-[#E11D48] mb-2.5">⚠️ {saveError}</p>
-            )}
-            <div className="flex gap-2.5">
-              <button
-                className={BTN_LINE}
-                onClick={() => {
-                  setHeard(null);
-                  setTyped("");
-                }}
-              >
-                Try again
-              </button>
-              <button className={BTN_TEAL} onClick={next}>
-                {index + 1 === words.length ? "Finish →" : "Next →"}
-              </button>
-            </div>
-          </div>
+          <ScoreResult
+            heard={heard}
+            targetKr={word.kr}
+            verdict={verdict}
+            animScore={animScore}
+            saveError={saveError}
+            ttsOk={ttsOk}
+            onReplay={() => speak(word.kr)}
+            onTryAgain={() => {
+              setHeard(null);
+              setTyped("");
+            }}
+            onNext={next}
+            isLastWord={index + 1 === words.length}
+          />
         )}
       </div>
     </div>
