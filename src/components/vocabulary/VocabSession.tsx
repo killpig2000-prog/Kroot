@@ -185,7 +185,11 @@ export default function VocabSession({
   // Warm the next few cards' audio so the speaker button plays instantly.
   useEffect(() => {
     prefetchKorean(
-      words.slice(index, index + 3).flatMap((w) => [w.korean, w.example_kr].filter(Boolean))
+      words.slice(index, index + 3).flatMap((w) => [
+        w.korean,
+        w.example_kr,
+        ...(w.moreExamples ?? []).map((e) => e.kr),
+      ].filter(Boolean))
     );
   }, [index, words]);
 
@@ -539,21 +543,41 @@ export default function VocabSession({
                 className="xl:hidden -mt-1 mb-5 mx-auto w-[min(260px,100%)] rotate-[-1deg]"
               />
             )}
-            <div
-              className="bg-[#FAF7EF] border border-[#E3DDD0] rounded-[10px] px-4 py-3.5 mb-[22px] text-left"
-              style={{ animation: "fadeUp .3s ease" }}
-            >
-              <p className="kr text-[15px] font-medium mb-[3px]">
-                <button
-                  type="button"
-                  onClick={() => speakKorean(word.example_kr)}
-                  title="Hear the sentence"
-                  className="text-left hover:text-[#7C3AED] transition-colors"
+            <div className="grid gap-2.5 mb-[22px]" style={{ animation: "fadeUp .3s ease" }}>
+              <div className="bg-[#FAF7EF] border border-[#E3DDD0] rounded-[10px] px-4 py-3.5 text-left">
+                <p className="kr text-[15px] font-medium mb-[3px]">
+                  <button
+                    type="button"
+                    onClick={() => speakKorean(word.example_kr)}
+                    title="Hear the sentence"
+                    className="text-left hover:text-[#7C3AED] transition-colors"
+                  >
+                    {word.example_kr} <span aria-hidden="true" className="text-[12px]">🔊</span>
+                  </button>
+                </p>
+                <p className="text-[13px] text-[#6B6560]">{word.example_en}</p>
+              </div>
+              {word.moreExamples?.map((ex, i) => (
+                <div
+                  key={i}
+                  className="bg-white border border-dashed border-[#E3DDD0] rounded-[10px] px-4 py-3.5 text-left"
                 >
-                  {word.example_kr} <span aria-hidden="true" className="text-[12px]">🔊</span>
-                </button>
-              </p>
-              <p className="text-[13px] text-[#6B6560]">{word.example_en}</p>
+                  <p className="flex items-center gap-1.5 text-[10.5px] font-bold tracking-[0.05em] uppercase text-[#A19A8C] mb-1.5">
+                    {ex.source === "reading" ? "📖 Seen in Reading" : "🎧 Seen in Listening"}
+                  </p>
+                  <p className="kr text-[15px] font-medium mb-[3px]">
+                    <button
+                      type="button"
+                      onClick={() => speakKorean(ex.kr)}
+                      title="Hear the sentence"
+                      className="text-left hover:text-[#7C3AED] transition-colors"
+                    >
+                      {ex.kr} <span aria-hidden="true" className="text-[12px]">🔊</span>
+                    </button>
+                  </p>
+                  <p className="text-[13px] text-[#6B6560]">{ex.en}</p>
+                </div>
+              ))}
             </div>
             <div className="flex gap-2.5 justify-center flex-wrap">
               <button

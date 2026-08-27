@@ -84,6 +84,10 @@ export type VocabWordWithProgress = VocabWord & {
   last_reviewed_at: string | null;
   // Leitner box (1-5); missing until migration 0022 / first review.
   box?: number | null;
+  // 0-2 more real sentences containing this word, found elsewhere in the
+  // app (reading/listening) — see lib/vocab-examples.ts. Populated by the
+  // session page (server-side); optional so other callers keep compiling.
+  moreExamples?: { kr: string; en: string; source: "reading" | "listening" }[];
 };
 
 export function getWordsForTopic(topicKey: string, level?: CefrLevel): VocabWord[] {

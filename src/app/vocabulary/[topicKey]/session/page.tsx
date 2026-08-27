@@ -11,6 +11,7 @@ import {
   unlockedVocabTiers,
   type VocabWordWithProgress,
 } from "@/lib/vocabulary";
+import { findMoreExamples } from "@/lib/vocab-examples";
 import { LEVEL_ORDER, type CefrLevel } from "@/lib/tree";
 
 function isCefrLevel(value: string | undefined): value is CefrLevel {
@@ -71,6 +72,7 @@ export default async function VocabChapterSessionPage({
       incorrect_count: p?.incorrect_count ?? 0,
       last_reviewed_at: p?.last_reviewed_at ?? null,
       box: p?.box ?? null,
+      moreExamples: findMoreExamples(w.korean, w.example_kr),
     };
   });
 
