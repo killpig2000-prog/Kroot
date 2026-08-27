@@ -150,7 +150,7 @@ export default function BottomNav() {
 
             {sheetSections.map((section) => (
               <div key={section.title}>
-                <p className="text-[11px] font-extrabold tracking-[.1em] uppercase text-[#B7AE9C] px-0.5 pt-3 pb-1.5">
+                <p className="text-[13px] font-extrabold tracking-[.08em] uppercase text-success-deep px-0.5 pt-3 pb-1.5">
                   {section.title}
                 </p>
                 <div className="grid grid-cols-3 gap-2">
