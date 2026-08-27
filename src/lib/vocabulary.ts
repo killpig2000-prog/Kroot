@@ -111,13 +111,14 @@ export function getWordsForTopic(topicKey: string, level?: CefrLevel): VocabWord
 
 // Display metadata for each unit (= chapter) of the daily-life track, curated
 // to match the words that actually land in that slice. Falls back to "Unit N".
+// Each title covers a 10-word unit (two of the original 5-word slices merged).
 const UNIT_TITLES: Record<string, string[]> = {
-  A1: ["First words", "People & time", "Around the house", "Home objects", "Things you carry", "Food & drink", "At the table", "Cooking basics", "Dishes & rooms", "People at home", "Body & day", "Time & place"],
-  A2: ["Plans & weather", "Getting around", "Around town", "Free time & errands", "Out and about", "Places & activities", "Hobbies", "Chores & routines", "Travel basics", "Shopping & money", "Paying & feeling ill", "Health & work"],
-  B1: ["Life & habits", "People & feelings", "Mind & mood", "Goals & effort", "Growth & ability", "Talking & helping", "Memory & hope", "Inner strength", "Moods & manners", "Strengths & choices", "Cause & result", "Order & reaction"],
-  B2: ["Getting along", "Character traits", "Working together", "Balance & priorities", "Skills at work", "Motivation & structure", "Careers", "Pay & workload", "Pressure & self-worth", "Belonging & identity", "Fairness & persuasion", "Conflict & repair"],
-  C1: ["Critical thinking", "Argument & logic", "Public discourse", "Open minds & logic", "Reasoning", "Necessity & chance", "Beliefs & worldviews", "Context & norms", "Social ills", "Power & inequality", "Rhetoric", "Isms & justification"],
-  C2: ["Idioms of fate", "Idioms of effort", "Hard moments", "Wisdom & growth", "Fortune turns", "Warnings", "Learning & listening", "Cunning & resolve", "People & empathy", "Pride & anxiety", "Despair & progress", "Rare & literary"],
+  A1: ["First words & people", "Around the house", "Everyday things & food", "At the table", "Home & family", "Body, time & place"],
+  A2: ["Plans & getting around", "Around town", "Places & activities", "Hobbies & routines", "Travel & shopping", "Health & work"],
+  B1: ["Life, people & feelings", "Mind, goals & effort", "Growth & helping", "Hope & inner strength", "Manners & choices", "Cause, order & reaction"],
+  B2: ["Getting along & character", "Teamwork & balance", "Skills & motivation", "Careers & workload", "Pressure & identity", "Fairness & conflict"],
+  C1: ["Critical thinking & argument", "Public discourse", "Reasoning & chance", "Beliefs & norms", "Society & power", "Rhetoric & isms"],
+  C2: ["Idioms of fate & effort", "Hard moments & wisdom", "Fortune & warnings", "Learning & resolve", "Empathy, pride & anxiety", "Despair, progress & the literary"],
 };
 
 export const UNIT_ICONS: { icon: string; bg: string }[] = [
@@ -133,8 +134,8 @@ export function getUnitTitle(level: CefrLevel, index: number): string {
   return UNIT_TITLES[level]?.[index] ?? `Unit ${index + 1}`;
 }
 
-export const CHAPTER_SIZE = 5;
-export const MINUTES_PER_SESSION = 5;
+export const CHAPTER_SIZE = 10;
+export const MINUTES_PER_SESSION = 8;
 export const QUIZ_OPTION_COUNT = 4;
 
 // Splits a level's word list into fixed, deterministically-ordered chapters —
