@@ -844,7 +844,7 @@ export const COSTUMES: Costume[] = [
     scene: {
       layer: "front",
       draw: () => (
-        <g transform="translate(46 196)">
+        <g transform="translate(46 196) scale(1.6)">
           <g className="bob2">
             <ellipse cx="0" cy="0" rx="8" ry="6" fill="#B08A5E" />
             <circle cx="6" cy="-4" r="4.5" fill="#C9A06A" />
@@ -867,7 +867,7 @@ export const COSTUMES: Costume[] = [
     scene: {
       layer: "front",
       draw: () => (
-        <g transform="translate(168 196)">
+        <g transform="translate(168 196) scale(1.6)">
           <path d="M6 2 C14 -14 2 -18 -2 -6" stroke="#B4651E" strokeWidth="6" fill="none" strokeLinecap="round" />
           <ellipse cx="0" cy="0" rx="8" ry="6" fill="#D97D3B" />
           <circle cx="-6" cy="-4" r="4.5" fill="#E08A4A" />
@@ -889,7 +889,7 @@ export const COSTUMES: Costume[] = [
     scene: {
       layer: "front",
       draw: () => (
-        <g transform="translate(40 194)">
+        <g transform="translate(40 194) scale(1.6)">
           <ellipse cx="0" cy="2" rx="10" ry="6" fill="#4B5563" />
           <circle cx="8" cy="-4" r="5.5" fill="#4B5563" />
           <path d="M4 -8 l1 -4 l3 3z M10 -9 l2 -3 l1 4z" fill="#4B5563" />
@@ -912,7 +912,7 @@ export const COSTUMES: Costume[] = [
     scene: {
       layer: "front",
       draw: () => (
-        <g transform="translate(180 190)">
+        <g transform="translate(180 190) scale(1.6)">
           <g className="friend-float">
             <path d="M-12 4 L-2 0" stroke="#1F2937" strokeWidth="3" strokeLinecap="round" />
             <ellipse cx="4" cy="0" rx="9" ry="5.5" fill="#1F2937" />
@@ -938,7 +938,7 @@ export const COSTUMES: Costume[] = [
     scene: {
       layer: "front",
       draw: () => (
-        <g transform="translate(40 188)">
+        <g transform="translate(40 188) scale(1.6)">
           <g className="friend-float-2">
             <ellipse cx="0" cy="2" rx="9" ry="10" fill="#A16207" />
             <ellipse cx="0" cy="4" rx="6" ry="6" fill="#FDE68A" />
@@ -965,7 +965,7 @@ export const COSTUMES: Costume[] = [
     scene: {
       layer: "front",
       draw: () => (
-        <g transform="translate(44 186)">
+        <g transform="translate(44 186) scale(1.6)">
           <g className="bob">
             <circle cx="0" cy="8" r="9" fill="#60A5FA" opacity=".3" />
             <ellipse cx="0" cy="4" rx="8" ry="9" fill="#3B82F6" />
@@ -980,6 +980,84 @@ export const COSTUMES: Costume[] = [
           </g>
         </g>
       ),
+    },
+  },
+  {
+    id: "dragon",
+    name: "Guardian Dragon",
+    krName: "용",
+    slot: "friend",
+    price: 520,
+    rarity: "legendary",
+    minPlayerLevel: 100,
+    icon: "\ud83d\udc09",
+    scene: {
+      layer: "front",
+      draw: () => {
+        // Tail-to-neck beads, each a little smaller than the last, tracing
+        // a rearing S-curve. The head is drawn separately, bigger, on top.
+        const body: { x: number; y: number; r: number }[] = [
+          { x: 6, y: 8, r: 5 },
+          { x: 1, y: -6, r: 6.5 },
+          { x: -6, y: -19, r: 8 },
+          { x: -3, y: -33, r: 10 },
+          { x: 8, y: -46, r: 11.5 },
+          { x: 18, y: -60, r: 10 },
+          { x: 21, y: -75, r: 8.5 },
+        ];
+        return (
+          <g transform="translate(170 210)">
+            <g className="friend-float">
+              {/* clouds at the base — a dragon is never far from them */}
+              <g opacity=".8">
+                <ellipse cx="-8" cy="10" rx="14" ry="5" fill="#fff" />
+                <ellipse cx="7" cy="15" rx="10" ry="4" fill="#fff" />
+              </g>
+              {body.map((seg, i) => (
+                <circle key={i} cx={seg.x} cy={seg.y} r={seg.r} fill={i % 2 ? "#0D9488" : "#14B8A6"} />
+              ))}
+              {/* back ridge, every other segment */}
+              {body
+                .filter((_, i) => i % 2 === 0)
+                .map((seg, i) => (
+                  <path
+                    key={i}
+                    d={`M${seg.x - 4} ${seg.y - seg.r * 0.5} L${seg.x} ${seg.y - seg.r * 1.5} L${seg.x + 4} ${seg.y - seg.r * 0.5}Z`}
+                    fill="#F59E0B"
+                  />
+                ))}
+              {/* golden belly scutes along the chest */}
+              {body.slice(0, 5).map((seg, i) => (
+                <rect
+                  key={i}
+                  x={seg.x - 3}
+                  y={seg.y + seg.r * 0.3}
+                  width="6"
+                  height="3"
+                  rx="1"
+                  fill="#FDE68A"
+                  transform={`rotate(${-20 + i * 8} ${seg.x} ${seg.y})`}
+                />
+              ))}
+              {/* head */}
+              <circle cx="24" cy="-90" r="13" fill="#0D9488" />
+              <path d="M18 -100 Q13 -113 9 -117" stroke="#92400E" strokeWidth="2.6" fill="none" strokeLinecap="round" />
+              <path d="M29 -101 Q34 -114 39 -117" stroke="#92400E" strokeWidth="2.6" fill="none" strokeLinecap="round" />
+              <path d="M14 -86 Q4 -84 -3 -78" stroke="#F59E0B" strokeWidth="1.6" fill="none" strokeLinecap="round" />
+              <path d="M15 -82 Q6 -78 1 -70" stroke="#F59E0B" strokeWidth="1.6" fill="none" strokeLinecap="round" />
+              <circle cx="19" cy="-92" r="2.1" fill="#1F2937" />
+              <circle cx="19.7" cy="-92.7" r=".7" fill="#fff" />
+              <circle cx="29" cy="-92" r="2.1" fill="#1F2937" />
+              <circle cx="29.7" cy="-92.7" r=".7" fill="#fff" />
+              <path d="M20 -85 Q24 -82 28 -85" stroke="#134E4A" strokeWidth="1.6" fill="none" strokeLinecap="round" />
+              {/* 여의주 — the wish-granting pearl */}
+              <circle cx="41" cy="-88" r="5.5" fill="#FDE68A" />
+              <circle cx="39" cy="-90" r="2" fill="#fff" opacity=".85" />
+              <path d="M41 -98 l1.6 4 l4 1.6 l-4 1.6 l-1.6 4 l-1.6 -4 l-4 -1.6 l4 -1.6z" fill="#FFD66B" opacity=".9" />
+            </g>
+          </g>
+        );
+      },
     },
   },
 ];
