@@ -23,9 +23,9 @@ type Counts = { correct: number; incorrect: number };
 
 // Growth stage of a word, from how many times it's been reviewed.
 const STAGE_META = [
-  { label: "🌰 Seed", cls: "bg-[#FFFBEB] text-[#D97706]" },
-  { label: "🌱 Sprout", cls: "bg-[#F0FDF4] text-[#16A34A]" },
-  { label: "🌿 Rooting", cls: "bg-[#DCFCE7] text-[#15803D]" },
+  { label: "🌰 Seed", cls: "bg-[#FFFBEB] text-amber" },
+  { label: "🌱 Sprout", cls: "bg-success-bg text-success" },
+  { label: "🌿 Rooting", cls: "bg-[#DCFCE7] text-success-deep" },
   { label: "🌳 Settled", cls: "bg-[#166534] text-white" },
 ];
 
@@ -39,10 +39,10 @@ function stageFor(reviews: number): number {
 const BTN_VIOLET =
   "rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-[#7C3AED] hover:bg-[#6D28D9] transition-colors disabled:opacity-60";
 const BTN_INK =
-  "rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-[#18181B] hover:bg-[#3F3F46] transition-colors disabled:opacity-60";
+  "rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-charcoal hover:bg-[#3F3F46] transition-colors disabled:opacity-60";
 const BTN_LINE =
-  "rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-[#18181B] bg-white border border-[#E3DDD0] hover:bg-[#FAF7EF] transition-colors disabled:opacity-60";
-const CARD = "max-w-[560px] border border-[#E3DDD0] rounded-[14px] p-[clamp(20px,3vw,28px)]";
+  "rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-charcoal bg-white border border-line hover:bg-warm transition-colors disabled:opacity-60";
+const CARD = "max-w-[560px] border border-line rounded-[14px] p-[clamp(20px,3vw,28px)]";
 
 // A generated word note is either a hanja breakdown like
 // "시(試 to test) + 험(驗 to examine)" or a loanword origin like
@@ -83,16 +83,16 @@ function MorphemeNote({
           <div className="flex flex-col gap-1.5">
             {data.parts.map((p) => (
               <div key={p.syllable + p.hanja} className="flex items-baseline gap-2">
-                <span className="kr text-[17px] font-bold text-[#18181B] leading-none">
+                <span className="kr text-[17px] font-bold text-charcoal leading-none">
                   {p.syllable}
                 </span>
                 <span className="kr text-[13px] text-[#A08F4E]">{p.hanja}</span>
-                <span className="text-[12px] text-[#6B6560] leading-[1.4]">{p.gloss}</span>
+                <span className="text-[12px] text-muted leading-[1.4]">{p.gloss}</span>
               </div>
             ))}
           </div>
         ) : (
-          <p className="text-[12.5px] text-[#6B6560] leading-[1.5]">from {data.origin}</p>
+          <p className="text-[12.5px] text-muted leading-[1.5]">from {data.origin}</p>
         )}
       </div>
     </div>
@@ -299,7 +299,7 @@ export default function VocabSession({
     return (
       <div className={`${CARD} text-center`}>
         <p className="font-bold text-[17px] tracking-[-0.01em] mb-1.5">No words here yet</p>
-        <p className="text-sm text-[#6B6560] mb-5">This chapter doesn&apos;t have cards yet — try another one.</p>
+        <p className="text-sm text-muted mb-5">This chapter doesn&apos;t have cards yet — try another one.</p>
         <Link href="/vocabulary" className={BTN_INK}>
           Back to topics
         </Link>
@@ -312,7 +312,7 @@ export default function VocabSession({
       <div className={`${CARD} text-center`} style={{ animation: "fadeUp .35s ease" }}>
         <p className="text-3xl mb-2">🎯</p>
         <h2 className="font-bold text-[19px] tracking-[-0.02em] mb-1.5">Chapter quiz</h2>
-        <p className="text-sm text-[#6B6560] mb-6">
+        <p className="text-sm text-muted mb-6">
           {known} of {words.length} felt easy. Ready to fill in the blanks?
         </p>
         <div className="flex justify-center gap-2.5 flex-wrap">
@@ -338,13 +338,13 @@ export default function VocabSession({
     const quizPct = quizQuestions.length ? (quizIndex / quizQuestions.length) * 100 : 0;
     return (
       <div className={CARD}>
-        <div className="flex justify-between items-center mb-2.5 text-[12.5px] font-medium text-[#A19A8C]">
+        <div className="flex justify-between items-center mb-2.5 text-[12.5px] font-medium text-faint">
           <span>
             Quiz · Question {quizIndex + 1} of {quizQuestions.length}
           </span>
           <span>{quizKnown} correct</span>
         </div>
-        <div className="h-1.5 bg-[#E3DDD0] rounded-full overflow-hidden mb-6">
+        <div className="h-1.5 bg-line rounded-full overflow-hidden mb-6">
           <i
             className="not-italic block h-full bg-[#7C3AED] rounded-full transition-[width] duration-300"
             style={{ width: `${quizPct}%` }}
@@ -354,13 +354,13 @@ export default function VocabSession({
         {q.mode === "meaning" ? (
           <>
             <p className="kr text-[clamp(30px,5vw,40px)] text-center mb-1">{q.prompt}</p>
-            <p className="text-[13px] text-[#6B6560] mb-6 text-center">{q.word.romanization}</p>
+            <p className="text-[13px] text-muted mb-6 text-center">{q.word.romanization}</p>
           </>
         ) : (
           <>
             <p className="kr text-[clamp(18px,3vw,22px)] leading-[1.6] mb-1.5 text-center">{q.prompt}</p>
             {q.word.example_en && (
-              <p className="text-[13px] text-[#6B6560] mb-6 text-center">{q.word.example_en}</p>
+              <p className="text-[13px] text-muted mb-6 text-center">{q.word.example_en}</p>
             )}
           </>
         )}
@@ -380,12 +380,12 @@ export default function VocabSession({
                   q.mode === "blank" ? "kr text-base" : "text-[14.5px]"
                 } text-left px-4 py-[13px] rounded-[10px] font-medium transition-all border-[1.5px] disabled:cursor-default ${
                   state === "correct"
-                    ? "border-[#16A34A] bg-[#F0FDF4]"
+                    ? "border-success bg-success-bg"
                     : state === "wrong"
-                    ? "border-[#DC2626] bg-[#FEF2F2]"
+                    ? "border-danger bg-danger-bg"
                     : show
-                    ? "border-[#E3DDD0] bg-white opacity-90"
-                    : "border-[#E3DDD0] bg-white hover:border-[#7C3AED] hover:bg-[#F5F3FF]"
+                    ? "border-line bg-white opacity-90"
+                    : "border-line bg-white hover:border-[#7C3AED] hover:bg-[#F5F3FF]"
                 }`}
               >
                 {opt}
@@ -417,39 +417,39 @@ export default function VocabSession({
         <h2 className="font-bold text-[21px] tracking-[-0.02em] mt-3 mb-1.5">
           {words.length} words watered today! 🌱
         </h2>
-        <p className="text-sm text-[#6B6560] mb-[22px]">Those words are rooted a little deeper now.</p>
+        <p className="text-sm text-muted mb-[22px]">Those words are rooted a little deeper now.</p>
         {levelUp && (
-          <p className="text-sm font-semibold text-[#16A34A] mb-[22px] -mt-3">
+          <p className="text-sm font-semibold text-success mb-[22px] -mt-3">
             🎉 Level up! You&apos;re now Lv. {levelUp.new_level}
           </p>
         )}
 
         <div className="flex justify-center gap-3 mb-6 flex-wrap">
-          <div className="border border-[#E3DDD0] rounded-[10px] px-5 py-3 min-w-[100px]">
-            <b className="block text-[19px] font-bold text-[#16A34A]">{known}</b>
-            <small className="text-xs text-[#6B6560]">Marked known</small>
+          <div className="border border-line rounded-[10px] px-5 py-3 min-w-[100px]">
+            <b className="block text-[19px] font-bold text-success">{known}</b>
+            <small className="text-xs text-muted">Marked known</small>
           </div>
-          <div className="border border-[#E3DDD0] rounded-[10px] px-5 py-3 min-w-[100px]">
+          <div className="border border-line rounded-[10px] px-5 py-3 min-w-[100px]">
             <b className="block text-[19px] font-bold">{tricky}</b>
-            <small className="text-xs text-[#6B6560]">Still learning</small>
+            <small className="text-xs text-muted">Still learning</small>
           </div>
           {tookQuiz && (
-            <div className="border border-[#E3DDD0] rounded-[10px] px-5 py-3 min-w-[100px]">
-              <b className="block text-[19px] font-bold text-[#16A34A]">
+            <div className="border border-line rounded-[10px] px-5 py-3 min-w-[100px]">
+              <b className="block text-[19px] font-bold text-success">
                 {quizKnown}/{quizKnown + quizTricky}
               </b>
-              <small className="text-xs text-[#6B6560]">Quiz</small>
+              <small className="text-xs text-muted">Quiz</small>
             </div>
           )}
         </div>
 
-        <span className="inline-flex items-center gap-2 bg-[#F0FDF4] border border-[#BBF7D0] rounded-full px-[18px] py-2 text-[13.5px] font-semibold text-[#16A34A] mb-6">
+        <span className="inline-flex items-center gap-2 bg-success-bg border border-success-line rounded-full px-[18px] py-2 text-[13.5px] font-semibold text-success mb-6">
           💧 Vocabulary · chapter watered
         </span>
 
         <div className="flex justify-center gap-2.5 flex-wrap">
           <button
-            className="rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-[#16A34A] hover:bg-[#15803D] transition-colors disabled:opacity-60"
+            className="rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-success hover:bg-success-deep transition-colors disabled:opacity-60"
             onClick={() => goTo(`/vocabulary?level=${words[0].level}`)}
             disabled={navigating}
           >
@@ -488,18 +488,18 @@ export default function VocabSession({
             <span
               key={w.key}
               className={`w-[26px] h-1.5 rounded-full ${
-                k < index ? "bg-[#7C3AED]" : k === index ? "bg-[#7C3AED] opacity-40" : "bg-[#E3DDD0]"
+                k < index ? "bg-[#7C3AED]" : k === index ? "bg-[#7C3AED] opacity-40" : "bg-line"
               }`}
             />
           ))}
         </div>
-        <span className="text-[13px] text-[#6B6560] flex-none">
+        <span className="text-[13px] text-muted flex-none">
           Today: <b className="text-[#7C3AED]">{index}</b> of {words.length} words
         </span>
       </div>
 
       {/* word card */}
-      <div className="relative border border-[#E3DDD0] rounded-[16px] p-[clamp(24px,4vw,34px)] text-center">
+      <div className="relative border border-line rounded-[16px] p-[clamp(24px,4vw,34px)] text-center">
         {/* desktop: sticky-note memo in the empty space to the right */}
         {flipped && morpheme && (
           <MorphemeNote
@@ -527,7 +527,7 @@ export default function VocabSession({
             <span aria-hidden="true" className="text-[20px] translate-y-[-4px]">🔊</span>
           </button>
         </p>
-        <p className="text-[13.5px] text-[#A19A8C] mb-4">{word.romanization}</p>
+        <p className="text-[13.5px] text-faint mb-4">{word.romanization}</p>
 
         {flipped ? (
           <>
@@ -544,7 +544,7 @@ export default function VocabSession({
               />
             )}
             <div className="grid gap-2.5 mb-[22px]" style={{ animation: "fadeUp .3s ease" }}>
-              <div className="bg-[#FAF7EF] border border-[#E3DDD0] rounded-[10px] px-4 py-3.5 text-left">
+              <div className="bg-warm border border-line rounded-[10px] px-4 py-3.5 text-left">
                 <p className="kr text-[15px] font-medium mb-[3px]">
                   <button
                     type="button"
@@ -555,14 +555,14 @@ export default function VocabSession({
                     {word.example_kr} <span aria-hidden="true" className="text-[12px]">🔊</span>
                   </button>
                 </p>
-                <p className="text-[13px] text-[#6B6560]">{word.example_en}</p>
+                <p className="text-[13px] text-muted">{word.example_en}</p>
               </div>
               {word.moreExamples?.map((ex, i) => (
                 <div
                   key={i}
-                  className="bg-white border border-dashed border-[#E3DDD0] rounded-[10px] px-4 py-3.5 text-left"
+                  className="bg-white border border-dashed border-line rounded-[10px] px-4 py-3.5 text-left"
                 >
-                  <p className="flex items-center gap-1.5 text-[10.5px] font-bold tracking-[0.05em] uppercase text-[#A19A8C] mb-1.5">
+                  <p className="flex items-center gap-1.5 text-[10.5px] font-bold tracking-[0.05em] uppercase text-faint mb-1.5">
                     {ex.source === "reading" ? "📖 Seen in Reading" : "🎧 Seen in Listening"}
                   </p>
                   <p className="kr text-[15px] font-medium mb-[3px]">
@@ -575,13 +575,13 @@ export default function VocabSession({
                       {ex.kr} <span aria-hidden="true" className="text-[12px]">🔊</span>
                     </button>
                   </p>
-                  <p className="text-[13px] text-[#6B6560]">{ex.en}</p>
+                  <p className="text-[13px] text-muted">{ex.en}</p>
                 </div>
               ))}
             </div>
             <div className="flex gap-2.5 justify-center flex-wrap">
               <button
-                className="rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-[#DC2626] bg-white border-[1.5px] border-[#FECACA] hover:bg-[#FEF2F2] transition-colors"
+                className="rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-danger bg-white border-[1.5px] border-[#FECACA] hover:bg-danger-bg transition-colors"
                 onClick={() => answerFlip(false)}
               >
                 Still learning
@@ -630,11 +630,11 @@ export default function VocabSession({
               </span>
               <div>
                 <b className="block text-[15px] font-bold">{root.name}</b>
-                <span className="text-[12.5px] text-[#6B6560]">{root.desc}</span>
+                <span className="text-[12.5px] text-muted">{root.desc}</span>
               </div>
             </div>
             <button
-              className="border-none bg-[#FAF7EF] w-7 h-7 rounded-lg text-[#A19A8C] hover:text-[#18181B] text-[13px]"
+              className="border-none bg-warm w-7 h-7 rounded-lg text-faint hover:text-charcoal text-[13px]"
               onClick={() => setRootOpen(false)}
               aria-label="Close root panel"
             >
@@ -643,10 +643,10 @@ export default function VocabSession({
           </div>
           <div className="grid gap-2.5">
             {root.words.map(([kr, meaning]) => (
-              <div key={kr} className="flex items-center gap-3 border border-[#E3DDD0] rounded-[10px] px-3.5 py-[11px] bg-[#FAF7EF]">
+              <div key={kr} className="flex items-center gap-3 border border-line rounded-[10px] px-3.5 py-[11px] bg-warm">
                 <span className="kr text-lg flex-none min-w-[52px]">{kr}</span>
-                <span className="text-[13px] text-[#6B6560]">
-                  <b className="text-[#18181B] font-semibold">{meaning}</b>
+                <span className="text-[13px] text-muted">
+                  <b className="text-charcoal font-semibold">{meaning}</b>
                 </span>
               </div>
             ))}

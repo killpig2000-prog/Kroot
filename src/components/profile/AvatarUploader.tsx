@@ -68,7 +68,7 @@ export default function AvatarUploader({
         type="button"
         onClick={() => inputRef.current?.click()}
         aria-label="Change profile photo"
-        className="relative w-14 h-14 rounded-full overflow-hidden bg-[#F0FDF4] border border-[#E3DDD0] flex items-center justify-center text-2xl group"
+        className="relative w-14 h-14 rounded-full overflow-hidden bg-success-bg border border-line flex items-center justify-center text-2xl group"
       >
         {preview ? (
           // eslint-disable-next-line @next/next/no-img-element
@@ -81,7 +81,7 @@ export default function AvatarUploader({
         </span>
       </button>
       <input ref={inputRef} type="file" accept="image/*" className="hidden" onChange={handleFile} />
-      {error && <p className="text-[11px] text-[#DC2626] font-semibold mt-1 max-w-[110px]">{error}</p>}
+      {error && <p className="text-[11px] text-danger font-semibold mt-1 max-w-[110px]">{error}</p>}
     </div>
   );
 }

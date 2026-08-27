@@ -19,9 +19,9 @@ export default function Error({
   return (
     <main className="min-h-dvh flex items-center justify-center px-5 bg-white">
       <div className="text-center max-w-[440px]">
-        <div className="inline-block border border-[#E3DDD0] rounded-[14px] bg-[#FAF7EF] px-8 pt-7 pb-4 mb-5 relative">
-          <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 bg-white border border-[#E3DDD0] rounded-full px-3 py-1 text-[11.5px] font-semibold whitespace-nowrap">
-            <span className="kr">앗, 미안해요!</span> <span className="text-[#A19A8C]">oops, sorry!</span>
+        <div className="inline-block border border-line rounded-[14px] bg-warm px-8 pt-7 pb-4 mb-5 relative">
+          <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 bg-white border border-line rounded-full px-3 py-1 text-[11.5px] font-semibold whitespace-nowrap">
+            <span className="kr">앗, 미안해요!</span> <span className="text-faint">oops, sorry!</span>
           </span>
           {/* A wilted little tree — droopy leaf, dizzy eyes, one sweat drop */}
           <svg className="w-[92px] h-[92px]" viewBox="0 0 100 100" aria-hidden="true">
@@ -45,7 +45,7 @@ export default function Error({
         <h1 className="font-bold text-[clamp(20px,4vw,25px)] tracking-[-0.02em] mb-2">
           Our tree wilted for a second
         </h1>
-        <p className="text-[14px] text-[#6B6560] leading-[1.65] mb-7">
+        <p className="text-[14px] text-muted leading-[1.65] mb-7">
           Something went wrong on our side — your progress is safe and rooted.
           <br />
           A splash of water usually fixes it.
@@ -54,13 +54,13 @@ export default function Error({
         <div className="flex justify-center gap-2.5 flex-wrap">
           <button
             onClick={() => unstable_retry()}
-            className="rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-[#16A34A] hover:bg-[#15803D] transition-colors"
+            className="rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-success hover:bg-success-deep transition-colors"
           >
             💧 Water it &amp; try again
           </button>
           <Link
             href="/dashboard"
-            className="rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-[#18181B] bg-white border border-[#E3DDD0] hover:bg-[#FAF7EF] transition-colors"
+            className="rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-charcoal bg-white border border-line hover:bg-warm transition-colors"
           >
             Back to my garden
           </Link>

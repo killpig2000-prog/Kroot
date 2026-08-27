@@ -22,13 +22,13 @@ const SKILL_META: Record<string, { label: string; emoji: string }> = {
 // Leitner boxes 1-5, in watering terms.
 const BOX_LABELS = ["Just planted", "Sprouting", "Growing", "Rooted", "Deep roots"];
 
-const CARD = "border border-[#E3DDD0] rounded-[14px] px-[22px] py-5";
+const CARD = "border border-line rounded-[14px] px-[22px] py-5";
 
 function SectionHead() {
   return (
     <div className="flex items-center gap-2 mt-2" id="insights">
       <b className="font-bold text-[15px] tracking-[-0.01em]">📊 Insights</b>
-      <span className="text-[10.5px] font-bold tracking-[.04em] text-[#92400E] bg-[#FFFBEB] border border-[#FDE68A] rounded-md px-1.5 py-0.5">
+      <span className="text-[10.5px] font-bold tracking-[.04em] text-[#92400E] bg-[#FFFBEB] border border-amber-line rounded-md px-1.5 py-0.5">
         🌟 PLUS
       </span>
     </div>
@@ -46,8 +46,8 @@ export default async function InsightsSection({
     return (
       <>
         <SectionHead />
-        <div className="border border-[#FDE68A] bg-[#FFFBEB] rounded-[14px] px-[22px] py-5">
-          <p className="text-[13px] text-[#6B6560] leading-[1.65] mb-3">
+        <div className="border border-amber-line bg-[#FFFBEB] rounded-[14px] px-[22px] py-5">
+          <p className="text-[13px] text-muted leading-[1.65] mb-3">
             Accuracy by skill, your weakest words ready for extra watering, how deep each word
             is rooted, and a day-by-day XP timeline — for Plus members.
           </p>
@@ -58,17 +58,17 @@ export default async function InsightsSection({
               { label: "deep-rooted words", value: "142" },
               { label: "XP this week", value: "215" },
             ].map((s) => (
-              <div key={s.label} className="border border-[#E3DDD0] bg-white rounded-[14px] px-4 py-3.5 text-center">
+              <div key={s.label} className="border border-line bg-white rounded-[14px] px-4 py-3.5 text-center">
                 <b className="block text-[18px] font-extrabold tracking-[-0.02em] blur-[6px]">
                   {s.value}
                 </b>
-                <small className="text-[11.5px] text-[#A19A8C]">{s.label}</small>
+                <small className="text-[11.5px] text-faint">{s.label}</small>
               </div>
             ))}
           </div>
           <Link
             href="/pricing"
-            className="inline-flex rounded-[10px] bg-[#16A34A] px-4 py-2 text-[13px] font-bold text-white hover:bg-[#15803D] transition-colors"
+            className="inline-flex rounded-[10px] bg-success px-4 py-2 text-[13px] font-bold text-white hover:bg-success-deep transition-colors"
           >
             Unlock with Kroot Plus →
           </Link>
@@ -190,7 +190,7 @@ export default async function InsightsSection({
             <b className="block text-[19px] font-extrabold tracking-[-0.02em] tabular-nums">
               {s.value}
             </b>
-            <small className="text-[11.5px] text-[#A19A8C]">{s.label}</small>
+            <small className="text-[11.5px] text-faint">{s.label}</small>
           </div>
         ))}
       </div>
@@ -199,7 +199,7 @@ export default async function InsightsSection({
       <div className={CARD}>
         <div className="flex justify-between items-baseline mb-4 gap-3">
           <b className="font-semibold text-[15px] tracking-[-0.01em]">⚡ XP · last 14 days</b>
-          <span className="text-[12px] text-[#A19A8C] font-medium">XP / day</span>
+          <span className="text-[12px] text-faint font-medium">XP / day</span>
         </div>
         <div className="flex items-end gap-1.5 h-[110px]" aria-hidden="true">
           {days.map((d, i) => {
@@ -212,11 +212,11 @@ export default async function InsightsSection({
               >
                 <div
                   className={`w-full max-w-[22px] rounded-t-[4px] ${
-                    isToday ? "bg-[#D97706]" : d.xp > 0 ? "bg-[#FDE68A]" : "bg-[#E3DDD0]"
+                    isToday ? "bg-amber" : d.xp > 0 ? "bg-amber-line" : "bg-line"
                   }`}
                   style={{ height: Math.max(3, Math.round((d.xp / maxDayXp) * 90)) }}
                 />
-                <span className={`text-[10px] leading-none ${isToday ? "text-[#18181B] font-semibold" : "text-[#A19A8C]"}`}>
+                <span className={`text-[10px] leading-none ${isToday ? "text-charcoal font-semibold" : "text-faint"}`}>
                   {d.label}
                 </span>
               </div>
@@ -231,19 +231,19 @@ export default async function InsightsSection({
           🌱 Where your XP comes from
         </b>
         {skillRows.length === 0 ? (
-          <p className="text-[13px] text-[#A19A8C]">
+          <p className="text-[13px] text-faint">
             Finish a lesson and your per-skill breakdown starts filling in here.
           </p>
         ) : (
           <div className="grid gap-2.5">
             {skillRows.map(([skill, xp]) => (
               <div key={skill} className="flex items-center gap-3">
-                <span className="flex-none w-[130px] text-[12.5px] font-semibold text-[#6B6560]">
+                <span className="flex-none w-[130px] text-[12.5px] font-semibold text-muted">
                   {SKILL_META[skill].emoji} {SKILL_META[skill].label}
                 </span>
                 <span className="flex-1 h-2.5 rounded-full bg-[#F5F5F4] overflow-hidden">
                   <span
-                    className="block h-full rounded-full bg-[#16A34A]"
+                    className="block h-full rounded-full bg-success"
                     style={{ width: `${Math.round((xp / maxSkillXp) * 100)}%` }}
                   />
                 </span>
@@ -258,12 +258,12 @@ export default async function InsightsSection({
       <div className={CARD}>
         <div className="flex justify-between items-baseline mb-3.5 gap-3">
           <b className="font-semibold text-[15px] tracking-[-0.01em]">💧 How deep your words are rooted</b>
-          <span className="text-[12px] text-[#A19A8C] font-medium">{vocab.length} words</span>
+          <span className="text-[12px] text-faint font-medium">{vocab.length} words</span>
         </div>
         <div className="grid gap-2.5">
           {BOX_LABELS.map((label, i) => (
             <div key={label} className="flex items-center gap-3">
-              <span className="flex-none w-[130px] text-[12.5px] font-semibold text-[#6B6560]">
+              <span className="flex-none w-[130px] text-[12.5px] font-semibold text-muted">
                 {label}
               </span>
               <span className="flex-1 h-2.5 rounded-full bg-[#F5F5F4] overflow-hidden">
@@ -285,12 +285,12 @@ export default async function InsightsSection({
       <div className={CARD}>
         <div className="flex justify-between items-baseline mb-3 gap-3">
           <b className="font-semibold text-[15px] tracking-[-0.01em]">🥀 Words that need extra water</b>
-          <Link href="/review" className="text-[12.5px] font-semibold text-[#16A34A] hover:underline">
+          <Link href="/review" className="text-[12.5px] font-semibold text-success hover:underline">
             Water them →
           </Link>
         </div>
         {weakest.length === 0 ? (
-          <p className="text-[13px] text-[#A19A8C]">
+          <p className="text-[13px] text-faint">
             Nothing wilting — every word you&apos;ve reviewed is doing fine. 🌱
           </p>
         ) : (
@@ -301,12 +301,12 @@ export default async function InsightsSection({
                 className="flex items-center gap-3 py-1.5 border-b border-dashed border-[#F0EEEA] last:border-b-0"
               >
                 <b className="kr flex-none text-[15px] font-semibold min-w-[90px]">{w.korean}</b>
-                <span className="flex-1 min-w-0 text-[12.5px] text-[#6B6560] truncate">
+                <span className="flex-1 min-w-0 text-[12.5px] text-muted truncate">
                   {w.meaning ?? ""}
                 </span>
-                <span className="flex-none text-[11.5px] font-semibold text-[#A19A8C]">{w.level}</span>
+                <span className="flex-none text-[11.5px] font-semibold text-faint">{w.level}</span>
                 <span className="flex-none text-[12px] tabular-nums">
-                  <span className="text-[#16A34A] font-semibold">{w.correct}✓</span>{" "}
+                  <span className="text-success font-semibold">{w.correct}✓</span>{" "}
                   <span className="text-[#DB2777] font-semibold">{w.wrong}✗</span>
                 </span>
               </div>
@@ -315,7 +315,7 @@ export default async function InsightsSection({
         )}
       </div>
 
-      <p className="text-[12px] text-[#A19A8C]">
+      <p className="text-[12px] text-faint">
         Per-skill XP starts counting from the day Insights launched — older XP shows in the
         timeline but isn&apos;t broken down by skill.
       </p>

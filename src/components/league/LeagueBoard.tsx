@@ -84,7 +84,7 @@ export default function LeagueBoard({ grade }: { grade: string }) {
 
   if (unavailable) {
     return (
-      <div className="border border-[#FDE68A] bg-[#FFFBEB] rounded-[14px] px-5 py-4 text-[13.5px]">
+      <div className="border border-amber-line bg-[#FFFBEB] rounded-[14px] px-5 py-4 text-[13.5px]">
         The league opens after database update 0026 is applied.
       </div>
     );
@@ -120,10 +120,10 @@ export default function LeagueBoard({ grade }: { grade: string }) {
       )}
 
       {/* my standing */}
-      <div className="border-[1.5px] border-[#BBF7D0] bg-[#F0FDF4] rounded-[14px] px-5 py-4 flex items-center gap-4 flex-wrap">
+      <div className="border-[1.5px] border-success-line bg-success-bg rounded-[14px] px-5 py-4 flex items-center gap-4 flex-wrap">
         <span className="text-[28px]">{tier.emoji}</span>
         <div className="flex-1 min-w-[200px]">
-          <p className="text-[11px] font-bold tracking-[.08em] uppercase text-[#16A34A]">
+          <p className="text-[11px] font-bold tracking-[.08em] uppercase text-success">
             {tier.name} League · this week
           </p>
           <b className="text-[16px]">
@@ -132,18 +132,18 @@ export default function LeagueBoard({ grade }: { grade: string }) {
               : "No XP yet this week — one session puts you on the board!"}
           </b>
           {my && my.xp_week > 0 && (
-            <span className="block text-[12.5px] text-[#6B6560] tabular-nums">
+            <span className="block text-[12.5px] text-muted tabular-nums">
               {my.xp_week} XP this week
             </span>
           )}
         </div>
         <div className="flex-none text-right">
           {joinedThisWeek ? (
-            <span className="text-[13px] font-semibold text-[#6B6560]">
+            <span className="text-[13px] font-semibold text-muted">
               First week — rewards unlock Monday 🌱
             </span>
           ) : reward ? (
-            <span className="text-[13.5px] font-bold text-[#16A34A]">
+            <span className="text-[13.5px] font-bold text-success">
               {reward.already_claimed
                 ? `Last week's reward claimed (${reward.coins}🪙)`
                 : reward.coins > 0
@@ -154,7 +154,7 @@ export default function LeagueBoard({ grade }: { grade: string }) {
             <button
               onClick={claim}
               disabled={claiming}
-              className="rounded-[9px] px-[16px] py-2 text-[13px] font-semibold text-white bg-[#16A34A] hover:bg-[#15803D] transition-colors disabled:opacity-60"
+              className="rounded-[9px] px-[16px] py-2 text-[13px] font-semibold text-white bg-success hover:bg-success-deep transition-colors disabled:opacity-60"
             >
               {claiming ? "Checking…" : "Claim last week's reward 🪙"}
             </button>
@@ -181,25 +181,25 @@ export default function LeagueBoard({ grade }: { grade: string }) {
 
       {/* reward tiers */}
       <div className="flex gap-2 flex-wrap text-[12px] font-semibold">
-        <span className="rounded-full border border-[#FDE68A] bg-[#FFFBEB] px-3 py-1">Top 10% → 100🪙</span>
-        <span className="rounded-full border border-[#E3DDD0] bg-white px-3 py-1">Top 30% → 50🪙</span>
-        <span className="rounded-full border border-[#E3DDD0] bg-white px-3 py-1">Top 60% → 20🪙</span>
-        <span className="rounded-full border border-[#E3DDD0] bg-white px-3 py-1">Joined → 5🪙</span>
+        <span className="rounded-full border border-amber-line bg-[#FFFBEB] px-3 py-1">Top 10% → 100🪙</span>
+        <span className="rounded-full border border-line bg-white px-3 py-1">Top 30% → 50🪙</span>
+        <span className="rounded-full border border-line bg-white px-3 py-1">Top 60% → 20🪙</span>
+        <span className="rounded-full border border-line bg-white px-3 py-1">Joined → 5🪙</span>
       </div>
 
       {/* fresh week: everyone is back to zero */}
       {rows !== null && rows.length > 0 && rows.every((r) => r.xp_week <= 0) && (
-        <div className="flex items-center gap-2.5 border border-[#FDE68A] bg-[#FFFBEB] rounded-[12px] px-4 py-2.5 text-[12.5px] font-semibold text-[#B45309]">
+        <div className="flex items-center gap-2.5 border border-amber-line bg-[#FFFBEB] rounded-[12px] px-4 py-2.5 text-[12.5px] font-semibold text-[#B45309]">
           🌅 Fresh week — everyone starts at 0. The first session takes #1!
         </div>
       )}
 
       {/* board */}
-      <div className="border border-[#E3DDD0] rounded-[14px] overflow-hidden">
+      <div className="border border-line rounded-[14px] overflow-hidden">
         {rows === null ? (
-          <p className="px-5 py-6 text-[13.5px] text-[#A19A8C]">Loading…</p>
+          <p className="px-5 py-6 text-[13.5px] text-faint">Loading…</p>
         ) : rows.length === 0 ? (
-          <p className="px-5 py-6 text-[13.5px] text-[#A19A8C]">
+          <p className="px-5 py-6 text-[13.5px] text-faint">
             Nobody has XP this week yet — first place is wide open!
           </p>
         ) : (
@@ -216,16 +216,16 @@ export default function LeagueBoard({ grade }: { grade: string }) {
               )}
               <div
                 className={`flex items-center gap-3.5 px-[18px] py-3 ${i > 0 ? "border-t border-[#F5F5F4]" : ""} ${
-                  r.is_me ? "bg-[#F0FDF4]" : "bg-white"
+                  r.is_me ? "bg-success-bg" : "bg-white"
                 }`}
               >
               <span
                 className={`flex-none w-8 h-8 rounded-full flex items-center justify-center text-[13px] font-extrabold ${
                   r.xp_week > 0 && r.rank === 1
-                    ? "bg-[#FFFBEB] border border-[#FDE68A]"
+                    ? "bg-[#FFFBEB] border border-amber-line"
                     : r.xp_week > 0 && r.rank <= 3
-                      ? "bg-[#FAF7EF] border border-[#E3DDD0]"
-                      : "text-[#A19A8C]"
+                      ? "bg-warm border border-line"
+                      : "text-faint"
                 }`}
               >
                 {r.xp_week <= 0
@@ -239,7 +239,7 @@ export default function LeagueBoard({ grade }: { grade: string }) {
                         : r.rank}
               </span>
               <span
-                className="flex-none w-[52px] h-[52px] rounded-[12px] bg-[#F0FDF4] border border-[#BBF7D0] overflow-hidden flex items-end justify-center"
+                className="flex-none w-[52px] h-[52px] rounded-[12px] bg-success-bg border border-success-line overflow-hidden flex items-end justify-center"
                 style={skyFor(r.costume_ids ?? []) ? { background: skyFor(r.costume_ids ?? []) ?? undefined } : undefined}
               >
                 <svg viewBox="30 60 160 160" className="w-[46px] h-[46px]" aria-hidden="true">
@@ -251,17 +251,17 @@ export default function LeagueBoard({ grade }: { grade: string }) {
               <span className="flex-1 min-w-0">
                 <b className="block text-[14px] truncate">
                   {r.display_name}
-                  {r.is_me && <span className="text-[#16A34A] text-[12px] font-bold ml-1.5">you</span>}
+                  {r.is_me && <span className="text-success text-[12px] font-bold ml-1.5">you</span>}
                 </b>
-                <span className="text-[12px] text-[#A19A8C]">Lv.{r.level}</span>
+                <span className="text-[12px] text-faint">Lv.{r.level}</span>
               </span>
                 {inPromoteZone && (
-                  <span className="flex-none text-[12px] font-bold text-[#16A34A]" title="Promotion zone">
+                  <span className="flex-none text-[12px] font-bold text-success" title="Promotion zone">
                     ▲
                   </span>
                 )}
                 {inDemoteZone && (
-                  <span className="flex-none text-[12px] font-bold text-[#DC2626]" title="Demotion zone">
+                  <span className="flex-none text-[12px] font-bold text-danger" title="Demotion zone">
                     ▼
                   </span>
                 )}
@@ -273,7 +273,7 @@ export default function LeagueBoard({ grade }: { grade: string }) {
         )}
       </div>
 
-      <p className="text-[12px] text-[#A19A8C]">
+      <p className="text-[12px] text-faint">
         Everyone in the {tier.name}{" "}league races by XP earned this week (weeks start Monday). Each
         Monday the top 20% (▲) climb to the next league, the bottom 20% (▼) drop one, and you can
         claim last week&apos;s reward. You see the top 10 plus the ranks around you.

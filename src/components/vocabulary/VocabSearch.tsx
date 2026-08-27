@@ -34,7 +34,7 @@ export default function VocabSearch({ unlockedLevels }: { unlockedLevels: CefrLe
 
   return (
     <div className="relative mb-6">
-      <div className="flex items-center gap-2.5 border border-[#E3DDD0] bg-white rounded-[12px] px-4 py-2.5 focus-within:border-[#16A34A] transition-colors">
+      <div className="flex items-center gap-2.5 border border-line bg-white rounded-[12px] px-4 py-2.5 focus-within:border-success transition-colors">
         <span aria-hidden="true" className="text-[15px] opacity-60">
           🔍
         </span>
@@ -43,14 +43,14 @@ export default function VocabSearch({ unlockedLevels }: { unlockedLevels: CefrLe
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => void ensureIndex()}
           placeholder="Search 4,000+ words — 한국어, romanization, or English"
-          className="flex-1 min-w-0 bg-transparent text-[14px] outline-none placeholder:text-[#A19A8C]"
+          className="flex-1 min-w-0 bg-transparent text-[14px] outline-none placeholder:text-faint"
           aria-label="Search vocabulary"
         />
         {query && (
           <button
             onClick={() => setQuery("")}
             aria-label="Clear search"
-            className="text-[13px] text-[#A19A8C] hover:text-[#18181B] transition-colors"
+            className="text-[13px] text-faint hover:text-charcoal transition-colors"
           >
             ✕
           </button>
@@ -58,11 +58,11 @@ export default function VocabSearch({ unlockedLevels }: { unlockedLevels: CefrLe
       </div>
 
       {q && (
-        <div className="absolute left-0 right-0 top-[calc(100%+6px)] z-20 border border-[#E3DDD0] bg-white rounded-[12px] shadow-[0_18px_40px_-24px_rgba(60,50,30,.5)] overflow-hidden">
+        <div className="absolute left-0 right-0 top-[calc(100%+6px)] z-20 border border-line bg-white rounded-[12px] shadow-[0_18px_40px_-24px_rgba(60,50,30,.5)] overflow-hidden">
           {!index ? (
-            <p className="px-4 py-3 text-[13px] text-[#A19A8C]">Loading the deck…</p>
+            <p className="px-4 py-3 text-[13px] text-faint">Loading the deck…</p>
           ) : results.length === 0 ? (
-            <p className="px-4 py-3 text-[13px] text-[#A19A8C]">
+            <p className="px-4 py-3 text-[13px] text-faint">
               No match for “{query.trim()}” — try the Korean spelling or the English meaning.
             </p>
           ) : (
@@ -71,10 +71,10 @@ export default function VocabSearch({ unlockedLevels }: { unlockedLevels: CefrLe
               const inner = (
                 <>
                   <span className="kr flex-none font-bold text-[15px] min-w-[72px]">{r.kr}</span>
-                  <span className="flex-1 min-w-0 text-[12.5px] text-[#6B6560] truncate">
+                  <span className="flex-1 min-w-0 text-[12.5px] text-muted truncate">
                     {r.en}
                   </span>
-                  <span className="flex-none text-[11.5px] text-[#A19A8C]">
+                  <span className="flex-none text-[11.5px] text-faint">
                     {r.level} · {getUnitTitle(r.level, r.chapter)}
                     {!open && " 🔒"}
                   </span>
@@ -85,7 +85,7 @@ export default function VocabSearch({ unlockedLevels }: { unlockedLevels: CefrLe
                 <Link
                   key={key}
                   href={`/vocabulary/daily-life/session?chapter=${r.chapter}&level=${r.level}`}
-                  className="flex items-center gap-3 px-4 py-2.5 border-t border-[#F5F1E8] first:border-t-0 hover:bg-[#F0FDF4] transition-colors"
+                  className="flex items-center gap-3 px-4 py-2.5 border-t border-[#F5F1E8] first:border-t-0 hover:bg-success-bg transition-colors"
                   onClick={() => setQuery("")}
                 >
                   {inner}

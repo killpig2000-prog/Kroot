@@ -5,11 +5,7 @@ import Sidebar from "@/components/dashboard/Sidebar";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { GRAMMAR_GROUPS, GRAMMAR_LESSONS, lessonByKey, lessonsByLevel } from "@/lib/grammar";
 import { isDifficultyUnlocked } from "@/lib/level";
-import { LEVEL_ORDER, type CefrLevel } from "@/lib/tree";
-
-function isCefrLevel(value: string | undefined): value is CefrLevel {
-  return !!value && (LEVEL_ORDER as string[]).includes(value);
-}
+import { LEVEL_ORDER, isCefrLevel, type CefrLevel } from "@/lib/tree";
 
 export default async function GrammarPage({
   searchParams,
@@ -34,7 +30,7 @@ export default async function GrammarPage({
   const levelLessons = lessonsByLevel(level);
 
   return (
-    <div className="min-h-screen bg-[#FFFFFF] text-[#18181B]">
+    <div className="min-h-screen bg-[#FFFFFF] text-charcoal">
       <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
         <Sidebar
           displayName={profile?.display_name ?? "there"}
@@ -45,12 +41,12 @@ export default async function GrammarPage({
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] md:pb-[60px]">
           {/* breadcrumb */}
-          <div className="flex gap-2 text-[13px] text-[#A19A8C] mb-[18px]">
-            <Link href="/dashboard" className="hover:text-[#18181B] transition-colors">
+          <div className="flex gap-2 text-[13px] text-faint mb-[18px]">
+            <Link href="/dashboard" className="hover:text-charcoal transition-colors">
               Garden
             </Link>
             <span>/</span>
-            <b className="text-[#18181B] font-semibold">Grammar</b>
+            <b className="text-charcoal font-semibold">Grammar</b>
           </div>
 
           {/* head */}
@@ -61,14 +57,14 @@ export default async function GrammarPage({
               </span>
               Grammar
             </h1>
-            <span className="text-[13px] text-[#6B6560]">
+            <span className="text-[13px] text-muted">
               {GRAMMAR_LESSONS.length} lessons · the patterns behind every sentence
             </span>
           </div>
 
           {/* intro */}
           <div className="max-w-[820px] bg-[#EEF2FF] border border-[#C7D2FE] rounded-[14px] px-[18px] py-4 mb-7">
-            <p className="text-[13.5px] text-[#18181B] leading-[1.65]">
+            <p className="text-[13.5px] text-charcoal leading-[1.65]">
               Korean grammar is regular. The first group digs deeper into what the{" "}
               <Link href="/course" className="font-semibold text-[#4F46E5] hover:underline">
                 16-Day Course
@@ -86,34 +82,34 @@ export default async function GrammarPage({
             return (
               <section key={group.key} className="max-w-[820px] mb-8">
                 <div className="flex items-center gap-2.5 mb-1">
-                  <span className="text-[11.5px] font-semibold tracking-[.06em] uppercase text-[#A19A8C]">
+                  <span className="text-[11.5px] font-semibold tracking-[.06em] uppercase text-faint">
                     <span className="kr normal-case">{group.titleKr}</span> · {group.title}
                   </span>
-                  <span className="h-px flex-1 bg-[#E3DDD0]" />
-                  <span className="text-[12px] text-[#A19A8C]">{lessons.length} lessons</span>
+                  <span className="h-px flex-1 bg-line" />
+                  <span className="text-[12px] text-faint">{lessons.length} lessons</span>
                 </div>
-                <p className="text-[12.5px] text-[#6B6560] mb-3">{group.sub}</p>
+                <p className="text-[12.5px] text-muted mb-3">{group.sub}</p>
 
-                <div className="border border-[#E3DDD0] rounded-[14px] overflow-hidden">
+                <div className="border border-line rounded-[14px] overflow-hidden">
                   {lessons.map((lesson, i) => (
                     <Link
                       key={lesson.key}
                       href={`/grammar/${lesson.key}`}
                       className={`flex items-center gap-3.5 px-[18px] py-[15px] bg-white transition-all duration-150 hover:bg-[#EEF2FF] group ${
-                        i > 0 ? "border-t border-[#E3DDD0]" : ""
+                        i > 0 ? "border-t border-line" : ""
                       }`}
                     >
-                      <span className="flex-none w-8 h-8 rounded-[10px] bg-[#FAF7EF] border border-[#E3DDD0] flex items-center justify-center text-[12.5px] font-bold text-[#6B6560] transition-all group-hover:bg-[#4F46E5] group-hover:border-[#4F46E5] group-hover:text-white">
+                      <span className="flex-none w-8 h-8 rounded-[10px] bg-warm border border-line flex items-center justify-center text-[12.5px] font-bold text-muted transition-all group-hover:bg-[#4F46E5] group-hover:border-[#4F46E5] group-hover:text-white">
                         {GRAMMAR_LESSONS.indexOf(lesson) + 1}
                       </span>
                       <span className="min-w-0 flex-1">
                         <b className="block font-semibold text-[15px] mb-0.5">
                           {lesson.title}
-                          <span className="kr text-[12.5px] font-medium text-[#A19A8C] ml-2">
+                          <span className="kr text-[12.5px] font-medium text-faint ml-2">
                             {lesson.krTitle}
                           </span>
                         </b>
-                        <small className="block text-[12.5px] text-[#6B6560] leading-[1.5]">
+                        <small className="block text-[12.5px] text-muted leading-[1.5]">
                           {lesson.summary}
                         </small>
                       </span>
@@ -133,13 +129,13 @@ export default async function GrammarPage({
           {/* browse the whole syllabus by CEFR level */}
           <section className="max-w-[820px] mb-8">
             <div className="flex items-center gap-2.5 mb-1">
-              <span className="text-[11.5px] font-semibold tracking-[.06em] uppercase text-[#A19A8C]">
+              <span className="text-[11.5px] font-semibold tracking-[.06em] uppercase text-faint">
                 <span className="kr normal-case">단계별</span> · Browse by level
               </span>
-              <span className="h-px flex-1 bg-[#E3DDD0]" />
-              <span className="text-[12px] text-[#A19A8C]">{levelLessons.length} lessons</span>
+              <span className="h-px flex-1 bg-line" />
+              <span className="text-[12px] text-faint">{levelLessons.length} lessons</span>
             </div>
-            <p className="text-[12.5px] text-[#6B6560] mb-3">
+            <p className="text-[12.5px] text-muted mb-3">
               Every lesson, ordered A1 to C2. Higher tiers open once you pass the promotion test.
             </p>
 
@@ -152,7 +148,7 @@ export default async function GrammarPage({
                     className={`rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold transition-all border ${
                       lv === level
                         ? "bg-[#4F46E5] border-[#4F46E5] text-white"
-                        : "bg-white border-[#E3DDD0] text-[#6B6560] hover:border-[#A19A8C]"
+                        : "bg-white border-line text-muted hover:border-faint"
                     }`}
                   >
                     {lv}
@@ -163,7 +159,7 @@ export default async function GrammarPage({
                 ) : (
                   <div
                     key={lv}
-                    className="rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold border bg-[#FAF7EF] border-[#E3DDD0] text-[#A19A8C] grayscale opacity-60 cursor-not-allowed select-none"
+                    className="rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold border bg-warm border-line text-faint grayscale opacity-60 cursor-not-allowed select-none"
                   >
                     🔒 {lv}
                     <span className="text-[10.5px] font-bold ml-1.5">· promotion test</span>
@@ -172,26 +168,26 @@ export default async function GrammarPage({
               )}
             </div>
 
-            <div className="border border-[#E3DDD0] rounded-[14px] overflow-hidden">
+            <div className="border border-line rounded-[14px] overflow-hidden">
               {levelLessons.map((lesson, i) => (
                 <Link
                   key={lesson.key}
                   href={`/grammar/${lesson.key}`}
                   className={`flex items-center gap-3.5 px-[18px] py-[15px] bg-white transition-all duration-150 hover:bg-[#EEF2FF] group ${
-                    i > 0 ? "border-t border-[#E3DDD0]" : ""
+                    i > 0 ? "border-t border-line" : ""
                   }`}
                 >
-                  <span className="flex-none w-8 h-8 rounded-[10px] bg-[#FAF7EF] border border-[#E3DDD0] flex items-center justify-center text-[12.5px] font-bold text-[#6B6560] transition-all group-hover:bg-[#4F46E5] group-hover:border-[#4F46E5] group-hover:text-white">
+                  <span className="flex-none w-8 h-8 rounded-[10px] bg-warm border border-line flex items-center justify-center text-[12.5px] font-bold text-muted transition-all group-hover:bg-[#4F46E5] group-hover:border-[#4F46E5] group-hover:text-white">
                     {i + 1}
                   </span>
                   <span className="min-w-0 flex-1">
                     <b className="block font-semibold text-[15px] mb-0.5">
                       {lesson.title}
-                      <span className="kr text-[12.5px] font-medium text-[#A19A8C] ml-2">
+                      <span className="kr text-[12.5px] font-medium text-faint ml-2">
                         {lesson.krTitle}
                       </span>
                     </b>
-                    <small className="block text-[12.5px] text-[#6B6560] leading-[1.5]">
+                    <small className="block text-[12.5px] text-muted leading-[1.5]">
                       {lesson.summary}
                     </small>
                   </span>

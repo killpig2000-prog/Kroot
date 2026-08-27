@@ -60,12 +60,12 @@ export default function TreeEvolution({
         )}
       </svg>
       <p
-        className="text-[13.5px] text-[#6B6560] mt-1"
+        className="text-[13.5px] text-muted mt-1"
         style={{ visibility: phase === "new" ? "visible" : "hidden" }}
       >
         <span className="kr font-semibold">{SPECIES[from].krName}</span>
         <span aria-hidden="true"> → </span>
-        <span className="kr font-bold text-[#16A34A]">{SPECIES[to].krName}</span>{" "}
+        <span className="kr font-bold text-success">{SPECIES[to].krName}</span>{" "}
         <span aria-hidden="true">{SPECIES[to].emoji}</span>
       </p>
     </div>

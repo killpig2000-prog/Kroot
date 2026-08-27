@@ -14,26 +14,26 @@ export default function SlangHero({ entry }: { entry: SlangEntry }) {
           Slang of the day
         </span>
         <div className="flex items-center gap-2.5">
-          <span className="kr text-[clamp(30px,5vw,42px)] leading-none text-[#18181B]">{entry.kr}</span>
+          <span className="kr text-[clamp(30px,5vw,42px)] leading-none text-charcoal">{entry.kr}</span>
           <SpeakButton text={entry.kr} />
         </div>
-        <span className="block text-[13px] text-[#6B6560] mt-1.5">{entry.romanization}</span>
+        <span className="block text-[13px] text-muted mt-1.5">{entry.romanization}</span>
       </div>
 
       <div className="min-w-0 flex-1">
-        <b className="block font-bold text-[17px] tracking-[-0.01em] text-[#18181B]">{entry.meaning}</b>
-        <span className="block text-[12.5px] text-[#A19A8C] italic mt-0.5">
+        <b className="block font-bold text-[17px] tracking-[-0.01em] text-charcoal">{entry.meaning}</b>
+        <span className="block text-[12.5px] text-faint italic mt-0.5">
           literally &ldquo;{entry.literal}&rdquo;
         </span>
         {entry.origin && (
-          <p className="text-[13px] text-[#6B6560] mt-2 leading-[1.55]">{entry.origin}</p>
+          <p className="text-[13px] text-muted mt-2 leading-[1.55]">{entry.origin}</p>
         )}
         <div className="mt-3 rounded-[10px] bg-white border border-[#FBCFE8] px-3.5 py-2.5">
           <div className="flex items-start gap-2">
             <span className="kr text-[14px] flex-1">{entry.example.kr}</span>
             <SpeakButton text={entry.example.kr} className="shrink-0 w-7 h-7 text-[12px]" />
           </div>
-          <span className="block text-[12.5px] text-[#6B6560] mt-0.5">{entry.example.en}</span>
+          <span className="block text-[12.5px] text-muted mt-0.5">{entry.example.en}</span>
         </div>
         <div className="mt-3">
           <VibeChip vibe={entry.vibe} />

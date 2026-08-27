@@ -10,7 +10,7 @@ import { buildQuizQuestions, type QuizQuestion, type VocabWordWithProgress } fro
 
 const REVIEW_MINUTES = 5;
 
-const CARD = "max-w-[560px] border border-[#E3DDD0] rounded-[14px] p-[clamp(20px,3vw,28px)]";
+const CARD = "max-w-[560px] border border-line rounded-[14px] p-[clamp(20px,3vw,28px)]";
 
 export default function ReviewSession({
   words,
@@ -93,18 +93,18 @@ export default function ReviewSession({
       <div className={`${CARD} text-center`} style={{ animation: "fadeUp .4s ease" }}>
         <p className="text-4xl mb-2">💧</p>
         <h2 className="font-bold text-[21px] tracking-[-0.02em] mb-1.5">Garden watered!</h2>
-        <p className="text-sm text-[#6B6560] mb-5">
+        <p className="text-sm text-muted mb-5">
           {kept} of {questions.length} words are rooted deeper.
           {slipped > 0 && " The ones that slipped will come back tomorrow."}
         </p>
         {levelUp && (
-          <p className="text-sm font-semibold text-[#16A34A] mb-5 -mt-2">
+          <p className="text-sm font-semibold text-success mb-5 -mt-2">
             🎉 Level up! You&apos;re now Lv. {levelUp.new_level}
           </p>
         )}
 
         {slipped > 0 && (
-          <div className="text-left border border-[#FDE68A] bg-[#FFFBEB] rounded-[10px] px-4 py-3 mb-6">
+          <div className="text-left border border-amber-line bg-[#FFFBEB] rounded-[10px] px-4 py-3 mb-6">
             <b className="block text-[12.5px] font-semibold text-[#92400E] mb-1.5">
               Back in the watering can:
             </b>
@@ -121,14 +121,14 @@ export default function ReviewSession({
 
         <div className="flex justify-center gap-2.5 flex-wrap">
           <button
-            className="rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-[#16A34A] hover:bg-[#15803D] transition-colors disabled:opacity-60"
+            className="rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-success hover:bg-success-deep transition-colors disabled:opacity-60"
             onClick={() => goTo("/dashboard")}
             disabled={navigating}
           >
             {navigating ? "Saving…" : "Back to my garden"}
           </button>
           <button
-            className="rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-[#18181B] bg-white border border-[#E3DDD0] hover:bg-[#FAF7EF] transition-colors disabled:opacity-60"
+            className="rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-charcoal bg-white border border-line hover:bg-warm transition-colors disabled:opacity-60"
             onClick={() => goTo("/review")}
             disabled={navigating}
           >
@@ -144,7 +144,7 @@ export default function ReviewSession({
     return (
       <div className={`${CARD} text-center`}>
         <p className="font-bold text-[17px] mb-1.5">Nothing to review</p>
-        <Link href="/dashboard" className="text-sm font-semibold text-[#16A34A] hover:underline">
+        <Link href="/dashboard" className="text-sm font-semibold text-success hover:underline">
           Back to my garden
         </Link>
       </div>
@@ -155,15 +155,15 @@ export default function ReviewSession({
 
   return (
     <div className={CARD}>
-      <div className="flex justify-between items-center mb-2.5 text-[12.5px] font-medium text-[#A19A8C]">
+      <div className="flex justify-between items-center mb-2.5 text-[12.5px] font-medium text-faint">
         <span>
           Watering · {index + 1} of {questions.length}
         </span>
         <span>💧 {correct} watered</span>
       </div>
-      <div className="h-1.5 bg-[#E3DDD0] rounded-full overflow-hidden mb-6">
+      <div className="h-1.5 bg-line rounded-full overflow-hidden mb-6">
         <i
-          className="not-italic block h-full bg-[#16A34A] rounded-full transition-[width] duration-300"
+          className="not-italic block h-full bg-success rounded-full transition-[width] duration-300"
           style={{ width: `${pct}%` }}
         />
       </div>
@@ -171,13 +171,13 @@ export default function ReviewSession({
       {q.mode === "meaning" ? (
         <>
           <p className="kr text-[clamp(30px,5vw,40px)] text-center mb-1">{q.prompt}</p>
-          <p className="text-[13px] text-[#6B6560] mb-6 text-center">{q.word.romanization}</p>
+          <p className="text-[13px] text-muted mb-6 text-center">{q.word.romanization}</p>
         </>
       ) : (
         <>
           <p className="kr text-[clamp(18px,3vw,22px)] leading-[1.6] mb-1.5 text-center">{q.prompt}</p>
           {q.word.example_en && (
-            <p className="text-[13px] text-[#6B6560] mb-6 text-center">{q.word.example_en}</p>
+            <p className="text-[13px] text-muted mb-6 text-center">{q.word.example_en}</p>
           )}
         </>
       )}
@@ -197,12 +197,12 @@ export default function ReviewSession({
                 q.mode === "blank" ? "kr text-base" : "text-[14.5px]"
               } text-left px-4 py-[13px] rounded-[10px] font-medium transition-all border-[1.5px] disabled:cursor-default ${
                 state === "correct"
-                  ? "border-[#16A34A] bg-[#F0FDF4]"
+                  ? "border-success bg-success-bg"
                   : state === "wrong"
-                  ? "border-[#DC2626] bg-[#FEF2F2]"
+                  ? "border-danger bg-danger-bg"
                   : show
-                  ? "border-[#E3DDD0] bg-white opacity-90"
-                  : "border-[#E3DDD0] bg-white hover:border-[#16A34A] hover:bg-[#F0FDF4]"
+                  ? "border-line bg-white opacity-90"
+                  : "border-line bg-white hover:border-success hover:bg-success-bg"
               }`}
             >
               {opt}

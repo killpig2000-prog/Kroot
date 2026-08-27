@@ -32,14 +32,14 @@ const TABS = [
 type TabKey = (typeof TABS)[number]["key"];
 
 const SECTION_LABEL =
-  "text-[11.5px] font-semibold tracking-[.06em] uppercase text-[#A19A8C] mb-2.5";
+  "text-[11.5px] font-semibold tracking-[.06em] uppercase text-faint mb-2.5";
 
 function JamoCard({ jamo }: { jamo: Jamo }) {
   const [open, setOpen] = useState(false);
   return (
     <div
       className={`border rounded-[14px] bg-white overflow-hidden transition-all duration-150 ${
-        open ? "border-[#BBF7D0] bg-[#F0FDF4]" : "border-[#E3DDD0] hover:border-[#BBF7D0]"
+        open ? "border-success-line bg-success-bg" : "border-line hover:border-success-line"
       }`}
     >
       <button
@@ -57,30 +57,30 @@ function JamoCard({ jamo }: { jamo: Jamo }) {
         </span>
         <span className="min-w-0">
           <b className="block font-semibold text-[15px]">{jamo.rom}</b>
-          <small className="block text-[12.5px] text-[#6B6560] kr">{jamo.name}</small>
+          <small className="block text-[12.5px] text-muted kr">{jamo.name}</small>
         </span>
-        <span className="ml-auto flex-none text-[15px] text-[#A19A8C] group-hover:text-[#16A34A] transition-colors">
+        <span className="ml-auto flex-none text-[15px] text-faint group-hover:text-success transition-colors">
           🔊
         </span>
       </button>
 
       {open && (
         <div
-          className="px-4 pb-4 border-t border-[#BBF7D0] pt-3"
+          className="px-4 pb-4 border-t border-success-line pt-3"
           style={{ animation: "fadeUp .3s ease" }}
         >
-          <p className="text-[13px] text-[#6B6560] leading-[1.55] mb-3">{jamo.hint}</p>
+          <p className="text-[13px] text-muted leading-[1.55] mb-3">{jamo.hint}</p>
           <button
             onClick={() => speak(jamo.example.kr)}
-            className="w-full text-left bg-white border border-[#E3DDD0] rounded-[10px] px-3.5 py-2.5 flex items-center gap-3 hover:border-[#16A34A] transition-colors"
+            className="w-full text-left bg-white border border-line rounded-[10px] px-3.5 py-2.5 flex items-center gap-3 hover:border-success transition-colors"
           >
             <span className="min-w-0">
               <b className="kr block text-[16px] font-medium">{jamo.example.kr}</b>
-              <small className="block text-[12px] text-[#A19A8C]">
+              <small className="block text-[12px] text-faint">
                 {jamo.example.rom} · {jamo.example.en}
               </small>
             </span>
-            <span className="ml-auto flex-none text-sm text-[#A19A8C]">🔊</span>
+            <span className="ml-auto flex-none text-sm text-faint">🔊</span>
           </button>
         </div>
       )}
@@ -105,9 +105,9 @@ function SyllableBuilder() {
   const rom = `${ROM_BY_JAMO[CHO[cho]] ?? ""}${ROM_BY_JAMO[JUNG[jung]] ?? ""}`;
 
   return (
-    <div className="max-w-[820px] border border-[#E3DDD0] rounded-[14px] p-[clamp(20px,3vw,28px)] mb-8">
+    <div className="max-w-[820px] border border-line rounded-[14px] p-[clamp(20px,3vw,28px)] mb-8">
       <p className={SECTION_LABEL}>Build a block</p>
-      <p className="text-[13.5px] text-[#6B6560] leading-[1.6] mb-5">
+      <p className="text-[13.5px] text-muted leading-[1.6] mb-5">
         Every Korean syllable is a little block: a consonant plus a vowel, packed into one square.
         Pick one of each and hear what you made.
       </p>
@@ -119,14 +119,14 @@ function SyllableBuilder() {
         >
           {CHO[cho]}
         </span>
-        <span className="text-[22px] text-[#A19A8C] font-light">+</span>
+        <span className="text-[22px] text-faint font-light">+</span>
         <span
           className="kr w-[72px] h-[72px] rounded-[14px] border flex items-center justify-center text-[34px]"
           style={{ background: "#FAF7EF", borderColor: "#E3DDD0" }}
         >
           {JUNG[jung]}
         </span>
-        <span className="text-[22px] text-[#A19A8C] font-light">=</span>
+        <span className="text-[22px] text-faint font-light">=</span>
         <button
           onClick={() => speak(syllable)}
           className="kr w-[96px] h-[96px] rounded-[18px] border-[1.5px] flex flex-col items-center justify-center text-[42px] leading-none transition-transform duration-150 hover:scale-105"
@@ -136,8 +136,8 @@ function SyllableBuilder() {
           {syllable}
         </button>
       </div>
-      <p className="text-center text-[13px] text-[#6B6560] mb-6">
-        <b className="text-[#16A34A]">{rom}</b> · tap the green block to hear it
+      <p className="text-center text-[13px] text-muted mb-6">
+        <b className="text-success">{rom}</b> · tap the green block to hear it
       </p>
 
       <p className={SECTION_LABEL}>Consonant (초성)</p>
@@ -148,8 +148,8 @@ function SyllableBuilder() {
             onClick={() => setCho(i)}
             className={`kr w-9 h-9 rounded-[9px] text-[17px] border transition-all ${
               i === cho
-                ? "bg-[#16A34A] border-[#16A34A] text-white"
-                : "bg-white border-[#E3DDD0] text-[#6B6560] hover:border-[#16A34A] hover:-translate-y-0.5"
+                ? "bg-success border-success text-white"
+                : "bg-white border-line text-muted hover:border-success hover:-translate-y-0.5"
             }`}
           >
             {c}
@@ -165,8 +165,8 @@ function SyllableBuilder() {
             onClick={() => setJung(i)}
             className={`kr w-9 h-9 rounded-[9px] text-[17px] border transition-all ${
               i === jung
-                ? "bg-[#16A34A] border-[#16A34A] text-white"
-                : "bg-white border-[#E3DDD0] text-[#6B6560] hover:border-[#16A34A] hover:-translate-y-0.5"
+                ? "bg-success border-success text-white"
+                : "bg-white border-line text-muted hover:border-success hover:-translate-y-0.5"
             }`}
           >
             {v}
@@ -186,17 +186,17 @@ function PracticeWordCard({ kr, rom, en }: { kr: string; rom: string; en: string
         speak(kr);
       }}
       className={`border rounded-[14px] px-4 py-4 text-center transition-all duration-150 hover:-translate-y-0.5 ${
-        shown ? "border-[#BBF7D0] bg-[#F0FDF4]" : "border-[#E3DDD0] bg-white hover:border-[#16A34A]"
+        shown ? "border-success-line bg-success-bg" : "border-line bg-white hover:border-success"
       }`}
     >
       <b className="kr block text-[24px] font-medium mb-1.5">{kr}</b>
       {shown ? (
         <span className="block" style={{ animation: "fadeUp .3s ease" }}>
-          <small className="block text-[12.5px] font-semibold text-[#16A34A]">{rom}</small>
-          <small className="block text-[12px] text-[#6B6560]">{en}</small>
+          <small className="block text-[12.5px] font-semibold text-success">{rom}</small>
+          <small className="block text-[12px] text-muted">{en}</small>
         </span>
       ) : (
-        <small className="block text-[12px] text-[#A19A8C]">tap to reveal · 🔊</small>
+        <small className="block text-[12px] text-faint">tap to reveal · 🔊</small>
       )}
     </button>
   );
@@ -215,8 +215,8 @@ export default function HangulExplorer() {
             onClick={() => setTab(t.key)}
             className={`rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold transition-all border ${
               t.key === tab
-                ? "bg-[#16A34A] border-[#16A34A] text-white"
-                : "bg-white border-[#E3DDD0] text-[#6B6560] hover:border-[#A19A8C]"
+                ? "bg-success border-success text-white"
+                : "bg-white border-line text-muted hover:border-faint"
             }`}
           >
             {t.label}
@@ -230,7 +230,7 @@ export default function HangulExplorer() {
           <p className={SECTION_LABEL}>14 basic consonants · 기본 자음</p>
           <JamoGrid items={BASIC_CONSONANTS} />
           <p className={SECTION_LABEL}>5 double consonants · 쌍자음</p>
-          <p className="text-[13px] text-[#6B6560] max-w-[680px] leading-[1.6] mb-3.5 -mt-1">
+          <p className="text-[13px] text-muted max-w-[680px] leading-[1.6] mb-3.5 -mt-1">
             These are the same shapes doubled up. Say them tense and tight, with no puff of air —
             the difference is real, and Korean ears hear it immediately.
           </p>
@@ -243,7 +243,7 @@ export default function HangulExplorer() {
           <p className={SECTION_LABEL}>10 basic vowels · 기본 모음</p>
           <JamoGrid items={BASIC_VOWELS} />
           <p className={SECTION_LABEL}>Compound vowels · 복합 모음</p>
-          <p className="text-[13px] text-[#6B6560] max-w-[680px] leading-[1.6] mb-3.5 -mt-1">
+          <p className="text-[13px] text-muted max-w-[680px] leading-[1.6] mb-3.5 -mt-1">
             Each of these is two basic vowels squashed together. Once you spot the parts, you can
             read them without memorising anything new.
           </p>
@@ -253,13 +253,13 @@ export default function HangulExplorer() {
 
       {tab === "syllables" && (
         <div style={{ animation: "fadeUp .35s ease" }}>
-          <div className="max-w-[820px] border border-[#E3DDD0] rounded-[14px] p-[clamp(20px,3vw,28px)] mb-5">
+          <div className="max-w-[820px] border border-line rounded-[14px] p-[clamp(20px,3vw,28px)] mb-5">
             <p className={SECTION_LABEL}>The idea</p>
-            <p className="text-[14px] text-[#6B6560] leading-[1.7] mb-4">
+            <p className="text-[14px] text-muted leading-[1.7] mb-4">
               Korean doesn&apos;t write letters in a straight line like English. It stacks them into
               square syllable blocks. A tall vowel like ㅏ sits to the{" "}
-              <b className="text-[#18181B]">right</b> of the consonant; a flat vowel like ㅗ sits{" "}
-              <b className="text-[#18181B]">underneath</b> it.
+              <b className="text-charcoal">right</b> of the consonant; a flat vowel like ㅗ sits{" "}
+              <b className="text-charcoal">underneath</b> it.
             </p>
             <div className="flex gap-3 flex-wrap">
               {[
@@ -270,11 +270,11 @@ export default function HangulExplorer() {
                 <button
                   key={b.block}
                   onClick={() => speak(b.block)}
-                  className="flex-1 min-w-[160px] border border-[#E3DDD0] rounded-xl px-4 py-3.5 bg-[#FAF7EF] text-center transition-all hover:border-[#16A34A] hover:bg-[#F0FDF4] hover:-translate-y-0.5"
+                  className="flex-1 min-w-[160px] border border-line rounded-xl px-4 py-3.5 bg-warm text-center transition-all hover:border-success hover:bg-success-bg hover:-translate-y-0.5"
                 >
                   <b className="kr block text-[30px] font-medium mb-1">{b.block}</b>
-                  <small className="kr block text-[13px] text-[#16A34A] font-semibold">{b.parts}</small>
-                  <small className="block text-[11.5px] text-[#A19A8C] mt-0.5">{b.note}</small>
+                  <small className="kr block text-[13px] text-success font-semibold">{b.parts}</small>
+                  <small className="block text-[11.5px] text-faint mt-0.5">{b.note}</small>
                 </button>
               ))}
             </div>
@@ -283,7 +283,7 @@ export default function HangulExplorer() {
           <SyllableBuilder />
 
           <p className={SECTION_LABEL}>Reading practice · 읽기 연습</p>
-          <p className="text-[13px] text-[#6B6560] max-w-[680px] leading-[1.6] mb-3.5 -mt-1">
+          <p className="text-[13px] text-muted max-w-[680px] leading-[1.6] mb-3.5 -mt-1">
             Try sounding each one out before you tap. If you can read these, you can read Korean —
             the rest is vocabulary.
           </p>

@@ -44,7 +44,7 @@ function Stone({ chapter, current }: { chapter: ChapterProgress; current: boolea
         </div>
       </div>
       <b className="block text-[11.5px] leading-[1.25] h-[30px] overflow-hidden">{chapterBlurb(chapter.key)}</b>
-      <small className="text-[10px] text-[#A19A8C]">{chapter.total} words</small>
+      <small className="text-[10px] text-faint">{chapter.total} words</small>
     </div>
   );
 
@@ -92,7 +92,7 @@ export default function PronunciationTrail({
               <b className="font-bold text-[15px] tracking-[-0.01em]">
                 {meta.emoji} {meta.name}
               </b>
-              <span className="ml-auto text-[12px] text-[#A19A8C] font-medium">
+              <span className="ml-auto text-[12px] text-faint font-medium">
                 {campLocked ? "locked" : `${clearedCount}/${camp.length} chapters cleared`}
               </span>
             </div>

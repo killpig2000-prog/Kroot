@@ -25,8 +25,8 @@ import { SPECIES } from "@/lib/tree";
 
 const DEFAULT_SKY = "linear-gradient(180deg,#DFF1FF 0%,#F0FBF1 62%,#E4F3DA 100%)";
 const RARITY_STYLE: Record<Rarity, { stripe: string; chip: string }> = {
-  common: { stripe: "#B7AE9C", chip: "bg-[#FAF7EF] text-[#6B6560]" },
-  rare: { stripe: "#2563EB", chip: "bg-[#EFF6FF] text-[#2563EB]" },
+  common: { stripe: "#B7AE9C", chip: "bg-warm text-muted" },
+  rare: { stripe: "#2563EB", chip: "bg-[#EFF6FF] text-sky-deep" },
   epic: { stripe: "#7C3AED", chip: "bg-[#F5F3FF] text-[#7C3AED]" },
   legendary: { stripe: "#C2410C", chip: "bg-[#FFF7ED] text-[#C2410C]" },
 };
@@ -173,7 +173,7 @@ export default function ShopClient({
   }
 
   return (
-    <div className="border border-[#E3DDD0] rounded-[14px] bg-white overflow-hidden max-w-[1040px]">
+    <div className="border border-line rounded-[14px] bg-white overflow-hidden max-w-[1040px]">
       <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_300px]">
         {/* ── catalog ── */}
         <div className="p-4 sm:p-5 min-w-0">
@@ -192,9 +192,9 @@ export default function ShopClient({
               </span>
               <span className="min-w-0">
                 <b className="block text-[14px] truncate">
-                  This week only · {featured.name} <span className="kr text-[#6B6560] font-semibold">{featured.krName}</span>
+                  This week only · {featured.name} <span className="kr text-muted font-semibold">{featured.krName}</span>
                 </b>
-                <small className="block text-[12.5px] text-[#6B6560]">
+                <small className="block text-[12.5px] text-muted">
                   {RARITY_LABEL[featured.rarity]} {SLOT_LABELS[featured.slot].en.toLowerCase()} · 🌰 {featured.price}
                   {featured.minPlayerLevel ? ` · needs Lv.${featured.minPlayerLevel}` : ""} · gone after {featured.availableUntil}
                 </small>
@@ -220,7 +220,7 @@ export default function ShopClient({
                     setMessage(null);
                   }}
                   className={`flex-none flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[13px] font-bold border transition-colors ${
-                    on ? "bg-[#18181B] text-white border-[#18181B]" : "bg-white text-[#6B6560] border-[#E3DDD0] hover:border-[#A19A8C]"
+                    on ? "bg-charcoal text-white border-charcoal" : "bg-white text-muted border-line hover:border-faint"
                   }`}
                 >
                   <span aria-hidden="true">{SLOT_LABELS[slot].icon}</span>
@@ -243,7 +243,7 @@ export default function ShopClient({
               const ids = Object.values({ ...preview, [c.slot]: c.id }).filter((v): v is string => !!v);
               const rs = RARITY_STYLE[c.rarity];
               let price: React.ReactNode;
-              if (isOwned) price = <span className="text-[12.5px] font-extrabold text-[#16A34A]">{worn[c.slot] === c.id ? "Wearing ✓" : "Owned"}</span>;
+              if (isOwned) price = <span className="text-[12.5px] font-extrabold text-success">{worn[c.slot] === c.id ? "Wearing ✓" : "Owned"}</span>;
               else if (c.plusOnly) price = <span className="text-[12.5px] font-extrabold text-[#B7791F]">🌟 Plus</span>;
               else if (locked) price = <span className="text-[12.5px] font-extrabold text-[#B7AE9C]">🔒 Lv.{c.minPlayerLevel}</span>;
               else price = <span className="text-[12.5px] font-extrabold tabular-nums">🌰 {c.price}</span>;
@@ -254,14 +254,14 @@ export default function ShopClient({
                   onClick={() => toggle(c)}
                   aria-pressed={on}
                   className={`relative text-left border rounded-[12px] overflow-hidden bg-white transition-all hover:-translate-y-0.5 ${
-                    on ? "border-[#16A34A] shadow-[0_0_0_2px_#BBF7D0]" : "border-[#E3DDD0] hover:border-[#A19A8C]"
+                    on ? "border-success shadow-[0_0_0_2px_#BBF7D0]" : "border-line hover:border-faint"
                   }`}
                 >
                   <span className="absolute left-0 top-0 bottom-0 w-[3px] z-10" style={{ background: rs.stripe }} aria-hidden="true" />
                   <Scene ids={ids} stage={stage} species={species} className="h-[96px]" />
                   <span className="block px-2.5 pt-2 pb-2.5">
                     <b className="block text-[13px] leading-tight">{c.name}</b>
-                    <small className="block kr text-[11.5px] text-[#6B6560]">{c.krName}</small>
+                    <small className="block kr text-[11.5px] text-muted">{c.krName}</small>
                     <span className="flex items-center justify-between gap-1.5 mt-1.5">
                       <span className={`text-[10px] font-extrabold tracking-[.06em] uppercase rounded px-1.5 py-px ${rs.chip}`}>{RARITY_LABEL[c.rarity]}</span>
                       {price}
@@ -271,15 +271,15 @@ export default function ShopClient({
               );
             })}
             {visible.length === 0 && (
-              <p className="col-span-full text-[13px] text-[#6B6560] py-6 text-center">Nothing on sale here right now — check back next season.</p>
+              <p className="col-span-full text-[13px] text-muted py-6 text-center">Nothing on sale here right now — check back next season.</p>
             )}
           </div>
         </div>
 
         {/* ── try-on ── */}
-        <aside className="order-first lg:order-none border-b lg:border-b-0 lg:border-l border-[#E3DDD0] bg-[#FAF7EF] p-4 lg:sticky lg:top-4 self-start">
+        <aside className="order-first lg:order-none border-b lg:border-b-0 lg:border-l border-line bg-warm p-4 lg:sticky lg:top-4 self-start">
           <p className="text-[11.5px] font-extrabold tracking-[.08em] uppercase text-[#B7AE9C] mb-2">Try on · 내 나무</p>
-          <figure className="relative m-0 mx-auto max-w-[230px] bg-white border border-[#E3DDD0] p-1.5 pb-6 rotate-[1deg] shadow-[0_10px_22px_-12px_rgba(60,50,30,.35)] mb-3">
+          <figure className="relative m-0 mx-auto max-w-[230px] bg-white border border-line p-1.5 pb-6 rotate-[1deg] shadow-[0_10px_22px_-12px_rgba(60,50,30,.35)] mb-3">
             <Scene ids={previewIds} stage={stage} species={species} className="px-2.5 pt-2.5" />
             <figcaption className="absolute bottom-1 left-0 right-0 text-center text-[10px] font-bold text-[#8A8478]">
               <span className="kr">{SPECIES[species].krName}</span> · Lv. {playerLevel}
@@ -294,7 +294,7 @@ export default function ShopClient({
                   key={slot}
                   type="button"
                   onClick={() => setTab(slot)}
-                  className={`text-left border rounded-lg px-2 py-1.5 ${it ? "border-[#BBF7D0] bg-[#F0FDF4]" : "border-[#E3DDD0] bg-white"} ${slot === tab ? "ring-2 ring-[#BBF7D0]" : ""}`}
+                  className={`text-left border rounded-lg px-2 py-1.5 ${it ? "border-success-line bg-success-bg" : "border-line bg-white"} ${slot === tab ? "ring-2 ring-success-line" : ""}`}
                 >
                   <small className="block text-[10px] tracking-[.06em] uppercase text-[#B7AE9C] font-extrabold">{SLOT_LABELS[slot].en}</small>
                   <b className="block text-[12px] truncate">{it ? it.name : "—"}</b>
@@ -313,7 +313,7 @@ export default function ShopClient({
                 type="button"
                 onClick={act}
                 disabled={busy || cta.disabled}
-                className="flex-1 rounded-[10px] px-3 py-2.5 text-[13px] font-extrabold text-white bg-[#18181B] hover:bg-[#3F3F46] transition-colors disabled:opacity-50"
+                className="flex-1 rounded-[10px] px-3 py-2.5 text-[13px] font-extrabold text-white bg-charcoal hover:bg-[#3F3F46] transition-colors disabled:opacity-50"
               >
                 {busy ? "…" : cta.label}
               </button>
@@ -324,15 +324,15 @@ export default function ShopClient({
                 setPreview(worn);
                 setMessage(null);
               }}
-              className="rounded-[10px] px-3 py-2.5 text-[13px] font-extrabold border border-[#E3DDD0] bg-white hover:border-[#A19A8C] transition-colors"
+              className="rounded-[10px] px-3 py-2.5 text-[13px] font-extrabold border border-line bg-white hover:border-faint transition-colors"
             >
               Reset
             </button>
           </div>
-          <p className={`text-[11.5px] mt-2 text-center ${message?.includes("yours") ? "text-[#16A34A] font-semibold" : "text-[#6B6560]"}`}>
+          <p className={`text-[11.5px] mt-2 text-center ${message?.includes("yours") ? "text-success font-semibold" : "text-muted"}`}>
             {message ?? (selected ? `${selected.name} · ${selected.krName}` : "Tap a card to try it on")}
           </p>
-          <p className="text-[11.5px] text-[#6B6560] mt-3 text-center">
+          <p className="text-[11.5px] text-muted mt-3 text-center">
             🌰 {isAdmin ? "∞" : balance} coins · earn 10 per daily quest, 50 at every 10th level
           </p>
         </aside>

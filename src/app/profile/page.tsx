@@ -38,7 +38,7 @@ export default async function ProfilePage() {
     : "—";
 
   return (
-    <div className="min-h-screen bg-[#FFFFFF] text-[#18181B]">
+    <div className="min-h-screen bg-[#FFFFFF] text-charcoal">
       <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
         <Sidebar
           displayName={profile?.display_name ?? "there"}
@@ -50,18 +50,18 @@ export default async function ProfilePage() {
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] md:pb-[60px]">
           {/* breadcrumb */}
-          <div className="flex gap-2 text-[13px] text-[#A19A8C] mb-[18px]">
-            <Link href="/dashboard" className="hover:text-[#18181B] transition-colors">
+          <div className="flex gap-2 text-[13px] text-faint mb-[18px]">
+            <Link href="/dashboard" className="hover:text-charcoal transition-colors">
               Garden
             </Link>
             <span>/</span>
-            <b className="text-[#18181B] font-semibold">My account</b>
+            <b className="text-charcoal font-semibold">My account</b>
           </div>
 
           {/* head */}
           <div className="flex items-center justify-between gap-4 mb-[18px] flex-wrap">
             <h1 className="font-bold text-[22px] tracking-[-0.02em] flex items-center">
-              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[#F0FDF4] text-[#16A34A] border border-[#BBF7D0] items-center justify-center kr text-[15px] mr-[9px]">
+              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-success-bg text-success border border-success-line items-center justify-center kr text-[15px] mr-[9px]">
                 나
               </span>
               My account
@@ -72,35 +72,35 @@ export default async function ProfilePage() {
               grows to the widest card's max-content and overflows on mobile */}
           <div className="max-w-[820px] grid grid-cols-1 gap-3.5">
             {/* identity card */}
-            <div className="border border-[#E3DDD0] rounded-[14px] px-[22px] py-5 flex items-center gap-4 flex-wrap">
+            <div className="border border-line rounded-[14px] px-[22px] py-5 flex items-center gap-4 flex-wrap">
               <AvatarUploader userId={user.id} avatarUrl={profile?.avatar_url ?? null} />
               <div className="flex-1 min-w-[180px]">
                 <b className="font-semibold text-base flex items-center gap-2">
                   <NameEditor userId={user.id} name={profile?.display_name ?? "Learner"} />
                   {plusActive && (
-                    <span className="text-[10.5px] font-bold tracking-[.04em] text-[#92400E] bg-[#FFFBEB] border border-[#FDE68A] rounded-md px-1.5 py-0.5">
+                    <span className="text-[10.5px] font-bold tracking-[.04em] text-[#92400E] bg-[#FFFBEB] border border-amber-line rounded-md px-1.5 py-0.5">
                       🌟 PLUS
                     </span>
                   )}
                 </b>
-                <span className="text-[13px] text-[#6B6560]">
+                <span className="text-[13px] text-muted">
                   {SPECIES[level].name} {SPECIES[level].emoji} · {treeStage.treeName} · Lv. {playerLevel} · {level} difficulty · growing since{" "}
                   {memberSince}
                 </span>
                 <div className="mt-2 max-w-[280px]">
-                  <div className="h-[6px] rounded-full bg-[#F0FDF4] border border-[#BBF7D0] overflow-hidden">
-                    <div className="h-full rounded-full bg-[#16A34A]" style={{ width: `${pct}%` }} />
+                  <div className="h-[6px] rounded-full bg-success-bg border border-success-line overflow-hidden">
+                    <div className="h-full rounded-full bg-success" style={{ width: `${pct}%` }} />
                   </div>
-                  <small className="block mt-1 text-[12px] text-[#6B6560]">
+                  <small className="block mt-1 text-[12px] text-muted">
                     {atMaxLevel ? "Reached the stars 🌟" : `${into}/${needed} XP to Lv. ${playerLevel + 1}`}
                   </small>
                 </div>
               </div>
               <div className="flex gap-2 flex-wrap">
-                <span className="text-[12.5px] font-semibold text-[#16A34A] bg-[#F0FDF4] border border-[#BBF7D0] rounded-full px-3 py-1">
+                <span className="text-[12.5px] font-semibold text-success bg-success-bg border border-success-line rounded-full px-3 py-1">
                   🔥 {profile?.streak_days ?? 0} day streak
                 </span>
-                <span className="text-[12.5px] font-semibold text-[#6B6560] bg-[#FAF7EF] border border-[#E3DDD0] rounded-full px-3 py-1">
+                <span className="text-[12.5px] font-semibold text-muted bg-warm border border-line rounded-full px-3 py-1">
                   🌰 {profile?.coins ?? 0} coins
                 </span>
               </div>
@@ -108,23 +108,23 @@ export default async function ProfilePage() {
 
             {plusActive ? (
               <div className="flex items-center justify-end gap-3 -mt-2">
-                <span className="text-[12px] text-[#A19A8C]">
+                <span className="text-[12px] text-faint">
                   🌟 Kroot Plus active — cancel or switch plans anytime.
                 </span>
                 <ManageSubscriptionButton />
               </div>
             ) : (
-              <div className="border border-[#FDE68A] bg-[#FFFBEB] rounded-[14px] px-[22px] py-4 flex items-center gap-4 flex-wrap">
+              <div className="border border-amber-line bg-[#FFFBEB] rounded-[14px] px-[22px] py-4 flex items-center gap-4 flex-wrap">
                 <div className="flex-1 min-w-[220px]">
                   <b className="font-semibold text-[14.5px] block mb-0.5">🌟 Kroot Plus</b>
-                  <span className="text-[13px] text-[#6B6560]">
+                  <span className="text-[13px] text-muted">
                     Streak shield, weekend XP boost, unlimited AI grading, insights & exclusive
                     outfits — every lesson stays free.
                   </span>
                 </div>
                 <Link
                   href="/pricing"
-                  className="rounded-[9px] bg-[#16A34A] px-4 py-2 text-[13px] font-bold text-white hover:bg-[#15803D] transition-colors"
+                  className="rounded-[9px] bg-success px-4 py-2 text-[13px] font-bold text-white hover:bg-success-deep transition-colors"
                 >
                   See plans →
                 </Link>
@@ -134,9 +134,9 @@ export default async function ProfilePage() {
             <InsightsSection userId={user.id} plusActive={plusActive} />
 
             {/* where did everything go? a gentle pointer for regulars */}
-            <p className="text-[12.5px] text-[#A19A8C]">
+            <p className="text-[12.5px] text-faint">
               Looking for your grass, costume, or progress? They now live in your{" "}
-              <Link href="/dashboard" className="font-semibold text-[#16A34A] hover:underline">
+              <Link href="/dashboard" className="font-semibold text-success hover:underline">
                 Garden →
               </Link>
             </p>

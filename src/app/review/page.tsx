@@ -62,7 +62,7 @@ export default async function ReviewPage() {
   });
 
   return (
-    <div className="min-h-screen bg-[#FFFFFF] text-[#18181B]">
+    <div className="min-h-screen bg-[#FFFFFF] text-charcoal">
       <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
         <Sidebar
           displayName={profile?.display_name ?? "there"}
@@ -73,23 +73,23 @@ export default async function ReviewPage() {
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] md:pb-[60px]">
           {/* breadcrumb */}
-          <div className="flex gap-2 text-[13px] text-[#A19A8C] mb-[18px]">
-            <Link href="/dashboard" className="hover:text-[#18181B] transition-colors">
+          <div className="flex gap-2 text-[13px] text-faint mb-[18px]">
+            <Link href="/dashboard" className="hover:text-charcoal transition-colors">
               Garden
             </Link>
             <span>/</span>
-            <b className="text-[#18181B] font-semibold">Watering time</b>
+            <b className="text-charcoal font-semibold">Watering time</b>
           </div>
 
           {/* head */}
           <div className="flex items-center justify-between gap-4 mb-6 flex-wrap">
             <h1 className="font-bold text-[22px] tracking-[-0.02em] flex items-center">
-              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[#EFF6FF] text-[#2563EB] border border-[#BFDBFE] items-center justify-center text-[15px] mr-[9px]">
+              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[#EFF6FF] text-sky-deep border border-sky-line items-center justify-center text-[15px] mr-[9px]">
                 💧
               </span>
               Watering time
             </h1>
-            <span className="text-[13px] text-[#6B6560]">
+            <span className="text-[13px] text-muted">
               Words wilt when they&apos;re not watered — quick reviews keep them rooted.
             </span>
           </div>
@@ -97,7 +97,7 @@ export default async function ReviewPage() {
           {migrationMissing ? (
             <div className="max-w-[560px] border border-[#CBD5E1] rounded-[14px] bg-[#F1F5F9] p-[18px]">
               <b className="block font-semibold text-[14px] mb-1">Review opens soon</b>
-              <small className="block text-[13px] text-[#6B6560] leading-[1.55]">
+              <small className="block text-[13px] text-muted leading-[1.55]">
                 Run the included migration{" "}
                 <code className="text-[12px]">supabase/migrations/0022_srs_review.sql</code> to turn
                 on spaced-repetition watering.
@@ -106,12 +106,12 @@ export default async function ReviewPage() {
           ) : dueWords.length > 0 ? (
             <ReviewSession words={dueWords} userId={user.id} />
           ) : (
-            <div className="max-w-[560px] border border-[#E3DDD0] rounded-[14px] p-[clamp(24px,4vw,32px)] text-center">
+            <div className="max-w-[560px] border border-line rounded-[14px] p-[clamp(24px,4vw,32px)] text-center">
               <p className="text-4xl mb-2">🌿</p>
               <h2 className="font-bold text-[19px] tracking-[-0.02em] mb-1.5">
                 Your garden is fully watered
               </h2>
-              <p className="text-sm text-[#6B6560] mb-5">
+              <p className="text-sm text-muted mb-5">
                 {(learnedCount ?? 0) > 0 ? (
                   <>
                     All {learnedCount} learned words are still fresh.
@@ -127,7 +127,7 @@ export default async function ReviewPage() {
               </p>
               <Link
                 href="/vocabulary"
-                className="inline-flex items-center justify-center rounded-[9px] bg-[#16A34A] px-[22px] py-2.5 text-sm font-semibold text-white hover:bg-[#15803D] transition-colors"
+                className="inline-flex items-center justify-center rounded-[9px] bg-success px-[22px] py-2.5 text-sm font-semibold text-white hover:bg-success-deep transition-colors"
               >
                 Plant new words →
               </Link>

@@ -14,6 +14,21 @@ export async function getClaimsUser(
   return { id: claims.sub, email: (claims.email as string | undefined) ?? null };
 }
 
+// Shared profile shape used by every feature dashboard header (reading,
+// writing, listening, vocabulary, ...) — was copy-pasted as an identical
+// .from("profiles").select(...) call per page.
+export async function getDashboardProfile(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  userId: string
+) {
+  const { data } = await supabase
+    .from("profiles")
+    .select("display_name, current_level, streak_days, avatar_url, xp")
+    .eq("id", userId)
+    .single();
+  return data;
+}
+
 export async function createClient() {
   const cookieStore = await cookies();
 

@@ -12,12 +12,12 @@ type Phase = "read" | "quiz" | "summary";
 const ABC = ["A", "B", "C", "D"];
 
 const BTN_BLUE =
-  "rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-[#2563EB] hover:bg-[#1D4ED8] transition-colors disabled:opacity-60";
+  "rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-sky-deep hover:bg-[#1D4ED8] transition-colors disabled:opacity-60";
 const BTN_INK =
-  "rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-[#18181B] hover:bg-[#3F3F46] transition-colors disabled:opacity-60";
+  "rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-charcoal hover:bg-[#3F3F46] transition-colors disabled:opacity-60";
 const BTN_LINE =
-  "rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-[#18181B] bg-white border border-[#E3DDD0] hover:bg-[#FAF7EF] transition-colors disabled:opacity-60";
-const LABEL = "text-[11.5px] font-semibold tracking-[.06em] uppercase text-[#A19A8C] mb-2";
+  "rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-charcoal bg-white border border-line hover:bg-warm transition-colors disabled:opacity-60";
+const LABEL = "text-[11.5px] font-semibold tracking-[.06em] uppercase text-faint mb-2";
 
 // Shared translation reveal used by every genre-specific reading layout below —
 // blurred placeholder until the reader taps "Show translation".
@@ -33,7 +33,7 @@ function TranslatableText({
   return (
     <p
       className={`transition-all rounded ${
-        showTranslation ? "text-[#6B6560]" : "text-transparent bg-[#F4F4F5] select-none"
+        showTranslation ? "text-muted" : "text-transparent bg-[#F4F4F5] select-none"
       } ${className}`}
     >
       {en || " "}
@@ -131,12 +131,12 @@ export default function ReadingSession({
 
     const header = (
       <div className="flex items-center justify-between gap-3 mb-4 flex-wrap">
-        <span className="text-[11.5px] font-semibold text-[#2563EB] bg-[#EFF6FF] border border-[#BFDBFE] rounded-md px-2 py-0.5">
+        <span className="text-[11.5px] font-semibold text-sky-deep bg-[#EFF6FF] border border-sky-line rounded-md px-2 py-0.5">
           Chapter {chapterIndex + 1}
         </span>
         <button
           onClick={() => setShowTranslation((s) => !s)}
-          className="text-[12.5px] font-semibold text-[#6B6560] hover:text-[#18181B] transition-colors"
+          className="text-[12.5px] font-semibold text-muted hover:text-charcoal transition-colors"
         >
           {showTranslation ? "Hide translation" : "Show translation"}
         </button>
@@ -165,22 +165,22 @@ export default function ReadingSession({
       });
 
       return (
-        <div className="max-w-[780px] border border-[#E3DDD0] rounded-[14px] p-[clamp(20px,3vw,28px)]">
+        <div className="max-w-[780px] border border-line rounded-[14px] p-[clamp(20px,3vw,28px)]">
           {header}
-          <div className="rounded-[10px] border border-[#E3DDD0] bg-[#F5F4F0] p-[clamp(16px,3vw,24px)] grid gap-4">
+          <div className="rounded-[10px] border border-line bg-[#F5F4F0] p-[clamp(16px,3vw,24px)] grid gap-4">
             {turns.map((t, i) => {
               const bubble = (
                 <div className="flex flex-col flex-none max-w-[380px]" key="bubble">
                   {t.speaker && (
-                    <span className={`text-[11px] font-semibold text-[#A19A8C] mb-1 px-1 ${t.side === "right" ? "text-right" : ""}`}>
+                    <span className={`text-[11px] font-semibold text-faint mb-1 px-1 ${t.side === "right" ? "text-right" : ""}`}>
                       {t.speaker}
                     </span>
                   )}
                   <div
                     className={`rounded-[14px] px-4 py-2.5 ${
                       t.side === "right"
-                        ? "bg-[#2563EB] text-white rounded-tr-[4px]"
-                        : "bg-white border border-[#E3DDD0] rounded-tl-[4px]"
+                        ? "bg-sky-deep text-white rounded-tr-[4px]"
+                        : "bg-white border border-line rounded-tl-[4px]"
                     }`}
                   >
                     <p className="kr text-[15px] leading-[1.6]">{t.text}</p>
@@ -210,9 +210,9 @@ export default function ReadingSession({
     // ---------- Notice: posted sign, bilingual side by side (common on real Korean signs) ----------
     if (genre === "notice") {
       return (
-        <div className="max-w-[780px] border border-[#E3DDD0] rounded-[14px] p-[clamp(20px,3vw,28px)]">
+        <div className="max-w-[780px] border border-line rounded-[14px] p-[clamp(20px,3vw,28px)]">
           {header}
-          <div className="relative mx-auto max-w-[620px] -rotate-1 bg-[#FFFDF7] border-2 border-dashed border-[#E3DDD0] rounded-[8px] p-[clamp(22px,4vw,30px)] shadow-[0_2px_10px_rgba(24,20,10,.06)]">
+          <div className="relative mx-auto max-w-[620px] -rotate-1 bg-[#FFFDF7] border-2 border-dashed border-line rounded-[8px] p-[clamp(22px,4vw,30px)] shadow-[0_2px_10px_rgba(24,20,10,.06)]">
             <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 text-xl drop-shadow-sm">📌</span>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-1">
               <div className="grid gap-2.5 sm:text-right">
@@ -237,19 +237,19 @@ export default function ReadingSession({
     // ---------- Email: envelope card, Korean | English columns ----------
     if (genre === "email") {
       return (
-        <div className="max-w-[860px] border border-[#E3DDD0] rounded-[14px] p-[clamp(20px,3vw,28px)]">
+        <div className="max-w-[860px] border border-line rounded-[14px] p-[clamp(20px,3vw,28px)]">
           {header}
-          <div className="rounded-[10px] border border-[#E3DDD0] overflow-hidden bg-white">
-            <div className="flex items-center gap-2.5 px-5 py-3.5 bg-[#EFF6FF] border-b border-[#BFDBFE]">
+          <div className="rounded-[10px] border border-line overflow-hidden bg-white">
+            <div className="flex items-center gap-2.5 px-5 py-3.5 bg-[#EFF6FF] border-b border-sky-line">
               <span className="text-lg flex-none">✉️</span>
               <div className="min-w-0">
-                <p className="text-[10.5px] font-semibold text-[#6B6560] uppercase tracking-[.05em]">Subject</p>
+                <p className="text-[10.5px] font-semibold text-muted uppercase tracking-[.05em]">Subject</p>
                 <p className="kr font-semibold text-[15px] truncate">{passage.title_kr}</p>
                 <TranslatableText en={passage.title_en} showTranslation={showTranslation} className="text-[12px] truncate" />
               </div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2">
-              <div className="p-[clamp(16px,3vw,24px)] sm:border-r border-b sm:border-b-0 border-[#E3DDD0] grid gap-3 content-start">
+              <div className="p-[clamp(16px,3vw,24px)] sm:border-r border-b sm:border-b-0 border-line grid gap-3 content-start">
                 {lines.map((line, i) => (
                   <p key={i} className="kr text-[15px] leading-[1.8]">
                     {line.kr}
@@ -281,19 +281,19 @@ export default function ReadingSession({
         return { speaker, text, enSpeaker, enText, isHost };
       });
       return (
-        <div className="max-w-[860px] border border-[#E3DDD0] rounded-[14px] p-[clamp(20px,3vw,28px)]">
+        <div className="max-w-[860px] border border-line rounded-[14px] p-[clamp(20px,3vw,28px)]">
           {header}
           <div className="flex items-center gap-2 mb-1">
             <span className="text-lg">🎙️</span>
             <h2 className="kr text-[16px] font-semibold">{passage.title_kr}</h2>
           </div>
           <TranslatableText en={passage.title_en} showTranslation={showTranslation} className="text-[13px] mb-4" />
-          <div className="rounded-[10px] border border-[#E3DDD0] overflow-hidden">
+          <div className="rounded-[10px] border border-line overflow-hidden">
             <div className="grid grid-cols-1 sm:grid-cols-2">
-              <div className="p-[clamp(14px,2.5vw,20px)] bg-white sm:border-r border-b sm:border-b-0 border-[#E3DDD0] grid gap-3">
+              <div className="p-[clamp(14px,2.5vw,20px)] bg-white sm:border-r border-b sm:border-b-0 border-line grid gap-3">
                 {turns.map((t, i) => (
-                  <p key={i} className={`kr text-[15px] leading-[1.7] ${t.isHost ? "text-[#6B6560] italic" : ""}`}>
-                    <b className={`not-italic font-semibold ${t.isHost ? "text-[#A19A8C]" : "text-[#2563EB]"}`}>{t.speaker}: </b>
+                  <p key={i} className={`kr text-[15px] leading-[1.7] ${t.isHost ? "text-muted italic" : ""}`}>
+                    <b className={`not-italic font-semibold ${t.isHost ? "text-faint" : "text-sky-deep"}`}>{t.speaker}: </b>
                     {t.text}
                   </p>
                 ))}
@@ -301,9 +301,9 @@ export default function ReadingSession({
               <div className="p-[clamp(14px,2.5vw,20px)] grid gap-3">
                 {turns.map((t, i) => (
                   <p key={i} className={`text-[13.5px] leading-[1.8] transition-all ${
-                    showTranslation ? (t.isHost ? "text-[#A19A8C] italic" : "text-[#6B6560]") : "text-transparent bg-[#F4F4F5] select-none rounded"
+                    showTranslation ? (t.isHost ? "text-faint italic" : "text-muted") : "text-transparent bg-[#F4F4F5] select-none rounded"
                   }`}>
-                    <b className={`not-italic font-semibold ${showTranslation ? (t.isHost ? "text-[#A19A8C]" : "text-[#1D4ED8]") : ""}`}>{t.enSpeaker}: </b>
+                    <b className={`not-italic font-semibold ${showTranslation ? (t.isHost ? "text-faint" : "text-[#1D4ED8]") : ""}`}>{t.enSpeaker}: </b>
                     {t.enText}
                   </p>
                 ))}
@@ -320,16 +320,16 @@ export default function ReadingSession({
       const stepLines = lines.filter((l) => /^\d+\./.test(l.kr.trim()));
       const displayLines = stepLines.length > 0 ? stepLines : lines;
       return (
-        <div className="max-w-[860px] border border-[#E3DDD0] rounded-[14px] p-[clamp(20px,3vw,28px)]">
+        <div className="max-w-[860px] border border-line rounded-[14px] p-[clamp(20px,3vw,28px)]">
           {header}
           <h2 className="kr text-[17px] font-semibold mb-1">{passage.title_kr}</h2>
           <TranslatableText en={passage.title_en} showTranslation={showTranslation} className="text-[13px] mb-4" />
-          <div className="rounded-[10px] border border-[#E3DDD0] overflow-hidden">
+          <div className="rounded-[10px] border border-line overflow-hidden">
             <div className="grid grid-cols-1 sm:grid-cols-2">
-              <div className="p-[clamp(14px,2.5vw,20px)] bg-white sm:border-r border-b sm:border-b-0 border-[#E3DDD0] grid gap-3">
+              <div className="p-[clamp(14px,2.5vw,20px)] bg-white sm:border-r border-b sm:border-b-0 border-line grid gap-3">
                 {displayLines.map((line, i) => (
                   <div key={i} className="flex items-start gap-3">
-                    <span className="flex-none w-7 h-7 rounded-full bg-[#EFF6FF] border border-[#BFDBFE] text-[#2563EB] text-[13px] font-bold flex items-center justify-center">
+                    <span className="flex-none w-7 h-7 rounded-full bg-[#EFF6FF] border border-sky-line text-sky-deep text-[13px] font-bold flex items-center justify-center">
                       {i + 1}
                     </span>
                     <p className="kr text-[15px] leading-[1.6] pt-0.5">{line.kr.replace(/^\d+\.\s*/, "")}</p>
@@ -358,10 +358,10 @@ export default function ReadingSession({
     // ---------- Review: verdict card, Korean | English columns ----------
     if (genre === "review") {
       return (
-        <div className="max-w-[860px] border border-[#E3DDD0] rounded-[14px] p-[clamp(20px,3vw,28px)]">
+        <div className="max-w-[860px] border border-line rounded-[14px] p-[clamp(20px,3vw,28px)]">
           {header}
-          <div className="relative rounded-[10px] border border-[#FDE68A] bg-[#FFFBEB] p-[clamp(18px,3.2vw,26px)]">
-            <span className="absolute -top-3 left-5 bg-white border border-[#FDE68A] rounded-full px-2.5 py-1 text-[12.5px] font-semibold text-[#92702B]">
+          <div className="relative rounded-[10px] border border-amber-line bg-[#FFFBEB] p-[clamp(18px,3.2vw,26px)]">
+            <span className="absolute -top-3 left-5 bg-white border border-amber-line rounded-full px-2.5 py-1 text-[12.5px] font-semibold text-[#92702B]">
               ⭐ Review
             </span>
             <h2 className="kr text-[16px] font-semibold mt-2.5 mb-1">{passage.title_kr}</h2>
@@ -388,11 +388,11 @@ export default function ReadingSession({
 
     // ---------- Default: book spread (diary / story / explainer / untagged) ----------
     return (
-      <div className="max-w-[880px] border border-[#E3DDD0] rounded-[14px] p-[clamp(20px,3vw,28px)]">
+      <div className="max-w-[880px] border border-line rounded-[14px] p-[clamp(20px,3vw,28px)]">
         {header}
-        <div className="rounded-[10px] border border-[#E3DDD0] overflow-hidden bg-[#FAF7EF]">
+        <div className="rounded-[10px] border border-line overflow-hidden bg-warm">
           <div className="grid grid-cols-1 sm:grid-cols-2">
-            <div className="p-[clamp(14px,2.5vw,22px)] bg-white sm:border-r border-b sm:border-b-0 border-[#E3DDD0]">
+            <div className="p-[clamp(14px,2.5vw,22px)] bg-white sm:border-r border-b sm:border-b-0 border-line">
               <p className={LABEL}>Korean</p>
               <h2 className="kr text-[17px] font-medium mb-3">{passage.title_kr}</h2>
               {lines.map((line, i) => (
@@ -403,7 +403,7 @@ export default function ReadingSession({
             </div>
             <div className="p-[clamp(14px,2.5vw,22px)]">
               <p className={LABEL}>English</p>
-              <h2 className="text-[15px] font-semibold text-[#6B6560] mb-3">{passage.title_en}</h2>
+              <h2 className="text-[15px] font-semibold text-muted mb-3">{passage.title_en}</h2>
               {lines.map((line, i) => (
                 <TranslatableText key={i} en={line.en} showTranslation={showTranslation} className="text-sm leading-[2.15] mb-1.5" />
               ))}
@@ -418,16 +418,16 @@ export default function ReadingSession({
   if (phase === "quiz") {
     const pct = (qIndex / passage.questions.length) * 100;
     return (
-      <div className="max-w-[680px] border border-[#E3DDD0] rounded-[14px] p-[clamp(20px,3vw,28px)]">
-        <div className="flex justify-between items-center mb-2.5 text-[12.5px] font-medium text-[#A19A8C]">
+      <div className="max-w-[680px] border border-line rounded-[14px] p-[clamp(20px,3vw,28px)]">
+        <div className="flex justify-between items-center mb-2.5 text-[12.5px] font-medium text-faint">
           <span>
             Question {qIndex + 1} of {passage.questions.length}
           </span>
           <span>{correct} correct</span>
         </div>
-        <div className="h-1.5 bg-[#E3DDD0] rounded-full overflow-hidden mb-6">
+        <div className="h-1.5 bg-line rounded-full overflow-hidden mb-6">
           <i
-            className="not-italic block h-full bg-[#2563EB] rounded-full transition-[width] duration-300"
+            className="not-italic block h-full bg-sky-deep rounded-full transition-[width] duration-300"
             style={{ width: `${pct}%` }}
           />
         </div>
@@ -447,21 +447,21 @@ export default function ReadingSession({
                 disabled={show}
                 className={`text-left px-4 py-[13px] rounded-[10px] text-[14.5px] font-medium flex items-center gap-2.5 transition-all border-[1.5px] disabled:cursor-default ${
                   state === "correct"
-                    ? "border-[#16A34A] bg-[#F0FDF4]"
+                    ? "border-success bg-success-bg"
                     : state === "wrong"
-                    ? "border-[#DC2626] bg-[#FEF2F2]"
+                    ? "border-danger bg-danger-bg"
                     : show
-                    ? "border-[#E3DDD0] bg-white opacity-90"
-                    : "border-[#E3DDD0] bg-white hover:border-[#2563EB] hover:bg-[#EFF6FF]"
+                    ? "border-line bg-white opacity-90"
+                    : "border-line bg-white hover:border-sky-deep hover:bg-[#EFF6FF]"
                 }`}
               >
                 <span
                   className={`w-6 h-6 rounded-[7px] flex-none flex items-center justify-center text-[11.5px] font-bold border ${
                     state === "correct"
-                      ? "bg-[#16A34A] border-[#16A34A] text-white"
+                      ? "bg-success border-success text-white"
                       : state === "wrong"
-                      ? "bg-[#DC2626] border-[#DC2626] text-white"
-                      : "bg-[#FAF7EF] border-[#E3DDD0] text-[#6B6560]"
+                      ? "bg-danger border-danger text-white"
+                      : "bg-warm border-line text-muted"
                   }`}
                 >
                   {ABC[i]}
@@ -477,7 +477,7 @@ export default function ReadingSession({
 
   return (
     <div
-      className="max-w-[680px] text-center border border-[#E3DDD0] rounded-[14px] px-7 py-10"
+      className="max-w-[680px] text-center border border-line rounded-[14px] px-7 py-10"
       style={{ animation: "fadeUp .4s ease" }}
     >
       <svg width="104" height="104" viewBox="0 0 150 160" aria-hidden="true" className="inline-block">
@@ -498,29 +498,29 @@ export default function ReadingSession({
         </text>
       </svg>
       <h2 className="font-bold text-[21px] tracking-[-0.02em] mt-3 mb-1.5">Chapter {chapterIndex + 1} complete!</h2>
-      <p className="text-sm text-[#6B6560] mb-[22px]">
+      <p className="text-sm text-muted mb-[22px]">
         You read the whole story — your tree grew a little today.
       </p>
       {levelUp && (
-        <p className="text-sm font-semibold text-[#16A34A] mb-[22px] -mt-3">
+        <p className="text-sm font-semibold text-success mb-[22px] -mt-3">
           🎉 Level up! You&apos;re now Lv. {levelUp.new_level}
         </p>
       )}
 
       <div className="flex justify-center gap-3 mb-6 flex-wrap">
-        <div className="border border-[#E3DDD0] rounded-[10px] px-5 py-3 min-w-[100px]">
-          <b className="block text-[19px] font-bold text-[#2563EB]">
+        <div className="border border-line rounded-[10px] px-5 py-3 min-w-[100px]">
+          <b className="block text-[19px] font-bold text-sky-deep">
             {correct}/{passage.questions.length}
           </b>
-          <small className="text-xs text-[#6B6560]">Correct</small>
+          <small className="text-xs text-muted">Correct</small>
         </div>
-        <div className="border border-[#E3DDD0] rounded-[10px] px-5 py-3 min-w-[100px]">
+        <div className="border border-line rounded-[10px] px-5 py-3 min-w-[100px]">
           <b className="block text-[19px] font-bold">{incorrect}</b>
-          <small className="text-xs text-[#6B6560]">To review</small>
+          <small className="text-xs text-muted">To review</small>
         </div>
-        <div className="border border-[#E3DDD0] rounded-[10px] px-5 py-3 min-w-[100px]">
-          <b className="block text-[19px] font-bold text-[#16A34A]">+10 XP</b>
-          <small className="text-xs text-[#6B6560]">Earned</small>
+        <div className="border border-line rounded-[10px] px-5 py-3 min-w-[100px]">
+          <b className="block text-[19px] font-bold text-success">+10 XP</b>
+          <small className="text-xs text-muted">Earned</small>
         </div>
       </div>
 
@@ -551,9 +551,9 @@ export default function ReadingSession({
 
 export function ReadingEmpty() {
   return (
-    <div className="max-w-[680px] border border-[#E3DDD0] rounded-[14px] px-7 py-10 text-center">
+    <div className="max-w-[680px] border border-line rounded-[14px] px-7 py-10 text-center">
       <p className="font-bold text-[17px] tracking-[-0.01em] mb-1.5">No story here yet</p>
-      <p className="text-sm text-[#6B6560] mb-5">This chapter isn&apos;t written yet.</p>
+      <p className="text-sm text-muted mb-5">This chapter isn&apos;t written yet.</p>
       <Link href="/reading" className={BTN_INK}>
         Back to the map
       </Link>

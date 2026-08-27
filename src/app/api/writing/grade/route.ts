@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { isRateLimited } from "@/lib/rate-limit";
+import { gradeWithGemini } from "@/lib/gemini";
 import { isPlus } from "@/lib/plus";
 import { utcDayStartISO } from "@/lib/writing";
 
@@ -68,26 +70,6 @@ const MAX_RESPONSE_CHARS = 2000;
 const RATE_LIMIT = 10;
 const RATE_WINDOW_MS = 60_000;
 
-// Per-instance throttle; resets on cold start, which is acceptable as a cheap abuse brake.
-const recentRequests = new Map<string, number[]>();
-
-function isRateLimited(userId: string) {
-  const now = Date.now();
-  const hits = (recentRequests.get(userId) ?? []).filter((t) => now - t < RATE_WINDOW_MS);
-  if (hits.length >= RATE_LIMIT) {
-    recentRequests.set(userId, hits);
-    return true;
-  }
-  hits.push(now);
-  recentRequests.set(userId, hits);
-  if (recentRequests.size > 5000) {
-    for (const [key, times] of recentRequests) {
-      if (times.every((t) => now - t >= RATE_WINDOW_MS)) recentRequests.delete(key);
-    }
-  }
-  return false;
-}
-
 export async function POST(request: Request) {
   const supabase = await createClient();
   const {
@@ -95,7 +77,7 @@ export async function POST(request: Request) {
   } = await supabase.auth.getUser();
   if (!user) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
 
-  if (isRateLimited(user.id)) {
+  if (isRateLimited("writing-grade", user.id, RATE_LIMIT, RATE_WINDOW_MS)) {
     return NextResponse.json(
       { error: "rate_limited", message: "Too many grading requests. Please wait a minute." },
       { status: 429 }
@@ -174,64 +156,36 @@ export async function POST(request: Request) {
     }
   }
 
-  const geminiRes = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${apiKey}`,
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        contents: [
-          {
-            parts: [
-              {
-                text: `You are a kind Korean teacher grading a short writing exercise from a CEFR ${level} learner.
+  const outcome = await gradeWithGemini<GradeResult>({
+    apiKey,
+    model: GEMINI_MODEL,
+    responseSchema: plus ? PLUS_RESPONSE_SCHEMA : RESPONSE_SCHEMA,
+    prompt: `You are a kind Korean teacher grading a short writing exercise from a CEFR ${level} learner.
 
 Writing prompt (Korean): ${prompt_kr}
 Writing prompt (English): ${prompt_en}${
-                  typeof stimulus_kr === "string" && stimulus_kr.trim()
-                    ? `\n\nThe learner is replying to this message they received:\n${stimulus_kr}`
-                    : ""
-                }
+      typeof stimulus_kr === "string" && stimulus_kr.trim()
+        ? `\n\nThe learner is replying to this message they received:\n${stimulus_kr}`
+        : ""
+    }
 
 Learner's answer:
 ${response_text}
 
 Grade the grammar accuracy relative to their ${level} level (don't punish vocabulary simplicity — only grammar, particles, conjugation, word order, and spelling). Be encouraging.${
-                  plus
-                    ? "\n\nAlso return sentence-by-sentence corrections: one entry per sentence of the learner's answer, each with the original, the corrected version, and a one-line note on the grammar point."
-                    : ""
-                }`,
-              },
-            ],
-          },
-        ],
-        generationConfig: {
-          responseMimeType: "application/json",
-          responseSchema: plus ? PLUS_RESPONSE_SCHEMA : RESPONSE_SCHEMA,
-        },
-      }),
-    }
-  );
+      plus
+        ? "\n\nAlso return sentence-by-sentence corrections: one entry per sentence of the learner's answer, each with the original, the corrected version, and a one-line note on the grammar point."
+        : ""
+    }`,
+  });
 
-  if (!geminiRes.ok) {
-    return NextResponse.json({ error: "grading_failed" }, { status: 502 });
-  }
-
-  const data = await geminiRes.json();
-  const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-  if (!text) {
-    return NextResponse.json({ error: "grading_failed" }, { status: 502 });
-  }
-
-  let result: GradeResult;
-  try {
-    result = JSON.parse(text);
-  } catch {
+  if (!outcome.ok) {
     return NextResponse.json(
-      { error: "grading_failed", message: "We couldn't read the grader's response. Please try again." },
-      { status: 502 }
+      outcome.message ? { error: outcome.error, message: outcome.message } : { error: outcome.error },
+      { status: outcome.status }
     );
   }
+  const result = outcome.result;
   result.score = Math.max(0, Math.min(100, Number(result.score) || 0));
   if (!plus) {
     delete result.corrections;

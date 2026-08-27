@@ -84,22 +84,22 @@ export default async function SlangSharePage({ params }: Props) {
             </span>
           )}
           <h1 className="kr text-[clamp(48px,9vw,72px)] font-bold leading-none">{entry.kr}</h1>
-          <p className="mt-3 text-lg text-[#6B6560]">
+          <p className="mt-3 text-lg text-muted">
             {entry.romanization} · <span className="italic">literally &ldquo;{entry.literal}&rdquo;</span>
           </p>
-          <p className="mt-5 text-2xl font-bold text-[#18181B]">{entry.meaning}</p>
+          <p className="mt-5 text-2xl font-bold text-charcoal">{entry.meaning}</p>
 
           <div className="mt-7 border border-[#FBCFE8] rounded-[14px] bg-[#FDF2F8] px-5 py-4 text-left">
-            <p className="kr text-lg font-medium text-[#18181B]">{entry.example.kr}</p>
-            <p className="mt-1 text-[#6B6560]">{entry.example.en}</p>
+            <p className="kr text-lg font-medium text-charcoal">{entry.example.kr}</p>
+            <p className="mt-1 text-muted">{entry.example.en}</p>
           </div>
 
           {entry.origin && (
             <div className="mt-5 text-left">
-              <p className="text-[11px] font-bold tracking-[.08em] uppercase text-[#A19A8C] mb-1.5">
+              <p className="text-[11px] font-bold tracking-[.08em] uppercase text-faint mb-1.5">
                 Where it comes from
               </p>
-              <p className="text-[14.5px] text-[#6B6560] leading-relaxed">{entry.origin}</p>
+              <p className="text-[14.5px] text-muted leading-relaxed">{entry.origin}</p>
             </div>
           )}
         </article>
@@ -114,7 +114,7 @@ export default async function SlangSharePage({ params }: Props) {
                   className="block rounded-2xl border border-[#F3E8EE] bg-white px-4 py-3 shadow-[0_3px_10px_-6px_rgba(219,39,119,.25)] hover:-translate-y-0.5 hover:border-[#FBCFE8] transition"
                 >
                   <span className="kr font-bold">{e.kr}</span>{" "}
-                  <span className="text-sm text-[#6B6560]">
+                  <span className="text-sm text-muted">
                     {e.romanization} — {e.meaning}
                   </span>
                 </Link>
@@ -127,7 +127,7 @@ export default async function SlangSharePage({ params }: Props) {
           <h2 className="text-2xl font-bold text-[#831843]">
             106 more slang words like {entry.kr}, free
           </h2>
-          <p className="mt-2 text-[#6B6560]">
+          <p className="mt-2 text-muted">
             Flip through them all, hear how they sound, and start learning the Korean that&apos;s
             actually spoken today — not just textbook Korean.
           </p>

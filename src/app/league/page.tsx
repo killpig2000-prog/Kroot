@@ -30,7 +30,7 @@ export default async function LeaguePage() {
   const tier = leagueTier(tierRow?.league_tier);
 
   return (
-    <div className="min-h-screen bg-[#FFFFFF] text-[#18181B]">
+    <div className="min-h-screen bg-[#FFFFFF] text-charcoal">
       <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
         <Sidebar
           displayName={profile?.display_name ?? "there"}
@@ -41,25 +41,25 @@ export default async function LeaguePage() {
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] md:pb-[60px] max-w-[720px]">
           {/* breadcrumb */}
-          <div className="flex gap-2 text-[13px] text-[#A19A8C] mb-[18px]">
-            <Link href="/dashboard" className="hover:text-[#18181B] transition-colors">
+          <div className="flex gap-2 text-[13px] text-faint mb-[18px]">
+            <Link href="/dashboard" className="hover:text-charcoal transition-colors">
               Garden
             </Link>
             <span>/</span>
-            <b className="text-[#18181B] font-semibold">League</b>
+            <b className="text-charcoal font-semibold">League</b>
           </div>
 
           {/* head */}
           <div className="flex items-center justify-between gap-4 mb-5 flex-wrap">
             <h1 className="font-bold text-[22px] tracking-[-0.02em] flex items-center">
-              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[#FFFBEB] border border-[#FDE68A] items-center justify-center text-[15px] mr-[9px]">
+              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[#FFFBEB] border border-amber-line items-center justify-center text-[15px] mr-[9px]">
                 {tier.emoji}
               </span>
               {tier.name} League
             </h1>
-            <span className="text-[13px] text-[#6B6560]">
+            <span className="text-[13px] text-muted">
               Weekly XP ranking · top 20% climb, bottom 20% drop · resets Monday ·{" "}
-              <Link href="/level-test" className="font-semibold text-[#16A34A] hover:underline">
+              <Link href="/level-test" className="font-semibold text-success hover:underline">
                 Level-up test →
               </Link>
             </span>

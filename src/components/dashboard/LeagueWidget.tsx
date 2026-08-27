@@ -38,19 +38,19 @@ export default function LeagueWidget() {
         <div className="h-[52px]" />
       ) : (
         <div className="flex items-center gap-3">
-          <span className="w-10 h-10 rounded-[10px] flex-none flex items-center justify-center text-[20px] bg-[#FAF7EF] border border-[#E3DDD0]">
+          <span className="w-10 h-10 rounded-[10px] flex-none flex items-center justify-center text-[20px] bg-warm border border-line">
             {tier.emoji}
           </span>
           <div className="flex-1 min-w-0">
             <b className="block text-[13.5px] font-bold">
               {tier.name} league
               {active && (
-                <span className="text-[#16A34A] ml-1.5 tabular-nums">
+                <span className="text-success ml-1.5 tabular-nums">
                   #{my.rank} of {my.total_players}
                 </span>
               )}
             </b>
-            <small className="text-[11.5px] text-[#6B6560]">
+            <small className="text-[11.5px] text-muted">
               {active
                 ? `${my.xp_week} XP this week — keep climbing!`
                 : "No XP yet this week — one session ranks you."}
@@ -60,7 +60,7 @@ export default function LeagueWidget() {
       )}
       <Link
         href="/league"
-        className="block w-full text-center text-[12.5px] font-medium text-[#6B6560] pt-3 hover:text-[#18181B] transition-colors"
+        className="block w-full text-center text-[12.5px] font-medium text-muted pt-3 hover:text-charcoal transition-colors"
       >
         Open league →
       </Link>

@@ -27,8 +27,8 @@ function NavItem({
       href={href}
       className={`flex items-center gap-2 px-2.5 py-2 text-[13.5px] transition-colors ${
         on
-          ? "bg-white border border-dashed border-[#CFC8B8] border-r-0 rounded-l-[10px] -mr-3.5 text-[#15803D] font-bold"
-          : "rounded-[9px] text-[#4A453D] font-medium hover:bg-white hover:text-[#15803D]"
+          ? "bg-white border border-dashed border-[#CFC8B8] border-r-0 rounded-l-[10px] -mr-3.5 text-success-deep font-bold"
+          : "rounded-[9px] text-[#4A453D] font-medium hover:bg-white hover:text-success-deep"
       }`}
     >
       {color ? (
@@ -59,7 +59,7 @@ function NavItem({
   // for the one item we want to visually call out (Pronunciation).
   return (
     <div className="rounded-[11px] p-[1.5px]" style={{ background: "linear-gradient(90deg,#F43F5E,#F59E0B,#22C55E,#0EA5E9,#8B5CF6)" }}>
-      <div className="rounded-[9.5px] bg-[#FAF7EF]">{link}</div>
+      <div className="rounded-[9.5px] bg-warm">{link}</div>
     </div>
   );
 }
@@ -81,9 +81,9 @@ export default function Sidebar({
   const pathname = usePathname();
 
   return (
-    <aside className="hidden md:flex flex-col gap-1 border-r border-dashed border-[#DDD6C8] bg-[#FAF7EF] px-3.5 py-5 sticky top-0 h-screen overflow-y-auto">
+    <aside className="hidden md:flex flex-col gap-1 border-r border-dashed border-dash bg-warm px-3.5 py-5 sticky top-0 h-screen overflow-y-auto">
       <Link href="/dashboard" className="flex items-center gap-[9px] font-extrabold text-[17px] tracking-[-0.01em] px-2.5 pb-[18px] text-[#221F1B]">
-        <span className="w-[30px] h-[30px] rounded-lg bg-[#16A34A] flex items-center justify-center kr text-sm text-white">
+        <span className="w-[30px] h-[30px] rounded-lg bg-success flex items-center justify-center kr text-sm text-white">
           한
         </span>
         Kroot
@@ -111,7 +111,7 @@ export default function Sidebar({
           <span className="text-lg">🔥</span>
           <div>
             <b className="block text-[13.5px] font-semibold leading-tight">{streakDays}-day streak</b>
-            <small className="text-[11.5px] text-[#6B6560]">
+            <small className="text-[11.5px] text-muted">
               {plus ? "🛡️ Shielded by Plus" : "Keep it alive today!"}
             </small>
           </div>

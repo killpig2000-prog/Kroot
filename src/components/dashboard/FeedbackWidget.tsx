@@ -100,7 +100,7 @@ export default function FeedbackWidget() {
               <b className="block text-[22px] font-extrabold text-[#221F1B] mb-2 tracking-tight">
                 We just opened! 🎉
               </b>
-              <p className="text-[14.5px] text-[#6B6560] leading-relaxed mb-7">
+              <p className="text-[14.5px] text-muted leading-relaxed mb-7">
                 Kroot is brand new, so things may be rough around the edges. Tell us what&apos;s
                 broken, confusing, or missing — every note helps us build the app you actually
                 want.
@@ -108,13 +108,13 @@ export default function FeedbackWidget() {
               <div className="flex flex-col gap-2.5">
                 <button
                   onClick={() => setView("form")}
-                  className="w-full rounded-[13px] bg-[#16A34A] text-white font-bold text-[14.5px] py-3.5 hover:bg-[#15803D] transition-colors"
+                  className="w-full rounded-[13px] bg-success text-white font-bold text-[14.5px] py-3.5 hover:bg-success-deep transition-colors"
                 >
                   Send feedback
                 </button>
                 <button
                   onClick={dismissAnnouncement}
-                  className="w-full rounded-[13px] text-[#A19A8C] font-semibold text-[13px] py-1.5 hover:text-[#6B6560] transition-colors"
+                  className="w-full rounded-[13px] text-faint font-semibold text-[13px] py-1.5 hover:text-muted transition-colors"
                 >
                   Maybe later
                 </button>
@@ -127,7 +127,7 @@ export default function FeedbackWidget() {
               <b className="block text-[15px] font-extrabold text-[#221F1B] mb-1.5">
                 💬 Send feedback
               </b>
-              <p className="text-[13px] text-[#6B6560] mb-3.5">
+              <p className="text-[13px] text-muted mb-3.5">
                 A bug, a rough edge, a feature you wish we had — all welcome.
               </p>
               <textarea
@@ -137,10 +137,10 @@ export default function FeedbackWidget() {
                 placeholder="What's on your mind?"
                 rows={5}
                 maxLength={2000}
-                className="w-full resize-none rounded-[11px] border border-[#E3DDD0] bg-white px-3.5 py-3 text-[13.5px] text-[#221F1B] placeholder:text-[#B7AE9C] focus:outline-none focus:border-[#16A34A]"
+                className="w-full resize-none rounded-[11px] border border-line bg-white px-3.5 py-3 text-[13.5px] text-[#221F1B] placeholder:text-[#B7AE9C] focus:outline-none focus:border-success"
               />
               {error && (
-                <p className="text-[12px] text-[#DC2626] mt-2">
+                <p className="text-[12px] text-danger mt-2">
                   Couldn&apos;t send that — mind trying again?
                 </p>
               )}
@@ -148,13 +148,13 @@ export default function FeedbackWidget() {
                 <button
                   onClick={submit}
                   disabled={!message.trim() || sending}
-                  className="flex-1 rounded-[11px] bg-[#16A34A] text-white font-semibold text-[13.5px] py-2.5 hover:bg-[#15803D] transition-colors disabled:opacity-50 disabled:hover:bg-[#16A34A]"
+                  className="flex-1 rounded-[11px] bg-success text-white font-semibold text-[13.5px] py-2.5 hover:bg-success-deep transition-colors disabled:opacity-50 disabled:hover:bg-success"
                 >
                   {sending ? "Sending…" : "Send"}
                 </button>
                 <button
                   onClick={close}
-                  className="rounded-[11px] border border-[#E3DDD0] bg-white text-[#6B6560] font-semibold text-[13.5px] px-4 py-2.5 hover:border-[#CFC8B8] transition-colors"
+                  className="rounded-[11px] border border-line bg-white text-muted font-semibold text-[13.5px] px-4 py-2.5 hover:border-[#CFC8B8] transition-colors"
                 >
                   Cancel
                 </button>
@@ -166,12 +166,12 @@ export default function FeedbackWidget() {
             <>
               <span className="text-[26px] block mb-2">🙏</span>
               <b className="block text-[16px] font-extrabold text-[#221F1B] mb-1.5">Thank you!</b>
-              <p className="text-[13.5px] text-[#6B6560] leading-relaxed mb-5">
+              <p className="text-[13.5px] text-muted leading-relaxed mb-5">
                 Your feedback landed with us. It genuinely shapes what we build next.
               </p>
               <button
                 onClick={close}
-                className="w-full rounded-[11px] bg-[#16A34A] text-white font-semibold text-[13.5px] py-2.5 hover:bg-[#15803D] transition-colors"
+                className="w-full rounded-[11px] bg-success text-white font-semibold text-[13.5px] py-2.5 hover:bg-success-deep transition-colors"
               >
                 Close
               </button>

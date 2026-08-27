@@ -1,11 +1,7 @@
 import { notFound, redirect } from "next/navigation";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { VOCAB_TOPICS, getChapterStatuses, getChaptersForTopic, unlockedVocabTiers } from "@/lib/vocabulary";
-import { LEVEL_ORDER, type CefrLevel } from "@/lib/tree";
-
-function isCefrLevel(value: string | undefined): value is CefrLevel {
-  return !!value && (LEVEL_ORDER as string[]).includes(value);
-}
+import { LEVEL_ORDER, isCefrLevel, type CefrLevel } from "@/lib/tree";
 
 // Like the reference design, picking a topic drops you straight into the cards —
 // this route just finds where you left off and forwards you there.

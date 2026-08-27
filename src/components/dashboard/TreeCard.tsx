@@ -105,7 +105,7 @@ export default function TreeCard({
   const groundShift = frameH - 230;
 
   return (
-    <div className={`relative border border-[#E3DDD0] p-[clamp(18px,3.6vw,26px)] mb-3.5 grid grid-cols-1 sm:grid-cols-[auto_1fr] gap-[clamp(18px,4vw,32px)] ${veteran ? "items-start" : "items-center"} bg-white rotate-[-0.4deg] shadow-[0_14px_30px_-18px_rgba(60,50,30,.35)]`}>
+    <div className={`relative border border-line p-[clamp(18px,3.6vw,26px)] mb-3.5 grid grid-cols-1 sm:grid-cols-[auto_1fr] gap-[clamp(18px,4vw,32px)] ${veteran ? "items-start" : "items-center"} bg-white rotate-[-0.4deg] shadow-[0_14px_30px_-18px_rgba(60,50,30,.35)]`}>
       <TreeGrowthPopup level={level} species={species} />
       <span
         aria-hidden="true"
@@ -113,7 +113,7 @@ export default function TreeCard({
         style={{ background: "rgba(190,227,248,.65)", borderColor: "rgba(150,200,230,.45)" }}
       />
       {/* the tree, as a polaroid in the album */}
-      <figure className="relative m-0 bg-white border border-[#E3DDD0] p-1.5 pb-6 rotate-[1.2deg] shadow-[0_10px_22px_-12px_rgba(60,50,30,.35)]">
+      <figure className="relative m-0 bg-white border border-line p-1.5 pb-6 rotate-[1.2deg] shadow-[0_10px_22px_-12px_rgba(60,50,30,.35)]">
         <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
           <SpeechBubble phrases={TREE_PHRASES} />
         </div>
@@ -171,10 +171,10 @@ export default function TreeCard({
           Your tree · 성장 앨범
         </p>
         <h2 className="font-semibold text-lg tracking-[-0.01em] mb-0.5">
-          {sp.name} <span className="text-[#A19A8C] font-medium">· {treeName}</span>
+          {sp.name} <span className="text-faint font-medium">· {treeName}</span>
           <span
             className={`inline-block ml-2 text-[12.5px] font-semibold border rounded-md px-2 py-px align-[2px] ${
-              veteran ? "bg-[#FFF8E6] text-[#B7791F] border-[#F3D98A]" : "bg-[#F0FDF4] text-[#16A34A] border-[#BBF7D0]"
+              veteran ? "bg-[#FFF8E6] text-[#B7791F] border-[#F3D98A]" : "bg-success-bg text-success border-success-line"
             }`}
           >
             Lv. {level}
@@ -183,10 +183,10 @@ export default function TreeCard({
         {veteran && (
           <p className="font-semibold text-[22px] text-[#B7791F] tracking-[-0.01em] tabular-nums mb-0.5">
             {metres}
-            <span className="text-[12px] text-[#6B6560] font-bold ml-1">m tall</span>
+            <span className="text-[12px] text-muted font-bold ml-1">m tall</span>
           </p>
         )}
-        <p className="text-[13.5px] text-[#6B6560] mb-4">
+        <p className="text-[13.5px] text-muted mb-4">
           <span className="kr font-semibold">{sp.krName}</span> —{" "}
           {veteran ? "Fully grown, still climbing. Every ten levels the canopy gains a tier." : blurb}
         </p>
@@ -194,11 +194,11 @@ export default function TreeCard({
         <div className="flex items-center gap-3 mb-4">
           <div className="flex-1 h-1.5 bg-[#EFE9DB] rounded-full overflow-hidden">
             <i
-              className={`not-italic block h-full rounded-full transition-[width] duration-1000 ${veteran ? "bg-[#B7791F]" : "bg-[#16A34A]"}`}
+              className={`not-italic block h-full rounded-full transition-[width] duration-1000 ${veteran ? "bg-[#B7791F]" : "bg-success"}`}
               style={{ width: `${fill}%` }}
             />
           </div>
-          <span className="text-[12.5px] text-[#6B6560] font-medium whitespace-nowrap">
+          <span className="text-[12.5px] text-muted font-medium whitespace-nowrap">
             {maxed ? "Reached the stars 🌟" : `${xpInto}/${xpNeeded} XP to Lv. ${level + 1}`}
           </span>
         </div>
@@ -211,10 +211,10 @@ export default function TreeCard({
                 key={lv}
                 className={`flex-1 rounded-lg py-[7px] px-1 text-center text-sm border transition-all ${
                   state === "now"
-                    ? "bg-[#F0FDF4] border-[#BBF7D0]"
+                    ? "bg-success-bg border-success-line"
                     : state === "done"
-                    ? "bg-white border-[#E3DDD0]"
-                    : "bg-white border-[#E3DDD0] grayscale opacity-45"
+                    ? "bg-white border-line"
+                    : "bg-white border-line grayscale opacity-45"
                 }`}
               >
                 <span className={state === "now" ? "inline-block bob" : undefined}>
@@ -222,7 +222,7 @@ export default function TreeCard({
                 </span>
                 <small
                   className={`block text-[10.5px] font-semibold mt-px ${
-                    state === "now" ? "text-[#16A34A]" : state === "done" ? "text-[#6B6560]" : "text-[#A19A8C]"
+                    state === "now" ? "text-success" : state === "done" ? "text-muted" : "text-faint"
                   }`}
                 >
                   {STAGE_RANGES[idx]}
@@ -234,7 +234,7 @@ export default function TreeCard({
 
         {/* keepsake ladder — what the taller tree has earned, and what's next */}
         {veteran && (
-          <div className="mt-4 pt-3.5 border-t border-dashed border-[#E3DDD0]">
+          <div className="mt-4 pt-3.5 border-t border-dashed border-line">
             <p className="text-[11.5px] font-extrabold tracking-[.08em] uppercase text-[#B7AE9C] mb-2">
               Canopy keepsakes
             </p>
@@ -249,8 +249,8 @@ export default function TreeCard({
                       on
                         ? "bg-[#FFF8E6] border-[#F3D98A] text-[#B7791F]"
                         : next
-                        ? "bg-white border-[#E3DDD0] text-[#6B6560]"
-                        : "bg-white border-[#E3DDD0] text-[#A19A8C] opacity-50"
+                        ? "bg-white border-line text-muted"
+                        : "bg-white border-line text-faint opacity-50"
                     }`}
                   >
                     <span className="tabular-nums">Lv.{m.level}</span> · {m.name}
@@ -264,10 +264,10 @@ export default function TreeCard({
 
         {/* wardrobe strip — dress the tree without leaving the garden */}
         {userId && ownedIds && (
-          <div className="mt-4 pt-3.5 border-t border-dashed border-[#E3DDD0] flex items-center gap-2 flex-wrap">
+          <div className="mt-4 pt-3.5 border-t border-dashed border-line flex items-center gap-2 flex-wrap">
             <b className="text-[12.5px] font-bold mr-0.5">My costume</b>
             {owned.length === 0 ? (
-              <span className="text-[12.5px] text-[#6B6560]">
+              <span className="text-[12.5px] text-muted">
                 No costumes yet — treat your tree at the shop.
               </span>
             ) : (
@@ -280,8 +280,8 @@ export default function TreeCard({
                     disabled={busy}
                     className={`flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[12px] font-semibold border transition-all disabled:opacity-60 ${
                       on
-                        ? "bg-[#F0FDF4] border-[#BBF7D0] text-[#15803D]"
-                        : "bg-[#FAF7EF] border-[#E3DDD0] text-[#6B6560] hover:border-[#A19A8C]"
+                        ? "bg-success-bg border-success-line text-success-deep"
+                        : "bg-warm border-line text-muted hover:border-faint"
                     }`}
                   >
                     {c.render ? (
@@ -299,7 +299,7 @@ export default function TreeCard({
             )}
             <Link
               href="/shop"
-              className="ml-auto text-[12.5px] font-semibold text-[#6B6560] hover:text-[#18181B] transition-colors whitespace-nowrap"
+              className="ml-auto text-[12.5px] font-semibold text-muted hover:text-charcoal transition-colors whitespace-nowrap"
             >
               Garden Shop →
             </Link>

@@ -39,7 +39,7 @@ export default function NameEditor({ userId, name }: { userId: string; name: str
           onClick={() => setEditing(true)}
           aria-label="Edit name"
           title="Edit name"
-          className="text-[12px] text-[#A19A8C] hover:text-[#16A34A] transition-colors"
+          className="text-[12px] text-faint hover:text-success transition-colors"
         >
           ✏️
         </button>
@@ -61,13 +61,13 @@ export default function NameEditor({ userId, name }: { userId: string; name: str
             setValue(name);
           }
         }}
-        className="w-[160px] rounded-lg border-[1.5px] border-[#BBF7D0] bg-white px-2 py-0.5 text-sm font-semibold outline-none focus:border-[#16A34A]"
+        className="w-[160px] rounded-lg border-[1.5px] border-success-line bg-white px-2 py-0.5 text-sm font-semibold outline-none focus:border-success"
       />
       <button
         type="button"
         onClick={() => void save()}
         disabled={saving}
-        className="rounded-lg bg-[#16A34A] px-2.5 py-1 text-[12px] font-bold text-white hover:bg-[#15803D] transition-colors disabled:opacity-60"
+        className="rounded-lg bg-success px-2.5 py-1 text-[12px] font-bold text-white hover:bg-success-deep transition-colors disabled:opacity-60"
       >
         {saving ? "…" : "Save"}
       </button>

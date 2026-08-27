@@ -2,8 +2,8 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
-import { createClient, getClaimsUser } from "@/lib/supabase/server";
-import { LEVEL_ORDER, type CefrLevel } from "@/lib/tree";
+import { createClient, getClaimsUser, getDashboardProfile } from "@/lib/supabase/server";
+import { LEVEL_ORDER, isCefrLevel, type CefrLevel } from "@/lib/tree";
 import { isDifficultyUnlocked } from "@/lib/level";
 import { SITUATIONS } from "@/lib/listening";
 import { dialoguesFor } from "@/lib/listening-dialogues";
@@ -20,10 +20,6 @@ const SUBS: Record<string, string> = {
   phone: "Calls you'll actually have to make",
 };
 
-function isCefrLevel(value: string | undefined): value is CefrLevel {
-  return !!value && (LEVEL_ORDER as string[]).includes(value);
-}
-
 export default async function ListeningPage({
   searchParams,
 }: {
@@ -34,11 +30,7 @@ export default async function ListeningPage({
 
   if (!user) redirect("/onboarding");
 
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("display_name, current_level, streak_days, avatar_url, xp")
-    .eq("id", user.id)
-    .single();
+  const profile = await getDashboardProfile(supabase, user.id);
 
   const myLevel = (profile?.current_level ?? "A1") as CefrLevel;
   const sp = await searchParams;
@@ -57,7 +49,7 @@ export default async function ListeningPage({
   const completedIds = new Set((progressRows ?? []).map((r) => r.dialogue_id));
 
   return (
-    <div className="min-h-screen bg-[#FFFFFF] text-[#18181B]">
+    <div className="min-h-screen bg-[#FFFFFF] text-charcoal">
       <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
         <Sidebar
           displayName={profile?.display_name ?? "there"}
@@ -68,23 +60,23 @@ export default async function ListeningPage({
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] md:pb-[60px]">
           {/* breadcrumb */}
-          <div className="flex gap-2 text-[13px] text-[#A19A8C] mb-[18px]">
-            <Link href="/dashboard" className="hover:text-[#18181B] transition-colors">
+          <div className="flex gap-2 text-[13px] text-faint mb-[18px]">
+            <Link href="/dashboard" className="hover:text-charcoal transition-colors">
               Garden
             </Link>
             <span>/</span>
-            <b className="text-[#18181B] font-semibold">Listening</b>
+            <b className="text-charcoal font-semibold">Listening</b>
           </div>
 
           {/* head */}
           <div className="flex items-center justify-between gap-4 mb-[18px] flex-wrap">
             <h1 className="font-bold text-[22px] tracking-[-0.02em] flex items-center">
-              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[#F0FDFA] text-[#0D9488] border border-[#99F6E4] items-center justify-center kr text-[15px] mr-[9px]">
+              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[#F0FDFA] text-teal border border-[#99F6E4] items-center justify-center kr text-[15px] mr-[9px]">
                 듣
               </span>
               Listening
             </h1>
-            <span className="text-[13px] text-[#6B6560]">
+            <span className="text-[13px] text-muted">
               Pick a situation, listen, and follow the script
             </span>
           </div>
@@ -98,8 +90,8 @@ export default async function ListeningPage({
                   href={`/listening?level=${lv}`}
                   className={`rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold transition-all border ${
                     lv === level
-                      ? "bg-[#0D9488] border-[#0D9488] text-white"
-                      : "bg-white border-[#E3DDD0] text-[#6B6560] hover:border-[#A19A8C]"
+                      ? "bg-teal border-teal text-white"
+                      : "bg-white border-line text-muted hover:border-faint"
                   }`}
                 >
                   {lv}
@@ -110,7 +102,7 @@ export default async function ListeningPage({
               ) : (
                 <div
                   key={lv}
-                  className="rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold border bg-[#FAF7EF] border-[#E3DDD0] text-[#A19A8C] grayscale opacity-60 cursor-not-allowed select-none"
+                  className="rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold border bg-warm border-line text-faint grayscale opacity-60 cursor-not-allowed select-none"
                 >
                   🔒 {lv}
                   <span className="text-[10.5px] font-bold ml-1.5">
@@ -132,30 +124,30 @@ export default async function ListeningPage({
                 <Link
                   key={s.key}
                   href={`/listening/${s.key}?level=${level}`}
-                  className="border border-[#E3DDD0] rounded-[14px] bg-white overflow-hidden text-left transition-all duration-150 hover:border-[#0D9488] hover:bg-[#F0FDFA] hover:-translate-y-0.5 group"
+                  className="border border-line rounded-[14px] bg-white overflow-hidden text-left transition-all duration-150 hover:border-teal hover:bg-[#F0FDFA] hover:-translate-y-0.5 group"
                 >
                   <div
-                    className="relative aspect-[16/9] bg-[#FAF7EF]"
+                    className="relative aspect-[16/9] bg-warm"
                     style={
                       photo
                         ? { background: `url(${photo}) center/cover` }
                         : { background: s.bg }
                     }
                   >
-                    <span className="absolute left-3 bottom-3 w-9 h-9 rounded-[10px] flex items-center justify-center text-lg bg-white/95 border border-[#E3DDD0] shadow-sm transition-transform group-hover:scale-110">
+                    <span className="absolute left-3 bottom-3 w-9 h-9 rounded-[10px] flex items-center justify-center text-lg bg-white/95 border border-line shadow-sm transition-transform group-hover:scale-110">
                       {s.icon}
                     </span>
                   </div>
                   <div className="px-[18px] py-4">
                     <b className="block font-semibold text-[15px] mb-0.5">{s.label}</b>
-                    <small className="block text-[12.5px] text-[#6B6560] leading-[1.5]">
+                    <small className="block text-[12.5px] text-muted leading-[1.5]">
                       {SUBS[s.key] ?? s.krLabel}
                     </small>
                     <span
                       className={`inline-block mt-3 text-[11.5px] font-semibold rounded-full px-2.5 py-[3px] border ${
                         done > 0 && done === count
-                          ? "text-[#16A34A] bg-[#F0FDF4] border-[#BBF7D0]"
-                          : "text-[#0D9488] bg-[#F0FDFA] border-[#99F6E4]"
+                          ? "text-success bg-success-bg border-success-line"
+                          : "text-teal bg-[#F0FDFA] border-[#99F6E4]"
                       }`}
                     >
                       {s.krLabel} ·{" "}

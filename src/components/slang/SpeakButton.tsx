@@ -26,7 +26,7 @@ export default function SpeakButton({
         e.stopPropagation();
         speakKorean(text, { rate: 0.92 });
       }}
-      className={`inline-flex items-center justify-center w-8 h-8 rounded-lg border border-[#E3DDD0] bg-white text-[13px] transition-all hover:border-[#DB2777] hover:bg-[#FDF2F8] hover:scale-110 ${className}`}
+      className={`inline-flex items-center justify-center w-8 h-8 rounded-lg border border-line bg-white text-[13px] transition-all hover:border-[#DB2777] hover:bg-[#FDF2F8] hover:scale-110 ${className}`}
     >
       🔊
     </button>

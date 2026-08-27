@@ -1,6 +1,6 @@
 export default function Pot({ grown }: { grown: boolean }) {
   return (
-    <div className="mx-auto mb-5 w-[190px] border border-[#E3DDD0] rounded-[12px] bg-[#FAF7EF] p-3">
+    <div className="mx-auto mb-5 w-[190px] border border-line rounded-[12px] bg-warm p-3">
       <svg viewBox="0 0 170 150" aria-hidden="true">
         <path d="M45 100 L125 100 L115 145 L55 145 Z" fill="#D6BFA8" />
         <rect x="40" y="94" width="90" height="14" rx="7" fill="#C4A98C" />

@@ -23,7 +23,7 @@ export default async function SlangPage() {
   const daily = slangOfTheDay();
 
   return (
-    <div className="min-h-screen bg-[#FFFFFF] text-[#18181B]">
+    <div className="min-h-screen bg-[#FFFFFF] text-charcoal">
       <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
         <Sidebar
           displayName={profile?.display_name ?? "there"}
@@ -34,12 +34,12 @@ export default async function SlangPage() {
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] md:pb-[60px]">
           {/* breadcrumb */}
-          <div className="flex gap-2 text-[13px] text-[#A19A8C] mb-[18px]">
-            <Link href="/dashboard" className="hover:text-[#18181B] transition-colors">
+          <div className="flex gap-2 text-[13px] text-faint mb-[18px]">
+            <Link href="/dashboard" className="hover:text-charcoal transition-colors">
               Garden
             </Link>
             <span>/</span>
-            <b className="text-[#18181B] font-semibold">Slang</b>
+            <b className="text-charcoal font-semibold">Slang</b>
           </div>
 
           {/* head */}
@@ -50,7 +50,7 @@ export default async function SlangPage() {
               </span>
               Slang
             </h1>
-            <span className="text-[13px] text-[#6B6560]">
+            <span className="text-[13px] text-muted">
               The words textbooks skip — straight from K-dramas, K-pop, and group chats
             </span>
           </div>

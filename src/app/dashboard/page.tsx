@@ -270,10 +270,10 @@ export default async function DashboardPage() {
 
         <main className="min-w-0 px-[clamp(18px,3vw,36px)] pt-[26px] pb-[100px] md:pb-[60px]">
           <Greeting name={displayName} />
-          <p className="text-[#6B6560] text-sm mb-6">
+          <p className="text-muted text-sm mb-6">
             One lesson today keeps your tree growing.
             {weekendBoost && (
-              <span className="ml-2 inline-flex items-center gap-1 text-[12px] font-bold text-[#B45309] bg-[#FFFBEB] border border-[#FDE68A] rounded-full px-2.5 py-[3px] align-middle">
+              <span className="ml-2 inline-flex items-center gap-1 text-[12px] font-bold text-[#B45309] bg-[#FFFBEB] border border-amber-line rounded-full px-2.5 py-[3px] align-middle">
                 ⚡ Weekend boost — 1.5x XP all weekend
               </span>
             )}
@@ -294,9 +294,9 @@ export default async function DashboardPage() {
           {dueCount > 0 && (
             <Link
               href="/review"
-              className="flex items-center gap-3.5 border border-[#BFDBFE] bg-[#EFF6FF] rounded-[14px] px-5 py-4 mb-[30px] transition-all hover:-translate-y-0.5 group"
+              className="flex items-center gap-3.5 border border-sky-line bg-[#EFF6FF] rounded-[14px] px-5 py-4 mb-[30px] transition-all hover:-translate-y-0.5 group"
             >
-              <span className="flex-none w-10 h-10 rounded-[10px] bg-white border border-[#BFDBFE] flex items-center justify-center text-lg transition-transform group-hover:scale-110">
+              <span className="flex-none w-10 h-10 rounded-[10px] bg-white border border-sky-line flex items-center justify-center text-lg transition-transform group-hover:scale-110">
                 💧
               </span>
               <span className="flex-1 min-w-[170px]">
@@ -307,7 +307,7 @@ export default async function DashboardPage() {
                   Water them before they wilt — a quick review keeps them rooted.
                 </span>
               </span>
-              <span className="text-[13px] font-semibold text-[#2563EB] transition-transform group-hover:translate-x-0.5">
+              <span className="text-[13px] font-semibold text-sky-deep transition-transform group-hover:translate-x-0.5">
                 Water now →
               </span>
             </Link>
@@ -332,7 +332,7 @@ export default async function DashboardPage() {
             </span>
             <div className="flex-1 min-w-[170px]">
               <b className="block font-semibold text-sm">{quest?.title ?? questOfTheDay.title}</b>
-              <span className="text-[13px] text-[#6B6560]">{quest?.description ?? questOfTheDay.description}</span>
+              <span className="text-[13px] text-muted">{quest?.description ?? questOfTheDay.description}</span>
             </div>
             {quest && <QuestButton skillKey={quest.skill_key} completed={!!quest.completed_at} />}
           </div>
@@ -363,18 +363,18 @@ export default async function DashboardPage() {
           {cefr === "A1" && courseDoneDays.length === 0 && (
           <Link
             href="/hangul"
-            className="flex items-center gap-3.5 border border-[#BBF7D0] bg-[#F0FDF4] rounded-[14px] px-5 py-4 mb-[30px] transition-all hover:-translate-y-0.5 group"
+            className="flex items-center gap-3.5 border border-success-line bg-success-bg rounded-[14px] px-5 py-4 mb-[30px] transition-all hover:-translate-y-0.5 group"
           >
-            <span className="flex-none w-10 h-10 rounded-[10px] bg-white border border-[#BBF7D0] flex items-center justify-center kr text-lg text-[#16A34A] transition-transform group-hover:scale-110">
+            <span className="flex-none w-10 h-10 rounded-[10px] bg-white border border-success-line flex items-center justify-center kr text-lg text-success transition-transform group-hover:scale-110">
               ㄱ
             </span>
             <span className="flex-1 min-w-[170px]">
-              <b className="block font-semibold text-sm text-[#15803D]">Completely new to Korean?</b>
+              <b className="block font-semibold text-sm text-success-deep">Completely new to Korean?</b>
               <span className="text-[13px] text-[#4D7C5F]">
                 Learn the alphabet first — 40 letters, one hour, free forever.
               </span>
             </span>
-            <span className="text-[13px] font-semibold text-[#16A34A] transition-transform group-hover:translate-x-0.5">
+            <span className="text-[13px] font-semibold text-success transition-transform group-hover:translate-x-0.5">
               Start here →
             </span>
           </Link>
@@ -382,20 +382,20 @@ export default async function DashboardPage() {
 
           {/* learning progress — replaces the old category card list (the
               sidebar already covers navigation); SkillBars live on here */}
-          <div className="border border-[#E3DDD0] rounded-[14px] bg-white px-[22px] py-5 mb-[14px]">
+          <div className="border border-line rounded-[14px] bg-white px-[22px] py-5 mb-[14px]">
             <div className="flex items-baseline justify-between gap-3 mb-3.5 flex-wrap">
               <b className="font-semibold text-[15px]">📈 Learning progress</b>
-              <small className="text-[12.5px] text-[#A19A8C] font-medium">{cefr} difficulty</small>
+              <small className="text-[12.5px] text-faint font-medium">{cefr} difficulty</small>
             </div>
 
             {showCourseGauge && (
               <Link href="/course" className="flex items-center gap-3 mb-4 group">
-                <span className="flex-none text-[12.5px] font-semibold text-[#6B6560] w-[92px]">
+                <span className="flex-none text-[12.5px] font-semibold text-muted w-[92px]">
                   Course {courseDone}/{COURSE_TOTAL_DAYS}
                 </span>
                 <span className="flex-1 h-2.5 rounded-full bg-[#F5F5F4] overflow-hidden">
                   <span
-                    className="block h-full rounded-full bg-[#16A34A] transition-all"
+                    className="block h-full rounded-full bg-success transition-all"
                     style={{ width: `${Math.round((courseDone / COURSE_TOTAL_DAYS) * 100)}%` }}
                   />
                 </span>
@@ -405,7 +405,7 @@ export default async function DashboardPage() {
               </Link>
             )}
             {courseFinished && (
-              <p className="text-[12.5px] font-semibold text-[#16A34A] mb-4">
+              <p className="text-[12.5px] font-semibold text-success mb-4">
                 ✓ 16-Day Course complete 🎉
               </p>
             )}
@@ -426,7 +426,7 @@ export default async function DashboardPage() {
                       <b className="font-semibold text-[13px] flex items-center gap-2">
                         {c.en}
                         {done && (
-                          <span className="text-[10.5px] font-semibold text-[#16A34A] bg-[#F0FDF4] border border-[#BBF7D0] rounded-md px-1.5 py-px">
+                          <span className="text-[10.5px] font-semibold text-success bg-success-bg border border-success-line rounded-md px-1.5 py-px">
                             +10 XP
                           </span>
                         )}
@@ -452,8 +452,8 @@ export default async function DashboardPage() {
               href="/level-test"
               className={`rounded-[14px] px-[22px] py-4 mb-[14px] flex items-center gap-4 flex-wrap border-[1.5px] transition-colors ${
                 elig.eligible
-                  ? "border-[#16A34A] bg-[#F0FDF4] hover:bg-[#DCFCE7]"
-                  : "border-[#E3DDD0] bg-white hover:border-[#16A34A]"
+                  ? "border-success bg-success-bg hover:bg-[#DCFCE7]"
+                  : "border-line bg-white hover:border-success"
               }`}
             >
               <span className="text-[24px] flex-none">🎯</span>
@@ -467,14 +467,14 @@ export default async function DashboardPage() {
                   {promoChecks.map((c) => (
                     <small
                       key={c.label}
-                      className={`text-[12px] font-semibold ${c.ok ? "text-[#16A34A]" : "text-[#A19A8C]"}`}
+                      className={`text-[12px] font-semibold ${c.ok ? "text-success" : "text-faint"}`}
                     >
                       {c.ok ? "✓" : "○"} {c.label} {c.value}
                     </small>
                   ))}
                 </span>
               </span>
-              <span className="flex-none text-[13px] font-bold text-[#16A34A]">
+              <span className="flex-none text-[13px] font-bold text-success">
                 {elig.eligible ? "Start →" : "Details →"}
               </span>
             </Link>

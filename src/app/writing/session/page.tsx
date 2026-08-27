@@ -6,12 +6,8 @@ import WritingSession, { WritingEmpty } from "@/components/writing/WritingSessio
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { chapterWrittenToday, getChaptersForLevel, utcDayStartISO } from "@/lib/writing";
 import { isPlus } from "@/lib/plus";
-import { LEVEL_ORDER, type CefrLevel } from "@/lib/tree";
+import { LEVEL_ORDER, isCefrLevel, type CefrLevel } from "@/lib/tree";
 import { levelProgress, treeStageForLevel } from "@/lib/level";
-
-function isCefrLevel(value: string | undefined): value is CefrLevel {
-  return !!value && (LEVEL_ORDER as string[]).includes(value);
-}
 
 export default async function WritingChapterSessionPage({
   searchParams,
@@ -56,7 +52,7 @@ export default async function WritingChapterSessionPage({
   const dailyDone = !plus && !!todayKey && todayKey !== prompt?.key;
 
   return (
-    <div className="min-h-screen bg-[#FFFFFF] text-[#18181B]">
+    <div className="min-h-screen bg-[#FFFFFF] text-charcoal">
       <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
         <Sidebar
           displayName={profile?.display_name ?? "there"}
@@ -67,27 +63,27 @@ export default async function WritingChapterSessionPage({
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] md:pb-[60px]">
           {/* breadcrumb */}
-          <div className="flex gap-2 text-[13px] text-[#A19A8C] mb-[18px] flex-wrap">
-            <Link href="/dashboard" className="hover:text-[#18181B] transition-colors">
+          <div className="flex gap-2 text-[13px] text-faint mb-[18px] flex-wrap">
+            <Link href="/dashboard" className="hover:text-charcoal transition-colors">
               Garden
             </Link>
             <span>/</span>
-            <Link href={`/writing?level=${level}`} className="hover:text-[#18181B] transition-colors">
+            <Link href={`/writing?level=${level}`} className="hover:text-charcoal transition-colors">
               Writing
             </Link>
             <span>/</span>
-            <b className="text-[#18181B] font-semibold">Page {chapterIndex + 1}</b>
+            <b className="text-charcoal font-semibold">Page {chapterIndex + 1}</b>
           </div>
 
           {/* head */}
           <div className="flex items-center justify-between gap-4 mb-5 flex-wrap">
             <h1 className="font-bold text-[22px] tracking-[-0.02em] flex items-center">
-              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[#FFFBEB] text-[#D97706] border border-[#FDE68A] items-center justify-center kr text-[15px] mr-[9px]">
+              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[#FFFBEB] text-amber border border-amber-line items-center justify-center kr text-[15px] mr-[9px]">
                 쓰
               </span>
               Writing
             </h1>
-            <span className="text-[13px] text-[#6B6560]">
+            <span className="text-[13px] text-muted">
               Level {level} · page {chapterIndex + 1} of {chapters.length}
             </span>
           </div>
@@ -95,25 +91,25 @@ export default async function WritingChapterSessionPage({
           {!prompt ? (
             <WritingEmpty />
           ) : dailyDone ? (
-            <div className="border border-[#E3DDD0] rounded-[14px] bg-white max-w-[900px] px-7 py-10 text-center">
+            <div className="border border-line rounded-[14px] bg-white max-w-[900px] px-7 py-10 text-center">
               <p className="text-[40px] mb-2">🌙</p>
               <h2 className="font-bold text-[19px] tracking-[-0.02em] mb-1.5">
                 Today&apos;s page is already written
               </h2>
-              <p className="text-sm text-[#6B6560] mb-6 max-w-[420px] mx-auto leading-[1.7]">
+              <p className="text-sm text-muted mb-6 max-w-[420px] mx-auto leading-[1.7]">
                 The free plan writes one page a day — this one opens tomorrow. Kroot
                 Plus turns pages without limits.
               </p>
               <div className="flex justify-center gap-2.5 flex-wrap">
                 <Link
                   href={`/writing?level=${level}`}
-                  className="rounded-[9px] px-[18px] py-[9px] text-sm font-semibold text-[#18181B] bg-white border border-[#E3DDD0] hover:bg-[#FAF7EF] transition-colors"
+                  className="rounded-[9px] px-[18px] py-[9px] text-sm font-semibold text-charcoal bg-white border border-line hover:bg-warm transition-colors"
                 >
                   All pages
                 </Link>
                 <Link
                   href="/pricing"
-                  className="rounded-[9px] px-[18px] py-[9px] text-sm font-semibold text-white bg-[#D97706] hover:bg-[#B45309] transition-colors"
+                  className="rounded-[9px] px-[18px] py-[9px] text-sm font-semibold text-white bg-amber hover:bg-[#B45309] transition-colors"
                 >
                   🌟 Go unlimited with Plus
                 </Link>

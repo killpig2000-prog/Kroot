@@ -5,9 +5,9 @@ export default function NotFound() {
   return (
     <main className="min-h-dvh flex items-center justify-center px-5 bg-white">
       <div className="text-center max-w-[420px]">
-        <div className="inline-block border border-[#E3DDD0] rounded-[14px] bg-[#FAF7EF] px-8 pt-7 pb-4 mb-5 relative">
-          <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 bg-white border border-[#E3DDD0] rounded-full px-3 py-1 text-[11.5px] font-semibold whitespace-nowrap">
-            <span className="kr">어디지?</span> <span className="text-[#A19A8C]">where is it?</span>
+        <div className="inline-block border border-line rounded-[14px] bg-warm px-8 pt-7 pb-4 mb-5 relative">
+          <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 bg-white border border-line rounded-full px-3 py-1 text-[11.5px] font-semibold whitespace-nowrap">
+            <span className="kr">어디지?</span> <span className="text-faint">where is it?</span>
           </span>
           {/* A little sprout peeking around with a magnifying glass */}
           <svg className="bob w-[92px] h-[92px]" viewBox="0 0 100 100" aria-hidden="true">
@@ -32,27 +32,27 @@ export default function NotFound() {
           </svg>
         </div>
 
-        <p className="text-[13px] font-bold tracking-[.08em] uppercase text-[#16A34A] mb-1.5">404</p>
+        <p className="text-[13px] font-bold tracking-[.08em] uppercase text-success mb-1.5">404</p>
         <h1 className="font-bold text-[clamp(20px,4vw,25px)] tracking-[-0.02em] mb-2">
           This page hasn&apos;t been planted yet
         </h1>
-        <p className="text-[14px] text-[#6B6560] leading-[1.65] mb-7">
+        <p className="text-[14px] text-muted leading-[1.65] mb-7">
           We dug around the whole garden and found nothing but soil.
           <br />
-          <span className="kr font-medium text-[#16A34A]">여기엔 아무것도 없어요!</span>{" "}
-          <span className="text-[#A19A8C]">— nothing here!</span>
+          <span className="kr font-medium text-success">여기엔 아무것도 없어요!</span>{" "}
+          <span className="text-faint">— nothing here!</span>
         </p>
 
         <div className="flex justify-center gap-2.5 flex-wrap">
           <Link
             href="/dashboard"
-            className="rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-[#16A34A] hover:bg-[#15803D] transition-colors"
+            className="rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-success hover:bg-success-deep transition-colors"
           >
             Back to my garden 🌱
           </Link>
           <Link
             href="/"
-            className="rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-[#18181B] bg-white border border-[#E3DDD0] hover:bg-[#FAF7EF] transition-colors"
+            className="rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-charcoal bg-white border border-line hover:bg-warm transition-colors"
           >
             Go home
           </Link>

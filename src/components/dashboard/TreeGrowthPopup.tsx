@@ -87,7 +87,7 @@ export default function TreeGrowthPopup({
           aria-label="Tree growth"
           className="pointer-events-auto w-full max-w-[420px] bg-white rounded-[24px] shadow-[0_30px_70px_-20px_rgba(40,35,25,.35)] px-8 pt-9 pb-8 text-center"
         >
-          <b className="block text-[13px] font-extrabold tracking-[.08em] uppercase text-[#16A34A] mb-1">
+          <b className="block text-[13px] font-extrabold tracking-[.08em] uppercase text-success mb-1">
             {growth.promoted ? "Promotion!" : growth.grewTaller ? "Taller!" : "Your tree grew!"}
           </b>
           <p className="text-[21px] font-extrabold text-[#221F1B] mb-4 tracking-tight">
@@ -105,12 +105,12 @@ export default function TreeGrowthPopup({
             fromStage={growth.fromStage}
           />
 
-          <p className="text-[13.5px] text-[#6B6560] leading-relaxed mt-4 mb-6">
+          <p className="text-[13.5px] text-muted leading-relaxed mt-4 mb-6">
             Lv. {level} — keep watering it every day and watch how far it grows.
           </p>
           <button
             onClick={() => setGrowth(null)}
-            className="w-full rounded-[13px] bg-[#16A34A] text-white font-bold text-[14.5px] py-3.5 hover:bg-[#15803D] transition-colors"
+            className="w-full rounded-[13px] bg-success text-white font-bold text-[14.5px] py-3.5 hover:bg-success-deep transition-colors"
           >
             Nice!
           </button>

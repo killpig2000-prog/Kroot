@@ -8,7 +8,7 @@ const MASCOT_PHRASES = [
 export default function Mascot() {
   return (
     <div className="relative flex justify-center mb-4">
-      <div className="border border-[#E3DDD0] rounded-[12px] bg-[#FAF7EF] px-6 pt-7 pb-3 relative">
+      <div className="border border-line rounded-[12px] bg-warm px-6 pt-7 pb-3 relative">
         <div className="absolute -top-2 left-1/2 -translate-x-1/2 z-10">
           <SpeechBubble phrases={MASCOT_PHRASES} />
         </div>

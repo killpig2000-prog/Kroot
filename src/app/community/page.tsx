@@ -70,11 +70,11 @@ export default async function CommunityPage({
     `rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold transition-all border ${
       active
         ? "bg-[#334155] border-[#334155] text-white"
-        : "bg-white border-[#E3DDD0] text-[#6B6560] hover:border-[#A19A8C]"
+        : "bg-white border-line text-muted hover:border-faint"
     }`;
 
   return (
-    <div className="min-h-screen bg-[#FFFFFF] text-[#18181B]">
+    <div className="min-h-screen bg-[#FFFFFF] text-charcoal">
       <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
         <Sidebar
           displayName={displayName}
@@ -85,12 +85,12 @@ export default async function CommunityPage({
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] md:pb-[60px]">
           {/* breadcrumb */}
-          <div className="flex gap-2 text-[13px] text-[#A19A8C] mb-[18px]">
-            <Link href="/dashboard" className="hover:text-[#18181B] transition-colors">
+          <div className="flex gap-2 text-[13px] text-faint mb-[18px]">
+            <Link href="/dashboard" className="hover:text-charcoal transition-colors">
               Garden
             </Link>
             <span>/</span>
-            <b className="text-[#18181B] font-semibold">Community</b>
+            <b className="text-charcoal font-semibold">Community</b>
           </div>
 
           {/* head */}
@@ -128,7 +128,7 @@ export default async function CommunityPage({
           {tableMissing && (
             <div className="border border-[#CBD5E1] rounded-[14px] bg-[#F1F5F9] p-[18px] mb-5 max-w-[980px]">
               <b className="block font-semibold text-[14px] mb-1">Community opens soon</b>
-              <small className="block text-[13px] text-[#6B6560] leading-[1.55]">
+              <small className="block text-[13px] text-muted leading-[1.55]">
                 Run the included migration{" "}
                 <code className="text-[12px]">supabase/migrations/0012_community_posts.sql</code> to
                 turn the board on. Until then, here&apos;s a peek at what it looks like.
@@ -137,30 +137,30 @@ export default async function CommunityPage({
           )}
 
           {loadFailed && (
-            <div className="border border-[#E3DDD0] rounded-[14px] bg-[#FAF7EF] px-[18px] py-3.5 mb-5 max-w-[980px]">
-              <small className="text-[13px] text-[#6B6560]">
+            <div className="border border-line rounded-[14px] bg-warm px-[18px] py-3.5 mb-5 max-w-[980px]">
+              <small className="text-[13px] text-muted">
                 Couldn&apos;t load posts. Try refreshing in a moment.
               </small>
             </div>
           )}
 
           {/* pinned official notices — defined in code, shown on every board */}
-          <div className="border border-[#BBF7D0] rounded-[14px] bg-[#F0FDF4] max-w-[980px] overflow-hidden mb-3.5">
+          <div className="border border-success-line rounded-[14px] bg-success-bg max-w-[980px] overflow-hidden mb-3.5">
             {NOTICES.map((n, i) => (
               <Link
                 key={n.id}
                 href={`/community/${n.id}`}
                 className={`px-[18px] py-[11px] flex items-center gap-3 transition-colors hover:bg-[#DCFCE7] ${
-                  i > 0 ? "border-t border-[#BBF7D0]" : ""
+                  i > 0 ? "border-t border-success-line" : ""
                 }`}
               >
-                <span className="text-[11.5px] font-bold rounded-full border border-[#86EFAC] bg-white text-[#15803D] px-2.5 py-[3px] flex-none">
+                <span className="text-[11.5px] font-bold rounded-full border border-[#86EFAC] bg-white text-success-deep px-2.5 py-[3px] flex-none">
                   📌 Notice
                 </span>
                 <b className="min-w-0 flex-1 font-semibold text-[14px] truncate">
                   {n.emoji} {n.title}
                 </b>
-                <span className="text-[12.5px] text-[#15803D] font-semibold flex-none hidden sm:inline">
+                <span className="text-[12.5px] text-success-deep font-semibold flex-none hidden sm:inline">
                   Kroot team
                 </span>
               </Link>

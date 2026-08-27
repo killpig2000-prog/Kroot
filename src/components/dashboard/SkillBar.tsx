@@ -12,17 +12,17 @@ export default function SkillBar({ percent, note }: { percent: number; note: str
 
   return (
     <span className="flex items-center gap-2.5 mt-1.5">
-      <span className="flex-1 max-w-[220px] h-[5px] bg-[#E3DDD0] rounded-full overflow-hidden">
+      <span className="flex-1 max-w-[220px] h-[5px] bg-line rounded-full overflow-hidden">
         <i
           className={`not-italic block h-full rounded-full transition-[width] duration-1000 ${
-            percent > 0 ? "bg-[#16A34A]" : "bg-[#F59E0B]"
+            percent > 0 ? "bg-success" : "bg-[#F59E0B]"
           }`}
           style={{ width: `${fill}%` }}
         />
       </span>
       {/* Counts, not percentages — "1/40" reads as progress where "3%" reads
           as failure, especially after the content library grew. */}
-      <span className="text-[11.5px] font-semibold text-[#6B6560] whitespace-nowrap">
+      <span className="text-[11.5px] font-semibold text-muted whitespace-nowrap">
         {note}
       </span>
     </span>

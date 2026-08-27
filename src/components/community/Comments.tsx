@@ -64,12 +64,12 @@ export default function Comments({
   return (
     <section className="max-w-[980px] mt-5">
       <h2 className="font-semibold text-[15px] mb-2.5">
-        Comments{comments.length > 0 && <span className="text-[#6B6560]"> · {comments.length}</span>}
+        Comments{comments.length > 0 && <span className="text-muted"> · {comments.length}</span>}
       </h2>
 
       {!available ? (
         <div className="border border-[#CBD5E1] rounded-[14px] bg-[#F1F5F9] px-[18px] py-3.5">
-          <small className="text-[13px] text-[#6B6560]">
+          <small className="text-[13px] text-muted">
             Comments open soon — run{" "}
             <code className="text-[12px]">supabase/migrations/0023_community_comments.sql</code> to
             turn them on.
@@ -78,14 +78,14 @@ export default function Comments({
       ) : (
         <>
           {comments.length === 0 && (
-            <p className="text-[13px] text-[#A19A8C] mb-3">No comments yet — be the first.</p>
+            <p className="text-[13px] text-faint mb-3">No comments yet — be the first.</p>
           )}
           {comments.length > 0 && (
-            <div className="border border-[#E3DDD0] rounded-[14px] bg-white overflow-hidden mb-3">
+            <div className="border border-line rounded-[14px] bg-white overflow-hidden mb-3">
               {comments.map((c, i) => (
                 <div
                   key={c.id}
-                  className={`px-[18px] py-3 ${i > 0 ? "border-t border-[#E3DDD0]" : ""}`}
+                  className={`px-[18px] py-3 ${i > 0 ? "border-t border-line" : ""}`}
                 >
                   <div className="flex items-center gap-2 mb-1">
                     <span
@@ -94,7 +94,7 @@ export default function Comments({
                       {c.author_emoji ?? "🦊"} {c.author_name}
                       {c.author_plus && " 🌟"}
                     </span>
-                    <span className="text-[11.5px] text-[#A19A8C]">{timeAgo(c.created_at)}</span>
+                    <span className="text-[11.5px] text-faint">{timeAgo(c.created_at)}</span>
                     {c.mine && (
                       <button
                         type="button"
@@ -114,17 +114,17 @@ export default function Comments({
             </div>
           )}
 
-          <div className="border border-[#E3DDD0] rounded-[14px] bg-white p-3.5">
+          <div className="border border-line rounded-[14px] bg-white p-3.5">
             <textarea
               value={draft}
               onChange={(e) => setDraft(e.target.value)}
               rows={2}
               maxLength={1000}
               placeholder={`Reply as ${displayName}…`}
-              className="w-full rounded-[10px] border border-[#E3DDD0] bg-[#FAF7EF] px-3.5 py-2.5 text-[13.5px] leading-[1.55] outline-none transition-colors resize-y focus:border-[#334155] focus:bg-white"
+              className="w-full rounded-[10px] border border-line bg-warm px-3.5 py-2.5 text-[13.5px] leading-[1.55] outline-none transition-colors resize-y focus:border-[#334155] focus:bg-white"
             />
             <div className="flex items-center mt-2">
-              <span className="text-[11.5px] text-[#A19A8C]">{draft.length}/1000</span>
+              <span className="text-[11.5px] text-faint">{draft.length}/1000</span>
               <button
                 type="button"
                 onClick={submit}

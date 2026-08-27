@@ -31,14 +31,14 @@ export default async function LevelTestPage() {
   const bar = (value: number, target: number) => (
     <span className="flex-1 h-2.5 rounded-full bg-[#F5F5F4] overflow-hidden">
       <span
-        className={`block h-full rounded-full ${value >= target ? "bg-[#16A34A]" : "bg-[#F59E0B]"}`}
+        className={`block h-full rounded-full ${value >= target ? "bg-success" : "bg-[#F59E0B]"}`}
         style={{ width: `${Math.min(100, Math.round((value / target) * 100))}%` }}
       />
     </span>
   );
 
   return (
-    <div className="min-h-screen bg-[#FFFFFF] text-[#18181B]">
+    <div className="min-h-screen bg-[#FFFFFF] text-charcoal">
       <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
         <Sidebar
           displayName={profile?.display_name ?? "there"}
@@ -49,23 +49,23 @@ export default async function LevelTestPage() {
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] md:pb-[60px] max-w-[680px]">
           {/* breadcrumb */}
-          <div className="flex gap-2 text-[13px] text-[#A19A8C] mb-[18px]">
-            <Link href="/dashboard" className="hover:text-[#18181B] transition-colors">
+          <div className="flex gap-2 text-[13px] text-faint mb-[18px]">
+            <Link href="/dashboard" className="hover:text-charcoal transition-colors">
               Garden
             </Link>
             <span>/</span>
-            <b className="text-[#18181B] font-semibold">Level Test</b>
+            <b className="text-charcoal font-semibold">Level Test</b>
           </div>
 
           <h1 className="font-bold text-[22px] tracking-[-0.02em] mb-1">
             🎯 Level-Up Test {spec && `— ${spec.from} → ${spec.to}`}
           </h1>
-          <p className="text-[13.5px] text-[#6B6560] mb-6">
+          <p className="text-[13.5px] text-muted mb-6">
             Study enough at your current grade — with good accuracy — and the test unlocks. Pass it to open the next grade&apos;s content and league.
           </p>
 
           {!spec ? (
-            <div className="border border-[#E3DDD0] rounded-[14px] px-5 py-5 text-[14px]">
+            <div className="border border-line rounded-[14px] px-5 py-5 text-[14px]">
               {grade === "C2"
                 ? "You\u2019re already at the top grade (C2)! 🏆"
                 : `The ${grade} level-up test is coming soon.`}
@@ -78,7 +78,7 @@ export default async function LevelTestPage() {
             />
           ) : (
             <div className="grid gap-4">
-              <div className="border border-[#E3DDD0] rounded-[14px] p-5 grid gap-3.5">
+              <div className="border border-line rounded-[14px] p-5 grid gap-3.5">
                 <b className="text-[14.5px]">Requirements — how much and how well you studied at {grade}</b>
                 <div className="flex items-center gap-3 text-[13px]">
                   <span className="flex-none w-[130px]">Words reviewed</span>
@@ -104,7 +104,7 @@ export default async function LevelTestPage() {
               </div>
 
               {elig.cooldownUntil ? (
-                <div className="border border-[#FDE68A] bg-[#FFFBEB] rounded-[14px] px-5 py-4 text-[13.5px]">
+                <div className="border border-amber-line bg-[#FFFBEB] rounded-[14px] px-5 py-4 text-[13.5px]">
                   <b>Retake cooldown</b> — you can try again after{" "}
                   {new Date(elig.cooldownUntil).toLocaleString("en-US", {
                     month: "short",
@@ -119,7 +119,7 @@ export default async function LevelTestPage() {
                       Meanwhile, practice{" "}
                       <Link
                         href={SKILL_LABELS[elig.lastWeakest as keyof SkillScores].href}
-                        className="font-bold text-[#16A34A] hover:underline"
+                        className="font-bold text-success hover:underline"
                       >
                         {SKILL_LABELS[elig.lastWeakest as keyof SkillScores].en} →
                       </Link>
@@ -127,7 +127,7 @@ export default async function LevelTestPage() {
                   )}
                 </div>
               ) : (
-                <p className="text-[13px] text-[#6B6560]">
+                <p className="text-[13px] text-muted">
                   Keep studying {grade} vocabulary and reading to fill the gauges. When every bar is full, the test opens right here.
                 </p>
               )}

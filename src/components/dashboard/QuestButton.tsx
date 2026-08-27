@@ -22,7 +22,7 @@ export default function QuestButton({
 }) {
   if (completed) {
     return (
-      <span className="rounded-[9px] px-[18px] py-[9px] text-[13.5px] font-semibold text-[#16A34A] bg-[#F0FDF4] border border-[#BBF7D0]">
+      <span className="rounded-[9px] px-[18px] py-[9px] text-[13.5px] font-semibold text-success bg-success-bg border border-success-line">
         Done ✓
       </span>
     );
@@ -30,7 +30,7 @@ export default function QuestButton({
   return (
     <Link
       href={SKILL_HREF[skillKey] ?? "/dashboard"}
-      className="rounded-[9px] px-[18px] py-[9px] text-[13.5px] font-semibold text-white bg-[#18181B] transition-colors hover:bg-[#3F3F46]"
+      className="rounded-[9px] px-[18px] py-[9px] text-[13.5px] font-semibold text-white bg-charcoal transition-colors hover:bg-[#3F3F46]"
     >
       Start ▸
     </Link>

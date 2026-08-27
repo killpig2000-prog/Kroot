@@ -2,6 +2,10 @@ export type CefrLevel = "A1" | "A2" | "B1" | "B2" | "C1" | "C2";
 
 export const LEVEL_ORDER: CefrLevel[] = ["A1", "A2", "B1", "B2", "C1", "C2"];
 
+export function isCefrLevel(value: string | undefined): value is CefrLevel {
+  return !!value && (LEVEL_ORDER as string[]).includes(value);
+}
+
 export const LEVEL_PATH: Record<CefrLevel, { icon: string; treeName: string; blurb: string }> = {
   A1: { icon: "🌰", treeName: "Tiny Seed", blurb: "Tucked in the soil, waiting to sprout. Every tree starts here!" },
   A2: { icon: "🌱", treeName: "Little Sprout", blurb: "First leaves are out! Keep the water coming." },

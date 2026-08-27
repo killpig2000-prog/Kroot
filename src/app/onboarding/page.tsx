@@ -41,16 +41,16 @@ const NATIVE_LANGUAGES = [
   "Other",
 ];
 
-const CARD = "border border-[#E3DDD0] rounded-[14px] bg-white p-[clamp(22px,4vw,32px)]";
+const CARD = "border border-line rounded-[14px] bg-white p-[clamp(22px,4vw,32px)]";
 const FIELD =
-  "w-full px-3.5 py-[11px] text-[14px] border border-[#E3DDD0] rounded-[9px] bg-white text-[#18181B] placeholder:text-[#A19A8C] focus:outline-none focus:border-[#16A34A] transition-colors";
-const LABEL = "block text-[12.5px] font-semibold mb-[6px] text-[#18181B]";
+  "w-full px-3.5 py-[11px] text-[14px] border border-line rounded-[9px] bg-white text-charcoal placeholder:text-faint focus:outline-none focus:border-success transition-colors";
+const LABEL = "block text-[12.5px] font-semibold mb-[6px] text-charcoal";
 const BTN_DARK =
-  "inline-flex items-center justify-center rounded-[9px] bg-[#18181B] px-[18px] py-[9px] text-[13.5px] font-semibold text-white hover:bg-[#3F3F46] transition-colors";
+  "inline-flex items-center justify-center rounded-[9px] bg-charcoal px-[18px] py-[9px] text-[13.5px] font-semibold text-white hover:bg-[#3F3F46] transition-colors";
 const BTN_GREEN =
-  "inline-flex items-center justify-center rounded-[9px] bg-[#16A34A] px-[18px] py-[9px] text-[13.5px] font-semibold text-white hover:bg-[#15803D] transition-colors";
+  "inline-flex items-center justify-center rounded-[9px] bg-success px-[18px] py-[9px] text-[13.5px] font-semibold text-white hover:bg-success-deep transition-colors";
 const BTN_OUTLINE =
-  "inline-flex items-center justify-center rounded-[9px] border border-[#E3DDD0] bg-white px-[18px] py-[9px] text-[13.5px] font-semibold text-[#18181B] hover:bg-[#FAF7EF] transition-colors";
+  "inline-flex items-center justify-center rounded-[9px] border border-line bg-white px-[18px] py-[9px] text-[13.5px] font-semibold text-charcoal hover:bg-warm transition-colors";
 
 function speak(text: string) {
   speakKorean(text, { rate: 0.9 });
@@ -244,14 +244,14 @@ export default function OnboardingPage() {
   const q = test[qi];
 
   return (
-    <div className="min-h-screen flex flex-col bg-white text-[#18181B]">
-      <header className="border-b border-[#E3DDD0]">
+    <div className="min-h-screen flex flex-col bg-white text-charcoal">
+      <header className="border-b border-line">
         <div className="max-w-[1160px] mx-auto flex items-center justify-between gap-4 px-[clamp(18px,5vw,44px)] py-3">
           <Link
             href="/"
             className="flex items-center gap-[9px] font-semibold text-[17px] tracking-[-0.01em]"
           >
-            <span className="w-[30px] h-[30px] rounded-lg bg-[#16A34A] text-white flex items-center justify-center kr text-sm">
+            <span className="w-[30px] h-[30px] rounded-lg bg-success text-white flex items-center justify-center kr text-sm">
               한
             </span>
             Kroot
@@ -264,8 +264,8 @@ export default function OnboardingPage() {
                   key={d.id}
                   className={`rounded-md px-2 py-[3px] text-[11.5px] font-semibold border transition-colors ${
                     on
-                      ? "bg-[#F0FDF4] border-[#BBF7D0] text-[#16A34A]"
-                      : "bg-white border-[#E3DDD0] text-[#A19A8C]"
+                      ? "bg-success-bg border-success-line text-success"
+                      : "bg-white border-line text-faint"
                   }`}
                 >
                   {d.label}
@@ -285,17 +285,17 @@ export default function OnboardingPage() {
                 <h1 className="text-center font-semibold text-[clamp(20px,3vw,25px)] tracking-[-0.02em] leading-[1.25] mb-1">
                   Plant your seed
                 </h1>
-                <p className="text-center text-[#6B6560] text-[13.5px] mb-6">
-                  Every big tree starts tiny. <span className="kr text-[#16A34A]">환영해요!</span>
+                <p className="text-center text-muted text-[13.5px] mb-6">
+                  Every big tree starts tiny. <span className="kr text-success">환영해요!</span>
                 </p>
 
                 <button type="button" className={`${BTN_OUTLINE} w-full mb-4`} onClick={handleGoogleSignup}>
                   Continue with Google
                 </button>
-                <div className="flex items-center gap-3 mb-5 text-[11.5px] font-medium text-[#A19A8C]">
-                  <span className="flex-1 h-px bg-[#E3DDD0]" />
+                <div className="flex items-center gap-3 mb-5 text-[11.5px] font-medium text-faint">
+                  <span className="flex-1 h-px bg-line" />
                   or with email
-                  <span className="flex-1 h-px bg-[#E3DDD0]" />
+                  <span className="flex-1 h-px bg-line" />
                 </div>
 
                 <form onSubmit={handleEmailSignup}>
@@ -351,7 +351,7 @@ export default function OnboardingPage() {
                         <option key={l}>{l}</option>
                       ))}
                     </select>
-                    <p className="text-[11.5px] text-[#A19A8C] mt-1.5">
+                    <p className="text-[11.5px] text-faint mt-1.5">
                       We&apos;ll explain things in this language.
                     </p>
                   </div>
@@ -362,9 +362,9 @@ export default function OnboardingPage() {
                     {submitting ? "Planting…" : "Plant my seed"}
                   </button>
                 </form>
-                <p className="text-center text-[12.5px] text-[#6B6560] mt-4">
+                <p className="text-center text-[12.5px] text-muted mt-4">
                   Already growing here?{" "}
-                  <Link href="/auth/login" className="text-[#18181B] font-semibold hover:underline">
+                  <Link href="/auth/login" className="text-charcoal font-semibold hover:underline">
                     Log in
                   </Link>
                 </p>
@@ -379,13 +379,13 @@ export default function OnboardingPage() {
                 <h1 className="font-semibold text-[clamp(20px,3vw,25px)] tracking-[-0.02em] leading-[1.25] mb-1.5">
                   Check your inbox
                 </h1>
-                <p className="text-[#6B6560] text-[13.5px] leading-[1.6] mb-5">
+                <p className="text-muted text-[13.5px] leading-[1.6] mb-5">
                   We sent you a confirmation link — tap it, then log in to pick where your Korean
                   begins.
                 </p>
                 <Link
                   href="/auth/login"
-                  className="inline-flex rounded-[9px] bg-[#16A34A] px-[22px] py-2.5 text-sm font-semibold text-white hover:bg-[#15803D] transition-colors"
+                  className="inline-flex rounded-[9px] bg-success px-[22px] py-2.5 text-sm font-semibold text-white hover:bg-success-deep transition-colors"
                 >
                   I confirmed — log me in
                 </Link>
@@ -399,44 +399,44 @@ export default function OnboardingPage() {
                 <h1 className="text-center font-semibold text-[clamp(20px,3vw,25px)] tracking-[-0.02em] leading-[1.25] mb-1">
                   Where does your Korean begin?
                 </h1>
-                <p className="text-center text-[#6B6560] text-[13.5px] mb-6">
+                <p className="text-center text-muted text-[13.5px] mb-6">
                   A quick test finds your level — or start from the beginning.
                 </p>
 
                 <div className="grid gap-2.5">
                   <button
                     onClick={startQuiz}
-                    className="text-left border border-[#E3DDD0] rounded-[14px] bg-white px-[18px] py-4 transition-all duration-150 hover:border-[#16A34A] hover:bg-[#F0FDF4]"
+                    className="text-left border border-line rounded-[14px] bg-white px-[18px] py-4 transition-all duration-150 hover:border-success hover:bg-success-bg"
                   >
-                    <span className="flex-none w-9 h-9 rounded-[9px] bg-[#F0FDF4] border border-[#BBF7D0] flex items-center justify-center text-base mb-3">
+                    <span className="flex-none w-9 h-9 rounded-[9px] bg-success-bg border border-success-line flex items-center justify-center text-base mb-3">
                       🗺️
                     </span>
                     <b className="flex items-center gap-2 font-semibold text-[15px] mb-1">
                       Find my level
-                      <span className="text-[11px] font-semibold text-[#16A34A] bg-[#F0FDF4] border border-[#BBF7D0] rounded-md px-2 py-0.5">
+                      <span className="text-[11px] font-semibold text-success bg-success-bg border border-success-line rounded-md px-2 py-0.5">
                         Recommended
                       </span>
                     </b>
-                    <span className="block text-[13px] text-[#6B6560] leading-[1.55]">
+                    <span className="block text-[13px] text-muted leading-[1.55]">
                       10 short questions — words, grammar, and listening. Start right where you
                       belong.
                     </span>
-                    <span className="inline-block mt-2.5 text-[11.5px] font-medium text-[#A19A8C]">
+                    <span className="inline-block mt-2.5 text-[11.5px] font-medium text-faint">
                       ~3 minutes
                     </span>
                   </button>
                   <button
                     onClick={skipToA1}
-                    className="text-left border border-[#E3DDD0] rounded-[14px] bg-white px-[18px] py-4 transition-all duration-150 hover:border-[#16A34A] hover:bg-[#F0FDF4]"
+                    className="text-left border border-line rounded-[14px] bg-white px-[18px] py-4 transition-all duration-150 hover:border-success hover:bg-success-bg"
                   >
-                    <span className="flex-none w-9 h-9 rounded-[9px] bg-[#FAF7EF] border border-[#E3DDD0] flex items-center justify-center text-base mb-3">
+                    <span className="flex-none w-9 h-9 rounded-[9px] bg-warm border border-line flex items-center justify-center text-base mb-3">
                       📖
                     </span>
                     <b className="block font-semibold text-[15px] mb-1">Start from the beginning</b>
-                    <span className="block text-[13px] text-[#6B6560] leading-[1.55]">
+                    <span className="block text-[13px] text-muted leading-[1.55]">
                       Begin fresh at A1. You can take the test anytime from your profile.
                     </span>
-                    <span className="inline-block mt-2.5 text-[11.5px] font-medium text-[#A19A8C]">
+                    <span className="inline-block mt-2.5 text-[11.5px] font-medium text-faint">
                       Start at A1
                     </span>
                   </button>
@@ -448,21 +448,21 @@ export default function OnboardingPage() {
           {step === "quiz" && q && (
             <section className="animate-[fade_.45s_cubic-bezier(.2,.8,.2,1)]">
               <div className={CARD}>
-                <div className="flex justify-between items-baseline mb-2.5 text-[12.5px] text-[#6B6560]">
+                <div className="flex justify-between items-baseline mb-2.5 text-[12.5px] text-muted">
                   <span className="font-medium">
                     Question {qi + 1} of {test.length}
                   </span>
-                  <span className="text-[11.5px] text-[#A19A8C] font-semibold">≈ 3 min</span>
+                  <span className="text-[11.5px] text-faint font-semibold">≈ 3 min</span>
                 </div>
-                <div className="h-1.5 bg-[#E3DDD0] rounded-full overflow-hidden mb-5">
+                <div className="h-1.5 bg-line rounded-full overflow-hidden mb-5">
                   <i
-                    className="block h-full bg-[#16A34A] rounded-full transition-[width] duration-500 not-italic"
+                    className="block h-full bg-success rounded-full transition-[width] duration-500 not-italic"
                     style={{ width: `${pct}%` }}
                   />
                 </div>
 
                 <div>
-                  <span className="inline-block text-[11.5px] font-semibold uppercase tracking-[0.06em] text-[#A19A8C] mb-2.5">
+                  <span className="inline-block text-[11.5px] font-semibold uppercase tracking-[0.06em] text-faint mb-2.5">
                     {q.type}
                   </span>
                   {q.audio ? (
@@ -475,14 +475,14 @@ export default function OnboardingPage() {
                           🔊 Play the sound
                         </button>
                       </div>
-                      <p className="text-[13.5px] text-[#6B6560] mb-4">{q.ask}</p>
+                      <p className="text-[13.5px] text-muted mb-4">{q.ask}</p>
                     </>
                   ) : (
                     <>
-                      <p className="kr text-[clamp(24px,3.6vw,30px)] text-[#18181B] mb-1.5 leading-[1.3]">
+                      <p className="kr text-[clamp(24px,3.6vw,30px)] text-charcoal mb-1.5 leading-[1.3]">
                         {q.word}
                       </p>
-                      <p className="text-[13.5px] text-[#6B6560] mb-4">{q.ask}</p>
+                      <p className="text-[13.5px] text-muted mb-4">{q.ask}</p>
                     </>
                   )}
                   <div className="grid gap-2">
@@ -490,14 +490,14 @@ export default function OnboardingPage() {
                       <button
                         key={opt}
                         onClick={() => answer(i)}
-                        className="text-left px-[14px] py-[11px] rounded-[9px] text-[13.5px] font-medium bg-white border border-[#E3DDD0] text-[#18181B] transition-colors hover:border-[#16A34A] hover:bg-[#F0FDF4]"
+                        className="text-left px-[14px] py-[11px] rounded-[9px] text-[13.5px] font-medium bg-white border border-line text-charcoal transition-colors hover:border-success hover:bg-success-bg"
                       >
                         {opt}
                       </button>
                     ))}
                     <button
                       onClick={() => answer(-1)}
-                      className="text-left px-[14px] py-[11px] rounded-[9px] text-[13.5px] font-medium bg-[#FAF7EF] border border-dashed border-[#CFC8B8] text-[#6B6560] transition-colors hover:border-[#A19A8C] hover:text-[#18181B]"
+                      className="text-left px-[14px] py-[11px] rounded-[9px] text-[13.5px] font-medium bg-warm border border-dashed border-[#CFC8B8] text-muted transition-colors hover:border-faint hover:text-charcoal"
                     >
                       🤷 I don&apos;t know yet
                     </button>
@@ -506,7 +506,7 @@ export default function OnboardingPage() {
 
                 <button
                   onClick={skipToA1}
-                  className="block text-center mx-auto mt-5 text-[12.5px] font-medium text-[#A19A8C] hover:text-[#18181B] transition-colors"
+                  className="block text-center mx-auto mt-5 text-[12.5px] font-medium text-faint hover:text-charcoal transition-colors"
                 >
                   Not now — start at A1
                 </button>
@@ -520,13 +520,13 @@ export default function OnboardingPage() {
                 <h1 className="font-semibold text-[clamp(20px,3vw,25px)] tracking-[-0.02em] leading-[1.25] mb-1">
                   Your seed is planted
                 </h1>
-                <p className="text-[#6B6560] text-[13.5px] mb-6">
+                <p className="text-muted text-[13.5px] mb-6">
                   Here&apos;s where your Korean begins.
                 </p>
 
                 <Pot grown={sproutUp} />
 
-                <p className="text-[11.5px] font-semibold uppercase tracking-[0.06em] text-[#A19A8C] mb-3">
+                <p className="text-[11.5px] font-semibold uppercase tracking-[0.06em] text-faint mb-3">
                   Your level
                 </p>
                 <div className="flex gap-2 justify-center flex-wrap mb-4">
@@ -535,22 +535,22 @@ export default function OnboardingPage() {
                       key={lv.code}
                       className={`rounded-[9px] px-3.5 py-1.5 text-[13px] font-semibold border ${
                         lv.code === result.code
-                          ? "bg-[#16A34A] border-[#16A34A] text-white"
-                          : "bg-white border-[#E3DDD0] text-[#A19A8C]"
+                          ? "bg-success border-success text-white"
+                          : "bg-white border-line text-faint"
                       }`}
                     >
                       {lv.code}
                     </span>
                   ))}
                 </div>
-                <p className="text-[13px] text-[#6B6560] max-w-[400px] mx-auto mb-6 leading-[1.6]">
+                <p className="text-[13px] text-muted max-w-[400px] mx-auto mb-6 leading-[1.6]">
                   {result.scoreLine}
                   {result.desc}
                 </p>
                 <button className={BTN_DARK} onClick={finish}>
                   Go to my garden
                 </button>
-                <p className="text-[11.5px] text-[#A19A8C] mt-3.5">
+                <p className="text-[11.5px] text-faint mt-3.5">
                   Retake the test anytime — your level grows as you do.
                 </p>
               </div>

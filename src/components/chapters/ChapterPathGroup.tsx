@@ -21,8 +21,8 @@ export type ChapterPathNode = {
  */
 export default function ChapterPathGroup({
   nodes,
-  lineColorClassName = "border-[#E3DDD0]",
-  hoverClassName = "hover:bg-[#FAF7EF]",
+  lineColorClassName = "border-line",
+  hoverClassName = "hover:bg-warm",
 }: {
   nodes: ChapterPathNode[];
   lineColorClassName?: string;
@@ -50,7 +50,7 @@ export default function ChapterPathGroup({
             <span className={`min-w-0 flex flex-col gap-1 ${left ? "items-end text-right" : "items-start text-left"}`}>
               <b className="block font-semibold text-[13.5px] truncate max-w-full">{node.title}</b>
               {node.subtitle && (
-                <small className="block text-[12px] text-[#6B6560] truncate max-w-full">{node.subtitle}</small>
+                <small className="block text-[12px] text-muted truncate max-w-full">{node.subtitle}</small>
               )}
               <span className={`inline-block text-[10.5px] font-semibold rounded-full border px-2 py-[2px] ${node.badgeClassName}`}>
                 {node.badgeLabel}

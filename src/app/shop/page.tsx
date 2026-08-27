@@ -34,7 +34,7 @@ export default async function ShopPage() {
   const today = new Date().toISOString().slice(0, 10);
 
   return (
-    <div className="min-h-screen bg-[#FFFFFF] text-[#18181B]">
+    <div className="min-h-screen bg-[#FFFFFF] text-charcoal">
       <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
         <Sidebar
           displayName={profile?.display_name ?? "there"}
@@ -45,24 +45,24 @@ export default async function ShopPage() {
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] md:pb-[60px]">
           {/* breadcrumb */}
-          <div className="flex gap-2 text-[13px] text-[#A19A8C] mb-[18px]">
-            <Link href="/dashboard" className="hover:text-[#18181B] transition-colors">
+          <div className="flex gap-2 text-[13px] text-faint mb-[18px]">
+            <Link href="/dashboard" className="hover:text-charcoal transition-colors">
               Garden
             </Link>
             <span>/</span>
-            <b className="text-[#18181B] font-semibold">Shop</b>
+            <b className="text-charcoal font-semibold">Shop</b>
           </div>
 
           {/* head */}
           <div className="flex items-center justify-between gap-4 mb-[18px] flex-wrap max-w-[1040px]">
             <h1 className="font-bold text-[22px] tracking-[-0.02em] flex items-center">
-              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[#F0FDF4] text-[#16A34A] border border-[#BBF7D0] items-center justify-center kr text-[15px] mr-[9px]">
+              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-success-bg text-success border border-success-line items-center justify-center kr text-[15px] mr-[9px]">
                 정
               </span>
               Garden Shop
             </h1>
             <div className="flex items-center gap-2">
-              <span className="text-[12.5px] font-semibold text-[#16A34A] bg-[#F0FDF4] border border-[#BBF7D0] rounded-full px-3 py-1">
+              <span className="text-[12.5px] font-semibold text-success bg-success-bg border border-success-line rounded-full px-3 py-1">
                 🌰 {isAdmin ? "∞" : coins} coins
               </span>
               {hasPlus ? (
@@ -80,7 +80,7 @@ export default async function ShopPage() {
             </div>
           </div>
 
-          <p className="text-[13px] text-[#6B6560] mb-5 max-w-[70ch]">
+          <p className="text-[13px] text-muted mb-5 max-w-[70ch]">
             Dress your tree and the garden around it. Tap a card to try it on your own tree, then buy and wear it right here.
           </p>
 

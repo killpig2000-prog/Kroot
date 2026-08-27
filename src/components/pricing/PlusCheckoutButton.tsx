@@ -46,13 +46,13 @@ export default function PlusCheckoutButton({
         <span
           className={`w-full inline-flex items-center justify-center rounded-[10px] px-[22px] py-[11px] text-[14px] font-semibold ${
             highlight
-              ? "bg-[#F0FDF4] text-[#15803D] border border-[#BBF7D0]"
-              : "border border-[#E3DDD0] bg-[#FAF7EF] text-[#6B6560]"
+              ? "bg-success-bg text-success-deep border border-success-line"
+              : "border border-line bg-warm text-muted"
           }`}
         >
           Coming soon 🌱
         </span>
-        <span className="text-[11.5px] text-[#A19A8C] text-center">
+        <span className="text-[11.5px] text-faint text-center">
           Subscriptions open shortly — every lesson is free meanwhile.
         </span>
       </div>
@@ -66,13 +66,13 @@ export default function PlusCheckoutButton({
         disabled={busy}
         className={`w-full inline-flex items-center justify-center rounded-[10px] px-[22px] py-[11px] text-[14px] font-semibold transition-colors disabled:opacity-60 ${
           highlight
-            ? "bg-[#16A34A] text-white hover:bg-[#15803D]"
-            : "border border-[#E3DDD0] bg-white text-[#18181B] hover:bg-[#FAF7EF]"
+            ? "bg-success text-white hover:bg-success-deep"
+            : "border border-line bg-white text-charcoal hover:bg-warm"
         }`}
       >
         {busy ? "Opening checkout…" : signedIn ? "Get Plus" : "Log in to get Plus"}
       </button>
-      {message && <span className="text-[12px] font-medium text-[#D97706]">{message}</span>}
+      {message && <span className="text-[12px] font-medium text-amber">{message}</span>}
     </div>
   );
 }

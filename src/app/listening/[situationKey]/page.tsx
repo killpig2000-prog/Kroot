@@ -4,13 +4,9 @@ import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import ListeningSession from "@/components/listening/ListeningSession";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
-import { LEVEL_ORDER, type CefrLevel } from "@/lib/tree";
+import { LEVEL_ORDER, isCefrLevel, type CefrLevel } from "@/lib/tree";
 import { situationByKey } from "@/lib/listening";
 import { dialoguesFor } from "@/lib/listening-dialogues";
-
-function isCefrLevel(value: string | undefined): value is CefrLevel {
-  return !!value && (LEVEL_ORDER as string[]).includes(value);
-}
 
 export default async function SituationPage({
   params,
@@ -53,7 +49,7 @@ export default async function SituationPage({
   const label = situation?.label ?? situationKey;
 
   return (
-    <div className="min-h-screen bg-[#FFFFFF] text-[#18181B]">
+    <div className="min-h-screen bg-[#FFFFFF] text-charcoal">
       <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
         <Sidebar
           displayName={profile?.display_name ?? "there"}
@@ -64,16 +60,16 @@ export default async function SituationPage({
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] md:pb-[60px]">
           {/* breadcrumb */}
-          <div className="flex gap-2 text-[13px] text-[#A19A8C] mb-[18px] flex-wrap">
-            <Link href="/dashboard" className="hover:text-[#18181B] transition-colors">
+          <div className="flex gap-2 text-[13px] text-faint mb-[18px] flex-wrap">
+            <Link href="/dashboard" className="hover:text-charcoal transition-colors">
               Garden
             </Link>
             <span>/</span>
-            <Link href={`/listening?level=${level}`} className="hover:text-[#18181B] transition-colors">
+            <Link href={`/listening?level=${level}`} className="hover:text-charcoal transition-colors">
               Listening
             </Link>
             <span>/</span>
-            <b className="text-[#18181B] font-semibold">{label}</b>
+            <b className="text-charcoal font-semibold">{label}</b>
           </div>
 
           {/* head */}
@@ -82,19 +78,19 @@ export default async function SituationPage({
               <Link
                 href={`/listening?level=${level}`}
                 aria-label="Back to all situations"
-                className="inline-flex w-[30px] h-[30px] rounded-lg bg-white text-[#6B6560] border border-[#E3DDD0] items-center justify-center text-[15px] mr-[9px] transition-colors hover:border-[#0D9488] hover:text-[#0D9488]"
+                className="inline-flex w-[30px] h-[30px] rounded-lg bg-white text-muted border border-line items-center justify-center text-[15px] mr-[9px] transition-colors hover:border-teal hover:text-teal"
               >
                 ←
               </Link>
-              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[#F0FDFA] text-[#0D9488] border border-[#99F6E4] items-center justify-center text-[15px] mr-[9px]">
+              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[#F0FDFA] text-teal border border-[#99F6E4] items-center justify-center text-[15px] mr-[9px]">
                 {situation?.icon ?? "🎧"}
               </span>
               {label}
             </h1>
-            <span className="text-[13px] text-[#6B6560]">
+            <span className="text-[13px] text-muted">
               {dialogues.length > 0 && (
                 <>
-                  <b className="text-[#0D9488]">{completedIds.length}</b> of {dialogues.length} clips heard
+                  <b className="text-teal">{completedIds.length}</b> of {dialogues.length} clips heard
                 </>
               )}
             </span>
@@ -108,8 +104,8 @@ export default async function SituationPage({
                 href={`/listening/${situationKey}?level=${lv}`}
                 className={`rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold transition-all border ${
                   lv === level
-                    ? "bg-[#0D9488] border-[#0D9488] text-white"
-                    : "bg-white border-[#E3DDD0] text-[#6B6560] hover:border-[#A19A8C]"
+                    ? "bg-teal border-teal text-white"
+                    : "bg-white border-line text-muted hover:border-faint"
                 }`}
               >
                 {lv}
@@ -121,8 +117,8 @@ export default async function SituationPage({
           </div>
 
           {dialogues.length === 0 ? (
-            <div className="max-w-[680px] border border-[#E3DDD0] rounded-[14px] p-8 text-center">
-              <p className="text-sm text-[#6B6560]">
+            <div className="max-w-[680px] border border-line rounded-[14px] p-8 text-center">
+              <p className="text-sm text-muted">
                 No dialogues for this level yet — try another level above.
               </p>
             </div>

@@ -48,7 +48,7 @@ export default async function CourseDayPage({
   const sections = day.phases.filter((p) => p.type !== "intro");
 
   return (
-    <div className="min-h-screen bg-[#FFFFFF] text-[#18181B]">
+    <div className="min-h-screen bg-[#FFFFFF] text-charcoal">
       <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
         <Sidebar
           displayName={profile?.display_name ?? "there"}
@@ -59,34 +59,34 @@ export default async function CourseDayPage({
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] md:pb-[60px]">
           {/* breadcrumb */}
-          <div className="flex gap-2 text-[13px] text-[#A19A8C] mb-[18px] flex-wrap">
-            <Link href="/dashboard" className="hover:text-[#18181B] transition-colors">
+          <div className="flex gap-2 text-[13px] text-faint mb-[18px] flex-wrap">
+            <Link href="/dashboard" className="hover:text-charcoal transition-colors">
               Garden
             </Link>
             <span>/</span>
-            <Link href="/course" className="hover:text-[#18181B] transition-colors">
+            <Link href="/course" className="hover:text-charcoal transition-colors">
               16-Day Course
             </Link>
             <span>/</span>
-            <b className="text-[#18181B] font-semibold">Day {day.day}</b>
+            <b className="text-charcoal font-semibold">Day {day.day}</b>
           </div>
 
           {/* head */}
           <div className="flex items-center justify-between gap-4 mb-[18px] flex-wrap">
             <h1 className="font-bold text-[22px] tracking-[-0.02em] flex items-center">
-              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[#F0FDF4] text-[#16A34A] border border-[#BBF7D0] items-center justify-center text-[13px] font-extrabold mr-[9px]">
+              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-success-bg text-success border border-success-line items-center justify-center text-[13px] font-extrabold mr-[9px]">
                 {day.day}
               </span>
               <span className="kr">{day.titleKr}</span>
             </h1>
-            <span className="text-[13px] text-[#6B6560]">
+            <span className="text-[13px] text-muted">
               Day {day.day}/{COURSE_TOTAL_DAYS} · ~{day.minutes} min · {day.title}
             </span>
           </div>
 
           {/* intro banner with the guide mascot */}
           {intro && intro.type === "intro" && (
-            <div className="max-w-[720px] border border-[#BBF7D0] bg-[#F0FDF4] rounded-[14px] px-[18px] py-4 mb-7 flex items-center gap-4 flex-wrap">
+            <div className="max-w-[720px] border border-success-line bg-success-bg rounded-[14px] px-[18px] py-4 mb-7 flex items-center gap-4 flex-wrap">
               <span className="flex-none">
                 <Character
                   color={characterColor(day.day)}
@@ -97,7 +97,7 @@ export default async function CourseDayPage({
               </span>
               <div className="flex-1 min-w-[220px]">
                 <p className="kr font-extrabold text-[16px]">{intro.kr}</p>
-                <p className="text-[13.5px] text-[#6B6560]">{intro.en}</p>
+                <p className="text-[13.5px] text-muted">{intro.en}</p>
               </div>
             </div>
           )}
@@ -107,7 +107,7 @@ export default async function CourseDayPage({
             {sections.map((phase, i) => {
               const heading = (title: string) => (
                 <h2 className="font-bold text-[16.5px] tracking-[-0.01em] mb-2.5">
-                  <span className="text-[#16A34A] mr-1.5">{i + 1}.</span>
+                  <span className="text-success mr-1.5">{i + 1}.</span>
                   {title}
                 </h2>
               );
@@ -126,7 +126,7 @@ export default async function CourseDayPage({
                   <section key={i}>
                     {heading("Stroke order — tap a card to replay it with sound")}
                     <StrokeGrid chars={phase.chars} />
-                    <p className="text-[13px] text-[#6B6560] mt-2.5">{phase.note}</p>
+                    <p className="text-[13px] text-muted mt-2.5">{phase.note}</p>
                   </section>
                 );
               }
@@ -135,7 +135,7 @@ export default async function CourseDayPage({
                   <section key={i}>
                     {heading(phase.title)}
                     <ExampleList items={phase.items} />
-                    <p className="text-[12.5px] text-[#A19A8C] mt-2">
+                    <p className="text-[12.5px] text-faint mt-2">
                       Tap 🔊 to listen, then read it out loud.
                     </p>
                   </section>
@@ -162,7 +162,7 @@ export default async function CourseDayPage({
             {COURSE_DEEP_DIVES[day.day] && (
               <section className="border border-[#C7D2FE] bg-[#EEF2FF] rounded-[14px] px-5 py-4">
                 <b className="block text-[13.5px] mb-2">
-                  Go deeper <span className="text-[#6B6560] font-medium">· Grammar deep dives</span>
+                  Go deeper <span className="text-muted font-medium">· Grammar deep dives</span>
                 </b>
                 <div className="grid gap-1.5">
                   {COURSE_DEEP_DIVES[day.day].map((key) => {
@@ -175,7 +175,7 @@ export default async function CourseDayPage({
                         className="flex items-center gap-2 text-[13.5px] font-semibold text-[#4F46E5] hover:underline"
                       >
                         <span>→ {lesson.title}</span>
-                        <span className="kr text-[12px] font-medium text-[#6B6560]">{lesson.krTitle}</span>
+                        <span className="kr text-[12px] font-medium text-muted">{lesson.krTitle}</span>
                       </Link>
                     );
                   })}
@@ -188,7 +188,7 @@ export default async function CourseDayPage({
 
             {/* completion — day 16 completes via the test instead */}
             {!day.phases.some((p) => p.type === "quiz") && (
-              <section className="border-t border-[#E3DDD0] pt-6">
+              <section className="border-t border-line pt-6">
                 <CompleteButton
                   userId={uid}
                   stepKey={day.key}

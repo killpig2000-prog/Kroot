@@ -3,7 +3,7 @@ import { notFound, redirect } from "next/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import VocabSession from "@/components/vocabulary/VocabSession";
-import { createClient, getClaimsUser } from "@/lib/supabase/server";
+import { createClient, getClaimsUser, getDashboardProfile } from "@/lib/supabase/server";
 import {
   VOCAB_TOPICS,
   getChaptersForTopic,
@@ -12,11 +12,7 @@ import {
   type VocabWordWithProgress,
 } from "@/lib/vocabulary";
 import { findMoreExamples } from "@/lib/vocab-examples";
-import { LEVEL_ORDER, type CefrLevel } from "@/lib/tree";
-
-function isCefrLevel(value: string | undefined): value is CefrLevel {
-  return !!value && (LEVEL_ORDER as string[]).includes(value);
-}
+import { LEVEL_ORDER, isCefrLevel, type CefrLevel } from "@/lib/tree";
 
 export default async function VocabChapterSessionPage({
   params,
@@ -37,11 +33,7 @@ export default async function VocabChapterSessionPage({
 
   if (!user) redirect("/onboarding");
 
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("display_name, current_level, streak_days, avatar_url, xp")
-    .eq("id", user.id)
-    .single();
+  const profile = await getDashboardProfile(supabase, user.id);
 
   const myLevel = (profile?.current_level ?? "A1") as CefrLevel;
 
@@ -80,7 +72,7 @@ export default async function VocabChapterSessionPage({
   const hasNextChapter = chapterIndex + 1 < chapters.length;
 
   return (
-    <div className="min-h-screen bg-[#FFFFFF] text-[#18181B]">
+    <div className="min-h-screen bg-[#FFFFFF] text-charcoal">
       <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
         <Sidebar
           displayName={profile?.display_name ?? "there"}
@@ -91,16 +83,16 @@ export default async function VocabChapterSessionPage({
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] md:pb-[60px]">
           {/* breadcrumb */}
-          <div className="flex gap-2 text-[13px] text-[#A19A8C] mb-[18px] flex-wrap">
-            <Link href="/dashboard" className="hover:text-[#18181B] transition-colors">
+          <div className="flex gap-2 text-[13px] text-faint mb-[18px] flex-wrap">
+            <Link href="/dashboard" className="hover:text-charcoal transition-colors">
               Garden
             </Link>
             <span>/</span>
-            <Link href={`/vocabulary?level=${level}`} className="hover:text-[#18181B] transition-colors">
+            <Link href={`/vocabulary?level=${level}`} className="hover:text-charcoal transition-colors">
               Vocabulary
             </Link>
             <span>/</span>
-            <b className="text-[#18181B] font-semibold">{topic.label}</b>
+            <b className="text-charcoal font-semibold">{topic.label}</b>
           </div>
 
           {/* head */}
@@ -111,7 +103,7 @@ export default async function VocabChapterSessionPage({
               </span>
               {topic.label}
             </h1>
-            <span className="text-[13px] text-[#6B6560]">
+            <span className="text-[13px] text-muted">
               Level {level} · set {chapterIndex + 1} of {chapters.length}
             </span>
           </div>

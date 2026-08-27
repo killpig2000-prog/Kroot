@@ -38,7 +38,7 @@ export default async function CommunityPostPage({
   const notice = findNotice(id);
   if (notice) {
     return (
-      <div className="min-h-screen bg-[#FFFFFF] text-[#18181B]">
+      <div className="min-h-screen bg-[#FFFFFF] text-charcoal">
         <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
           <Sidebar
             displayName={displayNameEarly}
@@ -48,24 +48,24 @@ export default async function CommunityPostPage({
           />
 
           <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] md:pb-[60px]">
-            <div className="flex gap-2 text-[13px] text-[#A19A8C] mb-[18px]">
-              <Link href="/dashboard" className="hover:text-[#18181B] transition-colors">
+            <div className="flex gap-2 text-[13px] text-faint mb-[18px]">
+              <Link href="/dashboard" className="hover:text-charcoal transition-colors">
                 Garden
               </Link>
               <span>/</span>
-              <Link href="/community" className="hover:text-[#18181B] transition-colors">
+              <Link href="/community" className="hover:text-charcoal transition-colors">
                 Community
               </Link>
               <span>/</span>
-              <b className="text-[#18181B] font-semibold truncate max-w-[240px]">{notice.title}</b>
+              <b className="text-charcoal font-semibold truncate max-w-[240px]">{notice.title}</b>
             </div>
 
-            <article className="border border-[#BBF7D0] rounded-[14px] bg-white max-w-[980px] px-[22px] py-5">
+            <article className="border border-success-line rounded-[14px] bg-white max-w-[980px] px-[22px] py-5">
               <div className="flex items-center gap-2.5 mb-2 flex-wrap">
-                <span className="text-[11.5px] font-bold rounded-full border border-[#86EFAC] bg-[#F0FDF4] text-[#15803D] px-2.5 py-[3px]">
+                <span className="text-[11.5px] font-bold rounded-full border border-[#86EFAC] bg-success-bg text-success-deep px-2.5 py-[3px]">
                   📌 Official notice
                 </span>
-                <span className="text-[12.5px] text-[#6B6560]">🌱 Kroot team</span>
+                <span className="text-[12.5px] text-muted">🌱 Kroot team</span>
               </div>
               <h1 className="font-bold text-[20px] tracking-[-0.01em] mb-2.5">
                 {notice.emoji} {notice.title}
@@ -73,11 +73,11 @@ export default async function CommunityPostPage({
               <p className="text-[14px] leading-[1.75] whitespace-pre-wrap break-words">{notice.body}</p>
             </article>
 
-            <p className="text-[12.5px] text-[#A19A8C] mt-4 max-w-[980px]">
+            <p className="text-[12.5px] text-faint mt-4 max-w-[980px]">
               Comments are closed on notices — got a question about this?{" "}
               <Link
                 href="/community/new?board=question"
-                className="font-semibold text-[#16A34A] hover:underline"
+                className="font-semibold text-success hover:underline"
               >
                 Ask it on the Question board →
               </Link>
@@ -124,7 +124,7 @@ export default async function CommunityPostPage({
   const displayName = profile?.display_name ?? "there";
 
   return (
-    <div className="min-h-screen bg-[#FFFFFF] text-[#18181B]">
+    <div className="min-h-screen bg-[#FFFFFF] text-charcoal">
       <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
         <Sidebar
           displayName={displayName}
@@ -134,19 +134,19 @@ export default async function CommunityPostPage({
         />
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] md:pb-[60px]">
-          <div className="flex gap-2 text-[13px] text-[#A19A8C] mb-[18px]">
-            <Link href="/dashboard" className="hover:text-[#18181B] transition-colors">
+          <div className="flex gap-2 text-[13px] text-faint mb-[18px]">
+            <Link href="/dashboard" className="hover:text-charcoal transition-colors">
               Garden
             </Link>
             <span>/</span>
-            <Link href="/community" className="hover:text-[#18181B] transition-colors">
+            <Link href="/community" className="hover:text-charcoal transition-colors">
               Community
             </Link>
             <span>/</span>
-            <b className="text-[#18181B] font-semibold truncate max-w-[240px]">{title}</b>
+            <b className="text-charcoal font-semibold truncate max-w-[240px]">{title}</b>
           </div>
 
-          <article className="border border-[#E3DDD0] rounded-[14px] bg-white max-w-[980px] px-[22px] py-5">
+          <article className="border border-line rounded-[14px] bg-white max-w-[980px] px-[22px] py-5">
             <div className="flex items-center gap-2.5 mb-2 flex-wrap">
               <span className="text-[11.5px] font-semibold rounded-full border border-[#CBD5E1] bg-[#F1F5F9] text-[#334155] px-2.5 py-[3px]">
                 {boardLabel(post.board)}
@@ -155,14 +155,14 @@ export default async function CommunityPostPage({
                 className={`text-[12.5px] ${
                   "author_plus" in post && post.author_plus
                     ? "font-semibold text-[#B45309]"
-                    : "text-[#6B6560]"
+                    : "text-muted"
                 }`}
               >
                 {post.author_emoji ?? "🦊"} {post.author_name}
                 {"author_plus" in post && post.author_plus && " 🌟"}
                 {post.country ? ` · ${post.country}` : ""}
               </span>
-              <span className="text-[12px] text-[#A19A8C]">{timeAgo(post.created_at)}</span>
+              <span className="text-[12px] text-faint">{timeAgo(post.created_at)}</span>
               {mine && (
                 <span className="ml-auto">
                   <DeletePostButton postId={post.id} />

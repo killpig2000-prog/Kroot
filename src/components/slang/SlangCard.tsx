@@ -53,7 +53,7 @@ export default function SlangCard({
         style={{ transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)" }}
       >
         {/* front */}
-        <div className={`${FACE} border border-[#E3DDD0] bg-[#FAF7EF] transition-colors hover:bg-[#FDF2F8]`}>
+        <div className={`${FACE} border border-line bg-warm transition-colors hover:bg-[#FDF2F8]`}>
           {collected && (
             <span
               className="absolute top-2.5 right-2.5 w-6 h-6 rounded-full bg-[#FDF2F8] border border-[#FBCFE8] text-[#DB2777] text-[12px] font-bold flex items-center justify-center"
@@ -63,10 +63,10 @@ export default function SlangCard({
             </span>
           )}
           <span className="kr text-[clamp(28px,5vw,38px)] leading-tight">{entry.kr}</span>
-          <span className="mt-2 text-[13px] text-[#6B6560]">{entry.romanization}</span>
+          <span className="mt-2 text-[13px] text-muted">{entry.romanization}</span>
           <div className="mt-4 flex items-center gap-2">
             <SpeakButton text={entry.kr} />
-            <span className="text-[11.5px] font-semibold tracking-[.06em] uppercase text-[#A19A8C]">
+            <span className="text-[11.5px] font-semibold tracking-[.06em] uppercase text-faint">
               Tap to flip
             </span>
           </div>
@@ -80,18 +80,18 @@ export default function SlangCard({
             <b className="kr text-[19px] text-[#DB2777]">{entry.kr}</b>
             <SpeakButton text={entry.kr} />
           </div>
-          <span className="mt-1 text-[11.5px] text-[#A19A8C] italic">
+          <span className="mt-1 text-[11.5px] text-faint italic">
             literally &ldquo;{entry.literal}&rdquo;
           </span>
-          <b className="mt-1.5 font-bold text-[15px] tracking-[-0.01em] text-[#18181B] leading-snug">
+          <b className="mt-1.5 font-bold text-[15px] tracking-[-0.01em] text-charcoal leading-snug">
             {entry.meaning}
           </b>
           <div className="mt-2.5 w-full rounded-[10px] bg-white border border-[#FBCFE8] px-3 py-2 text-left">
             <div className="flex items-start gap-1.5">
-              <span className="kr text-[13px] text-[#18181B] leading-snug flex-1">{entry.example.kr}</span>
+              <span className="kr text-[13px] text-charcoal leading-snug flex-1">{entry.example.kr}</span>
               <SpeakButton text={entry.example.kr} className="shrink-0 w-6 h-6 text-[11px]" />
             </div>
-            <span className="block text-[11.5px] text-[#6B6560] mt-0.5 leading-snug">
+            <span className="block text-[11.5px] text-muted mt-0.5 leading-snug">
               {entry.example.en}
             </span>
           </div>

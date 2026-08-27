@@ -22,10 +22,10 @@ const RAINBOW =
   "conic-gradient(from 0deg, #EF4444, #F97316, #EAB308, #22C55E, #06B6D4, #6366F1, #A855F7, #EF4444)";
 
 const BTN_TEAL =
-  "rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-[#0D9488] hover:bg-[#0F766E] transition-colors disabled:opacity-60";
+  "rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-teal hover:bg-[#0F766E] transition-colors disabled:opacity-60";
 const BTN_LINE =
-  "rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-[#18181B] bg-white border border-[#E3DDD0] hover:bg-[#FAF7EF] transition-colors";
-const LABEL = "text-[11.5px] font-semibold tracking-[.06em] uppercase text-[#A19A8C] mb-2";
+  "rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-charcoal bg-white border border-line hover:bg-warm transition-colors";
+const LABEL = "text-[11.5px] font-semibold tracking-[.06em] uppercase text-faint mb-2";
 
 const VERDICTS: Record<Verdict, { text: string; fg: string }> = {
   great: { text: "🔥 Nailed it!", fg: "#16A34A" },
@@ -119,7 +119,7 @@ export default function PronunciationChallenge({
 
   if (!chapter || words.length === 0) {
     return (
-      <div className="max-w-[680px] border border-[#E3DDD0] rounded-[14px] px-7 py-10 text-center">
+      <div className="max-w-[680px] border border-line rounded-[14px] px-7 py-10 text-center">
         <p className="text-[15px] font-semibold mb-1.5">Chapter not found</p>
         <Link href="/speaking" className={BTN_LINE}>
           Back to the trail
@@ -202,7 +202,7 @@ export default function PronunciationChallenge({
 
     return (
       <div
-        className="max-w-[680px] text-center border border-[#E3DDD0] rounded-[14px] px-7 py-10"
+        className="max-w-[680px] text-center border border-line rounded-[14px] px-7 py-10"
         style={{ animation: "fadeUp .4s ease" }}
       >
         <div
@@ -220,33 +220,33 @@ export default function PronunciationChallenge({
         <h2 className="font-bold text-[21px] tracking-[-0.02em] mt-1 mb-1.5">
           {cleared ? "Chapter cleared!" : "Round finished!"}
         </h2>
-        <p className="text-sm text-[#6B6560] mb-[22px]">
+        <p className="text-sm text-muted mb-[22px]">
           {words.length} word{words.length > 1 ? "s" : ""} attempted — your mouth is learning the shapes.
         </p>
         {levelUp && (
-          <p className="text-sm font-semibold text-[#16A34A] mb-[22px] -mt-3">
+          <p className="text-sm font-semibold text-success mb-[22px] -mt-3">
             🎉 Level up! You&apos;re now Lv. {levelUp.new_level}
           </p>
         )}
         <div className="flex justify-center gap-3 mb-6 flex-wrap">
-          <div className="border border-[#E3DDD0] rounded-[10px] px-5 py-3 min-w-[100px]">
-            <b className="block text-[19px] font-bold text-[#16A34A]">
+          <div className="border border-line rounded-[10px] px-5 py-3 min-w-[100px]">
+            <b className="block text-[19px] font-bold text-success">
               {nailed.length}/{words.length}
             </b>
-            <small className="text-xs text-[#6B6560]">Nailed</small>
+            <small className="text-xs text-muted">Nailed</small>
           </div>
-          <div className="border border-[#E3DDD0] rounded-[10px] px-5 py-3 min-w-[100px]">
+          <div className="border border-line rounded-[10px] px-5 py-3 min-w-[100px]">
             <b className="block text-[19px] font-bold">🔥 {bestStreak}</b>
-            <small className="text-xs text-[#6B6560]">Best streak</small>
+            <small className="text-xs text-muted">Best streak</small>
           </div>
-          <div className="border border-[#E3DDD0] rounded-[10px] px-5 py-3 min-w-[100px]">
-            <b className="block text-[19px] font-bold text-[#16A34A]">+{XP_POINTS.pronunciation} XP</b>
-            <small className="text-xs text-[#6B6560]">Earned</small>
+          <div className="border border-line rounded-[10px] px-5 py-3 min-w-[100px]">
+            <b className="block text-[19px] font-bold text-success">+{XP_POINTS.pronunciation} XP</b>
+            <small className="text-xs text-muted">Earned</small>
           </div>
         </div>
 
         {weakWords.length > 0 && (
-          <div className="text-left bg-[#FFFBEB] border border-[#FDE68A] rounded-[10px] px-4 py-3 mb-6">
+          <div className="text-left bg-[#FFFBEB] border border-amber-line rounded-[10px] px-4 py-3 mb-6">
             <b className="block text-[11px] font-bold tracking-[.06em] text-[#B45309] mb-2">
               TOOK A FEW TRIES
             </b>
@@ -254,10 +254,10 @@ export default function PronunciationChallenge({
               {weakWords.map((w) => (
                 <span
                   key={w.id}
-                  className="kr inline-flex items-center gap-1.5 text-[13px] font-medium bg-white border border-[#FDE68A] rounded-full px-2.5 py-1"
+                  className="kr inline-flex items-center gap-1.5 text-[13px] font-medium bg-white border border-amber-line rounded-full px-2.5 py-1"
                 >
                   {w.kr}
-                  <span className="text-[11px] text-[#A19A8C]">{attempts[w.id]?.best ?? 0}%</span>
+                  <span className="text-[11px] text-faint">{attempts[w.id]?.best ?? 0}%</span>
                 </span>
               ))}
             </div>
@@ -302,7 +302,7 @@ export default function PronunciationChallenge({
     <div>
       <Link
         href="/speaking"
-        className="inline-flex items-center gap-1 text-[12.5px] font-semibold text-[#A19A8C] hover:text-[#0D9488] transition-colors mb-3"
+        className="inline-flex items-center gap-1 text-[12.5px] font-semibold text-faint hover:text-teal transition-colors mb-3"
       >
         ← Trail
       </Link>
@@ -312,7 +312,7 @@ export default function PronunciationChallenge({
             <span
               key={w.id}
               className={`w-[26px] h-1.5 rounded-full transition-colors ${
-                i < index ? "bg-[#0D9488]" : i === index ? "bg-[#0D9488] opacity-45" : "bg-[#E3DDD0]"
+                i < index ? "bg-teal" : i === index ? "bg-teal opacity-45" : "bg-line"
               }`}
             />
           ))}
@@ -326,49 +326,49 @@ export default function PronunciationChallenge({
 
       <div
         key={word.id}
-        className="max-w-[680px] border border-[#E3DDD0] rounded-[14px] p-[clamp(20px,3vw,28px)]"
+        className="max-w-[680px] border border-line rounded-[14px] p-[clamp(20px,3vw,28px)]"
         style={{ animation: "fadeUp .35s ease" }}
       >
         <div className="flex items-center justify-between mb-5 gap-2.5 flex-wrap">
-          <span className="inline-flex items-center gap-1.5 text-[11.5px] font-semibold text-[#0D9488] bg-[#F0FDFA] border border-[#99F6E4] rounded-full px-2.5 py-[3px]">
+          <span className="inline-flex items-center gap-1.5 text-[11.5px] font-semibold text-teal bg-[#F0FDFA] border border-[#99F6E4] rounded-full px-2.5 py-[3px]">
             {meta.emoji} {word.groupTitle}
           </span>
-          <span className="text-[12.5px] text-[#A19A8C] font-medium">
+          <span className="text-[12.5px] text-faint font-medium">
             Word {index + 1} of {words.length}
           </span>
         </div>
 
         <p className={LABEL}>Say this out loud</p>
         <p className="kr font-bold text-[34px] tracking-[-0.01em] leading-[1.2] mb-1">{word.kr}</p>
-        <p className="text-[13.5px] text-[#6B6560] mb-5">
+        <p className="text-[13.5px] text-muted mb-5">
           <span className="italic">{word.romanization}</span> · {word.en}
         </p>
 
-        <div className="flex items-start gap-3 bg-[#FAF7EF] border border-[#E3DDD0] rounded-xl px-[18px] py-3.5 mb-5">
+        <div className="flex items-start gap-3 bg-warm border border-line rounded-xl px-[18px] py-3.5 mb-5">
           <button
             aria-label="Hear it"
-            className="w-11 h-11 rounded-full flex-none bg-[#0D9488] text-white text-[17px] flex items-center justify-center transition-transform hover:scale-105 disabled:opacity-50"
+            className="w-11 h-11 rounded-full flex-none bg-teal text-white text-[17px] flex items-center justify-center transition-transform hover:scale-105 disabled:opacity-50"
             onClick={() => speak(word.kr)}
             disabled={!ttsOk}
           >
             🔊
           </button>
           <div className="min-w-0">
-            <b className="block text-[11px] font-bold tracking-[.06em] text-[#A19A8C] mb-0.5">HOW TO MAKE IT</b>
-            <p className="text-[13px] text-[#6B6560] leading-[1.5]">{word.tip}</p>
+            <b className="block text-[11px] font-bold tracking-[.06em] text-faint mb-0.5">HOW TO MAKE IT</b>
+            <p className="text-[13px] text-muted leading-[1.5]">{word.tip}</p>
           </div>
           {isSpeaking && (
-            <span className="ml-auto flex-none text-[12px] font-semibold text-[#0D9488] wave-on">speaking…</span>
+            <span className="ml-auto flex-none text-[12px] font-semibold text-teal wave-on">speaking…</span>
           )}
         </div>
 
         {heard === null && (
           <div className="flex flex-col items-center gap-3 mb-2">
             {(bestScores[word.id] ?? 0) >= NAILED_THRESHOLD && (
-              <div className="inline-flex items-center gap-2.5 text-[12.5px] font-semibold text-[#16A34A] bg-[#F0FDF4] border border-[#BBF7D0] rounded-full pl-3 pr-1.5 py-1.5">
+              <div className="inline-flex items-center gap-2.5 text-[12.5px] font-semibold text-success bg-success-bg border border-success-line rounded-full pl-3 pr-1.5 py-1.5">
                 ✓ You&apos;ve nailed this before
                 <button
-                  className="text-[11.5px] font-bold bg-white border border-[#BBF7D0] rounded-full px-2.5 py-1 hover:bg-[#F0FDF4] transition-colors"
+                  className="text-[11.5px] font-bold bg-white border border-success-line rounded-full px-2.5 py-1 hover:bg-success-bg transition-colors"
                   onClick={skip}
                 >
                   Skip →
@@ -407,18 +407,18 @@ export default function PronunciationChallenge({
                     disabled={isListening}
                     className={`absolute rounded-full text-[30px] flex items-center justify-center border-[3px] transition-all ${
                       isListening
-                        ? "inset-[9px] bg-[#0D9488] border-transparent text-white wave-on"
-                        : "inset-0 bg-[#F0FDFA] border-[#99F6E4] text-[#0D9488] hover:scale-105 hover:bg-[#CCFBF1]"
+                        ? "inset-[9px] bg-teal border-transparent text-white wave-on"
+                        : "inset-0 bg-[#F0FDFA] border-[#99F6E4] text-teal hover:scale-105 hover:bg-[#CCFBF1]"
                     }`}
                   >
                     🎤
                   </button>
                 </div>
-                <p className="text-[13px] text-[#6B6560] min-h-[20px] text-center">
+                <p className="text-[13px] text-muted min-h-[20px] text-center">
                   {isListening ? (
                     <>
-                      <span className="kr text-[15px] text-[#18181B]">{interim || "Listening…"}</span>
-                      <span className="block text-[11.5px] text-[#A19A8C] mt-0.5 tabular-nums">
+                      <span className="kr text-[15px] text-charcoal">{interim || "Listening…"}</span>
+                      <span className="block text-[11.5px] text-faint mt-0.5 tabular-nums">
                         auto-stops in {Math.max(0, (MAX_LISTEN_MS - micElapsedMs) / 1000).toFixed(1)}s
                       </span>
                     </>
@@ -433,7 +433,7 @@ export default function PronunciationChallenge({
 
             {!showFallback ? (
               <button
-                className="text-[12.5px] font-semibold text-[#6B6560] hover:text-[#18181B] transition-colors"
+                className="text-[12.5px] font-semibold text-muted hover:text-charcoal transition-colors"
                 onClick={() => setTypedFallback(true)}
               >
                 Type your answer instead
@@ -441,7 +441,7 @@ export default function PronunciationChallenge({
             ) : (
               <div className="w-full max-w-[460px]">
                 {!micOk && (
-                  <p className="text-[12.5px] text-[#6B6560] mb-2 text-center">
+                  <p className="text-[12.5px] text-muted mb-2 text-center">
                     Your browser doesn&apos;t support speech recognition — type your answer instead.
                   </p>
                 )}
@@ -450,7 +450,7 @@ export default function PronunciationChallenge({
                   onChange={(e) => setTyped(e.target.value)}
                   placeholder="한국어로 입력하세요…"
                   rows={2}
-                  className="kr w-full resize-none rounded-[10px] border border-[#E3DDD0] bg-white px-3.5 py-2.5 text-[16px] outline-none focus:border-[#0D9488] transition-colors"
+                  className="kr w-full resize-none rounded-[10px] border border-line bg-white px-3.5 py-2.5 text-[16px] outline-none focus:border-teal transition-colors"
                 />
                 <div className="flex justify-end mt-2">
                   <button className={BTN_TEAL} disabled={!typed.trim()} onClick={() => grade(typed.trim())}>
@@ -464,72 +464,68 @@ export default function PronunciationChallenge({
 
         {heard !== null && verdict && (
           <div
-            className="border-t border-[#E3DDD0] pt-[18px] grid gap-6 sm:grid-cols-[1fr_auto] sm:items-center"
+            className="border-t border-line pt-6 flex flex-col items-center"
             style={{ animation: "fadeUp .35s ease" }}
           >
-            <div>
-              <div className="grid gap-2.5 mb-4">
-                <div className="bg-[#FAF7EF] border border-[#E3DDD0] rounded-[10px] px-4 py-3">
-                  <b className="block text-[11px] font-bold tracking-[.06em] text-[#A19A8C] mb-1">YOU SAID</b>
-                  <p className="kr text-[17px] font-medium">{heard}</p>
-                </div>
-                <div className="bg-[#F0FDFA] border border-[#99F6E4] rounded-[10px] px-4 py-3">
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="min-w-0">
-                      <b className="block text-[11px] font-bold tracking-[.06em] mb-1" style={{ color: TEAL }}>
-                        TARGET
-                      </b>
-                      <p className="kr text-[17px] font-medium">{word.kr}</p>
-                    </div>
-                    <button
-                      aria-label="Replay"
-                      className="flex-none text-sm text-[#A19A8C] hover:text-[#0D9488] transition-colors disabled:opacity-40"
-                      onClick={() => speak(word.kr)}
-                      disabled={!ttsOk}
-                    >
-                      🔁
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              {saveError && (
-                <p className="text-[11.5px] text-[#E11D48] mb-2.5">⚠️ {saveError}</p>
-              )}
-              <div className="flex gap-2.5">
-                <button
-                  className={BTN_LINE}
-                  onClick={() => {
-                    setHeard(null);
-                    setTyped("");
-                  }}
+            <div
+              className="w-[220px] h-[220px] rounded-full flex items-center justify-center mb-3"
+              style={{ background: `conic-gradient(${verdict.fg} ${animScore * 3.6}deg, #E3DDD0 0)` }}
+            >
+              <div className="w-[184px] h-[184px] rounded-full bg-white flex flex-col items-center justify-center">
+                <span
+                  className="font-bold text-[64px] leading-none tabular-nums"
+                  style={{ fontFamily: "var(--font-hand)", color: verdict.fg }}
                 >
-                  Try again
-                </button>
-                <button className={BTN_TEAL} onClick={next}>
-                  {index + 1 === words.length ? "Finish →" : "Next →"}
-                </button>
+                  {animScore}
+                </span>
+                <span className="text-[13px] text-faint font-semibold mt-1">% match</span>
+              </div>
+            </div>
+            <span className="text-[18px] font-bold text-center mb-6" style={{ color: verdict.fg }}>
+              {verdict.text}
+            </span>
+
+            <div className="grid gap-2.5 mb-4 w-full max-w-[420px]">
+              <div className="bg-warm border border-line rounded-[10px] px-4 py-3">
+                <b className="block text-[11px] font-bold tracking-[.06em] text-faint mb-1">YOU SAID</b>
+                <p className="kr text-[17px] font-medium">{heard}</p>
+              </div>
+              <div className="bg-[#F0FDFA] border border-[#99F6E4] rounded-[10px] px-4 py-3">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <b className="block text-[11px] font-bold tracking-[.06em] mb-1" style={{ color: TEAL }}>
+                      TARGET
+                    </b>
+                    <p className="kr text-[17px] font-medium">{word.kr}</p>
+                  </div>
+                  <button
+                    aria-label="Replay"
+                    className="flex-none text-sm text-faint hover:text-teal transition-colors disabled:opacity-40"
+                    onClick={() => speak(word.kr)}
+                    disabled={!ttsOk}
+                  >
+                    🔁
+                  </button>
+                </div>
               </div>
             </div>
 
-            <div className="flex flex-col items-center gap-2.5 sm:border-l sm:border-[#E3DDD0] sm:pl-6 flex-none">
-              <div
-                className="w-[130px] h-[130px] rounded-full flex items-center justify-center"
-                style={{ background: `conic-gradient(${verdict.fg} ${animScore * 3.6}deg, #E3DDD0 0)` }}
+            {saveError && (
+              <p className="text-[11.5px] text-[#E11D48] mb-2.5">⚠️ {saveError}</p>
+            )}
+            <div className="flex gap-2.5">
+              <button
+                className={BTN_LINE}
+                onClick={() => {
+                  setHeard(null);
+                  setTyped("");
+                }}
               >
-                <div className="w-[105px] h-[105px] rounded-full bg-white flex flex-col items-center justify-center">
-                  <span
-                    className="font-bold text-[30px] leading-none tabular-nums"
-                    style={{ fontFamily: "var(--font-hand)", color: verdict.fg }}
-                  >
-                    {animScore}
-                  </span>
-                  <span className="text-[11px] text-[#A19A8C] font-semibold mt-0.5">% match</span>
-                </div>
-              </div>
-              <span className="text-[13px] font-bold text-center" style={{ color: verdict.fg }}>
-                {verdict.text}
-              </span>
+                Try again
+              </button>
+              <button className={BTN_TEAL} onClick={next}>
+                {index + 1 === words.length ? "Finish →" : "Next →"}
+              </button>
             </div>
           </div>
         )}

@@ -99,6 +99,33 @@
   --tree-g3: #FFF2F6;
 }
 
+/* Content-UI tokens: the neutral/status palette shared by feature screens
+   (reading, writing, listening, vocab, pronunciation, shop, onboarding...).
+   Distinct from the tree-theme vars above, which only skin the landing/tree
+   layer. These were previously hardcoded hex, copy-pasted per component. */
+:root {
+  --c-line: #E3DDD0;
+  --c-muted: #6B6560;
+  --c-faint: #A19A8C;
+  --c-charcoal: #18181B;
+  --c-warm: #FAF7EF;
+  --c-warm-2: #F3EEE2;
+  --c-warm-3: #EFE9DC;
+  --c-warm-4: #F7F3E9;
+  --c-success: #16A34A;
+  --c-success-deep: #15803D;
+  --c-success-bg: #F0FDF4;
+  --c-success-line: #BBF7D0;
+  --c-teal: #0D9488;
+  --c-amber-line: #FDE68A;
+  --c-dash: #DDD6C8;
+  --c-amber: #D97706;
+  --c-sky-line: #BFDBFE;
+  --c-sky-deep: #2563EB;
+  --c-danger: #DC2626;
+  --c-danger-bg: #FEF2F2;
+}
+
 @theme inline {
   --color-sky: var(--sky);
   --color-cream: var(--cream);
@@ -113,6 +140,27 @@
   --font-hand: var(--font-fredoka), var(--font-noto-kr), sans-serif;
   --font-kr: var(--font-noto-kr), sans-serif;
   --font-body: var(--font-nunito), var(--font-noto-kr), sans-serif;
+
+  --color-line: var(--c-line);
+  --color-muted: var(--c-muted);
+  --color-faint: var(--c-faint);
+  --color-charcoal: var(--c-charcoal);
+  --color-warm: var(--c-warm);
+  --color-warm-2: var(--c-warm-2);
+  --color-warm-3: var(--c-warm-3);
+  --color-warm-4: var(--c-warm-4);
+  --color-success: var(--c-success);
+  --color-success-deep: var(--c-success-deep);
+  --color-success-bg: var(--c-success-bg);
+  --color-success-line: var(--c-success-line);
+  --color-teal: var(--c-teal);
+  --color-amber-line: var(--c-amber-line);
+  --color-dash: var(--c-dash);
+  --color-amber: var(--c-amber);
+  --color-sky-line: var(--c-sky-line);
+  --color-sky-deep: var(--c-sky-deep);
+  --color-danger: var(--c-danger);
+  --color-danger-bg: var(--c-danger-bg);
 }
 
 * {

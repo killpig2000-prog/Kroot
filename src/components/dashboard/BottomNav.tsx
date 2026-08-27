@@ -38,7 +38,7 @@ function Tile({
       href={href}
       onClick={onNavigate}
       className={`relative flex flex-col items-center gap-1 rounded-[12px] border bg-white px-1 py-2.5 text-center text-[11px] font-bold transition-colors ${
-        on ? "border-[#16A34A] text-[#15803D]" : "border-[#EFE9DC] text-[#4A453D] hover:border-[#CFC8B8]"
+        on ? "border-success text-success-deep" : "border-warm-3 text-[#4A453D] hover:border-[#CFC8B8]"
       }`}
     >
       {popular && (
@@ -141,7 +141,7 @@ export default function BottomNav() {
           <div
             role="dialog"
             aria-label="All menus"
-            className="sheet-up bg-[#FAF7EF] border-t-[1.5px] border-dashed border-[#DDD6C8] rounded-t-[22px] px-4 pt-2.5 pb-4 max-h-[70vh] overflow-y-auto"
+            className="sheet-up bg-warm border-t-[1.5px] border-dashed border-dash rounded-t-[22px] px-4 pt-2.5 pb-4 max-h-[70vh] overflow-y-auto"
           >
             <div className="w-10 h-1 rounded-full bg-[#D8D0BF] mx-auto mb-1" aria-hidden="true" />
 
@@ -165,12 +165,12 @@ export default function BottomNav() {
 
             <button
               onClick={toggleMode}
-              className="w-full flex items-center justify-between rounded-[12px] border border-[#EFE9DC] bg-white px-3.5 py-2.5 mt-4 text-[13px] font-semibold text-[#4A453D]"
+              className="w-full flex items-center justify-between rounded-[12px] border border-warm-3 bg-white px-3.5 py-2.5 mt-4 text-[13px] font-semibold text-[#4A453D]"
             >
               <span>{mode === "dark" ? "🌙 Dark mode" : "☀️ Light mode"}</span>
               <span
                 className={`w-9 h-5 rounded-full relative transition-colors ${
-                  mode === "dark" ? "bg-[#16A34A]" : "bg-[#E3DDD0]"
+                  mode === "dark" ? "bg-success" : "bg-line"
                 }`}
                 aria-hidden="true"
               >
@@ -187,7 +187,7 @@ export default function BottomNav() {
                 <span className="text-lg">🔥</span>
                 <div>
                   <b className="block text-[13px] font-semibold leading-tight">{streakDays}-day streak</b>
-                  <small className="text-[11.5px] text-[#6B6560]">Keep it alive today!</small>
+                  <small className="text-[11.5px] text-muted">Keep it alive today!</small>
                 </div>
               </div>
             )}
@@ -195,7 +195,7 @@ export default function BottomNav() {
         )}
 
         <nav
-          className="bg-white/90 backdrop-blur-[10px] border-t border-[#E3DDD0] flex justify-center gap-1 py-2 pb-[max(8px,env(safe-area-inset-bottom))]"
+          className="bg-white/90 backdrop-blur-[10px] border-t border-line flex justify-center gap-1 py-2 pb-[max(8px,env(safe-area-inset-bottom))]"
           aria-label="main"
         >
           {ITEMS.map((item) => {
@@ -206,7 +206,7 @@ export default function BottomNav() {
                 href={item.href}
                 onClick={close}
                 className={`flex flex-col items-center gap-px rounded-lg px-[15px] py-[7px] text-[11px] font-medium transition-colors ${
-                  on ? "text-[#18181B]" : "text-[#A19A8C] hover:text-[#6B6560]"
+                  on ? "text-charcoal" : "text-faint hover:text-muted"
                 }`}
               >
                 <span
@@ -223,7 +223,7 @@ export default function BottomNav() {
             onClick={() => setOpen((o) => !o)}
             aria-expanded={open}
             className={`flex flex-col items-center gap-px rounded-lg px-[15px] py-[7px] text-[11px] transition-colors ${
-              open ? "text-[#15803D] font-bold" : "text-[#A19A8C] font-medium hover:text-[#6B6560]"
+              open ? "text-success-deep font-bold" : "text-faint font-medium hover:text-muted"
             }`}
           >
             <span

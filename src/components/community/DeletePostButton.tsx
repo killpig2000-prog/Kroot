@@ -30,7 +30,7 @@ export default function DeletePostButton({ postId }: { postId: string }) {
         type="button"
         onClick={remove}
         disabled={busy}
-        className="rounded-[9px] border border-[#E3DDD0] px-3 py-1.5 text-[12.5px] font-semibold text-[#DB2777] transition-colors hover:border-[#DB2777] disabled:opacity-40"
+        className="rounded-[9px] border border-line px-3 py-1.5 text-[12.5px] font-semibold text-[#DB2777] transition-colors hover:border-[#DB2777] disabled:opacity-40"
       >
         {busy ? "Deleting…" : "Delete"}
       </button>

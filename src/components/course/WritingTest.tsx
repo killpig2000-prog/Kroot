@@ -57,12 +57,12 @@ export default function WritingTest({
 
   if (phase === "intro") {
     return (
-      <div className="border border-[#E3DDD0] rounded-[14px] p-6 text-center">
+      <div className="border border-line rounded-[14px] p-6 text-center">
         <p className="text-[15px] font-bold mb-1">Build the Korean for {questions.length} English sentences</p>
-        <p className="text-[13px] text-[#6B6560] mb-4">Everything from grammar modules 0–7 shows up here.</p>
+        <p className="text-[13px] text-muted mb-4">Everything from grammar modules 0–7 shows up here.</p>
         <button
           onClick={() => setPhase("test")}
-          className="rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-[#16A34A] hover:bg-[#15803D] transition-colors"
+          className="rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-success hover:bg-success-deep transition-colors"
         >
           Start the test
         </button>
@@ -72,17 +72,17 @@ export default function WritingTest({
 
   if (phase === "result") {
     return (
-      <div className="border border-[#BBF7D0] bg-[#F0FDF4] rounded-[14px] p-6 text-center">
+      <div className="border border-success-line bg-success-bg rounded-[14px] p-6 text-center">
         <p className="text-[28px] mb-1">🎉</p>
         <p className="text-[16px] font-extrabold mb-1">
           {correct}/{questions.length} correct — course complete!
         </p>
-        <p className="text-[13px] text-[#6B6560] mb-4">
+        <p className="text-[13px] text-muted mb-4">
           저는 한국어를 할 수 있어요! — &ldquo;I can speak Korean&rdquo; — and now you can say it.
         </p>
         <Link
           href="/course"
-          className="inline-block rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-[#16A34A] hover:bg-[#15803D] transition-colors"
+          className="inline-block rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-success hover:bg-success-deep transition-colors"
         >
           Back to the course
         </Link>
@@ -91,23 +91,23 @@ export default function WritingTest({
   }
 
   return (
-    <div className="border border-[#E3DDD0] rounded-[14px] p-6">
-      <p className="text-[11px] font-bold tracking-[.07em] uppercase text-[#A19A8C] mb-1.5">
+    <div className="border border-line rounded-[14px] p-6">
+      <p className="text-[11px] font-bold tracking-[.07em] uppercase text-faint mb-1.5">
         {index + 1} / {questions.length}
       </p>
       <p className="font-bold text-[17px] mb-0.5">{qq.q}</p>
-      {qq.hint && <p className="text-[12.5px] text-[#A19A8C] mb-2">{qq.hint}</p>}
+      {qq.hint && <p className="text-[12.5px] text-faint mb-2">{qq.hint}</p>}
       <div className="grid gap-2 mt-3">
         {qq.options.map((opt) => {
           const isAnswer = opt === qq.answer;
           const cls =
             selected === null
-              ? "border-[#E3DDD0] bg-white hover:border-[#16A34A]"
+              ? "border-line bg-white hover:border-success"
               : isAnswer
-                ? "border-[#16A34A] bg-[#F0FDF4] font-bold"
+                ? "border-success bg-success-bg font-bold"
                 : selected === opt
-                  ? "border-[#EF4444] bg-[#FEF2F2]"
-                  : "border-[#E3DDD0] bg-white opacity-60";
+                  ? "border-[#EF4444] bg-danger-bg"
+                  : "border-line bg-white opacity-60";
           return (
             <button
               key={opt}

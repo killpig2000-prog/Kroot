@@ -172,9 +172,9 @@ export default function SlangQuiz() {
                   onClick={() => pick(i)}
                   className={`text-left px-3.5 py-2.5 rounded-[10px] text-[13px] font-medium border-[1.5px] transition-all disabled:cursor-default ${
                     state === "correct"
-                      ? "border-[#16A34A] bg-[#F0FDF4]"
+                      ? "border-success bg-success-bg"
                       : state === "wrong"
-                        ? "border-[#DC2626] bg-[#FEF2F2]"
+                        ? "border-danger bg-danger-bg"
                         : state === "dim"
                           ? "border-[#FBCFE8] bg-white opacity-60"
                           : "border-[#FBCFE8] bg-white hover:border-[#DB2777]"

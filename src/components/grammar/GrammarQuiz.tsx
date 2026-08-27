@@ -6,7 +6,7 @@ import { recordCompletion } from "@/lib/activity";
 import type { GrammarQuiz as Quiz } from "@/lib/grammar";
 
 const ABC = ["A", "B", "C", "D"];
-const Q_LABEL = "text-[11.5px] font-semibold tracking-[.06em] uppercase text-[#A19A8C] mb-2";
+const Q_LABEL = "text-[11.5px] font-semibold tracking-[.06em] uppercase text-faint mb-2";
 
 function QuestionCard({
   quiz,
@@ -24,12 +24,12 @@ function QuestionCard({
   const correct = picked === quiz.ans;
 
   return (
-    <div className="border border-[#E3DDD0] rounded-[14px] p-[clamp(18px,2.5vw,24px)] mb-3.5">
+    <div className="border border-line rounded-[14px] p-[clamp(18px,2.5vw,24px)] mb-3.5">
       <div className="flex items-center justify-between gap-2 mb-2 flex-wrap">
         <p className={Q_LABEL} style={{ marginBottom: 0 }}>
           Question {no}
         </p>
-        <span className="text-[12.5px] text-[#A19A8C] font-medium">
+        <span className="text-[12.5px] text-faint font-medium">
           {no} of {total}
         </span>
       </div>
@@ -50,21 +50,21 @@ function QuestionCard({
               }}
               className={`text-left px-4 py-[13px] rounded-[10px] text-[14.5px] font-medium flex items-center gap-2.5 transition-all border-[1.5px] disabled:cursor-default ${
                 state === "correct"
-                  ? "border-[#16A34A] bg-[#F0FDF4]"
+                  ? "border-success bg-success-bg"
                   : state === "wrong"
-                  ? "border-[#DC2626] bg-[#FEF2F2]"
+                  ? "border-danger bg-danger-bg"
                   : answered
-                  ? "border-[#E3DDD0] bg-white opacity-90"
-                  : "border-[#E3DDD0] bg-white hover:border-[#4F46E5] hover:bg-[#EEF2FF]"
+                  ? "border-line bg-white opacity-90"
+                  : "border-line bg-white hover:border-[#4F46E5] hover:bg-[#EEF2FF]"
               }`}
             >
               <span
                 className={`w-6 h-6 rounded-[7px] flex-none flex items-center justify-center text-[11.5px] font-bold border ${
                   state === "correct"
-                    ? "bg-[#16A34A] border-[#16A34A] text-white"
+                    ? "bg-success border-success text-white"
                     : state === "wrong"
-                    ? "bg-[#DC2626] border-[#DC2626] text-white"
-                    : "bg-[#FAF7EF] border-[#E3DDD0] text-[#6B6560]"
+                    ? "bg-danger border-danger text-white"
+                    : "bg-warm border-line text-muted"
                 }`}
               >
                 {ABC[i]}
@@ -80,8 +80,8 @@ function QuestionCard({
           <span
             className={`inline-flex items-center gap-2 text-[13px] font-semibold rounded-lg px-3 py-1.5 border ${
               correct
-                ? "bg-[#F0FDF4] text-[#16A34A] border-[#BBF7D0]"
-                : "bg-[#FEF2F2] text-[#DC2626] border-[#FECACA]"
+                ? "bg-success-bg text-success border-success-line"
+                : "bg-danger-bg text-danger border-[#FECACA]"
             }`}
           >
             {correct
@@ -130,11 +130,11 @@ export default function GrammarQuizBlock({ quiz }: { quiz: Quiz[] }) {
 
       {done && (
         <div className="mt-1" style={{ animation: "fadeUp .35s ease" }}>
-          <span className="inline-flex items-center gap-2 text-[13px] font-semibold rounded-lg px-3 py-1.5 border bg-[#F0FDF4] text-[#16A34A] border-[#BBF7D0]">
+          <span className="inline-flex items-center gap-2 text-[13px] font-semibold rounded-lg px-3 py-1.5 border bg-success-bg text-success border-success-line">
             🌱 Quiz done — today&apos;s minutes are on your tree.
           </span>
           {newLevel && (
-            <p className="mt-2 text-[13.5px] font-semibold text-[#16A34A]">
+            <p className="mt-2 text-[13.5px] font-semibold text-success">
               🎉 Level up! Now Lv. {newLevel}
             </p>
           )}

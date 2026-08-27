@@ -6,12 +6,8 @@ import ChapterPathGroup from "@/components/chapters/ChapterPathGroup";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { chapterWrittenToday, getChapterStatuses, getChaptersForLevel, WRITING_GENRE_META } from "@/lib/writing";
 import { isPlus } from "@/lib/plus";
-import { LEVEL_ORDER, type CefrLevel } from "@/lib/tree";
+import { LEVEL_ORDER, isCefrLevel, type CefrLevel } from "@/lib/tree";
 import { isDifficultyUnlocked } from "@/lib/level";
-
-function isCefrLevel(value: string | undefined): value is CefrLevel {
-  return !!value && (LEVEL_ORDER as string[]).includes(value);
-}
 
 const STATUS_LABEL: Record<string, string> = {
   done: "Done",
@@ -20,9 +16,9 @@ const STATUS_LABEL: Record<string, string> = {
 };
 
 const STATUS_BADGE: Record<string, string> = {
-  done: "bg-[#F0FDF4] text-[#16A34A] border-[#BBF7D0]",
-  current: "bg-[#FFFBEB] text-[#D97706] border-[#FDE68A]",
-  locked: "bg-[#FAF7EF] text-[#A19A8C] border-[#E3DDD0]",
+  done: "bg-success-bg text-success border-success-line",
+  current: "bg-[#FFFBEB] text-amber border-amber-line",
+  locked: "bg-warm text-faint border-line",
 };
 
 export default async function WritingMapPage({
@@ -78,7 +74,7 @@ export default async function WritingMapPage({
   const continueWaitsTomorrow = dailyDone && continueIndex >= 0;
 
   return (
-    <div className="min-h-screen bg-[#FFFFFF] text-[#18181B]">
+    <div className="min-h-screen bg-[#FFFFFF] text-charcoal">
       <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
         <Sidebar
           displayName={profile?.display_name ?? "there"}
@@ -89,23 +85,23 @@ export default async function WritingMapPage({
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] md:pb-[60px]">
           {/* breadcrumb */}
-          <div className="flex gap-2 text-[13px] text-[#A19A8C] mb-[18px]">
-            <Link href="/dashboard" className="hover:text-[#18181B] transition-colors">
+          <div className="flex gap-2 text-[13px] text-faint mb-[18px]">
+            <Link href="/dashboard" className="hover:text-charcoal transition-colors">
               Garden
             </Link>
             <span>/</span>
-            <b className="text-[#18181B] font-semibold">Writing</b>
+            <b className="text-charcoal font-semibold">Writing</b>
           </div>
 
           {/* head */}
           <div className="flex items-center justify-between gap-4 mb-[18px] flex-wrap">
             <h1 className="font-bold text-[22px] tracking-[-0.02em] flex items-center">
-              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[#FFFBEB] text-[#D97706] border border-[#FDE68A] items-center justify-center kr text-[15px] mr-[9px]">
+              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[#FFFBEB] text-amber border border-amber-line items-center justify-center kr text-[15px] mr-[9px]">
                 쓰
               </span>
               Writing
             </h1>
-            <span className="text-[13px] text-[#6B6560]">
+            <span className="text-[13px] text-muted">
               Level {level} · write a little, see one natural way to say it
             </span>
           </div>
@@ -119,8 +115,8 @@ export default async function WritingMapPage({
                   href={`/writing?level=${lv}`}
                   className={`rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold transition-all border ${
                     lv === level
-                      ? "bg-[#D97706] border-[#D97706] text-white"
-                      : "bg-white border-[#E3DDD0] text-[#6B6560] hover:border-[#A19A8C]"
+                      ? "bg-amber border-amber text-white"
+                      : "bg-white border-line text-muted hover:border-faint"
                   }`}
                 >
                   {lv}
@@ -131,7 +127,7 @@ export default async function WritingMapPage({
               ) : (
                 <div
                   key={lv}
-                  className="rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold border bg-[#FAF7EF] border-[#E3DDD0] text-[#A19A8C] grayscale opacity-60 cursor-not-allowed select-none"
+                  className="rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold border bg-warm border-line text-faint grayscale opacity-60 cursor-not-allowed select-none"
                 >
                   🔒 {lv}
                   <span className="text-[10.5px] font-bold ml-1.5">
@@ -144,22 +140,22 @@ export default async function WritingMapPage({
 
           {/* progress */}
           <div className="max-w-[720px] mb-6">
-            <div className="flex items-center justify-between text-[12.5px] text-[#6B6560] mb-2">
+            <div className="flex items-center justify-between text-[12.5px] text-muted mb-2">
               <span>
                 {doneCount} of {chapters.length} pages written
               </span>
-              <span className="text-[#A19A8C]">4 genres · journal, replies, description, opinion</span>
+              <span className="text-faint">4 genres · journal, replies, description, opinion</span>
             </div>
-            <div className="h-1.5 rounded-full bg-[#E3DDD0] overflow-hidden">
+            <div className="h-1.5 rounded-full bg-line overflow-hidden">
               <div
-                className="h-full rounded-full bg-[#D97706] transition-all"
+                className="h-full rounded-full bg-amber transition-all"
                 style={{ width: `${chapters.length ? (doneCount / chapters.length) * 100 : 0}%` }}
               />
             </div>
             {dailyDone && (
-              <p className="text-[12.5px] text-[#6B6560] mt-2.5">
+              <p className="text-[12.5px] text-muted mt-2.5">
                 🌙 Today&apos;s page is written — the next one opens tomorrow.{" "}
-                <Link href="/pricing" className="font-semibold text-[#D97706] hover:underline">
+                <Link href="/pricing" className="font-semibold text-amber hover:underline">
                   Turn pages freely with Plus →
                 </Link>
               </p>
@@ -172,11 +168,11 @@ export default async function WritingMapPage({
               href={`/writing/session?chapter=${continueIndex}&level=${level}`}
               className={`flex items-center gap-3.5 border-[1.5px] rounded-[14px] px-5 py-4 mb-6 max-w-[720px] transition-all ${
                 continueWaitsTomorrow
-                  ? "border-[#E3DDD0] bg-[#FAF7EF] opacity-70 pointer-events-none"
-                  : "border-[#FDE68A] bg-[#FFFBEB] hover:-translate-y-0.5 group"
+                  ? "border-line bg-warm opacity-70 pointer-events-none"
+                  : "border-amber-line bg-[#FFFBEB] hover:-translate-y-0.5 group"
               }`}
             >
-              <span className="flex-none w-10 h-10 rounded-[10px] bg-white border border-[#FDE68A] flex items-center justify-center text-lg transition-transform group-hover:scale-110">
+              <span className="flex-none w-10 h-10 rounded-[10px] bg-white border border-amber-line flex items-center justify-center text-lg transition-transform group-hover:scale-110">
                 {continueWaitsTomorrow ? "🌙" : "✏️"}
               </span>
               <span className="flex-1 min-w-[170px]">
@@ -186,7 +182,7 @@ export default async function WritingMapPage({
                 <span className="text-[13px] text-[#92702B] truncate block">{continuePrompt.prompt_en}</span>
               </span>
               {!continueWaitsTomorrow && (
-                <span className="text-[13px] font-semibold text-[#D97706] transition-transform group-hover:translate-x-0.5">
+                <span className="text-[13px] font-semibold text-amber transition-transform group-hover:translate-x-0.5">
                   Write →
                 </span>
               )}
@@ -203,33 +199,33 @@ export default async function WritingMapPage({
                 <details
                   key={gi}
                   open={gi === openGroupIndex}
-                  className="border border-[#E3DDD0] rounded-[14px] bg-white overflow-hidden"
+                  className="border border-line rounded-[14px] bg-white overflow-hidden"
                 >
-                  <summary className="flex items-center gap-3 px-5 py-3.5 cursor-pointer select-none list-none [&::-webkit-details-marker]:hidden hover:bg-[#FAF7EF] transition-colors">
+                  <summary className="flex items-center gap-3 px-5 py-3.5 cursor-pointer select-none list-none [&::-webkit-details-marker]:hidden hover:bg-warm transition-colors">
                     <span className="flex-1 min-w-0">
                       <b className="font-bold text-[14.5px]">
                         {meta.icon} {meta.label}
                       </b>
-                      <small className="block text-[11.5px] text-[#A19A8C] font-normal truncate">
+                      <small className="block text-[11.5px] text-faint font-normal truncate">
                         {meta.blurb} · Pages {first}–{last}
                       </small>
                     </span>
                     <span className="flex-none flex items-center gap-2">
-                      <span className="w-[74px] h-1.5 rounded-full bg-[#E3DDD0] overflow-hidden">
+                      <span className="w-[74px] h-1.5 rounded-full bg-line overflow-hidden">
                         <span
-                          className="block h-full rounded-full bg-[#D97706]"
+                          className="block h-full rounded-full bg-amber"
                           style={{ width: `${(groupDone / group.length) * 100}%` }}
                         />
                       </span>
-                      <small className="text-[12px] text-[#6B6560] font-semibold tabular-nums">
+                      <small className="text-[12px] text-muted font-semibold tabular-nums">
                         {groupDone}/{group.length}
                       </small>
-                      <span className="text-[#A19A8C] text-[11px]">▾</span>
+                      <span className="text-faint text-[11px]">▾</span>
                     </span>
                   </summary>
-                  <div className="px-3.5 pb-3.5 pt-2 border-t border-dashed border-[#E3DDD0]">
+                  <div className="px-3.5 pb-3.5 pt-2 border-t border-dashed border-line">
                     <ChapterPathGroup
-                      lineColorClassName="border-[#FDE68A]"
+                      lineColorClassName="border-amber-line"
                       hoverClassName="hover:bg-[#FFFBEB]"
                       nodes={group.map(({ chapter, status, index: i }) => {
                         const prompt = chapter[0];
@@ -240,11 +236,11 @@ export default async function WritingMapPage({
                           href: dim ? undefined : `/writing/session?chapter=${i}&level=${level}`,
                           circleClassName:
                             status === "done"
-                              ? "bg-[#F0FDF4] text-[#16A34A] border-[#BBF7D0]"
+                              ? "bg-success-bg text-success border-success-line"
                               : status === "current"
-                              ? "bg-[#FFFBEB] text-[#D97706] border-[#FDE68A]"
-                              : "bg-[#FAF7EF] text-[#A19A8C] border-[#E3DDD0]",
-                          ringClassName: status === "current" && !waitTomorrow ? "ring-4 ring-[#FDE68A]/60" : undefined,
+                              ? "bg-[#FFFBEB] text-amber border-amber-line"
+                              : "bg-warm text-faint border-line",
+                          ringClassName: status === "current" && !waitTomorrow ? "ring-4 ring-amber-line/60" : undefined,
                           circleContent: status === "done" ? "✓" : i + 1,
                           title: `Page ${i + 1}`,
                           subtitle: prompt.prompt_en,

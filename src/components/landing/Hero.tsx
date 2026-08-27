@@ -29,13 +29,13 @@ export default function Hero() {
             Now learn to speak it.
           </mark>
         </h1>
-        <p className="text-[14.5px] text-[#6B6560] max-w-[44ch] mx-auto mb-6">
+        <p className="text-[14.5px] text-muted max-w-[44ch] mx-auto mb-6">
           K-drama, K-food, K-everything — you&apos;re halfway there. Kroot turns that love into real
           Korean, one tiny lesson a day.
         </p>
         <Link
           href="/onboarding"
-          className="inline-block rounded-[10px] bg-[#16A34A] px-[28px] py-[13px] text-[14.5px] font-bold text-white shadow-[0_6px_0_#15803D] hover:translate-y-[2px] hover:shadow-[0_4px_0_#15803D] transition-all"
+          className="inline-block rounded-[10px] bg-success px-[28px] py-[13px] text-[14.5px] font-bold text-white shadow-[0_6px_0_#15803D] hover:translate-y-[2px] hover:shadow-[0_4px_0_#15803D] transition-all"
         >
           Find my level (3 min)
         </Link>

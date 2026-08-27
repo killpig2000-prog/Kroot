@@ -41,14 +41,14 @@ export default function CompleteButton({
   return (
     <div className="flex items-center gap-2.5 flex-wrap">
       {done ? (
-        <span className="rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-[#16A34A] bg-[#F0FDF4] border border-[#BBF7D0]">
+        <span className="rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-success bg-success-bg border border-success-line">
           ✓ Day {day} complete
         </span>
       ) : (
         <button
           onClick={complete}
           disabled={saving}
-          className="rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-[#16A34A] hover:bg-[#15803D] transition-colors disabled:opacity-60"
+          className="rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-success hover:bg-success-deep transition-colors disabled:opacity-60"
         >
           {saving ? "Saving…" : `Mark Day ${day} complete 🌱`}
         </button>
@@ -56,14 +56,14 @@ export default function CompleteButton({
       {done && hasNext && (
         <Link
           href={`/course/day/${day + 1}`}
-          className="rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-[#16A34A] hover:bg-[#15803D] transition-colors"
+          className="rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-success hover:bg-success-deep transition-colors"
         >
           Next: Day {day + 1} →
         </Link>
       )}
       <Link
         href="/course"
-        className="rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-[#18181B] bg-white border border-[#E3DDD0] hover:bg-[#FAF7EF] transition-colors"
+        className="rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-charcoal bg-white border border-line hover:bg-warm transition-colors"
       >
         Course list
       </Link>

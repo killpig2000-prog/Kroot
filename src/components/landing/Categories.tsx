@@ -9,16 +9,16 @@ const CATEGORIES = [
 
 export default function Categories() {
   return (
-    <section id="learn" className="bg-[#FAF7EF] border-t border-dashed border-[#DDD6C8] py-[clamp(52px,8vw,88px)] px-6">
+    <section id="learn" className="bg-warm border-t border-dashed border-dash py-[clamp(52px,8vw,88px)] px-6">
       <div className="text-center mb-1.5">
-        <span className="inline-block bg-white border-[1.5px] border-dashed border-[#CFC8B8] rounded-full px-4 py-[5px] text-xs font-extrabold text-[#15803D] rotate-1">
+        <span className="inline-block bg-white border-[1.5px] border-dashed border-[#CFC8B8] rounded-full px-4 py-[5px] text-xs font-extrabold text-success-deep rotate-1">
           what&apos;s inside · <span className="kr">준비물</span>
         </span>
       </div>
       <h2 className="text-center font-black text-[clamp(22px,3vw,30px)] tracking-[-0.02em] text-[#221F1B] mb-2 text-balance">
         6 tools you&apos;ll reach for every day
       </h2>
-      <p className="text-center text-[#6B6560] text-[13.5px] mb-8">
+      <p className="text-center text-muted text-[13.5px] mb-8">
         All free — collect them one by one, like stickers.
       </p>
 
@@ -26,7 +26,7 @@ export default function Categories() {
         {CATEGORIES.map((c, i) => (
           <div
             key={c.en}
-            className={`reveal relative bg-white border border-[#E3DDD0] rounded-[14px] px-4 pt-4 pb-3.5 text-left shadow-[0_10px_24px_-16px_rgba(60,50,30,.3)] ${
+            className={`reveal relative bg-white border border-line rounded-[14px] px-4 pt-4 pb-3.5 text-left shadow-[0_10px_24px_-16px_rgba(60,50,30,.3)] ${
               i % 2 ? "rotate-1" : "-rotate-1"
             }`}
           >

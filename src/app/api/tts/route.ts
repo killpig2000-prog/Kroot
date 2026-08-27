@@ -2,6 +2,7 @@ import { createHash } from "crypto";
 import { NextResponse, after } from "next/server";
 import { MsEdgeTTS, OUTPUT_FORMAT } from "msedge-tts";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
+import { isRateLimited } from "@/lib/rate-limit";
 
 // Natural Korean TTS via Edge neural voices (free, no quota), cached forever
 // in the public `tts` storage bucket under content-hash filenames. The client
@@ -18,16 +19,6 @@ type VoiceKey = keyof typeof VOICES;
 const MAX_CHARS = 300;
 const RATE_LIMIT = 60;
 const RATE_WINDOW_MS = 60_000;
-const recentRequests = new Map<string, number[]>();
-
-function isRateLimited(userId: string) {
-  const now = Date.now();
-  const hits = (recentRequests.get(userId) ?? []).filter((t) => now - t < RATE_WINDOW_MS);
-  if (hits.length >= RATE_LIMIT) return true;
-  hits.push(now);
-  recentRequests.set(userId, hits);
-  return false;
-}
 
 async function synthesize(text: string, voice: VoiceKey): Promise<Buffer | null> {
   try {
@@ -48,7 +39,7 @@ export async function POST(request: Request) {
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
   if (!user) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
-  if (isRateLimited(user.id)) return NextResponse.json({ error: "rate_limited" }, { status: 429 });
+  if (isRateLimited("tts", user.id, RATE_LIMIT, RATE_WINDOW_MS)) return NextResponse.json({ error: "rate_limited" }, { status: 429 });
 
   let body: { text?: unknown; voice?: unknown };
   try {
