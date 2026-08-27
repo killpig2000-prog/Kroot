@@ -89,8 +89,11 @@ export default async function ReviewPage() {
               </span>
               Watering time
             </h1>
-            <span className="text-[13px] text-muted">
+            <span className="flex items-center gap-3 flex-wrap text-[13px] text-muted">
               Words wilt when they&apos;re not watered — quick reviews keep them rooted.
+              <Link href="/review/words" className="font-semibold text-sky-deep hover:underline">
+                📚 My words →
+              </Link>
             </span>
           </div>
 

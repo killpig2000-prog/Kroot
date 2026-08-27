@@ -11,6 +11,8 @@ export type NavItem = {
   color?: NavColor;
   /** Rainbow-ring + "Popular" badge treatment (Pronunciation only, for now). */
   popular?: boolean;
+  /** Small "New" pill next to the label. */
+  isNew?: boolean;
 };
 
 // "My growth" merged into the Garden (2026-08): grass, costume, and progress
@@ -34,6 +36,7 @@ export const SECTIONS: { title: string; items: NavItem[] }[] = [
     items: [
       { icon: "🎧", label: "Listening", href: "/listening", color: { text: "#16A34A", bg: "#F0FDF4", border: "#BBF7D0" } },
       { icon: "🌶️", label: "Pronunciation", href: "/speaking", color: { text: "#0D9488", bg: "#F0FDFA", border: "#99F6E4" }, popular: true },
+      { icon: "🗣️", label: "Roleplay", href: "/roleplay", color: { text: "#C2410C", bg: "#FFF7ED", border: "#FED7AA" }, isNew: true },
       { icon: "✏️", label: "Writing", href: "/writing", color: { text: "#D97706", bg: "#FFFBEB", border: "#FDE68A" } },
       { icon: "📰", label: "Reading", href: "/reading", color: { text: "#2563EB", bg: "#EFF6FF", border: "#BFDBFE" } },
     ],

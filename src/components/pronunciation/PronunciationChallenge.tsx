@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { buttonClassName } from "@/components/ui/Button";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useSaveResume } from "@/hooks/useSaveResume";
 import { createClient } from "@/lib/supabase/client";
 import { recordCompletion, type ProgressResult } from "@/lib/activity";
 import { useKoreanSpeaker, useSpeechRecognition } from "@/hooks/useSpeechRecognition";
@@ -56,6 +57,14 @@ export default function PronunciationChallenge({
   const [attempts, setAttempts] = useState<Record<string, { count: number; best: number }>>({});
   const [saveError, setSaveError] = useState<string | null>(null);
   const logged = useRef(false);
+
+  useSaveResume(finished ? null : userId, {
+    skill: "pronunciation",
+    href: `/speaking?chapter=${chapterKey}`,
+    label: chapter?.title ?? chapterKey,
+    detail: `Pronunciation · ${meta?.name ?? "chapter"}`,
+    progress: words.length ? Math.round((nailed.length / words.length) * 100) : 0,
+  });
 
   const { speak, isSpeaking, isSupported: ttsOk } = useKoreanSpeaker();
   const {

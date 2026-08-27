@@ -1,5 +1,6 @@
 import type { Passage } from "@/lib/reading";
 import { buttonClassName } from "@/components/ui/Button";
+import TapText from "@/components/words/TapText";
 
 const BTN_BLUE = buttonClassName("sky");
 const LABEL = "text-[11.5px] font-semibold tracking-[.06em] uppercase text-faint mb-2";
@@ -36,12 +37,15 @@ export default function ReadPhase({
   showTranslation,
   onToggleTranslation,
   onContinue,
+  userId,
 }: {
   passage: Passage;
   chapterIndex: number;
   showTranslation: boolean;
   onToggleTranslation: () => void;
   onContinue: () => void;
+  /** Enables tap-to-save on every Korean word (null = signed out). */
+  userId?: string | null;
 }) {
   const genre = passage.genre;
   // Structured genres author real \n line breaks (speaker turns, sign lines,
@@ -107,7 +111,7 @@ export default function ReadPhase({
                       : "bg-white border border-line rounded-tl-[4px]"
                   }`}
                 >
-                  <p className="kr text-[15px] leading-[1.6]">{t.text}</p>
+                  <p className="kr text-[15px] leading-[1.6]"><TapText text={t.text} userId={userId} source="reading" /></p>
                 </div>
               </div>
             );
@@ -142,7 +146,7 @@ export default function ReadPhase({
             <div className="grid gap-2.5 sm:text-right">
               {lines.map((line, i) => (
                 <p key={i} className={`kr leading-[1.7] ${i === 0 ? "font-bold text-[17px]" : "text-[15px]"}`}>
-                  {line.kr}
+                  <TapText text={line.kr} userId={userId} source="reading" />
                 </p>
               ))}
             </div>
@@ -176,7 +180,7 @@ export default function ReadPhase({
             <div className="p-[clamp(16px,3vw,24px)] sm:border-r border-b sm:border-b-0 border-line grid gap-3 content-start">
               {lines.map((line, i) => (
                 <p key={i} className="kr text-[15px] leading-[1.8]">
-                  {line.kr}
+                  <TapText text={line.kr} userId={userId} source="reading" />
                 </p>
               ))}
             </div>
@@ -218,7 +222,7 @@ export default function ReadPhase({
               {turns.map((t, i) => (
                 <p key={i} className={`kr text-[15px] leading-[1.7] ${t.isHost ? "text-muted italic" : ""}`}>
                   <b className={`not-italic font-semibold ${t.isHost ? "text-faint" : "text-sky-deep"}`}>{t.speaker}: </b>
-                  {t.text}
+                  <TapText text={t.text} userId={userId} source="reading" />
                 </p>
               ))}
             </div>
@@ -256,7 +260,7 @@ export default function ReadPhase({
                   <span className="flex-none w-7 h-7 rounded-full bg-[#EFF6FF] border border-sky-line text-sky-deep text-[13px] font-bold flex items-center justify-center">
                     {i + 1}
                   </span>
-                  <p className="kr text-[15px] leading-[1.6] pt-0.5">{line.kr.replace(/^\d+\.\s*/, "")}</p>
+                  <p className="kr text-[15px] leading-[1.6] pt-0.5"><TapText text={line.kr.replace(/^\d+\.\s*/, "")} userId={userId} source="reading" /></p>
                 </div>
               ))}
             </div>
@@ -294,7 +298,7 @@ export default function ReadPhase({
             <div className="grid gap-2">
               {lines.map((line, i) => (
                 <p key={i} className="kr text-[15px] leading-[1.75]">
-                  {line.kr}
+                  <TapText text={line.kr} userId={userId} source="reading" />
                 </p>
               ))}
             </div>
@@ -321,7 +325,7 @@ export default function ReadPhase({
             <h2 className="kr text-[17px] font-medium mb-3">{passage.title_kr}</h2>
             {lines.map((line, i) => (
               <p key={i} className="kr text-base font-medium leading-[2] mb-1.5">
-                {line.kr}
+                <TapText text={line.kr} userId={userId} source="reading" />
               </p>
             ))}
           </div>

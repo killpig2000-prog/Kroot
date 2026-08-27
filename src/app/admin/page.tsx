@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
+import FunnelSection from "@/components/admin/FunnelSection";
 import type { CefrLevel } from "@/lib/tree";
 
 // Owner-only dashboard: signups, activity, Plus subscribers. Anyone else
@@ -320,6 +321,8 @@ export default async function AdminPage() {
           ))}
         </div>
       </section>
+
+      <FunnelSection db={adminClient()} days={30} />
 
       <section className="mt-8 rounded-2xl border border-slate-200 bg-white p-5">
         <h2 className="text-sm font-semibold text-slate-700">Feature usage</h2>

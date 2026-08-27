@@ -3,6 +3,7 @@
 import { useState } from "react";
 import SpeakButton from "./SpeakButton";
 import { VIBES, type SlangEntry } from "@/lib/slang";
+import TapText from "@/components/words/TapText";
 
 const FACE =
   "absolute inset-0 flex flex-col items-center justify-center px-5 text-center [backface-visibility:hidden] rounded-[14px]";
@@ -88,7 +89,7 @@ export default function SlangCard({
           </b>
           <div className="mt-2.5 w-full rounded-[10px] bg-white border border-[#FBCFE8] px-3 py-2 text-left">
             <div className="flex items-start gap-1.5">
-              <span className="kr text-[13px] text-charcoal leading-snug flex-1">{entry.example.kr}</span>
+              <span className="kr text-[13px] text-charcoal leading-snug flex-1"><TapText text={entry.example.kr} source="slang" /></span>
               <SpeakButton text={entry.example.kr} className="shrink-0 w-6 h-6 text-[11px]" />
             </div>
             <span className="block text-[11.5px] text-muted mt-0.5 leading-snug">

@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import ShopClient from "@/components/shop/ShopClient";
+import StreakFreezeCard from "@/components/shop/StreakFreezeCard";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import type { CefrLevel } from "@/lib/tree";
 import { levelFromXp, treeStageForLevel } from "@/lib/level";
@@ -28,6 +29,13 @@ export default async function ShopPage() {
 
   const isAdmin = profile?.is_admin ?? false;
   const coins = profile?.coins ?? 0;
+  // Migration 0035 column — tolerant of a not-yet-applied migration.
+  const { data: freezeRow, error: freezeErr } = await supabase
+    .from("profiles")
+    .select("streak_freezes")
+    .eq("id", user.id)
+    .maybeSingle();
+  const streakFreezes = freezeErr ? 0 : (freezeRow?.streak_freezes ?? 0);
   const species = (profile?.current_level ?? "A1") as CefrLevel;
   const playerLevel = levelFromXp(profile?.xp ?? 0);
   const stage = treeStageForLevel(playerLevel);
@@ -83,6 +91,14 @@ export default async function ShopPage() {
           <p className="text-[13px] text-muted mb-5 max-w-[70ch]">
             Dress your tree and the garden around it. Tap a card to try it on your own tree, then buy and wear it right here.
           </p>
+
+          <StreakFreezeCard
+            held={streakFreezes}
+            coins={coins}
+            isAdmin={isAdmin}
+            streakDays={profile?.streak_days ?? 0}
+            hasPlus={hasPlus}
+          />
 
           <ShopClient
             userId={user.id}

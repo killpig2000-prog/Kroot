@@ -44,6 +44,7 @@ export async function proxy(request: NextRequest) {
     pathname.startsWith("/writing") ||
     pathname.startsWith("/shop") ||
     pathname.startsWith("/speaking") ||
+    pathname.startsWith("/roleplay") ||
     pathname.startsWith("/grammar") ||
     pathname.startsWith("/hangul") ||
     pathname.startsWith("/pronunciation") ||

@@ -6,6 +6,7 @@ import AvatarUploader from "@/components/profile/AvatarUploader";
 import InsightsSection from "@/components/profile/InsightsSection";
 import ManageSubscriptionButton from "@/components/plus/ManageSubscriptionButton";
 import NameEditor from "@/components/profile/NameEditor";
+import ReminderSettings from "@/components/profile/ReminderSettings";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { LEVEL_PATH, SPECIES, type CefrLevel } from "@/lib/tree";
 import { levelProgress, treeStageForLevel, MAX_LEVEL } from "@/lib/level";
@@ -25,6 +26,14 @@ export default async function ProfilePage() {
     .select("display_name, current_level, streak_days, created_at, avatar_url, coins, xp, plus_until")
     .eq("id", user.id)
     .single();
+
+  // Migration 0035 columns, tolerant of a not-yet-applied migration.
+  const { data: extrasRow, error: extrasErr } = await supabase
+    .from("profiles")
+    .select("reminder_push, reminder_email, reminder_hour, streak_freezes")
+    .eq("id", user.id)
+    .maybeSingle();
+  const extras = extrasErr ? null : extrasRow;
 
   const level = (profile?.current_level ?? "A1") as CefrLevel;
   const plusActive = isPlus(profile?.plus_until);
@@ -103,6 +112,11 @@ export default async function ProfilePage() {
                 <span className="text-[12.5px] font-semibold text-muted bg-warm border border-line rounded-full px-3 py-1">
                   🌰 {profile?.coins ?? 0} coins
                 </span>
+                {(extras?.streak_freezes ?? 0) > 0 && (
+                  <span className="text-[12.5px] font-semibold text-[#0369A1] bg-[#F0F9FF] border border-[#BAE6FD] rounded-full px-3 py-1">
+                    🧊 {extras?.streak_freezes} freeze{extras?.streak_freezes === 1 ? "" : "s"}
+                  </span>
+                )}
               </div>
             </div>
 
@@ -130,6 +144,14 @@ export default async function ProfilePage() {
                 </Link>
               </div>
             )}
+
+            <ReminderSettings
+              userId={user.id}
+              initialPush={extras?.reminder_push ?? false}
+              initialEmail={extras?.reminder_email ?? false}
+              initialHour={extras?.reminder_hour ?? 18}
+              hasEmail={!!user.email}
+            />
 
             <InsightsSection userId={user.id} plusActive={plusActive} />
 

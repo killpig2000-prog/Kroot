@@ -1,5 +1,7 @@
 "use client";
 
+import { track } from "@/lib/analytics";
+
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -138,6 +140,7 @@ export default function OnboardingPage() {
     });
 
     setSubmitting(false);
+    if (!error) track("signup", { native_language: nativeLanguage });
 
     if (error) {
       // Supabase's built-in mailer allows only a couple of emails per hour;
@@ -189,6 +192,7 @@ export default function OnboardingPage() {
     // test row for anything above A1.
     const { error } = await supabase.rpc("apply_level_test", { p_level: opts.code });
     if (error) console.error("apply_level_test failed:", error.message);
+    track("onboarding_completed", { level: opts.code, skipped: !!opts.skipped, score: opts.finalScore });
   }
 
   function answer(i: number) {

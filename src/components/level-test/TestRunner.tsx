@@ -5,6 +5,7 @@ import { buttonClassName } from "@/components/ui/Button";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { useSpeechRecognition } from "@/hooks/useSpeechRecognition";
+import { track } from "@/lib/analytics";
 import {
   COOLDOWN_HOURS,
   servedKeysOf,
@@ -97,6 +98,8 @@ export default function TestRunner({
         void _details;
         await supabase.from("level_test_results").insert(basic);
       }
+
+      track("level_test_finished", { from: spec.from, to: spec.to, passed: verdict.passed, score: verdict.avg });
 
       if (verdict.passed) {
         const { error: applyErr } = await supabase.rpc("apply_level_test", { p_level: spec.to });

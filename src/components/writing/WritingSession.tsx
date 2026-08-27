@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useSaveResume } from "@/hooks/useSaveResume";
+import { clearResume } from "@/lib/resume";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
@@ -52,6 +54,12 @@ export default function WritingSession({
   const supabase = useMemo(() => createClient(), []);
 
   const [phase, setPhase] = useState<Phase>("write");
+  useSaveResume(phase === "write" ? userId : null, {
+    skill: "writing",
+    href: "",
+    label: prompt.prompt_en.length > 60 ? prompt.prompt_en.slice(0, 57) + "…" : prompt.prompt_en,
+    detail: `Writing · Chapter ${chapterIndex + 1} · ${level}`,
+  });
   const [response, setResponse] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [navigating, setNavigating] = useState(false);
@@ -136,6 +144,7 @@ export default function WritingSession({
   async function logMinutesOnce() {
     if (loggedMinutes.current) return;
     loggedMinutes.current = true;
+    void clearResume(supabase, userId);
 
     const result = await recordCompletion(supabase, "writing", MINUTES_PER_PROMPT);
     if (result?.leveled_up) setLevelUp(result);

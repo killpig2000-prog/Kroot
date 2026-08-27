@@ -1,4 +1,5 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
+import { track } from "@/lib/analytics";
 
 // XP awarded per completed unit, by skill. Tuned so ~2-3 activities a day
 // (~30-40 XP) reaches the Lv.30 cap (5,800 XP) in roughly 5-6 months.
@@ -124,5 +125,6 @@ export async function recordCompletion(
   const remaining = Math.max(0, full - Math.round(full * Math.max(0, Math.min(1, alreadyAwardedRatio))));
   const result = await awardPoints(supabase, remaining, skill);
   await completeMatchingQuest(supabase, skill);
+  track("activity_completed", { skill, minutes, leveled_up: !!result?.leveled_up });
   return result;
 }

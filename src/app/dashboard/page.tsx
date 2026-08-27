@@ -8,6 +8,11 @@ import SkillBar from "@/components/dashboard/SkillBar";
 import Widgets from "@/components/dashboard/Widgets";
 import FeedbackWidget from "@/components/dashboard/FeedbackWidget";
 import Greeting from "@/components/dashboard/Greeting";
+import ContinueCard from "@/components/dashboard/ContinueCard";
+import LevelMap from "@/components/dashboard/LevelMap";
+import InstallBanner from "@/components/pwa/InstallBanner";
+import { GRAMMAR_LESSONS } from "@/lib/grammar";
+import type { ResumeRow } from "@/lib/resume";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { levelProgress } from "@/lib/level";
 import MonthlyGrass from "@/components/profile/MonthlyGrass";
@@ -25,6 +30,8 @@ import type { CefrLevel } from "@/lib/tree";
 // The old Basics/Practice/Relax card list duplicated the sidebar; only the
 // four practice skills keep an in-page presence, as compact progress rows.
 const PRACTICE_SKILLS = [
+  { key: "grammar", href: "/grammar", kr: "문", en: "Grammar", bg: "#EEF2FF", color: "#4F46E5" },
+  { key: "vocabulary", href: "/vocabulary", kr: "단", en: "Vocabulary", bg: "#F5F3FF", color: "#7C3AED" },
   { key: "listening", href: "/listening", kr: "듣", en: "Listening", bg: "#F0FDF4", color: "#16A34A" },
   { key: "reading", href: "/reading", kr: "읽", en: "Reading", bg: "#EFF6FF", color: "#2563EB" },
   { key: "writing", href: "/writing", kr: "쓰", en: "Writing", bg: "#FFFBEB", color: "#D97706" },
@@ -103,6 +110,12 @@ export default async function DashboardPage() {
     dueRes,
     { data: activity },
     levelTestRes,
+    resumeRes,
+    { data: grammarRows },
+    { data: vocabRows },
+    // Columns from migration 0035 — queried separately so a not-yet-applied
+    // migration degrades to defaults instead of nulling the whole profile.
+    extrasRes,
   ] = await Promise.all([
     supabase
       .from("profiles")
@@ -136,7 +149,12 @@ export default async function DashboardPage() {
       .from("level_test_results")
       .select("id", { count: "exact", head: true })
       .eq("user_id", user.id),
+    supabase.from("resume_points").select("skill, href, label, detail, progress, updated_at").eq("user_id", user.id).maybeSingle(),
+    supabase.from("grammar_progress").select("lesson_key").eq("user_id", user.id),
+    supabase.from("vocabulary_progress").select("word_key").eq("user_id", user.id),
+    supabase.from("profiles").select("streak_freezes, reminder_push, reminder_email").eq("id", user.id).maybeSingle(),
   ]);
+  const extras = extrasRes.error ? null : extrasRes.data;
 
   // Confirmed-email signups land here without ever picking a starting level
   // (the confirmation link used to skip onboarding). Send them back; a query
@@ -181,6 +199,14 @@ export default async function DashboardPage() {
     return { done, total, percent: total ? Math.round((done / total) * 100) : 0 };
   };
   const skillProgress: Record<string, { done: number; total: number; percent: number }> = {
+    grammar: tally(
+      new Set((grammarRows ?? []).map((r) => r.lesson_key)),
+      GRAMMAR_LESSONS.filter((l) => l.level === cefr).map((l) => l.key)
+    ),
+    vocabulary: tally(
+      new Set((vocabRows ?? []).map((r) => r.word_key)),
+      getWordsForTopic("daily-life", cefr).map((w) => w.key)
+    ),
     listening: tally(
       new Set((listeningRows ?? []).map((r) => r.dialogue_id)),
       DIALOGUES.filter((d) => d.level === cefr).map((d) => d.id)
@@ -232,6 +258,29 @@ export default async function DashboardPage() {
   const displayName = profile?.display_name ?? "there";
   const { level, into, needed, pct } = levelProgress(profile?.xp ?? 0);
 
+  // "Continue" target: the last unit the learner opened (resume_points), or
+  // today's quest when nothing is in progress. A finished unit clears itself.
+  const resume: ResumeRow | null = resumeRes.error ? null : ((resumeRes.data as ResumeRow | null) ?? null);
+  const questHref: Record<string, string> = {
+    writing: "/writing",
+    vocabulary: dueCount > 0 ? "/review" : "/vocabulary",
+    listening: "/listening",
+    reading: "/reading",
+    pronunciation: "/speaking",
+  };
+  const questSkill = quest?.skill_key ?? questOfTheDay.skill_key;
+  const questParts = (quest?.description ?? questOfTheDay.description).split(" · ");
+  const continueFallback = {
+    href: questHref[questSkill] ?? "/listening",
+    label: questParts[0],
+    detail: `Today's quest · ${questParts.slice(1).join(" · ")}`,
+    icon: "🎯",
+  };
+  const overallPct = Math.round(
+    Object.values(skillProgress).reduce((sum, p) => sum + p.percent, 0) / Object.keys(skillProgress).length
+  );
+  const remindersOff = !extras?.reminder_push && !extras?.reminder_email;
+
   const plusActive = isPlus(profile?.plus_until);
   const day = now.getDay();
   const weekendBoost = plusActive && (day === 0 || day === 6);
@@ -245,6 +294,7 @@ export default async function DashboardPage() {
           streakDays={streakDays}
           avatarUrl={profile?.avatar_url}
           plus={plusActive}
+          streakFreezes={extras?.streak_freezes ?? 0}
         />
 
         <main className="min-w-0 px-[clamp(18px,3vw,36px)] pt-[26px] pb-[100px] md:pb-[60px]">
@@ -268,6 +318,11 @@ export default async function DashboardPage() {
             userId={user.id}
             ownedIds={ownedIds}
           />
+
+          {/* the one button: pick up where you left off */}
+          <ContinueCard resume={resume} fallback={continueFallback} />
+
+          <InstallBanner streakDays={streakDays} />
 
           {/* watering (spaced-repetition review) */}
           {dueCount > 0 && (
@@ -348,6 +403,25 @@ export default async function DashboardPage() {
           </Link>
           )}
 
+          {/* curriculum map: A1 → C2 stepper + level-up checks */}
+          {promo && (
+            <LevelMap current={cefr} checks={promoChecks} eligible={elig.eligible} overallPct={overallPct} />
+          )}
+
+          {/* streak at risk & no reminders yet → one-line nudge to /profile */}
+          {remindersOff && streakDays >= 3 && (
+            <Link
+              href="/profile#reminders"
+              className="flex items-center gap-3 border border-dashed border-[#CFC8B8] rounded-[12px] bg-white px-4 py-3 mb-[14px] text-[13px] text-muted hover:border-success transition-colors"
+            >
+              <span>⏰</span>
+              <span className="flex-1">
+                <b className="text-charcoal font-semibold">Protect your {streakDays}-day streak</b> — get one gentle reminder on days you haven&apos;t studied.
+              </span>
+              <span className="font-semibold text-success">Turn on →</span>
+            </Link>
+          )}
+
           {/* learning progress — replaces the old category card list (the
               sidebar already covers navigation); SkillBars live on here */}
           <div className="border border-line rounded-[14px] bg-white px-[22px] py-5 mb-[14px]">
@@ -391,40 +465,6 @@ export default async function DashboardPage() {
               })}
             </div>
           </div>
-
-          {/* promotion status — moved in from My growth */}
-          {promo && (
-            <Link
-              href="/level-test"
-              className={`rounded-[14px] px-[22px] py-4 mb-[14px] flex items-center gap-4 flex-wrap border-[1.5px] transition-colors ${
-                elig.eligible
-                  ? "border-success bg-success-bg hover:bg-[#DCFCE7]"
-                  : "border-line bg-white hover:border-success"
-              }`}
-            >
-              <span className="text-[24px] flex-none">🎯</span>
-              <span className="flex-1 min-w-[200px]">
-                <b className="block text-[14.5px]">
-                  {elig.eligible
-                    ? `You're ready — take the ${promo.from} → ${promo.to} level-up test!`
-                    : `On the way to ${promo.to}`}
-                </b>
-                <span className="flex gap-2.5 mt-1 flex-wrap">
-                  {promoChecks.map((c) => (
-                    <small
-                      key={c.label}
-                      className={`text-[12px] font-semibold ${c.ok ? "text-success" : "text-faint"}`}
-                    >
-                      {c.ok ? "✓" : "○"} {c.label} {c.value}
-                    </small>
-                  ))}
-                </span>
-              </span>
-              <span className="flex-none text-[13px] font-bold text-success">
-                {elig.eligible ? "Start →" : "Details →"}
-              </span>
-            </Link>
-          )}
 
           {/* study garden — the year grass, moved in from My growth; its
               pills absorb the old This week / month challenge widgets */}

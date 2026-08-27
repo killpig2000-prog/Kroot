@@ -89,7 +89,7 @@ export default async function GrammarLessonPage({
                 <p className="text-[14px] text-muted leading-[1.7] mb-4">
                   {section.explanation}
                 </p>
-                <ExampleBox examples={section.examples} />
+                <ExampleBox examples={section.examples} userId={user.id} />
               </section>
             ))}
 
@@ -100,7 +100,7 @@ export default async function GrammarLessonPage({
               </span>
               <span className="h-px flex-1 bg-line" />
             </div>
-            <GrammarQuizBlock quiz={lesson.quiz} />
+            <GrammarQuizBlock quiz={lesson.quiz} lessonKey={lesson.key} lessonTitle={lesson.title} level={lesson.level} userId={user.id} />
 
             {/* footer nav */}
             <div className="flex items-center justify-between gap-3 mt-6 flex-wrap">

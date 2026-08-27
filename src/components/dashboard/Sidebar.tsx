@@ -12,6 +12,7 @@ function NavItem({
   on,
   color,
   popular,
+  isNew,
 }: {
   icon: string;
   label: string;
@@ -19,6 +20,7 @@ function NavItem({
   on: boolean;
   color?: NavColor;
   popular?: boolean;
+  isNew?: boolean;
 }) {
   // Active item reads like a notebook index tab: white paper, dashed edge,
   // open on the right so it "connects" to the page.
@@ -50,6 +52,11 @@ function NavItem({
           인기
         </span>
       )}
+      {isNew && !on && (
+        <span className="flex-none text-[8.5px] font-extrabold tracking-[.04em] text-white bg-[#9333EA] rounded-full px-[5px] py-px">
+          NEW
+        </span>
+      )}
     </Link>
   );
 
@@ -74,6 +81,7 @@ export default function Sidebar({
   streakDays,
   avatarUrl,
   plus = false,
+  streakFreezes = 0,
 }: {
   displayName: string;
   email: string;
@@ -81,6 +89,8 @@ export default function Sidebar({
   avatarUrl?: string | null;
   /** Active Kroot Plus — shows the streak shield note. */
   plus?: boolean;
+  /** Streak freezes held (shop consumable, migration 0035). */
+  streakFreezes?: number;
 }) {
   const pathname = usePathname();
 
@@ -116,7 +126,13 @@ export default function Sidebar({
           <div>
             <b className="block text-[13.5px] font-semibold leading-tight">{streakDays}-day streak</b>
             <small className="text-[11.5px] text-muted">
-              {plus ? "🛡️ Shielded by Plus" : "Keep it alive today!"}
+              {plus && streakFreezes > 0
+                ? `🛡️ Plus · 🧊 ${streakFreezes} freeze${streakFreezes === 1 ? "" : "s"}`
+                : plus
+                  ? "🛡️ Shielded by Plus"
+                  : streakFreezes > 0
+                    ? `🧊 ${streakFreezes} freeze${streakFreezes === 1 ? "" : "s"} ready`
+                    : "Keep it alive today!"}
             </small>
           </div>
         </div>

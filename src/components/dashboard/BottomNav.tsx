@@ -24,6 +24,7 @@ function Tile({
   onNavigate,
   color,
   popular,
+  isNew,
 }: {
   icon: string;
   label: string;
@@ -32,6 +33,7 @@ function Tile({
   onNavigate: () => void;
   color?: NavColor;
   popular?: boolean;
+  isNew?: boolean;
 }) {
   const tile = (
     <Link
@@ -47,6 +49,11 @@ function Tile({
           style={{ background: RAINBOW }}
         >
           인기
+        </span>
+      )}
+      {isNew && (
+        <span className="absolute -top-1.5 -right-1.5 text-[8.5px] font-extrabold text-white bg-[#9333EA] rounded-full px-[6px] py-px">
+          NEW
         </span>
       )}
       {color ? (

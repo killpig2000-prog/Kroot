@@ -9,6 +9,7 @@ import { SITE_URL } from "@/lib/site";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { isPlus } from "@/lib/plus";
 import SeasonalEffects from "@/components/ui/SeasonalEffects";
+import PwaRegister from "@/components/pwa/PwaRegister";
 
 const fredoka = Fredoka({
   variable: "--font-fredoka",
@@ -34,6 +35,7 @@ const nunito = Nunito({
 // toggle. "only light" opts out of Chrome Android's forced Auto Dark Theme.
 export const viewport: Viewport = {
   colorScheme: "only light",
+  themeColor: "#6BBF8A",
 };
 
 export const metadata: Metadata = {
@@ -43,6 +45,12 @@ export const metadata: Metadata = {
     "Kroot is a cozy garden where your Korean grows every day — with a friendly AI tutor, tiny lessons, and friends from all over the world.",
   verification: {
     google: "9_zaAq2WS5tU8bwdzzy7MF64LuKXCwJThp-S2V5ObPM",
+  },
+  applicationName: "Kroot",
+  appleWebApp: { capable: true, title: "Kroot", statusBarStyle: "default" },
+  icons: {
+    icon: [{ url: "/icon.svg", type: "image/svg+xml" }, { url: "/icon-192.png", sizes: "192x192", type: "image/png" }],
+    apple: "/apple-touch-icon.png",
   },
 };
 
@@ -82,6 +90,7 @@ export default async function RootLayout({
       <body>
         {children}
         <SeasonalEffects season={season} initialEnabled={seasonEnabled} plus={plusActive} />
+        <PwaRegister />
         <Analytics />
       </body>
     </html>

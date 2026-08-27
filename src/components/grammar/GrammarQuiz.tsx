@@ -3,6 +3,8 @@
 import { useMemo, useRef, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { recordCompletion } from "@/lib/activity";
+import { clearResume } from "@/lib/resume";
+import { useSaveResume } from "@/hooks/useSaveResume";
 import type { GrammarQuiz as Quiz } from "@/lib/grammar";
 
 const ABC = ["A", "B", "C", "D"];
@@ -17,7 +19,7 @@ function QuestionCard({
   quiz: Quiz;
   no: number;
   total: number;
-  onAnswered: () => void;
+  onAnswered: (correct: boolean) => void;
 }) {
   const [picked, setPicked] = useState<number | null>(null);
   const answered = picked !== null;
@@ -46,7 +48,7 @@ function QuestionCard({
               disabled={answered}
               onClick={() => {
                 setPicked(i);
-                onAnswered();
+                onAnswered(i === quiz.ans);
               }}
               className={`text-left px-4 py-[13px] rounded-[10px] text-[14.5px] font-medium flex items-center gap-2.5 transition-all border-[1.5px] disabled:cursor-default ${
                 state === "correct"
@@ -94,15 +96,37 @@ function QuestionCard({
   );
 }
 
-export default function GrammarQuizBlock({ quiz }: { quiz: Quiz[] }) {
+export default function GrammarQuizBlock({
+  quiz,
+  lessonKey,
+  lessonTitle,
+  level,
+  userId,
+}: {
+  quiz: Quiz[];
+  /** Lesson identity for grammar_progress + the dashboard Continue card. */
+  lessonKey?: string;
+  lessonTitle?: string;
+  level?: string;
+  userId?: string;
+}) {
   const supabase = useMemo(() => createClient(), []);
   const recorded = useRef(false);
   const answered = useRef(new Set<number>());
+  const correctCount = useRef(0);
   const [newLevel, setNewLevel] = useState<number | null>(null);
   const [done, setDone] = useState(false);
 
-  async function markAnswered(i: number) {
+  useSaveResume(
+    userId,
+    lessonKey
+      ? { skill: "grammar", href: `/grammar/${lessonKey}`, label: lessonTitle ?? lessonKey, detail: `Grammar${level ? ` · ${level}` : ""}` }
+      : null
+  );
+
+  async function markAnswered(i: number, correct: boolean) {
     answered.current.add(i);
+    if (correct) correctCount.current += 1;
     if (answered.current.size < quiz.length || recorded.current) return;
     recorded.current = true;
 
@@ -112,6 +136,19 @@ export default function GrammarQuizBlock({ quiz }: { quiz: Quiz[] }) {
     if (!user) return;
 
     setDone(true);
+    if (lessonKey) {
+      // 42P01 (table missing before migration 0035) is silently ignored.
+      await supabase.from("grammar_progress").upsert(
+        {
+          user_id: user.id,
+          lesson_key: lessonKey,
+          score: Math.round((correctCount.current / quiz.length) * 100),
+          completed_at: new Date().toISOString(),
+        },
+        { onConflict: "user_id,lesson_key" }
+      );
+      void clearResume(supabase, user.id, `/grammar/${lessonKey}`);
+    }
     const res = await recordCompletion(supabase, "grammar", 3);
     if (res?.leveled_up) setNewLevel(res.new_level);
   }
@@ -124,7 +161,7 @@ export default function GrammarQuizBlock({ quiz }: { quiz: Quiz[] }) {
           quiz={q}
           no={i + 1}
           total={quiz.length}
-          onAnswered={() => markAnswered(i)}
+          onAnswered={(correct) => markAnswered(i, correct)}
         />
       ))}
 

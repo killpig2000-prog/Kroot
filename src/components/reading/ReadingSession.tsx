@@ -1,6 +1,8 @@
 "use client";
 
 import { useMemo, useRef, useState } from "react";
+import { useSaveResume } from "@/hooks/useSaveResume";
+import { clearResume } from "@/lib/resume";
 import { buttonClassName } from "@/components/ui/Button";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -43,6 +45,11 @@ export default function ReadingSession({
   // Mirrors of correct/incorrect that are safe to read inside timeouts.
   const counts = useRef({ correct: 0, incorrect: 0 });
 
+  useSaveResume(
+    phase === "summary" ? null : userId,
+    { skill: "reading", href: "", label: passage.title_kr, detail: `Reading · Chapter ${chapterIndex + 1} · ${level}`, progress: phase === "read" ? 0 : Math.round((qIndex / Math.max(1, passage.questions.length)) * 100) }
+  );
+
   const question = passage.questions[qIndex];
 
   async function answer(optionIndex: number) {
@@ -69,6 +76,7 @@ export default function ReadingSession({
   async function logProgressOnce() {
     if (loggedMinutes.current) return;
     loggedMinutes.current = true;
+    void clearResume(supabase, userId);
 
     await supabase.from("reading_progress").upsert(
       {
@@ -100,6 +108,7 @@ export default function ReadingSession({
         showTranslation={showTranslation}
         onToggleTranslation={() => setShowTranslation((s) => !s)}
         onContinue={() => setPhase("quiz")}
+        userId={userId}
       />
     );
   }

@@ -7,6 +7,9 @@ import { recordCompletion } from "@/lib/activity";
 import { useSpeechSynthesis } from "@/hooks/useSpeechSynthesis";
 import Character, { characterColor, characterVariant } from "@/components/listening/Character";
 import type { DialogueLine } from "@/lib/listening-dialogues";
+import TapText from "@/components/words/TapText";
+import { useSaveResume } from "@/hooks/useSaveResume";
+import { clearResume } from "@/lib/resume";
 
 const BTN_TEAL = buttonClassName("teal");
 const BTN_INK = buttonClassName("ink");
@@ -19,12 +22,20 @@ export default function DialoguePlayer({
   completed,
   showTranslation,
   photoUrl,
+  userId = null,
+  title,
+  subtitle,
 }: {
   dialogueId: string;
   lines: DialogueLine[];
   completed: boolean;
   showTranslation: boolean;
   photoUrl: string | null;
+  /** Enables tap-to-save on every Korean word (null = signed out). */
+  userId?: string | null;
+  /** For the dashboard's Continue card. */
+  title?: string;
+  subtitle?: string;
 }) {
   const supabase = useMemo(() => createClient(), []);
   const { currentIndex, isPlaying, isSupported, hasFinished, play, replayLine, stop } = useSpeechSynthesis(lines);
@@ -39,6 +50,14 @@ export default function DialoguePlayer({
 
   // A completed first listen-through reveals the script, no effect needed.
   const scriptRevealed = revealed || hasFinished;
+
+  useSaveResume(done ? null : userId, {
+    skill: "listening",
+    href: "",
+    label: title ?? dialogueId,
+    detail: subtitle ?? "Listening",
+    progress: currentIndex >= 0 ? Math.round(((currentIndex + 1) / lines.length) * 100) : 0,
+  });
 
   async function markHeard() {
     if (done || saving) return;
@@ -58,6 +77,7 @@ export default function DialoguePlayer({
     );
 
     await recordCompletion(supabase, "listening", 3);
+    void clearResume(supabase, user.id);
 
     setDone(true);
     setSaving(false);
@@ -96,7 +116,7 @@ export default function DialoguePlayer({
                           className="bg-white border border-line rounded-[10px] px-4 py-2.5 text-left shadow-sm"
                           style={{ animation: "fadeUp .25s ease" }}
                         >
-                          <p className="kr text-[17px] font-medium leading-snug">{currentLine.kr}</p>
+                          <p className="kr text-[17px] font-medium leading-snug"><TapText text={currentLine.kr} userId={userId} source="listening" /></p>
                         </div>
                         <div className="mx-auto w-0 h-0 border-x-8 border-x-transparent border-t-8 border-t-white" />
                       </div>
@@ -190,7 +210,7 @@ export default function DialoguePlayer({
                       >
                         {line.speaker}
                       </b>
-                      <p className="kr text-base font-medium">{line.kr}</p>
+                      <p className="kr text-base font-medium"><TapText text={line.kr} userId={userId} source="listening" /></p>
                       {showEn && <p className="text-[13px] text-muted mt-0.5">{line.en}</p>}
                     </div>
                   </div>

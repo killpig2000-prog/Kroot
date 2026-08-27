@@ -88,6 +88,9 @@ export default async function DialoguePage({
             completed={!!progress?.completed_at}
             showTranslation={false}
             photoUrl={photoUrl}
+            userId={user.id}
+            title={dialogue.title}
+            subtitle={`Listening · ${situation?.label ?? situationKey} · ${dialogue.level}`}
           />
         </main>
       </div>
