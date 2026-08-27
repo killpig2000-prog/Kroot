@@ -72,6 +72,7 @@ function daysLeft(until: string, today: string): number {
 export default function ShopClient({
   userId,
   coins,
+  isAdmin = false,
   playerLevel,
   hasPlus,
   species,
@@ -82,6 +83,7 @@ export default function ShopClient({
 }: {
   userId: string;
   coins: number;
+  isAdmin?: boolean;
   playerLevel: number;
   hasPlus: boolean;
   species: CefrLevel;
@@ -163,6 +165,7 @@ export default function ShopClient({
   if (selected) {
     const isOwned = ownedSet.has(selected.id);
     if (isOwned) cta = { label: worn[selected.slot] === selected.id ? "Take off" : "Wear it" };
+    else if (isAdmin) cta = { label: "Claim & wear · admin" };
     else if (selected.plusOnly && !hasPlus) cta = { label: "Kroot Plus only · See plans", href: "/pricing" };
     else if (isLevelLocked(selected, playerLevel)) cta = { label: `Unlocks at Lv.${selected.minPlayerLevel}`, disabled: true };
     else if (balance < selected.price) cta = { label: `Need ${selected.price - balance} more 🌰`, disabled: true };
@@ -330,7 +333,7 @@ export default function ShopClient({
             {message ?? (selected ? `${selected.name} · ${selected.krName}` : "Tap a card to try it on")}
           </p>
           <p className="text-[11.5px] text-[#6B6560] mt-3 text-center">
-            🌰 {balance} coins · earn 10 per daily quest, 50 at every 10th level
+            🌰 {isAdmin ? "∞" : balance} coins · earn 10 per daily quest, 50 at every 10th level
           </p>
         </aside>
       </div>

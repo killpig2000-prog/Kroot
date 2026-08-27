@@ -17,7 +17,7 @@ export default async function ShopPage() {
   const [{ data: profile }, { data: costumeRows }] = await Promise.all([
     supabase
       .from("profiles")
-      .select("display_name, coins, xp, current_level, streak_days, avatar_url, plus_until")
+      .select("display_name, coins, xp, current_level, streak_days, avatar_url, plus_until, is_admin")
       .eq("id", user.id)
       .single(),
     supabase.from("user_costumes").select("costume_id, equipped").eq("user_id", user.id),
@@ -26,6 +26,7 @@ export default async function ShopPage() {
   const owned = (costumeRows ?? []).map((r) => r.costume_id);
   const equipped = (costumeRows ?? []).filter((r) => r.equipped).map((r) => r.costume_id);
 
+  const isAdmin = profile?.is_admin ?? false;
   const coins = profile?.coins ?? 0;
   const species = (profile?.current_level ?? "A1") as CefrLevel;
   const playerLevel = levelFromXp(profile?.xp ?? 0);
@@ -62,7 +63,7 @@ export default async function ShopPage() {
             </h1>
             <div className="flex items-center gap-2">
               <span className="text-[12.5px] font-semibold text-[#16A34A] bg-[#F0FDF4] border border-[#BBF7D0] rounded-full px-3 py-1">
-                🌰 {coins} coins
+                🌰 {isAdmin ? "∞" : coins} coins
               </span>
               {hasPlus ? (
                 <span className="text-[12.5px] font-semibold text-[#B7791F] bg-[#FFF8E6] border border-[#F3D98A] rounded-full px-3 py-1">
@@ -86,6 +87,7 @@ export default async function ShopPage() {
           <ShopClient
             userId={user.id}
             coins={coins}
+            isAdmin={isAdmin}
             playerLevel={playerLevel}
             hasPlus={hasPlus}
             species={species}
