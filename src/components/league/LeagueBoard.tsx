@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import LevelCreature from "@/components/dashboard/LevelCreature";
 import { treeStageForLevel } from "@/lib/level";
+import { SceneLayer, skyFor } from "@/lib/costumes";
 import { leagueTier, LEAGUE_TIERS } from "@/lib/league";
 import { LEVEL_ORDER, type CefrLevel } from "@/lib/tree";
 
@@ -237,9 +238,14 @@ export default function LeagueBoard({ grade }: { grade: string }) {
                         ? "🥉"
                         : r.rank}
               </span>
-              <span className="flex-none w-[52px] h-[52px] rounded-[12px] bg-[#F0FDF4] border border-[#BBF7D0] overflow-hidden flex items-end justify-center">
+              <span
+                className="flex-none w-[52px] h-[52px] rounded-[12px] bg-[#F0FDF4] border border-[#BBF7D0] overflow-hidden flex items-end justify-center"
+                style={skyFor(r.costume_ids ?? []) ? { background: skyFor(r.costume_ids ?? []) ?? undefined } : undefined}
+              >
                 <svg viewBox="30 60 160 160" className="w-[46px] h-[46px]" aria-hidden="true">
+                  <SceneLayer costumeIds={r.costume_ids ?? []} layer="behind" />
                   <LevelCreature level={treeStageForLevel(r.level)} costumeIds={r.costume_ids ?? []} species={species} />
+                  <SceneLayer costumeIds={r.costume_ids ?? []} layer="front" />
                 </svg>
               </span>
               <span className="flex-1 min-w-0">

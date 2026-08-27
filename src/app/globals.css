@@ -587,3 +587,28 @@ html[data-mode="dark"] .btn-leaf {
 @media (prefers-reduced-motion: reduce) {
   .evolve-out, .evolve-in, .evolve-glow { animation: none; }
 }
+
+/* garden shop items: slow ambient motion (auras, weather) */
+.aura-spin {
+  animation: aura-spin 40s linear infinite;
+  transform-box: view-box;
+  transform-origin: 110px 120px;
+}
+@keyframes aura-spin {
+  to { transform: rotate(360deg); }
+}
+.aura-twinkle { animation: aura-twinkle 2.4s ease-in-out infinite; }
+.aura-twinkle-2 { animation: aura-twinkle 3.1s ease-in-out 0.8s infinite; }
+@keyframes aura-twinkle {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 1; }
+}
+.aura-fall { animation: aura-fall 7s linear infinite; }
+.aura-fall-2 { animation: aura-fall 9s linear 2s infinite; }
+@keyframes aura-fall {
+  0% { transform: translate(0, -20px) rotate(0deg); }
+  100% { transform: translate(-30px, 240px) rotate(300deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .aura-spin, .aura-twinkle, .aura-twinkle-2, .aura-fall, .aura-fall-2 { animation: none; }
+}

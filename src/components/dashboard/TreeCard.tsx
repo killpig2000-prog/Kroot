@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
-import { COSTUMES, costumeById } from "@/lib/costumes";
+import { COSTUMES, SceneLayer, costumeById, skyFor } from "@/lib/costumes";
 import { LEVEL_ORDER, LEVEL_PATH, SPECIES, type CefrLevel } from "@/lib/tree";
 import { FULLY_GROWN_LEVEL, MAX_LEVEL, treeHeightMetres, treeStageForLevel } from "@/lib/level";
 import VeteranTree, { VETERAN_MILESTONES, veteranFrameHeight } from "@/components/dashboard/VeteranTree";
@@ -99,6 +99,10 @@ export default function TreeCard({
   const frameH = veteran ? veteranFrameHeight(level) : 230;
   const metres = treeHeightMetres(level);
   const nextKeepsake = VETERAN_MILESTONES.find((m) => m.level > level);
+  // Garden items: a sky costume swaps the frame's gradient (and hides the
+  // default sun); ground/friends ride down with the taller veteran frame.
+  const sky = skyFor(equipped);
+  const groundShift = frameH - 230;
 
   return (
     <div className={`relative border border-[#E3DDD0] p-[clamp(18px,3.6vw,26px)] mb-3.5 grid grid-cols-1 sm:grid-cols-[auto_1fr] gap-[clamp(18px,4vw,32px)] ${veteran ? "items-start" : "items-center"} bg-white rotate-[-0.4deg] shadow-[0_14px_30px_-18px_rgba(60,50,30,.35)]`}>
@@ -115,7 +119,7 @@ export default function TreeCard({
         </div>
         <div
           className="flex justify-center px-3 pt-3"
-          style={{ background: "linear-gradient(180deg,#DFF1FF 0%,#F0FBF1 62%,#E4F3DA 100%)" }}
+          style={{ background: sky ?? "linear-gradient(180deg,#DFF1FF 0%,#F0FBF1 62%,#E4F3DA 100%)" }}
         >
           <svg viewBox={`0 0 220 ${frameH}`} className="w-[clamp(140px,20vw,190px)] h-auto transition-[height] duration-500" aria-hidden="true">
             {/* garden backdrop: sun, clouds, and a grass hill under the soil */}
@@ -130,19 +134,25 @@ export default function TreeCard({
                 <stop offset="100%" stopColor="#BBDCAE" />
               </linearGradient>
             </defs>
-            <circle cx="182" cy="34" r="30" fill="url(#tc-sun)" />
-            <circle cx="182" cy="34" r="12" fill="#FFDE7A" />
-            <g fill="#FFFFFF" opacity=".85">
-              <ellipse cx="46" cy="36" rx="16" ry="6" />
-              <ellipse cx="60" cy="32" rx="11" ry="5" />
-              <ellipse cx="140" cy="60" rx="12" ry="4.6" opacity=".7" />
-            </g>
             <ellipse cx="110" cy={frameH + 4} rx="150" ry="34" fill="url(#tc-hill)" />
+            <SceneLayer costumeIds={equipped} layer="behind" />
+            {!sky && (
+              <>
+                <circle cx="182" cy="34" r="30" fill="url(#tc-sun)" />
+                <circle cx="182" cy="34" r="12" fill="#FFDE7A" />
+                <g fill="#FFFFFF" opacity=".85">
+                  <ellipse cx="46" cy="36" rx="16" ry="6" />
+                  <ellipse cx="60" cy="32" rx="11" ry="5" />
+                  <ellipse cx="140" cy="60" rx="12" ry="4.6" opacity=".7" />
+                </g>
+              </>
+            )}
             {veteran && species ? (
               <VeteranTree level={level} species={species} costumeIds={equipped} />
             ) : (
               <LevelCreature level={stage} costumeIds={equipped} species={species} />
             )}
+            <SceneLayer costumeIds={equipped} layer="front" groundShift={groundShift} />
             <g className="bob">
               <circle cx="60" cy="78" r="6" fill="#FACC15" />
             </g>
@@ -274,9 +284,13 @@ export default function TreeCard({
                         : "bg-[#FAF7EF] border-[#E3DDD0] text-[#6B6560] hover:border-[#A19A8C]"
                     }`}
                   >
-                    <svg viewBox="-40 -30 80 60" className="w-[26px] h-[19px]" aria-hidden="true">
-                      {c.render()}
-                    </svg>
+                    {c.render ? (
+                      <svg viewBox="-40 -30 80 60" className="w-[26px] h-[19px]" aria-hidden="true">
+                        {c.render()}
+                      </svg>
+                    ) : (
+                      <span className="text-[14px] leading-none" aria-hidden="true">{c.icon}</span>
+                    )}
                     {c.name}
                     {on && " ✓"}
                   </button>
@@ -287,7 +301,7 @@ export default function TreeCard({
               href="/shop"
               className="ml-auto text-[12.5px] font-semibold text-[#6B6560] hover:text-[#18181B] transition-colors whitespace-nowrap"
             >
-              Shop for more →
+              Garden Shop →
             </Link>
           </div>
         )}
