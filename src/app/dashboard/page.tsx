@@ -312,7 +312,6 @@ export default async function DashboardPage() {
             xpNeeded={needed}
             costumeIds={equippedIds}
             species={cefr}
-            userId={user.id}
             ownedIds={ownedIds}
           />
 

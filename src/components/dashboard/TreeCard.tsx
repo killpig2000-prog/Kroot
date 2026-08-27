@@ -1,9 +1,8 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { createClient } from "@/lib/supabase/client";
-import { COSTUMES, GARDEN_SLOTS, SLOT_LABELS, SceneLayer, WEARABLE_SLOTS, costumeById, skyFor } from "@/lib/costumes";
+import { COSTUMES, SceneLayer, skyFor } from "@/lib/costumes";
 import { LEVEL_ORDER, LEVEL_PATH, SPECIES, type CefrLevel } from "@/lib/tree";
 import { FULLY_GROWN_LEVEL, MAX_LEVEL, treeHeightMetres, treeStageForLevel } from "@/lib/level";
 import VeteranTree, { VETERAN_MILESTONES, veteranFrameHeight } from "@/components/dashboard/VeteranTree";
@@ -28,7 +27,6 @@ export default function TreeCard({
   xpNeeded,
   costumeIds = [],
   species,
-  userId,
   ownedIds,
 }: {
   level: number;
@@ -38,62 +36,13 @@ export default function TreeCard({
   costumeIds?: string[];
   /** CEFR grade — decides the tree species; promotion transforms the garden. */
   species?: CefrLevel;
-  /** With ownedIds, the card grows a wardrobe strip: tap a chip to dress the tree in place. */
-  userId?: string;
+  /** With ownedIds, the card shows a "My costume" strip linking to the Shop, where equipping happens. */
   ownedIds?: string[];
 }) {
-  const supabase = useMemo(() => createClient(), []);
   const [fill, setFill] = useState(0);
-  const [equipped, setEquipped] = useState<string[]>(costumeIds);
-  const [busy, setBusy] = useState(false);
-  const [wardrobeOpen, setWardrobeOpen] = useState(false);
+  const equipped = costumeIds;
 
   const owned = COSTUMES.filter((c) => (ownedIds ?? []).includes(c.id));
-  const slots = [...WEARABLE_SLOTS, ...GARDEN_SLOTS];
-
-  useEffect(() => {
-    if (!wardrobeOpen) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = prev;
-    };
-  }, [wardrobeOpen]);
-
-  async function toggleCostume(costumeId: string) {
-    if (busy || !userId) return;
-    const costume = costumeById(costumeId);
-    if (!costume) return;
-    setBusy(true);
-
-    const isOn = equipped.includes(costumeId);
-    if (isOn) {
-      await supabase
-        .from("user_costumes")
-        .update({ equipped: false })
-        .eq("user_id", userId)
-        .eq("costume_id", costumeId);
-      setEquipped((prev) => prev.filter((id) => id !== costumeId));
-    } else {
-      // One item per slot: unequip anything else occupying it first.
-      await supabase
-        .from("user_costumes")
-        .update({ equipped: false })
-        .eq("user_id", userId)
-        .eq("slot", costume.slot);
-      await supabase
-        .from("user_costumes")
-        .update({ equipped: true })
-        .eq("user_id", userId)
-        .eq("costume_id", costumeId);
-      setEquipped((prev) => [
-        ...prev.filter((id) => costumeById(id)?.slot !== costume.slot),
-        costumeId,
-      ]);
-    }
-
-    setBusy(false);
-  }
 
   useEffect(() => {
     const t = setTimeout(() => setFill(progressPct), 200);
@@ -273,11 +222,11 @@ export default function TreeCard({
           </div>
         )}
 
-        {/* wardrobe — opens a popup so the card stays a fixed height */}
-        {userId && ownedIds && (
+        {/* wardrobe strip — equipping lives in the Shop, this just shows what's on */}
+        {ownedIds && (
           <div className="mt-4 pt-3.5 border-t border-dashed border-line">
-            <button
-              onClick={() => setWardrobeOpen(true)}
+            <Link
+              href="/shop"
               className="w-full flex items-center justify-between gap-2 rounded-xl border border-line bg-warm px-3 py-2.5 hover:border-faint transition-colors"
             >
               <span className="flex items-center gap-2 min-w-0">
@@ -310,103 +259,13 @@ export default function TreeCard({
                   </span>
                 )}
               </span>
-              <span className="text-[12.5px] font-semibold text-muted whitespace-nowrap">Dress up →</span>
-            </button>
+              <span className="text-[12.5px] font-semibold text-muted whitespace-nowrap">
+                {owned.length === 0 ? "Shop →" : "Dress up in Shop →"}
+              </span>
+            </Link>
           </div>
         )}
       </div>
-
-      {userId && ownedIds && wardrobeOpen && (
-        <>
-          <button
-            aria-label="Close"
-            onClick={() => setWardrobeOpen(false)}
-            className="fixed inset-0 z-[60] bg-[#282319]/45 cursor-default"
-          />
-          <div className="fixed inset-0 z-[70] flex items-center justify-center px-4 pointer-events-none">
-            <div
-              role="dialog"
-              aria-modal="true"
-              aria-label="My costume"
-              className="pointer-events-auto w-full max-w-[420px] max-h-[85vh] flex flex-col bg-white rounded-[20px] shadow-[0_30px_70px_-20px_rgba(40,35,25,.35)]"
-            >
-              <div className="flex items-center justify-between px-5 pt-5 pb-3">
-                <h3 className="font-semibold text-[16px] tracking-[-0.01em]">My costume</h3>
-                <button
-                  onClick={() => setWardrobeOpen(false)}
-                  aria-label="Close"
-                  className="w-7 h-7 flex items-center justify-center rounded-full text-muted hover:bg-warm-2 transition-colors"
-                >
-                  ✕
-                </button>
-              </div>
-
-              <div className="overflow-y-auto px-5 pb-5">
-                {owned.length === 0 ? (
-                  <p className="text-[13px] text-muted py-4">
-                    No costumes yet — treat your tree at the shop.
-                  </p>
-                ) : (
-                  slots.map((slot) => {
-                    const items = owned.filter((c) => c.slot === slot);
-                    if (items.length === 0) return null;
-                    return (
-                      <div key={slot} className="mb-4 last:mb-0">
-                        <p className="text-[10.5px] font-extrabold tracking-[.07em] uppercase text-faint mb-1.5">
-                          {SLOT_LABELS[slot].icon} {SLOT_LABELS[slot].en}
-                        </p>
-                        <div className="flex gap-2.5 overflow-x-auto -mx-1 px-1 pb-1">
-                          {items.map((c) => {
-                            const on = equipped.includes(c.id);
-                            return (
-                              <button
-                                key={c.id}
-                                onClick={() => toggleCostume(c.id)}
-                                disabled={busy}
-                                aria-pressed={on}
-                                className="flex-none w-[74px] text-center disabled:opacity-60"
-                              >
-                                <span
-                                  className={`relative w-[74px] h-14 flex items-center justify-center rounded-xl border transition-all ${
-                                    on
-                                      ? "bg-success-bg border-success-line shadow-[0_3px_0_var(--color-success-line)]"
-                                      : "bg-warm border-line hover:border-faint"
-                                  }`}
-                                >
-                                  {c.render ? (
-                                    <svg viewBox="-40 -30 80 60" className="w-9 h-[26px]" aria-hidden="true">
-                                      {c.render()}
-                                    </svg>
-                                  ) : (
-                                    <span className="text-[22px] leading-none" aria-hidden="true">{c.icon}</span>
-                                  )}
-                                  {on && (
-                                    <span className="absolute bottom-1 right-1 w-2 h-2 rounded-full bg-success" aria-hidden="true" />
-                                  )}
-                                </span>
-                                <span className={`block text-[10.5px] font-semibold mt-1.5 leading-tight ${on ? "text-success-deep" : "text-muted"}`}>
-                                  {c.name}
-                                </span>
-                              </button>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    );
-                  })
-                )}
-              </div>
-
-              <Link
-                href="/shop"
-                className="text-center text-[13px] font-semibold text-muted hover:text-charcoal transition-colors border-t border-line px-5 py-3"
-              >
-                Garden Shop →
-              </Link>
-            </div>
-          </div>
-        </>
-      )}
     </div>
   );
 }
