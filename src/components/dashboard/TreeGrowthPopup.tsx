@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import TreeEvolution from "@/components/level-test/TreeEvolution";
 import { LEVEL_ORDER, LEVEL_PATH, type CefrLevel } from "@/lib/tree";
-import { treeStageForLevel } from "@/lib/level";
+import { treeStageForLevel, veteranTiers } from "@/lib/level";
 
 type Growth = {
   fromStage: CefrLevel;
@@ -11,10 +11,13 @@ type Growth = {
   fromSpecies: CefrLevel;
   toSpecies: CefrLevel;
   promoted: boolean;
+  /** Lv.50+: a new canopy tier (and keepsake) rather than a new stage. */
+  grewTaller: boolean;
 };
 
 // Celebrates the tree getting visibly bigger — either a numeric level
-// crossing into the next growth stage (every 5 levels) or a CEFR promotion
+// crossing into the next growth stage (every 10 levels, or a new canopy tier
+// past Lv.50) or a CEFR promotion
 // changing the species — with a full-screen popup instead of TreeCard's old
 // quiet inline banner. Fires once per transition via a localStorage diff.
 export default function TreeGrowthPopup({
@@ -34,12 +37,16 @@ export default function TreeGrowthPopup({
     localStorage.setItem("kroot-tree-species", species);
     const prevStage = localStorage.getItem("kroot-tree-stage") as CefrLevel | null;
     localStorage.setItem("kroot-tree-stage", stage);
+    const tiers = veteranTiers(level);
+    const prevTiersRaw = localStorage.getItem("kroot-tree-tiers");
+    localStorage.setItem("kroot-tree-tiers", String(tiers));
+    const tiersGrew = prevTiersRaw !== null && tiers > Number(prevTiersRaw);
 
     const speciesGrew =
       !!prevSpecies && prevSpecies !== species && LEVEL_ORDER.indexOf(species) > LEVEL_ORDER.indexOf(prevSpecies);
     const stageGrew =
       !!prevStage && prevStage !== stage && LEVEL_ORDER.indexOf(stage) > LEVEL_ORDER.indexOf(prevStage);
-    if (!speciesGrew && !stageGrew) return;
+    if (!speciesGrew && !stageGrew && !tiersGrew) return;
 
     const t = setTimeout(() => {
       setGrowth({
@@ -48,6 +55,7 @@ export default function TreeGrowthPopup({
         fromSpecies: prevSpecies ?? species,
         toSpecies: species,
         promoted: speciesGrew,
+        grewTaller: !speciesGrew && !stageGrew && tiersGrew,
       });
     }, 500);
     return () => clearTimeout(t);
@@ -80,10 +88,14 @@ export default function TreeGrowthPopup({
           className="pointer-events-auto w-full max-w-[420px] bg-white rounded-[24px] shadow-[0_30px_70px_-20px_rgba(40,35,25,.35)] px-8 pt-9 pb-8 text-center"
         >
           <b className="block text-[13px] font-extrabold tracking-[.08em] uppercase text-[#16A34A] mb-1">
-            {growth.promoted ? "Promotion!" : "Your tree grew!"}
+            {growth.promoted ? "Promotion!" : growth.grewTaller ? "Taller!" : "Your tree grew!"}
           </b>
           <p className="text-[21px] font-extrabold text-[#221F1B] mb-4 tracking-tight">
-            {growth.promoted ? "A brand new tree! 🌳" : `Say hello to the ${treeName}! 🌳`}
+            {growth.promoted
+              ? "A brand new tree! 🌳"
+              : growth.grewTaller
+              ? "A new canopy tier — and a keepsake 🌲"
+              : `Say hello to the ${treeName}! 🌳`}
           </p>
 
           <TreeEvolution

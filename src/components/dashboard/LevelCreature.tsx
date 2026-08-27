@@ -212,12 +212,15 @@ export default function LevelCreature({
   level,
   costumeIds = [],
   species,
+  hideGround = false,
 }: {
   /** Growth stage (player level band) — how big the tree is. */
   level: CefrLevel;
   costumeIds?: string[];
   /** Tree species (CEFR grade) — what kind of tree it is. Defaults to the stage. */
   species?: CefrLevel;
+  /** VeteranTree draws its own ground further down; skip the stage's soil mound. */
+  hideGround?: boolean;
 }) {
   const theme = SPECIES[species ?? level];
   const conifer = theme.shape === "conifer";
@@ -265,7 +268,7 @@ export default function LevelCreature({
       // Seed — half-buried in a soil mound, fast asleep. zzz floats above.
       return frame(
         <>
-          <Ground id={id} rx={46} cy={206} />
+          {!hideGround && <Ground id={id} rx={46} cy={206} />}
           <ellipse cx="110" cy="202" rx="34" ry="7" fill="#DCC79E" />
           <g className="char-tumble">
             <g className="sway">
@@ -299,7 +302,7 @@ export default function LevelCreature({
       // Sprout — cotyledon leaves spread like arms, sparkly first-day eyes.
       return frame(
         <>
-          <Ground id={id} rx={48} cy={212} />
+          {!hideGround && <Ground id={id} rx={48} cy={212} />}
           <g className="char-stroll">
             <g className="sway">
               <path d="M110 205 C110 180 110 168 110 156" stroke="#4E9A6D" strokeWidth="6.5" strokeLinecap="round" />
@@ -334,7 +337,7 @@ export default function LevelCreature({
       // Young tree — one waving branch and the species' first blossom.
       return frame(
         <>
-          <Ground id={id} rx={82} cy={212} />
+          {!hideGround && <Ground id={id} rx={82} cy={212} />}
           <g className="sway">
             <Trunk id={id} d="M110 205 C110 175 108 160 108 142" width={13} bark="M106 196 q3 -3 6 0 M107 184 q3 -3 6 0" />
             {conifer ? (
@@ -364,7 +367,7 @@ export default function LevelCreature({
       // Growing tree — bigger canopy, taller trunk, a bluebird friend.
       return frame(
         <>
-          <Ground id={id} rx={88} cy={216} />
+          {!hideGround && <Ground id={id} rx={88} cy={216} />}
           <g className="sway">
             <Trunk id={id} d="M110 208 C110 172 108 152 108 128" width={15} bark="M105 196 q4 -3 8 0 M106 182 q4 -3 8 0" />
             <path d="M108 160 C88 154 76 140 74 124 C92 128 103 142 108 156Z" fill={`url(#${id}-trunk)`} />
@@ -402,7 +405,7 @@ export default function LevelCreature({
       // Blossoming — the canopy dotted with the species' blossoms or young fruit.
       return frame(
         <>
-          <Ground id={id} rx={88} cy={216} />
+          {!hideGround && <Ground id={id} rx={88} cy={216} />}
           <g className="sway">
             <Trunk id={id} d="M110 208 C110 172 108 152 108 128" width={15} bark="M105 196 q4 -3 8 0 M106 182 q4 -3 8 0" />
             <path d="M108 160 C88 154 76 140 74 124 C92 128 103 142 108 156Z" fill={`url(#${id}-trunk)`} />
@@ -435,7 +438,7 @@ export default function LevelCreature({
       // Fully grown — the full harvest, a little crown, mastery sparkles.
       return frame(
         <>
-          <Ground id={id} rx={88} cy={216} />
+          {!hideGround && <Ground id={id} rx={88} cy={216} />}
           <g className="sway">
             <Trunk id={id} d="M110 208 C110 172 108 152 108 128" width={15} bark="M105 196 q4 -3 8 0 M106 182 q4 -3 8 0" />
             <path d="M108 160 C88 154 76 140 74 124 C92 128 103 142 108 156Z" fill={`url(#${id}-trunk)`} />

@@ -5,7 +5,8 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { COSTUMES, costumeById } from "@/lib/costumes";
 import { LEVEL_ORDER, LEVEL_PATH, SPECIES, type CefrLevel } from "@/lib/tree";
-import { MAX_LEVEL, treeStageForLevel } from "@/lib/level";
+import { FULLY_GROWN_LEVEL, MAX_LEVEL, treeHeightMetres, treeStageForLevel } from "@/lib/level";
+import VeteranTree, { VETERAN_MILESTONES, veteranFrameHeight } from "@/components/dashboard/VeteranTree";
 import SpeechBubble from "@/components/ui/SpeechBubble";
 import LevelCreature from "@/components/dashboard/LevelCreature";
 import TreeGrowthPopup from "@/components/dashboard/TreeGrowthPopup";
@@ -17,8 +18,8 @@ const TREE_PHRASES = [
   { kr: "같이 자라요", en: "let's grow together" },
 ];
 
-// One label per 5-level tree stage.
-const STAGE_RANGES = ["1-5", "6-10", "11-15", "16-20", "21-25", "26-30"];
+// One label per 10-level tree stage; from 50 the tree only grows taller.
+const STAGE_RANGES = ["1-9", "10-19", "20-29", "30-39", "40-49", "50+"];
 
 export default function TreeCard({
   level,
@@ -93,9 +94,14 @@ export default function TreeCard({
   const sp = SPECIES[species ?? stage];
   const stageIdx = LEVEL_ORDER.indexOf(stage);
   const maxed = level >= MAX_LEVEL;
+  // Lv.50+: same card width, taller frame — the trunk keeps growing.
+  const veteran = level >= FULLY_GROWN_LEVEL;
+  const frameH = veteran ? veteranFrameHeight(level) : 230;
+  const metres = treeHeightMetres(level);
+  const nextKeepsake = VETERAN_MILESTONES.find((m) => m.level > level);
 
   return (
-    <div className="relative border border-[#E3DDD0] p-[clamp(18px,3.6vw,26px)] mb-3.5 grid grid-cols-1 sm:grid-cols-[auto_1fr] gap-[clamp(18px,4vw,32px)] items-center bg-white rotate-[-0.4deg] shadow-[0_14px_30px_-18px_rgba(60,50,30,.35)]">
+    <div className={`relative border border-[#E3DDD0] p-[clamp(18px,3.6vw,26px)] mb-3.5 grid grid-cols-1 sm:grid-cols-[auto_1fr] gap-[clamp(18px,4vw,32px)] ${veteran ? "items-start" : "items-center"} bg-white rotate-[-0.4deg] shadow-[0_14px_30px_-18px_rgba(60,50,30,.35)]`}>
       <TreeGrowthPopup level={level} species={species} />
       <span
         aria-hidden="true"
@@ -111,7 +117,7 @@ export default function TreeCard({
           className="flex justify-center px-3 pt-3"
           style={{ background: "linear-gradient(180deg,#DFF1FF 0%,#F0FBF1 62%,#E4F3DA 100%)" }}
         >
-          <svg viewBox="0 0 220 230" className="w-[clamp(140px,20vw,190px)] h-auto" aria-hidden="true">
+          <svg viewBox={`0 0 220 ${frameH}`} className="w-[clamp(140px,20vw,190px)] h-auto transition-[height] duration-500" aria-hidden="true">
             {/* garden backdrop: sun, clouds, and a grass hill under the soil */}
             <defs>
               <radialGradient id="tc-sun" cx="50%" cy="50%" r="50%">
@@ -131,8 +137,12 @@ export default function TreeCard({
               <ellipse cx="60" cy="32" rx="11" ry="5" />
               <ellipse cx="140" cy="60" rx="12" ry="4.6" opacity=".7" />
             </g>
-            <ellipse cx="110" cy="234" rx="150" ry="34" fill="url(#tc-hill)" />
-            <LevelCreature level={stage} costumeIds={equipped} species={species} />
+            <ellipse cx="110" cy={frameH + 4} rx="150" ry="34" fill="url(#tc-hill)" />
+            {veteran && species ? (
+              <VeteranTree level={level} species={species} costumeIds={equipped} />
+            ) : (
+              <LevelCreature level={stage} costumeIds={equipped} species={species} />
+            )}
             <g className="bob">
               <circle cx="60" cy="78" r="6" fill="#FACC15" />
             </g>
@@ -142,7 +152,7 @@ export default function TreeCard({
           </svg>
         </div>
         <figcaption className="absolute bottom-1 left-0 right-0 text-center text-[10px] font-bold text-[#8A8478]">
-          오늘의 나무 🌱
+          {veteran ? `오늘의 나무 · ${metres}m 🌲` : "오늘의 나무 🌱"}
         </figcaption>
       </figure>
 
@@ -152,23 +162,34 @@ export default function TreeCard({
         </p>
         <h2 className="font-semibold text-lg tracking-[-0.01em] mb-0.5">
           {sp.name} <span className="text-[#A19A8C] font-medium">· {treeName}</span>
-          <span className="inline-block ml-2 text-[12.5px] font-semibold bg-[#F0FDF4] text-[#16A34A] border border-[#BBF7D0] rounded-md px-2 py-px align-[2px]">
+          <span
+            className={`inline-block ml-2 text-[12.5px] font-semibold border rounded-md px-2 py-px align-[2px] ${
+              veteran ? "bg-[#FFF8E6] text-[#B7791F] border-[#F3D98A]" : "bg-[#F0FDF4] text-[#16A34A] border-[#BBF7D0]"
+            }`}
+          >
             Lv. {level}
           </span>
         </h2>
+        {veteran && (
+          <p className="font-semibold text-[22px] text-[#B7791F] tracking-[-0.01em] tabular-nums mb-0.5">
+            {metres}
+            <span className="text-[12px] text-[#6B6560] font-bold ml-1">m tall</span>
+          </p>
+        )}
         <p className="text-[13.5px] text-[#6B6560] mb-4">
-          <span className="kr font-semibold">{sp.krName}</span> — {blurb}
+          <span className="kr font-semibold">{sp.krName}</span> —{" "}
+          {veteran ? "Fully grown, still climbing. Every ten levels the canopy gains a tier." : blurb}
         </p>
 
         <div className="flex items-center gap-3 mb-4">
           <div className="flex-1 h-1.5 bg-[#EFE9DB] rounded-full overflow-hidden">
             <i
-              className="not-italic block h-full bg-[#16A34A] rounded-full transition-[width] duration-1000"
+              className={`not-italic block h-full rounded-full transition-[width] duration-1000 ${veteran ? "bg-[#B7791F]" : "bg-[#16A34A]"}`}
               style={{ width: `${fill}%` }}
             />
           </div>
           <span className="text-[12.5px] text-[#6B6560] font-medium whitespace-nowrap">
-            {maxed ? "Fully grown 🎉" : `${xpInto}/${xpNeeded} XP to Lv. ${level + 1}`}
+            {maxed ? "Reached the stars 🌟" : `${xpInto}/${xpNeeded} XP to Lv. ${level + 1}`}
           </span>
         </div>
 
@@ -200,6 +221,36 @@ export default function TreeCard({
             );
           })}
         </div>
+
+        {/* keepsake ladder — what the taller tree has earned, and what's next */}
+        {veteran && (
+          <div className="mt-4 pt-3.5 border-t border-dashed border-[#E3DDD0]">
+            <p className="text-[11.5px] font-extrabold tracking-[.08em] uppercase text-[#B7AE9C] mb-2">
+              Canopy keepsakes
+            </p>
+            <div className="flex flex-wrap gap-1.5">
+              {VETERAN_MILESTONES.map((m) => {
+                const on = level >= m.level;
+                const next = nextKeepsake?.level === m.level;
+                return (
+                  <span
+                    key={m.level}
+                    className={`text-[12px] font-semibold rounded-full px-2.5 py-1 border ${
+                      on
+                        ? "bg-[#FFF8E6] border-[#F3D98A] text-[#B7791F]"
+                        : next
+                        ? "bg-white border-[#E3DDD0] text-[#6B6560]"
+                        : "bg-white border-[#E3DDD0] text-[#A19A8C] opacity-50"
+                    }`}
+                  >
+                    <span className="tabular-nums">Lv.{m.level}</span> · {m.name}
+                    {on && " ✓"}
+                  </span>
+                );
+              })}
+            </div>
+          </div>
+        )}
 
         {/* wardrobe strip — dress the tree without leaving the garden */}
         {userId && ownedIds && (

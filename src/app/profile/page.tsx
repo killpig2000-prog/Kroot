@@ -92,7 +92,7 @@ export default async function ProfilePage() {
                     <div className="h-full rounded-full bg-[#16A34A]" style={{ width: `${pct}%` }} />
                   </div>
                   <small className="block mt-1 text-[12px] text-[#6B6560]">
-                    {atMaxLevel ? "Max level 🎉" : `${into}/${needed} XP to Lv. ${playerLevel + 1}`}
+                    {atMaxLevel ? "Reached the stars 🌟" : `${into}/${needed} XP to Lv. ${playerLevel + 1}`}
                   </small>
                 </div>
               </div>
