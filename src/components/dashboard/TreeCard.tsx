@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
-import { COSTUMES, SceneLayer, costumeById, skyFor } from "@/lib/costumes";
+import { COSTUMES, GARDEN_SLOTS, SLOT_LABELS, SceneLayer, WEARABLE_SLOTS, costumeById, skyFor } from "@/lib/costumes";
 import { LEVEL_ORDER, LEVEL_PATH, SPECIES, type CefrLevel } from "@/lib/tree";
 import { FULLY_GROWN_LEVEL, MAX_LEVEL, treeHeightMetres, treeStageForLevel } from "@/lib/level";
 import VeteranTree, { VETERAN_MILESTONES, veteranFrameHeight } from "@/components/dashboard/VeteranTree";
@@ -46,8 +46,19 @@ export default function TreeCard({
   const [fill, setFill] = useState(0);
   const [equipped, setEquipped] = useState<string[]>(costumeIds);
   const [busy, setBusy] = useState(false);
+  const [wardrobeOpen, setWardrobeOpen] = useState(false);
 
   const owned = COSTUMES.filter((c) => (ownedIds ?? []).includes(c.id));
+  const slots = [...WEARABLE_SLOTS, ...GARDEN_SLOTS];
+
+  useEffect(() => {
+    if (!wardrobeOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [wardrobeOpen]);
 
   async function toggleCostume(costumeId: string) {
     if (busy || !userId) return;
@@ -262,60 +273,140 @@ export default function TreeCard({
           </div>
         )}
 
-        {/* wardrobe strip — dress the tree without leaving the garden */}
+        {/* wardrobe — opens a popup so the card stays a fixed height */}
         {userId && ownedIds && (
           <div className="mt-4 pt-3.5 border-t border-dashed border-line">
-            <div className="flex items-center justify-between mb-2">
-              <b className="text-[12.5px] font-bold">My costume</b>
+            <button
+              onClick={() => setWardrobeOpen(true)}
+              className="w-full flex items-center justify-between gap-2 rounded-xl border border-line bg-warm px-3 py-2.5 hover:border-faint transition-colors"
+            >
+              <span className="flex items-center gap-2 min-w-0">
+                <b className="text-[12.5px] font-bold whitespace-nowrap">My costume</b>
+                {owned.length === 0 ? (
+                  <span className="text-[12px] text-muted truncate">No costumes yet</span>
+                ) : (
+                  <span className="flex -space-x-1.5">
+                    {owned
+                      .filter((c) => equipped.includes(c.id))
+                      .slice(0, 4)
+                      .map((c) => (
+                        <span
+                          key={c.id}
+                          className="w-6 h-6 rounded-full bg-success-bg border border-white flex items-center justify-center text-[12px]"
+                          aria-hidden="true"
+                        >
+                          {c.render ? (
+                            <svg viewBox="-40 -30 80 60" className="w-4 h-[10px]" aria-hidden="true">
+                              {c.render()}
+                            </svg>
+                          ) : (
+                            c.icon
+                          )}
+                        </span>
+                      ))}
+                    {equipped.length === 0 && (
+                      <span className="text-[12px] text-muted">nothing equipped</span>
+                    )}
+                  </span>
+                )}
+              </span>
+              <span className="text-[12.5px] font-semibold text-muted whitespace-nowrap">Dress up →</span>
+            </button>
+          </div>
+        )}
+      </div>
+
+      {userId && ownedIds && wardrobeOpen && (
+        <>
+          <button
+            aria-label="Close"
+            onClick={() => setWardrobeOpen(false)}
+            className="fixed inset-0 z-[60] bg-[#282319]/45 cursor-default"
+          />
+          <div className="fixed inset-0 z-[70] flex items-center justify-center px-4 pointer-events-none">
+            <div
+              role="dialog"
+              aria-modal="true"
+              aria-label="My costume"
+              className="pointer-events-auto w-full max-w-[420px] max-h-[85vh] flex flex-col bg-white rounded-[20px] shadow-[0_30px_70px_-20px_rgba(40,35,25,.35)]"
+            >
+              <div className="flex items-center justify-between px-5 pt-5 pb-3">
+                <h3 className="font-semibold text-[16px] tracking-[-0.01em]">My costume</h3>
+                <button
+                  onClick={() => setWardrobeOpen(false)}
+                  aria-label="Close"
+                  className="w-7 h-7 flex items-center justify-center rounded-full text-muted hover:bg-warm-2 transition-colors"
+                >
+                  ✕
+                </button>
+              </div>
+
+              <div className="overflow-y-auto px-5 pb-5">
+                {owned.length === 0 ? (
+                  <p className="text-[13px] text-muted py-4">
+                    No costumes yet — treat your tree at the shop.
+                  </p>
+                ) : (
+                  slots.map((slot) => {
+                    const items = owned.filter((c) => c.slot === slot);
+                    if (items.length === 0) return null;
+                    return (
+                      <div key={slot} className="mb-4 last:mb-0">
+                        <p className="text-[10.5px] font-extrabold tracking-[.07em] uppercase text-faint mb-1.5">
+                          {SLOT_LABELS[slot].icon} {SLOT_LABELS[slot].en}
+                        </p>
+                        <div className="flex gap-2.5 overflow-x-auto -mx-1 px-1 pb-1">
+                          {items.map((c) => {
+                            const on = equipped.includes(c.id);
+                            return (
+                              <button
+                                key={c.id}
+                                onClick={() => toggleCostume(c.id)}
+                                disabled={busy}
+                                aria-pressed={on}
+                                className="flex-none w-[74px] text-center disabled:opacity-60"
+                              >
+                                <span
+                                  className={`relative w-[74px] h-14 flex items-center justify-center rounded-xl border transition-all ${
+                                    on
+                                      ? "bg-success-bg border-success-line shadow-[0_3px_0_var(--color-success-line)]"
+                                      : "bg-warm border-line hover:border-faint"
+                                  }`}
+                                >
+                                  {c.render ? (
+                                    <svg viewBox="-40 -30 80 60" className="w-9 h-[26px]" aria-hidden="true">
+                                      {c.render()}
+                                    </svg>
+                                  ) : (
+                                    <span className="text-[22px] leading-none" aria-hidden="true">{c.icon}</span>
+                                  )}
+                                  {on && (
+                                    <span className="absolute bottom-1 right-1 w-2 h-2 rounded-full bg-success" aria-hidden="true" />
+                                  )}
+                                </span>
+                                <span className={`block text-[10.5px] font-semibold mt-1.5 leading-tight ${on ? "text-success-deep" : "text-muted"}`}>
+                                  {c.name}
+                                </span>
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    );
+                  })
+                )}
+              </div>
+
               <Link
                 href="/shop"
-                className="text-[12.5px] font-semibold text-muted hover:text-charcoal transition-colors whitespace-nowrap"
+                className="text-center text-[13px] font-semibold text-muted hover:text-charcoal transition-colors border-t border-line px-5 py-3"
               >
                 Garden Shop →
               </Link>
             </div>
-            {owned.length === 0 ? (
-              <span className="text-[12.5px] text-muted">
-                No costumes yet — treat your tree at the shop.
-              </span>
-            ) : (
-              <div className="flex flex-wrap gap-2">
-                {owned.map((c) => {
-                  const on = equipped.includes(c.id);
-                  return (
-                    <button
-                      key={c.id}
-                      onClick={() => toggleCostume(c.id)}
-                      disabled={busy}
-                      title={c.name}
-                      aria-label={c.name}
-                      aria-pressed={on}
-                      className={`relative w-11 h-11 flex items-center justify-center rounded-xl border transition-all disabled:opacity-60 ${
-                        on
-                          ? "bg-success-bg border-success-line ring-2 ring-success-line ring-offset-1 ring-offset-white"
-                          : "bg-warm border-line hover:border-faint"
-                      }`}
-                    >
-                      {c.render ? (
-                        <svg viewBox="-40 -30 80 60" className="w-6 h-[17px]" aria-hidden="true">
-                          {c.render()}
-                        </svg>
-                      ) : (
-                        <span className="text-base leading-none" aria-hidden="true">{c.icon}</span>
-                      )}
-                      {on && (
-                        <span className="absolute -top-1.5 -right-1.5 w-4 h-4 rounded-full bg-success text-white text-[9px] font-bold flex items-center justify-center leading-none">
-                          ✓
-                        </span>
-                      )}
-                    </button>
-                  );
-                })}
-              </div>
-            )}
           </div>
-        )}
-      </div>
+        </>
+      )}
     </div>
   );
 }
