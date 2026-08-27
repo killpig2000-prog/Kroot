@@ -3,16 +3,21 @@ import { redirect } from "next/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import { createClient, getClaimsUser, getDashboardProfile } from "@/lib/supabase/server";
-import { UNIT_ICONS, getChaptersForTopic, getUnitTitle, unlockedVocabTiers } from "@/lib/vocabulary";
+import { MINUTES_PER_SESSION, getChaptersForTopic, getUnitTitle, unlockedVocabTiers } from "@/lib/vocabulary";
+import { GROWTH_STAGES, growthStage, hanjaOf } from "@/lib/word-notes";
 import VocabSearch from "@/components/vocabulary/VocabSearch";
 import { LEVEL_ORDER, isCefrLevel, nextLevel, type CefrLevel } from "@/lib/tree";
 
 const TOPIC_KEY = "daily-life";
+const GROUP_SIZE = 10;
 
+// The vocab index as a notebook: a table of contents on the left (units,
+// grouped ten at a time), and on the right a preview of the selected unit's
+// words — so you can read what a unit teaches before you commit to it.
 export default async function VocabularyPage({
   searchParams,
 }: {
-  searchParams: Promise<{ level?: string }>;
+  searchParams: Promise<{ level?: string; unit?: string }>;
 }) {
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
@@ -31,7 +36,9 @@ export default async function VocabularyPage({
   ]);
 
   const myLevel = (profile?.current_level ?? "A1") as CefrLevel;
-  const reviewedKeys = new Set((progressRows ?? []).map((r) => r.word_key));
+  const reviewsByKey = new Map(
+    (progressRows ?? []).map((r) => [r.word_key as string, (r.correct_count ?? 0) + (r.incorrect_count ?? 0)])
+  );
   // Words past their review date have "wilted" — units containing them show 💧.
   const now = new Date();
   const thirstyKeys = new Set(
@@ -41,32 +48,32 @@ export default async function VocabularyPage({
   );
 
   const unlockedTiers = unlockedVocabTiers(myLevel);
-
   const requested = isCefrLevel(sp.level) ? sp.level : myLevel;
   const level = unlockedTiers.has(requested) ? requested : myLevel;
   const next = nextLevel(level);
 
   const chapters = getChaptersForTopic(TOPIC_KEY, level);
-
   const units = chapters.map((words, i) => {
-    const known = words.filter((w) => reviewedKeys.has(w.key)).length;
+    const known = words.filter((w) => reviewsByKey.has(w.key)).length;
     const thirsty = words.filter((w) => thirstyKeys.has(w.key)).length;
     const status = known === 0 ? "not-started" : known < words.length ? "in-progress" : "done";
     return { index: i, words, known, thirsty, status };
   });
   const doneUnits = units.filter((u) => u.status === "done").length;
+  const rootedWords = units.reduce((sum, u) => sum + u.known, 0);
+  const totalWords = units.reduce((sum, u) => sum + u.words.length, 0);
 
-  // 120 flat unit rows were an endless scroll — group them into collapsible
-  // sets of ten, with the set you're currently working through open.
-  const GROUP_SIZE = 10;
   const groups: (typeof units)[] = [];
   for (let g = 0; g < units.length; g += GROUP_SIZE) groups.push(units.slice(g, g + GROUP_SIZE));
-  const continueUnit = units.find((u) => u.status !== "done") ?? null;
-  const openGroupIndex = continueUnit ? Math.floor(continueUnit.index / GROUP_SIZE) : -1;
 
-  // The three level pills shown in the hero: previous · current · next.
-  const levelIdx = LEVEL_ORDER.indexOf(level);
-  const pillLevels = LEVEL_ORDER.slice(Math.max(0, levelIdx - 1), levelIdx + 2);
+  const continueUnit = units.find((u) => u.status !== "done") ?? units[0] ?? null;
+  const requestedUnit = Number(sp.unit);
+  const selected =
+    Number.isInteger(requestedUnit) && units[requestedUnit] ? units[requestedUnit] : continueUnit;
+  const openGroupIndex = selected ? Math.floor(selected.index / GROUP_SIZE) : -1;
+
+  const sessionHref = (unit: number) => `/vocabulary/${TOPIC_KEY}/session?chapter=${unit}&level=${level}`;
+  const unitHref = (unit: number) => `/vocabulary?level=${level}&unit=${unit}`;
 
   return (
     <div className="min-h-screen bg-[#FFFFFF] text-charcoal">
@@ -78,7 +85,7 @@ export default async function VocabularyPage({
           avatarUrl={profile?.avatar_url}
         />
 
-        <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] md:pb-[60px] max-w-[820px]">
+        <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] md:pb-[60px] max-w-[980px]">
           {/* breadcrumb */}
           <div className="flex gap-2 text-[13px] text-faint mb-[18px]">
             <Link href="/dashboard" className="hover:text-charcoal transition-colors">
@@ -88,190 +95,242 @@ export default async function VocabularyPage({
             <b className="text-charcoal font-semibold">Vocabulary</b>
           </div>
 
-          <VocabSearch unlockedLevels={[...unlockedTiers]} />
-
-          {/* growth-stage legend */}
-          <div className="flex gap-4 flex-wrap mb-5 text-[13px] text-muted">
-            <span>🌰 Seed</span>
-            <span>🌱 Sprout</span>
-            <span>🌿 Rooting</span>
-            <span>🌳 Settled</span>
-          </div>
-
-          {/* level hero */}
-          <div className="border border-line rounded-[16px] px-6 py-6 mb-7 flex items-center gap-5 flex-wrap">
-            <span className="w-[70px] h-[70px] rounded-[14px] bg-success-bg border border-success-line flex items-center justify-center text-[34px] flex-none">
-              🪴
-            </span>
-            <div className="flex-1 min-w-[220px]">
-              <h1 className="font-bold text-[22px] tracking-[-0.02em] mb-0.5">
-                Level {level} vocabulary
+          {/* head */}
+          <div className="flex items-end justify-between gap-4 mb-4 flex-wrap">
+            <div>
+              <h1 className="font-bold text-[22px] tracking-[-0.02em] flex items-center">
+                <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[#F5F3FF] text-[#7C3AED] border border-[#DDD6FE] items-center justify-center kr text-[15px] mr-[9px]">
+                  단
+                </span>
+                Vocabulary · {level}
               </h1>
-              <p className="text-sm text-muted mb-3">
-                {next ? `Finish every unit to grow into ${next}` : "Top level — keep those roots strong"}
+              <p className="text-[13px] text-muted mt-1">
+                {rootedWords} of {totalWords} words rooted · {doneUnits}/{units.length} units ·{" "}
+                {next ? `finish them all to grow into ${next}` : "top level — keep the roots strong"}
               </p>
-              <div className="flex items-center gap-3">
-                <div className="flex-1 max-w-[300px] h-2 rounded-full bg-line overflow-hidden">
-                  <i
-                    className="not-italic block h-full rounded-full bg-success transition-all"
-                    style={{ width: `${units.length ? (doneUnits / units.length) * 100 : 0}%` }}
-                  />
-                </div>
-                <b className="text-[13.5px] font-bold flex-none">
-                  {doneUnits}/{units.length} units
-                </b>
-              </div>
             </div>
-            <div className="flex gap-1.5 flex-none">
-              {pillLevels.map((lv) =>
+            <div className="flex gap-1.5 flex-wrap">
+              {LEVEL_ORDER.map((lv) =>
                 unlockedTiers.has(lv) ? (
                   <Link
                     key={lv}
                     href={`/vocabulary?level=${lv}`}
-                    className={`rounded-[10px] px-3.5 py-2 text-[13.5px] font-bold border transition-colors ${
+                    className={`rounded-[8px] px-3 py-1.5 text-[12.5px] font-bold border transition-colors ${
                       lv === level
-                        ? "bg-success border-success text-white"
+                        ? "bg-charcoal border-charcoal text-white"
                         : "bg-white border-line text-faint hover:border-faint"
                     }`}
                   >
                     {lv}
                   </Link>
                 ) : (
-                  <div
+                  <span
                     key={lv}
-                    className="rounded-[10px] px-3.5 py-2 text-[13.5px] font-bold border bg-warm border-line text-faint grayscale opacity-60 cursor-not-allowed select-none text-center leading-tight"
+                    title="Pass the promotion test to unlock this level"
+                    className="rounded-[8px] px-3 py-1.5 text-[12.5px] font-bold border bg-warm border-line text-faint opacity-60 cursor-not-allowed select-none"
                   >
                     🔒 {lv}
-                    <small className="block text-[10.5px] font-bold">promotion test</small>
-                  </div>
+                  </span>
                 )
               )}
             </div>
           </div>
 
-          {/* continue card: one obvious next step above the unit groups */}
-          {continueUnit && (
-            <Link
-              href={`/vocabulary/${TOPIC_KEY}/session?chapter=${continueUnit.index}&level=${level}`}
-              className="flex items-center gap-3.5 border-[1.5px] border-success-line bg-success-bg rounded-[14px] px-5 py-4 mb-6 transition-all hover:-translate-y-0.5 group"
-            >
-              <span className="flex-none w-10 h-10 rounded-[10px] bg-white border border-success-line flex items-center justify-center text-lg transition-transform group-hover:scale-110">
-                ▶
-              </span>
-              <span className="flex-1 min-w-[170px]">
-                <b className="block font-semibold text-sm text-success-deep">
-                  Continue · {getUnitTitle(level, continueUnit.index)}
-                </b>
-                <span className="text-[13px] text-[#4D7C5F]">
-                  {continueUnit.known}/{continueUnit.words.length} known — pick up where you left off
-                </span>
-              </span>
-              <span className="text-[13px] font-semibold text-success transition-transform group-hover:translate-x-0.5">
-                Start →
-              </span>
-            </Link>
-          )}
+          <VocabSearch unlockedLevels={[...unlockedTiers]} />
 
-          {/* units, grouped ten at a time */}
-          <h2 className="font-bold text-[16px] tracking-[-0.01em] mb-3.5">Units in {level}</h2>
-          <div className="grid gap-3 mb-7">
-            {groups.map((group, gi) => {
-              const first = group[0].index + 1;
-              const last = group[group.length - 1].index + 1;
-              const groupDone = group.filter((u) => u.status === "done").length;
-              const groupThirsty = group.reduce((sum, u) => sum + u.thirsty, 0);
-              return (
-                <details
-                  key={gi}
-                  open={gi === openGroupIndex}
-                  className="border border-line rounded-[14px] bg-white overflow-hidden"
-                >
-                  <summary className="flex items-center gap-3 px-5 py-3.5 cursor-pointer select-none list-none [&::-webkit-details-marker]:hidden hover:bg-warm transition-colors">
-                    <b className="flex-1 font-bold text-[14.5px]">
-                      Units {first}–{last}
-                    </b>
-                    {groupThirsty > 0 && (
-                      <span className="text-[11.5px] font-semibold text-sky-deep bg-[#EFF6FF] border border-sky-line rounded-full px-2.5 py-[2px]">
-                        💧 {groupThirsty}
-                      </span>
-                    )}
-                    <span className="flex-none flex items-center gap-2">
-                      <span className="w-[74px] h-1.5 rounded-full bg-line overflow-hidden">
-                        <span
-                          className="block h-full rounded-full bg-success"
-                          style={{ width: `${(groupDone / group.length) * 100}%` }}
-                        />
-                      </span>
-                      <small className="text-[12px] text-muted font-semibold tabular-nums">
-                        {groupDone}/{group.length}
-                      </small>
-                      <span className="text-faint text-[11px]">▾</span>
-                    </span>
-                  </summary>
-                  <div className="grid gap-2.5 px-3.5 pb-3.5 pt-1 border-t border-dashed border-line">
-                    {group.map((u) => {
-                      const meta = UNIT_ICONS[u.index % UNIT_ICONS.length];
-                      return (
-                        <Link
-                          key={u.index}
-                          href={`/vocabulary/${TOPIC_KEY}/session?chapter=${u.index}&level=${level}`}
-                          className="border border-line rounded-[12px] bg-white px-4 py-3 flex items-center gap-3.5 transition-all duration-150 hover:border-success hover:bg-success-bg hover:-translate-y-0.5 group"
-                        >
-                          <span
-                            className="w-[40px] h-[40px] rounded-[11px] flex items-center justify-center text-[19px] flex-none transition-transform group-hover:scale-110"
-                            style={{ background: meta.bg }}
-                          >
-                            {meta.icon}
-                          </span>
-                          <span className="flex-1 min-w-0">
-                            <b className="block font-bold text-[14.5px]">{getUnitTitle(level, u.index)}</b>
-                            <small className="block text-[12.5px] text-muted">
-                              {u.words.length} word{u.words.length === 1 ? "" : "s"}
-                            </small>
-                          </span>
-                          <span className="text-right flex-none">
-                            <span
-                              className={`inline-block text-[12px] font-semibold rounded-full border px-3 py-[3px] mb-1 ${
-                                u.thirsty > 0
-                                  ? "text-sky-deep bg-[#EFF6FF] border-sky-line"
-                                  : u.status === "done"
-                                  ? "text-success bg-success-bg border-success-line"
-                                  : u.status === "in-progress"
-                                  ? "text-amber bg-[#FFFBEB] border-amber-line"
-                                  : "text-faint bg-warm border-line"
+          <div className="grid grid-cols-1 lg:grid-cols-[220px_minmax(0,1fr)] gap-6 lg:gap-8">
+            {/* ── table of contents ── */}
+            <nav
+              aria-label="Units"
+              className="order-2 lg:order-1 lg:border-r lg:border-line lg:pr-5 lg:sticky lg:top-6 lg:self-start lg:max-h-[calc(100vh-48px)] lg:overflow-y-auto"
+            >
+              <p className="text-[11px] font-extrabold tracking-[.07em] uppercase text-faint mb-2">
+                Contents · {units.length} units
+              </p>
+              <div className="flex flex-col gap-1">
+                {groups.map((group, gi) => {
+                  const first = group[0].index + 1;
+                  const last = group[group.length - 1].index + 1;
+                  const groupDone = group.filter((u) => u.status === "done").length;
+                  return (
+                    <details key={gi} open={gi === openGroupIndex} className="group/toc">
+                      <summary className="flex items-center gap-2 py-1.5 px-1.5 rounded-[8px] cursor-pointer select-none list-none [&::-webkit-details-marker]:hidden hover:bg-warm transition-colors">
+                        <span className="text-[10px] text-faint transition-transform group-open/toc:rotate-90">▶</span>
+                        <b className="flex-1 text-[12.5px] font-bold">
+                          Units {first}–{last}
+                        </b>
+                        <small className="text-[11px] text-faint tabular-nums font-semibold">
+                          {groupDone}/{group.length}
+                        </small>
+                      </summary>
+                      <div className="flex flex-col pb-1.5">
+                        {group.map((u) => {
+                          const on = selected?.index === u.index;
+                          const pg =
+                            u.thirsty > 0
+                              ? `💧 ${u.thirsty}`
+                              : u.status === "done"
+                              ? `${u.known}/${u.words.length}`
+                              : u.status === "in-progress"
+                              ? `${u.known}/${u.words.length}`
+                              : "—";
+                          return (
+                            <Link
+                              key={u.index}
+                              href={unitHref(u.index)}
+                              aria-current={on ? "true" : undefined}
+                              className={`flex items-baseline gap-2 px-2 py-[6px] rounded-[8px] text-[12.5px] transition-colors ${
+                                on
+                                  ? "bg-[#F5F3FF] text-[#6D28D9] font-bold"
+                                  : "hover:bg-warm"
                               }`}
                             >
-                              {u.thirsty > 0
-                                ? `💧 ${u.thirsty} thirsty`
-                                : u.status === "done"
-                                ? "Done"
-                                : u.status === "in-progress"
-                                ? "In progress"
-                                : "Not started"}
-                            </span>
-                            <small className="block text-[12px] text-faint">
-                              {u.known}/{u.words.length} known
-                            </small>
+                              <span className="w-[18px] text-[10.5px] text-faint tabular-nums flex-none">
+                                {u.index + 1}
+                              </span>
+                              <span
+                                className={`flex-1 min-w-0 truncate ${
+                                  u.status === "done" && !on ? "text-muted line-through decoration-line" : ""
+                                }`}
+                              >
+                                {getUnitTitle(level, u.index)}
+                              </span>
+                              <span
+                                className={`text-[10.5px] tabular-nums flex-none ${
+                                  u.thirsty > 0 ? "text-sky-deep font-bold" : on ? "text-[#7C3AED]" : "text-faint"
+                                }`}
+                              >
+                                {pg}
+                              </span>
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    </details>
+                  );
+                })}
+              </div>
+            </nav>
+
+            {/* ── unit preview ── */}
+            <section className="order-1 lg:order-2 min-w-0">
+              {selected ? (
+                <>
+                  <div className="flex items-end justify-between gap-4 pb-3.5 mb-1 border-b border-line">
+                    <div>
+                      <p className="text-[11px] font-extrabold tracking-[.06em] uppercase text-[#7C3AED] mb-1">
+                        Unit {selected.index + 1} · Units{" "}
+                        {Math.floor(selected.index / GROUP_SIZE) * GROUP_SIZE + 1}–
+                        {Math.min(units.length, (Math.floor(selected.index / GROUP_SIZE) + 1) * GROUP_SIZE)}
+                      </p>
+                      <h2 className="font-bold text-[22px] tracking-[-0.02em]">
+                        {getUnitTitle(level, selected.index)}
+                      </h2>
+                      <p className="text-[12.5px] text-muted mt-0.5">
+                        {selected.words.length} words · ~{MINUTES_PER_SESSION} min ·{" "}
+                        {selected.status === "done"
+                          ? "all rooted"
+                          : selected.known > 0
+                          ? `${selected.known} already sprouted`
+                          : "not planted yet"}
+                        {selected.thirsty > 0 && ` · 💧 ${selected.thirsty} thirsty`}
+                      </p>
+                    </div>
+                    <span
+                      className={`flex-none text-[11.5px] font-bold rounded-full border px-2.5 py-[3px] ${
+                        selected.thirsty > 0
+                          ? "text-sky-deep bg-[#EFF6FF] border-sky-line"
+                          : selected.status === "done"
+                          ? "text-success bg-success-bg border-success-line"
+                          : selected.status === "in-progress"
+                          ? "text-amber bg-[#FFFBEB] border-amber-line"
+                          : "text-faint bg-warm border-line"
+                      }`}
+                    >
+                      {selected.thirsty > 0
+                        ? "Needs water"
+                        : selected.status === "done"
+                        ? "Done"
+                        : selected.status === "in-progress"
+                        ? "In progress"
+                        : "New"}
+                    </span>
+                  </div>
+
+                  <div className="flex flex-col">
+                    {selected.words.map((w) => {
+                      const st = GROWTH_STAGES[growthStage(reviewsByKey.get(w.key) ?? 0)];
+                      const hanja = hanjaOf(w.korean);
+                      const thirsty = thirstyKeys.has(w.key);
+                      return (
+                        <div
+                          key={w.key}
+                          className="grid grid-cols-[22px_minmax(84px,auto)_1fr] sm:grid-cols-[22px_112px_1fr] items-center gap-x-3 gap-y-0.5 py-2.5 border-b border-dashed border-dash"
+                        >
+                          <span className="text-[14px]" title={`${st.label}${thirsty ? " · thirsty" : ""}`}>
+                            {thirsty ? "💧" : st.emoji}
                           </span>
-                        </Link>
+                          <span className="kr font-bold text-[17px] leading-tight">
+                            {w.korean}
+                            {hanja && (
+                              <small className="kr font-normal text-[11px] text-[#A08F4E] ml-1.5 align-middle">
+                                {hanja}
+                              </small>
+                            )}
+                          </span>
+                          <span className="min-w-0">
+                            <span className="block text-[13px] font-semibold">{w.meaning_en}</span>
+                            <span className="block text-[11.5px] text-muted truncate">
+                              <span className="kr">{w.example_kr}</span> · {w.example_en}
+                            </span>
+                          </span>
+                        </div>
                       );
                     })}
                   </div>
-                </details>
-              );
-            })}
-          </div>
 
-          {/* grow banner */}
-          <div className="border border-success-line bg-success-bg rounded-[14px] px-5 py-4 text-[13.5px] text-success-deep flex items-center gap-2.5">
-            <span className="text-base">🌳</span>
-            {next ? (
-              <span>
-                Complete all {units.length} units above to grow your tree into <b>{next}</b>.
-              </span>
-            ) : (
-              <span>You&apos;ve reached the canopy — review any unit to keep it fresh.</span>
-            )}
+                  <div className="flex items-center gap-3 flex-wrap mt-4">
+                    <Link
+                      href={sessionHref(selected.index)}
+                      className="rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-charcoal hover:bg-[#3F3F46] transition-colors"
+                    >
+                      {selected.status === "done"
+                        ? "Review this unit →"
+                        : selected.known > 0
+                        ? "Continue this unit →"
+                        : "Study this unit →"}
+                    </Link>
+                    {continueUnit && continueUnit.index !== selected.index && (
+                      <Link
+                        href={unitHref(continueUnit.index)}
+                        className="text-[12.5px] font-semibold text-muted hover:text-charcoal transition-colors"
+                      >
+                        or pick up where you left off · Unit {continueUnit.index + 1}
+                      </Link>
+                    )}
+                  </div>
+                </>
+              ) : (
+                <p className="text-[13px] text-muted py-6">No units at this level yet.</p>
+              )}
+
+              {/* growth legend + grow note */}
+              <div className="mt-7 pt-4 border-t border-line flex items-center justify-between gap-3 flex-wrap text-[12px] text-muted">
+                <span className="flex gap-3.5">
+                  {GROWTH_STAGES.map((s) => (
+                    <span key={s.label}>
+                      {s.emoji} {s.label}
+                    </span>
+                  ))}
+                  <span>💧 Thirsty</span>
+                </span>
+                {next && (
+                  <span>
+                    🌳 Finish all {units.length} units to grow into <b className="text-charcoal">{next}</b>
+                  </span>
+                )}
+              </div>
+            </section>
           </div>
         </main>
       </div>
