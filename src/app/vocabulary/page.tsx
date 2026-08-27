@@ -9,10 +9,10 @@ import VocabSearch from "@/components/vocabulary/VocabSearch";
 import { LEVEL_ORDER, isCefrLevel, nextLevel, type CefrLevel } from "@/lib/tree";
 
 const TOPIC_KEY = "daily-life";
-const GROUP_SIZE = 10;
+const GROUP_SIZE = 5;
 
 // The vocab index as a notebook: a table of contents on the left (units,
-// grouped ten at a time), and on the right a preview of the selected unit's
+// grouped five at a time), and on the right a preview of the selected unit's
 // words — so you can read what a unit teaches before you commit to it.
 export default async function VocabularyPage({
   searchParams,
