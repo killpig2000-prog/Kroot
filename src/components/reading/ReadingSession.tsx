@@ -245,6 +245,7 @@ export default function ReadingSession({
               <div className="min-w-0">
                 <p className="text-[10.5px] font-semibold text-[#6B6560] uppercase tracking-[.05em]">Subject</p>
                 <p className="kr font-semibold text-[15px] truncate">{passage.title_kr}</p>
+                <TranslatableText en={passage.title_en} showTranslation={showTranslation} className="text-[12px] truncate" />
               </div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2">
@@ -282,10 +283,11 @@ export default function ReadingSession({
       return (
         <div className="max-w-[860px] border border-[#E3DDD0] rounded-[14px] p-[clamp(20px,3vw,28px)]">
           {header}
-          <div className="flex items-center gap-2 mb-4">
+          <div className="flex items-center gap-2 mb-1">
             <span className="text-lg">🎙️</span>
             <h2 className="kr text-[16px] font-semibold">{passage.title_kr}</h2>
           </div>
+          <TranslatableText en={passage.title_en} showTranslation={showTranslation} className="text-[13px] mb-4" />
           <div className="rounded-[10px] border border-[#E3DDD0] overflow-hidden">
             <div className="grid grid-cols-1 sm:grid-cols-2">
               <div className="p-[clamp(14px,2.5vw,20px)] bg-white sm:border-r border-b sm:border-b-0 border-[#E3DDD0] grid gap-3">
@@ -320,7 +322,8 @@ export default function ReadingSession({
       return (
         <div className="max-w-[860px] border border-[#E3DDD0] rounded-[14px] p-[clamp(20px,3vw,28px)]">
           {header}
-          <h2 className="kr text-[17px] font-semibold mb-4">{passage.title_kr}</h2>
+          <h2 className="kr text-[17px] font-semibold mb-1">{passage.title_kr}</h2>
+          <TranslatableText en={passage.title_en} showTranslation={showTranslation} className="text-[13px] mb-4" />
           <div className="rounded-[10px] border border-[#E3DDD0] overflow-hidden">
             <div className="grid grid-cols-1 sm:grid-cols-2">
               <div className="p-[clamp(14px,2.5vw,20px)] bg-white sm:border-r border-b sm:border-b-0 border-[#E3DDD0] grid gap-3">
@@ -361,7 +364,8 @@ export default function ReadingSession({
             <span className="absolute -top-3 left-5 bg-white border border-[#FDE68A] rounded-full px-2.5 py-1 text-[12.5px] font-semibold text-[#92702B]">
               ⭐ Review
             </span>
-            <h2 className="kr text-[16px] font-semibold mt-2.5 mb-3">{passage.title_kr}</h2>
+            <h2 className="kr text-[16px] font-semibold mt-2.5 mb-1">{passage.title_kr}</h2>
+            <TranslatableText en={passage.title_en} showTranslation={showTranslation} className="text-[12.5px] mb-3" />
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1">
               <div className="grid gap-2">
                 {lines.map((line, i) => (

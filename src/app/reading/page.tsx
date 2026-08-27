@@ -183,7 +183,7 @@ export default async function ReadingMapPage({
                 <b className="block font-semibold text-sm text-[#1D4ED8]">
                   Continue · Chapter {continueIndex + 1}
                 </b>
-                <span className="kr text-[13px] text-[#3B82F6] truncate block">{continueChapter.title_kr}</span>
+                <span className="text-[13px] text-[#3B82F6] truncate block">{continueChapter.title_en}</span>
               </span>
               <span className="text-[13px] font-semibold text-[#2563EB] transition-transform group-hover:translate-x-0.5">
                 Start →
@@ -249,7 +249,7 @@ export default async function ReadingMapPage({
                           ringClassName: status === "current" ? "ring-4 ring-[#BFDBFE]/60" : undefined,
                           circleContent: style.icon,
                           title: `Chapter ${i + 1}`,
-                          subtitle: <span className="kr">{passage.title_kr}</span>,
+                          subtitle: passage.title_en,
                           badgeClassName: style.badge,
                           badgeLabel: status === "done" ? "Done" : status === "current" ? "Read" : "Locked",
                           dim: status === "locked",
