@@ -675,6 +675,127 @@ const RAW_LESSONS: GrammarLesson[] = [
     ],
   },
   {
+    key: "purpose-basics",
+    title: "Going somewhere to do something: ~(으)러",
+    krTitle: "~(으)러 · ~는 것",
+    level: "A2",
+    summary: "~(으)러 attaches to a verb stem before a movement verb (가다/오다) to say 'in order to'. There's a fuller set of purpose forms later — this is the one you'll use every day.",
+    sections: [
+      {
+        heading: "Stem + (으)러 + 가다/오다",
+        explanation:
+          "Only works with a movement verb at the end — 가다, 오다, 다니다. No batchim takes 러, a batchim takes 으러. The two clauses share the same subject.",
+        examples: [
+          { kr: "밥을 먹으러 가요.", romanization: "bab-eul meogeuro gayo.", en: "I'm going to eat. (lit. going in order to eat)" },
+          { kr: "친구를 만나러 왔어요.", romanization: "chingu-reul mannareo wasseoyo.", en: "I came to meet a friend." },
+          { kr: "책을 사러 서점에 가요.", romanization: "chaeg-eul sareo seojeom-e gayo.", en: "I'm going to the bookstore to buy a book." },
+        ],
+      },
+      {
+        heading: "Turning a verb into 'to do it' / 'doing it': ~는 것",
+        explanation:
+          "는 것 turns a whole verb phrase into a noun — 'the act of doing X'. It's the everyday way to say 'to swim' or 'swimming' as a subject or object, before you need anything fancier.",
+        examples: [
+          { kr: "한국어를 배우는 것이 재미있어요.", romanization: "hangugeo-reul baeuneun geosi jaemiisseoyo.", en: "Learning Korean is fun." },
+          { kr: "제 취미는 요리하는 거예요.", romanization: "je chwimi-neun yorihaneun geoyeyo.", en: "My hobby is cooking." },
+        ],
+      },
+    ],
+    quiz: [
+      { q: "'책을 사러 가요' means…", opts: ["I bought a book", "I'm going to buy a book", "I want a book", "I have a book"], ans: 1 },
+      { q: "~(으)러 must be followed by…", opts: ["Any verb", "A movement verb like 가다/오다", "A descriptive verb", "이다"], ans: 1 },
+      { q: "Which turns '요리하다' into 'cooking' as a noun?", opts: ["요리해서", "요리하러", "요리하는 것", "요리하려고"], ans: 2 },
+    ],
+  },
+  {
+    key: "simple-modifiers",
+    title: "Verbs before nouns: ~는",
+    krTitle: "~는 (동사 → 형용사)",
+    level: "A2",
+    summary: "Korean has no word for 'who'/'which' — instead the verb itself moves in front of the noun. This covers just the present-tense form; there's a full past/future set later.",
+    sections: [
+      {
+        heading: "Stem + 는 + noun",
+        explanation:
+          "Attach 는 to an action-verb stem and place it directly before the noun it describes — the modifier always comes first, opposite of English word order.",
+        examples: [
+          { kr: "커피를 마시는 사람", romanization: "keopi-reul masineun saram", en: "the person who drinks coffee" },
+          { kr: "한국어를 가르치는 선생님", romanization: "hangugeo-reul garuchineun seonsaengnim", en: "the teacher who teaches Korean" },
+          { kr: "지금 자는 아기", romanization: "jigeum janeun agi", en: "the baby who is sleeping now" },
+        ],
+      },
+      {
+        heading: "Only for actions happening now",
+        explanation:
+          "This 는 form is present tense only. Talking about something that already happened, or hasn't happened yet, needs a different ending (으)ㄴ or (으)ㄹ — that's the next lesson.",
+        examples: [
+          { kr: "매일 운동하는 사람은 건강해요.", romanization: "maeil undonghaneun saram-eun geonganghaeyo.", en: "A person who exercises every day is healthy." },
+        ],
+      },
+    ],
+    quiz: [
+      { q: "'커피를 마시는 사람' means…", opts: ["I drink coffee", "The person who drinks coffee", "Please drink coffee", "I drank coffee"], ans: 1 },
+      { q: "Where does the modifier go relative to the noun?", opts: ["After the noun", "Before the noun", "Doesn't matter", "Replaces the noun"], ans: 1 },
+      { q: "~는 on an action verb marks…", opts: ["Past tense", "Present tense", "Future tense", "A question"], ans: 1 },
+    ],
+  },
+  {
+    key: "wonder-ji",
+    title: "Wondering if: ~(으)ㄹ지",
+    krTitle: "~(으)ㄹ지",
+    level: "A2",
+    summary: "Attach (으)ㄹ지 to a stem to turn a yes/no question into 'whether/if' — useful with 모르다 (don't know) or 궁금하다 (wonder).",
+    sections: [
+      {
+        heading: "Stem + (으)ㄹ지 + 모르다/궁금하다",
+        explanation:
+          "Same batchim rule as the future tense: no batchim takes ㄹ지, a batchim takes 을지. It reports an unresolved yes/no question inside a bigger sentence.",
+        examples: [
+          { kr: "내일 비가 올지 모르겠어요.", romanization: "naeil biga olji moregesseoyo.", en: "I don't know if it'll rain tomorrow." },
+          { kr: "그 식당이 맛있을지 궁금해요.", romanization: "geu sikdang-i masiss-eulji gunggeumhaeyo.", en: "I wonder if that restaurant is good." },
+          { kr: "이걸 살지 말지 고민 중이에요.", romanization: "igeol salji malji gomin jungieyo.", en: "I'm debating whether to buy this or not." },
+        ],
+      },
+    ],
+    quiz: [
+      { q: "'내일 비가 올지 모르겠어요' means…", opts: ["It will rain tomorrow", "I don't know if it'll rain tomorrow", "It rained yesterday", "Please don't rain tomorrow"], ans: 1 },
+      { q: "~(으)ㄹ지 most naturally pairs with…", opts: ["주세요", "모르다 / 궁금하다", "싶어요", "거예요"], ans: 1 },
+      { q: "What does ~ㄹ지 말지 express?", opts: ["Definitely yes", "Whether to do it or not", "A command", "An apology"], ans: 1 },
+    ],
+  },
+  {
+    key: "simple-conditional",
+    title: "If / when: ~(으)면",
+    krTitle: "~(으)면",
+    level: "A2",
+    summary: "The everyday 'if' or 'when' clause. This is the basic pattern only — there's a lesson later on the fixed phrases built on top of it.",
+    sections: [
+      {
+        heading: "Stem + (으)면",
+        explanation:
+          "No batchim takes 면, a batchim takes 으면. The 면-clause never carries tense itself — 았/었 or 겠 goes only on the final verb, exactly like ~아/어서.",
+        examples: [
+          { kr: "시간이 있으면 전화해 주세요.", romanization: "sigan-i isseumyeon jeonhwahae juseyo.", en: "If you have time, please call me." },
+          { kr: "비가 오면 안 가요.", romanization: "biga omyeon an gayo.", en: "If it rains, I'm not going." },
+          { kr: "한국에 가면 김치를 먹을 거예요.", romanization: "hanguk-e gamyeon gimchi-reul meogeul geoyeyo.", en: "When I go to Korea, I'll eat kimchi." },
+        ],
+      },
+      {
+        heading: "'If' and 'when' overlap here",
+        explanation:
+          "Unlike English, Korean doesn't force a choice between 'if' and 'when' for something expected to happen — (으)면 covers both. A separate word (때) exists for 'when' about a fixed moment, but that's for later.",
+        examples: [
+          { kr: "졸리면 커피를 마셔요.", romanization: "jolliyeon keopi-reul masyeoyo.", en: "When/if I'm sleepy, I drink coffee." },
+        ],
+      },
+    ],
+    quiz: [
+      { q: "'비가 오면 안 가요' means…", opts: ["It's raining so I'm not going", "If it rains, I'm not going", "It rained yesterday", "I like rain"], ans: 1 },
+      { q: "Where does past tense go in a (으)면 sentence?", opts: ["On the 면-clause", "On the final verb only", "On both verbs", "Nowhere"], ans: 1 },
+      { q: "~(으)면 can mean…", opts: ["Only 'if'", "Only 'when'", "Both 'if' and 'when'", "Neither"], ans: 2 },
+    ],
+  },
+  {
     key: "because-aseo",
     title: "Because: ~아/어서",
     krTitle: "~아/어서",
@@ -2707,9 +2828,8 @@ export function lessonsByLevel(level: CefrLevel): GrammarLesson[] {
   return GRAMMAR_LESSONS.filter((l) => l.level === level);
 }
 
-// Grammar's role next to the 16-day course: the overlapping lessons are the
-// course's deep-dive reference; the rest are what to learn right after
-// finishing the course.
+// Curated groups shown above the full level-by-level list — a suggested
+// order for absolute beginners, and what to learn once the basics are down.
 export type GrammarGroup = {
   key: string;
   title: string;
@@ -2720,26 +2840,30 @@ export type GrammarGroup = {
 
 export const GRAMMAR_GROUPS: GrammarGroup[] = [
   {
-    key: "course-deep",
-    title: "16-Day Course deep dives",
-    titleKr: "16일 코스 심화",
-    sub: "The course teaches these as quick chunks — dig into the full rules here.",
-    lessonKeys: ["word-order", "to-be", "present-tense", "topic-vs-subject", "object-marker", "past-tense"],
+    key: "start-here",
+    title: "Start here",
+    titleKr: "여기서 시작하세요",
+    sub: "New to Korean grammar? Do these in order first.",
+    lessonKeys: [
+      "word-order",
+      "to-be",
+      "present-tense",
+      "topic-vs-subject",
+      "object-marker",
+      "past-tense",
+      "can-cannot",
+      "want-to",
+      "purpose-basics",
+      "simple-modifiers",
+      "wonder-ji",
+      "simple-conditional",
+    ],
   },
   {
     key: "next-steps",
-    title: "Next steps — after the course",
+    title: "Next steps",
     titleKr: "다음 단계",
-    sub: "Finished the 16-day course? These are the natural next lessons.",
+    sub: "Keep going after the basics.",
     lessonKeys: ["negation", "location-particles", "politeness", "numbers-counters"],
   },
 ];
-
-// Course day → deep-dive grammar lessons, shown on /course/day/[n].
-export const COURSE_DEEP_DIVES: Record<number, string[]> = {
-  8: ["word-order"],
-  9: ["to-be"],
-  10: ["present-tense"],
-  11: ["topic-vs-subject", "object-marker"],
-  12: ["past-tense", "present-tense"],
-};

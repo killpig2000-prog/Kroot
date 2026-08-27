@@ -50,7 +50,7 @@ export async function proxy(request: NextRequest) {
     pathname.startsWith("/slang") ||
     pathname.startsWith("/community") ||
     pathname.startsWith("/review") ||
-    pathname.startsWith("/course") ||
+    pathname.startsWith("/guide") ||
     pathname.startsWith("/league") ||
     pathname.startsWith("/level-test") ||
     pathname.startsWith("/admin");

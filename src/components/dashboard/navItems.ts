@@ -23,7 +23,7 @@ export const SECTIONS: { title: string; items: NavItem[] }[] = [
   {
     title: "Basics",
     items: [
-      { icon: "🧭", label: "16-Day Course", href: "/course", color: { text: "#0284C7", bg: "#F0F9FF", border: "#BAE6FD" } },
+      { icon: "🧭", label: "Guide", href: "/guide", color: { text: "#0284C7", bg: "#F0F9FF", border: "#BAE6FD" } },
       { icon: "🔤", label: "Hangul", href: "/hangul", color: { text: "#E11D48", bg: "#FFF1F2", border: "#FECDD3" } },
       { icon: "📖", label: "Grammar", href: "/grammar", color: { text: "#4F46E5", bg: "#EEF2FF", border: "#C7D2FE" } },
       { icon: "🃏", label: "Vocabulary", href: "/vocabulary", color: { text: "#7C3AED", bg: "#F5F3FF", border: "#DDD6FE" } },

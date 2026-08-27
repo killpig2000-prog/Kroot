@@ -65,12 +65,13 @@ export default async function GrammarPage({
           {/* intro */}
           <div className="max-w-[820px] bg-[#EEF2FF] border border-[#C7D2FE] rounded-[14px] px-[18px] py-4 mb-7">
             <p className="text-[13.5px] text-charcoal leading-[1.65]">
-              Korean grammar is regular. The first group digs deeper into what the{" "}
-              <Link href="/course" className="font-semibold text-[#4F46E5] hover:underline">
-                16-Day Course
+              Korean grammar is regular. New here? The first group below is a set order to learn the
+              basics in — see the{" "}
+              <Link href="/guide" className="font-semibold text-[#4F46E5] hover:underline">
+                Guide
               </Link>{" "}
-              teaches as chunks; the second is what to learn right after finishing it. Below those,
-              the full A1–C2 syllabus is browsable by level.
+              for how it fits with the rest of the app. Below that, the full A1–C2 syllabus is
+              browsable by level.
             </p>
           </div>
 

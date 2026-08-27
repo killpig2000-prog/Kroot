@@ -10,8 +10,6 @@ import FeedbackWidget from "@/components/dashboard/FeedbackWidget";
 import Greeting from "@/components/dashboard/Greeting";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { levelProgress } from "@/lib/level";
-import { COURSE_DAYS, COURSE_TOTAL_DAYS, nextCourseDay } from "@/lib/course";
-import CourseCard from "@/components/dashboard/CourseCard";
 import MonthlyGrass from "@/components/profile/MonthlyGrass";
 import { computeEligibility } from "@/lib/promotion-server";
 import { testForGrade } from "@/lib/promotion-test";
@@ -104,12 +102,11 @@ export default async function DashboardPage() {
     { data: speakingRows },
     dueRes,
     { data: activity },
-    { data: courseRows },
     levelTestRes,
   ] = await Promise.all([
     supabase
       .from("profiles")
-      .select("display_name, current_level, xp, streak_days, last_active_date, avatar_url, path_hidden, plus_until")
+      .select("display_name, current_level, xp, streak_days, last_active_date, avatar_url, plus_until")
       .eq("id", user.id)
       .single(),
     // touch_streak bumps (or resets) the streak server-side and returns its new value.
@@ -135,7 +132,6 @@ export default async function DashboardPage() {
       .from("daily_activity")
       .select("activity_date, minutes")
       .eq("user_id", user.id),
-    supabase.from("path_progress").select("step_key").eq("user_id", user.id),
     supabase
       .from("level_test_results")
       .select("id", { count: "exact", head: true })
@@ -240,23 +236,6 @@ export default async function DashboardPage() {
   const day = now.getDay();
   const weekendBoost = plusActive && (day === 0 || day === 6);
 
-  // 16-day course card: shown until dismissed or the course is finished.
-  const showCourse = !profile?.path_hidden;
-  let courseNext: ReturnType<typeof nextCourseDay> = null;
-  let courseDoneDays: number[] = [];
-  if (showCourse) {
-    const doneKeys = new Set((courseRows ?? []).map((r) => r.step_key));
-    courseNext = nextCourseDay(doneKeys);
-    courseDoneDays = COURSE_DAYS.filter((d) => doneKeys.has(d.key)).map((d) => d.day);
-  }
-
-  // Course gauge inside Learning progress (mirrors the old My growth rules):
-  // A1 learners only; hidden if dismissed and never started; a finished
-  // course collapses to a one-line badge.
-  const courseDone = (courseRows ?? []).filter((r) => r.step_key.startsWith("course-day-")).length;
-  const courseFinished = courseDone >= COURSE_TOTAL_DAYS;
-  const showCourseGauge = cefr === "A1" && !courseFinished && (courseDone > 0 || !profile?.path_hidden);
-
   return (
     <div className="min-h-screen bg-[#FFFFFF] text-[#221F1B]">
       <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] xl:grid-cols-[clamp(200px,17%,280px)_minmax(0,1fr)_clamp(260px,22%,340px)] w-full min-h-screen">
@@ -313,17 +292,6 @@ export default async function DashboardPage() {
             </Link>
           )}
 
-          {courseNext && (
-            <CourseCard
-              userId={user.id}
-              nextDay={courseNext.day}
-              nextTitle={courseNext.title}
-              nextTitleKr={courseNext.titleKr}
-              nextMinutes={courseNext.minutes}
-              doneDays={courseDoneDays}
-            />
-          )}
-
           {/* quest — a checklist slip pinned under the course note.
               On xl+ it moves to the right rail so the garden stays above the fold. */}
           <div className="xl:hidden border border-dashed border-[#CFC8B8] rounded-[12px] bg-white px-5 py-4 flex items-center gap-3.5 mb-[30px] flex-wrap">
@@ -359,8 +327,8 @@ export default async function DashboardPage() {
             </span>
           </Link>
 
-          {/* new to Korean? — only for true beginners who haven't started the course */}
-          {cefr === "A1" && courseDoneDays.length === 0 && (
+          {/* new to Korean? — only for true beginners */}
+          {cefr === "A1" && (
           <Link
             href="/hangul"
             className="flex items-center gap-3.5 border border-success-line bg-success-bg rounded-[14px] px-5 py-4 mb-[30px] transition-all hover:-translate-y-0.5 group"
@@ -387,28 +355,6 @@ export default async function DashboardPage() {
               <b className="font-semibold text-[15px]">📈 Learning progress</b>
               <small className="text-[12.5px] text-faint font-medium">{cefr} difficulty</small>
             </div>
-
-            {showCourseGauge && (
-              <Link href="/course" className="flex items-center gap-3 mb-4 group">
-                <span className="flex-none text-[12.5px] font-semibold text-muted w-[92px]">
-                  Course {courseDone}/{COURSE_TOTAL_DAYS}
-                </span>
-                <span className="flex-1 h-2.5 rounded-full bg-[#F5F5F4] overflow-hidden">
-                  <span
-                    className="block h-full rounded-full bg-success transition-all"
-                    style={{ width: `${Math.round((courseDone / COURSE_TOTAL_DAYS) * 100)}%` }}
-                  />
-                </span>
-                <b className="flex-none text-[12.5px] tabular-nums transition-transform group-hover:translate-x-0.5">
-                  {Math.round((courseDone / COURSE_TOTAL_DAYS) * 100)}%
-                </b>
-              </Link>
-            )}
-            {courseFinished && (
-              <p className="text-[12.5px] font-semibold text-success mb-4">
-                ✓ 16-Day Course complete 🎉
-              </p>
-            )}
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2.5">
               {PRACTICE_SKILLS.map((c) => {
