@@ -4,7 +4,7 @@ import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import ChapterPathGroup from "@/components/chapters/ChapterPathGroup";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
-import { chapterWrittenToday, getChapterStatuses, getChaptersForLevel } from "@/lib/writing";
+import { chapterWrittenToday, getChapterStatuses, getChaptersForLevel, WRITING_GENRE_META } from "@/lib/writing";
 import { isPlus } from "@/lib/plus";
 import { LEVEL_ORDER, type CefrLevel } from "@/lib/tree";
 import { isDifficultyUnlocked } from "@/lib/level";
@@ -148,7 +148,7 @@ export default async function WritingMapPage({
               <span>
                 {doneCount} of {chapters.length} pages written
               </span>
-              <span className="text-[#A19A8C]">Chapter · Daily life</span>
+              <span className="text-[#A19A8C]">4 genres · journal, replies, description, opinion</span>
             </div>
             <div className="h-1.5 rounded-full bg-[#E3DDD0] overflow-hidden">
               <div
@@ -198,6 +198,7 @@ export default async function WritingMapPage({
               const first = group[0].index + 1;
               const last = group[group.length - 1].index + 1;
               const groupDone = group.filter((g) => g.status === "done").length;
+              const meta = WRITING_GENRE_META[group[0].chapter[0].genre];
               return (
                 <details
                   key={gi}
@@ -205,9 +206,14 @@ export default async function WritingMapPage({
                   className="border border-[#E3DDD0] rounded-[14px] bg-white overflow-hidden"
                 >
                   <summary className="flex items-center gap-3 px-5 py-3.5 cursor-pointer select-none list-none [&::-webkit-details-marker]:hidden hover:bg-[#FAF7EF] transition-colors">
-                    <b className="flex-1 font-bold text-[14.5px]">
-                      Pages {first}–{last}
-                    </b>
+                    <span className="flex-1 min-w-0">
+                      <b className="font-bold text-[14.5px]">
+                        {meta.icon} {meta.label}
+                      </b>
+                      <small className="block text-[11.5px] text-[#A19A8C] font-normal truncate">
+                        {meta.blurb} · Pages {first}–{last}
+                      </small>
+                    </span>
                     <span className="flex-none flex items-center gap-2">
                       <span className="w-[74px] h-1.5 rounded-full bg-[#E3DDD0] overflow-hidden">
                         <span

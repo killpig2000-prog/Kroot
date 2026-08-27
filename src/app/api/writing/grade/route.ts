@@ -107,7 +107,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "grading_unavailable" }, { status: 503 });
   }
 
-  const { prompt_kr, prompt_en, prompt_key, response_text, level } = await request.json();
+  const { prompt_kr, prompt_en, prompt_key, response_text, level, stimulus_kr } = await request.json();
   if (typeof response_text !== "string" || !response_text.trim()) {
     return NextResponse.json({ error: "empty_response" }, { status: 400 });
   }
@@ -187,7 +187,11 @@ export async function POST(request: Request) {
                 text: `You are a kind Korean teacher grading a short writing exercise from a CEFR ${level} learner.
 
 Writing prompt (Korean): ${prompt_kr}
-Writing prompt (English): ${prompt_en}
+Writing prompt (English): ${prompt_en}${
+                  typeof stimulus_kr === "string" && stimulus_kr.trim()
+                    ? `\n\nThe learner is replying to this message they received:\n${stimulus_kr}`
+                    : ""
+                }
 
 Learner's answer:
 ${response_text}

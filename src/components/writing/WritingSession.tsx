@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { recordCompletion, type ProgressResult } from "@/lib/activity";
-import { MINUTES_PER_PROMPT, MIN_RESPONSE_LENGTH, type Prompt } from "@/lib/writing";
+import { MINUTES_PER_PROMPT, MIN_RESPONSE_LENGTH, WRITING_GENRE_META, type Prompt } from "@/lib/writing";
 import LevelCreature from "@/components/dashboard/LevelCreature";
 import SpeechBubble from "@/components/ui/SpeechBubble";
 import type { CefrLevel } from "@/lib/tree";
@@ -129,6 +129,7 @@ export default function WritingSession({
           prompt_key: prompt.key,
           response_text: response.trim(),
           level,
+          stimulus_kr: prompt.stimulus_kr,
         }),
       });
       if (res.ok) {
@@ -188,8 +189,24 @@ export default function WritingSession({
           {/* left page — the prompt */}
           <div className="p-[clamp(20px,3vw,32px)] flex flex-col border-b md:border-b-0 md:border-r border-dashed border-[#E3DDD0]">
             <p className={`${LABEL} mb-5`}>
-              Page {chapterIndex + 1} · <b className="text-[#D97706] font-semibold">Daily life</b>
+              Page {chapterIndex + 1} ·{" "}
+              <b className="text-[#D97706] font-semibold">
+                {WRITING_GENRE_META[prompt.genre].icon} {WRITING_GENRE_META[prompt.genre].label}
+              </b>
             </p>
+            {prompt.stimulus_kr && (
+              <div className="mb-4 flex gap-2.5 items-start">
+                <span className="flex-none w-8 h-8 rounded-full bg-[#EFF6FF] border border-[#BFDBFE] flex items-center justify-center text-[15px]">
+                  💬
+                </span>
+                <div className="rounded-[14px] rounded-tl-[4px] bg-[#F4F4F5] border border-[#E4E4E7] px-4 py-3 max-w-[92%]">
+                  <p className="kr text-[15px] leading-[1.75] text-[#18181B]">{prompt.stimulus_kr}</p>
+                  {prompt.stimulus_en && (
+                    <p className="text-[12.5px] text-[#6B6560] leading-[1.6] mt-1.5">{prompt.stimulus_en}</p>
+                  )}
+                </div>
+              </div>
+            )}
             <p className="font-bold text-[clamp(19px,2.2vw,24px)] leading-[1.45] tracking-[-0.02em] mb-3">
               <span className="text-[#D97706]">“</span>
               {prompt.prompt_en}

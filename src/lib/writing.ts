@@ -1,8 +1,16 @@
 import type { CefrLevel } from "@/lib/tree";
-import type { RawPrompt } from "@/lib/writing-data/types";
+import type { RawPrompt, WritingGenre } from "@/lib/writing-data/types";
 import { DAILY_LIFE_PROMPTS } from "@/lib/writing-data/daily-life";
 
 export type Prompt = RawPrompt & { key: string };
+
+/** Display metadata per writing genre — shared by the map page and the session. */
+export const WRITING_GENRE_META: Record<WritingGenre, { icon: string; label: string; blurb: string }> = {
+  journal: { icon: "📔", label: "Journal", blurb: "Your own day, in your own words" },
+  reply: { icon: "💬", label: "Replies", blurb: "Someone wrote to you — write back" },
+  description: { icon: "🖼️", label: "Description", blurb: "Paint a person, a place, a thing, a trend" },
+  opinion: { icon: "🗣️", label: "Opinion", blurb: "Take a side and say why" },
+};
 
 export function getPromptsForLevel(level: CefrLevel): Prompt[] {
   return DAILY_LIFE_PROMPTS.filter((p) => p.level === level).map((p) => ({
