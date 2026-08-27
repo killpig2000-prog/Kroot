@@ -1,6 +1,6 @@
 const CATEGORIES = [
   { kr: "듣", en: "Listening", sticker: "🎧", bg: "#16A34A", desc: "A1–C2 clips with subtitle toggle" },
-  { kr: "말", en: "Speaking", sticker: "🎤", bg: "#E11D48", desc: "Speak — AI corrects you instantly" },
+  { kr: "발", en: "Pronunciation", sticker: "🎤", bg: "#0D9488", desc: "Say it into the mic — score 80+ to clear each chapter" },
   { kr: "쓰", en: "Writing", sticker: "✍️", bg: "#D97706", desc: "Write a sentence, get feedback" },
   { kr: "읽", en: "Reading", sticker: "📖", bg: "#2563EB", desc: "Tap any word for a hint" },
   { kr: "단", en: "Vocabulary", sticker: "🃏", bg: "#7C3AED", desc: "4,000+ flashcards by topic" },

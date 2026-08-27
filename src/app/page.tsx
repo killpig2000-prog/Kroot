@@ -7,6 +7,8 @@ import SpeechStrip from "@/components/landing/SpeechStrip";
 import LevelTest from "@/components/landing/LevelTest";
 import Categories from "@/components/landing/Categories";
 import Growth from "@/components/landing/Growth";
+import PronunciationDemo from "@/components/landing/PronunciationDemo";
+import WritingFeedbackDemo from "@/components/landing/WritingFeedbackDemo";
 import Final from "@/components/landing/Final";
 
 export default function LandingPage() {
@@ -20,6 +22,8 @@ export default function LandingPage() {
       <LevelTest />
       <Categories />
       <Growth />
+      <PronunciationDemo />
+      <WritingFeedbackDemo />
       <Final />
     </div>
   );
