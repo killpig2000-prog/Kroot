@@ -844,12 +844,14 @@ export const COSTUMES: Costume[] = [
     scene: {
       layer: "front",
       draw: () => (
-        <g transform="translate(46 196)" className="bob2">
-          <ellipse cx="0" cy="0" rx="8" ry="6" fill="#B08A5E" />
-          <circle cx="6" cy="-4" r="4.5" fill="#C9A06A" />
-          <circle cx="7.5" cy="-5" r="1" fill="#2B2521" />
-          <path d="M10 -3 l4 1 l-4 1z" fill="#F5A623" />
-          <path d="M-2 6 l-1 4 M2 6 l1 4" stroke="#F5A623" strokeWidth="1.4" />
+        <g transform="translate(46 196)">
+          <g className="bob2">
+            <ellipse cx="0" cy="0" rx="8" ry="6" fill="#B08A5E" />
+            <circle cx="6" cy="-4" r="4.5" fill="#C9A06A" />
+            <circle cx="7.5" cy="-5" r="1" fill="#2B2521" />
+            <path d="M10 -3 l4 1 l-4 1z" fill="#F5A623" />
+            <path d="M-2 6 l-1 4 M2 6 l1 4" stroke="#F5A623" strokeWidth="1.4" />
+          </g>
         </g>
       ),
     },
@@ -910,14 +912,16 @@ export const COSTUMES: Costume[] = [
     scene: {
       layer: "front",
       draw: () => (
-        <g transform="translate(60 64)" className="bob">
-          <path d="M-12 4 L-2 0" stroke="#1F2937" strokeWidth="3" strokeLinecap="round" />
-          <ellipse cx="4" cy="0" rx="9" ry="5.5" fill="#1F2937" />
-          <ellipse cx="6" cy="1" rx="5" ry="3" fill="#fff" />
-          <circle cx="12" cy="-4" r="4.5" fill="#1F2937" />
-          <circle cx="13.5" cy="-5" r="1" fill="#fff" />
-          <path d="M16 -3 l5 1 l-5 1z" fill="#374151" />
-          <path d="M0 -3 q5 -4 9 -1" stroke="#60A5FA" strokeWidth="1.6" fill="none" />
+        <g transform="translate(180 190)">
+          <g className="friend-float">
+            <path d="M-12 4 L-2 0" stroke="#1F2937" strokeWidth="3" strokeLinecap="round" />
+            <ellipse cx="4" cy="0" rx="9" ry="5.5" fill="#1F2937" />
+            <ellipse cx="6" cy="1" rx="5" ry="3" fill="#fff" />
+            <circle cx="12" cy="-4" r="4.5" fill="#1F2937" />
+            <circle cx="13.5" cy="-5" r="1" fill="#fff" />
+            <path d="M16 -3 l5 1 l-5 1z" fill="#374151" />
+            <path d="M0 -3 q5 -4 9 -1" stroke="#60A5FA" strokeWidth="1.6" fill="none" />
+          </g>
         </g>
       ),
     },
@@ -934,15 +938,17 @@ export const COSTUMES: Costume[] = [
     scene: {
       layer: "front",
       draw: () => (
-        <g transform="translate(162 66)" className="bob2">
-          <ellipse cx="0" cy="2" rx="9" ry="10" fill="#A16207" />
-          <ellipse cx="0" cy="4" rx="6" ry="6" fill="#FDE68A" />
-          <circle cx="-3.5" cy="-2" r="3.5" fill="#fff" />
-          <circle cx="3.5" cy="-2" r="3.5" fill="#fff" />
-          <circle cx="-3.5" cy="-2" r="1.6" fill="#1F2937" />
-          <circle cx="3.5" cy="-2" r="1.6" fill="#1F2937" />
-          <path d="M-1.5 1 l1.5 2.5 l1.5 -2.5z" fill="#F59E0B" />
-          <path d="M-8 -9 l3 4 M8 -9 l-3 4" stroke="#A16207" strokeWidth="2.4" strokeLinecap="round" />
+        <g transform="translate(40 188)">
+          <g className="friend-float-2">
+            <ellipse cx="0" cy="2" rx="9" ry="10" fill="#A16207" />
+            <ellipse cx="0" cy="4" rx="6" ry="6" fill="#FDE68A" />
+            <circle cx="-3.5" cy="-2" r="3.5" fill="#fff" />
+            <circle cx="3.5" cy="-2" r="3.5" fill="#fff" />
+            <circle cx="-3.5" cy="-2" r="1.6" fill="#1F2937" />
+            <circle cx="3.5" cy="-2" r="1.6" fill="#1F2937" />
+            <path d="M-1.5 1 l1.5 2.5 l1.5 -2.5z" fill="#F59E0B" />
+            <path d="M-8 -9 l3 4 M8 -9 l-3 4" stroke="#A16207" strokeWidth="2.4" strokeLinecap="round" />
+          </g>
         </g>
       ),
     },
@@ -959,17 +965,19 @@ export const COSTUMES: Costume[] = [
     scene: {
       layer: "front",
       draw: () => (
-        <g transform="translate(44 186)" className="bob">
-          <circle cx="0" cy="8" r="9" fill="#60A5FA" opacity=".3" />
-          <ellipse cx="0" cy="4" rx="8" ry="9" fill="#3B82F6" />
-          <path d="M-4 -4 l-2 -7 l5 3z M4 -4 l2 -7 l-5 3z" fill="#FDE68A" />
-          <circle cx="-3" cy="2" r="1.6" fill="#fff" />
-          <circle cx="3" cy="2" r="1.6" fill="#fff" />
-          <circle cx="-3" cy="2" r=".8" fill="#1E3A8A" />
-          <circle cx="3" cy="2" r=".8" fill="#1E3A8A" />
-          <path d="M-3 7 q3 3 6 0" stroke="#1E3A8A" strokeWidth="1.2" fill="none" strokeLinecap="round" />
-          <path d="M8 2 l6 -6" stroke="#92400E" strokeWidth="2.4" strokeLinecap="round" />
-          <circle cx="14" cy="-4" r="2.5" fill="#B45309" />
+        <g transform="translate(44 186)">
+          <g className="bob">
+            <circle cx="0" cy="8" r="9" fill="#60A5FA" opacity=".3" />
+            <ellipse cx="0" cy="4" rx="8" ry="9" fill="#3B82F6" />
+            <path d="M-4 -4 l-2 -7 l5 3z M4 -4 l2 -7 l-5 3z" fill="#FDE68A" />
+            <circle cx="-3" cy="2" r="1.6" fill="#fff" />
+            <circle cx="3" cy="2" r="1.6" fill="#fff" />
+            <circle cx="-3" cy="2" r=".8" fill="#1E3A8A" />
+            <circle cx="3" cy="2" r=".8" fill="#1E3A8A" />
+            <path d="M-3 7 q3 3 6 0" stroke="#1E3A8A" strokeWidth="1.2" fill="none" strokeLinecap="round" />
+            <path d="M8 2 l6 -6" stroke="#92400E" strokeWidth="2.4" strokeLinecap="round" />
+            <circle cx="14" cy="-4" r="2.5" fill="#B45309" />
+          </g>
         </g>
       ),
     },
