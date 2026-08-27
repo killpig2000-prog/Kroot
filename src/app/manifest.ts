@@ -25,7 +25,6 @@ export default function manifest(): MetadataRoute.Manifest {
     shortcuts: [
       { name: "Water my words", short_name: "Review", url: "/review?source=pwa", icons: [{ src: "/icon-192.png", sizes: "192x192" }] },
       { name: "Listening", url: "/listening?source=pwa", icons: [{ src: "/icon-192.png", sizes: "192x192" }] },
-      { name: "Roleplay", url: "/roleplay?source=pwa", icons: [{ src: "/icon-192.png", sizes: "192x192" }] },
     ],
   };
 }

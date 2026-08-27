@@ -10,7 +10,6 @@ import { MAIN_ITEMS, SECTIONS, type NavColor } from "@/components/dashboard/navI
 const ITEMS = [
   { icon: "🏡", label: "Garden", href: "/dashboard" },
   { icon: "👤", label: "Me", href: "/profile" },
-  { icon: "🏆", label: "League", href: "/league" },
   { icon: "🛍️", label: "Shop", href: "/shop" },
 ];
 

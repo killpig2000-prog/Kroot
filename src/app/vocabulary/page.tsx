@@ -4,7 +4,7 @@ import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import { createClient, getClaimsUser, getDashboardProfile } from "@/lib/supabase/server";
 import { MINUTES_PER_SESSION, getChaptersForTopic, getUnitTitle, unlockedVocabTiers } from "@/lib/vocabulary";
-import { GROWTH_STAGES, growthStage, hanjaOf } from "@/lib/word-notes";
+import { GROWTH_STAGES, growthStage } from "@/lib/word-notes";
 import VocabSearch from "@/components/vocabulary/VocabSearch";
 import { LEVEL_ORDER, isCefrLevel, nextLevel, type CefrLevel } from "@/lib/tree";
 
@@ -74,6 +74,8 @@ export default async function VocabularyPage({
 
   const sessionHref = (unit: number) => `/vocabulary/${TOPIC_KEY}/session?chapter=${unit}&level=${level}`;
   const unitHref = (unit: number) => `/vocabulary?level=${level}&unit=${unit}`;
+  const wordHref = (unit: number, i: number) =>
+    `/vocabulary/${TOPIC_KEY}/word?level=${level}&chapter=${unit}&i=${i}`;
 
   return (
     <div className="min-h-screen bg-[#FFFFFF] text-charcoal">
@@ -258,33 +260,23 @@ export default async function VocabularyPage({
                   </div>
 
                   <div className="flex flex-col">
-                    {selected.words.map((w) => {
+                    {selected.words.map((w, wi) => {
                       const st = GROWTH_STAGES[growthStage(reviewsByKey.get(w.key) ?? 0)];
-                      const hanja = hanjaOf(w.korean);
                       const thirsty = thirstyKeys.has(w.key);
                       return (
-                        <div
+                        <Link
                           key={w.key}
-                          className="grid grid-cols-[22px_minmax(84px,auto)_1fr] sm:grid-cols-[22px_112px_1fr] items-center gap-x-3 gap-y-0.5 py-2.5 border-b border-dashed border-dash"
+                          href={wordHref(selected.index, wi)}
+                          className="grid grid-cols-[22px_minmax(84px,auto)_1fr] sm:grid-cols-[22px_112px_1fr] items-center gap-x-3 gap-y-0.5 py-2.5 border-b border-dashed border-dash hover:bg-warm transition-colors -mx-2 px-2 rounded-[6px]"
                         >
                           <span className="text-[14px]" title={`${st.label}${thirsty ? " · thirsty" : ""}`}>
                             {thirsty ? "💧" : st.emoji}
                           </span>
-                          <span className="kr font-bold text-[17px] leading-tight">
-                            {w.korean}
-                            {hanja && (
-                              <small className="kr font-normal text-[11px] text-[#A08F4E] ml-1.5 align-middle">
-                                {hanja}
-                              </small>
-                            )}
-                          </span>
+                          <span className="kr font-bold text-[17px] leading-tight">{w.korean}</span>
                           <span className="min-w-0">
                             <span className="block text-[13px] font-semibold">{w.meaning_en}</span>
-                            <span className="block text-[11.5px] text-muted truncate">
-                              <span className="kr">{w.example_kr}</span> · {w.example_en}
-                            </span>
                           </span>
-                        </div>
+                        </Link>
                       );
                     })}
                   </div>
@@ -300,14 +292,6 @@ export default async function VocabularyPage({
                         ? "Continue this unit →"
                         : "Study this unit →"}
                     </Link>
-                    {continueUnit && continueUnit.index !== selected.index && (
-                      <Link
-                        href={unitHref(continueUnit.index)}
-                        className="text-[12.5px] font-semibold text-muted hover:text-charcoal transition-colors"
-                      >
-                        or pick up where you left off · Unit {continueUnit.index + 1}
-                      </Link>
-                    )}
                   </div>
                 </>
               ) : (

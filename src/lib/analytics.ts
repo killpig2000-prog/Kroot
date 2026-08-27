@@ -14,8 +14,6 @@ export type AnalyticsEvent =
   | "activity_completed"
   | "review_started"
   | "word_saved"
-  | "roleplay_started"
-  | "roleplay_finished"
   | "reminder_optin"
   | "push_subscribed"
   | "pwa_installed"

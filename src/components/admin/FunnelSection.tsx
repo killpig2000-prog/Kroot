@@ -29,7 +29,6 @@ async function loadFunnel(db: SupabaseClient, days: number) {
         "activity_completed",
         "continue_clicked",
         "word_saved",
-        "roleplay_finished",
         "reminder_optin",
         "push_subscribed",
         "pwa_installed",
@@ -85,7 +84,6 @@ async function loadFunnel(db: SupabaseClient, days: number) {
   const features = [
     ["continue_clicked", "Continue card"],
     ["word_saved", "Words saved"],
-    ["roleplay_finished", "Roleplays finished"],
     ["reminder_optin", "Reminder opt-ins"],
     ["push_subscribed", "Push subscribed"],
     ["pwa_installed", "PWA installs"],

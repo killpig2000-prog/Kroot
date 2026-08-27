@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import LeagueWidget from "@/components/dashboard/LeagueWidget";
 import QuestButton from "@/components/dashboard/QuestButton";
 import { OPEN_FEEDBACK_EVENT } from "@/components/dashboard/FeedbackWidget";
 
@@ -102,10 +101,6 @@ export default function Widgets({
           </div>
         </WCard>
       )}
-
-      <WCard title="Weekly league" tag="🏆" index={3}>
-        <LeagueWidget />
-      </WCard>
 
       <button
         type="button"

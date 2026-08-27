@@ -1,0 +1,179 @@
+"use client";
+
+import Link from "next/link";
+import { buttonClassName } from "@/components/ui/Button";
+import { speakKorean } from "@/lib/tts";
+import { GROWTH_STAGES, getWordNote, growthStage, hanjaOf } from "@/lib/word-notes";
+
+const BTN_INK = buttonClassName("ink");
+
+// Ruled notebook paper: a faint line every 32px, plus a red margin rule.
+const RULED = "repeating-linear-gradient(180deg, transparent 0 31px, #EEF0F6 31px 32px)";
+
+export type DetailWord = {
+  key: string;
+  korean: string;
+  romanization: string;
+  meaning_en: string;
+  example_kr: string;
+  example_en: string;
+  moreExamples: { kr: string; en: string; source: "reading" | "listening" }[];
+};
+
+// A read-only dictionary entry for a single word — reached by tapping a row
+// in the unit preview. Unlike the study card (FlipPhase), the meaning is
+// shown right away: this is a lookup, not a quiz.
+export default function WordDetailCard({
+  word,
+  reviews,
+  topicLabel,
+  level,
+  prevHref,
+  nextHref,
+  studyHref,
+  unitHref,
+  unitLabel,
+}: {
+  word: DetailWord;
+  reviews: number;
+  topicLabel: string;
+  level: string;
+  prevHref: string | null;
+  nextHref: string | null;
+  studyHref: string;
+  unitHref: string;
+  unitLabel: string;
+}) {
+  const stage = GROWTH_STAGES[growthStage(reviews)];
+  const note = getWordNote(word.korean);
+  const hanja = hanjaOf(word.korean);
+
+  return (
+    <div className="max-w-[600px]">
+      <div className="flex items-center justify-between gap-3 mb-3.5">
+        <Link href={unitHref} className="text-[12.5px] text-muted hover:text-charcoal transition-colors">
+          ← {unitLabel}
+        </Link>
+        <span className="text-[12.5px] text-muted flex-none">
+          {topicLabel} · {level}
+        </span>
+      </div>
+
+      <div className="relative bg-white border border-line rounded-[6px] shadow-[0_20px_40px_-28px_rgba(60,50,30,.6)] overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none" style={{ background: RULED }} aria-hidden="true" />
+        <span
+          className="absolute top-0 bottom-0 left-[clamp(28px,6vw,52px)] w-px bg-[#F5C6C6] opacity-70 pointer-events-none"
+          aria-hidden="true"
+        />
+        <span className="absolute top-4 right-5 text-[10.5px] font-black tracking-[.06em] uppercase text-amber border-2 border-amber rounded-[6px] px-2 py-[3px] rotate-[-6deg] opacity-80 select-none">
+          {stage.emoji} {stage.label}
+        </span>
+
+        <div className="relative pt-6 pb-5 pr-[clamp(18px,4vw,26px)] pl-[clamp(40px,8vw,70px)]">
+          <div className="grid grid-cols-[1fr_auto] gap-4 items-start mb-1 pr-16">
+            <div>
+              <p className="kr font-black text-[clamp(34px,6vw,44px)] leading-[1.1] tracking-[-0.01em]">
+                <button
+                  type="button"
+                  onClick={() => speakKorean(word.korean)}
+                  title="Hear it"
+                  className="inline-flex items-baseline gap-2 hover:text-[#7C3AED] transition-colors text-left"
+                >
+                  {word.korean}
+                  <span aria-hidden="true" className="text-[16px] translate-y-[-6px] opacity-70">🔊</span>
+                </button>
+              </p>
+              <p className="text-[13px] text-faint mt-0.5">{word.romanization}</p>
+            </div>
+            {hanja && (
+              <span
+                className="kr font-black text-[clamp(36px,6vw,52px)] leading-none text-[#A08F4E] opacity-55 tracking-[.04em] select-none"
+                aria-label={`Hanja: ${hanja}`}
+              >
+                {hanja}
+              </span>
+            )}
+          </div>
+
+          <p className="text-[20px] font-extrabold mt-2.5 mb-1.5">{word.meaning_en}</p>
+
+          {note?.parts && (
+            <p className="text-[12.5px] text-muted leading-[1.65] mb-3">
+              {note.parts.map((p, i) => (
+                <span key={p.syllable + p.hanja}>
+                  {i > 0 && <span className="mx-1.5 text-faint">+</span>}
+                  <b className="kr text-charcoal">{p.syllable}</b>{" "}
+                  <span className="kr text-[#A08F4E]">{p.hanja}</span> {p.gloss}
+                </span>
+              ))}
+            </p>
+          )}
+          {note?.origin && <p className="text-[12.5px] text-muted leading-[1.65] mb-3">from {note.origin}</p>}
+
+          <div className="border-l-[3px] border-[#DDD6FE] pl-3.5 py-1 my-2 mb-3.5">
+            <p className="kr text-[16px] font-medium">
+              <button
+                type="button"
+                onClick={() => speakKorean(word.example_kr)}
+                title="Hear the sentence"
+                className="text-left hover:text-[#7C3AED] transition-colors"
+              >
+                {word.example_kr} <span aria-hidden="true" className="text-[11px] opacity-70">🔊</span>
+              </button>
+            </p>
+            <p className="text-[12.5px] text-muted">{word.example_en}</p>
+          </div>
+
+          {word.moreExamples.length > 0 && (
+            <div className="grid gap-2 mb-2">
+              {word.moreExamples.map((ex, i) => (
+                <div
+                  key={i}
+                  className="bg-[#FFF9DB] border border-[#EDE3B4] rounded-[6px] px-3 py-2.5 text-left"
+                >
+                  <p className="text-[10px] font-bold tracking-[0.07em] uppercase text-[#A08F4E] mb-1">
+                    {ex.source === "reading" ? "📖 Seen in Reading" : "🎧 Seen in Listening"}
+                  </p>
+                  <p className="kr text-[13px] font-medium text-charcoal leading-[1.45]">
+                    <button
+                      type="button"
+                      onClick={() => speakKorean(ex.kr)}
+                      title="Hear the sentence"
+                      className="text-left hover:text-[#7C3AED] transition-colors"
+                    >
+                      {ex.kr}
+                    </button>
+                  </p>
+                  <p className="text-[11.5px] text-muted leading-[1.45]">{ex.en}</p>
+                </div>
+              ))}
+            </div>
+          )}
+
+          <div className="flex items-center justify-between gap-3 flex-wrap mt-4 pt-3.5 border-t border-dashed border-dash">
+            <span className="text-[12px] font-semibold">
+              {prevHref ? (
+                <Link href={prevHref} className="text-muted hover:text-charcoal transition-colors">
+                  ← Prev
+                </Link>
+              ) : (
+                <span className="text-faint">← Prev</span>
+              )}
+              <span className="text-faint mx-2">·</span>
+              {nextHref ? (
+                <Link href={nextHref} className="text-muted hover:text-charcoal transition-colors">
+                  Next →
+                </Link>
+              ) : (
+                <span className="text-faint">Next →</span>
+              )}
+            </span>
+            <Link href={studyHref} className={BTN_INK}>
+              Study this unit →
+            </Link>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

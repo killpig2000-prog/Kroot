@@ -3,11 +3,18 @@
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
-// Early-launch notice: shows on every dashboard load (not just once) while
-// we're actively soliciting feedback — no dismissal is persisted.
+// Early-launch notice: shows on every dashboard load while we're actively
+// soliciting feedback. "Close" is per-load only; "Don't show today" hides it
+// until the next local calendar day.
 export const OPEN_FEEDBACK_EVENT = "kroot:open-feedback";
+const HIDE_KEY = "kroot:feedback-notice-hidden-on";
 
 type View = "closed" | "announce" | "form" | "sent";
+
+function localDateKey() {
+  const d = new Date();
+  return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
+}
 
 export default function FeedbackWidget() {
   const [view, setView] = useState<View>("closed");
@@ -17,6 +24,11 @@ export default function FeedbackWidget() {
   const pathname = usePathname();
 
   useEffect(() => {
+    let hiddenToday = false;
+    try {
+      hiddenToday = localStorage.getItem(HIDE_KEY) === localDateKey();
+    } catch {}
+    if (hiddenToday) return;
     const t = setTimeout(() => setView("announce"), 600);
     return () => clearTimeout(t);
   }, []);
@@ -37,6 +49,13 @@ export default function FeedbackWidget() {
   }, [view]);
 
   const dismissAnnouncement = () => setView("closed");
+
+  const hideForToday = () => {
+    try {
+      localStorage.setItem(HIDE_KEY, localDateKey());
+    } catch {}
+    setView("closed");
+  };
 
   const close = () => {
     setView("closed");
@@ -79,44 +98,42 @@ export default function FeedbackWidget() {
           aria-modal="true"
           aria-label="Feedback"
           className={`pointer-events-auto w-full bg-white rounded-[24px] shadow-[0_30px_70px_-20px_rgba(40,35,25,.35)] ${
-            view === "announce" ? "max-w-[420px] px-8 pt-9 pb-8 text-center" : "max-w-[380px] px-6 py-6"
+            view === "announce" ? "max-w-[420px] px-7 pt-7 pb-6" : "max-w-[380px] px-6 py-6"
           }`}
         >
           {view === "announce" && (
             <>
-              <svg className="bob w-[92px] h-[92px] mx-auto mb-4" viewBox="0 0 100 100" aria-hidden="true">
-                <ellipse cx="50" cy="88" rx="28" ry="5" fill="#F1EEE4" />
-                <g className="sway">
-                  <path d="M50 78 C50 62 50 56 50 50" stroke="#8B7355" strokeWidth="6" strokeLinecap="round" />
-                  <circle cx="50" cy="38" r="24" fill="#22C55E" />
-                  <path d="M50 20 C50 8 58 2 70 1 C68 13 61 19 50 20Z" fill="#16A34A" />
-                  <circle className="blink" cx="42" cy="38" r="3" fill="#14532D" />
-                  <circle className="blink d2" cx="58" cy="38" r="3" fill="#14532D" />
-                  <circle cx="37" cy="45" r="3.4" fill="#FB7185" opacity=".45" />
-                  <circle cx="63" cy="45" r="3.4" fill="#FB7185" opacity=".45" />
-                  <path d="M44 47 Q50 52 56 47" stroke="#14532D" strokeWidth="2.4" fill="none" strokeLinecap="round" />
-                </g>
-              </svg>
-              <b className="block text-[22px] font-extrabold text-[#221F1B] mb-2 tracking-tight">
-                We just opened! 🎉
+              <span className="block text-[11px] font-bold uppercase tracking-[0.12em] text-faint mb-2">
+                Notice
+              </span>
+              <b className="block text-[18px] font-extrabold text-[#221F1B] mb-3 tracking-tight">
+                Kroot has recently launched
               </b>
-              <p className="text-[14.5px] text-muted leading-relaxed mb-7">
-                Kroot is brand new, so things may be rough around the edges. Tell us what&apos;s
-                broken, confusing, or missing — every note helps us build the app you actually
-                want.
+              <p className="text-[14px] text-muted leading-relaxed mb-2">
+                The app is still early and has many shortcomings. We are continuing to improve
+                it.
               </p>
-              <div className="flex flex-col gap-2.5">
-                <button
-                  onClick={() => setView("form")}
-                  className="w-full rounded-[13px] bg-success text-white font-bold text-[14.5px] py-3.5 hover:bg-success-deep transition-colors"
-                >
-                  Send feedback
-                </button>
+              <p className="text-[14px] text-muted leading-relaxed mb-6">
+                If you have any opinions or suggestions, we would appreciate hearing them.
+              </p>
+              <button
+                onClick={() => setView("form")}
+                className="w-full rounded-[12px] bg-[#221F1B] text-white font-semibold text-[14px] py-3 hover:bg-[#3A3530] transition-colors"
+              >
+                Send feedback
+              </button>
+              <div className="flex items-center justify-between mt-3 pt-3 border-t border-line">
                 <button
                   onClick={dismissAnnouncement}
-                  className="w-full rounded-[13px] text-faint font-semibold text-[13px] py-1.5 hover:text-muted transition-colors"
+                  className="text-[13px] font-semibold text-muted hover:text-[#221F1B] transition-colors py-1"
                 >
-                  Maybe later
+                  Close
+                </button>
+                <button
+                  onClick={hideForToday}
+                  className="text-[13px] font-semibold text-faint hover:text-muted transition-colors py-1"
+                >
+                  Don&apos;t show again today
                 </button>
               </div>
             </>
@@ -125,7 +142,7 @@ export default function FeedbackWidget() {
           {view === "form" && (
             <>
               <b className="block text-[15px] font-extrabold text-[#221F1B] mb-1.5">
-                💬 Send feedback
+                Send feedback
               </b>
               <p className="text-[13px] text-muted mb-3.5">
                 A bug, a rough edge, a feature you wish we had — all welcome.
@@ -164,10 +181,10 @@ export default function FeedbackWidget() {
 
           {view === "sent" && (
             <>
-              <span className="text-[26px] block mb-2">🙏</span>
-              <b className="block text-[16px] font-extrabold text-[#221F1B] mb-1.5">Thank you!</b>
+              <b className="block text-[16px] font-extrabold text-[#221F1B] mb-1.5">Thank you</b>
               <p className="text-[13.5px] text-muted leading-relaxed mb-5">
-                Your feedback landed with us. It genuinely shapes what we build next.
+                Your feedback has been received. We read every message and use it to decide
+                what to improve next.
               </p>
               <button
                 onClick={close}
