@@ -2,6 +2,18 @@ import { LEVEL_ORDER, type CefrLevel } from "@/lib/tree";
 import { isDifficultyUnlocked } from "@/lib/level";
 import type { RawVocabWord } from "@/lib/vocabulary-data/types";
 import { DAILY_LIFE_WORDS } from "@/lib/vocabulary-data/daily-life";
+import EXAMPLE_OVERRIDES from "@/lib/vocabulary-data/example-overrides.json";
+
+// Regenerated example sentences (see scripts/gen-vocab-examples.mts) whose
+// grammar actually matches the word's CEFR level, keyed by "{level}:{korean}".
+// Falls back to the hand-authored example_kr/example_en until a word's been
+// regenerated — never a missing example.
+function withExampleOverride(w: RawVocabWord): RawVocabWord {
+  const override = (EXAMPLE_OVERRIDES as Record<string, { example_kr: string; example_en: string }>)[
+    `${w.level}:${w.korean}`
+  ];
+  return override ? { ...w, example_kr: override.example_kr, example_en: override.example_en } : w;
+}
 
 export type VocabTopic = {
   key: string;
@@ -94,7 +106,7 @@ export function getWordsForTopic(topicKey: string, level?: CefrLevel): VocabWord
   const raw = TOPIC_WORD_SOURCES[topicKey] ?? [];
   return raw
     .filter((w) => !level || w.level === level)
-    .map((w) => ({ ...w, topic_key: topicKey, key: `${topicKey}:${w.level}:${w.korean}` }));
+    .map((w) => ({ ...withExampleOverride(w), topic_key: topicKey, key: `${topicKey}:${w.level}:${w.korean}` }));
 }
 
 // Display metadata for each unit (= chapter) of the daily-life track, curated
