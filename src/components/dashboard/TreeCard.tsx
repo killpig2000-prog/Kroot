@@ -264,45 +264,55 @@ export default function TreeCard({
 
         {/* wardrobe strip — dress the tree without leaving the garden */}
         {userId && ownedIds && (
-          <div className="mt-4 pt-3.5 border-t border-dashed border-line flex items-center gap-2 flex-wrap">
-            <b className="text-[12.5px] font-bold mr-0.5">My costume</b>
+          <div className="mt-4 pt-3.5 border-t border-dashed border-line">
+            <div className="flex items-center justify-between mb-2">
+              <b className="text-[12.5px] font-bold">My costume</b>
+              <Link
+                href="/shop"
+                className="text-[12.5px] font-semibold text-muted hover:text-charcoal transition-colors whitespace-nowrap"
+              >
+                Garden Shop →
+              </Link>
+            </div>
             {owned.length === 0 ? (
               <span className="text-[12.5px] text-muted">
                 No costumes yet — treat your tree at the shop.
               </span>
             ) : (
-              owned.map((c) => {
-                const on = equipped.includes(c.id);
-                return (
-                  <button
-                    key={c.id}
-                    onClick={() => toggleCostume(c.id)}
-                    disabled={busy}
-                    className={`flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[12px] font-semibold border transition-all disabled:opacity-60 ${
-                      on
-                        ? "bg-success-bg border-success-line text-success-deep"
-                        : "bg-warm border-line text-muted hover:border-faint"
-                    }`}
-                  >
-                    {c.render ? (
-                      <svg viewBox="-40 -30 80 60" className="w-[26px] h-[19px]" aria-hidden="true">
-                        {c.render()}
-                      </svg>
-                    ) : (
-                      <span className="text-[14px] leading-none" aria-hidden="true">{c.icon}</span>
-                    )}
-                    {c.name}
-                    {on && " ✓"}
-                  </button>
-                );
-              })
+              <div className="flex flex-wrap gap-2">
+                {owned.map((c) => {
+                  const on = equipped.includes(c.id);
+                  return (
+                    <button
+                      key={c.id}
+                      onClick={() => toggleCostume(c.id)}
+                      disabled={busy}
+                      title={c.name}
+                      aria-label={c.name}
+                      aria-pressed={on}
+                      className={`relative w-11 h-11 flex items-center justify-center rounded-xl border transition-all disabled:opacity-60 ${
+                        on
+                          ? "bg-success-bg border-success-line ring-2 ring-success-line ring-offset-1 ring-offset-white"
+                          : "bg-warm border-line hover:border-faint"
+                      }`}
+                    >
+                      {c.render ? (
+                        <svg viewBox="-40 -30 80 60" className="w-6 h-[17px]" aria-hidden="true">
+                          {c.render()}
+                        </svg>
+                      ) : (
+                        <span className="text-base leading-none" aria-hidden="true">{c.icon}</span>
+                      )}
+                      {on && (
+                        <span className="absolute -top-1.5 -right-1.5 w-4 h-4 rounded-full bg-success text-white text-[9px] font-bold flex items-center justify-center leading-none">
+                          ✓
+                        </span>
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
             )}
-            <Link
-              href="/shop"
-              className="ml-auto text-[12.5px] font-semibold text-muted hover:text-charcoal transition-colors whitespace-nowrap"
-            >
-              Garden Shop →
-            </Link>
           </div>
         )}
       </div>

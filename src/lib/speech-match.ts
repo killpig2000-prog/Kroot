@@ -7,6 +7,33 @@ export function normalizeKr(s: string): string {
     .replace(/\s+/g, "");
 }
 
+const CHO = ["ㄱ", "ㄲ", "ㄴ", "ㄷ", "ㄸ", "ㄹ", "ㅁ", "ㅂ", "ㅃ", "ㅅ", "ㅆ", "ㅇ", "ㅈ", "ㅉ", "ㅊ", "ㅋ", "ㅌ", "ㅍ", "ㅎ"];
+const JUNG = ["ㅏ", "ㅐ", "ㅑ", "ㅒ", "ㅓ", "ㅔ", "ㅕ", "ㅖ", "ㅗ", "ㅘ", "ㅙ", "ㅚ", "ㅛ", "ㅜ", "ㅝ", "ㅞ", "ㅟ", "ㅠ", "ㅡ", "ㅢ", "ㅣ"];
+const JONG = ["", "ㄱ", "ㄲ", "ㄳ", "ㄴ", "ㄵ", "ㄶ", "ㄷ", "ㄹ", "ㄺ", "ㄻ", "ㄼ", "ㄽ", "ㄾ", "ㄿ", "ㅀ", "ㅁ", "ㅂ", "ㅄ", "ㅅ", "ㅆ", "ㅇ", "ㅈ", "ㅊ", "ㅋ", "ㅌ", "ㅍ", "ㅎ"];
+
+// Decompose Hangul syllable blocks into their component jamo (초성/중성/종성)
+// so similarity is scored at the sound level instead of the whole-syllable
+// level. Speech recognition on short words tends to mishear one jamo (e.g.
+// "물" heard as "불") — at the syllable level that's already a full
+// character wrong, which craters the score of a 1-2 syllable word. At the
+// jamo level it's a single substitution among many, which scores fairly.
+export function decomposeToJamo(s: string): string {
+  let out = "";
+  for (const ch of s) {
+    const code = ch.codePointAt(0)!;
+    if (code >= 0xac00 && code <= 0xd7a3) {
+      const offset = code - 0xac00;
+      const cho = Math.floor(offset / 588);
+      const jung = Math.floor((offset % 588) / 28);
+      const jong = offset % 28;
+      out += CHO[cho] + JUNG[jung] + JONG[jong];
+    } else {
+      out += ch;
+    }
+  }
+  return out;
+}
+
 function levenshtein(a: string, b: string): number {
   if (a === b) return 0;
   if (!a.length) return b.length;
@@ -25,8 +52,8 @@ function levenshtein(a: string, b: string): number {
 
 /** 0–1 similarity between two Korean strings after normalization. */
 export function similarity(a: string, b: string): number {
-  const x = normalizeKr(a);
-  const y = normalizeKr(b);
+  const x = decomposeToJamo(normalizeKr(a));
+  const y = decomposeToJamo(normalizeKr(b));
   if (!x && !y) return 1;
   const longest = Math.max(x.length, y.length);
   if (!longest) return 0;

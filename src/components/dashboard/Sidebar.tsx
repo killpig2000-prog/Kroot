@@ -53,7 +53,11 @@ function NavItem({
     </Link>
   );
 
-  if (!popular) return link;
+  // Skip the ring once the item is active — the "notebook tab" active state
+  // (white bg, right edge bled off with a negative margin) doesn't fit
+  // inside the ring's rounded frame, and the highlight is redundant once
+  // you're already on that page.
+  if (!popular || on) return link;
 
   // Rainbow-ring treatment: a gradient frame with a small padding gap, only
   // for the one item we want to visually call out (Pronunciation).

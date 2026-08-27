@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { bestSimilarity, normalizeKr, similarity, verdictFor } from "@/lib/speech-match";
+import { bestSimilarity, decomposeToJamo, normalizeKr, similarity, verdictFor } from "@/lib/speech-match";
 
 describe("normalizeKr", () => {
   it("strips punctuation and whitespace", () => {
@@ -32,6 +32,31 @@ describe("similarity", () => {
     const far = similarity("안녕하세요", "감사합니다");
     expect(close).toBeGreaterThan(far);
     expect(close).toBeGreaterThanOrEqual(0.8);
+  });
+});
+
+describe("decomposeToJamo", () => {
+  it("splits each syllable into cho/jung/jong", () => {
+    expect(decomposeToJamo("물")).toBe("ㅁㅜㄹ");
+    expect(decomposeToJamo("사랑")).toBe("ㅅㅏㄹㅏㅇ");
+  });
+
+  it("passes non-Hangul characters through unchanged", () => {
+    expect(decomposeToJamo("ok")).toBe("ok");
+  });
+});
+
+describe("similarity — jamo-level scoring for short words", () => {
+  it("scores a one-jamo mishearing of a single-syllable word much higher than 0", () => {
+    // "물" (water) misheard as "불" (fire) — one wrong consonant, not a
+    // wrong word. Syllable-level scoring would floor this at 0.
+    const score = similarity("불", "물");
+    expect(score).toBeGreaterThan(0.5);
+  });
+
+  it("still scores a totally different single-syllable word low", () => {
+    const score = similarity("산", "물");
+    expect(score).toBeLessThan(0.5);
   });
 });
 
