@@ -51,11 +51,25 @@ export const MIN_AVG = 70;
 export const COOLDOWN_HOURS = 24;
 
 // Eligibility thresholds within the current grade.
+//
+// The gate asks "have you actually retained a solid chunk of this grade?" — the
+// test itself is what measures ability, so the gate must never be harder to
+// clear than the test is to pass.
+//
+// It counts words held at SRS box >= MASTERY_BOX rather than words merely seen,
+// and rather than a lifetime correct/incorrect ratio. Box state is current, so
+// a word you fumbled while learning but hold today counts as held; a lifetime
+// ratio would have penalised those early misses forever.
+//
+// The target is an absolute count, capped by the ratio only so a grade with
+// very little content can't lock learners out. An earlier version used the
+// ratio alone, which meant every vocabulary expansion silently pushed the
+// finish line further away for everyone mid-grade (A1 had grown to 480 words,
+// ~7 weeks, before this was fixed).
 export const ELIGIBILITY = {
-  // Coverage is relative to how many words of this grade actually exist in
-  // the app (currently small; grows automatically as content is added).
-  wordCoverageRatio: 0.8, // review at least 80% of this grade's words
-  minAccuracy: 0.75, // cumulative correct / (correct+incorrect) on those words
+  masteryBox: 3, // box 3 = survived the 1-day and 3-day reviews (see lib/srs.ts)
+  targetMasteredWords: 150, // ~2 weeks at a normal pace
+  wordCoverageRatio: 0.8, // ceiling only: never demand more than 80% of a grade
   minReadingPassages: 2, // reading passages of this grade attempted
 };
 

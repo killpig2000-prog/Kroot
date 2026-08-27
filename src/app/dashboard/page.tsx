@@ -183,11 +183,8 @@ export default async function DashboardPage() {
   // internally it fans out its own queries in parallel.
   const elig = await computeEligibility(supabase, user.id, cefr);
   const promo = testForGrade(cefr);
-  const accuracyPct = Math.round(elig.accuracy * 100);
-  const accuracyLabel = elig.hasAccuracyData ? `${accuracyPct}%` : "—";
   const promoChecks = [
-    { label: "Words", ok: elig.wordsReviewed >= elig.wordsRequired, value: `${elig.wordsReviewed}/${elig.wordsRequired}` },
-    { label: "Accuracy", ok: elig.hasAccuracyData && accuracyPct >= Math.round(elig.accuracyRequired * 100), value: accuracyLabel },
+    { label: "Words held", ok: elig.wordsMastered >= elig.wordsRequired, value: `${elig.wordsMastered}/${elig.wordsRequired}` },
     { label: "Reading", ok: elig.readingDone >= elig.readingRequired, value: `${elig.readingDone}/${elig.readingRequired}` },
   ];
   // Errors (e.g. migration 0022 not applied yet) just hide the watering card.

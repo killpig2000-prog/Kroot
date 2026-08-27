@@ -26,8 +26,6 @@ export default async function LevelTestPage() {
   const spec = testForGrade(grade);
   const elig = spec ? await computeEligibility(supabase, user.id, grade) : null;
 
-  const accuracyPct = elig ? Math.round(elig.accuracy * 100) : 0;
-
   const bar = (value: number, target: number) => (
     <span className="flex-1 h-2.5 rounded-full bg-[#F5F5F4] overflow-hidden">
       <span
@@ -61,7 +59,7 @@ export default async function LevelTestPage() {
             🎯 Level-Up Test {spec && `— ${spec.from} → ${spec.to}`}
           </h1>
           <p className="text-[13.5px] text-muted mb-6">
-            Study enough at your current grade — with good accuracy — and the test unlocks. Pass it to open the next grade&apos;s content and league.
+            Hold onto enough of your current grade and the test unlocks on its own. Pass it to open the next grade&apos;s content.
           </p>
 
           {!spec ? (
@@ -79,21 +77,18 @@ export default async function LevelTestPage() {
           ) : (
             <div className="grid gap-4">
               <div className="border border-line rounded-[14px] p-5 grid gap-3.5">
-                <b className="text-[14.5px]">Requirements — how much and how well you studied at {grade}</b>
+                <b className="text-[14.5px]">Requirements — what you&apos;re holding onto at {grade}</b>
                 <div className="flex items-center gap-3 text-[13px]">
-                  <span className="flex-none w-[130px]">Words reviewed</span>
-                  {bar(elig.wordsReviewed, elig.wordsRequired)}
+                  <span className="flex-none w-[130px]">Words held</span>
+                  {bar(elig.wordsMastered, elig.wordsRequired)}
                   <b className="flex-none tabular-nums">
-                    {elig.wordsReviewed}/{elig.wordsRequired}
+                    {elig.wordsMastered}/{elig.wordsRequired}
                   </b>
                 </div>
-                <div className="flex items-center gap-3 text-[13px]">
-                  <span className="flex-none w-[130px]">Accuracy</span>
-                  {bar(accuracyPct, Math.round(elig.accuracyRequired * 100))}
-                  <b className="flex-none tabular-nums">
-                    {accuracyPct}%/{Math.round(elig.accuracyRequired * 100)}%
-                  </b>
-                </div>
+                <p className="text-[12px] text-muted -mt-1.5">
+                  A word counts once it survives its first two reviews — you&apos;ve studied{" "}
+                  {elig.wordsSeen} {grade} {elig.wordsSeen === 1 ? "word" : "words"} so far.
+                </p>
                 <div className="flex items-center gap-3 text-[13px]">
                   <span className="flex-none w-[130px]">Reading passages</span>
                   {bar(elig.readingDone, elig.readingRequired)}

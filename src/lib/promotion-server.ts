@@ -4,11 +4,9 @@ import { VOCAB_TOPICS, getWordsForTopic } from "@/lib/vocabulary";
 import { COOLDOWN_HOURS, ELIGIBILITY, type ExcludeKeys } from "@/lib/promotion-test";
 
 export type Eligibility = {
-  wordsReviewed: number;
+  wordsMastered: number; // words of this grade sitting at box >= masteryBox
   wordsRequired: number;
-  accuracy: number; // 0..1 over reviewed words of this grade
-  hasAccuracyData: boolean; // false until at least one quiz answer exists
-  accuracyRequired: number;
+  wordsSeen: number; // reviewed at least once — shown as context, not a gate
   readingDone: number;
   readingRequired: number;
   cooldownUntil: string | null; // ISO — set when a failed attempt is too recent
@@ -16,8 +14,8 @@ export type Eligibility = {
   eligible: boolean;
 };
 
-// Eligibility = enough coverage + accuracy in the CURRENT grade, and no
-// recent failed attempt still cooling down.
+// Eligibility = enough words of the CURRENT grade actually retained, some
+// reading done, and no recent failed attempt still cooling down.
 export async function computeEligibility(
   supabase: SupabaseClient,
   userId: string,
@@ -26,12 +24,20 @@ export async function computeEligibility(
   const gradeWordKeys = new Set(
     VOCAB_TOPICS.flatMap((t) => getWordsForTopic(t.key, grade)).map((w) => w.key),
   );
-  const wordsRequired = Math.max(1, Math.ceil(gradeWordKeys.size * ELIGIBILITY.wordCoverageRatio));
+  // The ratio is only a ceiling, so a thin grade can't demand more words than
+  // it has; normally the absolute target is the smaller of the two.
+  const wordsRequired = Math.max(
+    1,
+    Math.min(
+      ELIGIBILITY.targetMasteredWords,
+      Math.ceil(gradeWordKeys.size * ELIGIBILITY.wordCoverageRatio),
+    ),
+  );
 
   const [vocab, reading, attempts] = await Promise.all([
     supabase
       .from("vocabulary_progress")
-      .select("word_key, correct_count, incorrect_count")
+      .select("word_key, box")
       .eq("user_id", userId)
       .not("last_reviewed_at", "is", null),
     supabase
@@ -46,17 +52,13 @@ export async function computeEligibility(
       .limit(5),
   ]);
 
-  let correct = 0;
-  let total = 0;
-  let reviewed = 0;
+  let mastered = 0;
+  let seen = 0;
   for (const row of vocab.data ?? []) {
     if (!gradeWordKeys.has(row.word_key)) continue;
-    reviewed += 1;
-    correct += row.correct_count ?? 0;
-    total += (row.correct_count ?? 0) + (row.incorrect_count ?? 0);
+    seen += 1;
+    if ((row.box ?? 1) >= ELIGIBILITY.masteryBox) mastered += 1;
   }
-  const accuracy = total > 0 ? correct / total : 0;
-  const hasAccuracyData = total > 0;
 
   const readingDone = (reading.data ?? []).filter((r) =>
     String(r.passage_key).includes(`:${grade}:`),
@@ -78,17 +80,14 @@ export async function computeEligibility(
   }
 
   const eligible =
-    reviewed >= wordsRequired &&
-    accuracy >= ELIGIBILITY.minAccuracy &&
+    mastered >= wordsRequired &&
     readingDone >= ELIGIBILITY.minReadingPassages &&
     cooldownUntil === null;
 
   return {
-    wordsReviewed: reviewed,
+    wordsMastered: mastered,
     wordsRequired,
-    accuracy,
-    hasAccuracyData,
-    accuracyRequired: ELIGIBILITY.minAccuracy,
+    wordsSeen: seen,
     readingDone,
     readingRequired: ELIGIBILITY.minReadingPassages,
     cooldownUntil,
