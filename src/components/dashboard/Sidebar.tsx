@@ -99,7 +99,7 @@ export default function Sidebar({
 
       {SECTIONS.map((section) => (
         <div key={section.title} className="flex flex-col gap-1">
-          <p className="text-[13px] font-extrabold tracking-[.08em] uppercase text-success-deep px-3 pt-3.5 pb-1.5">
+          <p className="text-[13px] font-black tracking-[.08em] uppercase text-success-deep px-3 pt-3.5 pb-1.5">
             {section.title}
           </p>
           <div className="flex flex-col gap-1.5">
