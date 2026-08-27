@@ -1,7 +1,7 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { CefrLevel } from "@/lib/tree";
 import { VOCAB_TOPICS, getWordsForTopic } from "@/lib/vocabulary";
-import { COOLDOWN_HOURS, ELIGIBILITY } from "@/lib/promotion-test";
+import { COOLDOWN_HOURS, ELIGIBILITY, type ExcludeKeys } from "@/lib/promotion-test";
 
 export type Eligibility = {
   wordsReviewed: number;
@@ -95,4 +95,26 @@ export async function computeEligibility(
     lastWeakest,
     eligible,
   };
+}
+
+// So a retake doesn't re-serve the exact same content the learner just saw —
+// look up what the most recent attempt at this same promotion (from → to)
+// actually contained, stored as details.servedKeys by TestRunner on finish.
+export async function getLastServedKeys(
+  supabase: SupabaseClient,
+  userId: string,
+  toGrade: CefrLevel,
+): Promise<ExcludeKeys | undefined> {
+  const { data } = await supabase
+    .from("level_test_results")
+    .select("details")
+    .eq("user_id", userId)
+    .order("created_at", { ascending: false })
+    .limit(5);
+
+  for (const row of data ?? []) {
+    const d = row.details as { target_level?: string; servedKeys?: ExcludeKeys } | null;
+    if (d?.target_level === toGrade && d.servedKeys) return d.servedKeys;
+  }
+  return undefined;
 }

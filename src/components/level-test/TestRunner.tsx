@@ -7,7 +7,9 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { useSpeechRecognition } from "@/hooks/useSpeechRecognition";
 import {
+  COOLDOWN_HOURS,
   SKILL_LABELS,
+  servedKeysOf,
   testVerdict,
   type McqQuestion,
   type ServedPromotionTest,
@@ -166,7 +168,13 @@ export default function TestRunner({
         result_level: verdict.passed ? spec.to : spec.from,
         score: verdict.avg,
         total_questions: 100,
-        details: { ...skillScores, passed: verdict.passed, weakest: verdict.weakest, target_level: spec.to },
+        details: {
+          ...skillScores,
+          passed: verdict.passed,
+          weakest: verdict.weakest,
+          target_level: spec.to,
+          servedKeys: servedKeysOf(spec),
+        },
       };
       // details column arrives with migration 0014; fall back without it.
       const ins = await supabase.from("level_test_results").insert(row);
@@ -203,7 +211,7 @@ export default function TestRunner({
           Listening ({spec.listening.length}) → Reading ({totalReadingQuestions} questions over {spec.reading.length} passage{spec.reading.length > 1 ? "s" : ""}) → Writing (1) → Speaking (1). Writing and speaking are graded by an AI teacher. Questions are drawn at random each attempt.
         </p>
         <p className="text-[12.5px] text-[#A19A8C] mb-4">
-          To pass: 70+ average with every skill at 60+. Failing is fine — practice your weakest skill and retake after 48 hours.
+          To pass: 70+ average with every skill at 60+. Failing is fine — practice your weakest skill and retake after {COOLDOWN_HOURS} hours.
         </p>
         <button onClick={() => setStage("listening")} className={BTN_GREEN}>
           Start
@@ -344,7 +352,7 @@ export default function TestRunner({
         <div className="text-center mb-5">
           <p className="text-[34px] mb-1">🌱</p>
           <b className="text-[19px]">Not quite yet — but you&apos;re close!</b>
-          <p className="text-[13.5px] text-[#6B6560] mt-1">You can try again in 48 hours.</p>
+          <p className="text-[13.5px] text-[#6B6560] mt-1">You can try again in {COOLDOWN_HOURS} hours.</p>
         </div>
       )}
 

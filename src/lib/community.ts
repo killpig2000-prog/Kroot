@@ -94,7 +94,7 @@ See you in the garden! 🌳
 
 🏆 Weekly league — five leagues: Sprout 🌱 → Bronze 🥉 → Silver 🥈 → Gold 🥇 → Diamond 💎. Everyone starts in Sprout and races by XP earned this week. Every Monday the top 20% of your league climb to the next one, the bottom 20% drop down one — so you always compete with learners as active as you. Rewards: top 10% → 100 coins, top 30% → 50, top 60% → 20, and 5 just for playing. Coins buy costumes in the shop.
 
-Failed a promotion test? Totally normal — practice your weakest skill and retake it after 48 hours.`,
+Failed a promotion test? Totally normal — practice your weakest skill and retake it after 24 hours.`,
   },
   {
     id: "notice-start",
