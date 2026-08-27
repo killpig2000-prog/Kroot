@@ -22,14 +22,14 @@ describe("xpForNext (curve v2)", () => {
     expect(xpForNext(19)).toBe(15);
     expect(xpForNext(20)).toBe(25);
     expect(xpForNext(34)).toBe(25);
-    expect(xpForNext(35)).toBe(40);
-    expect(xpForNext(49)).toBe(40);
+    expect(xpForNext(35)).toBe(30);
+    expect(xpForNext(49)).toBe(30);
   });
 
   it("keeps rising slowly past fully grown", () => {
-    expect(xpForNext(50)).toBe(80);
-    expect(xpForNext(51)).toBe(84);
-    expect(xpForNext(100)).toBe(280);
+    expect(xpForNext(50)).toBe(60);
+    expect(xpForNext(51)).toBe(63);
+    expect(xpForNext(100)).toBe(210);
   });
 });
 
@@ -50,8 +50,8 @@ describe("xpToReach", () => {
     }
   });
 
-  it("fully grown at 1,215 XP (~100 chapters)", () => {
-    expect(xpToReach(FULLY_GROWN_LEVEL)).toBe(1215);
+  it("fully grown at 1,065 XP (~85 chapters)", () => {
+    expect(xpToReach(FULLY_GROWN_LEVEL)).toBe(1065);
   });
 
   it("clamps out-of-range levels", () => {

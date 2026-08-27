@@ -6,11 +6,11 @@ import { LEVEL_ORDER, type CefrLevel } from "@/lib/tree";
 //
 // Curve v2 — fast early, open-ended late. One chapter (10-15 XP) is one
 // level-up for the first ten levels, then the cost ramps gently so the tree
-// is fully grown at Lv.50 (~1,215 XP, about 100 chapters). Past 50 the tree
+// is fully grown at Lv.50 (~1,065 XP, about 85 chapters). Past 50 the tree
 // only grows *taller*; each level costs a little more than the last with no
 // hard ceiling on XP, and Lv.120 wears the star topper as the display cap.
 //
-// Mirror of public.level_from_xp() in supabase/migrations/0028_level_curve_v2.sql —
+// Mirror of public.level_from_xp() in supabase/migrations/0029_level_curve_v2_softer.sql —
 // change both together.
 export const FULLY_GROWN_LEVEL = 50;
 export const MAX_LEVEL = 120;
@@ -20,8 +20,8 @@ export function xpForNext(level: number): number {
   if (level < 10) return 10;
   if (level < 20) return 15;
   if (level < 35) return 25;
-  if (level < FULLY_GROWN_LEVEL) return 40;
-  return 80 + 4 * (level - FULLY_GROWN_LEVEL);
+  if (level < FULLY_GROWN_LEVEL) return 30;
+  return 60 + 3 * (level - FULLY_GROWN_LEVEL);
 }
 
 // Cumulative XP needed to *reach* a level. Tiny table, computed once.
