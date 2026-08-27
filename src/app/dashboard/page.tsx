@@ -162,7 +162,6 @@ export default async function DashboardPage() {
   if (!levelTestRes.error && (levelTestRes.count ?? 0) === 0) redirect("/onboarding");
 
   const streakDays = streakError ? profile?.streak_days ?? 0 : (streakValue as number) ?? 0;
-  const ownedIds = (costumeRows ?? []).map((r) => r.costume_id);
   const equippedIds = (costumeRows ?? []).filter((r) => r.equipped).map((r) => r.costume_id);
 
   let quest = questRes.data;
@@ -312,7 +311,6 @@ export default async function DashboardPage() {
             xpNeeded={needed}
             costumeIds={equippedIds}
             species={cefr}
-            ownedIds={ownedIds}
           />
 
           {/* the one button: pick up where you left off */}

@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
-import { COSTUMES, SceneLayer, skyFor } from "@/lib/costumes";
+import { SceneLayer, skyFor } from "@/lib/costumes";
 import { LEVEL_ORDER, LEVEL_PATH, SPECIES, type CefrLevel } from "@/lib/tree";
 import { FULLY_GROWN_LEVEL, MAX_LEVEL, treeHeightMetres, treeStageForLevel } from "@/lib/level";
 import VeteranTree, { VETERAN_MILESTONES, veteranFrameHeight } from "@/components/dashboard/VeteranTree";
@@ -27,7 +26,6 @@ export default function TreeCard({
   xpNeeded,
   costumeIds = [],
   species,
-  ownedIds,
 }: {
   level: number;
   progressPct: number;
@@ -36,13 +34,9 @@ export default function TreeCard({
   costumeIds?: string[];
   /** CEFR grade — decides the tree species; promotion transforms the garden. */
   species?: CefrLevel;
-  /** With ownedIds, the card shows a "My costume" strip linking to the Shop, where equipping happens. */
-  ownedIds?: string[];
 }) {
   const [fill, setFill] = useState(0);
   const equipped = costumeIds;
-
-  const owned = COSTUMES.filter((c) => (ownedIds ?? []).includes(c.id));
 
   useEffect(() => {
     const t = setTimeout(() => setFill(progressPct), 200);
@@ -222,49 +216,6 @@ export default function TreeCard({
           </div>
         )}
 
-        {/* wardrobe strip — equipping lives in the Shop, this just shows what's on */}
-        {ownedIds && (
-          <div className="mt-4 pt-3.5 border-t border-dashed border-line">
-            <Link
-              href="/shop"
-              className="w-full flex items-center justify-between gap-2 rounded-xl border border-line bg-warm px-3 py-2.5 hover:border-faint transition-colors"
-            >
-              <span className="flex items-center gap-2 min-w-0">
-                <b className="text-[12.5px] font-bold whitespace-nowrap">My costume</b>
-                {owned.length === 0 ? (
-                  <span className="text-[12px] text-muted truncate">No costumes yet</span>
-                ) : (
-                  <span className="flex -space-x-1.5">
-                    {owned
-                      .filter((c) => equipped.includes(c.id))
-                      .slice(0, 4)
-                      .map((c) => (
-                        <span
-                          key={c.id}
-                          className="w-6 h-6 rounded-full bg-success-bg border border-white flex items-center justify-center text-[12px]"
-                          aria-hidden="true"
-                        >
-                          {c.render ? (
-                            <svg viewBox="-40 -30 80 60" className="w-4 h-[10px]" aria-hidden="true">
-                              {c.render()}
-                            </svg>
-                          ) : (
-                            c.icon
-                          )}
-                        </span>
-                      ))}
-                    {equipped.length === 0 && (
-                      <span className="text-[12px] text-muted">nothing equipped</span>
-                    )}
-                  </span>
-                )}
-              </span>
-              <span className="text-[12.5px] font-semibold text-muted whitespace-nowrap">
-                {owned.length === 0 ? "Shop →" : "Dress up in Shop →"}
-              </span>
-            </Link>
-          </div>
-        )}
       </div>
     </div>
   );
