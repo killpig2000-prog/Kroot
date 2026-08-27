@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { applyModeToDocument, type ModeKey } from "@/lib/mode";
-import { MAIN_ITEMS, SECTIONS } from "@/components/dashboard/navItems";
+import { MAIN_ITEMS, SECTIONS, type NavColor } from "@/components/dashboard/navItems";
 
 const ITEMS = [
   { icon: "🏡", label: "Garden", href: "/dashboard" },
@@ -14,24 +14,60 @@ const ITEMS = [
   { icon: "🛍️", label: "Shop", href: "/shop" },
 ];
 
-function Tile({ icon, label, href, on, onNavigate }: {
+const RAINBOW = "linear-gradient(90deg,#F43F5E,#F59E0B,#22C55E,#0EA5E9,#8B5CF6)";
+
+function Tile({
+  icon,
+  label,
+  href,
+  on,
+  onNavigate,
+  color,
+  popular,
+}: {
   icon: string;
   label: string;
   href: string;
   on: boolean;
   onNavigate: () => void;
+  color?: NavColor;
+  popular?: boolean;
 }) {
-  return (
+  const tile = (
     <Link
       href={href}
       onClick={onNavigate}
-      className={`flex flex-col items-center gap-0.5 rounded-[12px] border bg-white px-1 py-2 text-center text-[11px] font-bold transition-colors ${
+      className={`relative flex flex-col items-center gap-1 rounded-[12px] border bg-white px-1 py-2.5 text-center text-[11px] font-bold transition-colors ${
         on ? "border-[#16A34A] text-[#15803D]" : "border-[#EFE9DC] text-[#4A453D] hover:border-[#CFC8B8]"
       }`}
     >
-      <span className="text-[17px]">{icon}</span>
+      {popular && (
+        <span
+          className="absolute -top-1.5 -right-1.5 text-[8.5px] font-extrabold text-white rounded-full px-[6px] py-px"
+          style={{ background: RAINBOW }}
+        >
+          인기
+        </span>
+      )}
+      {color ? (
+        <span
+          className="w-6 h-6 rounded-[7px] border flex items-center justify-center text-[13px]"
+          style={{ background: color.bg, borderColor: color.border, color: color.text }}
+        >
+          {icon}
+        </span>
+      ) : (
+        <span className="text-[17px]">{icon}</span>
+      )}
       <span className="leading-tight">{label}</span>
     </Link>
+  );
+
+  if (!popular) return tile;
+  return (
+    <div className="rounded-[13px] p-[1.5px]" style={{ background: RAINBOW }}>
+      <div className="rounded-[11.5px]">{tile}</div>
+    </div>
   );
 }
 
