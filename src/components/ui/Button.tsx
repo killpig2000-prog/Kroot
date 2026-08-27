@@ -4,18 +4,13 @@
 // had drifted (e.g. some variants were missing disabled:opacity-60).
 import type { ButtonHTMLAttributes } from "react";
 
-export type ButtonTone =
-  | "line"
-  | "ink"
-  | "teal"
-  | "sky"
-  | "success"
-  | "amber"
-  | "violet"
-  | "danger";
+export type ButtonTone = "line" | "ink" | "teal" | "sky" | "success" | "amber" | "violet";
 
-const BASE =
-  "inline-flex items-center justify-center rounded-[9px] px-[22px] py-2.5 text-sm font-semibold transition-colors disabled:opacity-60 disabled:pointer-events-none";
+// This is the "default" session-button size (px-[22px] py-2.5 text-sm) used
+// across reading/vocab/listening/level-test/pronunciation. It was the most
+// common shape among the per-file BTN_LINE/BTN_TEAL/... constants, and the
+// one where the disabled state had actually drifted between files.
+const BASE = "rounded-[9px] px-[22px] py-2.5 text-sm font-semibold transition-colors disabled:opacity-60";
 
 const TONE_CLASSES: Record<ButtonTone, string> = {
   line: "text-charcoal bg-white border border-line hover:bg-warm",
@@ -25,7 +20,6 @@ const TONE_CLASSES: Record<ButtonTone, string> = {
   success: "text-white bg-success hover:bg-success-deep",
   amber: "text-white bg-amber hover:bg-[#B45309]",
   violet: "text-white bg-[#7C3AED] hover:bg-[#6D28D9]",
-  danger: "text-white bg-danger hover:bg-[#B91C1C]",
 };
 
 export function buttonClassName(tone: ButtonTone = "line", className = "") {

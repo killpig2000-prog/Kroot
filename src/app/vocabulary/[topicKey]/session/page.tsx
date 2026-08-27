@@ -12,7 +12,7 @@ import {
   type VocabWordWithProgress,
 } from "@/lib/vocabulary";
 import { findMoreExamples } from "@/lib/vocab-examples";
-import { LEVEL_ORDER, isCefrLevel, type CefrLevel } from "@/lib/tree";
+import { isCefrLevel, type CefrLevel } from "@/lib/tree";
 
 export default async function VocabChapterSessionPage({
   params,

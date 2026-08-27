@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { buttonClassName } from "@/components/ui/Button";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
@@ -36,12 +37,9 @@ function stageFor(reviews: number): number {
   return 3;
 }
 
-const BTN_VIOLET =
-  "rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-[#7C3AED] hover:bg-[#6D28D9] transition-colors disabled:opacity-60";
-const BTN_INK =
-  "rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-charcoal hover:bg-[#3F3F46] transition-colors disabled:opacity-60";
-const BTN_LINE =
-  "rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-charcoal bg-white border border-line hover:bg-warm transition-colors disabled:opacity-60";
+const BTN_VIOLET = buttonClassName("violet");
+const BTN_INK = buttonClassName("ink");
+const BTN_LINE = buttonClassName("line");
 const CARD = "max-w-[560px] border border-line rounded-[14px] p-[clamp(20px,3vw,28px)]";
 
 // A generated word note is either a hanja breakdown like

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { buttonClassName } from "@/components/ui/Button";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { recordCompletion, awardPartialCredit } from "@/lib/activity";
@@ -10,10 +11,8 @@ import type { CefrLevel } from "@/lib/tree";
 
 const ABC = ["A", "B", "C", "D"];
 
-const BTN_TEAL =
-  "rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-teal hover:bg-[#0F766E] transition-colors disabled:opacity-60";
-const BTN_LINE =
-  "rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-charcoal bg-white border border-line hover:bg-warm transition-colors";
+const BTN_TEAL = buttonClassName("teal");
+const BTN_LINE = buttonClassName("line");
 const Q_LABEL = "text-[11.5px] font-semibold tracking-[.06em] uppercase text-faint mb-2";
 
 // ---------------------------------------------------------------------------

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { buttonClassName } from "@/components/ui/Button";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
@@ -21,10 +22,8 @@ const RING_C = 2 * Math.PI * RING_R;
 const RAINBOW =
   "conic-gradient(from 0deg, #EF4444, #F97316, #EAB308, #22C55E, #06B6D4, #6366F1, #A855F7, #EF4444)";
 
-const BTN_TEAL =
-  "rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-teal hover:bg-[#0F766E] transition-colors disabled:opacity-60";
-const BTN_LINE =
-  "rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-charcoal bg-white border border-line hover:bg-warm transition-colors";
+const BTN_TEAL = buttonClassName("teal");
+const BTN_LINE = buttonClassName("line");
 const LABEL = "text-[11.5px] font-semibold tracking-[.06em] uppercase text-faint mb-2";
 
 const VERDICTS: Record<Verdict, { text: string; fg: string }> = {

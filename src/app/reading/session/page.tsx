@@ -5,7 +5,7 @@ import Sidebar from "@/components/dashboard/Sidebar";
 import ReadingSession, { ReadingEmpty } from "@/components/reading/ReadingSession";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { getChaptersForLevel } from "@/lib/reading";
-import { LEVEL_ORDER, isCefrLevel, type CefrLevel } from "@/lib/tree";
+import { isCefrLevel, type CefrLevel } from "@/lib/tree";
 
 export default async function ReadingChapterSessionPage({
   searchParams,

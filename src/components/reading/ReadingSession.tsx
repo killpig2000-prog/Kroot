@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useRef, useState } from "react";
+import { buttonClassName } from "@/components/ui/Button";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
@@ -11,12 +12,9 @@ type Phase = "read" | "quiz" | "summary";
 
 const ABC = ["A", "B", "C", "D"];
 
-const BTN_BLUE =
-  "rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-sky-deep hover:bg-[#1D4ED8] transition-colors disabled:opacity-60";
-const BTN_INK =
-  "rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-charcoal hover:bg-[#3F3F46] transition-colors disabled:opacity-60";
-const BTN_LINE =
-  "rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-charcoal bg-white border border-line hover:bg-warm transition-colors disabled:opacity-60";
+const BTN_BLUE = buttonClassName("sky");
+const BTN_INK = buttonClassName("ink");
+const BTN_LINE = buttonClassName("line");
 const LABEL = "text-[11.5px] font-semibold tracking-[.06em] uppercase text-faint mb-2";
 
 // Shared translation reveal used by every genre-specific reading layout below —

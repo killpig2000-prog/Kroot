@@ -6,7 +6,7 @@ import WritingSession, { WritingEmpty } from "@/components/writing/WritingSessio
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { chapterWrittenToday, getChaptersForLevel, utcDayStartISO } from "@/lib/writing";
 import { isPlus } from "@/lib/plus";
-import { LEVEL_ORDER, isCefrLevel, type CefrLevel } from "@/lib/tree";
+import { isCefrLevel, type CefrLevel } from "@/lib/tree";
 import { levelProgress, treeStageForLevel } from "@/lib/level";
 
 export default async function WritingChapterSessionPage({

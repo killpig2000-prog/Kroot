@@ -128,14 +128,19 @@ export default function WritingSession({
   const [gradingStep, setGradingStep] = useState(0);
   const loggedMinutes = useRef(false);
 
+  // Reset the grading-step cycle whenever we leave "grading" — computed
+  // during render (not an effect) so it doesn't trigger an extra render.
+  const [gradingStepPhase, setGradingStepPhase] = useState(phase);
+  if (phase !== gradingStepPhase) {
+    setGradingStepPhase(phase);
+    if (phase !== "grading") setGradingStep(0);
+  }
+
   // Grading is a real API round-trip (often 5-15s) — cycle through a few
   // reassuring lines instead of one static caption so a slow check doesn't
   // read as stuck.
   useEffect(() => {
-    if (phase !== "grading") {
-      setGradingStep(0);
-      return;
-    }
+    if (phase !== "grading") return;
     const id = setInterval(() => setGradingStep((s) => s + 1), 3200);
     return () => clearInterval(id);
   }, [phase]);

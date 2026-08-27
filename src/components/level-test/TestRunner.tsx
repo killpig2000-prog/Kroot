@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { buttonClassName } from "@/components/ui/Button";
 import Link from "next/link";
 import { speakKorean } from "@/lib/tts";
 import { useRouter } from "next/navigation";
@@ -24,10 +25,8 @@ import TreeEvolution from "@/components/level-test/TreeEvolution";
 
 type Stage = "intro" | "listening" | "reading" | "writing" | "speaking" | "grading" | "result";
 
-const BTN_GREEN =
-  "rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-success hover:bg-success-deep transition-colors disabled:opacity-60";
-const BTN_LINE =
-  "rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-charcoal bg-white border border-line hover:bg-warm transition-colors";
+const BTN_GREEN = buttonClassName("success");
+const BTN_LINE = buttonClassName("line");
 
 function speak(text: string) {
   speakKorean(text);

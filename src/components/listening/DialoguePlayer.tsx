@@ -1,16 +1,15 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { buttonClassName } from "@/components/ui/Button";
 import { createClient } from "@/lib/supabase/client";
 import { recordCompletion } from "@/lib/activity";
 import { useSpeechSynthesis } from "@/hooks/useSpeechSynthesis";
 import Character, { characterColor, characterVariant } from "@/components/listening/Character";
 import type { DialogueLine } from "@/lib/listening-dialogues";
 
-const BTN_TEAL =
-  "rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-teal hover:bg-[#0F766E] transition-colors disabled:opacity-60";
-const BTN_INK =
-  "rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-charcoal hover:bg-[#3F3F46] transition-colors disabled:opacity-60";
+const BTN_TEAL = buttonClassName("teal");
+const BTN_INK = buttonClassName("ink");
 const BTN_LINE =
   "rounded-[9px] px-4 py-2 text-[13px] font-semibold text-muted bg-white border border-line hover:border-faint transition-colors";
 

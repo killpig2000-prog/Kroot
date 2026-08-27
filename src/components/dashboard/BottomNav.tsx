@@ -104,11 +104,14 @@ export default function BottomNav() {
     };
   }, [open, streakDays, supabase]);
 
-  // Close when the route changes (e.g. browser back) and lock body scroll
-  // while the sheet is up.
-  useEffect(() => {
+  // Close when the route changes (e.g. browser back) — computed during
+  // render (not an effect) so it doesn't trigger an extra render. Body
+  // scroll lock while the sheet is up stays a real effect below.
+  const [openForPathname, setOpenForPathname] = useState(pathname);
+  if (pathname !== openForPathname) {
+    setOpenForPathname(pathname);
     setOpen(false);
-  }, [pathname]);
+  }
   useEffect(() => {
     if (!open) return;
     const prev = document.body.style.overflow;
