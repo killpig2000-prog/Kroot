@@ -136,7 +136,7 @@ export default async function VocabularyPage({
             </div>
           </div>
 
-          <VocabSearch unlockedLevels={[...unlockedTiers]} />
+          <VocabSearch />
 
           <div className="grid grid-cols-1 lg:grid-cols-[220px_minmax(0,1fr)] gap-6 lg:gap-8">
             {/* ── table of contents ── */}

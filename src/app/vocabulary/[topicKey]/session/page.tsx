@@ -8,7 +8,6 @@ import {
   VOCAB_TOPICS,
   getChaptersForTopic,
   sortForReview,
-  unlockedVocabTiers,
   type VocabWordWithProgress,
 } from "@/lib/vocabulary";
 import { findMoreExamples } from "@/lib/vocab-examples";
@@ -37,10 +36,11 @@ export default async function VocabChapterSessionPage({
 
   const myLevel = (profile?.current_level ?? "A1") as CefrLevel;
 
-  const unlockedTiers = unlockedVocabTiers(myLevel);
-
-  const requested = isCefrLevel(sp.level) ? sp.level : myLevel;
-  const level = unlockedTiers.has(requested) ? requested : myLevel;
+  // Not level-gated: the only way to land on a level above your own here is
+  // the vocab search box, which deliberately lets you look up and study any
+  // word regardless of your progression — unlike the level tabs on the main
+  // vocabulary page, which do stay gated.
+  const level = isCefrLevel(sp.level) ? sp.level : myLevel;
   const chapters = getChaptersForTopic(topicKey, level);
   const chapterWords = chapters[chapterIndex] ?? [];
 

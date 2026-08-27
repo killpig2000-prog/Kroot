@@ -3,19 +3,19 @@
 import { useRef, useState } from "react";
 import Link from "next/link";
 import { getUnitTitle } from "@/lib/vocabulary";
-import type { CefrLevel } from "@/lib/tree";
 import type { SearchEntry } from "@/lib/vocab-search-index";
 
 const MAX_RESULTS = 8;
 
 // "Where did I see that word again?" — instant search over the whole deck,
-// jumping straight into the unit that teaches it. The index chunk loads on
-// first focus so the page bundle stays light.
-export default function VocabSearch({ unlockedLevels }: { unlockedLevels: CefrLevel[] }) {
+// jumping straight into the unit that teaches it, regardless of the
+// searcher's own level: looking a word up is not the same as the guided
+// level-by-level progression on the main page, so search results are never
+// locked (unlike the level tabs above them).
+export default function VocabSearch() {
   const [query, setQuery] = useState("");
   const [index, setIndex] = useState<SearchEntry[] | null>(null);
   const loading = useRef(false);
-  const unlocked = new Set(unlockedLevels);
 
   async function ensureIndex() {
     if (index || loading.current) return;
@@ -66,40 +66,20 @@ export default function VocabSearch({ unlockedLevels }: { unlockedLevels: CefrLe
               No match for “{query.trim()}” — try the Korean spelling or the English meaning.
             </p>
           ) : (
-            results.map((r) => {
-              const open = unlocked.has(r.level);
-              const inner = (
-                <>
-                  <span className="kr flex-none font-bold text-[15px] min-w-[72px]">{r.kr}</span>
-                  <span className="flex-1 min-w-0 text-[12.5px] text-muted truncate">
-                    {r.en}
-                  </span>
-                  <span className="flex-none text-[11.5px] text-faint">
-                    {r.level} · {getUnitTitle(r.level, r.chapter)}
-                    {!open && " 🔒"}
-                  </span>
-                </>
-              );
-              const key = `${r.level}:${r.kr}:${r.chapter}`;
-              return open ? (
-                <Link
-                  key={key}
-                  href={`/vocabulary/daily-life/session?chapter=${r.chapter}&level=${r.level}`}
-                  className="flex items-center gap-3 px-4 py-2.5 border-t border-[#F5F1E8] first:border-t-0 hover:bg-success-bg transition-colors"
-                  onClick={() => setQuery("")}
-                >
-                  {inner}
-                </Link>
-              ) : (
-                <div
-                  key={key}
-                  className="flex items-center gap-3 px-4 py-2.5 border-t border-[#F5F1E8] first:border-t-0 opacity-55 select-none"
-                  title="Pass the promotion test to unlock this level"
-                >
-                  {inner}
-                </div>
-              );
-            })
+            results.map((r) => (
+              <Link
+                key={`${r.level}:${r.kr}:${r.chapter}`}
+                href={`/vocabulary/daily-life/session?chapter=${r.chapter}&level=${r.level}`}
+                className="flex items-center gap-3 px-4 py-2.5 border-t border-[#F5F1E8] first:border-t-0 hover:bg-success-bg transition-colors"
+                onClick={() => setQuery("")}
+              >
+                <span className="kr flex-none font-bold text-[15px] min-w-[72px]">{r.kr}</span>
+                <span className="flex-1 min-w-0 text-[12.5px] text-muted truncate">{r.en}</span>
+                <span className="flex-none text-[11.5px] text-faint">
+                  {r.level} · {getUnitTitle(r.level, r.chapter)}
+                </span>
+              </Link>
+            ))
           )}
         </div>
       )}
