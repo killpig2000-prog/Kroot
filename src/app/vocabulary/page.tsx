@@ -267,7 +267,7 @@ export default async function VocabularyPage({
                         <Link
                           key={w.key}
                           href={wordHref(selected.index, wi)}
-                          className="grid grid-cols-[22px_minmax(84px,auto)_1fr] sm:grid-cols-[22px_112px_1fr] items-center gap-x-3 gap-y-0.5 py-2.5 border-b border-dashed border-dash hover:bg-warm transition-colors -mx-2 px-2 rounded-[6px]"
+                          className="group grid grid-cols-[22px_minmax(84px,auto)_1fr_16px] sm:grid-cols-[22px_112px_1fr_16px] items-center gap-x-3 gap-y-0.5 py-2.5 border-b border-dashed border-dash hover:bg-warm transition-colors -mx-2 px-2 rounded-[6px]"
                         >
                           <span className="text-[14px]" title={`${st.label}${thirsty ? " · thirsty" : ""}`}>
                             {thirsty ? "💧" : st.emoji}
@@ -276,6 +276,20 @@ export default async function VocabularyPage({
                           <span className="min-w-0">
                             <span className="block text-[13px] font-semibold">{w.meaning_en}</span>
                           </span>
+                          <svg
+                            aria-hidden="true"
+                            viewBox="0 0 16 16"
+                            className="w-4 h-4 text-faint group-hover:text-charcoal group-hover:translate-x-0.5 transition-all"
+                          >
+                            <path
+                              d="M6 3.5 10.5 8 6 12.5"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="1.8"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
                         </Link>
                       );
                     })}

@@ -1,11 +1,16 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { buttonClassName } from "@/components/ui/Button";
+import { createClient } from "@/lib/supabase/client";
+import { nextBox, nextReviewAt } from "@/lib/srs";
 import { speakKorean } from "@/lib/tts";
 import { GROWTH_STAGES, getWordNote, growthStage, hanjaOf } from "@/lib/word-notes";
 
 const BTN_INK = buttonClassName("ink");
+const BTN_LINE = buttonClassName("line");
 
 // Ruled notebook paper: a faint line every 32px, plus a red margin rule.
 const RULED = "repeating-linear-gradient(180deg, transparent 0 31px, #EEF0F6 31px 32px)";
@@ -22,31 +27,57 @@ export type DetailWord = {
 
 // A read-only dictionary entry for a single word — reached by tapping a row
 // in the unit preview. Unlike the study card (FlipPhase), the meaning is
-// shown right away: this is a lookup, not a quiz.
+// shown right away: this is a lookup. "Learned" / "Next" record the same SRS
+// progress the study session does and step to the next word.
 export default function WordDetailCard({
   word,
-  reviews,
+  userId,
+  correctCount,
+  incorrectCount,
+  box,
   topicLabel,
   level,
   prevHref,
   nextHref,
-  studyHref,
   unitHref,
   unitLabel,
 }: {
   word: DetailWord;
-  reviews: number;
+  userId: string;
+  correctCount: number;
+  incorrectCount: number;
+  box: number;
   topicLabel: string;
   level: string;
   prevHref: string | null;
   nextHref: string | null;
-  studyHref: string;
   unitHref: string;
   unitLabel: string;
 }) {
-  const stage = GROWTH_STAGES[growthStage(reviews)];
+  const router = useRouter();
+  const stage = GROWTH_STAGES[growthStage(correctCount + incorrectCount)];
   const note = getWordNote(word.korean);
   const hanja = hanjaOf(word.korean);
+  const [saving, setSaving] = useState(false);
+
+  async function advance(gotIt: boolean) {
+    setSaving(true);
+    const supabase = createClient();
+    const nb = nextBox(box, gotIt);
+    await supabase.from("vocabulary_progress").upsert(
+      {
+        user_id: userId,
+        word_key: word.key,
+        correct_count: correctCount + (gotIt ? 1 : 0),
+        incorrect_count: incorrectCount + (gotIt ? 0 : 1),
+        last_reviewed_at: new Date().toISOString(),
+        box: nb,
+        next_review_at: nextReviewAt(nb),
+      },
+      { onConflict: "user_id,word_key" }
+    );
+    router.push(nextHref ?? unitHref);
+  }
 
   return (
     <div className="max-w-[600px]">
@@ -151,26 +182,21 @@ export default function WordDetailCard({
           )}
 
           <div className="flex items-center justify-between gap-3 flex-wrap mt-4 pt-3.5 border-t border-dashed border-dash">
-            <span className="text-[12px] font-semibold">
-              {prevHref ? (
-                <Link href={prevHref} className="text-muted hover:text-charcoal transition-colors">
-                  ← Prev
-                </Link>
-              ) : (
-                <span className="text-faint">← Prev</span>
-              )}
-              <span className="text-faint mx-2">·</span>
-              {nextHref ? (
-                <Link href={nextHref} className="text-muted hover:text-charcoal transition-colors">
-                  Next →
-                </Link>
-              ) : (
-                <span className="text-faint">Next →</span>
-              )}
-            </span>
-            <Link href={studyHref} className={BTN_INK}>
-              Study this unit →
-            </Link>
+            {prevHref ? (
+              <Link href={prevHref} className="text-[12px] font-semibold text-muted hover:text-charcoal transition-colors">
+                ← Prev
+              </Link>
+            ) : (
+              <span className="text-[12px] font-semibold text-faint">← Prev</span>
+            )}
+            <div className="flex gap-2">
+              <button type="button" className={BTN_LINE} disabled={saving} onClick={() => advance(false)}>
+                다음
+              </button>
+              <button type="button" className={BTN_INK} disabled={saving} onClick={() => advance(true)}>
+                학습완료 ✓
+              </button>
+            </div>
           </div>
         </div>
       </div>

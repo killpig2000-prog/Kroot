@@ -40,12 +40,11 @@ export default async function VocabWordPage({
 
   const { data: progress } = await supabase
     .from("vocabulary_progress")
-    .select("correct_count, incorrect_count")
+    .select("correct_count, incorrect_count, box")
     .eq("user_id", user.id)
     .eq("word_key", word.key)
     .maybeSingle();
 
-  const reviews = (progress?.correct_count ?? 0) + (progress?.incorrect_count ?? 0);
   const moreExamples = findMoreExamples(word.korean, word.example_kr);
 
   const wordHref = (chapter: number, i: number) =>
@@ -85,12 +84,14 @@ export default async function VocabWordPage({
               example_en: word.example_en,
               moreExamples,
             }}
-            reviews={reviews}
+            userId={user.id}
+            correctCount={progress?.correct_count ?? 0}
+            incorrectCount={progress?.incorrect_count ?? 0}
+            box={progress?.box ?? 1}
             topicLabel={topic.label}
             level={level}
             prevHref={prevHref}
             nextHref={nextHref}
-            studyHref={`/vocabulary/${topicKey}/session?chapter=${chapterIndex}&level=${level}`}
             unitHref={`/vocabulary?level=${level}&unit=${chapterIndex}`}
             unitLabel={getUnitTitle(level, chapterIndex)}
           />
