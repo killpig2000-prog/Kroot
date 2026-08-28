@@ -1,3 +1,4 @@
+import type { SupabaseClient } from "@supabase/supabase-js";
 import type { VocabWord } from "@/lib/vocabulary";
 
 // Tap-to-save word bank: maps a Korean surface form found in listening /
@@ -96,4 +97,48 @@ export function tokenizeKorean(text: string): KoreanToken[] {
     .split(SPLIT_RE)
     .filter((t) => t.length > 0)
     .map((t) => ({ text: t, isWord: HANGUL_RE.test(t) }));
+}
+
+// ---------------------------------------------------------------------------
+// Saving into the word bank. Shared by tap-to-save (TapText) and the public
+// dictionary page's "Add to my words" button so both write identical rows.
+
+/** vocabulary_progress.word_key for a word — mirrors getWordsForTopic(). */
+export function wordBankKey(topicKey: string, level: string, korean: string): string {
+  return `${topicKey}:${level}:${korean}`;
+}
+
+/**
+ * Plant a word into vocabulary_progress (box 1, due now). A word that is
+ * already there keeps its box and counts — the upsert ignores duplicates.
+ * Resolves to an error message, or null on success.
+ */
+export async function plantWord(
+  supabase: SupabaseClient,
+  userId: string,
+  wordKey: string
+): Promise<string | null> {
+  const { error } = await supabase.from("vocabulary_progress").upsert(
+    {
+      user_id: userId,
+      word_key: wordKey,
+      correct_count: 0,
+      incorrect_count: 0,
+      box: 1,
+      next_review_at: new Date().toISOString(),
+      last_reviewed_at: null,
+    },
+    { onConflict: "user_id,word_key", ignoreDuplicates: true }
+  );
+  return error ? error.message : null;
+}
+
+/** Words whose next_review_at has passed — the Review tab badge number. */
+export async function countDueWords(supabase: SupabaseClient, userId: string): Promise<number> {
+  const { count, error } = await supabase
+    .from("vocabulary_progress")
+    .select("id", { count: "exact", head: true })
+    .eq("user_id", userId)
+    .lte("next_review_at", new Date().toISOString());
+  return error ? 0 : (count ?? 0);
 }

@@ -26,6 +26,7 @@ export default function TreeCard({
   xpNeeded,
   costumeIds = [],
   species,
+  subtitle,
 }: {
   level: number;
   progressPct: number;
@@ -34,6 +35,8 @@ export default function TreeCard({
   costumeIds?: string[];
   /** CEFR grade — decides the tree species; promotion transforms the garden. */
   species?: CefrLevel;
+  /** Replaces the stage blurb — the first-visit dashboard says what to do next. */
+  subtitle?: string;
 }) {
   const [fill, setFill] = useState(0);
   const equipped = costumeIds;
@@ -142,7 +145,7 @@ export default function TreeCard({
         )}
         <p className="text-[13.5px] text-muted mb-4">
           <span className="kr font-semibold">{sp.krName}</span> —{" "}
-          {veteran ? "Fully grown, still climbing. Every ten levels the canopy gains a tier." : blurb}
+          {subtitle ?? (veteran ? "Fully grown, still climbing. Every ten levels the canopy gains a tier." : blurb)}
         </p>
 
         <div className="flex items-center gap-3 mb-4">

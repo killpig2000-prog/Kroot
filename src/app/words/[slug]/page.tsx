@@ -3,6 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { SITE_URL } from "@/lib/site";
 import { PUBLIC_VOCAB_WORDS, getWordBySlug, relatedWords } from "@/lib/vocab-slugs";
+import { wordBankKey } from "@/lib/word-bank";
+import AddToMyWords from "@/components/words/AddToMyWords";
 
 // Public SEO dictionary page — one statically generated page per vocabulary
 // word, crawlable without login, funnelling visitors into onboarding.
@@ -95,6 +97,16 @@ export default async function WordPage({ params }: Props) {
           <h2 className="mt-8 text-lg font-bold">Example sentence</h2>
           <p className="mt-2 text-2xl">{word.example_kr}</p>
           <p className="mt-1 text-[var(--soft)]">{word.example_en}</p>
+
+          {/* Client island: the page stays static for SEO, the button resolves
+              the session on mount. Dictionary entries come from the daily-life
+              deck, so the word-bank key uses that topic. */}
+          <AddToMyWords
+            slug={word.slug}
+            wordKey={wordBankKey("daily-life", word.level, word.korean)}
+            korean={word.korean}
+            level={word.level}
+          />
         </article>
 
         <section className="mt-10">
@@ -121,14 +133,14 @@ export default async function WordPage({ params }: Props) {
             Learn {word.korean} for real — not just read it
           </h2>
           <p className="mt-2 text-[var(--ink)]">
-            Kroot teaches this word with flashcards, listening, and speaking practice in a free
-            16-day course.
+            Kroot teaches this word with flashcards, listening, and speaking practice — free, at
+            your own pace.
           </p>
           <Link
             href="/onboarding"
             className="mt-5 inline-block rounded-full bg-[var(--leaf)] px-6 py-3 font-semibold text-white shadow-[0_3px_0_var(--leaf-shadow)]"
           >
-            Start the free course
+            Start learning — free
           </Link>
         </section>
       </main>

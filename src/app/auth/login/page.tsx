@@ -172,7 +172,10 @@ export default function LoginPage() {
               </p>
               <p className="text-center text-[12.5px] text-muted mt-2">
                 New to Kroot?{" "}
-                <Link href="/onboarding" className="text-charcoal font-semibold hover:underline">
+                <Link
+                  href={next === "/dashboard" ? "/onboarding" : `/onboarding?next=${encodeURIComponent(next)}`}
+                  className="text-charcoal font-semibold hover:underline"
+                >
                   Plant your seed
                 </Link>
               </p>

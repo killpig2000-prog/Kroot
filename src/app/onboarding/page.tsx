@@ -58,6 +58,11 @@ function speak(text: string) {
   speakKorean(text, { rate: 0.9 });
 }
 
+function safeNext(raw: string | null): string {
+  if (raw && raw.startsWith("/") && !raw.startsWith("//")) return raw;
+  return "/dashboard";
+}
+
 export default function OnboardingPage() {
   const router = useRouter();
   const supabase = useMemo(() => createClient(), []);
@@ -83,6 +88,12 @@ export default function OnboardingPage() {
       : decodeURIComponent(errorCode);
   });
   const [submitting, setSubmitting] = useState(false);
+  // Where to land after onboarding. Public pages (e.g. /words/<slug>?save=1)
+  // hand us a `next` so a brand-new signup returns to what they were doing.
+  const [next] = useState(() =>
+    typeof window === "undefined" ? "/dashboard" : safeNext(new URLSearchParams(window.location.search).get("next"))
+  );
+  const callbackNext = next === "/dashboard" ? "/onboarding" : `/onboarding?next=${encodeURIComponent(next)}`;
 
   useEffect(() => {
     supabase.auth.getUser().then(async ({ data: { user } }) => {
@@ -96,19 +107,19 @@ export default function OnboardingPage() {
         .eq("user_id", user.id)
         .limit(1);
       if (data && data.length > 0) {
-        router.replace("/dashboard");
+        router.replace(next);
         return;
       }
       setStep((s) => (s === "signup" ? "choice" : s));
     });
-  }, [supabase, router]);
+  }, [supabase, router, next]);
 
   async function handleGoogleSignup() {
     setSignupError(null);
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${window.location.origin}/auth/callback?next=/onboarding`,
+        redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(callbackNext)}`,
         // Always show Google's account chooser instead of silently reusing
         // the last session — many learners share devices or test accounts.
         queryParams: { prompt: "select_account" },
@@ -135,7 +146,7 @@ export default function OnboardingPage() {
         data: { display_name: name, native_language: nativeLanguage },
         // The confirmation link must land back here, not on the dashboard —
         // a confirmed learner still needs to pick a starting level.
-        emailRedirectTo: `${window.location.origin}/auth/callback?next=/onboarding`,
+        emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(callbackNext)}`,
       },
     });
 
@@ -240,7 +251,7 @@ export default function OnboardingPage() {
   }
 
   function finish() {
-    router.push("/dashboard");
+    router.push(next);
   }
 
   const activeDot = STEP_DOT[step];

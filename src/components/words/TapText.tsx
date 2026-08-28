@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { createClient } from "@/lib/supabase/client";
 import { track } from "@/lib/analytics";
-import { lookupWord, tokenizeKorean } from "@/lib/word-bank";
+import { lookupWord, plantWord, tokenizeKorean } from "@/lib/word-bank";
 import { useKoreanSpeaker } from "@/hooks/useSpeechRecognition";
 import type { VocabWord } from "@/lib/vocabulary";
 
@@ -117,20 +117,9 @@ export default function TapText({
     if (!pop || pop.word === "loading" || !pop.word || !resolvedUser || pop.saving || pop.saved) return;
     const word = pop.word;
     setPop((p) => (p ? { ...p, saving: true } : p));
-    // ignoreDuplicates: an already-learned word keeps its box + counts.
-    const { error } = await supabase.from("vocabulary_progress").upsert(
-      {
-        user_id: resolvedUser,
-        word_key: word.key,
-        correct_count: 0,
-        incorrect_count: 0,
-        box: 1,
-        next_review_at: new Date().toISOString(),
-        last_reviewed_at: null,
-      },
-      { onConflict: "user_id,word_key", ignoreDuplicates: true }
-    );
-    if (error) console.error("save word failed:", error.message);
+    // An already-learned word keeps its box + counts (see plantWord).
+    const error = await plantWord(supabase, resolvedUser, word.key);
+    if (error) console.error("save word failed:", error);
     else track("word_saved", { source, level: word.level });
     setPop((p) => (p ? { ...p, saving: false, saved: !error } : p));
   }

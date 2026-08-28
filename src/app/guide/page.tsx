@@ -4,10 +4,32 @@ import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { ELIGIBILITY } from "@/lib/promotion-test";
+import {
+  formatDoneDate,
+  getGuideProgress,
+  resolveRoute,
+  type GuideProgress,
+  type GuideStationKey,
+  type GuideStationView,
+} from "@/lib/guide-progress";
+import { nextLevel, type CefrLevel } from "@/lib/tree";
 
 // Each stop reuses its section's own accent from navItems, so a stop on the
 // roadmap and the same entry in the sidebar read as the same thing.
-type Stop = { icon: string; label: string; href: string; color: string; task: string; freq: string };
+type Stop = {
+  key: GuideStationKey;
+  icon: string;
+  label: string;
+  href: string;
+  color: string;
+  task: string;
+  freq: string;
+};
+
+// "You are here" accents — the sun token, plus its deeper edge/ink shades.
+const SUN_EDGE = "#E2A600";
+const SUN_INK = "#7A5A12";
+const SUN_PAPER = "#FFFBEA";
 
 const S = {
   hangul: { icon: "🔤", label: "Hangul", href: "/hangul", color: "#E11D48" },
@@ -20,7 +42,7 @@ const S = {
   slang: { icon: "💬", label: "Slang", href: "/slang", color: "#DB2777" },
 } as const;
 
-const stop = (k: keyof typeof S, task: string, freq: string): Stop => ({ ...S[k], task, freq });
+const stop = (k: keyof typeof S, task: string, freq: string): Stop => ({ key: k, ...S[k], task, freq });
 
 const ROUTES: {
   icon: string;
@@ -103,9 +125,22 @@ export default async function GuidePage() {
 
   const { data: profile } = await supabase
     .from("profiles")
-    .select("display_name, streak_days, avatar_url")
+    .select("display_name, streak_days, avatar_url, current_level")
     .eq("id", user.id)
     .single();
+
+  // Progress markers need the grade first (every station is judged at the
+  // learner's level), so this is a second round trip; inside it the per-station
+  // reads run in one parallel batch. Any failure just leaves the roadmap static.
+  const grade = (profile?.current_level ?? "A1") as CefrLevel;
+  let progress: GuideProgress | null = null;
+  try {
+    progress = await getGuideProgress(supabase, user.id, grade);
+  } catch (e) {
+    console.error("guide progress failed:", e instanceof Error ? e.message : e);
+  }
+  const elig = progress?.eligibility ?? null;
+  const gradeUp = nextLevel(grade);
 
   return (
     <div className="min-h-screen bg-warm text-charcoal">
@@ -149,7 +184,14 @@ export default async function GuidePage() {
             />
 
             <div className="flex flex-col gap-3.5">
-              {ROUTES.map((route) => (
+              {ROUTES.map((route) => {
+                const views: GuideStationView[] | null = progress
+                  ? resolveRoute(
+                      route.stops.map((s) => s.key),
+                      progress
+                    )
+                  : null;
+                return (
                 <article
                   key={route.name}
                   className="relative overflow-hidden rounded-[18px] border border-line bg-white shadow-[0_1px_2px_rgba(27,36,48,.04),0_8px_24px_-16px_rgba(27,36,48,.16)]"
@@ -207,71 +249,173 @@ export default async function GuidePage() {
 
                   {/* stops */}
                   <div className="relative px-3.5 pt-[22px] pb-5 grid grid-cols-1 sm:grid-cols-5 gap-4 sm:gap-0">
-                    {/* Wide screens: one continuous line through the dot centres.
-                        A single even colour, so no segment reads as "completed". */}
-                    <span
-                      aria-hidden="true"
-                      className="hidden sm:block absolute top-[44px] h-0.5 rounded-full left-[calc(14px+(100%-28px)/10)] right-[calc(14px+(100%-28px)/10)]"
-                      style={{ background: `${route.color}8C` }}
-                    />
-                    {route.stops.map((s, i) => (
+                    {/* Wide screens, no progress data: one continuous line through the
+                        dot centres. A single even colour, so no segment reads as "completed".
+                        With progress, each stop draws its own segment below instead. */}
+                    {!views && (
+                      <span
+                        aria-hidden="true"
+                        className="hidden sm:block absolute top-[44px] h-0.5 rounded-full left-[calc(14px+(100%-28px)/10)] right-[calc(14px+(100%-28px)/10)]"
+                        style={{ background: `${route.color}8C` }}
+                      />
+                    )}
+                    {route.stops.map((s, i) => {
+                      const v = views?.[i] ?? null;
+                      const isDone = v?.status === "done";
+                      const isCurrent = v?.status === "current";
+                      const isUpcoming = v?.status === "upcoming";
+                      const hasNext = i < route.stops.length - 1;
+                      // The segment after a done stop recedes to dots; the rest stay
+                      // the route's solid line.
+                      const segmentStyle: React.CSSProperties = isDone
+                        ? { borderColor: "var(--c-success)" }
+                        : { background: `${route.color}8C` };
+                      return (
                       <Link
                         key={s.label}
-                        href={s.href}
-                        className="group relative flex sm:flex-col items-start sm:items-center gap-3.5 sm:gap-0 sm:text-center px-0 sm:px-[7px] sm:h-full"
+                        href={isCurrent && v ? v.ctaHref : s.href}
+                        aria-current={isCurrent ? "step" : undefined}
+                        className={`group relative flex sm:flex-col items-start sm:items-center gap-3.5 sm:gap-0 sm:text-center px-0 sm:px-[7px] sm:h-full ${
+                          isUpcoming ? "opacity-60 hover:opacity-100 transition-opacity" : ""
+                        }`}
                       >
-                        {/* Narrow screens: a connector from this dot down to the next
-                            one. Per-stop, so it can't drift out of sync with row height. */}
-                        {i < route.stops.length - 1 && (
+                        {/* Wide screens with progress: this dot's centre to the next one's */}
+                        {views && hasNext && (
                           <span
                             aria-hidden="true"
-                            className="sm:hidden absolute left-[21px] top-11 w-0.5 h-[calc(100%-6px)] rounded-full"
-                            style={{ background: `${route.color}8C` }}
+                            className={`hidden sm:block absolute top-[43px] left-1/2 w-full ${
+                              isDone ? "border-t-2 border-dotted" : "h-0.5 rounded-full"
+                            }`}
+                            style={segmentStyle}
+                          />
+                        )}
+                        {/* Narrow screens: a connector from this dot down to the next
+                            one. Per-stop, so it can't drift out of sync with row height. */}
+                        {hasNext && (
+                          <span
+                            aria-hidden="true"
+                            className={`sm:hidden absolute left-[21px] top-11 h-[calc(100%-6px)] ${
+                              isDone ? "border-l-2 border-dotted" : "w-0.5 rounded-full"
+                            }`}
+                            style={segmentStyle}
                           />
                         )}
                         <span
-                          className="relative z-[1] flex-none w-11 h-11 rounded-[13px] flex items-center justify-center text-[19px] border-[1.5px] shadow-[0_0_0_5px_#fff] transition-transform duration-200 group-hover:-translate-y-[3px]"
-                          style={{ background: `${s.color}1A`, borderColor: `${s.color}6B` }}
+                          className={`relative z-[1] flex-none w-11 h-11 rounded-[13px] flex items-center justify-center text-[19px] border-[1.5px] transition-transform duration-200 group-hover:-translate-y-[3px] ${
+                            isCurrent
+                              ? "shadow-[0_0_0_5px_#fff,0_0_0_9px_rgba(255,214,107,.4)]"
+                              : "shadow-[0_0_0_5px_#fff]"
+                          }`}
+                          style={
+                            isCurrent
+                              ? { background: SUN_PAPER, borderColor: SUN_EDGE }
+                              : { background: `${s.color}1A`, borderColor: `${s.color}6B` }
+                          }
                         >
                           {s.icon}
                           <span
                             className="absolute z-[2] -top-1.5 -left-1.5 sm:left-auto sm:-right-1.5 min-w-[18px] h-[18px] px-[5px] rounded-full text-white text-[10px] font-black flex items-center justify-center leading-none tabular-nums shadow-[0_0_0_2.5px_#fff]"
-                            style={{ background: s.color }}
+                            style={{
+                              background: isDone ? "var(--c-success)" : isCurrent ? SUN_EDGE : s.color,
+                            }}
                           >
-                            {i + 1}
+                            {isDone ? "✓" : i + 1}
                           </span>
                         </span>
                         {/* flex column on wide screens so the frequency chips all sit on
-                            one line, however many lines the description above them takes */}
-                        <span className="min-w-0 sm:flex sm:flex-col sm:items-center sm:flex-1">
+                            one line, however many lines the description above them takes.
+                            The current stop's column becomes a small sun-paper card. */}
+                        <span
+                          className={`min-w-0 sm:flex sm:flex-col sm:items-center sm:flex-1 ${
+                            isCurrent
+                              ? "flex-1 sm:flex-none sm:w-full sm:mt-[13px] rounded-[12px] border-[1.5px] px-3 py-2.5 shadow-[0_4px_14px_-8px_rgba(226,166,0,.7)]"
+                              : ""
+                          }`}
+                          style={isCurrent ? { background: SUN_PAPER, borderColor: SUN_EDGE } : undefined}
+                        >
+                          {isCurrent && (
+                            <span
+                              className="inline-flex items-center gap-1 self-start sm:self-center bg-sun text-[9.5px] font-black uppercase tracking-[.09em] rounded-full px-2 py-[2.5px] mb-1.5"
+                              style={{ color: SUN_INK }}
+                            >
+                              <span aria-hidden="true">●</span> You are here
+                            </span>
+                          )}
                           <b
-                            className="block text-[14px] font-black tracking-[-0.015em] sm:mt-[13px] transition-colors group-hover:[color:var(--stop-color)]"
+                            className={`block text-[14px] font-black tracking-[-0.015em] transition-colors ${
+                              isCurrent ? "" : "sm:mt-[13px]"
+                            } ${
+                              isDone
+                                ? "text-muted line-through decoration-2 decoration-success-line"
+                                : "group-hover:[color:var(--stop-color)]"
+                            }`}
                             style={{ "--stop-color": s.color } as React.CSSProperties}
                           >
                             {s.label}
                           </b>
-                          <small className="block text-[12px] text-muted leading-[1.5] mt-1 sm:max-w-[21ch] text-balance">
-                            {s.task}
-                          </small>
-                          {/* a data chip, not more prose */}
-                          <span className="block mt-2.5 sm:mt-auto sm:pt-2.5">
-                            <span
-                              className="inline-block text-[10.5px] font-extrabold tracking-[.02em] rounded-full px-[9px] py-[3px] border tabular-nums whitespace-nowrap"
-                              style={{
-                                color: s.color,
-                                background: `${s.color}14`,
-                                borderColor: `${s.color}38`,
-                              }}
-                            >
-                              {s.freq}
+                          {isDone && v ? (
+                            <small className="block text-[12px] font-semibold text-success-deep leading-[1.5] mt-1 tabular-nums">
+                              {v.doneAt ? `Done ${formatDoneDate(v.doneAt)} · ` : ""}
+                              {v.detail}
+                            </small>
+                          ) : (
+                            <small className="block text-[12px] text-muted leading-[1.5] mt-1 sm:max-w-[21ch] text-balance">
+                              {s.task}
+                            </small>
+                          )}
+                          {isCurrent && v && (
+                            <>
+                              <span
+                                className="block w-full h-1.5 rounded-full mt-2.5 overflow-hidden"
+                                style={{ background: "#F1E4B8" }}
+                                role="progressbar"
+                                aria-valuenow={v.percent}
+                                aria-valuemin={0}
+                                aria-valuemax={100}
+                              >
+                                <span className="block h-full rounded-full bg-success" style={{ width: `${v.percent}%` }} />
+                              </span>
+                              <small
+                                className="block text-[11.5px] font-semibold leading-[1.5] mt-1 tabular-nums"
+                                style={{ color: SUN_INK }}
+                              >
+                                {v.detail}
+                              </small>
+                              {/* the stop itself is the link, so this is a styled span, not a nested button */}
+                              <span className="inline-block self-start sm:self-center mt-2.5 rounded-[9px] bg-success text-white text-[12px] font-bold px-3 py-1.5 text-balance transition-colors group-hover:bg-success-deep">
+                                {v.ctaLabel}
+                              </span>
+                            </>
+                          )}
+                          {isUpcoming && v && (
+                            <small className="block text-[11.5px] text-faint leading-[1.5] mt-1 sm:max-w-[21ch] text-balance">
+                              {v.note}
+                            </small>
+                          )}
+                          {/* a data chip, not more prose — dropped on done/current stops,
+                              where the status line has taken its place */}
+                          {!isDone && !isCurrent && (
+                            <span className="block mt-2.5 sm:mt-auto sm:pt-2.5">
+                              <span
+                                className="inline-block text-[10.5px] font-extrabold tracking-[.02em] rounded-full px-[9px] py-[3px] border tabular-nums whitespace-nowrap"
+                                style={{
+                                  color: s.color,
+                                  background: `${s.color}14`,
+                                  borderColor: `${s.color}38`,
+                                }}
+                              >
+                                {s.freq}
+                              </span>
                             </span>
-                          </span>
+                          )}
                         </span>
                       </Link>
-                    ))}
+                      );
+                    })}
                   </div>
                 </article>
-              ))}
+                );
+              })}
             </div>
           </section>
 
@@ -350,6 +494,18 @@ export default async function GuidePage() {
                     {ELIGIBILITY.targetMasteredWords} words of your grade still held, plus{" "}
                     {ELIGIBILITY.minReadingPassages} reading passages
                   </span>
+                  {elig && gradeUp && (
+                    <span className={elig.eligible ? "text-success-deep font-semibold" : ""}>
+                      <em className="not-italic font-black text-[9.5px] uppercase tracking-[.07em] text-faint mr-[7px]">
+                        You
+                      </em>
+                      <span className="tabular-nums">
+                        {elig.wordsMastered}/{elig.wordsRequired} words held · {elig.readingDone}/
+                        {elig.readingRequired} passages
+                      </span>
+                      {elig.eligible ? ` · ready for ${grade} → ${gradeUp}` : ""}
+                    </span>
+                  )}
                   <span>
                     <em className="not-italic font-black text-[9.5px] uppercase tracking-[.07em] text-faint mr-[7px]">
                       To pass

@@ -99,12 +99,20 @@ export default async function ListeningPage({
               const dialogues = dialoguesFor(level, s.key);
               const count = dialogues.length;
               const done = dialogues.filter((d) => completedIds.has(d.id)).length;
-              const next = done > 0 && done < count ? dialogues.find((d) => !completedIds.has(d.id)) : null;
+              const finished = count > 0 && done === count;
+              const inProgress = done > 0 && done < count;
+              const next = inProgress ? (dialogues.find((d) => !completedIds.has(d.id)) ?? null) : null;
               const photo = photoByKey.get(s.key);
+              // In-progress cards act as a "Continue" button: tap goes straight
+              // to the next unheard clip. Not-started and finished cards still
+              // open the clip list.
+              const href = next
+                ? `/listening/${s.key}/${next.id}`
+                : `/listening/${s.key}?level=${level}`;
               return (
                 <Link
                   key={s.key}
-                  href={`/listening/${s.key}?level=${level}`}
+                  href={href}
                   className="border border-line rounded-[14px] bg-white overflow-hidden text-left transition-all duration-150 hover:border-teal hover:bg-[#F0FDFA] hover:-translate-y-0.5 group"
                 >
                   <div
@@ -118,6 +126,21 @@ export default async function ListeningPage({
                     <span className="absolute left-2.5 bottom-2.5 sm:left-3 sm:bottom-3 w-8 h-8 sm:w-9 sm:h-9 rounded-[10px] flex items-center justify-center text-base sm:text-lg bg-white/95 border border-line shadow-sm transition-transform group-hover:scale-110">
                       {s.icon}
                     </span>
+                    {done > 0 && (
+                      <span
+                        className="absolute left-0 right-0 bottom-0 h-1 bg-white/55"
+                        role="progressbar"
+                        aria-valuemin={0}
+                        aria-valuemax={count}
+                        aria-valuenow={done}
+                        aria-label={`${done} of ${count} heard`}
+                      >
+                        <span
+                          className={`block h-full ${finished ? "bg-success" : "bg-teal"}`}
+                          style={{ width: `${Math.round((done / count) * 100)}%` }}
+                        />
+                      </span>
+                    )}
                   </div>
                   <div className="px-3 py-3 sm:px-[18px] sm:py-4">
                     <b className="block font-semibold text-[14px] sm:text-[15px] mb-0.5 truncate">{s.label}</b>
@@ -140,11 +163,23 @@ export default async function ListeningPage({
                             ? `${done}/${count} heard`
                             : `${count} dialogue${count > 1 ? "s" : ""}`}
                     </span>
-                    {next && (
+                    {next ? (
+                      <span className="mt-1.5 flex items-center gap-1.5 min-w-0 bg-[#F0FDFA] border border-[#99F6E4] rounded-[9px] px-2 py-1.5 text-[11px]">
+                        <span
+                          aria-hidden="true"
+                          className="shrink-0 w-[18px] h-[18px] rounded-full bg-teal text-white flex items-center justify-center text-[8px] leading-none pl-px"
+                        >
+                          ▶
+                        </span>
+                        <span className="min-w-0 truncate text-charcoal">
+                          Next · <span className="font-semibold">{next.title}</span>
+                        </span>
+                      </span>
+                    ) : count > 0 ? (
                       <small className="block mt-1.5 text-[11.5px] text-muted truncate">
-                        Next: <span className="text-charcoal font-semibold">{next.title}</span>
+                        {finished ? "Replay any clip →" : "Start with clip 1 →"}
                       </small>
-                    )}
+                    ) : null}
                   </div>
                 </Link>
               );

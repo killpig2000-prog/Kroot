@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import TreeCard from "@/components/dashboard/TreeCard";
 import BottomNav from "@/components/dashboard/BottomNav";
@@ -9,6 +10,7 @@ import FeedbackWidget from "@/components/dashboard/FeedbackWidget";
 import Greeting from "@/components/dashboard/Greeting";
 import ContinueCard from "@/components/dashboard/ContinueCard";
 import LevelMap from "@/components/dashboard/LevelMap";
+import { FirstVisitPlan, LockedWidgets, type FirstVisitStep } from "@/components/dashboard/FirstVisitPlan";
 import InstallBanner from "@/components/pwa/InstallBanner";
 import { GRAMMAR_LESSONS } from "@/lib/grammar";
 import type { ResumeRow } from "@/lib/resume";
@@ -21,7 +23,9 @@ import { DIALOGUES } from "@/lib/listening-dialogues";
 import { getPassagesForLevel } from "@/lib/reading";
 import { getPromptsForLevel } from "@/lib/writing";
 import { chapterClearStats, NAILED_THRESHOLD } from "@/lib/pronunciation";
-import { getWordsForTopic } from "@/lib/vocabulary";
+import { CHAPTER_SIZE, getWordsForTopic } from "@/lib/vocabulary";
+import { firstVisitState, NEW_ACCOUNT_DAYS, SHOW_ALL_COOKIE } from "@/lib/first-visit";
+import { countCompletedSessions } from "@/lib/first-visit-server";
 import { slangOfTheDay } from "@/lib/slang";
 import { isPlus } from "@/lib/plus";
 import type { CefrLevel } from "@/lib/tree";
@@ -118,7 +122,7 @@ export default async function DashboardPage() {
   ] = await Promise.all([
     supabase
       .from("profiles")
-      .select("display_name, current_level, xp, streak_days, last_active_date, avatar_url, plus_until")
+      .select("display_name, current_level, xp, streak_days, last_active_date, avatar_url, plus_until, created_at")
       .eq("id", user.id)
       .single(),
     // touch_streak bumps (or resets) the streak server-side and returns its new value.
@@ -177,9 +181,20 @@ export default async function DashboardPage() {
   // Real per-skill progress: completed items at the user's difficulty tier.
   const cefr = (profile?.current_level ?? "A1") as CefrLevel;
 
+  // First-visit dashboard: accounts under a week old with fewer than three
+  // finished sessions see one plan card instead of the full Garden. Only they
+  // pay for the analytics count; everyone else skips it.
+  const cookieStore = await cookies();
+  const showAll = cookieStore.get(SHOW_ALL_COOKIE)?.value === "1";
+  const accountAgeDays = profile?.created_at ? (now.getTime() - Date.parse(profile.created_at)) / 86_400_000 : Infinity;
+  const maybeNew = !showAll && accountAgeDays < NEW_ACCOUNT_DAYS;
+
   // Promotion eligibility runs after the main batch (it needs the grade);
   // internally it fans out its own queries in parallel.
-  const elig = await computeEligibility(supabase, user.id, cefr);
+  const [elig, analyticsSessions] = await Promise.all([
+    computeEligibility(supabase, user.id, cefr),
+    maybeNew ? countCompletedSessions(user.id) : Promise.resolve(null),
+  ]);
   const promo = testForGrade(cefr);
   const promoChecks = [
     { label: "Words held", ok: elig.wordsMastered >= elig.wordsRequired, value: `${elig.wordsMastered}/${elig.wordsRequired}` },
@@ -288,6 +303,127 @@ export default async function DashboardPage() {
   const plusActive = isPlus(profile?.plus_until);
   const day = now.getDay();
   const weekendBoost = plusActive && (day === 0 || day === 6);
+
+  // Finished sessions: the activity_completed events, backed up by the
+  // progress tables in case a beacon never landed (or the service key is
+  // missing locally). Vocab progress is per word, so ten rows ≈ one unit.
+  const progressSessions =
+    (listeningRows?.length ?? 0) +
+    (readingRows?.length ?? 0) +
+    (writingRows?.length ?? 0) +
+    (grammarRows?.length ?? 0) +
+    skillProgress.pronunciation.done +
+    Math.floor((vocabRows?.length ?? 0) / CHAPTER_SIZE);
+  const firstVisit = firstVisitState({
+    createdAt: profile?.created_at,
+    sessions: Math.max(analyticsSessions ?? 0, progressSessions),
+    streakDays,
+    showAll,
+    now,
+  });
+
+  if (firstVisit.active) {
+    // Learners who placed above A1 in onboarding already read Hangul (the
+    // alphabet page keeps no progress of its own), so their first step is
+    // the vocab unit at their level.
+    const vocabUnit1 = `/vocabulary/daily-life/session?chapter=0&level=${cefr}`;
+    const steps: FirstVisitStep[] =
+      cefr === "A1"
+        ? [
+            { label: "Hangul", detail: "Consonants", time: "2 min", href: "/hangul" },
+            { label: "Vocab", detail: "Unit 1 (10 words)", time: "3 min", href: vocabUnit1 },
+            { label: "Water your seedling 💧", time: "10 s" },
+          ]
+        : [
+            { label: "Vocab", detail: `Unit 1 (10 words) · ${cefr}`, time: "3 min", href: vocabUnit1 },
+            { label: "Listening", detail: "one short dialogue", time: "2 min", href: "/listening" },
+            { label: "Water your seedling 💧", time: "10 s" },
+          ];
+
+    return (
+      <div className="min-h-screen bg-warm text-[#221F1B]">
+        <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
+          <Sidebar
+            displayName={displayName}
+            email={user.email ?? ""}
+            streakDays={streakDays}
+            avatarUrl={profile?.avatar_url}
+            plus={plusActive}
+            streakFreezes={extras?.streak_freezes ?? 0}
+          />
+
+          <main className="min-w-0 max-w-[820px] px-[clamp(18px,3vw,36px)] pt-[26px] pb-[100px] md:pb-[60px]">
+            <h1 className="font-semibold text-[clamp(20px,2.4vw,24px)] tracking-[-0.02em] mb-0.5">
+              Welcome, {displayName}
+            </h1>
+            <p className="text-muted text-sm mb-6">Day {firstVisit.day} · your garden starts here</p>
+
+            <TreeCard
+              level={level}
+              progressPct={pct}
+              xpInto={into}
+              xpNeeded={needed}
+              costumeIds={equippedIds}
+              species={cefr}
+              subtitle="Finish one session to water it."
+            />
+
+            <FirstVisitPlan steps={steps} />
+
+            {/* unlocked so far, in unlock order */}
+            {firstVisit.unlocked.quest && (
+              <ContinueCard
+                resume={resume}
+                fallback={continueFallback}
+                quest={{
+                  label: questParts[0],
+                  href: questHref[questSkill] ?? "/listening",
+                  done: !!quest?.completed_at,
+                }}
+              />
+            )}
+
+            {firstVisit.unlocked.wotd && wotd && (
+              <div className="border border-line rounded-[14px] bg-white px-[22px] py-5 mb-[30px]">
+                <div className="flex items-baseline justify-between mb-3">
+                  <b className="text-[12px] font-extrabold tracking-[.05em] text-success-deep uppercase">Word of the day</b>
+                  <small className="text-[11.5px] text-faint">단어</small>
+                </div>
+                <p className="kr text-2xl mb-0.5">{wotd.word}</p>
+                <p className="text-[12.5px] text-faint mb-1.5">{wotd.roman}</p>
+                <p className="text-[13.5px] text-muted mb-2.5">{wotd.mean}</p>
+                <div className="bg-warm rounded-[9px] px-3 py-[9px] text-[12.5px] text-muted">
+                  <span className="kr block text-[13.5px] text-charcoal mb-px">{wotd.exKr}</span>
+                  {wotd.exEn}
+                </div>
+              </div>
+            )}
+
+            {firstVisit.unlocked.levelMap && promo && (
+              <LevelMap current={cefr} checks={promoChecks} eligible={elig.eligible} overallPct={overallPct} />
+            )}
+
+            {firstVisit.unlocked.heatmap && (
+              <div className="mb-[30px]">
+                <MonthlyGrass
+                  minutesByDate={minutesByDate}
+                  headline={[
+                    { label: "this week", value: `${weekTotal}m` },
+                    { label: "best streak", value: `${longestStreak}d` },
+                  ]}
+                />
+              </div>
+            )}
+
+            <LockedWidgets unlocked={firstVisit.unlocked} />
+          </main>
+        </div>
+
+        <BottomNav />
+        <FeedbackWidget />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-warm text-[#221F1B]">

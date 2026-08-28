@@ -40,6 +40,14 @@ export default async function ShopPage() {
   const playerLevel = levelFromXp(profile?.xp ?? 0);
   const stage = treeStageForLevel(playerLevel);
   const today = new Date().toISOString().slice(0, 10);
+  // Today's quest row (created by the dashboard on first visit; absent = not done).
+  const { data: quest } = await supabase
+    .from("daily_quests")
+    .select("completed_at")
+    .eq("user_id", user.id)
+    .eq("quest_date", today)
+    .maybeSingle();
+  const questDone = !!quest?.completed_at;
 
   return (
     <div className="min-h-screen bg-warm text-charcoal">
@@ -111,6 +119,7 @@ export default async function ShopPage() {
             owned={owned}
             equipped={equipped}
             today={today}
+            questDone={questDone}
           />
         </main>
       </div>

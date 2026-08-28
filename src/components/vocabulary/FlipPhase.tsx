@@ -1,3 +1,15 @@
+"use client";
+
+import {
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+  type CSSProperties,
+  type MouseEvent as ReactMouseEvent,
+  type PointerEvent as ReactPointerEvent,
+  type ReactNode,
+} from "react";
 import { buttonClassName } from "@/components/ui/Button";
 import { speakKorean } from "@/lib/tts";
 import { VOCAB_ROOTS, type VocabWordWithProgress } from "@/lib/vocabulary";
@@ -8,6 +20,16 @@ const BTN_LINE = buttonClassName("line");
 
 // Ruled notebook paper: a faint line every 32px, plus a red margin rule.
 const RULED = "repeating-linear-gradient(180deg, transparent 0 31px, #EEF0F6 31px 32px)";
+
+// Swipe gesture tuning (px unless noted).
+const SWIPE_START = 8; // horizontal travel before we treat the pointer as a drag
+const STAMP_FROM = 40; // stamp starts fading in here…
+const STAMP_TO = 120; // …and is fully opaque here
+const RELEASE_MAX = 100; // release threshold: min(100px, 25% of card width)
+const MAX_TILT = 12; // degrees, ≈ dx / 20 clamped
+const FLY_MS = 250;
+const FADE_MS = 150; // reduced-motion replacement for the fly-off
+const SPRING_MS = 320;
 
 // The study card as a dictionary entry on a notebook page: headword, hanja
 // set large in the margin, the word-parts memo written out as etymology,
@@ -68,13 +90,8 @@ export default function FlipPhase({
         </span>
       </div>
 
-      {/* the notebook page */}
-      <div className="relative bg-white border border-line rounded-[6px] shadow-[0_20px_40px_-28px_rgba(60,50,30,.6)] overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none" style={{ background: RULED }} aria-hidden="true" />
-        <span
-          className="absolute top-0 bottom-0 left-[clamp(28px,6vw,52px)] w-px bg-[#F5C6C6] opacity-70 pointer-events-none"
-          aria-hidden="true"
-        />
+      {/* the notebook page — swipe right = Got it, left = Still learning */}
+      <SwipeCard key={word.key} enabled={flipped} nextWord={next} onSwipe={onAnswer}>
         <span className="absolute top-4 right-5 text-[10.5px] font-black tracking-[.06em] uppercase text-amber border-2 border-amber rounded-[6px] px-2 py-[3px] rotate-[-6deg] opacity-80 select-none">
           {stage.emoji} {stage.label}
         </span>
@@ -193,7 +210,7 @@ export default function FlipPhase({
             ))}
           </div>
         )}
-      </div>
+      </SwipeCard>
 
       {/* bonus root banner */}
       {root && !rootOpen && (
@@ -248,6 +265,195 @@ export default function FlipPhase({
         </div>
       )}
     </div>
+  );
+}
+
+type DragMode = "idle" | "drag" | "fly" | "back";
+
+const REDUCED_MOTION = "(prefers-reduced-motion: reduce)";
+function subscribeReducedMotion(onChange: () => void) {
+  const mq = window.matchMedia(REDUCED_MOTION);
+  mq.addEventListener("change", onChange);
+  return () => mq.removeEventListener("change", onChange);
+}
+
+// The notebook page with a swipe gesture layered on top: pointer events + a
+// CSS transform, no library. Keyed by word in the parent so every card mounts
+// fresh at rest. The buttons inside keep working exactly as before; the
+// gesture just calls the same handler.
+function SwipeCard({
+  enabled,
+  nextWord,
+  onSwipe,
+  children,
+}: {
+  enabled: boolean;
+  nextWord?: VocabWordWithProgress;
+  onSwipe: (gotIt: boolean) => void;
+  children: ReactNode;
+}) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  // limit = release threshold for this drag: min(100px, 25% of the card width).
+  const [drag, setDrag] = useState<{ dx: number; mode: DragMode; limit: number }>({
+    dx: 0,
+    mode: "idle",
+    limit: RELEASE_MAX,
+  });
+  // Pointer bookkeeping lives in refs so pointermove doesn't re-render until a drag begins.
+  const gesture = useRef<{ id: number; x0: number; y0: number; width: number; dragging: boolean } | null>(null);
+  const busy = useRef(false); // true from release-past-threshold until this card unmounts
+  const suppressClick = useRef(false); // swallow the click that follows a drag
+  const flyTimer = useRef<number | undefined>(undefined);
+  const reduced = useSyncExternalStore(
+    subscribeReducedMotion,
+    () => window.matchMedia(REDUCED_MOTION).matches,
+    () => false
+  );
+
+  useEffect(() => () => window.clearTimeout(flyTimer.current), []);
+
+  function onPointerDown(e: ReactPointerEvent<HTMLDivElement>) {
+    if (!enabled || busy.current || drag.mode === "fly") return;
+    if (e.pointerType === "mouse" && e.button !== 0) return;
+    gesture.current = {
+      id: e.pointerId,
+      x0: e.clientX,
+      y0: e.clientY,
+      width: cardRef.current?.offsetWidth ?? 400,
+      dragging: false,
+    };
+  }
+
+  function onPointerMove(e: ReactPointerEvent<HTMLDivElement>) {
+    const g = gesture.current;
+    if (!g || g.id !== e.pointerId) return;
+    const dx = e.clientX - g.x0;
+    const dy = e.clientY - g.y0;
+    if (!g.dragging) {
+      // Only claim the pointer once it's clearly horizontal; vertical
+      // movement stays with the browser (touch-action: pan-y) for scrolling.
+      if (Math.abs(dx) <= SWIPE_START || Math.abs(dx) <= Math.abs(dy)) return;
+      g.dragging = true;
+      suppressClick.current = true;
+      cardRef.current?.setPointerCapture(e.pointerId);
+    }
+    setDrag({ dx, mode: "drag", limit: Math.min(RELEASE_MAX, g.width * 0.25) });
+  }
+
+  function endGesture(e: ReactPointerEvent<HTMLDivElement>, cancelled: boolean) {
+    const g = gesture.current;
+    if (!g || g.id !== e.pointerId) return;
+    gesture.current = null;
+    if (!g.dragging) return;
+    if (cardRef.current?.hasPointerCapture(e.pointerId)) cardRef.current.releasePointerCapture(e.pointerId);
+
+    const dx = e.clientX - g.x0;
+    const limit = Math.min(RELEASE_MAX, g.width * 0.25);
+    if (cancelled || Math.abs(dx) < limit) {
+      setDrag({ dx: 0, mode: "back", limit });
+      return;
+    }
+    // Past the threshold: fly off (or fade, under reduced motion), then answer.
+    busy.current = true;
+    const dir = dx > 0 ? 1 : -1;
+    setDrag({ dx: dir * (g.width * 1.1), mode: "fly", limit });
+    flyTimer.current = window.setTimeout(() => onSwipe(dir > 0), reduced ? FADE_MS : FLY_MS);
+  }
+
+  function onClickCapture(e: ReactMouseEvent<HTMLDivElement>) {
+    if (!suppressClick.current) return;
+    suppressClick.current = false;
+    e.preventDefault();
+    e.stopPropagation();
+  }
+
+  const { dx, mode, limit } = drag;
+  const abs = Math.abs(dx);
+  const tilt = reduced ? 0 : Math.max(-MAX_TILT, Math.min(MAX_TILT, dx / 20));
+  const stampOpacity = Math.max(0, Math.min(1, (abs - STAMP_FROM) / (STAMP_TO - STAMP_FROM)));
+  const peekProgress = mode === "fly" ? 1 : Math.max(0, Math.min(1, abs / limit));
+
+  const flying = mode === "fly";
+  const cardStyle: CSSProperties = {
+    touchAction: "pan-y",
+    transform: flying && reduced ? "none" : `translateX(${dx}px) rotate(${tilt}deg)`,
+    opacity: flying ? 0 : 1,
+    transition:
+      mode === "drag"
+        ? "none"
+        : flying
+          ? reduced
+            ? `opacity ${FADE_MS}ms ease-out`
+            : `transform ${FLY_MS}ms ease-in, opacity ${FLY_MS}ms ease-in`
+          : mode === "back"
+            ? `transform ${SPRING_MS}ms cubic-bezier(.2,.9,.3,1.2)`
+            : "none",
+    userSelect: mode === "drag" ? "none" : undefined,
+  };
+
+  return (
+    <>
+      <div className="relative [overflow-x:clip]">
+        {/* the next page, peeking out from underneath */}
+        <div
+          className="absolute inset-0 bg-white border border-line rounded-[6px] overflow-hidden"
+          aria-hidden="true"
+          style={{
+            transform: `translateY(${12 - 12 * peekProgress}px) scale(${0.97 + 0.03 * peekProgress})`,
+            opacity: 0.55 + 0.45 * peekProgress,
+            transition: mode === "drag" ? "none" : "transform 200ms ease, opacity 200ms ease",
+          }}
+        >
+          <div className="absolute inset-0 pointer-events-none" style={{ background: RULED }} />
+          <span className="absolute top-0 bottom-0 left-[clamp(28px,6vw,52px)] w-px bg-[#F5C6C6] opacity-70" />
+          {nextWord && (
+            <p className="kr font-black text-[clamp(34px,6vw,44px)] leading-[1.1] tracking-[-0.01em] text-faint pt-6 pl-[clamp(40px,8vw,70px)]">
+              {nextWord.korean}
+            </p>
+          )}
+        </div>
+
+        <div
+          ref={cardRef}
+          onPointerDown={onPointerDown}
+          onPointerMove={onPointerMove}
+          onPointerUp={(e) => endGesture(e, false)}
+          onPointerCancel={(e) => endGesture(e, true)}
+          onClickCapture={onClickCapture}
+          className="relative bg-white border border-line rounded-[6px] shadow-[0_20px_40px_-28px_rgba(60,50,30,.6)] overflow-hidden"
+          style={cardStyle}
+        >
+          <div className="absolute inset-0 pointer-events-none" style={{ background: RULED }} aria-hidden="true" />
+          <span
+            className="absolute top-0 bottom-0 left-[clamp(28px,6vw,52px)] w-px bg-[#F5C6C6] opacity-70 pointer-events-none"
+            aria-hidden="true"
+          />
+          {children}
+
+          {/* swipe stamps */}
+          <span
+            aria-hidden="true"
+            className="absolute top-[108px] left-1/2 z-10 pointer-events-none select-none text-[22px] font-black tracking-[.08em] uppercase text-[#16A34A] border-[3px] border-[#16A34A] rounded-[8px] px-2.5 py-1 -translate-x-1/2 rotate-[-12deg] whitespace-nowrap"
+            style={{ opacity: dx > 0 ? stampOpacity : 0, transition: mode === "drag" ? "none" : "opacity 120ms ease" }}
+          >
+            Got it ✓
+          </span>
+          <span
+            aria-hidden="true"
+            className="absolute top-[108px] left-1/2 z-10 pointer-events-none select-none text-[18px] font-black tracking-[.08em] uppercase text-muted border-[3px] border-current rounded-[8px] px-2.5 py-1 -translate-x-1/2 rotate-[12deg] whitespace-nowrap"
+            style={{ opacity: dx < 0 ? stampOpacity : 0, transition: mode === "drag" ? "none" : "opacity 120ms ease" }}
+          >
+            Still learning
+          </span>
+        </div>
+      </div>
+
+      {enabled && (
+        <p className="hidden [@media(pointer:coarse)]:block text-[11.5px] text-faint text-center mt-2.5">
+          Swipe right = Got it · left = Still learning
+        </p>
+      )}
+    </>
   );
 }
 

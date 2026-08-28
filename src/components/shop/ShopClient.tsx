@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
@@ -22,6 +22,7 @@ import {
 } from "@/lib/costumes";
 import type { CefrLevel } from "@/lib/tree";
 import { SPECIES } from "@/lib/tree";
+import ShopGoal, { useStoredGoal, writeStoredGoal } from "@/components/shop/ShopGoal";
 
 const DEFAULT_SKY = "linear-gradient(180deg,#DFF1FF 0%,#F0FBF1 62%,#E4F3DA 100%)";
 const RARITY_STYLE: Record<Rarity, { stripe: string; chip: string }> = {
@@ -80,6 +81,7 @@ export default function ShopClient({
   owned,
   equipped,
   today,
+  questDone = false,
 }: {
   userId: string;
   coins: number;
@@ -91,6 +93,7 @@ export default function ShopClient({
   owned: string[];
   equipped: string[];
   today: string;
+  questDone?: boolean;
 }) {
   const router = useRouter();
   const supabase = useMemo(() => createClient(), []);
@@ -112,12 +115,34 @@ export default function ShopClient({
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
 
+  // ── coin goal ──
+  // A user-picked goal lives in localStorage only (null until hydrated, so
+  // server and client agree). Without one, the goal defaults to the cheapest
+  // unlocked, unowned item the balance doesn't yet cover.
+  const goalOverride = useStoredGoal();
+  const pickerRef = useRef<HTMLDetailsElement>(null);
+  function setGoal(id: string | null) {
+    writeStoredGoal(id);
+    pickerRef.current?.removeAttribute("open");
+  }
+
   const previewIds = Object.values(preview).filter((v): v is string => !!v);
   const visible = COSTUMES.filter((c) => c.slot === tab && (isAvailable(c, now) || ownedSet.has(c.id)));
   const featured = COSTUMES.find(
     (c) => c.availableUntil && isAvailable(c, now) && daysLeft(c.availableUntil, today) <= 14 && !ownedSet.has(c.id),
   );
   const selected = preview[tab] ? costumeById(preview[tab]!) : undefined;
+
+  // Anything you could save coins for: on sale, unowned, has a price.
+  // (Plus wardrobe items cost 0, so there is nothing to save toward.)
+  const goalCandidates = COSTUMES.filter((c) => !ownedSet.has(c.id) && c.price > 0 && !c.plusOnly && isAvailable(c, now)).sort(
+    (a, b) => a.price - b.price,
+  );
+  const defaultGoal = goalCandidates.find((c) => !isLevelLocked(c, playerLevel, hasPlus) && c.price > balance);
+  const overrideGoal = goalOverride ? goalCandidates.find((c) => c.id === goalOverride) : undefined;
+  // A stored goal that was since bought (or left the catalog) is ignored and
+  // the default takes over; buying the goal item clears the stored id below.
+  const goal = overrideGoal ?? defaultGoal ?? null;
 
   function toggle(c: Costume) {
     setMessage(null);
@@ -151,6 +176,7 @@ export default function ShopClient({
         }
         if (typeof data === "number") setBalance(data);
         setOwnedSet((s) => new Set(s).add(selected.id));
+        if (goalOverride === selected.id) writeStoredGoal(null);
         await equip(selected);
         setMessage(`${selected.name} is yours — and on your tree.`);
       }
@@ -174,6 +200,60 @@ export default function ShopClient({
 
   return (
     <div className="border border-line rounded-[14px] bg-white overflow-hidden max-w-[1040px]">
+      <ShopGoal
+        goal={goal}
+        balance={balance}
+        isAdmin={isAdmin}
+        playerLevel={playerLevel}
+        locked={goal ? isLevelLocked(goal, playerLevel, hasPlus) : false}
+        questDone={questDone}
+        preview={goal ? <Scene ids={[goal.id]} stage={stage} species={species} className="w-full h-full" /> : null}
+        picker={
+          goalCandidates.length > 0 ? (
+            <details ref={pickerRef} className="relative inline-block">
+              <summary className="list-none cursor-pointer select-none text-[12px] font-bold text-faint hover:text-charcoal [&::-webkit-details-marker]:hidden">
+                Change ▾
+              </summary>
+              <div className="absolute left-0 top-full mt-1 z-20 w-[250px] max-h-[264px] overflow-y-auto bg-white border border-line rounded-[10px] shadow-[0_10px_22px_-12px_rgba(60,50,30,.35)] p-1">
+                {goalOverride && (
+                  <button
+                    type="button"
+                    onClick={() => setGoal(null)}
+                    className="w-full text-left rounded-lg px-2.5 py-1.5 text-[12px] font-semibold text-muted hover:bg-warm"
+                  >
+                    Cheapest next item (auto)
+                  </button>
+                )}
+                {goalCandidates.map((c) => {
+                  const isGoal = goal?.id === c.id;
+                  return (
+                    <button
+                      key={c.id}
+                      type="button"
+                      onClick={() => setGoal(c.id)}
+                      className={`w-full text-left flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-[12.5px] hover:bg-warm ${isGoal ? "bg-success-bg" : ""}`}
+                    >
+                      <span aria-hidden="true">{c.icon ?? SLOT_LABELS[c.slot].icon}</span>
+                      <span className="flex-1 min-w-0 truncate font-semibold">{c.name}</span>
+                      <span className="text-muted tabular-nums whitespace-nowrap">
+                        🌰 {c.price}
+                        {isLevelLocked(c, playerLevel, hasPlus) ? ` · Lv.${c.minPlayerLevel}` : ""}
+                      </span>
+                      {isGoal && <span className="text-success font-extrabold">✓</span>}
+                    </button>
+                  );
+                })}
+              </div>
+            </details>
+          ) : null
+        }
+        onBuyNow={() => {
+          if (!goal) return;
+          setTab(goal.slot);
+          setPreview((p) => ({ ...p, [goal.slot]: goal.id }));
+          setMessage(null);
+        }}
+      />
       <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_300px]">
         {/* ── catalog ── */}
         <div className="p-4 sm:p-5 min-w-0">
@@ -253,27 +333,44 @@ export default function ShopClient({
               else if (c.plusOnly) price = <span className="text-[12.5px] font-extrabold text-[#B7791F]">🌟 Plus</span>;
               else if (locked) price = <span className="text-[12.5px] font-extrabold text-[#B7AE9C]">🔒 Lv.{c.minPlayerLevel}</span>;
               else price = <span className="text-[12.5px] font-extrabold tabular-nums">🌰 {c.price}</span>;
+              // Only items you could save for get the goal control.
+              const goalable = !isOwned && !isAdmin && c.price > 0 && !c.plusOnly;
+              const isGoal = goalable && goal?.id === c.id;
+              const toGo = Math.max(0, c.price - balance);
               return (
-                <button
+                <div
                   key={c.id}
-                  type="button"
-                  onClick={() => toggle(c)}
-                  aria-pressed={on}
-                  className={`relative text-left border rounded-[12px] overflow-hidden bg-white transition-all hover:-translate-y-0.5 ${
+                  className={`relative flex flex-col border rounded-[12px] overflow-hidden bg-white transition-all hover:-translate-y-0.5 ${
                     on ? "border-success shadow-[0_0_0_2px_#BBF7D0]" : "border-line hover:border-faint"
                   }`}
                 >
                   <span className="absolute left-0 top-0 bottom-0 w-[3px] z-10" style={{ background: rs.stripe }} aria-hidden="true" />
-                  <Scene ids={ids} stage={stage} species={species} className="h-[96px]" />
-                  <span className="block px-2.5 pt-2 pb-2.5">
-                    <b className="block text-[13px] leading-tight">{c.name}</b>
-                    <small className="block kr text-[11.5px] text-muted">{c.krName}</small>
-                    <span className="flex items-center justify-between gap-1.5 mt-1.5">
-                      <span className={`text-[10px] font-extrabold tracking-[.06em] uppercase rounded px-1.5 py-px ${rs.chip}`}>{RARITY_LABEL[c.rarity]}</span>
-                      {price}
+                  <button type="button" onClick={() => toggle(c)} aria-pressed={on} className="block w-full text-left">
+                    <Scene ids={ids} stage={stage} species={species} className="h-[96px]" />
+                    <span className="block px-2.5 pt-2 pb-2.5">
+                      <b className="block text-[13px] leading-tight">{c.name}</b>
+                      <small className="block kr text-[11.5px] text-muted">{c.krName}</small>
+                      <span className="flex items-center justify-between gap-1.5 mt-1.5">
+                        <span className={`text-[10px] font-extrabold tracking-[.06em] uppercase rounded px-1.5 py-px ${rs.chip}`}>{RARITY_LABEL[c.rarity]}</span>
+                        {price}
+                      </span>
                     </span>
-                  </span>
-                </button>
+                  </button>
+                  {goalable && (
+                    <span className="block px-2.5 pb-2 -mt-1 text-[11px] leading-tight">
+                      {isGoal ? (
+                        <span className="font-bold text-[#B7791F]">
+                          · your goal · {toGo > 0 ? `${toGo} to go` : "ready to buy"}
+                          {locked ? ` · Lv.${c.minPlayerLevel}` : ""}
+                        </span>
+                      ) : (
+                        <button type="button" onClick={() => setGoal(c.id)} className="font-bold text-faint hover:text-charcoal transition-colors">
+                          Set as goal
+                        </button>
+                      )}
+                    </span>
+                  )}
+                </div>
               );
             })}
             {visible.length === 0 && (
@@ -337,9 +434,6 @@ export default function ShopClient({
           </div>
           <p className={`text-[11.5px] mt-2 text-center ${message?.includes("yours") ? "text-success font-semibold" : "text-muted"}`}>
             {message ?? (selected ? `${selected.name} · ${selected.krName}` : "Tap a card to try it on")}
-          </p>
-          <p className="text-[11.5px] text-muted mt-3 text-center">
-            🌰 {isAdmin ? "∞" : balance} coins · earn 10 per daily quest, 50 at every 10th level
           </p>
         </aside>
       </div>
