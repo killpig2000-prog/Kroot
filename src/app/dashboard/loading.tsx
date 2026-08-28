@@ -5,7 +5,7 @@
 // skeleton to real content doesn't jump.
 export default function Loading() {
   return (
-    <div className="min-h-screen bg-[#FFFFFF]">
+    <div className="min-h-screen bg-warm">
       <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] xl:grid-cols-[clamp(200px,17%,280px)_minmax(0,1fr)_clamp(260px,22%,340px)] w-full min-h-screen">
         <div className="hidden md:block border-r border-dashed border-dash bg-warm" />
 

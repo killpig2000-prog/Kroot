@@ -3,7 +3,7 @@
 // accordions with icon rows, grow banner) instead of a generic row list.
 export default function Loading() {
   return (
-    <div className="min-h-screen bg-[#FFFFFF]">
+    <div className="min-h-screen bg-warm">
       <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
         <div className="hidden md:block border-r border-dashed border-dash bg-warm" />
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] md:pb-[60px] max-w-[820px]">

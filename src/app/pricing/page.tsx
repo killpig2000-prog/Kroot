@@ -32,7 +32,7 @@ export default async function PricingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#FFFFFF] text-charcoal">
+    <div className="min-h-screen bg-warm text-charcoal">
       <Nav />
 
       <main className="max-w-[880px] mx-auto px-[clamp(18px,4vw,28px)] py-[clamp(40px,6vw,72px)]">

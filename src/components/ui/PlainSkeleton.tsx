@@ -3,7 +3,7 @@
 // sidebar-layout variant.
 export default function PlainSkeleton({ rows = 4 }: { rows?: number }) {
   return (
-    <div className="min-h-screen bg-[#FFFFFF] px-6 pt-10 pb-16">
+    <div className="min-h-screen bg-warm px-6 pt-10 pb-16">
       <div className="max-w-[720px] mx-auto animate-pulse">
         <div className="h-3.5 w-40 rounded-full bg-warm-3 mb-4 mx-auto" />
         <div className="h-8 w-72 rounded-lg bg-warm-3 mb-8 mx-auto" />

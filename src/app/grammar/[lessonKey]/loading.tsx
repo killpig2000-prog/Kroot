@@ -3,7 +3,7 @@
 // example box, a "check yourself" quiz divider + block, and footer nav.
 export default function Loading() {
   return (
-    <div className="min-h-screen bg-[#FFFFFF] text-charcoal">
+    <div className="min-h-screen bg-warm text-charcoal">
       <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
         <div className="hidden md:block border-r border-dashed border-dash bg-warm" />
 
