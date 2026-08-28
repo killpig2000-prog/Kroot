@@ -50,7 +50,6 @@ export async function proxy(request: NextRequest) {
     pathname.startsWith("/community") ||
     pathname.startsWith("/review") ||
     pathname.startsWith("/guide") ||
-    pathname.startsWith("/league") ||
     pathname.startsWith("/level-test") ||
     pathname.startsWith("/admin");
   if (!user && isProtected) {

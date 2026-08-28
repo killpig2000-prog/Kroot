@@ -1,7 +1,7 @@
 // Mirrors the real /dashboard page: sidebar rail, main column (greeting,
 // tree/streak card, course/quest/slang callout strips, learning-progress
 // card with a 2x2 skill grid, promotion strip, study-garden grass), and the
-// xl+ right rail of quest/slang/word-of-day/league cards — so the swap from
+// xl+ right rail of quest/slang/word-of-day cards — so the swap from
 // skeleton to real content doesn't jump.
 export default function Loading() {
   return (
@@ -104,7 +104,7 @@ export default function Loading() {
           </div>
         </main>
 
-        {/* right rail (xl+) — quest / slang / word-of-day / league cards */}
+        {/* right rail (xl+) — quest / slang / word-of-day cards */}
         <div className="hidden xl:flex flex-col gap-4 px-5 pt-[26px] pb-[60px]">
           <div className="animate-pulse flex flex-col gap-4">
             <div className="border border-dashed border-[#CFC8B8] rounded-[12px] bg-white p-4">

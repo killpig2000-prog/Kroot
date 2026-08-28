@@ -1,74 +1,10 @@
-import Link from "next/link";
 import { redirect } from "next/navigation";
-import BottomNav from "@/components/dashboard/BottomNav";
-import Sidebar from "@/components/dashboard/Sidebar";
-import LeagueBoard from "@/components/league/LeagueBoard";
-import { createClient, getClaimsUser } from "@/lib/supabase/server";
-import { leagueTier } from "@/lib/league";
 
-// Weekly XP league within the user's activity tier (Sprout → Diamond).
-export default async function LeaguePage() {
-  const supabase = await createClient();
-  const user = await getClaimsUser(supabase);
-  if (!user) redirect("/onboarding");
-
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("display_name, streak_days, avatar_url, current_level")
-    .eq("id", user.id)
-    .single();
-
-  const grade = profile?.current_level ?? "A1";
-
-  // Separate query: league_tier only exists once migration 0026 is applied,
-  // and a missing column must not take down the whole profile read.
-  const { data: tierRow } = await supabase
-    .from("profiles")
-    .select("league_tier")
-    .eq("id", user.id)
-    .single();
-  const tier = leagueTier(tierRow?.league_tier);
-
-  return (
-    <div className="min-h-screen bg-warm text-charcoal">
-      <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
-        <Sidebar
-          displayName={profile?.display_name ?? "there"}
-          email={user.email ?? ""}
-          streakDays={profile?.streak_days ?? 0}
-          avatarUrl={profile?.avatar_url}
-        />
-
-        <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] md:pb-[60px] max-w-[720px]">
-          {/* breadcrumb */}
-          <div className="flex gap-2 text-[13px] text-faint mb-[18px]">
-            <Link href="/dashboard" className="hover:text-charcoal transition-colors">
-              Garden
-            </Link>
-            <span>/</span>
-            <b className="text-charcoal font-semibold">League</b>
-          </div>
-
-          {/* head */}
-          <div className="flex items-center justify-between gap-4 mb-5 flex-wrap">
-            <h1 className="font-bold text-[22px] tracking-[-0.02em] flex items-center">
-              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[#FFFBEB] border border-amber-line items-center justify-center text-[15px] mr-[9px]">
-                {tier.emoji}
-              </span>
-              {tier.name} League
-            </h1>
-            <span className="text-[13px] text-muted">
-              Weekly XP ranking · top 20% climb, bottom 20% drop · resets Monday ·{" "}
-              <Link href="/level-test" className="font-semibold text-success hover:underline">
-                Level-up test →
-              </Link>
-            </span>
-          </div>
-
-          <LeagueBoard grade={grade} />
-        </main>
-      </div>
-      <BottomNav />
-    </div>
-  );
+// The weekly league is switched off (2026-08-28). The route stays so old links
+// and the PWA don't 404 — it just sends people back to the Garden. The tier
+// tables, settle_league_weeks() and the ranking RPCs from migration 0026 are
+// still in the database; nothing in the app calls them any more, so no week
+// settles and no rewards are paid until the feature is re-enabled.
+export default function LeaguePage() {
+  redirect("/dashboard");
 }

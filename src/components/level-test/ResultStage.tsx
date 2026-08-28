@@ -12,7 +12,6 @@ import { SPECIES } from "@/lib/tree";
 import { treeStageForLevel } from "@/lib/level";
 
 const BTN_GREEN = buttonClassName("success");
-const BTN_LINE = buttonClassName("line");
 
 export default function ResultStage({
   spec,
@@ -37,7 +36,7 @@ export default function ResultStage({
           <p className="text-[13.5px] text-muted mt-1">
             Your {SPECIES[spec.from].name} grew into a <b>{SPECIES[spec.to].name}</b>.{" "}
             {promoted
-              ? `${spec.to} content and the ${spec.to} league are now open.`
+              ? `${spec.to} content is now open.`
               : "We couldn’t apply the promotion — check your profile shortly."}
           </p>
         </div>
@@ -87,9 +86,6 @@ export default function ResultStage({
       <div className="flex gap-2">
         <Link href="/dashboard" className={BTN_GREEN}>
           Back to Garden
-        </Link>
-        <Link href="/league" className={BTN_LINE}>
-          View league
         </Link>
       </div>
     </div>
