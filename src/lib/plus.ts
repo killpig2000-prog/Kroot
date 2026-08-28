@@ -25,7 +25,9 @@ export const PLUS_PERKS = [
   { icon: "✍️", title: "Unlimited writing", desc: "Free writes one page a day — Plus turns as many pages as you like, with sentence-by-sentence corrections on every one." },
   { icon: "🛡️", title: "Streak shield", desc: "Miss a day? Your streak survives — one skipped day never breaks the run." },
   { icon: "⚡", title: "Weekend XP boost", desc: "Earn 1.5x XP every Saturday and Sunday — climb the weekly league faster." },
-  { icon: "📊", title: "Learning insights", desc: "A detailed stats page: accuracy by skill, weakest words, and your XP timeline." },
+  // "Learning insights" is pulled from the list while the Insights section is
+  // switched off (2026-08-28) — the pricing page must not sell a screen nobody
+  // can open. Put it back when Insights ships again.
   { icon: "🎩", title: "Exclusive outfits", desc: "Nine Plus-only costumes for your tree — free to claim while subscribed." },
   { icon: "🔓", title: "No level locks", desc: "Every level-gated shop item — auras, companions, hats — unlocks early. Still pay coins, just skip the wait." },
   { icon: "🌟", title: "Plus badge", desc: "A golden name on your profile, in the community, and in the weekly league." },

@@ -3,7 +3,6 @@ import { redirect } from "next/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import AvatarUploader from "@/components/profile/AvatarUploader";
-import InsightsSection from "@/components/profile/InsightsSection";
 import ManageSubscriptionButton from "@/components/plus/ManageSubscriptionButton";
 import NameEditor from "@/components/profile/NameEditor";
 import ReminderSettings from "@/components/profile/ReminderSettings";
@@ -153,7 +152,11 @@ export default async function ProfilePage() {
               hasEmail={!!user.email}
             />
 
-            <InsightsSection userId={user.id} plusActive={plusActive} />
+            {/* Insights is switched off until it's rebuilt (2026-08-28). The
+                component still exists — restore this line and the /stats
+                anchor when it comes back. Its headline metric is lifetime
+                correct/incorrect, the very measure the promotion gate dropped,
+                so shipping it as-is would contradict the level-up screen. */}
 
             {/* where did everything go? a gentle pointer for regulars */}
             <p className="text-[12.5px] text-faint">

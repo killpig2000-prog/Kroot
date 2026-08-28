@@ -7,7 +7,7 @@ import { PLANS, PLUS_PERKS, isPlus, type PlanKey } from "@/lib/plus";
 
 export const metadata = {
   title: "Pricing — Kroot",
-  description: "Core Korean lessons are free forever. Kroot Plus adds unlimited writing with detailed corrections, a streak shield, weekend XP boosts, insights, and exclusive outfits.",
+  description: "Core Korean lessons are free forever. Kroot Plus adds unlimited writing with detailed corrections, a streak shield, weekend XP boosts, and exclusive outfits.",
 };
 
 const FREE_FEATURES = [

@@ -1,6 +1,8 @@
 import { redirect } from "next/navigation";
 
-// Insights merged into My growth (see InsightsSection); keep old links alive.
+// Insights used to live here, then moved into My growth. It's switched off
+// while it gets rebuilt (2026-08-28), so old /stats links land on the profile
+// itself rather than an #insights anchor that no longer renders.
 export default function StatsPage() {
-  redirect("/profile#insights");
+  redirect("/profile");
 }
