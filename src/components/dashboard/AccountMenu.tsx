@@ -3,11 +3,10 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
-import { applyModeToDocument, type ModeKey } from "@/lib/mode";
 import { SEASONS, applySeasonToDocument, seasonForDate } from "@/lib/seasons";
 
 // The sidebar account button: opens a small settings menu with profile,
-// dark mode, and logout.
+// the seasonal theme switch, and logout.
 export default function AccountMenu({
   displayName,
   email,
@@ -20,11 +19,6 @@ export default function AccountMenu({
   const supabase = useMemo(() => createClient(), []);
   const [open, setOpen] = useState(false);
   // Initial values come off the <html> attributes the layout rendered.
-  const [mode, setMode] = useState<ModeKey>(() =>
-    typeof document !== "undefined" && document.documentElement.getAttribute("data-mode") === "dark"
-      ? "dark"
-      : "light",
-  );
   const [seasonOn, setSeasonOn] = useState<boolean>(
     () => typeof document !== "undefined" && document.documentElement.hasAttribute("data-season"),
   );
@@ -39,12 +33,6 @@ export default function AccountMenu({
     document.addEventListener("mousedown", close);
     return () => document.removeEventListener("mousedown", close);
   }, [open]);
-
-  function toggleMode() {
-    const next: ModeKey = mode === "dark" ? "light" : "dark";
-    setMode(next);
-    applyModeToDocument(next);
-  }
 
   function toggleSeason() {
     const next = !seasonOn;
@@ -75,24 +63,7 @@ export default function AccountMenu({
             👤 My account
           </Link>
 
-          <button
-            onClick={toggleMode}
-            className="w-full flex items-center justify-between rounded-[9px] px-3 py-2 text-[13px] font-medium text-[#3F3F46] hover:bg-warm"
-          >
-            <span>{mode === "dark" ? "🌙 Dark mode" : "☀️ Light mode"}</span>
-            <span
-              className={`w-9 h-5 rounded-full relative transition-colors ${
-                mode === "dark" ? "bg-success" : "bg-line"
-              }`}
-              aria-hidden="true"
-            >
-              <span
-                className={`absolute top-0.5 w-4 h-4 rounded-full bg-white shadow transition-all ${
-                  mode === "dark" ? "left-[18px]" : "left-0.5"
-                }`}
-              />
-            </span>
-          </button>
+          {/* Dark-mode toggle removed while dark mode is off — see lib/mode.ts */}
 
 
           <button

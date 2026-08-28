@@ -4,14 +4,17 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
-import { applyModeToDocument, type ModeKey } from "@/lib/mode";
 import { MAIN_ITEMS, SECTIONS, type NavColor } from "@/components/dashboard/navItems";
 
+// "Me" left the tab bar (2026-08-28) — account settings aren't a place people
+// go often enough to spend one of three tabs on. It moves into the menu sheet
+// below, which is the only other way to reach /profile on a phone.
 const ITEMS = [
   { icon: "🏡", label: "Garden", href: "/dashboard" },
-  { icon: "👤", label: "Me", href: "/profile" },
   { icon: "🛍️", label: "Shop", href: "/shop" },
 ];
+
+const ACCOUNT_ITEM = { icon: "👤", label: "My account", href: "/profile" };
 
 const RAINBOW = "linear-gradient(90deg,#F43F5E,#F59E0B,#22C55E,#0EA5E9,#8B5CF6)";
 
@@ -81,13 +84,6 @@ export default function BottomNav() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [streakDays, setStreakDays] = useState<number | null>(null);
-  // Mirrors AccountMenu (desktop sidebar): initial value comes off the <html>
-  // attribute the layout rendered from the kroot-mode cookie.
-  const [mode, setMode] = useState<ModeKey>(() =>
-    typeof document !== "undefined" && document.documentElement.getAttribute("data-mode") === "dark"
-      ? "dark"
-      : "light",
-  );
   const supabase = useMemo(() => createClient(), []);
 
   // The streak note is a nice-to-have; fetch it lazily the first time the
@@ -128,12 +124,7 @@ export default function BottomNav() {
   }, [open]);
 
   const close = () => setOpen(false);
-  const toggleMode = () => {
-    const next: ModeKey = mode === "dark" ? "light" : "dark";
-    setMode(next);
-    applyModeToDocument(next);
-  };
-  const sheetSections = [{ title: "My page", items: MAIN_ITEMS }, ...SECTIONS];
+  const sheetSections = [{ title: "My page", items: [...MAIN_ITEMS, ACCOUNT_ITEM] }, ...SECTIONS];
 
   return (
     <>
@@ -172,24 +163,9 @@ export default function BottomNav() {
               </div>
             ))}
 
-            <button
-              onClick={toggleMode}
-              className="w-full flex items-center justify-between rounded-[12px] border border-warm-3 bg-white px-3.5 py-2.5 mt-4 text-[13px] font-semibold text-[#4A453D]"
-            >
-              <span>{mode === "dark" ? "🌙 Dark mode" : "☀️ Light mode"}</span>
-              <span
-                className={`w-9 h-5 rounded-full relative transition-colors ${
-                  mode === "dark" ? "bg-success" : "bg-line"
-                }`}
-                aria-hidden="true"
-              >
-                <span
-                  className={`absolute top-0.5 w-4 h-4 rounded-full bg-white shadow transition-all ${
-                    mode === "dark" ? "left-[18px]" : "left-0.5"
-                  }`}
-                />
-              </span>
-            </button>
+            {/* Dark-mode toggle removed while dark mode is off — see lib/mode.ts.
+                It sat here, one tap from every menu open, which is how phones
+                ended up stuck in an inverted palette. */}
 
             {streakDays !== null && (
               <div className="flex items-center gap-2.5 border border-[#ECD98A] bg-[#FEF9C3] px-[13px] py-[10px] mt-4 rotate-[-1deg] shadow-[0_8px_18px_-12px_rgba(120,100,30,.4)]">

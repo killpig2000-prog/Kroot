@@ -3,7 +3,7 @@ import { Fredoka, Noto_Sans_KR, Nunito } from "next/font/google";
 import { cookies } from "next/headers";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
-import { DEFAULT_MODE, MODE_COOKIE, isModeKey } from "@/lib/mode";
+import { MODE_COOKIE, resolveMode } from "@/lib/mode";
 import { SEASON_COOKIE, seasonForDate } from "@/lib/seasons";
 import { SITE_URL } from "@/lib/site";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
@@ -60,8 +60,9 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const cookieStore = await cookies();
-  const modeCookie = cookieStore.get(MODE_COOKIE)?.value;
-  const mode = isModeKey(modeCookie) ? modeCookie : DEFAULT_MODE;
+  // resolveMode ignores a stale dark cookie while dark mode is switched off,
+  // so a phone already stuck in dark comes back to light on its next load.
+  const mode = resolveMode(cookieStore.get(MODE_COOKIE)?.value);
   const seasonEnabled = cookieStore.get(SEASON_COOKIE)?.value === "on"; // default off
   const season = seasonForDate(new Date());
 
