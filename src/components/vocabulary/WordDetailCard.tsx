@@ -61,10 +61,11 @@ export default function WordDetailCard({
   const stage = GROWTH_STAGES[growthStage(correctCount + incorrectCount)];
   const note = getWordNote(word.korean);
   const hanja = hanjaOf(word.korean);
-  const [saving, setSaving] = useState(false);
+  // Which button is mid-save, so it can say so instead of just greying out.
+  const [saving, setSaving] = useState<"next" | "got-it" | null>(null);
 
   async function advance(gotIt: boolean) {
-    setSaving(true);
+    setSaving(gotIt ? "got-it" : "next");
     const supabase = createClient();
     const nb = nextBox(box, gotIt);
     await supabase.from("vocabulary_progress").upsert(
@@ -190,11 +191,11 @@ export default function WordDetailCard({
       {/* actions — a bar under the page, full card width, so the thumb
           doesn't have to reach into the card and the screen isn't half empty */}
       <div className="grid grid-cols-2 gap-2 mt-3.5">
-        <button type="button" className={`${BTN_LINE} w-full justify-center`} disabled={saving} onClick={() => advance(false)}>
-          Next
+        <button type="button" className={`${BTN_LINE} w-full justify-center`} disabled={saving !== null} onClick={() => advance(false)}>
+          {saving === "next" ? "Saving…" : "Next"}
         </button>
-        <button type="button" className={`${BTN_INK} w-full justify-center`} disabled={saving} onClick={() => advance(true)}>
-          Got it ✓
+        <button type="button" className={`${BTN_INK} w-full justify-center`} disabled={saving !== null} onClick={() => advance(true)}>
+          {saving === "got-it" ? "Saving…" : "Got it ✓"}
         </button>
       </div>
 
@@ -204,7 +205,9 @@ export default function WordDetailCard({
             ← Prev
           </Link>
         ) : (
-          <span className="font-semibold text-faint whitespace-nowrap">← Prev</span>
+          <Link href={unitHref} className="font-semibold text-muted hover:text-charcoal transition-colors whitespace-nowrap">
+            ← Back to unit
+          </Link>
         )}
         {nextHref && nextWord ? (
           <Link

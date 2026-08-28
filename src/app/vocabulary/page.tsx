@@ -110,17 +110,20 @@ export default async function VocabularyPage({
         />
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] md:pb-[60px] max-w-[980px]">
-          {/* breadcrumb */}
-          <div className="flex gap-2 text-[13px] text-faint mb-[18px]">
-            <Link href="/dashboard" className="hover:text-charcoal transition-colors">
-              Garden
-            </Link>
-            <span>/</span>
-            <b className="text-charcoal font-semibold">Vocabulary</b>
+          {/* breadcrumb + word lookup */}
+          <div className="flex items-center justify-between gap-3 mb-[18px]">
+            <div className="flex gap-2 text-[13px] text-faint">
+              <Link href="/dashboard" className="hover:text-charcoal transition-colors">
+                Garden
+              </Link>
+              <span>/</span>
+              <b className="text-charcoal font-semibold">Vocabulary</b>
+            </div>
+            <VocabSearch />
           </div>
 
           {/* head */}
-          <div className="flex items-end justify-between gap-4 mb-4 flex-wrap">
+          <div className="flex items-end justify-between gap-4 mb-6 flex-wrap">
             <div>
               <h1 className="font-bold text-[22px] tracking-[-0.02em] flex items-center">
                 <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[#F5F3FF] text-[#7C3AED] border border-[#DDD6FE] items-center justify-center kr text-[15px] mr-[9px]">
@@ -143,8 +146,6 @@ export default async function VocabularyPage({
               accent="bg-charcoal border-charcoal text-white"
             />
           </div>
-
-          <VocabSearch />
 
           <div className="grid grid-cols-1 lg:grid-cols-[220px_minmax(0,1fr)] gap-6 lg:gap-8">
             {/* ── table of contents ── */}

@@ -50,24 +50,13 @@ export default async function VocabWordPage({
   const wordHref = (chapter: number, i: number) =>
     `/vocabulary/${topicKey}/word?level=${level}&chapter=${chapter}&i=${i}`;
 
-  const prevHref =
-    wordIndex > 0
-      ? wordHref(chapterIndex, wordIndex - 1)
-      : chapterIndex > 0
-      ? wordHref(chapterIndex - 1, chapters[chapterIndex - 1].length - 1)
-      : null;
-  const nextHref =
-    wordIndex < chapterWords.length - 1
-      ? wordHref(chapterIndex, wordIndex + 1)
-      : chapterIndex < chapters.length - 1
-      ? wordHref(chapterIndex + 1, 0)
-      : null;
-  const nextWordEntry =
-    wordIndex < chapterWords.length - 1
-      ? chapterWords[wordIndex + 1]
-      : chapterIndex < chapters.length - 1
-      ? chapters[chapterIndex + 1][0]
-      : null;
+  // Prev/next stay inside the unit: the first word's "Prev" and the last
+  // word's "Next" both return to the unit page instead of quietly stepping
+  // into a neighbouring unit under a different title.
+  const unitHref = `/vocabulary?level=${level}&unit=${chapterIndex}`;
+  const prevHref = wordIndex > 0 ? wordHref(chapterIndex, wordIndex - 1) : null;
+  const nextHref = wordIndex < chapterWords.length - 1 ? wordHref(chapterIndex, wordIndex + 1) : null;
+  const nextWordEntry = wordIndex < chapterWords.length - 1 ? chapterWords[wordIndex + 1] : null;
   const nextWord = nextWordEntry
     ? { korean: nextWordEntry.korean, meaning_en: nextWordEntry.meaning_en }
     : null;
@@ -84,6 +73,10 @@ export default async function VocabWordPage({
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] md:pb-[60px]">
           <WordDetailCard
+            // Remount per word: without a key the card keeps its "saving"
+            // state across the search-param navigation and the next word's
+            // buttons arrive already disabled.
+            key={word.key}
             word={{
               key: word.key,
               korean: word.korean,
@@ -102,7 +95,7 @@ export default async function VocabWordPage({
             prevHref={prevHref}
             nextHref={nextHref}
             nextWord={nextWord}
-            unitHref={`/vocabulary?level=${level}&unit=${chapterIndex}`}
+            unitHref={unitHref}
             unitLabel={getUnitTitle(level, chapterIndex)}
           />
         </main>
