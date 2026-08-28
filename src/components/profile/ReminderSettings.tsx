@@ -12,12 +12,27 @@ import {
   unsubscribeFromPush,
 } from "@/lib/push-client";
 
+// Choices are LOCAL hours — the cron compares UTC, so we convert on save and
+// back on display using this browser's offset. (A DST change can shift the
+// real send time by an hour until the setting is touched again; acceptable
+// for a "sometime in the evening" nudge and avoids a timezone column.)
 const HOURS = [
-  { value: 7, label: "Morning (7:00 UTC)" },
-  { value: 12, label: "Midday (12:00 UTC)" },
-  { value: 18, label: "Evening (18:00 UTC)" },
-  { value: 22, label: "Late (22:00 UTC)" },
+  { local: 7, label: "Morning" },
+  { local: 12, label: "Midday" },
+  { local: 18, label: "Evening" },
+  { local: 22, label: "Late" },
 ];
+const offsetHours = () => Math.round(-new Date().getTimezoneOffset() / 60);
+const localToUtc = (h: number) => (((h - offsetHours()) % 24) + 24) % 24;
+const utcToLocal = (h: number) => (((h + offsetHours()) % 24) + 24) % 24;
+const clock = (h: number) => `${((h + 11) % 12) + 1} ${h < 12 ? "am" : "pm"}`;
+/** Nearest preset to a stored UTC hour, so the select never shows a blank. */
+const nearestLocal = (utc: number) => {
+  const local = utcToLocal(utc);
+  return HOURS.reduce((best, h) =>
+    Math.abs(h.local - local) < Math.abs(best.local - local) ? h : best
+  ).local;
+};
 
 type Support = "unknown" | "ok" | "ios-install" | "none";
 const subscribeNever = () => () => {};
@@ -95,10 +110,11 @@ export default function ReminderSettings({ userId, initialPush, initialEmail, in
     setBusy(null);
   }
 
-  async function changeHour(v: number) {
+  async function changeHour(localHour: number) {
     setBusy("hour");
-    setHour(v);
-    await supabase.from("profiles").update({ reminder_hour: v }).eq("id", userId);
+    const utc = localToUtc(localHour);
+    setHour(utc);
+    await supabase.from("profiles").update({ reminder_hour: utc }).eq("id", userId);
     setBusy(null);
   }
 
@@ -143,14 +159,14 @@ export default function ReminderSettings({ userId, initialPush, initialEmail, in
         <div className="flex items-center justify-between gap-3 flex-wrap pt-1">
           <span className="text-[13.5px] font-semibold">Send it around</span>
           <select
-            value={hour}
+            value={nearestLocal(hour)}
             disabled={busy !== null}
             onChange={(e) => changeHour(Number(e.target.value))}
             className="text-[13px] font-semibold border border-line rounded-[9px] px-3 py-2 bg-white"
           >
             {HOURS.map((h) => (
-              <option key={h.value} value={h.value}>
-                {h.label}
+              <option key={h.local} value={h.local}>
+                {h.label} · {clock(h.local)} your time
               </option>
             ))}
           </select>

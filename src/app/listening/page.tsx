@@ -1,4 +1,5 @@
 import Link from "next/link";
+import LevelTabs from "@/components/ui/LevelTabs";
 import { redirect } from "next/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
@@ -49,7 +50,7 @@ export default async function ListeningPage({
   const completedIds = new Set((progressRows ?? []).map((r) => r.dialogue_id));
 
   return (
-    <div className="min-h-screen bg-[#FFFFFF] text-charcoal">
+    <div className="min-h-screen bg-warm text-charcoal">
       <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
         <Sidebar
           displayName={profile?.display_name ?? "there"}
@@ -81,44 +82,24 @@ export default async function ListeningPage({
             </span>
           </div>
 
-          {/* level tabs */}
-          <div className="flex gap-2 mb-6 flex-wrap">
-            {LEVEL_ORDER.map((lv) =>
-              isDifficultyUnlocked(lv, myLevel) ? (
-                <Link
-                  key={lv}
-                  href={`/listening?level=${lv}`}
-                  className={`rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold transition-all border ${
-                    lv === level
-                      ? "bg-teal border-teal text-white"
-                      : "bg-white border-line text-muted hover:border-faint"
-                  }`}
-                >
-                  {lv}
-                  {lv === myLevel && (
-                    <span className="text-[10.5px] font-bold ml-1.5 opacity-85">· your level</span>
-                  )}
-                </Link>
-              ) : (
-                <div
-                  key={lv}
-                  className="rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold border bg-warm border-line text-faint grayscale opacity-60 cursor-not-allowed select-none"
-                >
-                  🔒 {lv}
-                  <span className="text-[10.5px] font-bold ml-1.5">
-                    · promotion test
-                  </span>
-                </div>
-              )
-            )}
-          </div>
+          <LevelTabs
+            className="mb-6"
+            levels={LEVEL_ORDER}
+            current={level}
+            mine={myLevel}
+            unlocked={(lv) => isDifficultyUnlocked(lv, myLevel)}
+            href={(lv) => `/listening?level=${lv}`}
+            accent="bg-teal border-teal text-white"
+          />
 
-          {/* topic grid */}
-          <div className="grid grid-cols-[repeat(auto-fill,minmax(220px,1fr))] gap-3.5 max-w-[980px]">
+          {/* topic grid — two-up on phones so all eight situations fit in a
+              couple of screens; the wider auto-fill grid from `sm` up. */}
+          <div className="grid grid-cols-2 sm:grid-cols-[repeat(auto-fill,minmax(220px,1fr))] gap-2.5 sm:gap-3.5 max-w-[980px]">
             {SITUATIONS.map((s) => {
               const dialogues = dialoguesFor(level, s.key);
               const count = dialogues.length;
               const done = dialogues.filter((d) => completedIds.has(d.id)).length;
+              const next = done > 0 && done < count ? dialogues.find((d) => !completedIds.has(d.id)) : null;
               const photo = photoByKey.get(s.key);
               return (
                 <Link
@@ -127,38 +108,43 @@ export default async function ListeningPage({
                   className="border border-line rounded-[14px] bg-white overflow-hidden text-left transition-all duration-150 hover:border-teal hover:bg-[#F0FDFA] hover:-translate-y-0.5 group"
                 >
                   <div
-                    className="relative aspect-[16/9] bg-warm"
+                    className="relative aspect-[4/3] sm:aspect-[16/9] bg-warm"
                     style={
                       photo
                         ? { background: `url(${photo}) center/cover` }
                         : { background: s.bg }
                     }
                   >
-                    <span className="absolute left-3 bottom-3 w-9 h-9 rounded-[10px] flex items-center justify-center text-lg bg-white/95 border border-line shadow-sm transition-transform group-hover:scale-110">
+                    <span className="absolute left-2.5 bottom-2.5 sm:left-3 sm:bottom-3 w-8 h-8 sm:w-9 sm:h-9 rounded-[10px] flex items-center justify-center text-base sm:text-lg bg-white/95 border border-line shadow-sm transition-transform group-hover:scale-110">
                       {s.icon}
                     </span>
                   </div>
-                  <div className="px-[18px] py-4">
-                    <b className="block font-semibold text-[15px] mb-0.5">{s.label}</b>
-                    <small className="block text-[12.5px] text-muted leading-[1.5]">
+                  <div className="px-3 py-3 sm:px-[18px] sm:py-4">
+                    <b className="block font-semibold text-[14px] sm:text-[15px] mb-0.5 truncate">{s.label}</b>
+                    <small className="hidden sm:block text-[12.5px] text-muted leading-[1.5]">
                       {SUBS[s.key] ?? s.krLabel}
                     </small>
                     <span
-                      className={`inline-block mt-3 text-[11.5px] font-semibold rounded-full px-2.5 py-[3px] border ${
+                      className={`inline-block mt-2 sm:mt-3 max-w-full truncate text-[11px] sm:text-[11.5px] font-semibold rounded-full px-2 sm:px-2.5 py-[3px] border ${
                         done > 0 && done === count
                           ? "text-success bg-success-bg border-success-line"
                           : "text-teal bg-[#F0FDFA] border-[#99F6E4]"
                       }`}
                     >
-                      {s.krLabel} ·{" "}
+                      <span className="kr">{s.krLabel}</span> ·{" "}
                       {count === 0
                         ? "coming soon"
                         : done === count
                           ? `all ${count} done ✓`
                           : done > 0
-                            ? `${done}/${count} done`
+                            ? `${done}/${count} heard`
                             : `${count} dialogue${count > 1 ? "s" : ""}`}
                     </span>
+                    {next && (
+                      <small className="block mt-1.5 text-[11.5px] text-muted truncate">
+                        Next: <span className="text-charcoal font-semibold">{next.title}</span>
+                      </small>
+                    )}
                   </div>
                 </Link>
               );

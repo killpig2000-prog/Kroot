@@ -191,8 +191,11 @@ export default function ShopClient({
                 <Scene ids={[featured.id]} stage={stage} species={species} className="w-full h-full" />
               </span>
               <span className="min-w-0">
+                <span className="block text-[10.5px] font-extrabold tracking-[.06em] uppercase text-[#C2410C]">
+                  This week only
+                </span>
                 <b className="block text-[14px] truncate">
-                  This week only · {featured.name} <span className="kr text-muted font-semibold">{featured.krName}</span>
+                  {featured.name} <span className="kr text-muted font-semibold">{featured.krName}</span>
                 </b>
                 <small className="block text-[12.5px] text-muted">
                   {RARITY_LABEL[featured.rarity]} {SLOT_LABELS[featured.slot].en.toLowerCase()} · 🌰 {featured.price}
@@ -205,7 +208,9 @@ export default function ShopClient({
             </button>
           )}
 
-          <div className="flex gap-1.5 overflow-x-auto pb-1.5 mb-3 -mx-1 px-1" role="tablist" aria-label="Item categories">
+          {/* right-edge fade hints that the category row scrolls sideways */}
+          <div className="relative mb-3 after:content-[''] after:pointer-events-none after:absolute after:top-0 after:bottom-1.5 after:right-0 after:w-8 after:bg-gradient-to-l after:from-white after:to-transparent">
+          <div className="flex gap-1.5 overflow-x-auto pb-1.5 -mx-1 px-1 pr-8 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" role="tablist" aria-label="Item categories">
             {TABS.map((slot) => {
               const on = slot === tab;
               const isNew = GARDEN_SLOTS.includes(slot);
@@ -233,6 +238,7 @@ export default function ShopClient({
                 </button>
               );
             })}
+          </div>
           </div>
 
           <div className="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-2.5">
@@ -278,7 +284,7 @@ export default function ShopClient({
 
         {/* ── try-on ── */}
         <aside className="order-first lg:order-none border-b lg:border-b-0 lg:border-l border-line bg-warm p-4 lg:sticky lg:top-4 self-start">
-          <p className="text-[11.5px] font-extrabold tracking-[.08em] uppercase text-[#B7AE9C] mb-2">Try on · 내 나무</p>
+          <p className="text-[11.5px] font-extrabold tracking-[.08em] uppercase text-[#B7AE9C] mb-2">Try on · your tree</p>
           <figure className="relative m-0 mx-auto max-w-[230px] bg-white border border-line p-1.5 pb-6 rotate-[1deg] shadow-[0_10px_22px_-12px_rgba(60,50,30,.35)] mb-3">
             <Scene ids={previewIds} stage={stage} species={species} className="px-2.5 pt-2.5" />
             <figcaption className="absolute bottom-1 left-0 right-0 text-center text-[10px] font-bold text-[#8A8478]">

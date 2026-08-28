@@ -1,4 +1,5 @@
 import Link from "next/link";
+import LevelTabs from "@/components/ui/LevelTabs";
 import { redirect } from "next/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
@@ -41,7 +42,7 @@ export default async function GrammarPage({
   const shownLessons = selectedGroup ? groupLessons : levelLessons;
 
   return (
-    <div className="min-h-screen bg-[#FFFFFF] text-charcoal">
+    <div className="min-h-screen bg-warm text-charcoal">
       <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
         <Sidebar
           displayName={profile?.display_name ?? "there"}
@@ -104,34 +105,16 @@ export default async function GrammarPage({
                   {group.title}
                 </Link>
               ))}
-              <span className="w-px self-stretch bg-line mx-0.5" aria-hidden="true" />
-              {LEVEL_ORDER.map((lv) =>
-                isDifficultyUnlocked(lv, myLevel) ? (
-                  <Link
-                    key={lv}
-                    href={`/grammar?level=${lv}`}
-                    className={`rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold transition-all border ${
-                      !selectedGroup && lv === level
-                        ? "bg-[#4F46E5] border-[#4F46E5] text-white"
-                        : "bg-white border-line text-muted hover:border-faint"
-                    }`}
-                  >
-                    {lv}
-                    {lv === myLevel && (
-                      <span className="text-[10.5px] font-bold ml-1.5 opacity-85">· your level</span>
-                    )}
-                  </Link>
-                ) : (
-                  <div
-                    key={lv}
-                    className="rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold border bg-warm border-line text-faint grayscale opacity-60 cursor-not-allowed select-none"
-                  >
-                    🔒 {lv}
-                    <span className="text-[10.5px] font-bold ml-1.5">· promotion test</span>
-                  </div>
-                )
-              )}
             </div>
+            <LevelTabs
+              className="mb-4"
+              levels={LEVEL_ORDER}
+              current={selectedGroup ? myLevel : level}
+              mine={myLevel}
+              unlocked={(lv) => isDifficultyUnlocked(lv, myLevel)}
+              href={(lv) => `/grammar?level=${lv}`}
+              accent="bg-[#4F46E5] border-[#4F46E5] text-white"
+            />
 
             <div className="flex items-center gap-2.5 mb-1">
               <span className="text-[11.5px] font-semibold tracking-[.06em] uppercase text-faint">
@@ -140,9 +123,7 @@ export default async function GrammarPage({
                     <span className="kr normal-case">{selectedGroup.titleKr}</span> · {selectedGroup.title}
                   </>
                 ) : (
-                  <>
-                    <span className="kr normal-case">단계별</span> · Browse by level
-                  </>
+                  <>Browse by level</>
                 )}
               </span>
               <span className="h-px flex-1 bg-line" />
@@ -167,17 +148,17 @@ export default async function GrammarPage({
                     {i + 1}
                   </span>
                   <span className="min-w-0 flex-1">
-                    <b className="block font-semibold text-[15px] mb-0.5">
+                    <b className="block font-semibold text-[15px] leading-[1.35]">
                       {lesson.title}
-                      <span className="kr text-[12.5px] font-medium text-faint ml-2">
-                        {lesson.krTitle}
-                      </span>
                     </b>
+                    <span className="kr block text-[12.5px] font-medium text-faint whitespace-nowrap truncate mb-0.5">
+                      {lesson.krTitle}
+                    </span>
                     <small className="block text-[12.5px] text-muted leading-[1.5]">
                       {lesson.summary}
                     </small>
                   </span>
-                  <span className="flex-none text-[11.5px] font-semibold text-[#4F46E5] bg-[#EEF2FF] border border-[#C7D2FE] rounded-full px-2.5 py-[3px]">
+                  <span className="hidden sm:inline-block flex-none text-[11.5px] font-semibold text-[#4F46E5] bg-[#EEF2FF] border border-[#C7D2FE] rounded-full px-2.5 py-[3px]">
                     {lesson.level}
                   </span>
                   <span className="flex-none text-[#D6D3CC] text-sm transition-all group-hover:text-[#4F46E5] group-hover:translate-x-0.5">

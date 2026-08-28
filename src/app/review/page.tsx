@@ -78,7 +78,7 @@ export default async function ReviewPage() {
               Garden
             </Link>
             <span>/</span>
-            <b className="text-charcoal font-semibold">Watering time</b>
+            <b className="text-charcoal font-semibold">Review</b>
           </div>
 
           {/* head */}
@@ -87,7 +87,8 @@ export default async function ReviewPage() {
               <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[#EFF6FF] text-sky-deep border border-sky-line items-center justify-center text-[15px] mr-[9px]">
                 💧
               </span>
-              Watering time
+              Review
+              <span className="ml-2 text-[13px] font-medium text-faint">watering time</span>
             </h1>
             <span className="flex items-center gap-3 flex-wrap text-[13px] text-muted">
               Words wilt when they&apos;re not watered — quick reviews keep them rooted.

@@ -93,7 +93,7 @@ export default async function MyWordsPage() {
             </Link>
             <span>/</span>
             <Link href="/review" className="hover:text-charcoal transition-colors">
-              Watering time
+              Review
             </Link>
             <span>/</span>
             <b className="text-charcoal font-semibold">My words</b>

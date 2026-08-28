@@ -47,7 +47,7 @@ export default async function SpeakingPage({
   const playable = requested && !requested.locked ? requested : undefined;
 
   return (
-    <div className="min-h-screen bg-[#FFFFFF] text-charcoal">
+    <div className="min-h-screen bg-warm text-charcoal">
       <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
         <Sidebar
           displayName={profile?.display_name ?? "there"}
@@ -72,7 +72,10 @@ export default async function SpeakingPage({
               <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[#F0FDFA] text-teal border border-[#99F6E4] items-center justify-center kr text-[15px] mr-[9px]">
                 발
               </span>
-              Pronunciation Trail
+              Pronunciation
+              <span className="ml-2.5 text-[12.5px] font-semibold text-teal bg-[#F0FDFA] border border-[#99F6E4] rounded-full px-2.5 py-[2px] tracking-normal">
+                Trail
+              </span>
             </h1>
             <span className="text-[13px] text-muted">
               {playable ? "Can you say it?" : `${totalCleared}/${chapters.length} chapters · ${totalWords} words`}

@@ -13,8 +13,8 @@ export const metadata = {
 const FREE_FEATURES = [
   "4,000+ vocabulary words, A1–C2",
   "Grammar, reading, writing, listening & speaking practice",
-  "Level tests, promotion tests & the 16-day starter course",
-  "Streaks, XP & the weekly league",
+  "Level test, promotion tests & the Start-here grammar path",
+  "Streaks, XP & your growing tree",
 ];
 
 export default async function PricingPage() {

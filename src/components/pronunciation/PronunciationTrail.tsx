@@ -25,7 +25,7 @@ function Stone({ chapter, current }: { chapter: ChapterProgress; current: boolea
   const body = (
     <div
       title={chapter.title}
-      className={`w-[112px] flex-none rounded-[12px] border-[1.5px] bg-white px-2.5 pt-2.5 pb-3 text-center transition-transform ${
+      className={`w-full rounded-[12px] border-[1.5px] bg-white px-2 pt-2.5 pb-3 text-center transition-transform ${
         chapter.locked ? "opacity-50" : "hover:-translate-y-0.5"
       }`}
       style={{
@@ -74,12 +74,36 @@ export default function PronunciationTrail({
         aria-hidden="true"
       />
 
-      {TIER_META.map((meta) => {
+      {TIER_META.map((meta, ti) => {
         const camp = chapters.filter((c) => c.tier === meta.tier);
         if (camp.length === 0) return null;
         const clearedCount = camp.filter((c) => c.cleared).length;
         const campLocked = camp[0]?.locked;
         const style = TIER_STYLE[meta.tier];
+        const previous = TIER_META[ti - 1];
+
+        // A locked tier is one quiet row — its chapters can't be opened yet,
+        // so a full card grid only adds scrolling.
+        if (campLocked) {
+          return (
+            <div key={meta.tier} className="relative mb-1.5">
+              <div className="flex items-center gap-2.5 py-3 opacity-70">
+                <span
+                  className="absolute left-[-26px] w-5 h-5 rounded-full border-[3px] border-white"
+                  style={{ background: "#D6D0C4", boxShadow: `0 0 0 2px ${style.c}` }}
+                  aria-hidden="true"
+                />
+                <b className="font-bold text-[14px] tracking-[-0.01em] text-muted">
+                  {meta.emoji} {meta.name}
+                </b>
+                <span className="text-[12px] text-faint font-medium">
+                  · {camp.length} chapters{previous ? ` · unlocks after ${previous.name}` : ""}
+                </span>
+                <span className="ml-auto text-[13px] text-faint" aria-hidden="true">🔒</span>
+              </div>
+            </div>
+          );
+        }
 
         return (
           <div key={meta.tier} className="relative mb-1.5">
@@ -93,10 +117,10 @@ export default function PronunciationTrail({
                 {meta.emoji} {meta.name}
               </b>
               <span className="ml-auto text-[12px] text-faint font-medium">
-                {campLocked ? "locked" : `${clearedCount}/${camp.length} chapters cleared`}
+                {clearedCount}/{camp.length} chapters cleared
               </span>
             </div>
-            <div className="flex flex-wrap gap-2.5 pb-3">
+            <div className="grid grid-cols-3 sm:grid-cols-[repeat(auto-fill,minmax(112px,1fr))] gap-2 sm:gap-2.5 pb-3">
               {camp.map((c) => (
                 <Stone key={c.key} chapter={c} current={c.key === currentKey} />
               ))}

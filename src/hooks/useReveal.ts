@@ -4,6 +4,14 @@ import { useEffect } from "react";
 
 export function useReveal() {
   useEffect(() => {
+    // Content is visible by default (see .reveal in globals.css) so a slow
+    // script, a crawler, or reduced-motion never sees blank sections. Only
+    // once this hook is live do we opt the page into the hide-then-reveal.
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      document.querySelectorAll(".leaf-step").forEach((l) => l.classList.add("grown"));
+      return;
+    }
+    document.documentElement.classList.add("js-reveal");
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -23,10 +31,9 @@ export function useReveal() {
 
     document.querySelectorAll(".reveal, #stalk").forEach((el) => io.observe(el));
 
-    if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      document.querySelectorAll(".leaf-step").forEach((l) => l.classList.add("grown"));
-    }
-
-    return () => io.disconnect();
+    return () => {
+      io.disconnect();
+      document.documentElement.classList.remove("js-reveal");
+    };
   }, []);
 }

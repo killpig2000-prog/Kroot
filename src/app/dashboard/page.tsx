@@ -2,7 +2,6 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import TreeCard from "@/components/dashboard/TreeCard";
 import BottomNav from "@/components/dashboard/BottomNav";
-import QuestButton from "@/components/dashboard/QuestButton";
 import Sidebar from "@/components/dashboard/Sidebar";
 import SkillBar from "@/components/dashboard/SkillBar";
 import Widgets from "@/components/dashboard/Widgets";
@@ -17,7 +16,7 @@ import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { levelProgress } from "@/lib/level";
 import MonthlyGrass from "@/components/profile/MonthlyGrass";
 import { computeEligibility } from "@/lib/promotion-server";
-import { testForGrade } from "@/lib/promotion-test";
+import { ELIGIBILITY, testForGrade } from "@/lib/promotion-test";
 import { DIALOGUES } from "@/lib/listening-dialogues";
 import { getPassagesForLevel } from "@/lib/reading";
 import { getPromptsForLevel } from "@/lib/writing";
@@ -189,10 +188,15 @@ export default async function DashboardPage() {
   // Errors (e.g. migration 0022 not applied yet) just hide the watering card.
   const dueCount = dueRes.error ? 0 : dueRes.count ?? 0;
 
-  const tally = (doneKeys: Set<string>, levelKeys: string[]) => {
+  const tally = (doneKeys: Set<string>, levelKeys: string[], cap?: number) => {
     const done = levelKeys.filter((k) => doneKeys.has(k)).length;
-    const total = levelKeys.length;
-    return { done, total, percent: total ? Math.round((done / total) * 100) : 0 };
+    // Cap the denominator at a reasonable near-term goal instead of the
+    // whole level's library — same idea as promotion ELIGIBILITY's
+    // targetMasteredWords: the content library has grown much faster than
+    // any learner's pace, so "done of everything" reads as permanently
+    // near-empty. A smaller, reachable target lets the bar actually fill.
+    const total = cap ? Math.min(levelKeys.length, cap) : levelKeys.length;
+    return { done: Math.min(done, total), total, percent: total ? Math.round((Math.min(done, total) / total) * 100) : 0 };
   };
   const skillProgress: Record<string, { done: number; total: number; percent: number }> = {
     grammar: tally(
@@ -201,19 +205,23 @@ export default async function DashboardPage() {
     ),
     vocabulary: tally(
       new Set((vocabRows ?? []).map((r) => r.word_key)),
-      getWordsForTopic("daily-life", cefr).map((w) => w.key)
+      getWordsForTopic("daily-life", cefr).map((w) => w.key),
+      ELIGIBILITY.targetMasteredWords
     ),
     listening: tally(
       new Set((listeningRows ?? []).map((r) => r.dialogue_id)),
-      DIALOGUES.filter((d) => d.level === cefr).map((d) => d.id)
+      DIALOGUES.filter((d) => d.level === cefr).map((d) => d.id),
+      20
     ),
     reading: tally(
       new Set((readingRows ?? []).map((r) => r.passage_key)),
-      getPassagesForLevel(cefr).map((p) => p.key)
+      getPassagesForLevel(cefr).map((p) => p.key),
+      20
     ),
     writing: tally(
       new Set((writingRows ?? []).map((r) => r.prompt_key)),
-      getPromptsForLevel(cefr).map((p) => p.key)
+      getPromptsForLevel(cefr).map((p) => p.key),
+      20
     ),
     pronunciation: (() => {
       const nailedIds = new Set(
@@ -282,7 +290,7 @@ export default async function DashboardPage() {
   const weekendBoost = plusActive && (day === 0 || day === 6);
 
   return (
-    <div className="min-h-screen bg-[#FFFFFF] text-[#221F1B]">
+    <div className="min-h-screen bg-warm text-[#221F1B]">
       <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] xl:grid-cols-[clamp(200px,17%,280px)_minmax(0,1fr)_clamp(260px,22%,340px)] w-full min-h-screen">
         <Sidebar
           displayName={displayName}
@@ -314,7 +322,15 @@ export default async function DashboardPage() {
           />
 
           {/* the one button: pick up where you left off */}
-          <ContinueCard resume={resume} fallback={continueFallback} />
+          <ContinueCard
+            resume={resume}
+            fallback={continueFallback}
+            quest={{
+              label: questParts[0],
+              href: questHref[questSkill] ?? "/listening",
+              done: !!quest?.completed_at,
+            }}
+          />
 
           <InstallBanner streakDays={streakDays} />
 
@@ -322,12 +338,12 @@ export default async function DashboardPage() {
           {dueCount > 0 && (
             <Link
               href="/review"
-              className="flex items-center gap-3.5 border border-sky-line bg-[#EFF6FF] rounded-[14px] px-5 py-4 mb-[30px] transition-all hover:-translate-y-0.5 group"
+              className="flex flex-wrap sm:flex-nowrap items-center gap-x-3.5 gap-y-2 border border-sky-line bg-[#EFF6FF] rounded-[14px] px-5 py-4 mb-[30px] transition-all hover:-translate-y-0.5 group"
             >
               <span className="flex-none w-10 h-10 rounded-[10px] bg-white border border-sky-line flex items-center justify-center text-lg transition-transform group-hover:scale-110">
                 💧
               </span>
-              <span className="flex-1 min-w-[170px]">
+              <span className="flex-1 min-w-0">
                 <b className="block font-semibold text-sm text-[#1D4ED8]">
                   {dueCount} {dueCount === 1 ? "word is" : "words are"} getting thirsty
                 </b>
@@ -335,44 +351,34 @@ export default async function DashboardPage() {
                   Water them before they wilt — a quick review keeps them rooted.
                 </span>
               </span>
-              <span className="text-[13px] font-semibold text-sky-deep transition-transform group-hover:translate-x-0.5">
+              <span className="w-full sm:w-auto pl-[54px] sm:pl-0 text-[13px] font-semibold text-sky-deep transition-transform group-hover:translate-x-0.5">
                 Water now →
               </span>
             </Link>
           )}
 
-          {/* quest — a checklist slip pinned under the course note.
-              On xl+ it moves to the right rail so the garden stays above the fold. */}
-          <div className="xl:hidden border border-dashed border-[#CFC8B8] rounded-[12px] bg-white px-5 py-4 flex items-center gap-3.5 mb-[30px] flex-wrap">
-            <span className="flex-none w-10 h-10 rounded-[10px] bg-[#FEF9C3] border border-[#ECD98A] flex items-center justify-center text-lg">
-              ✏️
-            </span>
-            <div className="flex-1 min-w-[170px]">
-              <b className="block font-semibold text-sm">{quest?.title ?? questOfTheDay.title}</b>
-              <span className="text-[13px] text-muted">{quest?.description ?? questOfTheDay.description}</span>
-            </div>
-            {quest && <QuestButton skillKey={quest.skill_key} completed={!!quest.completed_at} />}
-          </div>
+          {/* The daily quest used to be a third card here ("Start today" on the
+              Continue card, this slip, and the rail widget all pointed at the
+              same skill). It now lives inside the Continue card. */}
 
-          {/* today's slang — a daily reason to peek at Street Talk (rail on xl+) */}
+          {/* today's slang — a daily reason to peek at Street Talk (rail on xl+).
+              Below sm the CTA drops under the text so it never splits in two. */}
           <Link
             href="/slang"
-            className="xl:hidden flex items-center gap-3.5 border border-[#FBCFE8] bg-[#FDF2F8] rounded-[14px] px-5 py-4 mb-[30px] transition-all hover:-translate-y-0.5 group"
+            className="xl:hidden flex flex-wrap sm:flex-nowrap items-center gap-x-3.5 gap-y-2 border border-[#FBCFE8] bg-[#FDF2F8] rounded-[14px] px-5 py-4 mb-[30px] transition-all hover:-translate-y-0.5 group"
           >
             <span className="flex-none w-10 h-10 rounded-[10px] bg-white border border-[#FBCFE8] flex items-center justify-center text-lg transition-transform group-hover:scale-110">
               💬
             </span>
-            <span className="flex-1 min-w-[170px]">
+            <span className="flex-1 min-w-0">
               <b className="block font-semibold text-sm text-[#BE185D]">
                 Today&apos;s slang · <span className="kr">{slang.kr}</span>{" "}
-                <span className="font-medium text-[#DB2777]">({slang.romanization})</span>
+                <span className="font-medium text-[#DB2777] whitespace-nowrap">({slang.romanization})</span>
               </b>
-              <span className="text-[13px] text-[#9D5C79]">
-                {slang.meaning} — hear it in context →
-              </span>
+              <span className="text-[13px] text-[#9D5C79]">{slang.meaning}</span>
             </span>
-            <span className="text-[13px] font-semibold text-[#DB2777] transition-transform group-hover:translate-x-0.5">
-              Flip it →
+            <span className="w-full sm:w-auto pl-[54px] sm:pl-0 text-[13px] font-semibold text-[#DB2777] transition-transform group-hover:translate-x-0.5">
+              Hear it in context →
             </span>
           </Link>
 
@@ -380,18 +386,18 @@ export default async function DashboardPage() {
           {cefr === "A1" && (
           <Link
             href="/hangul"
-            className="flex items-center gap-3.5 border border-success-line bg-success-bg rounded-[14px] px-5 py-4 mb-[30px] transition-all hover:-translate-y-0.5 group"
+            className="flex flex-wrap sm:flex-nowrap items-center gap-x-3.5 gap-y-2 border border-success-line bg-success-bg rounded-[14px] px-5 py-4 mb-[30px] transition-all hover:-translate-y-0.5 group"
           >
             <span className="flex-none w-10 h-10 rounded-[10px] bg-white border border-success-line flex items-center justify-center kr text-lg text-success transition-transform group-hover:scale-110">
               ㄱ
             </span>
-            <span className="flex-1 min-w-[170px]">
+            <span className="flex-1 min-w-0">
               <b className="block font-semibold text-sm text-success-deep">Completely new to Korean?</b>
               <span className="text-[13px] text-[#4D7C5F]">
                 Learn the alphabet first — 40 letters, one hour, free forever.
               </span>
             </span>
-            <span className="text-[13px] font-semibold text-success transition-transform group-hover:translate-x-0.5">
+            <span className="w-full sm:w-auto pl-[54px] sm:pl-0 text-[13px] font-semibold text-success transition-transform group-hover:translate-x-0.5">
               Start here →
             </span>
           </Link>
@@ -406,13 +412,13 @@ export default async function DashboardPage() {
           {remindersOff && streakDays >= 3 && (
             <Link
               href="/profile#reminders"
-              className="flex items-center gap-3 border border-dashed border-[#CFC8B8] rounded-[12px] bg-white px-4 py-3 mb-[14px] text-[13px] text-muted hover:border-success transition-colors"
+              className="flex flex-wrap sm:flex-nowrap items-center gap-x-3 gap-y-1.5 border border-dashed border-[#CFC8B8] rounded-[12px] bg-white px-4 py-3 mb-[14px] text-[13px] text-muted hover:border-success transition-colors"
             >
               <span>⏰</span>
-              <span className="flex-1">
+              <span className="flex-1 min-w-0">
                 <b className="text-charcoal font-semibold">Protect your {streakDays}-day streak</b> — get one gentle reminder on days you haven&apos;t studied.
               </span>
-              <span className="font-semibold text-success">Turn on →</span>
+              <span className="w-full sm:w-auto pl-[28px] sm:pl-0 font-semibold text-success">Turn on →</span>
             </Link>
           )}
 
@@ -447,11 +453,7 @@ export default async function DashboardPage() {
                       </b>
                       <SkillBar
                         percent={prog.percent}
-                        note={
-                          prog.done > 0
-                            ? `${prog.done}/${prog.total}${c.key === "pronunciation" ? "" : ` · ${cefr}`}`
-                            : "needs water 💧"
-                        }
+                        note={`${prog.done}/${prog.total}${c.key === "pronunciation" ? "" : ` · ${cefr}`}`}
                       />
                     </span>
                   </Link>

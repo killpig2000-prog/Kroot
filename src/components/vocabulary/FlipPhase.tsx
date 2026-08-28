@@ -50,7 +50,7 @@ export default function FlipPhase({
     <div className="max-w-[600px] relative">
       {/* progress dots + counter */}
       <div className="flex items-center justify-between gap-3 mb-3.5">
-        <div className="flex gap-[6px]">
+        <div className="flex gap-[6px] min-w-0 flex-wrap">
           {words.map((w, k) => (
             <span
               key={w.key}
@@ -60,8 +60,11 @@ export default function FlipPhase({
             />
           ))}
         </div>
-        <span className="text-[12.5px] text-muted flex-none">
-          {topicLabel} · {word.level} · <b className="text-[#7C3AED]">{index + 1}</b> / {words.length}
+        <span className="text-[12.5px] text-muted min-w-0 truncate whitespace-nowrap">
+          <span className="hidden sm:inline">
+            {topicLabel} · {word.level} ·{" "}
+          </span>
+          <b className="text-[#7C3AED]">{index + 1}</b> / {words.length}
         </span>
       </div>
 

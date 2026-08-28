@@ -122,7 +122,7 @@ export default function TestRunner({
     return (
       <div className="border border-line rounded-[14px] p-6">
         <b className="block text-[16px] mb-1.5">
-          {spec.from} → {spec.to} Level-Up Test
+          Promotion test · {spec.from} → {spec.to}
         </b>
         <p className="text-[13.5px] text-muted mb-3">
           Listening ({spec.listening.length}) → Reading ({totalReadingQuestions} questions over {spec.reading.length} passage{spec.reading.length > 1 ? "s" : ""}) → Writing (1) → Speaking (1). Writing and speaking are graded by an AI teacher. Questions are drawn at random each attempt.

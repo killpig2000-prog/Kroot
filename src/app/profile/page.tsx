@@ -91,9 +91,17 @@ export default async function ProfilePage() {
                     </span>
                   )}
                 </b>
-                <span className="text-[13px] text-muted">
-                  {SPECIES[level].name} {SPECIES[level].emoji} · {treeStage.treeName} · Lv. {playerLevel} · {level} difficulty · growing since{" "}
-                  {memberSince}
+                <span className="flex flex-wrap items-center text-[13px] text-muted">
+                  {/* flex items: each segment wraps as a whole, never mid-phrase */}
+                  <span className="whitespace-nowrap">{SPECIES[level].name} {SPECIES[level].emoji}</span>
+                  <span className="mx-1">·</span>
+                  <span className="whitespace-nowrap">{treeStage.treeName}</span>
+                  <span className="mx-1">·</span>
+                  <span className="whitespace-nowrap">Lv. {playerLevel}</span>
+                  <span className="mx-1">·</span>
+                  <span className="whitespace-nowrap">{level} difficulty</span>
+                  <span className="mx-1">·</span>
+                  <span className="whitespace-nowrap">growing since {memberSince}</span>
                 </span>
                 <div className="mt-2 max-w-[280px]">
                   <div className="h-[6px] rounded-full bg-success-bg border border-success-line overflow-hidden">

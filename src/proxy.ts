@@ -47,7 +47,6 @@ export async function proxy(request: NextRequest) {
     pathname.startsWith("/grammar") ||
     pathname.startsWith("/hangul") ||
     pathname.startsWith("/pronunciation") ||
-    pathname.startsWith("/slang") ||
     pathname.startsWith("/community") ||
     pathname.startsWith("/review") ||
     pathname.startsWith("/guide") ||

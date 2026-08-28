@@ -16,11 +16,14 @@ export default function GradingPhase({
   treeStage,
   species,
   costumeIds,
+  response,
 }: {
   gradingStep: number;
   treeStage: CefrLevel;
   species?: CefrLevel;
   costumeIds?: string[];
+  /** What the learner submitted — shown while they wait so it doesn't vanish. */
+  response?: string;
 }) {
   const step = GRADING_STEPS[Math.min(gradingStep, GRADING_STEPS.length - 1)];
   return (
@@ -40,6 +43,12 @@ export default function GradingPhase({
         <p className="text-[12.5px] text-faint mt-4">
           Taking a little longer than usual — hang tight, it&apos;s still working.
         </p>
+      )}
+      {response?.trim() && (
+        <div className="mt-6 max-w-[560px] mx-auto text-left bg-warm border border-line rounded-[12px] px-4 py-3">
+          <p className="text-[10.5px] font-semibold tracking-[.08em] uppercase text-faint mb-1">Your answer</p>
+          <p className="kr text-[15px] leading-[1.7] whitespace-pre-wrap">{response.trim()}</p>
+        </div>
       )}
     </div>
   );

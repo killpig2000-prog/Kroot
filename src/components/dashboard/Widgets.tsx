@@ -102,19 +102,14 @@ export default function Widgets({
         </WCard>
       )}
 
+      {/* The launch notice already asks for feedback once per day; a second
+          card here made the same request twice on one screen. One quiet link. */}
       <button
         type="button"
         onClick={() => window.dispatchEvent(new CustomEvent(OPEN_FEEDBACK_EVENT))}
-        className="flex items-center gap-2.5 border-[1.5px] border-dashed border-success-line bg-success-bg rounded-[12px] px-4 py-3 text-left transition-colors hover:bg-[#DCFCE7] group"
+        className="mt-auto self-start text-[12px] font-semibold text-faint hover:text-muted transition-colors"
       >
-        <span className="text-lg flex-none">💌</span>
-        <span className="flex-1 min-w-0">
-          <b className="block text-[12.5px] font-bold text-success-deep">We&apos;re just getting started</b>
-          <span className="block text-[12px] text-[#4D7C5F]">Got feedback? We&apos;d love to hear it.</span>
-        </span>
-        <span className="flex-none text-[12px] font-semibold text-success transition-transform group-hover:translate-x-0.5">
-          Go →
-        </span>
+        Send feedback →
       </button>
     </aside>
   );

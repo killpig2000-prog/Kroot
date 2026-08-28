@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { recordCompletion, awardPartialCredit } from "@/lib/activity";
 import { type Dialogue } from "@/lib/listening-dialogues";
@@ -22,12 +22,20 @@ export default function ListeningSession({
   dialogues,
   level,
   situationLabel,
+  situationIcon = "🎧",
   completedIds,
+  header,
+  levelTabs,
 }: {
   dialogues: Dialogue[];
   level: CefrLevel;
   situationLabel: string;
+  situationIcon?: string;
   completedIds: string[];
+  /** Page title block — shown with the clip list, collapsed while a clip plays. */
+  header?: ReactNode;
+  /** Level switcher — hidden while a clip plays so the player sits at the top. */
+  levelTabs?: ReactNode;
 }) {
   const supabase = useMemo(() => createClient(), []);
   const [completed, setCompleted] = useState<Set<string>>(() => new Set(completedIds));
@@ -103,8 +111,23 @@ export default function ListeningSession({
 
   const open = openId ? dialogues.find((d) => d.id === openId) : null;
   if (open) {
+    // One-line header while listening: the situation and where we are in it.
+    // The player itself carries the "← All clips" exit.
     return (
-      <ClipPlayer
+      <>
+        <p className="flex items-center gap-2 text-[13px] text-muted mb-3 max-w-[680px]">
+          <span className="inline-flex w-6 h-6 rounded-md bg-[#F0FDFA] text-teal border border-[#99F6E4] items-center justify-center text-[12px]">
+            {situationIcon}
+          </span>
+          <b className="text-charcoal font-semibold">{situationLabel}</b>
+          <span className="text-faint">·</span>
+          <span className="tabular-nums">
+            Clip {dialogues.indexOf(open) + 1} of {dialogues.length}
+          </span>
+          <span className="text-faint">·</span>
+          <span>{level}</span>
+        </p>
+        <ClipPlayer
         key={open.id}
         dialogue={open}
         clipNo={dialogues.indexOf(open) + 1}
@@ -118,31 +141,39 @@ export default function ListeningSession({
         }}
         onFinished={() => void completeClip(open)}
       />
+      </>
     );
   }
 
   // all-done celebration (shown right after the last clip completes)
   if (justFinishedAll) {
     return (
-      <FinishedAllCard
-        situationLabel={situationLabel}
-        clipCount={dialogues.length}
-        level={level}
-        newLevel={newLevel}
-        onBackToClips={() => setJustFinishedAll(false)}
-      />
+      <>
+        {header}
+        <FinishedAllCard
+          situationLabel={situationLabel}
+          clipCount={dialogues.length}
+          level={level}
+          newLevel={newLevel}
+          onBackToClips={() => setJustFinishedAll(false)}
+        />
+      </>
     );
   }
 
   return (
-    <ClipList
-      dialogues={dialogues}
-      completed={completed}
-      heardMap={heardMap}
-      doneCount={doneCount}
-      resumeTarget={resumeTarget}
-      newLevel={newLevel}
-      onOpenClip={setOpenId}
-    />
+    <>
+      {header}
+      {levelTabs}
+      <ClipList
+        dialogues={dialogues}
+        completed={completed}
+        heardMap={heardMap}
+        doneCount={doneCount}
+        resumeTarget={resumeTarget}
+        newLevel={newLevel}
+        onOpenClip={setOpenId}
+      />
+    </>
   );
 }

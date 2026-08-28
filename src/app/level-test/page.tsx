@@ -52,11 +52,11 @@ export default async function LevelTestPage() {
               Garden
             </Link>
             <span>/</span>
-            <b className="text-charcoal font-semibold">Level Test</b>
+            <b className="text-charcoal font-semibold">Promotion test</b>
           </div>
 
           <h1 className="font-bold text-[22px] tracking-[-0.02em] mb-1">
-            🎯 Level-Up Test {spec && `— ${spec.from} → ${spec.to}`}
+            🎯 Promotion test {spec && `· ${spec.from} → ${spec.to}`}
           </h1>
           <p className="text-[13.5px] text-muted mb-6">
             Hold onto enough of your current grade and the test unlocks on its own. Pass it to open the next grade&apos;s content.

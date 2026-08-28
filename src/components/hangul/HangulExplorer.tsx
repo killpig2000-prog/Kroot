@@ -34,66 +34,85 @@ type TabKey = (typeof TABS)[number]["key"];
 const SECTION_LABEL =
   "text-[11.5px] font-semibold tracking-[.06em] uppercase text-faint mb-2.5";
 
-function JamoCard({ jamo }: { jamo: Jamo }) {
-  const [open, setOpen] = useState(false);
+function JamoTile({ jamo, selected, onSelect }: { jamo: Jamo; selected: boolean; onSelect: () => void }) {
   return (
-    <div
-      className={`border rounded-[14px] bg-white overflow-hidden transition-all duration-150 ${
-        open ? "border-success-line bg-success-bg" : "border-line hover:border-success-line"
+    <button
+      onClick={() => {
+        onSelect();
+        speak(jamo.char);
+      }}
+      aria-pressed={selected}
+      aria-label={`${jamo.char} · ${jamo.rom}`}
+      className={`group flex flex-col items-center rounded-[14px] border bg-white px-1.5 pt-3 pb-2.5 text-center transition-all duration-150 hover:-translate-y-0.5 ${
+        selected ? "border-success bg-success-bg shadow-[0_0_0_3px_#DCFCE7]" : "border-line hover:border-success-line"
       }`}
     >
-      <button
-        onClick={() => {
-          setOpen((v) => !v);
-          speak(jamo.char);
-        }}
-        className="w-full text-left px-4 py-[15px] flex items-center gap-3.5 group"
+      <span
+        className="kr flex items-center justify-center text-[34px] leading-none h-[44px] transition-transform duration-150 group-hover:scale-110"
+        style={{ color: GREEN }}
       >
-        <span
-          className="kr flex-none w-[52px] h-[52px] rounded-xl flex items-center justify-center text-[27px] border transition-transform duration-150 group-hover:scale-110"
-          style={{ background: SOFT, borderColor: BRD, color: GREEN }}
-        >
-          {jamo.char}
-        </span>
-        <span className="min-w-0">
-          <b className="block font-semibold text-[15px]">{jamo.rom}</b>
-          <small className="block text-[12.5px] text-muted kr">{jamo.name}</small>
-        </span>
-        <span className="ml-auto flex-none text-[15px] text-faint group-hover:text-success transition-colors">
-          🔊
-        </span>
-      </button>
+        {jamo.char}
+      </span>
+      <b className="block font-semibold text-[13px] mt-1.5 leading-tight">{jamo.rom}</b>
+      <small className="kr block text-[11px] text-faint leading-tight mt-0.5">{jamo.name}</small>
+    </button>
+  );
+}
 
-      {open && (
+/**
+ * The letters as a tile grid — big glyphs, four across on a phone — with one
+ * detail panel under the grid for whichever tile is selected, instead of a
+ * full-width card per letter.
+ */
+function JamoGrid({ items }: { items: Jamo[] }) {
+  const [selectedChar, setSelectedChar] = useState<string | null>(null);
+  const selected = items.find((j) => j.char === selectedChar) ?? null;
+  return (
+    <div className="max-w-[980px] mb-8">
+      <div className="grid grid-cols-4 sm:grid-cols-[repeat(auto-fill,minmax(104px,1fr))] gap-2 sm:gap-2.5">
+        {items.map((j) => (
+          <JamoTile
+            key={j.char}
+            jamo={j}
+            selected={j.char === selectedChar}
+            onSelect={() => setSelectedChar((c) => (c === j.char ? null : j.char))}
+          />
+        ))}
+      </div>
+      {selected ? (
         <div
-          className="px-4 pb-4 border-t border-success-line pt-3"
+          key={selected.char}
+          className="mt-3 border border-success-line bg-success-bg rounded-[14px] px-4 py-3.5 flex flex-col gap-3 sm:flex-row sm:items-center"
           style={{ animation: "fadeUp .3s ease" }}
         >
-          <p className="text-[13px] text-muted leading-[1.55] mb-3">{jamo.hint}</p>
+          <div className="flex items-center gap-3 min-w-0 flex-1">
+            <span
+              className="kr flex-none w-12 h-12 rounded-xl bg-white border flex items-center justify-center text-[26px]"
+              style={{ borderColor: BRD, color: GREEN }}
+            >
+              {selected.char}
+            </span>
+            <p className="text-[13px] text-muted leading-[1.55] min-w-0">
+              <b className="text-charcoal">{selected.rom}</b>
+              <span className="kr text-faint"> · {selected.name}</span> — {selected.hint}
+            </p>
+          </div>
           <button
-            onClick={() => speak(jamo.example.kr)}
-            className="w-full text-left bg-white border border-line rounded-[10px] px-3.5 py-2.5 flex items-center gap-3 hover:border-success transition-colors"
+            onClick={() => speak(selected.example.kr)}
+            className="flex-none text-left bg-white border border-line rounded-[10px] px-3.5 py-2.5 flex items-center gap-3 hover:border-success transition-colors sm:min-w-[200px]"
           >
             <span className="min-w-0">
-              <b className="kr block text-[16px] font-medium">{jamo.example.kr}</b>
+              <b className="kr block text-[16px] font-medium">{selected.example.kr}</b>
               <small className="block text-[12px] text-faint">
-                {jamo.example.rom} · {jamo.example.en}
+                {selected.example.rom} · {selected.example.en}
               </small>
             </span>
             <span className="ml-auto flex-none text-sm text-faint">🔊</span>
           </button>
         </div>
+      ) : (
+        <p className="text-[12px] text-faint mt-2.5">Tap a letter to hear it and see how it&apos;s used.</p>
       )}
-    </div>
-  );
-}
-
-function JamoGrid({ items }: { items: Jamo[] }) {
-  return (
-    <div className="grid grid-cols-[repeat(auto-fill,minmax(210px,1fr))] gap-3 max-w-[980px] mb-8">
-      {items.map((j) => (
-        <JamoCard key={j.char} jamo={j} />
-      ))}
     </div>
   );
 }

@@ -157,7 +157,7 @@ export default function ReviewSession({
     <div className={CARD}>
       <div className="flex justify-between items-center mb-2.5 text-[12.5px] font-medium text-faint">
         <span>
-          Watering · {index + 1} of {questions.length}
+          Review · {index + 1} of {questions.length}
         </span>
         <span>💧 {correct} watered</span>
       </div>

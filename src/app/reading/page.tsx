@@ -1,4 +1,5 @@
 import Link from "next/link";
+import LevelTabs from "@/components/ui/LevelTabs";
 import { redirect } from "next/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
@@ -76,25 +77,24 @@ export default async function ReadingMapPage({
   const statuses = getChapterStatuses(chapters, completedKeys);
   const doneCount = statuses.filter((s) => s === "done").length;
 
-  // 160 flat chapter rows is an endless scroll — group into collapsible sets
-  // of ten, with the set containing the current chapter open.
-  const GROUP_SIZE = 10;
+  // 160 flat chapter rows is an endless scroll — group into one collapsible
+  // set per genre (a run of consecutive chapters sharing a genre), with the
+  // set containing the current chapter open. Inside, a divider every ten.
+  const DIVIDER_EVERY = 10;
   const groups: { chapter: (typeof chapters)[number]; status: string; index: number }[][] = [];
-  for (let g = 0; g < chapters.length; g += GROUP_SIZE) {
-    groups.push(
-      chapters.slice(g, g + GROUP_SIZE).map((chapter, gi) => ({
-        chapter,
-        status: statuses[g + gi],
-        index: g + gi,
-      }))
-    );
-  }
+  chapters.forEach((chapter, i) => {
+    const entry = { chapter, status: statuses[i], index: i };
+    const last = groups[groups.length - 1];
+    if (last && last[0].chapter[0].genre === chapter[0].genre) last.push(entry);
+    else groups.push([entry]);
+  });
   const continueIndex = statuses.findIndex((s) => s === "current");
-  const openGroupIndex = continueIndex >= 0 ? Math.floor(continueIndex / GROUP_SIZE) : -1;
+  const openGroupIndex =
+    continueIndex >= 0 ? groups.findIndex((g) => g.some((e) => e.index === continueIndex)) : -1;
   const continueChapter = continueIndex >= 0 ? chapters[continueIndex][0] : null;
 
   return (
-    <div className="min-h-screen bg-[#FFFFFF] text-charcoal">
+    <div className="min-h-screen bg-warm text-charcoal">
       <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
         <Sidebar
           displayName={profile?.display_name ?? "there"}
@@ -119,7 +119,10 @@ export default async function ReadingMapPage({
               <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[#EFF6FF] text-sky-deep border border-sky-line items-center justify-center kr text-[15px] mr-[9px]">
                 읽
               </span>
-              Story Grove
+              Reading
+              <span className="ml-2.5 text-[12.5px] font-semibold text-sky-deep bg-[#EFF6FF] border border-sky-line rounded-full px-2.5 py-[2px] tracking-normal">
+                Story Grove
+              </span>
             </h1>
             <span className="text-[13px] text-muted">
               Level {level} · <b className="text-sky-deep">{doneCount}</b> of {chapters.length} chapters read
@@ -130,37 +133,15 @@ export default async function ReadingMapPage({
             Read the story, then answer the questions — finishing chapters keeps the next few open.
           </p>
 
-          {/* level tabs */}
-          <div className="flex gap-2 mb-6 flex-wrap">
-            {LEVEL_ORDER.map((lv) =>
-              isDifficultyUnlocked(lv, myLevel) ? (
-                <Link
-                  key={lv}
-                  href={`/reading?level=${lv}`}
-                  className={`rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold transition-all border ${
-                    lv === level
-                      ? "bg-sky-deep border-sky-deep text-white"
-                      : "bg-white border-line text-muted hover:border-faint"
-                  }`}
-                >
-                  {lv}
-                  {lv === myLevel && (
-                    <span className="text-[10.5px] font-bold ml-1.5 opacity-85">· your level</span>
-                  )}
-                </Link>
-              ) : (
-                <div
-                  key={lv}
-                  className="rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold border bg-warm border-line text-faint grayscale opacity-60 cursor-not-allowed select-none"
-                >
-                  🔒 {lv}
-                  <span className="text-[10.5px] font-bold ml-1.5">
-                    · promotion test
-                  </span>
-                </div>
-              )
-            )}
-          </div>
+          <LevelTabs
+            className="mb-6"
+            levels={LEVEL_ORDER}
+            current={level}
+            mine={myLevel}
+            unlocked={(lv) => isDifficultyUnlocked(lv, myLevel)}
+            href={(lv) => `/reading?level=${lv}`}
+            accent="bg-sky-deep border-sky-deep text-white"
+          />
 
           {/* continue card: one obvious next step above the chapter groups */}
           {continueChapter && (
@@ -229,6 +210,7 @@ export default async function ReadingMapPage({
                   </summary>
                   <div className="px-3.5 pb-3.5 pt-2 border-t border-dashed border-line">
                     <ChapterPathGroup
+                      dividerEvery={DIVIDER_EVERY}
                       lineColorClassName="border-sky-line"
                       hoverClassName="hover:bg-[#EFF6FF]"
                       nodes={group.map(({ chapter, status, index: i }) => {

@@ -39,6 +39,7 @@ export default function WordDetailCard({
   level,
   prevHref,
   nextHref,
+  nextWord,
   unitHref,
   unitLabel,
 }: {
@@ -51,6 +52,8 @@ export default function WordDetailCard({
   level: string;
   prevHref: string | null;
   nextHref: string | null;
+  /** The word behind nextHref, for the "Up next" preview under the card. */
+  nextWord?: { korean: string; meaning_en: string } | null;
   unitHref: string;
   unitLabel: string;
 }) {
@@ -181,24 +184,43 @@ export default function WordDetailCard({
             </div>
           )}
 
-          <div className="flex items-center justify-between gap-3 flex-wrap mt-4 pt-3.5 border-t border-dashed border-dash">
-            {prevHref ? (
-              <Link href={prevHref} className="text-[12px] font-semibold text-muted hover:text-charcoal transition-colors">
-                ← Prev
-              </Link>
-            ) : (
-              <span className="text-[12px] font-semibold text-faint">← Prev</span>
-            )}
-            <div className="flex gap-2">
-              <button type="button" className={BTN_LINE} disabled={saving} onClick={() => advance(false)}>
-                다음
-              </button>
-              <button type="button" className={BTN_INK} disabled={saving} onClick={() => advance(true)}>
-                학습완료 ✓
-              </button>
-            </div>
-          </div>
         </div>
+      </div>
+
+      {/* actions — a bar under the page, full card width, so the thumb
+          doesn't have to reach into the card and the screen isn't half empty */}
+      <div className="grid grid-cols-2 gap-2 mt-3.5">
+        <button type="button" className={`${BTN_LINE} w-full justify-center`} disabled={saving} onClick={() => advance(false)}>
+          Next
+        </button>
+        <button type="button" className={`${BTN_INK} w-full justify-center`} disabled={saving} onClick={() => advance(true)}>
+          Got it ✓
+        </button>
+      </div>
+
+      <div className="flex items-center justify-between gap-3 mt-3 text-[12.5px]">
+        {prevHref ? (
+          <Link href={prevHref} className="font-semibold text-muted hover:text-charcoal transition-colors whitespace-nowrap">
+            ← Prev
+          </Link>
+        ) : (
+          <span className="font-semibold text-faint whitespace-nowrap">← Prev</span>
+        )}
+        {nextHref && nextWord ? (
+          <Link
+            href={nextHref}
+            className="min-w-0 flex items-center gap-2 rounded-[10px] border border-line bg-white px-3 py-2 text-muted hover:border-faint hover:text-charcoal transition-colors"
+          >
+            <span className="text-[10.5px] font-bold tracking-[.06em] uppercase text-faint flex-none">Up next</span>
+            <span className="kr font-bold text-charcoal flex-none">{nextWord.korean}</span>
+            <span className="min-w-0 truncate">{nextWord.meaning_en}</span>
+            <span aria-hidden="true" className="flex-none">→</span>
+          </Link>
+        ) : (
+          <Link href={unitHref} className="font-semibold text-muted hover:text-charcoal transition-colors whitespace-nowrap">
+            Back to unit →
+          </Link>
+        )}
       </div>
     </div>
   );

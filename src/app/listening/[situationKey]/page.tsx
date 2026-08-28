@@ -1,4 +1,5 @@
 import Link from "next/link";
+import LevelTabs from "@/components/ui/LevelTabs";
 import { redirect } from "next/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
@@ -49,7 +50,7 @@ export default async function SituationPage({
   const label = situation?.label ?? situationKey;
 
   return (
-    <div className="min-h-screen bg-[#FFFFFF] text-charcoal">
+    <div className="min-h-screen bg-warm text-charcoal">
       <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
         <Sidebar
           displayName={profile?.display_name ?? "there"}
@@ -72,65 +73,71 @@ export default async function SituationPage({
             <b className="text-charcoal font-semibold">{label}</b>
           </div>
 
-          {/* head */}
-          <div className="flex items-center justify-between gap-4 mb-[18px] flex-wrap">
-            <h1 className="font-bold text-[22px] tracking-[-0.02em] flex items-center">
-              <Link
-                href={`/listening?level=${level}`}
-                aria-label="Back to all situations"
-                className="inline-flex w-[30px] h-[30px] rounded-lg bg-white text-muted border border-line items-center justify-center text-[15px] mr-[9px] transition-colors hover:border-teal hover:text-teal"
-              >
-                ←
-              </Link>
-              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[#F0FDFA] text-teal border border-[#99F6E4] items-center justify-center text-[15px] mr-[9px]">
-                {situation?.icon ?? "🎧"}
-              </span>
-              {label}
-            </h1>
-            <span className="text-[13px] text-muted">
-              {dialogues.length > 0 && (
+          {/* Head + level tabs live inside the session so they can collapse to
+              one line while a clip is open — the player then starts at the
+              top of the viewport instead of two screens down on a phone. */}
+          {(() => {
+            const header = (
+              <div className="flex items-center justify-between gap-4 mb-[18px] flex-wrap">
+                <h1 className="font-bold text-[22px] tracking-[-0.02em] flex items-center">
+                  <Link
+                    href={`/listening?level=${level}`}
+                    aria-label="Back to all situations"
+                    className="inline-flex w-[30px] h-[30px] rounded-lg bg-white text-muted border border-line items-center justify-center text-[15px] mr-[9px] transition-colors hover:border-teal hover:text-teal"
+                  >
+                    ←
+                  </Link>
+                  <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[#F0FDFA] text-teal border border-[#99F6E4] items-center justify-center text-[15px] mr-[9px]">
+                    {situation?.icon ?? "🎧"}
+                  </span>
+                  {label}
+                </h1>
+                <span className="text-[13px] text-muted">
+                  {dialogues.length > 0 && (
+                    <>
+                      <b className="text-teal">{completedIds.length}</b> of {dialogues.length} clips heard
+                    </>
+                  )}
+                </span>
+              </div>
+            );
+            const levelTabs = (
+              <LevelTabs
+                className="mb-6"
+                levels={LEVEL_ORDER}
+                current={level}
+                mine={myLevel}
+                unlocked={() => true}
+                href={(lv) => `/listening/${situationKey}?level=${lv}`}
+                accent="bg-teal border-teal text-white"
+              />
+            );
+            if (dialogues.length === 0) {
+              return (
                 <>
-                  <b className="text-teal">{completedIds.length}</b> of {dialogues.length} clips heard
+                  {header}
+                  {levelTabs}
+                  <div className="max-w-[680px] border border-line rounded-[14px] p-8 text-center">
+                    <p className="text-sm text-muted">
+                      No dialogues for this level yet — try another level above.
+                    </p>
+                  </div>
                 </>
-              )}
-            </span>
-          </div>
-
-          {/* level tabs */}
-          <div className="flex gap-2 mb-6 flex-wrap">
-            {LEVEL_ORDER.map((lv) => (
-              <Link
-                key={lv}
-                href={`/listening/${situationKey}?level=${lv}`}
-                className={`rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold transition-all border ${
-                  lv === level
-                    ? "bg-teal border-teal text-white"
-                    : "bg-white border-line text-muted hover:border-faint"
-                }`}
-              >
-                {lv}
-                {lv === myLevel && (
-                  <span className="text-[10.5px] font-bold ml-1.5 opacity-85">· your level</span>
-                )}
-              </Link>
-            ))}
-          </div>
-
-          {dialogues.length === 0 ? (
-            <div className="max-w-[680px] border border-line rounded-[14px] p-8 text-center">
-              <p className="text-sm text-muted">
-                No dialogues for this level yet — try another level above.
-              </p>
-            </div>
-          ) : (
-            <ListeningSession
-              key={level}
-              dialogues={dialogues}
-              level={level}
-              situationLabel={label}
-              completedIds={completedIds}
-            />
-          )}
+              );
+            }
+            return (
+              <ListeningSession
+                key={level}
+                dialogues={dialogues}
+                level={level}
+                situationLabel={label}
+                situationIcon={situation?.icon ?? "🎧"}
+                completedIds={completedIds}
+                header={header}
+                levelTabs={levelTabs}
+              />
+            );
+          })()}
         </main>
       </div>
 

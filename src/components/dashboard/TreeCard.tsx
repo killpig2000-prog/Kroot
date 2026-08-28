@@ -116,13 +116,13 @@ export default function TreeCard({
           </svg>
         </div>
         <figcaption className="absolute bottom-1 left-0 right-0 text-center text-[10px] font-bold text-[#8A8478]">
-          {veteran ? `오늘의 나무 · ${metres}m 🌲` : "오늘의 나무 🌱"}
+          {veteran ? `Today's tree · ${metres}m 🌲` : "Today's tree 🌱"}
         </figcaption>
       </figure>
 
       <div>
         <p className="text-[11.5px] font-extrabold tracking-[.08em] uppercase text-[#B7AE9C] mb-1.5">
-          Your tree · 성장 앨범
+          Your tree · growth album
         </p>
         <h2 className="font-semibold text-lg tracking-[-0.01em] mb-0.5">
           {sp.name} <span className="text-faint font-medium">· {treeName}</span>

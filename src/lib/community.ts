@@ -85,14 +85,12 @@ See you in the garden! 🌳
   {
     id: "notice-ranking",
     emoji: "🏆",
-    title: "Levels, leagues & your tree — how ranking works",
-    body: `Three systems grow side by side, and none of them can be bought — only learned.
+    title: "Levels, grades & your tree — how progress works",
+    body: `Two systems grow side by side, and neither can be bought — only learned.
 
-🌳 Level (Lv 1–120) — every lesson, quiz, and review earns XP. Your tree grows through six stages as you level: seed → sprout → young tree → growing tree → blossoming → fully grown.
+🌳 Level (Lv 1–120) — every lesson, quiz, and review earns XP. Your tree grows through six stages as you level: seed → sprout → young tree → growing tree → blossoming → fully grown. Every tenth level also drops 50 coins for the shop.
 
-📚 Grade (A1–C2) — your proven skill level. Hold onto enough words of your current grade (they count once they survive their first two spaced reviews), finish some reading, then pass the four-skill Level-Up Test (70+ average, every skill 60+). Pass it and your tree transforms into a new species: azalea → forsythia → cherry blossom → persimmon → ginkgo → pine. 진달래부터 소나무까지!
-
-🏆 Weekly league — five leagues: Sprout 🌱 → Bronze 🥉 → Silver 🥈 → Gold 🥇 → Diamond 💎. Everyone starts in Sprout and races by XP earned this week. Every Monday the top 20% of your league climb to the next one, the bottom 20% drop down one — so you always compete with learners as active as you. Rewards: top 10% → 100 coins, top 30% → 50, top 60% → 20, and 5 just for playing. Coins buy costumes in the shop.
+📚 Grade (A1–C2) — your proven skill level. Hold onto enough words of your current grade (they count once they survive their first two spaced reviews), finish some reading, then pass the four-skill promotion test (70+ average, every skill 60+). Pass it and your tree transforms into a new species: azalea → forsythia → cherry blossom → persimmon → ginkgo → pine. 진달래부터 소나무까지!
 
 Failed a promotion test? Totally normal — practice your weakest skill and retake it after 24 hours.`,
   },

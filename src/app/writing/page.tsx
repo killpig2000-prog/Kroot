@@ -1,4 +1,5 @@
 import Link from "next/link";
+import LevelTabs from "@/components/ui/LevelTabs";
 import { redirect } from "next/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
@@ -55,26 +56,25 @@ export default async function WritingMapPage({
   const plus = isPlus(profile?.plus_until);
   const dailyDone = !plus && !!chapterWrittenToday(progress);
 
-  // 160 flat page rows is an endless scroll — group into collapsible sets of
-  // ten, with the set containing the current page open.
-  const GROUP_SIZE = 10;
+  // 160 flat page rows is an endless scroll — group into one collapsible set
+  // per genre (a run of consecutive pages sharing a genre), with the set
+  // containing the current page open. Inside, a divider every ten.
+  const DIVIDER_EVERY = 10;
   const groups: { chapter: (typeof chapters)[number]; status: string; index: number }[][] = [];
-  for (let g = 0; g < chapters.length; g += GROUP_SIZE) {
-    groups.push(
-      chapters.slice(g, g + GROUP_SIZE).map((chapter, gi) => ({
-        chapter,
-        status: statuses[g + gi],
-        index: g + gi,
-      }))
-    );
-  }
+  chapters.forEach((chapter, i) => {
+    const entry = { chapter, status: statuses[i], index: i };
+    const last = groups[groups.length - 1];
+    if (last && last[0].chapter[0].genre === chapter[0].genre) last.push(entry);
+    else groups.push([entry]);
+  });
   const continueIndex = statuses.findIndex((s) => s === "current");
-  const openGroupIndex = continueIndex >= 0 ? Math.floor(continueIndex / GROUP_SIZE) : -1;
+  const openGroupIndex =
+    continueIndex >= 0 ? groups.findIndex((g) => g.some((e) => e.index === continueIndex)) : -1;
   const continuePrompt = continueIndex >= 0 ? chapters[continueIndex][0] : null;
   const continueWaitsTomorrow = dailyDone && continueIndex >= 0;
 
   return (
-    <div className="min-h-screen bg-[#FFFFFF] text-charcoal">
+    <div className="min-h-screen bg-warm text-charcoal">
       <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
         <Sidebar
           displayName={profile?.display_name ?? "there"}
@@ -106,41 +106,19 @@ export default async function WritingMapPage({
             </span>
           </div>
 
-          {/* level tabs */}
-          <div className="flex gap-2 mb-6 flex-wrap">
-            {LEVEL_ORDER.map((lv) =>
-              isDifficultyUnlocked(lv, myLevel) ? (
-                <Link
-                  key={lv}
-                  href={`/writing?level=${lv}`}
-                  className={`rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold transition-all border ${
-                    lv === level
-                      ? "bg-amber border-amber text-white"
-                      : "bg-white border-line text-muted hover:border-faint"
-                  }`}
-                >
-                  {lv}
-                  {lv === myLevel && (
-                    <span className="text-[10.5px] font-bold ml-1.5 opacity-85">· your level</span>
-                  )}
-                </Link>
-              ) : (
-                <div
-                  key={lv}
-                  className="rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold border bg-warm border-line text-faint grayscale opacity-60 cursor-not-allowed select-none"
-                >
-                  🔒 {lv}
-                  <span className="text-[10.5px] font-bold ml-1.5">
-                    · promotion test
-                  </span>
-                </div>
-              )
-            )}
-          </div>
+          <LevelTabs
+            className="mb-6"
+            levels={LEVEL_ORDER}
+            current={level}
+            mine={myLevel}
+            unlocked={(lv) => isDifficultyUnlocked(lv, myLevel)}
+            href={(lv) => `/writing?level=${lv}`}
+            accent="bg-amber border-amber text-white"
+          />
 
           {/* progress */}
           <div className="max-w-[720px] mb-6">
-            <div className="flex items-center justify-between text-[12.5px] text-muted mb-2">
+            <div className="flex flex-col gap-0.5 sm:flex-row sm:items-center sm:justify-between text-[12.5px] text-muted mb-2">
               <span>
                 {doneCount} of {chapters.length} pages written
               </span>
@@ -225,6 +203,7 @@ export default async function WritingMapPage({
                   </summary>
                   <div className="px-3.5 pb-3.5 pt-2 border-t border-dashed border-line">
                     <ChapterPathGroup
+                      dividerEvery={DIVIDER_EVERY}
                       lineColorClassName="border-amber-line"
                       hoverClassName="hover:bg-[#FFFBEB]"
                       nodes={group.map(({ chapter, status, index: i }) => {

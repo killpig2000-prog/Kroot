@@ -180,6 +180,7 @@ export default function WritingSession({
         treeStage={treeStage ?? level}
         species={species}
         costumeIds={costumeIds}
+        response={response}
       />
     );
   }

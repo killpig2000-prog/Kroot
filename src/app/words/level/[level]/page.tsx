@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { LEVEL_ORDER, type CefrLevel } from "@/lib/tree";
 import { SITE_URL } from "@/lib/site";
 import { getWordsByLevel } from "@/lib/vocab-slugs";
+import { CHAPTER_SIZE, getUnitTitle } from "@/lib/vocabulary";
 
 // Per-level word index — the crawlable listing that links every word page.
 
@@ -25,7 +26,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!level) return {};
   const count = getWordsByLevel(level).length;
   const title = `${count} Korean ${level} Vocabulary Words with Examples | Kroot`;
-  const description = `Complete list of ${count} CEFR ${level} Korean words with romanization, English meanings, and example sentences. Learn them free in Kroot's 16-day course.`;
+  const description = `Complete list of ${count} CEFR ${level} Korean words with romanization, English meanings, and example sentences. Learn them free in Kroot.`;
   return {
     title,
     description,
@@ -38,6 +39,16 @@ export default async function LevelIndexPage({ params }: Props) {
   if (!level) notFound();
 
   const words = getWordsByLevel(level);
+
+  // Ten words per unit, matching the in-app study units, so a 600-word level
+  // reads as 60 short sections with headings instead of one endless column.
+  const units = Array.from({ length: Math.ceil(words.length / CHAPTER_SIZE) }, (_, index) => ({
+    index,
+    first: index * CHAPTER_SIZE + 1,
+    last: Math.min(words.length, (index + 1) * CHAPTER_SIZE),
+    title: getUnitTitle(level, index),
+    words: words.slice(index * CHAPTER_SIZE, (index + 1) * CHAPTER_SIZE),
+  }));
 
   return (
     <div className="min-h-screen bg-[var(--sky)] text-[var(--ink)]">
@@ -82,21 +93,50 @@ export default async function LevelIndexPage({ params }: Props) {
           ))}
         </nav>
 
-        <ul className="mt-8 grid gap-3 sm:grid-cols-2">
-          {words.map((w) => (
-            <li key={w.slug}>
-              <Link
-                href={`/words/${w.slug}`}
-                className="block rounded-2xl bg-[var(--cream)] px-4 py-3 shadow-[0_3px_0_var(--card-shadow)] hover:-translate-y-0.5 transition"
+        {/* jump bar: one anchor per unit of ten, scrolls sideways on phones */}
+        <nav
+          aria-label="Jump to unit"
+          className="sticky top-0 z-10 -mx-6 mt-6 px-6 py-2 bg-[var(--sky)]/95 backdrop-blur-sm border-b border-black/5"
+        >
+          <div className="flex gap-1.5 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden text-xs">
+            {units.map((u) => (
+              <a
+                key={u.index}
+                href={`#unit-${u.index + 1}`}
+                className="flex-none rounded-full bg-[var(--cream)] px-2.5 py-1 font-semibold tabular-nums shadow-[0_2px_0_var(--card-shadow)] hover:text-[var(--deep)]"
               >
-                <span className="font-bold">{w.korean}</span>{" "}
-                <span className="text-sm text-[var(--soft)]">
-                  {w.romanization} — {w.meaning_en}
-                </span>
-              </Link>
-            </li>
-          ))}
-        </ul>
+                {u.first}–{u.last}
+              </a>
+            ))}
+          </div>
+        </nav>
+
+        {units.map((u) => (
+          <section key={u.index} id={`unit-${u.index + 1}`} className="mt-8 scroll-mt-14">
+            <h2 className="text-lg font-bold">
+              <span className="text-[var(--deep)]">Unit {u.index + 1}</span>
+              <span className="text-[var(--soft)] font-medium"> · {u.title}</span>
+              <span className="ml-2 text-xs font-medium text-[var(--soft)] tabular-nums">
+                words {u.first}–{u.last}
+              </span>
+            </h2>
+            <ul className="mt-3 grid gap-2 sm:grid-cols-2">
+              {u.words.map((w) => (
+                <li key={w.slug}>
+                  <Link
+                    href={`/words/${w.slug}`}
+                    className="flex items-baseline gap-2 rounded-xl bg-[var(--cream)] px-3.5 py-2 shadow-[0_2px_0_var(--card-shadow)] hover:-translate-y-0.5 transition"
+                  >
+                    <span className="font-bold flex-none">{w.korean}</span>
+                    <span className="min-w-0 truncate text-sm text-[var(--soft)]">
+                      {w.romanization} — {w.meaning_en}
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
       </main>
     </div>
   );

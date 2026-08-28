@@ -52,8 +52,9 @@ export default function ClipList({
         <p className="text-[13px] font-semibold text-success mb-3">🎉 Level up! Now Lv. {newLevel}</p>
       )}
 
-      {/* clip cards */}
-      <div className="grid gap-2.5">
+      {/* clip rows — one compact line each; only the exceptions (done,
+          in progress) carry a status, so twenty "Not started"s never repeat */}
+      <div className="border border-line rounded-[14px] bg-white overflow-hidden">
         {dialogues.map((d, i) => {
           const done = completed.has(d.id);
           const heard = heardMap[d.id] ?? 0;
@@ -62,46 +63,40 @@ export default function ClipList({
             <button
               key={d.id}
               onClick={() => onOpenClip(d.id)}
-              className={`w-full flex items-center gap-3 rounded-[13px] px-3.5 py-3 text-left border-[1.5px] transition-all hover:border-teal hover:-translate-y-0.5 ${
-                inProgress ? "border-[#99F6E4] bg-[#F0FDFA]" : "border-line bg-white"
-              }`}
+              className={`w-full flex items-center gap-3 px-3.5 py-2.5 text-left transition-colors hover:bg-[#F0FDFA] ${
+                i > 0 ? "border-t border-line" : ""
+              } ${inProgress ? "bg-[#F0FDFA]" : ""}`}
             >
               <span
-                className={`flex-none w-[34px] h-[34px] rounded-full flex items-center justify-center text-[14px] font-extrabold ${
+                className={`flex-none w-7 h-7 rounded-full flex items-center justify-center text-[12.5px] font-bold tabular-nums ${
                   done
-                    ? "bg-success-bg border-[1.5px] border-success-line text-success"
+                    ? "bg-success-bg border border-success-line text-success"
                     : inProgress
                       ? "bg-teal text-white"
-                      : "bg-warm border-[1.5px] border-line text-faint"
+                      : "bg-warm border border-line text-faint"
                 }`}
               >
                 {done ? "✓" : inProgress ? "▶" : i + 1}
               </span>
-              <span className="flex-1 min-w-0">
-                <b className="block text-[14px] font-bold truncate">{d.title}</b>
-                <small className="text-[11.5px] text-faint">
+              <span className="flex-1 min-w-0 flex items-baseline gap-2">
+                <b className={`text-[14px] truncate ${done ? "font-medium text-muted" : "font-semibold"}`}>
+                  {d.title}
+                </b>
+                <small className="flex-none text-[11.5px] text-faint tabular-nums">
                   {d.lines.length} lines · ~{estMinutes(d.lines.length)} min
                 </small>
               </span>
-              <span className="flex-none text-right text-[11.5px] text-faint">
-                {done ? (
-                  <span className="inline-block rounded-full border border-success-line bg-success-bg text-success font-bold px-2.5 py-0.5 text-[10.5px]">
-                    Done
+              {inProgress && (
+                <span className="flex-none flex items-center gap-1.5 text-[11.5px] font-semibold text-teal tabular-nums">
+                  <span className="inline-block w-12 h-1 rounded-full bg-line overflow-hidden">
+                    <span
+                      className="block h-full bg-teal"
+                      style={{ width: `${(heard / d.lines.length) * 100}%` }}
+                    />
                   </span>
-                ) : inProgress ? (
-                  <>
-                    <b className="block text-teal font-bold">line {heard}/{d.lines.length}</b>
-                    <span className="inline-block w-[74px] h-1 rounded-full bg-line overflow-hidden mt-1">
-                      <span
-                        className="block h-full bg-teal"
-                        style={{ width: `${(heard / d.lines.length) * 100}%` }}
-                      />
-                    </span>
-                  </>
-                ) : (
-                  "Not started"
-                )}
-              </span>
+                  {heard}/{d.lines.length}
+                </span>
+              )}
             </button>
           );
         })}

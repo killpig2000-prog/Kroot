@@ -71,8 +71,11 @@ export default function MonthlyGrass({
         </div>
       </div>
 
-      <div className="overflow-x-auto">
-        <div className="inline-flex flex-col gap-[2px]">
+      {/* dir="rtl" on the scroller makes a narrow viewport open at the RIGHT
+          edge — this week — instead of January; the inner block flips back to
+          ltr so the columns still read Jan → Dec. Pure CSS, no client JS. */}
+      <div className="overflow-x-auto [scrollbar-width:thin]" dir="rtl">
+        <div className="inline-flex flex-col gap-[2px]" dir="ltr">
           <div className="flex gap-[2px] text-[9px] text-faint h-[11px]">
             {monthLabels.map((m, i) => (
               <span key={i} className="w-[11px] leading-[11px] overflow-visible whitespace-nowrap">
@@ -102,6 +105,7 @@ export default function MonthlyGrass({
       </div>
 
       <div className="flex items-center gap-1.5 mt-3 text-[11px] text-faint">
+        <span className="sm:hidden mr-auto">← swipe for earlier months</span>
         less
         {CELL_COLORS.map((c) => (
           <span key={c} className="w-[10px] h-[10px] rounded-[3px]" style={{ background: c }} />

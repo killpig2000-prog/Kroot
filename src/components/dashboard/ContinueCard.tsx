@@ -9,21 +9,29 @@ import { SKILL_ICONS, type ResumeRow } from "@/lib/resume";
 export default function ContinueCard({
   resume,
   fallback,
+  quest,
 }: {
   resume: ResumeRow | null;
   fallback: { href: string; label: string; detail: string; icon: string };
+  /** Today's quest — shown as a footer line when the card resumes something else. */
+  quest?: { label: string; href: string; done: boolean };
 }) {
   const target = resume
     ? { href: resume.href, label: resume.label, detail: resume.detail ?? "", icon: SKILL_ICONS[resume.skill] ?? "🌱" }
     : fallback;
   const pct = resume?.progress ?? null;
   const ago = resume ? relativeTime(resume.updated_at) : null;
+  // When nothing is in progress the card IS the quest, so no footer.
+  const questFooter = resume && quest ? quest : null;
 
   return (
+    <div className="mb-[30px]">
     <Link
       href={target.href}
       onClick={() => track("continue_clicked", { skill: resume?.skill ?? "quest", resumed: !!resume })}
-      className="group flex items-center gap-4 rounded-[16px] border-[1.5px] border-success bg-success-bg px-5 py-4 mb-[30px] transition-all hover:-translate-y-0.5 hover:bg-[#DCFCE7]"
+      className={`group flex items-center gap-4 rounded-[16px] border-[1.5px] border-success bg-success-bg px-5 py-4 transition-all hover:-translate-y-0.5 hover:bg-[#DCFCE7] ${
+        questFooter ? "rounded-b-none" : ""
+      }`}
     >
       <span className="flex-none w-12 h-12 rounded-[12px] bg-white border border-success-line flex items-center justify-center text-[22px] transition-transform group-hover:scale-110">
         {target.icon}
@@ -47,6 +55,21 @@ export default function ContinueCard({
         {resume ? "Continue →" : "Go →"}
       </span>
     </Link>
+    {questFooter && (
+      <Link
+        href={questFooter.href}
+        className="flex items-center gap-2 rounded-b-[16px] border-[1.5px] border-t-0 border-success-line bg-white px-5 py-2 text-[12.5px] text-muted hover:bg-warm transition-colors"
+      >
+        <span aria-hidden="true">🎯</span>
+        <span className="flex-1 min-w-0 truncate">
+          Today&apos;s quest · <b className="font-semibold text-charcoal">{questFooter.label}</b>
+        </span>
+        <span className={`flex-none font-semibold ${questFooter.done ? "text-success" : "text-faint"}`}>
+          {questFooter.done ? "Done ✓" : "+10 coins →"}
+        </span>
+      </Link>
+    )}
+    </div>
   );
 }
 

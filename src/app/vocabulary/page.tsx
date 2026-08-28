@@ -1,4 +1,5 @@
 import Link from "next/link";
+import LevelTabs from "@/components/ui/LevelTabs";
 import { redirect } from "next/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
@@ -10,6 +11,27 @@ import { LEVEL_ORDER, isCefrLevel, nextLevel, type CefrLevel } from "@/lib/tree"
 
 const TOPIC_KEY = "daily-life";
 const GROUP_SIZE = 5;
+// Unit groups shown expanded before the "more" fold in the table of contents.
+const VISIBLE_GROUPS = 2;
+
+// Five dots instead of "0/5": an untouched list reads as room to grow, not a
+// column of zeros. The exact count stays in the tooltip.
+function GroupDots({ done, total }: { done: number; total: number }) {
+  return (
+    <span
+      className="flex gap-[3px] items-center"
+      title={`${done} of ${total} units done`}
+      aria-label={`${done} of ${total} units done`}
+    >
+      {Array.from({ length: total }, (_, i) => (
+        <span
+          key={i}
+          className={`w-[6px] h-[6px] rounded-full ${i < done ? "bg-[#7C3AED]" : "bg-line"}`}
+        />
+      ))}
+    </span>
+  );
+}
 
 // The vocab index as a notebook: a table of contents on the left (units,
 // grouped five at a time), and on the right a preview of the selected unit's
@@ -78,7 +100,7 @@ export default async function VocabularyPage({
     `/vocabulary/${TOPIC_KEY}/word?level=${level}&chapter=${unit}&i=${i}`;
 
   return (
-    <div className="min-h-screen bg-[#FFFFFF] text-charcoal">
+    <div className="min-h-screen bg-warm text-charcoal">
       <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
         <Sidebar
           displayName={profile?.display_name ?? "there"}
@@ -111,31 +133,15 @@ export default async function VocabularyPage({
                 {next ? `finish them all to grow into ${next}` : "top level — keep the roots strong"}
               </p>
             </div>
-            <div className="flex gap-1.5 flex-wrap">
-              {LEVEL_ORDER.map((lv) =>
-                unlockedTiers.has(lv) ? (
-                  <Link
-                    key={lv}
-                    href={`/vocabulary?level=${lv}`}
-                    className={`rounded-[8px] px-3 py-1.5 text-[12.5px] font-bold border transition-colors ${
-                      lv === level
-                        ? "bg-charcoal border-charcoal text-white"
-                        : "bg-white border-line text-faint hover:border-faint"
-                    }`}
-                  >
-                    {lv}
-                  </Link>
-                ) : (
-                  <span
-                    key={lv}
-                    title="Pass the promotion test to unlock this level"
-                    className="rounded-[8px] px-3 py-1.5 text-[12.5px] font-bold border bg-warm border-line text-faint opacity-60 cursor-not-allowed select-none"
-                  >
-                    🔒 {lv}
-                  </span>
-                )
-              )}
-            </div>
+            <LevelTabs
+              className="min-w-0 max-w-full"
+              levels={LEVEL_ORDER}
+              current={level}
+              mine={myLevel}
+              unlocked={(lv) => unlockedTiers.has(lv)}
+              href={(lv) => `/vocabulary?level=${lv}`}
+              accent="bg-charcoal border-charcoal text-white"
+            />
           </div>
 
           <VocabSearch />
@@ -154,16 +160,18 @@ export default async function VocabularyPage({
                   const first = group[0].index + 1;
                   const last = group[group.length - 1].index + 1;
                   const groupDone = group.filter((u) => u.status === "done").length;
+                  // Only the first two groups (or the one you're in) start open;
+                  // everything past them folds into one "more" block below.
+                  const nearby = gi < VISIBLE_GROUPS || gi === openGroupIndex;
+                  if (!nearby) return null;
                   return (
-                    <details key={gi} open={gi === openGroupIndex} className="group/toc">
+                    <details key={gi} open={gi === openGroupIndex || gi < VISIBLE_GROUPS} className="group/toc">
                       <summary className="flex items-center gap-2 py-1.5 px-1.5 rounded-[8px] cursor-pointer select-none list-none [&::-webkit-details-marker]:hidden hover:bg-warm transition-colors">
                         <span className="text-[10px] text-faint transition-transform group-open/toc:rotate-90">▶</span>
                         <b className="flex-1 text-[12.5px] font-bold">
                           Units {first}–{last}
                         </b>
-                        <small className="text-[11px] text-faint tabular-nums font-semibold">
-                          {groupDone}/{group.length}
-                        </small>
+                        <GroupDots done={groupDone} total={group.length} />
                       </summary>
                       <div className="flex flex-col pb-1.5">
                         {group.map((u) => {
@@ -211,6 +219,51 @@ export default async function VocabularyPage({
                     </details>
                   );
                 })}
+                {groups.length > VISIBLE_GROUPS && (
+                  <details className="group/toc mt-1">
+                    <summary className="flex items-center gap-2 py-1.5 px-1.5 rounded-[8px] cursor-pointer select-none list-none [&::-webkit-details-marker]:hidden hover:bg-warm transition-colors">
+                      <span className="text-[10px] text-faint transition-transform group-open/toc:rotate-90">▶</span>
+                      <b className="flex-1 text-[12.5px] font-bold text-muted">
+                        Units {groups[VISIBLE_GROUPS][0].index + 1}–{units.length}
+                      </b>
+                      <small className="text-[11px] text-faint tabular-nums font-semibold">
+                        {units.length - groups[VISIBLE_GROUPS][0].index} more
+                      </small>
+                    </summary>
+                    <div className="flex flex-col gap-1 pl-2 pb-1.5">
+                      {groups.slice(VISIBLE_GROUPS).map((group, k) => {
+                        const gi = k + VISIBLE_GROUPS;
+                        if (gi === openGroupIndex) return null;
+                        const first = group[0].index + 1;
+                        const last = group[group.length - 1].index + 1;
+                        const groupDone = group.filter((u) => u.status === "done").length;
+                        return (
+                          <details key={gi} className="group/sub">
+                            <summary className="flex items-center gap-2 py-1.5 px-1.5 rounded-[8px] cursor-pointer select-none list-none [&::-webkit-details-marker]:hidden hover:bg-warm transition-colors">
+                              <span className="text-[10px] text-faint transition-transform group-open/sub:rotate-90">▶</span>
+                              <b className="flex-1 text-[12.5px] font-bold">
+                                Units {first}–{last}
+                              </b>
+                              <GroupDots done={groupDone} total={group.length} />
+                            </summary>
+                            <div className="flex flex-col pb-1.5">
+                              {group.map((u) => (
+                                <Link
+                                  key={u.index}
+                                  href={unitHref(u.index)}
+                                  className="flex items-baseline gap-2 px-2 py-[6px] rounded-[8px] text-[12.5px] hover:bg-warm transition-colors"
+                                >
+                                  <span className="w-[18px] text-[10.5px] text-faint tabular-nums flex-none">{u.index + 1}</span>
+                                  <span className="flex-1 min-w-0 truncate">{getUnitTitle(level, u.index)}</span>
+                                </Link>
+                              ))}
+                            </div>
+                          </details>
+                        );
+                      })}
+                    </div>
+                  </details>
+                )}
               </div>
             </nav>
 

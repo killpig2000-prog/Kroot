@@ -49,7 +49,7 @@ function NavItem({
           className="flex-none text-[8.5px] font-extrabold tracking-[.02em] text-white rounded-full px-[5px] py-px"
           style={{ background: "linear-gradient(90deg,#F43F5E,#F59E0B,#22C55E,#0EA5E9,#8B5CF6)" }}
         >
-          인기
+          Popular
         </span>
       )}
       {isNew && !on && (
