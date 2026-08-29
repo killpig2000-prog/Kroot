@@ -51,9 +51,26 @@ export function getChapterStatuses(chapters: Prompt[][], completedKeys: Set<stri
   });
 }
 
-/** UTC start of today, as an ISO string — the daily grading-limit boundary. */
+/** UTC start of today, as an ISO string — the daily-limit boundary. */
 export function utcDayStartISO(): string {
   return new Date().toISOString().slice(0, 10) + "T00:00:00.000Z";
+}
+
+/** At most this many chapters can be finished per UTC day. */
+export const CHAPTERS_PER_DAY = 3;
+
+/** prompt_keys completed today (UTC) — the input to the daily chapter cap. */
+export function promptKeysCompletedToday(
+  rows: { prompt_key: string; completed_at: string }[] | null | undefined
+): Set<string> {
+  const dayStart = utcDayStartISO();
+  return new Set((rows ?? []).filter((r) => r.completed_at >= dayStart).map((r) => r.prompt_key));
+}
+
+/** How many whole chapters were finished today, given today's completed prompt_keys. */
+export function chaptersCompletedToday(chapters: Prompt[][], todayKeys: Set<string>): number {
+  return chapters.filter((chapter) => chapter.length > 0 && chapter.every((p) => todayKeys.has(p.key)))
+    .length;
 }
 
 export const MINUTES_PER_CHAPTER = 8;
