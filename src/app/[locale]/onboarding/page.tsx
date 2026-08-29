@@ -3,9 +3,7 @@
 import { track } from "@/lib/analytics";
 
 import { useEffect, useMemo, useState } from "react";
-import { Link } from "@/i18n/navigation";
-import { useRouter } from "next/navigation";
-import { Link, redirect, useRouter, usePathname, getPathname } from "@/i18n/navigation";
+import { Link, useRouter } from "@/i18n/navigation";
 import { speakKorean } from "@/lib/tts";
 import Mascot from "@/components/onboarding/Mascot";
 import CuteError from "@/components/ui/CuteError";

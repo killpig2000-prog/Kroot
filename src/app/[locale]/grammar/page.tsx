@@ -1,7 +1,5 @@
-import { Link } from "@/i18n/navigation";
 import LevelTabs from "@/components/ui/LevelTabs";
-import { redirect } from "next/navigation";
-import { Link, redirect, useRouter, usePathname, getPathname } from "@/i18n/navigation";
+import { Link, redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";

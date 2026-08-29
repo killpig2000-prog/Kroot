@@ -1,6 +1,4 @@
-import { Link } from "@/i18n/navigation";
-import { redirect } from "next/navigation";
-import { Link, redirect, useRouter, usePathname, getPathname } from "@/i18n/navigation";
+import { Link, redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import ForgetWordButton from "@/components/words/ForgetWordButton";
@@ -94,7 +92,7 @@ export default async function MyWordsPage() {
             </Link>
             <span>/</span>
             <Link href="/review" className="hover:text-charcoal transition-colors">
-              Review
+              Practice
             </Link>
             <span>/</span>
             <b className="text-charcoal font-semibold">My words</b>
@@ -170,7 +168,7 @@ export default async function MyWordsPage() {
                     <header className="flex items-baseline justify-between gap-3 px-[18px] py-3 bg-warm border-b border-line">
                       <b className="font-semibold text-[14px]">
                         {meta.icon} {meta.label}
-                        <span className="ml-2 text-[12px] font-medium text-faint">box {i + 1} · {meta.blurb}</span>
+                        <span className="ml-2 text-[12px] font-medium text-faint">{meta.blurb}</span>
                       </b>
                       <small className="text-[12.5px] text-muted">{group.length}</small>
                     </header>

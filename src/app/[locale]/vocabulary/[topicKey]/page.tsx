@@ -1,5 +1,5 @@
-import { notFound, redirect } from "next/navigation";
-import { Link, redirect, useRouter, usePathname, getPathname } from "@/i18n/navigation";
+import { notFound } from "next/navigation";
+import { redirect } from "@/i18n/navigation";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { VOCAB_TOPICS, getChapterStatuses, getChaptersForTopic, unlockedVocabTiers } from "@/lib/vocabulary";
 import { isCefrLevel, type CefrLevel } from "@/lib/tree";

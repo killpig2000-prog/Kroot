@@ -32,7 +32,7 @@ export default function LevelMap({
       </div>
 
       {/* stepper */}
-      <ol className="flex items-center gap-0 mb-4" aria-label="CEFR levels">
+      <ol className="flex items-center gap-0 mb-4" aria-label="Levels">
         {LEVEL_ORDER.map((lv, i) => {
           const state = i < idx ? "done" : i === idx ? "now" : "todo";
           return (

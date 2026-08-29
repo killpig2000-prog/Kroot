@@ -22,7 +22,7 @@ export default function LevelTest() {
         Find your level in 3 minutes
       </h2>
       <p className="text-center text-muted text-[13.5px] max-w-[52ch] mx-auto mb-8">
-        Ten questions place you on the CEFR scale (A1–C2). Or skip it and start at A1 — retake it
+        Ten questions find your level (A1–C2). Or skip it and start at A1 — retake it
         anytime from your profile.
       </p>
 

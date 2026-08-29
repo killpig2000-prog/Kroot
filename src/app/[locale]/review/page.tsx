@@ -1,6 +1,4 @@
-import { Link } from "@/i18n/navigation";
-import { redirect } from "next/navigation";
-import { Link, redirect, useRouter, usePathname, getPathname } from "@/i18n/navigation";
+import { Link, redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import ReviewSession from "@/components/review/ReviewSession";
@@ -79,7 +77,7 @@ export default async function ReviewPage() {
               Garden
             </Link>
             <span>/</span>
-            <b className="text-charcoal font-semibold">Review</b>
+            <b className="text-charcoal font-semibold">Practice</b>
           </div>
 
           {/* head */}
@@ -88,7 +86,7 @@ export default async function ReviewPage() {
               <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[#EFF6FF] text-sky-deep border border-sky-line items-center justify-center text-[15px] mr-[9px]">
                 💧
               </span>
-              Review
+              Practice
               <span className="ml-2 text-[13px] font-medium text-faint">watering time</span>
             </h1>
             <span className="flex items-center gap-3 flex-wrap text-[13px] text-muted">
@@ -101,7 +99,7 @@ export default async function ReviewPage() {
 
           {migrationMissing ? (
             <div className="max-w-[560px] border border-[#CBD5E1] rounded-[14px] bg-[#F1F5F9] p-[18px]">
-              <b className="block font-semibold text-[14px] mb-1">Review opens soon</b>
+              <b className="block font-semibold text-[14px] mb-1">Practice opens soon</b>
               <small className="block text-[13px] text-muted leading-[1.55]">
                 Run the included migration{" "}
                 <code className="text-[12px]">supabase/migrations/0022_srs_review.sql</code> to turn
@@ -121,7 +119,7 @@ export default async function ReviewPage() {
                   <>
                     All {learnedCount} learned words are still fresh.
                     {nextDue &&
-                      ` The next one gets thirsty ${new Date(nextDue).toLocaleDateString("en-US", {
+                      ` The next one is due ${new Date(nextDue).toLocaleDateString("en-US", {
                         month: "short",
                         day: "numeric",
                       })}.`}

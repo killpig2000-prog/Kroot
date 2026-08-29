@@ -91,7 +91,7 @@ export default async function WordPage({ params }: Props) {
             {word.romanization} · <span className="text-[var(--ink)]">{word.meaning_en}</span>
           </p>
           <span className="mt-4 inline-block rounded-full bg-[var(--mint)] px-3 py-1 text-sm font-semibold text-[var(--deep)]">
-            CEFR {word.level}
+            Level {word.level}
           </span>
 
           <h2 className="mt-8 text-lg font-bold">Example sentence</h2>

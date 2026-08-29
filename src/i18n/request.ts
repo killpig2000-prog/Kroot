@@ -1,13 +1,10 @@
+import { hasLocale } from 'next-intl';
 import { getRequestConfig } from 'next-intl/server';
 import { routing } from './routing';
 
-export default getRequestConfig(async ({ locale }) => {
-  // Validate that the requested locale is supported
-  if (!routing.locales.includes(locale as unknown as (typeof routing.locales)[number])) {
-    // Note: this should not happen in production if the [locale]
-    // dynamic segment is set up correctly with proper validation
-    console.error(`Unsupported locale: ${locale}`);
-  }
+export default getRequestConfig(async ({ requestLocale }) => {
+  const requested = await requestLocale;
+  const locale = hasLocale(routing.locales, requested) ? requested : routing.defaultLocale;
 
   // Load and merge all namespaced message files for this locale
   // Pattern: messages/{locale}/{namespace}.json
@@ -27,10 +24,7 @@ export default getRequestConfig(async ({ locale }) => {
   }
 
   return {
+    locale,
     messages: messages as any,
-    // Flatten namespace keys for convenience: common.key → key
-    // (Alternatively, use namespace-prefixed keys — adjust consumers accordingly)
-    // For simplicity, we merge all namespaces into one flat object.
-    // If you prefer namespace separation, remove this line.
   };
 });

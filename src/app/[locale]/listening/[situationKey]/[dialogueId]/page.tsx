@@ -1,6 +1,5 @@
-import { Link } from "@/i18n/navigation";
-import { notFound, redirect } from "next/navigation";
-import { Link, redirect, useRouter, usePathname, getPathname } from "@/i18n/navigation";
+import { notFound } from "next/navigation";
+import { Link, redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import DialoguePlayer from "@/components/listening/DialoguePlayer";

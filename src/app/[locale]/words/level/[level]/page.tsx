@@ -72,7 +72,7 @@ export default async function LevelIndexPage({ params }: Props) {
         </p>
         <h1 className="text-4xl font-bold">Korean {level} Vocabulary</h1>
         <p className="mt-3 text-[var(--soft)]">
-          All {words.length} CEFR {level} words, each with romanization, meaning, and an example
+          All {words.length} Level {level} words, each with romanization, meaning, and an example
           sentence.
         </p>
 

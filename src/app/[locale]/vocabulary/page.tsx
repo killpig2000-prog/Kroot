@@ -1,7 +1,5 @@
-import { Link } from "@/i18n/navigation";
+import { Link, redirect } from "@/i18n/navigation";
 import LevelTabs from "@/components/ui/LevelTabs";
-import { redirect } from "next/navigation";
-import { Link, redirect, useRouter, usePathname, getPathname } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import { createClient, getClaimsUser, getDashboardProfile } from "@/lib/supabase/server";
@@ -218,7 +216,7 @@ export default async function VocabularyPage({
                     href="/review"
                     className="inline-flex items-center justify-center rounded-[9px] px-4 py-2 text-[13px] font-bold text-sky-deep bg-[#EFF6FF] border border-sky-line hover:bg-[#DBEAFE] transition-colors whitespace-nowrap"
                   >
-                    💧 Water {waterCount} thirsty word{waterCount === 1 ? "" : "s"}
+                    💧 Water {waterCount} due word{waterCount === 1 ? "" : "s"}
                   </Link>
                 )}
               </div>
@@ -370,7 +368,7 @@ export default async function VocabularyPage({
                           : selected.known > 0
                           ? `${selected.known} already sprouted`
                           : "not planted yet"}
-                        {selected.thirsty > 0 && ` · 💧 ${selected.thirsty} thirsty`}
+                        {selected.thirsty > 0 && ` · 💧 ${selected.thirsty} due`}
                       </p>
                     </div>
                     <div className="flex flex-col items-end gap-2.5 flex-none">
@@ -416,7 +414,7 @@ export default async function VocabularyPage({
                           href={wordHref(selected.index, wi)}
                           className="group grid grid-cols-[22px_minmax(84px,auto)_1fr_16px] sm:grid-cols-[22px_112px_1fr_16px] items-center gap-x-3 gap-y-0.5 py-2.5 border-b border-dashed border-dash hover:bg-warm transition-colors -mx-2 px-2 rounded-[6px]"
                         >
-                          <span title={`${WORD_STATUSES[status].label}${thirsty ? " · thirsty" : ""}`}>
+                          <span title={`${WORD_STATUSES[status].label}${thirsty ? " · due" : ""}`}>
                             {thirsty ? <span className="text-[14px]">💧</span> : <WordStatusIcon status={status} />}
                           </span>
                           <span className="kr font-bold text-[17px] leading-tight">{w.korean}</span>
@@ -454,7 +452,7 @@ export default async function VocabularyPage({
                       <WordStatusIcon status={i} className="w-[13px] h-[13px]" /> {s.label}
                     </span>
                   ))}
-                  <span>💧 Thirsty</span>
+                  <span>💧 Due</span>
                 </span>
                 <span className="tabular-nums">
                   <b className="text-charcoal">{rootedWords}</b> of {totalWords} words rooted
@@ -478,7 +476,7 @@ export default async function VocabularyPage({
             {waterCount > 0 && (
               <Link
                 href="/review"
-                aria-label={`Water ${waterCount} thirsty words`}
+                aria-label={`Water ${waterCount} due words`}
                 className="inline-flex items-center justify-center rounded-[9px] px-3 py-3 text-[13px] font-bold text-sky-deep bg-[#EFF6FF] border border-sky-line tabular-nums"
               >
                 💧 {waterCount}

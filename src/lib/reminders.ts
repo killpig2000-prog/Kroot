@@ -40,12 +40,12 @@ export function reminderCopy(p: Pick<ReminderProfile, "display_name" | "streak_d
   if (p.streak_days >= 3) {
     return {
       title: `🔥 ${p.streak_days}-day streak on the line`,
-      body: `Hey ${name} — one 5-minute lesson tonight keeps it alive.${dueWords ? ` ${dueWords} words are thirsty 💧` : ""}`,
+      body: `Hey ${name} — one 5-minute lesson tonight keeps it alive.${dueWords ? ` ${dueWords} words are due 💧` : ""}`,
     };
   }
   if (dueWords > 0) {
     return {
-      title: "💧 Your words are getting thirsty",
+      title: "💧 You have words due for review",
       body: `${dueWords} ${dueWords === 1 ? "word" : "words"} due for watering — a quick review keeps them rooted.`,
     };
   }

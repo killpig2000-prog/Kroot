@@ -1,5 +1,4 @@
-import { redirect } from "next/navigation";
-import { Link, redirect, useRouter, usePathname, getPathname } from "@/i18n/navigation";
+import { redirect } from "@/i18n/navigation";
 
 // The weekly league is switched off (2026-08-28). The route stays so old links
 // and the PWA don't 404 — it just sends people back to the Garden. The tier

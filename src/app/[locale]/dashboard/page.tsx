@@ -1,7 +1,5 @@
-import { Link } from "@/i18n/navigation";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
-import { Link, redirect, useRouter, usePathname, getPathname } from "@/i18n/navigation";
+import { Link, redirect } from "@/i18n/navigation";
 import TreeCard from "@/components/dashboard/TreeCard";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
@@ -469,7 +467,7 @@ export default async function DashboardPage() {
               </span>
               <span className="flex-1 min-w-0">
                 <b className="block font-semibold text-sm text-[#1D4ED8]">
-                  {dueCount} {dueCount === 1 ? "word is" : "words are"} getting thirsty
+                  {dueCount} {dueCount === 1 ? "word is" : "words are"} due for review
                 </b>
                 <span className="text-[13px] text-[#3B82F6]">
                   Water them before they wilt — a quick review keeps them rooted.

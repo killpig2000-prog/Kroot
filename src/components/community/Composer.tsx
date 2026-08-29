@@ -1,7 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { Link, redirect, useRouter, usePathname, getPathname } from "@/i18n/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { BOARDS, type BoardKey } from "@/lib/community";

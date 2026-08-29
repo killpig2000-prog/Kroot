@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { Analytics } from "@vercel/analytics/next";
 import { NextIntlClientProvider } from "next-intl";
-import getRequestConfig from "@/i18n/request";
+import { getMessages } from "next-intl/server";
 import "../globals.css";
 import { routing } from "@/i18n/routing";
 import { MODE_COOKIE, resolveMode } from "@/lib/mode";
@@ -75,7 +75,7 @@ export default async function RootLayout({ children, params }: Props) {
     notFound();
   }
 
-  const messages = await getRequestConfig({ locale });
+  const messages = await getMessages();
 
   const cookieStore = await cookies();
   // resolveMode ignores a stale dark cookie while dark mode is switched off,

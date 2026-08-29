@@ -3,9 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useSaveResume } from "@/hooks/useSaveResume";
 import { clearResume } from "@/lib/resume";
-import { Link } from "@/i18n/navigation";
-import { useRouter } from "next/navigation";
-import { Link, redirect, useRouter, usePathname, getPathname } from "@/i18n/navigation";
+import { Link, useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { recordCompletion, type ProgressResult } from "@/lib/activity";
 import { MINUTES_PER_PROMPT, MIN_RESPONSE_LENGTH, type Prompt } from "@/lib/writing";
