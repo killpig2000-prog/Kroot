@@ -88,8 +88,7 @@ function Brand() {
   );
 }
 
-function LanguageSwitcher({ pathname }: { pathname: string }) {
-  const locale = useLocale();
+function LanguageSwitcher({ pathname, locale }: { pathname: string; locale: string }) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
 
@@ -159,8 +158,9 @@ function SidebarBody({
   avatarUrl,
   streakFreezes = 0,
   pathname,
+  locale,
   onClose,
-}: Props & { pathname: string; onClose?: () => void }) {
+}: Props & { pathname: string; locale: string; onClose?: () => void }) {
   return (
     <>
       <div className="flex items-center px-2.5 pb-[18px]">
@@ -207,7 +207,7 @@ function SidebarBody({
           </div>
         </div>
 
-        <LanguageSwitcher pathname={pathname} />
+        <LanguageSwitcher pathname={pathname} locale={locale} />
         <AccountMenu displayName={displayName} email={email} avatarUrl={avatarUrl} />
       </div>
     </>
@@ -216,6 +216,7 @@ function SidebarBody({
 
 export default function Sidebar(props: Props) {
   const pathname = usePathname();
+  const locale = useLocale();
   const [open, setOpen] = useState(false);
 
   // Close the drawer when the route changes (tap on a nav item, browser
@@ -251,7 +252,7 @@ export default function Sidebar(props: Props) {
     <>
       {/* Desktop: the notebook-index column. */}
       <aside className="hidden md:flex flex-col gap-1 border-r border-dashed border-dash bg-warm px-3.5 py-5 sticky top-0 h-screen overflow-y-auto">
-        <SidebarBody {...props} pathname={pathname} />
+        <SidebarBody {...props} pathname={pathname} locale={locale} />
       </aside>
 
       {/* Phone: the same column folded into a 52px header — menu button,
@@ -305,7 +306,7 @@ export default function Sidebar(props: Props) {
           open ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <SidebarBody {...props} pathname={pathname} onClose={() => setOpen(false)} />
+        <SidebarBody {...props} pathname={pathname} locale={locale} onClose={() => setOpen(false)} />
       </aside>
     </>
   );
