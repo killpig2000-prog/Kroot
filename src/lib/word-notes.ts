@@ -27,18 +27,18 @@ export function hanjaOf(korean: string): string | null {
   return note?.parts ? note.parts.map((p) => p.hanja).join("") : null;
 }
 
-// Growth stage of a word, from how many times it's been reviewed — shared by
-// the study card's stamp and the unit preview's per-word markers.
-export const GROWTH_STAGES = [
-  { emoji: "🌰", label: "Seed" },
-  { emoji: "🌱", label: "Sprout" },
-  { emoji: "🌿", label: "Rooting" },
-  { emoji: "🌳", label: "Settled" },
+// A word's study status, from how many times it's been reviewed — shared by
+// the study card's stamp and the unit preview's per-word markers. Three plain
+// states (not a growth metaphor) so a glance tells you what to do: nothing
+// yet, still coming back to it, or done.
+export const WORD_STATUSES = [
+  { key: "new", label: "New" },
+  { key: "learning", label: "Learning" },
+  { key: "known", label: "Known" },
 ] as const;
 
-export function growthStage(reviews: number): number {
+export function wordStatus(reviews: number): number {
   if (reviews <= 0) return 0;
-  if (reviews === 1) return 1;
-  if (reviews <= 3) return 2;
-  return 3;
+  if (reviews <= 3) return 1;
+  return 2;
 }

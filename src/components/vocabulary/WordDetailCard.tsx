@@ -7,7 +7,7 @@ import { buttonClassName } from "@/components/ui/Button";
 import { createClient } from "@/lib/supabase/client";
 import { nextBox, nextReviewAt } from "@/lib/srs";
 import { speakKorean } from "@/lib/tts";
-import { GROWTH_STAGES, getWordNote, growthStage, hanjaOf } from "@/lib/word-notes";
+import { WORD_STATUSES, getWordNote, wordStatus, hanjaOf } from "@/lib/word-notes";
 
 const BTN_INK = buttonClassName("ink");
 const BTN_LINE = buttonClassName("line");
@@ -27,8 +27,8 @@ export type DetailWord = {
 
 // A read-only dictionary entry for a single word — reached by tapping a row
 // in the unit preview. Unlike the study card (FlipPhase), the meaning is
-// shown right away: this is a lookup. "Learned" / "Next" record the same SRS
-// progress the study session does and step to the next word.
+// shown right away: this is a lookup. "Got it" / "Still learning" record the
+// same SRS progress the study session does and step to the next word.
 export default function WordDetailCard({
   word,
   userId,
@@ -58,7 +58,7 @@ export default function WordDetailCard({
   unitLabel: string;
 }) {
   const router = useRouter();
-  const stage = GROWTH_STAGES[growthStage(correctCount + incorrectCount)];
+  const status = WORD_STATUSES[wordStatus(correctCount + incorrectCount)];
   const note = getWordNote(word.korean);
   const hanja = hanjaOf(word.korean);
   // Which button is mid-save, so it can say so instead of just greying out.
@@ -101,7 +101,7 @@ export default function WordDetailCard({
           aria-hidden="true"
         />
         <span className="absolute top-4 right-5 text-[10.5px] font-black tracking-[.06em] uppercase text-amber border-2 border-amber rounded-[6px] px-2 py-[3px] rotate-[-6deg] opacity-80 select-none">
-          {stage.emoji} {stage.label}
+          {status.label}
         </span>
 
         <div className="relative pt-6 pb-5 pr-[clamp(18px,4vw,26px)] pl-[clamp(40px,8vw,70px)]">
@@ -192,7 +192,7 @@ export default function WordDetailCard({
           doesn't have to reach into the card and the screen isn't half empty */}
       <div className="grid grid-cols-2 gap-2 mt-3.5">
         <button type="button" className={`${BTN_LINE} w-full justify-center`} disabled={saving !== null} onClick={() => advance(false)}>
-          {saving === "next" ? "Saving…" : "Next"}
+          {saving === "next" ? "Saving…" : "Still learning"}
         </button>
         <button type="button" className={`${BTN_INK} w-full justify-center`} disabled={saving !== null} onClick={() => advance(true)}>
           {saving === "got-it" ? "Saving…" : "Got it ✓"}

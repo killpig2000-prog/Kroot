@@ -5,7 +5,8 @@ import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import { createClient, getClaimsUser, getDashboardProfile } from "@/lib/supabase/server";
 import { CHAPTER_UNITS, MINUTES_PER_SESSION, getChaptersForTopic, unitLabel, unlockedVocabTiers } from "@/lib/vocabulary";
-import { GROWTH_STAGES, growthStage } from "@/lib/word-notes";
+import { WORD_STATUSES, wordStatus } from "@/lib/word-notes";
+import WordStatusIcon from "@/components/vocabulary/WordStatusIcon";
 import VocabSearch from "@/components/vocabulary/VocabSearch";
 import { LEVEL_ORDER, isCefrLevel, nextLevel, type CefrLevel } from "@/lib/tree";
 
@@ -121,7 +122,7 @@ export default async function VocabularyPage({
 
   return (
     <div className="min-h-screen bg-warm text-charcoal">
-      <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
+      <div className="grid grid-cols-1 md:grid-cols-[clamp(216px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
         <Sidebar
           displayName={profile?.display_name ?? "there"}
           email={user.email ?? ""}
@@ -406,7 +407,7 @@ export default async function VocabularyPage({
 
                   <div className="flex flex-col">
                     {selected.words.map((w, wi) => {
-                      const st = GROWTH_STAGES[growthStage(reviewsByKey.get(w.key) ?? 0)];
+                      const status = wordStatus(reviewsByKey.get(w.key) ?? 0);
                       const thirsty = thirstyKeys.has(w.key);
                       return (
                         <Link
@@ -414,8 +415,8 @@ export default async function VocabularyPage({
                           href={wordHref(selected.index, wi)}
                           className="group grid grid-cols-[22px_minmax(84px,auto)_1fr_16px] sm:grid-cols-[22px_112px_1fr_16px] items-center gap-x-3 gap-y-0.5 py-2.5 border-b border-dashed border-dash hover:bg-warm transition-colors -mx-2 px-2 rounded-[6px]"
                         >
-                          <span className="text-[14px]" title={`${st.label}${thirsty ? " · thirsty" : ""}`}>
-                            {thirsty ? "💧" : st.emoji}
+                          <span title={`${WORD_STATUSES[status].label}${thirsty ? " · thirsty" : ""}`}>
+                            {thirsty ? <span className="text-[14px]">💧</span> : <WordStatusIcon status={status} />}
                           </span>
                           <span className="kr font-bold text-[17px] leading-tight">{w.korean}</span>
                           <span className="min-w-0">
@@ -447,9 +448,9 @@ export default async function VocabularyPage({
               {/* growth legend + tally */}
               <div className="mt-7 pt-4 border-t border-line flex items-center justify-between gap-3 flex-wrap text-[12px] text-muted">
                 <span className="flex gap-3.5 flex-wrap">
-                  {GROWTH_STAGES.map((s) => (
-                    <span key={s.label}>
-                      {s.emoji} {s.label}
+                  {WORD_STATUSES.map((s, i) => (
+                    <span key={s.key} className="inline-flex items-center gap-1.5">
+                      <WordStatusIcon status={i} className="w-[13px] h-[13px]" /> {s.label}
                     </span>
                   ))}
                   <span>💧 Thirsty</span>

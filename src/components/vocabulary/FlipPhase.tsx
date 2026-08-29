@@ -13,7 +13,7 @@ import {
 import { buttonClassName } from "@/components/ui/Button";
 import { speakKorean } from "@/lib/tts";
 import { VOCAB_ROOTS, type VocabWordWithProgress } from "@/lib/vocabulary";
-import { GROWTH_STAGES, getWordNote, growthStage, hanjaOf } from "@/lib/word-notes";
+import { WORD_STATUSES, getWordNote, wordStatus, hanjaOf } from "@/lib/word-notes";
 
 const BTN_INK = buttonClassName("ink");
 const BTN_LINE = buttonClassName("line");
@@ -60,7 +60,7 @@ export default function FlipPhase({
   onOpenRoot: () => void;
   onCloseRoot: () => void;
 }) {
-  const stage = GROWTH_STAGES[growthStage(wordCounts.correct + wordCounts.incorrect)];
+  const status = WORD_STATUSES[wordStatus(wordCounts.correct + wordCounts.incorrect)];
   const root = word.root ? VOCAB_ROOTS[word.root] : undefined;
   const note = getWordNote(word.korean);
   const hanja = hanjaOf(word.korean);
@@ -93,7 +93,7 @@ export default function FlipPhase({
       {/* the notebook page — swipe right = Got it, left = Still learning */}
       <SwipeCard key={word.key} enabled={flipped} nextWord={next} onSwipe={onAnswer}>
         <span className="absolute top-4 right-5 text-[10.5px] font-black tracking-[.06em] uppercase text-amber border-2 border-amber rounded-[6px] px-2 py-[3px] rotate-[-6deg] opacity-80 select-none">
-          {stage.emoji} {stage.label}
+          {status.label}
         </span>
 
         <div className="relative pt-6 pb-5 pr-[clamp(18px,4vw,26px)] pl-[clamp(40px,8vw,70px)]">
