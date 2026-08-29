@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import { Analytics } from "@vercel/analytics/next";
 import { NextIntlClientProvider } from "next-intl";
 import getRequestConfig from "@/i18n/request";
-import "./globals.css";
+import "../globals.css";
 import { routing } from "@/i18n/routing";
 import { MODE_COOKIE, resolveMode } from "@/lib/mode";
 import { SEASON_COOKIE, seasonForDate } from "@/lib/seasons";
