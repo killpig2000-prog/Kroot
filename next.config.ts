@@ -12,6 +12,14 @@ const nextConfig: NextConfig = {
         destination: "/course",
         permanent: true,
       },
+      // koreanunboxed.com is now the canonical domain; send the old
+      // Vercel-assigned URL there so there's one live address, not two.
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "kroot-puce.vercel.app" }],
+        destination: "https://www.koreanunboxed.com/:path*",
+        permanent: true,
+      },
     ];
   },
 };
