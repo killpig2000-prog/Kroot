@@ -27,7 +27,6 @@ import { CHAPTER_SIZE, getWordsForTopic } from "@/lib/vocabulary";
 import { firstVisitState, NEW_ACCOUNT_DAYS, SHOW_ALL_COOKIE } from "@/lib/first-visit";
 import { countCompletedSessions } from "@/lib/first-visit-server";
 import { slangOfTheDay } from "@/lib/slang";
-import { isPlus } from "@/lib/plus";
 import type { CefrLevel } from "@/lib/tree";
 
 // The old Basics/Practice/Relax card list duplicated the sidebar; only the
@@ -122,7 +121,7 @@ export default async function DashboardPage() {
   ] = await Promise.all([
     supabase
       .from("profiles")
-      .select("display_name, current_level, xp, streak_days, last_active_date, avatar_url, plus_until, created_at")
+      .select("display_name, current_level, xp, streak_days, last_active_date, avatar_url, created_at")
       .eq("id", user.id)
       .single(),
     // touch_streak bumps (or resets) the streak server-side and returns its new value.
@@ -300,9 +299,6 @@ export default async function DashboardPage() {
   );
   const remindersOff = !extras?.reminder_push && !extras?.reminder_email;
 
-  const plusActive = isPlus(profile?.plus_until);
-  const day = now.getDay();
-  const weekendBoost = plusActive && (day === 0 || day === 6);
 
   // Finished sessions: the activity_completed events, backed up by the
   // progress tables in case a beacon never landed (or the service key is
@@ -348,7 +344,6 @@ export default async function DashboardPage() {
             email={user.email ?? ""}
             streakDays={streakDays}
             avatarUrl={profile?.avatar_url}
-            plus={plusActive}
             streakFreezes={extras?.streak_freezes ?? 0}
           />
 
@@ -419,7 +414,6 @@ export default async function DashboardPage() {
           email={user.email ?? ""}
           streakDays={streakDays}
           avatarUrl={profile?.avatar_url}
-          plus={plusActive}
           streakFreezes={extras?.streak_freezes ?? 0}
         />
 
@@ -427,11 +421,6 @@ export default async function DashboardPage() {
           <Greeting name={displayName} />
           <p className="text-muted text-sm mb-6">
             One lesson today keeps your tree growing.
-            {weekendBoost && (
-              <span className="ml-2 inline-flex items-center gap-1 text-[12px] font-bold text-[#B45309] bg-[var(--tint-amber)] border border-amber-line rounded-full px-2.5 py-[3px] align-middle">
-                ⚡ Weekend boost — 1.5x XP all weekend
-              </span>
-            )}
           </p>
 
           <TreeCard

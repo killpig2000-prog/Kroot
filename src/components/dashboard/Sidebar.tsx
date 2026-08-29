@@ -66,8 +66,6 @@ type Props = {
   email: string;
   streakDays: number;
   avatarUrl?: string | null;
-  /** Active Kroot Plus — shows the streak shield note. */
-  plus?: boolean;
   /** Streak freezes held (shop consumable, migration 0035). */
   streakFreezes?: number;
 };
@@ -88,7 +86,6 @@ function SidebarBody({
   email,
   streakDays,
   avatarUrl,
-  plus = false,
   streakFreezes = 0,
   pathname,
   onClose,
@@ -132,13 +129,9 @@ function SidebarBody({
           <div>
             <b className="block text-[13.5px] font-semibold leading-tight text-[#5C4A0E]">{streakDays}-day streak</b>
             <small className="text-[11.5px] text-[#8A7420]">
-              {plus && streakFreezes > 0
-                ? `🛡️ Plus · 🧊 ${streakFreezes} freeze${streakFreezes === 1 ? "" : "s"}`
-                : plus
-                  ? "🛡️ Shielded by Plus"
-                  : streakFreezes > 0
-                    ? `🧊 ${streakFreezes} freeze${streakFreezes === 1 ? "" : "s"} ready`
-                    : "Keep it alive today!"}
+              {streakFreezes > 0
+                ? `🧊 ${streakFreezes} freeze${streakFreezes === 1 ? "" : "s"} ready`
+                : "Keep it alive today!"}
             </small>
           </div>
         </div>

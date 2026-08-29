@@ -2,14 +2,9 @@ import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { isRateLimited } from "@/lib/rate-limit";
 import { gradeWithGemini } from "@/lib/gemini";
-import { isPlus } from "@/lib/plus";
 import { utcDayStartISO } from "@/lib/writing";
 
-// Free plan: one writing chapter per UTC day (re-grading today's chapter is
-// fine); Kroot Plus is unlimited. Level-up test grading is NOT gated here —
-// exams must always be available. The grade-count backstop only bounds
-// retry-spam on a single chapter.
-const GRADE_BACKSTOP_PER_DAY = 10;
+// All grading is unlimited now (free for everyone).
 
 export type GradeResult = {
   score: number; // 0-100 grammar accuracy
@@ -69,6 +64,7 @@ const PLUS_RESPONSE_SCHEMA = {
 const MAX_RESPONSE_CHARS = 2000;
 const RATE_LIMIT = 10;
 const RATE_WINDOW_MS = 60_000;
+const GRADE_LIMIT_PER_DAY = 5;
 
 export async function POST(request: Request) {
   const supabase = await createClient();
@@ -103,63 +99,28 @@ export async function POST(request: Request) {
     );
   }
 
-  // Free plan: one chapter per UTC day. Re-grading the chapter written today
-  // is allowed; a different chapter waits for tomorrow. Plus skips both gates.
-  const { data: profileRow } = await supabase
-    .from("profiles")
-    .select("plus_until")
-    .eq("id", user.id)
-    .single();
-  const plus = isPlus(profileRow?.plus_until);
+  // Daily limit: 5 grading requests per user per UTC day.
+  const dayStart = utcDayStartISO();
+  const { count, error: countError } = await supabase
+    .from("ai_grade_log")
+    .select("id", { count: "exact", head: true })
+    .eq("user_id", user.id)
+    .gte("created_at", dayStart);
 
-  let limitTracked = false;
-  if (!plus) {
-    const dayStart = utcDayStartISO();
-
-    const { data: todayRows, error: todayError } = await supabase
-      .from("writing_progress")
-      .select("prompt_key")
-      .eq("user_id", user.id)
-      .gte("completed_at", dayStart)
-      .limit(1);
-    const todayKey = todayRows?.[0]?.prompt_key ?? null;
-    if (!todayError && todayKey && todayKey !== prompt_key) {
-      return NextResponse.json(
-        {
-          error: "daily_limit",
-          message:
-            "You've written today's page! Come back tomorrow — or turn pages without limits with Kroot Plus.",
-        },
-        { status: 429 }
-      );
-    }
-
-    // Backstop: bound retry-spam on the same chapter. If the log table hasn't
-    // been migrated yet, grade without limiting rather than break.
-    const { count, error: countError } = await supabase
-      .from("ai_grade_log")
-      .select("id", { count: "exact", head: true })
-      .eq("user_id", user.id)
-      .gte("created_at", dayStart);
-    if (!countError) {
-      limitTracked = true;
-      if ((count ?? 0) >= GRADE_BACKSTOP_PER_DAY) {
-        return NextResponse.json(
-          {
-            error: "daily_limit",
-            message:
-              "That's a lot of grading for one day! Come back tomorrow — or go unlimited with Kroot Plus.",
-          },
-          { status: 429 }
-        );
-      }
-    }
+  if (!countError && (count ?? 0) >= GRADE_LIMIT_PER_DAY) {
+    return NextResponse.json(
+      {
+        error: "daily_limit",
+        message: "서비스 점검중입니다. 내일 다시 시도해주세요.",
+      },
+      { status: 429 }
+    );
   }
 
   const outcome = await gradeWithGemini<GradeResult>({
     apiKey,
     model: GEMINI_MODEL,
-    responseSchema: plus ? PLUS_RESPONSE_SCHEMA : RESPONSE_SCHEMA,
+    responseSchema: PLUS_RESPONSE_SCHEMA,
     prompt: `You are a kind Korean teacher grading a short writing exercise from a CEFR ${level} learner.
 
 Writing prompt (Korean): ${prompt_kr}
@@ -172,11 +133,9 @@ Writing prompt (English): ${prompt_en}${
 Learner's answer:
 ${response_text}
 
-Grade the grammar accuracy relative to their ${level} level (don't punish vocabulary simplicity — only grammar, particles, conjugation, word order, and spelling). Be encouraging.${
-      plus
-        ? "\n\nAlso return sentence-by-sentence corrections: one entry per sentence of the learner's answer, each with the original, the corrected version, and a one-line note on the grammar point."
-        : ""
-    }`,
+Grade the grammar accuracy relative to their ${level} level (don't punish vocabulary simplicity — only grammar, particles, conjugation, word order, and spelling). Be encouraging.
+
+Also return sentence-by-sentence corrections: one entry per sentence of the learner's answer, each with the original, the corrected version, and a one-line note on the grammar point.`,
   });
 
   if (!outcome.ok) {
@@ -187,12 +146,9 @@ Grade the grammar accuracy relative to their ${level} level (don't punish vocabu
   }
   const result = outcome.result;
   result.score = Math.max(0, Math.min(100, Number(result.score) || 0));
-  if (!plus) {
-    delete result.corrections;
-    if (limitTracked) {
-      // Count this grading against the retry backstop; best-effort.
-      await supabase.from("ai_grade_log").insert({ user_id: user.id });
-    }
-  }
+
+  // Log this grading attempt (best-effort, don't fail if it errors).
+  await supabase.from("ai_grade_log").insert({ user_id: user.id }).catch(() => {});
+
   return NextResponse.json(result);
 }

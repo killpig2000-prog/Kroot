@@ -1,14 +1,12 @@
-import { Link, redirect } from "@/i18n/navigation";
+import { redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import AvatarUploader from "@/components/profile/AvatarUploader";
-import ManageSubscriptionButton from "@/components/plus/ManageSubscriptionButton";
 import NameEditor from "@/components/profile/NameEditor";
 import ReminderSettings from "@/components/profile/ReminderSettings";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { LEVEL_PATH, SPECIES, type CefrLevel } from "@/lib/tree";
 import { levelProgress, treeStageForLevel, MAX_LEVEL } from "@/lib/level";
-import { isPlus } from "@/lib/plus";
 
 // Slimmed to an account page (2026-08): grass, costume, learning progress,
 // and the promotion card all merged into the Garden (/dashboard); the league
@@ -34,7 +32,6 @@ export default async function ProfilePage() {
   const extras = extrasErr ? null : extrasRow;
 
   const level = (profile?.current_level ?? "A1") as CefrLevel;
-  const plusActive = isPlus(profile?.plus_until);
 
   const xp = profile?.xp ?? 0;
   const { level: playerLevel, into, needed, pct } = levelProgress(xp);
@@ -52,7 +49,6 @@ export default async function ProfilePage() {
           email={user.email ?? ""}
           streakDays={profile?.streak_days ?? 0}
           avatarUrl={profile?.avatar_url}
-          plus={plusActive}
         />
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] md:pb-[60px]">
@@ -126,30 +122,6 @@ export default async function ProfilePage() {
               </div>
             </div>
 
-            {plusActive ? (
-              <div className="flex items-center justify-end gap-3 -mt-2">
-                <span className="text-[12px] text-faint">
-                  🌟 Kroot Plus active — cancel or switch plans anytime.
-                </span>
-                <ManageSubscriptionButton />
-              </div>
-            ) : (
-              <div className="border border-amber-line bg-[var(--tint-amber)] rounded-[14px] px-[22px] py-4 flex items-center gap-4 flex-wrap">
-                <div className="flex-1 min-w-[220px]">
-                  <b className="font-semibold text-[14.5px] block mb-0.5">🌟 Kroot Plus</b>
-                  <span className="text-[13px] text-muted">
-                    Streak shield, weekend XP boost, unlimited AI grading, insights & exclusive
-                    outfits — every lesson stays free.
-                  </span>
-                </div>
-                <Link
-                  href="/pricing"
-                  className="rounded-[9px] bg-success px-4 py-2 text-[13px] font-bold text-white hover:bg-success-deep transition-colors"
-                >
-                  See plans →
-                </Link>
-              </div>
-            )}
 
             <ReminderSettings
               userId={user.id}

@@ -530,9 +530,8 @@ export const COSTUMES: Costume[] = [
     name: "Gardener's Halo",
     krName: "정원사의 후광",
     slot: "hat",
-    price: 0,
+    price: 95,
     rarity: "rare",
-    plusOnly: true,
     render: () => (
       <>
         <ellipse cx="0" cy="-12" rx="20" ry="6" fill="none" stroke="#FFD66B" strokeWidth="4" />
@@ -547,9 +546,8 @@ export const COSTUMES: Costume[] = [
     name: "Star Glasses",
     krName: "별 안경",
     slot: "face",
-    price: 0,
+    price: 85,
     rarity: "rare",
-    plusOnly: true,
     render: () => (
       <>
         <path d="M-11 -8 L-8.5 -2.5 L-3 -2 L-7 2 L-6 8 L-11 5 L-16 8 L-15 2 L-19 -2 L-13.5 -2.5 Z" fill="#FFD66B" stroke="#E0B23F" strokeWidth="1.5" />
@@ -563,9 +561,8 @@ export const COSTUMES: Costume[] = [
     name: "Golden Scarf",
     krName: "황금 목도리",
     slot: "neck",
-    price: 0,
+    price: 85,
     rarity: "rare",
-    plusOnly: true,
     render: () => (
       <>
         <path d="M-16 -3 Q0 6 16 -3 L16 4 Q0 13 -16 4 Z" fill="#FFD66B" />
@@ -581,9 +578,8 @@ export const COSTUMES: Costume[] = [
     name: "Blossom Crown",
     krName: "벚꽃 화관",
     slot: "hat",
-    price: 0,
+    price: 180,
     rarity: "epic",
-    plusOnly: true,
     render: () => (
       <>
         <path d="M-18 2 Q0 -10 18 2" stroke="#7FA86B" strokeWidth="3.5" fill="none" />
@@ -608,9 +604,8 @@ export const COSTUMES: Costume[] = [
     name: "Scholar's Gat",
     krName: "선비 갓",
     slot: "hat",
-    price: 0,
+    price: 180,
     rarity: "epic",
-    plusOnly: true,
     render: () => (
       <>
         <ellipse cx="0" cy="5" rx="30" ry="7" fill="#2E2A26" opacity=".92" />
@@ -626,9 +621,8 @@ export const COSTUMES: Costume[] = [
     name: "Moon Spectacles",
     krName: "달 안경",
     slot: "face",
-    price: 0,
+    price: 85,
     rarity: "rare",
-    plusOnly: true,
     render: () => (
       <>
         <path d="M-11 -8 A8 8 0 1 0 -11 8 A6.2 6.2 0 1 1 -11 -8 Z" fill="#FFD66B" stroke="#E0B23F" strokeWidth="1.5" />
@@ -644,9 +638,8 @@ export const COSTUMES: Costume[] = [
     name: "Cherry Blush",
     krName: "앵두 볼터치",
     slot: "face",
-    price: 0,
+    price: 40,
     rarity: "common",
-    plusOnly: true,
     render: () => (
       <>
         <ellipse cx="-13" cy="3" rx="5.5" ry="3.8" fill="#F2789A" opacity=".55" />
@@ -661,9 +654,8 @@ export const COSTUMES: Costume[] = [
     name: "Hanbok Ribbon",
     krName: "한복 고름",
     slot: "neck",
-    price: 0,
+    price: 180,
     rarity: "epic",
-    plusOnly: true,
     render: () => (
       <>
         <path d="M-16 -3 Q0 5 16 -3 L16 3 Q0 11 -16 3 Z" fill="#FBD5E0" />
@@ -679,9 +671,8 @@ export const COSTUMES: Costume[] = [
     name: "Maple Garland",
     krName: "단풍 목걸이",
     slot: "neck",
-    price: 0,
+    price: 85,
     rarity: "rare",
-    plusOnly: true,
     render: () => (
       <>
         <path d="M-16 -2 Q0 8 16 -2" stroke="#8A6B4A" strokeWidth="2" fill="none" />
@@ -897,9 +888,8 @@ export const COSTUMES: Costume[] = [
     name: "Golden Halo Ring",
     krName: "황금 고리",
     slot: "aura",
-    price: 0,
+    price: 420,
     rarity: "legendary",
-    plusOnly: true,
     icon: "💫",
     scene: {
       layer: "behind",
@@ -1040,9 +1030,8 @@ export const COSTUMES: Costume[] = [
     name: "Hanji Paper Sky",
     krName: "한지 하늘",
     slot: "sky",
-    price: 0,
+    price: 190,
     rarity: "epic",
-    plusOnly: true,
     icon: "📜",
     sky: "linear-gradient(180deg,#F7F1E3 0%,#F3EBD8 60%,#E9E3CF 100%)",
     scene: {
@@ -1174,9 +1163,8 @@ export const COSTUMES: Costume[] = [
     name: "Stone Lantern",
     krName: "석등",
     slot: "ground",
-    price: 0,
+    price: 180,
     rarity: "epic",
-    plusOnly: true,
     icon: "🏮",
     scene: {
       layer: "front",
@@ -1319,9 +1307,8 @@ export const COSTUMES: Costume[] = [
     name: "Spirit Dokkaebi",
     krName: "정령 도깨비",
     slot: "friend",
-    price: 0,
+    price: 520,
     rarity: "legendary",
-    plusOnly: true,
     icon: "\ud83d\udc79",
     scene: {
       layer: "front",

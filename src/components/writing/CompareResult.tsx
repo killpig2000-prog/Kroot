@@ -78,7 +78,6 @@ export default function CompareResult({
   prompt,
   response,
   grade,
-  limitMessage,
   levelUp,
   level,
   treeStage,
@@ -86,14 +85,12 @@ export default function CompareResult({
   costumeIds,
   chapterIndex,
   hasNextChapter,
-  plus,
   navigating,
   onGoTo,
 }: {
   prompt: Prompt;
   response: string;
   grade: GradeResult | null;
-  limitMessage: string | null;
   levelUp: ProgressResult | null;
   level: CefrLevel;
   treeStage: CefrLevel;
@@ -101,7 +98,6 @@ export default function CompareResult({
   costumeIds?: string[];
   chapterIndex: number;
   hasNextChapter: boolean;
-  plus: boolean;
   navigating: boolean;
   onGoTo: (href: string) => void;
 }) {
@@ -154,17 +150,6 @@ export default function CompareResult({
         <div className="text-center mb-6">
           <h2 className="font-bold text-[21px] tracking-[-0.02em] mb-1.5">Nice writing!</h2>
           <p className="text-sm text-muted">Here&apos;s one natural way to say it.</p>
-          {limitMessage && (
-            <div className="inline-flex items-center gap-2.5 border border-amber-line bg-[var(--tint-amber)] rounded-[10px] px-4 py-2.5 mt-3 text-left">
-              <span className="text-base">🌟</span>
-              <span className="text-[12.5px] text-[#92400E]">
-                {limitMessage}{" "}
-                <Link href="/pricing" className="font-semibold underline">
-                  See Kroot Plus →
-                </Link>
-              </span>
-            </div>
-          )}
         </div>
       )}
 
@@ -215,11 +200,8 @@ export default function CompareResult({
       </div>
 
       <div className="flex items-center justify-end gap-2.5 flex-wrap border-t border-line pt-5">
-        {hasNextChapter && !plus && !limitMessage && (
+        {!hasNextChapter && (
           <span className="mr-auto text-[12.5px] text-muted">
-            🌙 That&apos;s today&apos;s page — the next one opens tomorrow.{" "}
-            <Link href="/pricing" className="font-semibold text-amber hover:underline">
-              Turn pages freely with Plus →
             </Link>
           </span>
         )}
@@ -229,7 +211,7 @@ export default function CompareResult({
         <button className={BTN_LINE} onClick={() => onGoTo(`/writing?level=${level}`)} disabled={navigating}>
           {navigating ? "Saving…" : "All pages"}
         </button>
-        {hasNextChapter && plus && (
+        {hasNextChapter {hasNextChapter && plus && {hasNextChapter && plus &&  (
           <button
             className={BTN_AMBER}
             onClick={() => onGoTo(`/writing/session?chapter=${chapterIndex + 1}&level=${level}`)}

@@ -133,8 +133,7 @@ export default function ShopClient({
   const selected = preview[tab] ? costumeById(preview[tab]!) : undefined;
 
   // Anything you could save coins for: on sale, unowned, has a price.
-  // (Plus wardrobe items cost 0, so there is nothing to save toward.)
-  const goalCandidates = COSTUMES.filter((c) => !ownedSet.has(c.id) && c.price > 0 && !c.plusOnly && isAvailable(c, now)).sort(
+  const goalCandidates = COSTUMES.filter((c) => !ownedSet.has(c.id) && c.price > 0 && isAvailable(c, now)).sort(
     (a, b) => a.price - b.price,
   );
   const defaultGoal = goalCandidates.find((c) => !isLevelLocked(c, playerLevel, hasPlus) && c.price > balance);
@@ -191,7 +190,6 @@ export default function ShopClient({
     const isOwned = ownedSet.has(selected.id);
     if (isOwned) cta = { label: worn[selected.slot] === selected.id ? "Take off" : "Wear it" };
     else if (isAdmin) cta = { label: "Claim & wear · admin" };
-    else if (selected.plusOnly && !hasPlus) cta = { label: "Kroot Plus only · See plans", href: "/pricing" };
     else if (isLevelLocked(selected, playerLevel, hasPlus)) cta = { label: `Unlocks at Lv.${selected.minPlayerLevel}`, disabled: true };
     else if (balance < selected.price) cta = { label: `Need ${selected.price - balance} more 🌰`, disabled: true };
     else cta = { label: selected.price === 0 ? "Claim & wear" : `Buy & wear · 🌰 ${selected.price}` };
@@ -329,11 +327,10 @@ export default function ShopClient({
               const rs = RARITY_STYLE[c.rarity];
               let price: React.ReactNode;
               if (isOwned) price = <span className="text-[12.5px] font-extrabold text-success">{worn[c.slot] === c.id ? "Wearing ✓" : "Owned"}</span>;
-              else if (c.plusOnly) price = <span className="text-[12.5px] font-extrabold text-[#B7791F]">🌟 Plus</span>;
               else if (locked) price = <span className="text-[12.5px] font-extrabold text-[#B7AE9C]">🔒 Lv.{c.minPlayerLevel}</span>;
               else price = <span className="text-[12.5px] font-extrabold tabular-nums">🌰 {c.price}</span>;
               // Only items you could save for get the goal control.
-              const goalable = !isOwned && !isAdmin && c.price > 0 && !c.plusOnly;
+              const goalable = !isOwned && !isAdmin && c.price > 0;
               const isGoal = goalable && goal?.id === c.id;
               const toGo = Math.max(0, c.price - balance);
               return (
