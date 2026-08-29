@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useRouter } from "@/i18n/navigation";
 import Mascot from "@/components/onboarding/Mascot";
 import CuteError from "@/components/ui/CuteError";
@@ -42,6 +42,8 @@ export default function LoginPage() {
       : safeNext(new URLSearchParams(window.location.search).get("next"))
   );
   const [submitting, setSubmitting] = useState(false);
+  const [linkSentTo, setLinkSentTo] = useState<string | null>(null);
+  const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     // Already signed in? Straight to the app.
@@ -91,6 +93,37 @@ export default function LoginPage() {
     router.refresh();
   }
 
+  // Learners who signed up with a magic link have no password — offer the
+  // same link here rather than sending them through "forgot password".
+  async function handleMagicLink() {
+    const form = formRef.current;
+    const email = String(new FormData(form ?? undefined).get("email") || "").trim();
+    if (!email) {
+      form?.reportValidity();
+      setError("Type your email above first, and we'll send the link there.");
+      return;
+    }
+    setError(null);
+    setSubmitting(true);
+    const { error } = await supabase.auth.signInWithOtp({
+      email,
+      options: {
+        shouldCreateUser: false,
+        emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}`,
+      },
+    });
+    setSubmitting(false);
+    if (error) {
+      setError(
+        /signups not allowed|not found/i.test(error.message)
+          ? "We couldn't find a garden for that email. New here? Plant your seed below."
+          : error.message
+      );
+      return;
+    }
+    setLinkSentTo(email);
+  }
+
   return (
     <div className="min-h-screen flex flex-col bg-cream text-charcoal">
       <header className="border-b border-line">
@@ -126,7 +159,7 @@ export default function LoginPage() {
                 <span className="flex-1 h-px bg-line" />
               </div>
 
-              <form onSubmit={handleEmailLogin}>
+              <form ref={formRef} onSubmit={handleEmailLogin}>
                 <div className="mb-3.5">
                   <label htmlFor="email" className={LABEL}>
                     Email
@@ -157,9 +190,22 @@ export default function LoginPage() {
                 </div>
 
                 {error && <CuteError>{error}</CuteError>}
+                {linkSentTo && (
+                  <p className="text-[13px] text-success-deep bg-success-bg border border-success-line rounded-[9px] px-3.5 py-2.5 mb-3.5">
+                    Sign-in link sent to <b>{linkSentTo}</b> — tap it and you&apos;re in.
+                  </p>
+                )}
 
                 <button type="submit" disabled={submitting} className={`${BTN_GREEN} w-full disabled:opacity-60`}>
                   {submitting ? "Watering…" : "Log in"}
+                </button>
+                <button
+                  type="button"
+                  onClick={handleMagicLink}
+                  disabled={submitting}
+                  className={`${BTN_OUTLINE} w-full mt-2.5 disabled:opacity-60`}
+                >
+                  Email me a sign-in link instead
                 </button>
               </form>
 
