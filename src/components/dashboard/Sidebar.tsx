@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import AccountMenu from "@/components/dashboard/AccountMenu";
 import { Link, usePathname } from "@/i18n/navigation";
 import { MAIN_ITEMS, SECTIONS, type NavColor } from "@/components/dashboard/navItems";
+import BrandMark from "@/components/ui/BrandMark";
 
 function NavItem({
   icon,
@@ -89,9 +90,7 @@ type Props = {
 function Brand() {
   return (
     <Link href="/dashboard" className="flex items-center gap-[9px] font-extrabold text-[17px] tracking-[-0.01em] text-[#221F1B]">
-      <span className="w-[30px] h-[30px] rounded-lg bg-success flex items-center justify-center kr text-sm text-white">
-        한
-      </span>
+      <BrandMark size={30} />
       Kroot
     </Link>
   );

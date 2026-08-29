@@ -5,6 +5,7 @@ import { Link, useRouter } from "@/i18n/navigation";
 import Mascot from "@/components/onboarding/Mascot";
 import CuteError from "@/components/ui/CuteError";
 import { createClient } from "@/lib/supabase/client";
+import BrandMark from "@/components/ui/BrandMark";
 
 const CARD = "border border-line rounded-[14px] bg-white p-[clamp(22px,4vw,32px)]";
 const FIELD =
@@ -98,9 +99,7 @@ export default function LoginPage() {
             href="/"
             className="flex items-center gap-[9px] font-semibold text-[17px] tracking-[-0.01em]"
           >
-            <span className="w-[30px] h-[30px] rounded-lg bg-success text-white flex items-center justify-center kr text-sm">
-              한
-            </span>
+            <BrandMark size={30} />
             Kroot
           </Link>
         </div>

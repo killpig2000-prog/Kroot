@@ -1,4 +1,4 @@
-import Logo from "@/components/ui/Logo";
+import BrandMark from "@/components/ui/BrandMark";
 
 // Served by the service worker when a navigation fails offline. Styled inline
 // on purpose: the hashed CSS bundle isn't precached, so this page must look
@@ -35,7 +35,7 @@ export default function OfflinePage() {
     <div style={wrap}>
       <div style={card}>
         <div style={{ display: "flex", justifyContent: "center" }}>
-          <Logo size={64} />
+          <BrandMark size={64} />
         </div>
         <h1 style={h1}>The garden can&apos;t reach the sun</h1>
         <p style={p}>

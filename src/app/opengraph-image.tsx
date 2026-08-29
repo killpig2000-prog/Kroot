@@ -1,4 +1,5 @@
 import { ImageResponse } from "next/og";
+import BrandMark from "@/components/ui/BrandMark";
 
 // Site-wide social share card (Open Graph / Twitter). Statically generated
 // at build time; word pages inherit it unless they define their own.
@@ -29,22 +30,7 @@ export default function OpengraphImage() {
             marginBottom: 28,
           }}
         >
-          <div
-            style={{
-              width: 96,
-              height: 96,
-              borderRadius: 24,
-              background: "#16A34A",
-              color: "white",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: 56,
-              fontWeight: 700,
-            }}
-          >
-            한
-          </div>
+          <BrandMark size={96} />
           <div style={{ fontSize: 84, fontWeight: 800, color: "#18181B" }}>Kroot</div>
         </div>
         <div style={{ fontSize: 40, color: "#18181B", fontWeight: 700, marginBottom: 14 }}>

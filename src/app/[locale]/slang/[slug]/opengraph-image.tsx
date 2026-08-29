@@ -1,5 +1,6 @@
 import { ImageResponse } from "next/og";
 import { getSlangBySlug } from "@/lib/slang-slugs";
+import BrandMark from "@/components/ui/BrandMark";
 
 export const alt = "Korean slang, explained — Kroot";
 export const size = { width: 1200, height: 630 };
@@ -24,22 +25,7 @@ export default async function SlangOpengraphImage({ params }: { params: Promise<
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 30 }}>
-          <div
-            style={{
-              width: 56,
-              height: 56,
-              borderRadius: 16,
-              background: "#DB2777",
-              color: "white",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: 30,
-              fontWeight: 700,
-            }}
-          >
-            한
-          </div>
+          <BrandMark size={56} />
           <div style={{ fontSize: 34, fontWeight: 700, color: "#831843" }}>Kroot · Street Talk</div>
         </div>
 

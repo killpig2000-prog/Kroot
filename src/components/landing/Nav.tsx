@@ -3,6 +3,7 @@
 import { Link } from "@/i18n/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
+import BrandMark from "@/components/ui/BrandMark";
 
 export default function Nav() {
   const supabase = useMemo(() => createClient(), []);
@@ -24,9 +25,7 @@ export default function Nav() {
           href="/"
           className="flex items-center gap-[9px] font-extrabold text-[17px] tracking-[-0.01em] text-[#221F1B]"
         >
-          <span className="w-[30px] h-[30px] rounded-lg bg-success text-white flex items-center justify-center kr text-sm">
-            한
-          </span>
+          <BrandMark size={30} />
           Kroot
         </Link>
 

@@ -10,6 +10,7 @@ import CuteError from "@/components/ui/CuteError";
 import Pot from "@/components/onboarding/Pot";
 import { LEVELS, buildTest, levelFromWeighted } from "@/lib/level-test";
 import { createClient } from "@/lib/supabase/client";
+import BrandMark from "@/components/ui/BrandMark";
 
 type Step = "signup" | "confirm" | "choice" | "quiz" | "result";
 
@@ -265,9 +266,7 @@ export default function OnboardingPage() {
             href="/"
             className="flex items-center gap-[9px] font-semibold text-[17px] tracking-[-0.01em]"
           >
-            <span className="w-[30px] h-[30px] rounded-lg bg-success text-white flex items-center justify-center kr text-sm">
-              한
-            </span>
+            <BrandMark size={30} />
             Kroot
           </Link>
           <div className="flex items-center gap-1.5" aria-label="progress">

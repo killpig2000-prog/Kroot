@@ -1,4 +1,5 @@
 import { Link } from "@/i18n/navigation";
+import BrandMark from "@/components/ui/BrandMark";
 
 export default function Final() {
   return (
@@ -30,15 +31,13 @@ export default function Final() {
       <footer className="bg-[#FFFFFF] border-t border-dashed border-dash">
         <div className="max-w-[1080px] mx-auto px-[clamp(18px,4vw,28px)] py-6 flex justify-between items-center gap-4 flex-wrap text-[12px] text-faint">
           <span className="flex items-center gap-[9px] font-bold text-[13.5px] text-[#221F1B]">
-            <span className="w-[24px] h-[24px] rounded-lg bg-success text-white flex items-center justify-center kr text-[11px]">
-              한
-            </span>
+            <BrandMark size={24} />
             Kroot
           </span>
           <div className="flex gap-5 font-medium">
             <a href="#" className="hover:text-[#221F1B] transition-colors">About</a>
-            <a href="/pricing" className="hover:text-[#221F1B] transition-colors">Pricing</a>
-            <a href="/privacy" className="hover:text-[#221F1B] transition-colors">Privacy</a>
+            <Link href="/pricing" className="hover:text-[#221F1B] transition-colors">Pricing</Link>
+            <Link href="/privacy" className="hover:text-[#221F1B] transition-colors">Privacy</Link>
             <a href="#" className="hover:text-[#221F1B] transition-colors">Contact</a>
           </div>
           <span>© 2026 Kroot</span>
