@@ -1,5 +1,5 @@
 import { Link } from "@/i18n/navigation";
-import { showEverything } from "@/app/dashboard/actions";
+import { showEverything } from "../../app/[locale]/dashboard/actions";
 import { buttonClassName } from "@/components/ui/Button";
 import type { FirstVisitUnlocks } from "@/lib/first-visit";
 
