@@ -6,7 +6,9 @@ import { usePathname } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { MAIN_ITEMS, SECTIONS, type NavColor, type NavItem } from "@/components/dashboard/navItems";
 
-// Four tabs (2026-08-28): Garden · Learn · Review · More. Learning used to
+// Four tabs (2026-08-28): Garden · Learn · Review · More — equal-width cells
+// that fill the bar edge to edge (2026-08-29), so each tap target is a quarter
+// of the screen rather than a 60px pill in the middle. Learning used to
 // sit two taps deep behind a single "Menu" while the Shop had a tab of its
 // own; now the first study action is one tap away and the review queue
 // carries a due-count badge, which is the cheapest retention nudge we have.
@@ -104,16 +106,16 @@ function TabButton({
       type="button"
       onClick={onClick}
       aria-expanded={expanded}
-      className={`relative flex flex-col items-center gap-px rounded-lg px-[13px] py-[7px] text-[11px] transition-colors ${
+      className={`relative flex flex-col items-center justify-center gap-0.5 min-h-[56px] py-1 text-[11.5px] transition-colors ${
         on ? "text-success-deep font-bold" : "text-faint font-medium hover:text-muted"
       }`}
     >
-      <span className="text-[17px]" style={on ? {} : { filter: "grayscale(1)", opacity: 0.55 }}>
+      <span className="text-[21px] leading-none" style={on ? {} : { filter: "grayscale(1)", opacity: 0.55 }}>
         {icon}
       </span>
       {label}
       {badge !== undefined && badge > 0 && (
-        <span className="absolute top-0.5 right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-[#DC2626] text-white text-[10.5px] font-bold leading-[18px] text-center tabular-nums">
+        <span className="absolute top-1 left-[calc(50%+6px)] min-w-[18px] h-[18px] px-1 rounded-full bg-[#DC2626] text-white text-[10.5px] font-bold leading-[18px] text-center tabular-nums">
           {badge > 99 ? "99+" : badge}
         </span>
       )}
@@ -243,17 +245,17 @@ export default function BottomNav() {
         )}
 
         <nav
-          className="bg-white/90 backdrop-blur-[10px] border-t border-line flex justify-center gap-0.5 py-2 pb-[max(8px,env(safe-area-inset-bottom))]"
+          className="bg-white/90 backdrop-blur-[10px] border-t border-line grid grid-cols-4 pt-1 pb-[max(4px,env(safe-area-inset-bottom))]"
           aria-label="main"
         >
           <Link
             href="/dashboard"
             onClick={close}
-            className={`flex flex-col items-center gap-px rounded-lg px-[13px] py-[7px] text-[11px] transition-colors ${
+            className={`flex flex-col items-center justify-center gap-0.5 min-h-[56px] py-1 text-[11.5px] transition-colors ${
               onGarden ? "text-success-deep font-bold" : "text-faint font-medium hover:text-muted"
             }`}
           >
-            <span className="text-[17px]" style={onGarden ? {} : { filter: "grayscale(1)", opacity: 0.55 }}>
+            <span className="text-[21px] leading-none" style={onGarden ? {} : { filter: "grayscale(1)", opacity: 0.55 }}>
               🏡
             </span>
             Garden
@@ -262,16 +264,16 @@ export default function BottomNav() {
           <Link
             href="/review"
             onClick={close}
-            className={`relative flex flex-col items-center gap-px rounded-lg px-[13px] py-[7px] text-[11px] transition-colors ${
+            className={`relative flex flex-col items-center justify-center gap-0.5 min-h-[56px] py-1 text-[11.5px] transition-colors ${
               onReview ? "text-success-deep font-bold" : "text-faint font-medium hover:text-muted"
             }`}
           >
-            <span className="text-[17px]" style={onReview ? {} : { filter: "grayscale(1)", opacity: 0.55 }}>
+            <span className="text-[21px] leading-none" style={onReview ? {} : { filter: "grayscale(1)", opacity: 0.55 }}>
               💧
             </span>
             Review
             {due > 0 && (
-              <span className="absolute top-0.5 right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-[#DC2626] text-white text-[10.5px] font-bold leading-[18px] text-center tabular-nums">
+              <span className="absolute top-1 left-[calc(50%+6px)] min-w-[18px] h-[18px] px-1 rounded-full bg-[#DC2626] text-white text-[10.5px] font-bold leading-[18px] text-center tabular-nums">
                 {due > 99 ? "99+" : due}
               </span>
             )}

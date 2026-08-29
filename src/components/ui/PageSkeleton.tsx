@@ -4,8 +4,9 @@
 export default function PageSkeleton({ rows = 5 }: { rows?: number }) {
   return (
     <div className="min-h-screen bg-warm">
-      <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
+      <div className="grid grid-cols-1 md:grid-cols-[clamp(216px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
         <div className="hidden md:block border-r border-dashed border-dash bg-warm" />
+        <div className="md:hidden h-[52px] border-b-[1.5px] border-dashed border-dash bg-warm" />
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[60px] w-full max-w-[760px]">
           <div className="animate-pulse">
             <div className="h-3.5 w-36 rounded-full bg-warm-3 mb-7" />

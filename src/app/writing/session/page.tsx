@@ -53,7 +53,7 @@ export default async function WritingChapterSessionPage({
 
   return (
     <div className="min-h-screen bg-warm text-charcoal">
-      <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
+      <div className="grid grid-cols-1 md:grid-cols-[clamp(216px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
         <Sidebar
           displayName={profile?.display_name ?? "there"}
           email={user.email ?? ""}

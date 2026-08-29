@@ -6,6 +6,7 @@ import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import SkillBar from "@/components/dashboard/SkillBar";
 import Widgets from "@/components/dashboard/Widgets";
+import WordOfDayCard from "@/components/dashboard/WordOfDayCard";
 import FeedbackWidget from "@/components/dashboard/FeedbackWidget";
 import Greeting from "@/components/dashboard/Greeting";
 import ContinueCard from "@/components/dashboard/ContinueCard";
@@ -342,7 +343,7 @@ export default async function DashboardPage() {
 
     return (
       <div className="min-h-screen bg-warm text-[#221F1B]">
-        <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
+        <div className="grid grid-cols-1 md:grid-cols-[clamp(216px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
           <Sidebar
             displayName={displayName}
             email={user.email ?? ""}
@@ -383,21 +384,7 @@ export default async function DashboardPage() {
               />
             )}
 
-            {firstVisit.unlocked.wotd && wotd && (
-              <div className="border border-line rounded-[14px] bg-white px-[22px] py-5 mb-[30px]">
-                <div className="flex items-baseline justify-between mb-3">
-                  <b className="text-[12px] font-extrabold tracking-[.05em] text-success-deep uppercase">Word of the day</b>
-                  <small className="text-[11.5px] text-faint">단어</small>
-                </div>
-                <p className="kr text-2xl mb-0.5">{wotd.word}</p>
-                <p className="text-[12.5px] text-faint mb-1.5">{wotd.roman}</p>
-                <p className="text-[13.5px] text-muted mb-2.5">{wotd.mean}</p>
-                <div className="bg-warm rounded-[9px] px-3 py-[9px] text-[12.5px] text-muted">
-                  <span className="kr block text-[13.5px] text-charcoal mb-px">{wotd.exKr}</span>
-                  {wotd.exEn}
-                </div>
-              </div>
-            )}
+            {firstVisit.unlocked.wotd && wotd && <WordOfDayCard wotd={wotd} />}
 
             {firstVisit.unlocked.levelMap && promo && (
               <LevelMap current={cefr} checks={promoChecks} eligible={elig.eligible} overallPct={overallPct} />
@@ -427,7 +414,7 @@ export default async function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-warm text-[#221F1B]">
-      <div className="grid grid-cols-1 md:grid-cols-[clamp(200px,18%,280px)_minmax(0,1fr)] xl:grid-cols-[clamp(200px,17%,280px)_minmax(0,1fr)_clamp(260px,22%,340px)] w-full min-h-screen">
+      <div className="grid grid-cols-1 md:grid-cols-[clamp(216px,18%,280px)_minmax(0,1fr)] xl:grid-cols-[clamp(216px,17%,280px)_minmax(0,1fr)_clamp(260px,22%,340px)] w-full min-h-screen">
         <Sidebar
           displayName={displayName}
           email={user.email ?? ""}
@@ -517,6 +504,10 @@ export default async function DashboardPage() {
               Hear it in context →
             </span>
           </Link>
+
+          {/* word of the day — rail card on xl+, inline here below that so
+              phones and tablets get the same daily word a desktop does. */}
+          {wotd && <WordOfDayCard wotd={wotd} className="xl:hidden" />}
 
           {/* new to Korean? — only for true beginners */}
           {cefr === "A1" && (
