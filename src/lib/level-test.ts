@@ -109,9 +109,25 @@ function pickSome<T>(pool: T[], n: number, rand: () => number): T[] {
  * Draw a balanced placement paper: PER_BAND questions from every level band,
  * ordered easiest first. Pass a seed for a reproducible draw.
  */
+/**
+ * Shuffle a question's options and re-point `ans`. Most of the pool lists the
+ * right answer first, so without this "always pick the first option" would
+ * clear every band.
+ */
+function shuffleOptions(q: Question, rand: () => number): Question {
+  const order = q.opts.map((_, i) => i);
+  for (let i = order.length - 1; i > 0; i--) {
+    const j = Math.floor(rand() * (i + 1));
+    [order[i], order[j]] = [order[j], order[i]];
+  }
+  return { ...q, opts: order.map((i) => q.opts[i]), ans: order.indexOf(q.ans) };
+}
+
 export function buildTest(seed?: number): Question[] {
   const rand = seed === undefined ? Math.random : mulberry32(seed);
-  return TEST_BANDS.flatMap((lv) => pickSome(QUESTIONS.filter((q) => q.lv === lv), PER_BAND, rand));
+  return TEST_BANDS.flatMap((lv) =>
+    pickSome(QUESTIONS.filter((q) => q.lv === lv), PER_BAND, rand).map((q) => shuffleOptions(q, rand))
+  );
 }
 
 export type Level = {
@@ -223,10 +239,11 @@ export function answerRun(run: Run, choice: number): Run {
 export function replaceCurrent(run: Run): Run {
   const q = currentQuestion(run);
   if (!q) return run;
-  const unused = QUESTIONS.filter((x) => x.lv === q.lv && !run.paper.includes(x));
+  const seen = new Set(run.paper.map((x) => x.word ?? x.audio));
+  const unused = QUESTIONS.filter((x) => x.lv === q.lv && !seen.has(x.word ?? x.audio));
   const paper = [...run.paper];
   if (unused.length > 0) {
-    paper[run.index] = unused[Math.floor(Math.random() * unused.length)];
+    paper[run.index] = shuffleOptions(unused[Math.floor(Math.random() * unused.length)], Math.random);
     return { ...run, paper };
   }
   paper.splice(run.index, 1);

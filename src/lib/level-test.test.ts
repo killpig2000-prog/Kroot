@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   BAND_PASS,
   PER_BAND,
+  QUESTIONS,
   TEST_BANDS,
   answerRun,
   buildTest,
@@ -32,6 +33,18 @@ describe("buildTest", () => {
     const paper = buildTest(0);
     expect(paper).toHaveLength(TEST_BANDS.length * PER_BAND);
     for (let i = 1; i < paper.length; i++) expect(paper[i].lv).toBeGreaterThanOrEqual(paper[i - 1].lv);
+  });
+});
+
+describe("buildTest option shuffle", () => {
+  it("does not leave the right answer in the first slot every time", () => {
+    const paper = buildTest(11);
+    expect(paper.some((q) => q.ans !== 0)).toBe(true);
+    for (const q of paper) {
+      const original = QUESTIONS.find((x) => (x.word ?? x.audio) === (q.word ?? q.audio))!;
+      expect(q.opts[q.ans]).toBe(original.opts[original.ans]);
+      expect([...q.opts].sort()).toEqual([...original.opts].sort());
+    }
   });
 });
 
