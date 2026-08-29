@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 
 // Where each quest skill sends the learner. Completion is NOT done here —
 // finishing the actual activity marks the quest via recordCompletion().

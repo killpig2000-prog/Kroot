@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 
 const OPTIONS = [
   { label: "It's okay / I'm fine", on: true },

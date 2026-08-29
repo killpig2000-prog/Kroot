@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import LevelCreature from "@/components/dashboard/LevelCreature";
 import SpeechBubble from "@/components/ui/SpeechBubble";
 import type { ProgressResult } from "@/lib/activity";

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { LEVEL_ORDER, SPECIES, type CefrLevel } from "@/lib/tree";
 
 // A1 → C2 stepper: where the learner is on the curriculum and how far the

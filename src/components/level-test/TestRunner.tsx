@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { buttonClassName } from "@/components/ui/Button";
 import { useRouter } from "next/navigation";
+import { Link, redirect, useRouter, usePathname, getPathname } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { useSpeechRecognition } from "@/hooks/useSpeechRecognition";
 import { track } from "@/lib/analytics";

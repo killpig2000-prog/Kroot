@@ -2,8 +2,9 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { buttonClassName } from "@/components/ui/Button";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { useRouter } from "next/navigation";
+import { Link, redirect, useRouter, usePathname, getPathname } from "@/i18n/navigation";
 import { useSaveResume } from "@/hooks/useSaveResume";
 import { createClient } from "@/lib/supabase/client";
 import { recordCompletion, type ProgressResult } from "@/lib/activity";

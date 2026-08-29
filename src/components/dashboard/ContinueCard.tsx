@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { track } from "@/lib/analytics";
 import { SKILL_ICONS, type ResumeRow } from "@/lib/resume";
 

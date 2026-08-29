@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Link, redirect, useRouter, usePathname, getPathname } from "@/i18n/navigation";
 import { PAYMENTS_LIVE, type PlanKey } from "@/lib/plus";
 
 export default function PlusCheckoutButton({

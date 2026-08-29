@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
+import { Link, redirect, useRouter, usePathname, getPathname } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
 
 export default function NameEditor({ userId, name }: { userId: string; name: string }) {

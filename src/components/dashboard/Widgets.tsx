@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import QuestButton from "@/components/dashboard/QuestButton";
 import { OPEN_FEEDBACK_EVENT } from "@/components/dashboard/FeedbackWidget";
 

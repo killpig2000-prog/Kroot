@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { boardLabel, splitPost, timeAgo, type CommunityPost } from "@/lib/community";
 
 export default function PostList({

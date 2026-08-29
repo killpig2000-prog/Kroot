@@ -1,0 +1,17 @@
+{
+  "save": "Guardar",
+  "cancel": "Cancelar",
+  "continue": "Continuar",
+  "back": "Atrás",
+  "loading": "Cargando…",
+  "retry": "Intentar de nuevo",
+  "close": "Cerrar",
+  "open": "Abrir",
+  "next": "Siguiente",
+  "previous": "Anterior",
+  "submit": "Enviar",
+  "delete": "Eliminar",
+  "edit": "Editar",
+  "search": "Buscar",
+  "noResults": "No se encontraron resultados"
+}

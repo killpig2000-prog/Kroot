@@ -1,0 +1,11 @@
+{
+  "dictionary": "Diccionario de coreano",
+  "level": "Nivel",
+  "exampleSentence": "Oración de ejemplo",
+  "moreLevelWords": "Más palabras de nivel {level}",
+  "learnForReal": "Aprende {word} de verdad — no solo leas",
+  "learnDescription": "Kroot enseña esta palabra con tarjetas, escucha y práctica de pronunciación — gratis, a tu ritmo.",
+  "startLearning": "Comenzar a aprender — gratis",
+  "seenInListening": "🎧 Visto en Escucha",
+  "seenInReading": "📖 Visto en Lectura"
+}

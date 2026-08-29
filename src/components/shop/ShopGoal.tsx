@@ -4,7 +4,7 @@
 // Glow", a sun-yellow gauge, and how many daily quests (or which 10th-level
 // bonus) closes the gap. Pure presentation — goal selection lives in
 // ShopClient, where the catalog/ownership state is.
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { useSyncExternalStore, type ReactNode } from "react";
 import type { Costume } from "@/lib/costumes";
 

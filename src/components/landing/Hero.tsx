@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import Polaroid from "@/components/landing/Polaroid";
 
 export default function Hero() {

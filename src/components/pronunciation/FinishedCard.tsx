@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { buttonClassName } from "@/components/ui/Button";
 import { XP_POINTS, type ProgressResult } from "@/lib/activity";
 import { TIER_META, type Chapter, type ChallengeWord } from "@/lib/pronunciation";

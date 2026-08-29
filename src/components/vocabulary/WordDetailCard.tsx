@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { useRouter } from "next/navigation";
+import { Link, redirect, useRouter, usePathname, getPathname } from "@/i18n/navigation";
 import { buttonClassName } from "@/components/ui/Button";
 import { createClient } from "@/lib/supabase/client";
 import { nextBox, nextReviewAt } from "@/lib/srs";

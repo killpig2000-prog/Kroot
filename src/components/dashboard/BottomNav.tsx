@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { usePathname } from "next/navigation";
+import { Link, redirect, useRouter, usePathname, getPathname } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { MAIN_ITEMS, SECTIONS, type NavColor, type NavItem } from "@/components/dashboard/navItems";
 

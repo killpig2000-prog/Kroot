@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { unitLabel } from "@/lib/vocabulary";
 import type { SearchEntry } from "@/lib/vocab-search-index";
 

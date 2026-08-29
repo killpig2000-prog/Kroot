@@ -9,4 +9,7 @@ export type RawVocabWord = {
   example_en: string;
   // Optional shared-root key into VOCAB_ROOTS — shows a "bonus root" panel on this card.
   root?: string;
+  // Localized meanings and examples (applied via overlay in vocabulary.ts)
+  meaning_es?: string;
+  example_es?: string;
 };

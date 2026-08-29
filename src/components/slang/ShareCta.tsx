@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { track } from "@vercel/analytics";
 
 // Same CTA as the words/[slug] page, but fires a named event first so we can

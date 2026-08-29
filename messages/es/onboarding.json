@@ -1,0 +1,17 @@
+{
+  "welcome": "Aprende coreano, a tu propio ritmo",
+  "subtitle": "Únete a miles de personas aprendiendo coreano con Kroot — la app que se adapta a ti.",
+  "startFree": "Comenzar a aprender — gratis",
+  "alreadySignedUp": "¿Ya estás registrado?",
+  "signIn": "Iniciar sesión",
+  "email": "Correo electrónico",
+  "password": "Contraseña",
+  "name": "Nombre completo",
+  "nativeLanguage": "Idioma nativo",
+  "signUp": "Registrarse",
+  "agreeToTerms": "Acepto los Términos de Servicio y la Política de Privacidad",
+  "forgotPassword": "¿Olvidaste tu contraseña?",
+  "resetPassword": "Restablecer contraseña",
+  "sendResetLink": "Enviar enlace de restablecimiento",
+  "checkEmail": "Revisa tu correo electrónico para obtener el enlace de restablecimiento"
+}

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import { Link, redirect, useRouter, usePathname, getPathname } from "@/i18n/navigation";
 
 // Early-launch notice: shows on every dashboard load while we're actively
 // soliciting feedback. "Close" is per-load only; "Don't show today" hides it
