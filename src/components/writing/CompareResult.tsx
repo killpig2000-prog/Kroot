@@ -201,9 +201,6 @@ export default function CompareResult({
 
       <div className="flex items-center justify-end gap-2.5 flex-wrap border-t border-line pt-5">
         {!hasNextChapter && (
-          <span className="mr-auto text-[12.5px] text-muted">
-            </Link>
-          </span>
         )}
         <button className={BTN_LINE} onClick={() => onGoTo("/dashboard")} disabled={navigating}>
           Back to Garden
