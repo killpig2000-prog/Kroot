@@ -197,7 +197,11 @@ Be warm and encouraging. Praise answers that are already correct.`,
     .sort((a, b) => a.index - b.index);
 
   // Log this grading attempt (best-effort, don't fail if it errors).
-  await supabase.from("ai_grade_log").insert({ user_id: user.id }).catch(() => {});
+  try {
+    await supabase.from("ai_grade_log").insert({ user_id: user.id });
+  } catch {
+    // best-effort
+  }
 
   return NextResponse.json(result);
 }
