@@ -17,6 +17,7 @@ let translator: any = null;
 
 async function initTranslator() {
   try {
+    // @ts-ignore -- optional, installed ad hoc when this script is run; not a project dependency
     const mod = await import("google-translate-open-api");
     translator = mod.default;
     console.log("✓ Translation API initialized");
