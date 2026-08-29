@@ -44,7 +44,7 @@ const MONTH_GOAL = 20;
 
 // One quest per day, rotating through the four practice skills.
 const QUEST_ROTATION = [
-  { skill_key: "writing", title: "Today's quest", description: "Writing · 5 everyday sentences · ~5 min" },
+  { skill_key: "writing", title: "Today's quest", description: "Writing · one chapter, a few questions · ~8 min" },
   { skill_key: "vocabulary", title: "Today's quest", description: "Watering · review your due words · ~5 min" },
   { skill_key: "listening", title: "Today's quest", description: "Listening · one dialogue at your level · ~5 min" },
   { skill_key: "reading", title: "Today's quest", description: "Reading · one short passage · ~4 min" },

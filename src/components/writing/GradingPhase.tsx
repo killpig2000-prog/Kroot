@@ -16,14 +16,14 @@ export default function GradingPhase({
   treeStage,
   species,
   costumeIds,
-  response,
+  responses,
 }: {
   gradingStep: number;
   treeStage: CefrLevel;
   species?: CefrLevel;
   costumeIds?: string[];
   /** What the learner submitted — shown while they wait so it doesn't vanish. */
-  response?: string;
+  responses?: string[];
 }) {
   const step = GRADING_STEPS[Math.min(gradingStep, GRADING_STEPS.length - 1)];
   return (
@@ -44,10 +44,17 @@ export default function GradingPhase({
           Taking a little longer than usual — hang tight, it&apos;s still working.
         </p>
       )}
-      {response?.trim() && (
-        <div className="mt-6 max-w-[560px] mx-auto text-left bg-warm border border-line rounded-[12px] px-4 py-3">
-          <p className="text-[10.5px] font-semibold tracking-[.08em] uppercase text-faint mb-1">Your answer</p>
-          <p className="kr text-[15px] leading-[1.7] whitespace-pre-wrap">{response.trim()}</p>
+      {responses && responses.some((r) => r.trim()) && (
+        <div className="mt-6 max-w-[560px] mx-auto text-left bg-warm border border-line rounded-[12px] px-4 py-3 flex flex-col gap-2.5">
+          <p className="text-[10.5px] font-semibold tracking-[.08em] uppercase text-faint">Your answers</p>
+          {responses.map(
+            (r, i) =>
+              r.trim() && (
+                <p key={i} className="kr text-[14px] leading-[1.6] whitespace-pre-wrap">
+                  <b className="text-faint font-semibold">Q{i + 1}.</b> {r.trim()}
+                </p>
+              )
+          )}
         </div>
       )}
     </div>

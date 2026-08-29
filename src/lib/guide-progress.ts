@@ -5,7 +5,7 @@ import { getChaptersForTopic, getChapterStatuses } from "@/lib/vocabulary";
 import { DIALOGUES } from "@/lib/listening-dialogues";
 import { SITUATIONS } from "@/lib/listening";
 import { getPassagesForLevel } from "@/lib/reading";
-import { getPromptsForLevel } from "@/lib/writing";
+import { CHAPTER_SIZE, getPromptsForLevel } from "@/lib/writing";
 import { NAILED_THRESHOLD, chapterBlurb, orderedChapters } from "@/lib/pronunciation";
 import { computeEligibility, type Eligibility } from "@/lib/promotion-server";
 
@@ -277,6 +277,7 @@ export async function getGuideProgress(
   const writtenPrompts = prompts.filter((p) => wroteAt.has(p.key));
   const writingTarget = Math.min(WRITING_STATION_PROMPTS, prompts.length);
   const nextPromptIdx = prompts.findIndex((p) => !wroteAt.has(p.key));
+  const nextChapterIdx = nextPromptIdx >= 0 ? Math.floor(nextPromptIdx / CHAPTER_SIZE) : -1;
   const writeMet = writingTarget > 0 && writtenPrompts.length >= writingTarget;
   const writeStation: GuideStationProgress = {
     stationId: "write",
@@ -285,10 +286,10 @@ export async function getGuideProgress(
     doneAt: writeMet ? nthIso(writtenPrompts.map((p) => wroteAt.get(p.key)!), writingTarget) : undefined,
     percent: pct(writtenPrompts.length, writingTarget),
     ctaHref:
-      nextPromptIdx >= 0 ? `/writing/session?chapter=${nextPromptIdx}&level=${grade}` : `/writing?level=${grade}`,
+      nextChapterIdx >= 0 ? `/writing/session?chapter=${nextChapterIdx}&level=${grade}` : `/writing?level=${grade}`,
     ctaLabel:
-      nextPromptIdx >= 0
-        ? `${writtenPrompts.length ? "Continue" : "Start"}: Page ${nextPromptIdx + 1} →`
+      nextChapterIdx >= 0
+        ? `${writtenPrompts.length ? "Continue" : "Start"}: Chapter ${nextChapterIdx + 1} →`
         : "Open Writing →",
     note: writtenPrompts.length
       ? `${writtenPrompts.length} / ${writingTarget} pages so far`

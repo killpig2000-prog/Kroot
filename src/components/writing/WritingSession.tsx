@@ -6,7 +6,8 @@ import { clearResume } from "@/lib/resume";
 import { Link, useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { recordCompletion, type ProgressResult } from "@/lib/activity";
-import { MINUTES_PER_PROMPT, MIN_RESPONSE_LENGTH, type Prompt } from "@/lib/writing";
+import { MINUTES_PER_CHAPTER, MIN_RESPONSE_LENGTH, type Prompt } from "@/lib/writing";
+import type { ChapterGradeResult } from "@/app/api/writing/grade/route";
 import type { CefrLevel } from "@/lib/tree";
 import WritePhase from "@/components/writing/WritePhase";
 import GradingPhase from "@/components/writing/GradingPhase";
@@ -14,35 +15,25 @@ import CompareResult from "@/components/writing/CompareResult";
 
 type Phase = "write" | "grading" | "compare";
 
-type GradeResult = {
-  score: number;
-  feedback_en: string;
-  corrected_kr: string;
-  /** Plus only: sentence-by-sentence corrections. */
-  corrections?: { original: string; corrected: string; note: string }[];
-};
-
 const CARD = "border border-line rounded-[14px] bg-cream max-w-[900px]";
 const BTN_INK =
   "rounded-[9px] px-[18px] py-[9px] text-sm font-semibold text-white bg-success hover:bg-success-deep transition-colors disabled:bg-line disabled:text-faint";
 
 export default function WritingSession({
-  prompt,
+  prompts,
   userId,
   level,
   chapterIndex,
   hasNextChapter,
-  plus,
   species,
   costumeIds,
   treeStage,
 }: {
-  prompt: Prompt;
+  prompts: Prompt[];
   userId: string;
   level: CefrLevel;
   chapterIndex: number;
   hasNextChapter: boolean;
-  plus: boolean;
   /** The learner's actual CEFR grade — keeps the tree's species matching their real garden. */
   species?: CefrLevel;
   costumeIds?: string[];
@@ -56,14 +47,13 @@ export default function WritingSession({
   useSaveResume(phase === "write" ? userId : null, {
     skill: "writing",
     href: "",
-    label: prompt.prompt_en.length > 60 ? prompt.prompt_en.slice(0, 57) + "…" : prompt.prompt_en,
+    label: `Chapter ${chapterIndex + 1}`,
     detail: `Writing · Chapter ${chapterIndex + 1} · ${level}`,
   });
-  const [response, setResponse] = useState("");
+  const [responses, setResponses] = useState<string[]>(() => prompts.map(() => ""));
   const [submitting, setSubmitting] = useState(false);
   const [navigating, setNavigating] = useState(false);
-  const [showHint, setShowHint] = useState(false);
-  const [grade, setGrade] = useState<GradeResult | null>(null);
+  const [grade, setGrade] = useState<ChapterGradeResult | null>(null);
   const [limitMessage, setLimitMessage] = useState<string | null>(null);
   const [levelUp, setLevelUp] = useState<ProgressResult | null>(null);
   const [gradingStep, setGradingStep] = useState(0);
@@ -86,25 +76,35 @@ export default function WritingSession({
     return () => clearInterval(id);
   }, [phase]);
 
+  function setResponse(index: number, value: string) {
+    setResponses((prev) => {
+      const next = [...prev];
+      next[index] = value;
+      return next;
+    });
+  }
+
+  const answeredCount = responses.filter((r) => r.trim().length >= MIN_RESPONSE_LENGTH).length;
+  const ready = answeredCount === prompts.length;
+
   async function submit() {
-    if (response.trim().length < MIN_RESPONSE_LENGTH) return;
+    if (!ready) return;
     setSubmitting(true);
     setPhase("grading");
 
-    // Grade first: a free user who already wrote a different chapter today
-    // gets daily_limit back, and the chapter must NOT be marked complete.
     let dailyLimited = false;
     try {
       const res = await fetch("/api/writing/grade", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          prompt_kr: prompt.prompt_kr,
-          prompt_en: prompt.prompt_en,
-          prompt_key: prompt.key,
-          response_text: response.trim(),
           level,
-          stimulus_kr: prompt.stimulus_kr,
+          answers: prompts.map((p, i) => ({
+            prompt_kr: p.prompt_kr,
+            prompt_en: p.prompt_en,
+            stimulus_kr: p.stimulus_kr,
+            response_text: responses[i].trim(),
+          })),
         }),
       });
       if (res.ok) {
@@ -124,13 +124,14 @@ export default function WritingSession({
       // Nothing was completed — don't let the nav buttons award minutes/XP.
       loggedMinutes.current = true;
     } else {
+      const completedAt = new Date().toISOString();
       await supabase.from("writing_progress").upsert(
-        {
+        prompts.map((p, i) => ({
           user_id: userId,
-          prompt_key: prompt.key,
-          response_text: response.trim(),
-          completed_at: new Date().toISOString(),
-        },
+          prompt_key: p.key,
+          response_text: responses[i].trim(),
+          completed_at: completedAt,
+        })),
         { onConflict: "user_id,prompt_key" }
       );
       await logMinutesOnce();
@@ -145,7 +146,7 @@ export default function WritingSession({
     loggedMinutes.current = true;
     void clearResume(supabase, userId);
 
-    const result = await recordCompletion(supabase, "writing", MINUTES_PER_PROMPT);
+    const result = await recordCompletion(supabase, "writing", MINUTES_PER_CHAPTER);
     if (result?.leveled_up) setLevelUp(result);
   }
 
@@ -159,14 +160,13 @@ export default function WritingSession({
   if (phase === "write") {
     return (
       <WritePhase
-        prompt={prompt}
+        prompts={prompts}
         chapterIndex={chapterIndex}
-        response={response}
+        responses={responses}
         setResponse={setResponse}
-        showHint={showHint}
-        setShowHint={setShowHint}
         submitting={submitting}
-        ready={response.trim().length >= MIN_RESPONSE_LENGTH}
+        ready={ready}
+        answeredCount={answeredCount}
         onSubmit={submit}
       />
     );
@@ -179,15 +179,15 @@ export default function WritingSession({
         treeStage={treeStage ?? level}
         species={species}
         costumeIds={costumeIds}
-        response={response}
+        responses={responses}
       />
     );
   }
 
   return (
     <CompareResult
-      prompt={prompt}
-      response={response}
+      prompts={prompts}
+      responses={responses}
       grade={grade}
       limitMessage={limitMessage}
       levelUp={levelUp}
@@ -197,7 +197,6 @@ export default function WritingSession({
       costumeIds={costumeIds}
       chapterIndex={chapterIndex}
       hasNextChapter={hasNextChapter}
-      plus={plus}
       navigating={navigating}
       onGoTo={goTo}
     />

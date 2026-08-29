@@ -1,111 +1,130 @@
-import { WRITING_GENRE_META, type Prompt } from "@/lib/writing";
+import { WRITING_GENRE_META, MIN_RESPONSE_LENGTH, type Prompt } from "@/lib/writing";
 
-const CARD = "border border-line rounded-[14px] bg-cream max-w-[900px]";
-const LABEL = "text-[11.5px] font-semibold tracking-[.1em] uppercase text-faint";
+const CARD = "border border-line rounded-[16px] bg-cream max-w-[900px] overflow-hidden";
 const BTN_INK =
-  "rounded-[9px] px-[18px] py-[9px] text-sm font-semibold text-white bg-success hover:bg-success-deep transition-colors disabled:bg-line disabled:text-faint";
+  "rounded-[10px] px-5 py-[11px] text-sm font-bold text-white bg-success hover:bg-success-deep transition-colors disabled:bg-line disabled:text-faint";
 
 export default function WritePhase({
-  prompt,
+  prompts,
   chapterIndex,
-  response,
+  responses,
   setResponse,
-  showHint,
-  setShowHint,
   submitting,
   ready,
+  answeredCount,
   onSubmit,
 }: {
-  prompt: Prompt;
+  prompts: Prompt[];
   chapterIndex: number;
-  response: string;
-  setResponse: (v: string) => void;
-  showHint: boolean;
-  setShowHint: (v: boolean) => void;
+  responses: string[];
+  setResponse: (index: number, v: string) => void;
   submitting: boolean;
   ready: boolean;
+  answeredCount: number;
   onSubmit: () => void;
 }) {
+  const genreMeta = WRITING_GENRE_META[prompts[0].genre];
+
   return (
-    <div className={`${CARD} overflow-hidden`}>
-      <div className="grid grid-cols-1 md:grid-cols-2">
-        {/* left page — the prompt */}
-        <div className="p-[clamp(20px,3vw,32px)] flex flex-col border-b md:border-b-0 md:border-r border-dashed border-line">
-          <p className={`${LABEL} mb-5`}>
-            Page {chapterIndex + 1} ·{" "}
-            <b className="text-amber font-semibold">
-              {WRITING_GENRE_META[prompt.genre].icon} {WRITING_GENRE_META[prompt.genre].label}
-            </b>
+    <div className={CARD}>
+      {/* head */}
+      <div className="p-[clamp(20px,3vw,32px)] pb-5 border-b border-dashed border-line bg-cream grid gap-5 sm:grid-cols-[1fr_auto] sm:items-end">
+        <div>
+          <span className="inline-flex items-center gap-1.5 text-xs font-bold text-amber bg-[var(--tint-amber)] border border-amber-line px-2.5 py-1 rounded-full mb-2.5">
+            {genreMeta.icon} {genreMeta.label}
+          </span>
+          <h1 className="font-extrabold text-[22px] sm:text-[24px] tracking-[-0.02em]" style={{ textWrap: "balance" }}>
+            Chapter {chapterIndex + 1}
+          </h1>
+          <p className="text-[13.5px] text-muted mt-1">
+            {prompts.length}개 질문에 답하면 한 번에 채점해 드려요.
           </p>
-          {prompt.stimulus_kr && (
-            <div className="mb-4 flex gap-2.5 items-start">
-              <span className="flex-none w-8 h-8 rounded-full bg-[var(--tint-sky)] border border-sky-line flex items-center justify-center text-[15px]">
-                💬
-              </span>
-              <div className="rounded-[14px] rounded-tl-[4px] bg-[var(--tint-stone)] border border-[var(--tint-stone-line)] px-4 py-3 max-w-[92%]">
-                <p className="kr text-[15px] leading-[1.75] text-charcoal">{prompt.stimulus_kr}</p>
-                {prompt.stimulus_en && (
-                  <p className="text-[12.5px] text-muted leading-[1.6] mt-1.5">{prompt.stimulus_en}</p>
+        </div>
+        <div className="max-w-[260px] text-[12.5px] leading-[1.55] text-success bg-success-bg border border-success-line rounded-[12px] px-3 py-2.5">
+          <b className="block text-[13px] text-success-deep mb-0.5">💡 더 많이 쓸수록 더 정확해요</b>
+          질문마다 1–2문장이면 공통 패턴까지 잡아 드릴 수 있어요.
+        </div>
+      </div>
+
+      {/* questions */}
+      <div className="flex flex-col">
+        {prompts.map((prompt, i) => {
+          const value = responses[i] ?? "";
+          const answered = value.trim().length >= MIN_RESPONSE_LENGTH;
+          return (
+            <div
+              key={prompt.key}
+              className={`grid grid-cols-1 sm:grid-cols-[56px_1fr] gap-x-4 px-5 sm:px-[clamp(20px,3vw,32px)] py-[22px] ${
+                i > 0 ? "border-t border-line" : ""
+              }`}
+            >
+              <div className="text-[13px] font-extrabold text-amber tracking-[.02em] pt-[3px] mb-2 sm:mb-0">
+                Q{i + 1}
+                <small className="block text-[10.5px] text-faint font-semibold tracking-[.08em] mt-0.5">
+                  OF {prompts.length}
+                </small>
+              </div>
+              <div>
+                {prompt.stimulus_kr && (
+                  <div className="mb-3 flex gap-2 items-start">
+                    <span className="flex-none w-7 h-7 rounded-full bg-[var(--tint-sky)] border border-sky-line flex items-center justify-center text-[13px]">
+                      💬
+                    </span>
+                    <div className="rounded-[12px] rounded-tl-[4px] bg-warm border border-line px-3.5 py-2.5 max-w-[92%]">
+                      <p className="kr text-[13.5px] leading-[1.65] text-charcoal">{prompt.stimulus_kr}</p>
+                      {prompt.stimulus_en && (
+                        <p className="text-[11.5px] text-muted leading-[1.5] mt-1">{prompt.stimulus_en}</p>
+                      )}
+                    </div>
+                  </div>
                 )}
+                <p className="kr font-bold text-[17px] leading-[1.4] mb-0.5">{prompt.prompt_kr}</p>
+                <p className="text-[13px] text-muted mb-3">{prompt.prompt_en}</p>
+                <div
+                  className="rounded-lg"
+                  style={{
+                    backgroundImage: "repeating-linear-gradient(transparent 0 31px, var(--color-warm-3) 31px 32px)",
+                  }}
+                >
+                  <textarea
+                    value={value}
+                    onChange={(e) => setResponse(i, e.target.value)}
+                    placeholder={`예: ${prompt.example_kr}`}
+                    rows={2}
+                    spellCheck={false}
+                    className="kr w-full min-h-[64px] resize-none bg-transparent border-none px-1 text-[15px] leading-[32px] text-charcoal placeholder:text-faint focus:outline-none"
+                  />
+                </div>
+                <div className="flex items-center justify-between mt-1.5 text-xs">
+                  <span className={answered ? "text-success font-semibold" : "text-faint"}>
+                    {answered ? "✓ 작성 완료" : "아직 비어 있어요"}
+                  </span>
+                  <span className="text-faint tabular-nums">{value.length} / 500</span>
+                </div>
               </div>
             </div>
-          )}
-          <p className="font-bold text-[clamp(19px,2.2vw,24px)] leading-[1.45] tracking-[-0.02em] mb-3">
-            <span className="text-amber">“</span>
-            {prompt.prompt_en}
-            <span className="text-amber">”</span>
-          </p>
-          <p className="kr text-[15px] text-muted leading-[1.8] mb-auto">{prompt.prompt_kr}</p>
+          );
+        })}
+      </div>
 
-          <div className="border border-dashed border-line rounded-[10px] bg-warm px-4 py-3.5 mt-6">
-            <div className="flex items-center justify-between gap-3 text-[12.5px] font-semibold text-muted">
-              <span>Stuck on a word?</span>
-              <button
-                className="text-[12.5px] font-semibold text-amber hover:underline"
-                onClick={() => setShowHint(!showHint)}
-              >
-                {showHint ? "Hide hint" : "💡 Peek at a hint"}
-              </button>
-            </div>
-            {showHint && (
-              <p
-                className="kr text-[15px] text-amber mt-2 leading-[1.7]"
-                style={{ animation: "fadeUp .3s ease" }}
-              >
-                {prompt.example_kr}
-              </p>
-            )}
-          </div>
+      {/* footer */}
+      <div className="flex items-center justify-between gap-3 px-5 sm:px-[clamp(20px,3vw,32px)] py-[18px] border-t border-line bg-cream flex-wrap">
+        <div className="flex items-center gap-2.5 text-[13px] text-muted">
+          <span className="flex gap-1.5">
+            {prompts.map((p, i) => (
+              <i
+                key={p.key}
+                className={`w-2.5 h-2.5 rounded-full ${
+                  (responses[i]?.trim().length ?? 0) >= MIN_RESPONSE_LENGTH ? "bg-success" : "bg-line"
+                }`}
+              />
+            ))}
+          </span>
+          {answeredCount} / {prompts.length} 답변 완료
         </div>
-
-        {/* right page — your answer */}
-        <div className="p-[clamp(20px,3vw,32px)] flex flex-col">
-          <p className={`${LABEL} mb-3.5`}>Your answer</p>
-          <div
-            style={{
-              backgroundImage:
-                "repeating-linear-gradient(transparent 0 31px, #F0EEEA 31px 32px)",
-            }}
-          >
-            <textarea
-              value={response}
-              onChange={(e) => setResponse(e.target.value)}
-              placeholder="한국어로 써보세요..."
-              rows={5}
-              spellCheck={false}
-              className="kr w-full min-h-[160px] resize-none bg-transparent border-none px-0.5 text-[17px] leading-[32px] text-charcoal placeholder:text-[#C9C2B2] focus:outline-none"
-            />
-          </div>
-
-          <div className="flex items-center justify-between gap-3 pt-3.5 mt-auto flex-wrap">
-            <span className="text-xs text-faint">
-              {ready ? "Ready when you are ✍️" : "Write a little more…"}
-            </span>
-            <button className={BTN_INK} onClick={onSubmit} disabled={submitting || !ready}>
-              {submitting ? "Saving…" : "Check my sentence"}
-            </button>
-          </div>
-        </div>
+        <button className={BTN_INK} onClick={onSubmit} disabled={submitting || !ready}>
+          {submitting ? "Saving…" : "제출 & 피드백 받기"}
+        </button>
       </div>
     </div>
   );

@@ -4,8 +4,7 @@ import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import ChapterPathGroup from "@/components/chapters/ChapterPathGroup";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
-import { chapterWrittenToday, getChapterStatuses, getChaptersForLevel, WRITING_GENRE_META } from "@/lib/writing";
-import { isPlus } from "@/lib/plus";
+import { getChapterStatuses, getChaptersForLevel, WRITING_GENRE_META } from "@/lib/writing";
 import { LEVEL_ORDER, isCefrLevel, type CefrLevel } from "@/lib/tree";
 import { isDifficultyUnlocked } from "@/lib/level";
 
@@ -34,7 +33,7 @@ export default async function WritingMapPage({
   const [{ data: profile }, { data: progress }, sp] = await Promise.all([
     supabase
       .from("profiles")
-      .select("display_name, current_level, streak_days, avatar_url, xp, plus_until")
+      .select("display_name, current_level, streak_days, avatar_url, xp")
       .eq("id", user.id)
       .single(),
     supabase.from("writing_progress").select("prompt_key, completed_at").eq("user_id", user.id),
@@ -50,14 +49,9 @@ export default async function WritingMapPage({
   const statuses = getChapterStatuses(chapters, completedKeys);
   const doneCount = statuses.filter((s) => s === "done").length;
 
-  // Free plan writes one chapter per UTC day — after today's page, the next
-  // one waits for tomorrow (today's own page stays open for re-reading).
-  const plus = isPlus(profile?.plus_until);
-  const dailyDone = !plus && !!chapterWrittenToday(progress);
-
-  // 160 flat page rows is an endless scroll — group into one collapsible set
-  // per genre (a run of consecutive pages sharing a genre), with the set
-  // containing the current page open. Inside, a divider every ten.
+  // 40 chapters is a long scroll — group into one collapsible set per genre
+  // (a run of consecutive chapters sharing a genre), with the set containing
+  // the current chapter open. Inside, a divider every ten.
   const DIVIDER_EVERY = 10;
   const groups: { chapter: (typeof chapters)[number]; status: string; index: number }[][] = [];
   chapters.forEach((chapter, i) => {
@@ -69,8 +63,7 @@ export default async function WritingMapPage({
   const continueIndex = statuses.findIndex((s) => s === "current");
   const openGroupIndex =
     continueIndex >= 0 ? groups.findIndex((g) => g.some((e) => e.index === continueIndex)) : -1;
-  const continuePrompt = continueIndex >= 0 ? chapters[continueIndex][0] : null;
-  const continueWaitsTomorrow = dailyDone && continueIndex >= 0;
+  const continueChapter = continueIndex >= 0 ? chapters[continueIndex] : null;
 
   return (
     <div className="min-h-screen bg-warm text-charcoal">
@@ -119,7 +112,7 @@ export default async function WritingMapPage({
           <div className="max-w-[720px] mb-6">
             <div className="flex flex-col gap-0.5 sm:flex-row sm:items-center sm:justify-between text-[12.5px] text-muted mb-2">
               <span>
-                {doneCount} of {chapters.length} pages written
+                {doneCount} of {chapters.length} chapters written
               </span>
               <span className="text-faint">4 genres · journal, replies, description, opinion</span>
             </div>
@@ -129,40 +122,28 @@ export default async function WritingMapPage({
                 style={{ width: `${chapters.length ? (doneCount / chapters.length) * 100 : 0}%` }}
               />
             </div>
-            {dailyDone && (
-              <p className="text-[12.5px] text-muted mt-2.5">
-                🌙 Today&apos;s page is written — the next one opens tomorrow.{" "}
-                <Link href="/pricing" className="font-semibold text-amber hover:underline">
-                  Turn pages freely with Plus →
-                </Link>
-              </p>
-            )}
           </div>
 
-          {/* continue card: one obvious next step above the page groups */}
-          {continuePrompt && (
+          {/* continue card: one obvious next step above the chapter groups */}
+          {continueChapter && (
             <Link
               href={`/writing/session?chapter=${continueIndex}&level=${level}`}
-              className={`flex items-center gap-3.5 border-[1.5px] rounded-[14px] px-5 py-4 mb-6 max-w-[720px] transition-all ${
-                continueWaitsTomorrow
-                  ? "border-line bg-warm opacity-70 pointer-events-none"
-                  : "border-amber-line bg-[var(--tint-amber)] hover:-translate-y-0.5 group"
-              }`}
+              className="flex items-center gap-3.5 border-[1.5px] rounded-[14px] px-5 py-4 mb-6 max-w-[720px] transition-all border-amber-line bg-[var(--tint-amber)] hover:-translate-y-0.5 group"
             >
               <span className="flex-none w-10 h-10 rounded-[10px] bg-cream border border-amber-line flex items-center justify-center text-lg transition-transform group-hover:scale-110">
-                {continueWaitsTomorrow ? "🌙" : "✏️"}
+                ✏️
               </span>
               <span className="flex-1 min-w-[170px]">
                 <b className="block font-semibold text-sm text-[#B45309]">
-                  {continueWaitsTomorrow ? "Tomorrow's page" : `Continue · Page ${continueIndex + 1}`}
+                  Continue · Chapter {continueIndex + 1}
                 </b>
-                <span className="text-[13px] text-[#92702B] truncate block">{continuePrompt.prompt_en}</span>
-              </span>
-              {!continueWaitsTomorrow && (
-                <span className="text-[13px] font-semibold text-amber transition-transform group-hover:translate-x-0.5">
-                  Write →
+                <span className="text-[13px] text-[#92702B] truncate block">
+                  {continueChapter.length} questions · {continueChapter[0].prompt_en}
                 </span>
-              )}
+              </span>
+              <span className="text-[13px] font-semibold text-amber transition-transform group-hover:translate-x-0.5">
+                Write →
+              </span>
             </Link>
           )}
 
@@ -184,7 +165,7 @@ export default async function WritingMapPage({
                         {meta.icon} {meta.label}
                       </b>
                       <small className="block text-[11.5px] text-faint font-normal truncate">
-                        {meta.blurb} · Pages {first}–{last}
+                        {meta.blurb} · Chapters {first}–{last}
                       </small>
                     </span>
                     <span className="flex-none flex items-center gap-2">
@@ -206,9 +187,7 @@ export default async function WritingMapPage({
                       lineColorClassName="border-amber-line"
                       hoverClassName="hover:bg-[var(--tint-amber)]"
                       nodes={group.map(({ chapter, status, index: i }) => {
-                        const prompt = chapter[0];
-                        const waitTomorrow = dailyDone && status === "current";
-                        const dim = status === "locked" || waitTomorrow;
+                        const dim = status === "locked";
                         return {
                           key: i,
                           href: dim ? undefined : `/writing/session?chapter=${i}&level=${level}`,
@@ -218,12 +197,12 @@ export default async function WritingMapPage({
                               : status === "current"
                               ? "bg-[var(--tint-amber)] text-amber border-amber-line"
                               : "bg-warm text-faint border-line",
-                          ringClassName: status === "current" && !waitTomorrow ? "ring-4 ring-amber-line/60" : undefined,
+                          ringClassName: status === "current" ? "ring-4 ring-amber-line/60" : undefined,
                           circleContent: status === "done" ? "✓" : i + 1,
-                          title: `Page ${i + 1}`,
-                          subtitle: prompt.prompt_en,
-                          badgeClassName: waitTomorrow ? STATUS_BADGE.locked : STATUS_BADGE[status],
-                          badgeLabel: waitTomorrow ? "🌙 Tomorrow" : STATUS_LABEL[status],
+                          title: `Chapter ${i + 1}`,
+                          subtitle: `${chapter.length} questions · ${chapter[0].prompt_en}`,
+                          badgeClassName: STATUS_BADGE[status],
+                          badgeLabel: STATUS_LABEL[status],
                           dim,
                         };
                       })}
