@@ -1,5 +1,10 @@
+import { LEVEL_ORDER, isCefrLevel, type CefrLevel } from "@/lib/tree";
+
+export type QuestionType = "Words" | "Grammar" | "Listening";
+export const QUESTION_TYPES: QuestionType[] = ["Words", "Grammar", "Listening"];
+
 export type Question = {
-  type: "Words" | "Grammar" | "Listening";
+  type: QuestionType;
   lv: number;
   word?: string;
   audio?: string;
@@ -74,12 +79,10 @@ export const QUESTIONS: Question[] = [
 
 /** Question levels present in the pool, ascending. */
 export const TEST_BANDS = [1, 2, 3, 4, 5, 6] as const;
-/** How many questions each band contributes to a served test. */
-export const PER_BAND = 2;
-/** Length of a served test. */
-export const TEST_SIZE = TEST_BANDS.length * PER_BAND;
-/** The highest weighted score a served test can produce. */
-export const MAX_WEIGHTED = PER_BAND * TEST_BANDS.reduce((n, lv) => n + lv, 0);
+/** How many questions each band contributes to a served paper. */
+export const PER_BAND = 3;
+/** Correct answers needed to pass a band and move up. */
+export const BAND_PASS = 2;
 
 // Small deterministic PRNG so a seeded test renders identically on the server
 // and the client (avoids a hydration mismatch before the quiz starts).
@@ -103,41 +106,269 @@ function pickSome<T>(pool: T[], n: number, rand: () => number): T[] {
 }
 
 /**
- * Draw a balanced placement test: PER_BAND questions from every level band,
+ * Draw a balanced placement paper: PER_BAND questions from every level band,
  * ordered easiest first. Pass a seed for a reproducible draw.
  */
 export function buildTest(seed?: number): Question[] {
   const rand = seed === undefined ? Math.random : mulberry32(seed);
-  return TEST_BANDS.flatMap((lv) =>
-    pickSome(
-      QUESTIONS.filter((q) => q.lv === lv),
-      PER_BAND,
-      rand,
-    ),
-  );
+  return TEST_BANDS.flatMap((lv) => pickSome(QUESTIONS.filter((q) => q.lv === lv), PER_BAND, rand));
 }
 
 export type Level = {
-  code: "A1" | "A2" | "B1" | "B2" | "C1" | "C2";
-  min: number;
+  code: CefrLevel;
   desc: string;
 };
 
-// Thresholds are tuned to a 12-question served test (max weighted 42): a
-// learner who clears every band up to N lands squarely in that band's level.
 export const LEVELS: Level[] = [
-  { code: "A1", min: 0, desc: "You're at the very first page — the coziest place to start! We'll begin with Hangul, greetings, and little survival phrases." },
-  { code: "A2", min: 5, desc: "You know the basics! Simple everyday chats are yours. Next we'll grow longer sentences and everyday words." },
-  { code: "B1", min: 11, desc: "Solid roots! You can hold everyday conversations. Now for connectors, nuance, and real-life listening." },
-  { code: "B2", min: 18, desc: "Wow — you handle most situations with confidence! Time to polish natural expression and faster listening." },
-  { code: "C1", min: 26, desc: "Tall branches! You speak fluently across many topics. Let's refine idioms and formal Korean." },
-  { code: "C2", min: 38, desc: "A mighty tree! Near-native mastery. We'll keep you sharp with fresh media, slang, and pro-level Korean." },
+  { code: "A1", desc: "You're at the very first page — the coziest place to start! We'll begin with Hangul, greetings, and little survival phrases." },
+  { code: "A2", desc: "You know the basics! Simple everyday chats are yours. Next we'll grow longer sentences and everyday words." },
+  { code: "B1", desc: "Solid roots! You can hold everyday conversations. Now for connectors, nuance, and real-life listening." },
+  { code: "B2", desc: "Wow — you handle most situations with confidence! Time to polish natural expression and faster listening." },
+  { code: "C1", desc: "Tall branches! You speak fluently across many topics. Let's refine idioms and formal Korean." },
+  { code: "C2", desc: "A mighty tree! Near-native mastery. We'll keep you sharp with fresh media, slang, and pro-level Korean." },
 ];
 
-export function levelFromWeighted(weighted: number): Level {
-  let lv = LEVELS[0];
-  for (const L of LEVELS) {
-    if (weighted >= L.min) lv = L;
+export function levelByCode(code: CefrLevel): Level {
+  return LEVELS.find((l) => l.code === code) ?? LEVELS[0];
+}
+
+/** Band number (1-6) → CEFR code. */
+export function bandCode(band: number): CefrLevel {
+  return LEVEL_ORDER[Math.min(Math.max(band, 1), LEVEL_ORDER.length) - 1];
+}
+
+// ---------------------------------------------------------------------------
+// Adaptive run. The paper is walked band by band, easiest first. A band is
+// passed with BAND_PASS correct answers (the learner moves up as soon as that
+// is certain) and failed as soon as it can no longer be passed — the run ends
+// there. Level = the highest band passed, so a lucky guess on a C2 idiom
+// can't place a beginner at B1 the way a weighted sum could.
+// ---------------------------------------------------------------------------
+
+export type SkillHits = Record<QuestionType, [hit: number, seen: number]>;
+
+export type Run = {
+  paper: Question[];
+  /** Index into paper of the question being shown. */
+  index: number;
+  band: number;
+  bandHits: number;
+  bandSeen: number;
+  passed: number[];
+  /** Band the learner failed on; null if they cleared every band. */
+  stoppedAt: number | null;
+  done: boolean;
+  score: number;
+  answered: number;
+  skills: SkillHits;
+};
+
+export function emptySkills(): SkillHits {
+  return { Words: [0, 0], Grammar: [0, 0], Listening: [0, 0] };
+}
+
+export function startRun(paper: Question[] = buildTest()): Run {
+  return {
+    paper,
+    index: 0,
+    band: paper[0]?.lv ?? 1,
+    bandHits: 0,
+    bandSeen: 0,
+    passed: [],
+    stoppedAt: null,
+    done: paper.length === 0,
+    score: 0,
+    answered: 0,
+    skills: emptySkills(),
+  };
+}
+
+export function currentQuestion(run: Run): Question | undefined {
+  return run.done ? undefined : run.paper[run.index];
+}
+
+function advanceBand(run: Run): Run {
+  const passed = [...run.passed, run.band];
+  const nextIndex = run.paper.findIndex((q) => q.lv > run.band);
+  if (nextIndex === -1) return { ...run, passed, done: true };
+  return { ...run, passed, band: run.paper[nextIndex].lv, bandHits: 0, bandSeen: 0, index: nextIndex };
+}
+
+/** Apply an answer (-1 = "I don't know"). Pure: returns the next run state. */
+export function answerRun(run: Run, choice: number): Run {
+  const q = currentQuestion(run);
+  if (!q) return run;
+  const right = choice === q.ans;
+  const [hit, seen] = run.skills[q.type];
+  const next: Run = {
+    ...run,
+    skills: { ...run.skills, [q.type]: [hit + (right ? 1 : 0), seen + 1] },
+    score: run.score + (right ? 1 : 0),
+    answered: run.answered + 1,
+    bandHits: run.bandHits + (right ? 1 : 0),
+    bandSeen: run.bandSeen + 1,
+  };
+  const bandSize = run.paper.filter((x) => x.lv === run.band).length;
+  if (next.bandHits >= BAND_PASS) return advanceBand(next);
+  const canStillPass = bandSize - next.bandSeen + next.bandHits >= BAND_PASS;
+  if (!canStillPass) return { ...next, stoppedAt: run.band, done: true };
+  return { ...next, index: run.index + 1 };
+}
+
+/**
+ * Swap the current question for an unused one from the same band (no
+ * penalty) — used when audio fails to play. Falls back to dropping the
+ * question when the band's pool is exhausted.
+ */
+export function replaceCurrent(run: Run): Run {
+  const q = currentQuestion(run);
+  if (!q) return run;
+  const unused = QUESTIONS.filter((x) => x.lv === q.lv && !run.paper.includes(x));
+  const paper = [...run.paper];
+  if (unused.length > 0) {
+    paper[run.index] = unused[Math.floor(Math.random() * unused.length)];
+    return { ...run, paper };
   }
-  return lv;
+  paper.splice(run.index, 1);
+  const bandSize = paper.filter((x) => x.lv === run.band).length;
+  const canStillPass = bandSize - run.bandSeen + run.bandHits >= BAND_PASS;
+  if (!canStillPass) return { ...run, paper, done: true, stoppedAt: run.band };
+  return { ...run, paper, index: Math.min(run.index, paper.length - 1) };
+}
+
+/** Highest band passed → level; nothing passed → A1. */
+export function levelFromRun(run: Pick<Run, "passed">): Level {
+  const top = run.passed.length ? Math.max(...run.passed) : 0;
+  return top === 0 ? LEVELS[0] : levelByCode(bandCode(top));
+}
+
+// ---------------------------------------------------------------------------
+// Placement: what the whole onboarding produces. Survives the sign-up round
+// trip (OAuth redirect, magic link opened in another tab) as a compact string
+// in the callback URL, with sessionStorage as a same-tab backup.
+// ---------------------------------------------------------------------------
+
+export type Goal = "drama" | "kpop" | "travel" | "work" | "family" | "curious";
+export type LeadSkill = "listening" | "words" | "grammar";
+
+export const GOALS: { key: Goal; icon: string; label: string; lead: LeadSkill; hint: string }[] = [
+  { key: "drama", icon: "📺", label: "K-drama & variety", lead: "listening", hint: "Listening first" },
+  { key: "kpop", icon: "🎧", label: "K-pop lyrics", lead: "words", hint: "Words first" },
+  { key: "travel", icon: "✈️", label: "Travel to Korea", lead: "listening", hint: "Survival phrases" },
+  { key: "work", icon: "💼", label: "Work or study", lead: "grammar", hint: "Grammar first" },
+  { key: "family", icon: "💛", label: "Family or partner", lead: "listening", hint: "Everyday talk" },
+  { key: "curious", icon: "🌱", label: "Just curious", lead: "grammar", hint: "A balanced mix" },
+];
+
+export function isGoal(v: unknown): v is Goal {
+  return typeof v === "string" && GOALS.some((g) => g.key === v);
+}
+
+export type Route = "hangul" | CefrLevel;
+
+export type Placement = {
+  level: CefrLevel;
+  route: Route;
+  canRead: boolean;
+  goal: Goal | null;
+  score: number;
+  total: number;
+  /** True when no test was taken (can't read Hangul, or "start at A1"). */
+  skipped: boolean;
+  stoppedAt: CefrLevel | null;
+  skills: SkillHits;
+};
+
+export function placementFromRun(run: Run, goal: Goal | null): Placement {
+  const level = levelFromRun(run).code;
+  return {
+    level,
+    route: level,
+    canRead: true,
+    goal,
+    score: run.score,
+    total: run.answered,
+    skipped: false,
+    stoppedAt: run.stoppedAt === null ? null : bandCode(run.stoppedAt),
+    skills: run.skills,
+  };
+}
+
+export function skippedPlacement(canRead: boolean, goal: Goal | null): Placement {
+  return {
+    level: "A1",
+    route: canRead ? "A1" : "hangul",
+    canRead,
+    goal,
+    score: 0,
+    total: 0,
+    skipped: true,
+    stoppedAt: null,
+    skills: emptySkills(),
+  };
+}
+
+function toBase64Url(s: string): string {
+  const bytes = new TextEncoder().encode(s);
+  let bin = "";
+  bytes.forEach((b) => (bin += String.fromCharCode(b)));
+  return btoa(bin).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+}
+
+function fromBase64Url(s: string): string {
+  const b64 = s.replace(/-/g, "+").replace(/_/g, "/") + "=".repeat((4 - (s.length % 4)) % 4);
+  const bin = atob(b64);
+  const bytes = Uint8Array.from(bin, (c) => c.charCodeAt(0));
+  return new TextDecoder().decode(bytes);
+}
+
+export function encodePlacement(p: Placement): string {
+  return toBase64Url(JSON.stringify(p));
+}
+
+export function decodePlacement(raw: string | null | undefined): Placement | null {
+  if (!raw) return null;
+  try {
+    const p = JSON.parse(fromBase64Url(raw)) as Partial<Placement>;
+    if (!isCefrLevel(p.level)) return null;
+    const route: Route = p.route === "hangul" ? "hangul" : isCefrLevel(p.route) ? p.route : p.level;
+    return {
+      level: p.level,
+      route,
+      canRead: p.canRead !== false,
+      goal: isGoal(p.goal) ? p.goal : null,
+      score: Number(p.score) || 0,
+      total: Number(p.total) || 0,
+      skipped: !!p.skipped,
+      stoppedAt: isCefrLevel(p.stoppedAt ?? undefined) ? (p.stoppedAt as CefrLevel) : null,
+      skills: p.skills && typeof p.skills === "object" ? { ...emptySkills(), ...p.skills } : emptySkills(),
+    };
+  } catch {
+    return null;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// First lessons: the three units a placed learner sees on the result card.
+// The map is built server-side (first-lessons.ts) from the real content
+// tables; the goal only reorders it so the learner's reason leads.
+// ---------------------------------------------------------------------------
+
+export type FirstLesson = {
+  href: string;
+  label: string;
+  skill: "hangul" | LeadSkill;
+  minutes: number;
+};
+
+export type FirstLessonsMap = Record<Route, FirstLesson[]>;
+
+export function orderForGoal(lessons: FirstLesson[], goal: Goal | null): FirstLesson[] {
+  if (!goal) return lessons;
+  const lead = GOALS.find((g) => g.key === goal)?.lead;
+  if (!lead) return lessons;
+  // Hangul always stays first — nothing else is readable before it.
+  const hangul = lessons.filter((l) => l.skill === "hangul");
+  const rest = lessons.filter((l) => l.skill !== "hangul");
+  return [...hangul, ...rest.filter((l) => l.skill === lead), ...rest.filter((l) => l.skill !== lead)];
 }

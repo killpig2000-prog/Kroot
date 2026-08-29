@@ -22,8 +22,8 @@ export default function LevelTest() {
         Find your level in 3 minutes
       </h2>
       <p className="text-center text-muted text-[13.5px] max-w-[52ch] mx-auto mb-8">
-        Ten questions find your level (A1–C2). Or skip it and start at A1 — retake it
-        anytime from your profile.
+        A short adaptive test finds your level (A1–C2) and stops as soon as it&apos;s sure. Can&apos;t
+        read Hangul yet? Say so and start there — no account needed.
       </p>
 
       <div className="relative max-w-[840px] mx-auto flex justify-center items-start gap-6 flex-wrap">
@@ -61,7 +61,7 @@ export default function LevelTest() {
         <div className="relative z-10 w-[min(240px,100%)]">
           <div className="bg-[#FEF9C3] border border-[#ECD98A] px-4 py-3.5 text-[12px] leading-[1.55] rotate-2 shadow-[0_10px_22px_-12px_rgba(120,100,30,.4)] text-left mb-5">
             <b className="block mb-0.5">✏️ How it&apos;s scored</b>
-            Vocabulary, grammar and listening mixed — about 18s per question. Results on the CEFR
+            Vocabulary, grammar and listening mixed — usually 4 to 10 questions. Results on the CEFR
             scale learners and employers actually use!
           </div>
           <Link

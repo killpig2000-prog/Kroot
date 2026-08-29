@@ -9,6 +9,10 @@ import { isTableMissing } from "@/lib/resume";
 // Keep the vocabulary small and stable — the admin funnel keys off it.
 export type AnalyticsEvent =
   | "signup"
+  | "signup_started"
+  | "placement_gate"
+  | "placement_question"
+  | "placement_finished"
   | "onboarding_completed"
   | "session_started"
   | "activity_completed"
