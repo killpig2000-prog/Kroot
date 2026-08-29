@@ -28,7 +28,7 @@ export default function VocabQuizPhase({
       </div>
       <div className="h-1.5 bg-line rounded-full overflow-hidden mb-6">
         <i
-          className="not-italic block h-full bg-[#7C3AED] rounded-full transition-[width] duration-300"
+          className="not-italic block h-full bg-[#6B33CC] rounded-full transition-[width] duration-300"
           style={{ width: `${quizPct}%` }}
         />
       </div>
@@ -67,7 +67,7 @@ export default function VocabQuizPhase({
                   ? "border-danger bg-danger-bg"
                   : show
                   ? "border-line bg-white opacity-90"
-                  : "border-line bg-white hover:border-[#7C3AED] hover:bg-[#F5F3FF]"
+                  : "border-line bg-white hover:border-[#6B33CC] hover:bg-[#F5F3FF]"
               }`}
             >
               {opt}

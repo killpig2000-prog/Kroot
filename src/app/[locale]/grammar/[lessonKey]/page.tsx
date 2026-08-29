@@ -57,13 +57,13 @@ export default async function GrammarLessonPage({
           {/* head */}
           <div className="flex items-center justify-between gap-4 mb-[18px] flex-wrap">
             <h1 className="font-bold text-[22px] tracking-[-0.02em] flex items-center">
-              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[#EEF2FF] text-[#4F46E5] border border-[#C7D2FE] items-center justify-center kr text-[15px] mr-[9px]">
+              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[#EEF2FF] text-[#423AC5] border border-[#C7D2FE] items-center justify-center kr text-[15px] mr-[9px]">
                 문
               </span>
               {lesson.title}
             </h1>
             <span className="text-[13px] text-muted">
-              Lesson {no} · <b className="text-[#4F46E5]">{lesson.level}</b> ·{" "}
+              Lesson {no} · <b className="text-[#423AC5]">{lesson.level}</b> ·{" "}
               <span className="kr">{lesson.krTitle}</span>
             </span>
           </div>
@@ -81,7 +81,7 @@ export default async function GrammarLessonPage({
                 className="border border-line rounded-[14px] p-[clamp(18px,2.5vw,26px)] mb-3.5"
               >
                 <div className="flex items-center gap-2.5 mb-2.5">
-                  <span className="flex-none w-[22px] h-[22px] rounded-md bg-[#EEF2FF] border border-[#C7D2FE] text-[#4F46E5] flex items-center justify-center text-[11px] font-bold">
+                  <span className="flex-none w-[22px] h-[22px] rounded-md bg-[#EEF2FF] border border-[#C7D2FE] text-[#423AC5] flex items-center justify-center text-[11px] font-bold">
                     {i + 1}
                   </span>
                   <h2 className="font-bold text-[16.5px] tracking-[-0.01em]">{section.heading}</h2>
@@ -113,7 +113,7 @@ export default async function GrammarLessonPage({
               {next && (
                 <Link
                   href={`/grammar/${next.key}`}
-                  className="rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-[#4F46E5] hover:bg-[#4338CA] transition-colors"
+                  className="rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-[#423AC5] hover:bg-[#4338CA] transition-colors"
                 >
                   Next: {next.title} →
                 </Link>

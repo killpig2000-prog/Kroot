@@ -24,7 +24,7 @@ type GradeResult = {
 
 const CARD = "border border-line rounded-[14px] bg-white max-w-[900px]";
 const BTN_INK =
-  "rounded-[9px] px-[18px] py-[9px] text-sm font-semibold text-white bg-charcoal hover:bg-[#3F3F46] transition-colors disabled:bg-line disabled:text-faint";
+  "rounded-[9px] px-[18px] py-[9px] text-sm font-semibold text-white bg-success hover:bg-success-deep transition-colors disabled:bg-line disabled:text-faint";
 
 export default function WritingSession({
   prompt,

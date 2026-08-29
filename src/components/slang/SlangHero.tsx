@@ -10,7 +10,7 @@ export default function SlangHero({ entry }: { entry: SlangEntry }) {
   return (
     <div className="border border-[#FBCFE8] rounded-[14px] bg-[#FDF2F8] p-[18px] md:p-6 mb-6 max-w-[980px] flex flex-col md:flex-row gap-5 md:items-center">
       <div className="md:w-[220px] shrink-0">
-        <span className="inline-block text-[11.5px] font-semibold uppercase tracking-[0.06em] text-[#DB2777] mb-2">
+        <span className="inline-block text-[11.5px] font-semibold uppercase tracking-[0.06em] text-[#C13E78] mb-2">
           Slang of the day
         </span>
         <div className="flex items-center gap-2.5">

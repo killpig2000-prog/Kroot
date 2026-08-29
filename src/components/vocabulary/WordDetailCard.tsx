@@ -111,7 +111,7 @@ export default function WordDetailCard({
                   type="button"
                   onClick={() => speakKorean(word.korean)}
                   title="Hear it"
-                  className="inline-flex items-baseline gap-2 hover:text-[#7C3AED] transition-colors text-left"
+                  className="inline-flex items-baseline gap-2 hover:text-[#6B33CC] transition-colors text-left"
                 >
                   {word.korean}
                   <span aria-hidden="true" className="text-[16px] translate-y-[-6px] opacity-70">🔊</span>
@@ -150,7 +150,7 @@ export default function WordDetailCard({
                 type="button"
                 onClick={() => speakKorean(word.example_kr)}
                 title="Hear the sentence"
-                className="text-left hover:text-[#7C3AED] transition-colors"
+                className="text-left hover:text-[#6B33CC] transition-colors"
               >
                 {word.example_kr} <span aria-hidden="true" className="text-[11px] opacity-70">🔊</span>
               </button>
@@ -173,7 +173,7 @@ export default function WordDetailCard({
                       type="button"
                       onClick={() => speakKorean(ex.kr)}
                       title="Hear the sentence"
-                      className="text-left hover:text-[#7C3AED] transition-colors"
+                      className="text-left hover:text-[#6B33CC] transition-colors"
                     >
                       {ex.kr}
                     </button>

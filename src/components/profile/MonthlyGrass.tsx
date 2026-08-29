@@ -1,7 +1,7 @@
 // GitHub-style contribution grass for the current calendar year
 // (Jan 1 – Dec 31). Server component: pure markup from daily_activity data.
 
-const CELL_COLORS = ["#F0EFED", "#BBF7D0", "#6BBF8A", "#16A34A", "#15803D"];
+const CELL_COLORS = ["#F0EFED", "#BBF7D0", "#6BBF8A", "#3E7C59", "#2E5B41"];
 
 function shade(minutes: number): string {
   if (minutes <= 0) return CELL_COLORS[0];

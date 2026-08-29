@@ -51,7 +51,7 @@ export default function SlangBoard({ entries }: { entries: SlangEntry[] }) {
   const chip = (active: boolean) =>
     `rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold transition-all border ${
       active
-        ? "bg-[#DB2777] border-[#DB2777] text-white"
+        ? "bg-[#C13E78] border-[#C13E78] text-white"
         : "bg-white border-line text-muted hover:border-faint"
     }`;
 
@@ -59,12 +59,12 @@ export default function SlangBoard({ entries }: { entries: SlangEntry[] }) {
     <>
       {/* sticker-book progress */}
       <div className="flex items-center gap-3 mb-4 max-w-[420px]">
-        <span className="text-[13px] font-bold text-[#DB2777] flex-none tabular-nums">
+        <span className="text-[13px] font-bold text-[#C13E78] flex-none tabular-nums">
           🃏 {collectedCount}/{entries.length} collected
         </span>
         <span className="flex-1 h-1.5 rounded-full bg-[#FDF2F8] border border-[#FBCFE8] overflow-hidden">
           <span
-            className="block h-full bg-[#DB2777] rounded-full transition-all"
+            className="block h-full bg-[#C13E78] rounded-full transition-all"
             style={{ width: `${entries.length ? (collectedCount / entries.length) * 100 : 0}%` }}
           />
         </span>

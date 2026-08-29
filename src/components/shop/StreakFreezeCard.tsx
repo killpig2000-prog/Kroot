@@ -79,7 +79,7 @@ export default function StreakFreezeCard({
         type="button"
         onClick={buy}
         disabled={busy || full || !affordable}
-        className="rounded-[10px] bg-[#0284C7] px-4 py-2.5 text-[13px] font-bold text-white hover:bg-[#0369A1] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        className="rounded-[10px] bg-[#1F81B4] px-4 py-2.5 text-[13px] font-bold text-white hover:bg-[#0369A1] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {full ? "Max held" : busy ? "Freezing…" : `Buy · 🌰 ${FREEZE_PRICE}`}
       </button>

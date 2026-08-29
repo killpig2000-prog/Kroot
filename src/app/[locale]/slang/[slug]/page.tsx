@@ -68,18 +68,18 @@ export default async function SlangSharePage({ params }: Props) {
         </Link>
         <ShareCta
           slug={entry.slug}
-          className="rounded-full bg-[#DB2777] px-4 py-2 text-sm font-semibold text-white shadow-[0_3px_0_#9D174D] hover:bg-[#C2185F] transition-colors"
+          className="rounded-full bg-[#C13E78] px-4 py-2 text-sm font-semibold text-white shadow-[0_3px_0_#9D174D] hover:bg-[#C2185F] transition-colors"
         >
           Start learning
         </ShareCta>
       </header>
 
       <main className="mx-auto max-w-3xl px-6 pb-16">
-        <p className="mb-2 text-sm text-[#DB2777] font-semibold">Kroot · Street Talk 🇰🇷</p>
+        <p className="mb-2 text-sm text-[#C13E78] font-semibold">Kroot · Street Talk 🇰🇷</p>
 
         <article className="relative border border-[#FBCFE8] rounded-[22px] bg-white p-8 sm:p-10 shadow-[0_14px_34px_-20px_rgba(219,39,119,.35)] text-center">
           {vibe && (
-            <span className="inline-block text-[12px] font-semibold text-[#DB2777] bg-[#FDF2F8] border border-[#FBCFE8] rounded-full px-3 py-1 mb-5">
+            <span className="inline-block text-[12px] font-semibold text-[#C13E78] bg-[#FDF2F8] border border-[#FBCFE8] rounded-full px-3 py-1 mb-5">
               {vibe.emoji} {vibe.label}
             </span>
           )}
@@ -124,7 +124,7 @@ export default async function SlangSharePage({ params }: Props) {
         </section>
 
         <section className="mt-12 rounded-[24px] bg-[#FDF2F8] border border-[#FBCFE8] p-8 text-center">
-          <h2 className="text-2xl font-bold text-[#831843]">
+          <h2 className="text-2xl font-bold text-[#7C2A4B]">
             106 more slang words like {entry.kr}, free
           </h2>
           <p className="mt-2 text-muted">
@@ -133,7 +133,7 @@ export default async function SlangSharePage({ params }: Props) {
           </p>
           <ShareCta
             slug={entry.slug}
-            className="mt-5 inline-block rounded-full bg-[#DB2777] px-6 py-3 font-semibold text-white shadow-[0_3px_0_#9D174D] hover:bg-[#C2185F] transition-colors"
+            className="mt-5 inline-block rounded-full bg-[#C13E78] px-6 py-3 font-semibold text-white shadow-[0_3px_0_#9D174D] hover:bg-[#C2185F] transition-colors"
           >
             Start free →
           </ShareCta>

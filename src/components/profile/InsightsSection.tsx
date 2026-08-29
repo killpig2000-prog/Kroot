@@ -271,7 +271,7 @@ export default async function InsightsSection({
                   className="block h-full rounded-full"
                   style={{
                     width: `${Math.round((boxCounts[i] / maxBox) * 100)}%`,
-                    background: ["#FCA5A5", "#FDBA74", "#FDE047", "#BBF7D0", "#16A34A"][i],
+                    background: ["#FCA5A5", "#FDBA74", "#FDE047", "#BBF7D0", "#3E7C59"][i],
                   }}
                 />
               </span>
@@ -307,7 +307,7 @@ export default async function InsightsSection({
                 <span className="flex-none text-[11.5px] font-semibold text-faint">{w.level}</span>
                 <span className="flex-none text-[12px] tabular-nums">
                   <span className="text-success font-semibold">{w.correct}✓</span>{" "}
-                  <span className="text-[#DB2777] font-semibold">{w.wrong}✗</span>
+                  <span className="text-[#C13E78] font-semibold">{w.wrong}✗</span>
                 </span>
               </div>
             ))}

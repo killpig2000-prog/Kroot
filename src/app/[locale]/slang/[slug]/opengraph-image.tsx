@@ -26,23 +26,23 @@ export default async function SlangOpengraphImage({ params }: { params: Promise<
       >
         <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 30 }}>
           <BrandMark size={56} />
-          <div style={{ fontSize: 34, fontWeight: 700, color: "#831843" }}>Kroot · Street Talk</div>
+          <div style={{ fontSize: 34, fontWeight: 700, color: "#7C2A4B" }}>Kroot · Street Talk</div>
         </div>
 
         {entry ? (
           <>
-            <div style={{ fontSize: 130, fontWeight: 800, color: "#18181B", lineHeight: 1 }}>
+            <div style={{ fontSize: 130, fontWeight: 800, color: "#4A4237", lineHeight: 1 }}>
               {entry.kr}
             </div>
-            <div style={{ fontSize: 34, color: "#DB2777", fontWeight: 600, marginTop: 18 }}>
+            <div style={{ fontSize: 34, color: "#C13E78", fontWeight: 600, marginTop: 18 }}>
               {entry.romanization}
             </div>
-            <div style={{ fontSize: 40, color: "#18181B", fontWeight: 700, marginTop: 22, maxWidth: 900, textAlign: "center" }}>
+            <div style={{ fontSize: 40, color: "#4A4237", fontWeight: 700, marginTop: 22, maxWidth: 900, textAlign: "center" }}>
               {entry.meaning}
             </div>
           </>
         ) : (
-          <div style={{ fontSize: 48, fontWeight: 700, color: "#18181B" }}>Real Korean slang, explained</div>
+          <div style={{ fontSize: 48, fontWeight: 700, color: "#4A4237" }}>Real Korean slang, explained</div>
         )}
       </div>
     ),

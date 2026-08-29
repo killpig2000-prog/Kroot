@@ -57,7 +57,7 @@ function QuestionCard({
                   ? "border-danger bg-danger-bg"
                   : answered
                   ? "border-line bg-white opacity-90"
-                  : "border-line bg-white hover:border-[#4F46E5] hover:bg-[#EEF2FF]"
+                  : "border-line bg-white hover:border-[#423AC5] hover:bg-[#EEF2FF]"
               }`}
             >
               <span

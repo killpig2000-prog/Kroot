@@ -1,10 +1,10 @@
 const CATEGORIES = [
-  { kr: "듣", en: "Listening", sticker: "🎧", bg: "#16A34A", desc: "A1–C2 clips with subtitle toggle" },
-  { kr: "발", en: "Pronunciation", sticker: "🎤", bg: "#0D9488", desc: "Say it into the mic — score 80+ to clear each chapter" },
-  { kr: "쓰", en: "Writing", sticker: "✍️", bg: "#D97706", desc: "Write a sentence, get feedback" },
-  { kr: "읽", en: "Reading", sticker: "📖", bg: "#2563EB", desc: "Tap any word for a hint" },
-  { kr: "단", en: "Vocabulary", sticker: "🃏", bg: "#7C3AED", desc: "4,000+ flashcards by topic" },
-  { kr: "슬", en: "Slang", sticker: "💬", bg: "#DB2777", desc: "Real phrases textbooks skip" },
+  { kr: "듣", en: "Listening", sticker: "🎧", bg: "#3E7C59", desc: "A1–C2 clips with subtitle toggle" },
+  { kr: "발", en: "Pronunciation", sticker: "🎤", bg: "#228980", desc: "Say it into the mic — score 80+ to clear each chapter" },
+  { kr: "쓰", en: "Writing", sticker: "✍️", bg: "#C47A25", desc: "Write a sentence, get feedback" },
+  { kr: "읽", en: "Reading", sticker: "📖", bg: "#3363CC", desc: "Tap any word for a hint" },
+  { kr: "단", en: "Vocabulary", sticker: "🃏", bg: "#6B33CC", desc: "4,000+ flashcards by topic" },
+  { kr: "슬", en: "Slang", sticker: "💬", bg: "#C13E78", desc: "Real phrases textbooks skip" },
 ];
 
 export default function Categories() {

@@ -31,9 +31,9 @@ export default function OpengraphImage() {
           }}
         >
           <BrandMark size={96} />
-          <div style={{ fontSize: 84, fontWeight: 800, color: "#18181B" }}>Kroot</div>
+          <div style={{ fontSize: 84, fontWeight: 800, color: "#4A4237" }}>Kroot</div>
         </div>
-        <div style={{ fontSize: 40, color: "#18181B", fontWeight: 700, marginBottom: 14 }}>
+        <div style={{ fontSize: 40, color: "#4A4237", fontWeight: 700, marginBottom: 14 }}>
           Grow your Korean, one little sprout at a time 🌱
         </div>
         <div style={{ fontSize: 27, color: "#6B6560" }}>

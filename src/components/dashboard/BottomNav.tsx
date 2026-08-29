@@ -21,7 +21,6 @@ const MORE_SECTIONS = [
 ];
 const LEARN_PATHS = LEARN_SECTIONS.flatMap((s) => s.items.map((i) => i.href));
 
-const RAINBOW = "linear-gradient(90deg,#F43F5E,#F59E0B,#22C55E,#0EA5E9,#8B5CF6)";
 
 function Tile({
   icon,
@@ -51,10 +50,7 @@ function Tile({
       }`}
     >
       {popular && (
-        <span
-          className="absolute -top-1.5 -right-1.5 text-[8.5px] font-extrabold text-white rounded-full px-[6px] py-px"
-          style={{ background: RAINBOW }}
-        >
+        <span className="absolute -top-1.5 -right-1.5 text-[8.5px] font-extrabold text-[#B14F27] bg-[#FDE9D0] rounded-full px-[6px] py-px">
           Popular
         </span>
       )}
@@ -77,12 +73,7 @@ function Tile({
     </Link>
   );
 
-  if (!popular) return tile;
-  return (
-    <div className="rounded-[13px] p-[1.5px]" style={{ background: RAINBOW }}>
-      <div className="rounded-[11.5px]">{tile}</div>
-    </div>
-  );
+  return tile;
 }
 
 function TabButton({

@@ -66,10 +66,10 @@ export default function AnswerCapture({
                   strokeLinecap="round"
                   stroke={
                     micElapsedMs / MAX_LISTEN_MS < 0.55
-                      ? "#16A34A"
+                      ? "#3E7C59"
                       : micElapsedMs / MAX_LISTEN_MS < 0.8
                         ? "#B45309"
-                        : "#E11D48"
+                        : "#C63958"
                   }
                   strokeDasharray={RING_C}
                   strokeDashoffset={RING_C * Math.min(1, micElapsedMs / MAX_LISTEN_MS)}
@@ -105,7 +105,7 @@ export default function AnswerCapture({
         </>
       )}
 
-      {error && <p className="text-[12.5px] text-[#E11D48] text-center max-w-[420px]">{error}</p>}
+      {error && <p className="text-[12.5px] text-[#C63958] text-center max-w-[420px]">{error}</p>}
 
       {!showFallback ? (
         <button

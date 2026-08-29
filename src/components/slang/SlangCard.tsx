@@ -11,7 +11,7 @@ const FACE =
 export function VibeChip({ vibe }: { vibe: SlangEntry["vibe"] }) {
   const meta = VIBES.find((v) => v.key === vibe);
   return (
-    <span className="inline-block text-[11.5px] font-semibold text-[#DB2777] bg-[#FDF2F8] border border-[#FBCFE8] rounded-full px-2.5 py-[3px]">
+    <span className="inline-block text-[11.5px] font-semibold text-[#C13E78] bg-[#FDF2F8] border border-[#FBCFE8] rounded-full px-2.5 py-[3px]">
       {meta?.emoji} {meta?.label}
     </span>
   );
@@ -57,7 +57,7 @@ export default function SlangCard({
         <div className={`${FACE} border border-line bg-warm transition-colors hover:bg-[#FDF2F8]`}>
           {collected && (
             <span
-              className="absolute top-2.5 right-2.5 w-6 h-6 rounded-full bg-[#FDF2F8] border border-[#FBCFE8] text-[#DB2777] text-[12px] font-bold flex items-center justify-center"
+              className="absolute top-2.5 right-2.5 w-6 h-6 rounded-full bg-[#FDF2F8] border border-[#FBCFE8] text-[#C13E78] text-[12px] font-bold flex items-center justify-center"
               title="Collected"
             >
               ✓
@@ -78,7 +78,7 @@ export default function SlangCard({
           className={`${FACE} border border-[#FBCFE8] bg-[#FDF2F8] [transform:rotateY(180deg)] justify-start pt-4 pb-4 overflow-hidden`}
         >
           <div className="flex items-center gap-2 w-full justify-center">
-            <b className="kr text-[19px] text-[#DB2777]">{entry.kr}</b>
+            <b className="kr text-[19px] text-[#C13E78]">{entry.kr}</b>
             <SpeakButton text={entry.kr} />
           </div>
           <span className="mt-1 text-[11.5px] text-faint italic">

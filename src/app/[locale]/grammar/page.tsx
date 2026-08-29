@@ -63,7 +63,7 @@ export default async function GrammarPage({
           {/* head */}
           <div className="flex items-center justify-between gap-4 mb-[18px] flex-wrap">
             <h1 className="font-bold text-[22px] tracking-[-0.02em] flex items-center">
-              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[#EEF2FF] text-[#4F46E5] border border-[#C7D2FE] items-center justify-center kr text-[15px] mr-[9px]">
+              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[#EEF2FF] text-[#423AC5] border border-[#C7D2FE] items-center justify-center kr text-[15px] mr-[9px]">
                 문
               </span>
               Grammar
@@ -77,9 +77,9 @@ export default async function GrammarPage({
           <div className="max-w-[820px] bg-[#EEF2FF] border border-[#C7D2FE] rounded-[14px] px-[18px] py-4 mb-6">
             <p className="text-[13.5px] text-charcoal leading-[1.65]">
               Korean grammar is regular. New here? Tap{" "}
-              <b className="text-[#4F46E5]">Start here</b> below for a set order to learn the basics
+              <b className="text-[#423AC5]">Start here</b> below for a set order to learn the basics
               in — see the{" "}
-              <Link href="/guide" className="font-semibold text-[#4F46E5] hover:underline">
+              <Link href="/guide" className="font-semibold text-[#423AC5] hover:underline">
                 Guide
               </Link>{" "}
               for how it fits with the rest of the app. Otherwise browse the full A1–C2 syllabus by
@@ -97,7 +97,7 @@ export default async function GrammarPage({
                   href={`/grammar?group=${group.key}`}
                   className={`rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold transition-all border ${
                     selectedGroup?.key === group.key
-                      ? "bg-[#4F46E5] border-[#4F46E5] text-white"
+                      ? "bg-[#423AC5] border-[#423AC5] text-white"
                       : "bg-white border-line text-muted hover:border-faint"
                   }`}
                 >
@@ -112,7 +112,7 @@ export default async function GrammarPage({
               mine={myLevel}
               unlocked={(lv) => isDifficultyUnlocked(lv, myLevel)}
               href={(lv) => `/grammar?level=${lv}`}
-              accent="bg-[#4F46E5] border-[#4F46E5] text-white"
+              accent="bg-[#423AC5] border-[#423AC5] text-white"
             />
 
             <div className="flex items-center gap-2.5 mb-1">
@@ -143,7 +143,7 @@ export default async function GrammarPage({
                     i > 0 ? "border-t border-line" : ""
                   }`}
                 >
-                  <span className="flex-none w-8 h-8 rounded-[10px] bg-warm border border-line flex items-center justify-center text-[12.5px] font-bold text-muted transition-all group-hover:bg-[#4F46E5] group-hover:border-[#4F46E5] group-hover:text-white">
+                  <span className="flex-none w-8 h-8 rounded-[10px] bg-warm border border-line flex items-center justify-center text-[12.5px] font-bold text-muted transition-all group-hover:bg-[#423AC5] group-hover:border-[#423AC5] group-hover:text-white">
                     {i + 1}
                   </span>
                   <span className="min-w-0 flex-1">
@@ -157,10 +157,10 @@ export default async function GrammarPage({
                       {lesson.summary}
                     </small>
                   </span>
-                  <span className="hidden sm:inline-block flex-none text-[11.5px] font-semibold text-[#4F46E5] bg-[#EEF2FF] border border-[#C7D2FE] rounded-full px-2.5 py-[3px]">
+                  <span className="hidden sm:inline-block flex-none text-[11.5px] font-semibold text-[#423AC5] bg-[#EEF2FF] border border-[#C7D2FE] rounded-full px-2.5 py-[3px]">
                     {lesson.level}
                   </span>
-                  <span className="flex-none text-[#D6D3CC] text-sm transition-all group-hover:text-[#4F46E5] group-hover:translate-x-0.5">
+                  <span className="flex-none text-[#D6D3CC] text-sm transition-all group-hover:text-[#423AC5] group-hover:translate-x-0.5">
                     →
                   </span>
                 </Link>

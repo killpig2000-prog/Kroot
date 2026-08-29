@@ -19,7 +19,7 @@ export default function GlobalError({
           alignItems: "center",
           justifyContent: "center",
           background: "#fff",
-          color: "#18181B",
+          color: "#4A4237",
           fontFamily: "system-ui, -apple-system, sans-serif",
           textAlign: "center",
           padding: "20px",
@@ -41,7 +41,7 @@ export default function GlobalError({
               <g transform="rotate(4 50 80)">
                 <path d="M50 80 C50 66 49 60 48 54" stroke="#8B7355" strokeWidth="6" strokeLinecap="round" />
                 <circle cx="48" cy="40" r="24" fill="#22C55E" />
-                <path d="M48 22 C46 12 38 8 28 10 C32 20 40 23 48 22Z" fill="#16A34A" />
+                <path d="M48 22 C46 12 38 8 28 10 C32 20 40 23 48 22Z" fill="#3E7C59" />
                 <path d="M37 36 L44 40 L37 44" stroke="#14532D" strokeWidth="2.4" fill="none" strokeLinecap="round" strokeLinejoin="round" />
                 <path d="M59 36 L52 40 L59 44" stroke="#14532D" strokeWidth="2.4" fill="none" strokeLinecap="round" strokeLinejoin="round" />
                 <path d="M41 51 Q44.5 48 48 51 Q51.5 54 55 51" stroke="#14532D" strokeWidth="2.2" fill="none" strokeLinecap="round" />
@@ -68,7 +68,7 @@ export default function GlobalError({
               fontSize: 14,
               fontWeight: 600,
               color: "#fff",
-              background: "#16A34A",
+              background: "#3E7C59",
               cursor: "pointer",
             }}
           >

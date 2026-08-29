@@ -117,8 +117,8 @@ export default function SlangQuiz() {
         <div className="flex items-center gap-3.5 flex-wrap">
           <span className="text-[22px] flex-none">🎯</span>
           <div className="flex-1 min-w-[180px]">
-            <b className="block text-[14px] font-bold text-[#BE185D]">Daily slang challenge</b>
-            <span className="text-[12.5px] text-[#9D5C79]">
+            <b className="block text-[14px] font-bold text-[#AF3166]">Daily slang challenge</b>
+            <span className="text-[12.5px] text-[#97687D]">
               {doneToday !== null
                 ? `Done today — ${doneToday}/${QUESTIONS} correct. New round tomorrow!`
                 : `Guess the meaning of ${QUESTIONS} expressions · +4 XP`}
@@ -127,7 +127,7 @@ export default function SlangQuiz() {
           {doneToday === null && (
             <button
               onClick={start}
-              className="flex-none rounded-[9px] px-[18px] py-2 text-[13px] font-semibold text-white bg-[#DB2777] hover:bg-[#BE185D] transition-colors"
+              className="flex-none rounded-[9px] px-[18px] py-2 text-[13px] font-semibold text-white bg-[#C13E78] hover:bg-[#AF3166] transition-colors"
             >
               Start ▶
             </button>
@@ -137,10 +137,10 @@ export default function SlangQuiz() {
         <div className="flex items-center gap-3.5 flex-wrap">
           <span className="text-[22px] flex-none">{score >= 4 ? "🏆" : score >= 2 ? "🌱" : "💧"}</span>
           <div className="flex-1">
-            <b className="block text-[14px] font-bold text-[#BE185D]">
+            <b className="block text-[14px] font-bold text-[#AF3166]">
               {score}/{quiz.length} correct · +4 XP
             </b>
-            <span className="text-[12.5px] text-[#9D5C79]">
+            <span className="text-[12.5px] text-[#97687D]">
               {score >= 4
                 ? "Fluent in Street Talk — see you tomorrow!"
                 : "Flip the cards below and come back tomorrow."}
@@ -150,16 +150,16 @@ export default function SlangQuiz() {
       ) : (
         <div>
           <div className="flex items-center justify-between mb-2.5">
-            <b className="text-[12px] font-bold tracking-[.06em] uppercase text-[#DB2777]">
+            <b className="text-[12px] font-bold tracking-[.06em] uppercase text-[#C13E78]">
               What does it mean? · {qIndex + 1}/{quiz.length}
             </b>
-            <span className="text-[12px] font-semibold text-[#9D5C79] tabular-nums">
+            <span className="text-[12px] font-semibold text-[#97687D] tabular-nums">
               score {score}
             </span>
           </div>
           <p className="kr text-[22px] font-bold mb-3">
             {q.entry.kr}{" "}
-            <span className="text-[13px] font-medium text-[#9D5C79]">({q.entry.romanization})</span>
+            <span className="text-[13px] font-medium text-[#97687D]">({q.entry.romanization})</span>
           </p>
           <div className="grid gap-2 sm:grid-cols-2">
             {q.options.map((opt, i) => {
@@ -177,7 +177,7 @@ export default function SlangQuiz() {
                         ? "border-danger bg-danger-bg"
                         : state === "dim"
                           ? "border-[#FBCFE8] bg-white opacity-60"
-                          : "border-[#FBCFE8] bg-white hover:border-[#DB2777]"
+                          : "border-[#FBCFE8] bg-white hover:border-[#C13E78]"
                   }`}
                 >
                   {opt}

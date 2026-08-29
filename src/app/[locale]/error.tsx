@@ -30,7 +30,7 @@ export default function Error({
               <path d="M50 80 C50 66 49 60 48 54" stroke="#8B7355" strokeWidth="6" strokeLinecap="round" />
               <circle cx="48" cy="40" r="24" fill="#22C55E" />
               {/* the top leaf flops over */}
-              <path d="M48 22 C46 12 38 8 28 10 C32 20 40 23 48 22Z" fill="#16A34A" />
+              <path d="M48 22 C46 12 38 8 28 10 C32 20 40 23 48 22Z" fill="#3E7C59" />
               {/* dizzy > < eyes */}
               <path d="M37 36 L44 40 L37 44" stroke="#14532D" strokeWidth="2.4" fill="none" strokeLinecap="round" strokeLinejoin="round" />
               <path d="M59 36 L52 40 L59 44" stroke="#14532D" strokeWidth="2.4" fill="none" strokeLinecap="round" strokeLinejoin="round" />

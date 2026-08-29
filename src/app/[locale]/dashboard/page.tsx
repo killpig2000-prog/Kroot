@@ -33,12 +33,12 @@ import type { CefrLevel } from "@/lib/tree";
 // The old Basics/Practice/Relax card list duplicated the sidebar; only the
 // four practice skills keep an in-page presence, as compact progress rows.
 const PRACTICE_SKILLS = [
-  { key: "grammar", href: "/grammar", kr: "문", en: "Grammar", bg: "#EEF2FF", color: "#4F46E5" },
-  { key: "vocabulary", href: "/vocabulary", kr: "단", en: "Vocabulary", bg: "#F5F3FF", color: "#7C3AED" },
-  { key: "listening", href: "/listening", kr: "듣", en: "Listening", bg: "#F0FDF4", color: "#16A34A" },
-  { key: "reading", href: "/reading", kr: "읽", en: "Reading", bg: "#EFF6FF", color: "#2563EB" },
-  { key: "writing", href: "/writing", kr: "쓰", en: "Writing", bg: "#FFFBEB", color: "#D97706" },
-  { key: "pronunciation", href: "/speaking", kr: "발", en: "Pronunciation", bg: "#F0FDFA", color: "#0D9488" },
+  { key: "grammar", href: "/grammar", kr: "문", en: "Grammar", bg: "#EEF2FF", color: "#423AC5" },
+  { key: "vocabulary", href: "/vocabulary", kr: "단", en: "Vocabulary", bg: "#F5F3FF", color: "#6B33CC" },
+  { key: "listening", href: "/listening", kr: "듣", en: "Listening", bg: "#F0FDF4", color: "#3E7C59" },
+  { key: "reading", href: "/reading", kr: "읽", en: "Reading", bg: "#EFF6FF", color: "#3363CC" },
+  { key: "writing", href: "/writing", kr: "쓰", en: "Writing", bg: "#FFFBEB", color: "#C47A25" },
+  { key: "pronunciation", href: "/speaking", kr: "발", en: "Pronunciation", bg: "#F0FDFA", color: "#228980" },
 ];
 
 const MONTH_GOAL = 20;
@@ -493,13 +493,13 @@ export default async function DashboardPage() {
               💬
             </span>
             <span className="flex-1 min-w-0">
-              <b className="block font-semibold text-sm text-[#BE185D]">
+              <b className="block font-semibold text-sm text-[#AF3166]">
                 Today&apos;s slang · <span className="kr">{slang.kr}</span>{" "}
-                <span className="font-medium text-[#DB2777] whitespace-nowrap">({slang.romanization})</span>
+                <span className="font-medium text-[#C13E78] whitespace-nowrap">({slang.romanization})</span>
               </b>
-              <span className="text-[13px] text-[#9D5C79]">{slang.meaning}</span>
+              <span className="text-[13px] text-[#97687D]">{slang.meaning}</span>
             </span>
-            <span className="w-full sm:w-auto pl-[54px] sm:pl-0 text-[13px] font-semibold text-[#DB2777] transition-transform group-hover:translate-x-0.5">
+            <span className="w-full sm:w-auto pl-[54px] sm:pl-0 text-[13px] font-semibold text-[#C13E78] transition-transform group-hover:translate-x-0.5">
               Hear it in context →
             </span>
           </Link>

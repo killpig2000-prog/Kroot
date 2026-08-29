@@ -19,7 +19,7 @@ export default function Final() {
         </p>
         <Link
           href="/onboarding"
-          className="relative z-10 inline-block rounded-[10px] bg-success px-[28px] py-[13px] text-[14.5px] font-bold text-white shadow-[0_6px_0_#15803D] hover:translate-y-[2px] hover:shadow-[0_4px_0_#15803D] transition-all"
+          className="relative z-10 inline-block rounded-[10px] bg-success px-[28px] py-[13px] text-[14.5px] font-bold text-white shadow-[0_6px_0_#2E5B41] hover:translate-y-[2px] hover:shadow-[0_4px_0_#2E5B41] transition-all"
         >
           Start free — 3-min level test
         </Link>

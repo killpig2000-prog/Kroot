@@ -7,7 +7,7 @@ export default function Pot({ grown }: { grown: boolean }) {
         <g className={`sprout-grow${grown ? " up" : ""}`}>
           <path d="M85 96 C85 78 85 70 85 62" stroke="#8B7355" strokeWidth="6" strokeLinecap="round" />
           <circle cx="85" cy="46" r="20" fill="#22C55E" />
-          <path d="M85 30 C85 18 93 12 104 11 C102 22 95 28 85 30Z" fill="#16A34A" />
+          <path d="M85 30 C85 18 93 12 104 11 C102 22 95 28 85 30Z" fill="#3E7C59" />
           <circle cx="78" cy="46" r="2.6" fill="#14532D" />
           <circle cx="92" cy="46" r="2.6" fill="#14532D" />
           <path d="M80 53 Q85 57 90 53" stroke="#14532D" strokeWidth="2.2" fill="none" strokeLinecap="round" />

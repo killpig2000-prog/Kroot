@@ -3,7 +3,7 @@ import { WRITING_GENRE_META, type Prompt } from "@/lib/writing";
 const CARD = "border border-line rounded-[14px] bg-white max-w-[900px]";
 const LABEL = "text-[11.5px] font-semibold tracking-[.1em] uppercase text-faint";
 const BTN_INK =
-  "rounded-[9px] px-[18px] py-[9px] text-sm font-semibold text-white bg-charcoal hover:bg-[#3F3F46] transition-colors disabled:bg-line disabled:text-faint";
+  "rounded-[9px] px-[18px] py-[9px] text-sm font-semibold text-white bg-success hover:bg-success-deep transition-colors disabled:bg-line disabled:text-faint";
 
 export default function WritePhase({
   prompt,

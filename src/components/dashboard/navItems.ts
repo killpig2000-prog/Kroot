@@ -25,26 +25,26 @@ export const SECTIONS: { title: string; items: NavItem[] }[] = [
   {
     title: "Basics",
     items: [
-      { icon: "🧭", label: "Guide", href: "/guide", color: { text: "#0284C7", bg: "#F0F9FF", border: "#BAE6FD" } },
-      { icon: "🔤", label: "Hangul", href: "/hangul", color: { text: "#E11D48", bg: "#FFF1F2", border: "#FECDD3" } },
-      { icon: "📖", label: "Grammar", href: "/grammar", color: { text: "#4F46E5", bg: "#EEF2FF", border: "#C7D2FE" } },
-      { icon: "🃏", label: "Vocabulary", href: "/vocabulary", color: { text: "#7C3AED", bg: "#F5F3FF", border: "#DDD6FE" }, popular: true },
+      { icon: "🧭", label: "Guide", href: "/guide", color: { text: "#1F81B4", bg: "#F0F9FF", border: "#BAE6FD" } },
+      { icon: "🔤", label: "Hangul", href: "/hangul", color: { text: "#C63958", bg: "#FFF1F2", border: "#FECDD3" } },
+      { icon: "📖", label: "Grammar", href: "/grammar", color: { text: "#423AC5", bg: "#EEF2FF", border: "#C7D2FE" } },
+      { icon: "🃏", label: "Vocabulary", href: "/vocabulary", color: { text: "#6B33CC", bg: "#F5F3FF", border: "#DDD6FE" }, popular: true },
     ],
   },
   {
     title: "Practice",
     items: [
-      { icon: "🎧", label: "Listening", href: "/listening", color: { text: "#16A34A", bg: "#F0FDF4", border: "#BBF7D0" } },
-      { icon: "🌶️", label: "Pronunciation", href: "/speaking", color: { text: "#0D9488", bg: "#F0FDFA", border: "#99F6E4" }, popular: true },
-      { icon: "✏️", label: "Writing", href: "/writing", color: { text: "#D97706", bg: "#FFFBEB", border: "#FDE68A" } },
-      { icon: "📰", label: "Reading", href: "/reading", color: { text: "#2563EB", bg: "#EFF6FF", border: "#BFDBFE" } },
+      { icon: "🎧", label: "Listening", href: "/listening", color: { text: "#2C9754", bg: "#F0FDF4", border: "#BBF7D0" } },
+      { icon: "🌶️", label: "Pronunciation", href: "/speaking", color: { text: "#228980", bg: "#F0FDFA", border: "#99F6E4" }, popular: true },
+      { icon: "✏️", label: "Writing", href: "/writing", color: { text: "#C47A25", bg: "#FFFBEB", border: "#FDE68A" } },
+      { icon: "📰", label: "Reading", href: "/reading", color: { text: "#3363CC", bg: "#EFF6FF", border: "#BFDBFE" } },
     ],
   },
   {
     title: "Relax",
     items: [
-      { icon: "💬", label: "Slang", href: "/slang", color: { text: "#DB2777", bg: "#FDF2F8", border: "#FBCFE8" } },
-      { icon: "🛍️", label: "Shop", href: "/shop", color: { text: "#C2410C", bg: "#FFF7ED", border: "#FED7AA" } },
+      { icon: "💬", label: "Slang", href: "/slang", color: { text: "#C13E78", bg: "#FDF2F8", border: "#FBCFE8" } },
+      { icon: "🛍️", label: "Shop", href: "/shop", color: { text: "#B14F27", bg: "#FFF7ED", border: "#FED7AA" } },
     ],
   },
 ];

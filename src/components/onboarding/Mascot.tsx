@@ -17,7 +17,7 @@ export default function Mascot() {
           <g className="sway">
             <path d="M50 78 C50 62 50 56 50 50" stroke="#8B7355" strokeWidth="6" strokeLinecap="round" />
             <circle cx="50" cy="38" r="24" fill="#22C55E" />
-            <path d="M50 20 C50 8 58 2 70 1 C68 13 61 19 50 20Z" fill="#16A34A" />
+            <path d="M50 20 C50 8 58 2 70 1 C68 13 61 19 50 20Z" fill="#3E7C59" />
             <circle className="blink" cx="42" cy="38" r="3" fill="#14532D" />
             <circle className="blink d2" cx="58" cy="38" r="3" fill="#14532D" />
             <circle cx="37" cy="45" r="3.4" fill="#FB7185" opacity=".45" />

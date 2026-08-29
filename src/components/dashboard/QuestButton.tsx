@@ -30,7 +30,7 @@ export default function QuestButton({
   return (
     <Link
       href={SKILL_HREF[skillKey] ?? "/dashboard"}
-      className="rounded-[9px] px-[18px] py-[9px] text-[13.5px] font-semibold text-white bg-charcoal transition-colors hover:bg-[#3F3F46]"
+      className="rounded-[9px] px-[18px] py-[9px] text-[13.5px] font-semibold text-white bg-success transition-colors hover:bg-success-deep"
     >
       Start ▸
     </Link>

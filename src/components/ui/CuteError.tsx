@@ -12,7 +12,7 @@ export default function CuteError({ children }: { children: React.ReactNode }) {
         <g transform="rotate(3 50 80)">
           <path d="M50 82 C50 68 49 62 48 56" stroke="#8B7355" strokeWidth="7" strokeLinecap="round" />
           <circle cx="48" cy="40" r="26" fill="#22C55E" />
-          <path d="M48 16 C46 6 38 2 28 4 C32 14 40 17 48 16Z" fill="#16A34A" />
+          <path d="M48 16 C46 6 38 2 28 4 C32 14 40 17 48 16Z" fill="#3E7C59" />
           {/* flustered ; ; eyes */}
           <path d="M36 36 Q40 40 36 44" stroke="#14532D" strokeWidth="3" fill="none" strokeLinecap="round" />
           <path d="M60 36 Q56 40 60 44" stroke="#14532D" strokeWidth="3" fill="none" strokeLinecap="round" />

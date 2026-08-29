@@ -15,7 +15,7 @@ export default function NotFound() {
             <g className="sway">
               <path d="M50 80 C50 66 50 60 50 54" stroke="#8B7355" strokeWidth="6" strokeLinecap="round" />
               <circle cx="50" cy="40" r="24" fill="#22C55E" />
-              <path d="M50 22 C50 10 58 4 70 3 C68 15 61 21 50 22Z" fill="#16A34A" />
+              <path d="M50 22 C50 10 58 4 70 3 C68 15 61 21 50 22Z" fill="#3E7C59" />
               {/* wide searching eyes */}
               <circle cx="41" cy="39" r="4.5" fill="white" />
               <circle cx="59" cy="39" r="4.5" fill="white" />

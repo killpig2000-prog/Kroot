@@ -66,7 +66,7 @@ export default function LevelTest() {
           </div>
           <Link
             href="/onboarding"
-            className="inline-block rounded-[10px] bg-success px-[24px] py-3 text-sm font-bold text-white shadow-[0_5px_0_#15803D] hover:translate-y-[2px] hover:shadow-[0_3px_0_#15803D] transition-all"
+            className="inline-block rounded-[10px] bg-success px-[24px] py-3 text-sm font-bold text-white shadow-[0_5px_0_#2E5B41] hover:translate-y-[2px] hover:shadow-[0_3px_0_#2E5B41] transition-all"
           >
             Start the level test
           </Link>

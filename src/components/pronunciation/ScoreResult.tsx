@@ -1,14 +1,14 @@
 import { buttonClassName } from "@/components/ui/Button";
 import type { Verdict } from "@/lib/speech-match";
 
-const TEAL = "#0D9488";
+const TEAL = "#228980";
 const BTN_TEAL = buttonClassName("teal");
 const BTN_LINE = buttonClassName("line");
 
 export const VERDICTS: Record<Verdict, { text: string; fg: string }> = {
-  great: { text: "🔥 Nailed it!", fg: "#16A34A" },
+  great: { text: "🔥 Nailed it!", fg: "#3E7C59" },
   close: { text: "😬 So close", fg: "#B45309" },
-  again: { text: "💥 Try again", fg: "#E11D48" },
+  again: { text: "💥 Try again", fg: "#C63958" },
 };
 
 export default function ScoreResult({
@@ -82,7 +82,7 @@ export default function ScoreResult({
         </div>
       </div>
 
-      {saveError && <p className="text-[11.5px] text-[#E11D48] mb-2.5">⚠️ {saveError}</p>}
+      {saveError && <p className="text-[11.5px] text-[#C63958] mb-2.5">⚠️ {saveError}</p>}
       <div className="flex gap-2.5">
         <button className={BTN_LINE} onClick={onTryAgain}>
           Try again

@@ -46,10 +46,7 @@ function NavItem({
       )}
       <span className="flex-1 min-w-0 truncate">{label}</span>
       {popular && (
-        <span
-          className="flex-none text-[8.5px] font-extrabold tracking-[.02em] text-white rounded-full px-[5px] py-px"
-          style={{ background: "linear-gradient(90deg,#F43F5E,#F59E0B,#22C55E,#0EA5E9,#8B5CF6)" }}
-        >
+        <span className="flex-none text-[8.5px] font-extrabold tracking-[.02em] text-[#B14F27] bg-[#FDE9D0] rounded-full px-[5px] py-px">
           Popular
         </span>
       )}
@@ -61,19 +58,7 @@ function NavItem({
     </Link>
   );
 
-  // Skip the ring once the item is active — the "notebook tab" active state
-  // (white bg, right edge bled off with a negative margin) doesn't fit
-  // inside the ring's rounded frame, and the highlight is redundant once
-  // you're already on that page.
-  if (!popular || on) return link;
-
-  // Rainbow-ring treatment: a gradient frame with a small padding gap, only
-  // for the one item we want to visually call out (Pronunciation).
-  return (
-    <div className="rounded-[11px] p-[1.5px]" style={{ background: "linear-gradient(90deg,#F43F5E,#F59E0B,#22C55E,#0EA5E9,#8B5CF6)" }}>
-      <div className="rounded-[9.5px] bg-warm">{link}</div>
-    </div>
-  );
+  return link;
 }
 
 type Props = {

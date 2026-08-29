@@ -31,14 +31,14 @@ const SUN_INK = "#7A5A12";
 const SUN_PAPER = "#FFFBEA";
 
 const S = {
-  hangul: { icon: "🔤", label: "Hangul", href: "/hangul", color: "#E11D48" },
-  grammar: { icon: "📖", label: "Grammar", href: "/grammar", color: "#4F46E5" },
-  vocab: { icon: "🃏", label: "Vocabulary", href: "/vocabulary", color: "#7C3AED" },
-  listen: { icon: "🎧", label: "Listening", href: "/listening", color: "#16A34A" },
-  pron: { icon: "🌶️", label: "Pronunciation", href: "/speaking", color: "#0D9488" },
-  write: { icon: "✏️", label: "Writing", href: "/writing", color: "#D97706" },
-  read: { icon: "📰", label: "Reading", href: "/reading", color: "#2563EB" },
-  slang: { icon: "💬", label: "Slang", href: "/slang", color: "#DB2777" },
+  hangul: { icon: "🔤", label: "Hangul", href: "/hangul", color: "#C63958" },
+  grammar: { icon: "📖", label: "Grammar", href: "/grammar", color: "#423AC5" },
+  vocab: { icon: "🃏", label: "Vocabulary", href: "/vocabulary", color: "#6B33CC" },
+  listen: { icon: "🎧", label: "Listening", href: "/listening", color: "#3E7C59" },
+  pron: { icon: "🌶️", label: "Pronunciation", href: "/speaking", color: "#228980" },
+  write: { icon: "✏️", label: "Writing", href: "/writing", color: "#C47A25" },
+  read: { icon: "📰", label: "Reading", href: "/reading", color: "#3363CC" },
+  slang: { icon: "💬", label: "Slang", href: "/slang", color: "#C13E78" },
 } as const;
 
 const stop = (k: keyof typeof S, task: string, freq: string): Stop => ({ key: k, ...S[k], task, freq });
@@ -54,7 +54,7 @@ const ROUTES: {
 }[] = [
   {
     icon: "🗣️",
-    color: "#0D9488",
+    color: "#228980",
     tag: "Most people start here",
     name: "Use Korean with people",
     sub: "Dramas, travel, friends. Skips the grammar you don't need yet.",
@@ -69,7 +69,7 @@ const ROUTES: {
   },
   {
     icon: "🎓",
-    color: "#4F46E5",
+    color: "#423AC5",
     tag: "If you need the certificate",
     name: "Reach B2 or pass TOPIK",
     sub: "Grammar in order, nothing skipped. Slower to feel fluent, but it holds up.",
@@ -465,7 +465,7 @@ export default async function GuidePage() {
 
               <Link
                 href="/level-test"
-                className="group flex flex-col rounded-2xl border border-line bg-white px-[18px] pt-4 pb-3.5 shadow-[0_1px_2px_rgba(27,36,48,.04),0_8px_24px_-16px_rgba(27,36,48,.16)] transition-all hover:border-[#7C3AED] hover:-translate-y-0.5"
+                className="group flex flex-col rounded-2xl border border-line bg-white px-[18px] pt-4 pb-3.5 shadow-[0_1px_2px_rgba(27,36,48,.04),0_8px_24px_-16px_rgba(27,36,48,.16)] transition-all hover:border-[#6B33CC] hover:-translate-y-0.5"
               >
                 <span className="flex items-center gap-3 mb-2.5">
                   <span className="flex-none w-9 h-9 rounded-[11px] bg-[#F5F3FF] border border-[#DDD6FE] flex items-center justify-center text-[18px]">
@@ -475,7 +475,7 @@ export default async function GuidePage() {
                     <span className="block text-[9.5px] font-black uppercase tracking-[.09em] text-faint">
                       Now and then
                     </span>
-                    <b className="block text-[16px] font-black tracking-[-0.015em] transition-colors group-hover:text-[#7C3AED]">
+                    <b className="block text-[16px] font-black tracking-[-0.015em] transition-colors group-hover:text-[#6B33CC]">
                       Promotion test
                     </b>
                   </span>

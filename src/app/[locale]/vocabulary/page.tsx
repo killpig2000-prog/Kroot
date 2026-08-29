@@ -25,7 +25,7 @@ function ChapterDots({ done, started, total }: { done: number; started: number; 
         <span
           key={i}
           className={`w-[6px] h-[6px] rounded-full ${
-            i < done ? "bg-[#7C3AED]" : i < done + started ? "bg-[#DDD6FE]" : "bg-line"
+            i < done ? "bg-[#6B33CC]" : i < done + started ? "bg-[#DDD6FE]" : "bg-line"
           }`}
         />
       ))}
@@ -146,7 +146,7 @@ export default async function VocabularyPage({
           <div className="flex items-end justify-between gap-4 mb-5 flex-wrap">
             <div>
               <h1 className="font-bold text-[22px] tracking-[-0.02em] flex items-center">
-                <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[#F5F3FF] text-[#7C3AED] border border-[#DDD6FE] items-center justify-center kr text-[15px] mr-[9px]">
+                <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[#F5F3FF] text-[#6B33CC] border border-[#DDD6FE] items-center justify-center kr text-[15px] mr-[9px]">
                   단
                 </span>
                 Vocabulary · {level}
@@ -174,7 +174,7 @@ export default async function VocabularyPage({
               className="grid grid-cols-1 sm:grid-cols-[minmax(0,1fr)_auto] gap-3 sm:gap-[18px] items-center bg-white border border-[#DDD6FE] rounded-[14px] px-4 py-4 sm:px-[22px] sm:py-[18px] mb-4 shadow-[0_4px_0_#DDD6FE]"
             >
               <div className="min-w-0">
-                <p className="text-[11px] font-extrabold tracking-[.07em] uppercase text-[#7C3AED] mb-1">
+                <p className="text-[11px] font-extrabold tracking-[.07em] uppercase text-[#6B33CC] mb-1">
                   {upNext.status === "done" ? "All done" : "Up next"}
                 </p>
                 <h2 className="font-bold text-[20px] sm:text-[24px] tracking-[-0.02em] leading-[1.15]">
@@ -207,7 +207,7 @@ export default async function VocabularyPage({
               <div className="hidden sm:flex flex-col gap-2 items-stretch min-w-[220px]">
                 <Link
                   href={sessionHref(upNext.index)}
-                  className="inline-flex items-center justify-center rounded-[9px] px-5 py-[11px] text-sm font-bold text-white bg-charcoal hover:bg-[#3F3F46] transition-colors whitespace-nowrap"
+                  className="inline-flex items-center justify-center rounded-[9px] px-5 py-[11px] text-sm font-bold text-white bg-success hover:bg-success-deep transition-colors whitespace-nowrap"
                 >
                   {ctaLabel(upNext)}
                 </Link>
@@ -238,11 +238,11 @@ export default async function VocabularyPage({
                 aria-label={`${doneUnits} of ${units.length} units done`}
               >
                 <span
-                  className="absolute inset-y-0 left-0 rounded-full bg-[#7C3AED]"
+                  className="absolute inset-y-0 left-0 rounded-full bg-[#6B33CC]"
                   style={{ width: `${railPct}%` }}
                 />
                 <span
-                  className="absolute top-[-3px] w-[11px] h-[11px] -ml-[5px] rounded-full bg-white border-[2.5px] border-[#7C3AED]"
+                  className="absolute top-[-3px] w-[11px] h-[11px] -ml-[5px] rounded-full bg-white border-[2.5px] border-[#6B33CC]"
                   style={{ left: `${railPct}%` }}
                 />
               </span>
@@ -270,7 +270,7 @@ export default async function VocabularyPage({
                 <span>Contents</span>
                 <Link
                   href={`/vocabulary?level=${level}${selected ? `&unit=${selected.index}` : ""}${showAll ? "" : "&all=1"}`}
-                  className="text-[11.5px] font-bold tracking-normal normal-case text-[#7C3AED] hover:underline"
+                  className="text-[11.5px] font-bold tracking-normal normal-case text-[#6B33CC] hover:underline"
                 >
                   {showAll ? "Show chapters" : "Show all units"}
                 </Link>
@@ -293,7 +293,7 @@ export default async function VocabularyPage({
                         href={unitHref(target.index)}
                         aria-current={current ? "true" : undefined}
                         className={`grid grid-cols-[minmax(0,1fr)_auto] gap-2 items-center px-2 py-[7px] rounded-[8px] text-[12.5px] transition-colors ${
-                          current ? "bg-[#F5F3FF] text-[#6D28D9] font-bold" : "hover:bg-warm"
+                          current ? "bg-[#F5F3FF] text-[#713FC0] font-bold" : "hover:bg-warm"
                         } ${allDone && !current ? "text-muted font-semibold" : "font-bold"}`}
                         title={`Units ${first}–${last}`}
                       >
@@ -314,7 +314,7 @@ export default async function VocabularyPage({
                                 aria-current={on ? "page" : undefined}
                                 className={`grid grid-cols-[minmax(0,1fr)_auto] gap-2 items-baseline px-2 py-[5px] rounded-[7px] text-[12.5px] transition-colors ${
                                   on
-                                    ? "bg-white border border-[#DDD6FE] text-[#6D28D9] font-extrabold lg:bg-white max-lg:bg-[#F5F3FF] max-lg:border-transparent"
+                                    ? "bg-white border border-[#DDD6FE] text-[#713FC0] font-extrabold lg:bg-white max-lg:bg-[#F5F3FF] max-lg:border-transparent"
                                     : "hover:bg-warm"
                                 }`}
                               >
@@ -330,7 +330,7 @@ export default async function VocabularyPage({
                                     u.thirsty > 0
                                       ? "text-sky-deep font-bold"
                                       : on
-                                      ? "text-[#7C3AED] font-bold"
+                                      ? "text-[#6B33CC] font-bold"
                                       : u.status === "done"
                                       ? "text-success"
                                       : "text-faint"
@@ -355,7 +355,7 @@ export default async function VocabularyPage({
                 <>
                   <div className="flex items-start justify-between gap-4 pb-3.5 mb-1 border-b border-line">
                     <div className="min-w-0">
-                      <p className="text-[11px] font-extrabold tracking-[.06em] uppercase text-[#7C3AED] mb-1">
+                      <p className="text-[11px] font-extrabold tracking-[.06em] uppercase text-[#6B33CC] mb-1">
                         Chapter {chapterOf(selected.index) + 1} · Units{" "}
                         {chapterOf(selected.index) * CHAPTER_UNITS + 1}–
                         {Math.min(units.length, (chapterOf(selected.index) + 1) * CHAPTER_UNITS)}
@@ -469,7 +469,7 @@ export default async function VocabularyPage({
           <div className="grid grid-cols-[1fr_auto] gap-2 items-center pointer-events-auto">
             <Link
               href={sessionHref(upNext.index)}
-              className="inline-flex items-center justify-center rounded-[9px] px-4 py-3 text-sm font-bold text-white bg-charcoal shadow-[0_6px_16px_-8px_rgba(24,24,27,.5)] whitespace-nowrap"
+              className="inline-flex items-center justify-center rounded-[9px] px-4 py-3 text-sm font-bold text-white bg-success shadow-[0_6px_16px_-8px_rgba(46,91,65,.5)] whitespace-nowrap"
             >
               {ctaLabel(upNext)}
             </Link>

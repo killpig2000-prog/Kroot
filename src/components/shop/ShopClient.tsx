@@ -26,9 +26,9 @@ import ShopGoal, { useStoredGoal, writeStoredGoal } from "@/components/shop/Shop
 const DEFAULT_SKY = "linear-gradient(180deg,#DFF1FF 0%,#F0FBF1 62%,#E4F3DA 100%)";
 const RARITY_STYLE: Record<Rarity, { stripe: string; chip: string }> = {
   common: { stripe: "#B7AE9C", chip: "bg-warm text-muted" },
-  rare: { stripe: "#2563EB", chip: "bg-[#EFF6FF] text-sky-deep" },
-  epic: { stripe: "#7C3AED", chip: "bg-[#F5F3FF] text-[#7C3AED]" },
-  legendary: { stripe: "#C2410C", chip: "bg-[#FFF7ED] text-[#C2410C]" },
+  rare: { stripe: "#3363CC", chip: "bg-[#EFF6FF] text-sky-deep" },
+  epic: { stripe: "#6B33CC", chip: "bg-[#F5F3FF] text-[#6B33CC]" },
+  legendary: { stripe: "#B14F27", chip: "bg-[#FFF7ED] text-[#B14F27]" },
 };
 const TABS: CostumeSlot[] = [...WEARABLE_SLOTS, ...GARDEN_SLOTS];
 
@@ -270,7 +270,7 @@ export default function ShopClient({
                 <Scene ids={[featured.id]} stage={stage} species={species} className="w-full h-full" />
               </span>
               <span className="min-w-0">
-                <span className="block text-[10.5px] font-extrabold tracking-[.06em] uppercase text-[#C2410C]">
+                <span className="block text-[10.5px] font-extrabold tracking-[.06em] uppercase text-[#B14F27]">
                   This week only
                 </span>
                 <b className="block text-[14px] truncate">
@@ -281,7 +281,7 @@ export default function ShopClient({
                   {featured.minPlayerLevel ? ` · needs Lv.${featured.minPlayerLevel}` : ""} · gone after {featured.availableUntil}
                 </small>
               </span>
-              <span className="text-[11.5px] font-extrabold tracking-[.04em] uppercase text-[#C2410C] whitespace-nowrap">
+              <span className="text-[11.5px] font-extrabold tracking-[.04em] uppercase text-[#B14F27] whitespace-nowrap">
                 {daysLeft(featured.availableUntil, today)}d left
               </span>
             </button>
@@ -310,7 +310,7 @@ export default function ShopClient({
                   <span aria-hidden="true">{SLOT_LABELS[slot].icon}</span>
                   {SLOT_LABELS[slot].en}
                   {isNew && (
-                    <span className={`text-[9.5px] font-extrabold tracking-[.06em] rounded-full px-1.5 py-px ${on ? "bg-[#B7791F] text-white" : "bg-[#C2410C] text-white"}`}>
+                    <span className={`text-[9.5px] font-extrabold tracking-[.06em] rounded-full px-1.5 py-px ${on ? "bg-[#B7791F] text-white" : "bg-[#B14F27] text-white"}`}>
                       NEW
                     </span>
                   )}
@@ -415,7 +415,7 @@ export default function ShopClient({
                 type="button"
                 onClick={act}
                 disabled={busy || cta.disabled}
-                className="flex-1 rounded-[10px] px-3 py-2.5 text-[13px] font-extrabold text-white bg-charcoal hover:bg-[#3F3F46] transition-colors disabled:opacity-50"
+                className="flex-1 rounded-[10px] px-3 py-2.5 text-[13px] font-extrabold text-white bg-success hover:bg-success-deep transition-colors disabled:opacity-50"
               >
                 {busy ? "…" : cta.label}
               </button>

@@ -78,12 +78,12 @@ export default function Widgets({
       {slang && (
         <WCard title="Today's slang" tag="💬" index={1}>
           <Link href="/slang" className="block group">
-            <p className="kr text-[21px] font-bold text-[#BE185D] mb-0.5">
+            <p className="kr text-[21px] font-bold text-[#AF3166] mb-0.5">
               {slang.kr}{" "}
-              <span className="text-[12px] font-medium text-[#DB2777]">({slang.romanization})</span>
+              <span className="text-[12px] font-medium text-[#C13E78]">({slang.romanization})</span>
             </p>
             <p className="text-[12.5px] text-muted mb-2">{slang.meaning}</p>
-            <span className="text-[12.5px] font-semibold text-[#DB2777] transition-transform inline-block group-hover:translate-x-0.5">
+            <span className="text-[12.5px] font-semibold text-[#C13E78] transition-transform inline-block group-hover:translate-x-0.5">
               Flip it →
             </span>
           </Link>

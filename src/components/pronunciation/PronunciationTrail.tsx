@@ -12,8 +12,8 @@ export type ChapterProgress = Chapter & {
 };
 
 const TIER_STYLE: Record<ChallengeTier, { c: string; soft: string; brd: string }> = {
-  1: { c: "#16A34A", soft: "#F0FDF4", brd: "#BBF7D0" },
-  2: { c: "#D97706", soft: "#FFFBEB", brd: "#FDE68A" },
+  1: { c: "#3E7C59", soft: "#F0FDF4", brd: "#BBF7D0" },
+  2: { c: "#C47A25", soft: "#FFFBEB", brd: "#FDE68A" },
   3: { c: "#EA580C", soft: "#FFF7ED", brd: "#FED7AA" },
   4: { c: "#DC2626", soft: "#FEF2F2", brd: "#FECACA" },
   5: { c: "#7C2D12", soft: "#FDF2F0", brd: "#E7C4B4" },

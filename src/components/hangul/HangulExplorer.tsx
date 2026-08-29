@@ -15,7 +15,7 @@ import {
   type Jamo,
 } from "@/lib/hangul";
 
-const GREEN = "#16A34A";
+const GREEN = "#3E7C59";
 const SOFT = "#F0FDF4";
 const BRD = "#BBF7D0";
 

@@ -5,7 +5,7 @@ import { TIER_META, type Chapter, type ChallengeWord } from "@/lib/pronunciation
 
 type TierMeta = (typeof TIER_META)[number];
 
-const TEAL = "#0D9488";
+const TEAL = "#228980";
 const RAINBOW =
   "conic-gradient(from 0deg, #EF4444, #F97316, #EAB308, #22C55E, #06B6D4, #6366F1, #A855F7, #EF4444)";
 const BTN_TEAL = buttonClassName("teal");
@@ -103,7 +103,7 @@ export default function FinishedCard({
       )}
 
       {saveError && (
-        <p className="text-[12px] text-[#E11D48] bg-[#FFF1F2] border border-[#FECDD3] rounded-[8px] px-3 py-2 mb-5">
+        <p className="text-[12px] text-[#C63958] bg-[#FFF1F2] border border-[#FECDD3] rounded-[8px] px-3 py-2 mb-5">
           ⚠️ {saveError}
         </p>
       )}

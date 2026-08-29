@@ -40,7 +40,7 @@ export default function ManageSubscriptionButton({ className }: { className?: st
         {busy ? "Opening…" : "Manage subscription"}
       </button>
       {error && (
-        <small className="text-[12px] text-[#DB2777]">
+        <small className="text-[12px] text-[#C13E78]">
           Couldn&apos;t open billing — try again in a moment.
         </small>
       )}

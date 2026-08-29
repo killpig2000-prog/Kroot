@@ -77,7 +77,7 @@ export default function FlipPhase({
             <span
               key={w.key}
               className={`w-[22px] h-[5px] rounded-full ${
-                k < index ? "bg-[#7C3AED]" : k === index ? "bg-[#7C3AED] opacity-40" : "bg-line"
+                k < index ? "bg-[#6B33CC]" : k === index ? "bg-[#6B33CC] opacity-40" : "bg-line"
               }`}
             />
           ))}
@@ -86,7 +86,7 @@ export default function FlipPhase({
           <span className="hidden sm:inline">
             {topicLabel} · {word.level} ·{" "}
           </span>
-          <b className="text-[#7C3AED]">{index + 1}</b> / {words.length}
+          <b className="text-[#6B33CC]">{index + 1}</b> / {words.length}
         </span>
       </div>
 
@@ -105,7 +105,7 @@ export default function FlipPhase({
                   type="button"
                   onClick={() => speakKorean(word.korean)}
                   title="Hear it"
-                  className="inline-flex items-baseline gap-2 hover:text-[#7C3AED] transition-colors text-left"
+                  className="inline-flex items-baseline gap-2 hover:text-[#6B33CC] transition-colors text-left"
                 >
                   {word.korean}
                   <span aria-hidden="true" className="text-[16px] translate-y-[-6px] opacity-70">🔊</span>
@@ -126,7 +126,7 @@ export default function FlipPhase({
           {flipped ? (
             <div style={{ animation: "fadeUp .3s ease" }}>
               <p className="text-[20px] font-extrabold mt-2.5 mb-1.5 flex items-center gap-2">
-                <span className="text-[11px] font-black text-[#7C3AED] border-[1.5px] border-[#DDD6FE] rounded-full w-[18px] h-[18px] inline-grid place-items-center">
+                <span className="text-[11px] font-black text-[#6B33CC] border-[1.5px] border-[#DDD6FE] rounded-full w-[18px] h-[18px] inline-grid place-items-center">
                   1
                 </span>
                 {word.meaning_en}
@@ -152,7 +152,7 @@ export default function FlipPhase({
                     type="button"
                     onClick={() => speakKorean(word.example_kr)}
                     title="Hear the sentence"
-                    className="text-left hover:text-[#7C3AED] transition-colors"
+                    className="text-left hover:text-[#6B33CC] transition-colors"
                   >
                     {word.example_kr} <span aria-hidden="true" className="text-[11px] opacity-70">🔊</span>
                   </button>
@@ -190,7 +190,7 @@ export default function FlipPhase({
           ) : (
             <div className="mt-5 mb-1">
               <button
-                className="border-[1.5px] border-dashed border-[#DDD6FE] rounded-[10px] bg-[#F5F3FF] px-[22px] py-3 text-[13.5px] font-semibold text-[#7C3AED] hover:bg-[#EDE9FE] transition-colors"
+                className="border-[1.5px] border-dashed border-[#DDD6FE] rounded-[10px] bg-[#F5F3FF] px-[22px] py-3 text-[13.5px] font-semibold text-[#6B33CC] hover:bg-[#EDE9FE] transition-colors"
                 onClick={onFlip}
               >
                 👀 Reveal meaning
@@ -215,15 +215,15 @@ export default function FlipPhase({
       {/* bonus root banner */}
       {root && !rootOpen && (
         <div className="mt-4 border border-dashed border-[#DDD6FE] rounded-[14px] bg-[#F5F3FF] px-5 py-4 flex items-center gap-3.5">
-          <span className="w-[38px] h-[38px] rounded-[10px] bg-[#7C3AED] text-white flex items-center justify-center font-bold text-[17px] flex-none kr">
+          <span className="w-[38px] h-[38px] rounded-[10px] bg-[#6B33CC] text-white flex items-center justify-center font-bold text-[17px] flex-none kr">
             {root.syllable}
           </span>
           <div className="min-w-0">
             <b className="block text-[13.5px] font-semibold">Bonus root: {root.name}</b>
-            <span className="text-[12.5px] text-[#6D28D9]">A few more words that share this root</span>
+            <span className="text-[12.5px] text-[#713FC0]">A few more words that share this root</span>
           </div>
           <button
-            className="ml-auto flex-none bg-[#7C3AED] hover:bg-[#6D28D9] text-white rounded-lg px-4 py-2 text-[12.5px] font-semibold transition-colors"
+            className="ml-auto flex-none bg-[#6B33CC] hover:bg-[#713FC0] text-white rounded-lg px-4 py-2 text-[12.5px] font-semibold transition-colors"
             onClick={onOpenRoot}
           >
             Explore →
@@ -236,7 +236,7 @@ export default function FlipPhase({
         <div className="mt-2.5 border border-[#DDD6FE] rounded-[14px] bg-white px-[22px] py-5" style={{ animation: "fadeUp .3s ease" }}>
           <div className="flex items-start justify-between mb-4">
             <div className="flex items-center gap-3">
-              <span className="w-11 h-11 rounded-xl bg-[#F5F3FF] text-[#7C3AED] flex items-center justify-center kr text-xl flex-none">
+              <span className="w-11 h-11 rounded-xl bg-[#F5F3FF] text-[#6B33CC] flex items-center justify-center kr text-xl flex-none">
                 {root.syllable}
               </span>
               <div>
@@ -433,7 +433,7 @@ function SwipeCard({
           {/* swipe stamps */}
           <span
             aria-hidden="true"
-            className="absolute top-[108px] left-1/2 z-10 pointer-events-none select-none text-[22px] font-black tracking-[.08em] uppercase text-[#16A34A] border-[3px] border-[#16A34A] rounded-[8px] px-2.5 py-1 -translate-x-1/2 rotate-[-12deg] whitespace-nowrap"
+            className="absolute top-[108px] left-1/2 z-10 pointer-events-none select-none text-[22px] font-black tracking-[.08em] uppercase text-[#3E7C59] border-[3px] border-[#3E7C59] rounded-[8px] px-2.5 py-1 -translate-x-1/2 rotate-[-12deg] whitespace-nowrap"
             style={{ opacity: dx > 0 ? stampOpacity : 0, transition: mode === "drag" ? "none" : "opacity 120ms ease" }}
           >
             Got it ✓
@@ -478,7 +478,7 @@ function MarginNote({
           type="button"
           onClick={() => speakKorean(ex.kr)}
           title="Hear the sentence"
-          className="text-left hover:text-[#7C3AED] transition-colors"
+          className="text-left hover:text-[#6B33CC] transition-colors"
         >
           {ex.kr}
         </button>
