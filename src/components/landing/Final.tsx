@@ -38,7 +38,7 @@ export default function Final() {
           <div className="flex gap-5 font-medium">
             <a href="#" className="hover:text-[#221F1B] transition-colors">About</a>
             <a href="/pricing" className="hover:text-[#221F1B] transition-colors">Pricing</a>
-            <a href="#" className="hover:text-[#221F1B] transition-colors">Privacy</a>
+            <a href="/privacy" className="hover:text-[#221F1B] transition-colors">Privacy</a>
             <a href="#" className="hover:text-[#221F1B] transition-colors">Contact</a>
           </div>
           <span>© 2026 Kroot</span>

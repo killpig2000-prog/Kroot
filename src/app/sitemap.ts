@@ -7,6 +7,7 @@ import { PUBLIC_SLANG } from "@/lib/slang-slugs";
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     { url: SITE_URL, changeFrequency: "weekly", priority: 1 },
+    { url: `${SITE_URL}/privacy`, changeFrequency: "yearly", priority: 0.3 },
     { url: `${SITE_URL}/words`, changeFrequency: "weekly", priority: 0.9 },
     ...LEVEL_ORDER.map((level) => ({
       url: `${SITE_URL}/words/level/${level.toLowerCase()}`,
