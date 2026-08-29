@@ -1,4 +1,4 @@
-import { redirect } from "@/i18n/navigation";
+import { Link, redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import AvatarUploader from "@/components/profile/AvatarUploader";
@@ -80,11 +80,6 @@ export default async function ProfilePage() {
               <div className="flex-1 min-w-[180px]">
                 <b className="font-semibold text-base flex items-center gap-2">
                   <NameEditor userId={user.id} name={profile?.display_name ?? "Learner"} />
-                  {plusActive && (
-                    <span className="text-[10.5px] font-bold tracking-[.04em] text-[#92400E] bg-[var(--tint-amber)] border border-amber-line rounded-md px-1.5 py-0.5">
-                      🌟 PLUS
-                    </span>
-                  )}
                 </b>
                 <span className="flex flex-wrap items-center text-[13px] text-muted">
                   {/* flex items: each segment wraps as a whole, never mid-phrase */}
