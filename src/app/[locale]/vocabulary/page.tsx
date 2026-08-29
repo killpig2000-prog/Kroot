@@ -8,6 +8,7 @@ import { WORD_STATUSES, wordStatus } from "@/lib/word-notes";
 import WordStatusIcon from "@/components/vocabulary/WordStatusIcon";
 import VocabSearch from "@/components/vocabulary/VocabSearch";
 import { LEVEL_ORDER, isCefrLevel, nextLevel, type CefrLevel } from "@/lib/tree";
+import { getLocalizedMeaning } from "@/lib/vocabulary-i18n";
 
 const TOPIC_KEY = "daily-life";
 const PREVIEW_WORDS = 5;
@@ -37,10 +38,13 @@ function ChapterDots({ done, started, total }: { done: number; started: number; 
 // action, a numbered table of contents (5 units = 1 chapter) on the left, and
 // a preview of the selected unit's words on the right.
 export default async function VocabularyPage({
+  params,
   searchParams,
 }: {
+  params: Promise<{ locale: string }>;
   searchParams: Promise<{ level?: string; unit?: string; all?: string }>;
 }) {
+  const { locale } = await params;
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
 
@@ -419,7 +423,7 @@ export default async function VocabularyPage({
                           </span>
                           <span className="kr font-bold text-[17px] leading-tight">{w.korean}</span>
                           <span className="min-w-0">
-                            <span className="block text-[13px] font-semibold">{w.meaning_en}</span>
+                            <span className="block text-[13px] font-semibold">{getLocalizedMeaning(w, locale)}</span>
                           </span>
                           <svg
                             aria-hidden="true"

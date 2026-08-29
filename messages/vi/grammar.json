@@ -1,0 +1,249 @@
+{
+  "lessons": {
+    "word-order": {
+      "title": "Trật tự từ tiếng Hàn (SOV)",
+      "summary": "Động từ luôn đứng sau cùng. Mọi thứ khác đều linh hoạt vì các hạt mang ý nghĩa.",
+      "sections": [
+        {
+          "heading": "Chủ ngữ – Tân ngữ – Động từ",
+          "explanation": "Tiếng Anh là Chủ ngữ–Động từ–Tân ngữ: 'Tôi ăn bánh mì.' Tiếng Hàn là Chủ ngữ–Tân ngữ–Động từ: 'Tôi ăn bánh mì.' Một khi bạn mong đợi động từ ở cuối, hầu hết các câu sẽ không còn cảm giác lộn xộn nữa."
+        },
+        {
+          "heading": "Các hạt thực hiện công nên trật tự có thể di chuyển",
+          "explanation": "Bởi vì 은/는 đánh dấu chủ đề và 을/를 đánh dấu tân ngữ, bạn có thể di chuyển các phần đó để nhấn mạnh và câu vẫn có nghĩa tương tự. Chỉ có động từ bị khóa đến cuối."
+        },
+        {
+          "heading": "Bạn có thể bỏ đi những gì hiển nhiên",
+          "explanation": "Tiếng Hàn bỏ chủ ngữ bất cứ khi nào ngữ cảnh làm cho nó rõ ràng. Câu trả lời một từ là một câu hoàn chỉnh."
+        }
+      ],
+      "quiz": [
+        {
+          "q": "Động từ đi đâu trong câu tiếng Hàn?",
+          "opts": [
+            "Đầu tiên",
+            "Thứ hai",
+            "Vào cuối cùng",
+            "mọi nơi"
+          ]
+        },
+        {
+          "q": "Câu nào có nghĩa là 'Tôi học tiếng Hàn'?",
+          "opts": [
+            "Tôi học tiếng Hàn.",
+            "Tôi học tiếng Hàn.",
+            "Tôi học tiếng Hàn.",
+            "Tôi học tiếng Hàn."
+          ]
+        },
+        {
+          "q": "Tại sao người Hàn Quốc có thể di chuyển các cụm từ một cách tự do như vậy?",
+          "opts": [
+            "Vì động từ thay đổi hình thức",
+            "Bởi vì các hạt đánh dấu vai trò của mỗi từ",
+            "Vì không có danh từ",
+            "Bởi vì thứ tự từ là ngẫu nhiên"
+          ]
+        }
+      ]
+    },
+    "topic-vs-subject": {
+      "title": "là/là vs là/là",
+      "summary": "은/는 đặt chủ đề và gợi lên sự tương phản. 이/가 chỉ chính xác ai đang làm việc gì đó.",
+      "sections": [
+        {
+          "heading": "Các hình dạng",
+          "explanation": "Sau phụ âm sử dụng 은 và 이. Sau nguyên âm sử dụng 는 và 가. Đó là quy tắc chính tả duy nhất bạn cần."
+        },
+        {
+          "heading": "Eun/Eun: 'về phần...' '",
+          "explanation": "은/는 thông báo nội dung của câu và lặng lẽ so sánh nó với điều gì khác. Sử dụng nó để giới thiệu bản thân và đối chiếu hai điều."
+        },
+        {
+          "heading": "이/가: 'chính là cái NÀY'",
+          "explanation": "이/가 xác định chủ ngữ, đặc biệt là thông tin mới hoặc câu trả lời cho 'ai?' và 'cái gì?'. Nó cũng được yêu cầu với 있어요/없어요 và với các động từ mô tả như 좋다."
+        }
+      ],
+      "quiz": [
+        {
+          "q": "Trợ từ nào theo sau một từ kết thúc bằng một phụ âm, như 선생님?",
+          "opts": [
+            "Là",
+            "bạc",
+            "đi",
+            "dàn diễn viên"
+          ]
+        },
+        {
+          "q": "'Ai đến?' — 'Bạn ___ đang ở đây.' Cái nào phù hợp?",
+          "opts": [
+            "Là",
+            "bạc",
+            "đi",
+            "dàn diễn viên"
+          ]
+        },
+        {
+          "q": "Bạn muốn đối chiếu: 'Cà phê tôi thích, nhưng trà thì không.' Hạt nào đánh dấu 커피 và 차?",
+          "opts": [
+            "Cái này/Đi",
+            "là/là",
+            "đến/đến",
+            "đến/vào"
+          ]
+        }
+      ]
+    },
+    "object-marker": {
+      "title": "Điểm đánh dấu đối tượng",
+      "summary": "Đánh dấu hành động được thực hiện bằng 을 sau một phụ âm, 를 sau một nguyên âm.",
+      "sections": [
+        {
+          "heading": "Nên sử dụng cái nào",
+          "explanation": "을 đi sau danh từ kết thúc bằng phụ âm; 를 sau danh từ kết thúc bằng nguyên âm. Sự lựa chọn hoàn toàn là về âm thanh."
+        },
+        {
+          "heading": "Nó gắn vào người nhận hành động",
+          "explanation": "Bất cứ thứ gì được ăn, xem, mua hoặc nghiên cứu đều dùng 을/를. Các động từ chuyển động như 가다 sử dụng 에 thay vì 을/를."
+        },
+        {
+          "heading": "Trong lời nói thông thường nó biến mất",
+          "explanation": "Tiếng Hàn nói sẽ giảm 을/를 liên tục khi ý nghĩa đã rõ ràng. Hãy giữ nó bằng văn bản và lời nói cẩn thận."
+        }
+      ],
+      "quiz": [
+        {
+          "q": "'책' kết thúc bằng một phụ âm. Điểm đánh dấu đối tượng nào theo sau nó?",
+          "opts": [
+            "dàn diễn viên",
+            "thứ hai",
+            "cái này",
+            "đi"
+          ]
+        },
+        {
+          "q": "Câu nào đúng khi nói “Tôi uống cà phê”?",
+          "opts": [
+            "Uống cà phê.",
+            "Uống cà phê.",
+            "Tôi uống cà phê.",
+            "Uống nó với cà phê."
+          ]
+        },
+        {
+          "q": "đánh dấu cái gì?",
+          "opts": [
+            "chủ đề",
+            "Vị trí",
+            "Đối tượng của động từ",
+            "thời gian"
+          ]
+        }
+      ]
+    },
+    "to-be": {
+      "title": "Nó là / Nó là - là",
+      "summary": "Gắn vào danh từ để nói “is/am/are”.",
+      "sections": [
+        {
+          "heading": "Danh từ + Iyo/Yeo",
+          "explanation": "Sử dụng 이에요 sau một phụ âm và 예요 sau một nguyên âm. Không có từ riêng biệt cho 'is' - nó dính thẳng vào danh từ."
+        },
+        {
+          "heading": "Câu hỏi và phủ định",
+          "explanation": "Đối với câu hỏi, hãy giữ nguyên hình thức và nâng cao ngữ điệu của bạn. Đối với 'không phải', hãy sử dụng 이/가 아니에요."
+        },
+        {
+          "heading": "Đừng nhầm lẫn nó với",
+          "explanation": "Iyeo/Yeo có nghĩa là 'X là Y'. There có nghĩa là 'có/tôi có'. Chúng không thể thay thế cho nhau."
+        }
+      ],
+      "quiz": [
+        {
+          "q": "'의사' kết thúc bằng nguyên âm. Hình thức nào đúng?",
+          "opts": [
+            "tôi là bác sĩ",
+            "tôi là bác sĩ",
+            "tôi là bác sĩ",
+            "Có một bác sĩ"
+          ]
+        },
+        {
+          "q": "Làm sao bạn nói 'Tôi không phải là sinh viên'?",
+          "opts": [
+            "Tôi là một sinh viên.",
+            "Tôi không phải là sinh viên.",
+            "Tôi không có học sinh nào cả.",
+            "Tôi không phải là một sinh viên."
+          ]
+        },
+        {
+          "q": "Có nghĩa là 'Tôi có một người bạn'?",
+          "opts": [
+            "Tôi là bạn của bạn.",
+            "Tôi có một người bạn.",
+            "Không phải là một người bạn.",
+            "Tôi có một người bạn."
+          ]
+        }
+      ]
+    },
+    "present-tense": {
+      "title": "Thì hiện tại Được/Có",
+      "summary": "Bỏ 다 khỏi dạng từ điển, sau đó thêm 아요 hoặc 어요 tùy theo nguyên âm cuối cùng.",
+      "sections": [
+        {
+          "heading": "Quy tắc",
+          "explanation": "Lấy gốc động từ (dạng từ điển trừ c). Nếu nguyên âm cuối cùng là ㅏ hoặc ㅗ, hãy thêm ah. Nếu không thì thêm. Do động từ bất quy tắc và trở thành."
+        },
+        {
+          "heading": "Khi các nguyên âm hợp nhất",
+          "explanation": "Nếu gốc đã kết thúc bằng ㅏ hoặc ㅓ thì ah/uh sẽ được hấp thụ thay vì tăng gấp đôi. Oh + ayo ký hợp đồng đến và woo + ayo to woyo."
+        },
+        {
+          "heading": "Một hình thức, ba công việc",
+          "explanation": "아요/어요 bao gồm hiện tại, tương lai gần và những hành động theo thói quen. Ngữ điệu một mình biến nó thành một câu hỏi."
+        }
+      ],
+      "quiz": [
+        {
+          "q": "Dạng hiện tại của 먹다 là gì?",
+          "opts": [
+            "Ăn",
+            "ăn",
+            "tôi đang ăn",
+            "Đó là thức ăn"
+          ]
+        },
+        {
+          "q": "Việc học trở thành…",
+          "opts": [
+            "Học",
+            "học",
+            "Học",
+            "Đó là việc học"
+          ]
+        },
+        {
+          "q": "Thân cây nào lấy 아요?",
+          "opts": [
+            "Thân có nguyên âm cuối là ㅏ hoặc ㅗ",
+            "Thân cây kết thúc bằng một phụ âm",
+            "Tất cả đều làm động từ",
+            "Thân có nguyên âm cuối là ㅜ"
+          ]
+        }
+      ]
+    }
+  },
+  "groups": {
+    "start-here": {
+      "title": "Bắt đầu ở đây",
+      "sub": "Bạn mới làm quen với ngữ pháp tiếng Hàn? Làm những việc này theo thứ tự đầu tiên."
+    },
+    "next-steps": {
+      "title": "Các bước tiếp theo",
+      "sub": "Hãy tiếp tục theo đuổi những điều cơ bản."
+    }
+  }
+}

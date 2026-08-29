@@ -21,8 +21,10 @@ const SUBS: Record<string, string> = {
 };
 
 export default async function ListeningPage({
+  params,
   searchParams,
 }: {
+  params: Promise<{ locale: string }>;
   searchParams: Promise<{ level?: string }>;
 }) {
   const supabase = await createClient();
@@ -32,6 +34,7 @@ export default async function ListeningPage({
 
   const profile = await getDashboardProfile(supabase, user.id);
 
+  const { locale } = await params;
   const myLevel = (profile?.current_level ?? "A1") as CefrLevel;
   const sp = await searchParams;
   const requested = isCefrLevel(sp.level) ? sp.level : myLevel;

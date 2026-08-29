@@ -24,17 +24,27 @@ import { HOSPITAL_C2_EXPANSION, HOSPITAL_C2_QUIZZES } from "@/lib/listening-data
 import { HOTEL_C2_EXPANSION, HOTEL_C2_QUIZZES } from "@/lib/listening-data/hotel-c2-expansion";
 import { PHONE_C2_EXPANSION, PHONE_C2_QUIZZES } from "@/lib/listening-data/phone-c2-expansion";
 
+export type LocalizedString = {
+  en: string;
+  ja?: string;
+  zh?: string;
+  vi?: string;
+};
+
 export type DialogueLine = {
   speaker: string;
   kr: string;
   en: string;
+  ja?: string;
+  zh?: string;
+  vi?: string;
 };
 
 export type Dialogue = {
   id: string;
   situationKey: string;
   level: CefrLevel;
-  title: string;
+  title: LocalizedString | string;
   lines: DialogueLine[];
 };
 

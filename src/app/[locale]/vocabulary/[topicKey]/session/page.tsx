@@ -17,10 +17,10 @@ export default async function VocabChapterSessionPage({
   params,
   searchParams,
 }: {
-  params: Promise<{ topicKey: string }>;
+  params: Promise<{ locale: string; topicKey: string }>;
   searchParams: Promise<{ chapter?: string; level?: string }>;
 }) {
-  const { topicKey } = await params;
+  const { locale, topicKey } = await params;
   const sp = await searchParams;
   const topic = VOCAB_TOPICS.find((t) => t.key === topicKey && t.available);
   if (!topic) notFound();
@@ -113,6 +113,7 @@ export default async function VocabChapterSessionPage({
             // state doesn't survive the navigation.
             key={`${topicKey}-${level}-${chapterIndex}`}
             words={sessionWords}
+            locale={locale}
             userId={user.id}
             topicLabel={topic.label}
             topicKey={topicKey}

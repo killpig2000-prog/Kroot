@@ -17,6 +17,7 @@ import FlipPhase from "@/components/vocabulary/FlipPhase";
 import QuizIntroPhase from "@/components/vocabulary/QuizIntroPhase";
 import VocabQuizPhase from "@/components/vocabulary/VocabQuizPhase";
 import VocabSummaryPhase from "@/components/vocabulary/VocabSummaryPhase";
+import { getLocalizedMeaning } from "@/lib/vocabulary-i18n";
 
 const QUIZ_BONUS_MINUTES = 3;
 
@@ -28,6 +29,7 @@ const CARD = "max-w-[560px] border border-line rounded-[14px] p-[clamp(20px,3vw,
 
 export default function VocabSession({
   words,
+  locale,
   userId,
   topicLabel,
   topicKey,
@@ -35,6 +37,7 @@ export default function VocabSession({
   hasNextChapter,
 }: {
   words: VocabWordWithProgress[];
+  locale: string;
   userId: string;
   topicLabel: string;
   topicKey: string;
@@ -282,6 +285,7 @@ export default function VocabSession({
   return (
     <FlipPhase
       words={words}
+      locale={locale}
       index={index}
       word={word}
       wordCounts={counts[word.key] ?? { correct: 0, incorrect: 0 }}

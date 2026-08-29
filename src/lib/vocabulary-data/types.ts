@@ -12,4 +12,13 @@ export type RawVocabWord = {
   // Localized meanings and examples (applied via overlay in vocabulary.ts)
   meaning_es?: string;
   example_es?: string;
+  // Japanese
+  meaning_ja?: string;
+  example_ja_en?: string;
+  // Chinese (Simplified)
+  meaning_zh?: string;
+  example_zh_en?: string;
+  // Vietnamese
+  meaning_vi?: string;
+  example_vi_en?: string;
 };

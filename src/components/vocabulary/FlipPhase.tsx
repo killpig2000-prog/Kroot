@@ -14,6 +14,7 @@ import { buttonClassName } from "@/components/ui/Button";
 import { speakKorean } from "@/lib/tts";
 import { VOCAB_ROOTS, type VocabWordWithProgress } from "@/lib/vocabulary";
 import { WORD_STATUSES, getWordNote, wordStatus, hanjaOf } from "@/lib/word-notes";
+import { getLocalizedMeaning, getLocalizedExampleEn } from "@/lib/vocabulary-i18n";
 
 const BTN_INK = buttonClassName("ink");
 const BTN_LINE = buttonClassName("line");
@@ -37,6 +38,7 @@ const SPRING_MS = 320;
 // notes. Flow (reveal → still learning / got it) is unchanged.
 export default function FlipPhase({
   words,
+  locale,
   index,
   word,
   wordCounts,
@@ -49,6 +51,7 @@ export default function FlipPhase({
   onCloseRoot,
 }: {
   words: VocabWordWithProgress[];
+  locale: string;
   index: number;
   word: VocabWordWithProgress;
   wordCounts: { correct: number; incorrect: number };
@@ -129,7 +132,7 @@ export default function FlipPhase({
                 <span className="text-[11px] font-black text-[#6B33CC] border-[1.5px] border-[var(--tint-violet-line)] rounded-full w-[18px] h-[18px] inline-grid place-items-center">
                   1
                 </span>
-                {word.meaning_en}
+                {getLocalizedMeaning(word, locale)}
               </p>
               {note?.parts && (
                 <p className="text-[12.5px] text-muted leading-[1.65] mb-3">
@@ -157,7 +160,7 @@ export default function FlipPhase({
                     {word.example_kr} <span aria-hidden="true" className="text-[11px] opacity-70">🔊</span>
                   </button>
                 </p>
-                <p className="text-[12.5px] text-muted">{word.example_en}</p>
+                <p className="text-[12.5px] text-muted">{getLocalizedExampleEn(word, locale)}</p>
               </div>
 
               {/* seen elsewhere — inline below xl, margin notes on xl */}

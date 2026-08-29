@@ -1,0 +1,129 @@
+{
+  "lessons": {
+    "word-order": {
+      "title": "Korean word order (SOV)",
+      "summary": "The verb always comes last. Everything else is flexible because particles carry the meaning.",
+      "sections": [
+        {
+          "heading": "Subject – Object – Verb",
+          "explanation": "English is Subject–Verb–Object: 'I eat bread.' Korean is Subject–Object–Verb: 'I bread eat.' Once you expect the verb at the end, most sentences stop feeling scrambled."
+        },
+        {
+          "heading": "Particles do the work, so order can move",
+          "explanation": "Because 은/는 marks the topic and 을/를 marks the object, you can move those chunks around for emphasis and the sentence still means the same thing. Only the verb is locked to the end."
+        },
+        {
+          "heading": "You can drop what's obvious",
+          "explanation": "Korean leaves out the subject whenever context makes it clear. A one-word answer is a complete sentence."
+        }
+      ],
+      "quiz": [
+        { "q": "Where does the verb go in a Korean sentence?", "opts": ["First", "Second", "At the very end", "Anywhere"] },
+        { "q": "Which sentence means 'I study Korean'?", "opts": ["저는 공부해요 한국어를.", "저는 한국어를 공부해요.", "공부해요 저는 한국어를.", "한국어를 공부해요 저는."] },
+        { "q": "Why can Korean move phrases around so freely?", "opts": ["Because verbs change form", "Because particles mark each word's role", "Because there are no nouns", "Because word order is random"] }
+      ]
+    },
+    "topic-vs-subject": {
+      "title": "은/는 vs 이/가",
+      "summary": "은/는 sets the topic and invites contrast. 이/가 points at who exactly is doing something.",
+      "sections": [
+        {
+          "heading": "The shapes",
+          "explanation": "After a consonant use 은 and 이. After a vowel use 는 and 가. That is the only spelling rule you need."
+        },
+        {
+          "heading": "은/는: 'as for…'",
+          "explanation": "은/는 announces what the sentence is about, and quietly compares it to something else. Use it to introduce yourself and to contrast two things."
+        },
+        {
+          "heading": "이/가: 'it is THIS one'",
+          "explanation": "이/가 identifies the subject, especially new information or the answer to 'who?' and 'what?'. It is also required with 있어요/없어요 and with descriptive verbs like 좋다."
+        }
+      ],
+      "quiz": [
+        { "q": "Which particle follows a word ending in a consonant, like 선생님?", "opts": ["는", "은", "가", "를"] },
+        { "q": "'Who came?' — '친구___ 왔어요.' Which fits?", "opts": ["는", "은", "가", "를"] },
+        { "q": "You want to contrast: 'Coffee I like, but tea I don't.' Which particle marks 커피 and 차?", "opts": ["이/가", "은/는", "을/를", "에/에서"] }
+      ]
+    },
+    "object-marker": {
+      "title": "The object marker 을/를",
+      "summary": "Mark the thing being acted on with 을 after a consonant, 를 after a vowel.",
+      "sections": [
+        {
+          "heading": "Which one to use",
+          "explanation": "을 goes after a noun ending in a consonant; 를 after a noun ending in a vowel. The choice is purely about sound."
+        },
+        {
+          "heading": "It attaches to the receiver of the action",
+          "explanation": "Whatever is being eaten, watched, bought or studied takes 을/를. Verbs of motion like 가다 use 에 instead, not 을/를."
+        },
+        {
+          "heading": "In casual speech it disappears",
+          "explanation": "Spoken Korean drops 을/를 constantly when the meaning is obvious. Keep it in writing and in careful speech."
+        }
+      ],
+      "quiz": [
+        { "q": "'책' ends in a consonant. Which object marker follows it?", "opts": ["를", "을", "이", "가"] },
+        { "q": "Which sentence is correct for 'I drink coffee'?", "opts": ["커피을 마셔요.", "커피를 마셔요.", "커피가 마셔요.", "커피에 마셔요."] },
+        { "q": "What does 을/를 mark?", "opts": ["The topic", "The location", "The object of the verb", "The time"] }
+      ]
+    },
+    "to-be": {
+      "title": "이에요 / 예요 — to be",
+      "summary": "Attach 이에요 or 예요 to a noun to say 'is / am / are'.",
+      "sections": [
+        {
+          "heading": "Noun + 이에요/예요",
+          "explanation": "Use 이에요 after a consonant and 예요 after a vowel. There is no separate word for 'is' — it glues straight onto the noun."
+        },
+        {
+          "heading": "Questions and negatives",
+          "explanation": "For a question, keep the same form and raise your intonation. For 'is not', use 이/가 아니에요."
+        },
+        {
+          "heading": "Don't confuse it with 있어요",
+          "explanation": "이에요/예요 means 'X is Y'. 있어요 means 'there is / I have'. They are not interchangeable."
+        }
+      ],
+      "quiz": [
+        { "q": "'의사' ends in a vowel. Which form is correct?", "opts": ["의사이에요", "의사예요", "의사가에요", "의사있어요"] },
+        { "q": "How do you say 'I am not a student'?", "opts": ["저는 학생이에요.", "저는 학생이 아니에요.", "저는 학생이 없어요.", "저는 학생을 안 해요."] },
+        { "q": "Which means 'I have a friend'?", "opts": ["친구예요.", "친구가 있어요.", "친구가 아니에요.", "친구를 예요."] }
+      ]
+    },
+    "present-tense": {
+      "title": "Present tense 아요 / 어요",
+      "summary": "Drop 다 from the dictionary form, then add 아요 or 어요 depending on the last vowel.",
+      "sections": [
+        {
+          "heading": "The rule",
+          "explanation": "Take the verb stem (dictionary form minus 다). If its last vowel is ㅏ or ㅗ, add 아요. Otherwise add 어요. 하다 verbs are irregular and become 해요."
+        },
+        {
+          "heading": "When vowels merge",
+          "explanation": "If the stem already ends in ㅏ or ㅓ, the 아/어 is absorbed rather than doubled. 오 + 아요 contracts to 와요, and 우 + 어요 to 워요."
+        },
+        {
+          "heading": "One form, three jobs",
+          "explanation": "아요/어요 covers the present, the near future, and habitual actions. Intonation alone turns it into a question."
+        }
+      ],
+      "quiz": [
+        { "q": "What is the present-tense form of 먹다?", "opts": ["먹아요", "먹어요", "먹해요", "먹이에요"] },
+        { "q": "공부하다 becomes…", "opts": ["공부하아요", "공부하어요", "공부해요", "공부이에요"] },
+        { "q": "Which stems take 아요?", "opts": ["Stems whose last vowel is ㅏ or ㅗ", "Stems ending in a consonant", "All 하다 verbs", "Stems whose last vowel is ㅜ"] }
+      ]
+    }
+  },
+  "groups": {
+    "start-here": {
+      "title": "Start here",
+      "sub": "New to Korean grammar? Do these in order first."
+    },
+    "next-steps": {
+      "title": "Next steps",
+      "sub": "Keep going after the basics."
+    }
+  }
+}

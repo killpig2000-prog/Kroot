@@ -7,6 +7,7 @@ import { createClient } from "@/lib/supabase/client";
 import { nextBox, nextReviewAt } from "@/lib/srs";
 import { speakKorean } from "@/lib/tts";
 import { WORD_STATUSES, getWordNote, wordStatus, hanjaOf } from "@/lib/word-notes";
+import { getLocalizedMeaning, getLocalizedExampleEn } from "@/lib/vocabulary-i18n";
 
 const BTN_INK = buttonClassName("ink");
 const BTN_LINE = buttonClassName("line");
@@ -30,6 +31,7 @@ export type DetailWord = {
 // same SRS progress the study session does and step to the next word.
 export default function WordDetailCard({
   word,
+  locale,
   userId,
   correctCount,
   incorrectCount,
@@ -43,6 +45,7 @@ export default function WordDetailCard({
   unitLabel,
 }: {
   word: DetailWord;
+  locale: string;
   userId: string;
   correctCount: number;
   incorrectCount: number;
@@ -129,7 +132,7 @@ export default function WordDetailCard({
             )}
           </div>
 
-          <p className="text-[20px] font-extrabold mt-2.5 mb-1.5">{word.meaning_en}</p>
+          <p className="text-[20px] font-extrabold mt-2.5 mb-1.5">{getLocalizedMeaning(word, locale)}</p>
 
           {note?.parts && (
             <p className="text-[12.5px] text-muted leading-[1.65] mb-3">
@@ -155,7 +158,7 @@ export default function WordDetailCard({
                 {word.example_kr} <span aria-hidden="true" className="text-[11px] opacity-70">🔊</span>
               </button>
             </p>
-            <p className="text-[12.5px] text-muted">{word.example_en}</p>
+            <p className="text-[12.5px] text-muted">{getLocalizedExampleEn(word, locale)}</p>
           </div>
 
           {word.moreExamples.length > 0 && (

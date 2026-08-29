@@ -1,0 +1,74 @@
+{
+  "word-order:0": [
+    {
+      "kr": "지수가 사과를 사요.",
+      "romanization": "ji-su-ga sa-gwa-reul sa-yo",
+      "en": "Jisu buys an apple.",
+      "vi": "Jisu mua một quả táo."
+    },
+    {
+      "kr": "동생이 우유를 마셔요.",
+      "romanization": "dong-saeng-i u-yu-reul ma-syeo-yo",
+      "en": "My younger sibling drinks milk.",
+      "vi": "Em gái của tôi uống sữa."
+    },
+    {
+      "kr": "아버지가 신문을 읽어요.",
+      "romanization": "a-beo-ji-ga sin-mun-eul il-geo-yo",
+      "en": "My father reads a newspaper.",
+      "vi": "Bố của tôi đọc báo."
+    }
+  ],
+  "word-order:1": [
+    {
+      "kr": "사과를 지수가 먹어요.",
+      "romanization": "sa-gwa-reul ji-su-ga meo-geo-yo",
+      "en": "As for the apple, Jisu eats it.",
+      "vi": "Về quả táo, Jisu ăn nó."
+    },
+    {
+      "kr": "학교에 민수가 가요.",
+      "romanization": "hak-gyo-e min-su-ga ga-yo",
+      "en": "To school, Minsu goes.",
+      "vi": "Minsu đi học."
+    },
+    {
+      "kr": "선물을 어머니가 사요.",
+      "romanization": "seon-mul-eul eo-meo-ni-ga sa-yo",
+      "en": "The gift, mother buys it.",
+      "vi": "Về quà tặng, mẹ mua nó."
+    },
+    {
+      "kr": "내일 친구를 만나요.",
+      "romanization": "nae-il chin-gu-reul man-na-yo",
+      "en": "Tomorrow, I meet a friend.",
+      "vi": "Ngày mai tôi sẽ gặp một người bạn."
+    }
+  ],
+  "word-order:2": [
+    {
+      "kr": "뭐 해요? — 숙제해요.",
+      "romanization": "mwo hae-yo? — suk-je-hae-yo",
+      "en": "What are you doing? — Doing homework.",
+      "vi": "Bạn đang làm gì? - Làm bài tập về nhà."
+    },
+    {
+      "kr": "배고파요? — 네, 배고파요.",
+      "romanization": "bae-go-pa-yo? — ne, bae-go-pa-yo",
+      "en": "Are you hungry? — Yes, I'm hungry.",
+      "vi": "Bạn có đói không? - Có, tôi đói."
+    },
+    {
+      "kr": "밥 먹었어요? — 먹었어요.",
+      "romanization": "bap meo-geo-sseo-yo? — meo-geo-sseo-yo",
+      "en": "Did you eat? — I ate.",
+      "vi": "Bạn đã ăn chưa? - Tôi đã ăn rồi."
+    },
+    {
+      "kr": "우유 좋아해요? — 아니요, 싫어해요.",
+      "romanization": "u-yu jo-a-hae-yo? — a-ni-yo, si-reo-hae-yo",
+      "en": "Do you like milk? — No, I hate it.",
+      "vi": "Bạn có thích sữa không? - Không, tôi ghét nó."
+    }
+  ]
+}

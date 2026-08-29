@@ -2883,3 +2883,130 @@ export const GRAMMAR_GROUPS: GrammarGroup[] = [
     lessonKeys: ["negation", "location-particles", "politeness", "numbers-counters"],
   },
 ];
+
+/**
+ * Load example overrides for a specific locale.
+ * Falls back to empty object if locale-specific file doesn't exist.
+ */
+async function loadExampleOverrides(
+  locale: string
+): Promise<Record<string, GrammarExample[]>> {
+  try {
+    const module = await import(
+      /* @vite-ignore */ `./grammar-example-overrides-${locale}.json`
+    );
+    return module.default || {};
+  } catch (error) {
+    // Fallback: return empty object if locale-specific file doesn't exist
+    return {};
+  }
+}
+
+/**
+ * Load grammar content translations for a specific locale from messages.
+ * Returns the lesson data with localized title, summary, and section text.
+ *
+ * Usage in server components:
+ *   const lesson = await getLocalizedLesson('word-order', 'en');
+ */
+export async function getLocalizedLesson(
+  lessonKey: string,
+  locale: string
+): Promise<GrammarLesson | null> {
+  // Get the original English lesson as fallback
+  const lesson = lessonByKey(lessonKey);
+  if (!lesson) return null;
+
+  // Try to load translations from messages/{locale}/grammar.json
+  try {
+    const messages = await import(
+      /* @vite-ignore */ `../../messages/${locale}/grammar.json`
+    );
+
+    const grammarData = messages.default?.lessons?.[lessonKey];
+    if (!grammarData) {
+      // No translation found, return original
+      return lesson;
+    }
+
+    // Load example overrides for this locale
+    const overrides = await loadExampleOverrides(locale);
+
+    // Apply localized text while keeping examples unchanged (except overrides)
+    const localizedSections = lesson.sections.map((section, i) => {
+      const overrideKey = `${lessonKey}:${i}`;
+      const sectionData = grammarData.sections?.[i];
+
+      return {
+        heading: sectionData?.heading ?? section.heading,
+        explanation: sectionData?.explanation ?? section.explanation,
+        // Apply overrides if available, otherwise use original examples
+        examples: overrides[overrideKey] ?? section.examples,
+      };
+    });
+
+    // Apply localized quiz questions
+    const localizedQuiz = lesson.quiz.map((q, i) => {
+      const quizData = grammarData.quiz?.[i];
+      return {
+        q: quizData?.q ?? q.q,
+        opts: quizData?.opts ?? q.opts,
+        ans: q.ans, // Answer index never changes
+      };
+    });
+
+    return {
+      ...lesson,
+      title: grammarData.title ?? lesson.title,
+      summary: grammarData.summary ?? lesson.summary,
+      sections: localizedSections,
+      quiz: localizedQuiz,
+    };
+  } catch (error) {
+    // If messages file doesn't exist or other error, gracefully fallback
+    console.warn(
+      `[Grammar i18n] Could not load translations for ${locale}/${lessonKey}:`,
+      error instanceof Error ? error.message : String(error)
+    );
+    return lesson;
+  }
+}
+
+/**
+ * Get localized grammar group information.
+ *
+ * Usage in server components:
+ *   const group = await getLocalizedGrammarGroup('start-here', 'en');
+ */
+export async function getLocalizedGrammarGroup(
+  groupKey: string,
+  locale: string
+): Promise<GrammarGroup | null> {
+  const group = GRAMMAR_GROUPS.find((g) => g.key === groupKey);
+  if (!group) return null;
+
+  try {
+    const messages = await import(
+      /* @vite-ignore */ `../../messages/${locale}/grammar.json`
+    );
+
+    const groupData = messages.default?.groups?.[groupKey];
+    if (!groupData) {
+      return group;
+    }
+
+    return {
+      ...group,
+      title: groupData.title ?? group.title,
+      // Keep Korean title unchanged
+      titleKr: group.titleKr,
+      sub: groupData.sub ?? group.sub,
+    };
+  } catch (error) {
+    console.warn(
+      `[Grammar i18n] Could not load group translations for ${locale}/${groupKey}:`,
+      error instanceof Error ? error.message : String(error)
+    );
+    return group;
+  }
+}

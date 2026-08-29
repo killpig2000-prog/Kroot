@@ -12,7 +12,7 @@ export default async function SituationPage({
   params,
   searchParams,
 }: {
-  params: Promise<{ situationKey: string }>;
+  params: Promise<{ locale: string; situationKey: string }>;
   searchParams: Promise<{ level?: string }>;
 }) {
   const supabase = await createClient();
@@ -26,7 +26,7 @@ export default async function SituationPage({
     .eq("id", user.id)
     .single();
 
-  const { situationKey } = await params;
+  const { locale, situationKey } = await params;
   const sp = await searchParams;
   const myLevel = (profile?.current_level ?? "A1") as CefrLevel;
   const level = isCefrLevel(sp.level) ? sp.level : myLevel;
@@ -128,6 +128,7 @@ export default async function SituationPage({
               <ListeningSession
                 key={level}
                 dialogues={dialogues}
+                locale={locale}
                 level={level}
                 situationLabel={label}
                 situationIcon={situation?.icon ?? "🎧"}

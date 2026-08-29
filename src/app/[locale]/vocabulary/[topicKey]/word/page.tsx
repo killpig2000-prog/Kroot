@@ -7,6 +7,7 @@ import { createClient, getClaimsUser, getDashboardProfile } from "@/lib/supabase
 import { VOCAB_TOPICS, getChaptersForTopic, unitLabel } from "@/lib/vocabulary";
 import { findMoreExamples } from "@/lib/vocab-examples";
 import { isCefrLevel, type CefrLevel } from "@/lib/tree";
+import { getLocalizedMeaning } from "@/lib/vocabulary-i18n";
 
 // A single word looked up from the unit preview — a dictionary entry, not a
 // quiz step. Reuses the session route's chapter/level addressing so prev/next
@@ -15,10 +16,10 @@ export default async function VocabWordPage({
   params,
   searchParams,
 }: {
-  params: Promise<{ topicKey: string }>;
+  params: Promise<{ locale: string; topicKey: string }>;
   searchParams: Promise<{ level?: string; chapter?: string; i?: string }>;
 }) {
-  const { topicKey } = await params;
+  const { locale, topicKey } = await params;
   const sp = await searchParams;
   const topic = VOCAB_TOPICS.find((t) => t.key === topicKey && t.available);
   if (!topic) notFound();
@@ -59,7 +60,7 @@ export default async function VocabWordPage({
   const nextHref = wordIndex < chapterWords.length - 1 ? wordHref(chapterIndex, wordIndex + 1) : null;
   const nextWordEntry = wordIndex < chapterWords.length - 1 ? chapterWords[wordIndex + 1] : null;
   const nextWord = nextWordEntry
-    ? { korean: nextWordEntry.korean, meaning_en: nextWordEntry.meaning_en }
+    ? { korean: nextWordEntry.korean, meaning_en: getLocalizedMeaning(nextWordEntry, locale) }
     : null;
 
   return (
@@ -87,6 +88,7 @@ export default async function VocabWordPage({
               example_en: word.example_en,
               moreExamples,
             }}
+            locale={locale}
             userId={user.id}
             correctCount={progress?.correct_count ?? 0}
             incorrectCount={progress?.incorrect_count ?? 0}

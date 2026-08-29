@@ -11,14 +11,14 @@ import { fetchUnsplashImage } from "@/lib/unsplash";
 export default async function DialoguePage({
   params,
 }: {
-  params: Promise<{ situationKey: string; dialogueId: string }>;
+  params: Promise<{ locale: string; situationKey: string; dialogueId: string }>;
 }) {
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
 
   if (!user) redirect("/onboarding");
 
-  const { situationKey, dialogueId } = await params;
+  const { locale, situationKey, dialogueId } = await params;
   const dialogue = dialogueById(dialogueId);
   if (!dialogue || dialogue.situationKey !== situationKey) notFound();
 
@@ -85,6 +85,7 @@ export default async function DialoguePage({
           <DialoguePlayer
             dialogueId={dialogue.id}
             lines={dialogue.lines}
+            locale={locale}
             completed={!!progress?.completed_at}
             showTranslation={false}
             photoUrl={photoUrl}

@@ -5,12 +5,12 @@ import Sidebar from "@/components/dashboard/Sidebar";
 import ExampleBox from "@/components/grammar/ExampleBox";
 import GrammarQuizBlock from "@/components/grammar/GrammarQuiz";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
-import { lessonByKey, lessonIndex, nextLesson } from "@/lib/grammar";
+import { lessonByKey, lessonIndex, nextLesson, getLocalizedLesson } from "@/lib/grammar";
 
 export default async function GrammarLessonPage({
   params,
 }: {
-  params: Promise<{ lessonKey: string }>;
+  params: Promise<{ locale: string; lessonKey: string }>;
 }) {
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
@@ -23,8 +23,8 @@ export default async function GrammarLessonPage({
     .eq("id", user.id)
     .single();
 
-  const { lessonKey } = await params;
-  const lesson = lessonByKey(lessonKey);
+  const { locale, lessonKey } = await params;
+  const lesson = await getLocalizedLesson(lessonKey, locale);
   if (!lesson) notFound();
 
   const no = lessonIndex(lesson.key) + 1;

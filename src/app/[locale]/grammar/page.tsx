@@ -3,13 +3,15 @@ import { Link, redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
-import { GRAMMAR_GROUPS, GRAMMAR_LESSONS, lessonByKey, lessonsByLevel } from "@/lib/grammar";
+import { GRAMMAR_GROUPS, GRAMMAR_LESSONS, lessonByKey, lessonsByLevel, getLocalizedLesson, getLocalizedGrammarGroup } from "@/lib/grammar";
 import { isDifficultyUnlocked } from "@/lib/level";
 import { LEVEL_ORDER, isCefrLevel, type CefrLevel } from "@/lib/tree";
 
 export default async function GrammarPage({
+  params,
   searchParams,
 }: {
+  params: Promise<{ locale: string }>;
   searchParams: Promise<{ level?: string; group?: string }>;
 }) {
   const supabase = await createClient();
@@ -23,6 +25,7 @@ export default async function GrammarPage({
     .eq("id", user.id)
     .single();
 
+  const { locale } = await params;
   const myLevel = (profile?.current_level ?? "A1") as CefrLevel;
   const sp = await searchParams;
   const requested = isCefrLevel(sp.level) ? sp.level : myLevel;
@@ -33,9 +36,11 @@ export default async function GrammarPage({
   // lesson list on screen at a time rather than three stacked sections.
   const selectedGroup = sp.group ? GRAMMAR_GROUPS.find((g) => g.key === sp.group) ?? null : null;
   const groupLessons = selectedGroup
-    ? selectedGroup.lessonKeys
-        .map((k) => lessonByKey(k))
-        .filter((l): l is NonNullable<typeof l> => Boolean(l))
+    ? (
+        await Promise.all(
+          selectedGroup.lessonKeys.map((k) => getLocalizedLesson(k, locale))
+        )
+      ).filter((l): l is NonNullable<typeof l> => Boolean(l))
     : [];
   const levelLessons = lessonsByLevel(level);
   const shownLessons = selectedGroup ? groupLessons : levelLessons;

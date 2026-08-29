@@ -1,0 +1,74 @@
+{
+  "word-order:0": [
+    {
+      "kr": "지수가 사과를 사요.",
+      "romanization": "ji-su-ga sa-gwa-reul sa-yo",
+      "en": "Jisu buys an apple.",
+      "zh": "吉秀买苹果。"
+    },
+    {
+      "kr": "동생이 우유를 마셔요.",
+      "romanization": "dong-saeng-i u-yu-reul ma-syeo-yo",
+      "en": "My younger sibling drinks milk.",
+      "zh": "妹妹喝牛奶。"
+    },
+    {
+      "kr": "아버지가 신문을 읽어요.",
+      "romanization": "a-beo-ji-ga sin-mun-eul il-geo-yo",
+      "en": "My father reads a newspaper.",
+      "zh": "父亲读报纸。"
+    }
+  ],
+  "word-order:1": [
+    {
+      "kr": "사과를 지수가 먹어요.",
+      "romanization": "sa-gwa-reul ji-su-ga meo-geo-yo",
+      "en": "As for the apple, Jisu eats it.",
+      "zh": "就苹果而言，吉秀吃它。"
+    },
+    {
+      "kr": "학교에 민수가 가요.",
+      "romanization": "hak-gyo-e min-su-ga ga-yo",
+      "en": "To school, Minsu goes.",
+      "zh": "民秀去学校。"
+    },
+    {
+      "kr": "선물을 어머니가 사요.",
+      "romanization": "seon-mul-eul eo-meo-ni-ga sa-yo",
+      "en": "The gift, mother buys it.",
+      "zh": "就礼物而言，母亲买了它。"
+    },
+    {
+      "kr": "내일 친구를 만나요.",
+      "romanization": "nae-il chin-gu-reul man-na-yo",
+      "en": "Tomorrow, I meet a friend.",
+      "zh": "明天我见一个朋友。"
+    }
+  ],
+  "word-order:2": [
+    {
+      "kr": "뭐 해요? — 숙제해요.",
+      "romanization": "mwo hae-yo? — suk-je-hae-yo",
+      "en": "What are you doing? — Doing homework.",
+      "zh": "你在做什么？ - 做功课。"
+    },
+    {
+      "kr": "배고파요? — 네, 배고파요.",
+      "romanization": "bae-go-pa-yo? — ne, bae-go-pa-yo",
+      "en": "Are you hungry? — Yes, I'm hungry.",
+      "zh": "你饿吗？ - 是的，我很饿。"
+    },
+    {
+      "kr": "밥 먹었어요? — 먹었어요.",
+      "romanization": "bap meo-geo-sseo-yo? — meo-geo-sseo-yo",
+      "en": "Did you eat? — I ate.",
+      "zh": "你吃过了吗？ - 我吃过了。"
+    },
+    {
+      "kr": "우유 좋아해요? — 아니요, 싫어해요.",
+      "romanization": "u-yu jo-a-hae-yo? — a-ni-yo, si-reo-hae-yo",
+      "en": "Do you like milk? — No, I hate it.",
+      "zh": "你喜欢牛奶吗？ - 不，我讨厌它。"
+    }
+  ]
+}
