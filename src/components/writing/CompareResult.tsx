@@ -206,7 +206,7 @@ export default function CompareResult({
         <button className={BTN_LINE} onClick={() => onGoTo(`/writing?level=${level}`)} disabled={navigating}>
           {navigating ? "Saving…" : "All pages"}
         </button>
-        {hasNextChapter {hasNextChapter && plus && {hasNextChapter && plus &&  (
+        {hasNextChapter && (
           <button
             className={BTN_AMBER}
             onClick={() => onGoTo(`/writing/session?chapter=${chapterIndex + 1}&level=${level}`)}
