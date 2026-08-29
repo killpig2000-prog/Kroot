@@ -1,10 +1,19 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useLocale } from "next-intl";
+import { useRouter, usePathname } from "@/i18n/navigation";
 import AccountMenu from "@/components/dashboard/AccountMenu";
-import { Link, usePathname } from "@/i18n/navigation";
+import { Link } from "@/i18n/navigation";
 import { MAIN_ITEMS, SECTIONS, type NavColor } from "@/components/dashboard/navItems";
 import BrandMark from "@/components/ui/BrandMark";
+
+const LANGUAGES = [
+  { code: "", label: "🇬🇧 English" },
+  { code: "ja", label: "🇯🇵 日本語" },
+  { code: "zh-Hans", label: "🇨🇳 中文" },
+  { code: "vi", label: "🇻🇳 Tiếng Việt" },
+];
 
 function NavItem({
   icon,
@@ -79,6 +88,68 @@ function Brand() {
   );
 }
 
+function LanguageSwitcher({ pathname }: { pathname: string }) {
+  const locale = useLocale();
+  const router = useRouter();
+  const [open, setOpen] = useState(false);
+
+  const handleLanguageChange = (code: string) => {
+    // Remove current locale prefix and add new one
+    let newPath = pathname;
+    const locales = ["ja", "zh-Hans", "vi"];
+
+    // Remove existing locale prefix
+    for (const loc of locales) {
+      if (pathname.startsWith(`/${loc}/`)) {
+        newPath = pathname.slice(loc.length + 1);
+        break;
+      }
+    }
+
+    // Add new locale prefix (empty string for English)
+    if (code) {
+      newPath = `/${code}${newPath}`;
+    } else {
+      newPath = newPath;
+    }
+
+    router.push(newPath);
+    setOpen(false);
+  };
+
+  const currentLang = LANGUAGES.find((l) => l.code === locale) || LANGUAGES[0];
+
+  return (
+    <div className="relative">
+      <button
+        onClick={() => setOpen(!open)}
+        className="w-full flex items-center justify-between gap-2 px-2.5 py-2 text-[13.5px] rounded-[9px] text-charcoal font-medium hover:bg-cream transition-colors text-left"
+      >
+        <span className="truncate">{currentLang.label}</span>
+        <span className="text-xs">▼</span>
+      </button>
+
+      {open && (
+        <div className="absolute bottom-full left-0 right-0 mb-1 bg-cream border border-dash rounded-[9px] shadow-lg z-50">
+          {LANGUAGES.map((lang) => (
+            <button
+              key={lang.code}
+              onClick={() => handleLanguageChange(lang.code)}
+              className={`w-full text-left px-2.5 py-2 text-[13px] rounded-[9px] transition-colors ${
+                locale === lang.code
+                  ? "bg-success-deep/10 text-success-deep font-bold"
+                  : "text-charcoal hover:bg-warm"
+              }`}
+            >
+              {lang.label}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 // The nav body — one source for the desktop column and the phone drawer, so
 // the two never drift apart (same order, icons, badges, streak note, account).
 function SidebarBody({
@@ -135,6 +206,8 @@ function SidebarBody({
             </small>
           </div>
         </div>
+
+        <LanguageSwitcher pathname={pathname} />
         <AccountMenu displayName={displayName} email={email} avatarUrl={avatarUrl} />
       </div>
     </>
