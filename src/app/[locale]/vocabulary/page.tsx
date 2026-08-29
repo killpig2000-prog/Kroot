@@ -25,7 +25,7 @@ function ChapterDots({ done, started, total }: { done: number; started: number; 
         <span
           key={i}
           className={`w-[6px] h-[6px] rounded-full ${
-            i < done ? "bg-[#6B33CC]" : i < done + started ? "bg-[#DDD6FE]" : "bg-line"
+            i < done ? "bg-[#6B33CC]" : i < done + started ? "bg-[var(--tint-violet-line)]" : "bg-line"
           }`}
         />
       ))}
@@ -146,7 +146,7 @@ export default async function VocabularyPage({
           <div className="flex items-end justify-between gap-4 mb-5 flex-wrap">
             <div>
               <h1 className="font-bold text-[22px] tracking-[-0.02em] flex items-center">
-                <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[#F5F3FF] text-[#6B33CC] border border-[#DDD6FE] items-center justify-center kr text-[15px] mr-[9px]">
+                <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[var(--tint-violet)] text-[#6B33CC] border border-[var(--tint-violet-line)] items-center justify-center kr text-[15px] mr-[9px]">
                   단
                 </span>
                 Vocabulary · {level}
@@ -163,7 +163,7 @@ export default async function VocabularyPage({
               mine={myLevel}
               unlocked={(lv) => unlockedTiers.has(lv)}
               href={(lv) => `/vocabulary?level=${lv}`}
-              accent="bg-charcoal border-charcoal text-white"
+              accent="bg-charcoal border-charcoal text-cream"
             />
           </div>
 
@@ -171,7 +171,7 @@ export default async function VocabularyPage({
           {upNext && (
             <section
               aria-label="Up next"
-              className="grid grid-cols-1 sm:grid-cols-[minmax(0,1fr)_auto] gap-3 sm:gap-[18px] items-center bg-cream border border-[#DDD6FE] rounded-[14px] px-4 py-4 sm:px-[22px] sm:py-[18px] mb-4 shadow-[0_4px_0_#DDD6FE]"
+              className="grid grid-cols-1 sm:grid-cols-[minmax(0,1fr)_auto] gap-3 sm:gap-[18px] items-center bg-cream border border-[var(--tint-violet-line)] rounded-[14px] px-4 py-4 sm:px-[22px] sm:py-[18px] mb-4 shadow-[0_4px_0_#DDD6FE]"
             >
               <div className="min-w-0">
                 <p className="text-[11px] font-extrabold tracking-[.07em] uppercase text-[#6B33CC] mb-1">
@@ -214,7 +214,7 @@ export default async function VocabularyPage({
                 {waterCount > 0 && (
                   <Link
                     href="/review"
-                    className="inline-flex items-center justify-center rounded-[9px] px-4 py-2 text-[13px] font-bold text-sky-deep bg-[#EFF6FF] border border-sky-line hover:bg-[#DBEAFE] transition-colors whitespace-nowrap"
+                    className="inline-flex items-center justify-center rounded-[9px] px-4 py-2 text-[13px] font-bold text-sky-deep bg-[var(--tint-sky)] border border-sky-line hover:bg-sky-line transition-colors whitespace-nowrap"
                   >
                     💧 Water {waterCount} due word{waterCount === 1 ? "" : "s"}
                   </Link>
@@ -230,7 +230,7 @@ export default async function VocabularyPage({
                 <b className="text-charcoal">{unitLabel(upNext.index)}</b> of {units.length}
               </span>
               <span
-                className="relative h-[5px] rounded-full bg-[#EFE9DC] overflow-visible"
+                className="relative h-[5px] rounded-full bg-warm-3 overflow-visible"
                 role="progressbar"
                 aria-valuemin={0}
                 aria-valuemax={units.length}
@@ -293,7 +293,7 @@ export default async function VocabularyPage({
                         href={unitHref(target.index)}
                         aria-current={current ? "true" : undefined}
                         className={`grid grid-cols-[minmax(0,1fr)_auto] gap-2 items-center px-2 py-[7px] rounded-[8px] text-[12.5px] transition-colors ${
-                          current ? "bg-[#F5F3FF] text-[#713FC0] font-bold" : "hover:bg-warm"
+                          current ? "bg-[var(--tint-violet)] text-[#713FC0] font-bold" : "hover:bg-warm"
                         } ${allDone && !current ? "text-muted font-semibold" : "font-bold"}`}
                         title={`Units ${first}–${last}`}
                       >
@@ -304,7 +304,7 @@ export default async function VocabularyPage({
                         <ChapterDots done={chapterDone} started={chapterStarted} total={group.length} />
                       </Link>
                       {open && (
-                        <div className="flex flex-col ml-[18px] pl-2.5 my-0.5 mb-1.5 border-l-2 border-[#DDD6FE]">
+                        <div className="flex flex-col ml-[18px] pl-2.5 my-0.5 mb-1.5 border-l-2 border-[var(--tint-violet-line)]">
                           {group.map((u) => {
                             const on = selected?.index === u.index;
                             return (
@@ -314,7 +314,7 @@ export default async function VocabularyPage({
                                 aria-current={on ? "page" : undefined}
                                 className={`grid grid-cols-[minmax(0,1fr)_auto] gap-2 items-baseline px-2 py-[5px] rounded-[7px] text-[12.5px] transition-colors ${
                                   on
-                                    ? "bg-cream border border-[#DDD6FE] text-[#713FC0] font-extrabold lg:bg-cream max-lg:bg-[#F5F3FF] max-lg:border-transparent"
+                                    ? "bg-cream border border-[var(--tint-violet-line)] text-[#713FC0] font-extrabold lg:bg-cream max-lg:bg-[var(--tint-violet)] max-lg:border-transparent"
                                     : "hover:bg-warm"
                                 }`}
                               >
@@ -375,11 +375,11 @@ export default async function VocabularyPage({
                       <span
                         className={`text-[11.5px] font-bold rounded-full border px-2.5 py-[3px] whitespace-nowrap ${
                           selected.thirsty > 0
-                            ? "text-sky-deep bg-[#EFF6FF] border-sky-line"
+                            ? "text-sky-deep bg-[var(--tint-sky)] border-sky-line"
                             : selected.status === "done"
                             ? "text-success bg-success-bg border-success-line"
                             : selected.status === "in-progress"
-                            ? "text-amber bg-[#FFFBEB] border-amber-line"
+                            ? "text-amber bg-[var(--tint-amber)] border-amber-line"
                             : "text-faint bg-warm border-line"
                         }`}
                       >
@@ -477,7 +477,7 @@ export default async function VocabularyPage({
               <Link
                 href="/review"
                 aria-label={`Water ${waterCount} due words`}
-                className="inline-flex items-center justify-center rounded-[9px] px-3 py-3 text-[13px] font-bold text-sky-deep bg-[#EFF6FF] border border-sky-line tabular-nums"
+                className="inline-flex items-center justify-center rounded-[9px] px-3 py-3 text-[13px] font-bold text-sky-deep bg-[var(--tint-sky)] border border-sky-line tabular-nums"
               >
                 💧 {waterCount}
               </Link>

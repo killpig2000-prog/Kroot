@@ -4,7 +4,7 @@ export default function CuteError({ children }: { children: React.ReactNode }) {
   return (
     <div
       role="alert"
-      className="flex items-start gap-3 border-[1.5px] border-[#FECDD3] bg-[#FFF1F2] rounded-[10px] px-3.5 py-3 mb-3.5"
+      className="flex items-start gap-3 border-[1.5px] border-[var(--tint-rose-line)] bg-[var(--tint-rose)] rounded-[10px] px-3.5 py-3 mb-3.5"
       style={{ animation: "fadeUp .3s ease" }}
     >
       <svg className="w-[34px] h-[34px] flex-none" viewBox="0 0 100 100" aria-hidden="true">

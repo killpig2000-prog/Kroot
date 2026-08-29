@@ -86,7 +86,7 @@ export default async function SituationPage({
                   >
                     ←
                   </Link>
-                  <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[#F0FDFA] text-teal border border-[#99F6E4] items-center justify-center text-[15px] mr-[9px]">
+                  <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[var(--tint-teal)] text-teal border border-[var(--tint-teal-line)] items-center justify-center text-[15px] mr-[9px]">
                     {situation?.icon ?? "🎧"}
                   </span>
                   {label}

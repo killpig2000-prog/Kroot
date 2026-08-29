@@ -30,7 +30,7 @@ export default function ExampleBox({
           <button
             aria-label={`Hear ${ex.kr}`}
             onClick={() => speak(ex.kr)}
-            className="flex-none text-sm text-faint hover:text-[#423AC5] hover:scale-110 transition-all mt-1"
+            className="flex-none text-sm text-faint hover:text-[var(--tint-indigo-ink)] hover:scale-110 transition-all mt-1"
           >
             🔊
           </button>

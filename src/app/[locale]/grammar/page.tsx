@@ -63,7 +63,7 @@ export default async function GrammarPage({
           {/* head */}
           <div className="flex items-center justify-between gap-4 mb-[18px] flex-wrap">
             <h1 className="font-bold text-[22px] tracking-[-0.02em] flex items-center">
-              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[#EEF2FF] text-[#423AC5] border border-[#C7D2FE] items-center justify-center kr text-[15px] mr-[9px]">
+              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[var(--tint-indigo)] text-[var(--tint-indigo-ink)] border border-[var(--tint-indigo-line)] items-center justify-center kr text-[15px] mr-[9px]">
                 문
               </span>
               Grammar
@@ -74,12 +74,12 @@ export default async function GrammarPage({
           </div>
 
           {/* intro */}
-          <div className="max-w-[820px] bg-[#EEF2FF] border border-[#C7D2FE] rounded-[14px] px-[18px] py-4 mb-6">
+          <div className="max-w-[820px] bg-[var(--tint-indigo)] border border-[var(--tint-indigo-line)] rounded-[14px] px-[18px] py-4 mb-6">
             <p className="text-[13.5px] text-charcoal leading-[1.65]">
               Korean grammar is regular. New here? Tap{" "}
-              <b className="text-[#423AC5]">Start here</b> below for a set order to learn the basics
+              <b className="text-[var(--tint-indigo-ink)]">Start here</b> below for a set order to learn the basics
               in — see the{" "}
-              <Link href="/guide" className="font-semibold text-[#423AC5] hover:underline">
+              <Link href="/guide" className="font-semibold text-[var(--tint-indigo-ink)] hover:underline">
                 Guide
               </Link>{" "}
               for how it fits with the rest of the app. Otherwise browse the full A1–C2 syllabus by
@@ -139,7 +139,7 @@ export default async function GrammarPage({
                 <Link
                   key={lesson.key}
                   href={`/grammar/${lesson.key}`}
-                  className={`flex items-center gap-3.5 px-[18px] py-[15px] bg-cream transition-all duration-150 hover:bg-[#EEF2FF] group ${
+                  className={`flex items-center gap-3.5 px-[18px] py-[15px] bg-cream transition-all duration-150 hover:bg-[var(--tint-indigo)] group ${
                     i > 0 ? "border-t border-line" : ""
                   }`}
                 >
@@ -157,10 +157,10 @@ export default async function GrammarPage({
                       {lesson.summary}
                     </small>
                   </span>
-                  <span className="hidden sm:inline-block flex-none text-[11.5px] font-semibold text-[#423AC5] bg-[#EEF2FF] border border-[#C7D2FE] rounded-full px-2.5 py-[3px]">
+                  <span className="hidden sm:inline-block flex-none text-[11.5px] font-semibold text-[var(--tint-indigo-ink)] bg-[var(--tint-indigo)] border border-[var(--tint-indigo-line)] rounded-full px-2.5 py-[3px]">
                     {lesson.level}
                   </span>
-                  <span className="flex-none text-[#D6D3CC] text-sm transition-all group-hover:text-[#423AC5] group-hover:translate-x-0.5">
+                  <span className="flex-none text-[#D6D3CC] text-sm transition-all group-hover:text-[var(--tint-indigo-ink)] group-hover:translate-x-0.5">
                     →
                   </span>
                 </Link>

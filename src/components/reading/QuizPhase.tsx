@@ -54,7 +54,7 @@ export default function QuizPhase({
                   ? "border-danger bg-danger-bg"
                   : show
                   ? "border-line bg-cream opacity-90"
-                  : "border-line bg-cream hover:border-sky-deep hover:bg-[#EFF6FF]"
+                  : "border-line bg-cream hover:border-sky-deep hover:bg-[var(--tint-sky)]"
               }`}
             >
               <span

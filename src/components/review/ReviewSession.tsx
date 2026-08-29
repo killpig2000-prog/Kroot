@@ -103,7 +103,7 @@ export default function ReviewSession({
         )}
 
         {slipped > 0 && (
-          <div className="text-left border border-amber-line bg-[#FFFBEB] rounded-[10px] px-4 py-3 mb-6">
+          <div className="text-left border border-amber-line bg-[var(--tint-amber)] rounded-[10px] px-4 py-3 mb-6">
             <b className="block text-[12.5px] font-semibold text-[#92400E] mb-1.5">
               Back in the watering can:
             </b>

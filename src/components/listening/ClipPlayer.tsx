@@ -112,7 +112,7 @@ export default function ClipPlayer({
         </div>
 
         {/* stage */}
-        <div className="border-[1.5px] border-[#99F6E4] bg-[#F0FDFA] rounded-[14px] px-5 py-5 text-center mb-4">
+        <div className="border-[1.5px] border-[var(--tint-teal-line)] bg-[var(--tint-teal)] rounded-[14px] px-5 py-5 text-center mb-4">
           <span className="block text-[11px] font-bold tracking-[.07em] uppercase text-teal">
             {stageLine ? stageLine.speaker : "Ready?"}
             {isPlaying && " · playing"}
@@ -176,7 +176,7 @@ export default function ClipPlayer({
                 key={i}
                 className={`flex items-start gap-2.5 px-3 py-2 rounded-[10px] border transition-colors ${
                   playing
-                    ? "bg-[#F0FDFA] border-[#99F6E4]"
+                    ? "bg-[var(--tint-teal)] border-[var(--tint-teal-line)]"
                     : revealed
                       ? "bg-warm border-transparent"
                       : "border-transparent"
@@ -250,7 +250,7 @@ export default function ClipPlayer({
                           ? "border-danger bg-danger-bg"
                           : answered
                             ? "border-line bg-cream opacity-90"
-                            : "border-line bg-cream hover:border-teal hover:bg-[#F0FDFA]"
+                            : "border-line bg-cream hover:border-teal hover:bg-[var(--tint-teal)]"
                     }`}
                   >
                     <span
@@ -279,7 +279,7 @@ export default function ClipPlayer({
                 className={`inline-flex items-center gap-2 text-[13px] font-semibold rounded-lg px-3 py-1.5 mb-3 border ${
                   correct
                     ? "bg-success-bg text-success border-success-line"
-                    : "bg-danger-bg text-danger border-[#FECACA]"
+                    : "bg-danger-bg text-danger border-[var(--tint-rose-line)]"
                 }`}
               >
                 {correct ? "🌱 Correct! Sharp ears." : "💧 Not quite — replay the lines above."}

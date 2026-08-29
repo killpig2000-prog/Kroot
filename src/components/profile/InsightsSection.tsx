@@ -28,7 +28,7 @@ function SectionHead() {
   return (
     <div className="flex items-center gap-2 mt-2" id="insights">
       <b className="font-bold text-[15px] tracking-[-0.01em]">📊 Insights</b>
-      <span className="text-[10.5px] font-bold tracking-[.04em] text-[#92400E] bg-[#FFFBEB] border border-amber-line rounded-md px-1.5 py-0.5">
+      <span className="text-[10.5px] font-bold tracking-[.04em] text-[#92400E] bg-[var(--tint-amber)] border border-amber-line rounded-md px-1.5 py-0.5">
         🌟 PLUS
       </span>
     </div>
@@ -46,7 +46,7 @@ export default async function InsightsSection({
     return (
       <>
         <SectionHead />
-        <div className="border border-amber-line bg-[#FFFBEB] rounded-[14px] px-[22px] py-5">
+        <div className="border border-amber-line bg-[var(--tint-amber)] rounded-[14px] px-[22px] py-5">
           <p className="text-[13px] text-muted leading-[1.65] mb-3">
             Accuracy by skill, your weakest words ready for extra watering, how deep each word
             is rooted, and a day-by-day XP timeline — for Plus members.
@@ -241,7 +241,7 @@ export default async function InsightsSection({
                 <span className="flex-none w-[130px] text-[12.5px] font-semibold text-muted">
                   {SKILL_META[skill].emoji} {SKILL_META[skill].label}
                 </span>
-                <span className="flex-1 h-2.5 rounded-full bg-[#F5F5F4] overflow-hidden">
+                <span className="flex-1 h-2.5 rounded-full bg-[var(--tint-stone)] overflow-hidden">
                   <span
                     className="block h-full rounded-full bg-success"
                     style={{ width: `${Math.round((xp / maxSkillXp) * 100)}%` }}
@@ -266,7 +266,7 @@ export default async function InsightsSection({
               <span className="flex-none w-[130px] text-[12.5px] font-semibold text-muted">
                 {label}
               </span>
-              <span className="flex-1 h-2.5 rounded-full bg-[#F5F5F4] overflow-hidden">
+              <span className="flex-1 h-2.5 rounded-full bg-[var(--tint-stone)] overflow-hidden">
                 <span
                   className="block h-full rounded-full"
                   style={{
@@ -298,7 +298,7 @@ export default async function InsightsSection({
             {weakest.map((w) => (
               <div
                 key={`${w.level}:${w.korean}`}
-                className="flex items-center gap-3 py-1.5 border-b border-dashed border-[#F0EEEA] last:border-b-0"
+                className="flex items-center gap-3 py-1.5 border-b border-dashed border-line last:border-b-0"
               >
                 <b className="kr flex-none text-[15px] font-semibold min-w-[90px]">{w.korean}</b>
                 <span className="flex-1 min-w-0 text-[12.5px] text-muted truncate">

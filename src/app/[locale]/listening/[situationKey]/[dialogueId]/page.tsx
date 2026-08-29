@@ -72,7 +72,7 @@ export default async function DialoguePage({
           {/* head */}
           <div className="flex items-center justify-between gap-4 mb-6 flex-wrap">
             <h1 className="font-bold text-[22px] tracking-[-0.02em] flex items-center">
-              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[#F0FDFA] text-teal border border-[#99F6E4] items-center justify-center text-[15px] mr-[9px]">
+              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[var(--tint-teal)] text-teal border border-[var(--tint-teal-line)] items-center justify-center text-[15px] mr-[9px]">
                 {situation?.icon ?? "🎧"}
               </span>
               {dialogue.title}

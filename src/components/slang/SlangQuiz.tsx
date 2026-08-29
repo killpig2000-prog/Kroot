@@ -112,7 +112,7 @@ export default function SlangQuiz() {
   const q = quiz[qIndex];
 
   return (
-    <div className="border-[1.5px] border-[#FBCFE8] bg-[#FDF2F8] rounded-[14px] px-5 py-4 mb-6">
+    <div className="border-[1.5px] border-[var(--tint-pink-line)] bg-[var(--tint-pink)] rounded-[14px] px-5 py-4 mb-6">
       {!expanded || doneToday !== null ? (
         <div className="flex items-center gap-3.5 flex-wrap">
           <span className="text-[22px] flex-none">🎯</span>
@@ -176,8 +176,8 @@ export default function SlangQuiz() {
                       : state === "wrong"
                         ? "border-danger bg-danger-bg"
                         : state === "dim"
-                          ? "border-[#FBCFE8] bg-cream opacity-60"
-                          : "border-[#FBCFE8] bg-cream hover:border-[#C13E78]"
+                          ? "border-[var(--tint-pink-line)] bg-cream opacity-60"
+                          : "border-[var(--tint-pink-line)] bg-cream hover:border-[#C13E78]"
                   }`}
                 >
                   {opt}

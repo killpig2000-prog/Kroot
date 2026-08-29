@@ -247,7 +247,7 @@ export default function PronunciationChallenge({
         style={{ animation: "fadeUp .35s ease" }}
       >
         <div className="flex items-center justify-between mb-5 gap-2.5 flex-wrap">
-          <span className="inline-flex items-center gap-1.5 text-[11.5px] font-semibold text-teal bg-[#F0FDFA] border border-[#99F6E4] rounded-full px-2.5 py-[3px]">
+          <span className="inline-flex items-center gap-1.5 text-[11.5px] font-semibold text-teal bg-[var(--tint-teal)] border border-[var(--tint-teal-line)] rounded-full px-2.5 py-[3px]">
             {meta.emoji} {word.groupTitle}
           </span>
           <span className="text-[12.5px] text-faint font-medium">

@@ -39,10 +39,10 @@ export default function WritePhase({
           </p>
           {prompt.stimulus_kr && (
             <div className="mb-4 flex gap-2.5 items-start">
-              <span className="flex-none w-8 h-8 rounded-full bg-[#EFF6FF] border border-sky-line flex items-center justify-center text-[15px]">
+              <span className="flex-none w-8 h-8 rounded-full bg-[var(--tint-sky)] border border-sky-line flex items-center justify-center text-[15px]">
                 💬
               </span>
-              <div className="rounded-[14px] rounded-tl-[4px] bg-[#F4F4F5] border border-[#E4E4E7] px-4 py-3 max-w-[92%]">
+              <div className="rounded-[14px] rounded-tl-[4px] bg-[var(--tint-stone)] border border-[var(--tint-stone-line)] px-4 py-3 max-w-[92%]">
                 <p className="kr text-[15px] leading-[1.75] text-charcoal">{prompt.stimulus_kr}</p>
                 {prompt.stimulus_en && (
                   <p className="text-[12.5px] text-muted leading-[1.6] mt-1.5">{prompt.stimulus_en}</p>

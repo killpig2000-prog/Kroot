@@ -126,7 +126,7 @@ export default function FlipPhase({
           {flipped ? (
             <div style={{ animation: "fadeUp .3s ease" }}>
               <p className="text-[20px] font-extrabold mt-2.5 mb-1.5 flex items-center gap-2">
-                <span className="text-[11px] font-black text-[#6B33CC] border-[1.5px] border-[#DDD6FE] rounded-full w-[18px] h-[18px] inline-grid place-items-center">
+                <span className="text-[11px] font-black text-[#6B33CC] border-[1.5px] border-[var(--tint-violet-line)] rounded-full w-[18px] h-[18px] inline-grid place-items-center">
                   1
                 </span>
                 {word.meaning_en}
@@ -146,7 +146,7 @@ export default function FlipPhase({
                 <p className="text-[12.5px] text-muted leading-[1.65] mb-3">from {note.origin}</p>
               )}
 
-              <div className="border-l-[3px] border-[#DDD6FE] pl-3.5 py-1 my-2 mb-3.5">
+              <div className="border-l-[3px] border-[var(--tint-violet-line)] pl-3.5 py-1 my-2 mb-3.5">
                 <p className="kr text-[16px] font-medium">
                   <button
                     type="button"
@@ -190,7 +190,7 @@ export default function FlipPhase({
           ) : (
             <div className="mt-5 mb-1">
               <button
-                className="border-[1.5px] border-dashed border-[#DDD6FE] rounded-[10px] bg-[#F5F3FF] px-[22px] py-3 text-[13.5px] font-semibold text-[#6B33CC] hover:bg-[#EDE9FE] transition-colors"
+                className="border-[1.5px] border-dashed border-[var(--tint-violet-line)] rounded-[10px] bg-[var(--tint-violet)] px-[22px] py-3 text-[13.5px] font-semibold text-[#6B33CC] hover:bg-[var(--tint-violet-line)] transition-colors"
                 onClick={onFlip}
               >
                 👀 Reveal meaning
@@ -214,7 +214,7 @@ export default function FlipPhase({
 
       {/* bonus root banner */}
       {root && !rootOpen && (
-        <div className="mt-4 border border-dashed border-[#DDD6FE] rounded-[14px] bg-[#F5F3FF] px-5 py-4 flex items-center gap-3.5">
+        <div className="mt-4 border border-dashed border-[var(--tint-violet-line)] rounded-[14px] bg-[var(--tint-violet)] px-5 py-4 flex items-center gap-3.5">
           <span className="w-[38px] h-[38px] rounded-[10px] bg-[#6B33CC] text-white flex items-center justify-center font-bold text-[17px] flex-none kr">
             {root.syllable}
           </span>
@@ -233,10 +233,10 @@ export default function FlipPhase({
 
       {/* root explore panel */}
       {root && rootOpen && (
-        <div className="mt-2.5 border border-[#DDD6FE] rounded-[14px] bg-cream px-[22px] py-5" style={{ animation: "fadeUp .3s ease" }}>
+        <div className="mt-2.5 border border-[var(--tint-violet-line)] rounded-[14px] bg-cream px-[22px] py-5" style={{ animation: "fadeUp .3s ease" }}>
           <div className="flex items-start justify-between mb-4">
             <div className="flex items-center gap-3">
-              <span className="w-11 h-11 rounded-xl bg-[#F5F3FF] text-[#6B33CC] flex items-center justify-center kr text-xl flex-none">
+              <span className="w-11 h-11 rounded-xl bg-[var(--tint-violet)] text-[#6B33CC] flex items-center justify-center kr text-xl flex-none">
                 {root.syllable}
               </span>
               <div>
@@ -405,7 +405,7 @@ function SwipeCard({
           }}
         >
           <div className="absolute inset-0 pointer-events-none" style={{ background: RULED }} />
-          <span className="absolute top-0 bottom-0 left-[clamp(28px,6vw,52px)] w-px bg-[#F5C6C6] opacity-70" />
+          <span className="absolute top-0 bottom-0 left-[clamp(28px,6vw,52px)] w-px bg-[var(--tint-rose-line)] opacity-70" />
           {nextWord && (
             <p className="kr font-black text-[clamp(34px,6vw,44px)] leading-[1.1] tracking-[-0.01em] text-faint pt-6 pl-[clamp(40px,8vw,70px)]">
               {nextWord.korean}
@@ -425,7 +425,7 @@ function SwipeCard({
         >
           <div className="absolute inset-0 pointer-events-none" style={{ background: RULED }} aria-hidden="true" />
           <span
-            className="absolute top-0 bottom-0 left-[clamp(28px,6vw,52px)] w-px bg-[#F5C6C6] opacity-70 pointer-events-none"
+            className="absolute top-0 bottom-0 left-[clamp(28px,6vw,52px)] w-px bg-[var(--tint-rose-line)] opacity-70 pointer-events-none"
             aria-hidden="true"
           />
           {children}
@@ -467,7 +467,7 @@ function MarginNote({
 }) {
   return (
     <div
-      className="bg-[#FFF9DB] border border-[#EDE3B4] rounded-[6px] px-3 py-2.5 shadow-[0_5px_12px_rgba(0,0,0,0.07)] text-left"
+      className="bg-[var(--tint-amber)] border border-amber-line rounded-[6px] px-3 py-2.5 shadow-[0_5px_12px_rgba(0,0,0,0.07)] text-left"
       style={rotate ? { transform: `rotate(${rotate}deg)` } : undefined}
     >
       <p className="text-[10px] font-bold tracking-[0.07em] uppercase text-[#A08F4E] mb-1">

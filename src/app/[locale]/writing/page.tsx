@@ -17,7 +17,7 @@ const STATUS_LABEL: Record<string, string> = {
 
 const STATUS_BADGE: Record<string, string> = {
   done: "bg-success-bg text-success border-success-line",
-  current: "bg-[#FFFBEB] text-amber border-amber-line",
+  current: "bg-[var(--tint-amber)] text-amber border-amber-line",
   locked: "bg-warm text-faint border-line",
 };
 
@@ -95,7 +95,7 @@ export default async function WritingMapPage({
           {/* head */}
           <div className="flex items-center justify-between gap-4 mb-[18px] flex-wrap">
             <h1 className="font-bold text-[22px] tracking-[-0.02em] flex items-center">
-              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[#FFFBEB] text-amber border border-amber-line items-center justify-center kr text-[15px] mr-[9px]">
+              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[var(--tint-amber)] text-amber border border-amber-line items-center justify-center kr text-[15px] mr-[9px]">
                 쓰
               </span>
               Writing
@@ -146,7 +146,7 @@ export default async function WritingMapPage({
               className={`flex items-center gap-3.5 border-[1.5px] rounded-[14px] px-5 py-4 mb-6 max-w-[720px] transition-all ${
                 continueWaitsTomorrow
                   ? "border-line bg-warm opacity-70 pointer-events-none"
-                  : "border-amber-line bg-[#FFFBEB] hover:-translate-y-0.5 group"
+                  : "border-amber-line bg-[var(--tint-amber)] hover:-translate-y-0.5 group"
               }`}
             >
               <span className="flex-none w-10 h-10 rounded-[10px] bg-cream border border-amber-line flex items-center justify-center text-lg transition-transform group-hover:scale-110">
@@ -204,7 +204,7 @@ export default async function WritingMapPage({
                     <ChapterPathGroup
                       dividerEvery={DIVIDER_EVERY}
                       lineColorClassName="border-amber-line"
-                      hoverClassName="hover:bg-[#FFFBEB]"
+                      hoverClassName="hover:bg-[var(--tint-amber)]"
                       nodes={group.map(({ chapter, status, index: i }) => {
                         const prompt = chapter[0];
                         const waitTomorrow = dailyDone && status === "current";
@@ -216,7 +216,7 @@ export default async function WritingMapPage({
                             status === "done"
                               ? "bg-success-bg text-success border-success-line"
                               : status === "current"
-                              ? "bg-[#FFFBEB] text-amber border-amber-line"
+                              ? "bg-[var(--tint-amber)] text-amber border-amber-line"
                               : "bg-warm text-faint border-line",
                           ringClassName: status === "current" && !waitTomorrow ? "ring-4 ring-amber-line/60" : undefined,
                           circleContent: status === "done" ? "✓" : i + 1,

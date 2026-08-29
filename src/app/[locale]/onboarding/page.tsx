@@ -510,7 +510,7 @@ export default function OnboardingPage() {
                     ))}
                     <button
                       onClick={() => answer(-1)}
-                      className="text-left px-[14px] py-[11px] rounded-[9px] text-[13.5px] font-medium bg-warm border border-dashed border-[#CFC8B8] text-muted transition-colors hover:border-faint hover:text-charcoal"
+                      className="text-left px-[14px] py-[11px] rounded-[9px] text-[13.5px] font-medium bg-warm border border-dashed border-dash text-muted transition-colors hover:border-faint hover:text-charcoal"
                     >
                       🤷 I don&apos;t know yet
                     </button>

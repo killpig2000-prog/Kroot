@@ -22,16 +22,16 @@ export default function Loading() {
             {/* head */}
             <div className="flex items-center justify-between gap-4 mb-[18px] flex-wrap">
               <div className="flex items-center gap-[9px]">
-                <div className="w-[30px] h-[30px] rounded-lg bg-[#EEF2FF] border border-[#C7D2FE]" />
+                <div className="w-[30px] h-[30px] rounded-lg bg-[var(--tint-indigo)] border border-[var(--tint-indigo-line)]" />
                 <div className="h-6 w-48 rounded-lg bg-warm-3" />
               </div>
               <div className="h-3.5 w-40 rounded-full bg-warm-2" />
             </div>
 
             {/* summary */}
-            <div className="max-w-[720px] bg-[#EEF2FF] border border-[#C7D2FE] rounded-[14px] px-[18px] py-4 mb-7">
-              <div className="h-3.5 w-full rounded-full bg-[#C7D2FE]/50 mb-2" />
-              <div className="h-3.5 w-[80%] rounded-full bg-[#C7D2FE]/50" />
+            <div className="max-w-[720px] bg-[var(--tint-indigo)] border border-[var(--tint-indigo-line)] rounded-[14px] px-[18px] py-4 mb-7">
+              <div className="h-3.5 w-full rounded-full bg-[var(--tint-indigo-line)]/50 mb-2" />
+              <div className="h-3.5 w-[80%] rounded-full bg-[var(--tint-indigo-line)]/50" />
             </div>
 
             {/* sections */}
@@ -42,7 +42,7 @@ export default function Loading() {
                   className="border border-line rounded-[14px] p-[clamp(18px,2.5vw,26px)] mb-3.5"
                 >
                   <div className="flex items-center gap-2.5 mb-2.5">
-                    <div className="flex-none w-[22px] h-[22px] rounded-md bg-[#EEF2FF] border border-[#C7D2FE]" />
+                    <div className="flex-none w-[22px] h-[22px] rounded-md bg-[var(--tint-indigo)] border border-[var(--tint-indigo-line)]" />
                     <div className="h-4 w-52 rounded-lg bg-warm-3" />
                   </div>
                   <div className="flex flex-col gap-2 mb-4">

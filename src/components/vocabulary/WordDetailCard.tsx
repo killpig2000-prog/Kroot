@@ -96,7 +96,7 @@ export default function WordDetailCard({
       <div className="relative bg-cream border border-line rounded-[6px] shadow-[0_20px_40px_-28px_rgba(60,50,30,.6)] overflow-hidden">
         <div className="absolute inset-0 pointer-events-none" style={{ background: RULED }} aria-hidden="true" />
         <span
-          className="absolute top-0 bottom-0 left-[clamp(28px,6vw,52px)] w-px bg-[#F5C6C6] opacity-70 pointer-events-none"
+          className="absolute top-0 bottom-0 left-[clamp(28px,6vw,52px)] w-px bg-[var(--tint-rose-line)] opacity-70 pointer-events-none"
           aria-hidden="true"
         />
         <span className="absolute top-4 right-5 text-[10.5px] font-black tracking-[.06em] uppercase text-amber border-2 border-amber rounded-[6px] px-2 py-[3px] rotate-[-6deg] opacity-80 select-none">
@@ -144,7 +144,7 @@ export default function WordDetailCard({
           )}
           {note?.origin && <p className="text-[12.5px] text-muted leading-[1.65] mb-3">from {note.origin}</p>}
 
-          <div className="border-l-[3px] border-[#DDD6FE] pl-3.5 py-1 my-2 mb-3.5">
+          <div className="border-l-[3px] border-[var(--tint-violet-line)] pl-3.5 py-1 my-2 mb-3.5">
             <p className="kr text-[16px] font-medium">
               <button
                 type="button"
@@ -163,7 +163,7 @@ export default function WordDetailCard({
               {word.moreExamples.map((ex, i) => (
                 <div
                   key={i}
-                  className="bg-[#FFF9DB] border border-[#EDE3B4] rounded-[6px] px-3 py-2.5 text-left"
+                  className="bg-[var(--tint-amber)] border border-amber-line rounded-[6px] px-3 py-2.5 text-left"
                 >
                   <p className="text-[10px] font-bold tracking-[0.07em] uppercase text-[#A08F4E] mb-1">
                     {ex.source === "reading" ? "📖 Seen in Reading" : "🎧 Seen in Listening"}

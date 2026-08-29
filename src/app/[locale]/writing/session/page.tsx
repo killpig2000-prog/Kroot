@@ -77,7 +77,7 @@ export default async function WritingChapterSessionPage({
           {/* head */}
           <div className="flex items-center justify-between gap-4 mb-5 flex-wrap">
             <h1 className="font-bold text-[22px] tracking-[-0.02em] flex items-center">
-              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[#FFFBEB] text-amber border border-amber-line items-center justify-center kr text-[15px] mr-[9px]">
+              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[var(--tint-amber)] text-amber border border-amber-line items-center justify-center kr text-[15px] mr-[9px]">
                 쓰
               </span>
               Writing

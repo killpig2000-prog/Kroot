@@ -136,7 +136,7 @@ export default function CompareResult({
               className={`inline-flex items-center gap-2 text-[13px] font-semibold rounded-lg border px-3 py-1.5 ${
                 reaction.good
                   ? "bg-success-bg text-success border-success-line"
-                  : "bg-[#FFFBEB] text-amber border-amber-line"
+                  : "bg-[var(--tint-amber)] text-amber border-amber-line"
               }`}
             >
               {reaction.verdict}
@@ -155,7 +155,7 @@ export default function CompareResult({
           <h2 className="font-bold text-[21px] tracking-[-0.02em] mb-1.5">Nice writing!</h2>
           <p className="text-sm text-muted">Here&apos;s one natural way to say it.</p>
           {limitMessage && (
-            <div className="inline-flex items-center gap-2.5 border border-amber-line bg-[#FFFBEB] rounded-[10px] px-4 py-2.5 mt-3 text-left">
+            <div className="inline-flex items-center gap-2.5 border border-amber-line bg-[var(--tint-amber)] rounded-[10px] px-4 py-2.5 mt-3 text-left">
               <span className="text-base">🌟</span>
               <span className="text-[12.5px] text-[#92400E]">
                 {limitMessage}{" "}
@@ -196,7 +196,7 @@ export default function CompareResult({
               {grade.corrections.map((c, i) => (
                 <div
                   key={i}
-                  className={`px-4 py-3 bg-[#FFFBEB] ${i > 0 ? "border-t border-amber-line" : ""}`}
+                  className={`px-4 py-3 bg-[var(--tint-amber)] ${i > 0 ? "border-t border-amber-line" : ""}`}
                 >
                   {c.original !== c.corrected && (
                     <p className="kr text-[14px] text-faint line-through leading-[1.6]">

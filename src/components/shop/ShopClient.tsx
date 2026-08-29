@@ -26,9 +26,9 @@ import ShopGoal, { useStoredGoal, writeStoredGoal } from "@/components/shop/Shop
 const DEFAULT_SKY = "linear-gradient(180deg,#DFF1FF 0%,#F0FBF1 62%,#E4F3DA 100%)";
 const RARITY_STYLE: Record<Rarity, { stripe: string; chip: string }> = {
   common: { stripe: "#B7AE9C", chip: "bg-warm text-muted" },
-  rare: { stripe: "#3363CC", chip: "bg-[#EFF6FF] text-sky-deep" },
-  epic: { stripe: "#6B33CC", chip: "bg-[#F5F3FF] text-[#6B33CC]" },
-  legendary: { stripe: "#B14F27", chip: "bg-[#FFF7ED] text-[#B14F27]" },
+  rare: { stripe: "#3363CC", chip: "bg-[var(--tint-sky)] text-sky-deep" },
+  epic: { stripe: "#6B33CC", chip: "bg-[var(--tint-violet)] text-[#6B33CC]" },
+  legendary: { stripe: "#B14F27", chip: "bg-[var(--tint-amber)] text-[#B14F27]" },
 };
 const TABS: CostumeSlot[] = [...WEARABLE_SLOTS, ...GARDEN_SLOTS];
 
@@ -263,7 +263,7 @@ export default function ShopClient({
                 setTab(featured.slot);
                 setPreview((p) => ({ ...p, [featured.slot]: featured.id }));
               }}
-              className="w-full text-left grid grid-cols-[auto_1fr_auto] gap-3.5 items-center border border-[#F3D98A] rounded-[10px] px-3.5 py-3 mb-3.5 transition-all hover:-translate-y-0.5"
+              className="w-full text-left grid grid-cols-[auto_1fr_auto] gap-3.5 items-center border border-amber-line rounded-[10px] px-3.5 py-3 mb-3.5 transition-all hover:-translate-y-0.5"
               style={{ background: "linear-gradient(90deg,#FFF8E6,transparent)" }}
             >
               <span className="w-14 h-14 rounded-[10px] overflow-hidden flex-none">
@@ -304,7 +304,7 @@ export default function ShopClient({
                     setMessage(null);
                   }}
                   className={`flex-none flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[13px] font-bold border transition-colors ${
-                    on ? "bg-charcoal text-white border-charcoal" : "bg-cream text-muted border-line hover:border-faint"
+                    on ? "bg-charcoal text-cream border-charcoal" : "bg-cream text-muted border-line hover:border-faint"
                   }`}
                 >
                   <span aria-hidden="true">{SLOT_LABELS[slot].icon}</span>

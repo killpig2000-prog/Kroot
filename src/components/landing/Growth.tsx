@@ -14,13 +14,13 @@ const CARD = [
 
 export default function Growth() {
   return (
-    <section id="grow" className="relative bg-[#FFFFFF] border-t border-dashed border-dash py-[clamp(52px,8vw,88px)] px-6 overflow-hidden">
+    <section id="grow" className="relative bg-cream border-t border-dashed border-dash py-[clamp(52px,8vw,88px)] px-6 overflow-hidden">
       <div className="text-center mb-1.5">
-        <span className="inline-block bg-cream border-[1.5px] border-dashed border-[#CFC8B8] rounded-full px-4 py-[5px] text-xs font-extrabold text-success-deep -rotate-1">
+        <span className="inline-block bg-cream border-[1.5px] border-dashed border-dash rounded-full px-4 py-[5px] text-xs font-extrabold text-success-deep -rotate-1">
           growth album · <span className="kr">성장 앨범</span>
         </span>
       </div>
-      <h2 className="text-center font-black text-[clamp(22px,3vw,30px)] tracking-[-0.02em] text-[#221F1B] mb-2 text-balance">
+      <h2 className="text-center font-black text-[clamp(22px,3vw,30px)] tracking-[-0.02em] text-charcoal mb-2 text-balance">
         Your tree grows every day
       </h2>
       <p className="text-center text-muted text-[13.5px] max-w-[52ch] mx-auto mb-2">

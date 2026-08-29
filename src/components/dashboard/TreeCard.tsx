@@ -131,7 +131,7 @@ export default function TreeCard({
           {sp.name} <span className="text-faint font-medium">· {treeName}</span>
           <span
             className={`inline-block ml-2 text-[12.5px] font-semibold border rounded-md px-2 py-px align-[2px] ${
-              veteran ? "bg-[#FFF8E6] text-[#B7791F] border-[#F3D98A]" : "bg-success-bg text-success border-success-line"
+              veteran ? "bg-[var(--tint-amber)] text-[#B7791F] border-amber-line" : "bg-success-bg text-success border-success-line"
             }`}
           >
             Lv. {level}
@@ -149,7 +149,7 @@ export default function TreeCard({
         </p>
 
         <div className="flex items-center gap-3 mb-4">
-          <div className="flex-1 h-1.5 bg-[#EFE9DB] rounded-full overflow-hidden">
+          <div className="flex-1 h-1.5 bg-warm-3 rounded-full overflow-hidden">
             <i
               className={`not-italic block h-full rounded-full transition-[width] duration-1000 ${veteran ? "bg-[#B7791F]" : "bg-success"}`}
               style={{ width: `${fill}%` }}
@@ -204,7 +204,7 @@ export default function TreeCard({
                     key={m.level}
                     className={`text-[12px] font-semibold rounded-full px-2.5 py-1 border ${
                       on
-                        ? "bg-[#FFF8E6] border-[#F3D98A] text-[#B7791F]"
+                        ? "bg-[var(--tint-amber)] border-amber-line text-[#B7791F]"
                         : next
                         ? "bg-cream border-line text-muted"
                         : "bg-cream border-line text-faint opacity-50"

@@ -57,7 +57,7 @@ function QuestionCard({
                   ? "border-danger bg-danger-bg"
                   : answered
                   ? "border-line bg-cream opacity-90"
-                  : "border-line bg-cream hover:border-[#423AC5] hover:bg-[#EEF2FF]"
+                  : "border-line bg-cream hover:border-[#423AC5] hover:bg-[var(--tint-indigo)]"
               }`}
             >
               <span
@@ -83,7 +83,7 @@ function QuestionCard({
             className={`inline-flex items-center gap-2 text-[13px] font-semibold rounded-lg px-3 py-1.5 border ${
               correct
                 ? "bg-success-bg text-success border-success-line"
-                : "bg-danger-bg text-danger border-[#FECACA]"
+                : "bg-danger-bg text-danger border-[var(--tint-rose-line)]"
             }`}
           >
             {correct

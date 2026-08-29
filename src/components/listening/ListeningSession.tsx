@@ -116,7 +116,7 @@ export default function ListeningSession({
     return (
       <>
         <p className="flex items-center gap-2 text-[13px] text-muted mb-3 max-w-[680px]">
-          <span className="inline-flex w-6 h-6 rounded-md bg-[#F0FDFA] text-teal border border-[#99F6E4] items-center justify-center text-[12px]">
+          <span className="inline-flex w-6 h-6 rounded-md bg-[var(--tint-teal)] text-teal border border-[var(--tint-teal-line)] items-center justify-center text-[12px]">
             {situationIcon}
           </span>
           <b className="text-charcoal font-semibold">{situationLabel}</b>

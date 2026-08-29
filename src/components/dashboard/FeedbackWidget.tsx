@@ -106,7 +106,7 @@ export default function FeedbackWidget() {
               <span className="block text-[11px] font-bold uppercase tracking-[0.12em] text-faint mb-2">
                 Notice
               </span>
-              <b className="block text-[18px] font-extrabold text-[#221F1B] mb-3 tracking-tight">
+              <b className="block text-[18px] font-extrabold text-charcoal mb-3 tracking-tight">
                 Kroot has recently launched
               </b>
               <p className="text-[14px] text-muted leading-relaxed mb-2">
@@ -125,7 +125,7 @@ export default function FeedbackWidget() {
               <div className="flex items-center justify-between mt-3 pt-3 border-t border-line">
                 <button
                   onClick={dismissAnnouncement}
-                  className="text-[13px] font-semibold text-muted hover:text-[#221F1B] transition-colors py-1"
+                  className="text-[13px] font-semibold text-muted hover:text-charcoal transition-colors py-1"
                 >
                   Close
                 </button>
@@ -141,7 +141,7 @@ export default function FeedbackWidget() {
 
           {view === "form" && (
             <>
-              <b className="block text-[15px] font-extrabold text-[#221F1B] mb-1.5">
+              <b className="block text-[15px] font-extrabold text-charcoal mb-1.5">
                 Send feedback
               </b>
               <p className="text-[13px] text-muted mb-3.5">
@@ -154,7 +154,7 @@ export default function FeedbackWidget() {
                 placeholder="What's on your mind?"
                 rows={5}
                 maxLength={2000}
-                className="w-full resize-none rounded-[11px] border border-line bg-cream px-3.5 py-3 text-[13.5px] text-[#221F1B] placeholder:text-[#B7AE9C] focus:outline-none focus:border-success"
+                className="w-full resize-none rounded-[11px] border border-line bg-cream px-3.5 py-3 text-[13.5px] text-charcoal placeholder:text-[#B7AE9C] focus:outline-none focus:border-success"
               />
               {error && (
                 <p className="text-[12px] text-danger mt-2">
@@ -171,7 +171,7 @@ export default function FeedbackWidget() {
                 </button>
                 <button
                   onClick={close}
-                  className="rounded-[11px] border border-line bg-cream text-muted font-semibold text-[13.5px] px-4 py-2.5 hover:border-[#CFC8B8] transition-colors"
+                  className="rounded-[11px] border border-line bg-cream text-muted font-semibold text-[13.5px] px-4 py-2.5 hover:border-dash transition-colors"
                 >
                   Cancel
                 </button>
@@ -181,7 +181,7 @@ export default function FeedbackWidget() {
 
           {view === "sent" && (
             <>
-              <b className="block text-[16px] font-extrabold text-[#221F1B] mb-1.5">Thank you</b>
+              <b className="block text-[16px] font-extrabold text-charcoal mb-1.5">Thank you</b>
               <p className="text-[13.5px] text-muted leading-relaxed mb-5">
                 Your feedback has been received. We read every message and use it to decide
                 what to improve next.

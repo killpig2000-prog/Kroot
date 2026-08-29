@@ -8,17 +8,17 @@ const OPTIONS = [
 
 export default function LevelTest() {
   return (
-    <section className="relative bg-[#FFFFFF] border-t border-dashed border-dash py-[clamp(52px,8vw,88px)] px-6 overflow-hidden">
+    <section className="relative bg-cream border-t border-dashed border-dash py-[clamp(52px,8vw,88px)] px-6 overflow-hidden">
       <span aria-hidden="true" className="absolute left-[8%] bottom-[40px] font-black text-[#F0EBDD] text-[80px] -rotate-[8deg] select-none">
         가
       </span>
 
       <div className="text-center mb-1.5">
-        <span className="inline-block bg-cream border-[1.5px] border-dashed border-[#CFC8B8] rounded-full px-4 py-[5px] text-xs font-extrabold text-success-deep -rotate-1">
+        <span className="inline-block bg-cream border-[1.5px] border-dashed border-dash rounded-full px-4 py-[5px] text-xs font-extrabold text-success-deep -rotate-1">
           pop quiz · <span className="kr">쪽지시험</span>
         </span>
       </div>
-      <h2 className="text-center font-black text-[clamp(22px,3vw,30px)] tracking-[-0.02em] text-[#221F1B] mb-2 text-balance">
+      <h2 className="text-center font-black text-[clamp(22px,3vw,30px)] tracking-[-0.02em] text-charcoal mb-2 text-balance">
         Find your level in 3 minutes
       </h2>
       <p className="text-center text-muted text-[13.5px] max-w-[52ch] mx-auto mb-8">
@@ -33,7 +33,7 @@ export default function LevelTest() {
           style={{ backgroundImage: "repeating-linear-gradient(#fff 0 27px,#F2EEE4 27px 28px)" }}
         >
           <span aria-hidden="true" className="absolute -top-2 left-1/2 -translate-x-1/2 -rotate-2 w-[64px] h-[17px] border z-10" style={{ background: "rgba(253,230,138,.6)", borderColor: "rgba(217,180,90,.45)" }} />
-          <div className="flex justify-between items-baseline border-b-2 border-[#221F1B] pb-1.5 mb-3">
+          <div className="flex justify-between items-baseline border-b-2 border-charcoal pb-1.5 mb-3">
             <b className="text-[15px]">Level test · Q3</b>
             <span className="text-[11px] text-[#8A8478]">vocabulary</span>
           </div>
@@ -44,12 +44,12 @@ export default function LevelTest() {
             <span
               key={o.label}
               className={`block text-left text-[13px] rounded-[9px] px-3.5 py-2.5 mb-[7px] border-[1.5px] ${
-                o.on ? "border-success bg-success-bg font-bold" : "border-line bg-[#FFFFFF]"
+                o.on ? "border-success bg-success-bg font-bold" : "border-line bg-cream"
               }`}
             >
               <span
                 className={`inline-block w-[15px] h-[15px] rounded-full border-2 mr-2 align-[-2px] ${
-                  o.on ? "border-success bg-success" : "border-[#CFC8B8]"
+                  o.on ? "border-success bg-success" : "border-dash"
                 }`}
               />
               {o.label}

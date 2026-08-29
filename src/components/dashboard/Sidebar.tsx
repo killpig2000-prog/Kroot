@@ -30,7 +30,7 @@ function NavItem({
       href={href}
       className={`flex items-center gap-2 px-2.5 py-2 text-[13.5px] transition-colors ${
         on
-          ? "bg-cream border border-dashed border-[#CFC8B8] border-r-0 rounded-l-[10px] -mr-3.5 text-success-deep font-bold"
+          ? "bg-cream border border-dashed border-dash border-r-0 rounded-l-[10px] -mr-3.5 text-success-deep font-bold"
           : "rounded-[9px] text-charcoal font-medium hover:bg-cream hover:text-success-deep"
       }`}
     >

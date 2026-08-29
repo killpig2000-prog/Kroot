@@ -58,7 +58,7 @@ export default async function ReadingChapterSessionPage({
           {/* head */}
           <div className="flex items-center justify-between gap-4 mb-6 flex-wrap">
             <h1 className="font-bold text-[22px] tracking-[-0.02em] flex items-center">
-              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[#EFF6FF] text-sky-deep border border-sky-line items-center justify-center kr text-[15px] mr-[9px]">
+              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[var(--tint-sky)] text-sky-deep border border-sky-line items-center justify-center kr text-[15px] mr-[9px]">
                 읽
               </span>
               {passage?.title_en ?? "Story Grove"}

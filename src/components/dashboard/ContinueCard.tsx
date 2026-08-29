@@ -29,7 +29,7 @@ export default function ContinueCard({
     <Link
       href={target.href}
       onClick={() => track("continue_clicked", { skill: resume?.skill ?? "quest", resumed: !!resume })}
-      className={`group flex items-center gap-4 rounded-[16px] border-[1.5px] border-success bg-success-bg px-5 py-4 transition-all hover:-translate-y-0.5 hover:bg-[#DCFCE7] ${
+      className={`group flex items-center gap-4 rounded-[16px] border-[1.5px] border-success bg-success-bg px-5 py-4 transition-all hover:-translate-y-0.5 hover:bg-[var(--tint-green)] ${
         questFooter ? "rounded-b-none" : ""
       }`}
     >
@@ -41,7 +41,7 @@ export default function ContinueCard({
           {resume ? "Continue where you left off" : "Start today"}
         </small>
         <b className="block font-semibold text-[15.5px] truncate text-charcoal">{target.label}</b>
-        <span className="block text-[12.5px] text-[#4D7C5F] truncate">
+        <span className="block text-[12.5px] text-success-deep truncate">
           {target.detail}
           {ago ? ` · ${ago}` : ""}
         </span>

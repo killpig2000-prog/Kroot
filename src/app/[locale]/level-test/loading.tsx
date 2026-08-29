@@ -21,7 +21,7 @@ export default function Loading() {
               {Array.from({ length: 3 }).map((_, i) => (
                 <div key={i} className="flex items-center gap-3">
                   <div className="flex-none w-[130px] h-2.5 rounded-full bg-warm-4" />
-                  <div className="flex-1 h-2.5 rounded-full bg-[#F5F5F4] overflow-hidden">
+                  <div className="flex-1 h-2.5 rounded-full bg-[var(--tint-stone)] overflow-hidden">
                     <div className="h-full w-1/3 rounded-full bg-warm-3" />
                   </div>
                   <div className="flex-none w-10 h-2.5 rounded-full bg-warm-2" />

@@ -68,7 +68,7 @@ export default function Comments({
       </h2>
 
       {!available ? (
-        <div className="border border-[#CBD5E1] rounded-[14px] bg-[#F1F5F9] px-[18px] py-3.5">
+        <div className="border border-[var(--tint-slate-line)] rounded-[14px] bg-[var(--tint-slate)] px-[18px] py-3.5">
           <small className="text-[13px] text-muted">
             Comments open soon — run{" "}
             <code className="text-[12px]">supabase/migrations/0023_community_comments.sql</code> to
@@ -121,7 +121,7 @@ export default function Comments({
               rows={2}
               maxLength={1000}
               placeholder={`Reply as ${displayName}…`}
-              className="w-full rounded-[10px] border border-line bg-warm px-3.5 py-2.5 text-[13.5px] leading-[1.55] outline-none transition-colors resize-y focus:border-[#334155] focus:bg-cream"
+              className="w-full rounded-[10px] border border-line bg-warm px-3.5 py-2.5 text-[13.5px] leading-[1.55] outline-none transition-colors resize-y focus:border-[var(--tint-slate-line)] focus:bg-cream"
             />
             <div className="flex items-center mt-2">
               <span className="text-[11.5px] text-faint">{draft.length}/1000</span>

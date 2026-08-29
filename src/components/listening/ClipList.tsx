@@ -31,7 +31,7 @@ export default function ClipList({
       {/* resume banner */}
       {resumeTarget && (
         <button
-          className="w-full flex items-center gap-3 border-[1.5px] border-[#99F6E4] bg-[#F0FDFA] rounded-[13px] px-4 py-3 mb-3.5 text-left transition-all hover:-translate-y-0.5"
+          className="w-full flex items-center gap-3 border-[1.5px] border-[var(--tint-teal-line)] bg-[var(--tint-teal)] rounded-[13px] px-4 py-3 mb-3.5 text-left transition-all hover:-translate-y-0.5"
           onClick={() => onOpenClip(resumeTarget.id)}
         >
           <span className="text-[20px] flex-none">🎧</span>
@@ -63,9 +63,9 @@ export default function ClipList({
             <button
               key={d.id}
               onClick={() => onOpenClip(d.id)}
-              className={`w-full flex items-center gap-3 px-3.5 py-2.5 text-left transition-colors hover:bg-[#F0FDFA] ${
+              className={`w-full flex items-center gap-3 px-3.5 py-2.5 text-left transition-colors hover:bg-[var(--tint-teal)] ${
                 i > 0 ? "border-t border-line" : ""
-              } ${inProgress ? "bg-[#F0FDFA]" : ""}`}
+              } ${inProgress ? "bg-[var(--tint-teal)]" : ""}`}
             >
               <span
                 className={`flex-none w-7 h-7 rounded-full flex items-center justify-center text-[12.5px] font-bold tabular-nums ${

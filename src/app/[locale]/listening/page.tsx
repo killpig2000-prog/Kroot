@@ -71,7 +71,7 @@ export default async function ListeningPage({
           {/* head */}
           <div className="flex items-center justify-between gap-4 mb-[18px] flex-wrap">
             <h1 className="font-bold text-[22px] tracking-[-0.02em] flex items-center">
-              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[#F0FDFA] text-teal border border-[#99F6E4] items-center justify-center kr text-[15px] mr-[9px]">
+              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[var(--tint-teal)] text-teal border border-[var(--tint-teal-line)] items-center justify-center kr text-[15px] mr-[9px]">
                 듣
               </span>
               Listening
@@ -112,7 +112,7 @@ export default async function ListeningPage({
                 <Link
                   key={s.key}
                   href={href}
-                  className="border border-line rounded-[14px] bg-cream overflow-hidden text-left transition-all duration-150 hover:border-teal hover:bg-[#F0FDFA] hover:-translate-y-0.5 group"
+                  className="border border-line rounded-[14px] bg-cream overflow-hidden text-left transition-all duration-150 hover:border-teal hover:bg-[var(--tint-teal)] hover:-translate-y-0.5 group"
                 >
                   <div
                     className="relative aspect-[4/3] sm:aspect-[16/9] bg-warm"
@@ -150,7 +150,7 @@ export default async function ListeningPage({
                       className={`inline-block mt-2 sm:mt-3 max-w-full truncate text-[11px] sm:text-[11.5px] font-semibold rounded-full px-2 sm:px-2.5 py-[3px] border ${
                         done > 0 && done === count
                           ? "text-success bg-success-bg border-success-line"
-                          : "text-teal bg-[#F0FDFA] border-[#99F6E4]"
+                          : "text-teal bg-[var(--tint-teal)] border-[var(--tint-teal-line)]"
                       }`}
                     >
                       <span className="kr">{s.krLabel}</span> ·{" "}
@@ -163,7 +163,7 @@ export default async function ListeningPage({
                             : `${count} dialogue${count > 1 ? "s" : ""}`}
                     </span>
                     {next ? (
-                      <span className="mt-1.5 flex items-center gap-1.5 min-w-0 bg-[#F0FDFA] border border-[#99F6E4] rounded-[9px] px-2 py-1.5 text-[11px]">
+                      <span className="mt-1.5 flex items-center gap-1.5 min-w-0 bg-[var(--tint-teal)] border border-[var(--tint-teal-line)] rounded-[9px] px-2 py-1.5 text-[11px]">
                         <span
                           aria-hidden="true"
                           className="shrink-0 w-[18px] h-[18px] rounded-full bg-teal text-white flex items-center justify-center text-[8px] leading-none pl-px"

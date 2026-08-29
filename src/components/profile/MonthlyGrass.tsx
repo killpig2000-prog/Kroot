@@ -63,7 +63,7 @@ export default function MonthlyGrass({
           {headline.map((h) => (
             <span
               key={h.label}
-              className="text-[12px] font-semibold text-[#3F3F46] bg-warm border border-line rounded-full px-2.5 py-[3px] tabular-nums"
+              className="text-[12px] font-semibold text-charcoal bg-warm border border-line rounded-full px-2.5 py-[3px] tabular-nums"
             >
               {h.value} <span className="text-faint font-medium">{h.label}</span>
             </span>

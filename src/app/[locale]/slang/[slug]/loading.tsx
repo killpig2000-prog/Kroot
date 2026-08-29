@@ -5,7 +5,7 @@
 
 export default function SlangShareLoading() {
   return (
-    <div className="min-h-screen bg-[#FFF7FB] text-[#221F1B]">
+    <div className="min-h-screen bg-[var(--tint-pink)] text-charcoal">
       <div className="animate-pulse">
         <header className="mx-auto flex max-w-3xl items-center justify-between px-6 py-5">
           <div className="h-6 w-16 rounded-full bg-warm-3" />

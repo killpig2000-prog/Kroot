@@ -52,7 +52,7 @@ export default async function PricingPage() {
         </div>
 
         {plusActive && (
-          <div className="border border-amber-line bg-[#FFFBEB] rounded-[14px] px-5 py-4 mb-8 text-center">
+          <div className="border border-amber-line bg-[var(--tint-amber)] rounded-[14px] px-5 py-4 mb-8 text-center">
             <b className="font-semibold text-[14px]">🌟 You&apos;re a Plus member — thank you!</b>{" "}
             <span className="text-[13px] text-muted">
               Your exclusive outfits are waiting in the{" "}

@@ -62,7 +62,7 @@ export default function ScoreResult({
           <b className="block text-[11px] font-bold tracking-[.06em] text-faint mb-1">YOU SAID</b>
           <p className="kr text-[17px] font-medium">{heard}</p>
         </div>
-        <div className="bg-[#F0FDFA] border border-[#99F6E4] rounded-[10px] px-4 py-3">
+        <div className="bg-[var(--tint-teal)] border border-[var(--tint-teal-line)] rounded-[10px] px-4 py-3">
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">
               <b className="block text-[11px] font-bold tracking-[.06em] mb-1" style={{ color: TEAL }}>

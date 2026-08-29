@@ -84,7 +84,7 @@ export default function AnswerCapture({
               className={`absolute rounded-full text-[30px] flex items-center justify-center border-[3px] transition-all ${
                 isListening
                   ? "inset-[9px] bg-teal border-transparent text-white wave-on"
-                  : "inset-0 bg-[#F0FDFA] border-[#99F6E4] text-teal hover:scale-105 hover:bg-[#CCFBF1]"
+                  : "inset-0 bg-[var(--tint-teal)] border-[var(--tint-teal-line)] text-teal hover:scale-105 hover:bg-[var(--tint-teal-line)]"
               }`}
             >
               🎤

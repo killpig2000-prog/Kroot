@@ -19,19 +19,19 @@ export default function Nav() {
   }, [supabase]);
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-dashed border-dash bg-[#FFFFFF]/95 backdrop-blur-sm">
+    <nav className="sticky top-0 z-50 border-b border-dashed border-dash bg-cream/95 backdrop-blur-sm">
       <div className="max-w-[1160px] mx-auto flex items-center justify-between gap-4 px-[clamp(18px,5vw,56px)] py-3">
         <Link
           href="/"
-          className="flex items-center gap-[9px] font-extrabold text-[17px] tracking-[-0.01em] text-[#221F1B]"
+          className="flex items-center gap-[9px] font-extrabold text-[17px] tracking-[-0.01em] text-charcoal"
         >
           <BrandMark size={30} />
           Kroot
         </Link>
 
         <div className="hidden md:flex gap-7 text-[13px] font-semibold text-[#7A746A]">
-          <a href="#learn" className="hover:text-[#221F1B] transition-colors">Practice</a>
-          <a href="#grow" className="hover:text-[#221F1B] transition-colors">How it grows</a>
+          <a href="#learn" className="hover:text-charcoal transition-colors">Practice</a>
+          <a href="#grow" className="hover:text-charcoal transition-colors">How it grows</a>
         </div>
 
         {loggedIn ? (
@@ -45,7 +45,7 @@ export default function Nav() {
           <div className="flex items-center gap-2">
             <Link
               href="/auth/login"
-              className="inline-flex rounded-full border-[1.5px] border-line bg-cream px-[14px] sm:px-[16px] py-[7px] text-[12.5px] font-bold text-[#221F1B] hover:bg-warm transition-colors"
+              className="inline-flex rounded-full border-[1.5px] border-line bg-cream px-[14px] sm:px-[16px] py-[7px] text-[12.5px] font-bold text-charcoal hover:bg-warm transition-colors"
             >
               Log in
             </Link>

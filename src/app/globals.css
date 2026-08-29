@@ -144,6 +144,17 @@ html[data-mode="dark"] {
   --c-danger: #FF8A80;
   --c-danger-bg: #2A1917;
 
+  --tint-sky: #172A3D;    --tint-sky-line: #2B4F6B;
+  --tint-teal: #10302B;   --tint-teal-line: #1F5C52;
+  --tint-amber: #2F2712;
+  --tint-pink: #33202B;   --tint-pink-line: #5C2E45;
+  --tint-violet: #251E3A; --tint-violet-line: #4B3F7A;
+  --tint-indigo: #1F2140; --tint-indigo-line: #3F4680; --tint-indigo-ink: #A5B4FC;
+  --tint-slate: #1F2A33;  --tint-slate-line: #3B4A58;  --tint-slate-ink: #C5D0DB;
+  --tint-stone: #262A24;  --tint-stone-line: #3A3F38;
+  --tint-rose: #3A1F22;   --tint-rose-line: #6B3540;
+  --tint-green: #17301F;  --tint-green-line: #2E5B41;
+
   color-scheme: dark;
 }
 
@@ -172,6 +183,19 @@ html[data-mode="dark"] {
   --c-sky-deep: #2563EB;
   --c-danger: #DC2626;
   --c-danger-bg: #FEF2F2;
+  /* Category / status tints — the pastel card fills and their borders that
+     used to be hardcoded Tailwind-50 hexes. Flip with the theme so a
+     light text token never lands on a light card in dark mode. */
+  --tint-sky: #EFF6FF;    --tint-sky-line: #BAE6FD;
+  --tint-teal: #F0FDFA;   --tint-teal-line: #99F6E4;
+  --tint-amber: #FFFBEB;
+  --tint-pink: #FDF2F8;   --tint-pink-line: #FBCFE8;
+  --tint-violet: #F5F3FF; --tint-violet-line: #DDD6FE;
+  --tint-indigo: #EEF2FF; --tint-indigo-line: #C7D2FE; --tint-indigo-ink: #423AC5;
+  --tint-slate: #F1F5F9;  --tint-slate-line: #CBD5E1;  --tint-slate-ink: #334155;
+  --tint-stone: #F5F5F4;  --tint-stone-line: #E4E4E7;
+  --tint-rose: #FFF1F2;   --tint-rose-line: #FECDD3;
+  --tint-green: #DCFCE7;  --tint-green-line: #86EFAC;
 }
 
 @theme inline {

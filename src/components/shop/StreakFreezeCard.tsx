@@ -58,22 +58,22 @@ export default function StreakFreezeCard({
   }
 
   return (
-    <div className="max-w-[1040px] border border-[#BAE6FD] bg-[#F0F9FF] rounded-[14px] px-5 py-4 mb-5 flex items-center gap-4 flex-wrap">
-      <span className="flex-none w-12 h-12 rounded-[12px] bg-cream border border-[#BAE6FD] flex items-center justify-center text-[24px]">
+    <div className="max-w-[1040px] border border-[var(--tint-sky-line)] bg-[var(--tint-sky)] rounded-[14px] px-5 py-4 mb-5 flex items-center gap-4 flex-wrap">
+      <span className="flex-none w-12 h-12 rounded-[12px] bg-cream border border-[var(--tint-sky-line)] flex items-center justify-center text-[24px]">
         🧊
       </span>
       <div className="flex-1 min-w-[220px]">
-        <b className="font-semibold text-[14.5px] text-[#0369A1] flex items-center gap-2 flex-wrap">
+        <b className="font-semibold text-[14.5px] text-sky-deep flex items-center gap-2 flex-wrap">
           Streak freeze
-          <span className="text-[11px] font-bold text-[#0369A1] bg-cream border border-[#BAE6FD] rounded-full px-2 py-px">
+          <span className="text-[11px] font-bold text-sky-deep bg-cream border border-[var(--tint-sky-line)] rounded-full px-2 py-px">
             {count}/{FREEZE_MAX} held
           </span>
         </b>
-        <span className="text-[13px] text-[#0C4A6E]">
+        <span className="text-[13px] text-sky-deep">
           Miss a day and a freeze is spent for you — your{streakDays > 0 ? ` ${streakDays}-day` : ""} streak stays alive.
           {hasPlus ? " Stacks with your Plus shield." : ""}
         </span>
-        {msg && <span className="block text-[12.5px] mt-1 text-[#0369A1]">{msg}</span>}
+        {msg && <span className="block text-[12.5px] mt-1 text-sky-deep">{msg}</span>}
       </div>
       <button
         type="button"

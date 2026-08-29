@@ -55,7 +55,7 @@ export default function ResultStage({
               <span className="flex-none w-[72px] text-[13px] font-semibold">
                 {SKILL_LABELS[k].en}
               </span>
-              <span className="flex-1 h-2.5 rounded-full bg-[#F5F5F4] overflow-hidden">
+              <span className="flex-1 h-2.5 rounded-full bg-[var(--tint-stone)] overflow-hidden">
                 <span
                   className={`block h-full rounded-full ${scores[k] >= 60 ? "bg-success" : "bg-[#EF4444]"}`}
                   style={{ width: `${scores[k]}%` }}
@@ -68,14 +68,14 @@ export default function ResultStage({
       )}
 
       {(feedback.writing || feedback.speaking) && (
-        <div className="bg-warm border border-line rounded-[12px] px-4 py-3 text-[13px] text-[#3F3F46] grid gap-1.5 mb-4">
+        <div className="bg-warm border border-line rounded-[12px] px-4 py-3 text-[13px] text-charcoal grid gap-1.5 mb-4">
           {feedback.writing && <p>✏️ {feedback.writing}</p>}
           {feedback.speaking && <p>🎙 {feedback.speaking}</p>}
         </div>
       )}
 
       {!verdict?.passed && verdict && (
-        <div className="border border-amber-line bg-[#FFFBEB] rounded-[12px] px-4 py-3 text-[13.5px] mb-4">
+        <div className="border border-amber-line bg-[var(--tint-amber)] rounded-[12px] px-4 py-3 text-[13.5px] mb-4">
           Your weakest skill was <b>{SKILL_LABELS[verdict.weakest].en}</b>.{" "}
           <Link href={SKILL_LABELS[verdict.weakest].href} className="font-bold text-success hover:underline">
             Practice {SKILL_LABELS[verdict.weakest].en} →

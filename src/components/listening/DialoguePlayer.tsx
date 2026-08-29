@@ -125,7 +125,7 @@ export default function DialoguePlayer({
                     <span
                       className={`text-[11.5px] font-semibold mt-1.5 rounded-md px-2 py-0.5 border transition-colors ${
                         active
-                          ? "bg-[#F0FDFA] text-teal border-[#99F6E4]"
+                          ? "bg-[var(--tint-teal)] text-teal border-[var(--tint-teal-line)]"
                           : "bg-cream/90 text-muted border-line"
                       }`}
                     >
@@ -160,7 +160,7 @@ export default function DialoguePlayer({
               <button
                 className={`rounded-[9px] px-4 py-2 text-[13px] font-semibold border transition-colors ${
                   showCaption
-                    ? "bg-[#F0FDFA] text-teal border-[#99F6E4]"
+                    ? "bg-[var(--tint-teal)] text-teal border-[var(--tint-teal-line)]"
                     : "bg-cream text-muted border-line hover:border-faint"
                 }`}
                 onClick={() => setShowCaption((v) => !v)}
@@ -189,7 +189,7 @@ export default function DialoguePlayer({
               <div
                 key={i}
                 className={`px-[18px] py-3.5 border-b border-line last:border-b-0 transition-colors ${
-                  i === currentIndex ? "bg-[#F0FDFA]" : "bg-cream"
+                  i === currentIndex ? "bg-[var(--tint-teal)]" : "bg-cream"
                 }`}
               >
                 <div className="flex items-start justify-between gap-3">

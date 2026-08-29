@@ -101,7 +101,7 @@ export default async function MyWordsPage() {
           {/* head */}
           <div className="flex items-center justify-between gap-4 mb-5 flex-wrap">
             <h1 className="font-bold text-[22px] tracking-[-0.02em] flex items-center">
-              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[#EFF6FF] text-sky-deep border border-sky-line items-center justify-center text-[15px] mr-[9px]">
+              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[var(--tint-sky)] text-sky-deep border border-sky-line items-center justify-center text-[15px] mr-[9px]">
                 📚
               </span>
               My words
@@ -121,7 +121,7 @@ export default async function MyWordsPage() {
               <span
                 key={s.label}
                 className={`inline-flex items-baseline gap-1.5 rounded-full border px-3.5 py-1.5 text-[13px] ${
-                  s.accent ? "border-sky-line bg-[#EFF6FF] text-[#1D4ED8]" : "border-line bg-cream text-muted"
+                  s.accent ? "border-sky-line bg-[var(--tint-sky)] text-sky-deep" : "border-line bg-cream text-muted"
                 }`}
               >
                 <b className="font-bold text-[15px] text-charcoal">{s.value}</b> {s.label}
@@ -138,7 +138,7 @@ export default async function MyWordsPage() {
           </div>
 
           {migrationMissing ? (
-            <div className="max-w-[560px] border border-[#CBD5E1] rounded-[14px] bg-[#F1F5F9] p-[18px]">
+            <div className="max-w-[560px] border border-[var(--tint-slate-line)] rounded-[14px] bg-[var(--tint-slate)] p-[18px]">
               <b className="block font-semibold text-[14px] mb-1">My words opens soon</b>
               <small className="block text-[13px] text-muted leading-[1.55]">
                 Run the included migration{" "}
@@ -190,7 +190,7 @@ export default async function MyWordsPage() {
                               </span>
                               <span
                                 className={`flex-none text-[11.5px] font-semibold ${
-                                  due.due ? "text-[#1D4ED8]" : "text-faint"
+                                  due.due ? "text-sky-deep" : "text-faint"
                                 }`}
                               >
                                 {due.due ? "💧 " : ""}

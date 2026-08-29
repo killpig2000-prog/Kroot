@@ -15,7 +15,7 @@ export default function LandingPage() {
   useReveal();
 
   return (
-    <div className="min-h-screen bg-warm text-[#221F1B]">
+    <div className="min-h-screen bg-warm text-charcoal">
       <Nav />
       <Hero />
       <SpeechStrip />

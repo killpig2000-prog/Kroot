@@ -19,7 +19,7 @@ export function TranslatableText({
   return (
     <p
       className={`transition-all rounded ${
-        showTranslation ? "text-muted" : "text-transparent bg-[#F4F4F5] select-none"
+        showTranslation ? "text-muted" : "text-transparent bg-[var(--tint-stone)] select-none"
       } ${className}`}
     >
       {en || " "}
@@ -59,7 +59,7 @@ export default function ReadPhase({
 
   const header = (
     <div className="flex items-center justify-between gap-3 mb-4 flex-wrap">
-      <span className="text-[11.5px] font-semibold text-sky-deep bg-[#EFF6FF] border border-sky-line rounded-md px-2 py-0.5">
+      <span className="text-[11.5px] font-semibold text-sky-deep bg-[var(--tint-sky)] border border-sky-line rounded-md px-2 py-0.5">
         Chapter {chapterIndex + 1}
       </span>
       <button
@@ -95,7 +95,7 @@ export default function ReadPhase({
     return (
       <div className="max-w-[780px] border border-line rounded-[14px] p-[clamp(20px,3vw,28px)]">
         {header}
-        <div className="rounded-[10px] border border-line bg-[#F5F4F0] p-[clamp(16px,3vw,24px)] grid gap-4">
+        <div className="rounded-[10px] border border-line bg-[var(--tint-stone)] p-[clamp(16px,3vw,24px)] grid gap-4">
           {turns.map((t, i) => {
             const bubble = (
               <div className="flex flex-col flex-none max-w-[380px]" key="bubble">
@@ -140,7 +140,7 @@ export default function ReadPhase({
     return (
       <div className="max-w-[780px] border border-line rounded-[14px] p-[clamp(20px,3vw,28px)]">
         {header}
-        <div className="relative mx-auto max-w-[620px] -rotate-1 bg-[#FFFDF7] border-2 border-dashed border-line rounded-[8px] p-[clamp(22px,4vw,30px)] shadow-[0_2px_10px_rgba(24,20,10,.06)]">
+        <div className="relative mx-auto max-w-[620px] -rotate-1 bg-cream border-2 border-dashed border-line rounded-[8px] p-[clamp(22px,4vw,30px)] shadow-[0_2px_10px_rgba(24,20,10,.06)]">
           <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 text-xl drop-shadow-sm">📌</span>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-1">
             <div className="grid gap-2.5 sm:text-right">
@@ -168,7 +168,7 @@ export default function ReadPhase({
       <div className="max-w-[860px] border border-line rounded-[14px] p-[clamp(20px,3vw,28px)]">
         {header}
         <div className="rounded-[10px] border border-line overflow-hidden bg-cream">
-          <div className="flex items-center gap-2.5 px-5 py-3.5 bg-[#EFF6FF] border-b border-sky-line">
+          <div className="flex items-center gap-2.5 px-5 py-3.5 bg-[var(--tint-sky)] border-b border-sky-line">
             <span className="text-lg flex-none">✉️</span>
             <div className="min-w-0">
               <p className="text-[10.5px] font-semibold text-muted uppercase tracking-[.05em]">Subject</p>
@@ -229,9 +229,9 @@ export default function ReadPhase({
             <div className="p-[clamp(14px,2.5vw,20px)] grid gap-3">
               {turns.map((t, i) => (
                 <p key={i} className={`text-[13.5px] leading-[1.8] transition-all ${
-                  showTranslation ? (t.isHost ? "text-faint italic" : "text-muted") : "text-transparent bg-[#F4F4F5] select-none rounded"
+                  showTranslation ? (t.isHost ? "text-faint italic" : "text-muted") : "text-transparent bg-[var(--tint-stone)] select-none rounded"
                 }`}>
-                  <b className={`not-italic font-semibold ${showTranslation ? (t.isHost ? "text-faint" : "text-[#1D4ED8]") : ""}`}>{t.enSpeaker}: </b>
+                  <b className={`not-italic font-semibold ${showTranslation ? (t.isHost ? "text-faint" : "text-sky-deep") : ""}`}>{t.enSpeaker}: </b>
                   {t.enText}
                 </p>
               ))}
@@ -257,7 +257,7 @@ export default function ReadPhase({
             <div className="p-[clamp(14px,2.5vw,20px)] bg-cream sm:border-r border-b sm:border-b-0 border-line grid gap-3">
               {displayLines.map((line, i) => (
                 <div key={i} className="flex items-start gap-3">
-                  <span className="flex-none w-7 h-7 rounded-full bg-[#EFF6FF] border border-sky-line text-sky-deep text-[13px] font-bold flex items-center justify-center">
+                  <span className="flex-none w-7 h-7 rounded-full bg-[var(--tint-sky)] border border-sky-line text-sky-deep text-[13px] font-bold flex items-center justify-center">
                     {i + 1}
                   </span>
                   <p className="kr text-[15px] leading-[1.6] pt-0.5"><TapText text={line.kr.replace(/^\d+\.\s*/, "")} userId={userId} source="reading" /></p>
@@ -288,7 +288,7 @@ export default function ReadPhase({
     return (
       <div className="max-w-[860px] border border-line rounded-[14px] p-[clamp(20px,3vw,28px)]">
         {header}
-        <div className="relative rounded-[10px] border border-amber-line bg-[#FFFBEB] p-[clamp(18px,3.2vw,26px)]">
+        <div className="relative rounded-[10px] border border-amber-line bg-[var(--tint-amber)] p-[clamp(18px,3.2vw,26px)]">
           <span className="absolute -top-3 left-5 bg-cream border border-amber-line rounded-full px-2.5 py-1 text-[12.5px] font-semibold text-[#92702B]">
             ⭐ Review
           </span>

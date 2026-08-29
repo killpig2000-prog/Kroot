@@ -11,7 +11,7 @@ const FACE =
 export function VibeChip({ vibe }: { vibe: SlangEntry["vibe"] }) {
   const meta = VIBES.find((v) => v.key === vibe);
   return (
-    <span className="inline-block text-[11.5px] font-semibold text-[#C13E78] bg-[#FDF2F8] border border-[#FBCFE8] rounded-full px-2.5 py-[3px]">
+    <span className="inline-block text-[11.5px] font-semibold text-[#C13E78] bg-[var(--tint-pink)] border border-[var(--tint-pink-line)] rounded-full px-2.5 py-[3px]">
       {meta?.emoji} {meta?.label}
     </span>
   );
@@ -54,10 +54,10 @@ export default function SlangCard({
         style={{ transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)" }}
       >
         {/* front */}
-        <div className={`${FACE} border border-line bg-warm transition-colors hover:bg-[#FDF2F8]`}>
+        <div className={`${FACE} border border-line bg-warm transition-colors hover:bg-[var(--tint-pink)]`}>
           {collected && (
             <span
-              className="absolute top-2.5 right-2.5 w-6 h-6 rounded-full bg-[#FDF2F8] border border-[#FBCFE8] text-[#C13E78] text-[12px] font-bold flex items-center justify-center"
+              className="absolute top-2.5 right-2.5 w-6 h-6 rounded-full bg-[var(--tint-pink)] border border-[var(--tint-pink-line)] text-[#C13E78] text-[12px] font-bold flex items-center justify-center"
               title="Collected"
             >
               ✓
@@ -75,7 +75,7 @@ export default function SlangCard({
 
         {/* back */}
         <div
-          className={`${FACE} border border-[#FBCFE8] bg-[#FDF2F8] [transform:rotateY(180deg)] justify-start pt-4 pb-4 overflow-hidden`}
+          className={`${FACE} border border-[var(--tint-pink-line)] bg-[var(--tint-pink)] [transform:rotateY(180deg)] justify-start pt-4 pb-4 overflow-hidden`}
         >
           <div className="flex items-center gap-2 w-full justify-center">
             <b className="kr text-[19px] text-[#C13E78]">{entry.kr}</b>
@@ -87,7 +87,7 @@ export default function SlangCard({
           <b className="mt-1.5 font-bold text-[15px] tracking-[-0.01em] text-charcoal leading-snug">
             {entry.meaning}
           </b>
-          <div className="mt-2.5 w-full rounded-[10px] bg-cream border border-[#FBCFE8] px-3 py-2 text-left">
+          <div className="mt-2.5 w-full rounded-[10px] bg-cream border border-[var(--tint-pink-line)] px-3 py-2 text-left">
             <div className="flex items-start gap-1.5">
               <span className="kr text-[13px] text-charcoal leading-snug flex-1"><TapText text={entry.example.kr} source="slang" /></span>
               <SpeakButton text={entry.example.kr} className="shrink-0 w-6 h-6 text-[11px]" />

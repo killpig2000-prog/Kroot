@@ -32,12 +32,12 @@ export default function PostList({
               i > 0 ? "border-t border-line" : ""
             }`}
           >
-            <span className="text-[11.5px] font-semibold rounded-full border border-[#CBD5E1] bg-[#F1F5F9] text-[#334155] px-2.5 py-[3px] flex-none">
+            <span className="text-[11.5px] font-semibold rounded-full border border-[var(--tint-slate-line)] bg-[var(--tint-slate)] text-[var(--tint-slate-ink)] px-2.5 py-[3px] flex-none">
               {boardLabel(p.board)}
             </span>
             <b className="min-w-0 flex-1 font-semibold text-[14px] truncate">
               {title}
-              {count > 0 && <span className="ml-1.5 text-[12px] font-bold text-[#334155]">[{count}]</span>}
+              {count > 0 && <span className="ml-1.5 text-[12px] font-bold text-[var(--tint-slate-ink)]">[{count}]</span>}
             </b>
             <span
               className={`text-[12.5px] flex-none hidden sm:inline truncate max-w-[140px] ${

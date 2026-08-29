@@ -341,7 +341,7 @@ export default async function DashboardPage() {
           ];
 
     return (
-      <div className="min-h-screen bg-warm text-[#221F1B]">
+      <div className="min-h-screen bg-warm text-charcoal">
         <div className="grid grid-cols-1 md:grid-cols-[clamp(216px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
           <Sidebar
             displayName={displayName}
@@ -412,7 +412,7 @@ export default async function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-warm text-[#221F1B]">
+    <div className="min-h-screen bg-warm text-charcoal">
       <div className="grid grid-cols-1 md:grid-cols-[clamp(216px,18%,280px)_minmax(0,1fr)] xl:grid-cols-[clamp(216px,17%,280px)_minmax(0,1fr)_clamp(260px,22%,340px)] w-full min-h-screen">
         <Sidebar
           displayName={displayName}
@@ -428,7 +428,7 @@ export default async function DashboardPage() {
           <p className="text-muted text-sm mb-6">
             One lesson today keeps your tree growing.
             {weekendBoost && (
-              <span className="ml-2 inline-flex items-center gap-1 text-[12px] font-bold text-[#B45309] bg-[#FFFBEB] border border-amber-line rounded-full px-2.5 py-[3px] align-middle">
+              <span className="ml-2 inline-flex items-center gap-1 text-[12px] font-bold text-[#B45309] bg-[var(--tint-amber)] border border-amber-line rounded-full px-2.5 py-[3px] align-middle">
                 ⚡ Weekend boost — 1.5x XP all weekend
               </span>
             )}
@@ -460,16 +460,16 @@ export default async function DashboardPage() {
           {dueCount > 0 && (
             <Link
               href="/review"
-              className="flex flex-wrap sm:flex-nowrap items-center gap-x-3.5 gap-y-2 border border-sky-line bg-[#EFF6FF] rounded-[14px] px-5 py-4 mb-[30px] transition-all hover:-translate-y-0.5 group"
+              className="flex flex-wrap sm:flex-nowrap items-center gap-x-3.5 gap-y-2 border border-sky-line bg-[var(--tint-sky)] rounded-[14px] px-5 py-4 mb-[30px] transition-all hover:-translate-y-0.5 group"
             >
               <span className="flex-none w-10 h-10 rounded-[10px] bg-cream border border-sky-line flex items-center justify-center text-lg transition-transform group-hover:scale-110">
                 💧
               </span>
               <span className="flex-1 min-w-0">
-                <b className="block font-semibold text-sm text-[#1D4ED8]">
+                <b className="block font-semibold text-sm text-sky-deep">
                   {dueCount} {dueCount === 1 ? "word is" : "words are"} due for review
                 </b>
-                <span className="text-[13px] text-[#3B82F6]">
+                <span className="text-[13px] text-sky-deep">
                   Water them before they wilt — a quick review keeps them rooted.
                 </span>
               </span>
@@ -487,9 +487,9 @@ export default async function DashboardPage() {
               Below sm the CTA drops under the text so it never splits in two. */}
           <Link
             href="/slang"
-            className="xl:hidden flex flex-wrap sm:flex-nowrap items-center gap-x-3.5 gap-y-2 border border-[#FBCFE8] bg-[#FDF2F8] rounded-[14px] px-5 py-4 mb-[30px] transition-all hover:-translate-y-0.5 group"
+            className="xl:hidden flex flex-wrap sm:flex-nowrap items-center gap-x-3.5 gap-y-2 border border-[var(--tint-pink-line)] bg-[var(--tint-pink)] rounded-[14px] px-5 py-4 mb-[30px] transition-all hover:-translate-y-0.5 group"
           >
-            <span className="flex-none w-10 h-10 rounded-[10px] bg-cream border border-[#FBCFE8] flex items-center justify-center text-lg transition-transform group-hover:scale-110">
+            <span className="flex-none w-10 h-10 rounded-[10px] bg-cream border border-[var(--tint-pink-line)] flex items-center justify-center text-lg transition-transform group-hover:scale-110">
               💬
             </span>
             <span className="flex-1 min-w-0">
@@ -519,7 +519,7 @@ export default async function DashboardPage() {
             </span>
             <span className="flex-1 min-w-0">
               <b className="block font-semibold text-sm text-success-deep">Completely new to Korean?</b>
-              <span className="text-[13px] text-[#4D7C5F]">
+              <span className="text-[13px] text-success-deep">
                 Learn the alphabet first — 40 letters, one hour, free forever.
               </span>
             </span>
@@ -538,7 +538,7 @@ export default async function DashboardPage() {
           {remindersOff && streakDays >= 3 && (
             <Link
               href="/profile#reminders"
-              className="flex flex-wrap sm:flex-nowrap items-center gap-x-3 gap-y-1.5 border border-dashed border-[#CFC8B8] rounded-[12px] bg-cream px-4 py-3 mb-[14px] text-[13px] text-muted hover:border-success transition-colors"
+              className="flex flex-wrap sm:flex-nowrap items-center gap-x-3 gap-y-1.5 border border-dashed border-dash rounded-[12px] bg-cream px-4 py-3 mb-[14px] text-[13px] text-muted hover:border-success transition-colors"
             >
               <span>⏰</span>
               <span className="flex-1 min-w-0">

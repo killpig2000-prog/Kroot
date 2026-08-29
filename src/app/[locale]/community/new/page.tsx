@@ -50,7 +50,7 @@ export default async function NewPostPage({
 
           <div className="flex items-center justify-between gap-4 mb-[18px] flex-wrap">
             <h1 className="font-bold text-[22px] tracking-[-0.02em] flex items-center">
-              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[#F1F5F9] text-[#334155] border border-[#CBD5E1] items-center justify-center kr text-[15px] mr-[9px]">
+              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[var(--tint-slate)] text-[var(--tint-slate-ink)] border border-[var(--tint-slate-line)] items-center justify-center kr text-[15px] mr-[9px]">
                 글
               </span>
               New post

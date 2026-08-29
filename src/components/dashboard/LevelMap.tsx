@@ -67,7 +67,7 @@ export default function LevelMap({
         <Link
           href="/level-test"
           className={`flex items-center gap-3 rounded-[12px] px-4 py-3 border transition-colors ${
-            eligible ? "border-success bg-success-bg hover:bg-[#DCFCE7]" : "border-line bg-warm hover:border-success"
+            eligible ? "border-success bg-success-bg hover:bg-[var(--tint-green)]" : "border-line bg-warm hover:border-success"
           }`}
         >
           <span className="text-[20px] flex-none">🎯</span>

@@ -90,7 +90,7 @@ export default function TreeGrowthPopup({
           <b className="block text-[13px] font-extrabold tracking-[.08em] uppercase text-success mb-1">
             {growth.promoted ? "Promotion!" : growth.grewTaller ? "Taller!" : "Your tree grew!"}
           </b>
-          <p className="text-[21px] font-extrabold text-[#221F1B] mb-4 tracking-tight">
+          <p className="text-[21px] font-extrabold text-charcoal mb-4 tracking-tight">
             {growth.promoted
               ? "A brand new tree! 🌳"
               : growth.grewTaller

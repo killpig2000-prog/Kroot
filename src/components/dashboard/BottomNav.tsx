@@ -46,7 +46,7 @@ function Tile({
       href={href}
       onClick={onNavigate}
       className={`relative flex flex-col items-center gap-1 rounded-[12px] border bg-cream px-1 py-2.5 text-center text-[11px] font-bold transition-colors ${
-        on ? "border-success text-success-deep" : "border-warm-3 text-charcoal hover:border-[#CFC8B8]"
+        on ? "border-success text-success-deep" : "border-warm-3 text-charcoal hover:border-dash"
       }`}
     >
       {popular && (
@@ -202,7 +202,7 @@ export default function BottomNav() {
             aria-label={sheet === "learn" ? "Learn" : "More"}
             className="sheet-up bg-warm border-t-[1.5px] border-dashed border-dash rounded-t-[22px] px-4 pt-2.5 pb-4 max-h-[70vh] overflow-y-auto"
           >
-            <div className="w-10 h-1 rounded-full bg-[#D8D0BF] mx-auto mb-1" aria-hidden="true" />
+            <div className="w-10 h-1 rounded-full bg-dash mx-auto mb-1" aria-hidden="true" />
 
             {sections.map((section) => (
               <div key={section.title}>

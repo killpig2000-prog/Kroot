@@ -17,7 +17,7 @@ export default function SpeechStrip() {
         <div className="flex gap-10 w-max animate-[scroll_30s_linear_infinite] whitespace-nowrap motion-reduce:animate-none">
           {track.map((p, i) => (
             <span key={i} className="text-[13.5px] text-[#8A8478] font-medium">
-              <span className="kr text-[#221F1B] text-[15px] mr-[7px]">{p.kr}</span>
+              <span className="kr text-charcoal text-[15px] mr-[7px]">{p.kr}</span>
               {p.en}
             </span>
           ))}

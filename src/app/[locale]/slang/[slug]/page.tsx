@@ -56,14 +56,14 @@ export default async function SlangSharePage({ params }: Props) {
   };
 
   return (
-    <div className="min-h-screen bg-[#FFF7FB] text-[#221F1B]">
+    <div className="min-h-screen bg-[var(--tint-pink)] text-charcoal">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
       <header className="mx-auto flex max-w-3xl items-center justify-between px-6 py-5">
-        <Link href="/" className="font-bold text-[#221F1B] text-xl">
+        <Link href="/" className="font-bold text-charcoal text-xl">
           Kroot
         </Link>
         <ShareCta
@@ -77,9 +77,9 @@ export default async function SlangSharePage({ params }: Props) {
       <main className="mx-auto max-w-3xl px-6 pb-16">
         <p className="mb-2 text-sm text-[#C13E78] font-semibold">Kroot · Street Talk 🇰🇷</p>
 
-        <article className="relative border border-[#FBCFE8] rounded-[22px] bg-cream p-8 sm:p-10 shadow-[0_14px_34px_-20px_rgba(219,39,119,.35)] text-center">
+        <article className="relative border border-[var(--tint-pink-line)] rounded-[22px] bg-cream p-8 sm:p-10 shadow-[0_14px_34px_-20px_rgba(219,39,119,.35)] text-center">
           {vibe && (
-            <span className="inline-block text-[12px] font-semibold text-[#C13E78] bg-[#FDF2F8] border border-[#FBCFE8] rounded-full px-3 py-1 mb-5">
+            <span className="inline-block text-[12px] font-semibold text-[#C13E78] bg-[var(--tint-pink)] border border-[var(--tint-pink-line)] rounded-full px-3 py-1 mb-5">
               {vibe.emoji} {vibe.label}
             </span>
           )}
@@ -89,7 +89,7 @@ export default async function SlangSharePage({ params }: Props) {
           </p>
           <p className="mt-5 text-2xl font-bold text-charcoal">{entry.meaning}</p>
 
-          <div className="mt-7 border border-[#FBCFE8] rounded-[14px] bg-[#FDF2F8] px-5 py-4 text-left">
+          <div className="mt-7 border border-[var(--tint-pink-line)] rounded-[14px] bg-[var(--tint-pink)] px-5 py-4 text-left">
             <p className="kr text-lg font-medium text-charcoal">{entry.example.kr}</p>
             <p className="mt-1 text-muted">{entry.example.en}</p>
           </div>
@@ -111,7 +111,7 @@ export default async function SlangSharePage({ params }: Props) {
               <li key={e.slug}>
                 <Link
                   href={`/slang/${e.slug}`}
-                  className="block rounded-2xl border border-[#F3E8EE] bg-cream px-4 py-3 shadow-[0_3px_10px_-6px_rgba(219,39,119,.25)] hover:-translate-y-0.5 hover:border-[#FBCFE8] transition"
+                  className="block rounded-2xl border border-line bg-cream px-4 py-3 shadow-[0_3px_10px_-6px_rgba(219,39,119,.25)] hover:-translate-y-0.5 hover:border-[var(--tint-pink-line)] transition"
                 >
                   <span className="kr font-bold">{e.kr}</span>{" "}
                   <span className="text-sm text-muted">
@@ -123,7 +123,7 @@ export default async function SlangSharePage({ params }: Props) {
           </ul>
         </section>
 
-        <section className="mt-12 rounded-[24px] bg-[#FDF2F8] border border-[#FBCFE8] p-8 text-center">
+        <section className="mt-12 rounded-[24px] bg-[var(--tint-pink)] border border-[var(--tint-pink-line)] p-8 text-center">
           <h2 className="text-2xl font-bold text-[#7C2A4B]">
             106 more slang words like {entry.kr}, free
           </h2>

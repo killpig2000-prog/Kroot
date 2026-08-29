@@ -83,7 +83,7 @@ export default async function ReviewPage() {
           {/* head */}
           <div className="flex items-center justify-between gap-4 mb-6 flex-wrap">
             <h1 className="font-bold text-[22px] tracking-[-0.02em] flex items-center">
-              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[#EFF6FF] text-sky-deep border border-sky-line items-center justify-center text-[15px] mr-[9px]">
+              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[var(--tint-sky)] text-sky-deep border border-sky-line items-center justify-center text-[15px] mr-[9px]">
                 💧
               </span>
               Practice
@@ -98,7 +98,7 @@ export default async function ReviewPage() {
           </div>
 
           {migrationMissing ? (
-            <div className="max-w-[560px] border border-[#CBD5E1] rounded-[14px] bg-[#F1F5F9] p-[18px]">
+            <div className="max-w-[560px] border border-[var(--tint-slate-line)] rounded-[14px] bg-[var(--tint-slate)] p-[18px]">
               <b className="block font-semibold text-[14px] mb-1">Practice opens soon</b>
               <small className="block text-[13px] text-muted leading-[1.55]">
                 Run the included migration{" "}

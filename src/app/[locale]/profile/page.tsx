@@ -85,7 +85,7 @@ export default async function ProfilePage() {
                 <b className="font-semibold text-base flex items-center gap-2">
                   <NameEditor userId={user.id} name={profile?.display_name ?? "Learner"} />
                   {plusActive && (
-                    <span className="text-[10.5px] font-bold tracking-[.04em] text-[#92400E] bg-[#FFFBEB] border border-amber-line rounded-md px-1.5 py-0.5">
+                    <span className="text-[10.5px] font-bold tracking-[.04em] text-[#92400E] bg-[var(--tint-amber)] border border-amber-line rounded-md px-1.5 py-0.5">
                       🌟 PLUS
                     </span>
                   )}
@@ -119,7 +119,7 @@ export default async function ProfilePage() {
                   🌰 {profile?.coins ?? 0} coins
                 </span>
                 {(extras?.streak_freezes ?? 0) > 0 && (
-                  <span className="text-[12.5px] font-semibold text-[#0369A1] bg-[#F0F9FF] border border-[#BAE6FD] rounded-full px-3 py-1">
+                  <span className="text-[12.5px] font-semibold text-sky-deep bg-[var(--tint-sky)] border border-[var(--tint-sky-line)] rounded-full px-3 py-1">
                     🧊 {extras?.streak_freezes} freeze{extras?.streak_freezes === 1 ? "" : "s"}
                   </span>
                 )}
@@ -134,7 +134,7 @@ export default async function ProfilePage() {
                 <ManageSubscriptionButton />
               </div>
             ) : (
-              <div className="border border-amber-line bg-[#FFFBEB] rounded-[14px] px-[22px] py-4 flex items-center gap-4 flex-wrap">
+              <div className="border border-amber-line bg-[var(--tint-amber)] rounded-[14px] px-[22px] py-4 flex items-center gap-4 flex-wrap">
                 <div className="flex-1 min-w-[220px]">
                   <b className="font-semibold text-[14.5px] block mb-0.5">🌟 Kroot Plus</b>
                   <span className="text-[13px] text-muted">

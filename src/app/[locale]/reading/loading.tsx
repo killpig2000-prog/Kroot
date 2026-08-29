@@ -24,7 +24,7 @@ export default function Loading() {
               ))}
             </div>
 
-            <div className="flex items-center gap-3.5 border-[1.5px] border-sky-line bg-[#EFF6FF] rounded-[14px] px-5 py-4 mb-6 max-w-[720px]">
+            <div className="flex items-center gap-3.5 border-[1.5px] border-sky-line bg-[var(--tint-sky)] rounded-[14px] px-5 py-4 mb-6 max-w-[720px]">
               <div className="w-10 h-10 rounded-[10px] bg-cream border border-sky-line flex-none" />
               <div className="flex-1 min-w-[170px]">
                 <div className="h-3.5 w-40 rounded-full bg-sky-line/60 mb-1.5" />
@@ -53,7 +53,7 @@ export default function Loading() {
                     <div className="px-3.5 pb-3.5 pt-2 border-t border-dashed border-line grid gap-6 py-4">
                       {Array.from({ length: 3 }).map((_, i) => (
                         <div key={i} className={`flex items-center gap-3 ${i % 2 ? "flex-row-reverse text-right" : ""}`}>
-                          <div className="w-11 h-11 rounded-full bg-[#EFF6FF] border border-sky-line flex-none" />
+                          <div className="w-11 h-11 rounded-full bg-[var(--tint-sky)] border border-sky-line flex-none" />
                           <div className={i % 2 ? "items-end flex flex-col gap-1.5" : "flex flex-col gap-1.5"}>
                             <div className="h-3 w-20 rounded-full bg-warm-2" />
                             <div className="h-2.5 w-32 rounded-full bg-warm-4" />

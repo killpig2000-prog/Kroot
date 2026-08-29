@@ -22,7 +22,7 @@ export default function Loading() {
             {/* head */}
             <div className="flex items-center justify-between gap-4 mb-6 flex-wrap">
               <div className="flex items-center gap-[9px]">
-                <div className="w-[30px] h-[30px] rounded-lg bg-[#EFF6FF] border border-sky-line" />
+                <div className="w-[30px] h-[30px] rounded-lg bg-[var(--tint-sky)] border border-sky-line" />
                 <div className="h-6 w-40 rounded-lg bg-warm-3" />
               </div>
               <div className="h-3.5 w-32 rounded-full bg-warm-2" />
@@ -32,7 +32,7 @@ export default function Loading() {
             <div className="max-w-[880px] border border-line rounded-[14px] p-[clamp(20px,3vw,28px)]">
               {/* header row: chapter pill + show-translation toggle */}
               <div className="flex items-center justify-between gap-3 mb-4">
-                <div className="h-5 w-24 rounded-md bg-[#EFF6FF] border border-sky-line" />
+                <div className="h-5 w-24 rounded-md bg-[var(--tint-sky)] border border-sky-line" />
                 <div className="h-3.5 w-28 rounded-full bg-warm-2" />
               </div>
 

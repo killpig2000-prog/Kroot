@@ -23,7 +23,7 @@ export default function Loading() {
             {/* head */}
             <div className="flex items-center justify-between gap-4 mb-6 flex-wrap">
               <div className="flex items-center gap-[9px]">
-                <div className="w-[30px] h-[30px] rounded-lg bg-[#F5F3FF] border border-[#DDD6FE]" />
+                <div className="w-[30px] h-[30px] rounded-lg bg-[var(--tint-violet)] border border-[var(--tint-violet-line)]" />
                 <div className="h-6 w-32 rounded-lg bg-warm-3" />
               </div>
               <div className="h-3.5 w-36 rounded-full bg-warm-2" />
@@ -48,7 +48,7 @@ export default function Loading() {
                 <div className="h-[46px] w-56 rounded-lg bg-warm-3 mx-auto mb-3" />
                 <div className="h-3 w-24 rounded-full bg-warm-4 mx-auto mb-6" />
 
-                <div className="h-[42px] w-[190px] rounded-[10px] bg-[#F5F3FF] border-[1.5px] border-dashed border-[#DDD6FE] mx-auto" />
+                <div className="h-[42px] w-[190px] rounded-[10px] bg-[var(--tint-violet)] border-[1.5px] border-dashed border-[var(--tint-violet-line)] mx-auto" />
               </div>
             </div>
           </div>

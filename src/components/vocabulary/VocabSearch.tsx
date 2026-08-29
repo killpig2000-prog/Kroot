@@ -139,7 +139,7 @@ export default function VocabSearch() {
                 <Link
                   key={`${r.level}:${r.kr}:${r.chapter}`}
                   href={`/vocabulary/daily-life/session?chapter=${r.chapter}&level=${r.level}`}
-                  className="flex items-center gap-3 px-4 py-2.5 border-t border-[#F5F1E8] first:border-t-0 hover:bg-success-bg transition-colors"
+                  className="flex items-center gap-3 px-4 py-2.5 border-t border-line first:border-t-0 hover:bg-success-bg transition-colors"
                   onClick={hide}
                 >
                   <span className="kr flex-none font-bold text-[15px] min-w-[72px]">{r.kr}</span>

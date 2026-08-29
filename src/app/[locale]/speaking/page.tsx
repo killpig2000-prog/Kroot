@@ -68,11 +68,11 @@ export default async function SpeakingPage({
           {/* head */}
           <div className="flex items-center justify-between gap-4 mb-[18px] flex-wrap">
             <h1 className="font-bold text-[22px] tracking-[-0.02em] flex items-center">
-              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[#F0FDFA] text-teal border border-[#99F6E4] items-center justify-center kr text-[15px] mr-[9px]">
+              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[var(--tint-teal)] text-teal border border-[var(--tint-teal-line)] items-center justify-center kr text-[15px] mr-[9px]">
                 발
               </span>
               Pronunciation
-              <span className="ml-2.5 text-[12.5px] font-semibold text-teal bg-[#F0FDFA] border border-[#99F6E4] rounded-full px-2.5 py-[2px] tracking-normal">
+              <span className="ml-2.5 text-[12.5px] font-semibold text-teal bg-[var(--tint-teal)] border border-[var(--tint-teal-line)] rounded-full px-2.5 py-[2px] tracking-normal">
                 Trail
               </span>
             </h1>

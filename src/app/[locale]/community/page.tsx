@@ -68,7 +68,7 @@ export default async function CommunityPage({
   const tab = (active: boolean) =>
     `rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold transition-all border ${
       active
-        ? "bg-[#334155] border-[#334155] text-white"
+        ? "bg-[#334155] border-[var(--tint-slate-line)] text-white"
         : "bg-cream border-line text-muted hover:border-faint"
     }`;
 
@@ -95,14 +95,14 @@ export default async function CommunityPage({
           {/* head */}
           <div className="flex items-center justify-between gap-4 mb-[18px] flex-wrap">
             <h1 className="font-bold text-[22px] tracking-[-0.02em] flex items-center">
-              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[#F1F5F9] text-[#334155] border border-[#CBD5E1] items-center justify-center kr text-[15px] mr-[9px]">
+              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[var(--tint-slate)] text-[var(--tint-slate-ink)] border border-[var(--tint-slate-line)] items-center justify-center kr text-[15px] mr-[9px]">
                 모
               </span>
               Community
             </h1>
             <Link
               href="/community/new"
-              className="rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold text-white bg-[#334155] border border-[#334155] transition-all hover:-translate-y-0.5"
+              className="rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold text-white bg-[#334155] border border-[var(--tint-slate-line)] transition-all hover:-translate-y-0.5"
             >
               ✍️ New post
             </Link>
@@ -125,7 +125,7 @@ export default async function CommunityPage({
           </div>
 
           {tableMissing && (
-            <div className="border border-[#CBD5E1] rounded-[14px] bg-[#F1F5F9] p-[18px] mb-5 max-w-[980px]">
+            <div className="border border-[var(--tint-slate-line)] rounded-[14px] bg-[var(--tint-slate)] p-[18px] mb-5 max-w-[980px]">
               <b className="block font-semibold text-[14px] mb-1">Community opens soon</b>
               <small className="block text-[13px] text-muted leading-[1.55]">
                 Run the included migration{" "}
@@ -149,11 +149,11 @@ export default async function CommunityPage({
               <Link
                 key={n.id}
                 href={`/community/${n.id}`}
-                className={`px-[18px] py-[11px] flex items-center gap-3 transition-colors hover:bg-[#DCFCE7] ${
+                className={`px-[18px] py-[11px] flex items-center gap-3 transition-colors hover:bg-[var(--tint-green)] ${
                   i > 0 ? "border-t border-success-line" : ""
                 }`}
               >
-                <span className="text-[11.5px] font-bold rounded-full border border-[#86EFAC] bg-cream text-success-deep px-2.5 py-[3px] flex-none">
+                <span className="text-[11.5px] font-bold rounded-full border border-[var(--tint-green-line)] bg-cream text-success-deep px-2.5 py-[3px] flex-none">
                   📌 Notice
                 </span>
                 <b className="min-w-0 flex-1 font-semibold text-[14px] truncate">

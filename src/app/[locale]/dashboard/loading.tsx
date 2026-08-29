@@ -30,7 +30,7 @@ export default function Loading() {
             <div className="h-[76px] rounded-[14px] bg-warm border border-dashed border-line mb-[30px]" />
 
             {/* quest strip (xl:hidden on real page) */}
-            <div className="xl:hidden border border-dashed border-[#CFC8B8] rounded-[12px] bg-cream px-5 py-4 flex items-center gap-3.5 mb-[30px]">
+            <div className="xl:hidden border border-dashed border-dash rounded-[12px] bg-cream px-5 py-4 flex items-center gap-3.5 mb-[30px]">
               <div className="w-10 h-10 rounded-[10px] bg-warm-2 flex-none" />
               <div className="flex-1 min-w-[170px]">
                 <div className="h-3.5 w-28 rounded-full bg-warm-2 mb-1.5" />
@@ -56,7 +56,7 @@ export default function Loading() {
 
               <div className="flex items-center gap-3 mb-4">
                 <div className="h-3 w-24 rounded-full bg-warm-2 flex-none" />
-                <div className="flex-1 h-2.5 rounded-full bg-[#F5F5F4]" />
+                <div className="flex-1 h-2.5 rounded-full bg-[var(--tint-stone)]" />
                 <div className="h-3 w-8 rounded-full bg-warm-2 flex-none" />
               </div>
 
@@ -66,7 +66,7 @@ export default function Loading() {
                     <div className="w-[30px] h-[30px] rounded-lg bg-warm-2 flex-none" />
                     <div className="flex-1 min-w-0">
                       <div className="h-3 w-20 rounded-full bg-warm-2 mb-1.5" />
-                      <div className="h-1.5 rounded-full bg-[#F5F5F4]" />
+                      <div className="h-1.5 rounded-full bg-[var(--tint-stone)]" />
                     </div>
                   </div>
                 ))}
@@ -108,7 +108,7 @@ export default function Loading() {
         {/* right rail (xl+) — quest / slang / word-of-day cards */}
         <div className="hidden xl:flex flex-col gap-4 px-5 pt-[26px] pb-[60px]">
           <div className="animate-pulse flex flex-col gap-4">
-            <div className="border border-dashed border-[#CFC8B8] rounded-[12px] bg-cream p-4">
+            <div className="border border-dashed border-dash rounded-[12px] bg-cream p-4">
               <div className="h-3.5 w-24 rounded-full bg-warm-2 mb-2" />
               <div className="h-3 w-36 rounded-full bg-warm-4" />
             </div>

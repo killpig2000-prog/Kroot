@@ -84,7 +84,7 @@ export default function FinishedCard({
       </div>
 
       {weakWords.length > 0 && (
-        <div className="text-left bg-[#FFFBEB] border border-amber-line rounded-[10px] px-4 py-3 mb-6">
+        <div className="text-left bg-[var(--tint-amber)] border border-amber-line rounded-[10px] px-4 py-3 mb-6">
           <b className="block text-[11px] font-bold tracking-[.06em] text-[#B45309] mb-2">
             TOOK A FEW TRIES
           </b>
@@ -103,7 +103,7 @@ export default function FinishedCard({
       )}
 
       {saveError && (
-        <p className="text-[12px] text-[#C63958] bg-[#FFF1F2] border border-[#FECDD3] rounded-[8px] px-3 py-2 mb-5">
+        <p className="text-[12px] text-[#C63958] bg-[var(--tint-rose)] border border-[var(--tint-rose-line)] rounded-[8px] px-3 py-2 mb-5">
           ⚠️ {saveError}
         </p>
       )}

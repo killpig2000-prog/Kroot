@@ -81,13 +81,13 @@ export default async function ShopPage() {
                 🌰 {isAdmin ? "∞" : coins} coins
               </span>
               {hasPlus ? (
-                <span className="text-[12.5px] font-semibold text-[#B7791F] bg-[#FFF8E6] border border-[#F3D98A] rounded-full px-3 py-1">
+                <span className="text-[12.5px] font-semibold text-[#B7791F] bg-[var(--tint-amber)] border border-amber-line rounded-full px-3 py-1">
                   🌟 Plus
                 </span>
               ) : (
                 <Link
                   href="/pricing"
-                  className="text-[12.5px] font-semibold text-[#B7791F] bg-[#FFF8E6] border border-[#F3D98A] rounded-full px-3 py-1 hover:border-[#B7791F] transition-colors"
+                  className="text-[12.5px] font-semibold text-[#B7791F] bg-[var(--tint-amber)] border border-amber-line rounded-full px-3 py-1 hover:border-[#B7791F] transition-colors"
                 >
                   🌟 Plus wardrobe →
                 </Link>

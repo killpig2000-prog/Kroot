@@ -164,7 +164,7 @@ export default async function GuidePage() {
           {/* head */}
           <div className="pb-5 mb-7 border-b border-line">
             <h1 className="font-bold text-[26px] tracking-[-0.025em] flex items-center mb-1 text-balance">
-              <span className="inline-flex w-8 h-8 rounded-[9px] bg-[#F0F9FF] text-sky-deep border border-sky-line items-center justify-center text-[16px] mr-2.5">
+              <span className="inline-flex w-8 h-8 rounded-[9px] bg-[var(--tint-sky)] text-sky-deep border border-sky-line items-center justify-center text-[16px] mr-2.5">
                 🧭
               </span>
               Guide
@@ -431,7 +431,7 @@ export default async function GuidePage() {
                 className="group flex flex-col rounded-2xl border border-line bg-cream px-[18px] pt-4 pb-3.5 shadow-[0_1px_2px_rgba(27,36,48,.04),0_8px_24px_-16px_rgba(27,36,48,.16)] transition-all hover:border-sky-deep hover:-translate-y-0.5"
               >
                 <span className="flex items-center gap-3 mb-2.5">
-                  <span className="flex-none w-9 h-9 rounded-[11px] bg-[#F0F9FF] border border-sky-line flex items-center justify-center text-[18px]">
+                  <span className="flex-none w-9 h-9 rounded-[11px] bg-[var(--tint-sky)] border border-sky-line flex items-center justify-center text-[18px]">
                     💧
                   </span>
                   <span>
@@ -468,7 +468,7 @@ export default async function GuidePage() {
                 className="group flex flex-col rounded-2xl border border-line bg-cream px-[18px] pt-4 pb-3.5 shadow-[0_1px_2px_rgba(27,36,48,.04),0_8px_24px_-16px_rgba(27,36,48,.16)] transition-all hover:border-[#6B33CC] hover:-translate-y-0.5"
               >
                 <span className="flex items-center gap-3 mb-2.5">
-                  <span className="flex-none w-9 h-9 rounded-[11px] bg-[#F5F3FF] border border-[#DDD6FE] flex items-center justify-center text-[18px]">
+                  <span className="flex-none w-9 h-9 rounded-[11px] bg-[var(--tint-violet)] border border-[var(--tint-violet-line)] flex items-center justify-center text-[18px]">
                     🎓
                   </span>
                   <span>

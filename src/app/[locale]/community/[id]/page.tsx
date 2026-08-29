@@ -62,7 +62,7 @@ export default async function CommunityPostPage({
 
             <article className="border border-success-line rounded-[14px] bg-cream max-w-[980px] px-[22px] py-5">
               <div className="flex items-center gap-2.5 mb-2 flex-wrap">
-                <span className="text-[11.5px] font-bold rounded-full border border-[#86EFAC] bg-success-bg text-success-deep px-2.5 py-[3px]">
+                <span className="text-[11.5px] font-bold rounded-full border border-[var(--tint-green-line)] bg-success-bg text-success-deep px-2.5 py-[3px]">
                   📌 Official notice
                 </span>
                 <span className="text-[12.5px] text-muted">🌱 Kroot team</span>
@@ -148,7 +148,7 @@ export default async function CommunityPostPage({
 
           <article className="border border-line rounded-[14px] bg-cream max-w-[980px] px-[22px] py-5">
             <div className="flex items-center gap-2.5 mb-2 flex-wrap">
-              <span className="text-[11.5px] font-semibold rounded-full border border-[#CBD5E1] bg-[#F1F5F9] text-[#334155] px-2.5 py-[3px]">
+              <span className="text-[11.5px] font-semibold rounded-full border border-[var(--tint-slate-line)] bg-[var(--tint-slate)] text-[var(--tint-slate-ink)] px-2.5 py-[3px]">
                 {boardLabel(post.board)}
               </span>
               <span

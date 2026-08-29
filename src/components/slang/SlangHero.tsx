@@ -8,7 +8,7 @@ import type { SlangEntry } from "@/lib/slang";
 // server and client agree on which word it is.
 export default function SlangHero({ entry }: { entry: SlangEntry }) {
   return (
-    <div className="border border-[#FBCFE8] rounded-[14px] bg-[#FDF2F8] p-[18px] md:p-6 mb-6 max-w-[980px] flex flex-col md:flex-row gap-5 md:items-center">
+    <div className="border border-[var(--tint-pink-line)] rounded-[14px] bg-[var(--tint-pink)] p-[18px] md:p-6 mb-6 max-w-[980px] flex flex-col md:flex-row gap-5 md:items-center">
       <div className="md:w-[220px] shrink-0">
         <span className="inline-block text-[11.5px] font-semibold uppercase tracking-[0.06em] text-[#C13E78] mb-2">
           Slang of the day
@@ -28,7 +28,7 @@ export default function SlangHero({ entry }: { entry: SlangEntry }) {
         {entry.origin && (
           <p className="text-[13px] text-muted mt-2 leading-[1.55]">{entry.origin}</p>
         )}
-        <div className="mt-3 rounded-[10px] bg-cream border border-[#FBCFE8] px-3.5 py-2.5">
+        <div className="mt-3 rounded-[10px] bg-cream border border-[var(--tint-pink-line)] px-3.5 py-2.5">
           <div className="flex items-start gap-2">
             <span className="kr text-[14px] flex-1">{entry.example.kr}</span>
             <SpeakButton text={entry.example.kr} className="shrink-0 w-7 h-7 text-[12px]" />

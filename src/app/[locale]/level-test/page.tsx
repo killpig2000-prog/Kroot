@@ -26,7 +26,7 @@ export default async function LevelTestPage() {
   const elig = spec ? await computeEligibility(supabase, user.id, grade) : null;
 
   const bar = (value: number, target: number) => (
-    <span className="flex-1 h-2.5 rounded-full bg-[#F5F5F4] overflow-hidden">
+    <span className="flex-1 h-2.5 rounded-full bg-[var(--tint-stone)] overflow-hidden">
       <span
         className={`block h-full rounded-full ${value >= target ? "bg-success" : "bg-[#F59E0B]"}`}
         style={{ width: `${Math.min(100, Math.round((value / target) * 100))}%` }}
@@ -98,7 +98,7 @@ export default async function LevelTestPage() {
               </div>
 
               {elig.cooldownUntil ? (
-                <div className="border border-amber-line bg-[#FFFBEB] rounded-[14px] px-5 py-4 text-[13.5px]">
+                <div className="border border-amber-line bg-[var(--tint-amber)] rounded-[14px] px-5 py-4 text-[13.5px]">
                   <b>Retake cooldown</b> — you can try again after{" "}
                   {new Date(elig.cooldownUntil).toLocaleString("en-US", {
                     month: "short",

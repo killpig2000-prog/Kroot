@@ -36,8 +36,8 @@ const STATUS_STYLE: Record<string, { badge: string; seed: string; icon: string }
     icon: "✅",
   },
   current: {
-    badge: "text-sky-deep bg-[#EFF6FF] border-sky-line",
-    seed: "bg-[#EFF6FF] text-sky-deep border-sky-line",
+    badge: "text-sky-deep bg-[var(--tint-sky)] border-sky-line",
+    seed: "bg-[var(--tint-sky)] text-sky-deep border-sky-line",
     icon: "📖",
   },
   locked: {
@@ -115,11 +115,11 @@ export default async function ReadingMapPage({
           {/* head */}
           <div className="flex items-center justify-between gap-4 mb-[18px] flex-wrap">
             <h1 className="font-bold text-[22px] tracking-[-0.02em] flex items-center">
-              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[#EFF6FF] text-sky-deep border border-sky-line items-center justify-center kr text-[15px] mr-[9px]">
+              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[var(--tint-sky)] text-sky-deep border border-sky-line items-center justify-center kr text-[15px] mr-[9px]">
                 읽
               </span>
               Reading
-              <span className="ml-2.5 text-[12.5px] font-semibold text-sky-deep bg-[#EFF6FF] border border-sky-line rounded-full px-2.5 py-[2px] tracking-normal">
+              <span className="ml-2.5 text-[12.5px] font-semibold text-sky-deep bg-[var(--tint-sky)] border border-sky-line rounded-full px-2.5 py-[2px] tracking-normal">
                 Story Grove
               </span>
             </h1>
@@ -146,16 +146,16 @@ export default async function ReadingMapPage({
           {continueChapter && (
             <Link
               href={`/reading/session?chapter=${continueIndex}&level=${level}`}
-              className="flex items-center gap-3.5 border-[1.5px] border-sky-line bg-[#EFF6FF] rounded-[14px] px-5 py-4 mb-6 max-w-[720px] transition-all hover:-translate-y-0.5 group"
+              className="flex items-center gap-3.5 border-[1.5px] border-sky-line bg-[var(--tint-sky)] rounded-[14px] px-5 py-4 mb-6 max-w-[720px] transition-all hover:-translate-y-0.5 group"
             >
               <span className="flex-none w-10 h-10 rounded-[10px] bg-cream border border-sky-line flex items-center justify-center text-lg transition-transform group-hover:scale-110">
                 📖
               </span>
               <span className="flex-1 min-w-[170px]">
-                <b className="block font-semibold text-sm text-[#1D4ED8]">
+                <b className="block font-semibold text-sm text-sky-deep">
                   Continue · Chapter {continueIndex + 1}
                 </b>
-                <span className="text-[13px] text-[#3B82F6] truncate block">{continueChapter.title_en}</span>
+                <span className="text-[13px] text-sky-deep truncate block">{continueChapter.title_en}</span>
               </span>
               <span className="text-[13px] font-semibold text-sky-deep transition-transform group-hover:translate-x-0.5">
                 Start →
@@ -211,7 +211,7 @@ export default async function ReadingMapPage({
                     <ChapterPathGroup
                       dividerEvery={DIVIDER_EVERY}
                       lineColorClassName="border-sky-line"
-                      hoverClassName="hover:bg-[#EFF6FF]"
+                      hoverClassName="hover:bg-[var(--tint-sky)]"
                       nodes={group.map(({ chapter, status, index: i }) => {
                         const passage = chapter[0];
                         const style = STATUS_STYLE[status];
