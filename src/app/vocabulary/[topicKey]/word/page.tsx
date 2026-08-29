@@ -3,7 +3,7 @@ import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import WordDetailCard from "@/components/vocabulary/WordDetailCard";
 import { createClient, getClaimsUser, getDashboardProfile } from "@/lib/supabase/server";
-import { VOCAB_TOPICS, getChaptersForTopic, getUnitTitle } from "@/lib/vocabulary";
+import { VOCAB_TOPICS, getChaptersForTopic, unitLabel } from "@/lib/vocabulary";
 import { findMoreExamples } from "@/lib/vocab-examples";
 import { isCefrLevel, type CefrLevel } from "@/lib/tree";
 
@@ -96,7 +96,7 @@ export default async function VocabWordPage({
             nextHref={nextHref}
             nextWord={nextWord}
             unitHref={unitHref}
-            unitLabel={getUnitTitle(level, chapterIndex)}
+            unitLabel={unitLabel(chapterIndex)}
           />
         </main>
       </div>

@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { LEVEL_ORDER, type CefrLevel } from "@/lib/tree";
 import { SITE_URL } from "@/lib/site";
 import { getWordsByLevel } from "@/lib/vocab-slugs";
-import { CHAPTER_SIZE, getUnitTitle } from "@/lib/vocabulary";
+import { CHAPTER_SIZE, unitLabel } from "@/lib/vocabulary";
 
 // Per-level word index — the crawlable listing that links every word page.
 
@@ -46,7 +46,6 @@ export default async function LevelIndexPage({ params }: Props) {
     index,
     first: index * CHAPTER_SIZE + 1,
     last: Math.min(words.length, (index + 1) * CHAPTER_SIZE),
-    title: getUnitTitle(level, index),
     words: words.slice(index * CHAPTER_SIZE, (index + 1) * CHAPTER_SIZE),
   }));
 
@@ -114,8 +113,7 @@ export default async function LevelIndexPage({ params }: Props) {
         {units.map((u) => (
           <section key={u.index} id={`unit-${u.index + 1}`} className="mt-8 scroll-mt-14">
             <h2 className="text-lg font-bold">
-              <span className="text-[var(--deep)]">Unit {u.index + 1}</span>
-              <span className="text-[var(--soft)] font-medium"> · {u.title}</span>
+              <span className="text-[var(--deep)]">{unitLabel(u.index)}</span>
               <span className="ml-2 text-xs font-medium text-[var(--soft)] tabular-nums">
                 words {u.first}–{u.last}
               </span>

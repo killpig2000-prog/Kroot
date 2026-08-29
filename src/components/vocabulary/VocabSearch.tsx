@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { getUnitTitle } from "@/lib/vocabulary";
+import { unitLabel } from "@/lib/vocabulary";
 import type { SearchEntry } from "@/lib/vocab-search-index";
 
 const MAX_RESULTS = 8;
@@ -145,7 +145,7 @@ export default function VocabSearch() {
                   <span className="kr flex-none font-bold text-[15px] min-w-[72px]">{r.kr}</span>
                   <span className="flex-1 min-w-0 text-[12.5px] text-muted truncate">{r.en}</span>
                   <span className="flex-none text-[11.5px] text-faint">
-                    {r.level} · {getUnitTitle(r.level, r.chapter)}
+                    {r.level} · {unitLabel(r.chapter)}
                   </span>
                 </Link>
               ))

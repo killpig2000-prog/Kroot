@@ -109,29 +109,11 @@ export function getWordsForTopic(topicKey: string, level?: CefrLevel): VocabWord
     .map((w) => ({ ...withExampleOverride(w), topic_key: topicKey, key: `${topicKey}:${w.level}:${w.korean}` }));
 }
 
-// Display metadata for each unit (= chapter) of the daily-life track, curated
-// to match the words that actually land in that slice. Falls back to "Unit N".
-// Each title covers a 10-word unit (two of the original 5-word slices merged).
-const UNIT_TITLES: Record<string, string[]> = {
-  A1: ["First words & people", "Around the house", "Everyday things & food", "At the table", "Home & family", "Body, time & place"],
-  A2: ["Plans & getting around", "Around town", "Places & activities", "Hobbies & routines", "Travel & shopping", "Health & work"],
-  B1: ["Life, people & feelings", "Mind, goals & effort", "Growth & helping", "Hope & inner strength", "Manners & choices", "Cause, order & reaction"],
-  B2: ["Getting along & character", "Teamwork & balance", "Skills & motivation", "Careers & workload", "Pressure & identity", "Fairness & conflict"],
-  C1: ["Critical thinking & argument", "Public discourse", "Reasoning & chance", "Beliefs & norms", "Society & power", "Rhetoric & isms"],
-  C2: ["Idioms of fate & effort", "Hard moments & wisdom", "Fortune & warnings", "Learning & resolve", "Empathy, pride & anxiety", "Despair, progress & the literary"],
-};
-
-export const UNIT_ICONS: { icon: string; bg: string }[] = [
-  { icon: "💬", bg: "#F0FDF4" },
-  { icon: "🧭", bg: "#EFF6FF" },
-  { icon: "🌿", bg: "#F5F3FF" },
-  { icon: "🎯", bg: "#FFFBEB" },
-  { icon: "📚", bg: "#FDF2F8" },
-  { icon: "⭐", bg: "#F0FDFA" },
-];
-
-export function getUnitTitle(level: CefrLevel, index: number): string {
-  return UNIT_TITLES[level]?.[index] ?? `Unit ${index + 1}`;
+// Units are plainly numbered ("Unit 7") — no curated titles. What a unit is
+// about is shown by its words, not a label. Five units make one chapter.
+export const CHAPTER_UNITS = 5;
+export function unitLabel(index: number): string {
+  return `Unit ${index + 1}`;
 }
 
 export const CHAPTER_SIZE = 10;
