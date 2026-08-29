@@ -4,7 +4,7 @@
 // This is the first middleware in the app. It's responsible for locale detection
 // and routing via next-intl's createMiddleware.
 
-import { createMiddleware } from 'next-intl/middleware';
+import createMiddleware from 'next-intl/middleware';
 import { routing } from './src/i18n/routing';
 
 export function proxy(request: any) {
