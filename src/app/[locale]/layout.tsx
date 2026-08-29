@@ -78,8 +78,6 @@ export default async function RootLayout({ children, params }: Props) {
   const messages = await getMessages();
 
   const cookieStore = await cookies();
-  // resolveMode ignores a stale dark cookie while dark mode is switched off,
-  // so a phone already stuck in dark comes back to light on its next load.
   const mode = resolveMode(cookieStore.get(MODE_COOKIE)?.value);
   const seasonEnabled = cookieStore.get(SEASON_COOKIE)?.value === "on"; // default off
   const season = seasonForDate(new Date());

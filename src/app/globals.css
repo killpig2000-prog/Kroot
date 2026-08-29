@@ -99,6 +99,54 @@
   --tree-g3: #FFF2F6;
 }
 
+/* Dark mode: a real token set, not an inverted light theme. Same garden
+   identity (leaf green, warm surfaces), redrawn for a dark ground so text
+   and buttons keep their actual intended colors instead of whatever an
+   invert filter happened to produce. */
+html[data-mode="dark"] {
+  --sky: #12201A;
+  --cream: #16241D;
+  --mint: #1B3327;
+  --leaf: #7FD9A0;
+  --deep: #9FE8BE;
+  --sun: #FFD66B;
+  --coral: #FF9E7D;
+  --blue: #BEE3F0;
+  --ink: #EAF2EC;
+  --soft: #93A69B;
+  --leaf-shadow: #4FA378;
+  --leaf-ink: #0E1F16;
+  --card-shadow: #0A140F;
+  --line-shadow: #0D1913;
+  --mint-shadow: #12261C;
+  --tree-g1: #1C3A2E;
+  --tree-g2: #223F31;
+  --tree-g3: #16241D;
+
+  --c-line: #2B3F35;
+  --c-muted: #9DB1A5;
+  --c-faint: #6E8478;
+  --c-charcoal: #F5F3EE;
+  --c-warm: #1A2B22;
+  --c-warm-2: #203829;
+  --c-warm-3: #253F2E;
+  --c-warm-4: #182A21;
+  --c-success: #6FE0A0;
+  --c-success-deep: #4FC085;
+  --c-success-bg: #16281E;
+  --c-success-line: #2E4A38;
+  --c-teal: #5EC9BE;
+  --c-amber-line: #5B4720;
+  --c-dash: #34473C;
+  --c-amber: #FBBF24;
+  --c-sky-line: #35485C;
+  --c-sky-deep: #7EB4FF;
+  --c-danger: #FF8A80;
+  --c-danger-bg: #2A1917;
+
+  color-scheme: dark;
+}
+
 /* Content-UI tokens: the neutral/status palette shared by feature screens
    (reading, writing, listening, vocab, pronunciation, shop, onboarding...).
    Distinct from the tree-theme vars above, which only skin the landing/tree
@@ -179,6 +227,9 @@ body {
   color: var(--ink);
   font-family: var(--font-body);
   line-height: 1.7;
+}
+html[data-mode="dark"] body {
+  background: var(--sky);
 }
 
 button {
@@ -550,26 +601,6 @@ html.js-reveal .reveal:not(.in) {
   .course-stroke { animation: none !important; stroke-dashoffset: 0 !important; }
 }
 
-/* Dark mode: a "smart invert" pass over the whole UI. The palette is
-   hardcoded per-component, so inverting + rotating hue keeps every accent
-   in its own family (greens stay green) while flipping lightness. Photos
-   and videos are re-inverted so they stay natural. */
-/* The filter lives on the root element on purpose: a filter on <body> would
-   turn body into the containing block for position:fixed descendants (the
-   mobile bottom nav would stick to the page bottom instead of the viewport).
-   The root element is spec-exempt from that containing-block rule. */
-html[data-mode="dark"] {
-  background: #FDFBF7; /* renders near-black once inverted */
-  filter: invert(0.94) hue-rotate(180deg);
-}
-html[data-mode="dark"] body {
-  background: #FDFBF7;
-}
-html[data-mode="dark"] img,
-html[data-mode="dark"] video {
-  filter: invert(1) hue-rotate(180deg);
-}
-
 /* Seasonal particle drift (SeasonalEffects) */
 .season-particle {
   animation-timing-function: linear;
@@ -585,24 +616,6 @@ html[data-mode="dark"] video {
 }
 @media (prefers-reduced-motion: reduce) {
   .season-particle { animation: none !important; display: none; }
-}
-
-/* Dark mode: counter-invert the seasonal layer (like img/video) so the
-   wash and particles keep their real colors over the dark surface. */
-html[data-mode="dark"] .season-layer {
-  filter: invert(1) hue-rotate(180deg);
-  opacity: 0.85;
-}
-html[data-mode="dark"] .season-layer.opacity-0 {
-  opacity: 0;
-}
-
-/* Dark mode: the invert filter flips white button text to black while
-   mid-luminance button backgrounds (brand green) stay colored. Setting the
-   source color near-black makes it render as white after inversion. */
-html[data-mode="dark"] .text-white,
-html[data-mode="dark"] .btn-leaf {
-  color: #101010;
 }
 
 /* --- promotion tree evolution (TreeEvolution.tsx) --- */

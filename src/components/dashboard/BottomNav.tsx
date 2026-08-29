@@ -46,8 +46,8 @@ function Tile({
     <Link
       href={href}
       onClick={onNavigate}
-      className={`relative flex flex-col items-center gap-1 rounded-[12px] border bg-white px-1 py-2.5 text-center text-[11px] font-bold transition-colors ${
-        on ? "border-success text-success-deep" : "border-warm-3 text-[#4A453D] hover:border-[#CFC8B8]"
+      className={`relative flex flex-col items-center gap-1 rounded-[12px] border bg-cream px-1 py-2.5 text-center text-[11px] font-bold transition-colors ${
+        on ? "border-success text-success-deep" : "border-warm-3 text-charcoal hover:border-[#CFC8B8]"
       }`}
     >
       {popular && (
@@ -235,8 +235,8 @@ export default function BottomNav() {
               <div className="flex items-center gap-2.5 border border-[#ECD98A] bg-[#FEF9C3] px-[13px] py-[10px] mt-4 rotate-[-1deg] shadow-[0_8px_18px_-12px_rgba(120,100,30,.4)]">
                 <span className="text-lg">🔥</span>
                 <div>
-                  <b className="block text-[13px] font-semibold leading-tight">{streakDays}-day streak</b>
-                  <small className="text-[11.5px] text-muted">Keep it alive today!</small>
+                  <b className="block text-[13px] font-semibold leading-tight text-[#5C4A0E]">{streakDays}-day streak</b>
+                  <small className="text-[11.5px] text-[#8A7420]">Keep it alive today!</small>
                 </div>
               </div>
             )}
@@ -244,7 +244,7 @@ export default function BottomNav() {
         )}
 
         <nav
-          className="bg-white/90 backdrop-blur-[10px] border-t border-line grid grid-cols-4 pt-1 pb-[max(4px,env(safe-area-inset-bottom))]"
+          className="bg-cream/90 backdrop-blur-[10px] border-t border-line grid grid-cols-4 pt-1 pb-[max(4px,env(safe-area-inset-bottom))]"
           aria-label="main"
         >
           <Link

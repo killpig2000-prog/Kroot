@@ -30,8 +30,8 @@ function NavItem({
       href={href}
       className={`flex items-center gap-2 px-2.5 py-2 text-[13.5px] transition-colors ${
         on
-          ? "bg-white border border-dashed border-[#CFC8B8] border-r-0 rounded-l-[10px] -mr-3.5 text-success-deep font-bold"
-          : "rounded-[9px] text-[#4A453D] font-medium hover:bg-white hover:text-success-deep"
+          ? "bg-cream border border-dashed border-[#CFC8B8] border-r-0 rounded-l-[10px] -mr-3.5 text-success-deep font-bold"
+          : "rounded-[9px] text-charcoal font-medium hover:bg-cream hover:text-success-deep"
       }`}
     >
       {color ? (
@@ -89,7 +89,7 @@ type Props = {
 
 function Brand() {
   return (
-    <Link href="/dashboard" className="flex items-center gap-[9px] font-extrabold text-[17px] tracking-[-0.01em] text-[#221F1B]">
+    <Link href="/dashboard" className="flex items-center gap-[9px] font-extrabold text-[17px] tracking-[-0.01em] text-charcoal">
       <BrandMark size={30} />
       Kroot
     </Link>
@@ -117,7 +117,7 @@ function SidebarBody({
             type="button"
             onClick={onClose}
             aria-label="Close menu"
-            className="ml-auto -mr-1 w-8 h-8 rounded-lg text-lg text-muted hover:bg-white flex items-center justify-center"
+            className="ml-auto -mr-1 w-8 h-8 rounded-lg text-lg text-muted hover:bg-cream flex items-center justify-center"
           >
             ×
           </button>
@@ -145,8 +145,8 @@ function SidebarBody({
         <div className="flex items-center gap-2.5 border border-[#ECD98A] bg-[#FEF9C3] px-[13px] py-[11px] mb-1.5 rotate-[-1deg] shadow-[0_8px_18px_-12px_rgba(120,100,30,.4)]">
           <span className="text-lg">🔥</span>
           <div>
-            <b className="block text-[13.5px] font-semibold leading-tight">{streakDays}-day streak</b>
-            <small className="text-[11.5px] text-muted">
+            <b className="block text-[13.5px] font-semibold leading-tight text-[#5C4A0E]">{streakDays}-day streak</b>
+            <small className="text-[11.5px] text-[#8A7420]">
               {plus && streakFreezes > 0
                 ? `🛡️ Plus · 🧊 ${streakFreezes} freeze${streakFreezes === 1 ? "" : "s"}`
                 : plus
@@ -212,7 +212,7 @@ export default function Sidebar(props: Props) {
           onClick={() => setOpen(true)}
           aria-label="Open menu"
           aria-expanded={open}
-          className="w-10 h-10 rounded-[10px] flex flex-col items-center justify-center gap-[5px] hover:bg-white active:bg-white"
+          className="w-10 h-10 rounded-[10px] flex flex-col items-center justify-center gap-[5px] hover:bg-cream active:bg-cream"
         >
           <span className="block w-[18px] h-0.5 rounded-full bg-charcoal" />
           <span className="block w-[18px] h-0.5 rounded-full bg-charcoal" />
@@ -223,7 +223,7 @@ export default function Sidebar(props: Props) {
         <Link
           href="/profile"
           aria-label={`${props.streakDays}-day streak`}
-          className="flex items-center gap-1 h-8 px-2.5 rounded-full border border-[#ECD98A] bg-[#FEF9C3] text-[12.5px] font-bold tabular-nums"
+          className="flex items-center gap-1 h-8 px-2.5 rounded-full border border-[#ECD98A] bg-[#FEF9C3] text-[#5C4A0E] text-[12.5px] font-bold tabular-nums"
         >
           🔥 {props.streakDays}
         </Link>

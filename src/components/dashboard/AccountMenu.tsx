@@ -4,9 +4,10 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { SEASONS, applySeasonToDocument, seasonForDate } from "@/lib/seasons";
+import { applyModeToDocument, type ModeKey } from "@/lib/mode";
 
 // The sidebar account button: opens a small settings menu with profile,
-// the seasonal theme switch, and logout.
+// the dark-mode and seasonal theme switches, and logout.
 export default function AccountMenu({
   displayName,
   email,
@@ -22,6 +23,11 @@ export default function AccountMenu({
   const [seasonOn, setSeasonOn] = useState<boolean>(
     () => typeof document !== "undefined" && document.documentElement.hasAttribute("data-season"),
   );
+  const [mode, setMode] = useState<ModeKey>(
+    () => (typeof document !== "undefined" && document.documentElement.getAttribute("data-mode") === "dark"
+      ? "dark"
+      : "light"),
+  );
   const [leaving, setLeaving] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -33,6 +39,12 @@ export default function AccountMenu({
     document.addEventListener("mousedown", close);
     return () => document.removeEventListener("mousedown", close);
   }, [open]);
+
+  function toggleMode() {
+    const next: ModeKey = mode === "dark" ? "light" : "dark";
+    setMode(next);
+    applyModeToDocument(next);
+  }
 
   function toggleSeason() {
     const next = !seasonOn;
@@ -54,21 +66,37 @@ export default function AccountMenu({
   return (
     <div className="relative" ref={ref}>
       {open && (
-        <div className="absolute bottom-full left-0 right-0 mb-2 bg-white border border-line rounded-[14px] shadow-[0_8px_24px_rgba(0,0,0,.10)] p-2 z-50">
+        <div className="absolute bottom-full left-0 right-0 mb-2 bg-cream border border-line rounded-[14px] shadow-[0_8px_24px_rgba(0,0,0,.10)] p-2 z-50">
           <Link
             href="/profile"
             onClick={() => setOpen(false)}
-            className="flex items-center gap-2.5 rounded-[9px] px-3 py-2 text-[13px] font-medium text-[#3F3F46] hover:bg-warm"
+            className="flex items-center gap-2.5 rounded-[9px] px-3 py-2 text-[13px] font-medium text-charcoal hover:bg-warm"
           >
             👤 My account
           </Link>
 
-          {/* Dark-mode toggle removed while dark mode is off — see lib/mode.ts */}
-
+          <button
+            onClick={toggleMode}
+            className="w-full flex items-center justify-between rounded-[9px] px-3 py-2 text-[13px] font-medium text-charcoal hover:bg-warm"
+          >
+            <span>{mode === "dark" ? "🌙" : "☀️"} Dark mode</span>
+            <span
+              className={`w-9 h-5 rounded-full relative transition-colors ${
+                mode === "dark" ? "bg-success" : "bg-line"
+              }`}
+              aria-hidden="true"
+            >
+              <span
+                className={`absolute top-0.5 w-4 h-4 rounded-full bg-white shadow transition-all ${
+                  mode === "dark" ? "left-[18px]" : "left-0.5"
+                }`}
+              />
+            </span>
+          </button>
 
           <button
             onClick={toggleSeason}
-            className="w-full flex items-center justify-between rounded-[9px] px-3 py-2 text-[13px] font-medium text-[#3F3F46] hover:bg-warm"
+            className="w-full flex items-center justify-between rounded-[9px] px-3 py-2 text-[13px] font-medium text-charcoal hover:bg-warm"
           >
             <span>
               {SEASONS[seasonForDate(new Date())].emoji} Seasonal theme
@@ -87,7 +115,7 @@ export default function AccountMenu({
             </span>
           </button>
 
-          <div className="border-t border-[#F5F5F4] mt-1.5 pt-1.5">
+          <div className="border-t border-line mt-1.5 pt-1.5">
             <button
               onClick={logout}
               disabled={leaving}
