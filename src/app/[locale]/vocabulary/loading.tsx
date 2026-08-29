@@ -60,7 +60,7 @@ export default function Loading() {
             {/* unit groups */}
             <div className="grid gap-3 mb-7">
               {Array.from({ length: 3 }).map((_, gi) => (
-                <div key={gi} className="border border-line rounded-[14px] bg-white overflow-hidden">
+                <div key={gi} className="border border-line rounded-[14px] bg-cream overflow-hidden">
                   <div className="flex items-center gap-3 px-5 py-3.5">
                     <div className="h-3.5 w-24 rounded-full bg-warm-2 flex-1" />
                     <div className="w-[74px] h-1.5 rounded-full bg-warm-3 flex-none" />
@@ -71,7 +71,7 @@ export default function Loading() {
                       {Array.from({ length: 4 }).map((_, i) => (
                         <div
                           key={i}
-                          className="border border-line rounded-[12px] bg-white px-4 py-3 flex items-center gap-3.5"
+                          className="border border-line rounded-[12px] bg-cream px-4 py-3 flex items-center gap-3.5"
                         >
                           <div className="w-[40px] h-[40px] rounded-[11px] bg-warm-2 flex-none" />
                           <div className="flex-1 min-w-0">

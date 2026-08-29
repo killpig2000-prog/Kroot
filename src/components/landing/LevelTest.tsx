@@ -14,7 +14,7 @@ export default function LevelTest() {
       </span>
 
       <div className="text-center mb-1.5">
-        <span className="inline-block bg-white border-[1.5px] border-dashed border-[#CFC8B8] rounded-full px-4 py-[5px] text-xs font-extrabold text-success-deep -rotate-1">
+        <span className="inline-block bg-cream border-[1.5px] border-dashed border-[#CFC8B8] rounded-full px-4 py-[5px] text-xs font-extrabold text-success-deep -rotate-1">
           pop quiz · <span className="kr">쪽지시험</span>
         </span>
       </div>
@@ -29,7 +29,7 @@ export default function LevelTest() {
       <div className="relative max-w-[840px] mx-auto flex justify-center items-start gap-6 flex-wrap">
         {/* the quiz, on ruled paper */}
         <div
-          className="relative z-10 w-[min(410px,100%)] bg-white border border-line px-6 pt-6 pb-5 -rotate-1 shadow-[0_18px_36px_-18px_rgba(60,50,30,.35)]"
+          className="relative z-10 w-[min(410px,100%)] bg-cream border border-line px-6 pt-6 pb-5 -rotate-1 shadow-[0_18px_36px_-18px_rgba(60,50,30,.35)]"
           style={{ backgroundImage: "repeating-linear-gradient(#fff 0 27px,#F2EEE4 27px 28px)" }}
         >
           <span aria-hidden="true" className="absolute -top-2 left-1/2 -translate-x-1/2 -rotate-2 w-[64px] h-[17px] border z-10" style={{ background: "rgba(253,230,138,.6)", borderColor: "rgba(217,180,90,.45)" }} />

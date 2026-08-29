@@ -81,7 +81,7 @@ export default function Comments({
             <p className="text-[13px] text-faint mb-3">No comments yet — be the first.</p>
           )}
           {comments.length > 0 && (
-            <div className="border border-line rounded-[14px] bg-white overflow-hidden mb-3">
+            <div className="border border-line rounded-[14px] bg-cream overflow-hidden mb-3">
               {comments.map((c, i) => (
                 <div
                   key={c.id}
@@ -114,14 +114,14 @@ export default function Comments({
             </div>
           )}
 
-          <div className="border border-line rounded-[14px] bg-white p-3.5">
+          <div className="border border-line rounded-[14px] bg-cream p-3.5">
             <textarea
               value={draft}
               onChange={(e) => setDraft(e.target.value)}
               rows={2}
               maxLength={1000}
               placeholder={`Reply as ${displayName}…`}
-              className="w-full rounded-[10px] border border-line bg-warm px-3.5 py-2.5 text-[13.5px] leading-[1.55] outline-none transition-colors resize-y focus:border-[#334155] focus:bg-white"
+              className="w-full rounded-[10px] border border-line bg-warm px-3.5 py-2.5 text-[13.5px] leading-[1.55] outline-none transition-colors resize-y focus:border-[#334155] focus:bg-cream"
             />
             <div className="flex items-center mt-2">
               <span className="text-[11.5px] text-faint">{draft.length}/1000</span>

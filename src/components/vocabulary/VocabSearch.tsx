@@ -77,7 +77,7 @@ export default function VocabSearch() {
       <button
         type="button"
         onClick={show}
-        className="inline-flex items-center gap-1.5 rounded-full border border-line bg-white px-3 py-1 text-[12.5px] font-semibold text-muted hover:text-charcoal hover:border-faint transition-colors"
+        className="inline-flex items-center gap-1.5 rounded-full border border-line bg-cream px-3 py-1 text-[12.5px] font-semibold text-muted hover:text-charcoal hover:border-faint transition-colors"
         aria-haspopup="dialog"
         aria-expanded={open}
       >
@@ -101,7 +101,7 @@ export default function VocabSearch() {
             aria-modal="true"
             aria-label="Search vocabulary"
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-[560px] bg-white border border-line rounded-[14px] shadow-[0_24px_60px_-24px_rgba(60,50,30,.55)] overflow-hidden"
+            className="w-full max-w-[560px] bg-cream border border-line rounded-[14px] shadow-[0_24px_60px_-24px_rgba(60,50,30,.55)] overflow-hidden"
             style={{ animation: "fadeUp .18s ease" }}
           >
             <div className="flex items-center gap-2.5 px-4 py-3 border-b border-line">

@@ -61,7 +61,7 @@ export default function NameEditor({ userId, name }: { userId: string; name: str
             setValue(name);
           }
         }}
-        className="w-[160px] rounded-lg border-[1.5px] border-success-line bg-white px-2 py-0.5 text-sm font-semibold outline-none focus:border-success"
+        className="w-[160px] rounded-lg border-[1.5px] border-success-line bg-cream px-2 py-0.5 text-sm font-semibold outline-none focus:border-success"
       />
       <button
         type="button"

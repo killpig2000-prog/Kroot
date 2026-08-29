@@ -56,7 +56,7 @@ export default function Composer({
   }
 
   return (
-    <div className="border border-line rounded-[14px] bg-white p-[18px] max-w-[980px]">
+    <div className="border border-line rounded-[14px] bg-cream p-[18px] max-w-[980px]">
       <div className="flex items-center gap-2.5 mb-3">
         <span className="w-8 h-8 rounded-[9px] bg-warm border border-line flex items-center justify-center text-sm">
           🦊
@@ -70,7 +70,7 @@ export default function Composer({
           value={board}
           onChange={(e) => setBoard(e.target.value as BoardKey)}
           disabled={disabled}
-          className="rounded-[9px] border border-line bg-white px-3 py-2 text-[13.5px] font-semibold text-muted outline-none focus:border-[#334155] disabled:opacity-60"
+          className="rounded-[9px] border border-line bg-cream px-3 py-2 text-[13.5px] font-semibold text-muted outline-none focus:border-[#334155] disabled:opacity-60"
         >
           {BOARDS.map((b) => (
             <option key={b.key} value={b.key}>
@@ -84,7 +84,7 @@ export default function Composer({
           maxLength={100}
           disabled={disabled}
           placeholder="Title"
-          className="flex-1 min-w-[200px] rounded-[10px] border border-line bg-warm px-3.5 py-2.5 text-[14px] font-semibold outline-none transition-colors focus:border-[#334155] focus:bg-white disabled:opacity-60"
+          className="flex-1 min-w-[200px] rounded-[10px] border border-line bg-warm px-3.5 py-2.5 text-[14px] font-semibold outline-none transition-colors focus:border-[#334155] focus:bg-cream disabled:opacity-60"
         />
       </div>
 
@@ -95,7 +95,7 @@ export default function Composer({
         maxLength={2000}
         disabled={disabled}
         placeholder="Write your post…"
-        className="w-full rounded-[10px] border border-line bg-warm px-3.5 py-3 text-[14px] leading-[1.55] outline-none transition-colors resize-y focus:border-[#334155] focus:bg-white disabled:opacity-60"
+        className="w-full rounded-[10px] border border-line bg-warm px-3.5 py-3 text-[14px] leading-[1.55] outline-none transition-colors resize-y focus:border-[#334155] focus:bg-cream disabled:opacity-60"
       />
 
       <div className="flex items-center gap-2.5 mt-3 flex-wrap">

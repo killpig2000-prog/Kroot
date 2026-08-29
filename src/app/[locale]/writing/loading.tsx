@@ -33,7 +33,7 @@ export default function Loading() {
 
             <div className="h-16 rounded-[14px] bg-warm border border-dashed border-line max-w-[720px] mb-6" />
 
-            <div className="border border-line rounded-[14px] bg-white max-w-[720px] overflow-hidden">
+            <div className="border border-line rounded-[14px] bg-cream max-w-[720px] overflow-hidden">
               <div className="flex items-center gap-3 px-5 py-3.5">
                 <div className="flex-1">
                   <div className="h-3.5 w-24 rounded-full bg-warm-2 mb-1.5" />

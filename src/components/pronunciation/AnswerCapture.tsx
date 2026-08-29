@@ -44,7 +44,7 @@ export default function AnswerCapture({
         <div className="inline-flex items-center gap-2.5 text-[12.5px] font-semibold text-success bg-success-bg border border-success-line rounded-full pl-3 pr-1.5 py-1.5">
           ✓ You&apos;ve nailed this before
           <button
-            className="text-[11.5px] font-bold bg-white border border-success-line rounded-full px-2.5 py-1 hover:bg-success-bg transition-colors"
+            className="text-[11.5px] font-bold bg-cream border border-success-line rounded-full px-2.5 py-1 hover:bg-success-bg transition-colors"
             onClick={onSkip}
           >
             Skip →
@@ -126,7 +126,7 @@ export default function AnswerCapture({
             onChange={(e) => setTyped(e.target.value)}
             placeholder="한국어로 입력하세요…"
             rows={2}
-            className="kr w-full resize-none rounded-[10px] border border-line bg-white px-3.5 py-2.5 text-[16px] outline-none focus:border-teal transition-colors"
+            className="kr w-full resize-none rounded-[10px] border border-line bg-cream px-3.5 py-2.5 text-[16px] outline-none focus:border-teal transition-colors"
           />
           <div className="flex justify-end mt-2">
             <button className={BTN_TEAL} disabled={!typed.trim()} onClick={onCheck}>

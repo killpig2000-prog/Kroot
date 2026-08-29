@@ -16,7 +16,7 @@ export default function Growth() {
   return (
     <section id="grow" className="relative bg-[#FFFFFF] border-t border-dashed border-dash py-[clamp(52px,8vw,88px)] px-6 overflow-hidden">
       <div className="text-center mb-1.5">
-        <span className="inline-block bg-white border-[1.5px] border-dashed border-[#CFC8B8] rounded-full px-4 py-[5px] text-xs font-extrabold text-success-deep -rotate-1">
+        <span className="inline-block bg-cream border-[1.5px] border-dashed border-[#CFC8B8] rounded-full px-4 py-[5px] text-xs font-extrabold text-success-deep -rotate-1">
           growth album · <span className="kr">성장 앨범</span>
         </span>
       </div>
@@ -38,7 +38,7 @@ export default function Growth() {
           return (
             <figure
               key={lv}
-              className={`reveal relative m-0 bg-white border border-line p-[7px] pb-[26px] shadow-[0_14px_30px_-14px_rgba(60,50,30,.35)] ${c.tilt}`}
+              className={`reveal relative m-0 bg-cream border border-line p-[7px] pb-[26px] shadow-[0_14px_30px_-14px_rgba(60,50,30,.35)] ${c.tilt}`}
               style={{ width: c.w }}
             >
               <span aria-hidden="true" className="absolute -top-3.5 left-1/2 -translate-x-1/2 w-3 h-[22px] bg-[#B98A4D] rounded-[3px] z-10" />

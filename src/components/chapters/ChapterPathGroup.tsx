@@ -74,7 +74,7 @@ export default function ChapterPathGroup({
                 }`}
               >
                 <span
-                  className={`relative z-10 w-9 h-9 rounded-full flex-none flex items-center justify-center text-[12px] font-bold border-[2.5px] bg-white ${node.circleClassName} ${node.ringClassName ?? ""}`}
+                  className={`relative z-10 w-9 h-9 rounded-full flex-none flex items-center justify-center text-[12px] font-bold border-[2.5px] bg-cream ${node.circleClassName} ${node.ringClassName ?? ""}`}
                 >
                   {node.circleContent}
                 </span>
@@ -109,7 +109,7 @@ export default function ChapterPathGroup({
 
             const circle = (
               <span
-                className={`relative z-10 w-11 h-11 rounded-full flex-none flex items-center justify-center text-[13px] font-bold border-[3px] bg-white transition-transform group-hover:scale-105 ${node.circleClassName} ${node.ringClassName ?? ""}`}
+                className={`relative z-10 w-11 h-11 rounded-full flex-none flex items-center justify-center text-[13px] font-bold border-[3px] bg-cream transition-transform group-hover:scale-105 ${node.circleClassName} ${node.ringClassName ?? ""}`}
               >
                 {node.circleContent}
               </span>
@@ -141,7 +141,7 @@ export default function ChapterPathGroup({
 
             return (
               <div key={node.key}>
-                {dividerBefore(i) && <div className="relative z-10 bg-white -mx-2 px-2">{divider(i)}</div>}
+                {dividerBefore(i) && <div className="relative z-10 bg-cream -mx-2 px-2">{divider(i)}</div>}
                 {wrap(node, row)}
               </div>
             );

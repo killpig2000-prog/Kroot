@@ -52,7 +52,7 @@ export default function SlangBoard({ entries }: { entries: SlangEntry[] }) {
     `rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold transition-all border ${
       active
         ? "bg-[#C13E78] border-[#C13E78] text-white"
-        : "bg-white border-line text-muted hover:border-faint"
+        : "bg-cream border-line text-muted hover:border-faint"
     }`;
 
   return (

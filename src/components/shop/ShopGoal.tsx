@@ -107,7 +107,7 @@ export default function ShopGoal({
   return (
     <div className="px-4 sm:px-5 py-4 border-b border-line bg-warm">
       <div className="grid grid-cols-[auto_1fr] gap-3.5 items-center">
-        <span className="w-14 h-14 rounded-[10px] overflow-hidden flex-none border border-line bg-white" aria-hidden="true">
+        <span className="w-14 h-14 rounded-[10px] overflow-hidden flex-none border border-line bg-cream" aria-hidden="true">
           {preview}
         </span>
         <div className="min-w-0">
@@ -127,7 +127,7 @@ export default function ShopGoal({
       </div>
 
       <div
-        className="mt-3 h-2.5 rounded-full bg-white border border-line overflow-hidden"
+        className="mt-3 h-2.5 rounded-full bg-cream border border-line overflow-hidden"
         role="progressbar"
         aria-label={`Coins saved toward ${goal.name}`}
         aria-valuemin={0}

@@ -101,7 +101,7 @@ export default function Polaroid({
   return (
     <figure
       aria-hidden="true"
-      className={`m-0 bg-white border border-line p-[7px] pb-6 shadow-[0_14px_30px_-14px_rgba(60,50,30,.35)] ${className}`}
+      className={`m-0 bg-cream border border-line p-[7px] pb-6 shadow-[0_14px_30px_-14px_rgba(60,50,30,.35)] ${className}`}
       style={style}
     >
       <Tape color={tape} />

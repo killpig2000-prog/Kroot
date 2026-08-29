@@ -56,8 +56,8 @@ function QuestionCard({
                   : state === "wrong"
                   ? "border-danger bg-danger-bg"
                   : answered
-                  ? "border-line bg-white opacity-90"
-                  : "border-line bg-white hover:border-[#423AC5] hover:bg-[#EEF2FF]"
+                  ? "border-line bg-cream opacity-90"
+                  : "border-line bg-cream hover:border-[#423AC5] hover:bg-[#EEF2FF]"
               }`}
             >
               <span

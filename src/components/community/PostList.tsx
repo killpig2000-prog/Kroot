@@ -19,7 +19,7 @@ export default function PostList({
   }
 
   return (
-    <div className="border border-line rounded-[14px] bg-white max-w-[980px] overflow-hidden">
+    <div className="border border-line rounded-[14px] bg-cream max-w-[980px] overflow-hidden">
       {posts.map((p, i) => {
         const { title } = splitPost(p.content);
         const count = commentCounts[p.id] ?? 0;

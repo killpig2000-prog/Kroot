@@ -57,12 +57,12 @@ export default function Mcq({
           const isAnswer = opt === qq.answer;
           const cls =
             selected === null
-              ? "border-line bg-white hover:border-success"
+              ? "border-line bg-cream hover:border-success"
               : isAnswer
                 ? "border-success bg-success-bg font-bold"
                 : selected === opt
                   ? "border-[#EF4444] bg-danger-bg"
-                  : "border-line bg-white opacity-60";
+                  : "border-line bg-cream opacity-60";
           return (
             <button
               key={opt}

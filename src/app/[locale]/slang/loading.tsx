@@ -30,7 +30,7 @@ export default function Loading() {
                 <div className="h-3 w-28 rounded-full bg-warm-4 mb-3" />
                 <div className="h-3 w-full max-w-[380px] rounded-full bg-warm-2 mb-1.5" />
                 <div className="h-3 w-2/3 rounded-full bg-warm-2 mb-3" />
-                <div className="rounded-[10px] bg-white border border-line px-3.5 py-2.5">
+                <div className="rounded-[10px] bg-cream border border-line px-3.5 py-2.5">
                   <div className="h-3 w-3/4 rounded-full bg-warm-2 mb-1.5" />
                   <div className="h-2.5 w-1/2 rounded-full bg-warm-4" />
                 </div>
@@ -59,7 +59,7 @@ export default function Loading() {
             {/* vibe filter chips */}
             <div className="flex gap-2 mb-6 flex-wrap">
               {Array.from({ length: 5 }).map((_, i) => (
-                <div key={i} className="h-9 w-20 rounded-[9px] bg-white border border-line" />
+                <div key={i} className="h-9 w-20 rounded-[9px] bg-cream border border-line" />
               ))}
             </div>
 

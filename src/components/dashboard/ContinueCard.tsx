@@ -33,7 +33,7 @@ export default function ContinueCard({
         questFooter ? "rounded-b-none" : ""
       }`}
     >
-      <span className="flex-none w-12 h-12 rounded-[12px] bg-white border border-success-line flex items-center justify-center text-[22px] transition-transform group-hover:scale-110">
+      <span className="flex-none w-12 h-12 rounded-[12px] bg-cream border border-success-line flex items-center justify-center text-[22px] transition-transform group-hover:scale-110">
         {target.icon}
       </span>
       <span className="flex-1 min-w-0">
@@ -46,7 +46,7 @@ export default function ContinueCard({
           {ago ? ` · ${ago}` : ""}
         </span>
         {pct !== null && pct > 0 && (
-          <span className="mt-1.5 block h-[5px] max-w-[220px] rounded-full bg-white border border-success-line overflow-hidden">
+          <span className="mt-1.5 block h-[5px] max-w-[220px] rounded-full bg-cream border border-success-line overflow-hidden">
             <span className="block h-full rounded-full bg-success" style={{ width: `${pct}%` }} />
           </span>
         )}
@@ -58,7 +58,7 @@ export default function ContinueCard({
     {questFooter && (
       <Link
         href={questFooter.href}
-        className="flex items-center gap-2 rounded-b-[16px] border-[1.5px] border-t-0 border-success-line bg-white px-5 py-2 text-[12.5px] text-muted hover:bg-warm transition-colors"
+        className="flex items-center gap-2 rounded-b-[16px] border-[1.5px] border-t-0 border-success-line bg-cream px-5 py-2 text-[12.5px] text-muted hover:bg-warm transition-colors"
       >
         <span aria-hidden="true">🎯</span>
         <span className="flex-1 min-w-0 truncate">

@@ -6,7 +6,7 @@ export default function WritingFeedbackDemo() {
   return (
     <section className="bg-[#FFFFFF] border-t border-dashed border-dash py-[clamp(52px,8vw,88px)] px-6">
       <div className="text-center mb-1.5">
-        <span className="inline-block bg-white border-[1.5px] border-dashed border-[#CFC8B8] rounded-full px-4 py-[5px] text-xs font-extrabold text-amber rotate-1">
+        <span className="inline-block bg-cream border-[1.5px] border-dashed border-[#CFC8B8] rounded-full px-4 py-[5px] text-xs font-extrabold text-amber rotate-1">
           AI corrections · <span className="kr">첨삭</span>
         </span>
       </div>
@@ -20,7 +20,7 @@ export default function WritingFeedbackDemo() {
 
       <div className="flex justify-center items-start gap-4 flex-wrap max-w-[880px] mx-auto">
         {/* prompt card */}
-        <div className="w-[min(340px,100%)] bg-white border border-line rounded-[16px] p-5 shadow-[0_14px_30px_-16px_rgba(60,50,30,.3)] -rotate-1">
+        <div className="w-[min(340px,100%)] bg-cream border border-line rounded-[16px] p-5 shadow-[0_14px_30px_-16px_rgba(60,50,30,.3)] -rotate-1">
           <span className="inline-flex items-center gap-1.5 text-[11px] font-extrabold text-amber bg-[#FFFBEB] border border-amber-line rounded-full px-3 py-1 mb-4">
             ✍️ Writing · reply prompt
           </span>
@@ -50,7 +50,7 @@ export default function WritingFeedbackDemo() {
         <span aria-hidden="true" className="text-[26px] text-[#CFC8B8] rotate-90 sm:rotate-0 sm:mt-16">→</span>
 
         {/* result card */}
-        <div className="w-[min(340px,100%)] bg-white border border-success-line rounded-[16px] p-5 shadow-[0_14px_30px_-16px_rgba(60,50,30,.3)] rotate-1">
+        <div className="w-[min(340px,100%)] bg-cream border border-success-line rounded-[16px] p-5 shadow-[0_14px_30px_-16px_rgba(60,50,30,.3)] rotate-1">
           <p className="text-[11px] font-extrabold tracking-[.05em] uppercase text-faint mb-3 text-center">
             Result
           </p>

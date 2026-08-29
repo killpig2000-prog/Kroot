@@ -29,7 +29,7 @@ export default function PrivacyPage() {
         <h1 className="font-black text-[clamp(26px,4vw,34px)] tracking-[-0.02em] mb-2">Privacy Policy</h1>
         <p className="text-[13px] text-faint mb-8">Effective {EFFECTIVE_DATE}</p>
 
-        <div className="bg-white border border-line rounded-[14px] px-5 py-4 mb-2 text-[13.5px] text-muted leading-[1.65]">
+        <div className="bg-cream border border-line rounded-[14px] px-5 py-4 mb-2 text-[13.5px] text-muted leading-[1.65]">
           Kroot is a Korean-learning app built and run by a single independent
           developer, not a company. This page explains what data the app
           collects, why, and how you can get it deleted. If anything here is

@@ -60,7 +60,7 @@ export default function LevelTabs({
               role="tab"
               aria-selected={on}
               className={`flex-none inline-flex items-center gap-1.5 rounded-[9px] px-3.5 py-1.5 text-[13px] font-semibold border transition-colors ${
-                on ? accent : "bg-white border-line text-muted hover:border-faint"
+                on ? accent : "bg-cream border-line text-muted hover:border-faint"
               }`}
             >
               {lv}

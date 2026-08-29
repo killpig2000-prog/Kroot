@@ -127,7 +127,7 @@ export default function ReviewSession({
             {navigating ? "Saving…" : "Back to my garden"}
           </button>
           <button
-            className="rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-charcoal bg-white border border-line hover:bg-warm transition-colors disabled:opacity-60"
+            className="rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-charcoal bg-cream border border-line hover:bg-warm transition-colors disabled:opacity-60"
             onClick={() => goTo("/review")}
             disabled={navigating}
           >
@@ -200,8 +200,8 @@ export default function ReviewSession({
                   : state === "wrong"
                   ? "border-danger bg-danger-bg"
                   : show
-                  ? "border-line bg-white opacity-90"
-                  : "border-line bg-white hover:border-success hover:bg-success-bg"
+                  ? "border-line bg-cream opacity-90"
+                  : "border-line bg-cream hover:border-success hover:bg-success-bg"
               }`}
             >
               {opt}

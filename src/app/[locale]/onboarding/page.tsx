@@ -43,16 +43,16 @@ const NATIVE_LANGUAGES = [
   "Other",
 ];
 
-const CARD = "border border-line rounded-[14px] bg-white p-[clamp(22px,4vw,32px)]";
+const CARD = "border border-line rounded-[14px] bg-cream p-[clamp(22px,4vw,32px)]";
 const FIELD =
-  "w-full px-3.5 py-[11px] text-[14px] border border-line rounded-[9px] bg-white text-charcoal placeholder:text-faint focus:outline-none focus:border-success transition-colors";
+  "w-full px-3.5 py-[11px] text-[14px] border border-line rounded-[9px] bg-cream text-charcoal placeholder:text-faint focus:outline-none focus:border-success transition-colors";
 const LABEL = "block text-[12.5px] font-semibold mb-[6px] text-charcoal";
 const BTN_DARK =
   "inline-flex items-center justify-center rounded-[9px] bg-charcoal px-[18px] py-[9px] text-[13.5px] font-semibold text-white hover:bg-[#3F3F46] transition-colors";
 const BTN_GREEN =
   "inline-flex items-center justify-center rounded-[9px] bg-success px-[18px] py-[9px] text-[13.5px] font-semibold text-white hover:bg-success-deep transition-colors";
 const BTN_OUTLINE =
-  "inline-flex items-center justify-center rounded-[9px] border border-line bg-white px-[18px] py-[9px] text-[13.5px] font-semibold text-charcoal hover:bg-warm transition-colors";
+  "inline-flex items-center justify-center rounded-[9px] border border-line bg-cream px-[18px] py-[9px] text-[13.5px] font-semibold text-charcoal hover:bg-warm transition-colors";
 
 function speak(text: string) {
   speakKorean(text, { rate: 0.9 });
@@ -259,7 +259,7 @@ export default function OnboardingPage() {
   const q = test[qi];
 
   return (
-    <div className="min-h-screen flex flex-col bg-white text-charcoal">
+    <div className="min-h-screen flex flex-col bg-cream text-charcoal">
       <header className="border-b border-line">
         <div className="max-w-[1160px] mx-auto flex items-center justify-between gap-4 px-[clamp(18px,5vw,44px)] py-3">
           <Link
@@ -278,7 +278,7 @@ export default function OnboardingPage() {
                   className={`rounded-md px-2 py-[3px] text-[11.5px] font-semibold border transition-colors ${
                     on
                       ? "bg-success-bg border-success-line text-success"
-                      : "bg-white border-line text-faint"
+                      : "bg-cream border-line text-faint"
                   }`}
                 >
                   {d.label}
@@ -419,7 +419,7 @@ export default function OnboardingPage() {
                 <div className="grid gap-2.5">
                   <button
                     onClick={startQuiz}
-                    className="text-left border border-line rounded-[14px] bg-white px-[18px] py-4 transition-all duration-150 hover:border-success hover:bg-success-bg"
+                    className="text-left border border-line rounded-[14px] bg-cream px-[18px] py-4 transition-all duration-150 hover:border-success hover:bg-success-bg"
                   >
                     <span className="flex-none w-9 h-9 rounded-[9px] bg-success-bg border border-success-line flex items-center justify-center text-base mb-3">
                       🗺️
@@ -440,7 +440,7 @@ export default function OnboardingPage() {
                   </button>
                   <button
                     onClick={skipToA1}
-                    className="text-left border border-line rounded-[14px] bg-white px-[18px] py-4 transition-all duration-150 hover:border-success hover:bg-success-bg"
+                    className="text-left border border-line rounded-[14px] bg-cream px-[18px] py-4 transition-all duration-150 hover:border-success hover:bg-success-bg"
                   >
                     <span className="flex-none w-9 h-9 rounded-[9px] bg-warm border border-line flex items-center justify-center text-base mb-3">
                       📖
@@ -503,7 +503,7 @@ export default function OnboardingPage() {
                       <button
                         key={opt}
                         onClick={() => answer(i)}
-                        className="text-left px-[14px] py-[11px] rounded-[9px] text-[13.5px] font-medium bg-white border border-line text-charcoal transition-colors hover:border-success hover:bg-success-bg"
+                        className="text-left px-[14px] py-[11px] rounded-[9px] text-[13.5px] font-medium bg-cream border border-line text-charcoal transition-colors hover:border-success hover:bg-success-bg"
                       >
                         {opt}
                       </button>
@@ -549,7 +549,7 @@ export default function OnboardingPage() {
                       className={`rounded-[9px] px-3.5 py-1.5 text-[13px] font-semibold border ${
                         lv.code === result.code
                           ? "bg-success border-success text-white"
-                          : "bg-white border-line text-faint"
+                          : "bg-cream border-line text-faint"
                       }`}
                     >
                       {lv.code}

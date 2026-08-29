@@ -21,7 +21,7 @@ export type FirstVisitStep = {
 export function FirstVisitPlan({ steps }: { steps: FirstVisitStep[] }) {
   const first = steps.find((s) => s.href);
   return (
-    <div className="border-[1.5px] border-success rounded-[16px] bg-white px-[clamp(18px,3vw,26px)] py-5 mb-[30px] shadow-[0_14px_30px_-18px_rgba(60,50,30,.3)]">
+    <div className="border-[1.5px] border-success rounded-[16px] bg-cream px-[clamp(18px,3vw,26px)] py-5 mb-[30px] shadow-[0_14px_30px_-18px_rgba(60,50,30,.3)]">
       <div className="flex items-baseline justify-between gap-3 mb-3.5 flex-wrap">
         <b className="font-semibold text-[15.5px]">⏱️ Today · 5 minutes</b>
         <small className="text-[11.5px] font-bold tracking-[.06em] uppercase text-success-deep">Start here</small>
@@ -87,7 +87,7 @@ export function LockedWidgets({ unlocked }: { unlocked: FirstVisitUnlocks }) {
             {rows.map((r) => (
               <li
                 key={r.key}
-                className="flex items-center gap-3.5 border border-dashed border-line rounded-[14px] bg-white/60 px-5 py-3.5 opacity-70"
+                className="flex items-center gap-3.5 border border-dashed border-line rounded-[14px] bg-cream/60 px-5 py-3.5 opacity-70"
               >
                 <span
                   aria-hidden="true"

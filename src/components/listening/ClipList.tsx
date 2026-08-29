@@ -54,7 +54,7 @@ export default function ClipList({
 
       {/* clip rows — one compact line each; only the exceptions (done,
           in progress) carry a status, so twenty "Not started"s never repeat */}
-      <div className="border border-line rounded-[14px] bg-white overflow-hidden">
+      <div className="border border-line rounded-[14px] bg-cream overflow-hidden">
         {dialogues.map((d, i) => {
           const done = completed.has(d.id);
           const heard = heardMap[d.id] ?? 0;

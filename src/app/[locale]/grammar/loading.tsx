@@ -47,7 +47,7 @@ export default function GrammarLoading() {
                 {[0, 1, 2].map((i) => (
                   <div
                     key={i}
-                    className={`flex items-center gap-3.5 px-[18px] py-[15px] bg-white ${
+                    className={`flex items-center gap-3.5 px-[18px] py-[15px] bg-cream ${
                       i > 0 ? "border-t border-line" : ""
                     }`}
                   >
@@ -78,7 +78,7 @@ export default function GrammarLoading() {
               {[0, 1, 2, 3, 4, 5].map((i) => (
                 <div
                   key={i}
-                  className="rounded-[9px] px-[18px] py-2 h-[36px] w-[70px] border bg-white border-line"
+                  className="rounded-[9px] px-[18px] py-2 h-[36px] w-[70px] border bg-cream border-line"
                 />
               ))}
             </div>
@@ -87,7 +87,7 @@ export default function GrammarLoading() {
               {[0, 1, 2, 3, 4].map((i) => (
                 <div
                   key={i}
-                  className={`flex items-center gap-3.5 px-[18px] py-[15px] bg-white ${
+                  className={`flex items-center gap-3.5 px-[18px] py-[15px] bg-cream ${
                     i > 0 ? "border-t border-line" : ""
                   }`}
                 >

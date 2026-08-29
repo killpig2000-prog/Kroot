@@ -26,7 +26,7 @@ export default function Community() {
   return (
     <section id="community" className="bg-warm border-t border-dashed border-dash py-[clamp(52px,8vw,88px)] px-6">
       <div className="text-center mb-1.5">
-        <span className="inline-block bg-white border-[1.5px] border-dashed border-[#CFC8B8] rounded-full px-4 py-[5px] text-xs font-extrabold text-success-deep rotate-1">
+        <span className="inline-block bg-cream border-[1.5px] border-dashed border-[#CFC8B8] rounded-full px-4 py-[5px] text-xs font-extrabold text-success-deep rotate-1">
           from learners · <span className="kr">받은 엽서</span>
         </span>
       </div>
@@ -41,7 +41,7 @@ export default function Community() {
         {POSTS.map((p) => (
           <div
             key={p.from}
-            className={`reveal relative w-[250px] bg-white border border-line px-[17px] pt-4 pb-3.5 text-left shadow-[0_14px_30px_-16px_rgba(60,50,30,.35)] ${p.tilt}`}
+            className={`reveal relative w-[250px] bg-cream border border-line px-[17px] pt-4 pb-3.5 text-left shadow-[0_14px_30px_-16px_rgba(60,50,30,.35)] ${p.tilt}`}
           >
             <span aria-hidden="true" className="absolute top-2.5 right-[11px] w-[34px] h-[40px] border-2 border-dashed border-[#D3C9B4] grid place-items-center text-[15px] bg-[#FFFFFF]">
               {p.stamp}

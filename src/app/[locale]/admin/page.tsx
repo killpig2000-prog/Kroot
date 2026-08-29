@@ -261,7 +261,7 @@ async function loadStats() {
 
 function StatCard({ label, value, sub }: { label: string; value: string | number; sub?: string }) {
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5">
+    <div className="rounded-2xl border border-slate-200 bg-cream p-5">
       <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">{label}</p>
       <p className="mt-1 text-3xl font-bold text-slate-900">{value}</p>
       {sub && <p className="mt-1 text-xs text-slate-500">{sub}</p>}
@@ -306,7 +306,7 @@ export default async function AdminPage() {
         <StatCard label="Plus subscribers" value={stats.plusUsers} sub={`${stats.minutes7d} min studied · 7d`} />
       </section>
 
-      <section className="mt-8 rounded-2xl border border-slate-200 bg-white p-5">
+      <section className="mt-8 rounded-2xl border border-slate-200 bg-cream p-5">
         <h2 className="text-sm font-semibold text-slate-700">Signups · last 14 days</h2>
         <div className="mt-4 flex h-28 items-end gap-1.5">
           {stats.signupsByDay.map(([day, n]) => (
@@ -324,7 +324,7 @@ export default async function AdminPage() {
 
       <FunnelSection db={adminClient()} days={30} />
 
-      <section className="mt-8 rounded-2xl border border-slate-200 bg-white p-5">
+      <section className="mt-8 rounded-2xl border border-slate-200 bg-cream p-5">
         <h2 className="text-sm font-semibold text-slate-700">Feature usage</h2>
         <p className="mt-0.5 text-xs text-slate-400">
           Completed activities per skill (one row per finished lesson/session)
@@ -374,7 +374,7 @@ export default async function AdminPage() {
       </section>
 
       <div className="mt-8 grid gap-6 lg:grid-cols-[3fr_2fr]">
-        <section className="rounded-2xl border border-slate-200 bg-white p-5">
+        <section className="rounded-2xl border border-slate-200 bg-cream p-5">
           <h2 className="text-sm font-semibold text-slate-700">Who did what · 7d</h2>
           <p className="mt-0.5 text-xs text-slate-400">
             Per-user feature usage, most recently active first
@@ -421,7 +421,7 @@ export default async function AdminPage() {
           </div>
         </section>
 
-        <section className="rounded-2xl border border-slate-200 bg-white p-5">
+        <section className="rounded-2xl border border-slate-200 bg-cream p-5">
           <h2 className="text-sm font-semibold text-slate-700">Recent activity</h2>
           <p className="mt-0.5 text-xs text-slate-400">Latest completed activities (KST)</p>
           <ul className="mt-3 max-h-[440px] space-y-1 overflow-y-auto pr-1">
@@ -446,7 +446,7 @@ export default async function AdminPage() {
       </div>
 
       <div className="mt-8 grid gap-6 md:grid-cols-[2fr_1fr]">
-        <section className="rounded-2xl border border-slate-200 bg-white p-5">
+        <section className="rounded-2xl border border-slate-200 bg-cream p-5">
           <h2 className="text-sm font-semibold text-slate-700">Recent signups</h2>
           <table className="mt-3 w-full text-sm">
             <thead>
@@ -484,7 +484,7 @@ export default async function AdminPage() {
           </table>
         </section>
 
-        <section className="rounded-2xl border border-slate-200 bg-white p-5">
+        <section className="rounded-2xl border border-slate-200 bg-cream p-5">
           <h2 className="text-sm font-semibold text-slate-700">Users by level</h2>
           <ul className="mt-3 space-y-2">
             {stats.byLevel.map(({ level, count }) => (

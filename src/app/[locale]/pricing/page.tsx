@@ -84,7 +84,7 @@ export default async function PricingPage() {
             <div className="mt-auto">
               <Link
                 href="/onboarding"
-                className="w-full inline-flex items-center justify-center rounded-[10px] border border-line bg-white px-[22px] py-[11px] text-[14px] font-semibold hover:bg-warm transition-colors"
+                className="w-full inline-flex items-center justify-center rounded-[10px] border border-line bg-cream px-[22px] py-[11px] text-[14px] font-semibold hover:bg-warm transition-colors"
               >
                 Start free
               </Link>

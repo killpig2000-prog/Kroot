@@ -36,10 +36,10 @@ export default function Loading() {
               {Array.from({ length: 8 }).map((_, i) => (
                 <div
                   key={i}
-                  className="border border-line rounded-[14px] bg-white overflow-hidden"
+                  className="border border-line rounded-[14px] bg-cream overflow-hidden"
                 >
                   <div className="relative aspect-[16/9] bg-warm">
-                    <div className="absolute left-3 bottom-3 w-9 h-9 rounded-[10px] bg-white border border-line" />
+                    <div className="absolute left-3 bottom-3 w-9 h-9 rounded-[10px] bg-cream border border-line" />
                   </div>
                   <div className="px-[18px] py-4">
                     <div className="h-3.5 w-24 rounded-full bg-warm-3 mb-2" />

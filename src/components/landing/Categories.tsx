@@ -11,7 +11,7 @@ export default function Categories() {
   return (
     <section id="learn" className="bg-warm border-t border-dashed border-dash py-[clamp(52px,8vw,88px)] px-6">
       <div className="text-center mb-1.5">
-        <span className="inline-block bg-white border-[1.5px] border-dashed border-[#CFC8B8] rounded-full px-4 py-[5px] text-xs font-extrabold text-success-deep rotate-1">
+        <span className="inline-block bg-cream border-[1.5px] border-dashed border-[#CFC8B8] rounded-full px-4 py-[5px] text-xs font-extrabold text-success-deep rotate-1">
           what&apos;s inside · <span className="kr">준비물</span>
         </span>
       </div>
@@ -26,7 +26,7 @@ export default function Categories() {
         {CATEGORIES.map((c, i) => (
           <div
             key={c.en}
-            className={`reveal relative bg-white border border-line rounded-[14px] px-4 pt-4 pb-3.5 text-left shadow-[0_10px_24px_-16px_rgba(60,50,30,.3)] ${
+            className={`reveal relative bg-cream border border-line rounded-[14px] px-4 pt-4 pb-3.5 text-left shadow-[0_10px_24px_-16px_rgba(60,50,30,.3)] ${
               i % 2 ? "rotate-1" : "-rotate-1"
             }`}
           >

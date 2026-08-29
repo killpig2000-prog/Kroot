@@ -85,7 +85,7 @@ export default function TreeGrowthPopup({
           role="dialog"
           aria-modal="true"
           aria-label="Tree growth"
-          className="pointer-events-auto w-full max-w-[420px] bg-white rounded-[24px] shadow-[0_30px_70px_-20px_rgba(40,35,25,.35)] px-8 pt-9 pb-8 text-center"
+          className="pointer-events-auto w-full max-w-[420px] bg-cream rounded-[24px] shadow-[0_30px_70px_-20px_rgba(40,35,25,.35)] px-8 pt-9 pb-8 text-center"
         >
           <b className="block text-[13px] font-extrabold tracking-[.08em] uppercase text-success mb-1">
             {growth.promoted ? "Promotion!" : growth.grewTaller ? "Taller!" : "Your tree grew!"}

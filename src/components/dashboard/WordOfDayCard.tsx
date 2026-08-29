@@ -5,7 +5,7 @@ import type { WordOfTheDay } from "@/components/dashboard/Widgets";
 // a phone shows the same object a desktop does, not a plainer stand-in.
 export default function WordOfDayCard({ wotd, className = "" }: { wotd: WordOfTheDay; className?: string }) {
   return (
-    <div className={`relative bg-white border border-line rounded-[14px] px-[22px] py-5 mb-[30px] shadow-[0_10px_22px_-14px_rgba(60,50,30,.3)] ${className}`}>
+    <div className={`relative bg-cream border border-line rounded-[14px] px-[22px] py-5 mb-[30px] shadow-[0_10px_22px_-14px_rgba(60,50,30,.3)] ${className}`}>
       <span
         aria-hidden="true"
         className="absolute -top-2 left-6 -rotate-3 w-[46px] h-[15px] border z-10"

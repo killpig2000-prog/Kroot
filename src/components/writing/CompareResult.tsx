@@ -13,12 +13,12 @@ type GradeResult = {
   corrections?: { original: string; corrected: string; note: string }[];
 };
 
-const CARD = "border border-line rounded-[14px] bg-white max-w-[900px]";
+const CARD = "border border-line rounded-[14px] bg-cream max-w-[900px]";
 const LABEL = "text-[11.5px] font-semibold tracking-[.1em] uppercase text-faint";
 const BTN_AMBER =
   "rounded-[9px] px-[18px] py-[9px] text-sm font-semibold text-white bg-amber hover:bg-[#B45309] transition-colors disabled:opacity-60";
 const BTN_LINE =
-  "rounded-[9px] px-[18px] py-[9px] text-sm font-semibold text-charcoal bg-white border border-line hover:bg-warm transition-colors disabled:opacity-60";
+  "rounded-[9px] px-[18px] py-[9px] text-sm font-semibold text-charcoal bg-cream border border-line hover:bg-warm transition-colors disabled:opacity-60";
 
 function reactionFor(score: number) {
   if (score >= 90)

@@ -149,7 +149,7 @@ export default async function WritingMapPage({
                   : "border-amber-line bg-[#FFFBEB] hover:-translate-y-0.5 group"
               }`}
             >
-              <span className="flex-none w-10 h-10 rounded-[10px] bg-white border border-amber-line flex items-center justify-center text-lg transition-transform group-hover:scale-110">
+              <span className="flex-none w-10 h-10 rounded-[10px] bg-cream border border-amber-line flex items-center justify-center text-lg transition-transform group-hover:scale-110">
                 {continueWaitsTomorrow ? "🌙" : "✏️"}
               </span>
               <span className="flex-1 min-w-[170px]">
@@ -176,7 +176,7 @@ export default async function WritingMapPage({
                 <details
                   key={gi}
                   open={gi === openGroupIndex}
-                  className="border border-line rounded-[14px] bg-white overflow-hidden"
+                  className="border border-line rounded-[14px] bg-cream overflow-hidden"
                 >
                   <summary className="flex items-center gap-3 px-5 py-3.5 cursor-pointer select-none list-none [&::-webkit-details-marker]:hidden hover:bg-warm transition-colors">
                     <span className="flex-1 min-w-0">

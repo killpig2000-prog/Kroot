@@ -22,7 +22,7 @@ export default function Loading() {
             {/* head */}
             <div className="flex items-center justify-between gap-4 mb-[18px] flex-wrap">
               <div className="flex items-center">
-                <div className="w-[30px] h-[30px] rounded-lg bg-white border border-line mr-[9px]" />
+                <div className="w-[30px] h-[30px] rounded-lg bg-cream border border-line mr-[9px]" />
                 <div className="w-[30px] h-[30px] rounded-lg bg-warm-2 border border-line mr-[9px]" />
                 <div className="h-6 w-40 rounded-lg bg-warm-3" />
               </div>
@@ -55,7 +55,7 @@ export default function Loading() {
                 {Array.from({ length: 6 }).map((_, i) => (
                   <div
                     key={i}
-                    className="w-full flex items-center gap-3 rounded-[13px] px-3.5 py-3 border-[1.5px] border-line bg-white"
+                    className="w-full flex items-center gap-3 rounded-[13px] px-3.5 py-3 border-[1.5px] border-line bg-cream"
                   >
                     <div className="flex-none w-[34px] h-[34px] rounded-full bg-warm border-[1.5px] border-line" />
                     <div className="flex-1 min-w-0">

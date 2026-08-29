@@ -108,7 +108,7 @@ export default function ReadPhase({
                   className={`rounded-[14px] px-4 py-2.5 ${
                     t.side === "right"
                       ? "bg-sky-deep text-white rounded-tr-[4px]"
-                      : "bg-white border border-line rounded-tl-[4px]"
+                      : "bg-cream border border-line rounded-tl-[4px]"
                   }`}
                 >
                   <p className="kr text-[15px] leading-[1.6]"><TapText text={t.text} userId={userId} source="reading" /></p>
@@ -167,7 +167,7 @@ export default function ReadPhase({
     return (
       <div className="max-w-[860px] border border-line rounded-[14px] p-[clamp(20px,3vw,28px)]">
         {header}
-        <div className="rounded-[10px] border border-line overflow-hidden bg-white">
+        <div className="rounded-[10px] border border-line overflow-hidden bg-cream">
           <div className="flex items-center gap-2.5 px-5 py-3.5 bg-[#EFF6FF] border-b border-sky-line">
             <span className="text-lg flex-none">✉️</span>
             <div className="min-w-0">
@@ -218,7 +218,7 @@ export default function ReadPhase({
         <TranslatableText en={passage.title_en} showTranslation={showTranslation} className="text-[13px] mb-4" />
         <div className="rounded-[10px] border border-line overflow-hidden">
           <div className="grid grid-cols-1 sm:grid-cols-2">
-            <div className="p-[clamp(14px,2.5vw,20px)] bg-white sm:border-r border-b sm:border-b-0 border-line grid gap-3">
+            <div className="p-[clamp(14px,2.5vw,20px)] bg-cream sm:border-r border-b sm:border-b-0 border-line grid gap-3">
               {turns.map((t, i) => (
                 <p key={i} className={`kr text-[15px] leading-[1.7] ${t.isHost ? "text-muted italic" : ""}`}>
                   <b className={`not-italic font-semibold ${t.isHost ? "text-faint" : "text-sky-deep"}`}>{t.speaker}: </b>
@@ -254,7 +254,7 @@ export default function ReadPhase({
         <TranslatableText en={passage.title_en} showTranslation={showTranslation} className="text-[13px] mb-4" />
         <div className="rounded-[10px] border border-line overflow-hidden">
           <div className="grid grid-cols-1 sm:grid-cols-2">
-            <div className="p-[clamp(14px,2.5vw,20px)] bg-white sm:border-r border-b sm:border-b-0 border-line grid gap-3">
+            <div className="p-[clamp(14px,2.5vw,20px)] bg-cream sm:border-r border-b sm:border-b-0 border-line grid gap-3">
               {displayLines.map((line, i) => (
                 <div key={i} className="flex items-start gap-3">
                   <span className="flex-none w-7 h-7 rounded-full bg-[#EFF6FF] border border-sky-line text-sky-deep text-[13px] font-bold flex items-center justify-center">
@@ -289,7 +289,7 @@ export default function ReadPhase({
       <div className="max-w-[860px] border border-line rounded-[14px] p-[clamp(20px,3vw,28px)]">
         {header}
         <div className="relative rounded-[10px] border border-amber-line bg-[#FFFBEB] p-[clamp(18px,3.2vw,26px)]">
-          <span className="absolute -top-3 left-5 bg-white border border-amber-line rounded-full px-2.5 py-1 text-[12.5px] font-semibold text-[#92702B]">
+          <span className="absolute -top-3 left-5 bg-cream border border-amber-line rounded-full px-2.5 py-1 text-[12.5px] font-semibold text-[#92702B]">
             ⭐ Review
           </span>
           <h2 className="kr text-[16px] font-semibold mt-2.5 mb-1">{passage.title_kr}</h2>
@@ -320,7 +320,7 @@ export default function ReadPhase({
       {header}
       <div className="rounded-[10px] border border-line overflow-hidden bg-warm">
         <div className="grid grid-cols-1 sm:grid-cols-2">
-          <div className="p-[clamp(14px,2.5vw,22px)] bg-white sm:border-r border-b sm:border-b-0 border-line">
+          <div className="p-[clamp(14px,2.5vw,22px)] bg-cream sm:border-r border-b sm:border-b-0 border-line">
             <p className={LABEL}>Korean</p>
             <h2 className="kr text-[17px] font-medium mb-3">{passage.title_kr}</h2>
             {lines.map((line, i) => (

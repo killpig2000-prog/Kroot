@@ -60,7 +60,7 @@ export default async function CommunityPostPage({
               <b className="text-charcoal font-semibold truncate max-w-[240px]">{notice.title}</b>
             </div>
 
-            <article className="border border-success-line rounded-[14px] bg-white max-w-[980px] px-[22px] py-5">
+            <article className="border border-success-line rounded-[14px] bg-cream max-w-[980px] px-[22px] py-5">
               <div className="flex items-center gap-2.5 mb-2 flex-wrap">
                 <span className="text-[11.5px] font-bold rounded-full border border-[#86EFAC] bg-success-bg text-success-deep px-2.5 py-[3px]">
                   📌 Official notice
@@ -146,7 +146,7 @@ export default async function CommunityPostPage({
             <b className="text-charcoal font-semibold truncate max-w-[240px]">{title}</b>
           </div>
 
-          <article className="border border-line rounded-[14px] bg-white max-w-[980px] px-[22px] py-5">
+          <article className="border border-line rounded-[14px] bg-cream max-w-[980px] px-[22px] py-5">
             <div className="flex items-center gap-2.5 mb-2 flex-wrap">
               <span className="text-[11.5px] font-semibold rounded-full border border-[#CBD5E1] bg-[#F1F5F9] text-[#334155] px-2.5 py-[3px]">
                 {boardLabel(post.board)}

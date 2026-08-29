@@ -121,7 +121,7 @@ export default async function MyWordsPage() {
               <span
                 key={s.label}
                 className={`inline-flex items-baseline gap-1.5 rounded-full border px-3.5 py-1.5 text-[13px] ${
-                  s.accent ? "border-sky-line bg-[#EFF6FF] text-[#1D4ED8]" : "border-line bg-white text-muted"
+                  s.accent ? "border-sky-line bg-[#EFF6FF] text-[#1D4ED8]" : "border-line bg-cream text-muted"
                 }`}
               >
                 <b className="font-bold text-[15px] text-charcoal">{s.value}</b> {s.label}
@@ -164,7 +164,7 @@ export default async function MyWordsPage() {
               {byBox.map((group, i) => {
                 const meta = BOX_META[i];
                 return (
-                  <section key={i} className="border border-line rounded-[14px] bg-white overflow-hidden">
+                  <section key={i} className="border border-line rounded-[14px] bg-cream overflow-hidden">
                     <header className="flex items-baseline justify-between gap-3 px-[18px] py-3 bg-warm border-b border-line">
                       <b className="font-semibold text-[14px]">
                         {meta.icon} {meta.label}

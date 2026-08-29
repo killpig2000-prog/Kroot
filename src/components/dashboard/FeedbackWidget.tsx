@@ -97,7 +97,7 @@ export default function FeedbackWidget() {
           role="dialog"
           aria-modal="true"
           aria-label="Feedback"
-          className={`pointer-events-auto w-full bg-white rounded-[24px] shadow-[0_30px_70px_-20px_rgba(40,35,25,.35)] ${
+          className={`pointer-events-auto w-full bg-cream rounded-[24px] shadow-[0_30px_70px_-20px_rgba(40,35,25,.35)] ${
             view === "announce" ? "max-w-[420px] px-7 pt-7 pb-6" : "max-w-[380px] px-6 py-6"
           }`}
         >
@@ -154,7 +154,7 @@ export default function FeedbackWidget() {
                 placeholder="What's on your mind?"
                 rows={5}
                 maxLength={2000}
-                className="w-full resize-none rounded-[11px] border border-line bg-white px-3.5 py-3 text-[13.5px] text-[#221F1B] placeholder:text-[#B7AE9C] focus:outline-none focus:border-success"
+                className="w-full resize-none rounded-[11px] border border-line bg-cream px-3.5 py-3 text-[13.5px] text-[#221F1B] placeholder:text-[#B7AE9C] focus:outline-none focus:border-success"
               />
               {error && (
                 <p className="text-[12px] text-danger mt-2">
@@ -171,7 +171,7 @@ export default function FeedbackWidget() {
                 </button>
                 <button
                   onClick={close}
-                  className="rounded-[11px] border border-line bg-white text-muted font-semibold text-[13.5px] px-4 py-2.5 hover:border-[#CFC8B8] transition-colors"
+                  className="rounded-[11px] border border-line bg-cream text-muted font-semibold text-[13.5px] px-4 py-2.5 hover:border-[#CFC8B8] transition-colors"
                 >
                   Cancel
                 </button>

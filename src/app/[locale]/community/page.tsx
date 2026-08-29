@@ -69,7 +69,7 @@ export default async function CommunityPage({
     `rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold transition-all border ${
       active
         ? "bg-[#334155] border-[#334155] text-white"
-        : "bg-white border-line text-muted hover:border-faint"
+        : "bg-cream border-line text-muted hover:border-faint"
     }`;
 
   return (
@@ -153,7 +153,7 @@ export default async function CommunityPage({
                   i > 0 ? "border-t border-success-line" : ""
                 }`}
               >
-                <span className="text-[11.5px] font-bold rounded-full border border-[#86EFAC] bg-white text-success-deep px-2.5 py-[3px] flex-none">
+                <span className="text-[11.5px] font-bold rounded-full border border-[#86EFAC] bg-cream text-success-deep px-2.5 py-[3px] flex-none">
                   📌 Notice
                 </span>
                 <b className="min-w-0 flex-1 font-semibold text-[14px] truncate">

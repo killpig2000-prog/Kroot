@@ -14,7 +14,7 @@ import { clearResume } from "@/lib/resume";
 const BTN_TEAL = buttonClassName("teal");
 const BTN_INK = buttonClassName("ink");
 const BTN_LINE =
-  "rounded-[9px] px-4 py-2 text-[13px] font-semibold text-muted bg-white border border-line hover:border-faint transition-colors";
+  "rounded-[9px] px-4 py-2 text-[13px] font-semibold text-muted bg-cream border border-line hover:border-faint transition-colors";
 
 export default function DialoguePlayer({
   dialogueId,
@@ -113,7 +113,7 @@ export default function DialoguePlayer({
                     {bubbleOn && (
                       <div className="absolute bottom-[calc(100%+2px)] left-1/2 -translate-x-1/2 z-10 w-max max-w-[280px]">
                         <div
-                          className="bg-white border border-line rounded-[10px] px-4 py-2.5 text-left shadow-sm"
+                          className="bg-cream border border-line rounded-[10px] px-4 py-2.5 text-left shadow-sm"
                           style={{ animation: "fadeUp .25s ease" }}
                         >
                           <p className="kr text-[17px] font-medium leading-snug"><TapText text={currentLine.kr} userId={userId} source="listening" /></p>
@@ -126,7 +126,7 @@ export default function DialoguePlayer({
                       className={`text-[11.5px] font-semibold mt-1.5 rounded-md px-2 py-0.5 border transition-colors ${
                         active
                           ? "bg-[#F0FDFA] text-teal border-[#99F6E4]"
-                          : "bg-white/90 text-muted border-line"
+                          : "bg-cream/90 text-muted border-line"
                       }`}
                     >
                       {sp}
@@ -161,7 +161,7 @@ export default function DialoguePlayer({
                 className={`rounded-[9px] px-4 py-2 text-[13px] font-semibold border transition-colors ${
                   showCaption
                     ? "bg-[#F0FDFA] text-teal border-[#99F6E4]"
-                    : "bg-white text-muted border-line hover:border-faint"
+                    : "bg-cream text-muted border-line hover:border-faint"
                 }`}
                 onClick={() => setShowCaption((v) => !v)}
               >
@@ -189,7 +189,7 @@ export default function DialoguePlayer({
               <div
                 key={i}
                 className={`px-[18px] py-3.5 border-b border-line last:border-b-0 transition-colors ${
-                  i === currentIndex ? "bg-[#F0FDFA]" : "bg-white"
+                  i === currentIndex ? "bg-[#F0FDFA]" : "bg-cream"
                 }`}
               >
                 <div className="flex items-start justify-between gap-3">

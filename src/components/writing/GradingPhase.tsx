@@ -1,7 +1,7 @@
 import LevelCreature from "@/components/dashboard/LevelCreature";
 import type { CefrLevel } from "@/lib/tree";
 
-const CARD = "border border-line rounded-[14px] bg-white max-w-[900px]";
+const CARD = "border border-line rounded-[14px] bg-cream max-w-[900px]";
 
 // Cycled every ~3.2s while grading is in flight (a real 5-15s API round
 // trip) so a slow check reads as "still working" instead of "stuck".

@@ -93,7 +93,7 @@ export default function WordDetailCard({
         </span>
       </div>
 
-      <div className="relative bg-white border border-line rounded-[6px] shadow-[0_20px_40px_-28px_rgba(60,50,30,.6)] overflow-hidden">
+      <div className="relative bg-cream border border-line rounded-[6px] shadow-[0_20px_40px_-28px_rgba(60,50,30,.6)] overflow-hidden">
         <div className="absolute inset-0 pointer-events-none" style={{ background: RULED }} aria-hidden="true" />
         <span
           className="absolute top-0 bottom-0 left-[clamp(28px,6vw,52px)] w-px bg-[#F5C6C6] opacity-70 pointer-events-none"
@@ -211,7 +211,7 @@ export default function WordDetailCard({
         {nextHref && nextWord ? (
           <Link
             href={nextHref}
-            className="min-w-0 flex items-center gap-2 rounded-[10px] border border-line bg-white px-3 py-2 text-muted hover:border-faint hover:text-charcoal transition-colors"
+            className="min-w-0 flex items-center gap-2 rounded-[10px] border border-line bg-cream px-3 py-2 text-muted hover:border-faint hover:text-charcoal transition-colors"
           >
             <span className="text-[10.5px] font-bold tracking-[.06em] uppercase text-faint flex-none">Up next</span>
             <span className="kr font-bold text-charcoal flex-none">{nextWord.korean}</span>

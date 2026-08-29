@@ -34,7 +34,7 @@ export default function ManageSubscriptionButton({ className }: { className?: st
         disabled={busy}
         className={
           className ??
-          "rounded-[9px] border border-line bg-white px-4 py-2 text-[13px] font-semibold text-charcoal hover:bg-warm transition-colors disabled:opacity-60"
+          "rounded-[9px] border border-line bg-cream px-4 py-2 text-[13px] font-semibold text-charcoal hover:bg-warm transition-colors disabled:opacity-60"
         }
       >
         {busy ? "Opening…" : "Manage subscription"}

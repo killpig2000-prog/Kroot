@@ -17,7 +17,7 @@ export default function Loading() {
             <div className="h-3.5 w-72 rounded-full bg-warm-2 mb-6" />
 
             {/* tree/streak card */}
-            <div className="border border-line rounded-[14px] bg-white px-[22px] py-6 mb-[30px] flex items-center gap-6 flex-wrap">
+            <div className="border border-line rounded-[14px] bg-cream px-[22px] py-6 mb-[30px] flex items-center gap-6 flex-wrap">
               <div className="w-24 h-24 rounded-full bg-warm-2 flex-none" />
               <div className="flex-1 min-w-[200px]">
                 <div className="h-4 w-28 rounded-full bg-warm-3 mb-2.5" />
@@ -30,7 +30,7 @@ export default function Loading() {
             <div className="h-[76px] rounded-[14px] bg-warm border border-dashed border-line mb-[30px]" />
 
             {/* quest strip (xl:hidden on real page) */}
-            <div className="xl:hidden border border-dashed border-[#CFC8B8] rounded-[12px] bg-white px-5 py-4 flex items-center gap-3.5 mb-[30px]">
+            <div className="xl:hidden border border-dashed border-[#CFC8B8] rounded-[12px] bg-cream px-5 py-4 flex items-center gap-3.5 mb-[30px]">
               <div className="w-10 h-10 rounded-[10px] bg-warm-2 flex-none" />
               <div className="flex-1 min-w-[170px]">
                 <div className="h-3.5 w-28 rounded-full bg-warm-2 mb-1.5" />
@@ -48,7 +48,7 @@ export default function Loading() {
             </div>
 
             {/* learning progress card */}
-            <div className="border border-line rounded-[14px] bg-white px-[22px] py-5 mb-[14px]">
+            <div className="border border-line rounded-[14px] bg-cream px-[22px] py-5 mb-[14px]">
               <div className="flex items-baseline justify-between gap-3 mb-3.5">
                 <div className="h-4 w-36 rounded-full bg-warm-3" />
                 <div className="h-3 w-16 rounded-full bg-warm-4" />
@@ -74,7 +74,7 @@ export default function Loading() {
             </div>
 
             {/* promotion status strip */}
-            <div className="rounded-[14px] px-[22px] py-4 mb-[14px] border-[1.5px] border-line bg-white flex items-center gap-4">
+            <div className="rounded-[14px] px-[22px] py-4 mb-[14px] border-[1.5px] border-line bg-cream flex items-center gap-4">
               <div className="w-6 h-6 rounded-full bg-warm-2 flex-none" />
               <div className="flex-1 min-w-[200px]">
                 <div className="h-3.5 w-56 rounded-full bg-warm-2 mb-2" />
@@ -87,7 +87,7 @@ export default function Loading() {
             </div>
 
             {/* study garden / monthly grass */}
-            <div className="border border-line rounded-[14px] bg-white px-[22px] py-5">
+            <div className="border border-line rounded-[14px] bg-cream px-[22px] py-5">
               <div className="flex gap-6 flex-wrap mb-4">
                 {Array.from({ length: 4 }).map((_, i) => (
                   <div key={i}>
@@ -108,7 +108,7 @@ export default function Loading() {
         {/* right rail (xl+) — quest / slang / word-of-day cards */}
         <div className="hidden xl:flex flex-col gap-4 px-5 pt-[26px] pb-[60px]">
           <div className="animate-pulse flex flex-col gap-4">
-            <div className="border border-dashed border-[#CFC8B8] rounded-[12px] bg-white p-4">
+            <div className="border border-dashed border-[#CFC8B8] rounded-[12px] bg-cream p-4">
               <div className="h-3.5 w-24 rounded-full bg-warm-2 mb-2" />
               <div className="h-3 w-36 rounded-full bg-warm-4" />
             </div>
@@ -116,13 +116,13 @@ export default function Loading() {
               <div className="h-3.5 w-28 rounded-full bg-warm-2 mb-2" />
               <div className="h-3 w-40 rounded-full bg-warm-4" />
             </div>
-            <div className="border border-line rounded-[14px] bg-white p-4">
+            <div className="border border-line rounded-[14px] bg-cream p-4">
               <div className="h-3.5 w-32 rounded-full bg-warm-3 mb-2.5" />
               <div className="h-4 w-16 rounded-lg bg-warm-2 mb-2" />
               <div className="h-3 w-full rounded-full bg-warm-4 mb-1.5" />
               <div className="h-3 w-3/4 rounded-full bg-warm-4" />
             </div>
-            <div className="border border-line rounded-[14px] bg-white p-4">
+            <div className="border border-line rounded-[14px] bg-cream p-4">
               <div className="h-3.5 w-20 rounded-full bg-warm-3 mb-3" />
               {Array.from({ length: 5 }).map((_, i) => (
                 <div key={i} className="flex items-center gap-2.5 mb-2 last:mb-0">

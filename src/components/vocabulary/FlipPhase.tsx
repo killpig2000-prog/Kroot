@@ -233,7 +233,7 @@ export default function FlipPhase({
 
       {/* root explore panel */}
       {root && rootOpen && (
-        <div className="mt-2.5 border border-[#DDD6FE] rounded-[14px] bg-white px-[22px] py-5" style={{ animation: "fadeUp .3s ease" }}>
+        <div className="mt-2.5 border border-[#DDD6FE] rounded-[14px] bg-cream px-[22px] py-5" style={{ animation: "fadeUp .3s ease" }}>
           <div className="flex items-start justify-between mb-4">
             <div className="flex items-center gap-3">
               <span className="w-11 h-11 rounded-xl bg-[#F5F3FF] text-[#6B33CC] flex items-center justify-center kr text-xl flex-none">
@@ -396,7 +396,7 @@ function SwipeCard({
       <div className="relative [overflow-x:clip]">
         {/* the next page, peeking out from underneath */}
         <div
-          className="absolute inset-0 bg-white border border-line rounded-[6px] overflow-hidden"
+          className="absolute inset-0 bg-cream border border-line rounded-[6px] overflow-hidden"
           aria-hidden="true"
           style={{
             transform: `translateY(${12 - 12 * peekProgress}px) scale(${0.97 + 0.03 * peekProgress})`,
@@ -420,7 +420,7 @@ function SwipeCard({
           onPointerUp={(e) => endGesture(e, false)}
           onPointerCancel={(e) => endGesture(e, true)}
           onClickCapture={onClickCapture}
-          className="relative bg-white border border-line rounded-[6px] shadow-[0_20px_40px_-28px_rgba(60,50,30,.6)] overflow-hidden"
+          className="relative bg-cream border border-line rounded-[6px] shadow-[0_20px_40px_-28px_rgba(60,50,30,.6)] overflow-hidden"
           style={cardStyle}
         >
           <div className="absolute inset-0 pointer-events-none" style={{ background: RULED }} aria-hidden="true" />

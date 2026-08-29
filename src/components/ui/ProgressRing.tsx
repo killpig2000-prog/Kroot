@@ -30,7 +30,7 @@ export default function ProgressRing({
       }}
     >
       <div
-        className="rounded-full bg-white flex flex-col items-center justify-center"
+        className="rounded-full bg-cream flex flex-col items-center justify-center"
         style={{ width: innerSize, height: innerSize }}
       >
         {children}

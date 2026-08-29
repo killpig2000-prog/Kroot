@@ -40,7 +40,7 @@ export default function SpeechBubble({
       } ${className}`}
     >
       <div
-        className={`relative bg-white shadow-[0_3px_0_var(--card-shadow)] whitespace-nowrap ${
+        className={`relative bg-cream shadow-[0_3px_0_var(--card-shadow)] whitespace-nowrap ${
           large ? "rounded-3xl px-6 py-3.5" : "rounded-2xl px-3.5 py-2"
         }`}
       >
@@ -51,7 +51,7 @@ export default function SpeechBubble({
           {current.en}
         </span>
         <span
-          className={`absolute left-1/2 -translate-x-1/2 bg-white rotate-45 ${
+          className={`absolute left-1/2 -translate-x-1/2 bg-cream rotate-45 ${
             large ? "-bottom-2 w-4 h-4" : "-bottom-1.5 w-3 h-3"
           }`}
         />

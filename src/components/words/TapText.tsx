@@ -162,7 +162,7 @@ export default function TapText({
             role="dialog"
             aria-label="Word details"
             onClick={(e) => e.stopPropagation()}
-            className="fixed z-[100] bg-white border border-line rounded-[12px] shadow-[0_8px_24px_rgba(24,20,10,.12)] p-3 text-left text-charcoal font-body"
+            className="fixed z-[100] bg-cream border border-line rounded-[12px] shadow-[0_8px_24px_rgba(24,20,10,.12)] p-3 text-left text-charcoal font-body"
             style={{
               left,
               top,

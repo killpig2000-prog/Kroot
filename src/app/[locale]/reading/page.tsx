@@ -148,7 +148,7 @@ export default async function ReadingMapPage({
               href={`/reading/session?chapter=${continueIndex}&level=${level}`}
               className="flex items-center gap-3.5 border-[1.5px] border-sky-line bg-[#EFF6FF] rounded-[14px] px-5 py-4 mb-6 max-w-[720px] transition-all hover:-translate-y-0.5 group"
             >
-              <span className="flex-none w-10 h-10 rounded-[10px] bg-white border border-sky-line flex items-center justify-center text-lg transition-transform group-hover:scale-110">
+              <span className="flex-none w-10 h-10 rounded-[10px] bg-cream border border-sky-line flex items-center justify-center text-lg transition-transform group-hover:scale-110">
                 📖
               </span>
               <span className="flex-1 min-w-[170px]">
@@ -175,7 +175,7 @@ export default async function ReadingMapPage({
                 <details
                   key={gi}
                   open={gi === openGroupIndex}
-                  className="border border-line rounded-[14px] bg-white overflow-hidden"
+                  className="border border-line rounded-[14px] bg-cream overflow-hidden"
                 >
                   <summary className="flex items-center gap-3 px-5 py-3.5 cursor-pointer select-none list-none [&::-webkit-details-marker]:hidden hover:bg-warm transition-colors">
                     <span className="flex-1 min-w-0">

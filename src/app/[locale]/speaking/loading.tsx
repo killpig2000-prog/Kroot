@@ -36,7 +36,7 @@ export default function Loading() {
                     {Array.from({ length: 5 }).map((_, i) => (
                       <div
                         key={i}
-                        className="w-[112px] flex-none rounded-[12px] border-[1.5px] border-line bg-white px-2.5 pt-2.5 pb-3"
+                        className="w-[112px] flex-none rounded-[12px] border-[1.5px] border-line bg-cream px-2.5 pt-2.5 pb-3"
                       >
                         <div className="w-9 h-9 mx-auto mb-1.5 rounded-full bg-warm-2" />
                         <div className="h-2.5 w-full rounded-full bg-warm-2 mb-1" />

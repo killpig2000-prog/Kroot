@@ -99,7 +99,7 @@ export default async function FunnelSection({ db, days = 30 }: { db: SupabaseCli
   const max = Math.max(1, steps[0].count);
 
   return (
-    <section className="mt-8 rounded-2xl border border-slate-200 bg-white p-5">
+    <section className="mt-8 rounded-2xl border border-slate-200 bg-cream p-5">
       <div className="flex items-baseline justify-between gap-3 flex-wrap">
         <h2 className="text-sm font-semibold text-slate-700">Activation funnel · {days}d cohort</h2>
         {missing && (

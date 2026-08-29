@@ -59,13 +59,13 @@ export default function StreakFreezeCard({
 
   return (
     <div className="max-w-[1040px] border border-[#BAE6FD] bg-[#F0F9FF] rounded-[14px] px-5 py-4 mb-5 flex items-center gap-4 flex-wrap">
-      <span className="flex-none w-12 h-12 rounded-[12px] bg-white border border-[#BAE6FD] flex items-center justify-center text-[24px]">
+      <span className="flex-none w-12 h-12 rounded-[12px] bg-cream border border-[#BAE6FD] flex items-center justify-center text-[24px]">
         🧊
       </span>
       <div className="flex-1 min-w-[220px]">
         <b className="font-semibold text-[14.5px] text-[#0369A1] flex items-center gap-2 flex-wrap">
           Streak freeze
-          <span className="text-[11px] font-bold text-[#0369A1] bg-white border border-[#BAE6FD] rounded-full px-2 py-px">
+          <span className="text-[11px] font-bold text-[#0369A1] bg-cream border border-[#BAE6FD] rounded-full px-2 py-px">
             {count}/{FREEZE_MAX} held
           </span>
         </b>

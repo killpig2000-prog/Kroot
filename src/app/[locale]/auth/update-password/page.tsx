@@ -7,9 +7,9 @@ import CuteError from "@/components/ui/CuteError";
 import { createClient } from "@/lib/supabase/client";
 import BrandMark from "@/components/ui/BrandMark";
 
-const CARD = "border border-line rounded-[14px] bg-white p-[clamp(22px,4vw,32px)]";
+const CARD = "border border-line rounded-[14px] bg-cream p-[clamp(22px,4vw,32px)]";
 const FIELD =
-  "w-full px-3.5 py-[11px] text-[14px] border border-line rounded-[9px] bg-white text-charcoal placeholder:text-faint focus:outline-none focus:border-success transition-colors";
+  "w-full px-3.5 py-[11px] text-[14px] border border-line rounded-[9px] bg-cream text-charcoal placeholder:text-faint focus:outline-none focus:border-success transition-colors";
 const LABEL = "block text-[12.5px] font-semibold mb-[6px] text-charcoal";
 const BTN_GREEN =
   "inline-flex items-center justify-center rounded-[9px] bg-success px-[18px] py-[9px] text-[13.5px] font-semibold text-white hover:bg-success-deep transition-colors";
@@ -50,7 +50,7 @@ export default function UpdatePasswordPage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-white text-charcoal">
+    <div className="min-h-screen flex flex-col bg-cream text-charcoal">
       <header className="border-b border-line">
         <div className="max-w-[1160px] mx-auto flex items-center justify-between gap-4 px-[clamp(18px,5vw,44px)] py-3">
           <Link

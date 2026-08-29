@@ -15,7 +15,7 @@ export default function SlangShareLoading() {
         <main className="mx-auto max-w-3xl px-6 pb-16">
           <div className="mb-2 h-4 w-40 rounded-full bg-warm-2" />
 
-          <article className="relative border border-line rounded-[22px] bg-white p-8 sm:p-10 text-center">
+          <article className="relative border border-line rounded-[22px] bg-cream p-8 sm:p-10 text-center">
             <div className="mx-auto mb-5 h-6 w-28 rounded-full bg-warm-2" />
             <div className="mx-auto h-[64px] w-3/5 rounded-lg bg-warm-3" />
             <div className="mx-auto mt-4 h-5 w-2/5 rounded-full bg-warm-2" />
@@ -39,7 +39,7 @@ export default function SlangShareLoading() {
               {Array.from({ length: 6 }).map((_, i) => (
                 <div
                   key={i}
-                  className="rounded-2xl border border-line bg-white px-4 py-3"
+                  className="rounded-2xl border border-line bg-cream px-4 py-3"
                 >
                   <div className="h-4 w-2/5 rounded-full bg-warm-3" />
                   <div className="mt-2 h-3 w-4/5 rounded-full bg-warm-2" />

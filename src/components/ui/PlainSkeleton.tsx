@@ -11,7 +11,7 @@ export default function PlainSkeleton({ rows = 4 }: { rows?: number }) {
           {Array.from({ length: rows }).map((_, i) => (
             <div
               key={i}
-              className="h-[72px] rounded-[14px] border border-warm-3 bg-white flex items-center gap-4 px-5"
+              className="h-[72px] rounded-[14px] border border-warm-3 bg-cream flex items-center gap-4 px-5"
             >
               <div className="w-11 h-11 rounded-[11px] bg-warm-2 flex-none" />
               <div className="flex-1">

@@ -198,7 +198,7 @@ export default function ShopClient({
   }
 
   return (
-    <div className="border border-line rounded-[14px] bg-white overflow-hidden max-w-[1040px]">
+    <div className="border border-line rounded-[14px] bg-cream overflow-hidden max-w-[1040px]">
       <ShopGoal
         goal={goal}
         balance={balance}
@@ -213,7 +213,7 @@ export default function ShopClient({
               <summary className="list-none cursor-pointer select-none text-[12px] font-bold text-faint hover:text-charcoal [&::-webkit-details-marker]:hidden">
                 Change ▾
               </summary>
-              <div className="absolute left-0 top-full mt-1 z-20 w-[250px] max-h-[264px] overflow-y-auto bg-white border border-line rounded-[10px] shadow-[0_10px_22px_-12px_rgba(60,50,30,.35)] p-1">
+              <div className="absolute left-0 top-full mt-1 z-20 w-[250px] max-h-[264px] overflow-y-auto bg-cream border border-line rounded-[10px] shadow-[0_10px_22px_-12px_rgba(60,50,30,.35)] p-1">
                 {goalOverride && (
                   <button
                     type="button"
@@ -304,7 +304,7 @@ export default function ShopClient({
                     setMessage(null);
                   }}
                   className={`flex-none flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[13px] font-bold border transition-colors ${
-                    on ? "bg-charcoal text-white border-charcoal" : "bg-white text-muted border-line hover:border-faint"
+                    on ? "bg-charcoal text-white border-charcoal" : "bg-cream text-muted border-line hover:border-faint"
                   }`}
                 >
                   <span aria-hidden="true">{SLOT_LABELS[slot].icon}</span>
@@ -339,7 +339,7 @@ export default function ShopClient({
               return (
                 <div
                   key={c.id}
-                  className={`relative flex flex-col border rounded-[12px] overflow-hidden bg-white transition-all hover:-translate-y-0.5 ${
+                  className={`relative flex flex-col border rounded-[12px] overflow-hidden bg-cream transition-all hover:-translate-y-0.5 ${
                     on ? "border-success shadow-[0_0_0_2px_#BBF7D0]" : "border-line hover:border-faint"
                   }`}
                 >
@@ -381,7 +381,7 @@ export default function ShopClient({
         {/* ── try-on ── */}
         <aside className="order-first lg:order-none border-b lg:border-b-0 lg:border-l border-line bg-warm p-4 lg:sticky lg:top-4 self-start">
           <p className="text-[11.5px] font-extrabold tracking-[.08em] uppercase text-[#B7AE9C] mb-2">Try on · your tree</p>
-          <figure className="relative m-0 mx-auto max-w-[230px] bg-white border border-line p-1.5 pb-6 rotate-[1deg] shadow-[0_10px_22px_-12px_rgba(60,50,30,.35)] mb-3">
+          <figure className="relative m-0 mx-auto max-w-[230px] bg-cream border border-line p-1.5 pb-6 rotate-[1deg] shadow-[0_10px_22px_-12px_rgba(60,50,30,.35)] mb-3">
             <Scene ids={previewIds} stage={stage} species={species} className="px-2.5 pt-2.5" />
             <figcaption className="absolute bottom-1 left-0 right-0 text-center text-[10px] font-bold text-[#8A8478]">
               <span className="kr">{SPECIES[species].krName}</span> · Lv. {playerLevel}
@@ -396,7 +396,7 @@ export default function ShopClient({
                   key={slot}
                   type="button"
                   onClick={() => setTab(slot)}
-                  className={`text-left border rounded-lg px-2 py-1.5 ${it ? "border-success-line bg-success-bg" : "border-line bg-white"} ${slot === tab ? "ring-2 ring-success-line" : ""}`}
+                  className={`text-left border rounded-lg px-2 py-1.5 ${it ? "border-success-line bg-success-bg" : "border-line bg-cream"} ${slot === tab ? "ring-2 ring-success-line" : ""}`}
                 >
                   <small className="block text-[10px] tracking-[.06em] uppercase text-[#B7AE9C] font-extrabold">{SLOT_LABELS[slot].en}</small>
                   <b className="block text-[12px] truncate">{it ? it.name : "—"}</b>
@@ -426,7 +426,7 @@ export default function ShopClient({
                 setPreview(worn);
                 setMessage(null);
               }}
-              className="rounded-[10px] px-3 py-2.5 text-[13px] font-extrabold border border-line bg-white hover:border-faint transition-colors"
+              className="rounded-[10px] px-3 py-2.5 text-[13px] font-extrabold border border-line bg-cream hover:border-faint transition-colors"
             >
               Reset
             </button>

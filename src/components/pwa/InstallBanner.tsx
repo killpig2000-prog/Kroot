@@ -64,7 +64,7 @@ export default function InstallBanner({ streakDays }: { streakDays: number }) {
 
   return (
     <div className="flex items-center gap-3.5 border border-line bg-warm rounded-[14px] px-5 py-3.5 mb-[30px] flex-wrap">
-      <span className="flex-none w-10 h-10 rounded-[10px] bg-white border border-line flex items-center justify-center text-lg">
+      <span className="flex-none w-10 h-10 rounded-[10px] bg-cream border border-line flex items-center justify-center text-lg">
         📱
       </span>
       <span className="flex-1 min-w-[170px]">

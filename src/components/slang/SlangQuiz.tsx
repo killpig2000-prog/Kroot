@@ -176,8 +176,8 @@ export default function SlangQuiz() {
                       : state === "wrong"
                         ? "border-danger bg-danger-bg"
                         : state === "dim"
-                          ? "border-[#FBCFE8] bg-white opacity-60"
-                          : "border-[#FBCFE8] bg-white hover:border-[#C13E78]"
+                          ? "border-[#FBCFE8] bg-cream opacity-60"
+                          : "border-[#FBCFE8] bg-cream hover:border-[#C13E78]"
                   }`}
                 >
                   {opt}

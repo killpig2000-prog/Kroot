@@ -13,7 +13,7 @@ export type ButtonTone = "line" | "ink" | "teal" | "sky" | "success" | "amber" |
 const BASE = "rounded-[9px] px-[22px] py-2.5 text-sm font-semibold transition-colors disabled:opacity-60";
 
 const TONE_CLASSES: Record<ButtonTone, string> = {
-  line: "text-charcoal bg-white border border-line hover:bg-warm",
+  line: "text-charcoal bg-cream border border-line hover:bg-warm",
   ink: "text-white bg-success hover:bg-success-deep",
   teal: "text-white bg-teal hover:bg-[#0F766E]",
   sky: "text-white bg-sky-deep hover:bg-[#1D4ED8]",

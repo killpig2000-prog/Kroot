@@ -58,7 +58,7 @@ export default async function InsightsSection({
               { label: "deep-rooted words", value: "142" },
               { label: "XP this week", value: "215" },
             ].map((s) => (
-              <div key={s.label} className="border border-line bg-white rounded-[14px] px-4 py-3.5 text-center">
+              <div key={s.label} className="border border-line bg-cream rounded-[14px] px-4 py-3.5 text-center">
                 <b className="block text-[18px] font-extrabold tracking-[-0.02em] blur-[6px]">
                   {s.value}
                 </b>

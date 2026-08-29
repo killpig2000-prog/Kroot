@@ -60,7 +60,7 @@ export default function Loading() {
                   {Array.from({ length: 4 }).map((_, i) => (
                     <div
                       key={i}
-                      className="border border-line bg-white rounded-[14px] px-4 py-3.5 flex flex-col items-center gap-2"
+                      className="border border-line bg-cream rounded-[14px] px-4 py-3.5 flex flex-col items-center gap-2"
                     >
                       <div className="h-4 w-10 rounded-full bg-warm-3" />
                       <div className="h-2.5 w-16 rounded-full bg-warm-2" />

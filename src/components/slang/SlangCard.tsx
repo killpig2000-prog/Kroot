@@ -87,7 +87,7 @@ export default function SlangCard({
           <b className="mt-1.5 font-bold text-[15px] tracking-[-0.01em] text-charcoal leading-snug">
             {entry.meaning}
           </b>
-          <div className="mt-2.5 w-full rounded-[10px] bg-white border border-[#FBCFE8] px-3 py-2 text-left">
+          <div className="mt-2.5 w-full rounded-[10px] bg-cream border border-[#FBCFE8] px-3 py-2 text-left">
             <div className="flex items-start gap-1.5">
               <span className="kr text-[13px] text-charcoal leading-snug flex-1"><TapText text={entry.example.kr} source="slang" /></span>
               <SpeakButton text={entry.example.kr} className="shrink-0 w-6 h-6 text-[11px]" />

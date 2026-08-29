@@ -162,7 +162,7 @@ export default function ReminderSettings({ userId, initialPush, initialEmail, in
             value={nearestLocal(hour)}
             disabled={busy !== null}
             onChange={(e) => changeHour(Number(e.target.value))}
-            className="text-[13px] font-semibold border border-line rounded-[9px] px-3 py-2 bg-white"
+            className="text-[13px] font-semibold border border-line rounded-[9px] px-3 py-2 bg-cream"
           >
             {HOURS.map((h) => (
               <option key={h.local} value={h.local}>

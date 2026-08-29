@@ -462,7 +462,7 @@ export default async function DashboardPage() {
               href="/review"
               className="flex flex-wrap sm:flex-nowrap items-center gap-x-3.5 gap-y-2 border border-sky-line bg-[#EFF6FF] rounded-[14px] px-5 py-4 mb-[30px] transition-all hover:-translate-y-0.5 group"
             >
-              <span className="flex-none w-10 h-10 rounded-[10px] bg-white border border-sky-line flex items-center justify-center text-lg transition-transform group-hover:scale-110">
+              <span className="flex-none w-10 h-10 rounded-[10px] bg-cream border border-sky-line flex items-center justify-center text-lg transition-transform group-hover:scale-110">
                 💧
               </span>
               <span className="flex-1 min-w-0">
@@ -489,7 +489,7 @@ export default async function DashboardPage() {
             href="/slang"
             className="xl:hidden flex flex-wrap sm:flex-nowrap items-center gap-x-3.5 gap-y-2 border border-[#FBCFE8] bg-[#FDF2F8] rounded-[14px] px-5 py-4 mb-[30px] transition-all hover:-translate-y-0.5 group"
           >
-            <span className="flex-none w-10 h-10 rounded-[10px] bg-white border border-[#FBCFE8] flex items-center justify-center text-lg transition-transform group-hover:scale-110">
+            <span className="flex-none w-10 h-10 rounded-[10px] bg-cream border border-[#FBCFE8] flex items-center justify-center text-lg transition-transform group-hover:scale-110">
               💬
             </span>
             <span className="flex-1 min-w-0">
@@ -514,7 +514,7 @@ export default async function DashboardPage() {
             href="/hangul"
             className="flex flex-wrap sm:flex-nowrap items-center gap-x-3.5 gap-y-2 border border-success-line bg-success-bg rounded-[14px] px-5 py-4 mb-[30px] transition-all hover:-translate-y-0.5 group"
           >
-            <span className="flex-none w-10 h-10 rounded-[10px] bg-white border border-success-line flex items-center justify-center kr text-lg text-success transition-transform group-hover:scale-110">
+            <span className="flex-none w-10 h-10 rounded-[10px] bg-cream border border-success-line flex items-center justify-center kr text-lg text-success transition-transform group-hover:scale-110">
               ㄱ
             </span>
             <span className="flex-1 min-w-0">
@@ -538,7 +538,7 @@ export default async function DashboardPage() {
           {remindersOff && streakDays >= 3 && (
             <Link
               href="/profile#reminders"
-              className="flex flex-wrap sm:flex-nowrap items-center gap-x-3 gap-y-1.5 border border-dashed border-[#CFC8B8] rounded-[12px] bg-white px-4 py-3 mb-[14px] text-[13px] text-muted hover:border-success transition-colors"
+              className="flex flex-wrap sm:flex-nowrap items-center gap-x-3 gap-y-1.5 border border-dashed border-[#CFC8B8] rounded-[12px] bg-cream px-4 py-3 mb-[14px] text-[13px] text-muted hover:border-success transition-colors"
             >
               <span>⏰</span>
               <span className="flex-1 min-w-0">
@@ -550,7 +550,7 @@ export default async function DashboardPage() {
 
           {/* learning progress — replaces the old category card list (the
               sidebar already covers navigation); SkillBars live on here */}
-          <div className="border border-line rounded-[14px] bg-white px-[22px] py-5 mb-[14px]">
+          <div className="border border-line rounded-[14px] bg-cream px-[22px] py-5 mb-[14px]">
             <div className="flex items-baseline justify-between gap-3 mb-3.5 flex-wrap">
               <b className="font-semibold text-[15px]">📈 Learning progress</b>
               <small className="text-[12.5px] text-faint font-medium">{cefr} difficulty</small>

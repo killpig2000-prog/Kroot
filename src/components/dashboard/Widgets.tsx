@@ -35,7 +35,7 @@ function WCard({ title, tag, index = 0, children }: { title: string; tag: string
   // Notes taped to the rail — alternating tilt and washi-tape color.
   return (
     <div
-      className={`relative bg-white border border-line px-[18px] py-4 shadow-[0_10px_22px_-14px_rgba(60,50,30,.3)] ${
+      className={`relative bg-cream border border-line px-[18px] py-4 shadow-[0_10px_22px_-14px_rgba(60,50,30,.3)] ${
         index % 2 ? "rotate-[-0.8deg]" : "rotate-[0.8deg]"
       }`}
     >

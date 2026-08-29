@@ -66,8 +66,8 @@ export default function VocabQuizPhase({
                   : state === "wrong"
                   ? "border-danger bg-danger-bg"
                   : show
-                  ? "border-line bg-white opacity-90"
-                  : "border-line bg-white hover:border-[#6B33CC] hover:bg-[#F5F3FF]"
+                  ? "border-line bg-cream opacity-90"
+                  : "border-line bg-cream hover:border-[#6B33CC] hover:bg-[#F5F3FF]"
               }`}
             >
               {opt}

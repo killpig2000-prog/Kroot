@@ -53,8 +53,8 @@ export default function QuizPhase({
                   : state === "wrong"
                   ? "border-danger bg-danger-bg"
                   : show
-                  ? "border-line bg-white opacity-90"
-                  : "border-line bg-white hover:border-sky-deep hover:bg-[#EFF6FF]"
+                  ? "border-line bg-cream opacity-90"
+                  : "border-line bg-cream hover:border-sky-deep hover:bg-[#EFF6FF]"
               }`}
             >
               <span

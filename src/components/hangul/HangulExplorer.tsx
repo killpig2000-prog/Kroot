@@ -43,7 +43,7 @@ function JamoTile({ jamo, selected, onSelect }: { jamo: Jamo; selected: boolean;
       }}
       aria-pressed={selected}
       aria-label={`${jamo.char} · ${jamo.rom}`}
-      className={`group flex flex-col items-center rounded-[14px] border bg-white px-1.5 pt-3 pb-2.5 text-center transition-all duration-150 hover:-translate-y-0.5 ${
+      className={`group flex flex-col items-center rounded-[14px] border bg-cream px-1.5 pt-3 pb-2.5 text-center transition-all duration-150 hover:-translate-y-0.5 ${
         selected ? "border-success bg-success-bg shadow-[0_0_0_3px_#DCFCE7]" : "border-line hover:border-success-line"
       }`}
     >
@@ -87,7 +87,7 @@ function JamoGrid({ items }: { items: Jamo[] }) {
         >
           <div className="flex items-center gap-3 min-w-0 flex-1">
             <span
-              className="kr flex-none w-12 h-12 rounded-xl bg-white border flex items-center justify-center text-[26px]"
+              className="kr flex-none w-12 h-12 rounded-xl bg-cream border flex items-center justify-center text-[26px]"
               style={{ borderColor: BRD, color: GREEN }}
             >
               {selected.char}
@@ -99,7 +99,7 @@ function JamoGrid({ items }: { items: Jamo[] }) {
           </div>
           <button
             onClick={() => speak(selected.example.kr)}
-            className="flex-none text-left bg-white border border-line rounded-[10px] px-3.5 py-2.5 flex items-center gap-3 hover:border-success transition-colors sm:min-w-[200px]"
+            className="flex-none text-left bg-cream border border-line rounded-[10px] px-3.5 py-2.5 flex items-center gap-3 hover:border-success transition-colors sm:min-w-[200px]"
           >
             <span className="min-w-0">
               <b className="kr block text-[16px] font-medium">{selected.example.kr}</b>
@@ -168,7 +168,7 @@ function SyllableBuilder() {
             className={`kr w-9 h-9 rounded-[9px] text-[17px] border transition-all ${
               i === cho
                 ? "bg-success border-success text-white"
-                : "bg-white border-line text-muted hover:border-success hover:-translate-y-0.5"
+                : "bg-cream border-line text-muted hover:border-success hover:-translate-y-0.5"
             }`}
           >
             {c}
@@ -185,7 +185,7 @@ function SyllableBuilder() {
             className={`kr w-9 h-9 rounded-[9px] text-[17px] border transition-all ${
               i === jung
                 ? "bg-success border-success text-white"
-                : "bg-white border-line text-muted hover:border-success hover:-translate-y-0.5"
+                : "bg-cream border-line text-muted hover:border-success hover:-translate-y-0.5"
             }`}
           >
             {v}
@@ -205,7 +205,7 @@ function PracticeWordCard({ kr, rom, en }: { kr: string; rom: string; en: string
         speak(kr);
       }}
       className={`border rounded-[14px] px-4 py-4 text-center transition-all duration-150 hover:-translate-y-0.5 ${
-        shown ? "border-success-line bg-success-bg" : "border-line bg-white hover:border-success"
+        shown ? "border-success-line bg-success-bg" : "border-line bg-cream hover:border-success"
       }`}
     >
       <b className="kr block text-[24px] font-medium mb-1.5">{kr}</b>
@@ -235,7 +235,7 @@ export default function HangulExplorer() {
             className={`rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold transition-all border ${
               t.key === tab
                 ? "bg-success border-success text-white"
-                : "bg-white border-line text-muted hover:border-faint"
+                : "bg-cream border-line text-muted hover:border-faint"
             }`}
           >
             {t.label}

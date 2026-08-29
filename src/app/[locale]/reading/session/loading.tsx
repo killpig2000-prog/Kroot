@@ -39,7 +39,7 @@ export default function Loading() {
               <div className="rounded-[10px] border border-line overflow-hidden bg-warm">
                 <div className="grid grid-cols-1 sm:grid-cols-2">
                   {/* Korean column */}
-                  <div className="p-[clamp(14px,2.5vw,22px)] bg-white sm:border-r border-b sm:border-b-0 border-line flex flex-col gap-2">
+                  <div className="p-[clamp(14px,2.5vw,22px)] bg-cream sm:border-r border-b sm:border-b-0 border-line flex flex-col gap-2">
                     <div className="h-2.5 w-16 rounded-full bg-warm-2 mb-1" />
                     <div className="h-5 w-[75%] rounded-lg bg-warm-3 mb-2" />
                     <div className="h-4 w-full rounded-full bg-warm-3" />

@@ -21,7 +21,7 @@ export default function FinishedAllCard({
 }) {
   return (
     <div
-      className="max-w-[680px] text-center border border-line rounded-[14px] px-7 py-10 bg-white"
+      className="max-w-[680px] text-center border border-line rounded-[14px] px-7 py-10 bg-cream"
       style={{ animation: "fadeUp .4s ease" }}
     >
       <svg width="104" height="104" viewBox="0 0 150 160" aria-hidden="true" className="inline-block">

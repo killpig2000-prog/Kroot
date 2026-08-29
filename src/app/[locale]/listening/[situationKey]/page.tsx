@@ -82,7 +82,7 @@ export default async function SituationPage({
                   <Link
                     href={`/listening?level=${level}`}
                     aria-label="Back to all situations"
-                    className="inline-flex w-[30px] h-[30px] rounded-lg bg-white text-muted border border-line items-center justify-center text-[15px] mr-[9px] transition-colors hover:border-teal hover:text-teal"
+                    className="inline-flex w-[30px] h-[30px] rounded-lg bg-cream text-muted border border-line items-center justify-center text-[15px] mr-[9px] transition-colors hover:border-teal hover:text-teal"
                   >
                     ←
                   </Link>

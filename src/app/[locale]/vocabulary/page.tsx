@@ -171,7 +171,7 @@ export default async function VocabularyPage({
           {upNext && (
             <section
               aria-label="Up next"
-              className="grid grid-cols-1 sm:grid-cols-[minmax(0,1fr)_auto] gap-3 sm:gap-[18px] items-center bg-white border border-[#DDD6FE] rounded-[14px] px-4 py-4 sm:px-[22px] sm:py-[18px] mb-4 shadow-[0_4px_0_#DDD6FE]"
+              className="grid grid-cols-1 sm:grid-cols-[minmax(0,1fr)_auto] gap-3 sm:gap-[18px] items-center bg-cream border border-[#DDD6FE] rounded-[14px] px-4 py-4 sm:px-[22px] sm:py-[18px] mb-4 shadow-[0_4px_0_#DDD6FE]"
             >
               <div className="min-w-0">
                 <p className="text-[11px] font-extrabold tracking-[.07em] uppercase text-[#6B33CC] mb-1">
@@ -242,7 +242,7 @@ export default async function VocabularyPage({
                   style={{ width: `${railPct}%` }}
                 />
                 <span
-                  className="absolute top-[-3px] w-[11px] h-[11px] -ml-[5px] rounded-full bg-white border-[2.5px] border-[#6B33CC]"
+                  className="absolute top-[-3px] w-[11px] h-[11px] -ml-[5px] rounded-full bg-cream border-[2.5px] border-[#6B33CC]"
                   style={{ left: `${railPct}%` }}
                 />
               </span>
@@ -314,7 +314,7 @@ export default async function VocabularyPage({
                                 aria-current={on ? "page" : undefined}
                                 className={`grid grid-cols-[minmax(0,1fr)_auto] gap-2 items-baseline px-2 py-[5px] rounded-[7px] text-[12.5px] transition-colors ${
                                   on
-                                    ? "bg-white border border-[#DDD6FE] text-[#713FC0] font-extrabold lg:bg-white max-lg:bg-[#F5F3FF] max-lg:border-transparent"
+                                    ? "bg-cream border border-[#DDD6FE] text-[#713FC0] font-extrabold lg:bg-cream max-lg:bg-[#F5F3FF] max-lg:border-transparent"
                                     : "hover:bg-warm"
                                 }`}
                               >
@@ -393,7 +393,7 @@ export default async function VocabularyPage({
                       </span>
                       <Link
                         href={sessionHref(selected.index)}
-                        className="rounded-[9px] px-4 py-2 text-[13px] font-bold bg-white border border-line hover:border-charcoal transition-colors whitespace-nowrap"
+                        className="rounded-[9px] px-4 py-2 text-[13px] font-bold bg-cream border border-line hover:border-charcoal transition-colors whitespace-nowrap"
                       >
                         {selected.status === "done"
                           ? "Review this unit →"

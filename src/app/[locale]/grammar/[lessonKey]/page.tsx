@@ -106,7 +106,7 @@ export default async function GrammarLessonPage({
             <div className="flex items-center justify-between gap-3 mt-6 flex-wrap">
               <Link
                 href="/grammar"
-                className="rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-charcoal bg-white border border-line hover:bg-warm transition-colors"
+                className="rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-charcoal bg-cream border border-line hover:bg-warm transition-colors"
               >
                 ← All lessons
               </Link>

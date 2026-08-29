@@ -15,7 +15,7 @@ export default function Loading() {
               <div className="h-3.5 w-28 rounded-full bg-warm-2" />
             </div>
 
-            <div className="border border-line rounded-[14px] bg-white max-w-[900px] overflow-hidden">
+            <div className="border border-line rounded-[14px] bg-cream max-w-[900px] overflow-hidden">
               <div className="grid grid-cols-1 md:grid-cols-2">
                 <div className="p-[clamp(20px,3vw,32px)] flex flex-col gap-3.5 border-b md:border-b-0 md:border-r border-dashed border-line">
                   <div className="h-3 w-24 rounded-full bg-warm-2" />

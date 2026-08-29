@@ -98,7 +98,7 @@ export default async function GrammarPage({
                   className={`rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold transition-all border ${
                     selectedGroup?.key === group.key
                       ? "bg-[#423AC5] border-[#423AC5] text-white"
-                      : "bg-white border-line text-muted hover:border-faint"
+                      : "bg-cream border-line text-muted hover:border-faint"
                   }`}
                 >
                   {group.title}
@@ -139,7 +139,7 @@ export default async function GrammarPage({
                 <Link
                   key={lesson.key}
                   href={`/grammar/${lesson.key}`}
-                  className={`flex items-center gap-3.5 px-[18px] py-[15px] bg-white transition-all duration-150 hover:bg-[#EEF2FF] group ${
+                  className={`flex items-center gap-3.5 px-[18px] py-[15px] bg-cream transition-all duration-150 hover:bg-[#EEF2FF] group ${
                     i > 0 ? "border-t border-line" : ""
                   }`}
                 >

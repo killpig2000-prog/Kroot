@@ -23,7 +23,7 @@ export default function LevelMap({
   const okCount = checks.filter((c) => c.ok).length;
 
   return (
-    <div className="border border-line rounded-[14px] bg-white px-[22px] py-5 mb-[14px]">
+    <div className="border border-line rounded-[14px] bg-cream px-[22px] py-5 mb-[14px]">
       <div className="flex items-baseline justify-between gap-3 mb-4 flex-wrap">
         <b className="font-semibold text-[15px]">🗺️ Your path</b>
         <small className="text-[12.5px] text-faint font-medium">
@@ -43,7 +43,7 @@ export default function LevelMap({
                     ? "bg-success text-white border-success"
                     : state === "now"
                       ? "bg-success-bg text-success-deep border-success ring-4 ring-success-bg"
-                      : "bg-white text-faint border-line"
+                      : "bg-cream text-faint border-line"
                 }`}
                 title={`${lv} · ${SPECIES[lv].name}`}
               >

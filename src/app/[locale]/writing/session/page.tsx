@@ -90,7 +90,7 @@ export default async function WritingChapterSessionPage({
           {!prompt ? (
             <WritingEmpty />
           ) : dailyDone ? (
-            <div className="border border-line rounded-[14px] bg-white max-w-[900px] px-7 py-10 text-center">
+            <div className="border border-line rounded-[14px] bg-cream max-w-[900px] px-7 py-10 text-center">
               <p className="text-[40px] mb-2">🌙</p>
               <h2 className="font-bold text-[19px] tracking-[-0.02em] mb-1.5">
                 Today&apos;s page is already written
@@ -102,7 +102,7 @@ export default async function WritingChapterSessionPage({
               <div className="flex justify-center gap-2.5 flex-wrap">
                 <Link
                   href={`/writing?level=${level}`}
-                  className="rounded-[9px] px-[18px] py-[9px] text-sm font-semibold text-charcoal bg-white border border-line hover:bg-warm transition-colors"
+                  className="rounded-[9px] px-[18px] py-[9px] text-sm font-semibold text-charcoal bg-cream border border-line hover:bg-warm transition-colors"
                 >
                   All pages
                 </Link>

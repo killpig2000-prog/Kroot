@@ -43,7 +43,7 @@ export default function ScoreResult({
         className="w-[220px] h-[220px] rounded-full flex items-center justify-center mb-3"
         style={{ background: `conic-gradient(${verdict.fg} ${animScore * 3.6}deg, #E3DDD0 0)` }}
       >
-        <div className="w-[184px] h-[184px] rounded-full bg-white flex flex-col items-center justify-center">
+        <div className="w-[184px] h-[184px] rounded-full bg-cream flex flex-col items-center justify-center">
           <span
             className="font-bold text-[64px] leading-none tabular-nums"
             style={{ fontFamily: "var(--font-hand)", color: verdict.fg }}

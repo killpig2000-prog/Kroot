@@ -51,7 +51,7 @@ export default function FinishedCard({
             : `conic-gradient(${TEAL} ${(nailed.length / words.length) * 360}deg, #E3DDD0 0)`,
         }}
       >
-        <div className="w-[84px] h-[84px] rounded-full bg-white flex items-center justify-center text-[34px]">
+        <div className="w-[84px] h-[84px] rounded-full bg-cream flex items-center justify-center text-[34px]">
           {cleared ? "🎉" : meta.emoji}
         </div>
       </div>
@@ -92,7 +92,7 @@ export default function FinishedCard({
             {weakWords.map((w) => (
               <span
                 key={w.id}
-                className="kr inline-flex items-center gap-1.5 text-[13px] font-medium bg-white border border-amber-line rounded-full px-2.5 py-1"
+                className="kr inline-flex items-center gap-1.5 text-[13px] font-medium bg-cream border border-amber-line rounded-full px-2.5 py-1"
               >
                 {w.kr}
                 <span className="text-[11px] text-faint">{attempts[w.id]?.best ?? 0}%</span>

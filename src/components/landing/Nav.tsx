@@ -45,7 +45,7 @@ export default function Nav() {
           <div className="flex items-center gap-2">
             <Link
               href="/auth/login"
-              className="inline-flex rounded-full border-[1.5px] border-line bg-white px-[14px] sm:px-[16px] py-[7px] text-[12.5px] font-bold text-[#221F1B] hover:bg-warm transition-colors"
+              className="inline-flex rounded-full border-[1.5px] border-line bg-cream px-[14px] sm:px-[16px] py-[7px] text-[12.5px] font-bold text-[#221F1B] hover:bg-warm transition-colors"
             >
               Log in
             </Link>

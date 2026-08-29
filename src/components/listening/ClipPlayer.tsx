@@ -75,14 +75,14 @@ export default function ClipPlayer({
           ← All clips
         </button>
         <button
-          className="flex-none border border-line bg-white rounded-lg px-3 py-1.5 text-[12.5px] font-semibold text-muted hover:border-faint transition-colors"
+          className="flex-none border border-line bg-cream rounded-lg px-3 py-1.5 text-[12.5px] font-semibold text-muted hover:border-faint transition-colors"
           onClick={() => setRate((r) => (r === 1.0 ? 0.7 : 1.0))}
         >
           {rate.toFixed(1)}×
         </button>
       </div>
 
-      <div className="border border-line rounded-[14px] p-[clamp(20px,3vw,28px)] mb-3.5 bg-white">
+      <div className="border border-line rounded-[14px] p-[clamp(20px,3vw,28px)] mb-3.5 bg-cream">
         <div className="flex items-center justify-between mb-3 gap-2.5 flex-wrap">
           <div className="font-semibold text-[15.5px]">
             {dialogue.title}
@@ -126,7 +126,7 @@ export default function ClipPlayer({
           <div className="flex items-center justify-center gap-3.5 mt-3 mb-1">
             <button
               aria-label="Replay previous line"
-              className="w-10 h-10 rounded-full border border-line bg-white text-[13px] text-muted hover:border-teal hover:text-teal transition-colors disabled:opacity-40"
+              className="w-10 h-10 rounded-full border border-line bg-cream text-[13px] text-muted hover:border-teal hover:text-teal transition-colors disabled:opacity-40"
               onClick={() => stageIndex > 0 && speakOne(stageIndex - 1)}
               disabled={!isSupported || stageIndex <= 0}
             >
@@ -142,7 +142,7 @@ export default function ClipPlayer({
             </button>
             <button
               aria-label="Replay this line"
-              className="w-10 h-10 rounded-full border border-line bg-white text-[13px] text-muted hover:border-teal hover:text-teal transition-colors disabled:opacity-40"
+              className="w-10 h-10 rounded-full border border-line bg-cream text-[13px] text-muted hover:border-teal hover:text-teal transition-colors disabled:opacity-40"
               onClick={() => stageIndex >= 0 && speakOne(stageIndex)}
               disabled={!isSupported || stageIndex < 0}
             >
@@ -249,8 +249,8 @@ export default function ClipPlayer({
                         : state === "wrong"
                           ? "border-danger bg-danger-bg"
                           : answered
-                            ? "border-line bg-white opacity-90"
-                            : "border-line bg-white hover:border-teal hover:bg-[#F0FDFA]"
+                            ? "border-line bg-cream opacity-90"
+                            : "border-line bg-cream hover:border-teal hover:bg-[#F0FDFA]"
                     }`}
                   >
                     <span

@@ -28,7 +28,7 @@ export default function SlangHero({ entry }: { entry: SlangEntry }) {
         {entry.origin && (
           <p className="text-[13px] text-muted mt-2 leading-[1.55]">{entry.origin}</p>
         )}
-        <div className="mt-3 rounded-[10px] bg-white border border-[#FBCFE8] px-3.5 py-2.5">
+        <div className="mt-3 rounded-[10px] bg-cream border border-[#FBCFE8] px-3.5 py-2.5">
           <div className="flex items-start gap-2">
             <span className="kr text-[14px] flex-1">{entry.example.kr}</span>
             <SpeakButton text={entry.example.kr} className="shrink-0 w-7 h-7 text-[12px]" />

@@ -67,7 +67,7 @@ export default function PlusCheckoutButton({
         className={`w-full inline-flex items-center justify-center rounded-[10px] px-[22px] py-[11px] text-[14px] font-semibold transition-colors disabled:opacity-60 ${
           highlight
             ? "bg-success text-white hover:bg-success-deep"
-            : "border border-line bg-white text-charcoal hover:bg-warm"
+            : "border border-line bg-cream text-charcoal hover:bg-warm"
         }`}
       >
         {busy ? "Opening checkout…" : signedIn ? "Get Plus" : "Log in to get Plus"}

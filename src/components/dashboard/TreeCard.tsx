@@ -62,7 +62,7 @@ export default function TreeCard({
   const groundShift = frameH - 230;
 
   return (
-    <div className={`relative border border-line p-[clamp(18px,3.6vw,26px)] mb-3.5 grid grid-cols-1 sm:grid-cols-[auto_1fr] gap-[clamp(18px,4vw,32px)] ${veteran ? "items-start" : "items-center"} bg-white rotate-[-0.4deg] shadow-[0_14px_30px_-18px_rgba(60,50,30,.35)]`}>
+    <div className={`relative border border-line p-[clamp(18px,3.6vw,26px)] mb-3.5 grid grid-cols-1 sm:grid-cols-[auto_1fr] gap-[clamp(18px,4vw,32px)] ${veteran ? "items-start" : "items-center"} bg-cream rotate-[-0.4deg] shadow-[0_14px_30px_-18px_rgba(60,50,30,.35)]`}>
       <TreeGrowthPopup level={level} species={species} />
       <span
         aria-hidden="true"
@@ -70,7 +70,7 @@ export default function TreeCard({
         style={{ background: "rgba(190,227,248,.65)", borderColor: "rgba(150,200,230,.45)" }}
       />
       {/* the tree, as a polaroid in the album */}
-      <figure className="relative m-0 bg-white border border-line p-1.5 pb-6 rotate-[1.2deg] shadow-[0_10px_22px_-12px_rgba(60,50,30,.35)]">
+      <figure className="relative m-0 bg-cream border border-line p-1.5 pb-6 rotate-[1.2deg] shadow-[0_10px_22px_-12px_rgba(60,50,30,.35)]">
         <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
           <SpeechBubble phrases={TREE_PHRASES} />
         </div>
@@ -170,8 +170,8 @@ export default function TreeCard({
                   state === "now"
                     ? "bg-success-bg border-success-line"
                     : state === "done"
-                    ? "bg-white border-line"
-                    : "bg-white border-line grayscale opacity-45"
+                    ? "bg-cream border-line"
+                    : "bg-cream border-line grayscale opacity-45"
                 }`}
               >
                 <span className={state === "now" ? "inline-block bob" : undefined}>
@@ -206,8 +206,8 @@ export default function TreeCard({
                       on
                         ? "bg-[#FFF8E6] border-[#F3D98A] text-[#B7791F]"
                         : next
-                        ? "bg-white border-line text-muted"
-                        : "bg-white border-line text-faint opacity-50"
+                        ? "bg-cream border-line text-muted"
+                        : "bg-cream border-line text-faint opacity-50"
                     }`}
                   >
                     <span className="tabular-nums">Lv.{m.level}</span> · {m.name}

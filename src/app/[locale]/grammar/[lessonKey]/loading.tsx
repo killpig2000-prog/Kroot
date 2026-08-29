@@ -82,7 +82,7 @@ export default function Loading() {
 
               {/* footer nav */}
               <div className="flex items-center justify-between gap-3 mt-6 flex-wrap">
-                <div className="h-10 w-32 rounded-[9px] bg-white border border-line" />
+                <div className="h-10 w-32 rounded-[9px] bg-cream border border-line" />
                 <div className="h-10 w-40 rounded-[9px] bg-warm-3" />
               </div>
             </div>

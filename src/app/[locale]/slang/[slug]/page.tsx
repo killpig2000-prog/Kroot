@@ -77,7 +77,7 @@ export default async function SlangSharePage({ params }: Props) {
       <main className="mx-auto max-w-3xl px-6 pb-16">
         <p className="mb-2 text-sm text-[#C13E78] font-semibold">Kroot · Street Talk 🇰🇷</p>
 
-        <article className="relative border border-[#FBCFE8] rounded-[22px] bg-white p-8 sm:p-10 shadow-[0_14px_34px_-20px_rgba(219,39,119,.35)] text-center">
+        <article className="relative border border-[#FBCFE8] rounded-[22px] bg-cream p-8 sm:p-10 shadow-[0_14px_34px_-20px_rgba(219,39,119,.35)] text-center">
           {vibe && (
             <span className="inline-block text-[12px] font-semibold text-[#C13E78] bg-[#FDF2F8] border border-[#FBCFE8] rounded-full px-3 py-1 mb-5">
               {vibe.emoji} {vibe.label}
@@ -111,7 +111,7 @@ export default async function SlangSharePage({ params }: Props) {
               <li key={e.slug}>
                 <Link
                   href={`/slang/${e.slug}`}
-                  className="block rounded-2xl border border-[#F3E8EE] bg-white px-4 py-3 shadow-[0_3px_10px_-6px_rgba(219,39,119,.25)] hover:-translate-y-0.5 hover:border-[#FBCFE8] transition"
+                  className="block rounded-2xl border border-[#F3E8EE] bg-cream px-4 py-3 shadow-[0_3px_10px_-6px_rgba(219,39,119,.25)] hover:-translate-y-0.5 hover:border-[#FBCFE8] transition"
                 >
                   <span className="kr font-bold">{e.kr}</span>{" "}
                   <span className="text-sm text-muted">

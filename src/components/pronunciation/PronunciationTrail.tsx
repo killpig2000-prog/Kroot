@@ -25,7 +25,7 @@ function Stone({ chapter, current }: { chapter: ChapterProgress; current: boolea
   const body = (
     <div
       title={chapter.title}
-      className={`w-full rounded-[12px] border-[1.5px] bg-white px-2 pt-2.5 pb-3 text-center transition-transform ${
+      className={`w-full rounded-[12px] border-[1.5px] bg-cream px-2 pt-2.5 pb-3 text-center transition-transform ${
         chapter.locked ? "opacity-50" : "hover:-translate-y-0.5"
       }`}
       style={{
@@ -39,7 +39,7 @@ function Stone({ chapter, current }: { chapter: ChapterProgress; current: boolea
           background: chapter.locked ? "#E3DDD0" : chapter.cleared ? RAINBOW : `conic-gradient(${style.c} ${pct * 360}deg, #E3DDD0 0)`,
         }}
       >
-        <div className="w-[27px] h-[27px] rounded-full bg-white flex items-center justify-center text-[11px] font-bold">
+        <div className="w-[27px] h-[27px] rounded-full bg-cream flex items-center justify-center text-[11px] font-bold">
           {chapter.locked ? "🔒" : chapter.cleared ? "✓" : `${chapter.nailed}/${chapter.total}`}
         </div>
       </div>

@@ -6,7 +6,7 @@ export default function PronunciationDemo() {
   return (
     <section className="bg-warm border-t border-dashed border-dash py-[clamp(52px,8vw,88px)] px-6">
       <div className="text-center mb-1.5">
-        <span className="inline-block bg-white border-[1.5px] border-dashed border-[#CFC8B8] rounded-full px-4 py-[5px] text-xs font-extrabold text-teal -rotate-1">
+        <span className="inline-block bg-cream border-[1.5px] border-dashed border-[#CFC8B8] rounded-full px-4 py-[5px] text-xs font-extrabold text-teal -rotate-1">
           pronunciation trail · <span className="kr">발음 도장깨기</span>
         </span>
       </div>
@@ -20,7 +20,7 @@ export default function PronunciationDemo() {
 
       <div className="flex justify-center items-center gap-4 flex-wrap max-w-[820px] mx-auto">
         {/* prompt card */}
-        <div className="w-[min(320px,100%)] bg-white border border-line rounded-[16px] p-5 shadow-[0_14px_30px_-16px_rgba(60,50,30,.3)] -rotate-1">
+        <div className="w-[min(320px,100%)] bg-cream border border-line rounded-[16px] p-5 shadow-[0_14px_30px_-16px_rgba(60,50,30,.3)] -rotate-1">
           <div className="flex items-center justify-between mb-4">
             <span className="inline-flex items-center gap-1.5 text-[11px] font-extrabold text-teal bg-[#F0FDFA] border border-[#99F6E4] rounded-full px-3 py-1">
               🌶️ Spicy · ㄹ chapter
@@ -46,7 +46,7 @@ export default function PronunciationDemo() {
         <span aria-hidden="true" className="text-[26px] text-[#CFC8B8] rotate-90 sm:rotate-0">→</span>
 
         {/* result card */}
-        <div className="w-[min(320px,100%)] bg-white border border-success-line rounded-[16px] p-5 shadow-[0_14px_30px_-16px_rgba(60,50,30,.3)] rotate-1">
+        <div className="w-[min(320px,100%)] bg-cream border border-success-line rounded-[16px] p-5 shadow-[0_14px_30px_-16px_rgba(60,50,30,.3)] rotate-1">
           <p className="text-[11px] font-extrabold tracking-[.05em] uppercase text-faint mb-4 text-center">
             Result
           </p>

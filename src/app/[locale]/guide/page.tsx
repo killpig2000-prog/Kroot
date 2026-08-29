@@ -193,7 +193,7 @@ export default async function GuidePage() {
                 return (
                 <article
                   key={route.name}
-                  className="relative overflow-hidden rounded-[18px] border border-line bg-white shadow-[0_1px_2px_rgba(27,36,48,.04),0_8px_24px_-16px_rgba(27,36,48,.16)]"
+                  className="relative overflow-hidden rounded-[18px] border border-line bg-cream shadow-[0_1px_2px_rgba(27,36,48,.04),0_8px_24px_-16px_rgba(27,36,48,.16)]"
                 >
                   <span
                     className="absolute inset-y-0 left-0 w-[3px]"
@@ -428,7 +428,7 @@ export default async function GuidePage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
               <Link
                 href="/review"
-                className="group flex flex-col rounded-2xl border border-line bg-white px-[18px] pt-4 pb-3.5 shadow-[0_1px_2px_rgba(27,36,48,.04),0_8px_24px_-16px_rgba(27,36,48,.16)] transition-all hover:border-sky-deep hover:-translate-y-0.5"
+                className="group flex flex-col rounded-2xl border border-line bg-cream px-[18px] pt-4 pb-3.5 shadow-[0_1px_2px_rgba(27,36,48,.04),0_8px_24px_-16px_rgba(27,36,48,.16)] transition-all hover:border-sky-deep hover:-translate-y-0.5"
               >
                 <span className="flex items-center gap-3 mb-2.5">
                   <span className="flex-none w-9 h-9 rounded-[11px] bg-[#F0F9FF] border border-sky-line flex items-center justify-center text-[18px]">
@@ -465,7 +465,7 @@ export default async function GuidePage() {
 
               <Link
                 href="/level-test"
-                className="group flex flex-col rounded-2xl border border-line bg-white px-[18px] pt-4 pb-3.5 shadow-[0_1px_2px_rgba(27,36,48,.04),0_8px_24px_-16px_rgba(27,36,48,.16)] transition-all hover:border-[#6B33CC] hover:-translate-y-0.5"
+                className="group flex flex-col rounded-2xl border border-line bg-cream px-[18px] pt-4 pb-3.5 shadow-[0_1px_2px_rgba(27,36,48,.04),0_8px_24px_-16px_rgba(27,36,48,.16)] transition-all hover:border-[#6B33CC] hover:-translate-y-0.5"
               >
                 <span className="flex items-center gap-3 mb-2.5">
                   <span className="flex-none w-9 h-9 rounded-[11px] bg-[#F5F3FF] border border-[#DDD6FE] flex items-center justify-center text-[18px]">
@@ -525,7 +525,7 @@ export default async function GuidePage() {
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {FACTS.map((f) => (
-                <div key={f.title} className="rounded-[14px] border border-line bg-white px-[15px] py-3.5">
+                <div key={f.title} className="rounded-[14px] border border-line bg-cream px-[15px] py-3.5">
                   <span className="block text-[10px] font-black uppercase tracking-[.09em] text-faint mb-1.5">
                     {f.kicker}
                   </span>

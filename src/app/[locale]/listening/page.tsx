@@ -112,7 +112,7 @@ export default async function ListeningPage({
                 <Link
                   key={s.key}
                   href={href}
-                  className="border border-line rounded-[14px] bg-white overflow-hidden text-left transition-all duration-150 hover:border-teal hover:bg-[#F0FDFA] hover:-translate-y-0.5 group"
+                  className="border border-line rounded-[14px] bg-cream overflow-hidden text-left transition-all duration-150 hover:border-teal hover:bg-[#F0FDFA] hover:-translate-y-0.5 group"
                 >
                   <div
                     className="relative aspect-[4/3] sm:aspect-[16/9] bg-warm"
@@ -122,12 +122,12 @@ export default async function ListeningPage({
                         : { background: s.bg }
                     }
                   >
-                    <span className="absolute left-2.5 bottom-2.5 sm:left-3 sm:bottom-3 w-8 h-8 sm:w-9 sm:h-9 rounded-[10px] flex items-center justify-center text-base sm:text-lg bg-white/95 border border-line shadow-sm transition-transform group-hover:scale-110">
+                    <span className="absolute left-2.5 bottom-2.5 sm:left-3 sm:bottom-3 w-8 h-8 sm:w-9 sm:h-9 rounded-[10px] flex items-center justify-center text-base sm:text-lg bg-cream/95 border border-line shadow-sm transition-transform group-hover:scale-110">
                       {s.icon}
                     </span>
                     {done > 0 && (
                       <span
-                        className="absolute left-0 right-0 bottom-0 h-1 bg-white/55"
+                        className="absolute left-0 right-0 bottom-0 h-1 bg-cream/55"
                         role="progressbar"
                         aria-valuemin={0}
                         aria-valuemax={count}
