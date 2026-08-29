@@ -1,11 +1,11 @@
 {
-  "dictionary": "Korean Dictionary",
-  "level": "Level",
-  "exampleSentence": "Example sentence",
-  "moreLevelWords": "More Level {level} words",
-  "learnForReal": "Learn {word} for real — not just read it",
-  "learnDescription": "Kroot teaches this word with flashcards, listening, and speaking practice — free, at your own pace.",
-  "startLearning": "Start learning — free",
-  "seenInListening": "🎧 Seen in Listening",
-  "seenInReading": "📖 Seen in Reading"
+  "dictionary": "韩语词典",
+  "level": "级别",
+  "exampleSentence": "例句",
+  "moreLevelWords": "更多级别 {level} 的单词",
+  "learnForReal": "真正学习 {word} — 不只是阅读",
+  "learnDescription": "Kroot通过闪卡、听力和发音练习来教授这个单词 — 完全免费，按您的进度。",
+  "startLearning": "免费开始学习",
+  "seenInListening": "🎧 在听力中出现",
+  "seenInReading": "📖 在阅读中出现"
 }
