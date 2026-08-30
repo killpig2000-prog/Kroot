@@ -14,30 +14,10 @@ import { getLocalizedMeaning } from "@/lib/vocabulary-i18n";
 const TOPIC_KEY = "daily-life";
 const PREVIEW_WORDS = 5;
 
-// Five dots instead of "0/5": an untouched chapter reads as room to grow, not
-// a column of zeros. Half-filled dots are units in progress.
-function ChapterDots({ done, started, total }: { done: number; started: number; total: number }) {
-  return (
-    <span
-      className="flex gap-[3px] items-center flex-none"
-      title={`${done} of ${total} units done`}
-      aria-label={`${done} of ${total} units done`}
-    >
-      {Array.from({ length: total }, (_, i) => (
-        <span
-          key={i}
-          className={`w-[6px] h-[6px] rounded-full ${
-            i < done ? "bg-[#6B33CC]" : i < done + started ? "bg-[var(--tint-violet-line)]" : "bg-line"
-          }`}
-        />
-      ))}
-    </span>
-  );
-}
-
 // The vocab index as a notebook: one "Up next" card with the single obvious
-// action, a numbered table of contents (5 units = 1 chapter) on the left, and
-// a preview of the selected unit's words on the right.
+// action, a horizontally-scrolling chapter chip bar (same on phone and
+// desktop) that always shows where you are, and a preview of the selected
+// unit's words below it.
 export default async function VocabularyPage({
   params,
   searchParams,
@@ -253,97 +233,108 @@ export default async function VocabularyPage({
             </div>
           )}
 
-          <div className="grid grid-cols-1 lg:grid-cols-[236px_minmax(0,1fr)] gap-6 lg:gap-8">
-            {/* ── table of contents ── */}
-            <nav
-              aria-label="Chapters"
-              className="order-2 lg:order-1 lg:border-r lg:border-line lg:pr-5 lg:sticky lg:top-6 lg:self-start lg:max-h-[calc(100vh-48px)] lg:overflow-y-auto"
-            >
-              <p className="flex items-center justify-end mb-2">
-                <Link
-                  href={`/vocabulary?level=${level}${selected ? `&unit=${selected.index}` : ""}${showAll ? "" : "&all=1"}`}
-                  className="text-[11.5px] font-bold tracking-normal normal-case text-[#6B33CC] hover:underline"
-                >
-                  {showAll ? t("showChapters") : t("showAllUnits")}
-                </Link>
-              </p>
-              <div className="flex flex-col gap-px">
-                {chapters.map((group, ci) => {
-                  const first = group[0].index + 1;
-                  const last = group[group.length - 1].index + 1;
-                  const chapterDone = group.filter((u) => u.status === "done").length;
-                  const chapterStarted = group.filter((u) => u.status === "in-progress").length;
-                  const allDone = chapterDone === group.length;
-                  const open = showAll || ci === openChapter;
-                  const current = ci === openChapter;
-                  // The row jumps to the chapter's first unfinished unit; the
-                  // page then opens that chapter in place of this one.
-                  const target = group.find((u) => u.status !== "done") ?? group[0];
-                  return (
-                    <div key={ci}>
-                      <Link
-                        href={unitHref(target.index)}
-                        aria-current={current ? "true" : undefined}
-                        className={`grid grid-cols-[minmax(0,1fr)_auto] gap-2 items-center px-2 py-[7px] rounded-[8px] text-[12.5px] transition-colors ${
-                          current ? "bg-[var(--tint-violet)] text-[#713FC0] font-bold" : "hover:bg-warm"
-                        } ${allDone && !current ? "text-muted font-semibold" : "font-bold"}`}
-                        title={t("unitsOf", { first, last })}
-                      >
-                        <span className="truncate">
-                          {allDone && <span className="text-success text-[11px] mr-1.5">✓</span>}
-                          Chapter {ci + 1}
-                        </span>
-                        <ChapterDots done={chapterDone} started={chapterStarted} total={group.length} />
-                      </Link>
-                      {open && (
-                        <div className="flex flex-col ml-[18px] pl-2.5 my-0.5 mb-1.5 border-l-2 border-[var(--tint-violet-line)]">
-                          {group.map((u) => {
-                            const on = selected?.index === u.index;
-                            return (
-                              <Link
-                                key={u.index}
-                                href={unitHref(u.index)}
-                                aria-current={on ? "page" : undefined}
-                                className={`grid grid-cols-[minmax(0,1fr)_auto] gap-2 items-baseline px-2 py-[5px] rounded-[7px] text-[12.5px] transition-colors ${
-                                  on
-                                    ? "bg-cream border border-[var(--tint-violet-line)] text-[#713FC0] font-extrabold lg:bg-cream max-lg:bg-[var(--tint-violet)] max-lg:border-transparent"
-                                    : "hover:bg-warm"
-                                }`}
-                              >
-                                <span
-                                  className={`truncate ${
-                                    u.status === "done" && !on ? "text-muted line-through decoration-line" : ""
-                                  }`}
-                                >
-                                  {unitLabel(u.index)}
-                                </span>
-                                <span
-                                  className={`text-[10.5px] tabular-nums flex-none ${
-                                    u.thirsty > 0
-                                      ? "text-sky-deep font-bold"
-                                      : on
-                                      ? "text-[#6B33CC] font-bold"
-                                      : u.status === "done"
-                                      ? "text-success"
-                                      : "text-faint"
-                                  }`}
-                                >
-                                  {unitStatus(u)}
-                                </span>
-                              </Link>
-                            );
-                          })}
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            </nav>
+          {/* ── chapter chip bar ── */}
+          <nav
+            aria-label="Chapters"
+            className="mb-3 sticky top-[52px] md:top-0 z-20 -mx-1 px-1 pt-1 bg-warm/95 backdrop-blur-sm"
+          >
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-[11px] font-extrabold tracking-[.06em] uppercase text-[#6B33CC]">
+                Chapters
+              </span>
+              <Link
+                href={`/vocabulary?level=${level}${selected ? `&unit=${selected.index}` : ""}${showAll ? "" : "&all=1"}`}
+                className="text-[11.5px] font-bold tracking-normal normal-case text-[#6B33CC] hover:underline"
+              >
+                {showAll ? t("showChapters") : t("showAllUnits")}
+              </Link>
+            </div>
+            <div className="flex gap-2 overflow-x-auto lg:flex-wrap lg:overflow-visible pb-1.5">
+              {chapters.map((group, ci) => {
+                const chapterDone = group.filter((u) => u.status === "done").length;
+                const chapterThirsty = group.reduce((sum, u) => sum + u.thirsty, 0);
+                const allDone = chapterDone === group.length;
+                const current = ci === openChapter;
+                // The chip jumps to the chapter's first unfinished unit; the
+                // page then opens that chapter's units below.
+                const target = group.find((u) => u.status !== "done") ?? group[0];
+                return (
+                  <Link
+                    key={ci}
+                    href={unitHref(target.index)}
+                    aria-current={current ? "true" : undefined}
+                    className={`flex-none inline-flex items-center gap-1.5 rounded-full border px-3.5 py-[7px] text-[12.5px] font-bold whitespace-nowrap transition-colors ${
+                      current
+                        ? "bg-[#6B33CC] border-[#6B33CC] text-white"
+                        : allDone
+                        ? "bg-cream border-line text-muted hover:border-charcoal"
+                        : "bg-cream border-line hover:border-charcoal"
+                    }`}
+                  >
+                    {allDone && !current && <span className="text-success text-[11px]">✓</span>}
+                    Chapter {ci + 1}
+                    <span
+                      className={`text-[10.5px] tabular-nums font-semibold ${
+                        current ? "text-white/80" : chapterThirsty > 0 ? "text-sky-deep" : "text-faint"
+                      }`}
+                    >
+                      {chapterThirsty > 0 ? `💧${chapterThirsty}` : `${chapterDone}/${group.length}`}
+                    </span>
+                  </Link>
+                );
+              })}
+            </div>
+          </nav>
 
-            {/* ── unit preview ── */}
-            <section className="order-1 lg:order-2 min-w-0" id="unit">
-              {selected ? (
+          {/* ── unit pills for the open chapter(s) ── */}
+          <div className="flex flex-col gap-2.5 mb-5">
+            {(showAll ? chapters : chapters.slice(openChapter, openChapter + 1)).map((group, gi) => {
+              const ci = showAll ? gi : openChapter;
+              return (
+                <div key={ci} className="flex items-center gap-2 overflow-x-auto lg:flex-wrap lg:overflow-visible">
+                  {showAll && (
+                    <span className="flex-none text-[11px] font-bold text-faint tabular-nums pr-0.5">
+                      Ch.{ci + 1}
+                    </span>
+                  )}
+                  {group.map((u) => {
+                    const on = selected?.index === u.index;
+                    return (
+                      <Link
+                        key={u.index}
+                        href={unitHref(u.index)}
+                        aria-current={on ? "page" : undefined}
+                        className={`flex-none inline-flex items-center gap-1.5 rounded-[8px] border px-2.5 py-1 text-[12px] font-semibold whitespace-nowrap transition-colors ${
+                          on
+                            ? "bg-[var(--tint-violet)] border-[var(--tint-violet-line)] text-[#713FC0] font-extrabold"
+                            : "bg-cream border-line hover:border-charcoal"
+                        } ${u.status === "done" && !on ? "text-muted" : ""}`}
+                      >
+                        {unitLabel(u.index)}
+                        <span
+                          className={`text-[10px] tabular-nums ${
+                            u.thirsty > 0
+                              ? "text-sky-deep font-bold"
+                              : on
+                              ? "text-[#6B33CC] font-bold"
+                              : u.status === "done"
+                              ? "text-success"
+                              : "text-faint"
+                          }`}
+                        >
+                          {unitStatus(u)}
+                        </span>
+                      </Link>
+                    );
+                  })}
+                </div>
+              );
+            })}
+          </div>
+
+          {/* ── unit preview ── */}
+          <section className="min-w-0" id="unit">
+            {selected ? (
                 <>
                   <div className="flex items-start justify-between gap-4 pb-3.5 mb-1 border-b border-line">
                     <div className="min-w-0">
@@ -396,7 +387,7 @@ export default async function VocabularyPage({
                     </div>
                   </div>
 
-                  <div className="flex flex-col">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-x-8">
                     {selected.words.map((w, wi) => {
                       const status = wordStatus(reviewsByKey.get(w.key) ?? 0);
                       const thirsty = thirstyKeys.has(w.key);
@@ -432,18 +423,17 @@ export default async function VocabularyPage({
                     })}
                   </div>
                 </>
-              ) : (
-                <p className="text-[13px] text-muted py-6">No units at this level yet.</p>
-              )}
+            ) : (
+              <p className="text-[13px] text-muted py-6">No units at this level yet.</p>
+            )}
 
-              {/* growth legend + tally */}
-              <div className="mt-7 pt-4 border-t border-line flex items-center justify-end text-[12px] text-muted">
-                <span className="tabular-nums">
-                  <b className="text-charcoal">{rootedWords}</b> of {totalWords} words rooted
-                </span>
-              </div>
-            </section>
-          </div>
+            {/* growth legend + tally */}
+            <div className="mt-7 pt-4 border-t border-line flex items-center justify-end text-[12px] text-muted">
+              <span className="tabular-nums">
+                <b className="text-charcoal">{rootedWords}</b> of {totalWords} words rooted
+              </span>
+            </div>
+          </section>
         </main>
       </div>
 
