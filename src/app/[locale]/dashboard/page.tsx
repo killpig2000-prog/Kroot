@@ -366,15 +366,7 @@ export default async function DashboardPage() {
 
             {/* unlocked so far, in unlock order */}
             {firstVisit.unlocked.quest && (
-              <ContinueCard
-                resume={resume}
-                fallback={continueFallback}
-                quest={{
-                  label: questParts[0],
-                  href: questHref[questSkill] ?? "/listening",
-                  done: !!quest?.completed_at,
-                }}
-              />
+              <ContinueCard resume={resume} fallback={continueFallback} />
             )}
 
             {firstVisit.unlocked.wotd && wotd && <WordOfDayCard wotd={wotd} />}
@@ -428,16 +420,11 @@ export default async function DashboardPage() {
             species={cefr}
           />
 
-          {/* the one button: pick up where you left off */}
-          <ContinueCard
-            resume={resume}
-            fallback={continueFallback}
-            quest={{
-              label: questParts[0],
-              href: questHref[questSkill] ?? "/listening",
-              done: !!quest?.completed_at,
-            }}
-          />
+          {/* the one button: pick up where you left off. No resume in
+              progress ⇒ this would just re-show today's quest, which already
+              has its own widget in the sidebar, so it's skipped entirely and
+              the due-review banner below becomes the top recommendation. */}
+          {resume && <ContinueCard resume={resume} fallback={continueFallback} />}
 
           <InstallBanner streakDays={streakDays} />
 
