@@ -8,10 +8,11 @@ import AccountMenu from "@/components/dashboard/AccountMenu";
 import { Link } from "@/i18n/navigation";
 import { MAIN_ITEMS, SECTIONS, type NavColor } from "@/components/dashboard/navItems";
 
-// Nav labels map 1:1 to nav.json keys, except the two-word one.
+import BrandMark from "@/components/ui/BrandMark";
+
+// Nav labels map 1:1 to nav.json keys, except the two-word ones.
 const navKey = (label: string) =>
   label === "My account" ? "myAccount" : label === "My word bank" ? "myWords" : label.toLowerCase();
-import BrandMark from "@/components/ui/BrandMark";
 
 const LANGUAGES = [
   { code: "en", label: "🇬🇧 English" },

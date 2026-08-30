@@ -93,7 +93,7 @@ export default async function ReviewPage() {
             </h1>
             <span className="flex items-center gap-3 flex-wrap text-[13px] text-muted">
               <Link href="/review/words" className="font-semibold text-sky-deep hover:underline">
-                📚 My words →
+                📚 {tn("myWords")} →
               </Link>
             </span>
           </div>

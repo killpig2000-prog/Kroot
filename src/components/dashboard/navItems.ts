@@ -31,6 +31,7 @@ export const SECTIONS: { title: string; items: NavItem[] }[] = [
       { icon: "🔤", label: "Hangul", href: "/hangul", color: { text: "#C63958", bg: "#FFF1F2", border: "#FECDD3" } },
       { icon: "📖", label: "Grammar", href: "/grammar", color: { text: "#423AC5", bg: "#EEF2FF", border: "#C7D2FE" } },
       { icon: "🃏", label: "Vocabulary", href: "/vocabulary", color: { text: "#6B33CC", bg: "#F5F3FF", border: "#DDD6FE" }, popular: true },
+      { icon: "📚", label: "My word bank", href: "/review/words", color: { text: "#2563EB", bg: "#EFF6FF", border: "#BFDBFE" } },
     ],
   },
   {

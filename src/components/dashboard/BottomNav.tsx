@@ -16,7 +16,8 @@ type Sheet = "learn" | "more" | null;
 
 // nav.json keys: single-word labels lowercase 1:1 ("Garden" → garden);
 // multi-word ones are stored as the key itself ("My account" → myAccount).
-const navKey = (label: string) => (label === "My account" ? "myAccount" : /[A-Z]/.test(label.slice(1)) ? label : label.toLowerCase());
+const navKey = (label: string) =>
+  label === "My account" ? "myAccount" : label === "My word bank" ? "myWords" : /[A-Z]/.test(label.slice(1)) ? label : label.toLowerCase();
 
 const LEARN_SECTIONS = SECTIONS.filter((s) => s.title === "Basics" || s.title === "Practice");
 const MORE_SECTIONS = [
