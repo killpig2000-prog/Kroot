@@ -267,7 +267,6 @@ export default async function DashboardPage() {
   const overallPct = Math.round(
     Object.values(skillProgress).reduce((sum, p) => sum + p.percent, 0) / Object.keys(skillProgress).length
   );
-  const remindersOff = !extras?.reminder_push && !extras?.reminder_email;
 
 
   // Finished sessions: the activity_completed events, backed up by the
@@ -468,20 +467,6 @@ export default async function DashboardPage() {
           {/* curriculum map: A1 → C2 stepper + level-up checks */}
           {promo && (
             <LevelMap current={cefr} checks={promoChecks} eligible={elig.eligible} overallPct={overallPct} />
-          )}
-
-          {/* streak at risk & no reminders yet → one-line nudge to /profile */}
-          {remindersOff && streakDays >= 3 && (
-            <Link
-              href="/profile#reminders"
-              className="flex flex-wrap sm:flex-nowrap items-center gap-x-3 gap-y-1.5 border border-dashed border-dash rounded-[12px] bg-cream px-4 py-3 mb-[14px] text-[13px] text-muted hover:border-success transition-colors"
-            >
-              <span>⏰</span>
-              <span className="flex-1 min-w-0">
-                <b className="text-charcoal font-semibold">Protect your {streakDays}-day streak</b> — get one gentle reminder on days you haven&apos;t studied.
-              </span>
-              <span className="w-full sm:w-auto pl-[28px] sm:pl-0 font-semibold text-success">Turn on →</span>
-            </Link>
           )}
 
           {/* Learning progress moved to My account (/profile) 2026-08-30 — the
