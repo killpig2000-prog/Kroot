@@ -6,6 +6,7 @@ import WordDetailCard from "@/components/vocabulary/WordDetailCard";
 import { createClient, getClaimsUser, getDashboardProfile } from "@/lib/supabase/server";
 import { VOCAB_TOPICS, getChaptersForTopic, unitLabel } from "@/lib/vocabulary";
 import { findMoreExamples } from "@/lib/vocab-examples";
+import { DEFAULT_WORD_BANK_SLOTS, countSavedWords } from "@/lib/word-bank";
 import { isCefrLevel, type CefrLevel } from "@/lib/tree";
 
 // A single word looked up from the unit preview — a dictionary entry, not a
@@ -16,7 +17,7 @@ export default async function VocabWordPage({
   searchParams,
 }: {
   params: Promise<{ locale: string; topicKey: string }>;
-  searchParams: Promise<{ level?: string; chapter?: string; i?: string }>;
+  searchParams: Promise<{ level?: string; chapter?: string; i?: string; from?: string }>;
 }) {
   const { locale, topicKey } = await params;
   const sp = await searchParams;
@@ -39,17 +40,43 @@ export default async function VocabWordPage({
   const word = chapterWords[wordIndex];
   if (!word) notFound();
 
-  const { data: progress } = await supabase
-    .from("vocabulary_progress")
-    .select("correct_count, incorrect_count, box")
-    .eq("user_id", user.id)
-    .eq("word_key", word.key)
-    .maybeSingle();
+  const progressQuery = (cols: string) =>
+    supabase
+      .from("vocabulary_progress")
+      .select(cols)
+      .eq("user_id", user.id)
+      .eq("word_key", word.key)
+      .maybeSingle();
+
+  // Migration 0039 columns — tolerant of a checkout whose DB is behind.
+  const [first, savedCount, slotsRes] = await Promise.all([
+    progressQuery("correct_count, incorrect_count, box, saved"),
+    countSavedWords(supabase, user.id),
+    supabase.from("profiles").select("word_bank_slots").eq("id", user.id).maybeSingle(),
+  ]);
+  type ProgressRow = {
+    correct_count: number | null;
+    incorrect_count: number | null;
+    box: number | null;
+    saved?: boolean | null;
+  };
+  let progress = first.data as unknown as ProgressRow | null;
+  if (first.error?.code === "42703") {
+    const fallback = await progressQuery("correct_count, incorrect_count, box");
+    progress = fallback.data as unknown as ProgressRow | null;
+  }
+  const slots = slotsRes.error
+    ? DEFAULT_WORD_BANK_SLOTS
+    : ((slotsRes.data as { word_bank_slots?: number | null } | null)?.word_bank_slots ??
+      DEFAULT_WORD_BANK_SLOTS);
 
   const moreExamples = findMoreExamples(word.korean, word.example_kr);
 
+  // "&from=bank" survives prev/next, so stepping through words keeps the way
+  // back to the word bank the learner came from.
+  const fromBank = sp.from === "bank";
   const wordHref = (chapter: number, i: number) =>
-    `/vocabulary/${topicKey}/word?level=${level}&chapter=${chapter}&i=${i}`;
+    `/vocabulary/${topicKey}/word?level=${level}&chapter=${chapter}&i=${i}${fromBank ? "&from=bank" : ""}`;
 
   // Prev/next stay inside the unit: the first word's "Prev" and the last
   // word's "Next" both return to the unit page instead of quietly stepping
@@ -92,7 +119,10 @@ export default async function VocabWordPage({
             level={level}
             prevHref={prevHref}
             nextHref={nextHref}
-            inBank={progress !== null}
+            inBank={progress?.saved ?? false}
+            savedCount={savedCount}
+            slots={slots}
+            fromBank={fromBank}
             unitHref={unitHref}
             unitLabel={unitLabel(chapterIndex)}
           />

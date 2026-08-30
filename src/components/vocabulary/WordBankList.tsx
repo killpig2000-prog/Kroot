@@ -4,24 +4,20 @@ import { useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { setSaved } from "@/lib/word-bank";
 
-// The learner's word bank: one flat list of every word they've collected.
-// No stage/box grouping and no filter tabs — the user asked for "everything
-// in one place, tap to open, swipe-free delete with an undo".
+// The learner's word bank: the words they picked, in one flat list. Removing
+// a row unsaves it — the SRS history in the same row is kept, so a word that
+// comes back returns with everything it knew.
 
 export type BankItem = {
   wordKey: string;
   korean: string;
   romanization: string;
   meaning: string;
-  /** Public dictionary slug, when this word has a /words page. */
-  slug: string | null;
+  /** In-app vocabulary page for this word, when it's still in the deck. */
+  href: string | null;
   incorrectCount: number;
-  /** Kept only so an undo can restore the row exactly as it was. */
-  correctCount: number;
-  lastReviewedAt: string | null;
-  box: number | null;
-  nextReviewAt: string | null;
 };
 
 type Pending = { item: BankItem; index: number };
@@ -39,6 +35,7 @@ export default function WordBankList({
   const supabase = useMemo(() => createClient(), []);
   const [items, setItems] = useState(initialItems);
   const [query, setQuery] = useState("");
+  const [hideMeanings, setHideMeanings] = useState(false);
   const [pending, setPending] = useState<Pending | null>(null);
   const [error, setError] = useState<string | null>(null);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -57,12 +54,7 @@ export default function WordBankList({
     setPending({ item, index });
     timer.current = setTimeout(() => setPending(null), UNDO_MS);
 
-    const { error: err } = await supabase
-      .from("vocabulary_progress")
-      .delete()
-      .eq("user_id", userId)
-      .eq("word_key", item.wordKey);
-
+    const err = await setSaved(supabase, userId, item.wordKey, false);
     if (err) {
       if (timer.current) clearTimeout(timer.current);
       setPending(null);
@@ -79,19 +71,7 @@ export default function WordBankList({
     setError(null);
     setItems((prev) => insertAt(prev, restore.item, restore.index));
 
-    const { error: err } = await supabase.from("vocabulary_progress").upsert(
-      {
-        user_id: userId,
-        word_key: restore.item.wordKey,
-        correct_count: restore.item.correctCount,
-        incorrect_count: restore.item.incorrectCount,
-        last_reviewed_at: restore.item.lastReviewedAt,
-        box: restore.item.box ?? 1,
-        next_review_at: restore.item.nextReviewAt ?? new Date().toISOString(),
-      },
-      { onConflict: "user_id,word_key" }
-    );
-
+    const err = await setSaved(supabase, userId, restore.item.wordKey, true);
     if (err) {
       setItems((prev) => prev.filter((i) => i.wordKey !== restore.item.wordKey));
       setError(t("bank.undoFailed", { word: restore.item.korean }));
@@ -110,27 +90,39 @@ export default function WordBankList({
 
   if (initialItems.length === 0) {
     return (
-      <p className="text-sm text-muted">
-        {t("bank.empty")}{" "}
-        <Link href="/vocabulary" className="font-semibold text-charcoal hover:underline">
-          {t("bank.emptyCta")}
-        </Link>
-      </p>
+      <div className="max-w-[680px]">
+        <p className="text-[14px] text-charcoal">{t("bank.emptyWhat")}</p>
+        <p className="mt-2 text-sm text-muted">
+          <Link href="/vocabulary" className="font-semibold text-charcoal hover:underline">
+            {t("bank.emptyCta")}
+          </Link>
+        </p>
+      </div>
     );
   }
 
   return (
     <div className="max-w-[680px]">
-      <label className="block mb-3">
-        <span className="sr-only">{t("bank.searchPlaceholder")}</span>
-        <input
-          type="search"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder={t("bank.searchPlaceholder")}
-          className="w-full min-w-0 h-[42px] rounded-[10px] border border-line bg-cream px-3.5 text-[14px] text-charcoal placeholder:text-faint focus:outline-none focus:border-faint"
-        />
-      </label>
+      <div className="flex items-center gap-2 mb-3 flex-wrap">
+        <label className="min-w-0 flex-1 basis-[180px]">
+          <span className="sr-only">{t("bank.searchPlaceholder")}</span>
+          <input
+            type="search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder={t("bank.searchPlaceholder")}
+            className="w-full min-w-0 h-[42px] rounded-[10px] border border-line bg-cream px-3.5 text-[14px] text-charcoal placeholder:text-faint focus:outline-none focus:border-faint"
+          />
+        </label>
+        <button
+          type="button"
+          onClick={() => setHideMeanings((v) => !v)}
+          aria-pressed={hideMeanings}
+          className="flex-none h-[42px] px-3.5 rounded-[10px] border border-line bg-cream text-[13px] font-semibold text-muted hover:text-charcoal hover:border-faint transition-colors"
+        >
+          {hideMeanings ? t("bank.showMeanings") : t("bank.hideMeanings")}
+        </button>
+      </div>
 
       {error && (
         <p role="alert" className="mb-3 text-[13px] font-semibold text-danger">
@@ -146,9 +138,17 @@ export default function WordBankList({
             const index = items.indexOf(item);
             const inner = (
               <>
+                <span className="flex-none text-[12px] font-semibold text-faint tabular-nums">
+                  {index + 1}
+                </span>
                 <span className="min-w-0 flex-1 flex items-baseline gap-x-2 gap-y-0.5 flex-wrap">
                   <b className="kr font-bold text-[17px] leading-tight">{item.korean}</b>
-                  <span className="min-w-0 text-[13px] text-muted break-words">{item.meaning}</span>
+                  {item.romanization && (
+                    <span className="text-[12px] text-faint">{item.romanization}</span>
+                  )}
+                  {!hideMeanings && (
+                    <span className="min-w-0 text-[13px] text-muted break-words">{item.meaning}</span>
+                  )}
                 </span>
                 {item.incorrectCount > 0 && (
                   <span className="flex-none text-[11.5px] font-semibold text-faint whitespace-nowrap">
@@ -159,9 +159,9 @@ export default function WordBankList({
             );
             return (
               <li key={item.wordKey} className="flex items-center gap-1.5 pl-3 pr-1.5">
-                {item.slug ? (
+                {item.href ? (
                   <Link
-                    href={`/words/${item.slug}?from=bank`}
+                    href={item.href}
                     className="min-w-0 flex-1 flex items-center gap-2.5 py-3 pr-1 hover:text-charcoal transition-colors"
                   >
                     {inner}

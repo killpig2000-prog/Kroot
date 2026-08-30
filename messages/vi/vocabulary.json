@@ -31,17 +31,40 @@
   "dueForReview": "Cần ôn tập",
   "bank": {
     "searchPlaceholder": "Tìm trong từ của bạn",
-    "count": "{count} từ",
     "missed": "sai {count} lần",
     "remove": "Xóa {word}",
     "removed": "Đã xóa",
     "undo": "Hoàn tác",
     "removeFailed": "Không xóa được {word}. Hãy thử lại.",
     "undoFailed": "Không khôi phục được {word}. Hãy thử lại.",
-    "empty": "Chưa có từ nào.",
     "emptyCta": "Xem từ vựng →",
     "noMatches": "Không có từ nào khớp với “{query}”.",
     "backToBank": "Từ của tôi",
-    "saved": "Đã có trong từ của tôi ✓"
+    "budget": "{used} / {slots}",
+    "fullHint": "Đã đầy {slots} từ — bỏ bớt một từ để có chỗ.",
+    "hideMeanings": "Ẩn nghĩa",
+    "showMeanings": "Hiện nghĩa",
+    "emptyWhat": "Sổ từ là danh sách ngắn những từ bạn muốn giữ lại. Hãy chọn những từ đáng nhớ.",
+    "savedWithCount": "Đã có trong sổ từ · {used}/{slots}",
+    "fullShort": "Sổ từ đã đầy ({used}/{slots}) — bỏ bớt một từ",
+    "addFailed": "Không lưu được. Thử lại nhé.",
+    "backToMyBank": "quay lại sổ từ của tôi",
+    "seeAll": "Xem tất cả từ của tôi →",
+    "budgetLine": "{used}/{slots} trong sổ từ",
+    "saveThisWord": "Lưu từ này"
+  },
+  "slots": {
+    "title": "Chỗ trong sổ từ",
+    "capacity": "{slots}/{max} chỗ",
+    "upgrade": "Chứa {to} từ thay vì {from}.",
+    "atMax": "Bạn đã đạt mức tối đa {max} từ.",
+    "maxed": "Tối đa",
+    "buying": "Đang mua…",
+    "buy": "Mua · 🌰 {price}",
+    "bought": "Giờ sổ từ chứa được {slots} từ.",
+    "errNotEnough": "Không đủ xu — mỗi nhiệm vụ hằng ngày trả 10 xu.",
+    "errMax": "{max} từ là mức tối đa.",
+    "errAuth": "Đăng nhập để mua.",
+    "errGeneric": "Hiện chưa mua được."
   }
 }

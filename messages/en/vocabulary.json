@@ -31,17 +31,40 @@
   "dueForReview": "Due for review",
   "bank": {
     "searchPlaceholder": "Search your words",
-    "count": "{count, plural, =1 {1 word} other {# words}}",
     "missed": "missed {count}×",
     "remove": "Remove {word}",
     "removed": "Removed",
     "undo": "Undo",
     "removeFailed": "Couldn't remove {word}. Try again.",
     "undoFailed": "Couldn't put {word} back. Try again.",
-    "empty": "No words yet.",
     "emptyCta": "Browse vocabulary →",
     "noMatches": "No words match “{query}”.",
     "backToBank": "My words",
-    "saved": "In my words ✓"
+    "budget": "{used} / {slots}",
+    "fullHint": "Bank full at {slots} — remove a word to make room.",
+    "hideMeanings": "Hide meanings",
+    "showMeanings": "Show meanings",
+    "emptyWhat": "Your word bank is the short list of words you want to keep. Pick the ones worth remembering.",
+    "savedWithCount": "In your word bank · {used}/{slots}",
+    "fullShort": "Bank full ({used}/{slots}) — remove one first",
+    "addFailed": "Couldn't save that. Try again.",
+    "backToMyBank": "back to my word bank",
+    "seeAll": "See all my words →",
+    "budgetLine": "{used}/{slots} in your word bank",
+    "saveThisWord": "Save this word"
+  },
+  "slots": {
+    "title": "Word bank slots",
+    "capacity": "{slots}/{max} slots",
+    "upgrade": "Hold {to} words instead of {from}.",
+    "atMax": "You're at the maximum of {max} words.",
+    "maxed": "Max",
+    "buying": "Buying…",
+    "buy": "Buy · 🌰 {price}",
+    "bought": "Room for {slots} words now.",
+    "errNotEnough": "Not enough coins — daily quests pay 10 each.",
+    "errMax": "{max} words is the maximum.",
+    "errAuth": "Sign in to buy that.",
+    "errGeneric": "Couldn't buy that right now."
   }
 }

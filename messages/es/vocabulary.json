@@ -31,17 +31,40 @@
   "doneOfTotal": "{done} of {total} units done",
   "bank": {
     "searchPlaceholder": "Busca en tus palabras",
-    "count": "{count, plural, =1 {1 palabra} other {# palabras}}",
     "missed": "fallada {count}×",
     "remove": "Quitar {word}",
     "removed": "Eliminada",
     "undo": "Deshacer",
     "removeFailed": "No se pudo quitar {word}. Inténtalo de nuevo.",
     "undoFailed": "No se pudo restaurar {word}. Inténtalo de nuevo.",
-    "empty": "Todavía no hay palabras.",
     "emptyCta": "Ver vocabulario →",
     "noMatches": "Ninguna palabra coincide con «{query}».",
     "backToBank": "Mis palabras",
-    "saved": "En mis palabras ✓"
+    "budget": "{used} / {slots}",
+    "fullHint": "Lleno con {slots} palabras: quita una para hacer sitio.",
+    "hideMeanings": "Ocultar significados",
+    "showMeanings": "Mostrar significados",
+    "emptyWhat": "Tu lista de palabras es una selección corta de las que quieres conservar. Elige las que merezca la pena recordar.",
+    "savedWithCount": "En tu lista · {used}/{slots}",
+    "fullShort": "Lista llena ({used}/{slots}): quita una primero",
+    "addFailed": "No se pudo guardar. Inténtalo de nuevo.",
+    "backToMyBank": "volver a mi lista de palabras",
+    "seeAll": "Ver todas mis palabras →",
+    "budgetLine": "{used}/{slots} en tu lista de palabras",
+    "saveThisWord": "Guardar esta palabra"
+  },
+  "slots": {
+    "title": "Espacios de la lista",
+    "capacity": "{slots}/{max} espacios",
+    "upgrade": "Guarda {to} palabras en vez de {from}.",
+    "atMax": "Ya tienes el máximo de {max} palabras.",
+    "maxed": "Máximo",
+    "buying": "Comprando…",
+    "buy": "Comprar · 🌰 {price}",
+    "bought": "Ahora caben {slots} palabras.",
+    "errNotEnough": "No tienes suficientes monedas: cada misión diaria da 10.",
+    "errMax": "{max} palabras es el máximo.",
+    "errAuth": "Inicia sesión para comprar.",
+    "errGeneric": "No se pudo comprar ahora mismo."
   }
 }

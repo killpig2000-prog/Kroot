@@ -1,37 +1,30 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { track } from "@/lib/analytics";
-import { countDueWords, plantWord } from "@/lib/word-bank";
+import { DEFAULT_WORD_BANK_SLOTS, countSavedWords, getWordBankSlots, saveToBank } from "@/lib/word-bank";
 
 // "Add to my words" on the public dictionary page (/words/[slug]).
 //
 // The page itself is statically generated for SEO, so it can't read the
 // session cookie — this island resolves the session on mount and swaps
-// between three states: signed out (→ login, come back with ?save=1 and
-// auto-save), signed in & not saved (plant it), signed in & saved (quiet).
+// between states: signed out (→ login, come back with ?save=1 and auto-save),
+// signed in with room, signed in with a full bank, and already saved.
 
 type Status =
   | { kind: "loading" }
   | { kind: "anon" }
   | { kind: "unsaved"; userId: string }
-  | { kind: "saved"; nextReviewAt: string | null };
+  | { kind: "full" }
+  | { kind: "saved" };
 
 const BTN =
   "inline-flex items-center justify-center rounded-full px-6 py-3 font-semibold transition disabled:cursor-default";
 const BTN_PRIMARY = `${BTN} bg-[var(--leaf)] text-[var(--leaf-ink)] shadow-[0_3px_0_var(--leaf-shadow)] hover:-translate-y-0.5 disabled:translate-y-0 disabled:opacity-70`;
 const BTN_QUIET = `${BTN} bg-[var(--mint)] text-[var(--deep)] shadow-[0_3px_0_var(--mint-shadow)]`;
-
-function dueLabel(iso: string | null, now = Date.now()): string {
-  if (!iso) return "due today";
-  const t = Date.parse(iso);
-  if (Number.isNaN(t) || t <= now) return "due today";
-  const days = Math.ceil((t - now) / 86_400_000);
-  if (days <= 1) return "due tomorrow";
-  return `due in ${days} days`;
-}
 
 export default function AddToMyWords({
   slug,
@@ -45,10 +38,15 @@ export default function AddToMyWords({
   korean: string;
   level: string;
 }) {
+  const t = useTranslations("vocabulary");
+  const tu = useTranslations("ui");
   const supabase = useMemo(() => createClient(), []);
   const [status, setStatus] = useState<Status>({ kind: "loading" });
+  const [used, setUsed] = useState(0);
+  const [slots, setSlots] = useState(DEFAULT_WORD_BANK_SLOTS);
   const [saving, setSaving] = useState(false);
-  const [toast, setToast] = useState<{ waiting: number } | null>(null);
+  const [failed, setFailed] = useState(false);
+  const [toast, setToast] = useState(false);
   const savingRef = useRef(false);
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -56,21 +54,26 @@ export default function AddToMyWords({
     if (savingRef.current) return;
     savingRef.current = true;
     setSaving(true);
-    const error = await plantWord(supabase, userId, wordKey);
-    if (error) {
-      console.error("add to my words failed:", error);
-      setSaving(false);
-      savingRef.current = false;
+    setFailed(false);
+    const res = await saveToBank(supabase, userId, wordKey);
+    setSaving(false);
+    savingRef.current = false;
+    if (!res.ok) {
+      if (res.reason === "full") {
+        setUsed(res.used);
+        setSlots(res.slots);
+        setStatus({ kind: "full" });
+      } else {
+        setFailed(true);
+      }
       return;
     }
     track("word_saved", { source: "dictionary", level });
-    const waiting = await countDueWords(supabase, userId);
-    setStatus({ kind: "saved", nextReviewAt: new Date().toISOString() });
-    setSaving(false);
-    savingRef.current = false;
-    setToast({ waiting });
+    setUsed((n) => n + 1);
+    setStatus({ kind: "saved" });
+    setToast(true);
     if (toastTimer.current) clearTimeout(toastTimer.current);
-    toastTimer.current = setTimeout(() => setToast(null), 10_000);
+    toastTimer.current = setTimeout(() => setToast(false), 10_000);
   }
 
   // Resolve session + saved state once; honour ?save=1 from the login round
@@ -79,21 +82,45 @@ export default function AddToMyWords({
   useEffect(() => {
     let cancelled = false;
     (async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
+      let user = null;
+      try {
+        user = (await supabase.auth.getUser()).data.user;
+      } catch {
+        // Never leave the button spinning: treat an unreadable session as
+        // signed out, which still offers a way forward.
+        user = null;
+      }
       if (cancelled) return;
       if (!user) {
         setStatus({ kind: "anon" });
         return;
       }
-      const { data } = await supabase
+
+      const row = await supabase
         .from("vocabulary_progress")
-        .select("next_review_at")
+        .select("saved")
         .eq("user_id", user.id)
         .eq("word_key", wordKey)
         .maybeSingle();
+      // Pre-0039 checkouts have no `saved` column: any row counts as saved.
+      let isSaved = (row.data as { saved?: boolean | null } | null)?.saved ?? false;
+      if (row.error?.code === "42703") {
+        const fallback = await supabase
+          .from("vocabulary_progress")
+          .select("word_key")
+          .eq("user_id", user.id)
+          .eq("word_key", wordKey)
+          .maybeSingle();
+        isSaved = fallback.data !== null;
+      }
+
+      const [count, capacity] = await Promise.all([
+        countSavedWords(supabase, user.id),
+        getWordBankSlots(supabase, user.id),
+      ]);
       if (cancelled) return;
+      setUsed(count);
+      setSlots(capacity);
 
       const params = new URLSearchParams(window.location.search);
       const wantsSave = params.get("save") === "1";
@@ -103,13 +130,13 @@ export default function AddToMyWords({
         window.history.replaceState(null, "", `${window.location.pathname}${qs ? `?${qs}` : ""}`);
       }
 
-      if (data) {
-        setStatus({ kind: "saved", nextReviewAt: data.next_review_at ?? null });
-      } else if (wantsSave) {
-        setStatus({ kind: "unsaved", userId: user.id });
-        void save(user.id);
+      if (isSaved) {
+        setStatus({ kind: "saved" });
+      } else if (count >= capacity) {
+        setStatus({ kind: "full" });
       } else {
         setStatus({ kind: "unsaved", userId: user.id });
+        if (wantsSave) void save(user.id);
       }
     })();
     return () => {
@@ -126,13 +153,20 @@ export default function AddToMyWords({
       {status.kind === "saved" ? (
         <>
           <button type="button" disabled className={BTN_QUIET} aria-disabled="true">
-            In my words ✓ · {dueLabel(status.nextReviewAt)}
+            {t("bank.savedWithCount", { used, slots })}
           </button>
           <p className="mt-2 text-sm text-[var(--soft)]">
             <Link href="/review/words" className="hover:underline">
-              See all my words →
+              {t("bank.seeAll")}
             </Link>
           </p>
+        </>
+      ) : status.kind === "full" ? (
+        <>
+          <Link href="/review/words" className={BTN_QUIET}>
+            {t("bank.fullShort", { used, slots })}
+          </Link>
+          <p className="mt-2 text-sm text-[var(--soft)]">{t("bank.fullHint", { slots })}</p>
         </>
       ) : status.kind === "unsaved" || status.kind === "loading" ? (
         <>
@@ -143,17 +177,22 @@ export default function AddToMyWords({
             onClick={() => status.kind === "unsaved" && void save(status.userId)}
             className={BTN_PRIMARY}
           >
-            {saving ? "Adding…" : "＋ Add to my words"}
+            {saving ? tu("saving") : `＋ ${tu("addToMyWords")}`}
           </button>
-          <p className="mt-2 text-sm text-[var(--soft)]">Goes straight into your Review queue</p>
+          {failed ? (
+            <p role="alert" className="mt-2 text-sm font-semibold text-danger">
+              {t("bank.addFailed")}
+            </p>
+          ) : (
+            status.kind === "unsaved" && (
+              <p className="mt-2 text-sm text-[var(--soft)]">{t("bank.budgetLine", { used, slots })}</p>
+            )
+          )}
         </>
       ) : (
-        <>
-          <Link href={loginHref} className={BTN_PRIMARY}>
-            ＋ Save this word
-          </Link>
-          <p className="mt-2 text-sm text-[var(--soft)]">Free account · remembers it for you</p>
-        </>
+        <Link href={loginHref} className={BTN_PRIMARY}>
+          ＋ {t("bank.saveThisWord")}
+        </Link>
       )}
 
       {toast && (
@@ -164,16 +203,15 @@ export default function AddToMyWords({
           style={{ animation: "fadeUp .18s ease" }}
         >
           <span className="text-sm">
-            ✓ Added <span className="kr font-semibold">{korean}</span> · {toast.waiting}{" "}
-            {toast.waiting === 1 ? "word" : "words"} waiting —{" "}
+            ✓ <span className="kr font-semibold">{korean}</span> · {t("bank.budgetLine", { used, slots })}{" "}
             <Link href="/review/words" className="font-semibold underline underline-offset-2">
-              Review →
+              {t("bank.seeAll")}
             </Link>
           </span>
           <button
             type="button"
-            onClick={() => setToast(null)}
-            aria-label="Dismiss"
+            onClick={() => setToast(false)}
+            aria-label={tu("closeMenu")}
             className="flex-none rounded-full px-2 text-lg leading-none opacity-70 hover:opacity-100"
           >
             ×

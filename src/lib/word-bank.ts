@@ -142,3 +142,102 @@ export async function countDueWords(supabase: SupabaseClient, userId: string): P
     .lte("next_review_at", new Date().toISOString());
   return error ? 0 : (count ?? 0);
 }
+
+// ---------------------------------------------------------------------------
+// The capped word bank (migration 0039). `vocabulary_progress.saved` is the
+// hand-picked shortlist — review history lives in the same row, so unsaving a
+// word only clears the flag. `profiles.word_bank_slots` is the capacity
+// (20 by default, up to 60 via the shop).
+
+export const DEFAULT_WORD_BANK_SLOTS = 20;
+export const MAX_WORD_BANK_SLOTS = 60;
+export const SLOTS_PRICE = 200;
+export const SLOTS_PER_PURCHASE = 10;
+
+/** Capacity for this learner — the default when the column/row can't be read. */
+export async function getWordBankSlots(
+  supabase: SupabaseClient,
+  userId: string
+): Promise<number> {
+  const { data, error } = await supabase
+    .from("profiles")
+    .select("word_bank_slots")
+    .eq("id", userId)
+    .maybeSingle();
+  if (error) return DEFAULT_WORD_BANK_SLOTS;
+  const n = (data as { word_bank_slots?: number | null } | null)?.word_bank_slots;
+  return typeof n === "number" ? n : DEFAULT_WORD_BANK_SLOTS;
+}
+
+/** How many words are currently picked. 0 when the count can't be read. */
+export async function countSavedWords(
+  supabase: SupabaseClient,
+  userId: string
+): Promise<number> {
+  const { count, error } = await supabase
+    .from("vocabulary_progress")
+    .select("id", { count: "exact", head: true })
+    .eq("user_id", userId)
+    .eq("saved", true);
+  return error ? 0 : (count ?? 0);
+}
+
+export type SaveResult =
+  | { ok: true }
+  | { ok: false; reason: "full"; used: number; slots: number }
+  | { ok: false; reason: "error" };
+
+/**
+ * Pick a word into the bank, respecting the cap. An existing row is flagged
+ * saved (its box and counts survive); a new one starts at box 1, due now.
+ */
+export async function saveToBank(
+  supabase: SupabaseClient,
+  userId: string,
+  wordKey: string
+): Promise<SaveResult> {
+  const [used, slots] = await Promise.all([
+    countSavedWords(supabase, userId),
+    getWordBankSlots(supabase, userId),
+  ]);
+  if (used >= slots) return { ok: false, reason: "full", used, slots };
+
+  // Flag an existing row rather than upserting, so review history survives.
+  const upd = await supabase
+    .from("vocabulary_progress")
+    .update({ saved: true })
+    .eq("user_id", userId)
+    .eq("word_key", wordKey)
+    .select("word_key");
+  if (upd.error) return { ok: false, reason: "error" };
+  if ((upd.data ?? []).length > 0) return { ok: true };
+
+  const ins = await supabase.from("vocabulary_progress").insert({
+    user_id: userId,
+    word_key: wordKey,
+    correct_count: 0,
+    incorrect_count: 0,
+    box: 1,
+    next_review_at: new Date().toISOString(),
+    last_reviewed_at: null,
+    saved: true,
+  });
+  // A row inserted by a concurrent tap is a success, not a failure.
+  if (ins.error && ins.error.code !== "23505") return { ok: false, reason: "error" };
+  return { ok: true };
+}
+
+/** Flip the bank flag without losing what the row remembers about the word. */
+export async function setSaved(
+  supabase: SupabaseClient,
+  userId: string,
+  wordKey: string,
+  saved: boolean
+): Promise<string | null> {
+  const { error } = await supabase
+    .from("vocabulary_progress")
+    .update({ saved })
+    .eq("user_id", userId)
+    .eq("word_key", wordKey);
+  return error ? error.message : null;
+}

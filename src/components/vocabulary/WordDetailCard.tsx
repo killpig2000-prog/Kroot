@@ -6,7 +6,7 @@ import { Link, useRouter } from "@/i18n/navigation";
 import { buttonClassName } from "@/components/ui/Button";
 import { createClient } from "@/lib/supabase/client";
 import { nextBox, nextReviewAt } from "@/lib/srs";
-import { plantWord } from "@/lib/word-bank";
+import { saveToBank } from "@/lib/word-bank";
 import { speakKorean } from "@/lib/tts";
 import { WORD_STATUSES, getWordNote, wordStatus, hanjaOf } from "@/lib/word-notes";
 import { getLocalizedMeaning, getLocalizedExampleEn } from "@/lib/vocabulary-i18n";
@@ -43,6 +43,9 @@ export default function WordDetailCard({
   prevHref,
   nextHref,
   inBank: initialInBank,
+  savedCount: initialSavedCount,
+  slots,
+  fromBank,
   unitHref,
   unitLabel,
 }: {
@@ -56,8 +59,13 @@ export default function WordDetailCard({
   level: string;
   prevHref: string | null;
   nextHref: string | null;
-  /** Whether this word already has a vocabulary_progress row. */
+  /** Whether this word is one of the learner's picked words. */
   inBank: boolean;
+  /** How many words the bank holds right now, and how many it can hold. */
+  savedCount: number;
+  slots: number;
+  /** Opened from /review/words — show the way back to it. */
+  fromBank: boolean;
   unitHref: string;
   unitLabel: string;
 }) {
@@ -65,7 +73,9 @@ export default function WordDetailCard({
   const t = useTranslations("vocabulary");
   const tu = useTranslations("ui");
   const [inBank, setInBank] = useState(initialInBank);
+  const [savedCount, setSavedCount] = useState(initialSavedCount);
   const [adding, setAdding] = useState(false);
+  const [addError, setAddError] = useState<"full" | "error" | null>(null);
   const status = WORD_STATUSES[wordStatus(correctCount + incorrectCount)];
   const note = getWordNote(word.korean);
   const hanja = hanjaOf(word.korean);
@@ -91,26 +101,36 @@ export default function WordDetailCard({
     router.push(nextHref ?? unitHref);
   }
 
-  // Add-to-word-bank: plants the row with untouched counts, so saving a word
-  // never looks like a review the learner didn't do.
+  // Add-to-word-bank: flags the row saved with untouched counts, so picking a
+  // word never looks like a review the learner didn't do. The bank is capped,
+  // so a full bank refuses the add and says where to make room.
   async function addToBank() {
     if (adding || inBank) return;
     setAdding(true);
-    const error = await plantWord(createClient(), userId, word.key);
+    setAddError(null);
+    const res = await saveToBank(createClient(), userId, word.key);
     setAdding(false);
-    if (error) {
-      console.error("add to word bank failed:", error);
+    if (!res.ok) {
+      if (res.reason === "full") setSavedCount(res.used);
+      setAddError(res.reason);
       return;
     }
+    setSavedCount((n) => n + 1);
     setInBank(true);
   }
 
   return (
     <div className="max-w-[600px]">
       <div className="flex items-center justify-between gap-3 mb-3.5">
-        <Link href={unitHref} className="text-[12.5px] text-muted hover:text-charcoal transition-colors">
-          ← {unitLabel}
-        </Link>
+        {fromBank ? (
+          <Link href="/review/words" className="text-[12.5px] text-muted hover:text-charcoal transition-colors">
+            ← {t("bank.backToMyBank")}
+          </Link>
+        ) : (
+          <Link href={unitHref} className="text-[12.5px] text-muted hover:text-charcoal transition-colors">
+            ← {unitLabel}
+          </Link>
+        )}
         <span className="text-[12.5px] text-muted flex-none">
           {topicLabel} · {level}
         </span>
@@ -236,7 +256,14 @@ export default function WordDetailCard({
             href="/review/words"
             className="min-w-0 inline-flex items-center gap-1.5 rounded-[10px] border border-success-line bg-success-bg px-3 py-2 font-semibold text-success-deep hover:border-success transition-colors"
           >
-            <span className="truncate">{t("bank.saved")}</span>
+            <span className="truncate">{t("bank.savedWithCount", { used: savedCount, slots })}</span>
+          </Link>
+        ) : addError === "full" ? (
+          <Link
+            href="/review/words"
+            className="min-w-0 inline-flex items-center gap-1.5 rounded-[10px] border border-amber-line bg-[var(--tint-amber)] px-3 py-2 font-semibold text-[#B7791F] hover:border-amber transition-colors"
+          >
+            <span className="truncate">{t("bank.fullShort", { used: savedCount, slots })}</span>
           </Link>
         ) : (
           <button
@@ -246,7 +273,9 @@ export default function WordDetailCard({
             aria-busy={adding}
             className="min-w-0 inline-flex items-center gap-1.5 rounded-[10px] border border-line bg-cream px-3 py-2 font-semibold text-muted hover:border-faint hover:text-charcoal transition-colors disabled:opacity-60"
           >
-            <span className="truncate">{adding ? tu("saving") : `＋ ${tu("addToMyWords")}`}</span>
+            <span className="truncate">
+              {adding ? tu("saving") : addError === "error" ? t("bank.addFailed") : `＋ ${tu("addToMyWords")}`}
+            </span>
           </button>
         )}
       </div>

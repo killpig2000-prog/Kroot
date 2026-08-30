@@ -4,10 +4,12 @@ import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import ShopClient from "@/components/shop/ShopClient";
 import StreakFreezeCard from "@/components/shop/StreakFreezeCard";
+import WordBankSlotsCard from "@/components/shop/WordBankSlotsCard";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import type { CefrLevel } from "@/lib/tree";
 import { levelFromXp, treeStageForLevel } from "@/lib/level";
 import { isPlus } from "@/lib/plus";
+import { DEFAULT_WORD_BANK_SLOTS } from "@/lib/word-bank";
 
 export default async function ShopPage() {
   const tn = await getTranslations("nav");
@@ -37,6 +39,16 @@ export default async function ShopPage() {
     .eq("id", user.id)
     .maybeSingle();
   const streakFreezes = freezeErr ? 0 : (freezeRow?.streak_freezes ?? 0);
+  // Migration 0039 column — same tolerant read.
+  const { data: slotsRow, error: slotsErr } = await supabase
+    .from("profiles")
+    .select("word_bank_slots")
+    .eq("id", user.id)
+    .maybeSingle();
+  const wordBankSlots = slotsErr
+    ? DEFAULT_WORD_BANK_SLOTS
+    : ((slotsRow as { word_bank_slots?: number | null } | null)?.word_bank_slots ??
+      DEFAULT_WORD_BANK_SLOTS);
   const species = (profile?.current_level ?? "A1") as CefrLevel;
   const playerLevel = levelFromXp(profile?.xp ?? 0);
   const stage = treeStageForLevel(playerLevel);
@@ -108,6 +120,8 @@ export default async function ShopPage() {
             streakDays={profile?.streak_days ?? 0}
             hasPlus={hasPlus}
           />
+
+          <WordBankSlotsCard slots={wordBankSlots} coins={coins} isAdmin={isAdmin} />
 
           <ShopClient
             userId={user.id}

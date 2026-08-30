@@ -31,17 +31,40 @@
   "dueForReview": "復習が必要",
   "bank": {
     "searchPlaceholder": "単語を検索",
-    "count": "{count}語",
     "missed": "{count}回まちがえた",
     "remove": "{word} を削除",
     "removed": "削除しました",
     "undo": "元に戻す",
     "removeFailed": "{word} を削除できませんでした。もう一度お試しください。",
     "undoFailed": "{word} を元に戻せませんでした。もう一度お試しください。",
-    "empty": "まだ単語がありません。",
     "emptyCta": "単語一覧を見る →",
     "noMatches": "「{query}」に一致する単語はありません。",
     "backToBank": "マイ単語帳",
-    "saved": "単語帳に追加済み ✓"
+    "budget": "{used} / {slots}",
+    "fullHint": "{slots}語で満杯です。1語外すと追加できます。",
+    "hideMeanings": "意味を隠す",
+    "showMeanings": "意味を表示",
+    "emptyWhat": "単語帳は、覚えておきたい単語だけを入れる短いリストです。大事な単語を選びましょう。",
+    "savedWithCount": "単語帳に登録済み · {used}/{slots}",
+    "fullShort": "単語帳が満杯（{used}/{slots}）— 1語外してください",
+    "addFailed": "保存できませんでした。もう一度お試しください。",
+    "backToMyBank": "単語帳に戻る",
+    "seeAll": "単語帳をすべて見る →",
+    "budgetLine": "単語帳 {used}/{slots}",
+    "saveThisWord": "この単語を保存"
+  },
+  "slots": {
+    "title": "単語帳のスロット",
+    "capacity": "{slots}/{max} スロット",
+    "upgrade": "{from}語から{to}語まで入るようになります。",
+    "atMax": "最大の{max}語に達しています。",
+    "maxed": "上限",
+    "buying": "購入中…",
+    "buy": "購入 · 🌰 {price}",
+    "bought": "{slots}語まで入るようになりました。",
+    "errNotEnough": "コインが足りません — デイリークエストで10枚もらえます。",
+    "errMax": "{max}語が上限です。",
+    "errAuth": "購入するにはログインしてください。",
+    "errGeneric": "今は購入できませんでした。"
   }
 }
