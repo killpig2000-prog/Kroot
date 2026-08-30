@@ -72,6 +72,31 @@ function weekDates(now: Date) {
   });
 }
 
+type Snapshot = {
+  profile: {
+    display_name: string | null;
+    current_level: string | null;
+    xp: number | null;
+    streak_days: number | null;
+    last_active_date: string | null;
+    avatar_url: string | null;
+    created_at: string | null;
+  } | null;
+  extras: { streak_freezes: number | null; reminder_push: boolean | null; reminder_email: boolean | null } | null;
+  streak: number;
+  costumes: { costume_id: string; equipped: boolean }[];
+  quest: { id: string; skill_key: string; title: string; description: string; completed_at: string | null } | null;
+  listening: string[];
+  reading: string[];
+  writing: string[];
+  speaking: { prompt_key: string; best_score: number | null }[];
+  due_count: number;
+  activity: { activity_date: string; minutes: number | null }[];
+  level_tests: number;
+  grammar: string[];
+  vocab_keys: string[];
+};
+
 export default async function DashboardPage() {
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
@@ -80,78 +105,53 @@ export default async function DashboardPage() {
 
   const today = todayISO();
 
-  // Date windows computed up front so every query can run in one parallel
-  // batch — from Korea to us-east-1 each round trip is ~300ms, so sequential
-  // awaits were the whole reason this page felt slow.
+  // Date windows computed up front so downstream math runs in one pass.
   const now = new Date();
   const week = weekDates(now);
   const monthStart = iso(new Date(now.getFullYear(), now.getMonth(), 1));
 
-  const [
-    { data: profile },
-    { data: streakValue, error: streakError },
-    { data: costumeRows },
-    questRes,
-    { data: listeningRows },
-    { data: readingRows },
-    { data: writingRows },
-    { data: speakingRows },
-    dueRes,
-    { data: activity },
-    levelTestRes,
-    { data: grammarRows },
-    { data: vocabRows },
-    // Columns from migration 0035 — queried separately so a not-yet-applied
-    // migration degrades to defaults instead of nulling the whole profile.
-    extrasRes,
-  ] = await Promise.all([
-    supabase
-      .from("profiles")
-      .select("display_name, current_level, xp, streak_days, last_active_date, avatar_url, created_at")
-      .eq("id", user.id)
-      .single(),
-    // touch_streak bumps (or resets) the streak server-side and returns its new value.
-    supabase.rpc("touch_streak"),
-    supabase.from("user_costumes").select("costume_id, equipped").eq("user_id", user.id),
-    supabase
-      .from("daily_quests")
-      .select("id, skill_key, title, description, completed_at")
-      .eq("user_id", user.id)
-      .eq("quest_date", today)
-      .maybeSingle(),
-    supabase.from("listening_progress").select("dialogue_id").eq("user_id", user.id).not("completed_at", "is", null),
-    supabase.from("reading_progress").select("passage_key").eq("user_id", user.id),
-    supabase.from("writing_progress").select("prompt_key").eq("user_id", user.id),
-    supabase.from("speaking_progress").select("prompt_key, best_score").eq("user_id", user.id),
-    supabase
-      .from("vocabulary_progress")
-      .select("id", { count: "exact", head: true })
-      .eq("user_id", user.id)
-      .lte("next_review_at", new Date().toISOString()),
-    // Full history: the year grass + lifetime totals need every study day.
-    supabase
-      .from("daily_activity")
-      .select("activity_date, minutes")
-      .eq("user_id", user.id),
-    supabase
-      .from("level_test_results")
-      .select("id", { count: "exact", head: true })
-      .eq("user_id", user.id),
-    supabase.from("grammar_progress").select("lesson_key").eq("user_id", user.id),
-    supabase.from("vocabulary_progress").select("word_key").eq("user_id", user.id),
-    supabase.from("profiles").select("streak_freezes, reminder_push, reminder_email").eq("id", user.id).maybeSingle(),
-  ]);
-  const extras = extrasRes.error ? null : extrasRes.data;
+  // Every read this page needs (profile, quest, five progress tables, due
+  // count, activity, level-test count) plus touch_streak, in one round trip.
+  // Was 14 separate REST calls — on the free Nano instance, that per-request
+  // overhead (not query cost) was what capped concurrent dashboard loads.
+  // See supabase/migrations/0041_dashboard_snapshot.sql (SECURITY INVOKER —
+  // every read still goes through the caller's RLS).
+  const { data: snapshotRaw, error: snapshotError } = await supabase.rpc("dashboard_snapshot", { p_today: today });
+  const snapshot = (snapshotError ? null : (snapshotRaw as Snapshot | null)) ?? {
+    profile: null,
+    extras: null,
+    streak: 0,
+    costumes: [],
+    quest: null,
+    listening: [],
+    reading: [],
+    writing: [],
+    speaking: [],
+    due_count: 0,
+    activity: [],
+    level_tests: 1, // don't bounce a signed-in learner to /onboarding on a query error
+    grammar: [],
+    vocab_keys: [],
+  };
+  const profile = snapshot.profile;
+  const extras = snapshot.extras;
+  const listeningRows = snapshot.listening.map((dialogue_id) => ({ dialogue_id }));
+  const readingRows = snapshot.reading.map((passage_key) => ({ passage_key }));
+  const writingRows = snapshot.writing.map((prompt_key) => ({ prompt_key }));
+  const speakingRows = snapshot.speaking;
+  const activity = snapshot.activity;
+  const grammarRows = snapshot.grammar.map((lesson_key) => ({ lesson_key }));
+  const vocabRows = snapshot.vocab_keys.map((word_key) => ({ word_key }));
 
   // Confirmed-email signups land here without ever picking a starting level
   // (the confirmation link used to skip onboarding). Send them back; a query
   // error must not lock anyone out of the dashboard.
-  if (!levelTestRes.error && (levelTestRes.count ?? 0) === 0) redirect("/onboarding");
+  if (snapshot.level_tests === 0) redirect("/onboarding");
 
-  const streakDays = streakError ? profile?.streak_days ?? 0 : (streakValue as number) ?? 0;
-  const equippedIds = (costumeRows ?? []).filter((r) => r.equipped).map((r) => r.costume_id);
+  const streakDays = snapshot.streak || profile?.streak_days || 0;
+  const equippedIds = snapshot.costumes.filter((r) => r.equipped).map((r) => r.costume_id);
 
-  let quest = questRes.data;
+  let quest = snapshot.quest;
   const questOfTheDay = QUEST_ROTATION[Math.floor(Date.parse(today) / 86_400_000) % QUEST_ROTATION.length];
   if (!quest) {
     const { data: created } = await supabase
@@ -185,7 +185,7 @@ export default async function DashboardPage() {
     { label: "Reading", ok: elig.readingDone >= elig.readingRequired, value: `${elig.readingDone}/${elig.readingRequired}` },
   ];
   // Errors (e.g. migration 0022 not applied yet) just hide the review card.
-  const dueCount = dueRes.error ? 0 : dueRes.count ?? 0;
+  const dueCount = snapshot.due_count;
 
   const tally = (doneKeys: Set<string>, levelKeys: string[], cap?: number) => {
     const done = levelKeys.filter((k) => doneKeys.has(k)).length;
