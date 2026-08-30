@@ -8,6 +8,8 @@ export type RawPrompt = {
   prompt_kr: string;
   prompt_en: string;
   example_kr: string;
+  /** English rendering of example_kr — the line the tap-to-assemble boards show. Overlaid from writing-example-en.json. */
+  example_en?: string;
   /** reply only: the incoming message the learner is responding to. */
   stimulus_kr?: string;
   stimulus_en?: string;

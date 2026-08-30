@@ -1,6 +1,9 @@
 import type { CefrLevel } from "@/lib/tree";
 import type { RawPrompt, WritingGenre } from "@/lib/writing-data/types";
 import { DAILY_LIFE_PROMPTS } from "@/lib/writing-data/daily-life";
+import EXAMPLE_EN from "@/lib/writing-example-en.json";
+
+const exampleEn = EXAMPLE_EN as Record<string, string>;
 
 export type Prompt = RawPrompt & { key: string };
 
@@ -15,6 +18,7 @@ export const WRITING_GENRE_META: Record<WritingGenre, { icon: string; label: str
 export function getPromptsForLevel(level: CefrLevel): Prompt[] {
   return DAILY_LIFE_PROMPTS.filter((p) => p.level === level).map((p) => ({
     ...p,
+    example_en: p.example_en ?? exampleEn[`${p.level}:${p.example_kr}`],
     key: `writing:${p.level}:${p.prompt_kr}`,
   }));
 }
@@ -71,6 +75,24 @@ export function promptKeysCompletedToday(
 export function chaptersCompletedToday(chapters: Prompt[][], todayKeys: Set<string>): number {
   return chapters.filter((chapter) => chapter.length > 0 && chapter.every((p) => todayKeys.has(p.key)))
     .length;
+}
+
+/**
+ * Nearby prompts of the same level and genre — the distractor pool for the
+ * assemble boards. Excludes the chapter's own prompts; nearest chapters first
+ * so A1's distractors stay A1-easy.
+ */
+export function getSiblingPrompts(level: CefrLevel, chapter: Prompt[], max = 12): Prompt[] {
+  const all = getPromptsForLevel(level);
+  const genre = chapter[0]?.genre;
+  const own = new Set(chapter.map((p) => p.key));
+  const firstIdx = all.findIndex((p) => p.key === chapter[0]?.key);
+  return all
+    .map((p, i) => ({ p, d: Math.abs(i - firstIdx) }))
+    .filter(({ p }) => p.genre === genre && !own.has(p.key))
+    .sort((a, b) => a.d - b.d)
+    .slice(0, max)
+    .map(({ p }) => p);
 }
 
 export const MINUTES_PER_CHAPTER = 8;

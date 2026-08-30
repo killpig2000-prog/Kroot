@@ -7,6 +7,7 @@ import {
   CHAPTERS_PER_DAY,
   chaptersCompletedToday,
   getChaptersForLevel,
+  getSiblingPrompts,
   promptKeysCompletedToday,
   utcDayStartISO,
 } from "@/lib/writing";
@@ -117,6 +118,7 @@ export default async function WritingChapterSessionPage({
               // summary state doesn't survive the navigation.
               key={`${level}-${chapterIndex}`}
               prompts={prompts}
+              siblings={getSiblingPrompts(level, prompts)}
               userId={user.id}
               level={level}
               chapterIndex={chapterIndex}
