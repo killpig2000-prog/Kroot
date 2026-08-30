@@ -13,7 +13,7 @@ export default async function SituationPage({
   searchParams,
 }: {
   params: Promise<{ locale: string; situationKey: string }>;
-  searchParams: Promise<{ level?: string }>;
+  searchParams: Promise<{ level?: string; clip?: string }>;
 }) {
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
@@ -26,12 +26,14 @@ export default async function SituationPage({
     .eq("id", user.id)
     .single();
 
-  const { locale, situationKey } = await params;
+  const { situationKey } = await params;
   const sp = await searchParams;
   const myLevel = (profile?.current_level ?? "A1") as CefrLevel;
   const level = isCefrLevel(sp.level) ? sp.level : myLevel;
   const situation = situationByKey(situationKey);
   const dialogues = dialoguesFor(level, situationKey);
+  // `?clip=` opens the player straight away (Continue hero, dashboard resume).
+  const initialOpenId = sp.clip && dialogues.some((d) => d.id === sp.clip) ? sp.clip : null;
 
   let completedIds: string[] = [];
   if (dialogues.length > 0) {
@@ -46,7 +48,26 @@ export default async function SituationPage({
     completedIds = (progressRows ?? []).filter((p) => p.completed_at).map((p) => p.dialogue_id);
   }
 
-  const label = situation?.label ?? situationKey;
+  const meta = situation ?? {
+    key: situationKey,
+    label: situationKey,
+    krLabel: "",
+    icon: "🎧",
+    sub: "",
+    tint: "#EFE9DC",
+  };
+
+  const levelTabs = (
+    <LevelTabs
+      className="mb-5"
+      levels={LEVEL_ORDER}
+      current={level}
+      mine={myLevel}
+      unlocked={() => true}
+      href={(lv) => `/listening/${situationKey}?level=${lv}`}
+      accent="bg-teal border-teal text-white"
+    />
+  );
 
   return (
     <div className="min-h-screen bg-warm text-charcoal">
@@ -69,75 +90,28 @@ export default async function SituationPage({
               Listening
             </Link>
             <span>/</span>
-            <b className="text-charcoal font-semibold">{label}</b>
+            <b className="text-charcoal font-semibold">{meta.label}</b>
           </div>
 
-          {/* Head + level tabs live inside the session so they can collapse to
-              one line while a clip is open — the player then starts at the
-              top of the viewport instead of two screens down on a phone. */}
-          {(() => {
-            const header = (
-              <div className="flex items-center justify-between gap-4 mb-[18px] flex-wrap">
-                <h1 className="font-bold text-[22px] tracking-[-0.02em] flex items-center">
-                  <Link
-                    href={`/listening?level=${level}`}
-                    aria-label="Back to all situations"
-                    className="inline-flex w-[30px] h-[30px] rounded-lg bg-cream text-muted border border-line items-center justify-center text-[15px] mr-[9px] transition-colors hover:border-teal hover:text-teal"
-                  >
-                    ←
-                  </Link>
-                  <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[var(--tint-teal)] text-teal border border-[var(--tint-teal-line)] items-center justify-center text-[15px] mr-[9px]">
-                    {situation?.icon ?? "🎧"}
-                  </span>
-                  {label}
-                </h1>
-                <span className="text-[13px] text-muted">
-                  {dialogues.length > 0 && (
-                    <>
-                      <b className="text-teal">{completedIds.length}</b> of {dialogues.length} clips heard
-                    </>
-                  )}
-                </span>
+          {dialogues.length === 0 ? (
+            <>
+              {levelTabs}
+              <div className="max-w-[720px] border border-line rounded-[14px] p-8 text-center bg-cream">
+                <p className="text-sm text-muted">No clips for this level yet — try another level above.</p>
               </div>
-            );
-            const levelTabs = (
-              <LevelTabs
-                className="mb-6"
-                levels={LEVEL_ORDER}
-                current={level}
-                mine={myLevel}
-                unlocked={() => true}
-                href={(lv) => `/listening/${situationKey}?level=${lv}`}
-                accent="bg-teal border-teal text-white"
-              />
-            );
-            if (dialogues.length === 0) {
-              return (
-                <>
-                  {header}
-                  {levelTabs}
-                  <div className="max-w-[680px] border border-line rounded-[14px] p-8 text-center">
-                    <p className="text-sm text-muted">
-                      No dialogues for this level yet — try another level above.
-                    </p>
-                  </div>
-                </>
-              );
-            }
-            return (
-              <ListeningSession
-                key={level}
-                dialogues={dialogues}
-                locale={locale}
-                level={level}
-                situationLabel={label}
-                situationIcon={situation?.icon ?? "🎧"}
-                completedIds={completedIds}
-                header={header}
-                levelTabs={levelTabs}
-              />
-            );
-          })()}
+            </>
+          ) : (
+            <ListeningSession
+              key={level}
+              dialogues={dialogues}
+              level={level}
+              situation={meta}
+              completedIds={completedIds}
+              initialOpenId={initialOpenId}
+              userId={user.id}
+              levelTabs={levelTabs}
+            />
+          )}
         </main>
       </div>
 

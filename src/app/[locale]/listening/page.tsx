@@ -2,26 +2,16 @@ import LevelTabs from "@/components/ui/LevelTabs";
 import { Link, redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
+import ContinueHero, { type HeroClip } from "@/components/listening/ContinueHero";
+import ProgressRing from "@/components/listening/ProgressRing";
 import { createClient, getClaimsUser, getDashboardProfile } from "@/lib/supabase/server";
 import { LEVEL_ORDER, isCefrLevel, type CefrLevel } from "@/lib/tree";
 import { isDifficultyUnlocked } from "@/lib/level";
 import { SITUATIONS } from "@/lib/listening";
 import { dialoguesFor } from "@/lib/listening-dialogues";
-import { fetchUnsplashImage } from "@/lib/unsplash";
-
-const SUBS: Record<string, string> = {
-  cafe: "Ordering, menus, and small talk over coffee",
-  restaurant: "Reserving tables and ordering real meals",
-  airport: "Check-in, boarding, and customs phrases",
-  shopping: "Sizes, prices, and asking for a discount",
-  directions: "Finding your way around any city",
-  hospital: "Symptoms, appointments, and the pharmacy",
-  hotel: "Check-in, room requests, and amenities",
-  phone: "Calls you'll actually have to make",
-};
+import { estMinutes } from "@/lib/listening-resume";
 
 export default async function ListeningPage({
-  params,
   searchParams,
 }: {
   params: Promise<{ locale: string }>;
@@ -34,22 +24,51 @@ export default async function ListeningPage({
 
   const profile = await getDashboardProfile(supabase, user.id);
 
-  const { locale } = await params;
   const myLevel = (profile?.current_level ?? "A1") as CefrLevel;
   const sp = await searchParams;
   const requested = isCefrLevel(sp.level) ? sp.level : myLevel;
   const level = isDifficultyUnlocked(requested, myLevel) ? requested : myLevel;
 
-  const [photos, { data: progressRows }] = await Promise.all([
-    Promise.all(SITUATIONS.map((s) => fetchUnsplashImage(s.photoQuery))),
+  // Monday-based current week, UTC (daily_activity.activity_date is a DB date).
+  const now = new Date();
+  const todayIndex = (now.getUTCDay() + 6) % 7;
+  const monday = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() - todayIndex));
+  const mondayStr = monday.toISOString().slice(0, 10);
+
+  const [{ data: progressRows }, { data: activityRows }] = await Promise.all([
     supabase
       .from("listening_progress")
       .select("dialogue_id")
       .eq("user_id", user.id)
       .not("completed_at", "is", null),
+    supabase
+      .from("daily_activity")
+      .select("activity_date, minutes")
+      .eq("user_id", user.id)
+      .gte("activity_date", mondayStr),
   ]);
-  const photoByKey = new Map(SITUATIONS.map((s, i) => [s.key, photos[i]]));
   const completedIds = new Set((progressRows ?? []).map((r) => r.dialogue_id));
+
+  const weekMinutes = [0, 0, 0, 0, 0, 0, 0];
+  for (const row of activityRows ?? []) {
+    const d = Math.round((Date.parse(`${row.activity_date}T00:00:00Z`) - monday.getTime()) / 86400000);
+    if (d >= 0 && d < 7) weekMinutes[d] += row.minutes ?? 0;
+  }
+
+  const bySituation = SITUATIONS.map((s) => ({ s, dialogues: dialoguesFor(level, s.key) }));
+  const heroClips: HeroClip[] = bySituation.flatMap(({ s, dialogues }) =>
+    dialogues.map((d, i) => ({
+      id: d.id,
+      title: d.title as string,
+      situationKey: s.key,
+      situationLabel: s.label,
+      situationIcon: s.icon,
+      clipNo: i + 1,
+      clipCount: dialogues.length,
+      lineCount: d.lines.length,
+    }))
+  );
+  const heardAtLevel = heroClips.filter((c) => completedIds.has(c.id)).length;
 
   return (
     <div className="min-h-screen bg-warm text-charcoal">
@@ -79,13 +98,11 @@ export default async function ListeningPage({
               </span>
               Listening
             </h1>
-            <span className="text-[13px] text-muted">
-              Pick a situation, listen, and follow the script
-            </span>
+            <span className="text-[13px] text-muted">Pick a situation, listen, follow the script</span>
           </div>
 
           <LevelTabs
-            className="mb-6"
+            className="mb-5"
             levels={LEVEL_ORDER}
             current={level}
             mine={myLevel}
@@ -94,94 +111,99 @@ export default async function ListeningPage({
             accent="bg-teal border-teal text-white"
           />
 
-          {/* topic grid — two-up on phones so all eight situations fit in a
-              couple of screens; the wider auto-fill grid from `sm` up. */}
-          <div className="grid grid-cols-2 sm:grid-cols-[repeat(auto-fill,minmax(220px,1fr))] gap-2.5 sm:gap-3.5 max-w-[980px]">
-            {SITUATIONS.map((s) => {
-              const dialogues = dialoguesFor(level, s.key);
+          <ContinueHero
+            level={level}
+            clips={heroClips}
+            completedIds={[...completedIds]}
+            weekMinutes={weekMinutes}
+            todayIndex={todayIndex}
+            heardAtLevel={heardAtLevel}
+          />
+
+          {/* situation grid — two-up on phones so all eight fit in a couple
+              of screens; the wider auto-fill grid from `sm` up. */}
+          <div className="grid grid-cols-2 sm:grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-2.5 sm:gap-3.5 max-w-[980px]">
+            {bySituation.map(({ s, dialogues }) => {
               const count = dialogues.length;
               const done = dialogues.filter((d) => completedIds.has(d.id)).length;
               const finished = count > 0 && done === count;
               const inProgress = done > 0 && done < count;
               const next = inProgress ? (dialogues.find((d) => !completedIds.has(d.id)) ?? null) : null;
-              const photo = photoByKey.get(s.key);
+              const totalLines = dialogues.reduce((n, d) => n + d.lines.length, 0);
               // In-progress cards act as a "Continue" button: tap goes straight
-              // to the next unheard clip. Not-started and finished cards still
-              // open the clip list.
+              // to the next unheard clip. Not-started and finished cards open
+              // the clip list.
               const href = next
-                ? `/listening/${s.key}/${next.id}`
+                ? `/listening/${s.key}?level=${level}&clip=${next.id}`
                 : `/listening/${s.key}?level=${level}`;
               return (
                 <Link
                   key={s.key}
                   href={href}
-                  className="border border-line rounded-[14px] bg-cream overflow-hidden text-left transition-all duration-150 hover:border-teal hover:bg-[var(--tint-teal)] hover:-translate-y-0.5 group"
+                  className="flex flex-col border border-line rounded-[16px] bg-cream overflow-hidden text-left transition-all duration-150 hover:border-[var(--tint-teal-line)] hover:-translate-y-0.5 group"
                 >
                   <div
-                    className="relative aspect-[4/3] sm:aspect-[16/9] bg-warm"
-                    style={
-                      photo
-                        ? { background: `url(${photo}) center/cover` }
-                        : { background: s.bg }
-                    }
+                    className="relative h-[84px] sm:h-[96px] flex items-end p-2.5 sm:p-3 overflow-hidden"
+                    style={{ background: s.tint }}
                   >
-                    <span className="absolute left-2.5 bottom-2.5 sm:left-3 sm:bottom-3 w-8 h-8 sm:w-9 sm:h-9 rounded-[10px] flex items-center justify-center text-base sm:text-lg bg-cream/95 border border-line shadow-sm transition-transform group-hover:scale-110">
+                    <span
+                      aria-hidden="true"
+                      className="absolute -right-1.5 -top-2 text-[64px] sm:text-[72px] leading-none opacity-35 -rotate-[8deg] saturate-[.8] select-none"
+                    >
+                      {s.icon}
+                    </span>
+                    <span className="relative w-8 h-8 sm:w-9 sm:h-9 rounded-[10px] grid place-items-center text-base sm:text-lg bg-cream border border-line shadow-sm transition-transform group-hover:scale-110">
                       {s.icon}
                     </span>
                     {done > 0 && (
-                      <span
-                        className="absolute left-0 right-0 bottom-0 h-1 bg-cream/55"
-                        role="progressbar"
-                        aria-valuemin={0}
-                        aria-valuemax={count}
-                        aria-valuenow={done}
-                        aria-label={`${done} of ${count} heard`}
+                      <ProgressRing
+                        value={done}
+                        max={count}
+                        size={40}
+                        trackClassName="stroke-white/55"
+                        className="absolute right-2.5 bottom-2.5 sm:right-3 sm:bottom-3"
                       >
-                        <span
-                          className={`block h-full ${finished ? "bg-success" : "bg-teal"}`}
-                          style={{ width: `${Math.round((done / count) * 100)}%` }}
-                        />
-                      </span>
+                        <span className={`text-[10.5px] font-extrabold ${finished ? "text-success" : "text-charcoal"}`}>
+                          {finished ? "✓" : done}
+                        </span>
+                      </ProgressRing>
                     )}
                   </div>
-                  <div className="px-3 py-3 sm:px-[18px] sm:py-4">
-                    <b className="block font-semibold text-[14px] sm:text-[15px] mb-0.5 truncate">{s.label}</b>
-                    <small className="hidden sm:block text-[12.5px] text-muted leading-[1.5]">
-                      {SUBS[s.key] ?? s.krLabel}
-                    </small>
-                    <span
-                      className={`inline-block mt-2 sm:mt-3 max-w-full truncate text-[11px] sm:text-[11.5px] font-semibold rounded-full px-2 sm:px-2.5 py-[3px] border ${
-                        done > 0 && done === count
-                          ? "text-success bg-success-bg border-success-line"
-                          : "text-teal bg-[var(--tint-teal)] border-[var(--tint-teal-line)]"
-                      }`}
-                    >
-                      <span className="kr">{s.krLabel}</span> ·{" "}
-                      {count === 0
-                        ? "coming soon"
-                        : done === count
-                          ? `all ${count} done ✓`
-                          : done > 0
-                            ? `${done}/${count} heard`
-                            : `${count} dialogue${count > 1 ? "s" : ""}`}
-                    </span>
-                    {next ? (
-                      <span className="mt-1.5 flex items-center gap-1.5 min-w-0 bg-[var(--tint-teal)] border border-[var(--tint-teal-line)] rounded-[9px] px-2 py-1.5 text-[11px]">
+                  <div className="flex-1 flex flex-col gap-1.5 px-3 py-3 sm:px-4 sm:pb-4">
+                    <b className="flex items-baseline gap-2 font-extrabold text-[14px] sm:text-[15px] min-w-0">
+                      <span className="truncate">{s.label}</span>
+                      <small className="kr text-[12px] text-faint font-semibold flex-none">{s.krLabel}</small>
+                    </b>
+                    <p className="hidden sm:block text-[12.5px] text-muted leading-[1.45]">{s.sub}</p>
+                    {next && (
+                      <span className="flex items-center gap-1.5 min-w-0 bg-[var(--tint-teal)] border border-[var(--tint-teal-line)] rounded-lg px-2 py-[5px] text-[11.5px]">
                         <span
                           aria-hidden="true"
-                          className="shrink-0 w-[18px] h-[18px] rounded-full bg-teal text-white flex items-center justify-center text-[8px] leading-none pl-px"
+                          className="shrink-0 w-4 h-4 rounded-full bg-teal text-white grid place-items-center text-[7px] leading-none pl-px"
                         >
                           ▶
                         </span>
                         <span className="min-w-0 truncate text-charcoal">
-                          Next · <span className="font-semibold">{next.title}</span>
+                          Next · <span className="font-semibold">{next.title as string}</span>
                         </span>
                       </span>
-                    ) : count > 0 ? (
-                      <small className="block mt-1.5 text-[11.5px] text-muted truncate">
-                        {finished ? "Replay any clip →" : "Start with clip 1 →"}
-                      </small>
-                    ) : null}
+                    )}
+                    <span className="mt-auto pt-2 flex items-center justify-between gap-2 text-[12px]">
+                      <span className="text-muted tabular-nums truncate">
+                        {count === 0
+                          ? "Coming soon"
+                          : finished
+                            ? `All ${count} done`
+                            : done > 0
+                              ? `${done} / ${count} heard`
+                              : `${count} clips · ~${estMinutes(totalLines)} min`}
+                      </span>
+                      {count > 0 && (
+                        <span className={`font-bold flex-none ${finished ? "text-success" : "text-teal"}`}>
+                          {finished ? "Replay →" : done > 0 ? "Continue →" : "Start →"}
+                        </span>
+                      )}
+                    </span>
                   </div>
                 </Link>
               );

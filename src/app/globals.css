@@ -801,3 +801,18 @@ html.js-reveal .reveal:not(.in) {
   .sp-hop, .sp-flick, .sp-wisp, .sp-wisp2, .sp-breath, .sp-glowp, .sp-antler,
   .sp-ear, .sp-tailflick, .sp-rise, .sp-rise2 { animation: none; }
 }
+
+/* listening: "now playing" equaliser + speaking-avatar ring */
+@keyframes eqBar {
+  0%, 100% { height: 30%; }
+  50% { height: 100%; }
+}
+.eq-bar { animation: eqBar 1s ease-in-out infinite; }
+@keyframes avatarPulse {
+  0%, 100% { box-shadow: 0 0 0 4px var(--tint-teal-line); }
+  50% { box-shadow: 0 0 0 9px var(--tint-teal); }
+}
+.avatar-on { animation: avatarPulse 1.2s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .eq-bar, .avatar-on { animation: none; }
+}

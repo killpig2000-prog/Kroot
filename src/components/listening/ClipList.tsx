@@ -1,8 +1,16 @@
+import ProgressRing from "@/components/listening/ProgressRing";
 import { estMinutes } from "@/lib/listening-resume";
+import { waveHeights, type Situation } from "@/lib/listening";
 import type { Dialogue } from "@/lib/listening-dialogues";
+import type { CefrLevel } from "@/lib/tree";
 
+// Situation page: hero (icon, name, big progress ring), resume banner, and
+// the clips as a playlist table — #, title + Korean key phrase, length,
+// status pill.
 export default function ClipList({
   dialogues,
+  situation,
+  level,
   completed,
   heardMap,
   doneCount,
@@ -11,6 +19,8 @@ export default function ClipList({
   onOpenClip,
 }: {
   dialogues: Dialogue[];
+  situation: Situation;
+  level: CefrLevel;
   completed: Set<string>;
   heardMap: Record<string, number>;
   doneCount: number;
@@ -18,85 +28,131 @@ export default function ClipList({
   newLevel: number | null;
   onOpenClip: (id: string) => void;
 }) {
+  const totalLines = dialogues.reduce((n, d) => n + d.lines.length, 0);
+  const resumeHeard = resumeTarget ? (heardMap[resumeTarget.id] ?? 0) : 0;
+  const resumePct = resumeTarget ? Math.round((resumeHeard / resumeTarget.lines.length) * 100) : 0;
+
   return (
-    <div className="max-w-[680px]">
-      {/* situation progress */}
-      <div className="h-[7px] rounded-full bg-warm border border-line overflow-hidden mb-4">
-        <div
-          className="h-full bg-teal rounded-full transition-all"
-          style={{ width: `${dialogues.length ? (doneCount / dialogues.length) * 100 : 0}%` }}
-        />
-      </div>
-
-      {/* resume banner */}
-      {resumeTarget && (
-        <button
-          className="w-full flex items-center gap-3 border-[1.5px] border-[var(--tint-teal-line)] bg-[var(--tint-teal)] rounded-[13px] px-4 py-3 mb-3.5 text-left transition-all hover:-translate-y-0.5"
-          onClick={() => onOpenClip(resumeTarget.id)}
-        >
-          <span className="text-[20px] flex-none">🎧</span>
-          <span className="flex-1 min-w-0">
-            <b className="block text-[13.5px] font-bold text-teal">
-              Continue where you left off
-            </b>
-            <span className="text-[12.5px] text-muted">
-              {resumeTarget.title} · line {(heardMap[resumeTarget.id] ?? 0) + 1} of{" "}
-              {resumeTarget.lines.length}
-            </span>
-          </span>
-          <span className="flex-none text-[13px] font-bold text-teal">Resume ▶</span>
-        </button>
-      )}
-
+    <div className="max-w-[760px]">
       {newLevel && (
         <p className="text-[13px] font-semibold text-success mb-3">🎉 Level up! Now Lv. {newLevel}</p>
       )}
 
-      {/* clip rows — one compact line each; only the exceptions (done,
-          in progress) carry a status, so twenty "Not started"s never repeat */}
-      <div className="border border-line rounded-[14px] bg-cream overflow-hidden">
+      <div className="border border-line rounded-[16px] bg-cream overflow-hidden">
+        {/* hero */}
+        <div
+          className="grid sm:grid-cols-[minmax(0,1fr)_auto] gap-4 items-center px-[clamp(16px,3vw,26px)] py-5 border-b border-line"
+          style={{ background: `linear-gradient(90deg, ${situation.tint} 0%, var(--c-warm) 70%)` }}
+        >
+          <div className="flex items-center gap-3.5 min-w-0">
+            <span className="w-[52px] h-[52px] rounded-[14px] bg-cream border border-line grid place-items-center text-[26px] shadow-sm flex-none">
+              {situation.icon}
+            </span>
+            <div className="min-w-0">
+              <h1 className="font-extrabold text-[22px] tracking-[-0.02em] leading-tight">
+                {situation.label}
+                <small className="kr text-[13px] text-muted font-semibold ml-2">
+                  {situation.krLabel} · {level}
+                </small>
+              </h1>
+              <p className="text-[13px] text-muted mt-0.5">
+                {situation.sub && <>{situation.sub} · </>}
+                {dialogues.length} clips · ~{estMinutes(totalLines)} min
+              </p>
+            </div>
+          </div>
+          <ProgressRing value={doneCount} max={dialogues.length} size={76} stroke={7} trackClassName="stroke-line">
+            <span className="text-center leading-none">
+              <b className="block text-[14px] font-extrabold tabular-nums">
+                {doneCount}/{dialogues.length}
+              </b>
+              <small className="block text-[9.5px] text-muted tracking-[.06em] mt-0.5">HEARD</small>
+            </span>
+          </ProgressRing>
+        </div>
+
+        {/* resume banner */}
+        {resumeTarget && (
+          <button
+            className="w-full flex items-center gap-3.5 px-[18px] py-3.5 bg-[var(--tint-teal)] border-b border-[var(--tint-teal-line)] text-left transition-colors hover:bg-[var(--tint-teal-line)]/40"
+            onClick={() => onOpenClip(resumeTarget.id)}
+          >
+            <span
+              aria-hidden="true"
+              className="w-11 h-11 rounded-full bg-teal text-white grid place-items-center text-[16px] pl-[3px] flex-none shadow-[0_4px_14px_rgba(34,137,128,.35)]"
+            >
+              ▶
+            </span>
+            <span className="min-w-0 flex-1">
+              <b className="block text-[14px]">Continue where you left off</b>
+              <span className="text-[12.5px] text-muted">
+                {resumeTarget.title as string} · line {resumeHeard + 1} of {resumeTarget.lines.length}
+              </span>
+            </span>
+            <span className="hidden sm:block w-[120px] h-1.5 rounded-full bg-[var(--tint-teal-line)] overflow-hidden">
+              <span className="block h-full bg-teal rounded-full" style={{ width: `${resumePct}%` }} />
+            </span>
+            <span className="text-[12px] font-bold text-teal tabular-nums">{resumePct}%</span>
+          </button>
+        )}
+
+        {/* list head */}
+        <div className="hidden sm:grid grid-cols-[40px_1fr_120px_70px] gap-3 px-[18px] py-2.5 text-[10.5px] font-bold tracking-[.1em] uppercase text-faint border-b border-line bg-warm">
+          <span>#</span>
+          <span>Clip</span>
+          <span>Length</span>
+          <span className="text-right">Status</span>
+        </div>
+
         {dialogues.map((d, i) => {
           const done = completed.has(d.id);
           const heard = heardMap[d.id] ?? 0;
           const inProgress = !done && heard > 0;
+          const bars = waveHeights(d.id, Math.min(8, d.lines.length));
           return (
             <button
               key={d.id}
               onClick={() => onOpenClip(d.id)}
-              className={`w-full flex items-center gap-3 px-3.5 py-2.5 text-left transition-colors hover:bg-[var(--tint-teal)] ${
-                i > 0 ? "border-t border-line" : ""
+              className={`w-full grid grid-cols-[34px_1fr_auto] sm:grid-cols-[40px_1fr_120px_70px] gap-3 items-center px-[18px] py-3 text-left transition-colors hover:bg-[var(--tint-teal)] ${
+                i < dialogues.length - 1 ? "border-b border-line" : ""
               } ${inProgress ? "bg-[var(--tint-teal)]" : ""}`}
             >
               <span
-                className={`flex-none w-7 h-7 rounded-full flex items-center justify-center text-[12.5px] font-bold tabular-nums ${
+                className={`w-7 h-7 rounded-full grid place-items-center text-[12px] font-extrabold tabular-nums border ${
                   done
-                    ? "bg-success-bg border border-success-line text-success"
+                    ? "bg-success-bg border-success-line text-success"
                     : inProgress
-                      ? "bg-teal text-white"
-                      : "bg-warm border border-line text-faint"
+                      ? "bg-teal border-teal text-white text-[10px] pl-0.5"
+                      : "bg-warm border-line text-faint"
                 }`}
               >
                 {done ? "✓" : inProgress ? "▶" : i + 1}
               </span>
-              <span className="flex-1 min-w-0 flex items-baseline gap-2">
-                <b className={`text-[14px] truncate ${done ? "font-medium text-muted" : "font-semibold"}`}>
-                  {d.title}
+              <span className="min-w-0">
+                <b className={`block truncate text-[14px] ${done ? "font-medium text-muted" : "font-bold"}`}>
+                  {d.title as string}
                 </b>
-                <small className="flex-none text-[11.5px] text-faint tabular-nums">
-                  {d.lines.length} lines · ~{estMinutes(d.lines.length)} min
-                </small>
+                <small className="kr block truncate text-[12px] text-faint font-normal">{d.lines[0]?.kr}</small>
               </span>
-              {inProgress && (
-                <span className="flex-none flex items-center gap-1.5 text-[11.5px] font-semibold text-teal tabular-nums">
-                  <span className="inline-block w-12 h-1 rounded-full bg-line overflow-hidden">
-                    <span
-                      className="block h-full bg-teal"
-                      style={{ width: `${(heard / d.lines.length) * 100}%` }}
-                    />
-                  </span>
-                  {heard}/{d.lines.length}
+              <span className="hidden sm:flex items-center gap-1.5 text-[12px] text-muted tabular-nums">
+                <span aria-hidden="true" className="inline-flex items-end gap-[2px] h-3">
+                  {bars.map((h, j) => (
+                    <i key={j} className="w-[3px] rounded-[1px] bg-dash" style={{ height: `${Math.round(h * 12)}px` }} />
+                  ))}
                 </span>
-              )}
+                {d.lines.length} lines · {estMinutes(d.lines.length)} min
+              </span>
+              <span
+                className={`justify-self-end text-[11px] font-bold px-2.5 py-[3px] rounded-full tabular-nums ${
+                  done
+                    ? "bg-success-bg text-success"
+                    : inProgress
+                      ? "bg-teal text-white"
+                      : "bg-warm text-faint"
+                }`}
+              >
+                {done ? "Heard" : inProgress ? `${heard} / ${d.lines.length}` : "—"}
+              </span>
             </button>
           );
         })}

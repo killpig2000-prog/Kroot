@@ -2,8 +2,9 @@
 
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { createClient } from "@/lib/supabase/client";
-import { recordCompletion, awardPartialCredit } from "@/lib/activity";
+import { recordCompletion, awardPartialCredit, XP_POINTS } from "@/lib/activity";
 import { type Dialogue } from "@/lib/listening-dialogues";
+import type { Situation } from "@/lib/listening";
 import type { CefrLevel } from "@/lib/tree";
 import {
   loadHeard,
@@ -13,36 +14,43 @@ import {
   clearAwardedRatio,
 } from "@/lib/listening-resume";
 import ClipPlayer from "@/components/listening/ClipPlayer";
+import ClipDone from "@/components/listening/ClipDone";
 import FinishedAllCard from "@/components/listening/FinishedAllCard";
 import ClipList from "@/components/listening/ClipList";
 
-// Session: a clip list with per-clip status (done / in progress / not started)
-// and a resume banner; picking a clip opens the player.
+type DoneInfo = { dialogue: Dialogue; correct: boolean | null; xp: number };
+
+// Session: clip list (with per-clip status + resume banner) → player → done
+// screen → next clip, and the all-done celebration after the last one.
 export default function ListeningSession({
   dialogues,
   level,
-  situationLabel,
-  situationIcon = "🎧",
+  situation,
   completedIds,
-  header,
+  initialOpenId = null,
+  userId,
   levelTabs,
 }: {
   dialogues: Dialogue[];
   level: CefrLevel;
-  situationLabel: string;
-  situationIcon?: string;
+  situation: Situation;
   completedIds: string[];
-  /** Page title block — shown with the clip list, collapsed while a clip plays. */
-  header?: ReactNode;
+  /** Open this clip straight away (from `?clip=`). */
+  initialOpenId?: string | null;
+  userId: string | null;
   /** Level switcher — hidden while a clip plays so the player sits at the top. */
   levelTabs?: ReactNode;
 }) {
   const supabase = useMemo(() => createClient(), []);
   const [completed, setCompleted] = useState<Set<string>>(() => new Set(completedIds));
-  const [openId, setOpenId] = useState<string | null>(null);
+  const [openId, setOpenId] = useState<string | null>(initialOpenId);
   const [heardMap, setHeardMap] = useState<Record<string, number>>({});
   const [newLevel, setNewLevel] = useState<number | null>(null);
+  const [done, setDone] = useState<DoneInfo | null>(null);
   const [justFinishedAll, setJustFinishedAll] = useState(false);
+  // The player mounts before localStorage is read; feed it the saved line
+  // once known so a deep link still resumes mid-clip.
+  const [heardLoaded, setHeardLoaded] = useState(false);
 
   // localStorage is client-only — read the resume positions after mount
   // (async, so hydration matches the server-rendered "no resume" state).
@@ -54,6 +62,7 @@ export default function ListeningSession({
         if (h > 0) map[d.id] = h;
       }
       setHeardMap(map);
+      setHeardLoaded(true);
     }, 0);
     return () => clearTimeout(t);
   }, [dialogues]);
@@ -61,7 +70,7 @@ export default function ListeningSession({
   const doneCount = dialogues.filter((d) => completed.has(d.id)).length;
   const resumeTarget = dialogues.find((d) => !completed.has(d.id) && (heardMap[d.id] ?? 0) > 0);
 
-  async function completeClip(dialogue: Dialogue) {
+  async function completeClip(dialogue: Dialogue, correct: boolean | null) {
     const awardedRatio = loadAwardedRatio(dialogue.id);
     clearHeard(dialogue.id);
     clearAwardedRatio(dialogue.id);
@@ -74,7 +83,9 @@ export default function ListeningSession({
     nowDone.add(dialogue.id);
     setCompleted(nowDone);
     setOpenId(null);
-    if (dialogues.every((d) => nowDone.has(d.id))) setJustFinishedAll(true);
+    const full = XP_POINTS.listening ?? 12;
+    const xp = Math.max(0, full - Math.round(full * awardedRatio));
+    setDone({ dialogue, correct, xp });
 
     const {
       data: { user },
@@ -111,27 +122,20 @@ export default function ListeningSession({
 
   const open = openId ? dialogues.find((d) => d.id === openId) : null;
   if (open) {
-    // One-line header while listening: the situation and where we are in it.
-    // The player itself carries the "← All clips" exit.
+    // Wait for the saved line before mounting the player, so a deep link
+    // resumes where it should instead of restarting at line 1.
+    if (!heardLoaded) return null;
     return (
-      <>
-        <p className="flex items-center gap-2 text-[13px] text-muted mb-3 max-w-[680px]">
-          <span className="inline-flex w-6 h-6 rounded-md bg-[var(--tint-teal)] text-teal border border-[var(--tint-teal-line)] items-center justify-center text-[12px]">
-            {situationIcon}
-          </span>
-          <b className="text-charcoal font-semibold">{situationLabel}</b>
-          <span className="text-faint">·</span>
-          <span className="tabular-nums">
-            Clip {dialogues.indexOf(open) + 1} of {dialogues.length}
-          </span>
-          <span className="text-faint">·</span>
-          <span>{level}</span>
-        </p>
-        <ClipPlayer
+      <ClipPlayer
         key={open.id}
         dialogue={open}
         clipNo={dialogues.indexOf(open) + 1}
         clipCount={dialogues.length}
+        situationKey={situation.key}
+        situationLabel={situation.label}
+        situationIcon={situation.icon}
+        level={level}
+        userId={userId}
         initialHeard={heardMap[open.id] ?? 0}
         onExit={() => {
           const finalHeard = loadHeard(open.id, open.lines.length);
@@ -139,34 +143,60 @@ export default function ListeningSession({
           setOpenId(null);
           void awardListeningPartial(open, finalHeard);
         }}
-        onFinished={() => void completeClip(open)}
+        onFinished={(correct) => void completeClip(open, correct)}
       />
-      </>
     );
   }
 
-  // all-done celebration (shown right after the last clip completes)
+  // all-done celebration (after the summary button on the last clip)
   if (justFinishedAll) {
     return (
-      <>
-        {header}
-        <FinishedAllCard
-          situationLabel={situationLabel}
-          clipCount={dialogues.length}
-          level={level}
-          newLevel={newLevel}
-          onBackToClips={() => setJustFinishedAll(false)}
-        />
-      </>
+      <FinishedAllCard
+        situationLabel={situation.label}
+        clipCount={dialogues.length}
+        level={level}
+        newLevel={newLevel}
+        onBackToClips={() => setJustFinishedAll(false)}
+      />
+    );
+  }
+
+  if (done) {
+    const idx = dialogues.indexOf(done.dialogue);
+    const next = dialogues.slice(idx + 1).find((d) => !completed.has(d.id)) ?? dialogues.find((d) => !completed.has(d.id)) ?? null;
+    return (
+      <ClipDone
+        dialogue={done.dialogue}
+        clipNo={idx + 1}
+        clipCount={dialogues.length}
+        situationLabel={situation.label}
+        situationIcon={situation.icon}
+        level={level}
+        correct={done.correct}
+        xp={done.xp}
+        next={next}
+        userId={userId}
+        onReplay={() => {
+          setDone(null);
+          setOpenId(done.dialogue.id);
+        }}
+        onAllClips={() => setDone(null)}
+        onNext={() => {
+          setDone(null);
+          if (next) setOpenId(next.id);
+          else setJustFinishedAll(true);
+        }}
+      />
     );
   }
 
   return (
     <>
-      {header}
       {levelTabs}
       <ClipList
         dialogues={dialogues}
+        situation={situation}
+        level={level}
         completed={completed}
         heardMap={heardMap}
         doneCount={doneCount}

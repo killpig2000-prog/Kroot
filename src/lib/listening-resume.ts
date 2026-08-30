@@ -1,6 +1,10 @@
 // Mid-clip resume: how many lines of a dialogue have been heard, kept in
 // localStorage so a refresh or detour resumes at the same line. Clip-level
 // completion stays in the DB (listening_progress) separately.
+// The clip most recently left mid-way — what the Listening home's
+// "Continue listening" hero points at.
+const LAST_KEY = "kroot-listen-last";
+
 function heardKey(dialogueId: string) {
   return `kroot-listen-heard:${dialogueId}`;
 }
@@ -14,6 +18,7 @@ export function loadHeard(dialogueId: string, lineCount: number): number {
 export function saveHeard(dialogueId: string, heard: number) {
   try {
     window.localStorage.setItem(heardKey(dialogueId), String(heard));
+    window.localStorage.setItem(LAST_KEY, dialogueId);
   } catch {
     // storage full/blocked — resume just won't survive a reload
   }
@@ -22,8 +27,18 @@ export function saveHeard(dialogueId: string, heard: number) {
 export function clearHeard(dialogueId: string) {
   try {
     window.localStorage.removeItem(heardKey(dialogueId));
+    if (window.localStorage.getItem(LAST_KEY) === dialogueId) window.localStorage.removeItem(LAST_KEY);
   } catch {
     // ignore
+  }
+}
+
+export function loadLastListened(): string | null {
+  if (typeof window === "undefined") return null;
+  try {
+    return window.localStorage.getItem(LAST_KEY);
+  } catch {
+    return null;
   }
 }
 
