@@ -22,5 +22,7 @@
   "storyGrove": "故事林",
   "dayStreak": "连续 {n} 天",
   "freezesReady": "{n} 个冻结可用",
-  "myProgress": "我的进度"
+  "myProgress": "我的进度",
+  "basics": "基础",
+  "relax": "休闲"
 }

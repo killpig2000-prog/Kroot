@@ -22,5 +22,7 @@
   "storyGrove": "Bosque de historias",
   "dayStreak": "Racha de {n} días",
   "freezesReady": "{n} congelaciones listas",
-  "myProgress": "Mi progreso"
+  "myProgress": "Mi progreso",
+  "basics": "Básicos",
+  "relax": "Relax"
 }

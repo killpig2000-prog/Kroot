@@ -22,5 +22,7 @@
   "storyGrove": "ストーリーの森",
   "dayStreak": "{n}日連続",
   "freezesReady": "フリーズ {n} 個",
-  "myProgress": "学習状況"
+  "myProgress": "学習状況",
+  "basics": "基本",
+  "relax": "リラックス"
 }

@@ -22,5 +22,7 @@
   "storyGrove": "Story Grove",
   "dayStreak": "{n}-day streak",
   "freezesReady": "{n} freezes ready",
-  "myProgress": "My progress"
+  "myProgress": "My progress",
+  "basics": "Basics",
+  "relax": "Relax"
 }
