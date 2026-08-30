@@ -47,7 +47,6 @@
     "reviewDue": "Ôn {count} từ",
     "accuracy": "Độ chính xác",
     "ofAnswers": "đúng {correct}/{total}",
-    "overAttempts": "{count} lần luyện",
     "overLessons": "{count} bài",
     "noScoreYet": "{skills} chưa tính điểm.",
     "wordsToPractise": "Từ cần luyện thêm",
@@ -56,6 +55,7 @@
     "levelHistory": "Lịch sử kiểm tra trình độ",
     "passed": "Đạt",
     "settings": "Cài đặt",
-    "noStatsYet": "Học xong bài đầu tiên là số liệu sẽ hiện ở đây."
+    "noStatsYet": "Học xong bài đầu tiên là số liệu sẽ hiện ở đây.",
+    "overWords": "{count} từ đã chấm điểm"
   }
 }

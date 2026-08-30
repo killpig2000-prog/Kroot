@@ -190,7 +190,7 @@ export default async function ProfilePage() {
         }]
       : []),
     ...(speakingScores.length > 0
-      ? [{ key: "pronunciation", percent: avg(speakingScores), note: t("overAttempts", { count: speakingScores.length }) }]
+      ? [{ key: "pronunciation", percent: avg(speakingScores), note: t("overWords", { count: speakingScores.length }) }]
       : []),
     ...(grammarScores.length > 0
       ? [{ key: "grammar", percent: avg(grammarScores), note: t("overLessons", { count: grammarScores.length }) }]

@@ -47,7 +47,6 @@
     "reviewDue": "{count} 語を復習する",
     "accuracy": "正答率",
     "ofAnswers": "{total} 問中 {correct} 問正解",
-    "overAttempts": "{count} 回の練習",
     "overLessons": "{count} 課",
     "noScoreYet": "{skills} はまだ点数がつきません。",
     "wordsToPractise": "苦手な単語",
@@ -56,6 +55,7 @@
     "levelHistory": "レベル判定の記録",
     "passed": "合格",
     "settings": "設定",
-    "noStatsYet": "最初のユニットを終えると、ここに記録が出ます。"
+    "noStatsYet": "最初のユニットを終えると、ここに記録が出ます。",
+    "overWords": "{count} 語を採点"
   }
 }

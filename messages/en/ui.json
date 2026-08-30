@@ -47,7 +47,6 @@
     "reviewDue": "{count, plural, =1 {Review 1 word} other {Review # words}}",
     "accuracy": "Accuracy",
     "ofAnswers": "{correct}/{total} correct",
-    "overAttempts": "{count, plural, =1 {1 attempt} other {# attempts}}",
     "overLessons": "{count, plural, =1 {1 lesson} other {# lessons}}",
     "noScoreYet": "{skills} don't record a score yet.",
     "wordsToPractise": "Words to practise",
@@ -56,6 +55,7 @@
     "levelHistory": "Level history",
     "passed": "Passed",
     "settings": "Settings",
-    "noStatsYet": "Finish your first unit and your stats show up here."
+    "noStatsYet": "Finish your first unit and your stats show up here.",
+    "overWords": "{count, plural, =1 {1 word scored} other {# words scored}}"
   }
 }

@@ -47,7 +47,6 @@
     "reviewDue": "{count, plural, =1 {Repasar 1 palabra} other {Repasar # palabras}}",
     "accuracy": "Aciertos",
     "ofAnswers": "{correct}/{total} correctas",
-    "overAttempts": "{count, plural, =1 {1 intento} other {# intentos}}",
     "overLessons": "{count, plural, =1 {1 lección} other {# lecciones}}",
     "noScoreYet": "{skills} todavía no dan puntuación.",
     "wordsToPractise": "Palabras que se te resisten",
@@ -56,6 +55,7 @@
     "levelHistory": "Historial de nivel",
     "passed": "Aprobado",
     "settings": "Ajustes",
-    "noStatsYet": "Termina tu primera unidad y aquí verás tus datos."
+    "noStatsYet": "Termina tu primera unidad y aquí verás tus datos.",
+    "overWords": "{count, plural, =1 {1 palabra puntuada} other {# palabras puntuadas}}"
   }
 }

@@ -47,7 +47,6 @@
     "reviewDue": "复习这 {count} 个词",
     "accuracy": "正确率",
     "ofAnswers": "{total} 题答对 {correct} 题",
-    "overAttempts": "{count} 次练习",
     "overLessons": "{count} 课",
     "noScoreYet": "{skills} 暂时不计分。",
     "wordsToPractise": "需要多练的词",
@@ -56,6 +55,7 @@
     "levelHistory": "水平测试记录",
     "passed": "通过",
     "settings": "设置",
-    "noStatsYet": "学完第一个单元后，这里就会显示你的数据。"
+    "noStatsYet": "学完第一个单元后，这里就会显示你的数据。",
+    "overWords": "已评分 {count} 个词"
   }
 }
