@@ -24,12 +24,30 @@
     "seePlan": "Xem lộ trình của tôi →"
   },
   "goals": {
-    "drama": { "label": "Phim và show Hàn Quốc", "hint": "Nghe trước" },
-    "kpop": { "label": "Lời bài hát K-pop", "hint": "Từ vựng trước" },
-    "travel": { "label": "Du lịch Hàn Quốc", "hint": "Câu giao tiếp thiết yếu" },
-    "work": { "label": "Công việc hoặc học tập", "hint": "Ngữ pháp trước" },
-    "family": { "label": "Gia đình hoặc người yêu", "hint": "Giao tiếp hằng ngày" },
-    "curious": { "label": "Chỉ là tò mò", "hint": "Kết hợp cân bằng" }
+    "drama": {
+      "label": "Phim và show Hàn Quốc",
+      "hint": "Nghe trước"
+    },
+    "kpop": {
+      "label": "Lời bài hát K-pop",
+      "hint": "Từ vựng trước"
+    },
+    "travel": {
+      "label": "Du lịch Hàn Quốc",
+      "hint": "Câu giao tiếp thiết yếu"
+    },
+    "work": {
+      "label": "Công việc hoặc học tập",
+      "hint": "Ngữ pháp trước"
+    },
+    "family": {
+      "label": "Gia đình hoặc người yêu",
+      "hint": "Giao tiếp hằng ngày"
+    },
+    "curious": {
+      "label": "Chỉ là tò mò",
+      "hint": "Kết hợp cân bằng"
+    }
   },
   "quiz": {
     "question": "câu {n}",
@@ -114,6 +132,7 @@
     "sentAgain": "Đã gửi lại — đợi một chút nhé.",
     "nothingYet": "Chưa thấy gì?",
     "resend": "Gửi lại",
+    "resendIn": "Gửi lại sau {n} giây",
     "changeEmail": "Dùng email khác"
   },
   "saving": {

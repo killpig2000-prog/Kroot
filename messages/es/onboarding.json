@@ -24,12 +24,30 @@
     "seePlan": "Ver mi plan →"
   },
   "goals": {
-    "drama": { "label": "K-dramas y variedades", "hint": "Primero escuchar" },
-    "kpop": { "label": "Letras de K-pop", "hint": "Primero palabras" },
-    "travel": { "label": "Viajar a Corea", "hint": "Frases de supervivencia" },
-    "work": { "label": "Trabajo o estudios", "hint": "Primero gramática" },
-    "family": { "label": "Familia o pareja", "hint": "Conversación diaria" },
-    "curious": { "label": "Solo curiosidad", "hint": "Una mezcla equilibrada" }
+    "drama": {
+      "label": "K-dramas y variedades",
+      "hint": "Primero escuchar"
+    },
+    "kpop": {
+      "label": "Letras de K-pop",
+      "hint": "Primero palabras"
+    },
+    "travel": {
+      "label": "Viajar a Corea",
+      "hint": "Frases de supervivencia"
+    },
+    "work": {
+      "label": "Trabajo o estudios",
+      "hint": "Primero gramática"
+    },
+    "family": {
+      "label": "Familia o pareja",
+      "hint": "Conversación diaria"
+    },
+    "curious": {
+      "label": "Solo curiosidad",
+      "hint": "Una mezcla equilibrada"
+    }
   },
   "quiz": {
     "question": "pregunta {n}",
@@ -114,6 +132,7 @@
     "sentAgain": "Enviado de nuevo: dale un minuto.",
     "nothingYet": "¿Nada todavía?",
     "resend": "Reenviar",
+    "resendIn": "Reenviar en {n} s",
     "changeEmail": "Usar otro correo"
   },
   "saving": {

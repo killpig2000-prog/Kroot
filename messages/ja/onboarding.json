@@ -24,12 +24,30 @@
     "seePlan": "プランを見る →"
   },
   "goals": {
-    "drama": { "label": "韓国ドラマ・バラエティ", "hint": "リスニングから" },
-    "kpop": { "label": "K-POPの歌詞", "hint": "単語から" },
-    "travel": { "label": "韓国旅行", "hint": "旅行で使うフレーズ" },
-    "work": { "label": "仕事・勉強", "hint": "文法から" },
-    "family": { "label": "家族・パートナー", "hint": "日常会話" },
-    "curious": { "label": "なんとなく興味がある", "hint": "バランスよく" }
+    "drama": {
+      "label": "韓国ドラマ・バラエティ",
+      "hint": "リスニングから"
+    },
+    "kpop": {
+      "label": "K-POPの歌詞",
+      "hint": "単語から"
+    },
+    "travel": {
+      "label": "韓国旅行",
+      "hint": "旅行で使うフレーズ"
+    },
+    "work": {
+      "label": "仕事・勉強",
+      "hint": "文法から"
+    },
+    "family": {
+      "label": "家族・パートナー",
+      "hint": "日常会話"
+    },
+    "curious": {
+      "label": "なんとなく興味がある",
+      "hint": "バランスよく"
+    }
   },
   "quiz": {
     "question": "問題 {n}",
@@ -114,6 +132,7 @@
     "sentAgain": "再送しました — 少しお待ちください。",
     "nothingYet": "まだ届きませんか？",
     "resend": "再送する",
+    "resendIn": "{n}秒後に再送できます",
     "changeEmail": "別のメールアドレスを使う"
   },
   "saving": {

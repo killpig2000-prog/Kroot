@@ -118,6 +118,7 @@ export function ConfirmCard({
   firstLesson,
   resent,
   sending,
+  cooldown,
   onResend,
   onChangeEmail,
 }: {
@@ -125,6 +126,8 @@ export function ConfirmCard({
   firstLesson: FirstLesson | undefined;
   resent: boolean;
   sending: boolean;
+  /** Seconds left before resend is allowed again; 0 means ready. */
+  cooldown: number;
   onResend: () => void;
   onChangeEmail: () => void;
 }) {
@@ -147,8 +150,8 @@ export function ConfirmCard({
         </div>
         <p className="text-[12px] text-faint mt-4">
           {resent ? t("sentAgain") : t("nothingYet")}{" "}
-          <button type="button" className={`${BTN_GHOST} text-charcoal font-semibold`} onClick={onResend} disabled={sending}>
-            {t("resend")}
+          <button type="button" className={`${BTN_GHOST} text-charcoal font-semibold`} onClick={onResend} disabled={sending || cooldown > 0}>
+            {cooldown > 0 ? t("resendIn", { n: cooldown }) : t("resend")}
           </button>{" "}
           ·{" "}
           <button type="button" className={`${BTN_GHOST} text-charcoal font-semibold`} onClick={onChangeEmail}>

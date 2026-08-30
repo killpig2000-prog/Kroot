@@ -24,12 +24,30 @@
     "seePlan": "查看我的计划 →"
   },
   "goals": {
-    "drama": { "label": "韩剧和综艺", "hint": "先练听力" },
-    "kpop": { "label": "K-pop 歌词", "hint": "先学单词" },
-    "travel": { "label": "去韩国旅行", "hint": "实用短句" },
-    "work": { "label": "工作或学习", "hint": "先学语法" },
-    "family": { "label": "家人或伴侣", "hint": "日常对话" },
-    "curious": { "label": "只是好奇", "hint": "均衡搭配" }
+    "drama": {
+      "label": "韩剧和综艺",
+      "hint": "先练听力"
+    },
+    "kpop": {
+      "label": "K-pop 歌词",
+      "hint": "先学单词"
+    },
+    "travel": {
+      "label": "去韩国旅行",
+      "hint": "实用短句"
+    },
+    "work": {
+      "label": "工作或学习",
+      "hint": "先学语法"
+    },
+    "family": {
+      "label": "家人或伴侣",
+      "hint": "日常对话"
+    },
+    "curious": {
+      "label": "只是好奇",
+      "hint": "均衡搭配"
+    }
   },
   "quiz": {
     "question": "第 {n} 题",
@@ -114,6 +132,7 @@
     "sentAgain": "已重新发送 — 请稍等片刻。",
     "nothingYet": "还没收到？",
     "resend": "重新发送",
+    "resendIn": "{n} 秒后可重新发送",
     "changeEmail": "换一个邮箱"
   },
   "saving": {

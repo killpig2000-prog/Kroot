@@ -90,10 +90,19 @@ export default function OnboardingFlow({ lessons }: { lessons: FirstLessonsMap }
   const [email, setEmail] = useState("");
   const [resent, setResent] = useState(false);
   const [sending, setSending] = useState(false);
+  const [resendCooldown, setResendCooldown] = useState(0);
   const [error, setError] = useState<string | null>(() =>
     params.error === "auth" ? t("errors.authFailed") : params.error ? decodeURIComponent(params.error) : null
   );
   const saving = useRef(false);
+
+  // A tick-down after every magic-link send — stops accidental double-taps
+  // from burning into the mailer's hourly rate limit (see errors.rateLimit).
+  useEffect(() => {
+    if (resendCooldown <= 0) return;
+    const id = setInterval(() => setResendCooldown((n) => Math.max(0, n - 1)), 1000);
+    return () => clearInterval(id);
+  }, [resendCooldown]);
 
   const orderedLessons = useCallback(
     (p: Placement) => orderForGoal(lessons[p.route] ?? lessons[p.level], p.goal),
@@ -259,6 +268,7 @@ export default function OnboardingFlow({ lessons }: { lessons: FirstLessonsMap }
     if (step === "confirm") setResent(true);
     setEmail(addr);
     setStep("confirm");
+    setResendCooldown(30);
   }
 
   const active = STEP_INDEX[step];
@@ -322,6 +332,7 @@ export default function OnboardingFlow({ lessons }: { lessons: FirstLessonsMap }
               firstLesson={firstLesson}
               resent={resent}
               sending={sending}
+              cooldown={resendCooldown}
               onResend={() => magicLink(email, "")}
               onChangeEmail={() => {
                 setResent(false);
