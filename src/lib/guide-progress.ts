@@ -6,7 +6,7 @@ import { DIALOGUES } from "@/lib/listening-dialogues";
 import { SITUATIONS } from "@/lib/listening";
 import { getPassagesForLevel } from "@/lib/reading";
 import { CHAPTER_SIZE, getPromptsForLevel } from "@/lib/writing";
-import { NAILED_THRESHOLD, chapterBlurb, orderedChapters } from "@/lib/pronunciation";
+import { chapterBlurb, orderedChapters } from "@/lib/pronunciation";
 import { computeEligibility, type Eligibility } from "@/lib/promotion-server";
 
 // "You are here" for the Guide roadmaps. Each station on a roadmap has ONE
@@ -220,12 +220,12 @@ export async function getGuideProgress(
   };
 
   // --- Pronunciation: clear the Warm-up tier ------------------------------
-  const nailedIds = new Set(
-    speakingRows.filter((r) => (r.best_score ?? 0) >= NAILED_THRESHOLD).map((r) => r.prompt_key),
-  );
+  // Cleared = every word attempted at least once, matching the unlock gate
+  // on /speaking (an 80+ score is no longer required to move on).
+  const attemptedIds = new Set(speakingRows.map((r) => r.prompt_key));
   const speakingAt = new Map(speakingRows.map((r) => [r.prompt_key, r.completed_at]));
   const warmup = orderedChapters().filter((c) => c.tier === 1);
-  const clearedWarmup = warmup.filter((c) => c.items.every((w) => nailedIds.has(`${c.key}:${w.kr}`)));
+  const clearedWarmup = warmup.filter((c) => c.items.every((w) => attemptedIds.has(`${c.key}:${w.kr}`)));
   const nextChapter = warmup.find((c) => !clearedWarmup.includes(c));
   const pronMet = warmup.length > 0 && clearedWarmup.length === warmup.length;
   const pronStation: GuideStationProgress = {

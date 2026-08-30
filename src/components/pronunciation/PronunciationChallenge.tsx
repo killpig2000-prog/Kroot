@@ -180,13 +180,21 @@ export default function PronunciationChallenge({
     router.refresh();
   }
 
+  // A chapter clears once every word has been attempted at least once —
+  // scoring 80+ on all of them earns the "nailed" checkmarks and stats, but
+  // isn't required to move on. Reaching the last word via next() already
+  // guarantees every word has a bestScores entry (grade() always records
+  // one, and skip() only appears for a word that already has one from a
+  // prior session), so this is really just naming that guarantee.
+  const attemptedAll = words.every((w) => w.id in bestScores);
+
   function next() {
     if (index + 1 < words.length) {
       setIndex(index + 1);
       resetAnswer();
     } else {
       setFinished(true);
-      if (nailed.length === words.length) playChapterClear();
+      if (attemptedAll) playChapterClear();
       void logMinutesOnce();
     }
   }
@@ -196,6 +204,7 @@ export default function PronunciationChallenge({
       <FinishedCard
         words={words}
         nailed={nailed}
+        cleared={attemptedAll}
         bestStreak={bestStreak}
         levelUp={levelUp}
         attempts={attempts}

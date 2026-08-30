@@ -14,6 +14,7 @@ const BTN_LINE = buttonClassName("line");
 export default function FinishedCard({
   words,
   nailed,
+  cleared,
   bestStreak,
   levelUp,
   attempts,
@@ -24,6 +25,8 @@ export default function FinishedCard({
 }: {
   words: ChallengeWord[];
   nailed: string[];
+  /** Every word attempted at least once — doesn't require a passing score. */
+  cleared: boolean;
   bestStreak: number;
   levelUp: ProgressResult | null;
   attempts: Record<string, { count: number; best: number }>;
@@ -32,7 +35,6 @@ export default function FinishedCard({
   nextChapter: Chapter | undefined;
   onRunItBack: () => void;
 }) {
-  const cleared = nailed.length === words.length;
   const weakWords = words
     .filter((w) => (attempts[w.id]?.count ?? 0) > 1)
     .sort((a, b) => (attempts[a.id]?.best ?? 0) - (attempts[b.id]?.best ?? 0))

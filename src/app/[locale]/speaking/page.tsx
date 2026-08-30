@@ -28,15 +28,21 @@ export default async function SpeakingPage({
   const bestScores: Record<string, number> = {};
   for (const r of progressRows ?? []) bestScores[r.prompt_key] = r.best_score;
   const nailedIds = new Set(Object.keys(bestScores).filter((k) => bestScores[k] >= NAILED_THRESHOLD));
+  // A row exists the moment a word is attempted, whatever the score — used
+  // to gate progress, so a chapter clears (and the next tier can open) once
+  // every word has been tried, not once every word scores 80+. `nailedIds`
+  // (above) still drives the mastery count shown on each chapter's ring.
+  const attemptedIds = new Set(Object.keys(bestScores));
 
   // Chapters unlock a whole tier at a time, not one another individually:
   // every chapter within a tier is open (in any order) as soon as the tier
   // itself is unlocked, and the next tier opens only once every chapter in
-  // this one is fully cleared.
+  // this one is fully attempted.
   const statsFor = (c: Chapter) => {
     const total = c.items.length;
     const nailed = c.items.filter((w) => nailedIds.has(`${c.key}:${w.kr}`)).length;
-    return { total, nailed, cleared: total > 0 && nailed === total };
+    const attempted = c.items.filter((w) => attemptedIds.has(`${c.key}:${w.kr}`)).length;
+    return { total, nailed, cleared: total > 0 && attempted === total };
   };
 
   const allChapters = orderedChapters();
