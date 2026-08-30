@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { Link, redirect } from "@/i18n/navigation";
 import LevelTabs from "@/components/ui/LevelTabs";
 import BottomNav from "@/components/dashboard/BottomNav";
@@ -19,8 +20,8 @@ function ChapterDots({ done, started, total }: { done: number; started: number; 
   return (
     <span
       className="flex gap-[3px] items-center flex-none"
-      title={`${done} of ${total} units done`}
-      aria-label={`${done} of ${total} units done`}
+      title={t("doneOfTotal", { done, total })}
+      aria-label={t("doneOfTotal", { done, total })}
     >
       {Array.from({ length: total }, (_, i) => (
         <span
@@ -34,7 +35,7 @@ function ChapterDots({ done, started, total }: { done: number; started: number; 
   );
 }
 
-// The vocab index as a notebook: one "Up next" card with the single obvious
+// The vocab index as a notebook: one t("upNext") card with the single obvious
 // action, a numbered table of contents (5 units = 1 chapter) on the left, and
 // a preview of the selected unit's words on the right.
 export default async function VocabularyPage({
@@ -45,6 +46,7 @@ export default async function VocabularyPage({
   searchParams: Promise<{ level?: string; unit?: string; all?: string }>;
 }) {
   const { locale } = await params;
+  const t = getTranslations("vocabulary");
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
 
@@ -174,12 +176,12 @@ export default async function VocabularyPage({
           {/* ── up next ── */}
           {upNext && (
             <section
-              aria-label="Up next"
+              aria-label=t("upNext")
               className="grid grid-cols-1 sm:grid-cols-[minmax(0,1fr)_auto] gap-3 sm:gap-[18px] items-center bg-cream border border-[var(--tint-violet-line)] rounded-[14px] px-4 py-4 sm:px-[22px] sm:py-[18px] mb-4 shadow-[0_4px_0_#DDD6FE]"
             >
               <div className="min-w-0">
                 <p className="text-[11px] font-extrabold tracking-[.07em] uppercase text-[#6B33CC] mb-1">
-                  {upNext.status === "done" ? "All done" : "Up next"}
+                  {upNext.status === "done" ? t("allDone") : t("upNext")}
                 </p>
                 <h2 className="font-bold text-[20px] sm:text-[24px] tracking-[-0.02em] leading-[1.15]">
                   {unitLabel(upNext.index)}
@@ -276,7 +278,7 @@ export default async function VocabularyPage({
                   href={`/vocabulary?level=${level}${selected ? `&unit=${selected.index}` : ""}${showAll ? "" : "&all=1"}`}
                   className="text-[11.5px] font-bold tracking-normal normal-case text-[#6B33CC] hover:underline"
                 >
-                  {showAll ? "Show chapters" : "Show all units"}
+                  {showAll ? t("showChapters") : t("showAllUnits")}
                 </Link>
               </p>
               <div className="flex flex-col gap-px">
@@ -299,7 +301,7 @@ export default async function VocabularyPage({
                         className={`grid grid-cols-[minmax(0,1fr)_auto] gap-2 items-center px-2 py-[7px] rounded-[8px] text-[12.5px] transition-colors ${
                           current ? "bg-[var(--tint-violet)] text-[#713FC0] font-bold" : "hover:bg-warm"
                         } ${allDone && !current ? "text-muted font-semibold" : "font-bold"}`}
-                        title={`Units ${first}–${last}`}
+                        title={t("unitsOf", { first, last })}
                       >
                         <span className="truncate">
                           {allDone && <span className="text-success text-[11px] mr-1.5">✓</span>}
@@ -388,22 +390,22 @@ export default async function VocabularyPage({
                         }`}
                       >
                         {selected.thirsty > 0
-                          ? "Needs water"
+                          ? t("needsWater")
                           : selected.status === "done"
-                          ? "Done"
+                          ? t("known")
                           : selected.status === "in-progress"
-                          ? "In progress"
-                          : "New"}
+                          ? t("learning")
+                          : t("new")}
                       </span>
                       <Link
                         href={sessionHref(selected.index)}
                         className="rounded-[9px] px-4 py-2 text-[13px] font-bold bg-cream border border-line hover:border-charcoal transition-colors whitespace-nowrap"
                       >
                         {selected.status === "done"
-                          ? "Review this unit →"
+                          ? t("review")
                           : selected.known > 0
-                          ? "Continue this unit →"
-                          : "Study this unit →"}
+                          ? t("continue")
+                          : t("study")}
                       </Link>
                     </div>
                   </div>

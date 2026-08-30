@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import LevelTabs from "@/components/ui/LevelTabs";
 import { Link, redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
@@ -26,6 +27,7 @@ export default async function GrammarPage({
     .single();
 
   const { locale } = await params;
+  const t = getTranslations("grammar");
   const myLevel = (profile?.current_level ?? "A1") as CefrLevel;
   const sp = await searchParams;
   const requested = isCefrLevel(sp.level) ? sp.level : myLevel;
@@ -136,7 +138,7 @@ export default async function GrammarPage({
             <p className="text-[12.5px] text-muted mb-3">
               {selectedGroup
                 ? selectedGroup.sub
-                : "Every lesson, ordered A1 to C2. Higher tiers open once you pass the promotion test."}
+                : t("everyLessonDesc")}
             </p>
 
             <div className="border border-line rounded-[14px] overflow-hidden">

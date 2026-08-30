@@ -21,5 +21,14 @@
   "startStudying": "Start studying",
   "emptyState": "No words yet. Start by clicking on a word from the unit list.",
   "wordBank": "Word bank",
-  "myWords": "My words"
+  "myWords": "My words",
+  "allDone": "All done",
+  "showChapters": "Show chapters",
+  "needsWater": "Needs water",
+  "dueWords": "due words",
+  "review": "Review this unit →",
+  "continue": "Continue this unit →",
+  "study": "Study this unit →",
+  "unitsOf": "Units {first}–{last}",
+  "doneOfTotal": "{done} of {total} units done"
 }

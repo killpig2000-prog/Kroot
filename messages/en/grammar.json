@@ -18,9 +18,33 @@
         }
       ],
       "quiz": [
-        { "q": "Where does the verb go in a Korean sentence?", "opts": ["First", "Second", "At the very end", "Anywhere"] },
-        { "q": "Which sentence means 'I study Korean'?", "opts": ["저는 공부해요 한국어를.", "저는 한국어를 공부해요.", "공부해요 저는 한국어를.", "한국어를 공부해요 저는."] },
-        { "q": "Why can Korean move phrases around so freely?", "opts": ["Because verbs change form", "Because particles mark each word's role", "Because there are no nouns", "Because word order is random"] }
+        {
+          "q": "Where does the verb go in a Korean sentence?",
+          "opts": [
+            "First",
+            "Second",
+            "At the very end",
+            "Anywhere"
+          ]
+        },
+        {
+          "q": "Which sentence means 'I study Korean'?",
+          "opts": [
+            "저는 공부해요 한국어를.",
+            "저는 한국어를 공부해요.",
+            "공부해요 저는 한국어를.",
+            "한국어를 공부해요 저는."
+          ]
+        },
+        {
+          "q": "Why can Korean move phrases around so freely?",
+          "opts": [
+            "Because verbs change form",
+            "Because particles mark each word's role",
+            "Because there are no nouns",
+            "Because word order is random"
+          ]
+        }
       ]
     },
     "topic-vs-subject": {
@@ -41,9 +65,33 @@
         }
       ],
       "quiz": [
-        { "q": "Which particle follows a word ending in a consonant, like 선생님?", "opts": ["는", "은", "가", "를"] },
-        { "q": "'Who came?' — '친구___ 왔어요.' Which fits?", "opts": ["는", "은", "가", "를"] },
-        { "q": "You want to contrast: 'Coffee I like, but tea I don't.' Which particle marks 커피 and 차?", "opts": ["이/가", "은/는", "을/를", "에/에서"] }
+        {
+          "q": "Which particle follows a word ending in a consonant, like 선생님?",
+          "opts": [
+            "는",
+            "은",
+            "가",
+            "를"
+          ]
+        },
+        {
+          "q": "'Who came?' — '친구___ 왔어요.' Which fits?",
+          "opts": [
+            "는",
+            "은",
+            "가",
+            "를"
+          ]
+        },
+        {
+          "q": "You want to contrast: 'Coffee I like, but tea I don't.' Which particle marks 커피 and 차?",
+          "opts": [
+            "이/가",
+            "은/는",
+            "을/를",
+            "에/에서"
+          ]
+        }
       ]
     },
     "object-marker": {
@@ -64,9 +112,33 @@
         }
       ],
       "quiz": [
-        { "q": "'책' ends in a consonant. Which object marker follows it?", "opts": ["를", "을", "이", "가"] },
-        { "q": "Which sentence is correct for 'I drink coffee'?", "opts": ["커피을 마셔요.", "커피를 마셔요.", "커피가 마셔요.", "커피에 마셔요."] },
-        { "q": "What does 을/를 mark?", "opts": ["The topic", "The location", "The object of the verb", "The time"] }
+        {
+          "q": "'책' ends in a consonant. Which object marker follows it?",
+          "opts": [
+            "를",
+            "을",
+            "이",
+            "가"
+          ]
+        },
+        {
+          "q": "Which sentence is correct for 'I drink coffee'?",
+          "opts": [
+            "커피을 마셔요.",
+            "커피를 마셔요.",
+            "커피가 마셔요.",
+            "커피에 마셔요."
+          ]
+        },
+        {
+          "q": "What does 을/를 mark?",
+          "opts": [
+            "The topic",
+            "The location",
+            "The object of the verb",
+            "The time"
+          ]
+        }
       ]
     },
     "to-be": {
@@ -87,9 +159,33 @@
         }
       ],
       "quiz": [
-        { "q": "'의사' ends in a vowel. Which form is correct?", "opts": ["의사이에요", "의사예요", "의사가에요", "의사있어요"] },
-        { "q": "How do you say 'I am not a student'?", "opts": ["저는 학생이에요.", "저는 학생이 아니에요.", "저는 학생이 없어요.", "저는 학생을 안 해요."] },
-        { "q": "Which means 'I have a friend'?", "opts": ["친구예요.", "친구가 있어요.", "친구가 아니에요.", "친구를 예요."] }
+        {
+          "q": "'의사' ends in a vowel. Which form is correct?",
+          "opts": [
+            "의사이에요",
+            "의사예요",
+            "의사가에요",
+            "의사있어요"
+          ]
+        },
+        {
+          "q": "How do you say 'I am not a student'?",
+          "opts": [
+            "저는 학생이에요.",
+            "저는 학생이 아니에요.",
+            "저는 학생이 없어요.",
+            "저는 학생을 안 해요."
+          ]
+        },
+        {
+          "q": "Which means 'I have a friend'?",
+          "opts": [
+            "친구예요.",
+            "친구가 있어요.",
+            "친구가 아니에요.",
+            "친구를 예요."
+          ]
+        }
       ]
     },
     "present-tense": {
@@ -110,9 +206,33 @@
         }
       ],
       "quiz": [
-        { "q": "What is the present-tense form of 먹다?", "opts": ["먹아요", "먹어요", "먹해요", "먹이에요"] },
-        { "q": "공부하다 becomes…", "opts": ["공부하아요", "공부하어요", "공부해요", "공부이에요"] },
-        { "q": "Which stems take 아요?", "opts": ["Stems whose last vowel is ㅏ or ㅗ", "Stems ending in a consonant", "All 하다 verbs", "Stems whose last vowel is ㅜ"] }
+        {
+          "q": "What is the present-tense form of 먹다?",
+          "opts": [
+            "먹아요",
+            "먹어요",
+            "먹해요",
+            "먹이에요"
+          ]
+        },
+        {
+          "q": "공부하다 becomes…",
+          "opts": [
+            "공부하아요",
+            "공부하어요",
+            "공부해요",
+            "공부이에요"
+          ]
+        },
+        {
+          "q": "Which stems take 아요?",
+          "opts": [
+            "Stems whose last vowel is ㅏ or ㅗ",
+            "Stems ending in a consonant",
+            "All 하다 verbs",
+            "Stems whose last vowel is ㅜ"
+          ]
+        }
       ]
     }
   },
@@ -125,5 +245,6 @@
       "title": "Next steps",
       "sub": "Keep going after the basics."
     }
-  }
+  },
+  "everyLessonDesc": "Every lesson, ordered A1 to C2. Higher tiers open once you pass the promotion test."
 }
