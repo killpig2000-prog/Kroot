@@ -42,6 +42,23 @@ const PROTECTED_PREFIXES = [
   "/admin",
 ];
 
+// Next fires a speculative RSC prefetch for every link in the viewport, so a
+// page full of /ja/* links keeps re-requesting them long after the learner has
+// switched language. Those requests must never write a language preference:
+// otherwise a stale prefetch from the page you just left lands after the real
+// navigation and re-pins the cookie, and picking English "doesn't stick" —
+// the page renders in English while the cookie still says ja, so the next
+// bare URL bounces straight back. (Reproduced on production 2026-08-30.)
+function isPrefetchRequest(request: NextRequest): boolean {
+  const h = request.headers;
+  return (
+    h.get("next-router-prefetch") === "1" ||
+    h.get("purpose")?.toLowerCase() === "prefetch" ||
+    h.get("x-purpose")?.toLowerCase() === "prefetch" ||
+    h.get("x-moz")?.toLowerCase() === "prefetch"
+  );
+}
+
 function isPageRequest(pathname: string): boolean {
   if (pathname.startsWith("/api/") || pathname === "/api") return false;
   if (pathname.startsWith("/_next/") || pathname.startsWith("/_vercel/")) return false;
@@ -114,8 +131,11 @@ export async function proxy(request: NextRequest) {
   } else {
     response = handleI18n(request);
     // Pin the cookie to the locale actually served (next-intl only writes it
-    // on some responses), so the choice survives the next bare URL.
-    response.cookies.set(LOCALE_COOKIE, resolvedLocale, { path: "/", maxAge: 60 * 60 * 24 * 365, sameSite: "lax" });
+    // on some responses), so the choice survives the next bare URL — but only
+    // for a real navigation, never a speculative prefetch.
+    if (!isPrefetchRequest(request)) {
+      response.cookies.set(LOCALE_COOKIE, resolvedLocale, { path: "/", maxAge: 60 * 60 * 24 * 365, sameSite: "lax" });
+    }
   }
   // Carry over any auth cookies the claims check refreshed — dropping them
   // would discard the rotated refresh token and invalidate the session.
