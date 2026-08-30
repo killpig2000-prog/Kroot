@@ -24,13 +24,14 @@ const LANGUAGES = [
 // language when you're on it, but not offered in the list.
 const HIDDEN_LANGUAGES = [{ code: "es", label: "🇪🇸 Español" }];
 
+// The sidebar renders every item quiet on purpose — plain emoji, no color
+// tiles, no "Popular" badges (those still show in the phone Menu sheet).
+// 13 always-visible destinations beat an accordion that hides half of them.
 function NavItem({
   icon,
   label,
   href,
   on,
-  color,
-  popular,
   isNew,
 }: {
   icon: string;
@@ -47,28 +48,14 @@ function NavItem({
   const link = (
     <Link
       href={href}
-      className={`flex items-center gap-2 px-2.5 py-2 text-[13.5px] transition-colors ${
+      className={`flex items-center gap-2 px-2.5 py-[6px] text-[13.5px] transition-colors ${
         on
           ? "bg-cream border border-dashed border-dash border-r-0 rounded-l-[10px] -mr-3.5 text-success-deep font-bold"
           : "rounded-[9px] text-charcoal font-medium hover:bg-cream hover:text-success-deep"
       }`}
     >
-      {color ? (
-        <span
-          className="flex-none w-5 h-5 rounded-[6px] border flex items-center justify-center text-[11px]"
-          style={{ background: color.bg, borderColor: color.border, color: color.text }}
-        >
-          {icon}
-        </span>
-      ) : (
-        <span className="text-base">{icon}</span>
-      )}
+      <span className="flex-none w-5 text-center text-[14px]">{icon}</span>
       <span className="flex-1 min-w-0 truncate">{tn(navKey(label))}</span>
-      {popular && (
-        <span className="flex-none text-[8.5px] font-extrabold tracking-[.02em] text-[#B14F27] bg-[#FDE9D0] rounded-full px-[5px] py-px">
-          {tn("popular")}
-        </span>
-      )}
       {isNew && !on && (
         <span className="flex-none text-[8.5px] font-extrabold tracking-[.04em] text-white bg-[#9333EA] rounded-full px-[5px] py-px">
           {tn("new").toUpperCase()}
@@ -100,7 +87,6 @@ function Brand() {
 
 function LanguageSwitcher({ pathname, locale }: { pathname: string; locale: string }) {
   const router = useRouter();
-  const tn = useTranslations("nav");
   const [open, setOpen] = useState(false);
 
   // next-intl's router keeps the current locale unless told otherwise, so
@@ -184,11 +170,11 @@ function SidebarBody({
       ))}
 
       {SECTIONS.map((section) => (
-        <div key={section.title} className="flex flex-col gap-1">
-          <p className="text-[13px] font-black tracking-[.08em] uppercase text-success-deep px-3 pt-3.5 pb-1.5">
+        <div key={section.title} className="flex flex-col gap-0.5">
+          <p className="text-[10.5px] font-bold tracking-[.09em] uppercase text-muted px-3 pt-3 pb-1">
             {tn(section.title.toLowerCase())}
           </p>
-          <div className="flex flex-col gap-1.5">
+          <div className="flex flex-col gap-0.5">
             {section.items.map((item) => (
               <NavItem key={item.label} {...item} on={pathname.startsWith(item.href)} />
             ))}
