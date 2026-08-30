@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { useTranslations } from "next-intl";
 import { useSaveResume } from "@/hooks/useSaveResume";
-import { clearResume } from "@/lib/resume";
+import { clearResume, isColumnMissing } from "@/lib/resume";
 import { Link, useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { recordCompletion, type ProgressResult } from "@/lib/activity";
@@ -217,6 +217,19 @@ export default function WritingSession({
     };
   }
 
+  /**
+   * Score to persist for one prompt, or null when there isn't a real one —
+   * never the fallback 0 mergeGrade shows in the UI when grading was
+   * unavailable for a prompt (that's a display placeholder, not a mark).
+   */
+  function scoreToPersist(i: number, ai: ChapterGradeResult | null): number | null {
+    if (isLocalMode(boards[i].mode)) return localScore(entries[i].checks);
+    if (!ai) return null;
+    const k = graderIdx.indexOf(i);
+    const a = ai.answers.find((x) => x.index === k) ?? ai.answers[k];
+    return a ? a.score : null;
+  }
+
   async function submit() {
     if (!ready) return;
     setSubmitting(true);
@@ -272,15 +285,21 @@ export default function WritingSession({
       // an unavailable grader for typed answers keeps the old "saved, not graded" card.
       if (!needsGrader || ai) setGrade(mergeGrade(ai));
       const completedAt = new Date().toISOString();
-      await supabase.from("writing_progress").upsert(
-        prompts.map((p, i) => ({
-          user_id: userId,
-          prompt_key: p.key,
-          response_text: responses[i],
-          completed_at: completedAt,
-        })),
-        { onConflict: "user_id,prompt_key" }
-      );
+      const rows = prompts.map((p, i) => ({
+        user_id: userId,
+        prompt_key: p.key,
+        response_text: responses[i],
+        completed_at: completedAt,
+        score: scoreToPersist(i, ai),
+      }));
+      const { error } = await supabase.from("writing_progress").upsert(rows, { onConflict: "user_id,prompt_key" });
+      if (error && isColumnMissing(error)) {
+        // Migration 0037 (writing_progress.score) hasn't run here yet — retry without it.
+        await supabase.from("writing_progress").upsert(
+          rows.map((r) => ({ user_id: r.user_id, prompt_key: r.prompt_key, response_text: r.response_text, completed_at: r.completed_at })),
+          { onConflict: "user_id,prompt_key" }
+        );
+      }
       await logMinutesOnce();
     }
 
