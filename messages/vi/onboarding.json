@@ -2,47 +2,47 @@
   "steps": {
     "hangul": "Hangul",
     "goal": "Mục tiêu",
-    "test": "Bài kiểm tra",
+    "test": "Kiểm tra",
     "level": "Trình độ",
     "account": "Tài khoản"
   },
   "gate": {
-    "eyebrow": "Trước khi chúng ta bắt đầu",
-    "title": "Bạn có thể đọc cái này không?",
-    "sub": "Không có áp lực — điều này chỉ chọn bước đầu tiên phù hợp với bạn.",
-    "yesTitle": "Có, tôi có thể đọc được",
-    "yesHint": "Thực hiện bài kiểm tra trình độ 3 phút",
-    "noTitle": "Chưa",
+    "eyebrow": "Trước khi bắt đầu",
+    "title": "Bạn đọc được chữ này không?",
+    "sub": "Đừng lo — câu này chỉ để chọn bước đầu phù hợp cho bạn.",
+    "yesTitle": "Có, tôi đọc được",
+    "yesHint": "Làm bài kiểm tra trình độ 3 phút",
+    "noTitle": "Chưa đọc được",
     "noHint": "Bắt đầu với Hangul — không cần kiểm tra",
-    "foot": "Miễn phí · không cần tài khoản để tìm hiểu trình độ của bạn"
+    "foot": "Miễn phí · không cần tài khoản để biết trình độ"
   },
   "goal": {
-    "title": "Điều gì đã đưa bạn đến tiếng Hàn?",
-    "sub": "Chúng tôi sẽ định hình các bài học đầu tiên của bạn xung quanh nó.",
+    "title": "Điều gì đưa bạn đến với tiếng Hàn?",
+    "sub": "Chúng tôi sẽ sắp xếp những bài học đầu tiên theo đó.",
     "skip": "Bỏ qua",
-    "startTest": "Bắt đầu bài kiểm tra →",
-    "seePlan": "Xem kế hoạch của tôi →"
+    "startTest": "Bắt đầu kiểm tra →",
+    "seePlan": "Xem lộ trình của tôi →"
   },
   "goals": {
-    "drama": { "label": "Phim K-drama & Variety", "hint": "Nghe trước" },
+    "drama": { "label": "Phim và show Hàn Quốc", "hint": "Nghe trước" },
     "kpop": { "label": "Lời bài hát K-pop", "hint": "Từ vựng trước" },
-    "travel": { "label": "Du lịch đến Hàn Quốc", "hint": "Cụm từ sống sót" },
-    "work": { "label": "Làm việc hoặc học tập", "hint": "Ngữ pháp trước" },
-    "family": { "label": "Gia đình hoặc bạn đời", "hint": "Cuộc trò chuyện hàng ngày" },
-    "curious": { "label": "Chỉ tò mò", "hint": "Hỗn hợp cân bằng" }
+    "travel": { "label": "Du lịch Hàn Quốc", "hint": "Câu giao tiếp thiết yếu" },
+    "work": { "label": "Công việc hoặc học tập", "hint": "Ngữ pháp trước" },
+    "family": { "label": "Gia đình hoặc người yêu", "hint": "Giao tiếp hằng ngày" },
+    "curious": { "label": "Chỉ là tò mò", "hint": "Kết hợp cân bằng" }
   },
   "quiz": {
-    "question": "câu hỏi {n}",
-    "stopsEarly": "dừng sớm khi trình độ của bạn rõ ràng",
+    "question": "câu {n}",
+    "stopsEarly": "dừng sớm khi đã rõ trình độ của bạn",
     "play": "🔊 Phát âm thanh",
     "audioFailed": "Âm thanh không phát được.",
     "cantHear": "Không nghe được?",
-    "showText": "Hiển thị văn bản",
+    "showText": "Hiện chữ",
     "or": "· hoặc",
-    "swap": "hoán đổi câu hỏi này",
-    "noPenalty": "(không có hình phạt)",
+    "swap": "đổi câu hỏi này",
+    "noPenalty": "(không bị trừ điểm)",
     "dontKnow": "🤷 Tôi chưa biết",
-    "notNow": "Không phải bây giờ — bắt đầu từ A1"
+    "notNow": "Để sau — bắt đầu từ A1"
   },
   "types": {
     "Words": "Từ vựng",
@@ -57,72 +57,72 @@
     "minutes": "{n} phút"
   },
   "levels": {
-    "A1": "Bạn ở trang đầu tiên — nơi thoải mái nhất để bắt đầu! Chúng tôi sẽ bắt đầu bằng Hangul, lời chào và những cụm từ sinh tồn nhỏ.",
-    "A2": "Bạn biết những điều cơ bản! Những cuộc trò chuyện hàng ngày đơn giản là của bạn. Tiếp theo, chúng tôi sẽ phát triển các câu dài hơn và các từ hàng ngày.",
-    "B1": "Rễ vững chắc! Bạn có thể đảm đương cuộc trò chuyện hàng ngày. Bây giờ để kết nối, sắc thái và nghe lời thực tế.",
-    "B2": "Wow — bạn xử lý hầu hết các tình huống một cách tự tin! Bây giờ là lúc để đánh bóng biểu hiện tự nhiên và nghe nhanh hơn.",
-    "C1": "Chi nhánh cao! Bạn nói thành thạo về nhiều chủ đề. Hãy để chúng tôi tinh chỉnh các thành ngữ và tiếng Hàn chính thức.",
-    "C2": "Một cây mạnh! Gần như thạo lưu địa phương. Chúng tôi sẽ giữ bạn sắc nét với các phương tiện mới, lóng và tiếng Hàn cấp chuyên nghiệp."
+    "A1": "Bạn đang ở trang đầu tiên — nơi khởi đầu dễ chịu nhất! Chúng ta sẽ bắt đầu với Hangul, lời chào và vài câu giao tiếp thiết yếu.",
+    "A2": "Bạn đã nắm được căn bản! Những cuộc trò chuyện hằng ngày đơn giản nằm trong tầm tay. Tiếp theo là câu dài hơn và từ vựng đời thường.",
+    "B1": "Gốc rễ vững chắc! Bạn có thể trò chuyện hằng ngày. Giờ là lúc học liên từ, sắc thái và nghe trong tình huống thật.",
+    "B2": "Tuyệt — bạn tự tin xử lý hầu hết tình huống! Đã đến lúc trau chuốt cách diễn đạt tự nhiên và nghe nhanh hơn.",
+    "C1": "Cành cao vươn xa! Bạn nói trôi chảy nhiều chủ đề. Hãy tinh chỉnh thành ngữ và tiếng Hàn trang trọng.",
+    "C2": "Một cây đại thụ! Gần như người bản xứ. Chúng tôi sẽ giữ bạn luôn sắc bén với truyền thông mới, tiếng lóng và tiếng Hàn chuyên nghiệp."
   },
   "result": {
     "titleHangul": "Hãy bắt đầu với Hangul",
-    "title": "Hạt giống của bạn đã được trồng",
-    "subHangul": "Bạn sẽ đọc tiếng Hàn trong khoảng hai bài học. Sau đó, mọi thứ khác sẽ mở ra.",
-    "sub": "Đây là nơi tiếng Hàn của bạn bắt đầu.",
+    "title": "Hạt giống của bạn đã được gieo",
+    "subHangul": "Bạn sẽ đọc được tiếng Hàn sau khoảng hai bài. Sau đó mọi thứ sẽ mở ra.",
+    "sub": "Tiếng Hàn của bạn bắt đầu từ đây.",
     "yourLevel": "Trình độ của bạn",
-    "stoppedAt": "Chúng tôi dừng lại ở {level} — đó là mục tiêu tiếp theo của bạn.",
+    "stoppedAt": "Chúng tôi dừng ở {level} — đó là mục tiêu tiếp theo của bạn.",
     "firstThree": "Ba bài học đầu tiên của bạn",
     "goalLine": {
-      "listening": "{icon} {label} — vì vậy chúng ta bắt đầu với nghe.",
-      "words": "{icon} {label} — vì vậy chúng ta bắt đầu với từ vựng.",
-      "grammar": "{icon} {label} — vì vậy chúng ta bắt đầu với ngữ pháp."
+      "listening": "{icon} {label} — nên chúng ta bắt đầu với nghe.",
+      "words": "{icon} {label} — nên chúng ta bắt đầu với từ vựng.",
+      "grammar": "{icon} {label} — nên chúng ta bắt đầu với ngữ pháp."
     },
     "goalLineHangul": {
-      "listening": "{icon} {label} — nghe ngay sau Hangul.",
-      "words": "{icon} {label} — từ vựng ngay sau Hangul.",
-      "grammar": "{icon} {label} — ngữ pháp ngay sau Hangul."
+      "listening": "{icon} {label} — nghe sẽ đến ngay sau Hangul.",
+      "words": "{icon} {label} — từ vựng sẽ đến ngay sau Hangul.",
+      "grammar": "{icon} {label} — ngữ pháp sẽ đến ngay sau Hangul."
     },
-    "saving": "Đang lưu trình độ của bạn…",
+    "saving": "Đang lưu trình độ…",
     "startLesson": "Bắt đầu bài 1",
-    "saveAndStart": "Lưu trình độ của tôi & bắt đầu bài 1",
+    "saveAndStart": "Lưu trình độ & bắt đầu bài 1",
     "upNext": "Tiếp theo: {label}",
-    "takes": "Mất 20 giây · miễn phí mãi mãi, không cần thẻ"
+    "takes": "Chỉ mất 20 giây · miễn phí mãi mãi, không cần thẻ"
   },
   "signup": {
-    "title": "Giữ lại vị trí của bạn",
-    "sub": "Lưu trình độ của bạn để cây của bạn nhớ bạn.",
-    "hangulFirst": "Hangul trước, sau đó A1",
-    "levelLessons": "{level} bài học",
-    "ready": "sẵn sàng bắt đầu khi bạn vào",
+    "title": "Giữ chỗ của bạn",
+    "sub": "Lưu trình độ để cái cây của bạn nhớ bạn.",
+    "hangulFirst": "Hangul trước, rồi đến A1",
+    "levelLessons": "Bài học {level}",
+    "ready": "sẵn sàng ngay khi bạn đăng nhập",
     "google": "Tiếp tục với Google",
-    "orEmail": "hoặc với email",
+    "orEmail": "hoặc bằng email",
     "email": "Email",
     "nameLabel": "Chúng tôi nên gọi bạn là gì?",
-    "namePlaceholder": "Maria",
-    "agree": "I agree to the <link>Điều khoản Dịch vụ và Chính sách Bảo mật</link>.",
+    "namePlaceholder": "Linh",
+    "agree": "Tôi đồng ý với <link>Điều khoản và Chính sách bảo mật</link>.",
     "sending": "Đang gửi…",
     "sendLink": "Gửi cho tôi liên kết đăng nhập",
-    "noPassword": "Không có mật khẩu để nhớ. Đã phát triển ở đây rồi?",
+    "noPassword": "Không cần nhớ mật khẩu. Đã có tài khoản ở đây?",
     "login": "Đăng nhập"
   },
   "confirm": {
-    "title": "Kiểm tra hộp thư đến của bạn",
-    "sub": "Chúng tôi đã gửi một liên kết đến <b>{email}</b>. Nhấn vào nó và bài 1 đang chờ.",
-    "upNext": "Tiếp theo, khi bạn vào",
+    "title": "Kiểm tra hộp thư của bạn",
+    "sub": "Chúng tôi đã gửi liên kết đến <b>{email}</b>. Nhấn vào đó và bài 1 đang chờ bạn.",
+    "upNext": "Tiếp theo, ngay khi bạn đăng nhập",
     "gmail": "Mở Gmail",
     "outlook": "Mở Outlook",
-    "sentAgain": "Đã gửi lại — chờ một chút.",
-    "nothingYet": "Chưa có gì?",
+    "sentAgain": "Đã gửi lại — đợi một chút nhé.",
+    "nothingYet": "Chưa thấy gì?",
     "resend": "Gửi lại",
-    "changeEmail": "Sử dụng email khác"
+    "changeEmail": "Dùng email khác"
   },
   "saving": {
-    "title": "Đang trồng hạt giống của bạn…",
-    "sub": "Lưu {level} và mở bài học đầu tiên của bạn.",
-    "moment": "Một chút nữa."
+    "title": "Đang gieo hạt giống của bạn…",
+    "sub": "Đang lưu {level} và mở bài học đầu tiên.",
+    "moment": "Chờ một chút."
   },
   "errors": {
-    "authFailed": "Liên kết đăng nhập đó không thành công hoặc đã hết hạn. Vui lòng thử lại.",
-    "rateLimit": "Chúng tôi đã gửi quá nhiều email vừa rồi — vui lòng chờ một vài phút và thử lại, hoặc tiếp tục với Google."
+    "authFailed": "Liên kết đăng nhập đó không hợp lệ hoặc đã hết hạn. Vui lòng thử lại.",
+    "rateLimit": "Chúng tôi vừa gửi quá nhiều email — vui lòng đợi vài phút rồi thử lại, hoặc tiếp tục với Google."
   }
 }

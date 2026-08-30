@@ -1,128 +1,128 @@
 {
   "steps": {
-    "hangul": "韩文",
+    "hangul": "韩文字母",
     "goal": "目标",
     "test": "测试",
-    "level": "级别",
+    "level": "等级",
     "account": "账户"
   },
   "gate": {
-    "eyebrow": "在我们开始之前",
-    "title": "你能读懂这个吗？",
-    "sub": "没有压力 — 这只是为您选择合适的第一步。",
-    "yesTitle": "是的，我能读",
-    "yesHint": "参加3分钟的水平测试",
-    "noTitle": "还没有",
-    "noHint": "从韩文开始 — 无需测试",
-    "foot": "免费 · 无需帐户即可了解您的水平"
+    "eyebrow": "开始之前",
+    "title": "你能读出这个吗？",
+    "sub": "别紧张 — 这只是为了帮你选对第一步。",
+    "yesTitle": "能，我能读",
+    "yesHint": "参加 3 分钟等级测试",
+    "noTitle": "还不能",
+    "noHint": "从韩文字母开始 — 无需测试",
+    "foot": "免费 · 无需账户即可测出等级"
   },
   "goal": {
-    "title": "是什么让您学习韩语？",
-    "sub": "我们会根据您的需求塑造您的第一堂课。",
+    "title": "你为什么想学韩语？",
+    "sub": "我们会据此安排你的前几课。",
     "skip": "跳过",
     "startTest": "开始测试 →",
     "seePlan": "查看我的计划 →"
   },
   "goals": {
-    "drama": { "label": "K-剧和综艺", "hint": "优先听力" },
-    "kpop": { "label": "K-pop歌词", "hint": "优先词汇" },
-    "travel": { "label": "去韩国旅游", "hint": "生存短语" },
-    "work": { "label": "工作或学习", "hint": "优先语法" },
-    "family": { "label": "家人或伴侣", "hint": "日常交谈" },
-    "curious": { "label": "只是好奇", "hint": "平衡组合" }
+    "drama": { "label": "韩剧和综艺", "hint": "先练听力" },
+    "kpop": { "label": "K-pop 歌词", "hint": "先学单词" },
+    "travel": { "label": "去韩国旅行", "hint": "实用短句" },
+    "work": { "label": "工作或学习", "hint": "先学语法" },
+    "family": { "label": "家人或伴侣", "hint": "日常对话" },
+    "curious": { "label": "只是好奇", "hint": "均衡搭配" }
   },
   "quiz": {
-    "question": "问题 {n}",
-    "stopsEarly": "一旦您的水平明确后就会提前停止",
+    "question": "第 {n} 题",
+    "stopsEarly": "等级明确后会提前结束",
     "play": "🔊 播放声音",
-    "audioFailed": "音频未播放。",
+    "audioFailed": "音频没有播放。",
     "cantHear": "听不到？",
-    "showText": "显示文本",
-    "or": "· 或",
-    "swap": "交换这个问题",
-    "noPenalty": "（无惩罚）",
+    "showText": "显示文字",
+    "or": "· 或者",
+    "swap": "换一题",
+    "noPenalty": "（不扣分）",
     "dontKnow": "🤷 我还不知道",
-    "notNow": "现在不行 — 从A1开始"
+    "notNow": "先不测了 — 从 A1 开始"
   },
   "types": {
-    "Words": "词汇",
+    "Words": "单词",
     "Grammar": "语法",
     "Listening": "听力"
   },
   "skills": {
-    "hangul": "韩文",
+    "hangul": "韩文字母",
     "grammar": "语法",
-    "words": "词汇",
+    "words": "单词",
     "listening": "听力",
-    "minutes": "{n}分钟"
+    "minutes": "{n} 分钟"
   },
   "levels": {
-    "A1": "您在第一页 — 最舒适的开始地点！我们将从韩文、问候语和小的生存短语开始。",
-    "A2": "您知道基础知识！简单的日常聊天是您的。接下来，我们将增长更长的句子和日常用词。",
-    "B1": "坚实的根！您可以进行日常对话。现在是连接词、细微差别和真实生活听力。",
-    "B2": "哇 — 您自信地处理大多数情况！现在是时候打磨自然表达和更快的听力。",
-    "C1": "高枝！您能流利地讨论许多话题。让我们改进习语和正式韩语。",
-    "C2": "一棵强大的树！接近本地精通。我们将通过新鲜媒体、俚语和专业级韩语保持您的敏锐。"
+    "A1": "你正站在第一页 — 最舒适的起点！我们会从韩文字母、问候语和简单的实用短句开始。",
+    "A2": "你已经掌握了基础！简单的日常聊天不在话下。接下来我们会学更长的句子和日常词汇。",
+    "B1": "根基扎实！你能进行日常对话了。接下来是连接词、语感和真实场景的听力。",
+    "B2": "哇 — 你能自信应对大多数场合！是时候打磨自然表达和更快的听力了。",
+    "C1": "枝繁叶茂！你能流利地谈论许多话题。让我们精进惯用语和正式韩语。",
+    "C2": "参天大树！接近母语水平。我们会用最新的媒体、俚语和专业级韩语让你保持敏锐。"
   },
   "result": {
-    "titleHangul": "让我们从韩文开始",
-    "title": "您的种子已种下",
-    "subHangul": "大约两课后，您就能读韩文了。之后，其他所有内容都会开放。",
-    "sub": "这是您的韩语开始的地方。",
-    "yourLevel": "您的水平",
-    "stoppedAt": "我们停在{level} — 那是您的下一个目标。",
-    "firstThree": "您的前三课",
+    "titleHangul": "我们从韩文字母开始吧",
+    "title": "你的种子已经种下",
+    "subHangul": "大约两课之后你就能读韩语了。然后一切都会打开。",
+    "sub": "你的韩语之旅从这里开始。",
+    "yourLevel": "你的等级",
+    "stoppedAt": "我们在 {level} 停下了 — 那就是你的下一个目标。",
+    "firstThree": "你的前三课",
     "goalLine": {
       "listening": "{icon} {label} — 所以我们从听力开始。",
-      "words": "{icon} {label} — 所以我们从词汇开始。",
+      "words": "{icon} {label} — 所以我们从单词开始。",
       "grammar": "{icon} {label} — 所以我们从语法开始。"
     },
     "goalLineHangul": {
-      "listening": "{icon} {label} — 听力在韩文之后立即进行。",
-      "words": "{icon} {label} — 词汇在韩文之后立即进行。",
-      "grammar": "{icon} {label} — 语法在韩文之后立即进行。"
+      "listening": "{icon} {label} — 学完韩文字母就练听力。",
+      "words": "{icon} {label} — 学完韩文字母就学单词。",
+      "grammar": "{icon} {label} — 学完韩文字母就学语法。"
     },
-    "saving": "正在保存您的水平…",
-    "startLesson": "开始第1课",
-    "saveAndStart": "保存我的水平并开始第1课",
-    "upNext": "接下来: {label}",
-    "takes": "需要20秒 · 永远免费，无需卡"
+    "saving": "正在保存你的等级…",
+    "startLesson": "开始第 1 课",
+    "saveAndStart": "保存等级并开始第 1 课",
+    "upNext": "接下来：{label}",
+    "takes": "只需 20 秒 · 永久免费，无需银行卡"
   },
   "signup": {
-    "title": "保留您的位置",
-    "sub": "保存您的水平，这样您的树就会记住您。",
-    "hangulFirst": "韩文第一，然后是A1",
-    "levelLessons": "{level}课程",
-    "ready": "准备好在您进入时立即开始",
-    "google": "使用Google继续",
-    "orEmail": "或使用电子邮件",
-    "email": "电子邮件",
-    "nameLabel": "我们应该怎样称呼您？",
-    "namePlaceholder": "玛丽亚",
-    "agree": "I agree to the <link>服务条款和隐私政策</link>.",
-    "sending": "正在发送…",
-    "sendLink": "发送登录链接",
-    "noPassword": "没有密码要记住。已经在这里成长了吗？",
+    "title": "保住你的位置",
+    "sub": "保存等级，让你的树记住你。",
+    "hangulFirst": "先学韩文字母，再学 A1",
+    "levelLessons": "{level} 课程",
+    "ready": "登录后即可马上开始",
+    "google": "使用 Google 继续",
+    "orEmail": "或使用邮箱",
+    "email": "邮箱",
+    "nameLabel": "我们该怎么称呼你？",
+    "namePlaceholder": "小明",
+    "agree": "我同意<link>服务条款和隐私政策</link>。",
+    "sending": "发送中…",
+    "sendLink": "给我发送登录链接",
+    "noPassword": "无需记住密码。已经在这里学习了？",
     "login": "登录"
   },
   "confirm": {
-    "title": "检查您的收件箱",
-    "sub": "我们发送了一个链接到<b>{email}</b>。点击它，第1课等着您。",
-    "upNext": "接下来，您进入时的时刻",
-    "gmail": "打开Gmail",
-    "outlook": "打开Outlook",
-    "sentAgain": "再次发送 — 请稍候。",
-    "nothingYet": "还没有什么？",
+    "title": "请查看你的邮箱",
+    "sub": "我们已把链接发送到 <b>{email}</b>。点击它，第 1 课正在等你。",
+    "upNext": "登录后马上开始",
+    "gmail": "打开 Gmail",
+    "outlook": "打开 Outlook",
+    "sentAgain": "已重新发送 — 请稍等片刻。",
+    "nothingYet": "还没收到？",
     "resend": "重新发送",
-    "changeEmail": "使用不同的电子邮件"
+    "changeEmail": "换一个邮箱"
   },
   "saving": {
-    "title": "正在种植您的种子…",
-    "sub": "保存{level}并打开您的第一课。",
-    "moment": "稍等一下。"
+    "title": "正在种下你的种子…",
+    "sub": "正在保存 {level} 并打开你的第一课。",
+    "moment": "请稍候。"
   },
   "errors": {
-    "authFailed": "该登录链接失败或已过期。请重试。",
-    "rateLimit": "我们现在发送了太多电子邮件 — 请稍候几分钟后重试，或使用Google继续。"
+    "authFailed": "该登录链接无效或已过期。请重试。",
+    "rateLimit": "我们刚刚发送了太多邮件 — 请等几分钟再试，或改用 Google 继续。"
   }
 }

@@ -1,9 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import { useLocale, useTranslations } from "next-intl";
 import { LEVEL_ORDER } from "@/lib/tree";
 import { speakKorean } from "@/lib/tts";
 import { bandCode, currentQuestion, type Run } from "@/lib/level-test";
+import { poolText } from "@/lib/level-test-i18n";
 import { BTN_GHOST, BTN_OUTLINE, CARD, EYEBROW, FADE } from "./styles";
 
 const OPT =
@@ -26,6 +28,9 @@ export default function PlacementQuiz({
   const [picked, setPicked] = useState<number | null>(null);
   const [showText, setShowText] = useState(false);
   const [audioFailed, setAudioFailed] = useState(false);
+  const t = useTranslations("onboarding.quiz");
+  const tt = useTranslations("onboarding.types");
+  const locale = useLocale();
   const q = currentQuestion(run);
   if (!q) return null;
 
@@ -51,9 +56,9 @@ export default function PlacementQuiz({
       <div className={CARD}>
         <div className="flex justify-between items-baseline mb-2.5 text-[12.5px] text-muted">
           <span className="font-medium">
-            <b className="text-charcoal">{bandCode(run.band)}</b> · question {run.answered + 1}
+            <b className="text-charcoal">{bandCode(run.band)}</b> · {t("question", { n: run.answered + 1 })}
           </span>
-          <span className="text-[11.5px] text-faint font-semibold">stops early once your level is clear</span>
+          <span className="text-[11.5px] text-faint font-semibold">{t("stopsEarly")}</span>
         </div>
         <div className="flex gap-1.5 mb-4" aria-label="levels">
           {LEVEL_ORDER.map((code, i) => {
@@ -67,32 +72,32 @@ export default function PlacementQuiz({
           })}
         </div>
 
-        <span className={`${EYEBROW} mb-2.5`}>{q.type}</span>
+        <span className={`${EYEBROW} mb-2.5`}>{tt(q.type)}</span>
         {q.audio ? (
           <>
             <div>
               <button type="button" onClick={play} className={`${BTN_OUTLINE} mb-2`}>
-                🔊 Play the sound
+                {t("play")}
               </button>
             </div>
             <p className="text-[12px] text-faint mb-3">
-              {audioFailed ? "Audio didn't play. " : "Can't hear it? "}
+              {audioFailed ? t("audioFailed") : t("cantHear")}{" "}
               <button type="button" className="font-semibold text-success underline" onClick={() => setShowText(true)}>
-                Show the text
+                {t("showText")}
               </button>{" "}
-              · or{" "}
+              {t("or")}{" "}
               <button type="button" className="font-semibold text-success underline" onClick={onReplace}>
-                swap this question
+                {t("swap")}
               </button>{" "}
-              (no penalty)
+              {t("noPenalty")}
             </p>
             {showText && <p className="kr text-[22px] text-charcoal mb-1.5 leading-[1.3]">{q.audio}</p>}
-            <p className="text-[13.5px] text-muted mb-4">{q.ask}</p>
+            <p className="text-[13.5px] text-muted mb-4">{poolText(locale, q.ask)}</p>
           </>
         ) : (
           <>
             <p className="kr text-[clamp(24px,3.6vw,30px)] text-charcoal mb-1.5 leading-[1.3]">{q.word}</p>
-            <p className="text-[13.5px] text-muted mb-4">{q.ask}</p>
+            <p className="text-[13.5px] text-muted mb-4">{poolText(locale, q.ask)}</p>
           </>
         )}
 
@@ -108,7 +113,7 @@ export default function PlacementQuiz({
                     : "bg-cream border-line text-charcoal opacity-55";
             return (
               <button key={opt} type="button" onClick={() => pick(i)} disabled={picked !== null} className={`${OPT} ${state}`}>
-                {opt}
+                {poolText(locale, opt)}
               </button>
             );
           })}
@@ -120,12 +125,12 @@ export default function PlacementQuiz({
               picked === -1 ? "opacity-55" : ""
             }`}
           >
-            🤷 I don&apos;t know yet
+            {t("dontKnow")}
           </button>
         </div>
 
         <button type="button" onClick={onSkipAll} className={`${BTN_GHOST} block text-center mx-auto mt-5`}>
-          Not now — start at A1
+          {t("notNow")}
         </button>
       </div>
     </section>

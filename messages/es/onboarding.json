@@ -1,17 +1,128 @@
 {
-  "welcome": "Aprende coreano, a tu propio ritmo",
-  "subtitle": "Únete a miles de personas aprendiendo coreano con Kroot — la app que se adapta a ti.",
-  "startFree": "Comenzar a aprender — gratis",
-  "alreadySignedUp": "¿Ya estás registrado?",
-  "signIn": "Iniciar sesión",
-  "email": "Correo electrónico",
-  "password": "Contraseña",
-  "name": "Nombre completo",
-  "nativeLanguage": "Idioma nativo",
-  "signUp": "Registrarse",
-  "agreeToTerms": "Acepto los Términos de Servicio y la Política de Privacidad",
-  "forgotPassword": "¿Olvidaste tu contraseña?",
-  "resetPassword": "Restablecer contraseña",
-  "sendResetLink": "Enviar enlace de restablecimiento",
-  "checkEmail": "Revisa tu correo electrónico para obtener el enlace de restablecimiento"
+  "steps": {
+    "hangul": "Hangul",
+    "goal": "Objetivo",
+    "test": "Prueba",
+    "level": "Nivel",
+    "account": "Cuenta"
+  },
+  "gate": {
+    "eyebrow": "Antes de empezar",
+    "title": "¿Puedes leer esto?",
+    "sub": "Sin presión: solo sirve para elegir el primer paso adecuado.",
+    "yesTitle": "Sí, puedo leerlo",
+    "yesHint": "Haz la prueba de nivel de 3 minutos",
+    "noTitle": "Todavía no",
+    "noHint": "Empieza con el Hangul, sin prueba",
+    "foot": "Gratis · no necesitas cuenta para conocer tu nivel"
+  },
+  "goal": {
+    "title": "¿Qué te trajo al coreano?",
+    "sub": "Adaptaremos tus primeras lecciones a eso.",
+    "skip": "Omitir",
+    "startTest": "Empezar la prueba →",
+    "seePlan": "Ver mi plan →"
+  },
+  "goals": {
+    "drama": { "label": "K-dramas y variedades", "hint": "Primero escuchar" },
+    "kpop": { "label": "Letras de K-pop", "hint": "Primero palabras" },
+    "travel": { "label": "Viajar a Corea", "hint": "Frases de supervivencia" },
+    "work": { "label": "Trabajo o estudios", "hint": "Primero gramática" },
+    "family": { "label": "Familia o pareja", "hint": "Conversación diaria" },
+    "curious": { "label": "Solo curiosidad", "hint": "Una mezcla equilibrada" }
+  },
+  "quiz": {
+    "question": "pregunta {n}",
+    "stopsEarly": "termina antes en cuanto tu nivel esté claro",
+    "play": "🔊 Reproducir el audio",
+    "audioFailed": "El audio no se reprodujo.",
+    "cantHear": "¿No lo oyes?",
+    "showText": "Mostrar el texto",
+    "or": "· o",
+    "swap": "cambiar esta pregunta",
+    "noPenalty": "(sin penalización)",
+    "dontKnow": "🤷 Todavía no lo sé",
+    "notNow": "Ahora no: empezar en A1"
+  },
+  "types": {
+    "Words": "Palabras",
+    "Grammar": "Gramática",
+    "Listening": "Escucha"
+  },
+  "skills": {
+    "hangul": "Hangul",
+    "grammar": "Gramática",
+    "words": "Palabras",
+    "listening": "Escucha",
+    "minutes": "{n} min"
+  },
+  "levels": {
+    "A1": "Estás en la primera página: ¡el lugar más acogedor para empezar! Comenzaremos con el Hangul, saludos y pequeñas frases de supervivencia.",
+    "A2": "¡Ya conoces lo básico! Las charlas cotidianas sencillas son tuyas. Ahora haremos crecer frases más largas y palabras del día a día.",
+    "B1": "¡Raíces sólidas! Puedes mantener conversaciones cotidianas. Ahora toca conectores, matices y escucha de la vida real.",
+    "B2": "Vaya: ¡manejas la mayoría de las situaciones con confianza! Es hora de pulir la expresión natural y una escucha más rápida.",
+    "C1": "¡Ramas altas! Hablas con fluidez sobre muchos temas. Refinemos los modismos y el coreano formal.",
+    "C2": "¡Un árbol imponente! Dominio casi nativo. Te mantendremos en forma con medios actuales, jerga y coreano de nivel profesional."
+  },
+  "result": {
+    "titleHangul": "Empecemos con el Hangul",
+    "title": "Tu semilla está plantada",
+    "subHangul": "Leerás coreano en unas dos lecciones. Después, todo lo demás se abre.",
+    "sub": "Aquí empieza tu coreano.",
+    "yourLevel": "Tu nivel",
+    "stoppedAt": "Nos detuvimos en {level}: ese es tu próximo objetivo.",
+    "firstThree": "Tus primeras tres lecciones",
+    "goalLine": {
+      "listening": "{icon} {label}: por eso empezamos con la escucha.",
+      "words": "{icon} {label}: por eso empezamos con palabras.",
+      "grammar": "{icon} {label}: por eso empezamos con gramática."
+    },
+    "goalLineHangul": {
+      "listening": "{icon} {label}: la escucha viene justo después del Hangul.",
+      "words": "{icon} {label}: las palabras vienen justo después del Hangul.",
+      "grammar": "{icon} {label}: la gramática viene justo después del Hangul."
+    },
+    "saving": "Guardando tu nivel…",
+    "startLesson": "Empezar la lección 1",
+    "saveAndStart": "Guardar mi nivel y empezar la lección 1",
+    "upNext": "A continuación: {label}",
+    "takes": "Toma 20 segundos · gratis para siempre, sin tarjeta"
+  },
+  "signup": {
+    "title": "Guarda tu lugar",
+    "sub": "Guarda tu nivel para que tu árbol te recuerde.",
+    "hangulFirst": "Primero Hangul, luego A1",
+    "levelLessons": "Lecciones de {level}",
+    "ready": "listo para empezar en cuanto entres",
+    "google": "Continuar con Google",
+    "orEmail": "o con tu correo",
+    "email": "Correo electrónico",
+    "nameLabel": "¿Cómo te llamamos?",
+    "namePlaceholder": "María",
+    "agree": "Acepto los <link>Términos y la Política de privacidad</link>.",
+    "sending": "Enviando…",
+    "sendLink": "Enviarme un enlace de acceso",
+    "noPassword": "Sin contraseña que recordar. ¿Ya estás creciendo aquí?",
+    "login": "Iniciar sesión"
+  },
+  "confirm": {
+    "title": "Revisa tu bandeja de entrada",
+    "sub": "Enviamos un enlace a <b>{email}</b>. Tócalo y la lección 1 te estará esperando.",
+    "upNext": "A continuación, en cuanto entres",
+    "gmail": "Abrir Gmail",
+    "outlook": "Abrir Outlook",
+    "sentAgain": "Enviado de nuevo: dale un minuto.",
+    "nothingYet": "¿Nada todavía?",
+    "resend": "Reenviar",
+    "changeEmail": "Usar otro correo"
+  },
+  "saving": {
+    "title": "Plantando tu semilla…",
+    "sub": "Guardando {level} y abriendo tu primera lección.",
+    "moment": "Un momento."
+  },
+  "errors": {
+    "authFailed": "Ese enlace de acceso falló o caducó. Inténtalo de nuevo.",
+    "rateLimit": "Acabamos de enviar demasiados correos: espera unos minutos e inténtalo de nuevo, o continúa con Google."
+  }
 }

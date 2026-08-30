@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
 import BrandMark from "@/components/ui/BrandMark";
 import { track } from "@/lib/analytics";
@@ -35,12 +36,12 @@ import { CARD, FADE } from "./styles";
 type Step = "gate" | "goal" | "quiz" | "result" | "signup" | "confirm" | "saving";
 
 const PLACEMENT_KEY = "kroot-placement";
-const STEPS: { id: Step; label: string }[] = [
-  { id: "gate", label: "Hangul" },
-  { id: "goal", label: "Goal" },
-  { id: "quiz", label: "Test" },
-  { id: "result", label: "Level" },
-  { id: "signup", label: "Account" },
+const STEPS: { id: Step; label: "hangul" | "goal" | "test" | "level" | "account" }[] = [
+  { id: "gate", label: "hangul" },
+  { id: "goal", label: "goal" },
+  { id: "quiz", label: "test" },
+  { id: "result", label: "level" },
+  { id: "signup", label: "account" },
 ];
 const STEP_INDEX: Record<Step, number> = { gate: 0, goal: 1, quiz: 2, result: 3, signup: 4, confirm: 4, saving: 4 };
 
@@ -67,6 +68,7 @@ function writeStored(p: Placement | null) {
 
 export default function OnboardingFlow({ lessons }: { lessons: FirstLessonsMap }) {
   const router = useRouter();
+  const t = useTranslations("onboarding");
   const supabase = useMemo(() => createClient(), []);
 
   // Query params are read once, client-side only (the page is static).
@@ -89,7 +91,7 @@ export default function OnboardingFlow({ lessons }: { lessons: FirstLessonsMap }
   const [resent, setResent] = useState(false);
   const [sending, setSending] = useState(false);
   const [error, setError] = useState<string | null>(() =>
-    params.error === "auth" ? "That sign-in link failed or expired. Please try again." : params.error ? decodeURIComponent(params.error) : null
+    params.error === "auth" ? t("errors.authFailed") : params.error ? decodeURIComponent(params.error) : null
   );
   const saving = useRef(false);
 
@@ -248,7 +250,7 @@ export default function OnboardingFlow({ lessons }: { lessons: FirstLessonsMap }
       // The mailer allows only a handful of emails per hour; make that actionable.
       setError(
         /rate limit/i.test(error.message)
-          ? "We've sent too many emails just now — please wait a few minutes and try again, or continue with Google instead."
+          ? t("errors.rateLimit")
           : error.message
       );
       return;
@@ -280,7 +282,7 @@ export default function OnboardingFlow({ lessons }: { lessons: FirstLessonsMap }
                   i <= active ? "bg-success-bg border-success-line text-success" : "bg-cream border-line text-faint"
                 }`}
               >
-                {s.label}
+                {t(`steps.${s.label}`)}
               </span>
             ))}
           </div>
@@ -331,9 +333,9 @@ export default function OnboardingFlow({ lessons }: { lessons: FirstLessonsMap }
             <section className={FADE}>
               <div className={`${CARD} text-center`}>
                 <p className="text-[34px] mb-1">🌱</p>
-                <b className="block text-[17px]">Planting your seed…</b>
+                <b className="block text-[17px]">{t("saving.title")}</b>
                 <p className="text-muted text-[13.5px] mt-1">
-                  {placement ? `Saving ${placement.level} and opening your first lesson.` : "One moment."}
+                  {placement ? t("saving.sub", { level: placement.level }) : t("saving.moment")}
                 </p>
               </div>
             </section>

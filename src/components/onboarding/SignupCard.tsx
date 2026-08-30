@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import CuteError from "@/components/ui/CuteError";
 import type { FirstLesson, Placement } from "@/lib/level-test";
@@ -38,6 +39,7 @@ export function SignupCard({
   onMagicLink: (email: string, name: string) => void;
 }) {
   const [agreed, setAgreed] = useState(false);
+  const t = useTranslations("onboarding.signup");
 
   function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -48,59 +50,61 @@ export function SignupCard({
   return (
     <section className={FADE}>
       <div className={CARD}>
-        <h1 className={H1}>Keep your spot</h1>
-        <p className={SUB}>Save your level so your tree remembers you.</p>
+        <h1 className={H1}>{t("title")}</h1>
+        <p className={SUB}>{t("sub")}</p>
 
         <div className="flex items-center gap-3 border border-success-line bg-success-bg rounded-[12px] px-3 py-2.5 mb-4 text-[13px]">
           <span className="hand font-bold text-[22px] text-success-deep">{placement.level}</span>
           <span className="min-w-0">
             <b className="block truncate text-charcoal">
-              {placement.route === "hangul" ? "Hangul first, then A1" : firstLesson ? firstLesson.label : `${placement.level} lessons`}
+              {placement.route === "hangul" ? t("hangulFirst") : firstLesson ? firstLesson.label : t("levelLessons", { level: placement.level })}
             </b>
-            <small className="block text-success-deep text-[12px]">ready to start the moment you&apos;re in</small>
+            <small className="block text-success-deep text-[12px]">{t("ready")}</small>
           </span>
         </div>
 
         <button type="button" className={`${BTN_OUTLINE} w-full`} onClick={onGoogle} disabled={!agreed}>
           <GoogleMark />
-          Continue with Google
+          {t("google")}
         </button>
         <div className="flex items-center gap-3 my-4 text-[11.5px] font-medium text-faint">
           <span className="flex-1 h-px bg-line" />
-          or with email
+          {t("orEmail")}
           <span className="flex-1 h-px bg-line" />
         </div>
 
         <form onSubmit={submit}>
           <label htmlFor="email" className={LABEL}>
-            Email
+            {t("email")}
           </label>
           <input id="email" name="email" type="email" required autoComplete="email" placeholder="you@email.com" className={`${FIELD} mb-3`} />
           <label htmlFor="name" className={LABEL}>
-            What should we call you?
+            {t("nameLabel")}
           </label>
-          <input id="name" name="name" type="text" required autoComplete="given-name" placeholder="Maria" className={`${FIELD} mb-3`} />
+          <input id="name" name="name" type="text" required autoComplete="given-name" placeholder={t("namePlaceholder")} className={`${FIELD} mb-3`} />
           <label className="flex gap-2 items-start text-[12px] text-muted mb-3.5">
             <input type="checkbox" className="mt-[3px] accent-[var(--c-success)]" checked={agreed} onChange={(e) => setAgreed(e.target.checked)} />
             <span>
-              I agree to the{" "}
-              <Link href="/privacy" className="text-charcoal font-semibold hover:underline">
-                Terms and Privacy Policy
-              </Link>
-              .
+              {t.rich("agree", {
+                link: (chunks) => (
+                  <Link href="/privacy" className="text-charcoal font-semibold hover:underline">
+                    {chunks}
+                  </Link>
+                ),
+              })}
             </span>
           </label>
 
           {error && <CuteError>{error}</CuteError>}
 
           <button type="submit" className={`${BTN_GREEN} w-full`} disabled={!agreed || sending}>
-            {sending ? "Sending…" : "Send me a sign-in link"}
+            {sending ? t("sending") : t("sendLink")}
           </button>
         </form>
         <p className="text-center text-[12px] text-faint mt-3.5">
-          No password to remember. Already growing here?{" "}
+          {t("noPassword")}{" "}
           <Link href={loginHref} className="text-charcoal font-semibold hover:underline">
-            Log in
+            {t("login")}
           </Link>
         </p>
       </div>
@@ -124,30 +128,31 @@ export function ConfirmCard({
   onResend: () => void;
   onChangeEmail: () => void;
 }) {
+  const t = useTranslations("onboarding.confirm");
   return (
     <section className={FADE}>
       <div className={`${CARD} text-center`}>
-        <h1 className={H1}>Check your inbox</h1>
+        <h1 className={H1}>{t("title")}</h1>
         <p className={SUB}>
-          We sent a link to <b className="text-charcoal">{email}</b>. Tap it and lesson 1 is waiting.
+          {t.rich("sub", { email, b: (chunks) => <b className="text-charcoal">{chunks}</b> })}
         </p>
-        {firstLesson && <FirstLessonList lessons={[firstLesson]} title="Up next, the moment you're in" />}
+        {firstLesson && <FirstLessonList lessons={[firstLesson]} title={t("upNext")} />}
         <div className="flex gap-2 justify-center flex-wrap mt-2">
           <a href="https://mail.google.com" target="_blank" rel="noreferrer" className={BTN_OUTLINE}>
-            Open Gmail
+            {t("gmail")}
           </a>
           <a href="https://outlook.live.com/mail/" target="_blank" rel="noreferrer" className={BTN_OUTLINE}>
-            Open Outlook
+            {t("outlook")}
           </a>
         </div>
         <p className="text-[12px] text-faint mt-4">
-          {resent ? "Sent again — give it a minute. " : "Nothing yet? "}
+          {resent ? t("sentAgain") : t("nothingYet")}{" "}
           <button type="button" className={`${BTN_GHOST} text-charcoal font-semibold`} onClick={onResend} disabled={sending}>
-            Resend
+            {t("resend")}
           </button>{" "}
           ·{" "}
           <button type="button" className={`${BTN_GHOST} text-charcoal font-semibold`} onClick={onChangeEmail}>
-            Use a different email
+            {t("changeEmail")}
           </button>
         </p>
       </div>
