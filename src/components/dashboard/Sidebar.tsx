@@ -9,7 +9,7 @@ import { MAIN_ITEMS, SECTIONS, type NavColor } from "@/components/dashboard/navI
 import BrandMark from "@/components/ui/BrandMark";
 
 const LANGUAGES = [
-  { code: "", label: "🇬🇧 English" },
+  { code: "en", label: "🇬🇧 English" },
   { code: "ja", label: "🇯🇵 日本語" },
   { code: "zh-Hans", label: "🇨🇳 中文" },
   { code: "vi", label: "🇻🇳 Tiếng Việt" },
@@ -92,27 +92,12 @@ function LanguageSwitcher({ pathname, locale }: { pathname: string; locale: stri
   const router = useRouter();
   const [open, setOpen] = useState(false);
 
+  // next-intl's router keeps the current locale unless told otherwise, so
+  // pushing a hand-built "/ja/..." path either doubled the prefix or, for
+  // English, silently stayed on the old locale. `pathname` from
+  // @/i18n/navigation is already locale-less; let the router add the prefix.
   const handleLanguageChange = (code: string) => {
-    // Remove current locale prefix and add new one
-    let newPath = pathname;
-    const locales = ["ja", "zh-Hans", "vi"];
-
-    // Remove existing locale prefix
-    for (const loc of locales) {
-      if (pathname.startsWith(`/${loc}/`)) {
-        newPath = pathname.slice(loc.length + 1);
-        break;
-      }
-    }
-
-    // Add new locale prefix (empty string for English)
-    if (code) {
-      newPath = `/${code}${newPath}`;
-    } else {
-      newPath = newPath;
-    }
-
-    router.push(newPath);
+    router.replace(pathname, { locale: code });
     setOpen(false);
   };
 
