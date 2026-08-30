@@ -6,7 +6,6 @@
   "words": "単語",
   "min": "分",
   "alreadySprouted": "既に成長",
-  "contents": "目次",
   "showAllUnits": "すべてのユニットを表示",
   "allChapters": "すべての章",
   "stillLearning": "まだ学習中",
@@ -22,13 +21,12 @@
   "emptyState": "まだ単語がありません。ユニットリストから単語をクリックして開始してください。",
   "wordBank": "単語帳",
   "myWords": "私の単語",
-  "allDone": "すべて完了",
   "showChapters": "章を表示",
-  "needsWater": "水が必要です",
   "dueWords": "期限のある単語",
   "review": "このユニットをレビュー →",
   "continue": "このユニットを続ける →",
   "study": "このユニットを学習する →",
   "unitsOf": "ユニット {first}–{last}",
-  "doneOfTotal": "{done}/{total} ユニット完了"
+  "doneOfTotal": "{done}/{total} ユニット完了",
+  "dueForReview": "復習が必要"
 }

@@ -6,7 +6,6 @@
   "words": "từ",
   "min": "phút",
   "alreadySprouted": "đã nảy mầm",
-  "contents": "Nội dung",
   "showAllUnits": "Hiển thị tất cả bài học",
   "allChapters": "Tất cả chương",
   "stillLearning": "Còn đang học",
@@ -22,13 +21,12 @@
   "emptyState": "Chưa có từ nào. Bắt đầu bằng cách nhấp vào một từ từ danh sách bài học.",
   "wordBank": "Kho từ vựng",
   "myWords": "Từ của tôi",
-  "allDone": "Hoàn thành tất cả",
   "showChapters": "Hiển thị chương",
-  "needsWater": "Cần ôn tập",
   "dueWords": "từ hạn",
   "review": "Ôn tập bài học này →",
   "continue": "Tiếp tục bài học này →",
   "study": "Học bài học này →",
   "unitsOf": "Bài {first}–{last}",
-  "doneOfTotal": "{done} trên {total} bài học hoàn thành"
+  "doneOfTotal": "{done} trên {total} bài học hoàn thành",
+  "dueForReview": "Cần ôn tập"
 }

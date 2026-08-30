@@ -91,7 +91,7 @@ export default function Widgets({
       )}
 
       {wotd && (
-        <WCard title="Word of the day" tag="단어" index={2}>
+        <WCard title="Word of the day" tag="📖" index={2}>
           <p className="kr text-2xl mb-0.5">{wotd.word}</p>
           <p className="text-[12.5px] text-faint mb-1.5">{wotd.roman}</p>
           <p className="text-[13.5px] text-muted mb-2.5">{wotd.mean}</p>

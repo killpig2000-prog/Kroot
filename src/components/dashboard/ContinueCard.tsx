@@ -37,9 +37,6 @@ export default function ContinueCard({
         {target.icon}
       </span>
       <span className="flex-1 min-w-0">
-        <small className="block text-[11.5px] font-bold tracking-[.06em] uppercase text-success-deep">
-          {resume ? "Continue where you left off" : "Start today"}
-        </small>
         <b className="block font-semibold text-[15.5px] truncate text-charcoal">{target.label}</b>
         <span className="block text-[12.5px] text-success-deep truncate">
           {target.detail}

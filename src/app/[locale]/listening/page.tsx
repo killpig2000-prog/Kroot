@@ -88,14 +88,6 @@ export default async function ListeningPage({
         />
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] md:pb-[60px]">
-          {/* breadcrumb */}
-          <div className="flex gap-2 text-[13px] text-faint mb-[18px]">
-            <Link href="/dashboard" className="hover:text-charcoal transition-colors">
-              Garden
-            </Link>
-            <span>/</span>
-            <b className="text-charcoal font-semibold">{t("title")}</b>
-          </div>
 
           {/* head */}
           <div className="flex items-center justify-between gap-4 mb-[18px] flex-wrap">
@@ -105,7 +97,6 @@ export default async function ListeningPage({
               </span>
               {t("title")}
             </h1>
-            <span className="text-[13px] text-muted">{t("subtitle")}</span>
           </div>
 
           <LevelTabs
@@ -179,9 +170,7 @@ export default async function ListeningPage({
                   <div className="flex-1 flex flex-col gap-1.5 px-3 py-3 sm:px-4 sm:pb-4">
                     <b className="flex items-baseline gap-2 font-extrabold text-[14px] sm:text-[15px] min-w-0">
                       <span className="truncate">{ts(`${s.key}.label`)}</span>
-                      <small className="kr text-[12px] text-faint font-semibold flex-none">{s.krLabel}</small>
                     </b>
-                    <p className="hidden sm:block text-[12.5px] text-muted leading-[1.45]">{ts(`${s.key}.sub`)}</p>
                     {next && (
                       <span className="flex items-center gap-1.5 min-w-0 bg-[var(--tint-teal)] border border-[var(--tint-teal-line)] rounded-lg px-2 py-[5px] text-[11.5px]">
                         <span

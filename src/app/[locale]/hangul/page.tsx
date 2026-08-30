@@ -1,4 +1,4 @@
-import { Link, redirect } from "@/i18n/navigation";
+import { redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import HangulExplorer from "@/components/hangul/HangulExplorer";
@@ -27,14 +27,6 @@ export default async function HangulPage() {
         />
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] md:pb-[60px]">
-          {/* breadcrumb */}
-          <div className="flex gap-2 text-[13px] text-faint mb-[18px]">
-            <Link href="/dashboard" className="hover:text-charcoal transition-colors">
-              Garden
-            </Link>
-            <span>/</span>
-            <b className="text-charcoal font-semibold">Hangul</b>
-          </div>
 
           {/* head */}
           <div className="flex items-center justify-between gap-4 mb-[18px] flex-wrap">
@@ -44,19 +36,6 @@ export default async function HangulPage() {
               </span>
               Hangul
             </h1>
-            <span className="text-[13px] text-muted">
-              Tap any letter to hear it — 한글 takes about an hour to learn
-            </span>
-          </div>
-
-          {/* intro */}
-          <div className="max-w-[820px] bg-success-bg border border-success-line rounded-[14px] px-[18px] py-4 mb-6">
-            <p className="text-[13.5px] text-charcoal leading-[1.65]">
-              한글 was invented in 1443 to be learned quickly, and it works. There are{" "}
-              <b>24 basic letters</b>, each one always makes the same sound, and they stack into neat
-              syllable blocks. Start with the consonants, then the vowels, then build a few blocks
-              yourself.
-            </p>
           </div>
 
           <HangulExplorer />

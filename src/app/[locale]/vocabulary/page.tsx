@@ -20,8 +20,8 @@ function ChapterDots({ done, started, total }: { done: number; started: number; 
   return (
     <span
       className="flex gap-[3px] items-center flex-none"
-      title={t("doneOfTotal", { done, total })}
-      aria-label={t("doneOfTotal", { done, total })}
+      title={`${done} of ${total} units done`}
+      aria-label={`${done} of ${total} units done`}
     >
       {Array.from({ length: total }, (_, i) => (
         <span
@@ -35,7 +35,7 @@ function ChapterDots({ done, started, total }: { done: number; started: number; 
   );
 }
 
-// The vocab index as a notebook: one t("upNext") card with the single obvious
+// The vocab index as a notebook: one "Up next" card with the single obvious
 // action, a numbered table of contents (5 units = 1 chapter) on the left, and
 // a preview of the selected unit's words on the right.
 export default async function VocabularyPage({
@@ -46,7 +46,7 @@ export default async function VocabularyPage({
   searchParams: Promise<{ level?: string; unit?: string; all?: string }>;
 }) {
   const { locale } = await params;
-  const t = getTranslations("vocabulary");
+  const t = await getTranslations("vocabulary");
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
 
@@ -94,7 +94,7 @@ export default async function VocabularyPage({
   const thirstyTotal = units.reduce((sum, u) => sum + u.thirsty, 0);
   // Thirsty words at the level being browsed only count for the level you're
   // actually at — the Review queue is level-wide, so the card only offers
-  // watering when the numbers line up.
+  // review when the numbers line up.
   const waterCount = level === myLevel ? thirstyTotal : 0;
 
   const chapters: (typeof units)[] = [];
@@ -137,14 +137,7 @@ export default async function VocabularyPage({
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[170px] md:pb-[60px] max-w-[980px]">
           {/* breadcrumb + word lookup */}
-          <div className="flex items-center justify-between gap-3 mb-[18px]">
-            <div className="flex gap-2 text-[13px] text-faint">
-              <Link href="/dashboard" className="hover:text-charcoal transition-colors">
-                Garden
-              </Link>
-              <span>/</span>
-              <b className="text-charcoal font-semibold">Vocabulary</b>
-            </div>
+          <div className="flex justify-end mb-[18px]">
             <VocabSearch />
           </div>
 
@@ -176,13 +169,10 @@ export default async function VocabularyPage({
           {/* ── up next ── */}
           {upNext && (
             <section
-              aria-label=t("upNext")
+              aria-label={t("upNext")}
               className="grid grid-cols-1 sm:grid-cols-[minmax(0,1fr)_auto] gap-3 sm:gap-[18px] items-center bg-cream border border-[var(--tint-violet-line)] rounded-[14px] px-4 py-4 sm:px-[22px] sm:py-[18px] mb-4 shadow-[0_4px_0_#DDD6FE]"
             >
               <div className="min-w-0">
-                <p className="text-[11px] font-extrabold tracking-[.07em] uppercase text-[#6B33CC] mb-1">
-                  {upNext.status === "done" ? t("allDone") : t("upNext")}
-                </p>
                 <h2 className="font-bold text-[20px] sm:text-[24px] tracking-[-0.02em] leading-[1.15]">
                   {unitLabel(upNext.index)}
                   <small className="font-semibold text-faint text-[14px] sm:text-[15px] ml-2">
@@ -222,7 +212,7 @@ export default async function VocabularyPage({
                     href="/review"
                     className="inline-flex items-center justify-center rounded-[9px] px-4 py-2 text-[13px] font-bold text-sky-deep bg-[var(--tint-sky)] border border-sky-line hover:bg-sky-line transition-colors whitespace-nowrap"
                   >
-                    💧 Water {waterCount} due word{waterCount === 1 ? "" : "s"}
+                    💧 Review {waterCount} due word{waterCount === 1 ? "" : "s"}
                   </Link>
                 )}
               </div>
@@ -255,13 +245,9 @@ export default async function VocabularyPage({
               <span className="whitespace-nowrap">
                 {next ? (
                   <>
-                    <span className="hidden sm:inline">🌳 Finish all {units.length} to grow into </span>
-                    <span className="sm:hidden">→ </span>
-                    <b className="text-charcoal">{next}</b>
+                    → <b className="text-charcoal">{next}</b>
                   </>
-                ) : (
-                  <>top level</>
-                )}
+                ) : null}
               </span>
             </div>
           )}
@@ -272,8 +258,7 @@ export default async function VocabularyPage({
               aria-label="Chapters"
               className="order-2 lg:order-1 lg:border-r lg:border-line lg:pr-5 lg:sticky lg:top-6 lg:self-start lg:max-h-[calc(100vh-48px)] lg:overflow-y-auto"
             >
-              <p className="flex items-center justify-between text-[11px] font-extrabold tracking-[.07em] uppercase text-faint mb-2">
-                <span>Contents</span>
+              <p className="flex items-center justify-end mb-2">
                 <Link
                   href={`/vocabulary?level=${level}${selected ? `&unit=${selected.index}` : ""}${showAll ? "" : "&all=1"}`}
                   className="text-[11.5px] font-bold tracking-normal normal-case text-[#6B33CC] hover:underline"
@@ -390,7 +375,7 @@ export default async function VocabularyPage({
                         }`}
                       >
                         {selected.thirsty > 0
-                          ? t("needsWater")
+                          ? t("dueForReview")
                           : selected.status === "done"
                           ? t("known")
                           : selected.status === "in-progress"
@@ -451,15 +436,7 @@ export default async function VocabularyPage({
               )}
 
               {/* growth legend + tally */}
-              <div className="mt-7 pt-4 border-t border-line flex items-center justify-between gap-3 flex-wrap text-[12px] text-muted">
-                <span className="flex gap-3.5 flex-wrap">
-                  {WORD_STATUSES.map((s, i) => (
-                    <span key={s.key} className="inline-flex items-center gap-1.5">
-                      <WordStatusIcon status={i} className="w-[13px] h-[13px]" /> {s.label}
-                    </span>
-                  ))}
-                  <span>💧 Due</span>
-                </span>
+              <div className="mt-7 pt-4 border-t border-line flex items-center justify-end text-[12px] text-muted">
                 <span className="tabular-nums">
                   <b className="text-charcoal">{rootedWords}</b> of {totalWords} words rooted
                 </span>
@@ -482,7 +459,7 @@ export default async function VocabularyPage({
             {waterCount > 0 && (
               <Link
                 href="/review"
-                aria-label={`Water ${waterCount} due words`}
+                aria-label={`Review ${waterCount} due words`}
                 className="inline-flex items-center justify-center rounded-[9px] px-3 py-3 text-[13px] font-bold text-sky-deep bg-[var(--tint-sky)] border border-sky-line tabular-nums"
               >
                 💧 {waterCount}

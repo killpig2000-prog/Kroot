@@ -238,13 +238,10 @@
   },
   "groups": {
     "start-here": {
-      "title": "Start here",
-      "sub": "New to Korean grammar? Do these in order first."
+      "title": "Start here"
     },
     "next-steps": {
-      "title": "Next steps",
-      "sub": "Keep going after the basics."
+      "title": "Next steps"
     }
-  },
-  "everyLessonDesc": "Every lesson, ordered A1 to C2. Higher tiers open once you pass the promotion test."
+  }
 }

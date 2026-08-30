@@ -7,18 +7,15 @@
     "account": "Tài khoản"
   },
   "gate": {
-    "eyebrow": "Trước khi bắt đầu",
     "title": "Bạn đọc được chữ này không?",
     "sub": "Đừng lo — câu này chỉ để chọn bước đầu phù hợp cho bạn.",
     "yesTitle": "Có, tôi đọc được",
     "yesHint": "Làm bài kiểm tra trình độ 3 phút",
     "noTitle": "Chưa đọc được",
-    "noHint": "Bắt đầu với Hangul — không cần kiểm tra",
-    "foot": "Miễn phí · không cần tài khoản để biết trình độ"
+    "noHint": "Bắt đầu với Hangul — không cần kiểm tra"
   },
   "goal": {
     "title": "Điều gì đưa bạn đến với tiếng Hàn?",
-    "sub": "Chúng tôi sẽ sắp xếp những bài học đầu tiên theo đó.",
     "skip": "Bỏ qua",
     "startTest": "Bắt đầu kiểm tra →",
     "seePlan": "Xem lộ trình của tôi →"
@@ -74,44 +71,21 @@
     "listening": "Nghe",
     "minutes": "{n} phút"
   },
-  "levels": {
-    "A1": "Bạn đang ở trang đầu tiên — nơi khởi đầu dễ chịu nhất! Chúng ta sẽ bắt đầu với Hangul, lời chào và vài câu giao tiếp thiết yếu.",
-    "A2": "Bạn đã nắm được căn bản! Những cuộc trò chuyện hằng ngày đơn giản nằm trong tầm tay. Tiếp theo là câu dài hơn và từ vựng đời thường.",
-    "B1": "Gốc rễ vững chắc! Bạn có thể trò chuyện hằng ngày. Giờ là lúc học liên từ, sắc thái và nghe trong tình huống thật.",
-    "B2": "Tuyệt — bạn tự tin xử lý hầu hết tình huống! Đã đến lúc trau chuốt cách diễn đạt tự nhiên và nghe nhanh hơn.",
-    "C1": "Cành cao vươn xa! Bạn nói trôi chảy nhiều chủ đề. Hãy tinh chỉnh thành ngữ và tiếng Hàn trang trọng.",
-    "C2": "Một cây đại thụ! Gần như người bản xứ. Chúng tôi sẽ giữ bạn luôn sắc bén với truyền thông mới, tiếng lóng và tiếng Hàn chuyên nghiệp."
-  },
   "result": {
     "titleHangul": "Hãy bắt đầu với Hangul",
     "title": "Hạt giống của bạn đã được gieo",
-    "subHangul": "Bạn sẽ đọc được tiếng Hàn sau khoảng hai bài. Sau đó mọi thứ sẽ mở ra.",
-    "sub": "Tiếng Hàn của bạn bắt đầu từ đây.",
     "yourLevel": "Trình độ của bạn",
     "stoppedAt": "Chúng tôi dừng ở {level} — đó là mục tiêu tiếp theo của bạn.",
     "firstThree": "Ba bài học đầu tiên của bạn",
-    "goalLine": {
-      "listening": "{icon} {label} — nên chúng ta bắt đầu với nghe.",
-      "words": "{icon} {label} — nên chúng ta bắt đầu với từ vựng.",
-      "grammar": "{icon} {label} — nên chúng ta bắt đầu với ngữ pháp."
-    },
-    "goalLineHangul": {
-      "listening": "{icon} {label} — nghe sẽ đến ngay sau Hangul.",
-      "words": "{icon} {label} — từ vựng sẽ đến ngay sau Hangul.",
-      "grammar": "{icon} {label} — ngữ pháp sẽ đến ngay sau Hangul."
-    },
     "saving": "Đang lưu trình độ…",
     "startLesson": "Bắt đầu bài 1",
     "saveAndStart": "Lưu trình độ & bắt đầu bài 1",
-    "upNext": "Tiếp theo: {label}",
-    "takes": "Chỉ mất 20 giây · miễn phí mãi mãi, không cần thẻ"
+    "upNext": "Tiếp theo: {label}"
   },
   "signup": {
     "title": "Giữ chỗ của bạn",
-    "sub": "Lưu trình độ để cái cây của bạn nhớ bạn.",
     "hangulFirst": "Hangul trước, rồi đến A1",
     "levelLessons": "Bài học {level}",
-    "ready": "sẵn sàng ngay khi bạn đăng nhập",
     "google": "Tiếp tục với Google",
     "orEmail": "hoặc bằng email",
     "email": "Email",
@@ -120,13 +94,13 @@
     "agree": "Tôi đồng ý với <link>Điều khoản và Chính sách bảo mật</link>.",
     "sending": "Đang gửi…",
     "sendLink": "Gửi cho tôi liên kết đăng nhập",
-    "noPassword": "Không cần nhớ mật khẩu. Đã có tài khoản ở đây?",
-    "login": "Đăng nhập"
+    "login": "Đăng nhập",
+    "alreadyHere": "Đã có tài khoản rồi?"
   },
   "confirm": {
     "title": "Kiểm tra hộp thư của bạn",
     "sub": "Chúng tôi đã gửi liên kết đến <b>{email}</b>. Nhấn vào đó và bài 1 đang chờ bạn.",
-    "upNext": "Tiếp theo, ngay khi bạn đăng nhập",
+    "upNext": "Tiếp theo",
     "gmail": "Mở Gmail",
     "outlook": "Mở Outlook",
     "sentAgain": "Đã gửi lại — đợi một chút nhé.",
@@ -137,8 +111,7 @@
   },
   "saving": {
     "title": "Đang gieo hạt giống của bạn…",
-    "sub": "Đang lưu {level} và mở bài học đầu tiên.",
-    "moment": "Chờ một chút."
+    "sub": "Đang lưu {level} và mở bài học đầu tiên."
   },
   "errors": {
     "authFailed": "Liên kết đăng nhập đó không hợp lệ hoặc đã hết hạn. Vui lòng thử lại.",

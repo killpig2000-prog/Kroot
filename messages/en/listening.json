@@ -3,7 +3,6 @@
   "crumb": "Listening",
   "home": {
     "title": "Listening",
-    "subtitle": "Pick a situation, listen, follow the script",
     "continueTag": "Continue listening",
     "upNextTag": "Up next",
     "clipOf": "{icon} {situation} · Clip {n} of {total} · {level}",
@@ -30,14 +29,30 @@
     "nextChip": "Next · "
   },
   "situations": {
-    "cafe": { "label": "Cafe", "sub": "Ordering, menus, and small talk over coffee" },
-    "restaurant": { "label": "Restaurant", "sub": "Reserving tables and ordering real meals" },
-    "airport": { "label": "Airport", "sub": "Check-in, boarding, and customs phrases" },
-    "shopping": { "label": "Shopping", "sub": "Sizes, prices, and asking for a discount" },
-    "directions": { "label": "Directions", "sub": "Finding your way around any city" },
-    "hospital": { "label": "Hospital", "sub": "Symptoms, appointments, and the pharmacy" },
-    "hotel": { "label": "Hotel", "sub": "Check-in, room requests, and amenities" },
-    "phone": { "label": "Phone Call", "sub": "Calls you’ll actually have to make" }
+    "cafe": {
+      "label": "Cafe"
+    },
+    "restaurant": {
+      "label": "Restaurant"
+    },
+    "airport": {
+      "label": "Airport"
+    },
+    "shopping": {
+      "label": "Shopping"
+    },
+    "directions": {
+      "label": "Directions"
+    },
+    "hospital": {
+      "label": "Hospital"
+    },
+    "hotel": {
+      "label": "Hotel"
+    },
+    "phone": {
+      "label": "Phone Call"
+    }
   },
   "situation": {
     "noClips": "No clips for this level yet — try another level above.",

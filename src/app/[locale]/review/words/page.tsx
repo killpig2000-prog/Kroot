@@ -132,7 +132,7 @@ export default async function MyWordsPage() {
                 href="/review"
                 className="inline-flex items-center rounded-full bg-success px-4 py-1.5 text-[13px] font-semibold text-white hover:bg-success-deep transition-colors"
               >
-                💧 Water {dueCount} now →
+                💧 Review {dueCount} now →
               </Link>
             )}
           </div>

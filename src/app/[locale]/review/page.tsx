@@ -87,10 +87,9 @@ export default async function ReviewPage() {
                 💧
               </span>
               Practice
-              <span className="ml-2 text-[13px] font-medium text-faint">watering time</span>
+              <span className="ml-2 text-[13px] font-medium text-faint">review time</span>
             </h1>
             <span className="flex items-center gap-3 flex-wrap text-[13px] text-muted">
-              Words wilt when they&apos;re not watered — quick reviews keep them rooted.
               <Link href="/review/words" className="font-semibold text-sky-deep hover:underline">
                 📚 My words →
               </Link>
@@ -103,7 +102,7 @@ export default async function ReviewPage() {
               <small className="block text-[13px] text-muted leading-[1.55]">
                 Run the included migration{" "}
                 <code className="text-[12px]">supabase/migrations/0022_srs_review.sql</code> to turn
-                on spaced-repetition watering.
+                on spaced-repetition review.
               </small>
             </div>
           ) : dueWords.length > 0 ? (
@@ -112,7 +111,7 @@ export default async function ReviewPage() {
             <div className="max-w-[560px] border border-line rounded-[14px] p-[clamp(24px,4vw,32px)] text-center">
               <p className="text-4xl mb-2">🌿</p>
               <h2 className="font-bold text-[19px] tracking-[-0.02em] mb-1.5">
-                Your garden is fully watered
+                Nothing to review right now
               </h2>
               <p className="text-sm text-muted mb-5">
                 {(learnedCount ?? 0) > 0 ? (
@@ -125,7 +124,7 @@ export default async function ReviewPage() {
                       })}.`}
                   </>
                 ) : (
-                  <>Learn a few words first — they&apos;ll show up here when it&apos;s time to water them.</>
+                  <>Learn a few words first — they&apos;ll show up here when it&apos;s time to review them.</>
                 )}
               </p>
               <Link

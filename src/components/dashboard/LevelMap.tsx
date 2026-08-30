@@ -85,9 +85,7 @@ export default function LevelMap({
           </span>
           <span className="flex-none text-[13px] font-bold text-success">{eligible ? "Start →" : "Details →"}</span>
         </Link>
-      ) : (
-        <p className="text-[13px] text-muted">You&apos;ve reached C2 — the whole garden is yours.</p>
-      )}
+      ) : null}
     </div>
   );
 }

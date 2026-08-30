@@ -3,7 +3,6 @@
   "crumb": "リスニング",
   "home": {
     "title": "リスニング",
-    "subtitle": "シチュエーションを選んで、聞いて、台本を追おう",
     "continueTag": "続きを聞く",
     "upNextTag": "次はこれ",
     "clipOf": "{icon} {situation} · クリップ {n}/{total} · {level}",
@@ -30,14 +29,30 @@
     "nextChip": "次 · "
   },
   "situations": {
-    "cafe": { "label": "カフェ", "sub": "注文、メニュー、コーヒーを飲みながらの雑談" },
-    "restaurant": { "label": "レストラン", "sub": "テーブルの予約と本格的な食事の注文" },
-    "airport": { "label": "空港", "sub": "チェックイン、搭乗、税関のフレーズ" },
-    "shopping": { "label": "ショッピング", "sub": "サイズ、値段、値引き交渉" },
-    "directions": { "label": "道案内", "sub": "街中でどこへでも行けるように" },
-    "hospital": { "label": "病院", "sub": "症状、予約、薬局でのやり取り" },
-    "hotel": { "label": "ホテル", "sub": "チェックイン、部屋のリクエスト、設備" },
-    "phone": { "label": "電話", "sub": "実際に使う電話のやり取り" }
+    "cafe": {
+      "label": "カフェ"
+    },
+    "restaurant": {
+      "label": "レストラン"
+    },
+    "airport": {
+      "label": "空港"
+    },
+    "shopping": {
+      "label": "ショッピング"
+    },
+    "directions": {
+      "label": "道案内"
+    },
+    "hospital": {
+      "label": "病院"
+    },
+    "hotel": {
+      "label": "ホテル"
+    },
+    "phone": {
+      "label": "電話"
+    }
   },
   "situation": {
     "noClips": "このレベルのクリップはまだありません — 上の別のレベルを試してください。",

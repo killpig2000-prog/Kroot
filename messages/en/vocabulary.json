@@ -6,7 +6,6 @@
   "words": "words",
   "min": "min",
   "alreadySprouted": "already sprouted",
-  "contents": "Contents",
   "showAllUnits": "Show all units",
   "allChapters": "All chapters",
   "stillLearning": "Still learning",
@@ -22,13 +21,12 @@
   "emptyState": "No words yet. Start by clicking on a word from the unit list.",
   "wordBank": "Word bank",
   "myWords": "My words",
-  "allDone": "All done",
   "showChapters": "Show chapters",
-  "needsWater": "Needs water",
   "dueWords": "due words",
   "review": "Review this unit →",
   "continue": "Continue this unit →",
   "study": "Study this unit →",
   "unitsOf": "Units {first}–{last}",
-  "doneOfTotal": "{done} of {total} units done"
+  "doneOfTotal": "{done} of {total} units done",
+  "dueForReview": "Due for review"
 }

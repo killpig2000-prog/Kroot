@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { GOALS, type Goal } from "@/lib/level-test";
-import { BTN_GHOST, BTN_GREEN, CARD, EYEBROW, FADE, H1, SUB, TILE, TILE_ICON, TILE_ON } from "./styles";
+import { BTN_GHOST, BTN_GREEN, CARD, FADE, H1, SUB, TILE, TILE_ICON, TILE_ON } from "./styles";
 
 // Step 1 — can they read Hangul at all? A "not yet" skips the test entirely
 // and routes the first lesson to /hangul; nothing else is readable before it.
@@ -11,7 +11,6 @@ export function GateCard({ onAnswer }: { onAnswer: (canRead: boolean) => void })
   return (
     <section className={FADE}>
       <div className={CARD}>
-        <span className={`${EYEBROW} block text-center mb-2.5`}>{t("eyebrow")}</span>
         <h1 className={H1}>{t("title")}</h1>
         <p className={SUB}>{t("sub")}</p>
         <p className="kr text-center font-bold text-[clamp(56px,12vw,84px)] leading-none tracking-[-0.02em] text-charcoal mt-2 mb-5">
@@ -33,7 +32,6 @@ export function GateCard({ onAnswer }: { onAnswer: (canRead: boolean) => void })
             </span>
           </button>
         </div>
-        <p className="text-center text-[12px] text-faint mt-4">{t("foot")}</p>
       </div>
     </section>
   );
@@ -56,8 +54,7 @@ export function GoalCard({
   return (
     <section className={FADE}>
       <div className={CARD}>
-        <h1 className={H1}>{t("title")}</h1>
-        <p className={SUB}>{t("sub")}</p>
+        <h1 className={`${H1} mb-5`}>{t("title")}</h1>
         <div className="grid gap-2.5 sm:grid-cols-2">
           {GOALS.map((g) => (
             <button

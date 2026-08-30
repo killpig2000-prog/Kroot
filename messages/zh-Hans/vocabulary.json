@@ -6,7 +6,6 @@
   "words": "个单词",
   "min": "分钟",
   "alreadySprouted": "已发芽",
-  "contents": "目录",
   "showAllUnits": "显示所有单元",
   "allChapters": "所有章节",
   "stillLearning": "还在学习",
@@ -22,13 +21,12 @@
   "emptyState": "还没有单词。从单元列表中点击一个单词开始。",
   "wordBank": "词库",
   "myWords": "我的单词",
-  "allDone": "全部完成",
   "showChapters": "显示章节",
-  "needsWater": "需要复习",
   "dueWords": "期限内单词",
   "review": "复习此单元 →",
   "continue": "继续此单元 →",
   "study": "学习此单元 →",
   "unitsOf": "单元 {first}–{last}",
-  "doneOfTotal": "{done} 个/{total} 个单元完成"
+  "doneOfTotal": "{done} 个/{total} 个单元完成",
+  "dueForReview": "需要复习"
 }

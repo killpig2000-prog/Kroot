@@ -238,13 +238,10 @@
   },
   "groups": {
     "start-here": {
-      "title": "Bắt đầu ở đây",
-      "sub": "Bạn mới làm quen với ngữ pháp tiếng Hàn? Làm những việc này theo thứ tự đầu tiên."
+      "title": "Bắt đầu ở đây"
     },
     "next-steps": {
-      "title": "Các bước tiếp theo",
-      "sub": "Hãy tiếp tục theo đuổi những điều cơ bản."
+      "title": "Các bước tiếp theo"
     }
-  },
-  "everyLessonDesc": "Mọi bài học, được sắp xếp từ A1 đến C2. Các cấp độ cao hơn sẽ mở khi bạn vượt qua bài kiểm tra nâng cấp."
+  }
 }

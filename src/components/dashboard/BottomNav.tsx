@@ -227,7 +227,6 @@ export default function BottomNav() {
                 <span className="text-lg">🔥</span>
                 <div>
                   <b className="block text-[13px] font-semibold leading-tight text-[#5C4A0E]">{streakDays}-day streak</b>
-                  <small className="text-[11.5px] text-[#8A7420]">Keep it alive today!</small>
                 </div>
               </div>
             )}

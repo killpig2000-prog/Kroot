@@ -56,7 +56,7 @@ export default function Error({
             onClick={() => unstable_retry()}
             className="rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-success hover:bg-success-deep transition-colors"
           >
-            💧 Water it &amp; try again
+            Try again
           </button>
           <Link
             href="/dashboard"

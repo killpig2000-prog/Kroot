@@ -1,4 +1,3 @@
-import { getTranslations } from "next-intl/server";
 import LevelTabs from "@/components/ui/LevelTabs";
 import { Link, redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
@@ -27,7 +26,6 @@ export default async function GrammarPage({
     .single();
 
   const { locale } = await params;
-  const t = getTranslations("grammar");
   const myLevel = (profile?.current_level ?? "A1") as CefrLevel;
   const sp = await searchParams;
   const requested = isCefrLevel(sp.level) ? sp.level : myLevel;
@@ -58,14 +56,6 @@ export default async function GrammarPage({
         />
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] md:pb-[60px]">
-          {/* breadcrumb */}
-          <div className="flex gap-2 text-[13px] text-faint mb-[18px]">
-            <Link href="/dashboard" className="hover:text-charcoal transition-colors">
-              Garden
-            </Link>
-            <span>/</span>
-            <b className="text-charcoal font-semibold">Grammar</b>
-          </div>
 
           {/* head */}
           <div className="flex items-center justify-between gap-4 mb-[18px] flex-wrap">
@@ -76,22 +66,8 @@ export default async function GrammarPage({
               Grammar
             </h1>
             <span className="text-[13px] text-muted">
-              {GRAMMAR_LESSONS.length} lessons · the patterns behind every sentence
+              {GRAMMAR_LESSONS.length} lessons
             </span>
-          </div>
-
-          {/* intro */}
-          <div className="max-w-[820px] bg-[var(--tint-indigo)] border border-[var(--tint-indigo-line)] rounded-[14px] px-[18px] py-4 mb-6">
-            <p className="text-[13.5px] text-charcoal leading-[1.65]">
-              Korean grammar is regular. New here? Tap{" "}
-              <b className="text-[var(--tint-indigo-ink)]">Start here</b> below for a set order to learn the basics
-              in — see the{" "}
-              <Link href="/guide" className="font-semibold text-[var(--tint-indigo-ink)] hover:underline">
-                Guide
-              </Link>{" "}
-              for how it fits with the rest of the app. Otherwise browse the full A1–C2 syllabus by
-              level.
-            </p>
           </div>
 
           {/* one tab row: curated groups, then every CEFR level — one lesson
@@ -122,24 +98,15 @@ export default async function GrammarPage({
               accent="bg-[#423AC5] border-[#423AC5] text-white"
             />
 
-            <div className="flex items-center gap-2.5 mb-1">
-              <span className="text-[11.5px] font-semibold tracking-[.06em] uppercase text-faint">
-                {selectedGroup ? (
-                  <>
-                    <span className="kr normal-case">{selectedGroup.titleKr}</span> · {selectedGroup.title}
-                  </>
-                ) : (
-                  <>Browse by level</>
-                )}
-              </span>
+            <div className="flex items-center gap-2.5 mb-3">
+              {selectedGroup && (
+                <span className="text-[11.5px] font-semibold tracking-[.06em] uppercase text-faint">
+                  <span className="kr normal-case">{selectedGroup.titleKr}</span> · {selectedGroup.title}
+                </span>
+              )}
               <span className="h-px flex-1 bg-line" />
               <span className="text-[12px] text-faint">{shownLessons.length} lessons</span>
             </div>
-            <p className="text-[12.5px] text-muted mb-3">
-              {selectedGroup
-                ? selectedGroup.sub
-                : t("everyLessonDesc")}
-            </p>
 
             <div className="border border-line rounded-[14px] overflow-hidden">
               {shownLessons.map((lesson, i) => (

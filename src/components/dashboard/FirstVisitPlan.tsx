@@ -8,7 +8,7 @@ import type { FirstVisitUnlocks } from "@/lib/first-visit";
 // is a plain form posting to a server action that sets a cookie.
 
 export type FirstVisitStep = {
-  /** "Hangul", "Vocab", "Water your seedling 💧" */
+  /** "Hangul", "Vocab", "Review your seedling 💧" */
   label: string;
   /** "Consonants", "Unit 1 (10 words)" — omitted for the payoff step. */
   detail?: string;

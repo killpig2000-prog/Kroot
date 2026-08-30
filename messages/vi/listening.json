@@ -3,7 +3,6 @@
   "crumb": "Nghe",
   "home": {
     "title": "Nghe",
-    "subtitle": "Chọn một tình huống, nghe và theo dõi lời thoại",
     "continueTag": "Tiếp tục nghe",
     "upNextTag": "Tiếp theo",
     "clipOf": "{icon} {situation} · Đoạn {n}/{total} · {level}",
@@ -30,14 +29,30 @@
     "nextChip": "Tiếp theo · "
   },
   "situations": {
-    "cafe": { "label": "Quán cà phê", "sub": "Gọi món, xem thực đơn và trò chuyện khi uống cà phê" },
-    "restaurant": { "label": "Nhà hàng", "sub": "Đặt bàn và gọi món cho một bữa ăn thật sự" },
-    "airport": { "label": "Sân bay", "sub": "Làm thủ tục, lên máy bay và các câu hải quan" },
-    "shopping": { "label": "Mua sắm", "sub": "Kích cỡ, giá cả và cách xin giảm giá" },
-    "directions": { "label": "Hỏi đường", "sub": "Tìm đường ở bất kỳ thành phố nào" },
-    "hospital": { "label": "Bệnh viện", "sub": "Triệu chứng, lịch hẹn và ở hiệu thuốc" },
-    "hotel": { "label": "Khách sạn", "sub": "Nhận phòng, yêu cầu và tiện nghi" },
-    "phone": { "label": "Gọi điện", "sub": "Những cuộc gọi bạn sẽ thực sự cần dùng" }
+    "cafe": {
+      "label": "Quán cà phê"
+    },
+    "restaurant": {
+      "label": "Nhà hàng"
+    },
+    "airport": {
+      "label": "Sân bay"
+    },
+    "shopping": {
+      "label": "Mua sắm"
+    },
+    "directions": {
+      "label": "Hỏi đường"
+    },
+    "hospital": {
+      "label": "Bệnh viện"
+    },
+    "hotel": {
+      "label": "Khách sạn"
+    },
+    "phone": {
+      "label": "Gọi điện"
+    }
   },
   "situation": {
     "noClips": "Chưa có đoạn nào ở cấp độ này — hãy thử cấp độ khác ở trên.",

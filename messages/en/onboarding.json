@@ -7,18 +7,15 @@
     "account": "Account"
   },
   "gate": {
-    "eyebrow": "Before we start",
     "title": "Can you read this?",
     "sub": "No pressure — this just picks the right first step.",
     "yesTitle": "Yes, I can read it",
     "yesHint": "Take the 3-minute level test",
     "noTitle": "Not yet",
-    "noHint": "Start with Hangul — no test needed",
-    "foot": "Free · no account needed to find your level"
+    "noHint": "Start with Hangul — no test needed"
   },
   "goal": {
     "title": "What brought you to Korean?",
-    "sub": "We'll shape your first lessons around it.",
     "skip": "Skip",
     "startTest": "Start the test →",
     "seePlan": "See my plan →"
@@ -74,44 +71,21 @@
     "listening": "Listening",
     "minutes": "{n} min"
   },
-  "levels": {
-    "A1": "You're at the very first page — the coziest place to start! We'll begin with Hangul, greetings, and little survival phrases.",
-    "A2": "You know the basics! Simple everyday chats are yours. Next we'll grow longer sentences and everyday words.",
-    "B1": "Solid roots! You can hold everyday conversations. Now for connectors, nuance, and real-life listening.",
-    "B2": "Wow — you handle most situations with confidence! Time to polish natural expression and faster listening.",
-    "C1": "Tall branches! You speak fluently across many topics. Let's refine idioms and formal Korean.",
-    "C2": "A mighty tree! Near-native mastery. We'll keep you sharp with fresh media, slang, and pro-level Korean."
-  },
   "result": {
     "titleHangul": "Let's start with Hangul",
     "title": "Your seed is planted",
-    "subHangul": "You'll read Korean in about two lessons. Then everything else opens up.",
-    "sub": "Here's where your Korean begins.",
     "yourLevel": "Your level",
     "stoppedAt": "We stopped at {level} — that's your next goal.",
     "firstThree": "Your first three lessons",
-    "goalLine": {
-      "listening": "{icon} {label} — so we start with listening.",
-      "words": "{icon} {label} — so we start with words.",
-      "grammar": "{icon} {label} — so we start with grammar."
-    },
-    "goalLineHangul": {
-      "listening": "{icon} {label} — listening comes right after Hangul.",
-      "words": "{icon} {label} — words come right after Hangul.",
-      "grammar": "{icon} {label} — grammar comes right after Hangul."
-    },
     "saving": "Saving your level…",
     "startLesson": "Start lesson 1",
     "saveAndStart": "Save my level & start lesson 1",
-    "upNext": "Up next: {label}",
-    "takes": "Takes 20 seconds · free forever, no card"
+    "upNext": "Up next: {label}"
   },
   "signup": {
     "title": "Keep your spot",
-    "sub": "Save your level so your tree remembers you.",
     "hangulFirst": "Hangul first, then A1",
     "levelLessons": "{level} lessons",
-    "ready": "ready to start the moment you're in",
     "google": "Continue with Google",
     "orEmail": "or with email",
     "email": "Email",
@@ -120,13 +94,13 @@
     "agree": "I agree to the <link>Terms and Privacy Policy</link>.",
     "sending": "Sending…",
     "sendLink": "Send me a sign-in link",
-    "noPassword": "No password to remember. Already growing here?",
-    "login": "Log in"
+    "login": "Log in",
+    "alreadyHere": "Already growing here?"
   },
   "confirm": {
     "title": "Check your inbox",
     "sub": "We sent a link to <b>{email}</b>. Tap it and lesson 1 is waiting.",
-    "upNext": "Up next, the moment you're in",
+    "upNext": "Up next",
     "gmail": "Open Gmail",
     "outlook": "Open Outlook",
     "sentAgain": "Sent again — give it a minute.",
@@ -137,8 +111,7 @@
   },
   "saving": {
     "title": "Planting your seed…",
-    "sub": "Saving {level} and opening your first lesson.",
-    "moment": "One moment."
+    "sub": "Saving {level} and opening your first lesson."
   },
   "errors": {
     "authFailed": "That sign-in link failed or expired. Please try again.",

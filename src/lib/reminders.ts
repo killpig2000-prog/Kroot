@@ -46,7 +46,7 @@ export function reminderCopy(p: Pick<ReminderProfile, "display_name" | "streak_d
   if (dueWords > 0) {
     return {
       title: "💧 You have words due for review",
-      body: `${dueWords} ${dueWords === 1 ? "word" : "words"} due for watering — a quick review keeps them rooted.`,
+      body: `${dueWords} ${dueWords === 1 ? "word" : "words"} due for review — five minutes keeps them fresh.`,
     };
   }
   return {

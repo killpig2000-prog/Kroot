@@ -7,18 +7,15 @@
     "account": "账户"
   },
   "gate": {
-    "eyebrow": "开始之前",
     "title": "你能读出这个吗？",
     "sub": "别紧张 — 这只是为了帮你选对第一步。",
     "yesTitle": "能，我能读",
     "yesHint": "参加 3 分钟等级测试",
     "noTitle": "还不能",
-    "noHint": "从韩文字母开始 — 无需测试",
-    "foot": "免费 · 无需账户即可测出等级"
+    "noHint": "从韩文字母开始 — 无需测试"
   },
   "goal": {
     "title": "你为什么想学韩语？",
-    "sub": "我们会据此安排你的前几课。",
     "skip": "跳过",
     "startTest": "开始测试 →",
     "seePlan": "查看我的计划 →"
@@ -74,44 +71,21 @@
     "listening": "听力",
     "minutes": "{n} 分钟"
   },
-  "levels": {
-    "A1": "你正站在第一页 — 最舒适的起点！我们会从韩文字母、问候语和简单的实用短句开始。",
-    "A2": "你已经掌握了基础！简单的日常聊天不在话下。接下来我们会学更长的句子和日常词汇。",
-    "B1": "根基扎实！你能进行日常对话了。接下来是连接词、语感和真实场景的听力。",
-    "B2": "哇 — 你能自信应对大多数场合！是时候打磨自然表达和更快的听力了。",
-    "C1": "枝繁叶茂！你能流利地谈论许多话题。让我们精进惯用语和正式韩语。",
-    "C2": "参天大树！接近母语水平。我们会用最新的媒体、俚语和专业级韩语让你保持敏锐。"
-  },
   "result": {
     "titleHangul": "我们从韩文字母开始吧",
     "title": "你的种子已经种下",
-    "subHangul": "大约两课之后你就能读韩语了。然后一切都会打开。",
-    "sub": "你的韩语之旅从这里开始。",
     "yourLevel": "你的等级",
     "stoppedAt": "我们在 {level} 停下了 — 那就是你的下一个目标。",
     "firstThree": "你的前三课",
-    "goalLine": {
-      "listening": "{icon} {label} — 所以我们从听力开始。",
-      "words": "{icon} {label} — 所以我们从单词开始。",
-      "grammar": "{icon} {label} — 所以我们从语法开始。"
-    },
-    "goalLineHangul": {
-      "listening": "{icon} {label} — 学完韩文字母就练听力。",
-      "words": "{icon} {label} — 学完韩文字母就学单词。",
-      "grammar": "{icon} {label} — 学完韩文字母就学语法。"
-    },
     "saving": "正在保存你的等级…",
     "startLesson": "开始第 1 课",
     "saveAndStart": "保存等级并开始第 1 课",
-    "upNext": "接下来：{label}",
-    "takes": "只需 20 秒 · 永久免费，无需银行卡"
+    "upNext": "接下来：{label}"
   },
   "signup": {
     "title": "保住你的位置",
-    "sub": "保存等级，让你的树记住你。",
     "hangulFirst": "先学韩文字母，再学 A1",
     "levelLessons": "{level} 课程",
-    "ready": "登录后即可马上开始",
     "google": "使用 Google 继续",
     "orEmail": "或使用邮箱",
     "email": "邮箱",
@@ -120,13 +94,13 @@
     "agree": "我同意<link>服务条款和隐私政策</link>。",
     "sending": "发送中…",
     "sendLink": "给我发送登录链接",
-    "noPassword": "无需记住密码。已经在这里学习了？",
-    "login": "登录"
+    "login": "登录",
+    "alreadyHere": "已经有账号了？"
   },
   "confirm": {
     "title": "请查看你的邮箱",
     "sub": "我们已把链接发送到 <b>{email}</b>。点击它，第 1 课正在等你。",
-    "upNext": "登录后马上开始",
+    "upNext": "接下来",
     "gmail": "打开 Gmail",
     "outlook": "打开 Outlook",
     "sentAgain": "已重新发送 — 请稍等片刻。",
@@ -137,8 +111,7 @@
   },
   "saving": {
     "title": "正在种下你的种子…",
-    "sub": "正在保存 {level} 并打开你的第一课。",
-    "moment": "请稍候。"
+    "sub": "正在保存 {level} 并打开你的第一课。"
   },
   "errors": {
     "authFailed": "该登录链接无效或已过期。请重试。",

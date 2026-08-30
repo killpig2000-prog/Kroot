@@ -26,7 +26,6 @@ export default function TreeCard({
   xpNeeded,
   costumeIds = [],
   species,
-  subtitle,
 }: {
   level: number;
   progressPct: number;
@@ -35,8 +34,6 @@ export default function TreeCard({
   costumeIds?: string[];
   /** CEFR grade — decides the tree species; promotion transforms the garden. */
   species?: CefrLevel;
-  /** Replaces the stage blurb — the first-visit dashboard says what to do next. */
-  subtitle?: string;
 }) {
   const [fill, setFill] = useState(0);
   const equipped = costumeIds;
@@ -47,7 +44,7 @@ export default function TreeCard({
   }, [progressPct]);
 
   const stage = treeStageForLevel(level);
-  const { treeName, blurb } = LEVEL_PATH[stage];
+  const { treeName } = LEVEL_PATH[stage];
   const sp = SPECIES[species ?? stage];
   const stageIdx = LEVEL_ORDER.indexOf(stage);
   const maxed = level >= MAX_LEVEL;
@@ -118,15 +115,9 @@ export default function TreeCard({
             </g>
           </svg>
         </div>
-        <figcaption className="absolute bottom-1 left-0 right-0 text-center text-[10px] font-bold text-[#8A8478]">
-          {veteran ? `Today's tree · ${metres}m 🌲` : "Today's tree 🌱"}
-        </figcaption>
       </figure>
 
       <div>
-        <p className="text-[11.5px] font-extrabold tracking-[.08em] uppercase text-[#B7AE9C] mb-1.5">
-          Your tree · growth album
-        </p>
         <h2 className="font-semibold text-lg tracking-[-0.01em] mb-0.5">
           {sp.name} <span className="text-faint font-medium">· {treeName}</span>
           <span
@@ -144,8 +135,7 @@ export default function TreeCard({
           </p>
         )}
         <p className="text-[13.5px] text-muted mb-4">
-          <span className="kr font-semibold">{sp.krName}</span> —{" "}
-          {subtitle ?? (veteran ? "Fully grown, still climbing. Every ten levels the canopy gains a tier." : blurb)}
+          <span className="kr font-semibold">{sp.krName}</span>
         </p>
 
         <div className="flex items-center gap-3 mb-4">
@@ -192,9 +182,6 @@ export default function TreeCard({
         {/* keepsake ladder — what the taller tree has earned, and what's next */}
         {veteran && (
           <div className="mt-4 pt-3.5 border-t border-dashed border-line">
-            <p className="text-[11.5px] font-extrabold tracking-[.08em] uppercase text-[#B7AE9C] mb-2">
-              Canopy keepsakes
-            </p>
             <div className="flex flex-wrap gap-1.5">
               {VETERAN_MILESTONES.map((m) => {
                 const on = level >= m.level;

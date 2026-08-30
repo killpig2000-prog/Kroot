@@ -49,7 +49,7 @@ export default function VocabSummaryPhase({
         </g>
       </svg>
       <h2 className="font-bold text-[21px] tracking-[-0.02em] mt-3 mb-1.5">
-        {words.length} words watered today! 🌱
+        {words.length} words studied today! 🌱
       </h2>
       <p className="text-sm text-muted mb-[22px]">Those words are rooted a little deeper now.</p>
       {levelUp && (
@@ -78,7 +78,7 @@ export default function VocabSummaryPhase({
       </div>
 
       <span className="inline-flex items-center gap-2 bg-success-bg border border-success-line rounded-full px-[18px] py-2 text-[13.5px] font-semibold text-success mb-6">
-        💧 Vocabulary · chapter watered
+        💧 Vocabulary · chapter done
       </span>
 
       <div className="flex justify-center gap-2.5 flex-wrap">

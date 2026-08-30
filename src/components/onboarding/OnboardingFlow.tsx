@@ -356,9 +356,7 @@ export default function OnboardingFlow({ lessons }: { lessons: FirstLessonsMap }
               <div className={`${CARD} text-center`}>
                 <p className="text-[34px] mb-1">🌱</p>
                 <b className="block text-[17px]">{t("saving.title")}</b>
-                <p className="text-muted text-[13.5px] mt-1">
-                  {placement ? t("saving.sub", { level: placement.level }) : t("saving.moment")}
-                </p>
+                {placement && <p className="text-muted text-[13.5px] mt-1">{t("saving.sub", { level: placement.level })}</p>}
               </div>
             </section>
           )}

@@ -4,10 +4,10 @@ import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import Pot from "@/components/onboarding/Pot";
 import { LEVEL_ORDER } from "@/lib/tree";
-import { GOALS, QUESTION_TYPES, type FirstLesson, type Placement } from "@/lib/level-test";
-import { BTN_BIG, CARD, EYEBROW, FADE, H1, SUB } from "./styles";
+import { QUESTION_TYPES, type FirstLesson, type Placement } from "@/lib/level-test";
+import { BTN_BIG, CARD, EYEBROW, FADE, H1 } from "./styles";
 
-export function FirstLessonList({ lessons, title, goalLine }: { lessons: FirstLesson[]; title: string; goalLine?: string }) {
+export function FirstLessonList({ lessons, title }: { lessons: FirstLesson[]; title: string }) {
   const ts = useTranslations("onboarding.skills");
   return (
     <div className="text-left border border-line rounded-[12px] bg-warm px-3.5 py-3 mb-[18px]">
@@ -29,7 +29,6 @@ export function FirstLessonList({ lessons, title, goalLine }: { lessons: FirstLe
           </li>
         ))}
       </ol>
-      {goalLine && <p className="mt-2.5 mb-0 text-[12.5px] text-muted">{goalLine}</p>}
     </div>
   );
 }
@@ -50,8 +49,6 @@ export default function PlacementResult({
   onContinue: () => void;
 }) {
   const t = useTranslations("onboarding.result");
-  const tg = useTranslations("onboarding.goals");
-  const tl = useTranslations("onboarding.levels");
   const tt = useTranslations("onboarding.types");
   const [grown, setGrown] = useState(false);
   useEffect(() => {
@@ -61,19 +58,12 @@ export default function PlacementResult({
 
   const hangul = placement.route === "hangul";
   const tested = !placement.skipped;
-  const goal = GOALS.find((g) => g.key === placement.goal);
-  const goalLine = goal
-    ? t(hangul ? `goalLineHangul.${goal.lead}` : `goalLine.${goal.lead}`, { icon: goal.icon, label: tg(`${goal.key}.label`) })
-    : undefined;
   const first = lessons[0];
 
   return (
     <section className={FADE}>
       <div className={`${CARD} text-center`}>
         <h1 className={H1}>{hangul ? t("titleHangul") : t("title")}</h1>
-        <p className={SUB}>
-          {hangul ? t("subHangul") : t("sub")}
-        </p>
 
         <Pot grown={grown} />
 
@@ -109,21 +99,18 @@ export default function PlacementResult({
           </div>
         )}
 
-        <p className="text-[13px] text-muted max-w-[400px] mx-auto mb-[18px] leading-[1.6]">
-          {tested && placement.stoppedAt && placement.stoppedAt !== placement.level
-            ? `${t("stoppedAt", { level: placement.stoppedAt })} `
-            : ""}
-          {tl(placement.level)}
-        </p>
+        {tested && placement.stoppedAt && placement.stoppedAt !== placement.level && (
+          <p className="text-[13px] text-muted max-w-[400px] mx-auto mb-[18px] leading-[1.6]">
+            {t("stoppedAt", { level: placement.stoppedAt })}
+          </p>
+        )}
 
-        <FirstLessonList lessons={lessons} title={t("firstThree")} goalLine={goalLine} />
+        <FirstLessonList lessons={lessons} title={t("firstThree")} />
 
         <button type="button" className={`${BTN_BIG} w-full`} onClick={onContinue} disabled={busy}>
           {busy ? t("saving") : signedIn ? t("startLesson") : t("saveAndStart")}
         </button>
-        <p className="text-[12px] text-faint mt-2.5">
-          {signedIn ? (first ? t("upNext", { label: first.label }) : "") : t("takes")}
-        </p>
+        {signedIn && first && <p className="text-[12px] text-faint mt-2.5">{t("upNext", { label: first.label })}</p>}
       </div>
     </section>
   );

@@ -3,7 +3,6 @@
   "crumb": "Escucha",
   "home": {
     "title": "Escucha",
-    "subtitle": "Elige una situación, escucha y sigue el guion",
     "continueTag": "Continuar escuchando",
     "upNextTag": "A continuación",
     "clipOf": "{icon} {situation} · Clip {n} de {total} · {level}",
@@ -30,14 +29,30 @@
     "nextChip": "Siguiente · "
   },
   "situations": {
-    "cafe": { "label": "Cafetería", "sub": "Pedir, ver el menú y charlar mientras tomas un café" },
-    "restaurant": { "label": "Restaurante", "sub": "Reservar mesa y pedir una comida de verdad" },
-    "airport": { "label": "Aeropuerto", "sub": "Facturación, embarque y frases de aduana" },
-    "shopping": { "label": "Compras", "sub": "Tallas, precios y cómo pedir un descuento" },
-    "directions": { "label": "Direcciones", "sub": "Orientarte en cualquier ciudad" },
-    "hospital": { "label": "Hospital", "sub": "Síntomas, citas y la farmacia" },
-    "hotel": { "label": "Hotel", "sub": "Registro, peticiones de habitación y servicios" },
-    "phone": { "label": "Llamada telefónica", "sub": "Llamadas que de verdad tendrás que hacer" }
+    "cafe": {
+      "label": "Cafetería"
+    },
+    "restaurant": {
+      "label": "Restaurante"
+    },
+    "airport": {
+      "label": "Aeropuerto"
+    },
+    "shopping": {
+      "label": "Compras"
+    },
+    "directions": {
+      "label": "Direcciones"
+    },
+    "hospital": {
+      "label": "Hospital"
+    },
+    "hotel": {
+      "label": "Hotel"
+    },
+    "phone": {
+      "label": "Llamada telefónica"
+    }
   },
   "situation": {
     "noClips": "Todavía no hay clips en este nivel — prueba otro nivel arriba.",

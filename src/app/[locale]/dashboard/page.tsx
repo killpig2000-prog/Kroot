@@ -45,7 +45,7 @@ const MONTH_GOAL = 20;
 // One quest per day, rotating through the four practice skills.
 const QUEST_ROTATION = [
   { skill_key: "writing", title: "Today's quest", description: "Writing · one chapter, a few questions · ~8 min" },
-  { skill_key: "vocabulary", title: "Today's quest", description: "Watering · review your due words · ~5 min" },
+  { skill_key: "vocabulary", title: "Today's quest", description: "Review · your due words · ~5 min" },
   { skill_key: "listening", title: "Today's quest", description: "Listening · one dialogue at your level · ~5 min" },
   { skill_key: "reading", title: "Today's quest", description: "Reading · one short passage · ~4 min" },
   { skill_key: "pronunciation", title: "Today's quest", description: "Pronunciation · clear one chapter · ~4 min" },
@@ -199,7 +199,7 @@ export default async function DashboardPage() {
     { label: "Words held", ok: elig.wordsMastered >= elig.wordsRequired, value: `${elig.wordsMastered}/${elig.wordsRequired}` },
     { label: "Reading", ok: elig.readingDone >= elig.readingRequired, value: `${elig.readingDone}/${elig.readingRequired}` },
   ];
-  // Errors (e.g. migration 0022 not applied yet) just hide the watering card.
+  // Errors (e.g. migration 0022 not applied yet) just hide the review card.
   const dueCount = dueRes.error ? 0 : dueRes.count ?? 0;
 
   const tally = (doneKeys: Set<string>, levelKeys: string[], cap?: number) => {
@@ -328,12 +328,12 @@ export default async function DashboardPage() {
         ? [
             { label: "Hangul", detail: "Consonants", time: "2 min", href: "/hangul" },
             { label: "Vocab", detail: "Unit 1 (10 words)", time: "3 min", href: vocabUnit1 },
-            { label: "Water your seedling 💧", time: "10 s" },
+            { label: "Review your seedling 💧", time: "10 s" },
           ]
         : [
             { label: "Vocab", detail: `Unit 1 (10 words) · ${cefr}`, time: "3 min", href: vocabUnit1 },
             { label: "Listening", detail: "one short dialogue", time: "2 min", href: "/listening" },
-            { label: "Water your seedling 💧", time: "10 s" },
+            { label: "Review your seedling 💧", time: "10 s" },
           ];
 
     return (
@@ -351,7 +351,7 @@ export default async function DashboardPage() {
             <h1 className="font-semibold text-[clamp(20px,2.4vw,24px)] tracking-[-0.02em] mb-0.5">
               Welcome, {displayName}
             </h1>
-            <p className="text-muted text-sm mb-6">Day {firstVisit.day} · your garden starts here</p>
+            <p className="text-muted text-sm mb-6">Day {firstVisit.day}</p>
 
             <TreeCard
               level={level}
@@ -360,7 +360,6 @@ export default async function DashboardPage() {
               xpNeeded={needed}
               costumeIds={equippedIds}
               species={cefr}
-              subtitle="Finish one session to water it."
             />
 
             <FirstVisitPlan steps={steps} />
@@ -419,9 +418,6 @@ export default async function DashboardPage() {
 
         <main className="min-w-0 px-[clamp(18px,3vw,36px)] pt-[26px] pb-[100px] md:pb-[60px]">
           <Greeting name={displayName} />
-          <p className="text-muted text-sm mb-6">
-            One lesson today keeps your tree growing.
-          </p>
 
           <TreeCard
             level={level}
@@ -445,7 +441,7 @@ export default async function DashboardPage() {
 
           <InstallBanner streakDays={streakDays} />
 
-          {/* watering (spaced-repetition review) */}
+          {/* spaced-repetition review */}
           {dueCount > 0 && (
             <Link
               href="/review"
@@ -458,12 +454,9 @@ export default async function DashboardPage() {
                 <b className="block font-semibold text-sm text-sky-deep">
                   {dueCount} {dueCount === 1 ? "word is" : "words are"} due for review
                 </b>
-                <span className="text-[13px] text-sky-deep">
-                  Water them before they wilt — a quick review keeps them rooted.
-                </span>
               </span>
               <span className="w-full sm:w-auto pl-[54px] sm:pl-0 text-[13px] font-semibold text-sky-deep transition-transform group-hover:translate-x-0.5">
-                Water now →
+                Review now →
               </span>
             </Link>
           )}

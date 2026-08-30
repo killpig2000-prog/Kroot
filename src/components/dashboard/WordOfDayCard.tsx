@@ -13,7 +13,6 @@ export default function WordOfDayCard({ wotd, className = "" }: { wotd: WordOfTh
       />
       <div className="flex items-baseline justify-between mb-3">
         <b className="text-[12px] font-extrabold tracking-[.05em] text-success-deep uppercase">Word of the day</b>
-        <small className="text-[11.5px] text-faint">단어</small>
       </div>
       <p className="kr text-2xl mb-0.5">{wotd.word}</p>
       <p className="text-[12.5px] text-faint mb-1.5">{wotd.roman}</p>

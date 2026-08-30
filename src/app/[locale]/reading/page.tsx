@@ -11,22 +11,22 @@ import { isDifficultyUnlocked } from "@/lib/level";
 // Genre keys are unique across all levels (diary/story repeat at every level;
 // the other two slots change per level to match real-world text types that
 // get harder as CEFR level rises — see [[chapter-list-garden-path]] memory).
-const GENRE_META: Record<string, { icon: string; label: string; blurb: string }> = {
-  diary: { icon: "📔", label: "Diary", blurb: "Everyday life, told as it happens" },
-  story: { icon: "🎈", label: "Story", blurb: "Something specific happens — a small event" },
-  notice: { icon: "📌", label: "Notices", blurb: "Real signs and postings you'd see around town" },
-  dialogue: { icon: "💬", label: "Dialogue", blurb: "Two people talking — practice following a conversation" },
-  message: { icon: "📱", label: "Messages", blurb: "A text chat between two people" },
-  instruction: { icon: "📋", label: "Instructions", blurb: "Step-by-step — a recipe, a how-to, a set of directions" },
-  email: { icon: "✉️", label: "Emails", blurb: "Real correspondence — work, landlords, RSVPs" },
-  explainer: { icon: "📚", label: "Explainers", blurb: "How something works, or a Korean custom explained" },
-  review: { icon: "⭐", label: "Reviews", blurb: "An opinion piece — what's good, what's not, the verdict" },
-  article: { icon: "📰", label: "Articles", blurb: "A short news piece on a social trend" },
-  opinion: { icon: "🗣️", label: "Opinion", blurb: "A writer argues a stance, and weighs the other side" },
-  editorial: { icon: "🏛️", label: "Editorials", blurb: "A newspaper opinion column on a policy or social issue" },
-  essay: { icon: "🖋️", label: "Essays", blurb: "A reflective piece on identity, work, or modern life" },
-  academic: { icon: "🎓", label: "Academic", blurb: "A scholarly explainer on history, language, or ideas" },
-  interview: { icon: "🎙️", label: "Interviews", blurb: "A Q&A with an expert, writer, or public figure" },
+const GENRE_META: Record<string, { icon: string; label: string }> = {
+  diary: { icon: "📔", label: "Diary" },
+  story: { icon: "🎈", label: "Story" },
+  notice: { icon: "📌", label: "Notices" },
+  dialogue: { icon: "💬", label: "Dialogue" },
+  message: { icon: "📱", label: "Messages" },
+  instruction: { icon: "📋", label: "Instructions" },
+  email: { icon: "✉️", label: "Emails" },
+  explainer: { icon: "📚", label: "Explainers" },
+  review: { icon: "⭐", label: "Reviews" },
+  article: { icon: "📰", label: "Articles" },
+  opinion: { icon: "🗣️", label: "Opinion" },
+  editorial: { icon: "🏛️", label: "Editorials" },
+  essay: { icon: "🖋️", label: "Essays" },
+  academic: { icon: "🎓", label: "Academic" },
+  interview: { icon: "🎙️", label: "Interviews" },
 };
 
 const STATUS_STYLE: Record<string, { badge: string; seed: string; icon: string }> = {
@@ -103,14 +103,6 @@ export default async function ReadingMapPage({
         />
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] md:pb-[60px]">
-          {/* breadcrumb */}
-          <div className="flex gap-2 text-[13px] text-faint mb-[18px]">
-            <Link href="/dashboard" className="hover:text-charcoal transition-colors">
-              Garden
-            </Link>
-            <span>/</span>
-            <b className="text-charcoal font-semibold">Reading</b>
-          </div>
 
           {/* head */}
           <div className="flex items-center justify-between gap-4 mb-[18px] flex-wrap">
@@ -127,10 +119,6 @@ export default async function ReadingMapPage({
               Level {level} · <b className="text-sky-deep">{doneCount}</b> of {chapters.length} chapters read
             </span>
           </div>
-
-          <p className="text-[13px] text-muted mb-6">
-            Read the story, then answer the questions — finishing chapters keeps the next few open.
-          </p>
 
           <LevelTabs
             className="mb-6"
@@ -185,7 +173,7 @@ export default async function ReadingMapPage({
                             {meta.icon} {meta.label}
                           </b>
                           <small className="block text-[11.5px] text-faint font-normal truncate">
-                            {meta.blurb} · Chapters {first}–{last}
+                            Chapters {first}–{last}
                           </small>
                         </>
                       ) : (

@@ -50,8 +50,7 @@ export function SignupCard({
   return (
     <section className={FADE}>
       <div className={CARD}>
-        <h1 className={H1}>{t("title")}</h1>
-        <p className={SUB}>{t("sub")}</p>
+        <h1 className={`${H1} mb-4`}>{t("title")}</h1>
 
         <div className="flex items-center gap-3 border border-success-line bg-success-bg rounded-[12px] px-3 py-2.5 mb-4 text-[13px]">
           <span className="hand font-bold text-[22px] text-success-deep">{placement.level}</span>
@@ -59,7 +58,6 @@ export function SignupCard({
             <b className="block truncate text-charcoal">
               {placement.route === "hangul" ? t("hangulFirst") : firstLesson ? firstLesson.label : t("levelLessons", { level: placement.level })}
             </b>
-            <small className="block text-success-deep text-[12px]">{t("ready")}</small>
           </span>
         </div>
 
@@ -102,7 +100,7 @@ export function SignupCard({
           </button>
         </form>
         <p className="text-center text-[12px] text-faint mt-3.5">
-          {t("noPassword")}{" "}
+          {t("alreadyHere")}{" "}
           <Link href={loginHref} className="text-charcoal font-semibold hover:underline">
             {t("login")}
           </Link>

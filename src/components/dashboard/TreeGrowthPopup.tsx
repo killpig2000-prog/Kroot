@@ -106,7 +106,7 @@ export default function TreeGrowthPopup({
           />
 
           <p className="text-[13.5px] text-muted leading-relaxed mt-4 mb-6">
-            Lv. {level} — keep watering it every day and watch how far it grows.
+            Lv. {level} — review a little every day and watch how far it grows.
           </p>
           <button
             onClick={() => setGrowth(null)}

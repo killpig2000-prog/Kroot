@@ -122,13 +122,10 @@ export default function ReminderSettings({ userId, initialPush, initialEmail, in
 
   return (
     <div id="reminders" className="border border-line rounded-[14px] px-[22px] py-5">
-      <div className="flex items-baseline justify-between gap-3 mb-1 flex-wrap">
+      <div className="flex items-baseline justify-between gap-3 mb-4 flex-wrap">
         <b className="font-semibold text-[15px]">⏰ Daily reminder</b>
         <small className="text-[12.5px] text-faint font-medium">Only when you haven&apos;t studied yet</small>
       </div>
-      <p className="text-[13px] text-muted mb-4">
-        A single nudge a day, and only on days your streak is at risk. Never more.
-      </p>
 
       <div className="grid grid-cols-1 gap-3">
         <Row

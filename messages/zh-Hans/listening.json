@@ -3,7 +3,6 @@
   "crumb": "听力",
   "home": {
     "title": "听力",
-    "subtitle": "选择一个场景，边听边跟着台词走",
     "continueTag": "继续收听",
     "upNextTag": "接下来",
     "clipOf": "{icon} {situation} · 第 {n}/{total} 段 · {level}",
@@ -30,14 +29,30 @@
     "nextChip": "下一个 · "
   },
   "situations": {
-    "cafe": { "label": "咖啡馆", "sub": "点单、看菜单，还有喝咖啡时的闲聊" },
-    "restaurant": { "label": "餐厅", "sub": "订座和正式点餐" },
-    "airport": { "label": "机场", "sub": "值机、登机和海关用语" },
-    "shopping": { "label": "购物", "sub": "尺码、价格，还有讲价" },
-    "directions": { "label": "问路", "sub": "在任何城市都能找到方向" },
-    "hospital": { "label": "医院", "sub": "描述症状、预约和去药房" },
-    "hotel": { "label": "酒店", "sub": "办理入住、提出要求和设施问询" },
-    "phone": { "label": "打电话", "sub": "你真正会遇到的电话场景" }
+    "cafe": {
+      "label": "咖啡馆"
+    },
+    "restaurant": {
+      "label": "餐厅"
+    },
+    "airport": {
+      "label": "机场"
+    },
+    "shopping": {
+      "label": "购物"
+    },
+    "directions": {
+      "label": "问路"
+    },
+    "hospital": {
+      "label": "医院"
+    },
+    "hotel": {
+      "label": "酒店"
+    },
+    "phone": {
+      "label": "打电话"
+    }
   },
   "situation": {
     "noClips": "这个等级暂时还没有片段——试试上面的其他等级吧。",

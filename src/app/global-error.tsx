@@ -72,7 +72,7 @@ export default function GlobalError({
               cursor: "pointer",
             }}
           >
-            💧 Water it &amp; try again
+            Try again
           </button>
 
           {error.digest && (

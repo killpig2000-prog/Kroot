@@ -110,9 +110,7 @@ function JamoGrid({ items }: { items: Jamo[] }) {
             <span className="ml-auto flex-none text-sm text-faint">🔊</span>
           </button>
         </div>
-      ) : (
-        <p className="text-[12px] text-faint mt-2.5">Tap a letter to hear it and see how it&apos;s used.</p>
-      )}
+      ) : null}
     </div>
   );
 }
@@ -126,10 +124,6 @@ function SyllableBuilder() {
   return (
     <div className="max-w-[820px] border border-line rounded-[14px] p-[clamp(20px,3vw,28px)] mb-8">
       <p className={SECTION_LABEL}>Build a block</p>
-      <p className="text-[13.5px] text-muted leading-[1.6] mb-5">
-        Every Korean syllable is a little block: a consonant plus a vowel, packed into one square.
-        Pick one of each and hear what you made.
-      </p>
 
       <div className="flex items-center justify-center gap-3 flex-wrap mb-6">
         <span
@@ -156,7 +150,7 @@ function SyllableBuilder() {
         </button>
       </div>
       <p className="text-center text-[13px] text-muted mb-6">
-        <b className="text-success">{rom}</b> · tap the green block to hear it
+        <b className="text-success">{rom}</b>
       </p>
 
       <p className={SECTION_LABEL}>Consonant (초성)</p>
@@ -249,10 +243,6 @@ export default function HangulExplorer() {
           <p className={SECTION_LABEL}>14 basic consonants · 기본 자음</p>
           <JamoGrid items={BASIC_CONSONANTS} />
           <p className={SECTION_LABEL}>5 double consonants · 쌍자음</p>
-          <p className="text-[13px] text-muted max-w-[680px] leading-[1.6] mb-3.5 -mt-1">
-            These are the same shapes doubled up. Say them tense and tight, with no puff of air —
-            the difference is real, and Korean ears hear it immediately.
-          </p>
           <JamoGrid items={DOUBLE_CONSONANTS} />
         </div>
       )}
@@ -262,10 +252,6 @@ export default function HangulExplorer() {
           <p className={SECTION_LABEL}>10 basic vowels · 기본 모음</p>
           <JamoGrid items={BASIC_VOWELS} />
           <p className={SECTION_LABEL}>Compound vowels · 복합 모음</p>
-          <p className="text-[13px] text-muted max-w-[680px] leading-[1.6] mb-3.5 -mt-1">
-            Each of these is two basic vowels squashed together. Once you spot the parts, you can
-            read them without memorising anything new.
-          </p>
           <JamoGrid items={COMPOUND_VOWELS} />
         </div>
       )}
@@ -274,12 +260,6 @@ export default function HangulExplorer() {
         <div style={{ animation: "fadeUp .35s ease" }}>
           <div className="max-w-[820px] border border-line rounded-[14px] p-[clamp(20px,3vw,28px)] mb-5">
             <p className={SECTION_LABEL}>The idea</p>
-            <p className="text-[14px] text-muted leading-[1.7] mb-4">
-              Korean doesn&apos;t write letters in a straight line like English. It stacks them into
-              square syllable blocks. A tall vowel like ㅏ sits to the{" "}
-              <b className="text-charcoal">right</b> of the consonant; a flat vowel like ㅗ sits{" "}
-              <b className="text-charcoal">underneath</b> it.
-            </p>
             <div className="flex gap-3 flex-wrap">
               {[
                 { block: "가", parts: "ㄱ + ㅏ", note: "vowel on the right" },
@@ -302,10 +282,6 @@ export default function HangulExplorer() {
           <SyllableBuilder />
 
           <p className={SECTION_LABEL}>Reading practice · 읽기 연습</p>
-          <p className="text-[13px] text-muted max-w-[680px] leading-[1.6] mb-3.5 -mt-1">
-            Try sounding each one out before you tap. If you can read these, you can read Korean —
-            the rest is vocabulary.
-          </p>
           <div className="grid grid-cols-[repeat(auto-fill,minmax(140px,1fr))] gap-3 max-w-[820px]">
             {PRACTICE_WORDS.map((w) => (
               <PracticeWordCard key={w.kr} {...w} />

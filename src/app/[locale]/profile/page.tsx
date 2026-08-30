@@ -1,4 +1,4 @@
-import { Link, redirect } from "@/i18n/navigation";
+import { redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import AvatarUploader from "@/components/profile/AvatarUploader";
@@ -52,14 +52,6 @@ export default async function ProfilePage() {
         />
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] md:pb-[60px]">
-          {/* breadcrumb */}
-          <div className="flex gap-2 text-[13px] text-faint mb-[18px]">
-            <Link href="/dashboard" className="hover:text-charcoal transition-colors">
-              Garden
-            </Link>
-            <span>/</span>
-            <b className="text-charcoal font-semibold">My account</b>
-          </div>
 
           {/* head */}
           <div className="flex items-center justify-between gap-4 mb-[18px] flex-wrap">
@@ -131,14 +123,6 @@ export default async function ProfilePage() {
                 anchor when it comes back. Its headline metric is lifetime
                 correct/incorrect, the very measure the promotion gate dropped,
                 so shipping it as-is would contradict the level-up screen. */}
-
-            {/* where did everything go? a gentle pointer for regulars */}
-            <p className="text-[12.5px] text-faint">
-              Looking for your grass, costume, or progress? They now live in your{" "}
-              <Link href="/dashboard" className="font-semibold text-success hover:underline">
-                Garden →
-              </Link>
-            </p>
           </div>
         </main>
       </div>

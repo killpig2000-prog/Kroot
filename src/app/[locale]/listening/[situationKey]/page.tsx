@@ -55,7 +55,7 @@ export default async function SituationPage({
   }
 
   const meta = situation
-    ? { ...situation, label: ts(`${situation.key}.label`), sub: ts(`${situation.key}.sub`) }
+    ? { ...situation, label: ts(`${situation.key}.label`), sub: "" }
     : { key: situationKey, label: situationKey, krLabel: "", icon: "🎧", sub: "", tint: "#EFE9DC" };
 
   const levelTabs = (
