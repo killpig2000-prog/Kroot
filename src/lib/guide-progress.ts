@@ -6,7 +6,7 @@ import { DIALOGUES } from "@/lib/listening-dialogues";
 import { SITUATIONS } from "@/lib/listening";
 import { getPassagesForLevel } from "@/lib/reading";
 import { CHAPTER_SIZE, getPromptsForLevel } from "@/lib/writing";
-import { chapterBlurb, orderedChapters } from "@/lib/pronunciation";
+import { chapterBlurb, groupsForFamily } from "@/lib/pronunciation";
 import { computeEligibility, type Eligibility } from "@/lib/promotion-server";
 
 // "You are here" for the Guide roadmaps. Each station on a roadmap has ONE
@@ -219,12 +219,13 @@ export async function getGuideProgress(
           : `Opens now · ${situations.length} situations`,
   };
 
-  // --- Pronunciation: clear the Warm-up tier ------------------------------
-  // Cleared = every word attempted at least once, matching the unlock gate
-  // on /speaking (an 80+ score is no longer required to move on).
+  // --- Pronunciation: get the vowel chapters down -------------------------
+  // Cleared = every word attempted at least once, matching /speaking (an 80+
+  // score is never required). Vowels are the natural first stop now that
+  // practice chapters are grouped by sound family instead of difficulty.
   const attemptedIds = new Set(speakingRows.map((r) => r.prompt_key));
   const speakingAt = new Map(speakingRows.map((r) => [r.prompt_key, r.completed_at]));
-  const warmup = orderedChapters().filter((c) => c.tier === 1);
+  const warmup = groupsForFamily("vowels");
   const clearedWarmup = warmup.filter((c) => c.items.every((w) => attemptedIds.has(`${c.key}:${w.kr}`)));
   const nextChapter = warmup.find((c) => !clearedWarmup.includes(c));
   const pronMet = warmup.length > 0 && clearedWarmup.length === warmup.length;
@@ -232,8 +233,8 @@ export async function getGuideProgress(
     stationId: "pron",
     met: pronMet,
     detail: pronMet
-      ? `${warmup.length} chapters · Warm-up`
-      : `${clearedWarmup.length} / ${warmup.length} chapters cleared · Warm-up`,
+      ? `${warmup.length} chapters · Vowels`
+      : `${clearedWarmup.length} / ${warmup.length} chapters cleared · Vowels`,
     doneAt: pronMet
       ? maxIso(clearedWarmup.flatMap((c) => c.items.map((w) => speakingAt.get(`${c.key}:${w.kr}`) ?? "")).filter(Boolean))
       : undefined,

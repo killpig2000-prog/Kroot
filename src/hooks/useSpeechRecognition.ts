@@ -24,6 +24,9 @@ type SpeechRecognitionLike = {
 };
 type SpeechRecognitionCtor = new () => SpeechRecognitionLike;
 
+/** How long the learner was actually speaking, first syllable to last. */
+export type SpeechTiming = { ms: number };
+
 function getCtor(): SpeechRecognitionCtor | null {
   if (typeof window === "undefined") return null;
   const w = window as unknown as {
@@ -40,7 +43,7 @@ export function useSpeechRecognition(lang = "ko-KR", maxDurationMs?: number) {
   const [interim, setInterim] = useState("");
   const [error, setError] = useState<string | null>(null);
   const recRef = useRef<SpeechRecognitionLike | null>(null);
-  const onFinalRef = useRef<((t: string) => void) | null>(null);
+  const onFinalRef = useRef<((t: string, meta: SpeechTiming) => void) | null>(null);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
@@ -56,7 +59,7 @@ export function useSpeechRecognition(lang = "ko-KR", maxDurationMs?: number) {
   }, []);
 
   const listen = useCallback(
-    (onFinal: (transcript: string) => void) => {
+    (onFinal: (transcript: string, meta: SpeechTiming) => void) => {
       const Ctor = getCtor();
       if (!Ctor) return; // isSupported already reflects this
 
@@ -79,7 +82,15 @@ export function useSpeechRecognition(lang = "ko-KR", maxDurationMs?: number) {
       // one so a short word still grades against *something* instead of
       // always coming back "nothing heard".
       let lastInterim = "";
+      // Speech time is measured from the first syllable the recognizer
+      // actually hears, not from the tap — otherwise a learner who takes a
+      // breath before starting is penalised for silence.
+      let firstResultAt: number | null = null;
+      let lastResultAt: number | null = null;
       rec.onresult = (e) => {
+        const now = performance.now();
+        if (firstResultAt === null) firstResultAt = now;
+        lastResultAt = now;
         let live = "";
         for (let i = e.resultIndex; i < e.results.length; i++) {
           const r = e.results[i];
@@ -103,7 +114,9 @@ export function useSpeechRecognition(lang = "ko-KR", maxDurationMs?: number) {
         setIsListening(false);
         setListenStartedAt(null);
         const heard = (finalText || lastInterim).trim();
-        if (heard) onFinalRef.current?.(heard);
+        const ms =
+          firstResultAt !== null && lastResultAt !== null ? Math.round(lastResultAt - firstResultAt) : 0;
+        if (heard) onFinalRef.current?.(heard, { ms });
         else setError((prev) => prev ?? "Nothing heard — try speaking a little louder.");
       };
 

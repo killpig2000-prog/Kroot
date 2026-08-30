@@ -9,6 +9,7 @@ export type SoundGroup = {
   title: string;
   /** English explanation of how to make the sound */
   tip: string;
+  /** Exactly six per chapter — a short, finishable round. */
   items: PronWord[];
 };
 
@@ -23,9 +24,7 @@ export const SOUND_GROUPS: SoundGroup[] = [
       { kr: "빨리", romanization: "ppalli", en: "quickly" },
       { kr: "일요일", romanization: "iryoil", en: "Sunday" },
       { kr: "노래", romanization: "norae", en: "song" },
-      { kr: "다리", romanization: "dari", en: "leg / bridge" },
       { kr: "물", romanization: "mul", en: "water" },
-      { kr: "여러분", romanization: "yeoreobun", en: "everyone" },
     ],
   },
   {
@@ -39,8 +38,6 @@ export const SOUND_GROUPS: SoundGroup[] = [
       { kr: "싸요", romanization: "ssayo", en: "it's cheap" },
       { kr: "짜요", romanization: "jjayo", en: "it's salty" },
       { kr: "꿈", romanization: "kkum", en: "dream" },
-      { kr: "뽀뽀", romanization: "ppoppo", en: "a peck / kiss" },
-      { kr: "쓰다", romanization: "sseuda", en: "to write / to be bitter" },
     ],
   },
   {
@@ -52,10 +49,8 @@ export const SOUND_GROUPS: SoundGroup[] = [
       { kr: "토마토", romanization: "tomato", en: "tomato" },
       { kr: "포도", romanization: "podo", en: "grapes" },
       { kr: "치즈", romanization: "chijeu", en: "cheese" },
-      { kr: "카페", romanization: "kape", en: "cafe" },
       { kr: "친구", romanization: "chingu", en: "friend" },
       { kr: "택시", romanization: "taeksi", en: "taxi" },
-      { kr: "피아노", romanization: "piano", en: "piano" },
     ],
   },
   {
@@ -69,8 +64,6 @@ export const SOUND_GROUPS: SoundGroup[] = [
       { kr: "개", romanization: "gae", en: "dog" },
       { kr: "캐다", romanization: "kaeda", en: "to dig up" },
       { kr: "깨", romanization: "kkae", en: "sesame" },
-      { kr: "굴", romanization: "gul", en: "oyster" },
-      { kr: "꿀", romanization: "kkul", en: "honey" },
     ],
   },
   {
@@ -84,8 +77,6 @@ export const SOUND_GROUPS: SoundGroup[] = [
       { kr: "도", romanization: "do", en: "also" },
       { kr: "토요일", romanization: "toyoil", en: "Saturday" },
       { kr: "또", romanization: "tto", en: "again" },
-      { kr: "다리", romanization: "dari", en: "leg" },
-      { kr: "따로", romanization: "ttaro", en: "separately" },
     ],
   },
   {
@@ -99,8 +90,6 @@ export const SOUND_GROUPS: SoundGroup[] = [
       { kr: "방", romanization: "bang", en: "room" },
       { kr: "팡", romanization: "pang", en: "pop (sound)" },
       { kr: "빵", romanization: "ppang", en: "bread" },
-      { kr: "비", romanization: "bi", en: "rain" },
-      { kr: "삐다", romanization: "ppida", en: "to sprain" },
     ],
   },
   {
@@ -114,8 +103,6 @@ export const SOUND_GROUPS: SoundGroup[] = [
       { kr: "쌀", romanization: "ssal", en: "uncooked rice" },
       { kr: "시", romanization: "si", en: "poem / o'clock" },
       { kr: "씨", romanization: "ssi", en: "seed / Mr., Ms." },
-      { kr: "손", romanization: "son", en: "hand" },
-      { kr: "쓴맛", romanization: "sseunmat", en: "bitter taste" },
     ],
   },
   {
@@ -124,13 +111,11 @@ export const SOUND_GROUPS: SoundGroup[] = [
     tip: "ㅓ is an open, unrounded 'uh' with a relaxed jaw. ㅗ is rounded — push your lips forward into a small circle like 'oh'. Mixing them turns 정말 into 종말.",
     items: [
       { kr: "머리", romanization: "meori", en: "head / hair" },
-      { kr: "모리", romanization: "mori", en: "(name) Mori" },
       { kr: "정말", romanization: "jeongmal", en: "really" },
       { kr: "동생", romanization: "dongsaeng", en: "younger sibling" },
       { kr: "서울", romanization: "seoul", en: "Seoul" },
       { kr: "거기", romanization: "geogi", en: "there" },
       { kr: "고기", romanization: "gogi", en: "meat" },
-      { kr: "설", romanization: "seol", en: "Lunar New Year" },
     ],
   },
   {
@@ -142,10 +127,8 @@ export const SOUND_GROUPS: SoundGroup[] = [
       { kr: "구름", romanization: "gureum", en: "cloud" },
       { kr: "음악", romanization: "eumak", en: "music" },
       { kr: "우유", romanization: "uyu", en: "milk" },
-      { kr: "슈퍼", romanization: "syupeo", en: "supermarket" },
       { kr: "느낌", romanization: "neukkim", en: "feeling" },
       { kr: "누나", romanization: "nuna", en: "older sister (of a male)" },
-      { kr: "즐겁다", romanization: "jeulgeopda", en: "to be enjoyable" },
     ],
   },
   {
@@ -159,8 +142,6 @@ export const SOUND_GROUPS: SoundGroup[] = [
       { kr: "네", romanization: "ne", en: "yes / your" },
       { kr: "새", romanization: "sae", en: "bird" },
       { kr: "세", romanization: "se", en: "three" },
-      { kr: "애기", romanization: "aegi", en: "baby (colloquial)" },
-      { kr: "에어컨", romanization: "eeokeon", en: "air conditioner" },
     ],
   },
   {
@@ -173,9 +154,7 @@ export const SOUND_GROUPS: SoundGroup[] = [
       { kr: "요리", romanization: "yori", en: "cooking" },
       { kr: "유리", romanization: "yuri", en: "glass" },
       { kr: "예약", romanization: "yeyak", en: "reservation" },
-      { kr: "얘기", romanization: "yaegi", en: "story, talk" },
       { kr: "겨울", romanization: "gyeoul", en: "winter" },
-      { kr: "병원", romanization: "byeongwon", en: "hospital" },
     ],
   },
   {
@@ -186,7 +165,6 @@ export const SOUND_GROUPS: SoundGroup[] = [
       { kr: "의사", romanization: "uisa", en: "doctor" },
       { kr: "의자", romanization: "uija", en: "chair" },
       { kr: "회의", romanization: "hoei", en: "meeting" },
-      { kr: "주의", romanization: "jui", en: "caution" },
       { kr: "나의 꿈", romanization: "na-e kkum", en: "my dream" },
       { kr: "민주주의", romanization: "minjujui", en: "democracy" },
       { kr: "의미", romanization: "uimi", en: "meaning" },
@@ -199,9 +177,7 @@ export const SOUND_GROUPS: SoundGroup[] = [
     items: [
       { kr: "밥", romanization: "bap", en: "rice / meal" },
       { kr: "책", romanization: "chaek", en: "book" },
-      { kr: "곧", romanization: "got", en: "soon" },
       { kr: "옷", romanization: "ot", en: "clothes" },
-      { kr: "학교", romanization: "hakgyo", en: "school" },
       { kr: "산", romanization: "san", en: "mountain" },
       { kr: "봄", romanization: "bom", en: "spring" },
       { kr: "강", romanization: "gang", en: "river" },
@@ -218,7 +194,6 @@ export const SOUND_GROUPS: SoundGroup[] = [
       { kr: "부엌", romanization: "bueok", en: "kitchen" },
       { kr: "잎", romanization: "ip", en: "leaf" },
       { kr: "밖", romanization: "bak", en: "outside" },
-      { kr: "히읗", romanization: "hieut", en: "the letter ㅎ" },
     ],
   },
   {
@@ -230,9 +205,7 @@ export const SOUND_GROUPS: SoundGroup[] = [
       { kr: "값이", romanization: "gapssi", en: "the price (subject)" },
       { kr: "앉다", romanization: "antta", en: "to sit" },
       { kr: "읽다", romanization: "iktta", en: "to read" },
-      { kr: "읽어요", romanization: "ilgeoyo", en: "(I) read" },
       { kr: "닭", romanization: "dak", en: "chicken" },
-      { kr: "삶", romanization: "sam", en: "life" },
       { kr: "없어요", romanization: "eopsseoyo", en: "there isn't any" },
     ],
   },
@@ -246,9 +219,7 @@ export const SOUND_GROUPS: SoundGroup[] = [
       { kr: "맛있어요", romanization: "masisseoyo", en: "it's delicious" },
       { kr: "책을", romanization: "chaegeul", en: "book (object)" },
       { kr: "발음", romanization: "bareum", en: "pronunciation" },
-      { kr: "옷이", romanization: "osi", en: "the clothes (subject)" },
       { kr: "집에", romanization: "jibe", en: "to/at home" },
-      { kr: "직업", romanization: "jigeop", en: "occupation" },
     ],
   },
   {
@@ -261,9 +232,7 @@ export const SOUND_GROUPS: SoundGroup[] = [
       { kr: "많이", romanization: "mani", en: "a lot" },
       { kr: "많고", romanization: "manko", en: "many, and…" },
       { kr: "싫어요", romanization: "sireoyo", en: "I don't like it" },
-      { kr: "놓다", romanization: "nota", en: "to put down" },
       { kr: "괜찮아요", romanization: "gwaenchanayo", en: "it's okay" },
-      { kr: "그렇지만", romanization: "geureochiman", en: "however" },
     ],
   },
   {
@@ -274,11 +243,9 @@ export const SOUND_GROUPS: SoundGroup[] = [
       { kr: "감사합니다", romanization: "gamsahamnida", en: "thank you" },
       { kr: "국물", romanization: "gungmul", en: "broth" },
       { kr: "십만", romanization: "simman", en: "one hundred thousand" },
-      { kr: "믿는", romanization: "minneun", en: "believing" },
       { kr: "작년", romanization: "jangnyeon", en: "last year" },
       { kr: "한국말", romanization: "hangungmal", en: "the Korean language" },
       { kr: "앞문", romanization: "ammun", en: "front door" },
-      { kr: "십년", romanization: "simnyeon", en: "ten years" },
     ],
   },
   {
@@ -292,7 +259,6 @@ export const SOUND_GROUPS: SoundGroup[] = [
       { kr: "설날", romanization: "seollal", en: "Lunar New Year's Day" },
       { kr: "일년", romanization: "illyeon", en: "one year" },
       { kr: "관리", romanization: "gwalli", en: "management" },
-      { kr: "난로", romanization: "nallo", en: "heater, stove" },
     ],
   },
   {
@@ -306,7 +272,6 @@ export const SOUND_GROUPS: SoundGroup[] = [
       { kr: "닫히다", romanization: "dachida", en: "to be closed" },
       { kr: "붙이다", romanization: "buchida", en: "to stick on" },
       { kr: "밭이", romanization: "bachi", en: "the field (subject)" },
-      { kr: "맏이", romanization: "maji", en: "the eldest child" },
     ],
   },
   {
@@ -318,9 +283,7 @@ export const SOUND_GROUPS: SoundGroup[] = [
       { kr: "식당", romanization: "sikttang", en: "restaurant" },
       { kr: "숟가락", romanization: "sutkkarak", en: "spoon" },
       { kr: "약국", romanization: "yakkuk", en: "pharmacy" },
-      { kr: "입국", romanization: "ipkkuk", en: "entering a country" },
       { kr: "젓가락", romanization: "jeotkkarak", en: "chopsticks" },
-      { kr: "듣기", romanization: "deutkki", en: "listening" },
       { kr: "잡지", romanization: "japjji", en: "magazine" },
     ],
   },
@@ -335,7 +298,6 @@ export const SOUND_GROUPS: SoundGroup[] = [
       { kr: "한여름", romanization: "hannyeoreum", en: "midsummer" },
       { kr: "꽃잎", romanization: "kkonnip", en: "flower petal" },
       { kr: "십육", romanization: "simnyuk", en: "sixteen" },
-      { kr: "그림 일기", romanization: "geurim nilgi", en: "picture diary" },
     ],
   },
   {
@@ -346,70 +308,9 @@ export const SOUND_GROUPS: SoundGroup[] = [
       { kr: "밥 먹었어요?", romanization: "bap meogeosseoyo?", en: "Did you eat? (rising)" },
       { kr: "밥 먹었어요.", romanization: "bap meogeosseoyo.", en: "I ate. (falling)" },
       { kr: "진짜요?", romanization: "jinjjayo?", en: "Really? (rising)" },
-      { kr: "아니요, 괜찮아요.", romanization: "aniyo, gwaenchanayo.", en: "No, it's fine." },
       { kr: "가자!", romanization: "gaja!", en: "Let's go!" },
       { kr: "어떻게 해요?", romanization: "eotteoke haeyo?", en: "What should we do?" },
       { kr: "그렇구나…", romanization: "geureokuna…", en: "Ah, I see. (trailing)" },
-    ],
-  },
-  {
-    key: "twister-ganjang",
-    title: "간장공장 공장장 — the soy sauce factory manager",
-    tip: "Every syllable ends in ㅇ or has a tense ㅈ/ㅊ — build it up piece by piece and don't let the endings blur into each other as it speeds up.",
-    items: [
-      { kr: "공장", romanization: "gongjang", en: "factory" },
-      { kr: "공장장", romanization: "gongjangjang", en: "factory manager" },
-      { kr: "간장공장", romanization: "ganjang gongjang", en: "soy sauce factory" },
-      { kr: "간장공장 공장장", romanization: "ganjang gongjang gongjangjang", en: "the soy sauce factory's manager" },
-      { kr: "강 공장장", romanization: "gang gongjangjang", en: "Manager Kang" },
-      { kr: "간장공장 공장장은 강 공장장이다", romanization: "ganjang gongjang gongjangjangeun gang gongjangjangida", en: "The soy sauce factory's manager is Manager Kang." },
-      { kr: "된장공장 공장장은 공 공장장이다", romanization: "doenjang gongjang gongjangjangeun gong gongjangjangida", en: "The soybean paste factory's manager is Manager Gong." },
-      { kr: "간장공장 공장장은 강 공장장이고 된장공장 공장장은 공 공장장이다", romanization: "ganjang gongjang gongjangjangeun gang gongjangjangigo doenjang gongjang gongjangjangeun gong gongjangjangida", en: "The soy sauce factory's manager is Manager Kang, and the soybean paste factory's manager is Manager Gong." },
-    ],
-  },
-  {
-    key: "twister-kongkkakji",
-    title: "콩깍지 — peeled or not?",
-    tip: "The tense ㄲ in 깍지 has to stay sharp every time it repeats — let it soften and 깐 (peeled) and 안 깐 (unpeeled) stop being distinguishable.",
-    items: [
-      { kr: "콩깍지", romanization: "kongkkakji", en: "bean pod" },
-      { kr: "깐 콩깍지", romanization: "kkan kongkkakji", en: "a peeled bean pod" },
-      { kr: "안 깐 콩깍지", romanization: "an kkan kongkkakji", en: "an unpeeled bean pod" },
-      { kr: "저 콩깍지", romanization: "jeo kongkkakji", en: "that bean pod" },
-      { kr: "저 콩깍지가 깐 콩깍지냐", romanization: "jeo kongkkakjiga kkan kongkkakjinya", en: "Is that bean pod a peeled one" },
-      { kr: "안 깐 콩깍지냐", romanization: "an kkan kongkkakjinya", en: "or an unpeeled one?" },
-      { kr: "콩깍지는 콩깍지인데", romanization: "kongkkakjineun kongkkakjinde", en: "it's a bean pod, all right, but —" },
-      { kr: "저기 있는 저 콩깍지가 깐 콩깍지인지 안 깐 콩깍지인지", romanization: "jeogi inneun jeo kongkkakjiga kkan kongkkakjinji an kkan kongkkakjinji", en: "whether that bean pod over there is a peeled one or an unpeeled one" },
-    ],
-  },
-  {
-    key: "twister-girin",
-    title: "기린 그림 — the giraffe drawing",
-    tip: "기린, 그린 and 그림 differ by one vowel each — the whole twister lives or dies on keeping ㅣ, ㅡ and ㅣ crisp while the tongue wants to average them out.",
-    items: [
-      { kr: "기린", romanization: "girin", en: "giraffe" },
-      { kr: "그린 기린", romanization: "geurin girin", en: "a drawn giraffe" },
-      { kr: "기린 그림", romanization: "girin geurim", en: "a giraffe drawing" },
-      { kr: "내가 그린 기린 그림", romanization: "naega geurin girin geurim", en: "the giraffe drawing I drew" },
-      { kr: "잘 그린 기린 그림", romanization: "jal geurin girin geurim", en: "a well-drawn giraffe drawing" },
-      { kr: "못 그린 기린 그림", romanization: "mot geurin girin geurim", en: "a poorly-drawn giraffe drawing" },
-      { kr: "내가 그린 기린 그림은 잘 그린 기린 그림이다", romanization: "naega geurin girin geurimeun jal geurin girin geurimida", en: "The giraffe drawing I drew is a well-drawn giraffe drawing." },
-      { kr: "네가 그린 기린 그림은 못 그린 기린 그림이다", romanization: "nega geurin girin geurimeun mot geurin girin geurimida", en: "The giraffe drawing you drew is a poorly-drawn giraffe drawing." },
-    ],
-  },
-  {
-    key: "twister-malttuk",
-    title: "말뚝 — tie the horse?",
-    tip: "말(horse) and 뚝 (a tense-ㄸ stake) collide over and over — 말 맬 말뚝 packs three near-identical syllables in a row that only the ending consonant tells apart.",
-    items: [
-      { kr: "말", romanization: "mal", en: "horse" },
-      { kr: "말뚝", romanization: "malttuk", en: "a stake, a post" },
-      { kr: "저 말뚝", romanization: "jeo malttuk", en: "that stake" },
-      { kr: "말 맬 말뚝", romanization: "mal mael malttuk", en: "a stake for tying a horse" },
-      { kr: "말 못 맬 말뚝", romanization: "mal mot mael malttuk", en: "a stake not for tying a horse" },
-      { kr: "저 말뚝이 말 맬 말뚝이냐", romanization: "jeo malttugi mal mael malttugin-ya", en: "Is that stake a stake for tying a horse," },
-      { kr: "말 못 맬 말뚝이냐", romanization: "mal mot mael malttugin-ya", en: "or a stake not for tying a horse?" },
-      { kr: "저 말뚝이 말 맬 말뚝이냐 말 못 맬 말뚝이냐", romanization: "jeo malttugi mal mael malttugin-ya mal mot mael malttugin-ya", en: "Is that stake a stake for tying a horse, or a stake not for tying a horse?" },
     ],
   },
 ];
@@ -418,52 +319,47 @@ export function groupByKey(key: string) {
   return SOUND_GROUPS.find((g) => g.key === key);
 }
 
-// Challenge tiers, easy to brutal — vowel contrasts and single consonant
-// families first, connected-speech rules (assimilation, insertion, melody)
-// last, since those only make sense once the basics are solid.
-export type ChallengeTier = 1 | 2 | 3 | 4 | 5 | 6;
+// Practice chapters are grouped by what part of the sound system they teach —
+// NOT by difficulty. There is no tier ladder and nothing is locked: a learner
+// picks whichever sound they want to work on. Ramping difficulty lives in
+// Challenge mode instead (see CHALLENGES below).
+export type SoundFamily = "vowels" | "consonants" | "endings" | "flow";
 
-export const GROUP_TIER: Record<string, ChallengeTier> = {
-  "eo-o": 1,
-  "eu-u": 1,
-  "ae-e": 1,
-  "y-vowels": 1,
-  batchim: 1,
-  tense: 2,
-  aspirated: 2,
-  "triplet-k": 2,
-  "triplet-t": 2,
-  "triplet-p": 2,
-  "triplet-s": 2,
-  "batchim-seven": 3,
-  "double-batchim": 3,
-  ui: 3,
-  rieul: 3,
-  linking: 4,
-  hieut: 4,
-  nasal: 4,
-  lateral: 4,
-  palatal: 5,
-  fortition: 5,
-  "n-insertion": 5,
-  intonation: 5,
-  "twister-ganjang": 6,
-  "twister-kongkkakji": 6,
-  "twister-girin": 6,
-  "twister-malttuk": 6,
-};
-
-export const TIER_META: { tier: ChallengeTier; name: string; emoji: string }[] = [
-  { tier: 1, name: "Warm-up", emoji: "🌱" },
-  { tier: 2, name: "Spicy", emoji: "🌶️" },
-  { tier: 3, name: "Hardcore", emoji: "🔥" },
-  { tier: 4, name: "Brutal", emoji: "💀" },
-  { tier: 5, name: "Legendary", emoji: "👑" },
-  { tier: 6, name: "Tongue Twisters", emoji: "🌪️" },
+export const FAMILY_META: { family: SoundFamily; name: string; tint: string }[] = [
+  { family: "vowels", name: "Vowels", tint: "#C9E3EC" },
+  { family: "consonants", name: "Consonants", tint: "#F6DFA4" },
+  { family: "endings", name: "Endings (받침)", tint: "#C6E6D2" },
+  { family: "flow", name: "Connected speech", tint: "#DDD6F0" },
 ];
 
-export function groupsForTier(tier: ChallengeTier): SoundGroup[] {
-  return SOUND_GROUPS.filter((g) => GROUP_TIER[g.key] === tier);
+export const GROUP_FAMILY: Record<string, SoundFamily> = {
+  "eo-o": "vowels",
+  "eu-u": "vowels",
+  "ae-e": "vowels",
+  "y-vowels": "vowels",
+  ui: "vowels",
+  rieul: "consonants",
+  tense: "consonants",
+  aspirated: "consonants",
+  "triplet-k": "consonants",
+  "triplet-t": "consonants",
+  "triplet-p": "consonants",
+  "triplet-s": "consonants",
+  batchim: "endings",
+  "batchim-seven": "endings",
+  "double-batchim": "endings",
+  linking: "flow",
+  hieut: "flow",
+  nasal: "flow",
+  lateral: "flow",
+  palatal: "flow",
+  fortition: "flow",
+  "n-insertion": "flow",
+  intonation: "flow",
+};
+
+export function groupsForFamily(family: SoundFamily): SoundGroup[] {
+  return SOUND_GROUPS.filter((g) => GROUP_FAMILY[g.key] === family);
 }
 
 // A friendlier name shown as the chapter's headline; the full linguistic
@@ -493,10 +389,6 @@ export const CHAPTER_BLURB: Record<string, string> = {
   fortition: "Sounds that toughen up",
   "n-insertion": "A surprise n",
   intonation: "Say it with feeling",
-  "twister-ganjang": "The soy sauce factory",
-  "twister-kongkkakji": "Peeled or not?",
-  "twister-girin": "The giraffe drawing",
-  "twister-malttuk": "Tie the horse?",
 };
 
 export function chapterBlurb(key: string): string {
@@ -504,14 +396,15 @@ export function chapterBlurb(key: string): string {
 }
 
 // A word counts as "nailed" once its best recorded score clears this bar —
-// used consistently for chapter-clear/unlock logic and for deciding which
-// words a returning learner can skip.
+// drives the per-word ✓ and the "skip, you've done this" shortcut. Clearing
+// a chapter only needs every word attempted, at any score.
 export const NAILED_THRESHOLD = 80;
+// …and a chapter earns its rainbow ring only when every word is perfect.
+export const PERFECT_SCORE = 100;
 
-export function chapterClearStats(nailedIds: Set<string>): { done: number; total: number } {
-  const chapters = orderedChapters();
-  const done = chapters.filter((c) => c.items.every((w) => nailedIds.has(`${c.key}:${w.kr}`))).length;
-  return { done, total: chapters.length };
+export function chapterClearStats(attemptedIds: Set<string>): { done: number; total: number } {
+  const done = SOUND_GROUPS.filter((c) => c.items.every((w) => attemptedIds.has(`${c.key}:${w.kr}`))).length;
+  return { done, total: SOUND_GROUPS.length };
 }
 
 export type ChallengeWord = PronWord & { id: string; groupTitle: string; tip: string };
@@ -520,25 +413,149 @@ export function allChallengeWordIds(): string[] {
   return SOUND_GROUPS.flatMap((g) => g.items.map((w) => `${g.key}:${w.kr}`));
 }
 
-// A chapter is one sound-rule group, played as a ~7-word round. Chapters are
-// globally ordered tier-by-tier (their `index` drives the unlock chain — a
-// chapter opens once the one before it in this list is fully cleared).
-export type Chapter = SoundGroup & { tier: ChallengeTier; index: number };
-
-export function orderedChapters(): Chapter[] {
-  const chapters: Chapter[] = [];
-  for (const { tier } of TIER_META) {
-    for (const g of groupsForTier(tier)) chapters.push({ ...g, tier, index: chapters.length });
-  }
-  return chapters;
-}
-
-export function chapterByKey(key: string): Chapter | undefined {
-  return orderedChapters().find((c) => c.key === key);
-}
-
 export function wordsForChapter(key: string): ChallengeWord[] {
   const g = groupByKey(key);
   if (!g) return [];
   return g.items.map((w) => ({ ...w, id: `${key}:${w.kr}`, groupTitle: g.title, tip: g.tip }));
+}
+
+// ---------------------------------------------------------------------------
+// Challenge mode — one hard line, said in one go, scored on accuracy and time.
+// ---------------------------------------------------------------------------
+
+export type ChallengeKind = "twister" | "brutal" | "speed" | "sentence";
+
+export const KIND_LABEL: Record<ChallengeKind, string> = {
+  twister: "Tongue twister",
+  brutal: "Brutal words",
+  speed: "Speed round",
+  sentence: "Long sentence",
+};
+
+export type Challenge = {
+  key: string;
+  kind: ChallengeKind;
+  /** English name shown as the card headline. */
+  title: string;
+  /** The line to say, in full. */
+  kr: string;
+  romanization: string;
+  /** 1–5 🔥, purely a difficulty signal on the card. */
+  heat: number;
+  /** Second star: best accuracy must reach this. */
+  targetAccuracy: number;
+  /** Third star: also finish within this many milliseconds of speaking. */
+  targetMs: number;
+  /** Unlock rule; omitted means open from the start. */
+  requires?:
+    | { type: "chapters"; family: SoundFamily; count: number }
+    | { type: "stars"; count: number };
+};
+
+export const CHALLENGES: Challenge[] = [
+  {
+    key: "twister-ganjang",
+    kind: "twister",
+    title: "The soy sauce factory",
+    kr: "간장공장 공장장은 강 공장장이다",
+    romanization: "ganjang gongjang gongjangjangeun gang gongjangjangida",
+    heat: 3,
+    targetAccuracy: 90,
+    targetMs: 5000,
+  },
+  {
+    key: "twister-kongkkakji",
+    kind: "twister",
+    title: "Peeled or not?",
+    kr: "저 콩깍지가 깐 콩깍지냐 안 깐 콩깍지냐",
+    romanization: "jeo kongkkakjiga kkan kongkkakjinya an kkan kongkkakjinya",
+    heat: 3,
+    targetAccuracy: 90,
+    targetMs: 5500,
+  },
+  {
+    key: "twister-girin",
+    kind: "twister",
+    title: "The giraffe drawing",
+    kr: "내가 그린 기린 그림은 잘 그린 기린 그림이다",
+    romanization: "naega geurin girin geurimeun jal geurin girin geurimida",
+    heat: 4,
+    targetAccuracy: 90,
+    targetMs: 5500,
+  },
+  {
+    key: "twister-malttuk",
+    kind: "twister",
+    title: "Tie the horse?",
+    kr: "저 말뚝이 말 맬 말뚝이냐 말 못 맬 말뚝이냐",
+    romanization: "jeo malttugi mal mael malttugin-ya mal mot mael malttugin-ya",
+    heat: 4,
+    targetAccuracy: 90,
+    targetMs: 6000,
+  },
+  {
+    key: "brutal-double",
+    kind: "brutal",
+    title: "Double endings",
+    kr: "닭 값 읊다 훑다 밟다",
+    romanization: "dak gap eupda hultta bapda",
+    heat: 2,
+    targetAccuracy: 88,
+    targetMs: 6000,
+  },
+  {
+    key: "speed-ten",
+    kind: "speed",
+    title: "Ten words, one breath",
+    kr: "커피 꽃 물 빵 딸기 우유 책 산 눈 밥",
+    romanization: "keopi kkot mul ppang ttalgi uyu chaek san nun bap",
+    heat: 2,
+    targetAccuracy: 88,
+    targetMs: 7000,
+  },
+  {
+    key: "sentence-cafe",
+    kind: "sentence",
+    title: "Ordering at the counter",
+    kr: "아이스 아메리카노 두 잔이랑 딸기 케이크 한 조각 주세요",
+    romanization: "aiseu amerikano du janirang ttalgi keikeu han jogak juseyo",
+    heat: 3,
+    targetAccuracy: 90,
+    targetMs: 7000,
+    requires: { type: "chapters", family: "flow", count: 2 },
+  },
+  {
+    key: "twister-chulchangsal",
+    kind: "twister",
+    title: "The police station",
+    kr: "경찰청 철창살은 외철창살이냐 쌍철창살이냐",
+    romanization: "gyeongchalcheong cheolchangsareun oecheolchangsarinya ssangcheolchangsarinya",
+    heat: 5,
+    targetAccuracy: 90,
+    targetMs: 6500,
+    requires: { type: "stars", count: 6 },
+  },
+];
+
+export function challengeByKey(key: string): Challenge | undefined {
+  return CHALLENGES.find((c) => c.key === key);
+}
+
+export type ChallengeResult = { accuracy: number; ms: number };
+
+/**
+ * Stars are earned on accuracy and speed only — retries are never counted,
+ * so a challenge can always be improved by running it again.
+ *   ★    finished it at all
+ *   ★★   best accuracy reached the target
+ *   ★★★  …and the best run also came in under the time limit
+ */
+export function starsFor(c: Challenge, best: ChallengeResult | null): 0 | 1 | 2 | 3 {
+  if (!best || best.accuracy <= 0) return 0;
+  if (best.accuracy < c.targetAccuracy) return 1;
+  return best.ms > 0 && best.ms <= c.targetMs ? 3 : 2;
+}
+
+export function totalStarsPossible(): number {
+  return CHALLENGES.length * 3;
 }

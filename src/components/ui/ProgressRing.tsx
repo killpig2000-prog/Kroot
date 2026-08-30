@@ -1,5 +1,5 @@
 // Shared conic-gradient score ring, previously hand-rolled separately in
-// PronunciationChallenge.tsx and PronunciationTrail.tsx.
+// PronunciationChallenge.tsx and the practice chapter grid.
 interface ProgressRingProps {
   value: number;
   color: string;

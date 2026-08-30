@@ -2,71 +2,107 @@ import { Link, redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import PronunciationChallenge from "@/components/pronunciation/PronunciationChallenge";
-import PronunciationTrail, { type ChapterProgress } from "@/components/pronunciation/PronunciationTrail";
+import PracticeGroups, { type ChapterProgress } from "@/components/pronunciation/PracticeGroups";
+import ChallengeList, { type ChallengeState } from "@/components/pronunciation/ChallengeList";
+import ChallengePlay from "@/components/pronunciation/ChallengePlay";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { isAdminEmail } from "@/lib/admin";
-import { orderedChapters, NAILED_THRESHOLD, TIER_META, type Chapter } from "@/lib/pronunciation";
+import { isTableMissing } from "@/lib/resume";
+import {
+  CHALLENGES,
+  GROUP_FAMILY,
+  PERFECT_SCORE,
+  SOUND_GROUPS,
+  challengeByKey,
+  groupByKey,
+  starsFor,
+  type ChallengeResult,
+} from "@/lib/pronunciation";
+
+const TAB = "inline-flex items-center gap-1.5 px-4 py-2 rounded-[9px] text-[13.5px] font-bold transition-colors";
 
 export default async function SpeakingPage({
   searchParams,
 }: {
-  searchParams: Promise<{ chapter?: string }>;
+  searchParams: Promise<{ chapter?: string; challenge?: string; tab?: string }>;
 }) {
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
 
   if (!user) redirect("/onboarding");
 
-  const [{ data: profile }, { data: progressRows }] = await Promise.all([
+  const [{ data: profile }, { data: progressRows }, challengeRes] = await Promise.all([
     supabase
       .from("profiles")
       .select("display_name, streak_days, avatar_url")
       .eq("id", user.id)
       .single(),
     supabase.from("speaking_progress").select("prompt_key, best_score").eq("user_id", user.id),
+    supabase
+      .from("challenge_progress")
+      .select("challenge_key, best_accuracy, best_ms")
+      .eq("user_id", user.id),
   ]);
 
   const bestScores: Record<string, number> = {};
   for (const r of progressRows ?? []) bestScores[r.prompt_key] = r.best_score;
-  const nailedIds = new Set(Object.keys(bestScores).filter((k) => bestScores[k] >= NAILED_THRESHOLD));
-  // A row exists the moment a word is attempted, whatever the score — used
-  // to gate progress, so a chapter clears (and the next tier can open) once
-  // every word has been tried, not once every word scores 80+. `nailedIds`
-  // (above) still drives the mastery count shown on each chapter's ring.
-  const attemptedIds = new Set(Object.keys(bestScores));
 
-  // Chapters unlock a whole tier at a time, not one another individually:
-  // every chapter within a tier is open (in any order) as soon as the tier
-  // itself is unlocked, and the next tier opens only once every chapter in
-  // this one is fully attempted.
-  const statsFor = (c: Chapter) => {
-    const total = c.items.length;
-    const nailed = c.items.filter((w) => nailedIds.has(`${c.key}:${w.kr}`)).length;
-    const attempted = c.items.filter((w) => attemptedIds.has(`${c.key}:${w.kr}`)).length;
-    return { total, nailed, cleared: total > 0 && attempted === total };
-  };
-
-  // The owner account gets every chapter open for testing/content review —
-  // everyone else still climbs the tiers normally.
-  const isAdmin = isAdminEmail(user.email);
-
-  const allChapters = orderedChapters();
-  const chapters: ChapterProgress[] = [];
-  let tierUnlocked = true;
-  for (const { tier } of TIER_META) {
-    const tierChapters = allChapters.filter((c) => c.tier === tier).map((c) => ({ c, ...statsFor(c) }));
-    const locked = !isAdmin && !tierUnlocked;
-    for (const s of tierChapters) chapters.push({ ...s.c, total: s.total, nailed: s.nailed, cleared: s.cleared, locked });
-    tierUnlocked = tierUnlocked && tierChapters.length > 0 && tierChapters.every((s) => s.cleared);
+  // Migration 0038 may not have reached this environment yet — with no table
+  // the challenge tab still works, it just shows no personal bests.
+  const challengeBest = new Map<string, ChallengeResult>();
+  if (!challengeRes.error || !isTableMissing(challengeRes.error)) {
+    for (const r of challengeRes.data ?? []) {
+      challengeBest.set(r.challenge_key, { accuracy: r.best_accuracy ?? 0, ms: r.best_ms ?? 0 });
+    }
   }
 
-  const current = chapters.find((c) => !c.locked && !c.cleared) ?? null;
-  const totalWords = chapters.reduce((n, c) => n + c.total, 0);
-  const totalCleared = chapters.filter((c) => c.cleared).length;
+  // Practice chapters: nothing locked, nothing ordered. "Done" is every word
+  // attempted; the rainbow ring needs every word at 100.
+  const chapters: ChapterProgress[] = SOUND_GROUPS.map((g) => {
+    const attempted = g.items.filter((w) => `${g.key}:${w.kr}` in bestScores).length;
+    const perfect = g.items.filter((w) => (bestScores[`${g.key}:${w.kr}`] ?? 0) >= PERFECT_SCORE).length;
+    return { ...g, total: g.items.length, attempted, perfect };
+  });
+  const chaptersDone = chapters.filter((c) => c.total > 0 && c.attempted === c.total);
+  const doneByFamily = (family: string) =>
+    chaptersDone.filter((c) => GROUP_FAMILY[c.key] === family).length;
+
+  const isAdmin = isAdminEmail(user.email);
+
+  // Challenges unlock off practice progress and stars earned; the owner
+  // account sees them all for testing.
+  const challengeStates: ChallengeState[] = CHALLENGES.map((c) => {
+    const best = challengeBest.get(c.key) ?? null;
+    const stars = starsFor(c, best);
+    return { challenge: c, best, stars };
+  }).map((s, _i, all) => {
+    const totalStars = all.reduce((n, x) => n + x.stars, 0);
+    const req = s.challenge.requires;
+    if (!req || isAdmin) return { ...s, locked: false };
+    if (req.type === "chapters") {
+      const have = doneByFamily(req.family);
+      return have >= req.count
+        ? { ...s, locked: false }
+        : { ...s, locked: true, lockNote: `Finish ${req.count} Connected-speech chapters (${have}/${req.count})` };
+    }
+    return totalStars >= req.count
+      ? { ...s, locked: false }
+      : { ...s, locked: true, lockNote: `Earn ${req.count} stars first (${totalStars}/${req.count})` };
+  });
 
   const sp = await searchParams;
-  const requested = sp.chapter ? chapters.find((c) => c.key === sp.chapter) : undefined;
-  const playable = requested && !requested.locked ? requested : undefined;
+  const openChapter = sp.chapter ? groupByKey(sp.chapter) : undefined;
+  const requestedChallenge = sp.challenge ? challengeByKey(sp.challenge) : undefined;
+  const openChallenge =
+    requestedChallenge && !challengeStates.find((s) => s.challenge.key === requestedChallenge.key)?.locked
+      ? requestedChallenge
+      : undefined;
+
+  const onChallengeTab = sp.tab === "challenge" || !!openChallenge;
+  const playing = !!openChapter || !!openChallenge;
+
+  const perfectCount = chapters.filter((c) => c.total > 0 && c.perfect === c.total).length;
+  const starsEarned = challengeStates.reduce((n, s) => n + s.stars, 0);
 
   return (
     <div className="min-h-screen bg-warm text-charcoal">
@@ -79,7 +115,6 @@ export default async function SpeakingPage({
         />
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] md:pb-[60px]">
-          {/* breadcrumb */}
           <div className="flex gap-2 text-[13px] text-faint mb-[18px]">
             <Link href="/dashboard" className="hover:text-charcoal transition-colors">
               Garden
@@ -88,31 +123,52 @@ export default async function SpeakingPage({
             <b className="text-charcoal font-semibold">Pronunciation</b>
           </div>
 
-          {/* head */}
           <div className="flex items-center justify-between gap-4 mb-[18px] flex-wrap">
             <h1 className="font-bold text-[22px] tracking-[-0.02em] flex items-center">
               <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[var(--tint-teal)] text-teal border border-[var(--tint-teal-line)] items-center justify-center kr text-[15px] mr-[9px]">
                 발
               </span>
               Pronunciation
-              <span className="ml-2.5 text-[12.5px] font-semibold text-teal bg-[var(--tint-teal)] border border-[var(--tint-teal-line)] rounded-full px-2.5 py-[2px] tracking-normal">
-                Trail
-              </span>
             </h1>
-            <span className="text-[13px] text-muted">
-              {playable ? "Can you say it?" : `${totalCleared}/${chapters.length} chapters · ${totalWords} words`}
+            <span className="text-[13px] text-muted tabular-nums">
+              {onChallengeTab
+                ? `${starsEarned} ★ earned`
+                : `${chaptersDone.length}/${chapters.length} chapters${perfectCount > 0 ? ` · ${perfectCount} perfect` : ""}`}
             </span>
           </div>
 
-          {playable ? (
+          {!playing && (
+            <div className="inline-flex bg-warm-2 border border-line rounded-[12px] p-1 gap-1 mb-6">
+              <Link href="/speaking" className={`${TAB} ${onChallengeTab ? "text-muted" : "bg-cream shadow-sm"}`}>
+                🎯 Practice
+              </Link>
+              <Link
+                href="/speaking?tab=challenge"
+                className={`${TAB} ${onChallengeTab ? "bg-cream shadow-sm text-[var(--c-danger)]" : "text-muted"}`}
+              >
+                🔥 Challenge
+              </Link>
+            </div>
+          )}
+
+          {openChallenge ? (
+            <ChallengePlay
+              key={openChallenge.key}
+              challenge={openChallenge}
+              userId={user.id}
+              initialBest={challengeBest.get(openChallenge.key) ?? null}
+            />
+          ) : openChapter ? (
             <PronunciationChallenge
-              key={playable.key}
-              chapterKey={playable.key}
+              key={openChapter.key}
+              chapterKey={openChapter.key}
               userId={user.id}
               initialBestScores={bestScores}
             />
+          ) : onChallengeTab ? (
+            <ChallengeList items={challengeStates} />
           ) : (
-            <PronunciationTrail chapters={chapters} currentKey={current?.key ?? null} />
+            <PracticeGroups chapters={chapters} />
           )}
         </main>
       </div>

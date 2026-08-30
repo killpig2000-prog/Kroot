@@ -1,9 +1,7 @@
 import { Link } from "@/i18n/navigation";
 import { buttonClassName } from "@/components/ui/Button";
 import { XP_POINTS, type ProgressResult } from "@/lib/activity";
-import { TIER_META, type Chapter, type ChallengeWord } from "@/lib/pronunciation";
-
-type TierMeta = (typeof TIER_META)[number];
+import { type ChallengeWord } from "@/lib/pronunciation";
 
 const TEAL = "#228980";
 const RAINBOW =
@@ -15,24 +13,23 @@ export default function FinishedCard({
   words,
   nailed,
   cleared,
+  perfect,
   bestStreak,
   levelUp,
   attempts,
   saveError,
-  meta,
-  nextChapter,
   onRunItBack,
 }: {
   words: ChallengeWord[];
   nailed: string[];
   /** Every word attempted at least once — doesn't require a passing score. */
   cleared: boolean;
+  /** Every word scored 100 — earns the rainbow ring. */
+  perfect: boolean;
   bestStreak: number;
   levelUp: ProgressResult | null;
   attempts: Record<string, { count: number; best: number }>;
   saveError: string | null;
-  meta: TierMeta;
-  nextChapter: Chapter | undefined;
   onRunItBack: () => void;
 }) {
   const weakWords = words
@@ -48,17 +45,17 @@ export default function FinishedCard({
       <div
         className="w-[104px] h-[104px] mx-auto mb-3 rounded-full flex items-center justify-center"
         style={{
-          background: cleared
+          background: perfect
             ? RAINBOW
             : `conic-gradient(${TEAL} ${(nailed.length / words.length) * 360}deg, #E3DDD0 0)`,
         }}
       >
         <div className="w-[84px] h-[84px] rounded-full bg-cream flex items-center justify-center text-[34px]">
-          {cleared ? "🎉" : meta.emoji}
+          {perfect ? "🌈" : cleared ? "🎉" : "🎤"}
         </div>
       </div>
       <h2 className="font-bold text-[21px] tracking-[-0.02em] mt-1 mb-1.5">
-        {cleared ? "Chapter cleared!" : "Round finished!"}
+        {perfect ? "Perfect chapter!" : cleared ? "Chapter cleared!" : "Round finished!"}
       </h2>
       <p className="text-sm text-muted mb-[22px]">
         {words.length} word{words.length > 1 ? "s" : ""} attempted — your mouth is learning the shapes.
@@ -112,14 +109,14 @@ export default function FinishedCard({
 
       <div className="flex justify-center gap-2.5 flex-wrap">
         <Link href="/speaking" className={BTN_TEAL}>
-          Back to the trail
+          Back to practice
         </Link>
         <button className={BTN_LINE} onClick={onRunItBack}>
           Run it back
         </button>
-        {cleared && nextChapter && (
-          <Link href={`/speaking?chapter=${nextChapter.key}`} className={BTN_LINE}>
-            Next: {TIER_META.find((t) => t.tier === nextChapter.tier)!.emoji} {nextChapter.title} →
+        {cleared && !perfect && (
+          <Link href="/speaking?tab=challenge" className={BTN_LINE}>
+            🔥 Try a challenge →
           </Link>
         )}
       </div>

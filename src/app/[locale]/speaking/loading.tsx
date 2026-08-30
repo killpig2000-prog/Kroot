@@ -1,5 +1,5 @@
 // Mirrors the real /speaking page (breadcrumb, icon header, and the
-// PronunciationTrail's vertical tier line with rows of wrapped stone cards)
+// tab switcher plus rows of wrapped chapter cards)
 // instead of a generic row list.
 export default function Loading() {
   return (

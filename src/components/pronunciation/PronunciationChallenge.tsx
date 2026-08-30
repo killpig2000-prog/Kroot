@@ -8,7 +8,7 @@ import { createClient } from "@/lib/supabase/client";
 import { recordCompletion, type ProgressResult } from "@/lib/activity";
 import { useKoreanSpeaker, useSpeechRecognition } from "@/hooks/useSpeechRecognition";
 import { bestSimilarity, verdictFor } from "@/lib/speech-match";
-import { wordsForChapter, orderedChapters, TIER_META, NAILED_THRESHOLD } from "@/lib/pronunciation";
+import { wordsForChapter, groupByKey, NAILED_THRESHOLD, PERFECT_SCORE } from "@/lib/pronunciation";
 import { playCorrect, playWrong, playStreak, playChapterClear } from "@/lib/sfx";
 import FinishedCard from "@/components/pronunciation/FinishedCard";
 import AnswerCapture from "@/components/pronunciation/AnswerCapture";
@@ -34,11 +34,8 @@ export default function PronunciationChallenge({
 }) {
   const router = useRouter();
   const supabase = useMemo(() => createClient(), []);
-  const chapters = useMemo(() => orderedChapters(), []);
-  const chapter = chapters.find((c) => c.key === chapterKey);
+  const chapter = groupByKey(chapterKey);
   const words = useMemo(() => wordsForChapter(chapterKey), [chapterKey]);
-  const meta = TIER_META.find((t) => t.tier === chapter?.tier)!;
-  const nextChapter = chapter ? chapters[chapter.index + 1] : undefined;
 
   const [index, setIndex] = useState(0);
   const [heard, setHeard] = useState<string | null>(null);
@@ -61,7 +58,7 @@ export default function PronunciationChallenge({
     skill: "pronunciation",
     href: `/speaking?chapter=${chapterKey}`,
     label: chapter?.title ?? chapterKey,
-    detail: `Pronunciation · ${meta?.name ?? "chapter"}`,
+    detail: "Pronunciation practice",
     progress: words.length ? Math.round((nailed.length / words.length) * 100) : 0,
   });
 
@@ -120,7 +117,7 @@ export default function PronunciationChallenge({
       <div className="max-w-[680px] border border-line rounded-[14px] px-7 py-10 text-center">
         <p className="text-[15px] font-semibold mb-1.5">Chapter not found</p>
         <Link href="/speaking" className={BTN_LINE}>
-          Back to the trail
+          Back to practice
         </Link>
       </div>
     );
@@ -182,11 +179,9 @@ export default function PronunciationChallenge({
 
   // A chapter clears once every word has been attempted at least once —
   // scoring 80+ on all of them earns the "nailed" checkmarks and stats, but
-  // isn't required to move on. Reaching the last word via next() already
-  // guarantees every word has a bestScores entry (grade() always records
-  // one, and skip() only appears for a word that already has one from a
-  // prior session), so this is really just naming that guarantee.
+  // isn't required to move on. Every word perfect earns the rainbow ring.
   const attemptedAll = words.every((w) => w.id in bestScores);
+  const allPerfect = words.every((w) => (bestScores[w.id] ?? 0) >= PERFECT_SCORE);
 
   function next() {
     if (index + 1 < words.length) {
@@ -205,12 +200,11 @@ export default function PronunciationChallenge({
         words={words}
         nailed={nailed}
         cleared={attemptedAll}
+        perfect={allPerfect}
         bestStreak={bestStreak}
         levelUp={levelUp}
         attempts={attempts}
         saveError={saveError}
-        meta={meta}
-        nextChapter={nextChapter}
         onRunItBack={() => {
           setIndex(0);
           setNailed([]);
@@ -230,7 +224,7 @@ export default function PronunciationChallenge({
         href="/speaking"
         className="inline-flex items-center gap-1 text-[12.5px] font-semibold text-faint hover:text-teal transition-colors mb-3"
       >
-        ← Trail
+        ← All chapters
       </Link>
       <div className="flex items-center justify-between mb-3 flex-wrap gap-2">
         <div className="flex gap-[7px] flex-wrap">
@@ -257,7 +251,7 @@ export default function PronunciationChallenge({
       >
         <div className="flex items-center justify-between mb-5 gap-2.5 flex-wrap">
           <span className="inline-flex items-center gap-1.5 text-[11.5px] font-semibold text-teal bg-[var(--tint-teal)] border border-[var(--tint-teal-line)] rounded-full px-2.5 py-[3px]">
-            {meta.emoji} {word.groupTitle}
+            {word.groupTitle}
           </span>
           <span className="text-[12.5px] text-faint font-medium">
             Word {index + 1} of {words.length}
