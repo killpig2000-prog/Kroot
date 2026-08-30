@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
@@ -5,6 +6,7 @@ import HangulExplorer from "@/components/hangul/HangulExplorer";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 
 export default async function HangulPage() {
+  const tn = await getTranslations("nav");
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
 
@@ -34,7 +36,7 @@ export default async function HangulPage() {
               <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-success-bg text-success border border-success-line items-center justify-center kr text-[15px] mr-[9px]">
                 ㄱ
               </span>
-              Hangul
+              {tn("hangul")}
             </h1>
           </div>
 

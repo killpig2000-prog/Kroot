@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
@@ -17,6 +18,7 @@ export const metadata = {
 // canonical per entry), so it renders signed-out too — just without the
 // app chrome and the XP-earning quiz.
 export default async function SlangPage() {
+  const tn = await getTranslations("nav");
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
 
@@ -45,7 +47,7 @@ export default async function SlangPage() {
           </Link>
         </header>
         <main className="mx-auto max-w-[980px] px-[clamp(18px,4vw,44px)] pb-16">
-          <h1 className="font-bold text-[26px] tracking-[-0.02em] mb-1">Korean slang</h1>
+          <h1 className="font-bold text-[26px] tracking-[-0.02em] mb-1">{tn("koreanSlang")}</h1>
           <p className="text-[14px] text-muted mb-6">
             The words textbooks skip — straight from K-dramas, K-pop, and group chats.
           </p>
@@ -90,7 +92,7 @@ export default async function SlangPage() {
               <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[var(--tint-pink)] text-[#C13E78] border border-[var(--tint-pink-line)] items-center justify-center kr text-[15px] mr-[9px]">
                 슬
               </span>
-              Slang
+              {tn("slang")}
             </h1>
             <span className="text-[13px] text-muted">
               The words textbooks skip — straight from K-dramas, K-pop, and group chats

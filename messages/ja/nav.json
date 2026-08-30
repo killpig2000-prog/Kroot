@@ -14,5 +14,15 @@
   "slang": "スラング",
   "shop": "ショップ",
   "popular": "人気",
-  "new": "新着"
+  "new": "新着",
+  "learn": "学ぶ",
+  "more": "その他",
+  "myAccount": "マイアカウント",
+  "myPage": "マイページ",
+  "myWords": "私の単語",
+  "gardenShop": "ガーデンショップ",
+  "koreanSlang": "韓国語のスラング",
+  "storyGrove": "ストーリーの森",
+  "dayStreak": "{n}日連続",
+  "freezesReady": "フリーズ {n} 個"
 }

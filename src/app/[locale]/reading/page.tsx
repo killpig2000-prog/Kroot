@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import LevelTabs from "@/components/ui/LevelTabs";
 import { Link, redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
@@ -52,6 +53,7 @@ export default async function ReadingMapPage({
 }: {
   searchParams: Promise<{ level?: string }>;
 }) {
+  const tn = await getTranslations("nav");
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
 
@@ -110,9 +112,9 @@ export default async function ReadingMapPage({
               <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[var(--tint-sky)] text-sky-deep border border-sky-line items-center justify-center kr text-[15px] mr-[9px]">
                 읽
               </span>
-              Reading
+              {tn("reading")}
               <span className="ml-2.5 text-[12.5px] font-semibold text-sky-deep bg-[var(--tint-sky)] border border-sky-line rounded-full px-2.5 py-[2px] tracking-normal">
-                Story Grove
+                {tn("storyGrove")}
               </span>
             </h1>
             <span className="text-[13px] text-muted">

@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { Link, redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
@@ -7,6 +8,7 @@ import { REVIEW_SESSION_SIZE } from "@/lib/srs";
 import { VOCAB_TOPICS, getWordsForTopic, type VocabWordWithProgress } from "@/lib/vocabulary";
 
 export default async function ReviewPage() {
+  const tn = await getTranslations("nav");
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
 
@@ -86,7 +88,7 @@ export default async function ReviewPage() {
               <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[var(--tint-sky)] text-sky-deep border border-sky-line items-center justify-center text-[15px] mr-[9px]">
                 💧
               </span>
-              Practice
+              {tn("practice")}
               <span className="ml-2 text-[13px] font-medium text-faint">review time</span>
             </h1>
             <span className="flex items-center gap-3 flex-wrap text-[13px] text-muted">

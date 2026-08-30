@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import LevelTabs from "@/components/ui/LevelTabs";
 import { Link, redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
@@ -14,6 +15,7 @@ export default async function GrammarPage({
   params: Promise<{ locale: string }>;
   searchParams: Promise<{ level?: string; group?: string }>;
 }) {
+  const tn = await getTranslations("nav");
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
 
@@ -63,7 +65,7 @@ export default async function GrammarPage({
               <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[var(--tint-indigo)] text-[var(--tint-indigo-ink)] border border-[var(--tint-indigo-line)] items-center justify-center kr text-[15px] mr-[9px]">
                 문
               </span>
-              Grammar
+              {tn("grammar")}
             </h1>
             <span className="text-[13px] text-muted">
               {GRAMMAR_LESSONS.length} lessons

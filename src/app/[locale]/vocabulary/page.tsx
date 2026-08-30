@@ -47,6 +47,7 @@ export default async function VocabularyPage({
 }) {
   const { locale } = await params;
   const t = await getTranslations("vocabulary");
+  const tn = await getTranslations("nav");
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
 
@@ -148,7 +149,7 @@ export default async function VocabularyPage({
                 <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[var(--tint-violet)] text-[#6B33CC] border border-[var(--tint-violet-line)] items-center justify-center kr text-[15px] mr-[9px]">
                   단
                 </span>
-                Vocabulary · {level}
+                {tn("vocabulary")} · {level}
               </h1>
               <p className="text-[13px] text-muted mt-1 tabular-nums">
                 {chapters.length} chapter{chapters.length === 1 ? "" : "s"} · {units.length} units

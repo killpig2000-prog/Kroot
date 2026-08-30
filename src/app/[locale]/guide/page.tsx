@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { Link, redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
@@ -117,6 +118,7 @@ function SectionHead({ title, note }: { title: string; note: string }) {
 }
 
 export default async function GuidePage() {
+  const tn = await getTranslations("nav");
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
 
@@ -167,7 +169,7 @@ export default async function GuidePage() {
               <span className="inline-flex w-8 h-8 rounded-[9px] bg-[var(--tint-sky)] text-sky-deep border border-sky-line items-center justify-center text-[16px] mr-2.5">
                 🧭
               </span>
-              Guide
+              {tn("guide")}
             </h1>
             <p className="text-[13.5px] text-muted max-w-[56ch]">
               Nothing in Kroot is locked by order. Pick whichever route matches why you&apos;re

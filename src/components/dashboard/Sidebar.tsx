@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useRouter, usePathname } from "@/i18n/navigation";
 import { rememberLocale } from "@/i18n/locale";
 import AccountMenu from "@/components/dashboard/AccountMenu";
@@ -36,6 +36,7 @@ function NavItem({
   popular?: boolean;
   isNew?: boolean;
 }) {
+  const tn = useTranslations("nav");
   // Active item reads like a notebook index tab: white paper, dashed edge,
   // open on the right so it "connects" to the page.
   const link = (
@@ -57,15 +58,15 @@ function NavItem({
       ) : (
         <span className="text-base">{icon}</span>
       )}
-      <span className="flex-1 min-w-0 truncate">{label}</span>
+      <span className="flex-1 min-w-0 truncate">{tn(label.toLowerCase())}</span>
       {popular && (
         <span className="flex-none text-[8.5px] font-extrabold tracking-[.02em] text-[#B14F27] bg-[#FDE9D0] rounded-full px-[5px] py-px">
-          Popular
+          {tn("popular")}
         </span>
       )}
       {isNew && !on && (
         <span className="flex-none text-[8.5px] font-extrabold tracking-[.04em] text-white bg-[#9333EA] rounded-full px-[5px] py-px">
-          NEW
+          {tn("new").toUpperCase()}
         </span>
       )}
     </Link>
@@ -152,6 +153,7 @@ function SidebarBody({
   locale,
   onClose,
 }: Props & { pathname: string; locale: string; onClose?: () => void }) {
+  const tn = useTranslations("nav");
   return (
     <>
       <div className="flex items-center px-2.5 pb-[18px]">
@@ -175,7 +177,7 @@ function SidebarBody({
       {SECTIONS.map((section) => (
         <div key={section.title} className="flex flex-col gap-1">
           <p className="text-[13px] font-black tracking-[.08em] uppercase text-success-deep px-3 pt-3.5 pb-1.5">
-            {section.title}
+            {tn(section.title.toLowerCase())}
           </p>
           <div className="flex flex-col gap-1.5">
             {section.items.map((item) => (
@@ -189,7 +191,7 @@ function SidebarBody({
         <div className="flex items-center gap-2.5 border border-[#ECD98A] bg-[#FEF9C3] px-[13px] py-[11px] mb-1.5 rotate-[-1deg] shadow-[0_8px_18px_-12px_rgba(120,100,30,.4)]">
           <span className="text-lg">🔥</span>
           <div>
-            <b className="block text-[13.5px] font-semibold leading-tight text-[#5C4A0E]">{streakDays}-day streak</b>
+            <b className="block text-[13.5px] font-semibold leading-tight text-[#5C4A0E]">{tn("dayStreak", { n: streakDays })}</b>
             {streakFreezes > 0 && (
               <small className="text-[11.5px] text-[#8A7420]">
                 🧊 {streakFreezes} freeze{streakFreezes === 1 ? "" : "s"} ready
@@ -208,6 +210,7 @@ function SidebarBody({
 export default function Sidebar(props: Props) {
   const pathname = usePathname();
   const locale = useLocale();
+  const tn = useTranslations("nav");
   const [open, setOpen] = useState(false);
 
   // Close the drawer when the route changes (tap on a nav item, browser
@@ -265,7 +268,7 @@ export default function Sidebar(props: Props) {
         <span className="flex-1" />
         <Link
           href="/profile"
-          aria-label={`${props.streakDays}-day streak`}
+          aria-label={tn("dayStreak", { n: props.streakDays })}
           className="flex items-center gap-1 h-8 px-2.5 rounded-full border border-[#ECD98A] bg-[#FEF9C3] text-[#5C4A0E] text-[12.5px] font-bold tabular-nums"
         >
           🔥 {props.streakDays}

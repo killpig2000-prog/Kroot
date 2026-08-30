@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
@@ -12,6 +13,7 @@ import { levelProgress, treeStageForLevel, MAX_LEVEL } from "@/lib/level";
 // and the promotion card all merged into the Garden (/dashboard); the league
 // rail has its own page. What remains is identity, Plus, and insights.
 export default async function ProfilePage() {
+  const tn = await getTranslations("nav");
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
 
@@ -59,7 +61,7 @@ export default async function ProfilePage() {
               <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-success-bg text-success border border-success-line items-center justify-center kr text-[15px] mr-[9px]">
                 나
               </span>
-              My account
+              {tn("myAccount")}
             </h1>
           </div>
 

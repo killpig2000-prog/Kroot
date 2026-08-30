@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { Link, redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
@@ -31,6 +32,7 @@ function fmtDue(iso: string | null, now: number): { text: string; due: boolean }
 }
 
 export default async function MyWordsPage() {
+  const tn = await getTranslations("nav");
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
   if (!user) redirect("/auth/login?next=/review/words");
@@ -104,7 +106,7 @@ export default async function MyWordsPage() {
               <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[var(--tint-sky)] text-sky-deep border border-sky-line items-center justify-center text-[15px] mr-[9px]">
                 📚
               </span>
-              My words
+              {tn("myWords")}
             </h1>
             <span className="text-[13px] text-muted">
               Tap any Korean word in a lesson to plant it here.

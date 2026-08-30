@@ -14,5 +14,15 @@
   "slang": "Jerga",
   "shop": "Tienda",
   "popular": "Popular",
-  "new": "Nuevo"
+  "new": "Nuevo",
+  "learn": "Aprender",
+  "more": "Más",
+  "myAccount": "Mi cuenta",
+  "myPage": "Mi página",
+  "myWords": "Mis palabras",
+  "gardenShop": "Tienda del jardín",
+  "koreanSlang": "Jerga coreana",
+  "storyGrove": "Bosque de historias",
+  "dayStreak": "Racha de {n} días",
+  "freezesReady": "{n} congelaciones listas"
 }

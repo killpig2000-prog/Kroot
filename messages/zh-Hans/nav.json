@@ -14,5 +14,15 @@
   "slang": "俚语",
   "shop": "商店",
   "popular": "热门",
-  "new": "新"
+  "new": "新",
+  "learn": "学习",
+  "more": "更多",
+  "myAccount": "我的账户",
+  "myPage": "我的页面",
+  "myWords": "我的单词",
+  "gardenShop": "花园商店",
+  "koreanSlang": "韩语俚语",
+  "storyGrove": "故事林",
+  "dayStreak": "连续 {n} 天",
+  "freezesReady": "{n} 个冻结可用"
 }

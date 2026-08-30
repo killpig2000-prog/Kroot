@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { MAIN_ITEMS, SECTIONS, type NavColor, type NavItem } from "@/components/dashboard/navItems";
@@ -13,10 +14,14 @@ import { MAIN_ITEMS, SECTIONS, type NavColor, type NavItem } from "@/components/
 // carries a due-count badge, which is the cheapest retention nudge we have.
 type Sheet = "learn" | "more" | null;
 
+// nav.json keys: single-word labels lowercase 1:1 ("Garden" → garden);
+// multi-word ones are stored as the key itself ("My account" → myAccount).
+const navKey = (label: string) => (label === "My account" ? "myAccount" : /[A-Z]/.test(label.slice(1)) ? label : label.toLowerCase());
+
 const ACCOUNT_ITEM: NavItem = { icon: "👤", label: "My account", href: "/profile" };
 const LEARN_SECTIONS = SECTIONS.filter((s) => s.title === "Basics" || s.title === "Practice");
 const MORE_SECTIONS = [
-  { title: "My page", items: [...MAIN_ITEMS, ACCOUNT_ITEM] },
+  { title: "myPage", items: [...MAIN_ITEMS, ACCOUNT_ITEM] },
   ...SECTIONS.filter((s) => s.title !== "Basics" && s.title !== "Practice"),
 ];
 const LEARN_PATHS = LEARN_SECTIONS.flatMap((s) => s.items.map((i) => i.href));
@@ -41,6 +46,7 @@ function Tile({
   popular?: boolean;
   isNew?: boolean;
 }) {
+  const tn = useTranslations("nav");
   const tile = (
     <Link
       href={href}
@@ -69,7 +75,7 @@ function Tile({
       ) : (
         <span className="text-[17px]">{icon}</span>
       )}
-      <span className="leading-tight">{label}</span>
+      <span className="leading-tight">{tn(navKey(label))}</span>
     </Link>
   );
 
@@ -176,6 +182,7 @@ export default function BottomNav() {
     };
   }, [sheet]);
 
+  const tn = useTranslations("nav");
   const close = () => setSheet(null);
   const toggle = (s: Exclude<Sheet, null>) => setSheet((cur) => (cur === s ? null : s));
   const sections = sheet === "learn" ? LEARN_SECTIONS : sheet === "more" ? MORE_SECTIONS : [];
@@ -199,7 +206,7 @@ export default function BottomNav() {
         {sheet && (
           <div
             role="dialog"
-            aria-label={sheet === "learn" ? "Learn" : "More"}
+            aria-label={sheet === "learn" ? tn("learn") : tn("more")}
             className="sheet-up bg-warm border-t-[1.5px] border-dashed border-dash rounded-t-[22px] px-4 pt-2.5 pb-4 max-h-[70vh] overflow-y-auto"
           >
             <div className="w-10 h-1 rounded-full bg-dash mx-auto mb-1" aria-hidden="true" />
@@ -207,7 +214,7 @@ export default function BottomNav() {
             {sections.map((section) => (
               <div key={section.title}>
                 <p className="text-[13px] font-black tracking-[.08em] uppercase text-success-deep px-0.5 pt-3 pb-1.5">
-                  {section.title}
+                  {tn(navKey(section.title))}
                 </p>
                 <div className="grid grid-cols-3 gap-2">
                   {section.items.map((item) => (
@@ -226,7 +233,7 @@ export default function BottomNav() {
               <div className="flex items-center gap-2.5 border border-[#ECD98A] bg-[#FEF9C3] px-[13px] py-[10px] mt-4 rotate-[-1deg] shadow-[0_8px_18px_-12px_rgba(120,100,30,.4)]">
                 <span className="text-lg">🔥</span>
                 <div>
-                  <b className="block text-[13px] font-semibold leading-tight text-[#5C4A0E]">{streakDays}-day streak</b>
+                  <b className="block text-[13px] font-semibold leading-tight text-[#5C4A0E]">{tn("dayStreak", { n: streakDays })}</b>
                 </div>
               </div>
             )}
@@ -247,9 +254,9 @@ export default function BottomNav() {
             <span className="text-[21px] leading-none" style={onGarden ? {} : { filter: "grayscale(1)", opacity: 0.55 }}>
               🏡
             </span>
-            Garden
+            {tn("garden")}
           </Link>
-          <TabButton icon="📚" label="Learn" on={onLearn} expanded={sheet === "learn"} onClick={() => toggle("learn")} />
+          <TabButton icon="📚" label={tn("learn")} on={onLearn} expanded={sheet === "learn"} onClick={() => toggle("learn")} />
           <Link
             href="/review"
             onClick={close}
@@ -260,14 +267,14 @@ export default function BottomNav() {
             <span className="text-[21px] leading-none" style={onReview ? {} : { filter: "grayscale(1)", opacity: 0.55 }}>
               💧
             </span>
-            Practice
+            {tn("practice")}
             {due > 0 && (
               <span className="absolute top-1 left-[calc(50%+6px)] min-w-[18px] h-[18px] px-1 rounded-full bg-[#DC2626] text-white text-[10.5px] font-bold leading-[18px] text-center tabular-nums">
                 {due > 99 ? "99+" : due}
               </span>
             )}
           </Link>
-          <TabButton icon="🌿" label="More" on={onMore} expanded={sheet === "more"} onClick={() => toggle("more")} />
+          <TabButton icon="🌿" label={tn("more")} on={onMore} expanded={sheet === "more"} onClick={() => toggle("more")} />
         </nav>
       </div>
     </>

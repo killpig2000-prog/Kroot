@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { Link, redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
@@ -9,6 +10,7 @@ import { levelFromXp, treeStageForLevel } from "@/lib/level";
 import { isPlus } from "@/lib/plus";
 
 export default async function ShopPage() {
+  const tn = await getTranslations("nav");
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
 
@@ -74,7 +76,7 @@ export default async function ShopPage() {
               <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-success-bg text-success border border-success-line items-center justify-center kr text-[15px] mr-[9px]">
                 정
               </span>
-              Garden Shop
+              {tn("gardenShop")}
             </h1>
             <div className="flex items-center gap-2">
               <span className="text-[12.5px] font-semibold text-success bg-success-bg border border-success-line rounded-full px-3 py-1">
