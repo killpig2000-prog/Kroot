@@ -2,7 +2,7 @@ import { Link } from "@/i18n/navigation";
 
 // Where each quest skill sends the learner. Completion is NOT done here —
 // finishing the actual activity marks the quest via recordCompletion().
-const SKILL_HREF: Record<string, string> = {
+export const SKILL_HREF: Record<string, string> = {
   listening: "/listening",
   reading: "/reading",
   writing: "/writing",
