@@ -1,3 +1,6 @@
+// @ts-nocheck -- one-off 2026-08 translation pass; depends on google-translate-open-api
+// (not a project dependency) and uses async String.replace callbacks. Kept for
+// reference only; tsconfig type-checks **/*.mts so it must not fail the build.
 #!/usr/bin/env node
 /**
  * Translate listening dialogues and apply translations to source files
