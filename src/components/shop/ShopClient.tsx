@@ -286,8 +286,8 @@ export default function ShopClient({
           )}
 
           {/* right-edge fade hints that the category row scrolls sideways */}
-          <div className="relative mb-3 after:content-[''] after:pointer-events-none after:absolute after:top-0 after:bottom-1.5 after:right-0 after:w-8 after:bg-gradient-to-l after:from-white after:to-transparent">
-          <div className="flex gap-1.5 overflow-x-auto pb-1.5 -mx-1 px-1 pr-8 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" role="tablist" aria-label="Item categories">
+          <div className="relative mb-3 after:content-[''] after:pointer-events-none after:absolute after:top-0 after:bottom-1.5 after:right-0 after:w-12 after:bg-gradient-to-l after:from-white after:to-transparent">
+          <div className="flex gap-1.5 overflow-x-auto pb-1.5 -mx-1 px-1 pr-12 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" role="tablist" aria-label="Item categories">
             {TABS.map((slot) => {
               const on = slot === tab;
               const isNew = GARDEN_SLOTS.includes(slot);
