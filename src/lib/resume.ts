@@ -5,6 +5,15 @@ export function isTableMissing(error: { code?: string } | null | undefined): boo
   return error?.code === "42P01" || error?.code === "PGRST205";
 }
 
+/**
+ * 42703 (Postgres) / PGRST204 (PostgREST schema cache): column not created
+ * yet. Lets a write carry a newly-added optional field and retry without it
+ * when the migration hasn't run on this environment.
+ */
+export function isColumnMissing(error: { code?: string } | null | undefined): boolean {
+  return error?.code === "42703" || error?.code === "PGRST204";
+}
+
 // "Continue where you left off": each session screen records the unit the
 // learner is in (one row per user, latest wins) so the dashboard can show a
 // single big CTA instead of making them re-navigate.

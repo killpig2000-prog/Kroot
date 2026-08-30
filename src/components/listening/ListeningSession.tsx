@@ -7,6 +7,7 @@ import { type Dialogue } from "@/lib/listening-dialogues";
 import type { Situation } from "@/lib/listening";
 import type { CefrLevel } from "@/lib/tree";
 import { loadAwardedRatio, saveAwardedRatio, clearAwardedRatio } from "@/lib/listening-resume";
+import { isColumnMissing } from "@/lib/resume";
 import ClipPlayer from "@/components/listening/ClipPlayer";
 import ClipDone from "@/components/listening/ClipDone";
 import FinishedAllCard from "@/components/listening/FinishedAllCard";
@@ -60,10 +61,15 @@ export default function ListeningSession({
       data: { user },
     } = await supabase.auth.getUser();
     if (user) {
-      await supabase.from("listening_progress").upsert(
-        { user_id: user.id, dialogue_id: dialogue.id, completed_at: new Date().toISOString() },
-        { onConflict: "user_id,dialogue_id" }
-      );
+      // quiz_correct arrived in migration 0037; save the completion without
+      // it when that migration hasn't reached this environment yet.
+      const row = { user_id: user.id, dialogue_id: dialogue.id, completed_at: new Date().toISOString() };
+      const { error } = await supabase
+        .from("listening_progress")
+        .upsert({ ...row, quiz_correct: correct }, { onConflict: "user_id,dialogue_id" });
+      if (error && isColumnMissing(error)) {
+        await supabase.from("listening_progress").upsert(row, { onConflict: "user_id,dialogue_id" });
+      }
       const res = await recordCompletion(supabase, "listening", 3, awardedRatio);
       if (res?.leveled_up) setNewLevel(res.new_level);
     }
