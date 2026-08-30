@@ -54,12 +54,12 @@ export default async function SkillAccuracy({
                 {g?.kr}
               </span>
 
-              <span className="min-w-0 w-[128px] flex-none">
+              <span className="min-w-0 flex-1 sm:flex-none sm:w-[128px]">
                 <b className="font-semibold text-[13px] block truncate">{tn(s.key)}</b>
                 <small className="block text-[11.5px] text-faint truncate tabular-nums">{s.progress}</small>
               </span>
 
-              <span className="flex-1 min-w-[40px] h-[6px] rounded-full bg-chart-dim overflow-hidden">
+              <span className="hidden sm:block flex-1 min-w-[40px] h-[6px] rounded-full bg-chart-dim overflow-hidden">
                 <i
                   className="not-italic block h-full rounded-full bg-chart"
                   style={{ width: `${Math.max(s.percent, 2)}%` }}
@@ -72,7 +72,7 @@ export default async function SkillAccuracy({
                 </span>
               )}
 
-              <span className="flex-none text-right w-[92px]">
+              <span className="flex-none text-right min-w-[64px] sm:w-[92px]">
                 <b className="block font-bold text-[15px] leading-tight tabular-nums">{s.percent}%</b>
                 <small className="block text-[11px] text-faint tabular-nums truncate">{s.basis}</small>
               </span>
