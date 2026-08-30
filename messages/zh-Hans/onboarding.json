@@ -1,17 +1,128 @@
 {
-  "welcome": "按自己的节奏学习韩语",
-  "subtitle": "加入数千名使用Kroot学习韩语的用户 — 这个应用适应您的学习需求。",
-  "startFree": "免费开始学习",
-  "alreadySignedUp": "已注册？",
-  "signIn": "登录",
-  "email": "电子邮件",
-  "password": "密码",
-  "name": "全名",
-  "nativeLanguage": "母语",
-  "signUp": "注册",
-  "agreeToTerms": "我同意服务条款和隐私政策",
-  "forgotPassword": "忘记密码？",
-  "resetPassword": "重置密码",
-  "sendResetLink": "发送重置链接",
-  "checkEmail": "请检查您的电子邮件以获取重置链接"
+  "steps": {
+    "hangul": "韩文",
+    "goal": "目标",
+    "test": "测试",
+    "level": "级别",
+    "account": "账户"
+  },
+  "gate": {
+    "eyebrow": "在我们开始之前",
+    "title": "你能读懂这个吗？",
+    "sub": "没有压力 — 这只是为您选择合适的第一步。",
+    "yesTitle": "是的，我能读",
+    "yesHint": "参加3分钟的水平测试",
+    "noTitle": "还没有",
+    "noHint": "从韩文开始 — 无需测试",
+    "foot": "免费 · 无需帐户即可了解您的水平"
+  },
+  "goal": {
+    "title": "是什么让您学习韩语？",
+    "sub": "我们会根据您的需求塑造您的第一堂课。",
+    "skip": "跳过",
+    "startTest": "开始测试 →",
+    "seePlan": "查看我的计划 →"
+  },
+  "goals": {
+    "drama": { "label": "K-剧和综艺", "hint": "优先听力" },
+    "kpop": { "label": "K-pop歌词", "hint": "优先词汇" },
+    "travel": { "label": "去韩国旅游", "hint": "生存短语" },
+    "work": { "label": "工作或学习", "hint": "优先语法" },
+    "family": { "label": "家人或伴侣", "hint": "日常交谈" },
+    "curious": { "label": "只是好奇", "hint": "平衡组合" }
+  },
+  "quiz": {
+    "question": "问题 {n}",
+    "stopsEarly": "一旦您的水平明确后就会提前停止",
+    "play": "🔊 播放声音",
+    "audioFailed": "音频未播放。",
+    "cantHear": "听不到？",
+    "showText": "显示文本",
+    "or": "· 或",
+    "swap": "交换这个问题",
+    "noPenalty": "（无惩罚）",
+    "dontKnow": "🤷 我还不知道",
+    "notNow": "现在不行 — 从A1开始"
+  },
+  "types": {
+    "Words": "词汇",
+    "Grammar": "语法",
+    "Listening": "听力"
+  },
+  "skills": {
+    "hangul": "韩文",
+    "grammar": "语法",
+    "words": "词汇",
+    "listening": "听力",
+    "minutes": "{n}分钟"
+  },
+  "levels": {
+    "A1": "您在第一页 — 最舒适的开始地点！我们将从韩文、问候语和小的生存短语开始。",
+    "A2": "您知道基础知识！简单的日常聊天是您的。接下来，我们将增长更长的句子和日常用词。",
+    "B1": "坚实的根！您可以进行日常对话。现在是连接词、细微差别和真实生活听力。",
+    "B2": "哇 — 您自信地处理大多数情况！现在是时候打磨自然表达和更快的听力。",
+    "C1": "高枝！您能流利地讨论许多话题。让我们改进习语和正式韩语。",
+    "C2": "一棵强大的树！接近本地精通。我们将通过新鲜媒体、俚语和专业级韩语保持您的敏锐。"
+  },
+  "result": {
+    "titleHangul": "让我们从韩文开始",
+    "title": "您的种子已种下",
+    "subHangul": "大约两课后，您就能读韩文了。之后，其他所有内容都会开放。",
+    "sub": "这是您的韩语开始的地方。",
+    "yourLevel": "您的水平",
+    "stoppedAt": "我们停在{level} — 那是您的下一个目标。",
+    "firstThree": "您的前三课",
+    "goalLine": {
+      "listening": "{icon} {label} — 所以我们从听力开始。",
+      "words": "{icon} {label} — 所以我们从词汇开始。",
+      "grammar": "{icon} {label} — 所以我们从语法开始。"
+    },
+    "goalLineHangul": {
+      "listening": "{icon} {label} — 听力在韩文之后立即进行。",
+      "words": "{icon} {label} — 词汇在韩文之后立即进行。",
+      "grammar": "{icon} {label} — 语法在韩文之后立即进行。"
+    },
+    "saving": "正在保存您的水平…",
+    "startLesson": "开始第1课",
+    "saveAndStart": "保存我的水平并开始第1课",
+    "upNext": "接下来: {label}",
+    "takes": "需要20秒 · 永远免费，无需卡"
+  },
+  "signup": {
+    "title": "保留您的位置",
+    "sub": "保存您的水平，这样您的树就会记住您。",
+    "hangulFirst": "韩文第一，然后是A1",
+    "levelLessons": "{level}课程",
+    "ready": "准备好在您进入时立即开始",
+    "google": "使用Google继续",
+    "orEmail": "或使用电子邮件",
+    "email": "电子邮件",
+    "nameLabel": "我们应该怎样称呼您？",
+    "namePlaceholder": "玛丽亚",
+    "agree": "I agree to the <link>服务条款和隐私政策</link>.",
+    "sending": "正在发送…",
+    "sendLink": "发送登录链接",
+    "noPassword": "没有密码要记住。已经在这里成长了吗？",
+    "login": "登录"
+  },
+  "confirm": {
+    "title": "检查您的收件箱",
+    "sub": "我们发送了一个链接到<b>{email}</b>。点击它，第1课等着您。",
+    "upNext": "接下来，您进入时的时刻",
+    "gmail": "打开Gmail",
+    "outlook": "打开Outlook",
+    "sentAgain": "再次发送 — 请稍候。",
+    "nothingYet": "还没有什么？",
+    "resend": "重新发送",
+    "changeEmail": "使用不同的电子邮件"
+  },
+  "saving": {
+    "title": "正在种植您的种子…",
+    "sub": "保存{level}并打开您的第一课。",
+    "moment": "稍等一下。"
+  },
+  "errors": {
+    "authFailed": "该登录链接失败或已过期。请重试。",
+    "rateLimit": "我们现在发送了太多电子邮件 — 请稍候几分钟后重试，或使用Google继续。"
+  }
 }
