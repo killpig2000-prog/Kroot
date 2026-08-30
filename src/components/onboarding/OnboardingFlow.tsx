@@ -95,6 +95,9 @@ export default function OnboardingFlow({ lessons }: { lessons: FirstLessonsMap }
     params.error === "auth" ? t("errors.authFailed") : params.error ? decodeURIComponent(params.error) : null
   );
   const saving = useRef(false);
+  // When the currently-shown question first appeared — lets placement_question
+  // report how long each question took, without needing extra state/rerenders.
+  const questionShownAt = useRef(Date.now());
 
   // A tick-down after every magic-link send — stops accidental double-taps
   // from burning into the mailer's hourly rate limit (see errors.rateLimit).
@@ -177,6 +180,7 @@ export default function OnboardingFlow({ lessons }: { lessons: FirstLessonsMap }
     if (goal) track("placement_gate", { goal });
     if (canRead) {
       setRun(startRun(buildTest()));
+      questionShownAt.current = Date.now();
       track("level_test_started", { kind: "placement" });
       setStep("quiz");
     } else {
@@ -200,9 +204,16 @@ export default function OnboardingFlow({ lessons }: { lessons: FirstLessonsMap }
   function answer(choice: number) {
     const q = run.paper[run.index];
     const next = answerRun(run, choice);
-    track("placement_question", { band: q.lv, type: q.type, right: choice === q.ans, unknown: choice === -1 });
+    const ms = Date.now() - questionShownAt.current;
+    track("placement_question", { band: q.lv, type: q.type, right: choice === q.ans, unknown: choice === -1, ms });
+    questionShownAt.current = Date.now();
     setRun(next);
     if (next.done) showResult(placementFromRun(next, goal));
+  }
+
+  function replaceQuestion() {
+    setRun(replaceCurrent(run));
+    questionShownAt.current = Date.now();
   }
 
   function skipToA1() {
@@ -304,7 +315,7 @@ export default function OnboardingFlow({ lessons }: { lessons: FirstLessonsMap }
           {step === "gate" && <GateCard onAnswer={gate} />}
           {step === "goal" && <GoalCard canRead={!!canRead} goal={goal} onPick={setGoal} onContinue={afterGoal} />}
           {step === "quiz" && (
-            <PlacementQuiz run={run} onAnswer={answer} onReplace={() => setRun(replaceCurrent(run))} onSkipAll={skipToA1} />
+            <PlacementQuiz run={run} onAnswer={answer} onReplace={replaceQuestion} onSkipAll={skipToA1} />
           )}
           {step === "result" && placement && (
             <PlacementResult
