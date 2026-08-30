@@ -1,15 +1,22 @@
-// GitHub-style contribution grass for the current calendar year
-// (Jan 1 – Dec 31). Server component: pure markup from daily_activity data.
+// Twelve small month calendars for the current year (Jan 1 – Dec 31),
+// replacing the old 53-week horizontal grass strip. Each month is a fixed
+// 6x7 grid (Mon-start) so every block is the same height regardless of how
+// many weeks the month actually spans — the whole year fits on one screen,
+// phone included, with no horizontal scroll.
+// Server component: pure markup from daily_activity data.
 
-const CELL_COLORS = ["#F0EFED", "#BBF7D0", "#6BBF8A", "#3E7C59", "#2E5B41"];
+const CELL_COLORS = ["bg-[#F0EFED]", "bg-[#BBF7D0]", "bg-[#6BBF8A]", "bg-[#3E7C59]", "bg-[#2E5B41]"];
+const LEGEND_COLORS = ["#F0EFED", "#BBF7D0", "#6BBF8A", "#3E7C59", "#2E5B41"];
 
-function shade(minutes: number): string {
-  if (minutes <= 0) return CELL_COLORS[0];
-  if (minutes < 10) return CELL_COLORS[1];
-  if (minutes < 20) return CELL_COLORS[2];
-  if (minutes < 40) return CELL_COLORS[3];
-  return CELL_COLORS[4];
+function level(minutes: number): number {
+  if (minutes <= 0) return 0;
+  if (minutes < 10) return 1;
+  if (minutes < 20) return 2;
+  if (minutes < 40) return 3;
+  return 4;
 }
+
+const MONTH_NAMES = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 export default function MonthlyGrass({
   minutesByDate,
@@ -18,41 +25,32 @@ export default function MonthlyGrass({
   minutesByDate: Map<string, number>;
   headline: { label: string; value: string }[];
 }) {
-  // The full current calendar year, columns = weeks (Mon–Sun rows).
   const today = new Date();
   const year = today.getFullYear();
-  const jan1 = new Date(year, 0, 1);
-  const dec31 = new Date(year, 11, 31);
-  const start = new Date(jan1);
-  start.setDate(jan1.getDate() - ((jan1.getDay() + 6) % 7)); // Monday on/before Jan 1
-  const end = new Date(dec31);
-  end.setDate(dec31.getDate() + (6 - ((dec31.getDay() + 6) % 7))); // Sunday on/after Dec 31
-  const weeks = Math.round((end.getTime() - start.getTime() + 86_400_000) / (7 * 86_400_000));
+  const todayIso = today.toISOString().slice(0, 10);
 
-  type Cell = { date: string; minutes: number; future: boolean; inYear: boolean };
-  const cols: Cell[][] = [];
-  const cursor = new Date(start);
-  for (let w = 0; w < weeks; w++) {
-    const col: Cell[] = [];
-    for (let d = 0; d < 7; d++) {
-      const iso = cursor.toISOString().slice(0, 10);
-      col.push({
-        date: iso,
-        minutes: minutesByDate.get(iso) ?? 0,
-        future: cursor > today,
-        inYear: cursor >= jan1 && cursor <= dec31,
-      });
-      cursor.setDate(cursor.getDate() + 1);
+  type Cell = { date: string; day: number; minutes: number; future: boolean } | null;
+
+  const months = Array.from({ length: 12 }, (_, mo) => {
+    const first = new Date(year, mo, 1);
+    const daysInMonth = new Date(year, mo + 1, 0).getDate();
+    const leadBlanks = (first.getDay() + 6) % 7; // Monday-start offset
+    const cells: Cell[] = Array.from({ length: leadBlanks }, () => null);
+    let total = 0;
+    let anyPast = false;
+    for (let d = 1; d <= daysInMonth; d++) {
+      const date = new Date(year, mo, d);
+      const iso = date.toISOString().slice(0, 10);
+      const future = date > today;
+      const minutes = minutesByDate.get(iso) ?? 0;
+      if (!future) {
+        total += minutes;
+        anyPast = true;
+      }
+      cells.push({ date: iso, day: d, minutes, future });
     }
-    cols.push(col);
-  }
-
-  // Label a column when the 1st of a month falls inside it.
-  const monthLabels = cols.map((col) => {
-    const firstOfMonth = col.find((c) => c.inYear && new Date(c.date).getDate() === 1);
-    return firstOfMonth
-      ? new Date(firstOfMonth.date).toLocaleDateString("en-US", { month: "short" })
-      : "";
+    while (cells.length < 42) cells.push(null);
+    return { mo, label: MONTH_NAMES[mo], total, anyPast, cells, isCurrent: mo === today.getMonth() };
   });
 
   return (
@@ -71,43 +69,39 @@ export default function MonthlyGrass({
         </div>
       </div>
 
-      {/* dir="rtl" on the scroller makes a narrow viewport open at the RIGHT
-          edge — this week — instead of January; the inner block flips back to
-          ltr so the columns still read Jan → Dec. Pure CSS, no client JS. */}
-      <div className="overflow-x-auto [scrollbar-width:thin]" dir="rtl">
-        <div className="inline-flex flex-col gap-[2px]" dir="ltr">
-          <div className="flex gap-[2px] text-[9px] text-faint h-[11px]">
-            {monthLabels.map((m, i) => (
-              <span key={i} className="w-[11px] leading-[11px] overflow-visible whitespace-nowrap">
-                {m}
+      <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-x-3 gap-y-4">
+        {months.map((m) => (
+          <div key={m.mo}>
+            <div className="flex items-baseline justify-between mb-1 px-px">
+              <span className={`text-[11px] font-bold tracking-[.02em] ${m.isCurrent ? "text-charcoal" : "text-faint"}`}>
+                {m.label}
               </span>
-            ))}
-          </div>
-          {Array.from({ length: 7 }, (_, row) => (
-            <div key={row} className="flex gap-[2px]">
-              {cols.map((col, i) => (
+              {m.anyPast && (
+                <span className="text-[10px] text-faint tabular-nums">{m.total}m</span>
+              )}
+            </div>
+            <div className="grid grid-cols-7 gap-[2px]">
+              {m.cells.map((c, i) => (
                 <span
                   key={i}
-                  title={`${col[row].date} · ${col[row].minutes} min`}
-                  className="w-[11px] h-[11px] rounded-[3px]"
-                  style={{
-                    background: !col[row].inYear
-                      ? "transparent"
-                      : col[row].future
-                        ? "#F9F8F7"
-                        : shade(col[row].minutes),
-                  }}
+                  title={c ? `${c.date} · ${c.minutes} min` : undefined}
+                  className={`aspect-square rounded-[2px] ${
+                    !c
+                      ? ""
+                      : c.future
+                        ? "bg-warm"
+                        : `${CELL_COLORS[level(c.minutes)]} ${c.date === todayIso ? "ring-1 ring-success ring-inset" : ""}`
+                  }`}
                 />
               ))}
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
 
-      <div className="flex items-center gap-1.5 mt-3 text-[11px] text-faint">
-        <span className="sm:hidden mr-auto">← swipe for earlier months</span>
+      <div className="flex items-center gap-1.5 mt-4 text-[11px] text-faint">
         less
-        {CELL_COLORS.map((c) => (
+        {LEGEND_COLORS.map((c) => (
           <span key={c} className="w-[10px] h-[10px] rounded-[3px]" style={{ background: c }} />
         ))}
         more
