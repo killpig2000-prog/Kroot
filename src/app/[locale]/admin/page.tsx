@@ -2,6 +2,7 @@ import { Link } from "@/i18n/navigation";
 import { notFound } from "next/navigation";
 import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
+import { isAdminEmail } from "@/lib/admin";
 import AdminRail, { type RailGroup } from "@/components/admin/AdminRail";
 import { BarList, DayBarChart, Funnel, Gauge, Panel, Pill, StackedBars, StatTile, TrendLines } from "@/components/admin/AdminCharts";
 import type { CefrLevel } from "@/lib/tree";
@@ -10,7 +11,6 @@ import type { CefrLevel } from "@/lib/tree";
 // system health. Anyone else (including logged-in users) gets a plain 404 so
 // the page stays invisible. Admin-only surface — Korean throughout, unlike
 // the rest of the app (see [[ui-language-english-first]]).
-const ADMIN_EMAIL = "killpig2000@gmail.com";
 
 const LEVELS: CefrLevel[] = ["A1", "A2", "B1", "B2", "C1", "C2"];
 const I18N_NAMESPACES = ["common", "nav", "onboarding", "vocabulary", "words", "ui", "listening"];
@@ -422,7 +422,7 @@ const RAIL: RailGroup[] = [
 export default async function AdminPage() {
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
-  if (!user || user.email?.toLowerCase() !== ADMIN_EMAIL) notFound();
+  if (!user || !isAdminEmail(user.email)) notFound();
 
   if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
     return (

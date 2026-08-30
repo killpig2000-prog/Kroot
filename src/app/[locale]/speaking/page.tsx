@@ -4,6 +4,7 @@ import Sidebar from "@/components/dashboard/Sidebar";
 import PronunciationChallenge from "@/components/pronunciation/PronunciationChallenge";
 import PronunciationTrail, { type ChapterProgress } from "@/components/pronunciation/PronunciationTrail";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
+import { isAdminEmail } from "@/lib/admin";
 import { orderedChapters, NAILED_THRESHOLD, TIER_META, type Chapter } from "@/lib/pronunciation";
 
 export default async function SpeakingPage({
@@ -45,12 +46,16 @@ export default async function SpeakingPage({
     return { total, nailed, cleared: total > 0 && attempted === total };
   };
 
+  // The owner account gets every chapter open for testing/content review —
+  // everyone else still climbs the tiers normally.
+  const isAdmin = isAdminEmail(user.email);
+
   const allChapters = orderedChapters();
   const chapters: ChapterProgress[] = [];
   let tierUnlocked = true;
   for (const { tier } of TIER_META) {
     const tierChapters = allChapters.filter((c) => c.tier === tier).map((c) => ({ c, ...statsFor(c) }));
-    const locked = !tierUnlocked;
+    const locked = !isAdmin && !tierUnlocked;
     for (const s of tierChapters) chapters.push({ ...s.c, total: s.total, nailed: s.nailed, cleared: s.cleared, locked });
     tierUnlocked = tierUnlocked && tierChapters.length > 0 && tierChapters.every((s) => s.cleared);
   }
