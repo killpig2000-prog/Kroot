@@ -1,5 +1,5 @@
 import { getTranslations } from "next-intl/server";
-import { Link, redirect } from "@/i18n/navigation";
+import { redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import WordBankList, { type BankItem } from "@/components/vocabulary/WordBankList";
@@ -98,18 +98,6 @@ export default async function MyWordsPage({ params }: { params: Promise<{ locale
         />
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] md:pb-[60px]">
-          <div className="flex gap-2 text-[13px] text-faint mb-[18px]">
-            <Link href="/dashboard" className="hover:text-charcoal transition-colors">
-              Garden
-            </Link>
-            <span>/</span>
-            <Link href="/review" className="hover:text-charcoal transition-colors">
-              Practice
-            </Link>
-            <span>/</span>
-            <b className="text-charcoal font-semibold">{tn("myWords")}</b>
-          </div>
-
           <div className="flex items-baseline gap-3 flex-wrap mb-4">
             <h1 className="font-bold text-[22px] tracking-[-0.02em]">{tn("myWords")}</h1>
             {items.length > 0 && (
