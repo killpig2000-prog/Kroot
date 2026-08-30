@@ -1,6 +1,5 @@
 {
   "garden": "Garden",
-  "basics": "Basics",
   "guide": "Guide",
   "hangul": "Hangul",
   "grammar": "Grammar",
@@ -10,19 +9,18 @@
   "pronunciation": "Pronunciation",
   "writing": "Writing",
   "reading": "Reading",
-  "relax": "Relax",
   "slang": "Slang",
   "shop": "Shop",
   "popular": "Popular",
   "new": "New",
   "learn": "Learn",
   "more": "More",
-  "myAccount": "My account",
   "myPage": "My page",
   "myWords": "My word bank",
   "gardenShop": "Garden Shop",
   "koreanSlang": "Korean slang",
   "storyGrove": "Story Grove",
   "dayStreak": "{n}-day streak",
-  "freezesReady": "{n} freezes ready"
+  "freezesReady": "{n} freezes ready",
+  "myProgress": "My progress"
 }

@@ -17,13 +17,13 @@ type Sheet = "learn" | "more" | null;
 // nav.json keys: single-word labels lowercase 1:1 ("Garden" → garden);
 // multi-word ones are stored as the key itself ("My account" → myAccount).
 const navKey = (label: string) =>
-  label === "My account" ? "myAccount" : label === "My word bank" ? "myWords" : /[A-Z]/.test(label.slice(1)) ? label : label.toLowerCase();
+  label === "My progress" ? "myProgress" : label === "My word bank" ? "myWords" : /[A-Z]/.test(label.slice(1)) ? label : label.toLowerCase();
 
-const LEARN_SECTIONS = SECTIONS.filter((s) => s.title === "Basics" || s.title === "Practice");
+const LEARN_SECTIONS = SECTIONS.filter((s) => s.title === "Learn");
 const MORE_SECTIONS = [
   // MAIN_ITEMS already carries Garden + My account.
   { title: "myPage", items: MAIN_ITEMS },
-  ...SECTIONS.filter((s) => s.title !== "Basics" && s.title !== "Practice"),
+  ...SECTIONS.filter((s) => s.title !== "Learn"),
 ];
 const LEARN_PATHS = LEARN_SECTIONS.flatMap((s) => s.items.map((i) => i.href));
 

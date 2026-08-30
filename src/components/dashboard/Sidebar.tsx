@@ -12,7 +12,7 @@ import BrandMark from "@/components/ui/BrandMark";
 
 // Nav labels map 1:1 to nav.json keys, except the two-word ones.
 const navKey = (label: string) =>
-  label === "My account" ? "myAccount" : label === "My word bank" ? "myWords" : label.toLowerCase();
+  label === "My progress" ? "myProgress" : label === "My word bank" ? "myWords" : label.toLowerCase();
 
 const LANGUAGES = [
   { code: "en", label: "🇬🇧 English" },

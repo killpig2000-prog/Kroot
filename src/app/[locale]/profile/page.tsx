@@ -323,7 +323,7 @@ export default async function ProfilePage() {
               <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-success-bg text-success border border-success-line items-center justify-center kr text-[15px] mr-[9px]">
                 나
               </span>
-              {tn("myAccount")}
+              {tn("myProgress")}
             </h1>
           </div>
 

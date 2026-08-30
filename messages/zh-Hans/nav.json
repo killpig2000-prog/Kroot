@@ -1,6 +1,5 @@
 {
   "garden": "花园",
-  "basics": "基础",
   "guide": "指南",
   "hangul": "韩文",
   "grammar": "语法",
@@ -10,19 +9,18 @@
   "pronunciation": "发音",
   "writing": "写作",
   "reading": "阅读",
-  "relax": "休闲",
   "slang": "俚语",
   "shop": "商店",
   "popular": "热门",
   "new": "新",
   "learn": "学习",
   "more": "更多",
-  "myAccount": "我的账户",
   "myPage": "我的页面",
   "myWords": "生词本",
   "gardenShop": "花园商店",
   "koreanSlang": "韩语俚语",
   "storyGrove": "故事林",
   "dayStreak": "连续 {n} 天",
-  "freezesReady": "{n} 个冻结可用"
+  "freezesReady": "{n} 个冻结可用",
+  "myProgress": "我的进度"
 }
