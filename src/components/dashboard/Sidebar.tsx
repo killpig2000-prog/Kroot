@@ -9,7 +9,8 @@ import { Link } from "@/i18n/navigation";
 import { MAIN_ITEMS, SECTIONS, type NavColor } from "@/components/dashboard/navItems";
 
 // Nav labels map 1:1 to nav.json keys, except the two-word one.
-const navKey = (label: string) => (label === "My account" ? "myAccount" : label.toLowerCase());
+const navKey = (label: string) =>
+  label === "My account" ? "myAccount" : label === "My word bank" ? "myWords" : label.toLowerCase();
 import BrandMark from "@/components/ui/BrandMark";
 
 const LANGUAGES = [
@@ -98,6 +99,7 @@ function Brand() {
 
 function LanguageSwitcher({ pathname, locale }: { pathname: string; locale: string }) {
   const router = useRouter();
+  const tn = useTranslations("nav");
   const [open, setOpen] = useState(false);
 
   // next-intl's router keeps the current locale unless told otherwise, so
@@ -119,12 +121,15 @@ function LanguageSwitcher({ pathname, locale }: { pathname: string; locale: stri
         onClick={() => setOpen(!open)}
         className="w-full flex items-center justify-between gap-2 px-2.5 py-2 text-[13.5px] rounded-[9px] text-charcoal font-medium hover:bg-cream transition-colors text-left"
       >
-        <span className="truncate">{currentLang.label}</span>
+        <span className="truncate">🌐 Language</span>
         <span className="text-xs">▼</span>
       </button>
 
       {open && (
         <div className="absolute bottom-full left-0 right-0 mb-1 bg-cream border border-dash rounded-[9px] shadow-lg z-50">
+          <div className="text-[12px] text-muted px-2.5 py-1.5 font-semibold uppercase tracking-[.06em]">
+            {currentLang.label}
+          </div>
           {LANGUAGES.map((lang) => (
             <button
               key={lang.code}
