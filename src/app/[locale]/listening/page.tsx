@@ -1,3 +1,4 @@
+import { getTranslations, getLocale } from "next-intl/server";
 import LevelTabs from "@/components/ui/LevelTabs";
 import { Link, redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
@@ -10,6 +11,7 @@ import { isDifficultyUnlocked } from "@/lib/level";
 import { SITUATIONS } from "@/lib/listening";
 import { dialoguesFor } from "@/lib/listening-dialogues";
 import { estMinutes } from "@/lib/listening-resume";
+import { getLocalizedDialogueTitle } from "@/lib/listening-i18n";
 
 export default async function ListeningPage({
   searchParams,
@@ -22,7 +24,12 @@ export default async function ListeningPage({
 
   if (!user) redirect("/onboarding");
 
-  const profile = await getDashboardProfile(supabase, user.id);
+  const [profile, t, ts, locale] = await Promise.all([
+    getDashboardProfile(supabase, user.id),
+    getTranslations("listening.home"),
+    getTranslations("listening.situations"),
+    getLocale(),
+  ]);
 
   const myLevel = (profile?.current_level ?? "A1") as CefrLevel;
   const sp = await searchParams;
@@ -59,7 +66,7 @@ export default async function ListeningPage({
   const heroClips: HeroClip[] = bySituation.flatMap(({ s, dialogues }) =>
     dialogues.map((d, i) => ({
       id: d.id,
-      title: d.title as string,
+      title: d.title,
       situationKey: s.key,
       situationLabel: s.label,
       situationIcon: s.icon,
@@ -87,7 +94,7 @@ export default async function ListeningPage({
               Garden
             </Link>
             <span>/</span>
-            <b className="text-charcoal font-semibold">Listening</b>
+            <b className="text-charcoal font-semibold">{t("title")}</b>
           </div>
 
           {/* head */}
@@ -96,9 +103,9 @@ export default async function ListeningPage({
               <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[var(--tint-teal)] text-teal border border-[var(--tint-teal-line)] items-center justify-center kr text-[15px] mr-[9px]">
                 듣
               </span>
-              Listening
+              {t("title")}
             </h1>
-            <span className="text-[13px] text-muted">Pick a situation, listen, follow the script</span>
+            <span className="text-[13px] text-muted">{t("subtitle")}</span>
           </div>
 
           <LevelTabs
@@ -171,10 +178,10 @@ export default async function ListeningPage({
                   </div>
                   <div className="flex-1 flex flex-col gap-1.5 px-3 py-3 sm:px-4 sm:pb-4">
                     <b className="flex items-baseline gap-2 font-extrabold text-[14px] sm:text-[15px] min-w-0">
-                      <span className="truncate">{s.label}</span>
+                      <span className="truncate">{ts(`${s.key}.label`)}</span>
                       <small className="kr text-[12px] text-faint font-semibold flex-none">{s.krLabel}</small>
                     </b>
-                    <p className="hidden sm:block text-[12.5px] text-muted leading-[1.45]">{s.sub}</p>
+                    <p className="hidden sm:block text-[12.5px] text-muted leading-[1.45]">{ts(`${s.key}.sub`)}</p>
                     {next && (
                       <span className="flex items-center gap-1.5 min-w-0 bg-[var(--tint-teal)] border border-[var(--tint-teal-line)] rounded-lg px-2 py-[5px] text-[11.5px]">
                         <span
@@ -184,23 +191,24 @@ export default async function ListeningPage({
                           ▶
                         </span>
                         <span className="min-w-0 truncate text-charcoal">
-                          Next · <span className="font-semibold">{next.title as string}</span>
+                          {t("nextChip")}
+                          <span className="font-semibold">{getLocalizedDialogueTitle(next.title, locale)}</span>
                         </span>
                       </span>
                     )}
                     <span className="mt-auto pt-2 flex items-center justify-between gap-2 text-[12px]">
                       <span className="text-muted tabular-nums truncate">
                         {count === 0
-                          ? "Coming soon"
+                          ? t("comingSoon")
                           : finished
-                            ? `All ${count} done`
+                            ? t("allDone", { n: count })
                             : done > 0
-                              ? `${done} / ${count} heard`
-                              : `${count} clips · ~${estMinutes(totalLines)} min`}
+                              ? t("heardCount", { done, total: count })
+                              : t("clipsMin", { n: count, min: estMinutes(totalLines) })}
                       </span>
                       {count > 0 && (
                         <span className={`font-bold flex-none ${finished ? "text-success" : "text-teal"}`}>
-                          {finished ? "Replay →" : done > 0 ? "Continue →" : "Start →"}
+                          {finished ? t("goReplay") : done > 0 ? t("goContinue") : t("goStart")}
                         </span>
                       )}
                     </span>

@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { buttonClassName } from "@/components/ui/Button";
 import type { CefrLevel } from "@/lib/tree";
@@ -19,6 +20,7 @@ export default function FinishedAllCard({
   newLevel: number | null;
   onBackToClips: () => void;
 }) {
+  const t = useTranslations("listening.finished");
   return (
     <div
       className="max-w-[680px] text-center border border-line rounded-[14px] px-7 py-10 bg-cream"
@@ -41,19 +43,19 @@ export default function FinishedAllCard({
           💧
         </text>
       </svg>
-      <h2 className="font-bold text-[21px] tracking-[-0.02em] mt-3 mb-1.5">Great listening!</h2>
+      <h2 className="font-bold text-[21px] tracking-[-0.02em] mt-3 mb-1.5">{t("title")}</h2>
       <p className="text-sm text-muted mb-5">
-        {situationLabel} · all {clipCount} clips done at {level}. Your ears (and your tree) grew today.
+        {t("sub", { situation: situationLabel, n: clipCount, level })}
       </p>
       {newLevel && (
-        <p className="text-[13.5px] font-semibold text-success mb-5">🎉 Level up! Now Lv. {newLevel}</p>
+        <p className="text-[13.5px] font-semibold text-success mb-5">{t("levelUp", { level: newLevel })}</p>
       )}
       <div className="flex justify-center gap-2.5 flex-wrap">
         <Link href={`/listening?level=${level}`} className={BTN_TEAL}>
-          Choose another topic
+          {t("another")}
         </Link>
         <button className={BTN_LINE} onClick={onBackToClips}>
-          Back to the clips
+          {t("back")}
         </button>
       </div>
     </div>

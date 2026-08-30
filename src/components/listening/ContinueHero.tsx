@@ -1,17 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { buttonClassName } from "@/components/ui/Button";
 import Waveform from "@/components/listening/Waveform";
 import { estMinutes, loadHeard, loadLastListened } from "@/lib/listening-resume";
+import { getLocalizedDialogueTitle } from "@/lib/listening-i18n";
+import type { LocalizedString } from "@/lib/listening-dialogues";
 import type { CefrLevel } from "@/lib/tree";
 
 const BTN_TEAL = buttonClassName("teal");
 
 export type HeroClip = {
   id: string;
-  title: string;
+  title: LocalizedString | string;
   situationKey: string;
   situationLabel: string;
   situationIcon: string;
@@ -42,6 +45,8 @@ export default function ContinueHero({
   todayIndex: number;
   heardAtLevel: number;
 }) {
+  const t = useTranslations("listening.home");
+  const locale = useLocale();
   const completed = new Set(completedIds);
   const fallback = clips.find((c) => !completed.has(c.id)) ?? null;
   const [pick, setPick] = useState<{ clip: HeroClip; heard: number } | null>(
@@ -68,7 +73,7 @@ export default function ContinueHero({
 
   const total = weekMinutes.reduce((a, b) => a + b, 0);
   const peak = Math.max(1, ...weekMinutes);
-  const DAYS = ["M", "T", "W", "T", "F", "S", "S"];
+  const DAYS = t("days").split(" ");
 
   const resuming = !!pick && pick.heard > 0;
   const c = pick?.clip;
@@ -87,44 +92,35 @@ export default function ContinueHero({
           ) : (
             <span aria-hidden="true">▶</span>
           )}
-          {resuming ? "Continue listening" : "Up next"}
+          {resuming ? t("continueTag") : t("upNextTag")}
         </span>
 
         {c ? (
           <>
             <div>
               <h2 className="font-extrabold text-[clamp(19px,2.4vw,24px)] tracking-[-0.02em] leading-tight [text-wrap:balance]">
-                {c.title}
+                {getLocalizedDialogueTitle(c.title, locale)}
               </h2>
               <p className="text-[13.5px] text-muted mt-0.5">
-                {c.situationIcon} {c.situationLabel} · Clip {c.clipNo} of {c.clipCount} · {level}
-                {resuming && (
-                  <>
-                    {" "}
-                    · stopped at line {pick!.heard} of {c.lineCount}
-                  </>
-                )}
+                {t("clipOf", { icon: c.situationIcon, situation: c.situationLabel, n: c.clipNo, total: c.clipCount, level })}
+                {resuming && t("stoppedAt", { heard: pick!.heard, total: c.lineCount })}
               </p>
             </div>
             <Waveform seed={c.id} lineCount={c.lineCount} heard={pick?.heard ?? 0} barsPerLine={5} height={36} />
             <div className="flex items-center justify-between gap-3 flex-wrap">
               <div className="flex gap-3 text-[12.5px] text-muted tabular-nums">
-                <span>
-                  <b className="text-charcoal">{pick?.heard ?? 0}</b>/{c.lineCount} lines
-                </span>
-                <span>
-                  <b className="text-charcoal">~{left}</b> min {resuming ? "left" : ""}
-                </span>
+                <span>{t("linesOf", { heard: pick?.heard ?? 0, total: c.lineCount })}</span>
+                <span>{resuming ? t("minLeft", { min: left }) : t("minTotal", { min: left })}</span>
               </div>
               <Link href={`/listening/${c.situationKey}?level=${level}&clip=${c.id}`} className={BTN_TEAL}>
-                ▶ {resuming ? "Resume" : "Start"}
+                {resuming ? t("resume") : t("start")}
               </Link>
             </div>
           </>
         ) : (
           <div>
-            <h2 className="font-extrabold text-[22px] tracking-[-0.02em]">Every clip at {level} heard 🎉</h2>
-            <p className="text-[13.5px] text-muted mt-0.5">Replay any situation below, or try the next level.</p>
+            <h2 className="font-extrabold text-[22px] tracking-[-0.02em]">{t("allHeardTitle", { level })}</h2>
+            <p className="text-[13.5px] text-muted mt-0.5">{t("allHeardSub")}</p>
           </div>
         )}
       </div>
@@ -133,9 +129,9 @@ export default function ContinueHero({
         <div className="flex items-baseline justify-between">
           <b className="text-[22px] font-extrabold tracking-[-0.02em] tabular-nums">
             {total}
-            <small className="text-[12px] text-muted font-semibold ml-[3px]">min</small>
+            <small className="text-[12px] text-muted font-semibold ml-[3px]">{t("minUnit")}</small>
           </b>
-          <span className="text-[12px] text-muted">this week</span>
+          <span className="text-[12px] text-muted">{t("thisWeek")}</span>
         </div>
         <div>
           <div aria-hidden="true" className="flex items-end gap-[5px] h-[34px]">
@@ -160,9 +156,9 @@ export default function ContinueHero({
         <div className="flex items-baseline justify-between">
           <b className="text-[22px] font-extrabold tracking-[-0.02em] tabular-nums">
             {heardAtLevel}
-            <small className="text-[12px] text-muted font-semibold ml-[3px]">clips</small>
+            <small className="text-[12px] text-muted font-semibold ml-[3px]">{t("clipsUnit")}</small>
           </b>
-          <span className="text-[12px] text-muted">heard at {level}</span>
+          <span className="text-[12px] text-muted">{t("heardAt", { level })}</span>
         </div>
       </div>
     </div>

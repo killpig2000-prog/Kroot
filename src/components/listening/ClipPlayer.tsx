@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { useLocale, useTranslations } from "next-intl";
 import { buttonClassName } from "@/components/ui/Button";
 import { useSpeechSynthesis } from "@/hooks/useSpeechSynthesis";
 import { useSaveResume } from "@/hooks/useSaveResume";
@@ -7,6 +8,7 @@ import Waveform from "@/components/listening/Waveform";
 import TapText from "@/components/words/TapText";
 import { QUIZZES, type Dialogue } from "@/lib/listening-dialogues";
 import { estMinutes, saveHeard } from "@/lib/listening-resume";
+import { getLocalizedDialogueLine } from "@/lib/listening-i18n";
 import type { CefrLevel } from "@/lib/tree";
 
 const ABC = ["A", "B", "C", "D"];
@@ -46,6 +48,9 @@ export default function ClipPlayer({
   onExit: () => void;
   onFinished: (correct: boolean | null) => void;
 }) {
+  const t = useTranslations("listening.player");
+  const th = useTranslations("listening.home");
+  const locale = useLocale();
   const lines = dialogue.lines;
   const [rate, setRate] = useState(1.0);
   const [showEn, setShowEn] = useState(false);
@@ -74,7 +79,7 @@ export default function ClipPlayer({
     skill: "listening",
     href: `/listening/${situationKey}?level=${level}&clip=${dialogue.id}`,
     label: dialogue.title as string,
-    detail: `Listening · ${situationLabel} · ${level}`,
+    detail: `${situationIcon} ${situationLabel} · ${level}`,
     progress: Math.round((Math.min(heard, lines.length) / lines.length) * 100),
   });
 
@@ -92,19 +97,19 @@ export default function ClipPlayer({
     playFrom(allHeard ? 0 : heard);
   }
 
-  const mainLabel = isPlaying ? "Pause" : allHeard ? "Play again" : heard > 0 ? "Resume" : "Play";
+  const mainLabel = isPlaying ? t("pause") : allHeard ? t("playAgain") : heard > 0 ? t("resume") : t("play");
   const hint = isPlaying
-    ? `line ${stageIndex + 1} / ${lines.length} · playing`
+    ? t("hintPlaying", { n: stageIndex + 1, total: lines.length })
     : allHeard
-      ? `${lines.length} / ${lines.length} heard · play again`
+      ? t("hintAll", { total: lines.length })
       : heard > 0
-        ? `resumes at line ${heard + 1} / ${lines.length}`
-        : `${lines.length} lines · press play`;
+        ? t("hintResume", { n: heard + 1, total: lines.length })
+        : t("hintStart", { n: lines.length });
 
   const controls = (
     <>
       <button
-        aria-label="Replay previous line"
+        aria-label={t("prevLine")}
         className={CTL}
         onClick={() => stageIndex > 0 && speakOne(stageIndex - 1)}
         disabled={!isSupported || stageIndex <= 0}
@@ -120,7 +125,7 @@ export default function ClipPlayer({
         {isPlaying ? "⏸" : "▶"}
       </button>
       <button
-        aria-label="Replay this line"
+        aria-label={t("replayLine")}
         className={CTL}
         onClick={() => stageIndex >= 0 && speakOne(stageIndex)}
         disabled={!isSupported || stageIndex < 0}
@@ -141,15 +146,21 @@ export default function ClipPlayer({
             onExit();
           }}
         >
-          ← All clips
+          {t("allClips")}
         </button>
         <span className="min-w-0 truncate text-[12.5px] text-muted tabular-nums">
-          {situationIcon} <b className="text-charcoal">{situationLabel}</b> · Clip {clipNo} of {clipCount} · {level}
+          {th.rich("clipOf", {
+            icon: situationIcon,
+            situation: situationLabel,
+            n: clipNo,
+            total: clipCount,
+            level,
+          })}
         </span>
         <button
           className="flex-none border border-line bg-cream rounded-lg px-2.5 py-[5px] text-[12px] font-bold text-muted hover:border-faint transition-colors tabular-nums"
           onClick={() => setRate((r) => (r === 1.0 ? 0.7 : 1.0))}
-          aria-label={`Playback speed ${rate.toFixed(1)}×`}
+          aria-label={t("speed", { rate: rate.toFixed(1) })}
         >
           {rate.toFixed(1)}×
         </button>
@@ -157,7 +168,7 @@ export default function ClipPlayer({
 
       {!isSupported && (
         <p className="border border-line bg-warm rounded-[10px] px-4 py-3 text-[13px] text-muted mb-3">
-          Your browser doesn&apos;t support text-to-speech — you can still read the script below.
+          {t("noTts")}
         </p>
       )}
 
@@ -169,20 +180,20 @@ export default function ClipPlayer({
         >
           <h2 className="font-extrabold text-[clamp(17px,2.2vw,20px)] tracking-[-0.02em]">{dialogue.title as string}</h2>
           <p className="text-[12.5px] text-muted mt-0.5">
-            {lines.length} lines · ~{estMinutes(lines.length)} min ·{" "}
-            {allHeard ? "all heard ✓" : "listen first, the script fills in as you go"}
+            {t("meta", { n: lines.length, min: estMinutes(lines.length) })} ·{" "}
+            {allHeard ? t("allHeard") : t("listenFirst")}
           </p>
 
           {/* cast */}
-          <div className="flex justify-center items-end gap-[clamp(40px,10vw,72px)] mt-8 mb-1">
+          <div className="flex justify-center items-end gap-[clamp(40px,10vw,72px)] mt-12 mb-1">
             {speakers.slice(0, 2).map((sp, i) => {
               const on = speakingIdx === i;
               const idleBubble =
                 !isPlaying &&
                 ((allHeard && i === 1) || (heard === 0 && i === 0))
                   ? allHeard
-                    ? "Play again, or check your ears below ↓"
-                    : "Press play to start ▶"
+                    ? t("idleAll")
+                    : t("idleStart")
                   : null;
               return (
                 <div key={sp} className="relative flex flex-col items-center gap-1.5">
@@ -248,7 +259,7 @@ export default function ClipPlayer({
               className={`font-semibold transition-colors ${showEn ? "text-teal" : "text-faint hover:text-muted"}`}
               onClick={() => setShowEn((v) => !v)}
             >
-              English {showEn ? "on" : "off"}
+              {t("translation")} {showEn ? t("on") : t("off")}
             </button>
           </div>
         </div>
@@ -275,7 +286,7 @@ export default function ClipPlayer({
                     }`}
                   >
                     {line.speaker}
-                    {playing && " · playing"}
+                    {playing && ` · ${t("playing")}`}
                   </b>
                   {revealed ? (
                     <div
@@ -299,7 +310,7 @@ export default function ClipPlayer({
                       </span>
                       {showEn && (
                         <span className={`block text-[12px] mt-[3px] font-normal ${playing ? "text-white/80" : "text-muted"}`}>
-                          {line.en}
+                          {getLocalizedDialogueLine(line, locale)}
                         </span>
                       )}
                     </div>
@@ -315,7 +326,7 @@ export default function ClipPlayer({
                 </div>
                 {revealed && (
                   <button
-                    aria-label="Replay this line"
+                    aria-label={t("replayLine")}
                     className="flex-none self-center text-[12px] text-faint hover:text-teal transition-colors disabled:opacity-40"
                     onClick={() => speakOne(i)}
                     disabled={!isSupported}
@@ -328,9 +339,7 @@ export default function ClipPlayer({
           })}
         </div>
         <p className="text-center text-[11.5px] text-faint px-5 pt-2 pb-4">
-          {allHeard
-            ? "Tap any word to save it · replay any line with 🔁"
-            : "Unheard lines unlock as they play · tap any word to save it · leave anytime, you'll resume here"}
+          {allHeard ? t("noteAll") : t("note")}
         </p>
 
         {/* quiz, once everything has played */}
@@ -339,8 +348,8 @@ export default function ClipPlayer({
             {quiz ? (
               <>
                 <div className="flex items-center justify-between px-4 py-3 bg-warm border-b border-line">
-                  <span className="text-[11px] font-extrabold tracking-[.1em] uppercase text-teal">🎧 Check your ears</span>
-                  <span className="text-[11.5px] text-faint">1 question</span>
+                  <span className="text-[11px] font-extrabold tracking-[.1em] uppercase text-teal">{t("checkEars")}</span>
+                  <span className="text-[11.5px] text-faint">{t("oneQuestion")}</span>
                 </div>
                 <p className="px-4 pt-4 pb-1.5 font-extrabold text-[16.5px] tracking-[-0.01em]">{quiz.q}</p>
                 <div className="grid gap-2 px-4 pt-2 pb-4">
@@ -388,10 +397,10 @@ export default function ClipPlayer({
               >
                 {quiz ? (
                   <span className={`text-[13px] font-bold ${correct ? "text-success" : "text-danger"}`}>
-                    {correct ? "🌱 Correct! Sharp ears." : "💧 Not quite — replay the lines above."}
+                    {correct ? t("correct") : t("wrong")}
                   </span>
                 ) : (
-                  <span className="text-[13px] font-bold text-success">🌱 All heard.</span>
+                  <span className="text-[13px] font-bold text-success">{t("allHeardMsg")}</span>
                 )}
                 <button
                   className={BTN_TEAL}
@@ -402,7 +411,7 @@ export default function ClipPlayer({
                     onFinished(quiz ? correct : null);
                   }}
                 >
-                  {saving ? "Saving…" : clipNo === clipCount ? "Finish →" : "Done — next clip →"}
+                  {saving ? t("saving") : clipNo === clipCount ? t("finish") : t("doneNext")}
                 </button>
               </div>
             )}
@@ -413,7 +422,7 @@ export default function ClipPlayer({
       {/* phones: playback controls stay reachable while the script scrolls */}
       <div className="md:hidden fixed left-0 right-0 bottom-[calc(64px+env(safe-area-inset-bottom))] z-30 flex items-center gap-2.5 px-3 py-2 bg-cream/95 backdrop-blur-[10px] border-t border-line">
         <button
-          aria-label="Replay previous line"
+          aria-label={t("prevLine")}
           className={CTL}
           onClick={() => stageIndex > 0 && speakOne(stageIndex - 1)}
           disabled={!isSupported || stageIndex <= 0}
@@ -433,10 +442,12 @@ export default function ClipPlayer({
             {stageLine ? `${stageLine.speaker} · ` : ""}
             {hint}
           </b>
-          <span className="block text-[11px] text-muted truncate">English {showEn ? "on" : "off"} · tap to toggle</span>
+          <span className="block text-[11px] text-muted truncate">
+            {t("translation")} {showEn ? t("on") : t("off")} · {t("tapToggle")}
+          </span>
         </button>
         <button
-          aria-label="Replay this line"
+          aria-label={t("replayLine")}
           className={CTL}
           onClick={() => stageIndex >= 0 && speakOne(stageIndex)}
           disabled={!isSupported || stageIndex < 0}

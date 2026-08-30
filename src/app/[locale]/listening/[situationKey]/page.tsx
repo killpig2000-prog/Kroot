@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import LevelTabs from "@/components/ui/LevelTabs";
 import { Link, redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
@@ -28,6 +29,11 @@ export default async function SituationPage({
 
   const { situationKey } = await params;
   const sp = await searchParams;
+  const [t, ts, th] = await Promise.all([
+    getTranslations("listening.situation"),
+    getTranslations("listening.situations"),
+    getTranslations("listening.home"),
+  ]);
   const myLevel = (profile?.current_level ?? "A1") as CefrLevel;
   const level = isCefrLevel(sp.level) ? sp.level : myLevel;
   const situation = situationByKey(situationKey);
@@ -48,14 +54,9 @@ export default async function SituationPage({
     completedIds = (progressRows ?? []).filter((p) => p.completed_at).map((p) => p.dialogue_id);
   }
 
-  const meta = situation ?? {
-    key: situationKey,
-    label: situationKey,
-    krLabel: "",
-    icon: "🎧",
-    sub: "",
-    tint: "#EFE9DC",
-  };
+  const meta = situation
+    ? { ...situation, label: ts(`${situation.key}.label`), sub: ts(`${situation.key}.sub`) }
+    : { key: situationKey, label: situationKey, krLabel: "", icon: "🎧", sub: "", tint: "#EFE9DC" };
 
   const levelTabs = (
     <LevelTabs
@@ -87,7 +88,7 @@ export default async function SituationPage({
             </Link>
             <span>/</span>
             <Link href={`/listening?level=${level}`} className="hover:text-charcoal transition-colors">
-              Listening
+              {th("title")}
             </Link>
             <span>/</span>
             <b className="text-charcoal font-semibold">{meta.label}</b>
@@ -97,7 +98,7 @@ export default async function SituationPage({
             <>
               {levelTabs}
               <div className="max-w-[720px] border border-line rounded-[14px] p-8 text-center bg-cream">
-                <p className="text-sm text-muted">No clips for this level yet — try another level above.</p>
+                <p className="text-sm text-muted">{t("noClips")}</p>
               </div>
             </>
           ) : (

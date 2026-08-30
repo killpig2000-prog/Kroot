@@ -1,11 +1,14 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { useLocale, useTranslations } from "next-intl";
 import { buttonClassName } from "@/components/ui/Button";
 import { createClient } from "@/lib/supabase/client";
 import { track } from "@/lib/analytics";
 import { lookupWord, plantWord, tokenizeKorean } from "@/lib/word-bank";
 import { estMinutes } from "@/lib/listening-resume";
+import { getLocalizedDialogueTitle } from "@/lib/listening-i18n";
+import { getLocalizedMeaning } from "@/lib/vocabulary-i18n";
 import type { Dialogue } from "@/lib/listening-dialogues";
 import type { VocabWord } from "@/lib/vocabulary";
 import type { CefrLevel } from "@/lib/tree";
@@ -49,6 +52,8 @@ export default function ClipDone({
   /** Next clip, or the situation summary when this was the last one. */
   onNext: () => void;
 }) {
+  const t = useTranslations("listening.done");
+  const locale = useLocale();
   const supabase = useMemo(() => createClient(), []);
   const [words, setWords] = useState<ClipWord[] | null>(null);
   const allDone = clipNo === clipCount && !next;
@@ -107,10 +112,14 @@ export default function ClipDone({
         style={{ background: "radial-gradient(ellipse at 50% 0%, var(--c-success-bg) 0%, var(--c-warm) 70%)" }}
       >
         <div className="text-[46px] leading-none">🎧</div>
-        <h2 className="font-extrabold text-[22px] tracking-[-0.02em] mt-2">Clip heard!</h2>
+        <h2 className="font-extrabold text-[22px] tracking-[-0.02em] mt-2">{t("title")}</h2>
         <p className="text-[13.5px] text-muted mt-1">
-          “{dialogue.title as string}” is in your ears now. {clipNo} of {clipCount} {situationLabel.toLowerCase()} clips
-          done.
+          {t("sub", {
+            title: getLocalizedDialogueTitle(dialogue.title, locale),
+            n: clipNo,
+            total: clipCount,
+            situation: situationLabel.toLowerCase(),
+          })}
         </p>
 
         <div className="flex justify-center gap-2 flex-wrap mt-4 mb-5">
@@ -122,11 +131,11 @@ export default function ClipDone({
                   : "bg-danger-bg text-danger border-[var(--tint-rose-line)]"
               }`}
             >
-              {correct ? "🌱 Quiz correct" : "💧 Quiz missed"}
+              {correct ? t("quizCorrect") : t("quizMissed")}
             </span>
           )}
           <span className="text-[12.5px] font-bold px-[11px] py-1.5 rounded-full border bg-[var(--tint-teal)] text-teal border-[var(--tint-teal-line)]">
-            +{estMinutes(dialogue.lines.length)} min · +{xp} XP
+            {t("minXp", { min: estMinutes(dialogue.lines.length), xp })}
           </span>
           <span className="text-[12.5px] font-bold px-[11px] py-1.5 rounded-full border bg-cream text-muted border-line tabular-nums">
             {situationIcon} {situationLabel} · {clipNo} / {clipCount}
@@ -141,16 +150,16 @@ export default function ClipDone({
                 className="inline-flex items-center gap-2 px-3 py-[7px] rounded-[10px] bg-cream border border-line text-[13.5px]"
               >
                 <b className="kr font-bold">{word.korean}</b>
-                <span className="text-muted text-[12px]">{word.meaning_en}</span>
+                <span className="text-muted text-[12px]">{getLocalizedMeaning(word, locale)}</span>
                 {saved ? (
-                  <i className="not-italic text-teal font-extrabold text-[12px]">saved ✓</i>
+                  <i className="not-italic text-teal font-extrabold text-[12px]">{t("saved")}</i>
                 ) : (
                   <button
                     className="text-teal font-extrabold text-[12px] hover:underline disabled:opacity-50"
                     disabled={saving || !userId}
                     onClick={() => save(word.key)}
                   >
-                    {saving ? "…" : "+ save"}
+                    {saving ? "…" : t("save")}
                   </button>
                 )}
               </span>
@@ -167,28 +176,28 @@ export default function ClipDone({
               {clipNo + 1}
             </span>
             <span className="min-w-0 flex-1">
-              <b className="block text-[14px] truncate">{next.title as string}</b>
+              <b className="block text-[14px] truncate">{getLocalizedDialogueTitle(next.title, locale)}</b>
               <span className="text-[12px] text-muted">
-                {next.lines.length} lines · ~{estMinutes(next.lines.length)} min
+                {t("linesMin", { n: next.lines.length, min: estMinutes(next.lines.length) })}
               </span>
             </span>
-            <span className="text-teal font-extrabold text-[13px] flex-none">Play ▶</span>
+            <span className="text-teal font-extrabold text-[13px] flex-none">{t("play")}</span>
           </button>
         ) : (
           <p className="text-[13px] font-semibold text-success">
-            🎉 Every {situationLabel.toLowerCase()} clip at {level} heard
+            {t("allHeard", { situation: situationLabel.toLowerCase(), level })}
           </p>
         )}
 
         <div className="flex justify-center gap-2.5 flex-wrap mt-4">
           <button className={BTN_GHOST} onClick={onReplay}>
-            ↻ Replay this clip
+            {t("replay")}
           </button>
           <button className={BTN_GHOST} onClick={onAllClips}>
-            All clips
+            {t("allClips")}
           </button>
           <button className={BTN_GREEN} onClick={onNext}>
-            {allDone ? "See summary →" : "Next clip →"}
+            {allDone ? t("summary") : t("next")}
           </button>
         </div>
       </div>

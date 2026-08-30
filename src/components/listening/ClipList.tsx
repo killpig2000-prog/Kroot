@@ -1,6 +1,8 @@
+import { useLocale, useTranslations } from "next-intl";
 import ProgressRing from "@/components/listening/ProgressRing";
 import { estMinutes } from "@/lib/listening-resume";
 import { waveHeights, type Situation } from "@/lib/listening";
+import { getLocalizedDialogueTitle } from "@/lib/listening-i18n";
 import type { Dialogue } from "@/lib/listening-dialogues";
 import type { CefrLevel } from "@/lib/tree";
 
@@ -28,6 +30,8 @@ export default function ClipList({
   newLevel: number | null;
   onOpenClip: (id: string) => void;
 }) {
+  const t = useTranslations("listening.situation");
+  const locale = useLocale();
   const totalLines = dialogues.reduce((n, d) => n + d.lines.length, 0);
   const resumeHeard = resumeTarget ? (heardMap[resumeTarget.id] ?? 0) : 0;
   const resumePct = resumeTarget ? Math.round((resumeHeard / resumeTarget.lines.length) * 100) : 0;
@@ -35,7 +39,7 @@ export default function ClipList({
   return (
     <div className="max-w-[760px]">
       {newLevel && (
-        <p className="text-[13px] font-semibold text-success mb-3">🎉 Level up! Now Lv. {newLevel}</p>
+        <p className="text-[13px] font-semibold text-success mb-3">{t("levelUp", { level: newLevel })}</p>
       )}
 
       <div className="border border-line rounded-[16px] bg-cream overflow-hidden">
@@ -57,7 +61,7 @@ export default function ClipList({
               </h1>
               <p className="text-[13px] text-muted mt-0.5">
                 {situation.sub && <>{situation.sub} · </>}
-                {dialogues.length} clips · ~{estMinutes(totalLines)} min
+                {t("clipsMin", { n: dialogues.length, min: estMinutes(totalLines) })}
               </p>
             </div>
           </div>
@@ -66,7 +70,7 @@ export default function ClipList({
               <b className="block text-[14px] font-extrabold tabular-nums">
                 {doneCount}/{dialogues.length}
               </b>
-              <small className="block text-[9.5px] text-muted tracking-[.06em] mt-0.5">HEARD</small>
+              <small className="block text-[9.5px] text-muted tracking-[.06em] mt-0.5">{t("heard")}</small>
             </span>
           </ProgressRing>
         </div>
@@ -84,9 +88,13 @@ export default function ClipList({
               ▶
             </span>
             <span className="min-w-0 flex-1">
-              <b className="block text-[14px]">Continue where you left off</b>
+              <b className="block text-[14px]">{t("continueWhere")}</b>
               <span className="text-[12.5px] text-muted">
-                {resumeTarget.title as string} · line {resumeHeard + 1} of {resumeTarget.lines.length}
+                {t("lineOf", {
+                  title: getLocalizedDialogueTitle(resumeTarget.title, locale),
+                  n: resumeHeard + 1,
+                  total: resumeTarget.lines.length,
+                })}
               </span>
             </span>
             <span className="hidden sm:block w-[120px] h-1.5 rounded-full bg-[var(--tint-teal-line)] overflow-hidden">
@@ -98,10 +106,10 @@ export default function ClipList({
 
         {/* list head */}
         <div className="hidden sm:grid grid-cols-[40px_1fr_120px_70px] gap-3 px-[18px] py-2.5 text-[10.5px] font-bold tracking-[.1em] uppercase text-faint border-b border-line bg-warm">
-          <span>#</span>
-          <span>Clip</span>
-          <span>Length</span>
-          <span className="text-right">Status</span>
+          <span>{t("headNum")}</span>
+          <span>{t("headClip")}</span>
+          <span>{t("headLength")}</span>
+          <span className="text-right">{t("headStatus")}</span>
         </div>
 
         {dialogues.map((d, i) => {
@@ -130,7 +138,7 @@ export default function ClipList({
               </span>
               <span className="min-w-0">
                 <b className={`block truncate text-[14px] ${done ? "font-medium text-muted" : "font-bold"}`}>
-                  {d.title as string}
+                  {getLocalizedDialogueTitle(d.title, locale)}
                 </b>
                 <small className="kr block truncate text-[12px] text-faint font-normal">{d.lines[0]?.kr}</small>
               </span>
@@ -140,7 +148,7 @@ export default function ClipList({
                     <i key={j} className="w-[3px] rounded-[1px] bg-dash" style={{ height: `${Math.round(h * 12)}px` }} />
                   ))}
                 </span>
-                {d.lines.length} lines · {estMinutes(d.lines.length)} min
+                {t("linesMin", { n: d.lines.length, min: estMinutes(d.lines.length) })}
               </span>
               <span
                 className={`justify-self-end text-[11px] font-bold px-2.5 py-[3px] rounded-full tabular-nums ${
@@ -151,7 +159,7 @@ export default function ClipList({
                       : "bg-warm text-faint"
                 }`}
               >
-                {done ? "Heard" : inProgress ? `${heard} / ${d.lines.length}` : "—"}
+                {done ? t("pillHeard") : inProgress ? `${heard} / ${d.lines.length}` : "—"}
               </span>
             </button>
           );
