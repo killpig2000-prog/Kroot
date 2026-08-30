@@ -24,7 +24,8 @@ export type AnalyticsEvent =
   | "streak_freeze_bought"
   | "level_test_started"
   | "level_test_finished"
-  | "continue_clicked";
+  | "continue_clicked"
+  | "writing_chapter_submitted";
 
 export type AnalyticsProps = Record<string, string | number | boolean | null>;
 

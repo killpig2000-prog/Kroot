@@ -228,6 +228,17 @@ export default function WritingSession({
     if (!ready) return;
     setSubmitting(true);
 
+    // One row per chapter, not per question — cheap, and gives admin the
+    // tiles/slots/chunks/typed adoption split and the local-vs-Gemini ratio.
+    const modeCounts = { tiles: 0, slots: 0, chunks: 0, type: 0 };
+    for (const b of boards) modeCounts[b.mode]++;
+    track("writing_chapter_submitted", {
+      level,
+      ...modeCounts,
+      graded_locally: !needsGrader,
+      retries: entries.reduce((s, e, i) => s + (isLocalMode(boards[i].mode) ? Math.max(0, e.checks - 1) : 0), 0),
+    });
+
     let dailyLimited = false;
     let ai: ChapterGradeResult | null = null;
 
