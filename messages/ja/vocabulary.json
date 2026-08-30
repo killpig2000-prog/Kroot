@@ -28,5 +28,20 @@
   "study": "このユニットを学習する →",
   "unitsOf": "ユニット {first}–{last}",
   "doneOfTotal": "{done}/{total} ユニット完了",
-  "dueForReview": "復習が必要"
+  "dueForReview": "復習が必要",
+  "bank": {
+    "searchPlaceholder": "単語を検索",
+    "count": "{count}語",
+    "missed": "{count}回まちがえた",
+    "remove": "{word} を削除",
+    "removed": "削除しました",
+    "undo": "元に戻す",
+    "removeFailed": "{word} を削除できませんでした。もう一度お試しください。",
+    "undoFailed": "{word} を元に戻せませんでした。もう一度お試しください。",
+    "empty": "まだ単語がありません。",
+    "emptyCta": "単語一覧を見る →",
+    "noMatches": "「{query}」に一致する単語はありません。",
+    "backToBank": "マイ単語帳",
+    "saved": "単語帳に追加済み ✓"
+  }
 }

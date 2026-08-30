@@ -7,7 +7,6 @@ import { createClient, getClaimsUser, getDashboardProfile } from "@/lib/supabase
 import { VOCAB_TOPICS, getChaptersForTopic, unitLabel } from "@/lib/vocabulary";
 import { findMoreExamples } from "@/lib/vocab-examples";
 import { isCefrLevel, type CefrLevel } from "@/lib/tree";
-import { getLocalizedMeaning } from "@/lib/vocabulary-i18n";
 
 // A single word looked up from the unit preview — a dictionary entry, not a
 // quiz step. Reuses the session route's chapter/level addressing so prev/next
@@ -58,10 +57,6 @@ export default async function VocabWordPage({
   const unitHref = `/vocabulary?level=${level}&unit=${chapterIndex}`;
   const prevHref = wordIndex > 0 ? wordHref(chapterIndex, wordIndex - 1) : null;
   const nextHref = wordIndex < chapterWords.length - 1 ? wordHref(chapterIndex, wordIndex + 1) : null;
-  const nextWordEntry = wordIndex < chapterWords.length - 1 ? chapterWords[wordIndex + 1] : null;
-  const nextWord = nextWordEntry
-    ? { korean: nextWordEntry.korean, meaning_en: getLocalizedMeaning(nextWordEntry, locale) }
-    : null;
 
   return (
     <div className="min-h-screen bg-warm text-charcoal">
@@ -97,7 +92,7 @@ export default async function VocabWordPage({
             level={level}
             prevHref={prevHref}
             nextHref={nextHref}
-            nextWord={nextWord}
+            inBank={progress !== null}
             unitHref={unitHref}
             unitLabel={unitLabel(chapterIndex)}
           />

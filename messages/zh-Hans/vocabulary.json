@@ -28,5 +28,20 @@
   "study": "学习此单元 →",
   "unitsOf": "单元 {first}–{last}",
   "doneOfTotal": "{done} 个/{total} 个单元完成",
-  "dueForReview": "需要复习"
+  "dueForReview": "需要复习",
+  "bank": {
+    "searchPlaceholder": "搜索你的单词",
+    "count": "{count} 个单词",
+    "missed": "错了 {count} 次",
+    "remove": "删除 {word}",
+    "removed": "已删除",
+    "undo": "撤销",
+    "removeFailed": "无法删除 {word}，请重试。",
+    "undoFailed": "无法恢复 {word}，请重试。",
+    "empty": "还没有单词。",
+    "emptyCta": "浏览词汇 →",
+    "noMatches": "没有匹配“{query}”的单词。",
+    "backToBank": "我的单词本",
+    "saved": "已在单词本 ✓"
+  }
 }

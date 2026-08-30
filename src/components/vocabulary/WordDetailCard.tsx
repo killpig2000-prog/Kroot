@@ -1,10 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
 import { buttonClassName } from "@/components/ui/Button";
 import { createClient } from "@/lib/supabase/client";
 import { nextBox, nextReviewAt } from "@/lib/srs";
+import { plantWord } from "@/lib/word-bank";
 import { speakKorean } from "@/lib/tts";
 import { WORD_STATUSES, getWordNote, wordStatus, hanjaOf } from "@/lib/word-notes";
 import { getLocalizedMeaning, getLocalizedExampleEn } from "@/lib/vocabulary-i18n";
@@ -40,7 +42,7 @@ export default function WordDetailCard({
   level,
   prevHref,
   nextHref,
-  nextWord,
+  inBank: initialInBank,
   unitHref,
   unitLabel,
 }: {
@@ -54,12 +56,16 @@ export default function WordDetailCard({
   level: string;
   prevHref: string | null;
   nextHref: string | null;
-  /** The word behind nextHref, for the "Up next" preview under the card. */
-  nextWord?: { korean: string; meaning_en: string } | null;
+  /** Whether this word already has a vocabulary_progress row. */
+  inBank: boolean;
   unitHref: string;
   unitLabel: string;
 }) {
   const router = useRouter();
+  const t = useTranslations("vocabulary");
+  const tu = useTranslations("ui");
+  const [inBank, setInBank] = useState(initialInBank);
+  const [adding, setAdding] = useState(false);
   const status = WORD_STATUSES[wordStatus(correctCount + incorrectCount)];
   const note = getWordNote(word.korean);
   const hanja = hanjaOf(word.korean);
@@ -83,6 +89,20 @@ export default function WordDetailCard({
       { onConflict: "user_id,word_key" }
     );
     router.push(nextHref ?? unitHref);
+  }
+
+  // Add-to-word-bank: plants the row with untouched counts, so saving a word
+  // never looks like a review the learner didn't do.
+  async function addToBank() {
+    if (adding || inBank) return;
+    setAdding(true);
+    const error = await plantWord(createClient(), userId, word.key);
+    setAdding(false);
+    if (error) {
+      console.error("add to word bank failed:", error);
+      return;
+    }
+    setInBank(true);
   }
 
   return (
@@ -211,22 +231,33 @@ export default function WordDetailCard({
             ← Back to unit
           </Link>
         )}
-        {nextHref && nextWord ? (
+        {inBank ? (
           <Link
-            href={nextHref}
-            className="min-w-0 flex items-center gap-2 rounded-[10px] border border-line bg-cream px-3 py-2 text-muted hover:border-faint hover:text-charcoal transition-colors"
+            href="/review/words"
+            className="min-w-0 inline-flex items-center gap-1.5 rounded-[10px] border border-success-line bg-success-bg px-3 py-2 font-semibold text-success-deep hover:border-success transition-colors"
           >
-            <span className="text-[10.5px] font-bold tracking-[.06em] uppercase text-faint flex-none">Up next</span>
-            <span className="kr font-bold text-charcoal flex-none">{nextWord.korean}</span>
-            <span className="min-w-0 truncate">{nextWord.meaning_en}</span>
-            <span aria-hidden="true" className="flex-none">→</span>
+            <span className="truncate">{t("bank.saved")}</span>
           </Link>
         ) : (
-          <Link href={unitHref} className="font-semibold text-muted hover:text-charcoal transition-colors whitespace-nowrap">
-            Back to unit →
-          </Link>
+          <button
+            type="button"
+            onClick={() => void addToBank()}
+            disabled={adding}
+            aria-busy={adding}
+            className="min-w-0 inline-flex items-center gap-1.5 rounded-[10px] border border-line bg-cream px-3 py-2 font-semibold text-muted hover:border-faint hover:text-charcoal transition-colors disabled:opacity-60"
+          >
+            <span className="truncate">{adding ? tu("saving") : `＋ ${tu("addToMyWords")}`}</span>
+          </button>
         )}
       </div>
+
+      {!nextHref && (
+        <div className="mt-2.5 text-right text-[12.5px]">
+          <Link href={unitHref} className="font-semibold text-muted hover:text-charcoal transition-colors">
+            Back to unit →
+          </Link>
+        </div>
+      )}
     </div>
   );
 }

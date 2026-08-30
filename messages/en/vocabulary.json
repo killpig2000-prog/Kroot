@@ -28,5 +28,20 @@
   "study": "Study this unit →",
   "unitsOf": "Units {first}–{last}",
   "doneOfTotal": "{done} of {total} units done",
-  "dueForReview": "Due for review"
+  "dueForReview": "Due for review",
+  "bank": {
+    "searchPlaceholder": "Search your words",
+    "count": "{count, plural, =1 {1 word} other {# words}}",
+    "missed": "missed {count}×",
+    "remove": "Remove {word}",
+    "removed": "Removed",
+    "undo": "Undo",
+    "removeFailed": "Couldn't remove {word}. Try again.",
+    "undoFailed": "Couldn't put {word} back. Try again.",
+    "empty": "No words yet.",
+    "emptyCta": "Browse vocabulary →",
+    "noMatches": "No words match “{query}”.",
+    "backToBank": "My words",
+    "saved": "In my words ✓"
+  }
 }

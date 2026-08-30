@@ -28,5 +28,20 @@
   "study": "Học bài học này →",
   "unitsOf": "Bài {first}–{last}",
   "doneOfTotal": "{done} trên {total} bài học hoàn thành",
-  "dueForReview": "Cần ôn tập"
+  "dueForReview": "Cần ôn tập",
+  "bank": {
+    "searchPlaceholder": "Tìm trong từ của bạn",
+    "count": "{count} từ",
+    "missed": "sai {count} lần",
+    "remove": "Xóa {word}",
+    "removed": "Đã xóa",
+    "undo": "Hoàn tác",
+    "removeFailed": "Không xóa được {word}. Hãy thử lại.",
+    "undoFailed": "Không khôi phục được {word}. Hãy thử lại.",
+    "empty": "Chưa có từ nào.",
+    "emptyCta": "Xem từ vựng →",
+    "noMatches": "Không có từ nào khớp với “{query}”.",
+    "backToBank": "Từ của tôi",
+    "saved": "Đã có trong từ của tôi ✓"
+  }
 }

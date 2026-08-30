@@ -28,5 +28,20 @@
   "continue": "Continue this unit →",
   "study": "Study this unit →",
   "unitsOf": "Units {first}–{last}",
-  "doneOfTotal": "{done} of {total} units done"
+  "doneOfTotal": "{done} of {total} units done",
+  "bank": {
+    "searchPlaceholder": "Busca en tus palabras",
+    "count": "{count, plural, =1 {1 palabra} other {# palabras}}",
+    "missed": "fallada {count}×",
+    "remove": "Quitar {word}",
+    "removed": "Eliminada",
+    "undo": "Deshacer",
+    "removeFailed": "No se pudo quitar {word}. Inténtalo de nuevo.",
+    "undoFailed": "No se pudo restaurar {word}. Inténtalo de nuevo.",
+    "empty": "Todavía no hay palabras.",
+    "emptyCta": "Ver vocabulario →",
+    "noMatches": "Ninguna palabra coincide con «{query}».",
+    "backToBank": "Mis palabras",
+    "saved": "En mis palabras ✓"
+  }
 }

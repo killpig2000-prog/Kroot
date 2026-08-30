@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { Link } from "@/i18n/navigation";
 import { notFound } from "next/navigation";
 import { SITE_URL } from "@/lib/site";
 import { PUBLIC_VOCAB_WORDS, getWordBySlug, relatedWords } from "@/lib/vocab-slugs";
 import { wordBankKey } from "@/lib/word-bank";
 import AddToMyWords from "@/components/words/AddToMyWords";
+import BankBackLink from "@/components/words/BankBackLink";
 
 // Public SEO dictionary page — one statically generated page per vocabulary
 // word, crawlable without login, funnelling visitors into onboarding.
@@ -75,6 +77,12 @@ export default async function WordPage({ params }: Props) {
       </header>
 
       <main className="mx-auto max-w-3xl px-6 pb-16">
+        {/* Only rendered when the learner came from their word bank; the
+            search param is read on the client so the page stays static. */}
+        <Suspense fallback={null}>
+          <BankBackLink />
+        </Suspense>
+
         <p className="mb-2 text-sm text-[var(--soft)]">
           <Link href="/words" className="hover:underline">
             Korean Dictionary
