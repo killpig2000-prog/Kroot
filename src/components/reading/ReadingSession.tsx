@@ -7,10 +7,11 @@ import { buttonClassName } from "@/components/ui/Button";
 import { Link, useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { recordCompletion, type ProgressResult } from "@/lib/activity";
-import { MINUTES_PER_PASSAGE, type Passage } from "@/lib/reading";
+import { findEvidenceLine, MINUTES_PER_PASSAGE, splitPassageLines, type Passage } from "@/lib/reading";
 import ReadPhase from "@/components/reading/ReadPhase";
 import QuizPhase from "@/components/reading/QuizPhase";
 import SummaryPhase from "@/components/reading/SummaryPhase";
+import type { Gloss } from "@/lib/word-links";
 
 type Phase = "read" | "quiz" | "summary";
 
@@ -22,54 +23,75 @@ export default function ReadingSession({
   chapterIndex,
   hasNextChapter,
   level,
+  glossary,
+  words,
 }: {
   passage: Passage;
   userId: string;
   chapterIndex: number;
   hasNextChapter: boolean;
   level: string;
+  /** Surface form → vocabulary entry, resolved on the server. */
+  glossary: Record<string, Gloss>;
+  words: Gloss[];
 }) {
   const router = useRouter();
   const supabase = useMemo(() => createClient(), []);
 
+  const lines = useMemo(() => splitPassageLines(passage), [passage]);
+  // Which line answers each question — computed once, from the English text.
+  const evidence = useMemo(
+    () => passage.questions.map((q) => findEvidenceLine(lines, q)),
+    [lines, passage.questions]
+  );
+
   const [phase, setPhase] = useState<Phase>("read");
-  const [showTranslation, setShowTranslation] = useState(false);
   const [qIndex, setQIndex] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
-  const [correct, setCorrect] = useState(0);
-  const [incorrect, setIncorrect] = useState(0);
+  const [answers, setAnswers] = useState<(boolean | null)[]>(() =>
+    passage.questions.map(() => null)
+  );
+  // Mirror of `answers` that's safe to read from the click handler that
+  // finishes the last question, before its state update has rendered.
+  const answersRef = useRef<(boolean | null)[]>(passage.questions.map(() => null));
   const [navigating, setNavigating] = useState(false);
   const [levelUp, setLevelUp] = useState<ProgressResult | null>(null);
   const loggedMinutes = useRef(false);
-  // Mirrors of correct/incorrect that are safe to read inside timeouts.
-  const counts = useRef({ correct: 0, incorrect: 0 });
 
-  useSaveResume(
-    phase === "summary" ? null : userId,
-    { skill: "reading", href: "", label: passage.title_kr, detail: `Reading · Chapter ${chapterIndex + 1} · ${level}`, progress: phase === "read" ? 0 : Math.round((qIndex / Math.max(1, passage.questions.length)) * 100) }
-  );
+  const correct = answers.filter((a) => a === true).length;
+  const incorrect = answers.filter((a) => a === false).length;
+  const missed = answers.flatMap((a, i) => (a === false ? [i] : []));
 
-  const question = passage.questions[qIndex];
+  useSaveResume(phase === "summary" ? null : userId, {
+    skill: "reading",
+    href: "",
+    label: passage.title_kr,
+    detail: `Reading · Chapter ${chapterIndex + 1} · ${level}`,
+    progress:
+      phase === "read" ? 0 : Math.round((qIndex / Math.max(1, passage.questions.length)) * 100),
+  });
 
-  async function answer(optionIndex: number) {
+  function answer(optionIndex: number) {
     if (selected !== null) return;
     setSelected(optionIndex);
-    const gotIt = optionIndex === question.answerIndex;
-    if (gotIt) setCorrect((c) => c + 1);
-    else setIncorrect((c) => c + 1);
-    if (gotIt) counts.current.correct += 1;
-    else counts.current.incorrect += 1;
+    const gotIt = optionIndex === passage.questions[qIndex].answerIndex;
+    const next = [...answersRef.current];
+    next[qIndex] = gotIt;
+    answersRef.current = next;
+    setAnswers(next);
+  }
 
-    setTimeout(() => {
-      setSelected(null);
-      if (qIndex + 1 < passage.questions.length) {
-        setQIndex((i) => i + 1);
-      } else {
-        setPhase("summary");
-        // Save right away so the level-up line can show on the summary screen.
-        void logProgressOnce();
-      }
-    }, 700);
+  // The reader advances, not a timer — a wrong answer is worth reading about.
+  function nextQuestion() {
+    if (selected === null) return;
+    setSelected(null);
+    if (qIndex + 1 < passage.questions.length) {
+      setQIndex((i) => i + 1);
+      return;
+    }
+    setPhase("summary");
+    // Save right away so the level-up line can show on the summary screen.
+    void logProgressOnce();
   }
 
   async function logProgressOnce() {
@@ -77,12 +99,14 @@ export default function ReadingSession({
     loggedMinutes.current = true;
     void clearResume(supabase, userId);
 
+    const final = answersRef.current;
+
     await supabase.from("reading_progress").upsert(
       {
         user_id: userId,
         passage_key: passage.key,
-        correct_count: counts.current.correct,
-        incorrect_count: counts.current.incorrect,
+        correct_count: final.filter((a) => a === true).length,
+        incorrect_count: final.filter((a) => a === false).length,
         last_reviewed_at: new Date().toISOString(),
       },
       { onConflict: "user_id,passage_key" }
@@ -104,17 +128,30 @@ export default function ReadingSession({
       <ReadPhase
         passage={passage}
         chapterIndex={chapterIndex}
-        showTranslation={showTranslation}
-        onToggleTranslation={() => setShowTranslation((s) => !s)}
-        onContinue={() => setPhase("quiz")}
-        userId={userId}
+        level={level}
+        lines={lines}
+        glossary={glossary}
+        words={words}
+        // Coming back from the summary for a second read returns there, not
+        // into a quiz that's already been answered.
+        onContinue={() => setPhase(answers.every((a) => a !== null) ? "summary" : "quiz")}
       />
     );
   }
 
   if (phase === "quiz") {
     return (
-      <QuizPhase passage={passage} qIndex={qIndex} correct={correct} selected={selected} onAnswer={answer} />
+      <QuizPhase
+        passage={passage}
+        lines={lines}
+        glossary={glossary}
+        qIndex={qIndex}
+        answers={answers}
+        selected={selected}
+        evidenceIndex={evidence[qIndex]}
+        onAnswer={answer}
+        onNext={nextQuestion}
+      />
     );
   }
 
@@ -124,11 +161,16 @@ export default function ReadingSession({
       chapterIndex={chapterIndex}
       correct={correct}
       incorrect={incorrect}
+      missed={missed}
+      words={words}
       levelUp={levelUp}
       hasNextChapter={hasNextChapter}
       level={level}
       navigating={navigating}
       onGoTo={goTo}
+      // Re-reading keeps the answers — it's a second look at the story, not a
+      // second attempt at the quiz.
+      onReRead={() => setPhase("read")}
     />
   );
 }

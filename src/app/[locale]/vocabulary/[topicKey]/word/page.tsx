@@ -17,7 +17,13 @@ export default async function VocabWordPage({
   searchParams,
 }: {
   params: Promise<{ locale: string; topicKey: string }>;
-  searchParams: Promise<{ level?: string; chapter?: string; i?: string; from?: string }>;
+  searchParams: Promise<{
+    level?: string;
+    chapter?: string;
+    i?: string;
+    from?: string;
+    back?: string;
+  }>;
 }) {
   const { locale, topicKey } = await params;
   const sp = await searchParams;
@@ -72,11 +78,23 @@ export default async function VocabWordPage({
 
   const moreExamples = findMoreExamples(word.korean, word.example_kr);
 
-  // "&from=bank" survives prev/next, so stepping through words keeps the way
-  // back to the word bank the learner came from.
+  // "&from=..." survives prev/next, so stepping through words keeps the way
+  // back to wherever the learner came from — the word bank, or the line of a
+  // reading passage that sent them here.
   const fromBank = sp.from === "bank";
+  // Only ever an in-app path: an absolute or protocol-relative URL here would
+  // turn a word link into an open redirect.
+  const backTo =
+    sp.from === "reading" && sp.back?.startsWith("/") && !sp.back.startsWith("//")
+      ? sp.back
+      : null;
+  const carry = fromBank
+    ? "&from=bank"
+    : backTo
+    ? `&from=reading&back=${encodeURIComponent(backTo)}`
+    : "";
   const wordHref = (chapter: number, i: number) =>
-    `/vocabulary/${topicKey}/word?level=${level}&chapter=${chapter}&i=${i}${fromBank ? "&from=bank" : ""}`;
+    `/vocabulary/${topicKey}/word?level=${level}&chapter=${chapter}&i=${i}${carry}`;
 
   // Prev/next stay inside the unit: the first word's "Prev" and the last
   // word's "Next" both return to the unit page instead of quietly stepping
@@ -123,6 +141,8 @@ export default async function VocabWordPage({
             savedCount={savedCount}
             slots={slots}
             fromBank={fromBank}
+            backHref={backTo}
+            backLabel="Back to the story"
             unitHref={unitHref}
             unitLabel={unitLabel(chapterIndex)}
           />

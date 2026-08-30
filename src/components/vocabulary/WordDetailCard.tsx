@@ -46,6 +46,8 @@ export default function WordDetailCard({
   savedCount: initialSavedCount,
   slots,
   fromBank,
+  backHref,
+  backLabel,
   unitHref,
   unitLabel,
 }: {
@@ -66,6 +68,10 @@ export default function WordDetailCard({
   slots: number;
   /** Opened from /review/words — show the way back to it. */
   fromBank: boolean;
+  /** Where the learner came from, when it wasn't a vocabulary unit (e.g. a
+      reading passage). Overrides the unit link at the top of the card. */
+  backHref?: string | null;
+  backLabel?: string;
   unitHref: string;
   unitLabel: string;
 }) {
@@ -122,7 +128,11 @@ export default function WordDetailCard({
   return (
     <div className="max-w-[600px]">
       <div className="flex items-center justify-between gap-3 mb-3.5">
-        {fromBank ? (
+        {backHref ? (
+          <Link href={backHref} className="text-[12.5px] text-muted hover:text-charcoal transition-colors">
+            ← {backLabel ?? "Back"}
+          </Link>
+        ) : fromBank ? (
           <Link href="/review/words" className="text-[12.5px] text-muted hover:text-charcoal transition-colors">
             ← {t("bank.backToMyBank")}
           </Link>

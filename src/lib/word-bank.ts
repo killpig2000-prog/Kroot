@@ -49,7 +49,12 @@ export function normalizeToken(token: string): string {
   return token.replace(PUNCT_RE, "").trim();
 }
 
-function candidates(token: string): string[] {
+/**
+ * Every dictionary form a surface token could reduce to, longest-first —
+ * "포근했어요" → 포근하다, "친구한테는" → 친구. Exported so the reading page can
+ * resolve a whole passage's tokens server-side (see lib/word-links.ts).
+ */
+export function surfaceCandidates(token: string): string[] {
   const base = normalizeToken(token);
   if (!base) return [];
   const out: string[] = [base];
@@ -79,7 +84,7 @@ function candidates(token: string): string[] {
 /** Resolve a tapped token to a deck word, or null when it isn't in the deck. */
 export async function lookupWord(token: string): Promise<VocabWord | null> {
   const dict = await loadDict();
-  for (const c of candidates(token)) {
+  for (const c of surfaceCandidates(token)) {
     const hit = dict.get(c);
     if (hit) return hit;
   }

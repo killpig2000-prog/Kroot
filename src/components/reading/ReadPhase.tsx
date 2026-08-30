@@ -1,344 +1,484 @@
-import type { Passage } from "@/lib/reading";
+"use client";
+
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import { Link } from "@/i18n/navigation";
 import { buttonClassName } from "@/components/ui/Button";
-import TapText from "@/components/words/TapText";
+import GlossedText from "@/components/reading/GlossedText";
+import { countKoreanWords, MINUTES_PER_PASSAGE, type Passage, type PassageLine } from "@/lib/reading";
+import { speakKorean, stopSpeaking } from "@/lib/tts";
+import type { Gloss } from "@/lib/word-links";
 
-const BTN_BLUE = buttonClassName("sky");
-const LABEL = "text-[11.5px] font-semibold tracking-[.06em] uppercase text-faint mb-2";
+const BTN_BLUE = buttonClassName("sky", "w-full");
 
-// Shared translation reveal used by every genre-specific layout below —
-// blurred placeholder until the reader taps "Show translation".
-export function TranslatableText({
-  en,
-  showTranslation,
-  className = "",
-}: {
-  en: string;
-  showTranslation: boolean;
-  className?: string;
-}) {
-  return (
-    <p
-      className={`transition-all rounded ${
-        showTranslation ? "text-muted" : "text-transparent bg-[var(--tint-stone)] select-none"
-      } ${className}`}
-    >
-      {en || " "}
-    </p>
-  );
+// How much of the English a reader wants on screen. "tap" is the default:
+// struggle with a line first, then check that one line.
+export type TranslationMode = "off" | "tap" | "all";
+
+// Text size is a per-device reading preference, not session state — a reader
+// who sizes up once shouldn't have to do it again next chapter.
+const SIZE_KEY = "reading:text-size";
+const sizeListeners = new Set<() => void>();
+
+function readLargeText(): boolean {
+  try {
+    return window.localStorage.getItem(SIZE_KEY) === "large";
+  } catch {
+    return false;
+  }
 }
 
-// The "read" phase of a reading session: picks a bilingual layout by genre
-// (chat bubbles, posted notice, email, interview transcript, numbered
-// instructions, review card, or the default book spread) and shows the same
-// header/continue-button shell around whichever one applies.
+function subscribeLargeText(onChange: () => void): () => void {
+  sizeListeners.add(onChange);
+  window.addEventListener("storage", onChange);
+  return () => {
+    sizeListeners.delete(onChange);
+    window.removeEventListener("storage", onChange);
+  };
+}
+
+function writeLargeText(large: boolean) {
+  try {
+    window.localStorage.setItem(SIZE_KEY, large ? "large" : "normal");
+  } catch {
+    // Blocked storage — the size still applies for this session.
+  }
+  for (const notify of sizeListeners) notify();
+}
+
+const GENRE_LABELS: Record<string, string> = {
+  dialogue: "💬 Dialogue",
+  message: "💬 Messages",
+  notice: "📌 Notice",
+  email: "✉️ Email",
+  interview: "🎙️ Interview",
+  instruction: "📋 How-to",
+  review: "⭐ Review",
+  diary: "📔 Diary",
+  story: "📖 Story",
+  explainer: "💡 Explainer",
+  editorial: "📰 Editorial",
+  article: "📰 Article",
+  essay: "✍️ Essay",
+  academic: "🎓 Academic",
+  opinion: "💭 Opinion",
+};
+
+const CHIP = "text-[11.5px] font-semibold tracking-[.04em] rounded-md px-2 py-0.5 border";
+const TOOL_BTN =
+  "text-[12px] font-semibold rounded-[9px] px-2.5 py-1.5 border transition-colors";
+
+/** Speaker prefix ("민수: 안녕") → ["민수", "안녕"]; ["", line] when there is none. */
+function splitSpeaker(line: string): [string, string] {
+  const i = line.indexOf(":");
+  if (i === -1) return ["", line];
+  return [line.slice(0, i).trim(), line.slice(i + 1).trim()];
+}
+
 export default function ReadPhase({
   passage,
   chapterIndex,
-  showTranslation,
-  onToggleTranslation,
+  level,
+  lines,
+  glossary,
+  words,
   onContinue,
-  userId,
 }: {
   passage: Passage;
   chapterIndex: number;
-  showTranslation: boolean;
-  onToggleTranslation: () => void;
+  level: string;
+  lines: PassageLine[];
+  /** Surface form → vocabulary entry, resolved on the server. */
+  glossary: Record<string, Gloss>;
+  /** The passage's deck words, for the rail. */
+  words: Gloss[];
   onContinue: () => void;
-  /** Enables tap-to-save on every Korean word (null = signed out). */
-  userId?: string | null;
 }) {
-  const genre = passage.genre;
-  // Structured genres author real \n line breaks (speaker turns, sign lines,
-  // steps, paragraphs) — split ONLY on those so a multi-sentence turn/step
-  // doesn't get chopped mid-line. Flowing prose (diary/story/explainer/none)
-  // still splits sentence-by-sentence for the book-spread layout.
-  const structured = genre === "dialogue" || genre === "message" || genre === "notice" || genre === "email" || genre === "instruction" || genre === "interview";
-  const krLines = (structured ? passage.body_kr.split("\n") : passage.body_kr.split(/(?<=[.!?])\s+/)).filter(Boolean);
-  const enLines = (structured ? passage.body_en.split("\n") : passage.body_en.split(/(?<=[.!?])\s+/)).filter(Boolean);
-  const lines = krLines.map((kr, i) => ({ kr, en: enLines[i] ?? "" }));
+  const genre = passage.genre ?? "";
+  const [mode, setMode] = useState<TranslationMode>("tap");
+  // Server-rendered at the normal size, then corrected on hydration.
+  const large = useSyncExternalStore(subscribeLargeText, readLargeText, () => false);
+  const [open, setOpen] = useState<Set<number>>(new Set());
+  const [speaking, setSpeaking] = useState<number | null>(null);
+  // Read inside the speech chain's callbacks, which outlive a render.
+  const playing = useRef(false);
 
-  const header = (
-    <div className="flex items-center justify-between gap-3 mb-4 flex-wrap">
-      <span className="text-[11.5px] font-semibold text-sky-deep bg-[var(--tint-sky)] border border-sky-line rounded-md px-2 py-0.5">
+  // The audio chain must not keep talking over the quiz.
+  useEffect(
+    () => () => {
+      playing.current = false;
+      stopSpeaking();
+    },
+    []
+  );
+
+  function toggleSize() {
+    writeLargeText(!large);
+  }
+
+  // What to actually speak: the speaker name and the step number are labels,
+  // not part of the line.
+  const speech = useMemo(
+    () =>
+      lines.map(({ kr }) => {
+        const [speaker, rest] = splitSpeaker(kr);
+        const text = (speaker ? rest : kr).replace(/^\d+\.\s*/, "");
+        return { text, speaker };
+      }),
+    [lines]
+  );
+  // Second speaker gets the other voice, so a dialogue has two people in it.
+  const speakers = useMemo(() => {
+    const seen: string[] = [];
+    for (const { speaker } of speech) {
+      if (speaker && !seen.includes(speaker)) seen.push(speaker);
+    }
+    return seen;
+  }, [speech]);
+
+  // A declaration, not a useCallback: it calls itself to chain the next line.
+  function playFrom(index: number) {
+    if (!playing.current || index >= speech.length) {
+      playing.current = false;
+      setSpeaking(null);
+      return;
+    }
+    setSpeaking(index);
+    const { text, speaker } = speech[index];
+    if (!text.trim()) {
+      playFrom(index + 1);
+      return;
+    }
+    speakKorean(text, {
+      // The second speaker gets the other voice, so a dialogue has two people.
+      pitch: speakers.indexOf(speaker) % 2 === 1 ? 0.85 : 1,
+      onend: () => playFrom(index + 1),
+      onerror: () => playFrom(index + 1),
+    });
+  }
+
+  function toggleListen() {
+    if (playing.current) {
+      playing.current = false;
+      stopSpeaking();
+      setSpeaking(null);
+      return;
+    }
+    playing.current = true;
+    playFrom(speaking ?? 0);
+  }
+
+  function toggleLine(i: number) {
+    if (mode !== "tap") return;
+    setOpen((prev) => {
+      const next = new Set(prev);
+      if (next.has(i)) next.delete(i);
+      else next.add(i);
+      return next;
+    });
+  }
+
+  const isOpen = (i: number) => mode === "all" || (mode === "tap" && open.has(i));
+
+  const krClass = large ? "text-[19px] leading-[2.05]" : "text-[16.5px] leading-[1.95]";
+
+  // A line and its translation, in that order, in one tap target. Every genre
+  // below wraps its own Korean markup in this. Plain functions, not nested
+  // components — a component defined during render remounts its whole subtree
+  // on every state change, which would drop an open word card mid-hover.
+  function revealable(
+    index: number,
+    children: React.ReactNode,
+    { align = "left", enClassName = "" }: { align?: "left" | "right"; enClassName?: string } = {}
+  ) {
+    const showEn = isOpen(index) && !!lines[index].en;
+    const tappable = mode === "tap";
+    return (
+      <div
+        key={index}
+        role={tappable ? "button" : undefined}
+        tabIndex={tappable ? 0 : undefined}
+        aria-expanded={tappable ? open.has(index) : undefined}
+        onClick={() => toggleLine(index)}
+        onKeyDown={(e) => {
+          if (!tappable) return;
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            toggleLine(index);
+          }
+        }}
+        className={`relative rounded-[9px] px-3 py-1.5 -mx-1 transition-colors ${
+          tappable ? "cursor-pointer hover:bg-warm" : ""
+        } ${speaking === index ? "bg-[var(--tint-sky)]" : ""} ${align === "right" ? "text-right" : ""}`}
+      >
+        {isOpen(index) && (
+          <i
+            className="not-italic absolute left-0 top-2 bottom-2 w-[2px] rounded-full bg-success"
+            aria-hidden="true"
+          />
+        )}
+        {children}
+        {showEn && (
+          <p className={`text-[13px] text-muted italic leading-[1.6] mt-1 ${enClassName}`}>
+            {lines[index].en}
+          </p>
+        )}
+      </div>
+    );
+  }
+
+  function krLine(index: number, className = "") {
+    return (
+      <p className={`kr font-medium ${krClass} ${className}`}>
+        <GlossedText text={lines[index].kr} glossary={glossary} />
+      </p>
+    );
+  }
+
+  const toolbar = (
+    <div className="flex items-center gap-2 flex-wrap bg-cream border border-line rounded-[12px] px-2.5 py-2 mb-3.5">
+      <span className={`${CHIP} bg-[var(--tint-sky)] border-sky-line text-sky-deep`}>
         Chapter {chapterIndex + 1}
       </span>
+      {GENRE_LABELS[genre] && (
+        <span className={`${CHIP} bg-[var(--tint-amber)] border-amber-line text-amber`}>
+          {GENRE_LABELS[genre]}
+        </span>
+      )}
+      <span className="text-[12.5px] text-faint">
+        {level} · {countKoreanWords(passage.body_kr)} words · ~{MINUTES_PER_PASSAGE} min
+      </span>
+      <span className="flex-1 min-w-1" />
       <button
-        onClick={onToggleTranslation}
-        className="text-[12.5px] font-semibold text-muted hover:text-charcoal transition-colors"
+        type="button"
+        onClick={toggleListen}
+        aria-pressed={speaking !== null}
+        className={`${TOOL_BTN} ${
+          speaking !== null
+            ? "bg-success-bg border-success text-success-deep"
+            : "bg-warm border-line text-muted hover:text-charcoal"
+        }`}
       >
-        {showTranslation ? "Hide translation" : "Show translation"}
+        {speaking !== null ? "❚❚ Playing" : "▶ Listen"}
       </button>
-    </div>
-  );
-  const continueButton = (
-    <div className="flex justify-end mt-5">
-      <button className={BTN_BLUE} onClick={onContinue}>
-        Answer the questions →
+      <button
+        type="button"
+        onClick={toggleSize}
+        aria-pressed={large}
+        className={`${TOOL_BTN} ${
+          large ? "bg-success-bg border-success text-success-deep" : "bg-warm border-line text-muted hover:text-charcoal"
+        }`}
+      >
+        <span className="kr">가</span> {large ? "Smaller" : "Larger"}
       </button>
+      <div className="flex border border-line rounded-[9px] overflow-hidden bg-warm" role="group" aria-label="Translation">
+        {(["off", "tap", "all"] as TranslationMode[]).map((m) => (
+          <button
+            key={m}
+            type="button"
+            onClick={() => setMode(m)}
+            aria-pressed={mode === m}
+            className={`text-[12px] font-semibold px-2.5 py-1.5 transition-colors border-l border-line first:border-l-0 ${
+              mode === m ? "bg-[var(--tint-sky)] text-sky-deep" : "text-muted hover:text-charcoal"
+            }`}
+          >
+            {m === "off" ? "Off" : m === "tap" ? "On tap" : "All"}
+          </button>
+        ))}
+      </div>
     </div>
   );
 
-  // ---------- Dialogue / Message: chat bubbles (translation beside, not below) ----------
+  const hint = (
+    <p className="text-[12.5px] text-faint mt-4 pt-3 border-t border-dashed border-line">
+      {mode === "tap" ? "Tap a line for its translation · " : ""}
+      dotted words open their vocabulary page
+    </p>
+  );
+
+  // ---------- genre bodies, all single-column ----------
+  let body: React.ReactNode;
+
   if (genre === "dialogue" || genre === "message") {
-    const speakers: string[] = [];
-    const turns = lines.map(({ kr, en }) => {
-      const krIdx = kr.indexOf(":");
-      const speaker = krIdx === -1 ? "" : kr.slice(0, krIdx).trim();
-      const text = krIdx === -1 ? kr : kr.slice(krIdx + 1).trim();
-      const enIdx = en.indexOf(":");
-      const enText = enIdx === -1 ? en : en.slice(enIdx + 1).trim();
-      if (speaker && !speakers.includes(speaker)) speakers.push(speaker);
-      const side = speakers.indexOf(speaker) % 2 === 1 ? "right" : "left";
-      return { speaker, text, enText, side };
-    });
-
-    return (
-      <div className="max-w-[780px] border border-line rounded-[14px] p-[clamp(20px,3vw,28px)]">
-        {header}
-        <div className="rounded-[10px] border border-line bg-[var(--tint-stone)] p-[clamp(16px,3vw,24px)] grid gap-4">
-          {turns.map((t, i) => {
-            const bubble = (
-              <div className="flex flex-col flex-none max-w-[380px]" key="bubble">
-                {t.speaker && (
-                  <span className={`text-[11px] font-semibold text-faint mb-1 px-1 ${t.side === "right" ? "text-right" : ""}`}>
-                    {t.speaker}
-                  </span>
+    body = (
+      <div className="grid gap-2.5">
+        {lines.map(({ kr }, i) => {
+          const [speaker, text] = splitSpeaker(kr);
+          const right = speakers.indexOf(speaker) % 2 === 1;
+          return revealable(
+            i,
+            <>
+              {speaker && (
+                <span className="block text-[11px] font-semibold text-faint mb-1">{speaker}</span>
+              )}
+              <span
+                className={`inline-block max-w-[440px] text-left rounded-[15px] px-4 py-2.5 ${
+                  right
+                    ? "bg-[var(--tint-sky)] border border-sky-line rounded-tr-[5px]"
+                    : "bg-warm border border-line rounded-tl-[5px]"
+                }`}
+              >
+                <span className={`kr block font-medium ${krClass}`}>
+                  <GlossedText text={text} glossary={glossary} />
+                </span>
+              </span>
+            </>,
+            { align: right ? "right" : "left" }
+          );
+        })}
+      </div>
+    );
+  } else if (genre === "notice") {
+    body = (
+      <div className="mx-auto max-w-[560px] -rotate-1 bg-warm border-2 border-dashed border-line rounded-[8px] px-[clamp(18px,4vw,30px)] py-[clamp(22px,4vw,30px)] shadow-[0_2px_10px_rgba(24,20,10,.06)] relative">
+        <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 text-xl drop-shadow-sm" aria-hidden="true">
+          📌
+        </span>
+        <div className="grid gap-1.5">
+          {lines.map((_, i) => revealable(i, krLine(i, i === 0 ? "font-bold text-center" : "")))}
+        </div>
+      </div>
+    );
+  } else if (genre === "email") {
+    body = (
+      <div className="rounded-[10px] border border-line overflow-hidden bg-warm">
+        <div className="flex items-center gap-2.5 px-5 py-3.5 bg-[var(--tint-sky)] border-b border-sky-line">
+          <span className="text-lg flex-none" aria-hidden="true">
+            ✉️
+          </span>
+          <div className="min-w-0">
+            <p className="text-[10.5px] font-semibold text-muted uppercase tracking-[.05em]">Subject</p>
+            <p className="kr font-semibold text-[15px] truncate">{passage.title_kr}</p>
+            {mode !== "off" && (
+              <p className="text-[12px] text-faint italic truncate">{passage.title_en}</p>
+            )}
+          </div>
+        </div>
+        <div className="p-[clamp(16px,3vw,26px)] grid gap-2">
+          {lines.map((_, i) => revealable(i, krLine(i)))}
+        </div>
+      </div>
+    );
+  } else if (genre === "interview") {
+    body = (
+      <>
+        <div className="flex items-center gap-2 mb-1">
+          <span className="text-lg" aria-hidden="true">
+            🎙️
+          </span>
+          <h2 className="kr text-[16px] font-semibold">{passage.title_kr}</h2>
+        </div>
+        {mode !== "off" && <p className="text-[13px] text-faint italic mb-4">{passage.title_en}</p>}
+        <div className="grid gap-1.5">
+          {lines.map(({ kr }, i) => {
+            const [speaker, text] = splitSpeaker(kr);
+            const isHost = speaker.includes("진행자") || speaker.includes("기자");
+            return revealable(
+              i,
+              <p className={`kr font-medium ${krClass} ${isHost ? "text-muted" : ""}`}>
+                {speaker && (
+                  <b className={`font-semibold ${isHost ? "text-faint" : "text-sky-deep"}`}>
+                    {speaker}:{" "}
+                  </b>
                 )}
-                <div
-                  className={`rounded-[14px] px-4 py-2.5 ${
-                    t.side === "right"
-                      ? "bg-sky-deep text-white rounded-tr-[4px]"
-                      : "bg-cream border border-line rounded-tl-[4px]"
-                  }`}
-                >
-                  <p className="kr text-[15px] leading-[1.6]"><TapText text={t.text} userId={userId} source="reading" /></p>
-                </div>
-              </div>
-            );
-            const translation = (
-              <TranslatableText
-                key="translation"
-                en={t.enText}
-                showTranslation={showTranslation}
-                className={`text-[12.5px] flex-1 min-w-[120px] self-center ${t.side === "right" ? "text-right" : ""}`}
-              />
-            );
-            return (
-              <div key={i} className={`flex items-center gap-3 ${t.side === "right" ? "justify-end" : "justify-start"}`}>
-                {t.side === "right" ? [translation, bubble] : [bubble, translation]}
-              </div>
+                <GlossedText text={speaker ? text : kr} glossary={glossary} />
+              </p>
             );
           })}
         </div>
-        {continueButton}
-      </div>
+      </>
     );
-  }
-
-  // ---------- Notice: posted sign, bilingual side by side (common on real Korean signs) ----------
-  if (genre === "notice") {
-    return (
-      <div className="max-w-[780px] border border-line rounded-[14px] p-[clamp(20px,3vw,28px)]">
-        {header}
-        <div className="relative mx-auto max-w-[620px] -rotate-1 bg-cream border-2 border-dashed border-line rounded-[8px] p-[clamp(22px,4vw,30px)] shadow-[0_2px_10px_rgba(24,20,10,.06)]">
-          <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 text-xl drop-shadow-sm">📌</span>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-1">
-            <div className="grid gap-2.5 sm:text-right">
-              {lines.map((line, i) => (
-                <p key={i} className={`kr leading-[1.7] ${i === 0 ? "font-bold text-[17px]" : "text-[15px]"}`}>
-                  <TapText text={line.kr} userId={userId} source="reading" />
-                </p>
-              ))}
-            </div>
-            <div className="grid gap-2.5">
-              {lines.map((line, i) => (
-                <TranslatableText key={i} en={line.en} showTranslation={showTranslation} className="text-[13px]" />
-              ))}
-            </div>
-          </div>
-        </div>
-        {continueButton}
-      </div>
-    );
-  }
-
-  // ---------- Email: envelope card, Korean | English columns ----------
-  if (genre === "email") {
-    return (
-      <div className="max-w-[860px] border border-line rounded-[14px] p-[clamp(20px,3vw,28px)]">
-        {header}
-        <div className="rounded-[10px] border border-line overflow-hidden bg-cream">
-          <div className="flex items-center gap-2.5 px-5 py-3.5 bg-[var(--tint-sky)] border-b border-sky-line">
-            <span className="text-lg flex-none">✉️</span>
-            <div className="min-w-0">
-              <p className="text-[10.5px] font-semibold text-muted uppercase tracking-[.05em]">Subject</p>
-              <p className="kr font-semibold text-[15px] truncate">{passage.title_kr}</p>
-              <TranslatableText en={passage.title_en} showTranslation={showTranslation} className="text-[12px] truncate" />
-            </div>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2">
-            <div className="p-[clamp(16px,3vw,24px)] sm:border-r border-b sm:border-b-0 border-line grid gap-3 content-start">
-              {lines.map((line, i) => (
-                <p key={i} className="kr text-[15px] leading-[1.8]">
-                  <TapText text={line.kr} userId={userId} source="reading" />
-                </p>
-              ))}
-            </div>
-            <div className="p-[clamp(16px,3vw,24px)] grid gap-3 content-start">
-              {lines.map((line, i) => (
-                <TranslatableText key={i} en={line.en} showTranslation={showTranslation} className="text-[13.5px] leading-[1.9]" />
-              ))}
-            </div>
-          </div>
-        </div>
-        {continueButton}
-      </div>
-    );
-  }
-
-  // ---------- Interview: Q&A transcript, speaker name bolded, Korean | English columns ----------
-  if (genre === "interview") {
-    const turns = lines.map(({ kr, en }) => {
-      const krIdx = kr.indexOf(":");
-      const speaker = krIdx === -1 ? "" : kr.slice(0, krIdx).trim();
-      const text = krIdx === -1 ? kr : kr.slice(krIdx + 1).trim();
-      const enIdx = en.indexOf(":");
-      const enSpeaker = enIdx === -1 ? "" : en.slice(0, enIdx).trim();
-      const enText = enIdx === -1 ? en : en.slice(enIdx + 1).trim();
-      const isHost = speaker.includes("진행자") || speaker.includes("기자");
-      return { speaker, text, enSpeaker, enText, isHost };
-    });
-    return (
-      <div className="max-w-[860px] border border-line rounded-[14px] p-[clamp(20px,3vw,28px)]">
-        {header}
-        <div className="flex items-center gap-2 mb-1">
-          <span className="text-lg">🎙️</span>
-          <h2 className="kr text-[16px] font-semibold">{passage.title_kr}</h2>
-        </div>
-        <TranslatableText en={passage.title_en} showTranslation={showTranslation} className="text-[13px] mb-4" />
-        <div className="rounded-[10px] border border-line overflow-hidden">
-          <div className="grid grid-cols-1 sm:grid-cols-2">
-            <div className="p-[clamp(14px,2.5vw,20px)] bg-cream sm:border-r border-b sm:border-b-0 border-line grid gap-3">
-              {turns.map((t, i) => (
-                <p key={i} className={`kr text-[15px] leading-[1.7] ${t.isHost ? "text-muted italic" : ""}`}>
-                  <b className={`not-italic font-semibold ${t.isHost ? "text-faint" : "text-sky-deep"}`}>{t.speaker}: </b>
-                  <TapText text={t.text} userId={userId} source="reading" />
-                </p>
-              ))}
-            </div>
-            <div className="p-[clamp(14px,2.5vw,20px)] grid gap-3">
-              {turns.map((t, i) => (
-                <p key={i} className={`text-[13.5px] leading-[1.8] transition-all ${
-                  showTranslation ? (t.isHost ? "text-faint italic" : "text-muted") : "text-transparent bg-[var(--tint-stone)] select-none rounded"
-                }`}>
-                  <b className={`not-italic font-semibold ${showTranslation ? (t.isHost ? "text-faint" : "text-sky-deep") : ""}`}>{t.enSpeaker}: </b>
-                  {t.enText}
-                </p>
-              ))}
-            </div>
-          </div>
-        </div>
-        {continueButton}
-      </div>
-    );
-  }
-
-  // ---------- Instruction: numbered steps, Korean | English columns ----------
-  if (genre === "instruction") {
-    const stepLines = lines.filter((l) => /^\d+\./.test(l.kr.trim()));
-    const displayLines = stepLines.length > 0 ? stepLines : lines;
-    return (
-      <div className="max-w-[860px] border border-line rounded-[14px] p-[clamp(20px,3vw,28px)]">
-        {header}
+  } else if (genre === "instruction") {
+    const steps = lines
+      .map((line, i) => ({ line, i }))
+      .filter(({ line }) => /^\d+\./.test(line.kr.trim()));
+    const shown = steps.length > 0 ? steps : lines.map((line, i) => ({ line, i }));
+    body = (
+      <>
         <h2 className="kr text-[17px] font-semibold mb-1">{passage.title_kr}</h2>
-        <TranslatableText en={passage.title_en} showTranslation={showTranslation} className="text-[13px] mb-4" />
-        <div className="rounded-[10px] border border-line overflow-hidden">
-          <div className="grid grid-cols-1 sm:grid-cols-2">
-            <div className="p-[clamp(14px,2.5vw,20px)] bg-cream sm:border-r border-b sm:border-b-0 border-line grid gap-3">
-              {displayLines.map((line, i) => (
-                <div key={i} className="flex items-start gap-3">
-                  <span className="flex-none w-7 h-7 rounded-full bg-[var(--tint-sky)] border border-sky-line text-sky-deep text-[13px] font-bold flex items-center justify-center">
-                    {i + 1}
-                  </span>
-                  <p className="kr text-[15px] leading-[1.6] pt-0.5"><TapText text={line.kr.replace(/^\d+\.\s*/, "")} userId={userId} source="reading" /></p>
-                </div>
-              ))}
-            </div>
-            <div className="p-[clamp(14px,2.5vw,20px)] grid gap-3">
-              {displayLines.map((line, i) => (
-                <div key={i} className="flex items-start gap-3">
-                  <span className="flex-none w-7 h-7 rounded-full opacity-0">{i + 1}</span>
-                  <TranslatableText
-                    en={line.en.replace(/^\d+\.\s*/, "")}
-                    showTranslation={showTranslation}
-                    className="text-[13.5px] leading-[1.7] pt-0.5"
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-        {continueButton}
-      </div>
-    );
-  }
-
-  // ---------- Review: verdict card, Korean | English columns ----------
-  if (genre === "review") {
-    return (
-      <div className="max-w-[860px] border border-line rounded-[14px] p-[clamp(20px,3vw,28px)]">
-        {header}
-        <div className="relative rounded-[10px] border border-amber-line bg-[var(--tint-amber)] p-[clamp(18px,3.2vw,26px)]">
-          <span className="absolute -top-3 left-5 bg-cream border border-amber-line rounded-full px-2.5 py-1 text-[12.5px] font-semibold text-[#92702B]">
-            ⭐ Review
-          </span>
-          <h2 className="kr text-[16px] font-semibold mt-2.5 mb-1">{passage.title_kr}</h2>
-          <TranslatableText en={passage.title_en} showTranslation={showTranslation} className="text-[12.5px] mb-3" />
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1">
-            <div className="grid gap-2">
-              {lines.map((line, i) => (
-                <p key={i} className="kr text-[15px] leading-[1.75]">
-                  <TapText text={line.kr} userId={userId} source="reading" />
+        {mode !== "off" && <p className="text-[13px] text-faint italic mb-4">{passage.title_en}</p>}
+        <div className="grid gap-1.5">
+          {shown.map(({ line, i }, step) =>
+            revealable(
+              i,
+              <div className="flex items-start gap-3">
+                <span className="flex-none w-7 h-7 rounded-full bg-[var(--tint-sky)] border border-sky-line text-sky-deep text-[13px] font-bold flex items-center justify-center">
+                  {step + 1}
+                </span>
+                <p className={`kr font-medium ${krClass} pt-0.5`}>
+                  <GlossedText text={line.kr.replace(/^\d+\.\s*/, "")} glossary={glossary} />
                 </p>
-              ))}
-            </div>
-            <div className="grid gap-2">
-              {lines.map((line, i) => (
-                <TranslatableText key={i} en={line.en} showTranslation={showTranslation} className="text-[13px] leading-[1.8]" />
-              ))}
-            </div>
-          </div>
+              </div>,
+              { enClassName: "pl-10" }
+            )
+          )}
         </div>
-        {continueButton}
+      </>
+    );
+  } else if (genre === "review") {
+    body = (
+      <div className="relative rounded-[10px] border border-amber-line bg-[var(--tint-amber)] px-[clamp(16px,3vw,26px)] py-[clamp(18px,3.2vw,26px)]">
+        <span className="absolute -top-3 left-5 bg-cream border border-amber-line rounded-full px-2.5 py-1 text-[12.5px] font-semibold text-amber">
+          ⭐ Review
+        </span>
+        <h2 className="kr text-[16px] font-semibold mt-2.5 mb-1">{passage.title_kr}</h2>
+        {mode !== "off" && <p className="text-[12.5px] text-faint italic mb-3">{passage.title_en}</p>}
+        <div className="grid gap-1">
+          {lines.map((_, i) => revealable(i, krLine(i)))}
+        </div>
       </div>
+    );
+  } else {
+    body = (
+      <>
+        <div className="mb-5 pb-4 border-b border-dashed border-line">
+          <h2 className="kr text-[20px] font-semibold tracking-[-0.01em]">{passage.title_kr}</h2>
+          {mode !== "off" && <p className="text-[13.5px] text-faint italic mt-0.5">{passage.title_en}</p>}
+        </div>
+        <div className="grid gap-0.5">
+          {lines.map((_, i) => revealable(i, krLine(i)))}
+        </div>
+      </>
     );
   }
 
-  // ---------- Default: book spread (diary / story / explainer / untagged) ----------
   return (
-    <div className="max-w-[880px] border border-line rounded-[14px] p-[clamp(20px,3vw,28px)]">
-      {header}
-      <div className="rounded-[10px] border border-line overflow-hidden bg-warm">
-        <div className="grid grid-cols-1 sm:grid-cols-2">
-          <div className="p-[clamp(14px,2.5vw,22px)] bg-cream sm:border-r border-b sm:border-b-0 border-line">
-            <p className={LABEL}>Korean</p>
-            <h2 className="kr text-[17px] font-medium mb-3">{passage.title_kr}</h2>
-            {lines.map((line, i) => (
-              <p key={i} className="kr text-base font-medium leading-[2] mb-1.5">
-                <TapText text={line.kr} userId={userId} source="reading" />
-              </p>
-            ))}
-          </div>
-          <div className="p-[clamp(14px,2.5vw,22px)]">
-            <p className={LABEL}>English</p>
-            <h2 className="text-[15px] font-semibold text-muted mb-3">{passage.title_en}</h2>
-            {lines.map((line, i) => (
-              <TranslatableText key={i} en={line.en} showTranslation={showTranslation} className="text-sm leading-[2.15] mb-1.5" />
-            ))}
-          </div>
-        </div>
+    <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_236px] items-start max-w-[1040px]">
+      <div className="min-w-0">
+        {toolbar}
+        <article className="bg-cream border border-line rounded-[14px] px-[clamp(16px,3.4vw,34px)] py-[clamp(18px,3.4vw,30px)]">
+          {body}
+          {hint}
+        </article>
       </div>
-      {continueButton}
+
+      <aside className="grid gap-3 lg:sticky lg:top-4">
+        {words.length > 0 && (
+          <div className="bg-cream border border-line rounded-[12px] px-3.5 py-3">
+            <h3 className="text-[11px] font-semibold tracking-[.08em] uppercase text-faint mb-2">
+              Words in this story
+            </h3>
+            <div className="flex flex-wrap gap-1.5">
+              {words.slice(0, 14).map((w) => (
+                <Link
+                  key={w.korean}
+                  href={w.href}
+                  className="kr text-[13px] font-medium rounded-full px-2.5 py-0.5 bg-warm border border-line text-charcoal hover:border-sky-deep hover:text-sky-deep transition-colors"
+                >
+                  {w.korean}
+                </Link>
+              ))}
+            </div>
+            <p className="text-[11.5px] text-faint mt-2">
+              {words.length > 14 ? `+${words.length - 14} more · ` : ""}
+              each one opens its vocabulary page.
+            </p>
+          </div>
+        )}
+
+        <button className={BTN_BLUE} onClick={onContinue}>
+          Answer {passage.questions.length} questions →
+        </button>
+      </aside>
     </div>
   );
 }
