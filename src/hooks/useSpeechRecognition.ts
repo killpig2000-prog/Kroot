@@ -73,6 +73,12 @@ export function useSpeechRecognition(lang = "ko-KR", maxDurationMs?: number) {
       rec.maxAlternatives = 1;
 
       let finalText = "";
+      // A one- or two-syllable word (개, 물…) is often too short for the
+      // recognizer to ever mark a result "final" before it gives up and
+      // fires onend — it only ever reports an interim guess. Keep the last
+      // one so a short word still grades against *something* instead of
+      // always coming back "nothing heard".
+      let lastInterim = "";
       rec.onresult = (e) => {
         let live = "";
         for (let i = e.resultIndex; i < e.results.length; i++) {
@@ -80,20 +86,23 @@ export function useSpeechRecognition(lang = "ko-KR", maxDurationMs?: number) {
           if (r.isFinal) finalText += r[0].transcript;
           else live += r[0].transcript;
         }
+        if (live) lastInterim = live;
         setInterim(live || finalText);
       };
       rec.onerror = (e) => {
         setError(
           e.error === "not-allowed"
             ? "Microphone access was blocked — allow it in your browser, or type instead."
-            : "Didn't catch that. Try again, or type your answer."
+            : e.error === "no-speech"
+              ? "Didn't catch that — for a short word, hold the sound a beat longer, or type it instead."
+              : "Didn't catch that. Try again, or type your answer."
         );
       };
       rec.onend = () => {
         if (timeoutRef.current) clearTimeout(timeoutRef.current);
         setIsListening(false);
         setListenStartedAt(null);
-        const heard = finalText.trim();
+        const heard = (finalText || lastInterim).trim();
         if (heard) onFinalRef.current?.(heard);
         else setError((prev) => prev ?? "Nothing heard — try speaking a little louder.");
       };
