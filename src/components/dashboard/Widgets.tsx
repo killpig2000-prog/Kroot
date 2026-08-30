@@ -1,7 +1,6 @@
 "use client";
 
 import { Link } from "@/i18n/navigation";
-import QuestButton from "@/components/dashboard/QuestButton";
 import { OPEN_FEEDBACK_EVENT } from "@/components/dashboard/FeedbackWidget";
 
 export type WordOfTheDay = {
@@ -10,13 +9,6 @@ export type WordOfTheDay = {
   mean: string;
   exKr: string;
   exEn: string;
-};
-
-export type QuestInfo = {
-  skill_key: string;
-  title: string;
-  description: string;
-  completed_at: string | null;
 };
 
 export type SlangTeaser = {
@@ -55,28 +47,22 @@ function WCard({ title, tag, index = 0, children }: { title: string; tag: string
 
 // Weekly grass and the monthly challenge ring used to live here; both were
 // absorbed into the Study garden card's headline pills on the main column.
-// The daily quest and slang cards live here on xl+ (and inline on smaller
-// screens) so the garden stays above the fold.
+// Today's quest used to have its own card here too, but that duplicated the
+// one always-visible quest card on the main column (this rail only shows on
+// xl+ screens) — it now lives solely there. Slang and the word of the day
+// stay here on xl+ (and inline on smaller screens) so the garden stays above
+// the fold.
 export default function Widgets({
   wotd,
-  quest,
   slang,
 }: {
   wotd: WordOfTheDay | null;
-  quest?: QuestInfo | null;
   slang?: SlangTeaser | null;
 }) {
   return (
     <aside className="hidden xl:flex flex-col gap-5 border-l border-dashed border-dash bg-warm px-5 py-[26px] sticky top-0 h-screen overflow-y-auto">
-      {quest && (
-        <WCard title="Today's quest" tag="✏️" index={0}>
-          <p className="text-[13px] text-muted mb-3">{quest.description}</p>
-          <QuestButton skillKey={quest.skill_key} completed={!!quest.completed_at} />
-        </WCard>
-      )}
-
       {slang && (
-        <WCard title="Today's slang" tag="💬" index={1}>
+        <WCard title="Today's slang" tag="💬" index={0}>
           <Link href="/slang" className="block group">
             <p className="kr text-[21px] font-bold text-[#AF3166] mb-0.5">
               {slang.kr}{" "}
@@ -91,7 +77,7 @@ export default function Widgets({
       )}
 
       {wotd && (
-        <WCard title="Word of the day" tag="📖" index={2}>
+        <WCard title="Word of the day" tag="📖" index={1}>
           <p className="kr text-2xl mb-0.5">{wotd.word}</p>
           <p className="text-[12.5px] text-faint mb-1.5">{wotd.roman}</p>
           <p className="text-[13.5px] text-muted mb-2.5">{wotd.mean}</p>
