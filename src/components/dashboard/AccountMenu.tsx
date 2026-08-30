@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Link } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { SEASONS, applySeasonToDocument, seasonForDate } from "@/lib/seasons";
 import { applyModeToDocument, type ModeKey } from "@/lib/mode";
@@ -67,14 +66,6 @@ export default function AccountMenu({
     <div className="relative" ref={ref}>
       {open && (
         <div className="absolute bottom-full left-0 right-0 mb-2 bg-cream border border-line rounded-[14px] shadow-[0_8px_24px_rgba(0,0,0,.10)] p-2 z-50">
-          <Link
-            href="/profile"
-            onClick={() => setOpen(false)}
-            className="flex items-center gap-2.5 rounded-[9px] px-3 py-2 text-[13px] font-medium text-charcoal hover:bg-warm"
-          >
-            👤 My account
-          </Link>
-
           <button
             onClick={toggleMode}
             className="w-full flex items-center justify-between rounded-[9px] px-3 py-2 text-[13px] font-medium text-charcoal hover:bg-warm"

@@ -8,11 +8,47 @@ import { SKILL_HREF } from "@/components/dashboard/QuestButton";
 // arrow pill on the right.
 export default function TodaysQuestCard({
   quest,
+  compact = false,
 }: {
   quest?: { skill_key: string; description: string; completed_at: string | null } | null;
+  /** Half-width paired layout (icon + description stacked, no title) — used
+   * when this card sits side-by-side with the review card on mobile. */
+  compact?: boolean;
 }) {
   if (!quest) return null;
   const completed = !!quest.completed_at;
+
+  if (compact) {
+    const compactInner = (
+      <>
+        <span className="flex-none w-9 h-9 rounded-[10px] bg-cream border border-success-line flex items-center justify-center text-[17px]">
+          🎯
+        </span>
+        <span className="block text-[11.5px] font-semibold text-success-deep leading-tight line-clamp-2">
+          {quest.description}
+        </span>
+      </>
+    );
+
+    if (completed) {
+      return (
+        <div className="flex flex-col items-center text-center gap-1.5 rounded-[16px] border-[1.5px] border-success bg-success-bg px-3 py-3.5 h-full">
+          {compactInner}
+          <span className="text-[10.5px] font-bold text-success">Done ✓</span>
+        </div>
+      );
+    }
+
+    return (
+      <Link
+        href={SKILL_HREF[quest.skill_key] ?? "/dashboard"}
+        className="group flex flex-col items-center text-center gap-1.5 rounded-[16px] border-[1.5px] border-success bg-success-bg px-3 py-3.5 h-full transition-all hover:-translate-y-0.5 hover:bg-[var(--tint-green)]"
+      >
+        {compactInner}
+        <span className="text-[10.5px] font-bold text-success">Go →</span>
+      </Link>
+    );
+  }
 
   const inner = (
     <>

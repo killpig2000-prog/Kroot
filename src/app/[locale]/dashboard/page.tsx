@@ -389,8 +389,29 @@ export default async function DashboardPage() {
 
           {/* today's quest — the one always-visible recommendation. Resuming
               a specific in-progress session was removed (product decision:
-              one clear "what to do today" beats a resume shortcut). */}
-          <TodaysQuestCard quest={quest} />
+              one clear "what to do today" beats a resume shortcut). Paired
+              side-by-side with the review card on mobile so they don't eat
+              two full-width rows; sm+ keeps the original stacked cards. */}
+          {quest && dueCount > 0 && (
+            <div className="grid grid-cols-2 gap-3 mb-[30px] sm:hidden">
+              <TodaysQuestCard quest={quest} compact />
+              <Link
+                href="/review"
+                className="group flex flex-col items-center text-center gap-1.5 rounded-[16px] border border-sky-line bg-[var(--tint-sky)] px-3 py-3.5 h-full transition-all hover:-translate-y-0.5"
+              >
+                <span className="flex-none w-9 h-9 rounded-[10px] bg-cream border border-sky-line flex items-center justify-center text-[17px]">
+                  💧
+                </span>
+                <b className="block text-[11.5px] font-semibold text-sky-deep leading-tight">{dueCount} due</b>
+                <span className="text-[10.5px] font-bold text-sky-deep transition-transform group-hover:translate-x-0.5">
+                  Review →
+                </span>
+              </Link>
+            </div>
+          )}
+          <div className={quest && dueCount > 0 ? "hidden sm:block" : undefined}>
+            <TodaysQuestCard quest={quest} />
+          </div>
 
           <InstallBanner streakDays={streakDays} />
 
@@ -398,7 +419,9 @@ export default async function DashboardPage() {
           {dueCount > 0 && (
             <Link
               href="/review"
-              className="flex flex-wrap sm:flex-nowrap items-center gap-x-3.5 gap-y-2 border border-sky-line bg-[var(--tint-sky)] rounded-[14px] px-5 py-4 mb-[30px] transition-all hover:-translate-y-0.5 group"
+              className={`flex flex-wrap sm:flex-nowrap items-center gap-x-3.5 gap-y-2 border border-sky-line bg-[var(--tint-sky)] rounded-[14px] px-5 py-4 mb-[30px] transition-all hover:-translate-y-0.5 group ${
+                quest ? "hidden sm:flex" : ""
+              }`}
             >
               <span className="flex-none w-10 h-10 rounded-[10px] bg-cream border border-sky-line flex items-center justify-center text-lg transition-transform group-hover:scale-110">
                 💧
@@ -418,11 +441,39 @@ export default async function DashboardPage() {
               Continue card, this slip, and the rail widget all pointed at the
               same skill). It now lives inside the Continue card. */}
 
-          {/* today's slang — a daily reason to peek at Street Talk (rail on xl+).
-              Below sm the CTA drops under the text so it never splits in two. */}
+          {/* today's slang + word of the day — both live on the rail at xl+.
+              Below that they're inlined into the main column; on mobile
+              specifically they're paired side-by-side (like the quest/review
+              pair above) instead of stacking as two more full-width rows. */}
+          {wotd && (
+            <div className="grid grid-cols-2 gap-3 mb-[30px] sm:hidden">
+              <Link
+                href="/slang"
+                className="group flex flex-col items-center text-center gap-1.5 rounded-[16px] border border-[var(--tint-pink-line)] bg-[var(--tint-pink)] px-3 py-3.5 h-full transition-all hover:-translate-y-0.5"
+              >
+                <span className="flex-none w-9 h-9 rounded-[10px] bg-cream border border-[var(--tint-pink-line)] flex items-center justify-center text-[17px]">
+                  💬
+                </span>
+                <b className="block text-[13px] font-semibold text-[#AF3166] leading-tight kr">{slang.kr}</b>
+                <span className="text-[10.5px] font-bold text-[#C13E78] transition-transform group-hover:translate-x-0.5">
+                  Slang →
+                </span>
+              </Link>
+              <div className="flex flex-col items-center text-center gap-1.5 rounded-[16px] border border-line bg-cream px-3 py-3.5 h-full">
+                <span className="flex-none w-9 h-9 rounded-[10px] bg-warm border border-line flex items-center justify-center text-[15px] font-semibold text-success-deep uppercase">
+                  W
+                </span>
+                <b className="block text-[13px] font-semibold text-charcoal leading-tight kr">{wotd.word}</b>
+                <span className="text-[10.5px] text-muted leading-tight line-clamp-1">{wotd.mean}</span>
+              </div>
+            </div>
+          )}
+
           <Link
             href="/slang"
-            className="xl:hidden flex flex-wrap sm:flex-nowrap items-center gap-x-3.5 gap-y-2 border border-[var(--tint-pink-line)] bg-[var(--tint-pink)] rounded-[14px] px-5 py-4 mb-[30px] transition-all hover:-translate-y-0.5 group"
+            className={`xl:hidden flex flex-wrap sm:flex-nowrap items-center gap-x-3.5 gap-y-2 border border-[var(--tint-pink-line)] bg-[var(--tint-pink)] rounded-[14px] px-5 py-4 mb-[30px] transition-all hover:-translate-y-0.5 group ${
+              wotd ? "hidden sm:flex" : ""
+            }`}
           >
             <span className="flex-none w-10 h-10 rounded-[10px] bg-cream border border-[var(--tint-pink-line)] flex items-center justify-center text-lg transition-transform group-hover:scale-110">
               💬
@@ -441,7 +492,7 @@ export default async function DashboardPage() {
 
           {/* word of the day — rail card on xl+, inline here below that so
               phones and tablets get the same daily word a desktop does. */}
-          {wotd && <WordOfDayCard wotd={wotd} className="xl:hidden" />}
+          {wotd && <WordOfDayCard wotd={wotd} className="hidden sm:block xl:hidden" />}
 
           {/* new to Korean? — only for true beginners */}
           {cefr === "A1" && (
