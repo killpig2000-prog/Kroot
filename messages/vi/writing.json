@@ -1,0 +1,131 @@
+{
+  "crumb": "Viết",
+  "genres": {
+    "journal": {
+      "icon": "📔",
+      "label": "Nhật ký",
+      "blurb": "Một ngày của riêng bạn, bằng lời của chính bạn"
+    },
+    "reply": {
+      "icon": "💬",
+      "label": "Trả lời",
+      "blurb": "Có người vừa nhắn cho bạn — hãy trả lời"
+    },
+    "description": {
+      "icon": "🖼️",
+      "label": "Miêu tả",
+      "blurb": "Miêu tả một người, một nơi, một vật, một xu hướng"
+    },
+    "opinion": {
+      "icon": "🗣️",
+      "label": "Ý kiến",
+      "blurb": "Chọn một quan điểm và giải thích lý do"
+    }
+  },
+  "map": {
+    "levelSub": "Cấp độ {level} · viết một chút, xem cách nói tự nhiên",
+    "progress": "Đã viết {done}/{total} chương",
+    "genresNote": "4 thể loại · nhật ký, trả lời, miêu tả, ý kiến",
+    "capReached": "🌙 Đã hoàn thành {n} chương hôm nay — mở thêm vào ngày mai.",
+    "continueTomorrow": "Chương của ngày mai",
+    "continueChapter": "Tiếp tục · Chương {n}",
+    "questionsOf": "{n} câu hỏi · {prompt}",
+    "write": "Viết →",
+    "chaptersRange": "Chương {first}–{last}",
+    "statusDone": "Đã xong",
+    "statusWrite": "Viết",
+    "statusLocked": "Đã khóa",
+    "tomorrowBadge": "🌙 Ngày mai",
+    "chapterN": "Chương {n}"
+  },
+  "session": {
+    "chapterN": "Chương {n}",
+    "levelChapterOf": "Cấp độ {level} · chương {n} / {total}",
+    "capTitle": "Đã hoàn thành {n} chương hôm nay",
+    "capBody": "Viết mở {n} chương mỗi ngày — chương này sẽ mở vào ngày mai. Hôm nay bạn làm rất tốt!",
+    "allChapters": "Tất cả chương",
+    "emptyTitle": "Chưa có đề bài ở đây",
+    "emptyBody": "Trang này chưa được soạn.",
+    "backToAll": "Quay lại tất cả trang"
+  },
+  "phase": {
+    "answersHint": "{n} câu · ghép từ mỗi khối, hoặc tự gõ.",
+    "holdTipTitle": "💡 Giữ vào một khối để nghe phát âm",
+    "holdTipBody": "Đọc to câu trước khi chạm — sẽ nhớ lâu hơn.",
+    "qOf": "TRÊN {n}",
+    "useBlocks": "Dùng khối từ",
+    "typeMyself": "Tự gõ",
+    "modeTiles": "Ghép câu",
+    "modeSlots": "Điền chỗ trống",
+    "modeChunks": "Ghép cụm từ",
+    "modeType": "Gõ chữ",
+    "putWordsInOrder": "Sắp xếp các từ theo đúng thứ tự.",
+    "written": "✓ Đã viết",
+    "stillEmpty": "Còn trống",
+    "doneCount": "{done} / {total} hoàn thành",
+    "noWait": "· mọi câu đã chấm ngay tại đây, không cần chờ",
+    "saving": "Đang lưu…",
+    "submitFeedback": "Nộp bài & nhận nhận xét",
+    "finishChapter": "Hoàn thành chương"
+  },
+  "board": {
+    "tapWords": "Chạm vào các từ bên dưới, theo đúng thứ tự",
+    "correct": "✓ Chính xác",
+    "hearIt": "🔊 nghe phát âm",
+    "tryAgain": "Thử lại",
+    "check": "Kiểm tra",
+    "holdWord": "Giữ vào một từ để nghe phát âm",
+    "shuffle": "xáo trộn",
+    "allRight": "✓ Tất cả đều đúng",
+    "singleCorrect": "✓ Chính xác",
+    "pickEnding": "Chọn đuôi câu đúng",
+    "pickParticle": "Chọn trợ từ đúng",
+    "tapBlocks": "Chạm vào các khối để ghép câu trả lời — thứ tự tự nhiên là được",
+    "someDontBelong": "Một số khối không thuộc câu này — cứ bỏ qua. Được chấm như một bài viết."
+  },
+  "grading": {
+    "step1Title": "Đang đọc bài viết của bạn…",
+    "step1Sub": "Cây giáo viên của bạn đang kiểm tra ngữ pháp 🧐",
+    "step2Title": "Đang xem xét kỹ hơn…",
+    "step2Sub": "So sánh với cách người bản xứ sẽ nói",
+    "step3Title": "Sắp xong rồi…",
+    "step3Sub": "Đang viết nhận xét dành riêng cho bạn ✍️",
+    "slow": "Đang lâu hơn bình thường một chút — chờ thêm chút nhé, vẫn đang xử lý.",
+    "yourAnswers": "Câu trả lời của bạn"
+  },
+  "result": {
+    "headline90": "Hoàn hảo! Mọi câu trả lời đều tự nhiên.",
+    "headline80": "Tuyệt vời! Câu trả lời của bạn rất rõ ràng.",
+    "headline60": "Làm tốt lắm! Có vài chỗ cần sửa nhỏ bên dưới.",
+    "headlineLow": "Cố gắng tốt! Cùng sửa lại nhé.",
+    "grammar": "Ngữ pháp",
+    "natural": "🌱 {n} câu tự nhiên",
+    "smallFixes": "✏️ {n} lỗi nhỏ",
+    "chapterN": "Chương {n}",
+    "answers": "câu trả lời",
+    "checkedOneGo": "Đã chấm cùng lúc",
+    "levelUpValue": "Cấp {n}",
+    "levelUpSub": "🎉 Lên cấp!",
+    "complete": "Hoàn thành",
+    "yourLevel": "Cấp độ của bạn",
+    "alreadyNatural": "✓ Đã tự nhiên — không cần sửa",
+    "naturalBadge": "Tự nhiên",
+    "needsFix": "Cần sửa",
+    "patternsTitle": "🔍 Những điểm lặp lại trong câu trả lời của bạn",
+    "focusTitle": "🎯 Trọng tâm hôm nay",
+    "tryIt": "Thử xem",
+    "nextChapterChecks": "Chương sau cũng sẽ kiểm tra điểm này. 💪",
+    "savedTitle": "Viết tốt lắm!",
+    "savedBody": "Chúng tôi đã lưu câu trả lời của bạn — lần này chưa thể chấm điểm.",
+    "backToGarden": "Về Khu vườn",
+    "allChapters": "Tất cả chương",
+    "saving": "Đang lưu…",
+    "turnPage": "Sang trang tiếp →",
+    "builtFirstTry": "Ghép đúng ngay lần đầu.",
+    "builtAfterTries": "Đúng sau {n} lần thử — đọc to lại một lần nữa để nhớ lâu hơn.",
+    "fallbackFeedbackPerfect": "Mọi câu đều được ghép đúng ngay lần đầu — trật tự từ của bạn rất vững.",
+    "fallbackFeedbackRetries": "Bạn đã hoàn thành — {n} câu phải thử lại, và đó chính là cách để nhớ lâu hơn.",
+    "fallbackFocusPerfect": "Chương sau sẽ nới lỏng các khối từ một chút — thử ghép câu trước khi nhìn phần tiếng Anh.",
+    "fallbackFocusRetries": "Trước khi chạm, hãy đọc to cả câu bằng tiếng Hàn — rồi đặt các khối cho khớp."
+  }
+}

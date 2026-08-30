@@ -1,4 +1,5 @@
 import { Link, redirect } from "@/i18n/navigation";
+import { getTranslations } from "next-intl/server";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import WritingSession, { WritingEmpty } from "@/components/writing/WritingSession";
@@ -27,7 +28,9 @@ export default async function WritingChapterSessionPage({
 
   if (!user) redirect("/onboarding");
 
-  const [{ data: profile }, { data: costumeRows }, { data: todayRows }] = await Promise.all([
+  const [t, tn, { data: profile }, { data: costumeRows }, { data: todayRows }] = await Promise.all([
+    getTranslations("writing"),
+    getTranslations("nav"),
     supabase
       .from("profiles")
       .select("display_name, current_level, streak_days, avatar_url, xp")
@@ -71,14 +74,14 @@ export default async function WritingChapterSessionPage({
           {/* breadcrumb */}
           <div className="flex gap-2 text-[13px] text-faint mb-[18px] flex-wrap">
             <Link href="/dashboard" className="hover:text-charcoal transition-colors">
-              Garden
+              {tn("garden")}
             </Link>
             <span>/</span>
             <Link href={`/writing?level=${level}`} className="hover:text-charcoal transition-colors">
-              Writing
+              {t("crumb")}
             </Link>
             <span>/</span>
-            <b className="text-charcoal font-semibold">Chapter {chapterIndex + 1}</b>
+            <b className="text-charcoal font-semibold">{t("session.chapterN", { n: chapterIndex + 1 })}</b>
           </div>
 
           {/* head */}
@@ -87,10 +90,10 @@ export default async function WritingChapterSessionPage({
               <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[var(--tint-amber)] text-amber border border-amber-line items-center justify-center kr text-[15px] mr-[9px]">
                 쓰
               </span>
-              Writing
+              {t("crumb")}
             </h1>
             <span className="text-[13px] text-muted">
-              Level {level} · chapter {chapterIndex + 1} of {chapters.length}
+              {t("session.levelChapterOf", { level, n: chapterIndex + 1, total: chapters.length })}
             </span>
           </div>
 
@@ -99,17 +102,15 @@ export default async function WritingChapterSessionPage({
           ) : dailyCapped ? (
             <div className="border border-line rounded-[14px] bg-cream max-w-[900px] px-7 py-10 text-center">
               <p className="text-[40px] mb-2">🌙</p>
-              <h2 className="font-bold text-[19px] tracking-[-0.02em] mb-1.5">
-                Today&apos;s {CHAPTERS_PER_DAY} chapters are done
-              </h2>
+              <h2 className="font-bold text-[19px] tracking-[-0.02em] mb-1.5">{t("session.capTitle", { n: CHAPTERS_PER_DAY })}</h2>
               <p className="text-sm text-muted mb-6 max-w-[420px] mx-auto leading-[1.7]">
-                Writing opens {CHAPTERS_PER_DAY} chapters a day — this one unlocks tomorrow. Great pace today!
+                {t("session.capBody", { n: CHAPTERS_PER_DAY })}
               </p>
               <Link
                 href={`/writing?level=${level}`}
                 className="rounded-[9px] px-[18px] py-[9px] text-sm font-semibold text-charcoal bg-cream border border-line hover:bg-warm transition-colors"
               >
-                All chapters
+                {t("session.allChapters")}
               </Link>
             </div>
           ) : (

@@ -1,7 +1,8 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { WRITING_GENRE_META, MIN_RESPONSE_LENGTH, type Prompt } from "@/lib/writing";
-import { MODE_LABEL, isLocalMode, type Board, type BuildMode } from "@/lib/writing-builder";
+import { isLocalMode, type Board, type BuildMode } from "@/lib/writing-builder";
 import { ChunkBoard, SlotBoard, TileBoard } from "@/components/writing/WritingBoards";
 
 const CARD = "border border-line rounded-[16px] bg-cream max-w-[900px] overflow-hidden";
@@ -65,7 +66,15 @@ export default function WritePhase({
   needsGrader: boolean;
   onSubmit: () => void;
 }) {
-  const genreMeta = WRITING_GENRE_META[prompts[0].genre];
+  const t = useTranslations("writing");
+  const genre = prompts[0].genre;
+  const genreMeta = WRITING_GENRE_META[genre];
+  const MODE_LABEL: Record<BuildMode, string> = {
+    tiles: t("phase.modeTiles"),
+    slots: t("phase.modeSlots"),
+    chunks: t("phase.modeChunks"),
+    type: t("phase.modeType"),
+  };
 
   return (
     <div className={CARD}>
@@ -73,18 +82,16 @@ export default function WritePhase({
       <div className="p-[clamp(20px,3vw,32px)] pb-5 border-b border-dashed border-line bg-cream grid gap-5 sm:grid-cols-[1fr_auto] sm:items-end">
         <div>
           <span className="inline-flex items-center gap-1.5 text-xs font-bold text-amber bg-[var(--tint-amber)] border border-amber-line px-2.5 py-1 rounded-full mb-2.5">
-            {genreMeta.icon} {genreMeta.label}
+            {genreMeta.icon} {t(`genres.${genre}.label`)}
           </span>
           <h1 className="font-extrabold text-[22px] sm:text-[24px] tracking-[-0.02em]" style={{ textWrap: "balance" }}>
-            Chapter {chapterIndex + 1}
+            {t("session.chapterN", { n: chapterIndex + 1 })}
           </h1>
-          <p className="text-[13.5px] text-muted mt-1">
-            {prompts.length} answers · build each one from the blocks, or type it yourself.
-          </p>
+          <p className="text-[13.5px] text-muted mt-1">{t("phase.answersHint", { n: prompts.length })}</p>
         </div>
         <div className="max-w-[260px] text-[12.5px] leading-[1.55] text-success bg-success-bg border border-success-line rounded-[12px] px-3 py-2.5">
-          <b className="block text-[13px] text-success-deep mb-0.5">💡 Hold any block to hear it</b>
-          Say the sentence out loud before you tap — it sticks better.
+          <b className="block text-[13px] text-success-deep mb-0.5">{t("phase.holdTipTitle")}</b>
+          {t("phase.holdTipBody")}
         </div>
       </div>
 
@@ -105,7 +112,7 @@ export default function WritePhase({
               <div className="text-[13px] font-extrabold text-amber tracking-[.02em] pt-[3px] mb-2 sm:mb-0">
                 Q{i + 1}
                 <small className="block text-[10.5px] text-faint font-semibold tracking-[.08em] mt-0.5">
-                  OF {prompts.length}
+                  {t("phase.qOf", { n: prompts.length })}
                 </small>
               </div>
               <div>
@@ -132,7 +139,7 @@ export default function WritePhase({
                       onClick={() => onToggleMode(i)}
                       className="flex-none text-[11.5px] font-bold px-2.5 py-1 rounded-full border border-line bg-warm text-muted hover:text-charcoal hover:border-faint transition-colors"
                     >
-                      {board.mode === "type" ? "Use blocks" : "Type it myself"}
+                      {board.mode === "type" ? t("phase.useBlocks") : t("phase.typeMyself")}
                     </button>
                   )}
                 </div>
@@ -149,7 +156,7 @@ export default function WritePhase({
                         }
                         style={{ textWrap: "balance" }}
                       >
-                        {prompt.example_en ?? "Put the words in order."}
+                        {prompt.example_en ?? t("phase.putWordsInOrder")}
                       </p>
                     )}
                     {board.mode === "slots" && prompt.example_en && (
@@ -203,7 +210,9 @@ export default function WritePhase({
                       />
                     </div>
                     <div className="flex items-center justify-between mt-1.5 text-xs">
-                      <span className={done ? "text-success font-semibold" : "text-faint"}>{done ? "✓ Written" : "Still empty"}</span>
+                      <span className={done ? "text-success font-semibold" : "text-faint"}>
+                        {done ? t("phase.written") : t("phase.stillEmpty")}
+                      </span>
                       <span className="text-faint tabular-nums">{entry.text.length} / 500</span>
                     </div>
                   </>
@@ -222,11 +231,11 @@ export default function WritePhase({
               <i key={p.key} className={`w-2.5 h-2.5 rounded-full ${entryDone(entries[i], boards[i]) ? "bg-success" : "bg-line"}`} />
             ))}
           </span>
-          {answeredCount} / {prompts.length} done
-          {!needsGrader && ready && <span className="text-faint">· all checked here, no wait</span>}
+          {t("phase.doneCount", { done: answeredCount, total: prompts.length })}
+          {!needsGrader && ready && <span className="text-faint">{t("phase.noWait")}</span>}
         </div>
         <button className={BTN_INK} onClick={onSubmit} disabled={submitting || !ready}>
-          {submitting ? "Saving…" : needsGrader ? "Submit & get feedback" : "Finish chapter"}
+          {submitting ? t("phase.saving") : needsGrader ? t("phase.submitFeedback") : t("phase.finishChapter")}
         </button>
       </div>
     </div>

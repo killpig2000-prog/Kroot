@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import { useTranslations } from "next-intl";
 import { speakKorean } from "@/lib/tts";
 import {
   checkSlots,
@@ -108,6 +109,7 @@ export function TileBoard({
   onCheck: () => void;
   onShuffle: () => void;
 }) {
+  const t = useTranslations("writing.board");
   const hold = useHoldToSpeak();
   const byId = new Map(board.tiles.map((t) => [t.id, t]));
   const wrong = checked === false ? new Set(wrongTilePositions(board, picked)) : new Set<number>();
@@ -116,7 +118,7 @@ export function TileBoard({
   return (
     <div>
       <div className={`${ZONE} ${zoneState}`} aria-live="polite">
-        {picked.length === 0 && <span className="text-[12.5px] text-faint px-1.5 py-1">Tap the words below, in order</span>}
+        {picked.length === 0 && <span className="text-[12.5px] text-faint px-1.5 py-1">{t("tapWords")}</span>}
         {picked.map((id, i) => {
           const t = byId.get(id);
           if (!t) return null;
@@ -151,23 +153,23 @@ export function TileBoard({
       <div className="flex items-center justify-between gap-3 flex-wrap">
         {checked === true ? (
           <span className="text-[13.5px] font-bold text-success flex items-center gap-2">
-            ✓ Correct
+            {t("correct")}
             <button type="button" className={BTN_GHOST} onClick={() => speakKorean(board.answer.join(" "), { rate: 0.9 })}>
-              🔊 hear it
+              {t("hearIt")}
             </button>
           </span>
         ) : (
           <button type="button" className={BTN_CHECK} onClick={onCheck} disabled={picked.length === 0}>
-            {checked === false ? "Try again" : "Check"}
+            {checked === false ? t("tryAgain") : t("check")}
           </button>
         )}
         <span className="text-[12px] text-faint">
-          Hold a word to hear it
+          {t("holdWord")}
           {checked !== true && (
             <>
               {" · "}
               <button type="button" className={BTN_GHOST} onClick={onShuffle}>
-                shuffle
+                {t("shuffle")}
               </button>
             </>
           )}
@@ -196,6 +198,7 @@ export function SlotBoard({
   onActivate: (slot: number) => void;
   onCheck: () => void;
 }) {
+  const t = useTranslations("writing.board");
   const hold = useHoldToSpeak();
   const results = checked === null ? null : checkSlots(board, chosen);
   const allRight = results?.every(Boolean) ?? false;
@@ -252,18 +255,18 @@ export function SlotBoard({
       <div className="flex items-center justify-between gap-3 flex-wrap">
         {allRight ? (
           <span className="text-[13.5px] font-bold text-success flex items-center gap-2">
-            ✓ {board.slots.length > 1 ? "All right" : "Correct"}
+            {board.slots.length > 1 ? t("allRight") : t("singleCorrect")}
             <button type="button" className={BTN_GHOST} onClick={() => speakKorean(slotsText(board, chosen), { rate: 0.9 })}>
-              🔊 hear it
+              {t("hearIt")}
             </button>
           </span>
         ) : (
           <button type="button" className={BTN_CHECK} onClick={onCheck} disabled={chosen.some((c) => !c)}>
-            {checked === false ? "Try again" : "Check"}
+            {checked === false ? t("tryAgain") : t("check")}
           </button>
         )}
         <span className="text-[12px] text-faint">
-          {board.slots[active]?.kind === "ending" ? "Pick the right ending" : "Pick the right particle"}
+          {board.slots[active]?.kind === "ending" ? t("pickEnding") : t("pickParticle")}
         </span>
       </div>
     </div>
@@ -281,12 +284,13 @@ export function ChunkBoard({
   picked: string[];
   onChange: (picked: string[]) => void;
 }) {
+  const t = useTranslations("writing.board");
   const hold = useHoldToSpeak();
   const byId = new Map(board.chunks.map((t) => [t.id, t]));
   return (
     <div>
       <div className={`${ZONE} min-h-[96px]`} aria-live="polite">
-        {picked.length === 0 && <span className="text-[12.5px] text-faint px-1.5 py-1">Tap blocks to build your answer — any natural order works</span>}
+        {picked.length === 0 && <span className="text-[12.5px] text-faint px-1.5 py-1">{t("tapBlocks")}</span>}
         {picked.map((id) => {
           const t = byId.get(id);
           if (!t) return null;

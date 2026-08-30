@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import LevelCreature from "@/components/dashboard/LevelCreature";
 import type { ProgressResult } from "@/lib/activity";
 import type { Prompt } from "@/lib/writing";
@@ -13,13 +14,6 @@ const BTN_LINE =
   "rounded-[10px] px-5 py-[11px] text-sm font-bold text-charcoal bg-cream border border-line hover:bg-warm transition-colors disabled:opacity-60";
 
 const CIRC = 2 * Math.PI * 70;
-
-function headlineFor(score: number) {
-  if (score >= 90) return "Perfect! Every answer reads naturally.";
-  if (score >= 80) return "Amazing! Your answers came through clearly.";
-  if (score >= 60) return "Nice work! A few small fixes below.";
-  return "Good try! Let's fix these together.";
-}
 
 export default function CompareResult({
   prompts,
@@ -50,9 +44,19 @@ export default function CompareResult({
   navigating: boolean;
   onGoTo: (href: string) => void;
 }) {
+  const t = useTranslations("writing.result");
   const naturalCount = grade?.answers.filter((a) => a.original === a.corrected).length ?? 0;
   const fixCount = (grade?.answers.length ?? 0) - naturalCount;
   const offset = grade ? CIRC - (Math.max(0, Math.min(100, grade.score)) / 100) * CIRC : CIRC;
+  const headline = grade
+    ? grade.score >= 90
+      ? t("headline90")
+      : grade.score >= 80
+        ? t("headline80")
+        : grade.score >= 60
+          ? t("headline60")
+          : t("headlineLow")
+    : "";
 
   return (
     <div className="flex flex-col gap-3.5" style={{ animation: "fadeUp .4s ease" }}>
@@ -90,28 +94,28 @@ export default function CompareResult({
                     {grade.score}
                     <small className="text-sm text-faint font-semibold">/100</small>
                   </div>
-                  <div className="text-[11px] font-bold tracking-[.1em] uppercase text-muted mt-1">Grammar</div>
+                  <div className="text-[11px] font-bold tracking-[.1em] uppercase text-muted mt-1">{t("grammar")}</div>
                 </div>
               </div>
 
               <div className="text-center sm:text-left">
                 <h2 className="font-extrabold text-[26px] sm:text-[28px] tracking-[-0.025em]" style={{ textWrap: "balance" }}>
-                  {headlineFor(grade.score)}
+                  {headline}
                 </h2>
                 <p className="text-[15px] text-muted mt-1.5 max-w-[46ch] mx-auto sm:mx-0">{grade.feedback_en}</p>
                 <div className="flex gap-2 flex-wrap mt-4 justify-center sm:justify-start">
                   {naturalCount > 0 && (
                     <span className="inline-flex items-center gap-1.5 text-[12.5px] font-bold px-2.5 py-1.5 rounded-full border bg-success-bg text-success-deep border-success-line">
-                      🌱 {naturalCount} natural
+                      {t("natural", { n: naturalCount })}
                     </span>
                   )}
                   {fixCount > 0 && (
                     <span className="inline-flex items-center gap-1.5 text-[12.5px] font-bold px-2.5 py-1.5 rounded-full border bg-[var(--tint-amber)] text-amber border-amber-line">
-                      ✏️ {fixCount} small fix{fixCount > 1 ? "es" : ""}
+                      {t("smallFixes", { n: fixCount })}
                     </span>
                   )}
                   <span className="inline-flex items-center gap-1.5 text-[12.5px] font-bold px-2.5 py-1.5 rounded-full border bg-cream text-muted border-line">
-                    Chapter {chapterIndex + 1}
+                    {t("chapterN", { n: chapterIndex + 1 })}
                   </span>
                 </div>
               </div>
@@ -120,28 +124,28 @@ export default function CompareResult({
             <div className="grid grid-cols-3 divide-x divide-line">
               <div className="px-4 sm:px-6 py-4">
                 <b className="block text-[20px] sm:text-[22px] font-extrabold tracking-[-0.02em] tabular-nums">
-                  {grade.answers.length} <em className="text-[13px] font-semibold text-success not-italic">answers</em>
+                  {grade.answers.length} <em className="text-[13px] font-semibold text-success not-italic">{t("answers")}</em>
                 </b>
-                <span className="text-xs text-muted">Checked in one go</span>
+                <span className="text-xs text-muted">{t("checkedOneGo")}</span>
               </div>
               {levelUp ? (
                 <div className="px-4 sm:px-6 py-4">
                   <b className="block text-[20px] sm:text-[22px] font-extrabold tracking-[-0.02em] tabular-nums">
-                    Lv. {levelUp.new_level}
+                    {t("levelUpValue", { n: levelUp.new_level })}
                   </b>
-                  <span className="text-xs text-muted">🎉 Level up!</span>
+                  <span className="text-xs text-muted">{t("levelUpSub")}</span>
                 </div>
               ) : (
                 <div className="px-4 sm:px-6 py-4">
                   <b className="block text-[20px] sm:text-[22px] font-extrabold tracking-[-0.02em] tabular-nums">
-                    Chapter {chapterIndex + 1}
+                    {t("chapterN", { n: chapterIndex + 1 })}
                   </b>
-                  <span className="text-xs text-muted">Complete</span>
+                  <span className="text-xs text-muted">{t("complete")}</span>
                 </div>
               )}
               <div className="px-4 sm:px-6 py-4">
                 <b className="block text-[20px] sm:text-[22px] font-extrabold tracking-[-0.02em] tabular-nums">{level}</b>
-                <span className="text-xs text-muted">Your level</span>
+                <span className="text-xs text-muted">{t("yourLevel")}</span>
               </div>
             </div>
           </div>
@@ -163,9 +167,7 @@ export default function CompareResult({
                     {isPerfect ? (
                       <>
                         <p className="kr text-[17px] leading-[1.75]">{a.corrected}</p>
-                        <p className="text-[13px] text-success font-semibold flex items-center gap-1.5 mt-2.5">
-                          ✓ Already natural — nothing to change
-                        </p>
+                        <p className="text-[13px] text-success font-semibold flex items-center gap-1.5 mt-2.5">{t("alreadyNatural")}</p>
                       </>
                     ) : (
                       <p className="kr text-[17px] leading-[1.85]">
@@ -205,7 +207,7 @@ export default function CompareResult({
                         isPerfect ? "bg-success-bg text-success-deep" : "bg-[var(--tint-amber)] text-amber"
                       }`}
                     >
-                      {isPerfect ? "Natural" : "Needs a fix"}
+                      {isPerfect ? t("naturalBadge") : t("needsFix")}
                     </span>
                     <div className="text-[30px] font-extrabold tracking-[-0.03em] leading-none tabular-nums">
                       {a.score}
@@ -228,7 +230,7 @@ export default function CompareResult({
             {grade.commonPatterns.length > 0 && (
               <div className="rounded-[16px] p-5 border bg-[var(--tint-sky)] border-sky-line">
                 <h3 className="text-xs font-extrabold tracking-[.1em] uppercase text-sky-deep flex items-center gap-2 mb-3.5">
-                  🔍 Patterns across your answers
+                  {t("patternsTitle")}
                 </h3>
                 <div className="flex flex-col">
                   {grade.commonPatterns.map((p, i) => (
@@ -257,20 +259,18 @@ export default function CompareResult({
               }`}
             >
               <h3 className="text-xs font-extrabold tracking-[.1em] uppercase text-success-deep flex items-center gap-2 mb-3.5">
-                🎯 Today&apos;s focus
+                {t("focusTitle")}
               </h3>
               <p className="text-[19px] font-extrabold tracking-[-0.02em] leading-[1.35] text-success-deep" style={{ textWrap: "balance" }}>
                 {grade.learningPoint.headline}
               </p>
               {grade.learningPoint.example_kr && (
                 <div className="mt-3.5 px-3.5 py-3 bg-cream border border-success-line rounded-[10px]">
-                  <span className={`${LABEL} block mb-1`}>Try it</span>
+                  <span className={`${LABEL} block mb-1`}>{t("tryIt")}</span>
                   <p className="kr text-[15px] leading-[1.7]">{grade.learningPoint.example_kr}</p>
                 </div>
               )}
-              <p className="text-[12.5px] text-success font-semibold mt-3">
-                Next chapter checks for this pattern too. 💪
-              </p>
+              <p className="text-[12.5px] text-success font-semibold mt-3">{t("nextChapterChecks")}</p>
             </div>
           </div>
         </>
@@ -279,8 +279,8 @@ export default function CompareResult({
           <svg viewBox="0 0 220 230" className="w-[140px] h-auto mx-auto" aria-hidden="true">
             <LevelCreature level={treeStage} species={species} costumeIds={costumeIds} />
           </svg>
-          <h2 className="font-bold text-[19px] tracking-[-0.02em] mt-2 mb-1.5">Nice writing!</h2>
-          <p className="text-sm text-muted mb-5">We saved your answers — grading wasn&apos;t available this time.</p>
+          <h2 className="font-bold text-[19px] tracking-[-0.02em] mt-2 mb-1.5">{t("savedTitle")}</h2>
+          <p className="text-sm text-muted mb-5">{t("savedBody")}</p>
           <div className="grid gap-3 max-w-[560px] mx-auto text-left">
             {prompts.map((p, i) => (
               <div key={p.key} className="rounded-[12px] border border-line bg-warm px-4 py-3">
@@ -294,10 +294,10 @@ export default function CompareResult({
 
       <div className="flex items-center justify-end gap-2.5 flex-wrap">
         <button className={BTN_LINE} onClick={() => onGoTo("/dashboard")} disabled={navigating}>
-          Back to Garden
+          {t("backToGarden")}
         </button>
         <button className={BTN_LINE} onClick={() => onGoTo(`/writing?level=${level}`)} disabled={navigating}>
-          {navigating ? "Saving…" : "All chapters"}
+          {navigating ? t("saving") : t("allChapters")}
         </button>
         {hasNextChapter && (
           <button
@@ -305,7 +305,7 @@ export default function CompareResult({
             onClick={() => onGoTo(`/writing/session?chapter=${chapterIndex + 1}&level=${level}`)}
             disabled={navigating}
           >
-            {navigating ? "Saving…" : "Turn the page →"}
+            {navigating ? t("saving") : t("turnPage")}
           </button>
         )}
       </div>

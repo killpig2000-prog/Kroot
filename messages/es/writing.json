@@ -1,0 +1,131 @@
+{
+  "crumb": "Escritura",
+  "genres": {
+    "journal": {
+      "icon": "📔",
+      "label": "Diario",
+      "blurb": "Tu propio día, con tus propias palabras"
+    },
+    "reply": {
+      "icon": "💬",
+      "label": "Respuestas",
+      "blurb": "Alguien te escribió — responde"
+    },
+    "description": {
+      "icon": "🖼️",
+      "label": "Descripción",
+      "blurb": "Describe a una persona, un lugar, un objeto o una tendencia"
+    },
+    "opinion": {
+      "icon": "🗣️",
+      "label": "Opinión",
+      "blurb": "Toma una postura y explica por qué"
+    }
+  },
+  "map": {
+    "levelSub": "Nivel {level} · escribe un poco y descubre una forma natural de decirlo",
+    "progress": "{done} de {total} capítulos escritos",
+    "genresNote": "4 géneros · diario, respuestas, descripción, opinión",
+    "capReached": "🌙 Ya completaste los {n} capítulos de hoy — mañana se abren más.",
+    "continueTomorrow": "Capítulo de mañana",
+    "continueChapter": "Continuar · Capítulo {n}",
+    "questionsOf": "{n} preguntas · {prompt}",
+    "write": "Escribir →",
+    "chaptersRange": "Capítulos {first}–{last}",
+    "statusDone": "Hecho",
+    "statusWrite": "Escribir",
+    "statusLocked": "Bloqueado",
+    "tomorrowBadge": "🌙 Mañana",
+    "chapterN": "Capítulo {n}"
+  },
+  "session": {
+    "chapterN": "Capítulo {n}",
+    "levelChapterOf": "Nivel {level} · capítulo {n} de {total}",
+    "capTitle": "Ya completaste los {n} capítulos de hoy",
+    "capBody": "Escritura abre {n} capítulos al día — este se desbloquea mañana. ¡Buen ritmo hoy!",
+    "allChapters": "Todos los capítulos",
+    "emptyTitle": "Todavía no hay una consigna aquí",
+    "emptyBody": "Esta página aún no se ha escrito.",
+    "backToAll": "Volver a todas las páginas"
+  },
+  "phase": {
+    "answersHint": "{n} respuestas · arma cada una con los bloques o escríbela tú mismo.",
+    "holdTipTitle": "💡 Mantén presionado un bloque para escucharlo",
+    "holdTipBody": "Di la frase en voz alta antes de tocar — así se te queda mejor.",
+    "qOf": "DE {n}",
+    "useBlocks": "Usar bloques",
+    "typeMyself": "Escribir yo mismo",
+    "modeTiles": "Armar la frase",
+    "modeSlots": "Completar los espacios",
+    "modeChunks": "Armar con bloques",
+    "modeType": "Escribir",
+    "putWordsInOrder": "Ordena las palabras correctamente.",
+    "written": "✓ Escrito",
+    "stillEmpty": "Todavía vacío",
+    "doneCount": "{done} / {total} completadas",
+    "noWait": "· todo se corrige aquí mismo, sin esperas",
+    "saving": "Guardando…",
+    "submitFeedback": "Enviar y recibir comentarios",
+    "finishChapter": "Terminar capítulo"
+  },
+  "board": {
+    "tapWords": "Toca las palabras de abajo, en orden",
+    "correct": "✓ Correcto",
+    "hearIt": "🔊 escuchar",
+    "tryAgain": "Intentar de nuevo",
+    "check": "Revisar",
+    "holdWord": "Mantén presionada una palabra para escucharla",
+    "shuffle": "mezclar",
+    "allRight": "✓ Todo correcto",
+    "singleCorrect": "✓ Correcto",
+    "pickEnding": "Elige la terminación correcta",
+    "pickParticle": "Elige la partícula correcta",
+    "tapBlocks": "Toca los bloques para armar tu respuesta — cualquier orden natural sirve",
+    "someDontBelong": "Algunos bloques no corresponden — puedes dejarlos fuera. Se corrige como un texto escrito."
+  },
+  "grading": {
+    "step1Title": "Leyendo tu texto…",
+    "step1Sub": "Tu árbol maestro está revisando la gramática 🧐",
+    "step2Title": "Mirando con más detalle…",
+    "step2Sub": "Comparando con cómo lo diría un hablante nativo",
+    "step3Title": "Ya casi…",
+    "step3Sub": "Escribiendo comentarios solo para ti ✍️",
+    "slow": "Está tardando un poco más de lo normal — espera un momento, sigue trabajando.",
+    "yourAnswers": "Tus respuestas"
+  },
+  "result": {
+    "headline90": "¡Perfecto! Todas las respuestas suenan naturales.",
+    "headline80": "¡Increíble! Tus respuestas se entendieron con claridad.",
+    "headline60": "¡Buen trabajo! Hay algunos ajustes pequeños abajo.",
+    "headlineLow": "¡Buen intento! Vamos a corregirlo juntos.",
+    "grammar": "Gramática",
+    "natural": "🌱 {n} naturales",
+    "smallFixes": "✏️ {n, plural, one {# ajuste pequeño} other {# ajustes pequeños}}",
+    "chapterN": "Capítulo {n}",
+    "answers": "respuestas",
+    "checkedOneGo": "Corregido todo junto",
+    "levelUpValue": "Nv. {n}",
+    "levelUpSub": "🎉 ¡Subiste de nivel!",
+    "complete": "Completo",
+    "yourLevel": "Tu nivel",
+    "alreadyNatural": "✓ Ya suena natural — nada que cambiar",
+    "naturalBadge": "Natural",
+    "needsFix": "Necesita ajuste",
+    "patternsTitle": "🔍 Patrones en tus respuestas",
+    "focusTitle": "🎯 Enfoque de hoy",
+    "tryIt": "Pruébalo",
+    "nextChapterChecks": "El próximo capítulo también repasa este patrón. 💪",
+    "savedTitle": "¡Buen texto!",
+    "savedBody": "Guardamos tus respuestas — esta vez no se pudo corregir.",
+    "backToGarden": "Volver al Jardín",
+    "allChapters": "Todos los capítulos",
+    "saving": "Guardando…",
+    "turnPage": "Pasar la página →",
+    "builtFirstTry": "Lo armaste bien al primer intento.",
+    "builtAfterTries": "Correcto tras {n} intentos — dilo en voz alta una vez más para que se te quede.",
+    "fallbackFeedbackPerfect": "Todas las frases se armaron bien al primer intento — tu orden de palabras es sólido.",
+    "fallbackFeedbackRetries": "Lo lograste — {n} de ellas necesitaron un segundo intento, que es justo cómo se afianza el orden.",
+    "fallbackFocusPerfect": "El próximo capítulo suelta un poco más los bloques — intenta armar cada frase antes de mirar el inglés.",
+    "fallbackFocusRetries": "Antes de tocar, di toda la frase en coreano en voz alta — luego coloca los bloques para que coincida."
+  }
+}

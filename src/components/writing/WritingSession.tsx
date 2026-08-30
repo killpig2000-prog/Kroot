@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import { useTranslations } from "next-intl";
 import { useSaveResume } from "@/hooks/useSaveResume";
 import { clearResume } from "@/lib/resume";
 import { Link, useRouter } from "@/i18n/navigation";
@@ -96,13 +97,15 @@ export default function WritingSession({
 }) {
   const router = useRouter();
   const supabase = useMemo(() => createClient(), []);
+  const t = useTranslations("writing.result");
+  const tc = useTranslations("writing");
 
   const [phase, setPhase] = useState<Phase>("write");
   useSaveResume(phase === "write" ? userId : null, {
     skill: "writing",
     href: "",
-    label: `Chapter ${chapterIndex + 1}`,
-    detail: `Writing · Chapter ${chapterIndex + 1} · ${level}`,
+    label: tc("session.chapterN", { n: chapterIndex + 1 }),
+    detail: `${tc("crumb")} · ${tc("session.chapterN", { n: chapterIndex + 1 })} · ${level}`,
   });
 
   // Boards are deterministic per (prompt, attempt), so the server and the
@@ -187,10 +190,7 @@ export default function WritingSession({
       score: localScore(e.checks),
       original: text,
       corrected: text,
-      note:
-        e.checks <= 1
-          ? "Built correctly on the first try."
-          : `Right after ${e.checks} tries — say it aloud once more to lock it in.`,
+      note: e.checks <= 1 ? t("builtFirstTry") : t("builtAfterTries", { n: e.checks }),
     };
   }
 
@@ -201,24 +201,17 @@ export default function WritingSession({
       const a = ai?.answers.find((x) => x.index === k) ?? ai?.answers[k];
       return a
         ? { ...a, index: i }
-        : { index: i, score: 0, original: responses[i], corrected: responses[i], note: "Grading wasn't available for this one." };
+        : { index: i, score: 0, original: responses[i], corrected: responses[i], note: t("savedBody") };
     });
     const score = Math.round(answers.reduce((s, a) => s + a.score, 0) / Math.max(1, answers.length));
     const retries = entries.filter((e, i) => isLocalMode(boards[i].mode) && e.checks > 1).length;
     return {
       score,
-      feedback_en:
-        ai?.feedback_en ??
-        (retries === 0
-          ? "Every sentence came together on the first try — your word order is solid."
-          : `You got there — ${retries} of them took a second look, which is exactly how the order sinks in.`),
+      feedback_en: ai?.feedback_en ?? (retries === 0 ? t("fallbackFeedbackPerfect") : t("fallbackFeedbackRetries", { n: retries })),
       answers,
       commonPatterns: ai?.commonPatterns ?? [],
       learningPoint: ai?.learningPoint ?? {
-        headline:
-          retries === 0
-            ? "Next chapter loosens the blocks a little — try building each sentence before you look at the English."
-            : "Before you tap, say the whole sentence in Korean — then place the blocks to match.",
+        headline: retries === 0 ? t("fallbackFocusPerfect") : t("fallbackFocusRetries"),
         example_kr: prompts[0]?.example_kr,
       },
     };
@@ -363,12 +356,13 @@ export default function WritingSession({
 }
 
 export function WritingEmpty() {
+  const t = useTranslations("writing.session");
   return (
     <div className={`${CARD} px-7 py-10 text-center`}>
-      <h2 className="font-bold text-[19px] tracking-[-0.02em] mb-1.5">No prompt here yet</h2>
-      <p className="text-sm text-muted mb-6">This page hasn&apos;t been written yet.</p>
+      <h2 className="font-bold text-[19px] tracking-[-0.02em] mb-1.5">{t("emptyTitle")}</h2>
+      <p className="text-sm text-muted mb-6">{t("emptyBody")}</p>
       <Link href="/writing" className={BTN_INK}>
-        Back to all pages
+        {t("backToAll")}
       </Link>
     </div>
   );

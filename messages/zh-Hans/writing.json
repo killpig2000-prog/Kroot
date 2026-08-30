@@ -1,0 +1,131 @@
+{
+  "crumb": "写作",
+  "genres": {
+    "journal": {
+      "icon": "📔",
+      "label": "日记",
+      "blurb": "用自己的话记录自己的一天"
+    },
+    "reply": {
+      "icon": "💬",
+      "label": "回复",
+      "blurb": "有人给你写信了 —— 回复一下吧"
+    },
+    "description": {
+      "icon": "🖼️",
+      "label": "描写",
+      "blurb": "描绘一个人、一个地方、一件事物或一种潮流"
+    },
+    "opinion": {
+      "icon": "🗣️",
+      "label": "观点",
+      "blurb": "表明立场,说说理由"
+    }
+  },
+  "map": {
+    "levelSub": "等级 {level} · 写一点点,看看地道的说法",
+    "progress": "已完成 {done} / {total} 章",
+    "genresNote": "4种体裁 · 日记、回复、描写、观点",
+    "capReached": "🌙 今天的 {n} 章已完成 —— 明天解锁更多。",
+    "continueTomorrow": "明天的章节",
+    "continueChapter": "继续 · 第{n}章",
+    "questionsOf": "{n}题 · {prompt}",
+    "write": "去写 →",
+    "chaptersRange": "第{first}–{last}章",
+    "statusDone": "已完成",
+    "statusWrite": "去写",
+    "statusLocked": "已锁定",
+    "tomorrowBadge": "🌙 明天",
+    "chapterN": "第{n}章"
+  },
+  "session": {
+    "chapterN": "第{n}章",
+    "levelChapterOf": "等级 {level} · 第{n}章,共{total}章",
+    "capTitle": "今天的 {n} 章已完成",
+    "capBody": "写作每天开放 {n} 章 —— 这一章明天解锁。今天进度很棒!",
+    "allChapters": "全部章节",
+    "emptyTitle": "这里还没有题目",
+    "emptyBody": "这个页面还没有内容。",
+    "backToAll": "返回全部页面"
+  },
+  "phase": {
+    "answersHint": "{n}道题 · 用词块拼出答案,或自己输入。",
+    "holdTipTitle": "💡 长按任意词块可以听发音",
+    "holdTipBody": "点击前先大声说一遍 —— 更容易记住。",
+    "qOf": "共{n}题",
+    "useBlocks": "使用词块",
+    "typeMyself": "自己输入",
+    "modeTiles": "拼句子",
+    "modeSlots": "填空",
+    "modeChunks": "拼词块",
+    "modeType": "输入",
+    "putWordsInOrder": "把单词排成正确的顺序。",
+    "written": "✓ 已完成",
+    "stillEmpty": "还没写",
+    "doneCount": "{done} / {total} 完成",
+    "noWait": "· 全部当场判分,无需等待",
+    "saving": "保存中…",
+    "submitFeedback": "提交并获取反馈",
+    "finishChapter": "完成本章"
+  },
+  "board": {
+    "tapWords": "按顺序点击下面的单词",
+    "correct": "✓ 正确",
+    "hearIt": "🔊 听发音",
+    "tryAgain": "再试一次",
+    "check": "检查",
+    "holdWord": "长按单词可以听发音",
+    "shuffle": "打乱",
+    "allRight": "✓ 全部正确",
+    "singleCorrect": "✓ 正确",
+    "pickEnding": "选择正确的词尾",
+    "pickParticle": "选择正确的助词",
+    "tapBlocks": "点击词块拼出答案 —— 顺序自然即可",
+    "someDontBelong": "有些词块是多余的 —— 不用全部使用。按写作方式判分。"
+  },
+  "grading": {
+    "step1Title": "正在批改你的作文…",
+    "step1Sub": "你的小树老师正在检查语法🧐",
+    "step2Title": "仔细比对中…",
+    "step2Sub": "对照母语者会怎么说",
+    "step3Title": "快好了…",
+    "step3Sub": "正在为你写反馈✍️",
+    "slow": "比平时慢了一点 —— 请再等一下,仍在处理中。",
+    "yourAnswers": "你的回答"
+  },
+  "result": {
+    "headline90": "完美!每个回答都很自然。",
+    "headline80": "太棒了!你的回答表达得很清楚。",
+    "headline60": "做得不错!下面有一些小修改。",
+    "headlineLow": "不错的尝试!我们一起来改一改。",
+    "grammar": "语法",
+    "natural": "🌱 {n} 处地道表达",
+    "smallFixes": "✏️ {n} 处小修改",
+    "chapterN": "第{n}章",
+    "answers": "题回答",
+    "checkedOneGo": "已一次性判分",
+    "levelUpValue": "Lv. {n}",
+    "levelUpSub": "🎉 升级了!",
+    "complete": "已完成",
+    "yourLevel": "你的等级",
+    "alreadyNatural": "✓ 已经很地道 —— 无需修改",
+    "naturalBadge": "地道",
+    "needsFix": "需要修改",
+    "patternsTitle": "🔍 你回答中的共同模式",
+    "focusTitle": "🎯 今日重点",
+    "tryIt": "试一试",
+    "nextChapterChecks": "下一章也会考察这个知识点。💪",
+    "savedTitle": "写得不错!",
+    "savedBody": "我们保存了你的回答 —— 这次暂时无法判分。",
+    "backToGarden": "返回花园",
+    "allChapters": "全部章节",
+    "saving": "保存中…",
+    "turnPage": "翻到下一页 →",
+    "builtFirstTry": "一次就拼对了。",
+    "builtAfterTries": "第{n}次才拼对 —— 再大声说一遍加深记忆。",
+    "fallbackFeedbackPerfect": "所有句子都一次拼对了 —— 你的语序很扎实。",
+    "fallbackFeedbackRetries": "都完成了 —— 其中{n}题多试了一次,这正是巩固记忆的方式。",
+    "fallbackFocusPerfect": "下一章的词块会更自由一些 —— 试着先拼句子,再看英文提示。",
+    "fallbackFocusRetries": "点击前先用韩语把整句话说一遍,再按顺序摆放词块。"
+  }
+}

@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import LevelCreature from "@/components/dashboard/LevelCreature";
 import type { CefrLevel } from "@/lib/tree";
 
@@ -5,11 +6,11 @@ const CARD = "border border-line rounded-[14px] bg-cream max-w-[900px]";
 
 // Cycled every ~3.2s while grading is in flight (a real 5-15s API round
 // trip) so a slow check reads as "still working" instead of "stuck".
-export const GRADING_STEPS = [
-  { title: "Reading your writing…", subtitle: "Your tree teacher is checking the grammar 🧐" },
-  { title: "Looking closely…", subtitle: "Comparing it to how a native speaker would say it" },
-  { title: "Almost there…", subtitle: "Writing up feedback just for you ✍️" },
-];
+const GRADING_STEP_KEYS = [
+  ["step1Title", "step1Sub"],
+  ["step2Title", "step2Sub"],
+  ["step3Title", "step3Sub"],
+] as const;
 
 export default function GradingPhase({
   gradingStep,
@@ -25,7 +26,8 @@ export default function GradingPhase({
   /** What the learner submitted — shown while they wait so it doesn't vanish. */
   responses?: string[];
 }) {
-  const step = GRADING_STEPS[Math.min(gradingStep, GRADING_STEPS.length - 1)];
+  const t = useTranslations("writing.grading");
+  const [titleKey, subtitleKey] = GRADING_STEP_KEYS[Math.min(gradingStep, GRADING_STEP_KEYS.length - 1)];
   return (
     <div className={`${CARD} px-7 py-10 text-center`} style={{ animation: "fadeUp .35s ease" }}>
       <svg viewBox="0 0 220 230" className="w-[180px] h-auto mx-auto" aria-hidden="true">
@@ -33,20 +35,16 @@ export default function GradingPhase({
           <LevelCreature level={treeStage} species={species} costumeIds={costumeIds} />
         </g>
       </svg>
-      <h2 key={step.title} className="font-bold text-[19px] tracking-[-0.02em] mt-3 mb-1.5" style={{ animation: "fadeUp .3s ease" }}>
-        {step.title}
+      <h2 key={titleKey} className="font-bold text-[19px] tracking-[-0.02em] mt-3 mb-1.5" style={{ animation: "fadeUp .3s ease" }}>
+        {t(titleKey)}
       </h2>
-      <p key={step.subtitle} className="text-sm text-muted" style={{ animation: "fadeUp .3s ease" }}>
-        {step.subtitle}
+      <p key={subtitleKey} className="text-sm text-muted" style={{ animation: "fadeUp .3s ease" }}>
+        {t(subtitleKey)}
       </p>
-      {gradingStep >= GRADING_STEPS.length - 1 && (
-        <p className="text-[12.5px] text-faint mt-4">
-          Taking a little longer than usual — hang tight, it&apos;s still working.
-        </p>
-      )}
+      {gradingStep >= GRADING_STEP_KEYS.length - 1 && <p className="text-[12.5px] text-faint mt-4">{t("slow")}</p>}
       {responses && responses.some((r) => r.trim()) && (
         <div className="mt-6 max-w-[560px] mx-auto text-left bg-warm border border-line rounded-[12px] px-4 py-3 flex flex-col gap-2.5">
-          <p className="text-[10.5px] font-semibold tracking-[.08em] uppercase text-faint">Your answers</p>
+          <p className="text-[10.5px] font-semibold tracking-[.08em] uppercase text-faint">{t("yourAnswers")}</p>
           {responses.map(
             (r, i) =>
               r.trim() && (

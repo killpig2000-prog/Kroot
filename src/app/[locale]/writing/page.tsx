@@ -1,5 +1,6 @@
 import LevelTabs from "@/components/ui/LevelTabs";
 import { Link, redirect } from "@/i18n/navigation";
+import { getTranslations } from "next-intl/server";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import ChapterPathGroup from "@/components/chapters/ChapterPathGroup";
@@ -14,12 +15,6 @@ import {
 } from "@/lib/writing";
 import { LEVEL_ORDER, isCefrLevel, type CefrLevel } from "@/lib/tree";
 import { isDifficultyUnlocked } from "@/lib/level";
-
-const STATUS_LABEL: Record<string, string> = {
-  done: "Done",
-  current: "Write",
-  locked: "Locked",
-};
 
 const STATUS_BADGE: Record<string, string> = {
   done: "bg-success-bg text-success border-success-line",
@@ -37,7 +32,9 @@ export default async function WritingMapPage({
 
   if (!user) redirect("/onboarding");
 
-  const [{ data: profile }, { data: progress }, sp] = await Promise.all([
+  const [t, tn, { data: profile }, { data: progress }, sp] = await Promise.all([
+    getTranslations("writing"),
+    getTranslations("nav"),
     supabase
       .from("profiles")
       .select("display_name, current_level, streak_days, avatar_url, xp")
@@ -93,10 +90,10 @@ export default async function WritingMapPage({
           {/* breadcrumb */}
           <div className="flex gap-2 text-[13px] text-faint mb-[18px]">
             <Link href="/dashboard" className="hover:text-charcoal transition-colors">
-              Garden
+              {tn("garden")}
             </Link>
             <span>/</span>
-            <b className="text-charcoal font-semibold">Writing</b>
+            <b className="text-charcoal font-semibold">{t("crumb")}</b>
           </div>
 
           {/* head */}
@@ -105,11 +102,9 @@ export default async function WritingMapPage({
               <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[var(--tint-amber)] text-amber border border-amber-line items-center justify-center kr text-[15px] mr-[9px]">
                 쓰
               </span>
-              Writing
+              {t("crumb")}
             </h1>
-            <span className="text-[13px] text-muted">
-              Level {level} · write a little, see one natural way to say it
-            </span>
+            <span className="text-[13px] text-muted">{t("map.levelSub", { level })}</span>
           </div>
 
           <LevelTabs
@@ -125,10 +120,8 @@ export default async function WritingMapPage({
           {/* progress */}
           <div className="max-w-[720px] mb-6">
             <div className="flex flex-col gap-0.5 sm:flex-row sm:items-center sm:justify-between text-[12.5px] text-muted mb-2">
-              <span>
-                {doneCount} of {chapters.length} chapters written
-              </span>
-              <span className="text-faint">4 genres · journal, replies, description, opinion</span>
+              <span>{t("map.progress", { done: doneCount, total: chapters.length })}</span>
+              <span className="text-faint">{t("map.genresNote")}</span>
             </div>
             <div className="h-1.5 rounded-full bg-line overflow-hidden">
               <div
@@ -136,11 +129,7 @@ export default async function WritingMapPage({
                 style={{ width: `${chapters.length ? (doneCount / chapters.length) * 100 : 0}%` }}
               />
             </div>
-            {capReached && (
-              <p className="text-[12.5px] text-muted mt-2.5">
-                🌙 Today&apos;s {CHAPTERS_PER_DAY} chapters are written — more open tomorrow.
-              </p>
-            )}
+            {capReached && <p className="text-[12.5px] text-muted mt-2.5">{t("map.capReached", { n: CHAPTERS_PER_DAY })}</p>}
           </div>
 
           {/* continue card: one obvious next step above the chapter groups */}
@@ -161,15 +150,15 @@ export default async function WritingMapPage({
                 </span>
                 <span className="flex-1 min-w-[170px]">
                   <b className="block font-semibold text-sm text-[#B45309]">
-                    {waitTomorrow ? "Tomorrow's chapter" : `Continue · Chapter ${continueIndex + 1}`}
+                    {waitTomorrow ? t("map.continueTomorrow") : t("map.continueChapter", { n: continueIndex + 1 })}
                   </b>
                   <span className="text-[13px] text-[#92702B] truncate block">
-                    {continueChapter.length} questions · {continueChapter[0].prompt_en}
+                    {t("map.questionsOf", { n: continueChapter.length, prompt: continueChapter[0].prompt_en })}
                   </span>
                 </span>
                 {!waitTomorrow && (
                   <span className="text-[13px] font-semibold text-amber transition-transform group-hover:translate-x-0.5">
-                    Write →
+                    {t("map.write")}
                   </span>
                 )}
               </Link>
@@ -181,7 +170,8 @@ export default async function WritingMapPage({
               const first = group[0].index + 1;
               const last = group[group.length - 1].index + 1;
               const groupDone = group.filter((g) => g.status === "done").length;
-              const meta = WRITING_GENRE_META[group[0].chapter[0].genre];
+              const genre = group[0].chapter[0].genre;
+              const meta = WRITING_GENRE_META[genre];
               return (
                 <details
                   key={gi}
@@ -191,10 +181,10 @@ export default async function WritingMapPage({
                   <summary className="flex items-center gap-3 px-5 py-3.5 cursor-pointer select-none list-none [&::-webkit-details-marker]:hidden hover:bg-warm transition-colors">
                     <span className="flex-1 min-w-0">
                       <b className="font-bold text-[14.5px]">
-                        {meta.icon} {meta.label}
+                        {meta.icon} {t(`genres.${genre}.label`)}
                       </b>
                       <small className="block text-[11.5px] text-faint font-normal truncate">
-                        {meta.blurb} · Chapters {first}–{last}
+                        {t(`genres.${genre}.blurb`)} · {t("map.chaptersRange", { first, last })}
                       </small>
                     </span>
                     <span className="flex-none flex items-center gap-2">
@@ -229,10 +219,16 @@ export default async function WritingMapPage({
                               : "bg-warm text-faint border-line",
                           ringClassName: status === "current" && !waitTomorrow ? "ring-4 ring-amber-line/60" : undefined,
                           circleContent: status === "done" ? "✓" : i + 1,
-                          title: `Chapter ${i + 1}`,
-                          subtitle: `${chapter.length} questions · ${chapter[0].prompt_en}`,
+                          title: t("map.chapterN", { n: i + 1 }),
+                          subtitle: t("map.questionsOf", { n: chapter.length, prompt: chapter[0].prompt_en }),
                           badgeClassName: waitTomorrow ? STATUS_BADGE.locked : STATUS_BADGE[status],
-                          badgeLabel: waitTomorrow ? "🌙 Tomorrow" : STATUS_LABEL[status],
+                          badgeLabel: waitTomorrow
+                            ? t("map.tomorrowBadge")
+                            : status === "done"
+                              ? t("map.statusDone")
+                              : status === "current"
+                                ? t("map.statusWrite")
+                                : t("map.statusLocked"),
                           dim,
                         };
                       })}
