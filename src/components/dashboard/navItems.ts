@@ -15,10 +15,12 @@ export type NavItem = {
   isNew?: boolean;
 };
 
-// "My growth" merged into the Garden (2026-08): grass, costume, and progress
-// now live on /dashboard; /profile is account settings, reached via AccountMenu.
+// The Garden is "what do I do today"; My account is "how far have I come" —
+// learning progress, accuracy and account settings. Both are top-level so the
+// stats page is reachable without opening the account menu.
 export const MAIN_ITEMS: NavItem[] = [
   { icon: "🏡", label: "Garden", href: "/dashboard" },
+  { icon: "👤", label: "My account", href: "/profile" },
 ];
 
 export const SECTIONS: { title: string; items: NavItem[] }[] = [

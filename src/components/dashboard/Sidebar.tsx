@@ -7,6 +7,9 @@ import { rememberLocale } from "@/i18n/locale";
 import AccountMenu from "@/components/dashboard/AccountMenu";
 import { Link } from "@/i18n/navigation";
 import { MAIN_ITEMS, SECTIONS, type NavColor } from "@/components/dashboard/navItems";
+
+// Nav labels map 1:1 to nav.json keys, except the two-word one.
+const navKey = (label: string) => (label === "My account" ? "myAccount" : label.toLowerCase());
 import BrandMark from "@/components/ui/BrandMark";
 
 const LANGUAGES = [
@@ -58,7 +61,7 @@ function NavItem({
       ) : (
         <span className="text-base">{icon}</span>
       )}
-      <span className="flex-1 min-w-0 truncate">{tn(label.toLowerCase())}</span>
+      <span className="flex-1 min-w-0 truncate">{tn(navKey(label))}</span>
       {popular && (
         <span className="flex-none text-[8.5px] font-extrabold tracking-[.02em] text-[#B14F27] bg-[#FDE9D0] rounded-full px-[5px] py-px">
           {tn("popular")}

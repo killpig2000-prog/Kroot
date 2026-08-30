@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
-import { MAIN_ITEMS, SECTIONS, type NavColor, type NavItem } from "@/components/dashboard/navItems";
+import { MAIN_ITEMS, SECTIONS, type NavColor } from "@/components/dashboard/navItems";
 
 // Four tabs (2026-08-28): Garden · Learn · Review · More — equal-width cells
 // that fill the bar edge to edge (2026-08-29), so each tap target is a quarter
@@ -18,10 +18,10 @@ type Sheet = "learn" | "more" | null;
 // multi-word ones are stored as the key itself ("My account" → myAccount).
 const navKey = (label: string) => (label === "My account" ? "myAccount" : /[A-Z]/.test(label.slice(1)) ? label : label.toLowerCase());
 
-const ACCOUNT_ITEM: NavItem = { icon: "👤", label: "My account", href: "/profile" };
 const LEARN_SECTIONS = SECTIONS.filter((s) => s.title === "Basics" || s.title === "Practice");
 const MORE_SECTIONS = [
-  { title: "myPage", items: [...MAIN_ITEMS, ACCOUNT_ITEM] },
+  // MAIN_ITEMS already carries Garden + My account.
+  { title: "myPage", items: MAIN_ITEMS },
   ...SECTIONS.filter((s) => s.title !== "Basics" && s.title !== "Practice"),
 ];
 const LEARN_PATHS = LEARN_SECTIONS.flatMap((s) => s.items.map((i) => i.href));
