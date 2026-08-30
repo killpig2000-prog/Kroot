@@ -251,20 +251,19 @@ export default function WordDetailCard({
             ← Back to unit
           </Link>
         )}
+        {/* The saved/full states replace the add button in place, so they must
+            never be links: a tap's trailing click lands ~50-300ms after
+            touchend, by which time React has swapped the element — the word
+            got saved AND the learner was thrown to /review/words. They stay
+            plain status now; the sidebar carries the way to the word bank. */}
         {inBank ? (
-          <Link
-            href="/review/words"
-            className="min-w-0 inline-flex items-center gap-1.5 rounded-[10px] border border-success-line bg-success-bg px-3 py-2 font-semibold text-success-deep hover:border-success transition-colors"
-          >
+          <span className="min-w-0 inline-flex items-center gap-1.5 rounded-[10px] border border-success-line bg-success-bg px-3 py-2 font-semibold text-success-deep">
             <span className="truncate">{t("bank.savedWithCount", { used: savedCount, slots })}</span>
-          </Link>
+          </span>
         ) : addError === "full" ? (
-          <Link
-            href="/review/words"
-            className="min-w-0 inline-flex items-center gap-1.5 rounded-[10px] border border-amber-line bg-[var(--tint-amber)] px-3 py-2 font-semibold text-[#B7791F] hover:border-amber transition-colors"
-          >
+          <span className="min-w-0 inline-flex items-center gap-1.5 rounded-[10px] border border-amber-line bg-[var(--tint-amber)] px-3 py-2 font-semibold text-[#B7791F]">
             <span className="truncate">{t("bank.fullShort", { used: savedCount, slots })}</span>
-          </Link>
+          </span>
         ) : (
           <button
             type="button"
