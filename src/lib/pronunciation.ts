@@ -425,12 +425,8 @@ export function wordsForChapter(key: string): ChallengeWord[] {
 
 export type ChallengeKind = "twister" | "brutal" | "speed" | "sentence";
 
-export const KIND_LABEL: Record<ChallengeKind, string> = {
-  twister: "Tongue twister",
-  brutal: "Brutal words",
-  speed: "Speed round",
-  sentence: "Long sentence",
-};
+// Display names for the kinds live in messages/*/pronunciation.json
+// (challenge.kinds.*) so they translate with the rest of the page.
 
 export type Challenge = {
   key: string;

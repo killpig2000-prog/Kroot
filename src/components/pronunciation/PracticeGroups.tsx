@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { FAMILY_META, chapterBlurb, groupsForFamily, type SoundGroup } from "@/lib/pronunciation";
 
@@ -13,6 +14,7 @@ export type ChapterProgress = SoundGroup & {
 };
 
 function Stone({ chapter }: { chapter: ChapterProgress }) {
+  const t = useTranslations("pronunciation.practice");
   const allPerfect = chapter.total > 0 && chapter.perfect === chapter.total;
   const done = chapter.total > 0 && chapter.attempted === chapter.total;
   const pct = chapter.total ? chapter.attempted / chapter.total : 0;
@@ -21,7 +23,7 @@ function Stone({ chapter }: { chapter: ChapterProgress }) {
     <Link
       href={`/speaking?chapter=${chapter.key}`}
       title={chapter.title}
-      aria-label={`Practice ${chapter.title}`}
+      aria-label={t("openChapter", { title: chapter.title })}
       className="rounded-[12px] border-[1.5px] bg-cream px-2 pt-2.5 pb-3 text-center transition-transform hover:-translate-y-0.5"
       style={{ borderColor: allPerfect ? "#D9A23B" : done ? "var(--c-success-line)" : "var(--c-line)" }}
     >
@@ -46,6 +48,8 @@ function Stone({ chapter }: { chapter: ChapterProgress }) {
 // teaches rather than by difficulty. Nothing is locked and nothing is ordered
 // — difficulty lives in Challenge mode.
 export default function PracticeGroups({ chapters }: { chapters: ChapterProgress[] }) {
+  const t = useTranslations("pronunciation.practice");
+  const tf = useTranslations("pronunciation.families");
   const byKey = new Map(chapters.map((c) => [c.key, c]));
 
   return (
@@ -65,10 +69,11 @@ export default function PracticeGroups({ chapters }: { chapters: ChapterProgress
                 style={{ background: meta.tint }}
                 aria-hidden="true"
               />
-              <h2 className="font-extrabold text-[15px] tracking-[-0.01em]">{meta.name}</h2>
+              <h2 className="font-extrabold text-[15px] tracking-[-0.01em]">{tf(meta.family)}</h2>
               <small className="text-[12px] text-faint">
-                {rows.length} chapters
-                {perfect > 0 && ` · ${perfect} perfect`}
+                {perfect > 0
+                  ? t("chapterCountPerfect", { n: rows.length, perfect })
+                  : t("chapterCount", { n: rows.length })}
               </small>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-[repeat(auto-fill,minmax(140px,1fr))] gap-2 sm:gap-2.5">

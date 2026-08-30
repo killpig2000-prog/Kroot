@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { buttonClassName } from "@/components/ui/Button";
 import { XP_POINTS, type ProgressResult } from "@/lib/activity";
@@ -32,6 +33,7 @@ export default function FinishedCard({
   saveError: string | null;
   onRunItBack: () => void;
 }) {
+  const t = useTranslations("pronunciation.finished");
   const weakWords = words
     .filter((w) => (attempts[w.id]?.count ?? 0) > 1)
     .sort((a, b) => (attempts[a.id]?.best ?? 0) - (attempts[b.id]?.best ?? 0))
@@ -55,14 +57,14 @@ export default function FinishedCard({
         </div>
       </div>
       <h2 className="font-bold text-[21px] tracking-[-0.02em] mt-1 mb-1.5">
-        {perfect ? "Perfect chapter!" : cleared ? "Chapter cleared!" : "Round finished!"}
+        {perfect ? t("perfect") : cleared ? t("cleared") : t("round")}
       </h2>
       <p className="text-sm text-muted mb-[22px]">
-        {words.length} word{words.length > 1 ? "s" : ""} attempted — your mouth is learning the shapes.
+        {t("sub", { n: words.length })}
       </p>
       {levelUp && (
         <p className="text-sm font-semibold text-success mb-[22px] -mt-3">
-          🎉 Level up! You&apos;re now Lv. {levelUp.new_level}
+          {t("levelUp", { level: levelUp.new_level })}
         </p>
       )}
       <div className="flex justify-center gap-3 mb-6 flex-wrap">
@@ -70,22 +72,22 @@ export default function FinishedCard({
           <b className="block text-[19px] font-bold text-success">
             {nailed.length}/{words.length}
           </b>
-          <small className="text-xs text-muted">Nailed</small>
+          <small className="text-xs text-muted">{t("nailed")}</small>
         </div>
         <div className="border border-line rounded-[10px] px-5 py-3 min-w-[100px]">
           <b className="block text-[19px] font-bold">🔥 {bestStreak}</b>
-          <small className="text-xs text-muted">Best streak</small>
+          <small className="text-xs text-muted">{t("bestStreak")}</small>
         </div>
         <div className="border border-line rounded-[10px] px-5 py-3 min-w-[100px]">
           <b className="block text-[19px] font-bold text-success">+{XP_POINTS.pronunciation} XP</b>
-          <small className="text-xs text-muted">Earned</small>
+          <small className="text-xs text-muted">{t("earned")}</small>
         </div>
       </div>
 
       {weakWords.length > 0 && (
         <div className="text-left bg-[var(--tint-amber)] border border-amber-line rounded-[10px] px-4 py-3 mb-6">
           <b className="block text-[11px] font-bold tracking-[.06em] text-[#B45309] mb-2">
-            TOOK A FEW TRIES
+            {t("tookTries")}
           </b>
           <div className="flex flex-wrap gap-2">
             {weakWords.map((w) => (
@@ -109,14 +111,14 @@ export default function FinishedCard({
 
       <div className="flex justify-center gap-2.5 flex-wrap">
         <Link href="/speaking" className={BTN_TEAL}>
-          Back to practice
+          {t("backToPractice")}
         </Link>
         <button className={BTN_LINE} onClick={onRunItBack}>
-          Run it back
+          {t("runItBack")}
         </button>
         {cleared && !perfect && (
           <Link href="/speaking?tab=challenge" className={BTN_LINE}>
-            🔥 Try a challenge →
+            {t("tryChallenge")}
           </Link>
         )}
       </div>

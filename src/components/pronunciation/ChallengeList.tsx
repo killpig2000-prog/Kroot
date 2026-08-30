@@ -1,7 +1,7 @@
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import {
   CHALLENGES,
-  KIND_LABEL,
   totalStarsPossible,
   type Challenge,
   type ChallengeResult,
@@ -16,9 +16,9 @@ export type ChallengeState = {
   lockNote?: string;
 };
 
-function Stars({ n }: { n: number }) {
+function Stars({ n, label }: { n: number; label: string }) {
   return (
-    <span className="tracking-[1px] text-[#D9A23B]" aria-label={`${n} of 3 stars`}>
+    <span className="tracking-[1px] text-[#D9A23B]" aria-label={label}>
       {"★".repeat(n)}
       <span className="text-line">{"★".repeat(3 - n)}</span>
     </span>
@@ -26,6 +26,8 @@ function Stars({ n }: { n: number }) {
 }
 
 export default function ChallengeList({ items }: { items: ChallengeState[] }) {
+  const t = useTranslations("pronunciation.challenge");
+  const tk = useTranslations("pronunciation.challenge.kinds");
   const earned = items.reduce((n, i) => n + i.stars, 0);
   const cleared = items.filter((i) => i.stars > 0).length;
   const bestAccuracy = items.reduce((n, i) => Math.max(n, i.best?.accuracy ?? 0), 0);
@@ -36,25 +38,17 @@ export default function ChallengeList({ items }: { items: ChallengeState[] }) {
       <div className="flex items-center justify-between gap-4 flex-wrap mb-4 px-1">
         <div className="flex gap-4 flex-wrap text-[12.5px] font-bold">
           <span className="inline-flex items-center gap-1.5">
-            <span aria-hidden="true">🎯</span> Accuracy earns ★★
+            <span aria-hidden="true">🎯</span> {t("ruleAccuracy")}
           </span>
           <span className="inline-flex items-center gap-1.5">
-            <span aria-hidden="true">⏱</span> Beat the clock for ★★★
+            <span aria-hidden="true">⏱</span> {t("ruleTime")}
           </span>
-          <span className="text-muted font-semibold">Retries never count against you</span>
+          <span className="text-muted font-semibold">{t("ruleRetries")}</span>
         </div>
         <div className="flex gap-3.5 text-[12.5px] text-muted tabular-nums">
-          <span>
-            <b className="text-charcoal">{earned}</b>/{totalStarsPossible()} ★
-          </span>
-          <span>
-            <b className="text-charcoal">{cleared}</b> cleared
-          </span>
-          {bestAccuracy > 0 && (
-            <span>
-              best <b className="text-charcoal">{bestAccuracy}%</b>
-            </span>
-          )}
+          <span>{t("starsOf", { earned, total: totalStarsPossible() })}</span>
+          <span>{t("clearedCount", { n: cleared })}</span>
+          {bestAccuracy > 0 && <span>{t("bestOf", { n: bestAccuracy })}</span>}
         </div>
       </div>
 
@@ -64,9 +58,9 @@ export default function ChallengeList({ items }: { items: ChallengeState[] }) {
             <>
               <div className="flex items-center justify-between gap-2">
                 <span className="text-[11px] font-extrabold tracking-[.08em] uppercase text-muted">
-                  {KIND_LABEL[c.kind]}
+                  {tk(c.kind)}
                 </span>
-                <span className="text-[12px] tracking-[1px]" aria-label={`difficulty ${c.heat} of 5`}>
+                <span className="text-[12px] tracking-[1px]" aria-label={t("difficulty", { n: c.heat })}>
                   {"🔥".repeat(c.heat)}
                 </span>
               </div>
@@ -76,14 +70,14 @@ export default function ChallengeList({ items }: { items: ChallengeState[] }) {
               </h3>
               <div className="mt-auto pt-2 border-t border-dashed border-dash flex items-center justify-between gap-2">
                 <span className="text-[12px] text-muted tabular-nums flex items-center gap-1.5">
-                  <Stars n={stars} />
+                  <Stars n={stars} label={t("starsLabel", { n: stars })} />
                   {best ? (
                     <>
                       · <b className="text-charcoal">{best.accuracy}%</b>
                       {best.ms > 0 && ` in ${(best.ms / 1000).toFixed(1)}s`}
                     </>
                   ) : locked ? null : (
-                    <span className="text-faint">· not tried</span>
+                    <span className="text-faint">{t("notTried")}</span>
                   )}
                 </span>
                 <span
@@ -91,7 +85,7 @@ export default function ChallengeList({ items }: { items: ChallengeState[] }) {
                     locked ? "text-faint" : "text-[var(--c-danger)]"
                   }`}
                 >
-                  {locked ? "Locked" : best ? "Retry →" : "Start →"}
+                  {locked ? t("locked") : best ? t("retry") : t("start")}
                 </span>
               </div>
               {locked && lockNote && (
@@ -120,7 +114,7 @@ export default function ChallengeList({ items }: { items: ChallengeState[] }) {
       </div>
 
       {items.length < CHALLENGES.length && (
-        <p className="text-[12px] text-faint mt-3">More challenges unlock as you practice.</p>
+        <p className="text-[12px] text-faint mt-3">{t("moreUnlock")}</p>
       )}
     </div>
   );

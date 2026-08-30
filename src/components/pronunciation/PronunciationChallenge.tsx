@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import { buttonClassName } from "@/components/ui/Button";
 import { Link, useRouter } from "@/i18n/navigation";
 import { useSaveResume } from "@/hooks/useSaveResume";
@@ -32,6 +33,8 @@ export default function PronunciationChallenge({
   userId?: string;
   initialBestScores?: Record<string, number>;
 }) {
+  const t = useTranslations("pronunciation.practice");
+  const tf = useTranslations("pronunciation.finished");
   const router = useRouter();
   const supabase = useMemo(() => createClient(), []);
   const chapter = groupByKey(chapterKey);
@@ -115,9 +118,9 @@ export default function PronunciationChallenge({
   if (!chapter || words.length === 0) {
     return (
       <div className="max-w-[680px] border border-line rounded-[14px] px-7 py-10 text-center">
-        <p className="text-[15px] font-semibold mb-1.5">Chapter not found</p>
+        <p className="text-[15px] font-semibold mb-1.5">{t("notFound")}</p>
         <Link href="/speaking" className={BTN_LINE}>
-          Back to practice
+          {t("backToPractice")}
         </Link>
       </div>
     );
@@ -159,7 +162,7 @@ export default function PronunciationChallenge({
           { onConflict: "user_id,prompt_key" },
         )
         .then(({ error }) => {
-          setSaveError(error ? "Couldn't save that attempt — check your connection. It may not stick after a refresh." : null);
+          setSaveError(error ? tf("saveError") : null);
         });
     }
   }
@@ -224,7 +227,7 @@ export default function PronunciationChallenge({
         href="/speaking"
         className="inline-flex items-center gap-1 text-[12.5px] font-semibold text-faint hover:text-teal transition-colors mb-3"
       >
-        ← All chapters
+        {t("allChapters")}
       </Link>
       <div className="flex items-center justify-between mb-3 flex-wrap gap-2">
         <div className="flex gap-[7px] flex-wrap">
@@ -239,7 +242,7 @@ export default function PronunciationChallenge({
         </div>
         {streak >= 2 && (
           <span className="text-[12.5px] font-bold text-[#EA580C]" style={{ animation: "fadeUp .25s ease" }}>
-            🔥 {streak} streak
+            {t("streak", { n: streak })}
           </span>
         )}
       </div>
@@ -254,11 +257,11 @@ export default function PronunciationChallenge({
             {word.groupTitle}
           </span>
           <span className="text-[12.5px] text-faint font-medium">
-            Word {index + 1} of {words.length}
+            {t("wordOf", { n: index + 1, total: words.length })}
           </span>
         </div>
 
-        <p className={LABEL}>Say this out loud</p>
+        <p className={LABEL}>{t("sayThis")}</p>
         <p className="kr font-bold text-[34px] tracking-[-0.01em] leading-[1.2] mb-1">{word.kr}</p>
         <p className="text-[13.5px] text-muted mb-5">
           <span className="italic">{word.romanization}</span> · {word.en}
@@ -266,7 +269,7 @@ export default function PronunciationChallenge({
 
         <div className="flex items-start gap-3 bg-warm border border-line rounded-xl px-[18px] py-3.5 mb-5">
           <button
-            aria-label="Hear it"
+            aria-label={t("hearIt")}
             className="w-11 h-11 rounded-full flex-none bg-teal text-white text-[17px] flex items-center justify-center transition-transform hover:scale-105 disabled:opacity-50"
             onClick={() => speak(word.kr)}
             disabled={!ttsOk}
@@ -274,11 +277,11 @@ export default function PronunciationChallenge({
             🔊
           </button>
           <div className="min-w-0">
-            <b className="block text-[11px] font-bold tracking-[.06em] text-faint mb-0.5">HOW TO MAKE IT</b>
+            <b className="block text-[11px] font-bold tracking-[.06em] text-faint mb-0.5">{t("howToMakeIt")}</b>
             <p className="text-[13px] text-muted leading-[1.5]">{word.tip}</p>
           </div>
           {isSpeaking && (
-            <span className="ml-auto flex-none text-[12px] font-semibold text-teal wave-on">speaking…</span>
+            <span className="ml-auto flex-none text-[12px] font-semibold text-teal wave-on">{t("speaking")}</span>
           )}
         </div>
 

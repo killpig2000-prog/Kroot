@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { buttonClassName } from "@/components/ui/Button";
 import { NAILED_THRESHOLD } from "@/lib/pronunciation";
 
@@ -38,16 +39,17 @@ export default function AnswerCapture({
   onSkip: () => void;
   onCheck: () => void;
 }) {
+  const t = useTranslations("pronunciation.capture");
   return (
     <div className="flex flex-col items-center gap-3 mb-2">
       {bestScore >= NAILED_THRESHOLD && (
         <div className="inline-flex items-center gap-2.5 text-[12.5px] font-semibold text-success bg-success-bg border border-success-line rounded-full pl-3 pr-1.5 py-1.5">
-          ✓ You&apos;ve nailed this before
+          {t("nailedBefore")}
           <button
             className="text-[11.5px] font-bold bg-cream border border-success-line rounded-full px-2.5 py-1 hover:bg-success-bg transition-colors"
             onClick={onSkip}
           >
-            Skip →
+            {t("skip")}
           </button>
         </div>
       )}
@@ -78,7 +80,7 @@ export default function AnswerCapture({
               </svg>
             )}
             <button
-              aria-label={isListening ? "Listening — tap to stop" : "Tap and speak"}
+              aria-label={isListening ? t("listeningStop") : t("tapAndSpeak")}
               onClick={onListen}
               disabled={isListening}
               className={`absolute rounded-full text-[30px] flex items-center justify-center border-[3px] transition-all ${
@@ -93,13 +95,13 @@ export default function AnswerCapture({
           <p className="text-[13px] text-muted min-h-[20px] text-center">
             {isListening ? (
               <>
-                <span className="kr text-[15px] text-charcoal">{interim || "Listening…"}</span>
+                <span className="kr text-[15px] text-charcoal">{interim || t("listening")}</span>
                 <span className="block text-[11.5px] text-faint mt-0.5 tabular-nums">
-                  auto-stops in {Math.max(0, (MAX_LISTEN_MS - micElapsedMs) / 1000).toFixed(1)}s
+                  {t("autoStops", { s: Math.max(0, (MAX_LISTEN_MS - micElapsedMs) / 1000).toFixed(1) })}
                 </span>
               </>
             ) : (
-              "Tap the mic and say it out loud"
+              t("tapPrompt")
             )}
           </p>
         </>
@@ -112,25 +114,25 @@ export default function AnswerCapture({
           className="text-[12.5px] font-semibold text-muted hover:text-charcoal transition-colors"
           onClick={() => setTypedFallback(true)}
         >
-          Type your answer instead
+          {t("typeInstead")}
         </button>
       ) : (
         <div className="w-full max-w-[460px]">
           {!micOk && (
             <p className="text-[12.5px] text-muted mb-2 text-center">
-              Your browser doesn&apos;t support speech recognition — type your answer instead.
+              {t("noMic")}
             </p>
           )}
           <textarea
             value={typed}
             onChange={(e) => setTyped(e.target.value)}
-            placeholder="한국어로 입력하세요…"
+            placeholder={t("placeholder")}
             rows={2}
             className="kr w-full resize-none rounded-[10px] border border-line bg-cream px-3.5 py-2.5 text-[16px] outline-none focus:border-teal transition-colors"
           />
           <div className="flex justify-end mt-2">
             <button className={BTN_TEAL} disabled={!typed.trim()} onClick={onCheck}>
-              Check it
+              {t("check")}
             </button>
           </div>
         </div>

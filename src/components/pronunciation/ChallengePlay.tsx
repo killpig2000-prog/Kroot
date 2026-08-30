@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useTranslations } from "next-intl";
 import { buttonClassName } from "@/components/ui/Button";
 import { Link, useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
@@ -10,7 +11,6 @@ import { bestSimilarity } from "@/lib/speech-match";
 import { isTableMissing } from "@/lib/resume";
 import { playCorrect, playWrong, playChapterClear } from "@/lib/sfx";
 import {
-  KIND_LABEL,
   starsFor,
   type Challenge,
   type ChallengeResult,
@@ -23,9 +23,9 @@ const MAX_LISTEN_MS = 12000;
 const BTN_EMBER = "rounded-[10px] px-[22px] py-2.5 text-sm font-semibold transition-colors bg-[var(--c-danger)] text-white hover:brightness-95 disabled:opacity-60";
 const BTN_LINE = buttonClassName("line");
 
-function Stars({ n, big = false }: { n: number; big?: boolean }) {
+function Stars({ n, big = false, label }: { n: number; big?: boolean; label: string }) {
   return (
-    <span className={`tracking-[2px] text-[#D9A23B] ${big ? "text-[22px]" : ""}`} aria-label={`${n} of 3 stars`}>
+    <span className={`tracking-[2px] text-[#D9A23B] ${big ? "text-[22px]" : ""}`} aria-label={label}>
       {"★".repeat(n)}
       <span className="text-line">{"★".repeat(3 - n)}</span>
     </span>
@@ -44,6 +44,8 @@ export default function ChallengePlay({
   userId?: string;
   initialBest: ChallengeResult | null;
 }) {
+  const t = useTranslations("pronunciation.challenge");
+  const tk = useTranslations("pronunciation.challenge.kinds");
   const router = useRouter();
   const supabase = useMemo(() => createClient(), []);
   const [best, setBest] = useState<ChallengeResult | null>(initialBest);
@@ -93,7 +95,7 @@ export default function ChallengePlay({
       // Migration 0038 may not have reached this environment yet — a missing
       // table must never break the run, it just won't persist.
       if (upsertError && !isTableMissing(upsertError)) {
-        setSaveError("Couldn't save that run — check your connection.");
+        setSaveError(t("saveError"));
       } else {
         setSaveError(null);
       }
@@ -118,10 +120,10 @@ export default function ChallengePlay({
           href="/speaking?tab=challenge"
           className="text-[12.5px] font-bold text-faint hover:text-charcoal transition-colors"
         >
-          ← Challenges
+          {t("backToChallenges")}
         </Link>
         <span className="text-[12.5px] text-muted">
-          {"🔥".repeat(challenge.heat)} <b className="text-charcoal">{KIND_LABEL[challenge.kind]}</b>
+          {"🔥".repeat(challenge.heat)} <b className="text-charcoal">{tk(challenge.kind)}</b>
         </span>
       </div>
 
@@ -132,7 +134,7 @@ export default function ChallengePlay({
           style={{ background: "radial-gradient(ellipse at 50% 0%, var(--c-danger-bg) 0%, var(--c-warm) 70%)" }}
         >
           <span className="text-[11px] font-extrabold tracking-[.1em] uppercase text-[var(--c-danger)]">
-            Say it in one breath
+            {t("sayInOneBreath")}
           </span>
           <p className="kr font-extrabold text-[clamp(20px,3.2vw,28px)] leading-[1.35] tracking-[-0.01em] mt-2.5 mb-1.5 [text-wrap:balance]">
             {challenge.kr}
@@ -148,7 +150,7 @@ export default function ChallengePlay({
                   : "bg-cream border-line text-muted"
               }`}
             >
-              🎯 {challenge.targetAccuracy}%+ accuracy
+              {t("targetAccuracy", { n: challenge.targetAccuracy })}
             </span>
             <span
               className={`inline-flex items-center gap-1.5 text-[12px] font-bold px-2.5 py-1 rounded-full border ${
@@ -157,17 +159,17 @@ export default function ChallengePlay({
                   : "bg-cream border-line text-muted"
               }`}
             >
-              ⏱ under {(challenge.targetMs / 1000).toFixed(1)}s
+              {t("targetTime", { s: (challenge.targetMs / 1000).toFixed(1) })}
             </span>
           </div>
 
           <button
-            aria-label="Hear it"
+            aria-label={t("hearItFirst")}
             className="mt-4 inline-flex items-center gap-2 text-[12.5px] font-semibold text-muted hover:text-charcoal transition-colors disabled:opacity-40"
             onClick={() => speak(challenge.kr, 0.8)}
             disabled={!ttsOk}
           >
-            🔊 {isSpeaking ? "playing…" : "Hear it first"}
+            {isSpeaking ? t("playing") : t("hearItFirst")}
           </button>
         </div>
 
@@ -178,7 +180,7 @@ export default function ChallengePlay({
               {micOk && (
                 <>
                   <button
-                    aria-label={isListening ? "Listening" : "Tap and say the line"}
+                    aria-label={t("tapAndSay")}
                     onClick={() => listen((text, meta) => void score(text, meta.ms))}
                     disabled={isListening}
                     className={`w-24 h-24 rounded-full text-[34px] grid place-items-center transition-all ${
@@ -191,9 +193,9 @@ export default function ChallengePlay({
                   </button>
                   <p className="text-[13px] text-muted min-h-[20px] text-center">
                     {isListening ? (
-                      <span className="kr text-[15px] text-charcoal">{interim || "Listening…"}</span>
+                      <span className="kr text-[15px] text-charcoal">{interim || "…"}</span>
                     ) : (
-                      "Tap once, say the whole line — the clock starts when you do"
+                      t("tapPrompt")
                     )}
                   </p>
                 </>
@@ -204,25 +206,25 @@ export default function ChallengePlay({
                   className="text-[12.5px] font-semibold text-muted hover:text-charcoal transition-colors"
                   onClick={() => setTypedFallback(true)}
                 >
-                  Type it instead
+                  {t("typeInstead")}
                 </button>
               ) : (
                 <div className="w-full max-w-[460px]">
                   {!micOk && (
                     <p className="text-[12.5px] text-muted mb-2 text-center">
-                      Your browser doesn&apos;t support speech recognition — type the line instead (no time score).
+                      {t("noMic")}
                     </p>
                   )}
                   <textarea
                     value={typed}
                     onChange={(e) => setTyped(e.target.value)}
-                    placeholder="한국어로 입력하세요…"
+                    placeholder={t("placeholder")}
                     rows={2}
                     className="kr w-full resize-none rounded-[10px] border border-line bg-cream px-3.5 py-2.5 text-[16px] outline-none focus:border-[var(--c-danger)] transition-colors"
                   />
                   <div className="flex justify-end mt-2">
                     <button className={BTN_EMBER} disabled={!typed.trim()} onClick={() => void score(typed.trim(), 0)}>
-                      Check it
+                      {t("check")}
                     </button>
                   </div>
                 </div>
@@ -254,18 +256,17 @@ export default function ChallengePlay({
 
               <div>
                 <p className="text-[17px] font-extrabold mb-2 flex items-center gap-2.5">
-                  <Stars n={runStars} big />
-                  {runStars === 3
-                    ? "Perfect run!"
-                    : runStars === 2
-                      ? "Two stars — now beat the clock"
-                      : "One star — keep at it"}
+                  <Stars n={runStars} big label={t("starsLabel", { n: runStars })} />
+                  {runStars === 3 ? t("verdictThree") : runStars === 2 ? t("verdictTwo") : t("verdictOne")}
                 </p>
                 <div className="grid gap-1.5 mb-3">
                   <div className="flex justify-between text-[13px] px-3 py-1.5 rounded-[9px] bg-warm">
-                    <span>Accuracy</span>
+                    <span>{t("rowAccuracy")}</span>
                     <b className="tabular-nums">
-                      {run.accuracy}% {run.accuracy >= challenge.targetAccuracy ? "✓" : `· need ${challenge.targetAccuracy}%`}
+                      {run.accuracy}%{" "}
+                      {run.accuracy >= challenge.targetAccuracy
+                        ? "✓"
+                        : t("rowAccuracyNeed", { n: challenge.targetAccuracy })}
                     </b>
                   </div>
                   <div
@@ -275,19 +276,19 @@ export default function ChallengePlay({
                         : "bg-warm"
                     }`}
                   >
-                    <span>Speaking time</span>
+                    <span>{t("rowTime")}</span>
                     <b className="tabular-nums">
                       {run.ms > 0 ? `${(run.ms / 1000).toFixed(1)}s` : "—"}
                       {run.ms > 0 && run.ms <= challenge.targetMs
                         ? " ✓"
-                        : ` · need ${(challenge.targetMs / 1000).toFixed(1)}s`}
+                        : ` ${t("rowTimeNeed", { s: (challenge.targetMs / 1000).toFixed(1) })}`}
                     </b>
                   </div>
                   {best && (
                     <div className="flex justify-between text-[13px] px-3 py-1.5 rounded-[9px] bg-[var(--tint-amber)] border border-amber-line">
-                      <span>Your best</span>
+                      <span>{t("rowBest")}</span>
                       <b className="tabular-nums">
-                        {best.accuracy}%{best.ms > 0 && ` in ${(best.ms / 1000).toFixed(1)}s`} · <Stars n={bestStars} />
+                        {best.accuracy}%{best.ms > 0 && ` in ${(best.ms / 1000).toFixed(1)}s`} · <Stars n={bestStars} label={t("starsLabel", { n: bestStars })} />
                       </b>
                     </div>
                   )}
@@ -295,10 +296,10 @@ export default function ChallengePlay({
                 {saveError && <p className="text-[11.5px] text-[var(--c-danger)] mb-2">⚠️ {saveError}</p>}
                 <div className="flex gap-2 flex-wrap">
                   <button className={BTN_EMBER} onClick={reset}>
-                    {runStars === 3 ? "Run it again" : "Try for more stars"}
+                    {runStars === 3 ? t("runAgain") : t("tryForMore")}
                   </button>
                   <Link href="/speaking?tab=challenge" className={BTN_LINE}>
-                    All challenges
+                    {t("allChallenges")}
                   </Link>
                 </div>
               </div>

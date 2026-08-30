@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { Link, redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
@@ -30,6 +31,8 @@ export default async function SpeakingPage({
   const user = await getClaimsUser(supabase);
 
   if (!user) redirect("/onboarding");
+
+  const t = await getTranslations("pronunciation");
 
   const [{ data: profile }, { data: progressRows }, challengeRes] = await Promise.all([
     supabase
@@ -83,11 +86,11 @@ export default async function SpeakingPage({
       const have = doneByFamily(req.family);
       return have >= req.count
         ? { ...s, locked: false }
-        : { ...s, locked: true, lockNote: `Finish ${req.count} Connected-speech chapters (${have}/${req.count})` };
+        : { ...s, locked: true, lockNote: t("challenge.lockChapters", { count: req.count, have }) };
     }
     return totalStars >= req.count
       ? { ...s, locked: false }
-      : { ...s, locked: true, lockNote: `Earn ${req.count} stars first (${totalStars}/${req.count})` };
+      : { ...s, locked: true, lockNote: t("challenge.lockStars", { count: req.count, have: totalStars }) };
   });
 
   const sp = await searchParams;
@@ -120,7 +123,7 @@ export default async function SpeakingPage({
               Garden
             </Link>
             <span>/</span>
-            <b className="text-charcoal font-semibold">Pronunciation</b>
+            <b className="text-charcoal font-semibold">{t("title")}</b>
           </div>
 
           <div className="flex items-center justify-between gap-4 mb-[18px] flex-wrap">
@@ -128,25 +131,27 @@ export default async function SpeakingPage({
               <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[var(--tint-teal)] text-teal border border-[var(--tint-teal-line)] items-center justify-center kr text-[15px] mr-[9px]">
                 발
               </span>
-              Pronunciation
+              {t("title")}
             </h1>
             <span className="text-[13px] text-muted tabular-nums">
               {onChallengeTab
-                ? `${starsEarned} ★ earned`
-                : `${chaptersDone.length}/${chapters.length} chapters${perfectCount > 0 ? ` · ${perfectCount} perfect` : ""}`}
+                ? t("headerStars", { n: starsEarned })
+                : perfectCount > 0
+                  ? t("headerPerfect", { done: chaptersDone.length, total: chapters.length, perfect: perfectCount })
+                  : t("headerPractice", { done: chaptersDone.length, total: chapters.length })}
             </span>
           </div>
 
           {!playing && (
             <div className="inline-flex bg-warm-2 border border-line rounded-[12px] p-1 gap-1 mb-6">
               <Link href="/speaking" className={`${TAB} ${onChallengeTab ? "text-muted" : "bg-cream shadow-sm"}`}>
-                🎯 Practice
+                🎯 {t("tabs.practice")}
               </Link>
               <Link
                 href="/speaking?tab=challenge"
                 className={`${TAB} ${onChallengeTab ? "bg-cream shadow-sm text-[var(--c-danger)]" : "text-muted"}`}
               >
-                🔥 Challenge
+                🔥 {t("tabs.challenge")}
               </Link>
             </div>
           )}
