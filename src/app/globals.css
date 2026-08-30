@@ -144,6 +144,10 @@ html[data-mode="dark"] {
   --c-danger: #FF8A80;
   --c-danger-bg: #2A1917;
 
+  --c-chart: #35A96C;
+  --c-chart-dim: #33453B;
+  --c-chart-miss: #E06A62;
+
   --tint-sky: #172A3D;    --tint-sky-line: #2B4F6B;
   --tint-teal: #10302B;   --tint-teal-line: #1F5C52;
   --tint-amber: #2F2712;
@@ -183,6 +187,13 @@ html[data-mode="dark"] {
   --c-sky-deep: #2563EB;
   --c-danger: #DC2626;
   --c-danger-bg: #FEF2F2;
+  /* Chart palette (account analytics). One data colour for every bar —
+     skills are nominal categories, so darker-where-bigger would encode a
+     ranking that isn't there; --c-chart-dim is the de-emphasis grey and
+     --c-chart-miss marks misses. */
+  --c-chart: #2C9754;
+  --c-chart-dim: #DCD6C8;
+  --c-chart-miss: #C0392B;
   /* Category / status tints — the pastel card fills and their borders that
      used to be hardcoded Tailwind-50 hexes. Flip with the theme so a
      light text token never lands on a light card in dark mode. */
@@ -233,6 +244,9 @@ html[data-mode="dark"] {
   --color-sky-deep: var(--c-sky-deep);
   --color-danger: var(--c-danger);
   --color-danger-bg: var(--c-danger-bg);
+  --color-chart: var(--c-chart);
+  --color-chart-dim: var(--c-chart-dim);
+  --color-chart-miss: var(--c-chart-miss);
 }
 
 * {

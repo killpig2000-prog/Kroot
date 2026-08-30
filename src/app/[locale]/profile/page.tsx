@@ -1,30 +1,32 @@
-import { getTranslations } from "next-intl/server";
+import { getFormatter, getTranslations } from "next-intl/server";
 import { redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import AvatarUploader from "@/components/profile/AvatarUploader";
 import NameEditor from "@/components/profile/NameEditor";
 import ReminderSettings from "@/components/profile/ReminderSettings";
-import LearningProgress from "@/components/profile/LearningProgress";
-import WordMemory from "@/components/profile/WordMemory";
-import AccuracyStats, { type AccuracyMetric } from "@/components/profile/AccuracyStats";
-import WordsToPractise, { type PractiseWord } from "@/components/profile/WordsToPractise";
-import LevelHistory, { type LevelTestRow } from "@/components/profile/LevelHistory";
+import HeadlineKpis, { type Headline } from "@/components/profile/HeadlineKpis";
+import SkillAccuracy, { type SkillScore, type SkillPending } from "@/components/profile/SkillAccuracy";
+import StudyDays, { type StudyDay } from "@/components/profile/StudyDays";
+import BestHours from "@/components/profile/BestHours";
+import WordsToReview, { type DueWord } from "@/components/profile/WordsToReview";
 import { computeSkillProgress } from "@/components/profile/skill-progress";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { LEVEL_PATH, SPECIES, type CefrLevel } from "@/lib/tree";
 import { levelProgress, treeStageForLevel, MAX_LEVEL } from "@/lib/level";
-import { MAX_BOX } from "@/lib/srs";
 import { PUBLIC_VOCAB_WORDS } from "@/lib/vocab-slugs";
 
-// My account (2026-08-30): identity at the top, then the learning stats that
-// used to be scattered across the Garden and the retired /stats page, with
-// the settings pushed to the bottom. Every query below is tolerant of a
-// missing table or column — a stats page must degrade, never 500.
+// My account (2026-08-30, rebuilt): an ANALYSIS page. Identity at the top,
+// then a headline that states the conclusion, per-skill accuracy, when the
+// learner actually studies, and their words. The old SRS box ladder and the
+// level-test history are gone — the ladder was unreadable ("how to read it,
+// I have no idea") and the history answered a question nobody asked.
+//
+// Every query is unwrapped error-tolerantly: a stats page must degrade to a
+// smaller page, never to a 500.
 
 type VocabRow = {
   word_key: string;
-  box: number | null;
   correct_count: number | null;
   incorrect_count: number | null;
   next_review_at: string | null;
@@ -38,38 +40,26 @@ function koreanFromWordKey(key: string): string {
 
 const WORD_BY_KOREAN = new Map(PUBLIC_VOCAB_WORDS.map((w) => [w.korean, w]));
 
-/** details jsonb → the per-skill rows we can actually show, in a fixed order. */
-const DETAIL_SKILLS: { field: string; navKey: string }[] = [
-  { field: "listening", navKey: "listening" },
-  { field: "reading", navKey: "reading" },
-  { field: "writing", navKey: "writing" },
-  { field: "speaking", navKey: "pronunciation" },
-];
+const DAY_MS = 86_400_000;
+const CHART_DAYS = 30;
+const MIN_HOUR_EVENTS = 10;
+const DUE_LIST_MAX = 8;
 
-function skillsFromDetails(details: unknown): { key: string; value: number }[] {
-  if (!details || typeof details !== "object") return [];
-  const d = details as Record<string, unknown>;
-  return DETAIL_SKILLS.flatMap(({ field, navKey }) => {
-    const v = d[field];
-    return typeof v === "number" && Number.isFinite(v) ? [{ key: navKey, value: Math.round(v) }] : [];
-  });
-}
-
-function passedFromDetails(details: unknown): boolean | null {
-  if (!details || typeof details !== "object") return null;
-  const v = (details as Record<string, unknown>).passed;
-  return typeof v === "boolean" ? v : null;
+function isoDay(d: Date): string {
+  return d.toISOString().slice(0, 10);
 }
 
 export default async function ProfilePage() {
   const t = await getTranslations("ui.account");
   const tn = await getTranslations("nav");
+  const format = await getFormatter();
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
 
   if (!user) redirect("/onboarding");
 
-  const nowIso = new Date().toISOString();
+  const now = new Date();
+  const nowIso = now.toISOString();
 
   // One parallel batch: from Korea to us-east-1 each round trip is ~300ms,
   // so sequential awaits are the whole difference between fast and sluggish.
@@ -82,7 +72,8 @@ export default async function ProfilePage() {
     listeningRes,
     speakingRes,
     grammarRes,
-    levelTestRes,
+    activityRes,
+    xpRes,
   ] = await Promise.all([
     supabase
       .from("profiles")
@@ -97,43 +88,58 @@ export default async function ProfilePage() {
       .maybeSingle(),
     supabase
       .from("vocabulary_progress")
-      .select("word_key, box, correct_count, incorrect_count, next_review_at")
+      .select("word_key, correct_count, incorrect_count, next_review_at")
       .eq("user_id", user.id),
     supabase.from("reading_progress").select("passage_key, correct_count, incorrect_count").eq("user_id", user.id),
-    supabase.from("writing_progress").select("prompt_key").eq("user_id", user.id),
-    supabase.from("listening_progress").select("dialogue_id").eq("user_id", user.id).not("completed_at", "is", null),
+    // score / quiz_correct arrive with migration 0037; both selects are
+    // retried below without them so an unapplied migration costs the score,
+    // not the page.
+    supabase.from("writing_progress").select("prompt_key, score").eq("user_id", user.id),
+    supabase
+      .from("listening_progress")
+      .select("dialogue_id, quiz_correct")
+      .eq("user_id", user.id)
+      .not("completed_at", "is", null),
     supabase.from("speaking_progress").select("prompt_key, best_score").eq("user_id", user.id),
     supabase.from("grammar_progress").select("lesson_key, score").eq("user_id", user.id),
+    supabase.from("daily_activity").select("activity_date, minutes").eq("user_id", user.id),
     supabase
-      .from("level_test_results")
-      .select("id, created_at, result_level, score, total_questions, details")
+      .from("xp_events")
+      .select("created_at")
       .eq("user_id", user.id)
       .order("created_at", { ascending: false })
-      .limit(8),
+      .limit(1000),
   ]);
 
   const extras = extrasRes.error ? null : extrasRes.data;
   const vocabRows = (vocabRes.error ? [] : (vocabRes.data as VocabRow[] | null) ?? []) as VocabRow[];
   const readingRows = readingRes.error ? [] : readingRes.data ?? [];
-  const writingRows = writingRes.error ? [] : writingRes.data ?? [];
-  const listeningRows = listeningRes.error ? [] : listeningRes.data ?? [];
   const speakingRows = speakingRes.error ? [] : speakingRes.data ?? [];
   const grammarRows = grammarRes.error ? [] : grammarRes.data ?? [];
+  const activityRows = activityRes.error ? [] : activityRes.data ?? [];
+  const xpRows = xpRes.error ? [] : xpRes.data ?? [];
 
-  // `details` arrives with migration 0014; without it the whole select errors,
-  // so retry once for the columns that have always existed.
-  let levelTests = levelTestRes.error ? [] : levelTestRes.data ?? [];
-  if (levelTestRes.error) {
+  type WritingRow = { prompt_key: string; score: number | null };
+  type ListeningRow = { dialogue_id: string; quiz_correct: boolean | null };
+
+  let writingRows: WritingRow[] = writingRes.error ? [] : ((writingRes.data ?? []) as WritingRow[]);
+  if (writingRes.error) {
+    const retry = await supabase.from("writing_progress").select("prompt_key").eq("user_id", user.id);
+    writingRows = retry.error ? [] : (retry.data ?? []).map((r) => ({ prompt_key: r.prompt_key, score: null }));
+  }
+
+  let listeningRows: ListeningRow[] = listeningRes.error ? [] : ((listeningRes.data ?? []) as ListeningRow[]);
+  if (listeningRes.error) {
     const retry = await supabase
-      .from("level_test_results")
-      .select("id, created_at, result_level, score, total_questions")
+      .from("listening_progress")
+      .select("dialogue_id")
       .eq("user_id", user.id)
-      .order("created_at", { ascending: false })
-      .limit(8);
-    levelTests = retry.error ? [] : (retry.data ?? []).map((r) => ({ ...r, details: null }));
+      .not("completed_at", "is", null);
+    listeningRows = retry.error ? [] : (retry.data ?? []).map((r) => ({ dialogue_id: r.dialogue_id, quiz_correct: null }));
   }
 
   const level = (profile?.current_level ?? "A1") as CefrLevel;
+  const streakDays = profile?.streak_days ?? 0;
 
   const xp = profile?.xp ?? 0;
   const { level: playerLevel, into, needed, pct } = levelProgress(xp);
@@ -143,7 +149,7 @@ export default async function ProfilePage() {
     ? new Date(profile.created_at).toLocaleDateString("en-US", { month: "short", year: "numeric" })
     : "—";
 
-  // 1. Learning progress
+  // ── level progress: the grey line under each skill name ──────────────────
   const skillProgress = computeSkillProgress({
     cefr: level,
     grammarKeys: grammarRows.map((r) => r.lesson_key),
@@ -154,54 +160,130 @@ export default async function ProfilePage() {
     speakingKeys: speakingRows.map((r) => r.prompt_key),
   });
 
-  // 2. Word memory — Leitner box distribution
-  const boxes = Array.from({ length: MAX_BOX }, () => 0);
-  for (const row of vocabRows) {
-    const box = Math.min(Math.max(row.box ?? 1, 1), MAX_BOX);
-    boxes[box - 1] += 1;
-  }
-  const dueNow = vocabRows.filter((r) => r.next_review_at != null && r.next_review_at <= nowIso).length;
+  const UNITS: Record<string, string> = {
+    grammar: t("unitLessons"),
+    vocabulary: t("unitWords"),
+    listening: t("unitClips"),
+    reading: t("unitPassages"),
+    writing: t("unitPrompts"),
+    pronunciation: t("unitChapters"),
+  };
 
-  // 3. Accuracy — a metric is shown only when it has data behind it.
-  const sum = (rows: { correct_count: number | null; incorrect_count: number | null }[]) =>
+  function progressLine(key: string): string {
+    const p = skillProgress[key] ?? { done: 0, total: 0 };
+    const args = { done: p.done, total: p.total, unit: UNITS[key] };
+    // pronunciation counts chapters across the whole course, not per level
+    return key === "pronunciation"
+      ? t("progressCountPlain", args)
+      : t("progressCount", { ...args, level });
+  }
+
+  // ── accuracy: one honest number per skill, each on its own basis ─────────
+  const rate = (rows: { correct_count: number | null; incorrect_count: number | null }[]) =>
     rows.reduce(
-      (acc, r) => ({ ok: acc.ok + (r.correct_count ?? 0), all: acc.all + (r.correct_count ?? 0) + (r.incorrect_count ?? 0) }),
+      (acc, r) => ({
+        ok: acc.ok + (r.correct_count ?? 0),
+        all: acc.all + (r.correct_count ?? 0) + (r.incorrect_count ?? 0),
+      }),
       { ok: 0, all: 0 }
     );
-  const vocabAcc = sum(vocabRows);
-  const readingAcc = sum(readingRows);
-  const speakingScores = speakingRows.map((r) => r.best_score).filter((s): s is number => typeof s === "number");
-  const grammarScores = grammarRows.map((r) => r.score).filter((s): s is number => typeof s === "number");
   const avg = (xs: number[]) => Math.round(xs.reduce((a, b) => a + b, 0) / xs.length);
 
-  const metrics: AccuracyMetric[] = [
-    ...(vocabAcc.all > 0
-      ? [{
-          key: "vocabulary",
-          percent: Math.round((vocabAcc.ok / vocabAcc.all) * 100),
-          note: t("ofAnswers", { correct: vocabAcc.ok, total: vocabAcc.all }),
-        }]
-      : []),
-    ...(readingAcc.all > 0
-      ? [{
-          key: "reading",
-          percent: Math.round((readingAcc.ok / readingAcc.all) * 100),
-          note: t("ofAnswers", { correct: readingAcc.ok, total: readingAcc.all }),
-        }]
-      : []),
-    ...(speakingScores.length > 0
-      ? [{ key: "pronunciation", percent: avg(speakingScores), note: t("overWords", { count: speakingScores.length }) }]
-      : []),
-    ...(grammarScores.length > 0
-      ? [{ key: "grammar", percent: avg(grammarScores), note: t("overLessons", { count: grammarScores.length }) }]
-      : []),
-  ];
+  const vocabRate = rate(vocabRows);
+  const readingRate = rate(readingRows);
+  const speakingScores = speakingRows.map((r) => r.best_score).filter((s): s is number => typeof s === "number");
+  const grammarScores = grammarRows.map((r) => r.score).filter((s): s is number => typeof s === "number");
+  const writingScores = writingRows.map((r) => r.score).filter((s): s is number => typeof s === "number");
+  // null = clip had no quiz, or was finished before the column existed. Those
+  // rows leave the denominator entirely; counting them as wrong would invent
+  // failures the learner never had.
+  const listeningQuizzes = listeningRows
+    .map((r) => r.quiz_correct)
+    .filter((v): v is boolean => typeof v === "boolean");
 
-  // 4. Words to practise — the ones missed most often
-  const practiseWords: PractiseWord[] = vocabRows
-    .filter((r) => (r.incorrect_count ?? 0) > 0)
-    .sort((a, b) => (b.incorrect_count ?? 0) - (a.incorrect_count ?? 0))
-    .slice(0, 6)
+  const scores: SkillScore[] = [];
+  const pending: SkillPending[] = [];
+  const push = (key: string, hasData: boolean, percent: number, basis: string) => {
+    if (hasData) scores.push({ key, percent, basis, progress: progressLine(key) });
+    else pending.push({ key, progress: progressLine(key) });
+  };
+
+  push(
+    "vocabulary",
+    vocabRate.all > 0,
+    vocabRate.all > 0 ? Math.round((vocabRate.ok / vocabRate.all) * 100) : 0,
+    t("basisAnswers", { correct: vocabRate.ok, total: vocabRate.all })
+  );
+  push(
+    "reading",
+    readingRate.all > 0,
+    readingRate.all > 0 ? Math.round((readingRate.ok / readingRate.all) * 100) : 0,
+    t("basisAnswers", { correct: readingRate.ok, total: readingRate.all })
+  );
+  push(
+    "pronunciation",
+    speakingScores.length > 0,
+    speakingScores.length > 0 ? avg(speakingScores) : 0,
+    t("basisWords", { count: speakingScores.length })
+  );
+  push(
+    "grammar",
+    grammarScores.length > 0,
+    grammarScores.length > 0 ? avg(grammarScores) : 0,
+    t("basisLessons", { count: grammarScores.length })
+  );
+  push(
+    "listening",
+    listeningQuizzes.length > 0,
+    listeningQuizzes.length > 0
+      ? Math.round((listeningQuizzes.filter(Boolean).length / listeningQuizzes.length) * 100)
+      : 0,
+    t("basisClips", { count: listeningQuizzes.length })
+  );
+  push(
+    "writing",
+    writingScores.length > 0,
+    writingScores.length > 0 ? avg(writingScores) : 0,
+    t("basisPrompts", { count: writingScores.length })
+  );
+
+  const ranked = [...scores].sort((a, b) => b.percent - a.percent);
+  const headline: Headline =
+    ranked.length >= 2
+      ? { kind: "compare", bestKey: ranked[0].key, worstKey: ranked[ranked.length - 1].key }
+      : ranked.length === 1
+        ? { kind: "single", skillKey: ranked[0].key }
+        : null;
+
+  // ── study time ───────────────────────────────────────────────────────────
+  const minutesByDate = new Map<string, number>(
+    activityRows.map((r) => [r.activity_date as string, r.minutes ?? 0])
+  );
+  const totalMinutes = activityRows.reduce((a, r) => a + (r.minutes ?? 0), 0);
+  const activeDays = activityRows.filter((r) => (r.minutes ?? 0) > 0).length;
+
+  const chartDays: StudyDay[] = Array.from({ length: CHART_DAYS }, (_, i) => {
+    const date = isoDay(new Date(now.getTime() - (CHART_DAYS - 1 - i) * DAY_MS));
+    return { date, minutes: minutesByDate.get(date) ?? 0 };
+  });
+
+  const hourTimestamps = xpRows.map((r) => r.created_at as string).filter(Boolean);
+
+  // ── words to review ──────────────────────────────────────────────────────
+  // Only the due queue. No box distribution, no stage labels, no intervals:
+  // the learner wants this card to manage what needs reviewing, and a
+  // collection-health meter is a number they cannot act on.
+  const due = vocabRows.filter((r) => r.next_review_at != null && r.next_review_at <= nowIso);
+  const dueCount = due.length;
+
+  const dueWords: DueWord[] = due
+    // hardest first, then whatever came due earliest
+    .sort(
+      (a, b) =>
+        (b.incorrect_count ?? 0) - (a.incorrect_count ?? 0) ||
+        (a.next_review_at ?? "").localeCompare(b.next_review_at ?? "")
+    )
+    .slice(0, DUE_LIST_MAX)
     .map((r) => {
       const korean = koreanFromWordKey(r.word_key);
       const entry = WORD_BY_KOREAN.get(korean);
@@ -213,22 +295,15 @@ export default async function ProfilePage() {
       };
     });
 
-  // 5. Level history
-  const levelRows: LevelTestRow[] = levelTests.map((r) => {
-    const details = (r as { details?: unknown }).details ?? null;
-    return {
-      id: r.id,
-      created_at: r.created_at,
-      result_level: r.result_level,
-      score: r.score,
-      total_questions: r.total_questions,
-      skills: skillsFromDetails(details),
-      passed: passedFromDetails(details),
-    };
-  });
+  // nothing due: the soonest word still to come back, if there is one
+  const nextReturnAt = vocabRows
+    .map((r) => r.next_review_at)
+    .filter((v): v is string => v != null && v > nowIso)
+    .sort()[0];
+  const nextReturn = dueCount === 0 && nextReturnAt ? format.relativeTime(new Date(nextReturnAt), now) : null;
 
   const hasVocab = vocabRows.length > 0;
-  const noScoreSkills = ["listening", "writing"];
+  const hasAnything = hasVocab || scores.length > 0 || totalMinutes > 0;
 
   return (
     <div className="min-h-screen bg-warm text-charcoal">
@@ -236,7 +311,7 @@ export default async function ProfilePage() {
         <Sidebar
           displayName={profile?.display_name ?? "there"}
           email={user.email ?? ""}
-          streakDays={profile?.streak_days ?? 0}
+          streakDays={streakDays}
           avatarUrl={profile?.avatar_url}
         />
 
@@ -255,7 +330,7 @@ export default async function ProfilePage() {
           {/* grid-cols-1 pins the track to minmax(0,1fr); a bare auto track
               grows to the widest card's max-content and overflows on mobile */}
           <div className="max-w-[820px] grid grid-cols-1 gap-3.5">
-            {/* identity card */}
+            {/* 1. identity */}
             <div className="border border-line rounded-[14px] px-[22px] py-5 flex items-center gap-4 flex-wrap">
               <AvatarUploader userId={user.id} avatarUrl={profile?.avatar_url ?? null} />
               <div className="flex-1 min-w-[180px]">
@@ -285,7 +360,7 @@ export default async function ProfilePage() {
               </div>
               <div className="flex gap-2 flex-wrap">
                 <span className="text-[12.5px] font-semibold text-success bg-success-bg border border-success-line rounded-full px-3 py-1">
-                  🔥 {profile?.streak_days ?? 0} day streak
+                  🔥 {streakDays} day streak
                 </span>
                 <span className="text-[12.5px] font-semibold text-muted bg-warm border border-line rounded-full px-3 py-1">
                   🌰 {profile?.coins ?? 0} coins
@@ -298,29 +373,37 @@ export default async function ProfilePage() {
               </div>
             </div>
 
-            {/* 1. learning progress — moved here from the Garden */}
-            <LearningProgress cefr={level} progress={skillProgress} />
+            {/* 2. the conclusion, then the headline numbers behind it */}
+            {hasAnything && (
+              <HeadlineKpis
+                headline={headline}
+                streakDays={streakDays}
+                totalMinutes={totalMinutes}
+                wordCount={vocabRows.length}
+                activeDays={activeDays}
+              />
+            )}
 
-            {/* 2. word memory — only once there is a word to remember */}
-            {hasVocab && <WordMemory boxes={boxes} total={vocabRows.length} due={dueNow} />}
+            {/* 3. accuracy per skill — the point of the page */}
+            {scores.length > 0 && <SkillAccuracy scores={scores} pending={pending} />}
 
-            {/* 3. accuracy — every metric with data behind it, and nothing else */}
-            {metrics.length > 0 && <AccuracyStats metrics={metrics} missingScores={noScoreSkills} />}
+            {/* 4. when you study */}
+            {totalMinutes > 0 && <StudyDays days={chartDays} streakDays={streakDays} />}
 
-            {/* 4. the words that trip you up most */}
-            {practiseWords.length > 0 && <WordsToPractise words={practiseWords} />}
+            {/* 5. your best hours — client-side, the reader's own timezone */}
+            {hourTimestamps.length >= MIN_HOUR_EVENTS && <BestHours timestamps={hourTimestamps} />}
 
-            {/* 5. level tests taken */}
-            {levelRows.length > 0 && <LevelHistory rows={levelRows} />}
+            {/* 6. the due queue — the whole of what this card is for */}
+            {hasVocab && <WordsToReview words={dueWords} dueCount={dueCount} nextReturn={nextReturn} />}
 
-            {/* nothing studied yet: one line instead of five empty cards */}
-            {!hasVocab && metrics.length === 0 && (
+            {/* nothing studied yet: one line instead of a stack of empty cards */}
+            {!hasAnything && (
               <div className="border border-dashed border-dash rounded-[14px] bg-cream px-[22px] py-5 text-[13px] text-muted">
                 {t("noStatsYet")}
               </div>
             )}
 
-            {/* 6. settings */}
+            {/* 7. settings */}
             <h2 className="font-semibold text-[15px] mt-3.5">{t("settings")}</h2>
 
             <ReminderSettings
@@ -330,12 +413,6 @@ export default async function ProfilePage() {
               initialHour={extras?.reminder_hour ?? 18}
               hasEmail={!!user.email}
             />
-
-            {/* Insights is switched off until it's rebuilt (2026-08-28). The
-                component still exists — restore this line and the /stats
-                anchor when it comes back. Its headline metric is lifetime
-                correct/incorrect, the very measure the promotion gate dropped,
-                so shipping it as-is would contradict the level-up screen. */}
           </div>
         </main>
       </div>
