@@ -140,7 +140,7 @@ async function worker() {
         const buf = await synth(job.spoken, job.voice);
         const { error } = await supabase.storage
           .from("tts")
-          .upload(`${hash}.mp3`, buf, { contentType: "audio/mpeg", upsert: true });
+          .upload(`${hash}.mp3`, buf, { contentType: "audio/mpeg", cacheControl: "31536000", upsert: true });
         if (error) throw new Error(error.message);
         ok = true;
       } catch {

@@ -65,11 +65,14 @@ export async function POST(request: Request) {
   if (!audio) return NextResponse.json({ error: "tts_failed" }, { status: 502 });
 
   // Stream the audio back immediately; the cache write can happen after the
-  // response — the next listener gets the public URL either way.
+  // response — the next listener gets the public URL either way. The
+  // filename is a content hash of (engine, voice, text), so the object never
+  // changes under that name — a year-long cache is safe and keeps repeat
+  // plays off Supabase egress (was defaulting to 1 hour).
   after(async () => {
     const { error } = await supabase.storage
       .from("tts")
-      .upload(objectPath, audio, { contentType: "audio/mpeg", upsert: true });
+      .upload(objectPath, audio, { contentType: "audio/mpeg", cacheControl: "31536000", upsert: true });
     if (error) console.error("tts cache write failed:", error.message);
   });
   return new NextResponse(new Uint8Array(audio), { headers: { "Content-Type": "audio/mpeg" } });
