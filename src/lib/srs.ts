@@ -15,5 +15,6 @@ export function nextReviewAt(box: number, from: Date = new Date()): string {
   return new Date(from.getTime() + days * 86_400_000).toISOString();
 }
 
-// How many due words make a satisfying single review session.
-export const REVIEW_SESSION_SIZE = 20;
+// How many due words make a satisfying single review session — past this
+// it starts to feel like a slog rather than a quick review.
+export const REVIEW_SESSION_SIZE = 10;

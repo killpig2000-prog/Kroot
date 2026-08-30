@@ -51,7 +51,13 @@
     "backToMyBank": "返回我的单词本",
     "seeAll": "查看全部单词 →",
     "budgetLine": "单词本 {used}/{slots}",
-    "saveThisWord": "保存这个词"
+    "saveThisWord": "保存这个词",
+    "emptyTitle": "{slots} 个空格位，等你来填",
+    "slotsAria": "已用 {used} / {slots} 个格位",
+    "firstWord": "第一个词",
+    "addWord": "添加单词",
+    "moreSlots": "+{count} 个格位",
+    "moreSlotsPrice": "{price} 金币"
   },
   "slots": {
     "title": "单词本容量",

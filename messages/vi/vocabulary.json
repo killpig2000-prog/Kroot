@@ -51,7 +51,13 @@
     "backToMyBank": "quay lại sổ từ của tôi",
     "seeAll": "Xem tất cả từ của tôi →",
     "budgetLine": "{used}/{slots} trong sổ từ",
-    "saveThisWord": "Lưu từ này"
+    "saveThisWord": "Lưu từ này",
+    "emptyTitle": "{slots} ô trống đang chờ",
+    "slotsAria": "Đã dùng {used} trên {slots} ô",
+    "firstWord": "Từ đầu tiên",
+    "addWord": "Thêm từ",
+    "moreSlots": "+{count} ô",
+    "moreSlotsPrice": "{price} xu"
   },
   "slots": {
     "title": "Chỗ trong sổ từ",

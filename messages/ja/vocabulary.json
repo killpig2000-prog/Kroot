@@ -51,7 +51,13 @@
     "backToMyBank": "単語帳に戻る",
     "seeAll": "単語帳をすべて見る →",
     "budgetLine": "単語帳 {used}/{slots}",
-    "saveThisWord": "この単語を保存"
+    "saveThisWord": "この単語を保存",
+    "emptyTitle": "空きスロット {slots} 個",
+    "slotsAria": "{slots} 個中 {used} 個使用中",
+    "firstWord": "最初の単語",
+    "addWord": "単語を追加",
+    "moreSlots": "+{count} スロット",
+    "moreSlotsPrice": "{price} コイン"
   },
   "slots": {
     "title": "単語帳のスロット",

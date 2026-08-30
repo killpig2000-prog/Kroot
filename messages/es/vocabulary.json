@@ -51,7 +51,13 @@
     "backToMyBank": "volver a mi lista de palabras",
     "seeAll": "Ver todas mis palabras →",
     "budgetLine": "{used}/{slots} en tu lista de palabras",
-    "saveThisWord": "Guardar esta palabra"
+    "saveThisWord": "Guardar esta palabra",
+    "emptyTitle": "{slots} huecos vacíos, esperando",
+    "slotsAria": "{used} de {slots} huecos usados",
+    "firstWord": "Primera palabra",
+    "addWord": "Añadir palabra",
+    "moreSlots": "+{count} huecos",
+    "moreSlotsPrice": "{price} monedas"
   },
   "slots": {
     "title": "Espacios de la lista",

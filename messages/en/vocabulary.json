@@ -51,7 +51,13 @@
     "backToMyBank": "back to my word bank",
     "seeAll": "See all my words →",
     "budgetLine": "{used}/{slots} in your word bank",
-    "saveThisWord": "Save this word"
+    "saveThisWord": "Save this word",
+    "emptyTitle": "{slots} empty slots, waiting",
+    "slotsAria": "{used} of {slots} slots used",
+    "firstWord": "First word",
+    "addWord": "Add a word",
+    "moreSlots": "+{count} slots",
+    "moreSlotsPrice": "{price} coins"
   },
   "slots": {
     "title": "Word bank slots",

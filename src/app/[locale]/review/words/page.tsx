@@ -128,22 +128,42 @@ export default async function MyWordsPage({ params }: { params: Promise<{ locale
               >
                 {tv("bank.budget", { used: items.length, slots })}
               </span>
-              <span
-                role="img"
-                aria-label={tv("bank.budget", { used: items.length, slots })}
-                className="block w-[64px] h-[6px] rounded-full bg-line overflow-hidden"
-              >
+              {/* One pip per slot — the capacity reads as countable cells, the
+                  same unit the grid below is built from. Past ~30 slots the
+                  pips get too fine to count, so it falls back to a bar. */}
+              {slots <= 30 ? (
                 <span
-                  className={`block h-full rounded-full ${full ? "bg-amber" : "bg-success"}`}
-                  style={{ width: `${Math.min(100, slots > 0 ? (items.length / slots) * 100 : 0)}%` }}
-                />
-              </span>
+                  role="img"
+                  aria-label={tv("bank.slotsAria", { used: items.length, slots })}
+                  className="flex items-center gap-[3px]"
+                >
+                  {Array.from({ length: slots }, (_, i) => (
+                    <span
+                      key={i}
+                      className={`block w-[7px] h-[12px] rounded-[2px] ${
+                        i < items.length ? (full ? "bg-amber" : "bg-success") : "bg-line"
+                      }`}
+                    />
+                  ))}
+                </span>
+              ) : (
+                <span
+                  role="img"
+                  aria-label={tv("bank.slotsAria", { used: items.length, slots })}
+                  className="block w-[64px] h-[6px] rounded-full bg-line overflow-hidden"
+                >
+                  <span
+                    className={`block h-full rounded-full ${full ? "bg-amber" : "bg-success"}`}
+                    style={{ width: `${Math.min(100, slots > 0 ? (items.length / slots) * 100 : 0)}%` }}
+                  />
+                </span>
+              )}
             </span>
           </div>
           {full && <p className="text-[13px] text-muted mt-1.5">{tv("bank.fullHint", { slots })}</p>}
           </div>
 
-          <WordBankList userId={user.id} items={items} />
+          <WordBankList userId={user.id} items={items} slots={slots} />
         </main>
       </div>
 
