@@ -1,8 +1,8 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
-import { speakKorean } from "@/lib/tts";
+import { speakKorean, prefetchKorean } from "@/lib/tts";
 import { wrongTilePositions, type Board, type Tile } from "@/lib/writing-builder";
 
 // The single tile-assembly board. A controlled component: the session owns
@@ -95,6 +95,12 @@ export function TileBoard({
   const t = useTranslations("writing.board");
   const hold = useHoldToSpeak();
   const byId = new Map(board.tiles.map((t) => [t.id, t]));
+
+  // Warm the audio cache for every tile plus the full answer, so a hold-to-
+  // speak or the post-check "hear it" plays without a synthesis pause.
+  useEffect(() => {
+    prefetchKorean([...board.tiles.map((tile) => tile.text), board.answer.join(" ")]);
+  }, [board]);
   const wrong = checked === false ? new Set(wrongTilePositions(board, picked)) : new Set<number>();
   const zoneState = checked === true ? "border-solid border-success-line bg-success-bg" : checked === false ? "border-solid border-danger bg-danger-bg" : "";
 

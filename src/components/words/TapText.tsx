@@ -6,6 +6,7 @@ import { createClient } from "@/lib/supabase/client";
 import { track } from "@/lib/analytics";
 import { lookupWord, plantWord, tokenizeKorean } from "@/lib/word-bank";
 import { useKoreanSpeaker } from "@/hooks/useSpeechRecognition";
+import { prefetchKorean } from "@/lib/tts";
 import type { VocabWord } from "@/lib/vocabulary";
 
 // Tap any Korean word in learning content to see it, hear it, and plant it
@@ -58,6 +59,12 @@ export default function TapText({
       closers.delete(close);
     };
   }, []);
+
+  // Warm the audio cache for every tappable word in this passage up front,
+  // so the first tap plays instantly instead of waiting on a cold synthesis.
+  useEffect(() => {
+    prefetchKorean(tokens.filter((tk) => tk.isWord).map((tk) => tk.text));
+  }, [tokens]);
 
   // Outside tap / Esc / scroll close the popover.
   useEffect(() => {

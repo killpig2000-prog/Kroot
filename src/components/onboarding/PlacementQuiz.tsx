@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { LEVEL_ORDER } from "@/lib/tree";
-import { speakKorean } from "@/lib/tts";
+import { speakKorean, prefetchKorean } from "@/lib/tts";
 import { bandCode, currentQuestion, type Run } from "@/lib/level-test";
 import { poolText } from "@/lib/level-test-i18n";
 import { BTN_GHOST, BTN_OUTLINE, CARD, EYEBROW, FADE } from "./styles";
@@ -32,6 +32,13 @@ export default function PlacementQuiz({
   const tt = useTranslations("onboarding.types");
   const locale = useLocale();
   const q = currentQuestion(run);
+
+  // Warm the audio cache as soon as the question is up, so "Play" doesn't
+  // wait on a cold synthesis.
+  useEffect(() => {
+    if (q?.audio) prefetchKorean([q.audio]);
+  }, [q?.audio]);
+
   if (!q) return null;
 
   function pick(i: number) {

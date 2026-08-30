@@ -1,7 +1,8 @@
 "use client";
 
+import { useEffect } from "react";
 import type { GrammarExample } from "@/lib/grammar";
-import { speakKorean } from "@/lib/tts";
+import { speakKorean, prefetchKorean } from "@/lib/tts";
 import TapText from "@/components/words/TapText";
 
 function speak(text: string) {
@@ -16,6 +17,10 @@ export default function ExampleBox({
   /** Enables tap-to-save on every Korean word (null = signed out). */
   userId?: string | null;
 }) {
+  useEffect(() => {
+    prefetchKorean(examples.map((ex) => ex.kr));
+  }, [examples]);
+
   return (
     <div className="bg-warm border border-line rounded-[10px] px-4 py-3.5 grid gap-3.5">
       {examples.map((ex, i) => (

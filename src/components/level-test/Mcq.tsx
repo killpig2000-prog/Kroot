@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { speakKorean } from "@/lib/tts";
+import { useEffect, useState } from "react";
+import { speakKorean, prefetchKorean } from "@/lib/tts";
 import type { McqQuestion } from "@/lib/promotion-test";
 
 export default function Mcq({
@@ -20,6 +20,10 @@ export default function Mcq({
   const [selected, setSelected] = useState<string | null>(null);
   const qq = questions[index];
   const DONT_KNOW = "__dont_know__";
+
+  useEffect(() => {
+    prefetchKorean(questions.map((q) => q.kr).filter((kr): kr is string => !!kr));
+  }, [questions]);
 
   function answer(opt: string) {
     if (selected !== null) return;

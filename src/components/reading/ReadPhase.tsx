@@ -5,7 +5,7 @@ import { Link } from "@/i18n/navigation";
 import { buttonClassName } from "@/components/ui/Button";
 import GlossedText from "@/components/reading/GlossedText";
 import { countKoreanWords, MINUTES_PER_PASSAGE, type Passage, type PassageLine } from "@/lib/reading";
-import { speakKorean, stopSpeaking } from "@/lib/tts";
+import { speakKorean, stopSpeaking, prefetchKorean } from "@/lib/tts";
 import type { Gloss } from "@/lib/word-links";
 
 const BTN_BLUE = buttonClassName("sky", "w-full");
@@ -134,6 +134,18 @@ export default function ReadPhase({
     }
     return seen;
   }, [speech]);
+
+  // Warm the audio cache for the whole passage up front — same voice split
+  // playFrom uses — so "Listen" plays each line without a synthesis pause.
+  useEffect(() => {
+    const byVoice: Record<"f" | "m", string[]> = { f: [], m: [] };
+    for (const { text, speaker } of speech) {
+      const voice = speaker && speakers.indexOf(speaker) % 2 === 1 ? "m" : "f";
+      byVoice[voice].push(text);
+    }
+    prefetchKorean(byVoice.f, "f");
+    prefetchKorean(byVoice.m, "m");
+  }, [speech, speakers]);
 
   // A declaration, not a useCallback: it calls itself to chain the next line.
   function playFrom(index: number) {

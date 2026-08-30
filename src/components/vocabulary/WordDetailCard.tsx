@@ -1,13 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
 import { buttonClassName } from "@/components/ui/Button";
 import { createClient } from "@/lib/supabase/client";
 import { nextBox, nextReviewAt } from "@/lib/srs";
 import { saveToBank } from "@/lib/word-bank";
-import { speakKorean } from "@/lib/tts";
+import { speakKorean, prefetchKorean } from "@/lib/tts";
 import { WORD_STATUSES, getWordNote, wordStatus, hanjaOf } from "@/lib/word-notes";
 import { getLocalizedMeaning, getLocalizedExampleEn } from "@/lib/vocabulary-i18n";
 
@@ -87,6 +87,12 @@ export default function WordDetailCard({
   const hanja = hanjaOf(word.korean);
   // Which button is mid-save, so it can say so instead of just greying out.
   const [saving, setSaving] = useState<"next" | "got-it" | null>(null);
+
+  // Warm the audio cache for every 🔊 on this page as soon as it loads, so
+  // the first tap plays instantly instead of waiting on a cold TTS synthesis.
+  useEffect(() => {
+    prefetchKorean([word.korean, word.example_kr, ...word.moreExamples.map((ex) => ex.kr)]);
+  }, [word.korean, word.example_kr, word.moreExamples]);
 
   async function advance(gotIt: boolean) {
     setSaving(gotIt ? "got-it" : "next");

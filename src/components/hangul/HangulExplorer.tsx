@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { speakKorean } from "@/lib/tts";
+import { useEffect, useState } from "react";
+import { speakKorean, prefetchKorean } from "@/lib/tts";
 import {
   BASIC_CONSONANTS,
   BASIC_VOWELS,
@@ -215,8 +215,22 @@ function PracticeWordCard({ kr, rom, en }: { kr: string; rom: string; en: string
   );
 }
 
+// Everything this page can speak, so the whole set can be warmed up front —
+// the grid is small and every tile is a plausible first tap.
+const ALL_SPOKEN = [
+  ...BASIC_CONSONANTS.flatMap((j) => [j.char, j.example.kr]),
+  ...DOUBLE_CONSONANTS.flatMap((j) => [j.char, j.example.kr]),
+  ...BASIC_VOWELS.flatMap((j) => [j.char, j.example.kr]),
+  ...COMPOUND_VOWELS.flatMap((j) => [j.char, j.example.kr]),
+  ...PRACTICE_WORDS.map((w) => w.kr),
+];
+
 export default function HangulExplorer() {
   const [tab, setTab] = useState<TabKey>("consonants");
+
+  useEffect(() => {
+    prefetchKorean(ALL_SPOKEN);
+  }, []);
 
   return (
     <div>
