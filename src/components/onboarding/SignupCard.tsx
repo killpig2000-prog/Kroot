@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import CuteError from "@/components/ui/CuteError";
+import { useHydrated } from "@/lib/use-hydrated";
 import type { FirstLesson, Placement } from "@/lib/level-test";
 import { FirstLessonList } from "./PlacementResult";
 import { BTN_GHOST, BTN_GREEN, BTN_OUTLINE, CARD, FADE, FIELD, H1, LABEL, SUB } from "./styles";
@@ -39,6 +40,7 @@ export function SignupCard({
   onMagicLink: (email: string, name: string) => void;
 }) {
   const [agreed, setAgreed] = useState(false);
+  const hydrated = useHydrated();
   const t = useTranslations("onboarding.signup");
 
   function submit(e: React.FormEvent<HTMLFormElement>) {
@@ -71,7 +73,7 @@ export function SignupCard({
           <span className="flex-1 h-px bg-line" />
         </div>
 
-        <form onSubmit={submit}>
+        <form method="post" onSubmit={submit}>
           <label htmlFor="email" className={LABEL}>
             {t("email")}
           </label>
@@ -95,7 +97,7 @@ export function SignupCard({
 
           {error && <CuteError>{error}</CuteError>}
 
-          <button type="submit" className={`${BTN_GREEN} w-full`} disabled={!agreed || sending}>
+          <button type="submit" className={`${BTN_GREEN} w-full`} disabled={!agreed || sending || !hydrated}>
             {sending ? t("sending") : t("sendLink")}
           </button>
         </form>

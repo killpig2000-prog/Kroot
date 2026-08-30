@@ -6,6 +6,7 @@ import { stripLocale } from "@/i18n/locale";
 import Mascot from "@/components/onboarding/Mascot";
 import CuteError from "@/components/ui/CuteError";
 import { createClient } from "@/lib/supabase/client";
+import { useHydrated } from "@/lib/use-hydrated";
 import BrandMark from "@/components/ui/BrandMark";
 
 const CARD = "border border-line rounded-[14px] bg-cream p-[clamp(22px,4vw,32px)]";
@@ -48,6 +49,8 @@ export default function LoginPage() {
   const [submitting, setSubmitting] = useState(false);
   const [linkSentTo, setLinkSentTo] = useState<string | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
+  const hydrated = useHydrated();
+  const busy = submitting || !hydrated;
 
   useEffect(() => {
     // Already signed in? Straight to the app.
@@ -163,7 +166,10 @@ export default function LoginPage() {
                 <span className="flex-1 h-px bg-line" />
               </div>
 
-              <form ref={formRef} onSubmit={handleEmailLogin}>
+              {/* method="post" so that a submit landing before hydration puts
+                  the password in a discarded request body, never in the URL;
+                  the disabled button below keeps it from getting that far. */}
+              <form ref={formRef} method="post" onSubmit={handleEmailLogin}>
                 <div className="mb-3.5">
                   <label htmlFor="email" className={LABEL}>
                     Email
@@ -200,13 +206,13 @@ export default function LoginPage() {
                   </p>
                 )}
 
-                <button type="submit" disabled={submitting} className={`${BTN_GREEN} w-full disabled:opacity-60`}>
+                <button type="submit" disabled={busy} className={`${BTN_GREEN} w-full disabled:opacity-60`}>
                   {submitting ? "Watering…" : "Log in"}
                 </button>
                 <button
                   type="button"
                   onClick={handleMagicLink}
-                  disabled={submitting}
+                  disabled={busy}
                   className={`${BTN_OUTLINE} w-full mt-2.5 disabled:opacity-60`}
                 >
                   Email me a sign-in link instead

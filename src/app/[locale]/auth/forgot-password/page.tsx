@@ -5,6 +5,7 @@ import { Link } from "@/i18n/navigation";
 import Mascot from "@/components/onboarding/Mascot";
 import CuteError from "@/components/ui/CuteError";
 import { createClient } from "@/lib/supabase/client";
+import { useHydrated } from "@/lib/use-hydrated";
 import BrandMark from "@/components/ui/BrandMark";
 
 const CARD = "border border-line rounded-[14px] bg-cream p-[clamp(22px,4vw,32px)]";
@@ -19,6 +20,8 @@ export default function ForgotPasswordPage() {
   const [error, setError] = useState<string | null>(null);
   const [sent, setSent] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const hydrated = useHydrated();
+  const busy = submitting || !hydrated;
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -75,7 +78,7 @@ export default function ForgotPasswordPage() {
                   We&apos;ll email you a link to set a new one.
                 </p>
 
-                <form onSubmit={handleSubmit}>
+                <form method="post" onSubmit={handleSubmit}>
                   <div className="mb-5">
                     <label htmlFor="email" className={LABEL}>
                       Email
@@ -93,7 +96,7 @@ export default function ForgotPasswordPage() {
 
                   {error && <CuteError>{error}</CuteError>}
 
-                  <button type="submit" disabled={submitting} className={`${BTN_GREEN} w-full disabled:opacity-60`}>
+                  <button type="submit" disabled={busy} className={`${BTN_GREEN} w-full disabled:opacity-60`}>
                     {submitting ? "Sending…" : "Send reset link"}
                   </button>
                 </form>
