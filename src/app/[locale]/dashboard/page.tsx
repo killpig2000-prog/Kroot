@@ -8,13 +8,11 @@ import Widgets from "@/components/dashboard/Widgets";
 import WordOfDayCard from "@/components/dashboard/WordOfDayCard";
 import FeedbackWidget from "@/components/dashboard/FeedbackWidget";
 import Greeting from "@/components/dashboard/Greeting";
-import ContinueCard from "@/components/dashboard/ContinueCard";
-import QuestButton from "@/components/dashboard/QuestButton";
+import TodaysQuestCard from "@/components/dashboard/TodaysQuestCard";
 import LevelMap from "@/components/dashboard/LevelMap";
 import { FirstVisitPlan, LockedWidgets, type FirstVisitStep } from "@/components/dashboard/FirstVisitPlan";
 import InstallBanner from "@/components/pwa/InstallBanner";
 import { GRAMMAR_LESSONS } from "@/lib/grammar";
-import type { ResumeRow } from "@/lib/resume";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { levelProgress } from "@/lib/level";
 import MonthlyGrass from "@/components/profile/MonthlyGrass";
@@ -23,7 +21,7 @@ import { ELIGIBILITY, testForGrade } from "@/lib/promotion-test";
 import { DIALOGUES } from "@/lib/listening-dialogues";
 import { getPassagesForLevel } from "@/lib/reading";
 import { getPromptsForLevel } from "@/lib/writing";
-import { chapterClearStats, NAILED_THRESHOLD } from "@/lib/pronunciation";
+import { chapterClearStats } from "@/lib/pronunciation";
 import { CHAPTER_SIZE, getWordsForTopic } from "@/lib/vocabulary";
 import { firstVisitState, NEW_ACCOUNT_DAYS, SHOW_ALL_COOKIE } from "@/lib/first-visit";
 import { countCompletedSessions } from "@/lib/first-visit-server";
@@ -113,7 +111,6 @@ export default async function DashboardPage() {
     dueRes,
     { data: activity },
     levelTestRes,
-    resumeRes,
     { data: grammarRows },
     { data: vocabRows },
     // Columns from migration 0035 — queried separately so a not-yet-applied
@@ -152,7 +149,6 @@ export default async function DashboardPage() {
       .from("level_test_results")
       .select("id", { count: "exact", head: true })
       .eq("user_id", user.id),
-    supabase.from("resume_points").select("skill, href, label, detail, progress, updated_at").eq("user_id", user.id).maybeSingle(),
     supabase.from("grammar_progress").select("lesson_key").eq("user_id", user.id),
     supabase.from("vocabulary_progress").select("word_key").eq("user_id", user.id),
     supabase.from("profiles").select("streak_freezes, reminder_push, reminder_email").eq("id", user.id).maybeSingle(),
@@ -239,10 +235,11 @@ export default async function DashboardPage() {
       20
     ),
     pronunciation: (() => {
-      const nailedIds = new Set(
-        (speakingRows ?? []).filter((r) => (r.best_score ?? 0) >= NAILED_THRESHOLD).map((r) => r.prompt_key)
-      );
-      const { done, total } = chapterClearStats(nailedIds);
+      // A chapter counts as done once every word in it has been attempted
+      // at least once — matches the unlock gate on /speaking, which no
+      // longer requires an 80+ score to move on.
+      const attemptedIds = new Set((speakingRows ?? []).map((r) => r.prompt_key));
+      const { done, total } = chapterClearStats(attemptedIds);
       return { done, total, percent: total ? Math.round((done / total) * 100) : 0 };
     })(),
   };
@@ -279,22 +276,6 @@ export default async function DashboardPage() {
 
   // "Continue" target: the last unit the learner opened (resume_points), or
   // today's quest when nothing is in progress. A finished unit clears itself.
-  const resume: ResumeRow | null = resumeRes.error ? null : ((resumeRes.data as ResumeRow | null) ?? null);
-  const questHref: Record<string, string> = {
-    writing: "/writing",
-    vocabulary: dueCount > 0 ? "/review" : "/vocabulary",
-    listening: "/listening",
-    reading: "/reading",
-    pronunciation: "/speaking",
-  };
-  const questSkill = quest?.skill_key ?? questOfTheDay.skill_key;
-  const questParts = (quest?.description ?? questOfTheDay.description).split(" · ");
-  const continueFallback = {
-    href: questHref[questSkill] ?? "/listening",
-    label: questParts[0],
-    detail: `Today's quest · ${questParts.slice(1).join(" · ")}`,
-    icon: "🎯",
-  };
   const overallPct = Math.round(
     Object.values(skillProgress).reduce((sum, p) => sum + p.percent, 0) / Object.keys(skillProgress).length
   );
@@ -366,9 +347,7 @@ export default async function DashboardPage() {
             <FirstVisitPlan steps={steps} />
 
             {/* unlocked so far, in unlock order */}
-            {firstVisit.unlocked.quest && (
-              <ContinueCard resume={resume} fallback={continueFallback} />
-            )}
+            {firstVisit.unlocked.quest && <TodaysQuestCard quest={quest} />}
 
             {firstVisit.unlocked.wotd && wotd && <WordOfDayCard wotd={wotd} />}
 
@@ -421,23 +400,10 @@ export default async function DashboardPage() {
             species={cefr}
           />
 
-          {/* the one button: pick up where you left off, when there is one. */}
-          {resume && <ContinueCard resume={resume} fallback={continueFallback} />}
-
-          {/* today's quest — the single copy of it (used to also live in a
-              sidebar widget that only ever showed on xl+ screens). */}
-          {quest && (
-            <div className="flex items-center gap-3.5 border border-amber-line bg-[var(--tint-amber)] rounded-[14px] px-5 py-4 mb-[30px]">
-              <span className="flex-none w-10 h-10 rounded-[10px] bg-cream border border-amber-line flex items-center justify-center text-lg">
-                🎯
-              </span>
-              <span className="flex-1 min-w-0">
-                <b className="block font-semibold text-sm text-[#B7791F]">Today&apos;s quest</b>
-                <span className="text-[13px] text-[#96751F]">{quest.description}</span>
-              </span>
-              <QuestButton skillKey={quest.skill_key} completed={!!quest.completed_at} />
-            </div>
-          )}
+          {/* today's quest — the one always-visible recommendation. Resuming
+              a specific in-progress session was removed (product decision:
+              one clear "what to do today" beats a resume shortcut). */}
+          <TodaysQuestCard quest={quest} />
 
           <InstallBanner streakDays={streakDays} />
 
