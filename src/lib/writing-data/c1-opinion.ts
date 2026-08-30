@@ -4,401 +4,313 @@ export const WRITING_C1_OPINION: RawPrompt[] = [
   {
     level: "C1",
     genre: "opinion",
-    prompt_kr:
-      "전 국민 기본소득 도입에 찬성하는지 자신의 입장을 밝히고 반대 의견도 언급하여 여섯 문장 이상으로 쓰세요. '-는 한편'과 '-을 부인할 수 없다'를 사용하세요.",
-    prompt_en:
-      "State your position on introducing a universal basic income and acknowledge the counterargument, in six or more sentences. Use '-는 한편' and '-을 부인할 수 없다'.",
-    example_kr:
-      "나는 전 국민 기본소득 도입에 찬성하는 입장이다. 자동화로 일자리가 빠르게 줄어드는 상황에서 기본소득은 최소한의 생계를 보장하는 안전망이 될 수 있다. 노동 의욕을 꺾을 수 있다는 우려가 제기되는 한편, 오히려 사람들이 저임금 불안정 노동에서 벗어나 자신에게 맞는 일을 찾을 여유를 얻는다는 연구도 있다. 물론 막대한 재정이 소요된다는 점을 부인할 수 없으며, 이는 세제 개편 없이는 실현되기 어려운 과제다. 그럼에도 불구하고 불평등이 심화되는 시대에는 이러한 재분배 정책이 사회 통합에 기여할 것이라고 본다. 결국 재원 마련의 구체적인 방안을 함께 논의한다는 전제하에 기본소득은 신중히 추진할 가치가 있다고 생각한다.",
+    prompt_kr: "가을에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on fall.",
+    example_kr: "저는 가을을 좋아하는 편인데 특히 스트레스가 풀리는 것 같아요.",
+    example_en: "I tend to like fall, and I especially feel like it relieves my stress.",
   },
   {
     level: "C1",
     genre: "opinion",
-    prompt_kr:
-      "공공장소 감시 카메라 확대가 안전을 위해 정당한지에 대한 입장을 여섯 문장 이상으로 쓰세요. '-는 데 반해'와 '-지 않을 수 없다'를 사용하세요.",
-    prompt_en:
-      "Give your position on whether expanding public surveillance cameras is justified for safety, in six or more sentences. Use '-는 데 반해' and '-지 않을 수 없다'.",
-    example_kr:
-      "나는 공공장소에서의 감시 카메라 확대가 제한적으로는 필요하다고 생각한다. 범죄율이 높은 지역에서는 카메라 설치 이후 실제로 사건 발생률이 낮아졌다는 통계가 존재한다. 하지만 감시가 강화될수록 시민의 사생활은 점점 위축되는 데 반해 그 효과가 항상 명확히 입증되는 것은 아니다. 특히 얼굴 인식 기술과 결합될 경우 정부나 기업이 개인의 동선을 과도하게 추적할 위험을 우려하지 않을 수 없다. 그러므로 나는 카메라 설치 자체를 반대하기보다 영상 자료의 보관 기간과 접근 권한을 엄격히 제한하는 제도적 장치가 선행되어야 한다고 본다. 안전과 자유는 양자택일의 문제가 아니라 균형을 찾아야 하는 문제라고 생각한다.",
+    prompt_kr: "커피에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on coffee.",
+    example_kr: "저는 커피를 좋아하는 편인데 특히 스트레스가 풀리는 것 같아요.",
+    example_en: "I tend to like coffee, and I especially feel like it relieves my stress.",
   },
   {
     level: "C1",
     genre: "opinion",
-    prompt_kr:
-      "인공지능이 작성한 작품에 저작권을 인정해야 하는지에 대한 입장을 여섯 문장 이상으로 쓰세요. '-을 계기로'와 '-다고 보기 어렵다'를 사용하세요.",
-    prompt_en:
-      "Give your position on whether AI-generated works should be granted copyright, in six or more sentences. Use '-을 계기로' and '-다고 보기 어렵다'.",
-    example_kr:
-      "나는 인공지능이 단독으로 생성한 작품에 인간 창작물과 동등한 저작권을 부여하는 것에는 신중해야 한다고 생각한다. 저작권 제도는 애초에 창작자의 노력과 의도를 보호하기 위해 설계된 것인데, 인공지능은 그러한 주체적 의도를 지녔다고 보기 어렵다. 최근 생성형 인공지능의 확산을 계기로 이 문제가 활발히 논의되기 시작한 것은 시의적절하다고 본다. 물론 인공지능을 도구로 활용해 완성한 작품까지 저작권을 인정하지 않는 것은 창작자의 권리를 지나치게 축소하는 일일 수 있다. 그래서 나는 인간이 실질적으로 창작 과정에 개입한 정도를 기준으로 권리 인정 여부를 판단해야 한다고 본다. 기술이 발전할수록 이러한 기준을 세밀하게 다듬어 나가는 작업이 반드시 필요할 것이다.",
+    prompt_kr: "추운 날씨에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on cold weather.",
+    example_kr: "저는 추운 날씨를 좋아하는 편인데 특히 스트레스가 풀리는 것 같아요.",
+    example_en: "I tend to like cold weather, and I especially feel like it relieves my stress.",
   },
   {
     level: "C1",
     genre: "opinion",
-    prompt_kr:
-      "이민자 수용 확대에 대한 입장을 여섯 문장 이상으로 쓰세요. '-을 막론하고'와 '-는 셈이다'를 사용하세요.",
-    prompt_en:
-      "Give your position on expanding immigration intake, in six or more sentences. Use '-을 막론하고' and '-는 셈이다'.",
-    example_kr:
-      "나는 인구 감소와 노동력 부족 문제를 겪는 사회일수록 이민자 수용을 확대할 필요가 있다고 생각한다. 국적을 막론하고 성실히 일하고자 하는 사람들에게 기회를 주는 것은 경제 전체에도 긍정적인 효과를 가져온다. 실제로 여러 이민 국가의 사례를 보면 이민자 유입이 산업 다양성과 혁신을 동시에 끌어올린 셈이다. 다만 문화적 갈등과 일자리 경쟁에 대한 기존 주민들의 우려도 충분히 이해할 만하다. 이러한 우려를 해소하기 위해서는 단순한 문호 개방을 넘어 언어 교육과 사회 통합 프로그램이 함께 마련되어야 한다. 결국 이민 정책의 성패는 수용 규모보다 통합 과정의 질에 달려 있다고 본다.",
+    prompt_kr: "영화 보기에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on watching movies.",
+    example_kr: "저는 영화 보기를 좋아하는 편인데 특히 스트레스가 풀리는 것 같아요.",
+    example_en: "I tend to like watching movies, and I especially feel like it relieves my stress.",
   },
   {
     level: "C1",
     genre: "opinion",
-    prompt_kr:
-      "고밀도 고층 개발과 저밀도 도시 확장 중 어느 쪽이 바람직한지 입장을 여섯 문장 이상으로 쓰세요. '-기에 앞서'와 '-는 데 그치지 않는다'를 사용하세요.",
-    prompt_en:
-      "Give your position on whether high-density high-rise development or low-density urban sprawl is preferable, in six or more sentences. Use '-기에 앞서' and '-는 데 그치지 않는다'.",
-    example_kr:
-      "나는 도시 확장보다 고밀도 개발을 우선해야 한다고 생각한다. 도시가 외곽으로 무분별하게 퍼지면 자연 생태계가 잠식될 뿐만 아니라 대중교통 효율도 크게 떨어진다. 새로운 부지를 개발하기에 앞서 기존 도심의 용적률을 조정하는 편이 자원 활용 면에서 더 합리적이다. 물론 고층 건물이 밀집하면 일조권과 조망권 침해 같은 문제가 뒤따른다는 점도 무시할 수 없다. 그러나 이는 도시 미관을 해치는 데 그치지 않고 실제로 주민의 삶의 질을 결정하는 요소이므로 세심한 설계 기준으로 보완할 수 있다고 본다. 결국 지속 가능한 도시를 만들기 위해서는 무분별한 확장보다 압축적이고 촘촘한 개발이 더 나은 방향이라고 생각한다.",
+    prompt_kr: "겨울에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on winter.",
+    example_kr: "저는 겨울을 좋아하는 편인데 특히 스트레스가 풀리는 것 같아요.",
+    example_en: "I tend to like winter, and I especially feel like it relieves my stress.",
   },
   {
     level: "C1",
     genre: "opinion",
-    prompt_kr:
-      "온라인상의 표현의 자유를 어디까지 허용해야 하는지 입장을 여섯 문장 이상으로 쓰세요. '-는 한편'과 '-을 전제로'를 사용하세요.",
-    prompt_en:
-      "Give your position on how far free speech online should extend, in six or more sentences. Use '-는 한편' and '-을 전제로'.",
-    example_kr:
-      "나는 온라인 공간에서의 표현의 자유는 최대한 폭넓게 보장되어야 한다고 생각하는 한편, 그것이 타인에게 명백한 해를 끼치지 않는다는 것을 전제로 해야 한다고 본다. 다양한 의견이 자유롭게 오갈 수 있어야 사회가 건강하게 논쟁하고 발전할 수 있기 때문이다. 그러나 혐오 발언이나 허위 정보 유포처럼 실질적인 피해를 낳는 발언까지 무제한으로 허용하는 것은 자유의 이름을 빌린 방임에 가깝다. 플랫폼 기업들이 콘텐츠를 삭제하는 기준이 자의적이라는 비판도 일리가 있다고 본다. 따라서 나는 명확하고 투명한 기준을 법적으로 명시하는 것이 전제되어야 표현의 자유와 피해 방지가 함께 성립할 수 있다고 생각한다. 규제가 지나치면 검열이 되고 방치하면 폭력이 된다는 점에서 이 균형은 계속 조정되어야 할 문제다.",
+    prompt_kr: "시골 생활에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on countryside life.",
+    example_kr: "저는 시골 생활을 좋아하는 편인데 특히 스트레스가 풀리는 것 같아요.",
+    example_en: "I tend to like countryside life, and I especially feel like it relieves my stress.",
   },
   {
     level: "C1",
     genre: "opinion",
-    prompt_kr:
-      "투표를 법적으로 의무화하는 것에 대한 입장을 여섯 문장 이상으로 쓰세요. '-지 않을 수 없다'와 '-다고 해도 과언이 아니다'를 사용하세요.",
-    prompt_en:
-      "Give your position on legally mandating voting, in six or more sentences. Use '-지 않을 수 없다' and '-다고 해도 과언이 아니다'.",
-    example_kr:
-      "나는 투표를 법적으로 의무화하는 것에 대체로 찬성하는 입장이다. 투표율이 낮으면 특정 세대나 계층의 목소리만 정책에 과도하게 반영될 위험이 있기 때문이다. 실제로 의무 투표제를 시행하는 국가들에서는 투표율이 대다수 국가보다 눈에 띄게 높다는 사실을 인정하지 않을 수 없다. 다만 원하지 않는 투표를 강제하는 것이 개인의 자유를 침해한다는 반론도 충분히 타당하다. 그럼에도 나는 민주주의의 근간이 시민의 참여에 있다고 해도 과언이 아니라고 보기 때문에, 기권표를 허용하는 방식으로 절충한다면 자유와 참여를 동시에 보장할 수 있다고 생각한다. 결국 완전한 강제보다는 참여를 장려하는 제도적 유인책과 병행하는 것이 현실적인 대안이라고 본다.",
+    prompt_kr: "여름에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on summer.",
+    example_kr: "저는 여름을 좋아하는 편인데 특히 스트레스가 풀리는 것 같아요.",
+    example_en: "I tend to like summer, and I especially feel like it relieves my stress.",
   },
   {
     level: "C1",
     genre: "opinion",
-    prompt_kr:
-      "질병 예방을 위한 배아 유전자 편집을 허용해야 하는지 입장을 여섯 문장 이상으로 쓰세요. '-(으)ㅁ에 따라'와 '-을 배제할 수 없다'를 사용하세요.",
-    prompt_en:
-      "Give your position on whether embryo gene editing for disease prevention should be permitted, in six or more sentences. Use '-(으)ㅁ에 따라' and '-을 배제할 수 없다'.",
-    example_kr:
-      "나는 유전 질환을 예방할 목적의 배아 유전자 편집은 제한적으로 허용해도 좋다고 생각한다. 유전학 기술이 정교해짐에 따라 특정 유전병을 사전에 차단할 수 있는 가능성이 현실화되고 있기 때문이다. 이러한 기술이 병을 앓게 될 미래 세대의 고통을 실질적으로 줄여 줄 수 있다는 점에서 그 의미는 결코 작지 않다. 그러나 치료 목적을 넘어 외모나 지능 같은 특성을 선택하는 이른바 맞춤형 아기로 악용될 가능성을 배제할 수 없다. 이런 부작용을 막기 위해서는 편집 가능한 범위를 질병 예방으로 엄격히 한정하는 국제적 기준이 필요하다고 본다. 기술의 혜택과 윤리적 위험 사이에서 균형을 찾는 신중한 접근이 반드시 선행되어야 할 것이다.",
+    prompt_kr: "매운 음식에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on spicy food.",
+    example_kr: "저는 매운 음식을 좋아하는 편인데 특히 스트레스가 풀리는 것 같아요.",
+    example_en: "I tend to like spicy food, and I especially feel like it relieves my stress.",
   },
   {
     level: "C1",
     genre: "opinion",
-    prompt_kr:
-      "경제 성장을 늦추더라도 환경을 우선하는 탈성장 정책에 대한 입장을 여섯 문장 이상으로 쓰세요. '-는 것이 마땅하다'와 '-을 무릅쓰고'를 사용하세요.",
-    prompt_en:
-      "Give your position on degrowth policies that prioritize the environment even at the cost of economic growth, in six or more sentences. Use '-는 것이 마땅하다' and '-을 무릅쓰고'.",
-    example_kr:
-      "나는 무한한 경제 성장을 추구하는 방식은 이제 한계에 다다랐다고 생각한다. 자원은 유한한데도 성장을 최우선 가치로 삼는 태도는 결국 환경 파괴로 귀결될 수밖에 없다. 그러므로 어느 정도의 성장 둔화를 감수하더라도 지속 가능한 사회로 전환하는 것이 마땅하다고 본다. 물론 성장이 둔화되면 일자리가 줄고 서민층의 생활이 어려워질 수 있다는 반박도 충분히 설득력이 있다. 하지만 나는 단기적인 경제적 손실을 무릅쓰고라도 기후 위기를 방치했을 때 치를 대가가 훨씬 크다고 생각한다. 따라서 탈성장이 곧 빈곤을 의미하는 것이 아니라 성장의 정의 자체를 다시 세우는 과정으로 받아들여야 한다고 본다.",
+    prompt_kr: "계획 세우기에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on making plans.",
+    example_kr: "저는 계획 세우기를 좋아하는 편인데 특히 스트레스가 풀리는 것 같아요.",
+    example_en: "I tend to like making plans, and I especially feel like it relieves my stress.",
   },
   {
     level: "C1",
     genre: "opinion",
-    prompt_kr:
-      "청소년의 스마트폰 사용 시간을 법으로 제한하는 것에 대한 입장을 여섯 문장 이상으로 쓰세요. '-는 한편'과 '-을 따름이다'를 사용하세요.",
-    prompt_en:
-      "Give your position on legally restricting teenagers' smartphone use, in six or more sentences. Use '-는 한편' and '-을 따름이다'.",
-    example_kr:
-      "나는 청소년의 스마트폰 사용 시간을 법으로 제한하는 방안에 조건부로 찬성한다. 과도한 사용이 수면 부족과 집중력 저하로 이어진다는 연구 결과가 이미 상당히 축적되어 있는 한편, 부모의 자율적인 지도만으로는 실효성을 담보하기 어려운 것이 현실이다. 물론 국가가 개인의 생활에 지나치게 개입한다는 비판도 일리가 있을 따름이다. 그럼에도 성장기의 뇌 발달과 정신 건강에 미치는 영향을 고려하면 최소한의 제도적 장치는 필요하다고 본다. 다만 획일적인 금지보다는 야간 시간대 사용을 제한하는 방식처럼 유연한 접근이 더 현실적일 것이다. 결국 법적 제한은 강제가 아니라 건강한 습관을 만들기 위한 보조 장치로 이해되어야 한다고 생각한다.",
+    prompt_kr: "여행에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on traveling.",
+    example_kr: "저는 여행을 좋아하는 편인데 특히 스트레스가 풀리는 것 같아요.",
+    example_en: "I tend to like traveling, and I especially feel like it relieves my stress.",
   },
   {
     level: "C1",
     genre: "opinion",
-    prompt_kr:
-      "원자력 발전소를 확대해야 하는지에 대한 입장을 여섯 문장 이상으로 쓰세요. '-는 데 반해'와 '-지 않으면 안 된다'를 사용하세요.",
-    prompt_en:
-      "Give your position on whether nuclear power plants should be expanded, in six or more sentences. Use '-는 데 반해' and '-지 않으면 안 된다'.",
-    example_kr:
-      "나는 기후 위기 대응을 위해 원자력 발전을 당분간 확대할 필요가 있다고 생각한다. 태양광과 풍력은 탄소를 배출하지 않는 데 반해 아직 안정적인 대규모 공급을 담당하기에는 발전량의 변동성이 크다는 한계가 있다. 반면 원자력은 적은 부지로도 안정적인 전력을 공급할 수 있어 화석 연료를 빠르게 대체할 대안이 될 수 있다. 물론 방사성 폐기물 처리와 사고 위험이라는 근본적인 문제는 결코 가볍게 볼 수 없다. 그렇기 때문에 원자력을 확대하더라도 안전 기준과 폐기물 관리 체계를 함께 강화하지 않으면 안 된다. 결국 재생에너지 기술이 충분히 성숙할 때까지의 과도기적 수단으로 원자력을 활용하는 것이 현실적인 선택이라고 본다.",
+    prompt_kr: "카페에서 공부하기에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on studying at a cafe.",
+    example_kr: "저는 카페에서 공부하기를 좋아하는 편인데 특히 스트레스가 풀리는 것 같아요.",
+    example_en: "I tend to like studying at a cafe, and I especially feel like it relieves my stress.",
   },
   {
     level: "C1",
     genre: "opinion",
-    prompt_kr:
-      "주 4일 근무제를 법적으로 의무화해야 하는지 입장을 여섯 문장 이상으로 쓰세요. '-을 계기로'와 '-다고 보기 어렵다'를 사용하세요.",
-    prompt_en:
-      "Give your position on whether a four-day workweek should be legally mandated, in six or more sentences. Use '-을 계기로' and '-다고 보기 어렵다'.",
-    example_kr:
-      "나는 주 4일 근무제를 전면적으로 법제화하는 것에는 아직 시기상조라는 입장이다. 몇몇 기업의 시범 운영을 계기로 생산성이 오히려 향상되었다는 결과가 화제가 된 것은 사실이다. 그러나 이러한 결과가 모든 업종과 규모의 기업에 동일하게 적용된다고 보기 어렵다. 특히 인력이 부족한 중소기업이나 교대 근무가 필수적인 업종에서는 근무일 축소가 곧바로 인건비 부담과 업무 공백으로 이어질 수 있다. 그럼에도 장기적으로는 노동 생산성과 삶의 질을 함께 높이는 방향으로 나아가야 한다는 큰 흐름에는 나도 동의한다. 따라서 나는 전면 의무화보다 업종별 시범 도입을 거쳐 단계적으로 확대하는 방식이 더 바람직하다고 생각한다.",
+    prompt_kr: "수영에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on swimming.",
+    example_kr: "저는 수영을 좋아하는 편인데 특히 스트레스가 풀리는 것 같아요.",
+    example_en: "I tend to like swimming, and I especially feel like it relieves my stress.",
   },
   {
     level: "C1",
     genre: "opinion",
-    prompt_kr:
-      "기후 위기 대응을 위해 육류 소비에 세금을 부과하는 것에 대한 입장을 여섯 문장 이상으로 쓰세요. '-는 셈이다'와 '-을 부인할 수 없다'를 사용하세요.",
-    prompt_en:
-      "Give your position on taxing meat consumption to address the climate crisis, in six or more sentences. Use '-는 셈이다' and '-을 부인할 수 없다'.",
-    example_kr:
-      "나는 육류 소비에 세금을 부과하는 정책에 신중하게나마 찬성하는 입장이다. 축산업이 온실가스 배출에서 상당한 비중을 차지한다는 사실을 부인할 수 없기 때문이다. 세금을 통해 소비자가 육류 대신 대체 식품을 선택하도록 유도한다면 결국 환경 부담을 줄이는 데 기여하는 셈이다. 다만 이러한 세금이 저소득층의 식비 부담을 늘려 사실상 역진세처럼 작용할 위험이 있다는 점도 무시할 수 없다. 그러므로 세금으로 걷은 재원을 대체 단백질 식품 보조나 저소득층 지원에 재투자하는 방안이 함께 마련되어야 한다고 본다. 결국 단순한 징벌적 과세가 아니라 소비 전환을 돕는 방향으로 설계될 때 이 정책이 제 역할을 할 수 있을 것이다.",
+    prompt_kr: "비 오는 날에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on rainy days.",
+    example_kr: "저는 비 오는 날을 좋아하는 편인데 특히 스트레스가 풀리는 것 같아요.",
+    example_en: "I tend to like rainy days, and I especially feel like it relieves my stress.",
   },
   {
     level: "C1",
     genre: "opinion",
-    prompt_kr:
-      "전 국민 공공 의료보험 체계가 민간 의료보험보다 바람직한지 입장을 여섯 문장 이상으로 쓰세요. '-을 막론하고'와 '-지 않을 도리가 없다'를 사용하세요.",
-    prompt_en:
-      "Give your position on whether universal public healthcare is preferable to private insurance, in six or more sentences. Use '-을 막론하고' and '-지 않을 도리가 없다'.",
-    example_kr:
-      "나는 소득 수준을 막론하고 모든 국민에게 기본적인 의료 서비스가 보장되어야 한다고 생각한다. 민간 보험 중심의 체계에서는 보험료를 감당할 수 없는 사람들이 필수적인 치료조차 미루는 경우가 실제로 발생한다. 이런 현실을 마주하면 공공 의료 체계의 필요성을 인정하지 않을 도리가 없다. 물론 공공 보험이 확대되면 세금 부담이 늘고 대기 시간이 길어질 수 있다는 우려도 충분히 근거가 있다. 그러나 생명과 건강이라는 기본권을 시장 논리에만 맡기는 것은 사회적 위험이 너무 크다고 본다. 그러므로 민간 보험을 보조적 수단으로 남겨 두되 기본적인 의료 접근권만큼은 공공 체계로 보장하는 방식이 바람직하다고 생각한다.",
+    prompt_kr: "아침형 인간에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on being a morning person.",
+    example_kr: "저는 아침형 인간을 좋아하는 편인데 특히 스트레스가 풀리는 것 같아요.",
+    example_en: "I tend to like being a morning person, and I especially feel like it relieves my stress.",
   },
   {
     level: "C1",
     genre: "opinion",
-    prompt_kr:
-      "교도소 운영이 처벌 중심에서 재사회화 중심으로 바뀌어야 하는지 입장을 여섯 문장 이상으로 쓰세요. '-는 데 그치지 않는다'와 '-기에 앞서'를 사용하세요.",
-    prompt_en:
-      "Give your position on whether prisons should shift from punishment-focused to rehabilitation-focused, in six or more sentences. Use '-는 데 그치지 않는다' and '-기에 앞서'.",
-    example_kr:
-      "나는 교도소 운영의 초점이 처벌에서 재사회화로 옮겨 가야 한다고 생각한다. 형벌의 목적은 범죄자를 단순히 격리하는 데 그치지 않고 사회로 복귀했을 때 다시 범죄를 저지르지 않도록 돕는 데 있어야 하기 때문이다. 처벌을 강화하기에 앞서 직업 훈련과 심리 상담 같은 재사회화 프로그램을 내실 있게 갖추는 것이 재범률을 낮추는 데 더 효과적이라는 연구가 다수 존재한다. 물론 흉악 범죄를 저지른 이들에게 지나치게 관대한 처우를 하는 것은 피해자와 사회의 정의감을 훼손할 수 있다는 반론도 무시할 수 없다. 그러므로 죄의 경중에 따라 처벌과 교화의 비중을 달리 적용하는 세밀한 접근이 필요하다고 본다. 결국 처벌만으로는 해결되지 않는 재범의 악순환을 끊기 위해서라도 교화 중심의 전환은 불가피하다고 생각한다.",
+    prompt_kr: "독서에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on reading.",
+    example_kr: "저는 독서를 좋아하는 편인데 특히 스트레스가 풀리는 것 같아요.",
+    example_en: "I tend to like reading, and I especially feel like it relieves my stress.",
   },
   {
     level: "C1",
     genre: "opinion",
-    prompt_kr:
-      "의약품 개발을 위한 동물 실험을 계속 허용해야 하는지 입장을 여섯 문장 이상으로 쓰세요. '-을 전제로'와 '-다고 해도 과언이 아니다'를 사용하세요.",
-    prompt_en:
-      "Give your position on whether animal testing for drug development should continue to be allowed, in six or more sentences. Use '-을 전제로' and '-다고 해도 과언이 아니다'.",
-    example_kr:
-      "나는 대체 실험 방법이 아직 완전하지 않은 현재로서는 최소한의 동물 실험이 불가피하다고 생각한다. 인간에게 직접 적용하기 전에 안전성을 검증할 다른 신뢰할 만한 방법이 부족한 것이 사실이기 때문이다. 다만 실험의 필요성이 명확히 입증된다는 것을 전제로 해야 하며, 불필요하거나 중복된 실험은 엄격히 제한되어야 한다. 오늘날 신약 개발의 상당 부분이 동물 실험을 거쳐 왔다고 해도 과언이 아닐 만큼 그 역할은 결코 작지 않았다. 그럼에도 동물의 고통을 최소화할 윤리적 의무 또한 함께 지켜져야 한다고 본다. 그러므로 동물 실험을 완전히 금지하기보다는 세포 배양이나 컴퓨터 시뮬레이션 같은 대체 기술을 적극적으로 병행하며 점진적으로 그 비중을 줄여 가는 방향이 현실적이라고 생각한다.",
+    prompt_kr: "주말에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on weekends.",
+    example_kr: "저는 주말을 좋아하는 편인데 특히 스트레스가 풀리는 것 같아요.",
+    example_en: "I tend to like weekends, and I especially feel like it relieves my stress.",
   },
   {
     level: "C1",
     genre: "opinion",
-    prompt_kr:
-      "채용 과정에 인공지능 알고리즘을 활용하는 것에 대한 입장을 여섯 문장 이상으로 쓰세요. '-는 한편'과 '-을 배제할 수 없다'를 사용하세요.",
-    prompt_en:
-      "Give your position on using AI algorithms in hiring processes, in six or more sentences. Use '-는 한편' and '-을 배제할 수 없다'.",
-    example_kr:
-      "나는 채용 과정에 인공지능 알고리즘을 부분적으로 활용하는 것에는 찬성하지만 전적으로 의존하는 데는 반대한다. 인공지능은 방대한 지원서를 빠르고 일관된 기준으로 검토할 수 있다는 한편, 학습에 사용된 과거 데이터에 편향이 있다면 그 편향을 그대로 재생산할 위험을 배제할 수 없다. 실제로 특정 성별이나 학력에 유리하게 작동한 알고리즘 사례가 이미 여러 차례 보고된 바 있다. 그럼에도 인간 면접관 역시 무의식적인 편견에서 자유롭지 않다는 점을 감안하면 인공지능을 무조건 배제할 이유도 없다고 본다. 그러므로 최종 판단은 반드시 사람이 내리되 알고리즘은 서류 검토처럼 보조적인 단계에서만 활용하는 것이 바람직하다고 생각한다. 기술을 신뢰하는 것과 감시하는 것이 동시에 필요한 영역이라고 본다.",
+    prompt_kr: "일찍 자기에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on going to bed early.",
+    example_kr: "저는 일찍 자기를 좋아하는 편인데 특히 스트레스가 풀리는 것 같아요.",
+    example_en: "I tend to like going to bed early, and I especially feel like it relieves my stress.",
   },
   {
     level: "C1",
     genre: "opinion",
-    prompt_kr:
-      "말기 환자의 안락사를 합법화해야 하는지 입장을 여섯 문장 이상으로 쓰세요. '-지 않을 수 없다'와 '-을 전제로'를 사용하세요.",
-    prompt_en:
-      "Give your position on legalizing euthanasia for terminally ill patients, in six or more sentences. Use '-지 않을 수 없다' and '-을 전제로'.",
-    example_kr:
-      "나는 회복 가능성이 없는 말기 환자에 한해 안락사를 제한적으로 합법화하는 것에 찬성한다. 극심한 고통 속에서 삶을 연장하는 것이 반드시 그 사람에게 최선이라고 볼 수 없기 때문이다. 존엄하게 삶을 마무리할 권리 또한 개인의 자기결정권에 속한다는 사실을 인정하지 않을 수 없다. 다만 이 제도는 반드시 엄격한 의료적 판단과 본인의 명확한 의사 확인을 전제로 해야 한다고 본다. 그렇지 않으면 경제적 부담이나 가족의 압력 때문에 원치 않는 죽음을 선택하도록 내몰리는 부작용이 생길 수 있다. 그러므로 안락사 합법화는 엄격한 절차와 다중의 검증 장치를 함께 갖출 때에만 신중하게 도입되어야 한다고 생각한다.",
+    prompt_kr: "혼자 여행하기에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on traveling alone.",
+    example_kr: "저는 혼자 여행하기를 좋아하는 편인데 특히 스트레스가 풀리는 것 같아요.",
+    example_en: "I tend to like traveling alone, and I especially feel like it relieves my stress.",
   },
   {
     level: "C1",
     genre: "opinion",
-    prompt_kr:
-      "사형 제도를 유지해야 하는지에 대한 입장을 여섯 문장 이상으로 쓰세요. '-는 데 그치지 않는다'와 '-다고 보기 어렵다'를 사용하세요.",
-    prompt_en:
-      "Give your position on whether the death penalty should be maintained, in six or more sentences. Use '-는 데 그치지 않는다' and '-다고 보기 어렵다'.",
-    example_kr:
-      "나는 사형 제도를 폐지하는 것이 바람직하다고 생각한다. 흉악 범죄에 대한 처벌은 사회적 분노를 해소하는 데 그치지 않고 재발 방지라는 실질적인 목적을 이루어야 하는데, 여러 연구 결과를 보면 사형이 다른 형벌보다 범죄 억제 효과가 더 크다고 보기 어렵다. 오히려 오판으로 무고한 사람이 처형된 사례가 세계 곳곳에서 보고되었다는 점은 이 제도의 치명적인 위험을 보여 준다. 물론 극악한 범죄의 피해자와 유가족의 입장에서는 사형만이 유일한 정의라고 느낄 수 있다는 점도 충분히 이해한다. 그럼에도 국가가 되돌릴 수 없는 형벌을 집행하는 데는 극도로 신중해야 한다고 본다. 그러므로 사형 대신 가석방 없는 종신형처럼 되돌릴 여지를 남기는 형벌 체계가 더 합리적이라고 생각한다.",
+    prompt_kr: "디저트에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on dessert.",
+    example_kr: "저는 디저트를 좋아하는 편인데 특히 스트레스가 풀리는 것 같아요.",
+    example_en: "I tend to like dessert, and I especially feel like it relieves my stress.",
   },
   {
     level: "C1",
     genre: "opinion",
-    prompt_kr:
-      "공공장소에서의 안면 인식 기술 사용을 허용해야 하는지 입장을 여섯 문장 이상으로 쓰세요. '-(으)ㅁ에 따라'와 '-을 부인할 수 없다'를 사용하세요.",
-    prompt_en:
-      "Give your position on whether facial recognition technology should be permitted in public spaces, in six or more sentences. Use '-(으)ㅁ에 따라' and '-을 부인할 수 없다'.",
-    example_kr:
-      "나는 공공장소에서의 안면 인식 기술 도입을 매우 제한적으로만 허용해야 한다고 생각한다. 기술이 정교해짐에 따라 범죄자 검거나 실종자 수색에 활용될 수 있는 잠재력이 커진 것은 부인할 수 없다. 그러나 동시에 정부나 기업이 개인의 일상적인 동선을 손쉽게 축적할 수 있게 된다는 위험도 그만큼 커졌다. 익명으로 거리를 걸을 자유가 사실상 사라지는 사회는 감시 사회로 변질될 가능성이 크다고 본다. 따라서 범죄 수사처럼 명확한 목적과 법적 근거가 있는 경우에 한해서만 사용을 허용하고, 상시적인 대중 감시로 확대되는 것은 막아야 한다고 생각한다. 기술의 편의성만큼이나 그것이 개인의 자유에 미치는 영향을 함께 고려하는 태도가 필요하다.",
+    prompt_kr: "눈 오는 날에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on snowy days.",
+    example_kr: "저는 눈 오는 날을 좋아하는 편인데 특히 스트레스가 풀리는 것 같아요.",
+    example_en: "I tend to like snowy days, and I especially feel like it relieves my stress.",
   },
   {
     level: "C1",
     genre: "opinion",
-    prompt_kr:
-      "현금 없는 사회로의 전환이 바람직한지 입장을 여섯 문장 이상으로 쓰세요. '-는 한편'과 '-을 무릅쓰고'를 사용하세요.",
-    prompt_en:
-      "Give your position on whether transitioning to a cashless society is desirable, in six or more sentences. Use '-는 한편' and '-을 무릅쓰고'.",
-    example_kr:
-      "나는 현금 없는 사회로의 전환을 무리하게 서두르는 것에는 반대하는 입장이다. 디지털 결제는 거래를 편리하게 만드는 한편, 노년층이나 디지털 접근성이 낮은 계층은 오히려 기본적인 경제 활동에서 소외될 위험이 크다. 은행 계좌나 스마트폰이 없는 사람들이 불편을 무릅쓰고 현금을 고집하는 데는 나름의 이유가 있는 셈이다. 물론 현금 유통에는 위조나 탈세 같은 부작용이 따른다는 점도 사실이다. 그럼에도 결제 수단의 선택권은 최소한의 사회 안전망으로 남겨 두어야 한다고 생각한다. 그러므로 디지털 결제를 장려하되 현금 사용을 법적으로 완전히 배제하지는 않는 균형 잡힌 정책이 필요하다고 본다.",
+    prompt_kr: "자전거 타기에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on cycling.",
+    example_kr: "저는 자전거 타기를 좋아하는 편인데 특히 스트레스가 풀리는 것 같아요.",
+    example_en: "I tend to like cycling, and I especially feel like it relieves my stress.",
   },
   {
     level: "C1",
     genre: "opinion",
-    prompt_kr:
-      "긱 이코노미 노동자에게 정규직 수준의 보호를 제공해야 하는지 입장을 여섯 문장 이상으로 쓰세요. '-을 계기로'와 '-지 않으면 안 된다'를 사용하세요.",
-    prompt_en:
-      "Give your position on whether gig economy workers should receive protections comparable to full-time employees, in six or more sentences. Use '-을 계기로' and '-지 않으면 안 된다'.",
-    example_kr:
-      "나는 긱 이코노미 노동자들에게도 최소한의 사회 보호 장치가 제공되어야 한다고 생각한다. 플랫폼 노동이 확산되는 것을 계기로 이 분야 노동자들이 처한 불안정한 처지가 사회적으로 크게 주목받게 되었다. 이들은 사고나 질병에 대한 보상 없이 오롯이 개인이 위험을 떠안는 경우가 많다. 물론 기업 입장에서는 자유로운 근무 형태를 유지하지 않으면 안 된다는 점을 내세워 보호 확대에 난색을 표하기도 한다. 그러나 자유로운 근무와 최소한의 안전망 마련은 서로 양립할 수 없는 가치가 아니라고 본다. 그러므로 산재 보험이나 최소 소득 보장 같은 기본적인 보호 장치만큼은 법적으로 의무화되어야 한다고 생각한다.",
+    prompt_kr: "아침 운동에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on morning exercise.",
+    example_kr: "저는 아침 운동을 좋아하는 편인데 특히 스트레스가 풀리는 것 같아요.",
+    example_en: "I tend to like morning exercise, and I especially feel like it relieves my stress.",
   },
   {
     level: "C1",
     genre: "opinion",
-    prompt_kr:
-      "일회용 플라스틱 사용을 법으로 전면 금지해야 하는지 입장을 여섯 문장 이상으로 쓰세요. '-는 것이 마땅하다'와 '-을 감안하면'을 사용하세요.",
-    prompt_en:
-      "Give your position on whether single-use plastics should be entirely banned by law, in six or more sentences. Use '-는 것이 마땅하다' and '-을 감안하면'.",
-    example_kr:
-      "나는 일회용 플라스틱 사용을 단계적으로 전면 금지하는 것이 마땅하다고 생각한다. 플라스틱 쓰레기가 해양 생태계와 인체 건강에 미치는 피해가 이미 심각한 수준에 이르렀기 때문이다. 대체재의 가격이 아직 상대적으로 비싸다는 현실을 감안하면 소상공인들의 부담이 커질 수 있다는 우려도 충분히 이해할 만하다. 그러나 이러한 부담을 이유로 대응을 미루기에는 환경 파괴 속도가 너무 빠르다고 본다. 그러므로 전면 금지에 앞서 정부가 대체 용기 개발과 보급에 재정 지원을 병행하는 것이 필요하다고 생각한다. 결국 일회용품 사용을 줄이는 방향 자체는 되돌릴 수 없는 시대적 흐름이라고 본다.",
+    prompt_kr: "야식에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on late-night snacks.",
+    example_kr: "저는 야식을 좋아하는 편인데 특히 스트레스가 풀리는 것 같아요.",
+    example_en: "I tend to like late-night snacks, and I especially feel like it relieves my stress.",
   },
   {
     level: "C1",
     genre: "opinion",
-    prompt_kr:
-      "국가 예산을 우주 개발에 투자하는 것이 정당한지 입장을 여섯 문장 이상으로 쓰세요. '-다고 보기 어렵다'와 '-는 셈이다'를 사용하세요.",
-    prompt_en:
-      "Give your position on whether it is justified to invest national budgets in space development, in six or more sentences. Use '-다고 보기 어렵다' and '-는 셈이다'.",
-    example_kr:
-      "나는 우주 개발에 대한 투자를 무조건 사치스러운 지출이라고 보기 어렵다고 생각한다. 우주 탐사 과정에서 파생된 기술이 통신, 의료, 소재 산업 등 여러 분야에 실질적으로 활용되어 온 사례가 적지 않기 때문이다. 지구의 빈곤이나 기후 문제조차 해결하지 못했는데 우주에 돈을 쓰는 것은 우선순위가 잘못되었다는 비판도 상당히 설득력이 있다. 그러나 두 가지 문제는 반드시 양자택일해야 하는 것이 아니라 국가 예산의 극히 일부를 배분하는 문제인 셈이다. 그러므로 나는 사회 복지 예산을 크게 훼손하지 않는 선에서 장기적인 기술 투자로서 우주 개발을 지속하는 것이 합리적이라고 본다. 결국 단기적 성과와 장기적 가능성 사이에서 적절한 균형을 찾는 것이 핵심이라고 생각한다.",
+    prompt_kr: "도시 생활에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on city life.",
+    example_kr: "저는 도시 생활을 좋아하는 편인데 특히 스트레스가 풀리는 것 같아요.",
+    example_en: "I tend to like city life, and I especially feel like it relieves my stress.",
   },
   {
     level: "C1",
     genre: "opinion",
-    prompt_kr:
-      "초등 교육에 인공지능 튜터를 도입해 교사 역할을 일부 대체하는 것에 대한 입장을 여섯 문장 이상으로 쓰세요. '-는 데 반해'와 '-을 부인할 수 없다'를 사용하세요.",
-    prompt_en:
-      "Give your position on introducing AI tutors to partially replace teachers in elementary education, in six or more sentences. Use '-는 데 반해' and '-을 부인할 수 없다'.",
-    example_kr:
-      "나는 인공지능 튜터가 교사의 업무를 보조하는 데는 효과적일 수 있지만 완전히 대체하는 데는 신중해야 한다고 생각한다. 인공지능은 학생 개개인의 학습 속도에 맞춰 반복 학습을 제공하는 데 반해 정서적 교감이나 즉각적인 공감 능력은 여전히 갖추지 못했다. 특히 어린 학생들에게는 지식 전달만큼이나 정서적 지지와 사회성 발달이 중요하다는 점을 부인할 수 없다. 물론 교사 부족 문제가 심각한 지역에서는 인공지능 튜터가 실질적인 대안이 될 수 있다는 점도 인정한다. 그러므로 인공지능은 반복적인 연습과 평가 업무를 맡고, 교사는 정서적 지도와 창의적 사고 교육에 집중하는 역할 분담이 바람직하다고 본다. 결국 기술은 교사를 대체하는 존재가 아니라 교사의 역량을 확장하는 도구로 자리매김해야 한다고 생각한다.",
+    prompt_kr: "사진 찍기에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on taking photos.",
+    example_kr: "저는 사진 찍기를 좋아하는 편인데 특히 스트레스가 풀리는 것 같아요.",
+    example_en: "I tend to like taking photos, and I especially feel like it relieves my stress.",
   },
   {
     level: "C1",
     genre: "opinion",
-    prompt_kr:
-      "상속세율을 대폭 인상해야 하는지 입장을 여섯 문장 이상으로 쓰세요. '-을 전제로'와 '-지 않을 도리가 없다'를 사용하세요.",
-    prompt_en:
-      "Give your position on whether inheritance tax rates should be significantly raised, in six or more sentences. Use '-을 전제로' and '-지 않을 도리가 없다'.",
-    example_kr:
-      "나는 상속세율을 지금보다 높이는 방안에 원칙적으로 찬성한다. 세대를 거듭할수록 부의 격차가 고착화되는 현실을 지켜보면 상속세 강화의 필요성을 인정하지 않을 도리가 없다. 노력이나 능력과 무관하게 태어난 환경만으로 부가 대물림되는 구조는 공정한 경쟁을 어렵게 만든다. 다만 세율 인상이 중소기업이나 가업 승계에 지나친 부담을 주지 않는다는 것을 전제로 해야 한다고 본다. 그렇지 않으면 오히려 기업이 해외로 이전하거나 편법적인 상속이 늘어나는 부작용이 생길 수 있다. 그러므로 자산 규모에 따라 누진적으로 세율을 조정하고 가업 승계에는 별도의 유예 제도를 두는 세밀한 설계가 필요하다고 생각한다.",
+    prompt_kr: "봄에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on spring.",
+    example_kr: "저는 봄을 좋아하는 편인데 특히 스트레스가 풀리는 것 같아요.",
+    example_en: "I tend to like spring, and I especially feel like it relieves my stress.",
   },
   {
     level: "C1",
     genre: "opinion",
-    prompt_kr:
-      "기업 이사회에 여성 할당제를 의무화하는 것에 대한 입장을 여섯 문장 이상으로 쓰세요. '-을 계기로'와 '-다고 해도 과언이 아니다'를 사용하세요.",
-    prompt_en:
-      "Give your position on mandating gender quotas on corporate boards, in six or more sentences. Use '-을 계기로' and '-다고 해도 과언이 아니다'.",
-    example_kr:
-      "나는 기업 이사회에 여성 할당제를 의무화하는 정책에 찬성하는 입장이다. 여러 국가에서 할당제를 도입한 것을 계기로 여성 임원의 비율이 눈에 띄게 늘어난 사례가 확인되기 때문이다. 그동안 능력이 부족해서가 아니라 보이지 않는 관행 때문에 여성들이 고위직에서 배제되어 왔다고 해도 과언이 아니다. 물론 능력이 아닌 성별을 기준으로 자리를 배정하는 것이 역차별이라는 반론도 충분히 귀 기울일 만하다. 그러나 이미 기울어진 구조를 방치한 채 자연스러운 변화를 기다리기에는 그 속도가 지나치게 더디다고 본다. 그러므로 할당제는 영구적인 제도라기보다 불균형을 바로잡기 위한 한시적 조치로 이해하고 도입하는 것이 바람직하다고 생각한다.",
+    prompt_kr: "음악 듣기에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on listening to music.",
+    example_kr: "저는 음악 듣기를 좋아하는 편인데 특히 스트레스가 풀리는 것 같아요.",
+    example_en: "I tend to like listening to music, and I especially feel like it relieves my stress.",
   },
   {
     level: "C1",
     genre: "opinion",
-    prompt_kr:
-      "청년에게 일정 기간의 국가 봉사를 의무화하는 것에 대한 입장을 여섯 문장 이상으로 쓰세요. '-는 것이 마땅하다'와 '-을 무릅쓰고'를 사용하세요.",
-    prompt_en:
-      "Give your position on mandating a period of national service for young people, in six or more sentences. Use '-는 것이 마땅하다' and '-을 무릅쓰고'.",
-    example_kr:
-      "나는 청년들에게 일정 기간의 국가 봉사를 의무화하는 것에는 신중한 입장이다. 공동체 의식을 기르고 다양한 배경의 사람들과 협력하는 경험을 쌓는다는 취지는 존중받는 것이 마땅하다고 생각한다. 그러나 학업이나 취업 준비의 결정적 시기를 놓치는 손실을 무릅쓰고까지 모든 청년에게 획일적으로 강제하는 것은 지나치다고 본다. 특히 경제적 여건이 어려운 청년일수록 그 기회비용을 더 크게 체감할 수밖에 없다. 물론 자발적인 참여로는 충분한 인원이 모이지 않을 수 있다는 현실적인 어려움도 이해한다. 그러므로 완전한 의무화보다는 참여자에게 학비 지원이나 취업 가산점 같은 실질적인 혜택을 제공해 자발적 참여를 유도하는 방식이 더 바람직하다고 생각한다.",
+    prompt_kr: "더운 날씨에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on hot weather.",
+    example_kr: "저는 더운 날씨를 좋아하는 편인데 특히 스트레스가 풀리는 것 같아요.",
+    example_en: "I tend to like hot weather, and I especially feel like it relieves my stress.",
   },
   {
     level: "C1",
     genre: "opinion",
-    prompt_kr:
-      "자율주행차가 인간 운전자를 완전히 대체해야 하는지 입장을 여섯 문장 이상으로 쓰세요. '-(으)ㅁ에 따라'와 '-다고 보기 어렵다'를 사용하세요.",
-    prompt_en:
-      "Give your position on whether self-driving cars should fully replace human drivers, in six or more sentences. Use '-(으)ㅁ에 따라' and '-다고 보기 어렵다'.",
-    example_kr:
-      "나는 자율주행 기술이 발전함에 따라 언젠가 대부분의 운전을 대체하게 되리라고 생각하지만 그 시점이 이미 도래했다고 보기 어렵다. 인공지능이 예측 불가능한 돌발 상황에 인간만큼 유연하게 대응할 수 있는지는 아직 충분히 검증되지 않았기 때문이다. 사고가 발생했을 때 책임의 소재를 누구에게 물어야 하는지에 대한 법적 기준도 여전히 미비한 상태다. 물론 인간 운전자의 부주의로 인한 사고가 훨씬 더 빈번하다는 통계를 감안하면 자율주행이 궁극적으로 더 안전할 가능성도 충분하다. 그러므로 완전한 대체를 서두르기보다는 제한된 구간에서 단계적으로 검증을 거치며 신뢰를 쌓아 가는 과정이 필요하다고 본다. 기술에 대한 기대와 신중함을 함께 유지하는 태도가 중요하다고 생각한다.",
+    prompt_kr: "강아지에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on dogs.",
+    example_kr: "저는 강아지를 좋아하는 편인데 특히 스트레스가 풀리는 것 같아요.",
+    example_en: "I tend to like dogs, and I especially feel like it relieves my stress.",
   },
   {
     level: "C1",
     genre: "opinion",
-    prompt_kr:
-      "물 사용량에 따라 요금을 누진적으로 부과하는 것에 대한 입장을 여섯 문장 이상으로 쓰세요. '-는 데 그치지 않는다'와 '-을 감안하면'을 사용하세요.",
-    prompt_en:
-      "Give your position on charging progressively higher water rates based on usage, in six or more sentences. Use '-는 데 그치지 않는다' and '-을 감안하면'.",
-    example_kr:
-      "나는 물 사용량에 따라 요금을 누진적으로 부과하는 정책이 필요하다고 생각한다. 물 부족은 특정 지역만의 문제가 아니라 전 세계적으로 확산되고 있는 데 그치지 않고 앞으로 더 심각해질 가능성이 크기 때문이다. 사용량에 비례해 요금이 높아진다면 자연스럽게 절약을 유도하는 효과를 기대할 수 있다. 다만 가족 구성원이 많은 가정이나 기초 생활에 필요한 최소 사용량을 감안하면 일률적인 누진제가 오히려 불공정하게 작용할 수 있다는 우려도 타당하다. 그러므로 기본적인 생활 사용량까지는 낮은 요금을 유지하고 그 이상을 초과할 때만 누진율을 적용하는 방식이 합리적이라고 본다. 결국 절약을 유도하면서도 기본권을 침해하지 않는 정교한 설계가 관건이라고 생각한다.",
+    prompt_kr: "휴가에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on vacations.",
+    example_kr: "저는 휴가를 좋아하는 편인데 특히 스트레스가 풀리는 것 같아요.",
+    example_en: "I tend to like vacations, and I especially feel like it relieves my stress.",
   },
   {
     level: "C1",
     genre: "opinion",
-    prompt_kr:
-      "역사적인 관광 도시에 관광객 수를 제한하는 정책에 대한 입장을 여섯 문장 이상으로 쓰세요. '-을 전제로'와 '-지 않을 수 없다'를 사용하세요.",
-    prompt_en:
-      "Give your position on policies capping tourist numbers in historic tourist cities, in six or more sentences. Use '-을 전제로' and '-지 않을 수 없다'.",
-    example_kr:
-      "나는 역사적인 도시일수록 관광객 수를 일정 부분 제한하는 정책이 필요하다고 생각한다. 관광객이 지나치게 몰리면 정작 그곳에 거주하는 주민들의 삶의 질이 크게 훼손된다는 사실을 인정하지 않을 수 없기 때문이다. 유적지 훼손이나 임대료 급등 같은 부작용도 이미 여러 도시에서 현실로 나타나고 있다. 물론 관광 산업이 지역 경제에 미치는 긍정적인 효과를 완전히 무시할 수는 없다. 그러므로 관광 수입을 지역 사회에 재투자한다는 것을 전제로 예약제나 입장료 인상 같은 완만한 제한 방식을 도입하는 것이 현실적이라고 본다. 결국 관광객 유치와 주민의 삶 사이에서 지속 가능한 균형을 찾는 것이 도시 정책의 핵심 과제라고 생각한다.",
+    prompt_kr: "요리하기에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on cooking.",
+    example_kr: "저는 요리하기를 좋아하는 편인데 특히 스트레스가 풀리는 것 같아요.",
+    example_en: "I tend to like cooking, and I especially feel like it relieves my stress.",
   },
   {
     level: "C1",
     genre: "opinion",
-    prompt_kr:
-      "학교 도서관에서 특정 도서를 금지하는 것에 대한 입장을 여섯 문장 이상으로 쓰세요. '-는 한편'과 '-을 배제할 수 없다'를 사용하세요.",
-    prompt_en:
-      "Give your position on banning certain books from school libraries, in six or more sentences. Use '-는 한편' and '-을 배제할 수 없다'.",
-    example_kr:
-      "나는 학교 도서관에서 특정 도서를 일괄적으로 금지하는 방식에는 반대하는 입장이다. 학부모들이 선정적이거나 폭력적인 내용을 우려하는 마음은 이해할 만한 한편, 그러한 이유로 사회적 소수자의 이야기나 논쟁적인 역사적 사실을 다룬 책까지 배제될 위험을 배제할 수 없다. 실제로 도서 금지가 불편한 진실을 마주하는 것 자체를 막는 수단으로 악용된 사례도 적지 않다. 물론 연령에 맞지 않는 자극적인 내용을 무분별하게 노출하는 것도 바람직하지 않다는 점은 동의한다. 그러므로 전면 금지보다는 연령대별 추천 구역을 나누고 교사와 사서의 전문적인 판단을 존중하는 방식이 더 합리적이라고 생각한다. 결국 다양한 목소리를 접할 권리는 교육 현장에서 특히 소중하게 지켜져야 한다고 본다.",
+    prompt_kr: "짧은 낮잠에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on short naps.",
+    example_kr: "저는 짧은 낮잠을 좋아하는 편인데 특히 스트레스가 풀리는 것 같아요.",
+    example_en: "I tend to like short naps, and I especially feel like it relieves my stress.",
   },
   {
     level: "C1",
     genre: "opinion",
-    prompt_kr:
-      "딥페이크 기술의 제작과 유포를 법으로 강하게 규제해야 하는지 입장을 여섯 문장 이상으로 쓰세요. '-을 계기로'와 '-지 않으면 안 된다'를 사용하세요.",
-    prompt_en:
-      "Give your position on whether the creation and spread of deepfake technology should be strongly regulated by law, in six or more sentences. Use '-을 계기로' and '-지 않으면 안 된다'.",
-    example_kr:
-      "나는 딥페이크 기술을 이용한 허위 영상물의 제작과 유포는 강력하게 규제해야 한다고 생각한다. 최근 유명인이나 일반인을 대상으로 한 악의적인 합성 영상이 확산된 사건을 계기로 이 기술의 위험성이 사회 전반에 널리 알려지게 되었다. 피해자는 자신의 얼굴이 도용된 영상 하나로 인격과 명예에 돌이키기 어려운 손상을 입는다. 물론 창작이나 풍자 목적의 합성 콘텐츠까지 무분별하게 금지하면 표현의 자유를 위축시킬 수 있다는 우려도 새겨들어야 한다. 그러나 동의 없이 타인의 얼굴을 성적이거나 명예 훼손적인 방식으로 합성하는 행위만큼은 엄격히 처벌하지 않으면 안 된다고 본다. 그러므로 목적과 피해 정도를 구분하는 세밀한 법적 기준을 서둘러 마련해야 한다고 생각한다.",
+    prompt_kr: "등산에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on hiking.",
+    example_kr: "저는 등산을 좋아하는 편인데 특히 스트레스가 풀리는 것 같아요.",
+    example_en: "I tend to like hiking, and I especially feel like it relieves my stress.",
   },
   {
     level: "C1",
     genre: "opinion",
-    prompt_kr:
-      "탄소세를 전 산업에 도입해야 하는지 입장을 여섯 문장 이상으로 쓰세요. '-는 데 반해'와 '-다고 해도 과언이 아니다'를 사용하세요.",
-    prompt_en:
-      "Give your position on whether a carbon tax should be introduced across all industries, in six or more sentences. Use '-는 데 반해' and '-다고 해도 과언이 아니다'.",
-    example_kr:
-      "나는 탄소세를 전 산업에 걸쳐 도입하는 것이 기후 위기 대응의 가장 현실적인 방안이라고 생각한다. 탄소 배출량에 비례해 세금을 부과하면 기업들이 자발적으로 친환경 기술에 투자하도록 유도하는 데 반해 기존의 규제 방식은 강제성은 있어도 유연성이 부족했다. 실제로 탄소세를 도입한 국가들의 배출량 감소 속도를 보면 그 효과는 상당했다고 해도 과언이 아니다. 다만 에너지 집약적인 산업의 국제 경쟁력이 약화되고 그 부담이 소비자 가격으로 전가될 수 있다는 우려도 무시할 수 없다. 그러므로 초기에는 세율을 점진적으로 인상하고 저소득층에게는 별도의 지원금을 지급하는 방식으로 충격을 완화해야 한다고 본다. 결국 탄소세는 처벌이 아니라 산업 구조를 친환경적으로 전환하기 위한 신호로 이해되어야 한다고 생각한다.",
+    prompt_kr: "일찍 일어나기에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on waking up early.",
+    example_kr: "저는 일찍 일어나기를 좋아하는 편인데 특히 스트레스가 풀리는 것 같아요.",
+    example_en: "I tend to like waking up early, and I especially feel like it relieves my stress.",
   },
   {
     level: "C1",
     genre: "opinion",
-    prompt_kr:
-      "연금 재정 안정을 위해 정년과 연금 수급 연령을 늦추는 것에 대한 입장을 여섯 문장 이상으로 쓰세요. '-을 감안하면'과 '-지 않을 도리가 없다'를 사용하세요.",
-    prompt_en:
-      "Give your position on raising the retirement age and pension eligibility age for pension fiscal stability, in six or more sentences. Use '-을 감안하면' and '-지 않을 도리가 없다'.",
-    example_kr:
-      "나는 평균 수명이 늘어나고 있는 상황을 감안하면 정년과 연금 수급 연령을 점진적으로 늦추는 방안을 받아들이지 않을 도리가 없다고 생각한다. 지금과 같은 구조를 그대로 유지한다면 젊은 세대가 감당해야 할 부담이 계속해서 눈덩이처럼 불어날 것이기 때문이다. 물론 육체적으로 힘든 노동을 오래 지속해 온 사람들에게 일률적으로 정년 연장을 요구하는 것은 지나치게 가혹할 수 있다는 지적도 타당하다. 그러므로 직종의 특성을 고려해 정년 연장 폭을 차등적으로 적용하는 방안이 필요하다고 본다. 또한 나이가 많은 노동자를 위한 재교육과 유연 근무 제도를 함께 마련해야 실질적인 효과를 거둘 수 있을 것이다. 결국 세대 간 형평성을 지키기 위해서라도 이 개혁은 더 이상 미루기 어려운 과제라고 생각한다.",
+    prompt_kr: "단체 여행에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on group trips.",
+    example_kr: "저는 단체 여행을 좋아하는 편인데 특히 스트레스가 풀리는 것 같아요.",
+    example_en: "I tend to like group trips, and I especially feel like it relieves my stress.",
   },
   {
     level: "C1",
     genre: "opinion",
-    prompt_kr:
-      "영어를 모든 학생에게 필수 공용어로 가르쳐야 하는지 입장을 여섯 문장 이상으로 쓰세요. '-는 한편'과 '-을 전제로'를 사용하세요.",
-    prompt_en:
-      "Give your position on whether English should be taught as a mandatory common language to all students, in six or more sentences. Use '-는 한편' and '-을 전제로'.",
-    example_kr:
-      "나는 영어 교육을 필수화하는 것에는 찬성하는 한편, 그것이 모국어와 자국 문화 교육을 희생시키지 않는다는 것을 전제로 해야 한다고 생각한다. 국제 사회에서 소통하고 정보에 접근하는 데 영어가 사실상 공용어처럼 기능하고 있다는 현실을 부정하기는 어렵다. 그러나 영어 교육에 지나치게 많은 자원을 쏟다 보면 모국어의 정체성이나 다른 과목의 균형이 무너질 위험도 있다. 물론 조기 영어 교육이 언어 습득에 유리하다는 연구 결과도 존재하지만 아이의 발달 단계를 고려하지 않은 무리한 교육은 오히려 역효과를 낳을 수 있다. 그러므로 영어 교육의 강도와 시기를 학생의 발달 수준에 맞게 조정하는 유연한 접근이 필요하다고 본다. 결국 영어는 도구일 뿐 그 자체가 교육의 목적이 되어서는 안 된다고 생각한다.",
+    prompt_kr: "고양이에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on cats.",
+    example_kr: "저는 고양이를 좋아하는 편인데 특히 스트레스가 풀리는 것 같아요.",
+    example_en: "I tend to like cats, and I especially feel like it relieves my stress.",
   },
   {
     level: "C1",
     genre: "opinion",
-    prompt_kr:
-      "유전자 정보를 보험 회사나 고용주가 열람하는 것을 금지해야 하는지 입장을 여섯 문장 이상으로 쓰세요. '-을 부인할 수 없다'와 '-는 것이 마땅하다'를 사용하세요.",
-    prompt_en:
-      "Give your position on whether insurers or employers should be barred from accessing genetic information, in six or more sentences. Use '-을 부인할 수 없다' and '-는 것이 마땅하다'.",
-    example_kr:
-      "나는 보험 회사나 고용주가 개인의 유전자 정보에 접근하는 것을 법으로 금지하는 것이 마땅하다고 생각한다. 유전자 검사 기술이 발전하면서 특정 질병에 걸릴 확률까지 미리 예측할 수 있게 된 것은 부인할 수 없는 사실이다. 그러나 이러한 정보가 보험 가입 거부나 채용 차별의 근거로 악용된다면 개인은 태어나기도 전에 정해진 유전적 특성만으로 불이익을 받게 된다. 물론 보험사 입장에서는 위험을 정확히 산정하기 위해 이러한 정보가 필요하다는 주장도 나름의 논리를 갖추고 있다. 그럼에도 유전자는 개인이 선택할 수 없는 요소이므로 그것을 근거로 차별하는 것은 근본적으로 부당하다고 본다. 그러므로 의료 목적을 제외한 유전자 정보 접근은 엄격히 차단되어야 한다고 생각한다.",
+    prompt_kr: "빵 굽기에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on baking bread.",
+    example_kr: "저는 빵 굽기를 좋아하는 편인데 특히 스트레스가 풀리는 것 같아요.",
+    example_en: "I tend to like baking bread, and I especially feel like it relieves my stress.",
   },
   {
     level: "C1",
     genre: "opinion",
-    prompt_kr:
-      "도심 개발보다 도시 내 녹지와 생태 공간 조성을 우선해야 하는지 입장을 여섯 문장 이상으로 쓰세요. '-기에 앞서'와 '-는 셈이다'를 사용하세요.",
-    prompt_en:
-      "Give your position on whether creating urban green and ecological spaces should take priority over downtown development, in six or more sentences. Use '-기에 앞서' and '-는 셈이다'.",
-    example_kr:
-      "나는 무분별한 도심 개발보다 도시 내 녹지와 생태 공간을 확보하는 일이 우선되어야 한다고 생각한다. 새로운 상업 시설을 짓기에 앞서 이미 부족한 녹지 비율을 먼저 점검하는 것이 장기적으로는 더 현명한 선택이라고 본다. 도시 열섬 현상과 대기 오염이 심각해지는 상황에서 녹지는 단순한 미관 요소가 아니라 시민 건강을 지키는 필수 기반 시설인 셈이다. 물론 개발이 지연되면 지역 경제 활성화가 늦어질 수 있다는 반론도 이해할 만하다. 그러나 한번 사라진 녹지와 생태계를 되살리는 데는 개발로 얻는 경제적 이익보다 훨씬 큰 비용과 시간이 든다고 생각한다. 그러므로 개발과 녹지 조성을 병행하되 녹지 비율에 최소 기준을 두는 정책이 필요하다고 본다.",
+    prompt_kr: "한국 음식에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on Korean food.",
+    example_kr: "저는 한국 음식을 좋아하는 편인데 특히 스트레스가 풀리는 것 같아요.",
+    example_en: "I tend to like Korean food, and I especially feel like it relieves my stress.",
   },
   {
     level: "C1",
     genre: "opinion",
-    prompt_kr:
-      "온라인상에서 자신에 대한 정보를 삭제할 수 있는 잊힐 권리를 법적으로 보장해야 하는지 입장을 여섯 문장 이상으로 쓰세요. '-는 데 반해'와 '-을 감안하면'을 사용하세요.",
-    prompt_en:
-      "Give your position on whether the right to be forgotten online should be legally guaranteed, in six or more sentences. Use '-는 데 반해' and '-을 감안하면'.",
-    example_kr:
-      "나는 개인에게 온라인상의 잊힐 권리를 법적으로 보장해야 한다고 생각한다. 젊은 시절의 실수나 오래된 개인 정보가 평생 검색 결과에 남아 있다면 그 사람의 현재 삶에 부당한 영향을 미칠 수 있기 때문이다. 정보의 자유로운 유통은 사회적으로 중요한 가치인 데 반해 개인의 인격권 역시 그에 못지않게 존중받아야 할 권리다. 다만 공익적으로 중요한 정보, 이를테면 공직자의 비리 이력까지 삭제 대상이 될 수 있다는 위험을 감안하면 이 권리를 무제한으로 인정하기는 어렵다. 그러므로 공공의 이익과 무관한 사적인 정보에 한해서만 삭제를 청구할 수 있도록 범위를 명확히 규정해야 한다고 본다. 결국 알 권리와 잊힐 권리 사이에서 세심한 균형을 찾는 것이 이 논의의 핵심이라고 생각한다.",
-  },
-  {
-    level: "C1",
-    genre: "opinion",
-    prompt_kr:
-      "주거와 대중교통 같은 기본 서비스를 국가가 무상으로 제공해야 하는지 입장을 여섯 문장 이상으로 쓰세요. '-을 계기로'와 '-지 않을 수 없다'를 사용하세요.",
-    prompt_en:
-      "Give your position on whether the state should provide basic services like housing and public transit for free, in six or more sentences. Use '-을 계기로' and '-지 않을 수 없다'.",
-    example_kr:
-      "나는 주거와 대중교통 같은 기본 서비스를 전면 무상화하는 데는 신중한 입장이지만 그 방향성 자체에는 공감한다. 최근 몇몇 도시가 대중교통 무료화를 시범 도입한 것을 계기로 이 논의가 활발해진 것은 긍정적이라고 생각한다. 이동권과 주거권은 삶의 가장 기본적인 조건이라는 점을 인정하지 않을 수 없기 때문이다. 다만 모든 서비스를 전면 무상으로 제공하려면 막대한 재정이 필요하며 이는 결국 다른 공공 지출을 줄이는 결과로 이어질 수 있다. 그러므로 나는 저소득층을 우선 대상으로 하는 단계적 무상화가 재정적으로도 사회적으로도 더 지속 가능한 접근이라고 본다. 결국 모두를 위한 무상화보다 꼭 필요한 사람에게 먼저 닿는 정책 설계가 더 현실적이라고 생각한다.",
+    prompt_kr: "혼밥에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on eating alone.",
+    example_kr: "저는 혼밥을 좋아하는 편인데 특히 스트레스가 풀리는 것 같아요.",
+    example_en: "I tend to like eating alone, and I especially feel like it relieves my stress.",
   },
 ];

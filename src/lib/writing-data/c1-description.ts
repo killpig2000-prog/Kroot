@@ -4,401 +4,313 @@ export const WRITING_C1_DESCRIPTION: RawPrompt[] = [
   {
     level: "C1",
     genre: "description",
-    prompt_kr:
-      "한국의 전세 제도가 어떻게 작동하는지 여섯 문장 이상으로 설명해 보세요. '-는 한편'과 '-을 계기로'를 사용하세요.",
-    prompt_en:
-      "Explain how Korea's jeonse (lump-sum deposit lease) system works in six or more sentences. Use the grammar patterns '-는 한편' and '-을 계기로'.",
-    example_kr:
-      "전세란 세입자가 매달 월세를 내는 대신 집값의 상당 부분에 해당하는 보증금을 집주인에게 맡기고 계약 기간 동안 거주하는 임대 방식이다. 집주인은 이 보증금을 운용해 수익을 얻는 한편 세입자는 매달 지출되는 주거비 부담을 크게 줄일 수 있다는 장점이 있다. 계약이 끝나면 보증금은 원칙적으로 전액 반환되지만 최근 들어 이를 계기로 이른바 '전세 사기'에 대한 우려도 커지고 있다. 집값이 하락하면 집주인이 보증금을 돌려주지 못하는 이른바 '깡통 전세' 문제가 발생하기도 한다. 이 때문에 정부는 전세 보증 보험 가입을 의무화하는 등의 제도 개선을 계속 추진해 왔다. 전세 제도는 한국 특유의 주거 문화를 상징하지만 동시에 그 위험성 때문에 꾸준히 논쟁의 대상이 되어 왔다.",
+    prompt_kr: "이 카페를 자세히 묘사해 보세요.",
+    prompt_en: "Describe this cafe in some detail.",
+    example_kr: "이 카페는 예쁘고 편해요, 그래서 볼 때마다 기분이 좋아져요.",
+    example_en: "This cafe is pretty and comfortable, and it makes me feel good every time I see it.",
   },
   {
     level: "C1",
     genre: "description",
-    prompt_kr:
-      "한국 회사의 회식 문화가 지닌 사회적 기능을 여섯 문장 이상으로 설명해 보세요. '-는 데 반해'와 '-을 막론하고'를 사용하세요.",
-    prompt_en:
-      "Explain the social function of Korean company dinner (hoesik) culture in six or more sentences. Use the grammar patterns '-는 데 반해' and '-을 막론하고'.",
-    example_kr:
-      "회식은 업무 시간이 끝난 뒤 부서원들이 함께 식사와 술자리를 갖는 자리로, 표면적으로는 친목을 다지는 데 목적이 있다. 서구의 회식 문화가 대체로 자율적인 참여를 전제로 하는 데 반해 한국의 회식은 오랫동안 반강제적인 성격을 띠어 왔다. 직급을 막론하고 참석이 당연시되던 과거와 달리 최근에는 개인의 의사를 존중하는 분위기가 자리 잡고 있다. 회식 자리에서는 평소 하기 어려운 이야기를 편하게 나눌 수 있다는 긍정적인 측면도 분명히 존재한다. 그러나 과도한 음주 강요와 늦은 귀가 시간은 여전히 개선이 필요한 부분으로 지적된다. 결국 회식 문화는 조직의 결속을 다지는 동시에 개인의 삶을 침해할 수 있다는 양면성을 지닌 관행이라 할 수 있다.",
+    prompt_kr: "제 가방을 자세히 묘사해 보세요.",
+    prompt_en: "Describe my bag in some detail.",
+    example_kr: "제 가방은 멋있고 귀여워요, 그래서 볼 때마다 기분이 좋아져요.",
+    example_en: "My bag is cool and cute, and it makes me feel good every time I see it.",
   },
   {
     level: "C1",
     genre: "description",
-    prompt_kr:
-      "긱 이코노미가 노동 시장에 가져온 변화를 여섯 문장 이상으로 설명해 보세요. '-(으)ㅁ에 따라'와 '-을 따름이다'를 사용하세요.",
-    prompt_en:
-      "Explain how the gig economy has changed the labor market in six or more sentences. Use the grammar patterns '-(으)ㅁ에 따라' and '-을 따름이다'.",
-    example_kr:
-      "긱 이코노미란 정규직 고용 대신 필요할 때마다 단기 계약으로 노동력을 사고파는 경제 형태를 가리킨다. 배달 대행이나 차량 공유 플랫폼이 확산됨에 따라 이러한 형태의 노동이 빠르게 늘어나고 있다. 노동자는 원하는 시간에 자유롭게 일할 수 있다는 장점을 누리지만 정작 고용 안정성은 거의 없을 따름이다. 회사에 소속되지 않기 때문에 4대 보험이나 퇴직금 같은 기본적인 보호도 받기 어려운 경우가 많다. 플랫폼 기업의 영향력이 커짐에 따라 노동자와 기업 간의 힘의 불균형 문제도 함께 부각되고 있다. 결국 긱 이코노미는 노동의 유연성을 확대했지만 그 이면에는 불안정한 삶이 자리하고 있을 따름이다.",
+    prompt_kr: "제 방을 자세히 묘사해 보세요.",
+    prompt_en: "Describe my room in some detail.",
+    example_kr: "제 방은 조용하고 귀여워요, 그래서 볼 때마다 기분이 좋아져요.",
+    example_en: "My room is quiet and cute, and it makes me feel good every time I see it.",
   },
   {
     level: "C1",
     genre: "description",
-    prompt_kr:
-      "도시 재생 사업이 낙후된 지역을 어떻게 변화시키는지 여섯 문장 이상으로 설명해 보세요. '-기에 앞서'와 '-는 한편'을 사용하세요.",
-    prompt_en:
-      "Explain how urban regeneration projects transform neglected neighborhoods in six or more sentences. Use the grammar patterns '-기에 앞서' and '-는 한편'.",
-    example_kr:
-      "도시 재생이란 낡고 쇠퇴한 지역을 완전히 철거하는 대신 기존의 골격을 살리며 새롭게 정비하는 도시 개발 방식이다. 재생 사업을 진행하기에 앞서 지역 주민들의 의견을 충분히 수렴하는 과정이 반드시 선행되어야 한다. 낡은 건물을 리모델링해 공방이나 카페로 바꾸는 한편 골목의 원형은 최대한 보존하는 방식이 흔히 활용된다. 이러한 방식은 지역의 정체성을 지키면서도 새로운 활력을 불어넣는다는 점에서 긍정적인 평가를 받는다. 그러나 재생이 성공적일수록 임대료가 급등해 원주민이 오히려 밀려나는 젠트리피케이션 문제가 뒤따르기도 한다. 따라서 도시 재생은 물리적 환경의 개선뿐 아니라 기존 공동체를 지키는 사회적 균형까지 함께 고려해야 하는 과제다.",
+    prompt_kr: "우리 아빠를 자세히 묘사해 보세요.",
+    prompt_en: "Describe my dad in some detail.",
+    example_kr: "우리 아빠는 따뜻하고 조용해요, 그래서 볼 때마다 기분이 좋아져요.",
+    example_en: "My dad is warm and quiet, and it makes me feel good every time I see it.",
   },
   {
     level: "C1",
     genre: "description",
-    prompt_kr:
-      "한국 사회의 고령화가 초래하는 구조적 문제를 여섯 문장 이상으로 설명해 보세요. '-는 데 반해'와 '-(으)ㅁ에 따라'를 사용하세요.",
-    prompt_en:
-      "Explain the structural problems caused by Korea's aging society in six or more sentences. Use the grammar patterns '-는 데 반해' and '-(으)ㅁ에 따라'.",
-    example_kr:
-      "한국은 전 세계에서 유례없이 빠른 속도로 고령화가 진행되고 있는 국가로 꼽힌다. 노인 인구 비중은 계속 늘어나는 데 반해 이를 부양할 생산 가능 인구는 오히려 줄어들고 있다는 점이 가장 큰 문제로 지적된다. 기대 수명이 늘어남에 따라 국민연금과 건강보험 등 사회 보장 제도에 가해지는 재정적 부담도 함께 커지고 있다. 젊은 세대는 낮은 출산율로 인해 인구가 줄어드는 데 반해 노년층은 갈수록 그 규모가 커지는 역전 현상이 나타나고 있다. 지방 소도시에서는 이러한 고령화 속도가 더욱 빨라짐에 따라 마을 자체가 소멸할 위기에 처한 곳도 늘고 있다. 결국 고령화 문제는 단순한 인구 통계의 변화가 아니라 국가 전체의 지속 가능성을 시험하는 과제라고 할 수 있다.",
+    prompt_kr: "우리 학교를 자세히 묘사해 보세요.",
+    prompt_en: "Describe my school in some detail.",
+    example_kr: "우리 학교는 귀엽고 깨끗해요, 그래서 볼 때마다 기분이 좋아져요.",
+    example_en: "My school is cute and clean, and it makes me feel good every time I see it.",
   },
   {
     level: "C1",
     genre: "description",
-    prompt_kr:
-      "한국의 아파트 단지가 어떤 구조와 기능을 갖추고 있는지 여섯 문장 이상으로 설명해 보세요. '-을 뿐만 아니라'와 '-는 셈이다'를 사용하세요.",
-    prompt_en:
-      "Explain the structure and function of a typical Korean apartment complex in six or more sentences. Use the grammar patterns '-을 뿐만 아니라' and '-는 셈이다'.",
-    example_kr:
-      "한국의 아파트 단지는 여러 동의 건물이 하나의 울타리 안에 모여 있는 대규모 주거 형태로, 단순한 주거 공간을 넘어 하나의 작은 마을을 이루는 셈이다. 단지 안에는 놀이터와 운동 시설뿐만 아니라 경로당과 어린이집 같은 생활 편의 시설도 함께 갖춰져 있는 경우가 많다. 입주민들은 관리비를 공동으로 부담하여 경비와 청소, 시설 유지 보수 등의 서비스를 제공받을 뿐만 아니라 입주자 대표 회의를 통해 단지 운영에 직접 참여하기도 한다. 대부분의 단지는 지하 주차장을 갖추고 있어 지상에는 차량이 다니지 않는 보행자 중심의 공간으로 조성되는 셈이다. 학군과 교통이 좋은 단지는 그 자체로 지역 부동산 가격을 좌우하는 기준이 되기도 한다. 이처럼 아파트 단지는 한국인의 일상생활과 자산 형성 방식을 동시에 반영하는 대표적인 주거 형태라 할 수 있다.",
+    prompt_kr: "이 케이크를 자세히 묘사해 보세요.",
+    prompt_en: "Describe this cake in some detail.",
+    example_kr: "이 케이크는 예쁘고 아름다워요, 그래서 볼 때마다 기분이 좋아져요.",
+    example_en: "This cake is pretty and beautiful, and it makes me feel good every time I see it.",
   },
   {
     level: "C1",
     genre: "description",
-    prompt_kr:
-      "협동조합이 일반 기업과 다르게 운영되는 방식을 여섯 문장 이상으로 설명해 보세요. '-는 한편'과 '-기 마련이다'를 사용하세요.",
-    prompt_en:
-      "Explain how a cooperative operates differently from a regular company in six or more sentences. Use the grammar patterns '-는 한편' and '-기 마련이다'.",
-    example_kr:
-      "협동조합은 이윤 극대화를 목표로 하는 일반 기업과 달리 조합원들의 공동 이익을 우선시하는 경제 조직이다. 조합원은 출자금을 내고 조합의 주인이 되는 한편 경영에도 동등한 자격으로 참여할 권리를 갖는다. 일반 주식회사에서는 지분이 많을수록 발언권이 커지기 마련인 데 반해 협동조합은 지분과 상관없이 조합원 한 명당 한 표의 원칙을 따른다. 이러한 구조는 소수의 자본이 조직을 좌우하는 것을 방지하기 위한 장치라 할 수 있다. 이윤이 발생하면 이를 조합원들에게 배당하는 한편 일부는 지역 사회를 위한 사업에 재투자되기도 한다. 그러나 의사 결정 과정이 민주적인 만큼 신속한 결정이 어렵다는 한계도 함께 드러나기 마련이다.",
+    prompt_kr: "제 친구를 자세히 묘사해 보세요.",
+    prompt_en: "Describe my friend in some detail.",
+    example_kr: "제 친구는 작고 친절해요, 그래서 볼 때마다 기분이 좋아져요.",
+    example_en: "My friend is small and kind, and it makes me feel good every time I see it.",
   },
   {
     level: "C1",
     genre: "description",
-    prompt_kr:
-      "재택근무가 확산되면서 생겨난 새로운 업무 예절을 여섯 문장 이상으로 설명해 보세요. '-는 한편'과 '-기 마련이다'를 사용하세요.",
-    prompt_en:
-      "Explain the new work etiquette that has emerged with the spread of remote work in six or more sentences. Use the grammar patterns '-는 한편' and '-기 마련이다'.",
-    example_kr:
-      "재택근무가 보편화되면서 사무실에서는 불필요했던 새로운 형태의 업무 예절이 자연스럽게 자리 잡기 시작했다. 화상 회의에서는 정해진 시간에 정확히 접속하는 것이 기본 예의로 여겨지는 한편 배경이나 복장에도 어느 정도 신경을 써야 한다는 인식이 퍼져 있다. 얼굴을 직접 보지 못하는 만큼 메시지의 어조가 실제보다 딱딱하게 느껴지기 마련이어서 이모티콘이나 부드러운 표현을 덧붙이는 경우가 늘었다. 업무 시간 이후에 연락하는 것은 실례로 받아들여지는 한편 즉각적인 응답을 기대하지 않는 문화도 함께 형성되고 있다. 반면 상대방의 상황을 눈으로 확인할 수 없기 때문에 오해가 생기기도 쉽기 마련이다. 결국 재택근무 예절은 물리적 거리를 심리적 배려로 메우려는 노력에서 비롯된 것이라 할 수 있다.",
+    prompt_kr: "이 영화를 자세히 묘사해 보세요.",
+    prompt_en: "Describe this movie in some detail.",
+    example_kr: "이 영화는 깨끗하고 따뜻해요, 그래서 볼 때마다 기분이 좋아져요.",
+    example_en: "This movie is clean and warm, and it makes me feel good every time I see it.",
   },
   {
     level: "C1",
     genre: "description",
-    prompt_kr:
-      "결혼에 대한 세대 간 가치관 차이를 여섯 문장 이상으로 설명해 보세요. '-는 데 반해'와 '-다고 보다'를 사용하세요.",
-    prompt_en:
-      "Explain the generational gap in attitudes toward marriage in six or more sentences. Use the grammar patterns '-는 데 반해' and '-다고 보다'.",
-    example_kr:
-      "과거 세대는 결혼을 성인이 되면 당연히 거쳐야 할 절차로 여기는 데 반해 최근 젊은 세대는 결혼을 여러 선택지 중 하나로 받아들이는 경향이 강하다. 기성세대는 결혼과 출산이 안정된 삶의 완성이라고 보는 데 반해 젊은 세대는 경제적 부담과 개인의 자유를 더 중요한 가치로 여긴다고 볼 수 있다. 특히 주거비와 양육비 상승은 결혼을 미루거나 포기하게 만드는 현실적인 요인이라고 보는 시각이 많다. 여성의 사회 진출이 활발해짐에 따라 결혼이 곧 안정을 의미하던 과거의 공식도 더 이상 유효하지 않다고 보는 사람들이 늘고 있다. 이러한 변화는 단순한 세대 갈등이 아니라 사회 구조 전체가 변화한 결과라고 보아야 한다. 결국 결혼관의 차이는 각 세대가 처한 경제적, 사회적 환경의 차이를 반영하는 것이라 할 수 있다.",
+    prompt_kr: "우리 집 고양이를 자세히 묘사해 보세요.",
+    prompt_en: "Describe our cat in some detail.",
+    example_kr: "우리 집 고양이는 조용하고 친절해요, 그래서 볼 때마다 기분이 좋아져요.",
+    example_en: "Our cat is quiet and kind, and it makes me feel good every time I see it.",
   },
   {
     level: "C1",
     genre: "description",
-    prompt_kr:
-      "한국의 편의점이 사회 인프라로서 수행하는 역할을 여섯 문장 이상으로 설명해 보세요. '-을 뿐만 아니라'와 '-는 셈이다'를 사용하세요.",
-    prompt_en:
-      "Explain the role Korean convenience stores play as social infrastructure in six or more sentences. Use the grammar patterns '-을 뿐만 아니라' and '-는 셈이다'.",
-    example_kr:
-      "한국의 편의점은 24시간 운영되는 소매점을 넘어 도시 생활 곳곳에 스며든 사회적 인프라 역할을 하는 셈이다. 늦은 밤에도 간단한 식사와 생필품을 구입할 수 있을 뿐만 아니라 각종 공과금 납부나 택배 접수 같은 행정적 편의도 함께 제공한다. 대부분의 편의점에는 현금 인출기와 앉아서 식사할 수 있는 취식 공간이 마련되어 있어 작은 생활 거점 역할을 하는 셈이다. 1인 가구가 늘어나면서 소량 포장된 상품을 부담 없이 구매할 수 있는 편의점의 수요는 계속 증가하고 있다. 재난이나 비상 상황이 발생했을 때는 임시로 구호 물품을 배포하는 거점으로 활용될 뿐만 아니라 지역 주민들의 안전 감시망 역할을 하기도 한다. 이처럼 편의점은 단순한 상업 시설을 넘어 도시민의 일상을 지탱하는 필수적인 공간으로 자리 잡았다.",
+    prompt_kr: "이 노래를 자세히 묘사해 보세요.",
+    prompt_en: "Describe this song in some detail.",
+    example_kr: "이 노래는 멋있고 커요, 그래서 볼 때마다 기분이 좋아져요.",
+    example_en: "This song is cool and big, and it makes me feel good every time I see it.",
   },
   {
     level: "C1",
     genre: "description",
-    prompt_kr:
-      "한국의 명절 귀성 풍습이 지닌 사회적 의미를 여섯 문장 이상으로 설명해 보세요. '-는 한편'과 '-을 계기로'를 사용하세요.",
-    prompt_en:
-      "Explain the social significance of Korea's holiday homecoming (gwiseong) custom in six or more sentences. Use the grammar patterns '-는 한편' and '-을 계기로'.",
-    example_kr:
-      "설날과 추석이 되면 수많은 사람들이 고향을 찾아 이동하는 귀성 행렬이 전국적으로 이어진다. 이는 흩어져 살던 가족들이 한자리에 모여 안부를 나누는 자리인 한편 조상에게 차례를 지내며 전통을 잇는 계기이기도 하다. 명절을 계기로 오랜만에 친척들을 만나 관계를 다시 다지는 사람들이 많은 반면 명절 노동과 잔소리에 부담을 느끼는 사람들도 적지 않다. 특히 여성에게 집중되는 명절 가사 노동은 오랫동안 사회적 논쟁거리가 되어 왔다. 최근에는 이를 계기로 간소화된 차례나 여행으로 명절을 대신하는 가정도 늘어나는 추세다. 이처럼 귀성 풍습은 전통적 가족 공동체의 가치를 지키는 한편 시대 변화에 따라 그 형태가 점차 달라지고 있다.",
+    prompt_kr: "우리 선생님을 자세히 묘사해 보세요.",
+    prompt_en: "Describe our teacher in some detail.",
+    example_kr: "우리 선생님은 친절하고 깨끗해요, 그래서 볼 때마다 기분이 좋아져요.",
+    example_en: "Our teacher is kind and clean, and it makes me feel good every time I see it.",
   },
   {
     level: "C1",
     genre: "description",
-    prompt_kr:
-      "구독 경제가 소비 방식을 어떻게 바꾸어 놓았는지 여섯 문장 이상으로 설명해 보세요. '-(으)ㅁ에 따라'와 '-을 따름이다'를 사용하세요.",
-    prompt_en:
-      "Explain how the subscription economy has changed consumption patterns in six or more sentences. Use the grammar patterns '-(으)ㅁ에 따라' and '-을 따름이다'.",
-    example_kr:
-      "구독 경제란 상품이나 서비스를 소유하는 대신 일정 금액을 정기적으로 지불하고 이용하는 소비 방식을 가리킨다. 영상 스트리밍이나 음악 서비스에서 시작된 이 방식은 이제 자동차와 가구, 심지어 식료품에까지 적용됨에 따라 소비의 개념 자체를 바꾸어 놓고 있다. 소비자는 목돈을 들이지 않고도 원하는 서비스를 이용할 수 있지만 여러 구독을 동시에 유지하다 보면 지출이 눈에 띄지 않게 누적될 따름이다. 기업 입장에서는 안정적인 수익을 지속적으로 확보할 수 있다는 점이 가장 큰 매력으로 작용한다. 구독 서비스 수가 늘어남에 따라 정작 이용자는 자신이 어떤 서비스를 얼마나 이용하는지조차 파악하지 못하는 경우도 많다. 결국 구독 경제는 소비의 편리함을 제공하는 한편 무의식적인 지출을 부추길 따름이라는 비판에서 자유롭지 못하다.",
+    prompt_kr: "서울을 자세히 묘사해 보세요.",
+    prompt_en: "Describe Seoul in some detail.",
+    example_kr: "서울은 귀엽고 유명해요, 그래서 볼 때마다 기분이 좋아져요.",
+    example_en: "Seoul is cute and famous, and it makes me feel good every time I see it.",
   },
   {
     level: "C1",
     genre: "description",
-    prompt_kr:
-      "한국의 배달 문화가 형성된 배경과 특징을 여섯 문장 이상으로 설명해 보세요. '-기에 앞서'와 '-을 뿐만 아니라'를 사용하세요.",
-    prompt_en:
-      "Explain the background and characteristics of Korea's delivery culture in six or more sentences. Use the grammar patterns '-기에 앞서' and '-을 뿐만 아니라'.",
-    example_kr:
-      "한국의 배달 문화를 이해하기에 앞서 이 나라의 높은 인구 밀도와 빠른 배송 인프라부터 살펴볼 필요가 있다. 대부분의 도심 지역은 촘촘한 도로망과 오토바이 배달망을 갖추고 있어 주문 후 삼십 분 안에 음식을 받는 일이 흔하다. 배달 앱은 음식뿐만 아니라 생필품과 의약품까지 취급할 뿐만 아니라 실시간으로 배달원의 위치를 확인할 수 있는 기능도 제공한다. 이러한 서비스를 이용하기에 앞서 소비자들은 리뷰와 평점을 꼼꼼히 비교하는 소비 습관을 갖게 되었다. 1인 가구의 증가와 맞물려 배달 음식에 대한 수요는 꾸준히 늘어나고 있을 뿐만 아니라 관련 시장의 규모도 계속 커지고 있다. 그러나 그 이면에는 열악한 배달원의 노동 환경이라는 그늘도 함께 존재한다.",
+    prompt_kr: "우리 동네를 자세히 묘사해 보세요.",
+    prompt_en: "Describe my neighborhood in some detail.",
+    example_kr: "우리 동네는 크고 시끄러워요, 그래서 볼 때마다 기분이 좋아져요.",
+    example_en: "My neighborhood is big and loud, and it makes me feel good every time I see it.",
   },
   {
     level: "C1",
     genre: "description",
-    prompt_kr:
-      "한국의 사교육 시장이 유지되는 구조적 이유를 여섯 문장 이상으로 설명해 보세요. '-는 데 반해'와 '-(으)ㅁ에 따라'를 사용하세요.",
-    prompt_en:
-      "Explain the structural reasons why Korea's private tutoring market persists in six or more sentences. Use the grammar patterns '-는 데 반해' and '-(으)ㅁ에 따라'.",
-    example_kr:
-      "한국의 공교육 과정은 표준화된 교육 과정을 제공하는 데 반해 대학 입시는 극도로 치열한 경쟁 구조를 갖고 있어 그 간극을 메우기 위한 사교육 수요가 꾸준히 발생한다. 명문대 진학이 이후의 취업과 소득 수준에 큰 영향을 미친다는 인식이 강해짐에 따라 부모들은 자녀 교육에 막대한 비용을 투자하는 경향을 보인다. 공교육이 다수를 대상으로 한 평균적인 수업을 제공하는 데 반해 학원은 개인의 수준에 맞춘 맞춤형 수업을 제공한다는 점에서 차별화된다. 사교육 시장의 규모가 커짐에 따라 가정의 경제적 여건이 자녀의 학업 성취에 미치는 영향력도 함께 커지고 있다. 이는 결과적으로 교육 격차가 소득 격차로, 다시 소득 격차가 교육 격차로 이어지는 악순환을 낳고 있다. 정부가 여러 차례 사교육 억제 정책을 내놓았음에도 이러한 구조적 요인 때문에 큰 효과를 거두지 못하고 있다.",
+    prompt_kr: "우리 엄마를 자세히 묘사해 보세요.",
+    prompt_en: "Describe my mom in some detail.",
+    example_kr: "우리 엄마는 유명하고 시끄러워요, 그래서 볼 때마다 기분이 좋아져요.",
+    example_en: "My mom is famous and loud, and it makes me feel good every time I see it.",
   },
   {
     level: "C1",
     genre: "description",
-    prompt_kr:
-      "한국의 지역 축제가 지역 경제에 미치는 영향을 여섯 문장 이상으로 설명해 보세요. '-을 계기로'와 '-는 한편'을 사용하세요.",
-    prompt_en:
-      "Explain the impact of local festivals on regional economies in six or more sentences. Use the grammar patterns '-을 계기로' and '-는 한편'.",
-    example_kr:
-      "지역 축제는 특산물이나 역사적 배경 등 지역만의 고유한 자원을 알리기 위해 지방자치단체가 주도적으로 기획하는 행사다. 성공적인 축제는 외지인의 방문을 늘리는 계기가 되는 한편 지역 상권에 실질적인 매출 증가를 가져다주기도 한다. 축제를 계기로 평소 잘 알려지지 않았던 지역이 전국적인 관심을 받게 되는 경우도 적지 않다. 지역 주민들은 축제 기간 동안 특산물을 판매하거나 체험 프로그램을 운영하며 부수입을 얻는 한편 지역에 대한 자긍심도 함께 느낀다. 그러나 일부 축제는 콘텐츠의 차별성이 부족해 예산 낭비라는 비판을 받기도 한다. 결국 지역 축제는 지역 경제를 활성화하는 동시에 지역 정체성을 재확인하는 계기로 작용한다고 볼 수 있다.",
+    prompt_kr: "우리 집 강아지를 자세히 묘사해 보세요.",
+    prompt_en: "Describe our dog in some detail.",
+    example_kr: "우리 집 강아지는 유명하고 편해요, 그래서 볼 때마다 기분이 좋아져요.",
+    example_en: "Our dog is famous and comfortable, and it makes me feel good every time I see it.",
   },
   {
     level: "C1",
     genre: "description",
-    prompt_kr:
-      "카페가 도시인의 '제3의 공간'으로 기능하는 방식을 여섯 문장 이상으로 설명해 보세요. '-을 뿐만 아니라'와 '-다고 보다'를 사용하세요.",
-    prompt_en:
-      "Explain how cafés function as a 'third place' for city dwellers in six or more sentences. Use the grammar patterns '-을 뿐만 아니라' and '-다고 보다'.",
-    example_kr:
-      "제3의 공간이란 집과 직장이 아닌, 개인이 자유롭게 머물며 쉴 수 있는 공간을 가리키는 개념이다. 오늘날 카페는 단순히 음료를 마시는 장소일 뿐만 아니라 업무를 보거나 사람을 만나는 다목적 공간으로 기능한다고 볼 수 있다. 특히 좁은 주거 공간에서 벗어나 넓고 쾌적한 환경에서 집중할 수 있다는 점이 많은 사람들을 카페로 이끈다고 보는 시각이 많다. 무선 인터넷과 콘센트를 갖춘 카페는 이제 일종의 임시 사무실 역할을 할 뿐만 아니라 스터디 모임이나 소규모 회의 장소로도 널리 활용된다. 도시화가 진행되면서 개인의 사적 공간이 좁아진 것이 카페 문화 확산의 배경이라고 보는 전문가들도 있다. 이처럼 카페는 현대 도시인에게 심리적 휴식과 사회적 교류를 동시에 제공하는 공간으로 자리 잡았다.",
+    prompt_kr: "이 카페를 자세히 묘사해 보세요.",
+    prompt_en: "Describe this cafe in some detail.",
+    example_kr: "이 카페는 복잡하고 조용해요, 그래서 볼 때마다 기분이 좋아져요.",
+    example_en: "This cafe is crowded and quiet, and it makes me feel good every time I see it.",
   },
   {
     level: "C1",
     genre: "description",
-    prompt_kr:
-      "한국의 대학 서열 문화가 형성된 배경을 여섯 문장 이상으로 설명해 보세요. '-는 한편'과 '-을 따름이다'를 사용하세요.",
-    prompt_en:
-      "Explain the background behind Korea's university-ranking culture in six or more sentences. Use the grammar patterns '-는 한편' and '-을 따름이다'.",
-    example_kr:
-      "한국 사회에서는 대학의 이름 자체가 개인의 능력을 평가하는 주요 기준으로 작용하는 경향이 오랫동안 이어져 왔다. 소수의 명문대가 취업과 사회적 지위에서 실질적인 우위를 누리는 한편 나머지 대학들은 그 격차를 좀처럼 좁히지 못하고 있다. 이러한 서열 구조는 산업화 시기 소수의 인재를 빠르게 양성해야 했던 역사적 배경에서 비롯되었다는 분석이 있다. 대학의 실질적인 교육 내용보다 이름값이 우선시되다 보니 학생들은 재수와 반수를 감수하면서까지 상위권 대학에 진학하려 할 따름이다. 정부와 대학이 여러 차례 서열 완화를 시도해 왔으나 뿌리 깊은 인식은 쉽게 바뀌지 않을 따름이다. 결국 이러한 문화는 개인의 다양한 가능성을 하나의 잣대로 평가하는 한계를 드러낸다고 할 수 있다.",
+    prompt_kr: "제 가방을 자세히 묘사해 보세요.",
+    prompt_en: "Describe my bag in some detail.",
+    example_kr: "제 가방은 크고 아름다워요, 그래서 볼 때마다 기분이 좋아져요.",
+    example_en: "My bag is big and beautiful, and it makes me feel good every time I see it.",
   },
   {
     level: "C1",
     genre: "description",
-    prompt_kr:
-      "무인 매장이 늘어나는 이유와 그로 인한 변화를 여섯 문장 이상으로 설명해 보세요. '-(으)ㅁ에 따라'와 '-는 데 반해'를 사용하세요.",
-    prompt_en:
-      "Explain why unmanned stores are increasing and the changes this brings in six or more sentences. Use the grammar patterns '-(으)ㅁ에 따라' and '-는 데 반해'.",
-    example_kr:
-      "최저임금이 꾸준히 인상됨에 따라 인건비 부담을 줄이기 위해 무인 매장을 도입하는 자영업자들이 늘어나고 있다. 무인 아이스크림 가게나 무인 세탁소처럼 비교적 단순한 업종에서 먼저 확산된 데 반해 최근에는 편의점과 카페 같은 복잡한 업종에서도 시도되고 있다. 인건비를 절감함에 따라 운영자는 수익성을 개선할 수 있지만 매장 관리와 도난 방지는 오롯이 시스템에 의존해야 한다. 기존 매장이 직원과의 대면 소통을 전제로 운영되는 데 반해 무인 매장은 철저히 자율적인 결제와 이용을 전제로 한다. 기술이 발전함에 따라 인공지능 카메라를 이용한 자동 결제 시스템도 점차 도입되고 있다. 이러한 변화는 편리함을 제공하는 동시에 일자리 감소라는 사회적 과제를 함께 남기고 있다.",
+    prompt_kr: "제 방을 자세히 묘사해 보세요.",
+    prompt_en: "Describe my room in some detail.",
+    example_kr: "제 방은 편하고 맛있어요, 그래서 볼 때마다 기분이 좋아져요.",
+    example_en: "My room is comfortable and delicious, and it makes me feel good every time I see it.",
   },
   {
     level: "C1",
     genre: "description",
-    prompt_kr:
-      "한국의 반려동물 양육 인구 증가가 사회에 미친 영향을 여섯 문장 이상으로 설명해 보세요. '-을 뿐만 아니라'와 '-는 셈이다'를 사용하세요.",
-    prompt_en:
-      "Explain the social impact of the rising number of pet owners in Korea in six or more sentences. Use the grammar patterns '-을 뿐만 아니라' and '-는 셈이다'.",
-    example_kr:
-      "1인 가구가 늘어나면서 정서적 유대를 나눌 대상으로 반려동물을 선택하는 사람들이 빠르게 증가하고 있다. 반려동물을 키우는 인구가 늘어남에 따라 관련 산업의 규모도 함께 성장해 하나의 거대한 시장을 형성하는 셈이다. 반려동물 전용 카페와 병원이 늘어났을 뿐만 아니라 반려동물과 동반 가능한 숙박 시설이나 식당도 크게 증가했다. 이러한 변화는 반려동물을 단순한 애완의 대상이 아니라 가족 구성원으로 여기는 인식의 변화를 보여 주는 셈이다. 그러나 반려동물 양육에 따르는 책임과 비용을 충분히 고려하지 않아 유기되는 동물의 수도 함께 늘고 있다. 결국 반려동물 문화의 확산은 삶의 질을 높이는 긍정적 변화인 동시에 새로운 사회적 책임을 요구하는 계기이기도 하다.",
+    prompt_kr: "우리 아빠를 자세히 묘사해 보세요.",
+    prompt_en: "Describe my dad in some detail.",
+    example_kr: "우리 아빠는 아름답고 멋있어요, 그래서 볼 때마다 기분이 좋아져요.",
+    example_en: "My dad is beautiful and cool, and it makes me feel good every time I see it.",
   },
   {
     level: "C1",
     genre: "description",
-    prompt_kr:
-      "온라인 커뮤니티가 여론 형성에 미치는 영향을 여섯 문장 이상으로 설명해 보세요. '-는 한편'과 '-다고 보다'를 사용하세요.",
-    prompt_en:
-      "Explain the influence of online communities on public opinion formation in six or more sentences. Use the grammar patterns '-는 한편' and '-다고 보다'.",
-    example_kr:
-      "온라인 커뮤니티는 비슷한 관심사를 가진 사람들이 모여 정보를 교환하고 의견을 나누는 공간으로 성장해 왔다. 이러한 공간은 소수의 목소리도 자유롭게 표출될 수 있는 통로가 되는 한편 특정 여론이 지나치게 증폭되는 부작용을 낳기도 한다. 전문가들은 커뮤니티 내부의 동질적인 구성원끼리 의견을 주고받다 보면 편향된 시각이 더욱 강화되기 쉽다고 본다. 정보의 사실 여부를 검증하지 않은 채 빠르게 확산되는 경우가 많아 가짜 뉴스의 온상이 될 수 있다고 보는 시각도 존재한다. 그럼에도 불구하고 커뮤니티는 기존 언론이 다루지 않는 사안을 공론화하는 순기능을 하는 한편 사회적 약자의 목소리를 대변하는 역할도 수행한다. 결국 온라인 커뮤니티는 여론 형성의 새로운 축으로 자리 잡았지만 그 영향력만큼 책임 있는 이용이 요구된다고 볼 수 있다.",
+    prompt_kr: "우리 학교를 자세히 묘사해 보세요.",
+    prompt_en: "Describe my school in some detail.",
+    example_kr: "우리 학교는 귀엽고 시끄러워요, 그래서 볼 때마다 기분이 좋아져요.",
+    example_en: "My school is cute and loud, and it makes me feel good every time I see it.",
   },
   {
     level: "C1",
     genre: "description",
-    prompt_kr:
-      "프랜차이즈 가맹 사업의 구조와 위험 요소를 여섯 문장 이상으로 설명해 보세요. '-기에 앞서'와 '-을 따름이다'를 사용하세요.",
-    prompt_en:
-      "Explain the structure and risks of franchise businesses in six or more sentences. Use the grammar patterns '-기에 앞서' and '-을 따름이다'.",
-    example_kr:
-      "프랜차이즈란 본사가 개발한 브랜드와 운영 시스템을 가맹점주가 일정한 비용을 지불하고 사용하는 사업 형태를 가리킨다. 가맹 계약을 체결하기에 앞서 예비 창업자는 본사의 재무 상태와 기존 가맹점들의 실적을 꼼꼼히 확인해야 한다. 본사는 브랜드 인지도와 검증된 운영 노하우를 제공하지만 그 대가로 매달 로열티를 받아 갈 따름이다. 사업을 시작하기에 앞서 예상 매출만 믿고 무리하게 대출을 받는 경우 경영에 큰 부담이 될 수 있다. 상권이 겹치는 인근에 동일 브랜드의 가맹점이 새로 생겨도 가맹점주는 이를 그대로 감수할 따름인 경우가 많다. 결국 프랜차이즈 사업은 안정성을 보장받는 대신 자율적인 경영권을 상당 부분 제한받는 구조라고 할 수 있다.",
+    prompt_kr: "이 케이크를 자세히 묘사해 보세요.",
+    prompt_en: "Describe this cake in some detail.",
+    example_kr: "이 케이크는 유명하고 작아요, 그래서 볼 때마다 기분이 좋아져요.",
+    example_en: "This cake is famous and small, and it makes me feel good every time I see it.",
   },
   {
     level: "C1",
     genre: "description",
-    prompt_kr:
-      "재활용 분리배출 제도가 어떻게 운영되는지 여섯 문장 이상으로 설명해 보세요. '-는 데 반해'와 '-(으)ㅁ에 따라'를 사용하세요.",
-    prompt_en:
-      "Explain how Korea's waste-sorting recycling system operates in six or more sentences. Use the grammar patterns '-는 데 반해' and '-(으)ㅁ에 따라'.",
-    example_kr:
-      "한국의 재활용 분리배출 제도는 쓰레기를 종이, 플라스틱, 유리, 금속 등으로 세분화하여 배출하도록 규정하고 있다. 다른 나라들은 비교적 단순한 분류 체계를 적용하는 데 반해 한국은 음식물 쓰레기까지 별도로 배출하도록 하는 정교한 체계를 갖추고 있다. 분리배출이 제대로 이루어짐에 따라 재활용 가능한 자원의 회수율이 높아지고 처리 비용도 절감되는 효과가 있다. 아파트 단지에서는 요일별로 배출 가능한 품목이 정해져 있는 데 반해 단독 주택 지역은 상대적으로 규정이 느슨하게 적용되는 경우가 많다. 환경에 대한 인식이 높아짐에 따라 최근에는 투명 페트병을 별도로 분리배출하는 제도까지 새롭게 도입되었다. 이러한 세분화된 체계는 번거롭다는 불만도 있지만 자원 재활용률을 높이는 데 실질적으로 기여하고 있다.",
+    prompt_kr: "제 친구를 자세히 묘사해 보세요.",
+    prompt_en: "Describe my friend in some detail.",
+    example_kr: "제 친구는 귀엽고 아름다워요, 그래서 볼 때마다 기분이 좋아져요.",
+    example_en: "My friend is cute and beautiful, and it makes me feel good every time I see it.",
   },
   {
     level: "C1",
     genre: "description",
-    prompt_kr:
-      "한국의 야근 문화가 유지되어 온 이유와 최근의 변화를 여섯 문장 이상으로 설명해 보세요. '-는 한편'과 '-기 마련이다'를 사용하세요.",
-    prompt_en:
-      "Explain why Korea's overtime-work culture has persisted and how it is recently changing, in six or more sentences. Use the grammar patterns '-는 한편' and '-기 마련이다'.",
-    example_kr:
-      "한국의 직장 문화에서는 오랫동안 정시에 퇴근하는 것이 성실하지 못한 태도로 여겨지는 분위기가 강했다. 상사가 자리를 지키고 있으면 부하 직원도 눈치를 보며 함께 남아 있는 한편 실제 업무량과는 무관하게 늦게까지 자리를 지키는 관행이 자리 잡았다. 이러한 문화 속에서는 효율적으로 일을 끝낸 사람보다 오래 자리를 지킨 사람이 더 좋은 평가를 받기 마련이었다. 그러나 주 52시간 근무제가 도입된 이후로는 야근에 대한 인식이 서서히 달라지고 있는 한편 초과 근무 자체가 법적으로 제한되기 시작했다. 젊은 세대를 중심으로 개인의 시간을 존중받고 싶어 하는 목소리가 커짐에 따라 야근을 당연시하던 분위기도 약화되기 마련이다. 결국 야근 문화의 변화는 노동에 대한 사회 전체의 가치관이 바뀌고 있음을 보여 주는 하나의 지표라 할 수 있다.",
+    prompt_kr: "이 영화를 자세히 묘사해 보세요.",
+    prompt_en: "Describe this movie in some detail.",
+    example_kr: "이 영화는 예쁘고 멋있어요, 그래서 볼 때마다 기분이 좋아져요.",
+    example_en: "This movie is pretty and cool, and it makes me feel good every time I see it.",
   },
   {
     level: "C1",
     genre: "description",
-    prompt_kr:
-      "한국의 명함 문화가 지닌 사회적 의미를 여섯 문장 이상으로 설명해 보세요. '-을 계기로'와 '-다고 보다'를 사용하세요.",
-    prompt_en:
-      "Explain the social meaning of Korea's business-card exchange culture in six or more sentences. Use the grammar patterns '-을 계기로' and '-다고 보다'.",
-    example_kr:
-      "한국에서는 처음 만나는 사람과 인사를 나눌 때 두 손으로 명함을 주고받는 것이 일반적인 예의로 자리 잡고 있다. 명함에는 이름과 직함뿐만 아니라 소속 회사와 부서까지 명시되어 있어 상대방의 사회적 위치를 곧바로 파악할 수 있는 수단이 된다고 볼 수 있다. 이 짧은 교환을 계기로 두 사람 사이의 호칭과 말투, 심지어 대화의 태도까지 자연스럽게 결정되는 경우가 많다. 전문가들은 이러한 관행이 서열과 위계를 중시하는 한국 특유의 조직 문화를 반영한다고 본다. 명함을 주고받는 짧은 순간을 계기로 상대에 대한 첫인상이 형성되기 때문에 명함 디자인에도 신경을 쓰는 사람들이 늘고 있다. 이처럼 작은 종이 한 장에 불과한 명함이지만 그 이면에는 한국 사회의 위계 문화가 고스란히 담겨 있다고 볼 수 있다.",
+    prompt_kr: "우리 집 고양이를 자세히 묘사해 보세요.",
+    prompt_en: "Describe our cat in some detail.",
+    example_kr: "우리 집 고양이는 편하고 조용해요, 그래서 볼 때마다 기분이 좋아져요.",
+    example_en: "Our cat is comfortable and quiet, and it makes me feel good every time I see it.",
   },
   {
     level: "C1",
     genre: "description",
-    prompt_kr:
-      "한국의 배달 앱 시장이 소상공인에게 미치는 영향을 여섯 문장 이상으로 설명해 보세요. '-는 데 반해'와 '-을 뿐만 아니라'를 사용하세요.",
-    prompt_en:
-      "Explain the impact of Korea's food-delivery app market on small business owners in six or more sentences. Use the grammar patterns '-는 데 반해' and '-을 뿐만 아니라'.",
-    example_kr:
-      "배달 앱은 소상공인에게 별도의 홍보 없이도 많은 잠재 고객에게 노출될 수 있는 기회를 제공한다. 대형 프랜차이즈는 자체적인 배달망을 구축할 여력이 있는 데 반해 영세 자영업자는 배달 앱에 대한 의존도가 훨씬 높을 수밖에 없다. 배달 앱을 이용하면 매출이 늘어날 뿐만 아니라 매장을 찾지 않던 새로운 고객층까지 확보할 수 있다는 장점이 있다. 그러나 주문이 늘어나는 데 반해 중개 수수료와 배달비 부담도 함께 커져 실제 순이익은 크게 늘지 않는 경우가 많다. 배달 앱의 노출 순위를 높이기 위한 광고비 지출까지 감안하면 자영업자의 부담은 더욱 가중될 뿐만 아니라 앱 정책 변화에 따라 매출이 크게 흔들리기도 한다. 결국 배달 앱은 소상공인에게 새로운 판로를 열어 준 동시에 또 다른 형태의 종속을 만들어 냈다고 할 수 있다.",
+    prompt_kr: "이 노래를 자세히 묘사해 보세요.",
+    prompt_en: "Describe this song in some detail.",
+    example_kr: "이 노래는 작고 멋있어요, 그래서 볼 때마다 기분이 좋아져요.",
+    example_en: "This song is small and cool, and it makes me feel good every time I see it.",
   },
   {
     level: "C1",
     genre: "description",
-    prompt_kr:
-      "한국의 공유 오피스가 확산된 배경을 여섯 문장 이상으로 설명해 보세요. '-(으)ㅁ에 따라'와 '-는 셈이다'를 사용하세요.",
-    prompt_en:
-      "Explain the background behind the spread of shared offices in Korea in six or more sentences. Use the grammar patterns '-(으)ㅁ에 따라' and '-는 셈이다'.",
-    example_kr:
-      "공유 오피스란 여러 개인이나 기업이 하나의 사무 공간을 나누어 사용하며 회의실과 사무기기 등을 함께 이용하는 업무 공간을 말한다. 스타트업과 프리랜서가 늘어남에 따라 별도의 사무실을 임대하기보다 필요한 만큼만 공간을 이용하려는 수요가 커지고 있다. 초기 창업자는 고정 비용을 크게 줄이면서도 전문적인 업무 환경을 얻는 셈이어서 공유 오피스를 선호하는 경우가 많다. 원격 근무가 확산됨에 따라 대기업 직원들도 자택 근처의 공유 오피스를 위성 사무실처럼 활용하는 사례가 늘고 있다. 다양한 업종의 사람들이 한 공간에 모여 있다 보니 자연스럽게 네트워킹의 기회를 얻는 셈이기도 하다. 이처럼 공유 오피스는 비용 절감과 유연성이라는 두 가지 요구가 맞물려 성장한 새로운 업무 공간 모델이라 할 수 있다.",
+    prompt_kr: "우리 선생님을 자세히 묘사해 보세요.",
+    prompt_en: "Describe our teacher in some detail.",
+    example_kr: "우리 선생님은 복잡하고 멋있어요, 그래서 볼 때마다 기분이 좋아져요.",
+    example_en: "Our teacher is crowded and cool, and it makes me feel good every time I see it.",
   },
   {
     level: "C1",
     genre: "description",
-    prompt_kr:
-      "명절 이후 늘어나는 이혼 신청 현상의 배경을 여섯 문장 이상으로 설명해 보세요. '-을 계기로'와 '-는 한편'을 사용하세요.",
-    prompt_en:
-      "Explain the background behind the rise in divorce filings after Korean holidays in six or more sentences. Use the grammar patterns '-을 계기로' and '-는 한편'.",
-    example_kr:
-      "한국에서는 명절 연휴가 끝난 직후 이혼 상담과 신청 건수가 눈에 띄게 늘어나는 현상이 매년 반복되고 있다. 오랜만에 온 가족이 한자리에 모이는 명절이 오히려 부부와 고부간의 갈등이 표면화되는 계기가 되는 경우가 많다. 며칠간 이어지는 명절 노동과 손님 접대는 부부 사이의 역할 분담 문제를 다시 떠올리게 하는 한편 그동안 억눌러 온 불만을 터뜨리는 계기가 되기도 한다. 특히 여성에게 집중되는 가사 부담은 오랫동안 부부 갈등의 핵심 원인으로 지목되어 왔다. 명절 기간 동안 쌓인 스트레스는 연휴가 끝난 뒤 진지한 대화의 계기가 되는 한편 관계를 재고하는 결정적인 순간으로 작용하기도 한다. 이러한 현상은 명절이라는 전통 행사가 현대 가족 구조와 충돌하고 있음을 보여 주는 단적인 사례라 할 수 있다.",
+    prompt_kr: "서울을 자세히 묘사해 보세요.",
+    prompt_en: "Describe Seoul in some detail.",
+    example_kr: "서울은 유명하고 조용해요, 그래서 볼 때마다 기분이 좋아져요.",
+    example_en: "Seoul is famous and quiet, and it makes me feel good every time I see it.",
   },
   {
     level: "C1",
     genre: "description",
-    prompt_kr:
-      "한국의 대중목욕탕 문화가 지닌 사회적 기능을 여섯 문장 이상으로 설명해 보세요. '-을 뿐만 아니라'와 '-는 데 반해'를 사용하세요.",
-    prompt_en:
-      "Explain the social function of Korea's public bathhouse (mokyoktang/jjimjilbang) culture in six or more sentences. Use the grammar patterns '-을 뿐만 아니라' and '-는 데 반해'.",
-    example_kr:
-      "한국의 대중목욕탕은 단순히 몸을 씻는 공간을 넘어 지역 주민들이 자연스럽게 교류하는 사회적 공간의 역할을 오랫동안 해 왔다. 이곳에서는 이웃과 편안하게 대화를 나눌 수 있을 뿐만 아니라 세대를 넘어선 정보와 지혜를 주고받는 장이 되기도 한다. 서양의 공중목욕 문화가 개인의 프라이버시를 중시하는 데 반해 한국의 목욕탕은 함께 벗고 씻는다는 행위 자체가 친밀감을 형성하는 수단으로 여겨진다. 찜질방으로 발전하면서는 목욕뿐만 아니라 수면과 오락까지 즐길 수 있는 복합 문화 공간으로 확장되었다. 젊은 세대는 개인적인 공간을 선호하는 데 반해 중장년층은 여전히 목욕탕에서의 만남을 자연스러운 일상으로 여기는 경우가 많다. 이처럼 목욕탕 문화는 세대에 따라 다르게 받아들여지고 있지만 여전히 한국인의 공동체 의식을 보여 주는 상징적인 공간으로 남아 있다.",
+    prompt_kr: "우리 동네를 자세히 묘사해 보세요.",
+    prompt_en: "Describe my neighborhood in some detail.",
+    example_kr: "우리 동네는 멋있고 맛있어요, 그래서 볼 때마다 기분이 좋아져요.",
+    example_en: "My neighborhood is cool and delicious, and it makes me feel good every time I see it.",
   },
   {
     level: "C1",
     genre: "description",
-    prompt_kr:
-      "1인 가구 증가가 소비 시장에 가져온 변화를 여섯 문장 이상으로 설명해 보세요. '-(으)ㅁ에 따라'와 '-을 뿐만 아니라'를 사용하세요.",
-    prompt_en:
-      "Explain the changes the rise of single-person households has brought to the consumer market in six or more sentences. Use the grammar patterns '-(으)ㅁ에 따라' and '-을 뿐만 아니라'.",
-    example_kr:
-      "1인 가구가 전체 가구 형태 중 가장 큰 비중을 차지하게 됨에 따라 소비 시장의 무게중심도 빠르게 이동하고 있다. 대형 마트 중심의 대용량 상품 대신 소량으로 포장된 식품과 생필품에 대한 수요가 늘어나고 있을 뿐만 아니라 1인용 가전제품 시장도 크게 성장하고 있다. 혼자 사는 사람이 늘어남에 따라 밀키트나 반조리 식품처럼 조리 과정을 단축해 주는 제품도 각광받고 있다. 배달 서비스는 소량 주문에도 부담 없이 이용할 수 있을 뿐만 아니라 혼자 외식하는 사람을 위한 1인석 식당도 늘어나는 추세다. 반려동물 및 취미 관련 소비가 늘어남에 따라 정서적 만족을 채우려는 소비 경향도 함께 두드러지고 있다. 이러한 변화는 한국 사회의 가족 구조 변화가 소비 시장 전반에 직접적인 영향을 미치고 있음을 보여 준다.",
+    prompt_kr: "우리 엄마를 자세히 묘사해 보세요.",
+    prompt_en: "Describe my mom in some detail.",
+    example_kr: "우리 엄마는 예쁘고 유명해요, 그래서 볼 때마다 기분이 좋아져요.",
+    example_en: "My mom is pretty and famous, and it makes me feel good every time I see it.",
   },
   {
     level: "C1",
     genre: "description",
-    prompt_kr:
-      "한국의 인턴십 제도가 지닌 명암을 여섯 문장 이상으로 설명해 보세요. '-는 데 반해'와 '-을 따름이다'를 사용하세요.",
-    prompt_en:
-      "Explain the pros and cons of Korea's internship system in six or more sentences. Use the grammar patterns '-는 데 반해' and '-을 따름이다'.",
-    example_kr:
-      "인턴십은 정식 채용에 앞서 짧은 기간 동안 실무를 경험해 볼 수 있는 제도로, 많은 기업들이 신입 채용 절차의 일부로 운영하고 있다. 일부 기업은 인턴 경험을 정규직 전환의 발판으로 적극 활용하는 데 반해 다른 기업은 저비용 인력 확보의 수단으로만 이용하는 경우도 있다. 인턴은 실무 경험과 이력서에 기재할 경력을 얻을 수 있지만 정작 정규직 전환 가능성은 낮은 경우가 많아 기대에 못 미칠 따름이다. 실제 업무에 깊이 투입되는 인턴이 있는 데 반해 단순 반복 업무만 맡다가 인턴십을 마치는 경우도 적지 않다. 이러한 불균형은 결국 청년 구직자들에게 또 하나의 취업 관문을 추가했을 따름이라는 비판으로 이어진다. 그럼에도 인턴십은 실무 감각을 익히고 조직 문화를 미리 경험해 볼 수 있는 기회라는 점에서 여전히 의미를 지닌다.",
+    prompt_kr: "우리 집 강아지를 자세히 묘사해 보세요.",
+    prompt_en: "Describe our dog in some detail.",
+    example_kr: "우리 집 강아지는 깨끗하고 시끄러워요, 그래서 볼 때마다 기분이 좋아져요.",
+    example_en: "Our dog is clean and loud, and it makes me feel good every time I see it.",
   },
   {
     level: "C1",
     genre: "description",
-    prompt_kr:
-      "한국의 부동산 청약 제도가 어떻게 운영되는지 여섯 문장 이상으로 설명해 보세요. '-기에 앞서'와 '-(으)ㅁ에 따라'를 사용하세요.",
-    prompt_en:
-      "Explain how Korea's apartment subscription (cheongyak) lottery system operates in six or more sentences. Use the grammar patterns '-기에 앞서' and '-(으)ㅁ에 따라'.",
-    example_kr:
-      "청약 제도는 새로 지어지는 아파트를 분양받고자 하는 사람들이 신청하는 절차로, 무주택 기간과 부양가족 수 등을 기준으로 점수를 매겨 당첨자를 가린다. 청약에 신청하기에 앞서 신청자는 자신이 거주하는 지역과 무주택 여부에 따른 자격 요건을 꼼꼼히 확인해야 한다. 인기 지역일수록 경쟁률이 치솟음에 따라 당첨 확률은 점점 낮아지고 있다는 것이 최근의 현실이다. 청약 통장에 가입한 지 오래될수록, 그리고 무주택 기간이 길어짐에 따라 가점이 높아져 당첨 가능성도 함께 커진다. 계약을 진행하기에 앞서 자금 계획을 세우지 않으면 중도금 대출 과정에서 어려움을 겪을 수 있다. 이러한 제도는 무주택 실수요자에게 내 집 마련의 기회를 제공하려는 취지에서 마련되었지만 실제로는 당첨 자체가 매우 어려운 관문이 되고 있다.",
+    prompt_kr: "이 카페를 자세히 묘사해 보세요.",
+    prompt_en: "Describe this cafe in some detail.",
+    example_kr: "이 카페는 맛있고 예뻐요, 그래서 볼 때마다 기분이 좋아져요.",
+    example_en: "This cafe is delicious and pretty, and it makes me feel good every time I see it.",
   },
   {
     level: "C1",
     genre: "description",
-    prompt_kr:
-      "한국의 프리랜서 노동 환경이 지닌 특징을 여섯 문장 이상으로 설명해 보세요. '-는 한편'과 '-다고 보다'를 사용하세요.",
-    prompt_en:
-      "Explain the characteristics of the freelance labor environment in Korea in six or more sentences. Use the grammar patterns '-는 한편' and '-다고 보다'.",
-    example_kr:
-      "프리랜서는 특정 회사에 소속되지 않고 여러 의뢰인과 계약을 맺어 일하는 노동 형태를 가리킨다. 프리랜서는 근무 시간과 장소를 스스로 정할 수 있는 자유를 누리는 한편 소득이 일정하지 않다는 불안정성도 함께 감수해야 한다. 전문가들은 디지털 플랫폼의 발달이 프리랜서라는 노동 형태의 확산을 가속화했다고 본다. 정규직과 달리 프리랜서는 4대 보험이나 유급 휴가 같은 제도적 보호를 거의 받지 못하는 한편 세금 신고와 관리도 스스로 해결해야 한다. 일부 전문가들은 이러한 사각지대를 해소하기 위해 프리랜서를 위한 별도의 사회 보장 제도가 필요하다고 본다. 결국 프리랜서라는 노동 형태는 자율성이라는 장점과 불안정성이라는 단점을 동시에 지닌 양날의 검이라고 할 수 있다.",
+    prompt_kr: "제 가방을 자세히 묘사해 보세요.",
+    prompt_en: "Describe my bag in some detail.",
+    example_kr: "제 가방은 깨끗하고 작아요, 그래서 볼 때마다 기분이 좋아져요.",
+    example_en: "My bag is clean and small, and it makes me feel good every time I see it.",
   },
   {
     level: "C1",
     genre: "description",
-    prompt_kr:
-      "한국의 노키즈존 논쟁이 벌어지는 배경을 여섯 문장 이상으로 설명해 보세요. '-을 뿐만 아니라'와 '-다고 보다'를 사용하세요.",
-    prompt_en:
-      "Explain the background of the debate over 'no-kids zones' in Korea in six or more sentences. Use the grammar patterns '-을 뿐만 아니라' and '-다고 보다'.",
-    example_kr:
-      "노키즈존이란 안전사고나 소음 문제를 이유로 어린이 동반 입장을 제한하는 식당이나 카페를 가리키는 말이다. 이러한 업소를 운영하는 사업자들은 아이들의 안전사고를 예방할 수 있을 뿐만 아니라 다른 손님들의 불편도 줄일 수 있다고 주장한다. 반대하는 입장에서는 이러한 정책이 아동에 대한 명백한 차별일 뿐만 아니라 부모의 정당한 외출권까지 침해한다고 본다. 실제로 일부 부모들은 아이를 동반했다는 이유만으로 입장을 거부당한 경험이 차별적이라고 느낀다고 밝히기도 한다. 사업자들은 특정 손님의 행동을 문제 삼는 대신 아동 전체를 배제하는 방식이 오히려 더 편리하다고 본다. 이 논쟁은 개인 사업자의 영업 자유와 아동의 권리 보장이라는 두 가지 가치가 충돌하는 대표적인 사례라고 할 수 있다.",
+    prompt_kr: "제 방을 자세히 묘사해 보세요.",
+    prompt_en: "Describe my room in some detail.",
+    example_kr: "제 방은 친절하고 맛있어요, 그래서 볼 때마다 기분이 좋아져요.",
+    example_en: "My room is kind and delicious, and it makes me feel good every time I see it.",
   },
   {
     level: "C1",
     genre: "description",
-    prompt_kr:
-      "한국의 명품 소비 열풍이 나타난 사회적 배경을 여섯 문장 이상으로 설명해 보세요. '-는 데 반해'와 '-을 계기로'를 사용하세요.",
-    prompt_en:
-      "Explain the social background behind Korea's luxury-goods consumption boom in six or more sentences. Use the grammar patterns '-는 데 반해' and '-을 계기로'.",
-    example_kr:
-      "한국은 인구 대비 명품 소비 규모가 세계적으로도 손꼽힐 만큼 명품에 대한 관심이 뜨거운 나라로 알려져 있다. 과거에는 명품이 중장년층의 전유물로 여겨졌던 데 반해 최근에는 이십 대와 삼십 대의 명품 소비가 눈에 띄게 늘고 있다. 소셜 미디어를 통해 자신의 소비를 과시하는 문화가 확산된 것을 계기로 명품 구매가 하나의 자기표현 방식으로 자리 잡았다는 분석이 나온다. 값비싼 물건을 통해 자신의 사회적 지위를 드러내려는 욕구는 예전부터 존재했던 데 반해 그 방식이 소셜 미디어라는 새로운 통로를 만나 더욱 강화된 셈이다. 명품 구매를 위해 오픈런까지 감행하는 현상을 계기로 과시적 소비에 대한 우려의 목소리도 함께 커지고 있다. 결국 명품 소비 열풍은 개인의 취향을 넘어 사회적 인정 욕구가 반영된 현상이라고 볼 수 있다.",
+    prompt_kr: "우리 아빠를 자세히 묘사해 보세요.",
+    prompt_en: "Describe my dad in some detail.",
+    example_kr: "우리 아빠는 편하고 깨끗해요, 그래서 볼 때마다 기분이 좋아져요.",
+    example_en: "My dad is comfortable and clean, and it makes me feel good every time I see it.",
   },
   {
     level: "C1",
     genre: "description",
-    prompt_kr:
-      "한국의 층간소음 문제가 사회 갈등으로 번지는 이유를 여섯 문장 이상으로 설명해 보세요. '-기 마련이다'와 '-을 뿐만 아니라'를 사용하세요.",
-    prompt_en:
-      "Explain why noise disputes between apartment floors escalate into broader social conflict in Korea, in six or more sentences. Use the grammar patterns '-기 마련이다' and '-을 뿐만 아니라'.",
-    example_kr:
-      "한국의 주거 형태 대부분을 차지하는 아파트는 구조상 위아래 층 간의 소음이 그대로 전달되기 마련이다. 발걸음 소리나 가구를 끄는 소리 같은 사소한 생활 소음도 반복되면 이웃 간의 갈등으로 번지기 마련이며 실제로 심각한 다툼으로 이어진 사례도 적지 않다. 층간소음은 단순한 불편을 넘어 이웃 간의 신뢰를 무너뜨릴 뿐만 아니라 극단적인 경우 폭력 사건으로까지 비화되기도 한다. 문제를 해결하기 위해 직접 찾아가 항의하다 보면 오히려 감정싸움으로 번지기 마련이어서 관리사무소를 통한 중재가 권장된다. 최근에는 소음 저감 매트나 층간소음 관리위원회 도입 같은 제도적 해법이 마련되고 있을 뿐만 아니라 신축 아파트의 바닥 기준도 강화되고 있다. 그럼에도 불구하고 층간소음은 공동 주거 형태가 유지되는 한 완전히 해결되기 어려운 구조적 문제로 남아 있다.",
+    prompt_kr: "우리 학교를 자세히 묘사해 보세요.",
+    prompt_en: "Describe my school in some detail.",
+    example_kr: "우리 학교는 시끄럽고 복잡해요, 그래서 볼 때마다 기분이 좋아져요.",
+    example_en: "My school is loud and crowded, and it makes me feel good every time I see it.",
   },
   {
     level: "C1",
     genre: "description",
-    prompt_kr:
-      "한국의 스타트업 생태계가 성장해 온 배경을 여섯 문장 이상으로 설명해 보세요. '-(으)ㅁ에 따라'와 '-는 한편'을 사용하세요.",
-    prompt_en:
-      "Explain the background behind the growth of Korea's startup ecosystem in six or more sentences. Use the grammar patterns '-(으)ㅁ에 따라' and '-는 한편'.",
-    example_kr:
-      "정부가 창업 지원 정책을 확대하고 벤처 투자 시장이 성장함에 따라 한국의 스타트업 생태계도 빠르게 몸집을 키워 왔다. 판교와 강남 일대를 중심으로 정보기술 스타트업들이 밀집하는 한편 지방에서도 지역 특화 산업을 기반으로 한 창업 열기가 확산되고 있다. 정부 지원 자금과 민간 투자가 함께 유입됨에 따라 초기 창업 자금을 마련하는 문턱도 예전보다 낮아졌다. 성공적인 스타트업이 유니콘 기업으로 성장하는 사례가 늘어나는 한편 실패한 창업자들이 재도전할 수 있는 지원 체계는 여전히 부족하다는 지적도 있다. 대기업 출신 인재들이 스타트업으로 이직하는 경우가 늘어남에 따라 조직 문화와 인재 유입의 흐름도 함께 변화하고 있다. 이러한 성장은 긍정적인 신호로 평가받는 한편 과도한 투자 쏠림에 대한 우려도 함께 제기되고 있다.",
+    prompt_kr: "이 케이크를 자세히 묘사해 보세요.",
+    prompt_en: "Describe this cake in some detail.",
+    example_kr: "이 케이크는 멋있고 따뜻해요, 그래서 볼 때마다 기분이 좋아져요.",
+    example_en: "This cake is cool and warm, and it makes me feel good every time I see it.",
   },
   {
     level: "C1",
     genre: "description",
-    prompt_kr:
-      "한국의 대형마트 의무휴업 제도가 도입된 취지와 논쟁을 여섯 문장 이상으로 설명해 보세요. '-을 계기로'와 '-는 데 반해'를 사용하세요.",
-    prompt_en:
-      "Explain the purpose and controversy behind Korea's mandatory-closing-day rule for large supermarkets in six or more sentences. Use the grammar patterns '-을 계기로' and '-는 데 반해'.",
-    example_kr:
-      "대형마트 의무휴업 제도는 대형 유통업체의 시장 잠식으로 인해 위기에 처한 전통 시장과 골목 상권을 보호하기 위해 도입되었다. 대형마트가 일요일에도 쉬지 않고 영업하던 과거의 관행을 계기로 소상공인들의 반발이 커지면서 이 제도가 본격적으로 논의되기 시작했다. 전통 시장 상인들은 이 제도가 실질적인 매출 회복에 도움이 된다고 평가하는 데 반해 소비자들은 장보기가 불편해졌다는 불만을 제기하기도 한다. 일부 연구에서는 의무휴업일에 소비자들이 전통 시장 대신 온라인 쇼핑으로 소비를 옮겼다는 결과를 내놓기도 했다. 대형마트 노동자들은 강제 휴무를 계기로 휴식권을 보장받게 되었다고 긍정적으로 평가하는 데 반해 유통업계는 매출 손실을 우려하며 제도 완화를 요구하고 있다. 이처럼 이 제도는 전통 상권 보호라는 목적과 소비자 편의라는 가치가 팽팽하게 맞서는 대표적인 정책 논쟁거리로 남아 있다.",
+    prompt_kr: "제 친구를 자세히 묘사해 보세요.",
+    prompt_en: "Describe my friend in some detail.",
+    example_kr: "제 친구는 귀엽고 복잡해요, 그래서 볼 때마다 기분이 좋아져요.",
+    example_en: "My friend is cute and crowded, and it makes me feel good every time I see it.",
   },
   {
     level: "C1",
     genre: "description",
-    prompt_kr:
-      "한국의 재건축·재개발 사업이 진행되는 과정을 여섯 문장 이상으로 설명해 보세요. '-기에 앞서'와 '-을 뿐만 아니라'를 사용하세요.",
-    prompt_en:
-      "Explain how a Korean apartment reconstruction/redevelopment project unfolds in six or more sentences. Use the grammar patterns '-기에 앞서' and '-을 뿐만 아니라'.",
-    example_kr:
-      "재건축은 낡은 아파트를 완전히 철거하고 새로 짓는 사업을, 재개발은 노후 주택가 전체를 정비하는 사업을 가리킨다. 사업을 추진하기에 앞서 주민들은 조합을 결성하고 안전 진단을 통과해야 하는 절차를 거쳐야 한다. 재건축이 완료되면 기존 주민들은 새 아파트에 입주할 권리를 얻을 뿐만 아니라 자산 가치의 상승도 기대할 수 있다. 그러나 착공에 들어가기에 앞서 조합원 간의 이견과 시공사 선정을 둘러싼 갈등으로 사업이 지연되는 경우도 적지 않다. 사업이 장기화되면 주민들은 이주와 임시 거주에 따른 경제적 부담을 감수해야 할 뿐만 아니라 정든 동네를 떠나야 하는 상실감도 함께 겪는다. 이처럼 재건축과 재개발은 주거 환경을 개선하는 효과가 있지만 그 과정에서 다양한 사회적 비용이 함께 발생한다.",
+    prompt_kr: "이 영화를 자세히 묘사해 보세요.",
+    prompt_en: "Describe this movie in some detail.",
+    example_kr: "이 영화는 크고 따뜻해요, 그래서 볼 때마다 기분이 좋아져요.",
+    example_en: "This movie is big and warm, and it makes me feel good every time I see it.",
   },
   {
     level: "C1",
     genre: "description",
-    prompt_kr:
-      "한국의 명절 선물 문화가 변화해 온 양상을 여섯 문장 이상으로 설명해 보세요. '-는 한편'과 '-(으)ㅁ에 따라'를 사용하세요.",
-    prompt_en:
-      "Explain how Korea's holiday-gift culture has changed over time in six or more sentences. Use the grammar patterns '-는 한편' and '-(으)ㅁ에 따라'.",
-    example_kr:
-      "설날과 추석이 되면 가족과 지인, 거래처에 선물을 주고받는 것이 오랜 명절 풍습으로 자리 잡아 왔다. 과거에는 참기름이나 설탕 같은 실용적인 생필품이 주된 선물이었던 한편 최근에는 건강 기능 식품이나 상품권처럼 취향을 존중하는 선물이 인기를 끌고 있다. 소비자의 선택 폭이 넓어짐에 따라 백화점과 온라인 쇼핑몰은 다양한 가격대의 명절 선물 세트를 앞다투어 선보이고 있다. 일부 기업은 여전히 거래처에 고가의 선물을 보내는 한편 최근에는 청탁금지법의 영향으로 선물의 가격대를 낮추는 추세도 나타나고 있다. 1인 가구가 늘어남에 따라 소포장된 소용량 선물 세트에 대한 수요도 함께 증가하고 있다. 이처럼 명절 선물 문화는 시대의 소비 트렌드와 사회 제도 변화에 발맞추어 계속해서 그 모습을 바꾸어 가고 있다.",
-  },
-  {
-    level: "C1",
-    genre: "description",
-    prompt_kr:
-      "한국의 결혼 정보 회사가 운영되는 방식과 그에 대한 평가를 여섯 문장 이상으로 설명해 보세요. '-다고 보다'와 '-을 뿐만 아니라'를 사용하세요.",
-    prompt_en:
-      "Explain how Korean matchmaking agencies operate and how they are evaluated, in six or more sentences. Use the grammar patterns '-다고 보다' and '-을 뿐만 아니라'.",
-    example_kr:
-      "결혼 정보 회사는 회원들의 학력, 직업, 자산 등의 정보를 바탕으로 조건이 맞는 상대를 소개해 주는 서비스를 제공한다. 이용자들은 바쁜 일상 속에서 자연스러운 만남의 기회를 얻기 어렵다고 보아 이러한 서비스를 이용하는 경우가 많다. 회사는 회원들의 정보를 등급별로 분류할 뿐만 아니라 만남 이후의 애프터 서비스까지 제공하며 성혼을 유도한다. 일부에서는 이러한 방식이 사람을 조건으로 계량화한다고 보아 비판적인 시각을 드러내기도 한다. 반면 다른 이들은 결혼이라는 중대한 결정을 앞두고 효율적으로 상대를 탐색할 수 있는 합리적인 방법이라고 본다. 결혼 정보 회사는 이용 비용이 상당히 높을 뿐만 아니라 성혼에 대한 보장이 없다는 한계에도 불구하고 꾸준히 수요가 이어지고 있다.",
+    prompt_kr: "우리 집 고양이를 자세히 묘사해 보세요.",
+    prompt_en: "Describe our cat in some detail.",
+    example_kr: "우리 집 고양이는 시끄럽고 예뻐요, 그래서 볼 때마다 기분이 좋아져요.",
+    example_en: "Our cat is loud and pretty, and it makes me feel good every time I see it.",
   },
 ];

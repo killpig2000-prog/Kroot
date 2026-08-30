@@ -4,401 +4,313 @@ export const WRITING_C2_JOURNAL: RawPrompt[] = [
   {
     level: "C2",
     genre: "journal",
-    prompt_kr:
-      "잊혀 가는 것에 대한 두려움을 일기로 써 보세요. '-는 법이다'와 '-에 지나지 않는다'를 사용하세요.",
-    prompt_en:
-      "Write a journal entry about the fear of being forgotten. Use '-는 법이다' and '-에 지나지 않는다'.",
-    example_kr:
-      "요즘 부쩍 예전 일들이 흐릿하게 느껴진다. 어제 있었던 대화의 세부는 또렷한데 십 년 전 가장 친했던 친구의 얼굴은 잘 떠오르지 않는다. 기억이란 원래 그렇게 선택적으로 흐려지는 법이라고 스스로를 다독여 보지만, 그 사실이 위로가 되지는 않는다. 결국 내가 남기는 흔적도 언젠가는 누군가의 어렴풋한 인상에 지나지 않게 될 것이다. 그렇다면 지금 이 순간을 붙잡으려는 노력 자체가 부질없는 걸까 하는 생각이 든다. 그래도 오늘 이 페이지에 적어 두는 문장들이 훗날 나에게 작은 실마리 하나쯤은 남겨 줄지도 모른다는 마음으로 계속 써 본다.",
+    prompt_kr: "지난주에 무엇을 했어요? 자세히 써 보세요.",
+    prompt_en: "What did you do last week? Write about it in some detail.",
+    example_kr: "저는 지난주에 커피를 내려서 발표를 준비했어요, 하루 종일 여유롭게 시간을 보냈어요.",
+    example_en: "I brewed coffee last week and prepared a presentation, spending the whole day at a relaxed pace.",
   },
   {
     level: "C2",
     genre: "journal",
-    prompt_kr:
-      "고독과 외로움의 차이에 대해 스스로 정리해 보세요. '-이야말로'와 '-을 전제로'를 사용하세요.",
-    prompt_en:
-      "Write a journal entry sorting out the difference between solitude and loneliness for yourself. Use '-이야말로' and '-을 전제로'.",
-    example_kr:
-      "오늘 오후 혼자 카페에 앉아 있었는데, 외롭지 않았다는 사실이 스스로도 놀라웠다. 예전 같으면 혼자라는 상태 자체가 곧 외로움이라고 여겼을 텐데, 오늘은 오히려 편안했다. 아마 지금의 나는 누군가와 연결될 수 있다는 확신을 전제로 혼자 있는 시간을 즐기고 있는 것 같다. 반대로 진짜 외로움은 주위에 사람이 있어도 아무도 나를 이해하지 못한다는 확신에서 온다는 걸 이제야 알겠다. 그러니 고독을 견디는 힘이야말로 진짜 관계를 알아보는 눈을 길러 주는 것 같다. 혼자 있는 시간을 두려워하지 않게 된 오늘의 나를 조금 기특하게 여기기로 한다.",
+    prompt_kr: "아까 무엇을 했어요? 자세히 써 보세요.",
+    prompt_en: "What did you do a little while ago? Write about it in some detail.",
+    example_kr: "저는 아까 고양이 밥을 줘서 방을 정리했어요, 하루 종일 여유롭게 시간을 보냈어요.",
+    example_en: "I fed the cat a little while ago and tidied my room, spending the whole day at a relaxed pace.",
   },
   {
     level: "C2",
     genre: "journal",
-    prompt_kr:
-      "여러 번 이사를 다닌 뒤 '집'이라는 말의 의미가 어떻게 달라졌는지 써 보세요. '-는 셈이다'와 '-을 넘어서다'를 사용하세요.",
-    prompt_en:
-      "Write about how the meaning of 'home' has changed for you after moving many times. Use '-는 셈이다' and '-을 넘어서다'.",
-    example_kr:
-      "이번이 벌써 다섯 번째 이사다. 처음에는 새 주소로 옮길 때마다 뿌리를 통째로 뽑아 옮기는 셈이라고 느껴서 마음이 힘들었다. 그런데 언제부턴가 집이라는 개념이 특정한 건물의 범위를 넘어서기 시작했다. 지금 나에게 집은 익숙한 벽지나 창밖 풍경이 아니라, 짐을 풀자마자 켜는 스탠드 조명과 늘 같은 자리에 두는 머그잔 같은 것들이다. 어디로 가든 그 몇 가지만 있으면 낯선 방도 금세 나의 공간이 된다. 결국 집을 짓는 것은 장소가 아니라 반복되는 작은 습관들이라는 사실을 이사를 거듭하며 배우고 있다.",
+    prompt_kr: "지난달에 무엇을 했어요? 자세히 써 보세요.",
+    prompt_en: "What did you do last month? Write about it in some detail.",
+    example_kr: "저는 지난달에 부모님과 통화해서 영화관에 갔어요, 하루 종일 여유롭게 시간을 보냈어요.",
+    example_en: "I talked with my parents on the phone last month and went to the movie theater, spending the whole day at a relaxed pace.",
   },
   {
     level: "C2",
     genre: "journal",
-    prompt_kr:
-      "과거의 진로 선택을 후회하는 마음을 솔직하게 써 보세요. '-라 할지라도'와 '-는 데 있다'를 사용하세요.",
-    prompt_en:
-      "Write honestly about regretting a past career choice. Use '-라 할지라도' and '-는 데 있다'.",
-    example_kr:
-      "오늘 우연히 옛 동창의 소식을 들었다. 내가 포기했던 그 길을 끝까지 걸어간 사람의 이야기를 들으니 마음이 복잡했다. 물론 지금의 안정된 자리를 얻기 위해 나름의 이유로 내린 선택이었다 할지라도, 가끔은 그날의 결정이 두고두고 아쉽다. 문제는 그 길을 갔어야 했다는 확신이 아니라, 그때 충분히 고민하지 않고 두려움에 떠밀려 결정했다는 데 있다. 결과가 좋았을지 나빴을지는 이제 와서 알 수 없는 일이다. 다만 다음번에는 적어도 후회가 남지 않을 만큼은 스스로에게 묻고 답한 뒤 선택하고 싶다.",
+    prompt_kr: "어제 무엇을 했어요? 자세히 써 보세요.",
+    prompt_en: "What did you do yesterday? Write about it in some detail.",
+    example_kr: "저는 어제 이메일을 보내서 사진을 찍었어요, 하루 종일 여유롭게 시간을 보냈어요.",
+    example_en: "I sent an email yesterday and took photos, spending the whole day at a relaxed pace.",
   },
   {
     level: "C2",
     genre: "journal",
-    prompt_kr:
-      "나이 들어가는 부모님을 지켜보는 마음을 써 보세요. '-기 마련이다'와 '-을 감안하더라도'를 사용하세요.",
-    prompt_en:
-      "Write about your feelings watching your parents grow old. Use '-기 마련이다' and '-을 감안하더라도'.",
-    example_kr:
-      "어머니와 통화를 하다가 예전보다 목소리에 힘이 없다는 걸 느꼈다. 누구나 나이가 들면 기력이 조금씩 줄어들기 마련이라는 걸 머리로는 알고 있었지만, 막상 부모의 변화로 마주하니 다른 무게로 다가온다. 여전히 정정하시다는 것을 감안하더라도, 예전처럼 모든 일을 혼자 척척 해내시던 모습은 조금씩 옅어지고 있다. 나는 여전히 부모님 앞에서는 어린아이 같은 기분이 드는데, 이제는 내가 돌봐 드려야 할 순간들이 늘어난다는 사실이 낯설다. 시간이 거꾸로 흐르지 않는다는 걸 알면서도 자꾸 붙잡고 싶어진다. 오늘은 평소보다 조금 더 길게 안부를 물어야겠다.",
+    prompt_kr: "작년에 무엇을 했어요? 자세히 써 보세요.",
+    prompt_en: "What did you do last year? Write about it in some detail.",
+    example_kr: "저는 작년에 사진을 찍어서 운동을 했어요, 하루 종일 여유롭게 시간을 보냈어요.",
+    example_en: "I took photos last year and exercised, spending the whole day at a relaxed pace.",
   },
   {
     level: "C2",
     genre: "journal",
-    prompt_kr:
-      "반복되는 일상이 주는 안정감과 지루함 사이의 갈등을 써 보세요. '-는 한편'과 '-에 지나지 않는다'를 사용하세요.",
-    prompt_en:
-      "Write about the conflict between the comfort and the tedium of routine. Use '-는 한편' and '-에 지나지 않는다'.",
-    example_kr:
-      "요즘의 하루하루는 놀라울 정도로 비슷하다. 같은 시간에 일어나 같은 길로 출근하고 같은 자리에서 커피를 마신다. 이 반복이 마음을 든든하게 지탱해 주는 한편, 문득 이 삶이 그저 정해진 순서를 따라가는 관성에 지나지 않는 것은 아닐까 하는 불안도 함께 찾아온다. 안정은 분명 소중한 것인데, 안정에 너무 익숙해지면 무언가를 새로 시도할 용기마저 무뎌지는 것 같다. 그렇다고 지금의 균형을 무작정 흔들고 싶지는 않다. 다만 이 반복 속에서도 작은 변화 하나쯤은 스스로에게 허락해도 되지 않을까 생각해 본다.",
+    prompt_kr: "지난주에 무엇을 했어요? 자세히 써 보세요.",
+    prompt_en: "What did you do last week? Write about it in some detail.",
+    example_kr: "저는 지난주에 이메일을 보내서 숙제를 했어요, 하루 종일 여유롭게 시간을 보냈어요.",
+    example_en: "I sent an email last week and did homework, spending the whole day at a relaxed pace.",
   },
   {
     level: "C2",
     genre: "journal",
-    prompt_kr:
-      "잊었다고 생각했던 슬픔이 갑자기 되살아난 순간을 써 보세요. '-을 계기로 삼아'와 '-는 것에 불과하다'를 사용하세요.",
-    prompt_en:
-      "Write about a moment when grief you thought you had let go of suddenly resurfaced. Use '-을 계기로 삼아' and '-는 것에 불과하다'.",
-    example_kr:
-      "오늘 라디오에서 흘러나온 노래 한 소절을 계기로 삼아 몇 년 전 헤어진 사람의 얼굴이 갑자기 떠올랐다. 이제는 완전히 정리했다고 믿었는데, 그 믿음이란 게 사실은 감정을 눌러 놓은 것에 지나지 않았나 보다. 놀랍게도 슬픔은 사라진 게 아니라 그저 조용히 자리를 옮겨 앉아 있었던 모양이다. 예전만큼 아프지는 않지만, 그날의 기억이 아직 나에게 어떤 힘을 가지고 있다는 사실이 조금 서글프다. 그래도 이렇게 갑자기 찾아온 감정을 억지로 밀어내지 않고 잠시 앉아 있게 두기로 했다. 아마 이것도 애도의 한 방식일 것이다.",
+    prompt_kr: "아까 무엇을 했어요? 자세히 써 보세요.",
+    prompt_en: "What did you do a little while ago? Write about it in some detail.",
+    example_kr: "저는 아까 시장에 가서 영화를 봤어요, 하루 종일 여유롭게 시간을 보냈어요.",
+    example_en: "I went to the market a little while ago and watched a movie, spending the whole day at a relaxed pace.",
   },
   {
     level: "C2",
     genre: "journal",
-    prompt_kr:
-      "되고 싶었던 사람과 지금의 나 사이의 간극을 써 보세요. '-을 전제로'와 '-지 않을 수 없다'를 사용하세요.",
-    prompt_en:
-      "Write about the gap between the person you wanted to become and who you are now. Use '-을 전제로' and '-지 않을 수 없다'.",
-    example_kr:
-      "스무 살의 나는 지금과는 전혀 다른 삶을 그리고 있었다. 그때의 계획은 모든 것이 순조롭게 풀린다는 것을 전제로 세워진 것이었고, 현실은 당연히 그렇게 흘러가지 않았다. 지금의 나를 그 시절의 기준에 비추어 보면 실패한 것처럼 느껴질 때가 있다는 걸 인정하지 않을 수 없다. 그러나 곰곰이 생각해 보면 그때는 몰랐던 것들을 지금은 알고 있고, 그때는 겁냈던 일들을 지금은 조금 더 담담히 마주할 수 있다. 어쩌면 되고 싶었던 사람이 아니라 다른 방향으로 자란 사람이 되었을 뿐일지도 모른다. 오늘은 그 다름을 실패가 아니라 변화로 불러 주고 싶다.",
+    prompt_kr: "지난달에 무엇을 했어요? 자세히 써 보세요.",
+    prompt_en: "What did you do last month? Write about it in some detail.",
+    example_kr: "저는 지난달에 요리를 해서 영화를 봤어요, 하루 종일 여유롭게 시간을 보냈어요.",
+    example_en: "I cooked last month and watched a movie, spending the whole day at a relaxed pace.",
   },
   {
     level: "C2",
     genre: "journal",
-    prompt_kr:
-      "오래된 연인이나 부부 사이에 찾아온 침묵의 의미를 생각해 보세요. '-으로 환원되다'와 '-이야말로'를 사용하세요.",
-    prompt_en:
-      "Reflect on the meaning of silence that has settled into a long relationship. Use '-으로 환원되다' and '-이야말로'.",
-    example_kr:
-      "요즘 남편과 나 사이에는 예전만큼 말이 많지 않다. 처음에는 그 조용함이 걱정스러워서 우리 사이에 문제가 생긴 건 아닌지 자꾸 확인하고 싶었다. 그러나 모든 침묵이 소원함으로 환원되는 것은 아니라는 걸 요즘 조금씩 깨닫는다. 굳이 말하지 않아도 상대가 오늘 어떤 하루를 보냈는지 짐작할 수 있는 것, 그 편안한 침묵이야말로 오랜 시간이 쌓여야만 얻을 수 있는 신뢰의 증거인지도 모른다. 물론 가끔은 서로의 마음을 더 자세히 물어야 할 순간도 있을 것이다. 그래도 오늘 밤 함께 앉아 있던 조용한 시간이 나쁘지 않았다.",
+    prompt_kr: "어제 무엇을 했어요? 자세히 써 보세요.",
+    prompt_en: "What did you do yesterday? Write about it in some detail.",
+    example_kr: "저는 어제 이메일을 보내서 커피를 내렸어요, 하루 종일 여유롭게 시간을 보냈어요.",
+    example_en: "I sent an email yesterday and brewed coffee, spending the whole day at a relaxed pace.",
   },
   {
     level: "C2",
     genre: "journal",
-    prompt_kr:
-      "형제자매의 성공을 보며 느낀 복잡한 감정을 정리해 보세요. '-을 막론하고'와 '-에 다름 아니다'를 사용하세요.",
-    prompt_en:
-      "Write about the complicated feelings you had watching a sibling's success. Use '-을 막론하고' and '-에 다름 아니다'.",
-    example_kr:
-      "동생이 승진했다는 소식을 듣고 진심으로 축하해 주었지만, 집에 돌아오는 길에는 이상하게 마음이 무거웠다. 형제자매 사이를 막론하고 이런 감정은 부끄러운 것이라고 배워 왔기에 스스로도 이 마음을 인정하기가 쉽지 않았다. 곰곰이 생각해 보니 이 감정은 동생을 향한 미움이 아니라 나 자신에 대한 조바심에 다름 아니었다. 동생의 성취가 내 인생의 속도를 비추는 거울처럼 느껴졌던 것이다. 그 사실을 알아차리고 나니 마음이 조금 가벼워졌다. 축하하는 마음과 조바심은 얼마든지 동시에 존재할 수 있는 감정이라는 걸 오늘 배운다.",
+    prompt_kr: "작년에 무엇을 했어요? 자세히 써 보세요.",
+    prompt_en: "What did you do last year? Write about it in some detail.",
+    example_kr: "저는 작년에 동생을 도와줘서 운동을 했어요, 하루 종일 여유롭게 시간을 보냈어요.",
+    example_en: "I helped my younger sibling last year and exercised, spending the whole day at a relaxed pace.",
   },
   {
     level: "C2",
     genre: "journal",
-    prompt_kr:
-      "평범한 화요일이 주는 뜻밖의 평온함을 써 보세요. '-기 마련이다'와 '-을 넘어서다'를 사용하세요.",
-    prompt_en:
-      "Write about the unexpected peace of an ordinary Tuesday. Use '-기 마련이다' and '-을 넘어서다'.",
-    example_kr:
-      "특별한 일이 하나도 없는 화요일이었다. 그런데도 저녁에 창밖을 보며 이상하게 마음이 편안했다. 인생은 대체로 특별한 사건들로 기억되기 마련인데, 오늘 같은 날은 아무 이야깃거리도 남기지 않을 것이다. 그러나 이런 평범함이야말로 특별한 사건의 배경을 넘어서서 삶을 실제로 지탱하는 시간이 아닐까 싶다. 반복되는 저녁 식사와 익숙한 산책길이 없다면 큰 사건들도 설 자리를 잃을 것이다. 오늘의 아무 일 없음을 오래 기억하고 싶어 이렇게 적어 둔다.",
+    prompt_kr: "지난주에 무엇을 했어요? 자세히 써 보세요.",
+    prompt_en: "What did you do last week? Write about it in some detail.",
+    example_kr: "저는 지난주에 늦게까지 일해서 시장에 갔어요, 하루 종일 여유롭게 시간을 보냈어요.",
+    example_en: "I worked late last week and went to the market, spending the whole day at a relaxed pace.",
   },
   {
     level: "C2",
     genre: "journal",
-    prompt_kr:
-      "연락이 끊긴 옛 친구를 떠올리며 든 생각을 써 보세요. '-는 법이다'와 '-을 계기로 삼아'를 사용하세요.",
-    prompt_en:
-      "Write about the thoughts that came to mind remembering an old friend you've lost touch with. Use '-는 법이다' and '-을 계기로 삼아'.",
-    example_kr:
-      "오늘 옛날 사진을 정리하다가 몇 년째 연락이 끊긴 친구의 사진을 발견했다. 한때는 매일 붙어 다녔는데 지금은 서로 어디서 사는지도 모른다. 관계는 특별한 다툼이 없어도 자연스레 멀어지는 법이라는 걸 이 사진 한 장을 계기로 삼아 새삼 실감한다. 누구의 잘못도 아닌데 이렇게 흐릿해질 수 있다는 사실이 조금 서글프다. 연락을 해 볼까 하다가도 어색할까 봐 망설이게 된다. 그래도 오늘만큼은 그때의 우정이 진짜였다는 사실만은 부정하지 않기로 한다.",
+    prompt_kr: "아까 무엇을 했어요? 자세히 써 보세요.",
+    prompt_en: "What did you do a little while ago? Write about it in some detail.",
+    example_kr: "저는 아까 도서관에 가서 요리를 했어요, 하루 종일 여유롭게 시간을 보냈어요.",
+    example_en: "I went to the library a little while ago and cooked, spending the whole day at a relaxed pace.",
   },
   {
     level: "C2",
     genre: "journal",
-    prompt_kr:
-      "하지 못한 사과가 마음속에 남긴 무게에 대해 써 보세요. '-을 대가로 하여'와 '-는 셈이다'를 사용하세요.",
-    prompt_en:
-      "Write about the weight an unspoken apology has left in your heart. Use '-을 대가로 하여' and '-는 셈이다'.",
-    example_kr:
-      "몇 년 전 상처를 준 친구에게 결국 사과하지 못했다. 자존심을 지키는 것을 대가로 하여 그 관계를 잃어버린 셈이다. 처음에는 시간이 지나면 잊힐 줄 알았는데, 오히려 문득문득 그 장면이 떠오른다. 사과 한마디가 뭐라고 그렇게 어려웠을까 지금도 이해가 잘 안 된다. 아마 자존심보다 무서웠던 건 내 잘못을 인정하는 그 순간이었던 것 같다. 이제라도 늦지 않았다면 짧은 메시지 하나쯤은 보내 볼 용기를 내 보고 싶다.",
+    prompt_kr: "지난달에 무엇을 했어요? 자세히 써 보세요.",
+    prompt_en: "What did you do last month? Write about it in some detail.",
+    example_kr: "저는 지난달에 공원에서 산책해서 이메일을 보냈어요, 하루 종일 여유롭게 시간을 보냈어요.",
+    example_en: "I walked in the park last month and sent an email, spending the whole day at a relaxed pace.",
   },
   {
     level: "C2",
     genre: "journal",
-    prompt_kr:
-      "어릴 적 좋아하던 취미를 다시 시작한 경험을 써 보세요. '-이야말로'와 '-라 할지라도'를 사용하세요.",
-    prompt_en:
-      "Write about rediscovering a childhood hobby. Use '-이야말로' and '-라 할지라도'.",
-    example_kr:
-      "십 년도 더 넘게 손을 놓았던 그림을 오랜만에 다시 그려 보았다. 서툰 손놀림이라 할지라도 붓을 잡는 순간 어릴 적 그 감각이 그대로 되살아났다. 어른이 되고 나서 잊고 지냈던 이 즐거움이야말로 진짜 나를 다시 만나게 해 주는 통로였던 것 같다. 잘하고 못하고를 떠나 그저 색을 칠하는 시간이 이렇게 마음을 편안하게 해 줄 줄은 몰랐다. 앞으로는 완벽하게 그리려는 부담 없이 그냥 즐기면서 다시 해 봐야겠다. 오늘 다시 시작한 이 작은 습관을 오래 이어 가고 싶다.",
+    prompt_kr: "어제 무엇을 했어요? 자세히 써 보세요.",
+    prompt_en: "What did you do yesterday? Write about it in some detail.",
+    example_kr: "저는 어제 요리를 해서 빨래를 했어요, 하루 종일 여유롭게 시간을 보냈어요.",
+    example_en: "I cooked yesterday and did laundry, spending the whole day at a relaxed pace.",
   },
   {
     level: "C2",
     genre: "journal",
-    prompt_kr:
-      "누군가에게 진짜 나를 보여 주는 것에 대한 두려움을 써 보세요. '-을 전제로'와 '-에 지나지 않는다'를 사용하세요.",
-    prompt_en:
-      "Write about the fear of truly letting someone see you. Use '-을 전제로' and '-에 지나지 않는다'.",
-    example_kr:
-      "친한 사람 앞에서도 가끔 진짜 속마음을 감추고 싶어질 때가 있다. 지금까지의 관계는 대체로 내가 밝고 문제없는 사람이라는 것을 전제로 유지되어 온 것 같다는 생각이 든다. 그래서 힘든 이야기를 꺼내면 그 관계가 흔들릴까 봐 겁이 난다. 하지만 그렇게 계속 조심하다 보면 결국 내가 보여 주는 모습은 진짜 나의 얇은 겉면에 지나지 않게 될 것이다. 진짜 친밀함은 완벽한 모습이 아니라 약한 모습을 보여도 괜찮다는 확신에서 시작되는 게 아닐까. 언젠가는 조금 더 용기를 내 보고 싶다.",
+    prompt_kr: "작년에 무엇을 했어요? 자세히 써 보세요.",
+    prompt_en: "What did you do last year? Write about it in some detail.",
+    example_kr: "저는 작년에 과일을 사서 발표를 준비했어요, 하루 종일 여유롭게 시간을 보냈어요.",
+    example_en: "I bought fruit last year and prepared a presentation, spending the whole day at a relaxed pace.",
   },
   {
     level: "C2",
     genre: "journal",
-    prompt_kr:
-      "이루지 못한 꿈과 화해하게 된 계기를 써 보세요. '-을 명분으로'와 '-는 데 있다'를 사용하세요.",
-    prompt_en:
-      "Write about the moment you made peace with an unfulfilled dream. Use '-을 명분으로' and '-는 데 있다'.",
-    example_kr:
-      "한때는 작가가 되는 것이 인생의 유일한 목표였다. 현실적인 이유를 명분으로 그 꿈을 접었지만, 마음 한구석에는 늘 미련이 남아 있었다. 그런데 최근 지인이 취미로 쓴 짧은 글을 읽고 나서 생각이 조금 바뀌었다. 꿈을 이루는 방법은 반드시 그것을 직업으로 삼는 데 있는 것만은 아니라는 걸 깨달았다. 퇴근 후 짧게라도 글을 쓰는 지금의 삶도 그 꿈과 완전히 멀어진 것은 아니다. 이루지 못한 꿈이 아니라 형태를 바꾼 꿈이라고 부르기로 한다.",
+    prompt_kr: "지난주에 무엇을 했어요? 자세히 써 보세요.",
+    prompt_en: "What did you do last week? Write about it in some detail.",
+    example_kr: "저는 지난주에 사진을 찍어서 책을 읽었어요, 하루 종일 여유롭게 시간을 보냈어요.",
+    example_en: "I took photos last week and read a book, spending the whole day at a relaxed pace.",
   },
   {
     level: "C2",
     genre: "journal",
-    prompt_kr:
-      "자녀가 독립한 뒤 찾아온 빈 둥지의 감정을 써 보세요. '-기 마련이다'와 '-을 넘어서다'를 사용하세요.",
-    prompt_en:
-      "Write about the feelings that came after your child moved out. Use '-기 마련이다' and '-을 넘어서다'.",
-    example_kr:
-      "딸이 독립한 지 한 달이 넘었는데도 아직 그 방 앞을 지날 때마다 마음이 이상하다. 자식은 언젠가 품을 떠나기 마련이라는 걸 알고 있었지만 막상 닥치니 준비가 덜 된 기분이다. 이 허전함은 단순한 그리움을 넘어서서 나 자신이 누구인지를 다시 묻게 만드는 감정 같다. 오랫동안 나의 역할은 부모라는 이름 안에 있었는데, 이제는 그 역할이 조금 헐거워졌다. 서운함과 동시에 딸이 잘 자라 주었다는 뿌듯함도 함께 있다. 이제부터는 나 자신을 위한 시간을 다시 채워 나가야겠다.",
+    prompt_kr: "아까 무엇을 했어요? 자세히 써 보세요.",
+    prompt_en: "What did you do a little while ago? Write about it in some detail.",
+    example_kr: "저는 아까 시장에 가서 사진을 찍었어요, 하루 종일 여유롭게 시간을 보냈어요.",
+    example_en: "I went to the market a little while ago and took photos, spending the whole day at a relaxed pace.",
   },
   {
     level: "C2",
     genre: "journal",
-    prompt_kr:
-      "오랫동안 믿어 온 신념이 흔들린 순간을 써 보세요. '-라 할지라도'와 '-는 셈이다'를 사용하세요.",
-    prompt_en:
-      "Write about a moment when a long-held belief of yours was shaken. Use '-라 할지라도' and '-는 셈이다'.",
-    example_kr:
-      "노력하면 반드시 보상받는다고 오래도록 믿어 왔는데, 최근 일어난 일들을 보며 그 믿음이 흔들리고 있다. 세상이 늘 공정하지 않다 할지라도 지금까지는 애써 그 사실을 외면하고 있었던 것 같다. 이 믿음을 놓는다는 건 곧 지금까지 나를 버티게 해 준 힘을 하나 잃는 셈이라 두렵기도 하다. 그렇다고 노력이 무의미하다고 결론짓고 싶지는 않다. 다만 결과를 보상으로만 계산하는 태도에서는 조금 벗어나고 싶다. 노력의 의미를 다르게 정의하는 시기가 온 것 같다.",
+    prompt_kr: "지난달에 무엇을 했어요? 자세히 써 보세요.",
+    prompt_en: "What did you do last month? Write about it in some detail.",
+    example_kr: "저는 지난달에 텔레비전을 봐서 영화관에 갔어요, 하루 종일 여유롭게 시간을 보냈어요.",
+    example_en: "I watched TV last month and went to the movie theater, spending the whole day at a relaxed pace.",
   },
   {
     level: "C2",
     genre: "journal",
-    prompt_kr:
-      "힘든 하루 끝에 내리는 비가 위로가 되었던 순간을 써 보세요. '-을 계기로 삼아'와 '-이야말로'를 사용하세요.",
-    prompt_en:
-      "Write about a moment when rain on a hard day brought unexpected comfort. Use '-을 계기로 삼아' and '-이야말로'.",
-    example_kr:
-      "오늘 회사에서 유난히 힘든 하루를 보내고 나오는데 갑자기 비가 쏟아졌다. 우산이 없어 짜증이 날 법도 한데 이상하게 마음이 조금 놓였다. 갑작스러운 비를 계기로 삼아 그동안 참아 왔던 감정이 조금씩 흘러나오는 것 같았다. 빗소리에 잠시 걸음을 멈추고 서 있던 그 몇 분이야말로 오늘 하루 중 유일하게 나 자신으로 돌아온 시간이었다. 젖은 옷은 갈아입으면 그만이지만 그 순간의 위안은 오래 남을 것 같다. 가끔은 이런 사소한 우연이 하루를 구해 준다.",
+    prompt_kr: "어제 무엇을 했어요? 자세히 써 보세요.",
+    prompt_en: "What did you do yesterday? Write about it in some detail.",
+    example_kr: "저는 어제 부모님과 통화해서 삼겹살을 먹었어요, 하루 종일 여유롭게 시간을 보냈어요.",
+    example_en: "I talked with my parents on the phone yesterday and ate samgyeopsal, spending the whole day at a relaxed pace.",
   },
   {
     level: "C2",
     genre: "journal",
-    prompt_kr:
-      "어느 순간 부모님을 닮아 가고 있다는 걸 깨달은 경험을 써 보세요. '-을 감안하더라도'와 '-에 다름 아니다'를 사용하세요.",
-    prompt_en:
-      "Write about realizing you've become like one of your parents. Use '-을 감안하더라도' and '-에 다름 아니다'.",
-    example_kr:
-      "오늘 무심코 한 잔소리가 어릴 적 아버지가 하시던 말투와 똑같아서 스스로 놀랐다. 나이가 들면 부모를 닮아 간다는 말을 익히 들어 왔음을 감안하더라도, 이렇게 갑작스럽게 그 순간을 마주하니 묘한 기분이었다. 예전에는 그 말투가 싫어서 절대 닮지 않겠다고 다짐했었는데, 지금 보니 그건 아버지를 향한 반감이 아니라 나 자신에 대한 두려움에 다름 아니었던 것 같다. 닮고 싶지 않았던 부분과 닮고 싶었던 부분이 뒤섞여 지금의 내가 되어 있다. 이제는 그 사실을 부정하기보다 있는 그대로 받아들이려 한다. 나도 언젠가 내 아이에게 어떤 말투로 기억될지 문득 궁금해진다.",
+    prompt_kr: "작년에 무엇을 했어요? 자세히 써 보세요.",
+    prompt_en: "What did you do last year? Write about it in some detail.",
+    example_kr: "저는 작년에 영화를 봐서 과일을 샀어요, 하루 종일 여유롭게 시간을 보냈어요.",
+    example_en: "I watched a movie last year and bought fruit, spending the whole day at a relaxed pace.",
   },
   {
     level: "C2",
     genre: "journal",
-    prompt_kr:
-      "성공했지만 오히려 외로움을 느꼈던 경험을 써 보세요. '-는 것에 불과하다'와 '-을 전제로'를 사용하세요.",
-    prompt_en:
-      "Write about a time you achieved success but felt more alone because of it. Use '-는 것에 불과하다' and '-을 전제로'.",
-    example_kr:
-      "오랫동안 꿈꾸던 자리에 올랐는데 막상 축하 인사를 받는 동안 마음 한구석은 허전했다. 이 자리를 위해 그동안 얼마나 많은 관계를 뒤로 미뤄 왔는지 새삼 깨달았기 때문이다. 사람들의 축하는 대체로 결과에 대한 반응에 지나지 않는 것 같고, 그 과정에서 내가 놓친 것들을 아는 사람은 아무도 없다. 성공은 종종 주변 사람들과의 시간을 희생하는 것을 전제로 이루어진다는 걸 이제야 실감한다. 축하를 받을수록 오히려 옆에 아무도 없다는 느낌이 커지는 게 이상하다. 다음번에는 성취와 관계 사이의 균형을 조금 더 신경 써야겠다.",
+    prompt_kr: "지난주에 무엇을 했어요? 자세히 써 보세요.",
+    prompt_en: "What did you do last week? Write about it in some detail.",
+    example_kr: "저는 지난주에 강아지를 산책시켜서 쇼핑을 했어요, 하루 종일 여유롭게 시간을 보냈어요.",
+    example_en: "I walked the dog last week and went shopping, spending the whole day at a relaxed pace.",
   },
   {
     level: "C2",
     genre: "journal",
-    prompt_kr:
-      "오래 품고 있던 원망을 내려놓은 순간을 써 보세요. '-을 무릅쓰고'와 '-는 법이다'를 사용하세요.",
-    prompt_en:
-      "Write about the moment you finally let go of a grudge you had held for a long time. Use '-을 무릅쓰고' and '-는 법이다'.",
-    example_kr:
-      "몇 년 동안 마음속에 품고 있던 원망을 오늘 처음으로 내려놓았다. 어색해질 위험을 무릅쓰고 그 사람에게 짧게라도 마음을 전한 게 계기가 되었다. 원망은 시간이 지나면 저절로 사라질 줄 알았는데, 사실 그런 감정은 표현하지 않으면 오히려 안에서 곪는 법이다. 막상 말하고 나니 별것 아니었나 싶을 정도로 마음이 가벼워졌다. 상대의 반응이 어떠했든 그 순간 나 자신을 그 감정에서 풀어 준 것 같아 다행이다. 앞으로는 마음에 담아 두기보다 더 일찍 표현하는 연습을 해야겠다.",
+    prompt_kr: "아까 무엇을 했어요? 자세히 써 보세요.",
+    prompt_en: "What did you do a little while ago? Write about it in some detail.",
+    example_kr: "저는 아까 커피숍에 가서 늦게까지 일했어요, 하루 종일 여유롭게 시간을 보냈어요.",
+    example_en: "I went to a coffee shop a little while ago and worked late, spending the whole day at a relaxed pace.",
   },
   {
     level: "C2",
     genre: "journal",
-    prompt_kr:
-      "힘들었던 과거가 그리워지는 이상한 향수를 써 보세요. '-지 않을 수 없다'와 '-을 넘어서다'를 사용하세요.",
-    prompt_en:
-      "Write about the strange nostalgia you feel for a difficult period of your past. Use '-지 않을 수 없다' and '-을 넘어서다'.",
-    example_kr:
-      "요즘 이상하게 예전 자취방 시절이 자꾸 그리워진다. 그때는 매달 월세 걱정에 시달리던 힘든 시기였는데도 문득 그리워하지 않을 수 없다. 이 그리움은 그 시절의 힘겨움을 미화하는 것을 넘어서서, 그때 함께했던 사람들과 젊은 패기를 그리워하는 것에 가깝다는 걸 깨닫는다. 지금이 훨씬 안정적인데도 왜 그 불안했던 시절이 더 생생하게 느껴지는지 스스로도 신기하다. 아마 힘들었던 만큼 모든 감정이 더 선명하게 새겨졌기 때문일 것이다. 지금의 안정도 언젠가는 이렇게 그리워질 날이 오겠지.",
+    prompt_kr: "지난달에 무엇을 했어요? 자세히 써 보세요.",
+    prompt_en: "What did you do last month? Write about it in some detail.",
+    example_kr: "저는 지난달에 영화관에 가서 도서관에 갔어요, 하루 종일 여유롭게 시간을 보냈어요.",
+    example_en: "I went to the movie theater last month and went to the library, spending the whole day at a relaxed pace.",
   },
   {
     level: "C2",
     genre: "journal",
-    prompt_kr:
-      "열정보다 안정을 택한 선택을 돌아보며 써 보세요. '-을 대가로 하여'와 '-이야말로'를 사용하세요.",
-    prompt_en:
-      "Write reflecting on the choice of stability over passion. Use '-을 대가로 하여' and '-이야말로'.",
-    example_kr:
-      "몇 년 전 열정을 좇던 프로젝트를 접고 안정적인 직장을 택했다. 그때는 확신을 대가로 하여 안전을 얻었다고 생각했는데, 지금 돌아보면 그 판단이 완전히 틀리지는 않았던 것 같다. 매달 들어오는 월급이 주는 안정감이야말로 다른 삶의 영역에서 조금씩 모험을 시도할 수 있는 여유를 준다. 물론 가끔은 그때 포기한 열정이 아쉬워질 때도 있다. 그러나 열정만으로는 채울 수 없는 것들이 삶에는 분명 존재한다는 것도 배웠다. 안정과 열정 사이에서 균형을 찾아가는 이 과정 자체가 어른이 되어 가는 일인 것 같다.",
+    prompt_kr: "어제 무엇을 했어요? 자세히 써 보세요.",
+    prompt_en: "What did you do yesterday? Write about it in some detail.",
+    example_kr: "저는 어제 한국어를 공부해서 화분에 물을 줬어요, 하루 종일 여유롭게 시간을 보냈어요.",
+    example_en: "I studied Korean yesterday and watered the plants, spending the whole day at a relaxed pace.",
   },
   {
     level: "C2",
     genre: "journal",
-    prompt_kr:
-      "아이가 너무 빨리 자라는 모습을 보며 드는 아쉬움을 써 보세요. '-기 마련이다'와 '-는 셈이다'를 사용하세요.",
-    prompt_en:
-      "Write about the wistfulness of watching your child grow up too fast. Use '-기 마련이다' and '-는 셈이다'.",
-    example_kr:
-      "오늘 아이의 신발이 또 작아졌다는 걸 알았다. 아이는 부모가 눈치채기도 전에 훌쩍 자라기 마련이라지만 이렇게 빠를 줄은 몰랐다. 사진첩을 넘기다 보면 매년 완전히 다른 아이를 만나는 셈이다. 지금 이 순간의 모습도 곧 사진 속 과거가 될 거라 생각하니 마음이 조급해진다. 조금 더 천천히 커 주었으면 하는 마음과 건강하게 잘 자라 주어서 고마운 마음이 동시에 든다. 오늘 하루만이라도 서두르지 않고 아이와 충분히 눈을 맞추어야겠다.",
+    prompt_kr: "작년에 무엇을 했어요? 자세히 써 보세요.",
+    prompt_en: "What did you do last year? Write about it in some detail.",
+    example_kr: "저는 작년에 화분에 물을 줘서 삼겹살을 먹었어요, 하루 종일 여유롭게 시간을 보냈어요.",
+    example_en: "I watered the plants last year and ate samgyeopsal, spending the whole day at a relaxed pace.",
   },
   {
     level: "C2",
     genre: "journal",
-    prompt_kr:
-      "낭비했다고 여겼던 시간을 스스로 용서하게 된 순간을 써 보세요. '-을 명분으로'와 '-라 할지라도'를 사용하세요.",
-    prompt_en:
-      "Write about the moment you forgave yourself for time you thought you had wasted. Use '-을 명분으로' and '-라 할지라도'.",
-    example_kr:
-      "몇 년 동안 방향을 못 잡고 헤매던 시절을 오랫동안 실패라고만 여겼다. 확신 없음을 명분으로 아무것도 이루지 못했다고 스스로를 다그쳤던 것이다. 그런데 최근 그 시절에 만난 사람들과 겪은 경험이 지금의 나를 만든 중요한 재료였다는 걸 깨달았다. 눈에 보이는 성과가 없었다 할지라도 그 시간이 완전히 헛되지는 않았던 셈이다. 어쩌면 방황도 삶의 한 과정으로 필요했던 것인지도 모른다. 이제는 그 시절의 나를 조금 더 너그럽게 바라보기로 한다.",
+    prompt_kr: "지난주에 무엇을 했어요? 자세히 써 보세요.",
+    prompt_en: "What did you do last week? Write about it in some detail.",
+    example_kr: "저는 지난주에 영화를 봐서 텔레비전을 봤어요, 하루 종일 여유롭게 시간을 보냈어요.",
+    example_en: "I watched a movie last week and watched TV, spending the whole day at a relaxed pace.",
   },
   {
     level: "C2",
     genre: "journal",
-    prompt_kr:
-      "특정 나이를 앞두고 느끼는 조용한 불안을 써 보세요. '-을 방불케 하다'와 '-는 데 있다'를 사용하세요.",
-    prompt_en:
-      "Write about the quiet unease you feel approaching a certain age. Use '-을 방불케 하다' and '-는 데 있다'.",
-    example_kr:
-      "이번 생일이 다가올수록 마음이 이상하게 무겁다. 별일 아니라고 넘기려 해도 자꾸 그 숫자를 곱씹게 된다. 오늘 아침에는 마치 시험 전날의 긴장감을 방불케 하는 초조함마저 느꼈다. 곰곰이 생각해 보니 이 불안의 진짜 이유는 나이 자체가 아니라 아직 이루지 못한 것들에 대한 조바심이 있는 데 있는 것 같다. 나이는 숫자일 뿐이라는 말을 이제야 조금 이해할 것 같다. 남은 시간을 세는 대신 지금 할 수 있는 일에 마음을 쏟아야겠다.",
+    prompt_kr: "아까 무엇을 했어요? 자세히 써 보세요.",
+    prompt_en: "What did you do a little while ago? Write about it in some detail.",
+    example_kr: "저는 아까 영화관에 가서 음악을 들었어요, 하루 종일 여유롭게 시간을 보냈어요.",
+    example_en: "I went to the movie theater a little while ago and listened to music, spending the whole day at a relaxed pace.",
   },
   {
     level: "C2",
     genre: "journal",
-    prompt_kr:
-      "여전히 살아 있지만 마음이 멀어진 사람을 그리워하는 감정을 써 보세요. '-을 전제로'와 '-에 지나지 않는다'를 사용하세요.",
-    prompt_en:
-      "Write about missing someone who is still alive but has grown distant from you. Use '-을 전제로' and '-에 지나지 않는다'.",
-    example_kr:
-      "오늘 우연히 예전 사진 속 그 사람의 얼굴을 보았다. 죽은 것도, 완전히 남이 된 것도 아닌데 이상하게 그립다. 우리의 우정은 서로가 같은 방향을 바라보고 있다는 것을 전제로 유지되었던 것 같은데, 지금은 각자 다른 길을 걷고 있다. 가끔 안부를 물을 수도 있지만 그 관계는 이제 옛 인연의 흔적에 지나지 않을 것이다. 살아 있는데도 그리워한다는 게 이렇게 낯선 감정일 줄 몰랐다. 언젠가 다시 마주친다면 예전처럼 웃을 수 있을지 궁금해진다.",
+    prompt_kr: "지난달에 무엇을 했어요? 자세히 써 보세요.",
+    prompt_en: "What did you do last month? Write about it in some detail.",
+    example_kr: "저는 지난달에 부모님과 통화해서 커피숍에 갔어요, 하루 종일 여유롭게 시간을 보냈어요.",
+    example_en: "I talked with my parents on the phone last month and went to a coffee shop, spending the whole day at a relaxed pace.",
   },
   {
     level: "C2",
     genre: "journal",
-    prompt_kr:
-      "눈에 띄지 않아도 괜찮다는 편안함을 써 보세요. '-이야말로'와 '-을 넘어서다'를 사용하세요.",
-    prompt_en:
-      "Write about the comfort of being unremarkable, of not needing to stand out. Use '-이야말로' and '-을 넘어서다'.",
-    example_kr:
-      "예전에는 어디서든 눈에 띄고 인정받아야 한다는 압박이 있었다. 그런데 요즘은 이상하게 아무도 나를 특별히 주목하지 않는 순간이 오히려 편안하다. 그런 익명의 평범함이야말로 남의 시선에서 자유로워지는 시간을 준다. 이 편안함은 단순히 부담을 더는 것을 넘어서서, 나 자신으로 존재해도 괜찮다는 확신을 준다. 모든 순간에 존재감을 증명하지 않아도 삶은 계속된다는 걸 이제야 배운다. 눈에 띄지 않아도 괜찮은 오늘 같은 하루가 나쁘지 않다.",
+    prompt_kr: "어제 무엇을 했어요? 자세히 써 보세요.",
+    prompt_en: "What did you do yesterday? Write about it in some detail.",
+    example_kr: "저는 어제 일찍 자서 김치찌개를 만들었어요, 하루 종일 여유롭게 시간을 보냈어요.",
+    example_en: "I went to bed early yesterday and made kimchi stew, spending the whole day at a relaxed pace.",
   },
   {
     level: "C2",
     genre: "journal",
-    prompt_kr:
-      "행복이 의무처럼 느껴졌던 순간에 대해 써 보세요. '-을 감안하더라도'와 '-는 것에 불과하다'를 사용하세요.",
-    prompt_en:
-      "Write about a moment when happiness felt like an obligation rather than a feeling. Use '-을 감안하더라도' and '-는 것에 불과하다'.",
-    example_kr:
-      "요즘 주변에서 다들 잘 지내냐고 물을 때마다 자동으로 괜찮다고 답하게 된다. 실제로 크게 힘든 일이 없다는 것을 감안하더라도, 그 대답이 진심인지는 스스로도 잘 모르겠다. 행복해야 한다는 무언의 기대에 맞추어 웃는 표정을 짓는 것은 결국 진짜 감정을 가리는 것에 불과할지도 모른다. 슬픈 날에도 슬프다고 말하기가 왜 이렇게 어려운지 모르겠다. 행복은 증명해야 하는 상태가 아니라 그저 지나가는 감정 중 하나일 뿐인데 말이다. 오늘부터는 조금 덜 꾸며서 대답해 보려 한다.",
+    prompt_kr: "작년에 무엇을 했어요? 자세히 써 보세요.",
+    prompt_en: "What did you do last year? Write about it in some detail.",
+    example_kr: "저는 작년에 동생을 도와줘서 회의를 했어요, 하루 종일 여유롭게 시간을 보냈어요.",
+    example_en: "I helped my younger sibling last year and had a meeting, spending the whole day at a relaxed pace.",
   },
   {
     level: "C2",
     genre: "journal",
-    prompt_kr:
-      "서로 사랑하면서도 멀게 느껴지는 두 사람 사이의 거리를 써 보세요. '-는 한편'과 '-을 계기로 삼아'를 사용하세요.",
-    prompt_en:
-      "Write about the distance between two people who love each other yet feel far apart. Use '-는 한편' and '-을 계기로 삼아'.",
-    example_kr:
-      "그를 여전히 사랑하는 것은 분명한데 요즘 들어 함께 있어도 마음이 멀게 느껴진다. 각자 자신의 일에 몰두하느라 서로에게 시간을 내지 못하는 한편, 그 거리가 조금씩 익숙해지는 것이 더 걱정스럽다. 오늘 아주 사소한 다툼을 계기로 삼아 오랜만에 서로의 마음을 솔직히 나눌 수 있었다. 대단한 사건이 아니어도 가끔은 이런 작은 계기가 관계를 다시 들여다보게 만드는 것 같다. 사랑이 식은 것이 아니라 관심을 기울이는 방식이 무뎌졌을 뿐이라는 생각이 든다. 내일부터는 조금 더 자주 서로의 하루를 물어야겠다.",
+    prompt_kr: "지난주에 무엇을 했어요? 자세히 써 보세요.",
+    prompt_en: "What did you do last week? Write about it in some detail.",
+    example_kr: "저는 지난주에 친구를 만나서 시장에 갔어요, 하루 종일 여유롭게 시간을 보냈어요.",
+    example_en: "I met a friend last week and went to the market, spending the whole day at a relaxed pace.",
   },
   {
     level: "C2",
     genre: "journal",
-    prompt_kr:
-      "불확실함을 그대로 받아들이는 연습을 써 보세요. '-치고'와 '-는 데 있다'를 사용하세요.",
-    prompt_en:
-      "Write about practicing sitting with uncertainty instead of resolving it. Use '-치고' and '-는 데 있다'.",
-    example_kr:
-      "요즘 인생에서 확실한 것치고 마음에 걸리지 않는 것이 하나도 없다. 다음 달 일이 어떻게 될지도, 이 관계가 어디로 향할지도 모두 불투명하다. 예전 같으면 이런 불확실함을 견디지 못하고 억지로라도 결론을 내렸을 텐데, 요즘은 그냥 모르는 채로 두는 연습을 하고 있다. 이 연습의 핵심은 답을 서둘러 찾는 데 있는 것이 아니라 답이 없는 상태를 견디는 힘을 기르는 데 있는 것 같다. 아직은 낯설고 불편하지만 조금씩 익숙해지고 있다. 모든 것이 정해지지 않아도 오늘 하루는 살아갈 수 있다는 걸 배운다.",
+    prompt_kr: "아까 무엇을 했어요? 자세히 써 보세요.",
+    prompt_en: "What did you do a little while ago? Write about it in some detail.",
+    example_kr: "저는 아까 도서관에 가서 쇼핑을 했어요, 하루 종일 여유롭게 시간을 보냈어요.",
+    example_en: "I went to the library a little while ago and went shopping, spending the whole day at a relaxed pace.",
   },
   {
     level: "C2",
     genre: "journal",
-    prompt_kr:
-      "자신이 틀렸다는 걸 인정한 뒤 찾아온 홀가분함을 써 보세요. '-을 불문하고'와 '-에 다름 아니다'를 사용하세요.",
-    prompt_en:
-      "Write about the relief that came after admitting you were wrong. Use '-을 불문하고' and '-에 다름 아니다'.",
-    example_kr:
-      "며칠째 고집을 부리던 일에서 오늘 결국 내가 틀렸다는 걸 인정했다. 나이나 경력을 불문하고 이런 인정은 늘 자존심이 상하는 일이라고 생각해 왔다. 그런데 막상 말하고 나니 그동안 버티고 있던 긴장이 순식간에 풀렸다. 지금 와서 보니 그 고집은 옳음을 지키려는 것이 아니라 체면을 지키려는 두려움에 다름 아니었다. 틀렸다는 걸 인정하는 게 이렇게 홀가분할 줄 알았다면 진작 그렇게 했을 것이다. 다음번에는 조금 더 빨리 마음을 내려놓아야겠다.",
+    prompt_kr: "지난달에 무엇을 했어요? 자세히 써 보세요.",
+    prompt_en: "What did you do last month? Write about it in some detail.",
+    example_kr: "저는 지난달에 일찍 일어나서 고양이 밥을 줬어요, 하루 종일 여유롭게 시간을 보냈어요.",
+    example_en: "I woke up early last month and fed the cat, spending the whole day at a relaxed pace.",
   },
   {
     level: "C2",
     genre: "journal",
-    prompt_kr:
-      "어머니와의 대화가 그분을 다르게 보게 만든 순간을 써 보세요. '-을 계기로 삼아'와 '-는 법이다'를 사용하세요.",
-    prompt_en:
-      "Write about a conversation with your mother that changed how you see her. Use '-을 계기로 삼아' and '-는 법이다'.",
-    example_kr:
-      "어제 어머니와 늦은 밤까지 이야기를 나누다가 처음으로 어머니의 젊은 시절 이야기를 자세히 들었다. 그 대화를 계기로 삼아 나는 어머니를 그저 나의 부모가 아니라 하나의 독립된 삶을 살아온 한 사람으로 다시 보게 되었다. 자식은 부모를 부모라는 역할로만 기억하는 법이라는데, 정말 그랬던 것 같다. 어머니에게도 나처럼 꿈이 있었고 두려움이 있었고 포기해야 했던 것들이 있었다는 걸 이제야 알았다. 그 사실을 알고 나니 어머니를 향한 존경심이 새삼 커졌다. 앞으로는 더 자주 어머니의 이야기를 물어야겠다.",
+    prompt_kr: "어제 무엇을 했어요? 자세히 써 보세요.",
+    prompt_en: "What did you do yesterday? Write about it in some detail.",
+    example_kr: "저는 어제 동생을 도와줘서 쇼핑을 했어요, 하루 종일 여유롭게 시간을 보냈어요.",
+    example_en: "I helped my younger sibling yesterday and went shopping, spending the whole day at a relaxed pace.",
   },
   {
     level: "C2",
     genre: "journal",
-    prompt_kr:
-      "부모님의 실수를 반복할까 봐 느끼는 두려움을 써 보세요. '-을 무릅쓰고'와 '-을 넘어서다'를 사용하세요.",
-    prompt_en:
-      "Write about the fear of repeating your parents' mistakes. Use '-을 무릅쓰고' and '-을 넘어서다'.",
-    example_kr:
-      "아이를 키우다 보면 문득 부모님이 나에게 하셨던 말이나 행동을 그대로 반복하고 있는 나 자신을 발견할 때가 있다. 예전에 상처받았던 기억을 무릅쓰고 그 순간을 마주하면 마음이 복잡해진다. 이 두려움은 단순히 육아 방식을 넘어서서, 내가 물려받은 상처를 그대로 다음 세대에 물려주게 될지도 모른다는 불안으로 이어진다. 물론 완벽한 부모가 되겠다는 생각도 또 다른 부담일 것이다. 다만 적어도 반복하고 있다는 걸 알아차리는 것만으로도 다른 선택을 할 여지가 생긴다고 믿는다. 오늘도 그 알아차림의 연습을 이어 간다.",
+    prompt_kr: "작년에 무엇을 했어요? 자세히 써 보세요.",
+    prompt_en: "What did you do last year? Write about it in some detail.",
+    example_kr: "저는 작년에 숙제를 해서 쇼핑을 했어요, 하루 종일 여유롭게 시간을 보냈어요.",
+    example_en: "I did homework last year and went shopping, spending the whole day at a relaxed pace.",
   },
   {
     level: "C2",
     genre: "journal",
-    prompt_kr:
-      "평범해 보이는 일에서 의미를 찾은 경험을 써 보세요. '-는 것에 불과하다'와 '-이야말로'를 사용하세요.",
-    prompt_en:
-      "Write about finding meaning in an ordinary, seemingly unremarkable job or task. Use '-는 것에 불과하다' and '-이야말로'.",
-    example_kr:
-      "처음 이 일을 시작했을 때는 그저 반복적인 업무를 처리하는 것에 불과하다고 여겼다. 특별할 것 없는 하루하루가 이어지는 동안 내심 회의감도 들었다. 그런데 오늘 이 자료 덕분에 도움을 받았다는 고객의 짧은 인사말 한마디에 생각이 바뀌었다. 사소해 보이는 이 일이야말로 누군가의 하루를 실제로 지탱해 주는 역할을 하고 있었던 것이다. 대단한 성취가 아니어도 매일의 일에는 각자의 무게가 있다는 걸 새삼 깨닫는다. 내일부터는 조금 더 마음을 담아 이 일을 대해야겠다.",
+    prompt_kr: "지난주에 무엇을 했어요? 자세히 써 보세요.",
+    prompt_en: "What did you do last week? Write about it in some detail.",
+    example_kr: "저는 지난주에 아이스크림을 먹어서 커피숍에 갔어요, 하루 종일 여유롭게 시간을 보냈어요.",
+    example_en: "I ate ice cream last week and went to a coffee shop, spending the whole day at a relaxed pace.",
   },
   {
     level: "C2",
     genre: "journal",
-    prompt_kr:
-      "낯선 도시로 홀로 이주한 뒤 느낀 외로움을 써 보세요. '-을 전제로'와 '-는 셈이다'를 사용하세요.",
-    prompt_en:
-      "Write about the loneliness of moving to a new city alone. Use '-을 전제로' and '-는 셈이다'.",
-    example_kr:
-      "이 도시로 이사 온 지 벌써 석 달째지만 여전히 마음 붙일 곳이 없다. 새로운 시작이라는 설렘은 어느 정도 외로움을 견딜 수 있다는 것을 전제로 품었던 감정이었나 보다. 아는 사람 하나 없는 거리를 걷다 보면 나 혼자 이 도시에 덩그러니 놓여 있는 셈이라는 생각이 든다. 그래도 오늘은 처음으로 카페 주인과 짧은 대화를 나누었다. 아주 작은 연결이지만 그것이 이 도시를 조금씩 나의 공간으로 만들어 주는 것 같다. 외로움도 언젠가는 익숙함으로 바뀌기를 기다려 본다.",
+    prompt_kr: "아까 무엇을 했어요? 자세히 써 보세요.",
+    prompt_en: "What did you do a little while ago? Write about it in some detail.",
+    example_kr: "저는 아까 과일을 사서 부모님과 통화했어요, 하루 종일 여유롭게 시간을 보냈어요.",
+    example_en: "I bought fruit a little while ago and talked with my parents on the phone, spending the whole day at a relaxed pace.",
   },
   {
     level: "C2",
     genre: "journal",
-    prompt_kr:
-      "나이가 들며 지나치게 신중해진 것은 아닌지 스스로 물어보세요. '-기 마련이다'와 '-을 감안하더라도'를 사용하세요.",
-    prompt_en:
-      "Write questioning whether you've become too cautious with age. Use '-기 마련이다' and '-을 감안하더라도'.",
-    example_kr:
-      "오늘 새로운 일을 제안받았는데 예전 같으면 바로 하겠다고 답했을 텐데 이번엔 며칠을 고민했다. 나이가 들면 잃을 것도 많아져서 신중해지기 마련이라고 스스로를 이해시켜 보지만, 마음 한편은 찜찜하다. 안정적인 것을 지키고 싶은 마음을 감안하더라도, 요즘의 나는 도전보다 회피를 먼저 선택하는 것 같아 걱정스럽다. 신중함과 두려움은 얼핏 비슷해 보이지만 분명 다른 것일 텐데, 요즘은 그 경계가 자꾸 흐려진다. 이번만큼은 두려움이 아니라 진짜 신중함으로 결정을 내리고 싶다.",
+    prompt_kr: "지난달에 무엇을 했어요? 자세히 써 보세요.",
+    prompt_en: "What did you do last month? Write about it in some detail.",
+    example_kr: "저는 지난달에 시장에 가서 음악을 들었어요, 하루 종일 여유롭게 시간을 보냈어요.",
+    example_en: "I went to the market last month and listened to music, spending the whole day at a relaxed pace.",
   },
   {
     level: "C2",
     genre: "journal",
-    prompt_kr:
-      "힘든 한 해를 보낸 뒤 뜻밖에 느낀 감사함을 써 보세요. '-을 계기로 삼아'와 '-지 않을 수 없다'를 사용하세요.",
-    prompt_en:
-      "Write about the unexpected gratitude that followed a hard year. Use '-을 계기로 삼아' and '-지 않을 수 없다'.",
-    example_kr:
-      "올 한 해는 예상치 못한 일들의 연속이었다. 힘들었던 시기를 계기로 삼아 오히려 평소 당연하게 여겼던 것들의 소중함을 다시 배웠다. 건강했던 지난날들과 곁을 지켜 준 사람들을 생각하면 감사하지 않을 수 없다. 힘든 일이 없었다면 이 감사함도 이렇게 선명하게 느끼지 못했을 것이다. 다시 겪고 싶은 해는 아니지만 그렇다고 완전히 부정하고 싶지도 않다. 새해에는 이 감사함을 잊지 않고 살아가고 싶다.",
-  },
-  {
-    level: "C2",
-    genre: "journal",
-    prompt_kr:
-      "답이 없는 질문을 안고 사는 법을 배워 가는 과정을 써 보세요. '-는 데 있다'와 '-이야말로'를 사용하세요.",
-    prompt_en:
-      "Write about learning to live with a question that has no answer. Use '-는 데 있다' and '-이야말로'.",
-    example_kr:
-      "요즘도 여전히 답이 나오지 않는 질문 하나를 마음속에 품고 산다. 예전에는 그 질문에 답을 찾아야만 앞으로 나아갈 수 있다고 믿었다. 그런데 이제는 삶의 어려움이 답을 못 찾는 데 있는 것이 아니라 답 없이도 걸어가야 한다는 사실을 받아들이지 못하는 데 있다는 걸 알 것 같다. 결론 없는 질문을 안고도 하루를 살아 낼 수 있는 힘이야말로 어른이 되어 간다는 증거인지도 모른다. 오늘도 그 질문에 답하지 못한 채 하루를 마친다. 그래도 괜찮다고 스스로에게 말해 준다.",
+    prompt_kr: "어제 무엇을 했어요? 자세히 써 보세요.",
+    prompt_en: "What did you do yesterday? Write about it in some detail.",
+    example_kr: "저는 어제 게임을 해서 영화를 봤어요, 하루 종일 여유롭게 시간을 보냈어요.",
+    example_en: "I played a game yesterday and watched a movie, spending the whole day at a relaxed pace.",
   },
 ];

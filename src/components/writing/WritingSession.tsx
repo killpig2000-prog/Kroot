@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useSaveResume } from "@/hooks/useSaveResume";
 import { clearResume, isColumnMissing } from "@/lib/resume";
@@ -9,67 +9,16 @@ import { createClient } from "@/lib/supabase/client";
 import { recordCompletion, type ProgressResult } from "@/lib/activity";
 import { track } from "@/lib/analytics";
 import { MINUTES_PER_CHAPTER, type Prompt } from "@/lib/writing";
-import {
-  buildBoard,
-  checkSlots,
-  checkTiles,
-  chunksText,
-  defaultMode,
-  isLocalMode,
-  localScore,
-  slotsText,
-  tilesText,
-  type Board,
-} from "@/lib/writing-builder";
-import type { ChapterGradeResult } from "@/app/api/writing/grade/route";
+import { buildBoard, checkTiles, hashString, localScore, tilesText, type Board } from "@/lib/writing-builder";
 import type { CefrLevel } from "@/lib/tree";
 import WritePhase, { emptyEntry, entryDone, type Entry } from "@/components/writing/WritePhase";
-import GradingPhase from "@/components/writing/GradingPhase";
-import CompareResult from "@/components/writing/CompareResult";
+import CompareResult, { type Answer } from "@/components/writing/CompareResult";
 
-type Phase = "write" | "grading" | "compare";
+type Phase = "write" | "compare";
 
 const CARD = "border border-line rounded-[14px] bg-cream max-w-[900px]";
 const BTN_INK =
   "rounded-[9px] px-[18px] py-[9px] text-sm font-semibold text-white bg-success hover:bg-success-deep transition-colors disabled:bg-line disabled:text-faint";
-
-/** Learner prefers the keyboard everywhere — remembered per device. */
-const TYPING_PREF_KEY = "kroot-writing-typing";
-
-function readTypingPref(): boolean {
-  try {
-    return localStorage.getItem(TYPING_PREF_KEY) === "1";
-  } catch {
-    return false;
-  }
-}
-const noopSubscribe = () => () => {};
-/** localStorage-backed, false on the server so the first render matches. */
-function useTypingPref(): boolean {
-  return useSyncExternalStore(noopSubscribe, readTypingPref, () => false);
-}
-function writeTypingPref(on: boolean) {
-  try {
-    if (on) localStorage.setItem(TYPING_PREF_KEY, "1");
-    else localStorage.removeItem(TYPING_PREF_KEY);
-  } catch {
-    // private mode — the choice just doesn't persist
-  }
-}
-
-/** The answer text a board currently spells, for saving and grading. */
-function responseText(entry: Entry, board: Board): string {
-  switch (board.mode) {
-    case "tiles":
-      return tilesText(board, entry.picked);
-    case "slots":
-      return slotsText(board, entry.chosen);
-    case "chunks":
-      return chunksText(board, entry.picked);
-    default:
-      return entry.text.trim();
-  }
-}
 
 export default function WritingSession({
   prompts,
@@ -78,9 +27,6 @@ export default function WritingSession({
   level,
   chapterIndex,
   hasNextChapter,
-  species,
-  costumeIds,
-  treeStage,
 }: {
   prompts: Prompt[];
   /** Same level + genre, outside this chapter — distractor pool for the boards. */
@@ -89,15 +35,9 @@ export default function WritingSession({
   level: CefrLevel;
   chapterIndex: number;
   hasNextChapter: boolean;
-  /** The learner's actual CEFR grade — keeps the tree's species matching their real garden. */
-  species?: CefrLevel;
-  costumeIds?: string[];
-  /** The learner's real growth-stage silhouette (from their Lv, like the dashboard tree) — falls back to `level` if omitted. */
-  treeStage?: CefrLevel;
 }) {
   const router = useRouter();
   const supabase = useMemo(() => createClient(), []);
-  const t = useTranslations("writing.result");
   const tc = useTranslations("writing");
 
   const [phase, setPhase] = useState<Phase>("write");
@@ -109,42 +49,20 @@ export default function WritingSession({
   });
 
   // Boards are deterministic per (prompt, attempt), so the server and the
-  // first client render agree. A remembered "type it myself" preference
-  // (client-only) overrides the level's default until a question is toggled.
-  const typingPref = useTypingPref();
-  const [entries, setEntries] = useState<Entry[]>(() =>
-    prompts.map((p, i) => emptyEntry(defaultMode(level, i, prompts.length)))
-  );
-  const modes = useMemo(
-    () => entries.map((e) => (e.explicit || !typingPref ? e.mode : "type")),
-    [entries, typingPref]
-  );
-
+  // first client render agree.
+  const [entries, setEntries] = useState<Entry[]>(() => prompts.map(() => emptyEntry()));
   const pool = useMemo(() => [...prompts, ...siblings], [prompts, siblings]);
+  const poolWords = useMemo(() => pool.flatMap((s) => s.example_kr.split(/\s+/)), [pool]);
   const boards = useMemo<Board[]>(
-    () => prompts.map((p, i) => buildBoard(modes[i], p, pool, entries[i].attempt)),
-    [prompts, pool, entries, modes]
+    () => prompts.map((p, i) => buildBoard(p, poolWords, hashString(`${p.key}:${entries[i].attempt}`))),
+    [prompts, poolWords, entries]
   );
 
   const [submitting, setSubmitting] = useState(false);
   const [navigating, setNavigating] = useState(false);
-  const [grade, setGrade] = useState<ChapterGradeResult | null>(null);
-  const [limitMessage, setLimitMessage] = useState<string | null>(null);
   const [levelUp, setLevelUp] = useState<ProgressResult | null>(null);
-  const [gradingStep, setGradingStep] = useState(0);
+  const [result, setResult] = useState<{ score: number; answers: Answer[] } | null>(null);
   const loggedMinutes = useRef(false);
-
-  const [gradingStepPhase, setGradingStepPhase] = useState(phase);
-  if (phase !== gradingStepPhase) {
-    setGradingStepPhase(phase);
-    if (phase !== "grading") setGradingStep(0);
-  }
-
-  useEffect(() => {
-    if (phase !== "grading") return;
-    const id = setInterval(() => setGradingStep((s) => s + 1), 3200);
-    return () => clearInterval(id);
-  }, [phase]);
 
   function update(index: number, patch: Partial<Entry>) {
     setEntries((prev) => prev.map((e, i) => (i === index ? { ...e, ...patch } : e)));
@@ -153,156 +71,56 @@ export default function WritingSession({
   function check(index: number) {
     const board = boards[index];
     const entry = entries[index];
-    let ok = false;
-    if (board.mode === "tiles") ok = checkTiles(board, entry.picked);
-    else if (board.mode === "slots") ok = checkSlots(board, entry.chosen).every(Boolean);
-    else return;
+    const ok = checkTiles(board, entry.picked);
     const checks = entry.checks + 1;
     update(index, { checked: ok, checks });
-    track("activity_completed", { kind: "writing_check", mode: board.mode, right: ok, checks });
+    track("activity_completed", { kind: "writing_check", right: ok, checks });
   }
 
   function shuffle(index: number) {
-    update(index, { attempt: entries[index].attempt + 1, picked: [], chosen: [], activeSlot: 0, checked: null });
+    update(index, { attempt: entries[index].attempt + 1, picked: [], checked: null });
   }
 
-  function toggleMode(index: number) {
-    const entry = entries[index];
-    const typing = modes[index] !== "type";
-    const mode = typing ? "type" : defaultMode(level, index, prompts.length);
-    // The keyboard is a preference; blocks are the default — only remember opting in.
-    writeTypingPref(typing && modes.every((m, i) => i === index || m === "type"));
-    update(index, { ...emptyEntry(mode), explicit: true, attempt: entry.attempt + 1 });
-  }
-
-  const responses = useMemo(() => entries.map((e, i) => responseText(e, boards[i])), [entries, boards]);
-  const answeredCount = entries.filter((e, i) => entryDone(e, boards[i])).length;
+  const answeredCount = entries.filter((e) => entryDone(e)).length;
   const ready = answeredCount === prompts.length;
-  const graderIdx = entries.map((e, i) => (isLocalMode(boards[i].mode) ? -1 : i)).filter((i) => i >= 0);
-  const needsGrader = graderIdx.length > 0;
-
-  /** Marks for the locally-checked boards — merged with (or standing in for) the AI's. */
-  function localAnswer(i: number): ChapterGradeResult["answers"][number] {
-    const e = entries[i];
-    const text = responses[i];
-    return {
-      index: i,
-      score: localScore(e.checks),
-      original: text,
-      corrected: text,
-      note: e.checks <= 1 ? t("builtFirstTry") : t("builtAfterTries", { n: e.checks }),
-    };
-  }
-
-  function mergeGrade(ai: ChapterGradeResult | null): ChapterGradeResult {
-    const answers = prompts.map((_, i) => {
-      if (isLocalMode(boards[i].mode)) return localAnswer(i);
-      const k = graderIdx.indexOf(i);
-      const a = ai?.answers.find((x) => x.index === k) ?? ai?.answers[k];
-      return a
-        ? { ...a, index: i }
-        : { index: i, score: 0, original: responses[i], corrected: responses[i], note: t("savedBody") };
-    });
-    const score = Math.round(answers.reduce((s, a) => s + a.score, 0) / Math.max(1, answers.length));
-    const retries = entries.filter((e, i) => isLocalMode(boards[i].mode) && e.checks > 1).length;
-    return {
-      score,
-      feedback_en: ai?.feedback_en ?? (retries === 0 ? t("fallbackFeedbackPerfect") : t("fallbackFeedbackRetries", { n: retries })),
-      answers,
-      commonPatterns: ai?.commonPatterns ?? [],
-      learningPoint: ai?.learningPoint ?? {
-        headline: retries === 0 ? t("fallbackFocusPerfect") : t("fallbackFocusRetries"),
-        example_kr: prompts[0]?.example_kr,
-      },
-    };
-  }
-
-  /**
-   * Score to persist for one prompt, or null when there isn't a real one —
-   * never the fallback 0 mergeGrade shows in the UI when grading was
-   * unavailable for a prompt (that's a display placeholder, not a mark).
-   */
-  function scoreToPersist(i: number, ai: ChapterGradeResult | null): number | null {
-    if (isLocalMode(boards[i].mode)) return localScore(entries[i].checks);
-    if (!ai) return null;
-    const k = graderIdx.indexOf(i);
-    const a = ai.answers.find((x) => x.index === k) ?? ai.answers[k];
-    return a ? a.score : null;
-  }
 
   async function submit() {
     if (!ready) return;
     setSubmitting(true);
 
-    // One row per chapter, not per question — cheap, and gives admin the
-    // tiles/slots/chunks/typed adoption split and the local-vs-Gemini ratio.
-    const modeCounts = { tiles: 0, slots: 0, chunks: 0, type: 0 };
-    for (const b of boards) modeCounts[b.mode]++;
+    const answers: Answer[] = prompts.map((_, i) => ({
+      index: i,
+      score: localScore(entries[i].checks),
+      text: tilesText(boards[i], entries[i].picked),
+      checks: entries[i].checks,
+    }));
+    const score = Math.round(answers.reduce((s, a) => s + a.score, 0) / answers.length);
+
     track("writing_chapter_submitted", {
       level,
-      ...modeCounts,
-      graded_locally: !needsGrader,
-      retries: entries.reduce((s, e, i) => s + (isLocalMode(boards[i].mode) ? Math.max(0, e.checks - 1) : 0), 0),
+      questions: prompts.length,
+      retries: entries.reduce((s, e) => s + Math.max(0, e.checks - 1), 0),
     });
 
-    let dailyLimited = false;
-    let ai: ChapterGradeResult | null = null;
-
-    if (needsGrader) {
-      setPhase("grading");
-      try {
-        const res = await fetch("/api/writing/grade", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            level,
-            answers: graderIdx.map((i) => ({
-              prompt_kr: prompts[i].prompt_kr,
-              prompt_en: prompts[i].prompt_en,
-              stimulus_kr: prompts[i].stimulus_kr,
-              response_text: responses[i],
-            })),
-          }),
-        });
-        if (res.ok) {
-          ai = await res.json();
-        } else if (res.status === 429) {
-          const body = await res.json().catch(() => null);
-          if (body?.error === "daily_limit") {
-            dailyLimited = true;
-            setLimitMessage(body.message);
-          }
-        }
-      } catch {
-        // grading is best-effort — the local marks still stand
-      }
+    const completedAt = new Date().toISOString();
+    const rows = answers.map((a, i) => ({
+      user_id: userId,
+      prompt_key: prompts[i].key,
+      response_text: a.text,
+      completed_at: completedAt,
+      score: a.score,
+    }));
+    const { error } = await supabase.from("writing_progress").upsert(rows, { onConflict: "user_id,prompt_key" });
+    if (error && isColumnMissing(error)) {
+      // Migration 0037 (writing_progress.score) hasn't run here yet — retry without it.
+      await supabase.from("writing_progress").upsert(
+        rows.map((r) => ({ user_id: r.user_id, prompt_key: r.prompt_key, response_text: r.response_text, completed_at: r.completed_at })),
+        { onConflict: "user_id,prompt_key" }
+      );
     }
 
-    if (dailyLimited) {
-      loggedMinutes.current = true;
-    } else {
-      // Only stand in for the AI when nothing needed it, or when it answered;
-      // an unavailable grader for typed answers keeps the old "saved, not graded" card.
-      if (!needsGrader || ai) setGrade(mergeGrade(ai));
-      const completedAt = new Date().toISOString();
-      const rows = prompts.map((p, i) => ({
-        user_id: userId,
-        prompt_key: p.key,
-        response_text: responses[i],
-        completed_at: completedAt,
-        score: scoreToPersist(i, ai),
-      }));
-      const { error } = await supabase.from("writing_progress").upsert(rows, { onConflict: "user_id,prompt_key" });
-      if (error && isColumnMissing(error)) {
-        // Migration 0037 (writing_progress.score) hasn't run here yet — retry without it.
-        await supabase.from("writing_progress").upsert(
-          rows.map((r) => ({ user_id: r.user_id, prompt_key: r.prompt_key, response_text: r.response_text, completed_at: r.completed_at })),
-          { onConflict: "user_id,prompt_key" }
-        );
-      }
-      await logMinutesOnce();
-    }
-
+    setResult({ score, answers });
+    await logMinutesOnce();
     setSubmitting(false);
     setPhase("compare");
   }
@@ -312,8 +130,8 @@ export default function WritingSession({
     loggedMinutes.current = true;
     void clearResume(supabase, userId);
 
-    const result = await recordCompletion(supabase, "writing", MINUTES_PER_CHAPTER);
-    if (result?.leveled_up) setLevelUp(result);
+    const res = await recordCompletion(supabase, "writing", MINUTES_PER_CHAPTER);
+    if (res?.leveled_up) setLevelUp(res);
   }
 
   async function goTo(href: string) {
@@ -333,24 +151,10 @@ export default function WritingSession({
         update={update}
         onCheck={check}
         onShuffle={shuffle}
-        onToggleMode={toggleMode}
         submitting={submitting}
         ready={ready}
         answeredCount={answeredCount}
-        needsGrader={needsGrader}
         onSubmit={submit}
-      />
-    );
-  }
-
-  if (phase === "grading") {
-    return (
-      <GradingPhase
-        gradingStep={gradingStep}
-        treeStage={treeStage ?? level}
-        species={species}
-        costumeIds={costumeIds}
-        responses={responses}
       />
     );
   }
@@ -358,14 +162,10 @@ export default function WritingSession({
   return (
     <CompareResult
       prompts={prompts}
-      responses={responses}
-      grade={grade}
-      limitMessage={limitMessage}
+      answers={result!.answers}
+      score={result!.score}
       levelUp={levelUp}
       level={level}
-      treeStage={treeStage ?? level}
-      species={species}
-      costumeIds={costumeIds}
       chapterIndex={chapterIndex}
       hasNextChapter={hasNextChapter}
       navigating={navigating}

@@ -4,401 +4,313 @@ export const WRITING_B2_DESCRIPTION: RawPrompt[] = [
   {
     level: "B2",
     genre: "description",
-    prompt_kr:
-      "최근 확산되는 '조용한 사직' 현상에 대해 여섯 문장 이상으로 설명해 보세요. '-는 셈이다'와 '-을 뿐만 아니라'를 사용하세요.",
-    prompt_en:
-      "Describe the recent spread of 'quiet quitting' in six or more sentences. Use the grammar patterns '-는 셈이다' and '-을 뿐만 아니라'.",
-    example_kr:
-      "조용한 사직이란 회사를 실제로 그만두는 것이 아니라 정해진 업무 시간과 범위 안에서만 일하는 태도를 가리킨다. 즉 최소한의 계약 조건만 지키며 더 이상의 헌신은 하지 않겠다는 선언인 셈이다. 이러한 흐름은 과도한 초과 근무와 번아웃에 대한 반작용일 뿐만 아니라 일과 삶의 경계를 다시 세우려는 시도이기도 하다. 젊은 세대를 중심으로 확산되고 있는 이 현상은 승진이나 인정보다 개인의 시간을 더 중시하는 태도를 보여 준다. 기업 입장에서는 생산성 저하를 우려하는 목소리도 있는 셈이지만 노동자 입장에서는 정당한 권리 행사로 받아들여지기도 한다. 결국 조용한 사직은 노동에 대한 세대 간 가치관 차이를 보여 주는 상징적인 현상이라고 할 수 있다.",
+    prompt_kr: "우리 아빠를 자세히 묘사해 보세요.",
+    prompt_en: "Describe my dad in some detail.",
+    example_kr: "우리 아빠는 따뜻하고 멋있어요, 그래서 항상 인기가 많아요.",
+    example_en: "My dad is warm and cool, so it's always popular.",
   },
   {
     level: "B2",
     genre: "description",
-    prompt_kr:
-      "한국과 서구 사회의 회식 문화 차이에 대해 여섯 문장 이상으로 설명해 보세요. '-는 데 반해'와 '-기 마련이다'를 사용하세요.",
-    prompt_en:
-      "Describe the differences between Korean and Western company dinner culture in six or more sentences. Use the grammar patterns '-는 데 반해' and '-기 마련이다'.",
-    example_kr:
-      "한국의 회식 문화는 팀워크를 다지는 자리로 여겨지는 데 반해 서구 사회에서는 회식이 훨씬 드물고 자율적인 경우가 많다. 한국에서는 회식에서 술을 함께 마시며 유대감을 쌓기 마련인 반면 서구에서는 개인의 사생활을 중시해 참석 여부도 자유로운 편이다. 이런 차이는 조직을 하나의 공동체로 보는 문화와 개인을 중심으로 보는 문화의 차이에서 비롯되기 마련이다. 최근 한국에서도 강제적인 회식 문화에 대한 불만이 늘어나면서 점심 회식이나 문화 회식 같은 대안이 생겨나고 있다. 세대가 바뀔수록 회식에 대한 인식도 자연스럽게 변화하기 마련이다. 결국 회식 문화는 각 사회가 일과 관계를 바라보는 방식을 그대로 보여 준다고 할 수 있다.",
+    prompt_kr: "우리 학교를 자세히 묘사해 보세요.",
+    prompt_en: "Describe my school in some detail.",
+    example_kr: "우리 학교는 시끄럽고 커요, 그래서 항상 인기가 많아요.",
+    example_en: "My school is loud and big, so it's always popular.",
   },
   {
     level: "B2",
     genre: "description",
-    prompt_kr:
-      "한국의 대학수학능력시험 준비 과정이 어떻게 이루어지는지 여섯 문장 이상으로 설명해 보세요. '-는 통에'와 '-을 정도로'를 사용하세요.",
-    prompt_en:
-      "Describe how preparation for Korea's college entrance exam (Suneung) unfolds in six or more sentences. Use the grammar patterns '-는 통에' and '-을 정도로'.",
-    example_kr:
-      "한국의 수능 준비는 보통 고등학교 삼 년 내내 이어지며 새벽부터 밤늦게까지 학업이 계속되는 통에 학생들의 생활 패턴이 완전히 시험 위주로 바뀌게 된다. 많은 학생들이 학원과 독서실을 오가는 통에 하루 대부분의 시간을 공부에 쏟는다. 시험 당일에는 항공기 이착륙 시간까지 조정될 정도로 사회 전체가 수험생을 배려하는 분위기가 만들어진다. 부모들도 자녀를 위해 기도하러 절이나 교회를 찾을 정도로 온 가족이 함께 긴장하며 하루를 보낸다. 시험이 가까워지는 통에 학생들의 스트레스와 불안감도 함께 커지는 경우가 많다. 이렇게 준비된 시험 하루가 대학 입시의 향방을 크게 좌우할 정도로 수능은 한국 사회에서 상징적인 의미를 지닌다.",
+    prompt_kr: "우리 엄마를 자세히 묘사해 보세요.",
+    prompt_en: "Describe my mom in some detail.",
+    example_kr: "우리 엄마는 유명하고 시끄러워요, 그래서 항상 인기가 많아요.",
+    example_en: "My mom is famous and loud, so it's always popular.",
   },
   {
     level: "B2",
     genre: "description",
-    prompt_kr:
-      "온라인 중고 거래 시장이 성장하는 과정에 대해 여섯 문장 이상으로 설명해 보세요. '-다 보니'와 '-는 셈이다'를 사용하세요.",
-    prompt_en:
-      "Describe how the online secondhand marketplace has grown in six or more sentences. Use the grammar patterns '-다 보니' and '-는 셈이다'.",
-    example_kr:
-      "몇 년 전부터 스마트폰 애플리케이션을 통한 중고 거래가 크게 늘어났다. 사람들이 물건을 쉽게 사고팔 수 있는 플랫폼을 자주 이용하다 보니 자연스럽게 중고 거래 시장 규모도 커졌다. 이는 단순한 소비 형태의 변화를 넘어 소유보다 공유를 중시하는 흐름을 반영하는 셈이다. 판매자는 필요 없는 물건을 처분해 수입을 얻고 구매자는 저렴한 가격에 물건을 구할 수 있다 보니 서로에게 이익이 되는 구조가 형성되었다. 동네 이웃과 직접 만나 거래하는 방식이 인기를 끌다 보니 지역 공동체 안에서 새로운 형태의 신뢰 관계가 만들어진 셈이다. 결국 중고 거래 시장의 성장은 경제적 효율성과 환경 보호라는 두 가지 가치를 함께 이루어 낸 사례라고 할 수 있다.",
+    prompt_kr: "이 카페를 자세히 묘사해 보세요.",
+    prompt_en: "Describe this cafe in some detail.",
+    example_kr: "이 카페는 귀엽고 깨끗해요, 그래서 항상 인기가 많아요.",
+    example_en: "This cafe is cute and clean, so it's always popular.",
   },
   {
     level: "B2",
     genre: "description",
-    prompt_kr:
-      "한국과 일본의 존댓말 사용 방식이 어떻게 다른지 여섯 문장 이상으로 설명해 보세요. '-는 반면'과 '-을 뿐만 아니라'를 사용하세요.",
-    prompt_en:
-      "Describe how honorific speech usage differs between Korean and Japanese in six or more sentences. Use the grammar patterns '-는 반면' and '-을 뿐만 아니라'.",
-    example_kr:
-      "한국어는 상대방의 나이와 사회적 지위에 따라 존댓말과 반말을 뚜렷하게 구분하는 반면 일본어는 상황과 관계에 따라 존댓말의 정도가 더 세밀하게 나뉜다. 한국어에서는 처음 만난 사이에는 나이를 확인한 뒤 존댓말 사용 여부를 정하는 경우가 많은 반면 일본어에서는 나이보다 사회적 위치나 소속이 더 중요한 기준이 된다. 두 언어 모두 존댓말이 예의를 나타낼 뿐만 아니라 관계의 거리감을 조절하는 역할도 한다. 한국에서는 친해지면 반말로 전환하는 경우가 흔한 반면 일본에서는 오랜 시간이 지나도 존댓말을 유지하는 관계가 많다. 이러한 차이는 언어 습관일 뿐만 아니라 두 사회가 인간관계를 바라보는 방식의 차이를 보여 주기도 한다. 결국 존댓말 체계는 각 사회의 위계와 관계 문화를 그대로 반영하는 거울이라고 할 수 있다.",
+    prompt_kr: "제 가방을 자세히 묘사해 보세요.",
+    prompt_en: "Describe my bag in some detail.",
+    example_kr: "제 가방은 예쁘고 깨끗해요, 그래서 항상 인기가 많아요.",
+    example_en: "My bag is pretty and clean, so it's always popular.",
   },
   {
     level: "B2",
     genre: "description",
-    prompt_kr:
-      "아파트 청약 제도가 어떻게 작동하는지 여섯 문장 이상으로 설명해 보세요. '-는 한'과 '-을 경우'를 사용하세요.",
-    prompt_en:
-      "Describe how the apartment subscription (cheongyak) system works in six or more sentences. Use the grammar patterns '-는 한' and '-을 경우'.",
-    example_kr:
-      "한국의 아파트 청약 제도는 신규 분양 아파트를 살 사람을 정하는 방식으로 무주택 기간과 부양가족 수 등을 점수화하여 우선순위를 정한다. 청약 통장을 일정 기간 이상 유지하는 한 청약 자격을 얻을 수 있어서 많은 사람들이 미리 통장을 만들어 둔다. 특정 지역에서 인기 있는 단지에 청약을 신청할 경우 경쟁률이 수백 대 일에 이르기도 한다. 무주택자인 한 가점을 더 받을 수 있기 때문에 실수요자에게 유리하게 설계되어 있다는 평가를 받는다. 반대로 청약에 여러 번 당첨될 경우 일정 기간 재당첨이 제한되는 규정도 있다. 결국 이 제도는 한정된 주택을 공정하게 배분하려는 목적에서 만들어졌지만 실수요자와 투자 목적 수요자 사이의 논쟁도 함께 낳고 있다.",
+    prompt_kr: "이 노래를 자세히 묘사해 보세요.",
+    prompt_en: "Describe this song in some detail.",
+    example_kr: "이 노래는 편하고 복잡해요, 그래서 항상 인기가 많아요.",
+    example_en: "This song is comfortable and crowded, so it's always popular.",
   },
   {
     level: "B2",
     genre: "description",
-    prompt_kr:
-      "구독형 스트리밍 서비스가 방송 산업을 어떻게 바꾸었는지 여섯 문장 이상으로 설명해 보세요. '-을수록'과 '-는 데 그치다'를 사용하세요.",
-    prompt_en:
-      "Describe how subscription streaming services have changed the broadcasting industry in six or more sentences. Use the grammar patterns '-을수록' and '-는 데 그치다'.",
-    example_kr:
-      "스트리밍 서비스가 늘어날수록 시청자들은 정해진 시간에 텔레비전 앞에 앉을 필요 없이 원하는 때에 원하는 콘텐츠를 볼 수 있게 되었다. 전통적인 방송사들이 단순히 실시간 편성만 고집하는 데 그친다면 빠르게 변화하는 시청자의 요구를 따라가기 어려워졌다. 플랫폼이 다양해질수록 제작사들은 더 많은 자본을 투입해 경쟁력 있는 오리지널 콘텐츠를 만들어야 하는 압박을 받는다. 시청자의 선택권이 넓어지는 데 그치지 않고 콘텐츠 제작 방식과 유통 구조 자체가 완전히 재편되었다. 구독료가 오를수록 여러 서비스를 동시에 이용하는 소비자들의 부담도 함께 커지고 있다. 결국 스트리밍 서비스는 단순한 시청 방식의 변화에 그치지 않고 방송 산업 전체의 판도를 바꾸어 놓았다.",
+    prompt_kr: "이 케이크를 자세히 묘사해 보세요.",
+    prompt_en: "Describe this cake in some detail.",
+    example_kr: "이 케이크는 시끄럽고 예뻐요, 그래서 항상 인기가 많아요.",
+    example_en: "This cake is loud and pretty, so it's always popular.",
   },
   {
     level: "B2",
     genre: "description",
-    prompt_kr:
-      "한국의 명절 세배와 세뱃돈 풍습이 어떻게 이루어지는지 여섯 문장 이상으로 설명해 보세요. '-도록 하다'와 '-기 마련이다'를 사용하세요.",
-    prompt_en:
-      "Describe how the New Year's bow (sebae) and lucky money custom works in Korea in six or more sentences. Use the grammar patterns '-도록 하다' and '-기 마련이다'.",
-    example_kr:
-      "설날 아침이 되면 자녀들은 한복을 갖춰 입고 어른들께 새해 인사를 올리는 세배를 한다. 부모는 아이들이 예의를 갖추도록 미리 세배하는 법을 가르치기 마련이다. 세배를 받은 어른들은 덕담을 건네며 아이들에게 세뱃돈을 주는데 이는 새해에 복이 깃들도록 하는 의미를 담고 있다. 나이가 어릴수록 세뱃돈에 대한 기대가 크기 마련이라 아이들은 설날을 손꼽아 기다리곤 한다. 최근에는 세뱃돈을 봉투에 담아 정성스럽게 전달하도록 하는 가정도 많아졌다. 이러한 풍습은 세대 간 예의와 정을 나누도록 하는 한국의 대표적인 명절 문화라고 할 수 있다.",
+    prompt_kr: "제 방을 자세히 묘사해 보세요.",
+    prompt_en: "Describe my room in some detail.",
+    example_kr: "제 방은 작고 맛있어요, 그래서 항상 인기가 많아요.",
+    example_en: "My room is small and delicious, so it's always popular.",
   },
   {
     level: "B2",
     genre: "description",
-    prompt_kr:
-      "1인 가구를 위한 소형 주택 시장이 어떻게 성장했는지 여섯 문장 이상으로 설명해 보세요. '-는 이상'과 '-에 비해'를 사용하세요.",
-    prompt_en:
-      "Describe how the market for compact housing aimed at single-person households has grown in six or more sentences. Use the grammar patterns '-는 이상' and '-에 비해'.",
-    example_kr:
-      "1인 가구 수가 꾸준히 늘어나는 이상 이들의 주거 수요를 충족시키는 시장도 함께 성장할 수밖에 없었다. 기존의 넓은 아파트에 비해 원룸이나 오피스텔 같은 소형 주택은 관리비와 임대료 부담이 적어 인기를 끌고 있다. 건설사들도 이러한 수요를 무시할 수 없는 이상 소형 평형 위주의 신규 물량을 앞다투어 공급하고 있다. 예전의 소형 주택에 비해 최근에는 수납공간과 보안 시설을 강화한 형태로 진화하고 있다. 1인 가구가 계속 늘어나는 이상 이 시장의 성장세는 당분간 이어질 것으로 전망된다. 결국 소형 주택 시장의 확대는 변화하는 가족 형태를 그대로 반영하는 현상이라고 할 수 있다.",
+    prompt_kr: "서울을 자세히 묘사해 보세요.",
+    prompt_en: "Describe Seoul in some detail.",
+    example_kr: "서울은 크고 복잡해요, 그래서 항상 인기가 많아요.",
+    example_en: "Seoul is big and crowded, so it's always popular.",
   },
   {
     level: "B2",
     genre: "description",
-    prompt_kr:
-      "반려동물 등록제가 어떻게 운영되는지 여섯 문장 이상으로 설명해 보세요. '-을 경우'와 '-도록 하다'를 사용하세요.",
-    prompt_en:
-      "Describe how the pet registration system operates in six or more sentences. Use the grammar patterns '-을 경우' and '-도록 하다'.",
-    example_kr:
-      "반려동물 등록제는 강아지를 키우는 보호자가 정부 시스템에 반려동물 정보를 등록하도록 하는 제도이다. 등록을 하지 않고 적발될 경우 과태료가 부과될 수 있어 대부분의 보호자들이 이를 준수하려고 노력한다. 이 제도는 유기 동물 문제를 줄이고 보호자의 책임감을 높이도록 하기 위해 도입되었다. 반려동물이 실종될 경우 등록된 정보를 통해 주인을 빠르게 찾을 수 있다는 장점도 있다. 동물병원에서 내장형 칩을 삽입하도록 하는 방식이 대표적인 등록 절차로 자리 잡았다. 결국 이 제도는 사람과 동물이 함께 안전하게 살아갈 수 있도록 하는 사회적 장치라고 할 수 있다.",
+    prompt_kr: "우리 동네를 자세히 묘사해 보세요.",
+    prompt_en: "Describe my neighborhood in some detail.",
+    example_kr: "우리 동네는 따뜻하고 유명해요, 그래서 항상 인기가 많아요.",
+    example_en: "My neighborhood is warm and famous, so it's always popular.",
   },
   {
     level: "B2",
     genre: "description",
-    prompt_kr:
-      "한국의 명함 교환 예절이 어떻게 다른지 여섯 문장 이상으로 설명해 보세요. '-는 법이다'와 '-는 데 반해'를 사용하세요.",
-    prompt_en:
-      "Describe how business card exchange etiquette differs in Korea in six or more sentences. Use the grammar patterns '-는 법이다' and '-는 데 반해'.",
-    example_kr:
-      "한국의 비즈니스 자리에서는 처음 만난 사람과 명함을 주고받는 것이 기본적인 예의로 여겨지는 법이다. 명함은 두 손으로 정중하게 건네고 받는 법이며 받은 즉시 주머니에 넣기보다 잠시 살펴보는 것이 예의로 통한다. 서구 사회에서는 명함 교환이 비교적 간단하고 형식적인 데 반해 한국에서는 이 과정 자체가 서열과 예절을 확인하는 의미를 지닌다. 지위가 낮은 사람이 먼저 명함을 건네는 법이며 윗사람에게는 두 손으로 공손히 전달해야 한다. 최근에는 젊은 세대를 중심으로 이런 격식이 다소 간소화되는 데 반해 전통적인 조직에서는 여전히 엄격하게 지켜지고 있다. 결국 명함 예절 하나에도 한국 사회 특유의 위계와 관계 문화가 담겨 있다고 할 수 있다.",
+    prompt_kr: "이 영화를 자세히 묘사해 보세요.",
+    prompt_en: "Describe this movie in some detail.",
+    example_kr: "이 영화는 시끄럽고 편해요, 그래서 항상 인기가 많아요.",
+    example_en: "This movie is loud and comfortable, so it's always popular.",
   },
   {
     level: "B2",
     genre: "description",
-    prompt_kr:
-      "재택근무가 확산되면서 오피스 공간이 어떻게 변화했는지 여섯 문장 이상으로 설명해 보세요. '-을 뿐만 아니라'와 '-는 셈이다'를 사용하세요.",
-    prompt_en:
-      "Describe how office spaces have changed as remote work has spread in six or more sentences. Use the grammar patterns '-을 뿐만 아니라' and '-는 셈이다'.",
-    example_kr:
-      "재택근무가 보편화되면서 기업들은 고정된 개인 자리를 없애고 필요할 때만 자리를 예약해 쓰는 방식을 도입하기 시작했다. 이런 변화는 사무실 공간의 효율을 높일 뿐만 아니라 임대 비용까지 줄여 주는 효과가 있다. 넓은 개인 책상 대신 협업을 위한 공용 공간을 늘리는 것은 사무실의 기능을 완전히 재정의하는 셈이다. 직원들은 정해진 자리 없이 자유롭게 이동하며 일할 뿐만 아니라 원하는 분위기의 공간을 골라 근무할 수 있게 되었다. 이러한 변화는 결국 사무실이 매일 출근하는 장소에서 협업을 위한 거점으로 바뀌었다는 것을 보여 주는 셈이다. 앞으로 사무 공간은 더욱 유연하고 다양한 형태로 진화할 것으로 예상된다.",
+    prompt_kr: "우리 집 고양이를 자세히 묘사해 보세요.",
+    prompt_en: "Describe our cat in some detail.",
+    example_kr: "우리 집 고양이는 멋있고 편해요, 그래서 항상 인기가 많아요.",
+    example_en: "Our cat is cool and comfortable, so it's always popular.",
   },
   {
     level: "B2",
     genre: "description",
-    prompt_kr:
-      "온라인 강의 플랫폼이 교육 방식을 어떻게 바꾸었는지 여섯 문장 이상으로 설명해 보세요. '-는 덕분에'와 '-는 데 그치다' 중 알맞은 표현과 '-을수록'을 사용하세요.",
-    prompt_en:
-      "Describe how online lecture platforms have changed education in six or more sentences. Use '-는 덕분에' (or another suitable expression) and '-을수록'.",
-    example_kr:
-      "온라인 강의 플랫폼이 등장한 덕분에 학생들은 시간과 장소에 구애받지 않고 원하는 강의를 들을 수 있게 되었다. 플랫폼이 다양해질수록 전 세계 유명 대학의 강의까지 손쉽게 접할 수 있는 기회도 늘어났다. 예전에는 교육이 교실 안에서 이루어지는 데 그쳤지만 이제는 개인의 속도에 맞춰 반복 학습이 가능해졌다. 강의 영상을 여러 번 돌려 볼수록 이해도가 높아진다는 것도 온라인 강의만의 장점이다. 저렴한 비용으로 양질의 교육을 받을 수 있게 된 덕분에 교육 격차를 줄이는 데도 어느 정도 기여하고 있다. 결국 온라인 강의는 교육의 접근성과 유연성을 동시에 높여 준 혁신적인 변화라고 할 수 있다.",
+    prompt_kr: "우리 선생님을 자세히 묘사해 보세요.",
+    prompt_en: "Describe our teacher in some detail.",
+    example_kr: "우리 선생님은 귀엽고 멋있어요, 그래서 항상 인기가 많아요.",
+    example_en: "Our teacher is cute and cool, so it's always popular.",
   },
   {
     level: "B2",
     genre: "description",
-    prompt_kr:
-      "카페 투어나 팝업 스토어처럼 유행에 민감한 소비 문화가 어떻게 형성되는지 여섯 문장 이상으로 설명해 보세요. '-다 보니'와 '-기 십상이다'를 사용하세요.",
-    prompt_en:
-      "Describe how trend-sensitive consumer culture like cafe touring or pop-up stores forms in six or more sentences. Use the grammar patterns '-다 보니' and '-기 십상이다'.",
-    example_kr:
-      "SNS에서 새로운 카페나 팝업 스토어 사진이 빠르게 퍼지다 보니 사람들이 몰려드는 현상이 자주 나타난다. 사진이 많이 공유될수록 그 장소는 더 특별해 보이기 마련이라 많은 사람들이 직접 방문해 보고 싶어 한다. 짧은 시간에 화제가 되다 보니 이런 장소는 금방 유행에서 벗어나기 십상이다. 유행을 따라가지 않으면 대화에서 소외될 것 같은 불안감 때문에 무리해서라도 찾아가는 사람도 많다. 소비자들의 관심이 빠르게 옮겨 가다 보니 브랜드 입장에서도 지속적인 신선함을 유지하기가 쉽지 않다. 결국 이런 유행 소비 문화는 새로움에 대한 갈증과 소속감을 동시에 반영하는 현상이라고 할 수 있다.",
+    prompt_kr: "제 친구를 자세히 묘사해 보세요.",
+    prompt_en: "Describe my friend in some detail.",
+    example_kr: "제 친구는 작고 유명해요, 그래서 항상 인기가 많아요.",
+    example_en: "My friend is small and famous, so it's always popular.",
   },
   {
     level: "B2",
     genre: "description",
-    prompt_kr:
-      "명절 때마다 벌어지는 교통 정체 현상이 어떻게 나타나는지 여섯 문장 이상으로 설명해 보세요. '-는 통에'와 '-을 정도로'를 사용하세요.",
-    prompt_en:
-      "Describe how the traffic congestion during Korean holidays occurs in six or more sentences. Use the grammar patterns '-는 통에' and '-을 정도로'.",
-    example_kr:
-      "설날이나 추석 연휴가 되면 전국의 고속도로가 귀성 차량으로 가득 차는 통에 평소 세 시간이면 갈 거리가 열 시간 넘게 걸리기도 한다. 많은 사람들이 같은 시기에 고향으로 이동하는 통에 도로마다 극심한 정체가 발생한다. 어떤 구간은 시속 몇 킬로미터로 거북이걸음을 할 정도로 심각한 정체를 겪기도 한다. 이런 상황을 피하려고 새벽이나 심야에 출발하는 사람들도 늘어날 정도로 다들 나름의 요령을 찾는다. 정체가 심해지는 통에 방송에서는 실시간 교통 상황을 계속 안내한다. 결국 명절 교통 정체는 매년 반복되지만 가족을 만나려는 마음을 꺾지는 못할 정도로 여전히 많은 사람들이 기꺼이 그 시간을 감수한다.",
+    prompt_kr: "우리 집 강아지를 자세히 묘사해 보세요.",
+    prompt_en: "Describe our dog in some detail.",
+    example_kr: "우리 집 강아지는 작고 멋있어요, 그래서 항상 인기가 많아요.",
+    example_en: "Our dog is small and cool, so it's always popular.",
   },
   {
     level: "B2",
     genre: "description",
-    prompt_kr:
-      "패스트 패션 브랜드의 생산 방식이 어떻게 이루어지는지 여섯 문장 이상으로 설명해 보세요. '-는 데다가'와 '-을 수밖에 없다'를 사용하세요.",
-    prompt_en:
-      "Describe how fast-fashion brands' production process works in six or more sentences. Use the grammar patterns '-는 데다가' and '-을 수밖에 없다'.",
-    example_kr:
-      "패스트 패션 브랜드는 유행에 맞춰 짧은 주기로 신제품을 출시하는 데다가 대량 생산 방식을 택해 가격을 최대한 낮춘다. 이런 방식은 소비자에게 저렴한 가격에 최신 유행 옷을 살 기회를 주는 데다가 빠른 소비를 부추기는 결과를 낳을 수밖에 없다. 생산 단가를 낮추기 위해 인건비가 저렴한 나라에서 옷을 만드는 데다가 노동 환경 문제도 함께 발생할 수밖에 없다는 지적이 있다. 옷의 수명이 짧게 설계되는 데다가 소재의 질도 낮은 경우가 많아 금방 버려질 수밖에 없다. 이렇게 만들어진 옷은 결국 환경 오염 문제로 이어지는 데다가 처리 비용도 사회가 떠안을 수밖에 없다. 최근에는 이런 구조에 대한 반성으로 지속 가능한 패션을 지향하는 브랜드도 늘어나고 있다.",
+    prompt_kr: "우리 아빠를 자세히 묘사해 보세요.",
+    prompt_en: "Describe my dad in some detail.",
+    example_kr: "우리 아빠는 크고 유명해요, 그래서 항상 인기가 많아요.",
+    example_en: "My dad is big and famous, so it's always popular.",
   },
   {
     level: "B2",
     genre: "description",
-    prompt_kr:
-      "온라인 마켓의 당일 배송 시스템이 어떻게 운영되는지 여섯 문장 이상으로 설명해 보세요. '-는 덕분에'와 '-을 뿐만 아니라'를 사용하세요.",
-    prompt_en:
-      "Describe how same-day delivery systems for online marketplaces operate in six or more sentences. Use '-는 덕분에' and '-을 뿐만 아니라'.",
-    example_kr:
-      "온라인 마켓의 당일 배송 시스템은 전국 곳곳에 위치한 물류 센터 덕분에 주문 후 몇 시간 만에 상품을 받아 볼 수 있도록 설계되어 있다. 이 시스템은 소비자의 편의를 높여 줄 뿐만 아니라 오프라인 매장의 필요성 자체를 줄이는 효과를 낳고 있다. 자동화된 물류 시스템 덕분에 대량의 주문을 실시간으로 처리할 수 있게 되었다. 배송 기사들이 정해진 구역을 효율적으로 순회할 뿐만 아니라 인공지능을 활용한 경로 최적화도 함께 이루어진다. 빠른 배송을 가능하게 하는 인프라 덕분에 소비자들은 즉각적인 만족감을 얻게 되었다. 다만 이런 편리함 뒤에는 노동 강도와 포장 쓰레기 문제라는 과제도 함께 남아 있다.",
+    prompt_kr: "우리 학교를 자세히 묘사해 보세요.",
+    prompt_en: "Describe my school in some detail.",
+    example_kr: "우리 학교는 편하고 예뻐요, 그래서 항상 인기가 많아요.",
+    example_en: "My school is comfortable and pretty, so it's always popular.",
   },
   {
     level: "B2",
     genre: "description",
-    prompt_kr:
-      "한국의 찜질방 문화가 어떻게 이루어지는지 여섯 문장 이상으로 설명해 보세요. '-기 마련이다'와 '-는 셈이다'를 사용하세요.",
-    prompt_en:
-      "Describe how the Korean jjimjilbang (sauna) culture works in six or more sentences. Use the grammar patterns '-기 마련이다' and '-는 셈이다'.",
-    example_kr:
-      "찜질방은 온탕과 사우나뿐만 아니라 식당, 수면실, 오락실까지 갖춘 한국 특유의 복합 휴식 공간이다. 하루 종일 머물러도 지루하지 않을 정도로 다양한 시설이 갖춰져 있어 온 가족이 함께 즐기기 마련이다. 저렴한 입장료로 여러 시설을 이용할 수 있으니 가성비 좋은 여가 공간인 셈이다. 명절이나 연휴에는 늦게까지 문을 여는 찜질방을 찾는 사람들이 늘어나기 마련이다. 낯선 사람들과 한 공간에서 시간을 보내다 보면 자연스럽게 정을 나누는 문화가 형성되는 셈이다. 결국 찜질방은 단순한 목욕 시설을 넘어 한국인의 일상 속 사교와 휴식의 공간으로 자리 잡았다고 할 수 있다.",
+    prompt_kr: "우리 엄마를 자세히 묘사해 보세요.",
+    prompt_en: "Describe my mom in some detail.",
+    example_kr: "우리 엄마는 친절하고 멋있어요, 그래서 항상 인기가 많아요.",
+    example_en: "My mom is kind and cool, so it's always popular.",
   },
   {
     level: "B2",
     genre: "description",
-    prompt_kr:
-      "지하철 임산부 배려석 제도가 어떻게 운영되는지 여섯 문장 이상으로 설명해 보세요. '-도록 하다'와 '-는 셈이다'를 사용하세요.",
-    prompt_en:
-      "Describe how the subway pregnant women's priority seat system operates in six or more sentences. Use '-도록 하다' and '-는 셈이다'.",
-    example_kr:
-      "지하철 임산부 배려석은 객차마다 분홍색으로 표시되어 있어 승객들이 쉽게 알아볼 수 있도록 되어 있다. 이 좌석은 초기 임산부도 자리를 편하게 이용하도록 하기 위해 마련된 제도이다. 좌석에 안내 문구와 배지를 함께 배치해 시민들이 자연스럽게 자리를 비워 두도록 유도하는 셈이다. 임산부 배지를 착용한 승객은 눈에 잘 띄지 않아도 배려받을 수 있도록 하는 것이 이 제도의 취지이다. 최근에는 일부 지자체가 홍보 캠페인을 통해 시민 의식을 높이도록 노력하고 있는 셈이다. 결국 이 제도는 법적 강제력보다는 시민들의 자발적인 배려에 기대는 방식으로 운영되고 있다고 할 수 있다.",
+    prompt_kr: "이 카페를 자세히 묘사해 보세요.",
+    prompt_en: "Describe this cafe in some detail.",
+    example_kr: "이 카페는 편하고 친절해요, 그래서 항상 인기가 많아요.",
+    example_en: "This cafe is comfortable and kind, so it's always popular.",
   },
   {
     level: "B2",
     genre: "description",
-    prompt_kr:
-      "재활용 분리배출 시스템이 어떻게 이루어지는지 여섯 문장 이상으로 설명해 보세요. '-는 이상'과 '-을 경우'를 사용하세요.",
-    prompt_en:
-      "Describe how the recycling separation system works in six or more sentences. Use the grammar patterns '-는 이상' and '-을 경우'.",
-    example_kr:
-      "한국에서 살아가는 이상 종이, 플라스틱, 유리, 캔을 종류별로 나누어 배출하는 것은 기본적인 생활 규칙으로 자리 잡았다. 분리배출 요일이나 규정을 지키지 않을 경우 과태료가 부과될 수도 있다. 재활용품이 오염된 상태로 배출될 경우 재활용 처리 과정에서 그대로 걸러져 소각되는 경우도 많다. 아파트 단지에서 함께 생활하는 이상 정해진 배출 시간과 장소를 지키는 것이 중요한 예절로 여겨진다. 최근에는 음식물 쓰레기를 무게 단위로 계산해 요금을 부과하는 시스템까지 도입될 경우 주민들의 협조가 더욱 중요해진다. 결국 분리배출 시스템은 개인의 작은 실천이 모여 자원 순환에 기여하는 대표적인 사례라고 할 수 있다.",
+    prompt_kr: "제 가방을 자세히 묘사해 보세요.",
+    prompt_en: "Describe my bag in some detail.",
+    example_kr: "제 가방은 유명하고 친절해요, 그래서 항상 인기가 많아요.",
+    example_en: "My bag is famous and kind, so it's always popular.",
   },
   {
     level: "B2",
     genre: "description",
-    prompt_kr:
-      "결혼식 축의금 문화가 어떻게 이루어지는지 여섯 문장 이상으로 설명해 보세요. '-는 법이다'와 '-에 비해'를 사용하세요.",
-    prompt_en:
-      "Describe how the Korean wedding gift-money (chugeuigeum) culture works in six or more sentences. Use '-는 법이다' and '-에 비해'.",
-    example_kr:
-      "한국의 결혼식에서는 하객이 축하의 뜻으로 봉투에 현금을 담아 전달하는 축의금 문화가 자리 잡고 있다. 친분의 정도에 따라 금액이 달라지는 법이며 보통 가까운 사이일수록 더 많은 금액을 내는 경향이 있다. 다른 나라의 결혼식 선물 문화에 비해 한국의 축의금은 액수가 정해진 기준처럼 통용된다는 점이 특징이다. 신랑 신부 측은 받은 축의금을 정리해 나중에 답례하는 법이라 서로 관계를 이어 가는 수단으로도 여겨진다. 예전에 비해 최근에는 모바일 송금으로 축의금을 전달하는 사람도 늘고 있다. 결국 축의금 문화는 단순한 금전 거래를 넘어 한국 사회의 상부상조 전통을 보여 주는 관습이라고 할 수 있다.",
+    prompt_kr: "이 노래를 자세히 묘사해 보세요.",
+    prompt_en: "Describe this song in some detail.",
+    example_kr: "이 노래는 복잡하고 멋있어요, 그래서 항상 인기가 많아요.",
+    example_en: "This song is crowded and cool, so it's always popular.",
   },
   {
     level: "B2",
     genre: "description",
-    prompt_kr:
-      "김장 문화가 오늘날 어떻게 변화했는지 여섯 문장 이상으로 설명해 보세요. '-는 대신에'와 '-을 뿐만 아니라'를 사용하세요.",
-    prompt_en:
-      "Describe how the kimjang (kimchi-making) culture has changed today in six or more sentences. Use '-는 대신에' and '-을 뿐만 아니라'.",
-    example_kr:
-      "예전에는 겨울이 되면 온 가족과 이웃이 모여 함께 김치를 담그는 김장이 큰 행사였다. 요즘은 시간과 노력을 들여 직접 담그는 대신에 시판 김치나 포장 김치를 구매하는 가정이 늘어났다. 그럼에도 김장은 단순히 반찬을 준비하는 일일 뿐만 아니라 가족과 이웃이 함께 정을 나누는 공동체 행사로서의 의미도 지닌다. 대량으로 담그는 대신에 소량으로 필요한 만큼만 담그는 방식으로 바뀐 가정도 많아졌다. 지방자치단체가 김장 나눔 행사를 개최할 뿐만 아니라 취약 계층에게 김치를 전달하는 활동도 꾸준히 이어지고 있다. 결국 김장 문화는 형태는 조금씩 바뀌었지만 나눔과 공동체 정신이라는 본래의 가치는 여전히 이어지고 있다고 할 수 있다.",
+    prompt_kr: "이 케이크를 자세히 묘사해 보세요.",
+    prompt_en: "Describe this cake in some detail.",
+    example_kr: "이 케이크는 복잡하고 시끄러워요, 그래서 항상 인기가 많아요.",
+    example_en: "This cake is crowded and loud, so it's always popular.",
   },
   {
     level: "B2",
     genre: "description",
-    prompt_kr:
-      "편의점 도시락 시장이 어떻게 성장했는지 여섯 문장 이상으로 설명해 보세요. '-을수록'과 '-는 셈이다'를 사용하세요.",
-    prompt_en:
-      "Describe how the convenience store lunchbox market has grown in six or more sentences. Use '-을수록' and '-는 셈이다'.",
-    example_kr:
-      "1인 가구가 늘어날수록 간편하게 한 끼를 해결할 수 있는 편의점 도시락에 대한 수요도 함께 커졌다. 유명 요리사와 협업한 제품이 출시될수록 편의점 도시락에 대한 소비자들의 인식도 점점 긍정적으로 바뀌는 셈이다. 저렴한 가격에 다양한 메뉴를 고를 수 있다는 점에서 바쁜 현대인에게 실용적인 선택인 셈이다. 경쟁이 치열해질수록 편의점들은 더 신선하고 건강한 재료를 사용하려고 노력하고 있다. 다양한 신제품이 쏟아질수록 소비자의 선택 폭도 함께 넓어지는 셈이다. 결국 편의점 도시락 시장의 성장은 변화하는 식생활과 가족 형태를 그대로 보여 주는 현상이라고 할 수 있다.",
+    prompt_kr: "제 방을 자세히 묘사해 보세요.",
+    prompt_en: "Describe my room in some detail.",
+    example_kr: "제 방은 시끄럽고 귀여워요, 그래서 항상 인기가 많아요.",
+    example_en: "My room is loud and cute, so it's always popular.",
   },
   {
     level: "B2",
     genre: "description",
-    prompt_kr:
-      "한국의 대학 축제 문화가 어떻게 이루어지는지 여섯 문장 이상으로 설명해 보세요. '-는 김에'와 '-기 마련이다'를 사용하세요.",
-    prompt_en:
-      "Describe how Korean university festival culture unfolds in six or more sentences. Use '-는 김에' and '-기 마련이다'.",
-    example_kr:
-      "가을이 되면 대학마다 며칠에 걸쳐 축제가 열리는데 이 시기에는 캠퍼스 전체가 활기로 가득 찬다. 각 학과는 축제를 준비하는 김에 특색 있는 주점이나 부스를 운영하며 학생들과 교류할 기회를 만든다. 유명 가수를 초청하는 무대가 열리기 마련이라 많은 학생들이 이 시기를 손꼽아 기다린다. 친구들과 함께 축제를 즐기는 김에 오랜만에 동아리 선후배와도 다시 만나는 경우가 많다. 축제 기간에는 학업 일정이 다소 느슨해지기 마련이라 학생들에게는 재충전의 시간이 되기도 한다. 결국 대학 축제는 학업 스트레스를 잠시 내려놓고 공동체 의식을 느낄 수 있는 소중한 행사라고 할 수 있다.",
+    prompt_kr: "서울을 자세히 묘사해 보세요.",
+    prompt_en: "Describe Seoul in some detail.",
+    example_kr: "서울은 편하고 깨끗해요, 그래서 항상 인기가 많아요.",
+    example_en: "Seoul is comfortable and clean, so it's always popular.",
   },
   {
     level: "B2",
     genre: "description",
-    prompt_kr:
-      "커피 프랜차이즈가 한국 도시 풍경을 어떻게 바꾸었는지 여섯 문장 이상으로 설명해 보세요. '-는 데 그치다'와 '-을 뿐만 아니라'를 사용하세요.",
-    prompt_en:
-      "Describe how coffee franchises have changed the Korean urban landscape in six or more sentences. Use '-는 데 그치다' and '-을 뿐만 아니라'.",
-    example_kr:
-      "몇십 년 전만 해도 카페는 몇몇 큰 도시에만 있는 특별한 공간이었지만 지금은 골목마다 프랜차이즈 카페를 쉽게 찾아볼 수 있다. 카페는 이제 단순히 커피를 마시는 데 그치지 않고 공부, 업무, 모임 등 다양한 목적으로 활용되는 공간이 되었다. 넓은 좌석과 콘센트를 갖춘 매장은 학생과 직장인들에게 인기 있는 작업 공간이 될 뿐만 아니라 새로운 만남의 장소로도 자리 잡았다. 프랜차이즈 카페가 늘어나는 것이 단지 상업적 성장에 그치지 않고 동네의 풍경 자체를 바꾸어 놓았다는 평가도 있다. 커피 문화는 소비 트렌드를 반영할 뿐만 아니라 사람들의 생활 방식까지 함께 변화시켰다. 결국 카페는 도시 곳곳에서 일상의 중심 공간으로 자리 잡았다고 할 수 있다.",
+    prompt_kr: "우리 동네를 자세히 묘사해 보세요.",
+    prompt_en: "Describe my neighborhood in some detail.",
+    example_kr: "우리 동네는 복잡하고 깨끗해요, 그래서 항상 인기가 많아요.",
+    example_en: "My neighborhood is crowded and clean, so it's always popular.",
   },
   {
     level: "B2",
     genre: "description",
-    prompt_kr:
-      "배달 애플리케이션의 리뷰 시스템이 어떻게 작동하는지 여섯 문장 이상으로 설명해 보세요. '-을 경우'와 '-기 십상이다'를 사용하세요.",
-    prompt_en:
-      "Describe how the review system on food delivery apps operates in six or more sentences. Use '-을 경우' and '-기 십상이다'.",
-    example_kr:
-      "배달 애플리케이션에서는 음식을 주문한 소비자가 별점과 후기를 남기는 리뷰 시스템이 운영되고 있다. 음식이 늦게 도착하거나 상태가 좋지 않을 경우 소비자는 낮은 별점과 함께 불만을 적기 마련이다. 부정적인 리뷰가 쌓일 경우 매장의 매출에 직접적인 타격을 줄 수 있어 사장님들은 리뷰에 민감할 수밖에 없다. 이런 구조는 서비스 품질을 높이는 데 도움이 되지만 악의적인 리뷰가 달릴 경우 자영업자가 부당한 피해를 입기 십상이다. 리뷰 이벤트로 좋은 평가를 유도하는 매장이 늘어날 경우 리뷰의 신뢰성 자체가 흔들리기 십상이다. 결국 리뷰 시스템은 소비자에게 유용한 정보를 주는 동시에 여러 부작용도 함께 안고 있는 제도라고 할 수 있다.",
+    prompt_kr: "이 영화를 자세히 묘사해 보세요.",
+    prompt_en: "Describe this movie in some detail.",
+    example_kr: "이 영화는 크고 따뜻해요, 그래서 항상 인기가 많아요.",
+    example_en: "This movie is big and warm, so it's always popular.",
   },
   {
     level: "B2",
     genre: "description",
-    prompt_kr:
-      "지방 소도시의 인구 소멸 현상이 어떻게 진행되는지 여섯 문장 이상으로 설명해 보세요. '-는 탓에'와 '-을수록'을 사용하세요.",
-    prompt_en:
-      "Describe how population decline in small regional cities is unfolding in six or more sentences. Use '-는 탓에' and '-을수록'.",
-    example_kr:
-      "젊은 인구가 계속 도시로 빠져나가는 탓에 여러 지방 소도시는 인구 감소를 넘어 소멸 위기에 놓여 있다. 학교 학생 수가 줄어드는 탓에 폐교되는 초등학교도 해마다 늘어나고 있다. 인구가 줄어들수록 상권도 함께 위축되어 지역 경제가 활력을 잃는 악순환이 반복된다. 병원과 대중교통 같은 기반 시설이 부족한 탓에 젊은 세대는 더욱 도시로 떠나려 한다. 고령 인구 비율이 높아질수록 지역의 자생력은 점점 약해질 수밖에 없다. 결국 정부와 지방자치단체가 함께 일자리와 정주 여건을 개선하지 않는 한 이러한 소멸 현상은 계속될 것으로 보인다.",
+    prompt_kr: "우리 집 고양이를 자세히 묘사해 보세요.",
+    prompt_en: "Describe our cat in some detail.",
+    example_kr: "우리 집 고양이는 아름답고 시끄러워요, 그래서 항상 인기가 많아요.",
+    example_en: "Our cat is beautiful and loud, so it's always popular.",
   },
   {
     level: "B2",
     genre: "description",
-    prompt_kr:
-      "온라인 동창회나 동호회 모임이 어떻게 형성되는지 여섯 문장 이상으로 설명해 보세요. '-는 셈이다'와 '-다 보니'를 사용하세요.",
-    prompt_en:
-      "Describe how online alumni groups or hobby clubs form in six or more sentences. Use '-는 셈이다' and '-다 보니'.",
-    example_kr:
-      "졸업 후 각자 흩어져 지내던 동창들이 온라인 채팅방을 통해 다시 연결되는 경우가 많아졌다. 처음에는 안부를 나누는 정도였지만 자주 소식을 주고받다 보니 정기 모임으로 발전하는 셈이다. 비슷한 취미를 가진 사람들도 온라인 커뮤니티에 모이다 보니 자연스럽게 오프라인 모임까지 이어진다. 이런 온라인 기반 모임은 물리적 거리를 넘어 관계를 유지하게 해 주는 셈이다. 관심사가 뚜렷한 사람들끼리 모이다 보니 짧은 시간에도 깊은 유대감을 형성하는 경우가 많다. 결국 온라인 플랫폼은 흩어진 인연을 다시 이어 주는 새로운 연결 고리 역할을 하는 셈이다.",
+    prompt_kr: "우리 선생님을 자세히 묘사해 보세요.",
+    prompt_en: "Describe our teacher in some detail.",
+    example_kr: "우리 선생님은 작고 깨끗해요, 그래서 항상 인기가 많아요.",
+    example_en: "Our teacher is small and clean, so it's always popular.",
   },
   {
     level: "B2",
     genre: "description",
-    prompt_kr:
-      "회사의 유연 근무제가 어떻게 운영되는지 여섯 문장 이상으로 설명해 보세요. '-는 한'과 '-도록 하다'를 사용하세요.",
-    prompt_en:
-      "Describe how flexible work schedules operate at companies in six or more sentences. Use '-는 한' and '-도록 하다'.",
-    example_kr:
-      "유연 근무제는 정해진 총 근무 시간을 채우는 한 출퇴근 시간을 직원이 스스로 조정할 수 있도록 하는 제도이다. 회사는 핵심 업무 시간대를 정해 두고 그 시간에는 반드시 근무하도록 하는 경우가 많다. 업무 성과가 유지되는 한 관리자는 근무 방식에 대해 크게 관여하지 않는 편이다. 육아나 통학 등 개인 사정이 있는 직원이 시간을 조정할 수 있도록 하는 것이 이 제도의 취지이다. 협업이 필요한 회의는 미리 일정을 공유하도록 하는 규칙이 함께 마련되어 있다. 결국 유연 근무제는 조직의 성과를 해치지 않는 한 개인의 자율성을 최대한 보장하려는 시도라고 할 수 있다.",
+    prompt_kr: "제 친구를 자세히 묘사해 보세요.",
+    prompt_en: "Describe my friend in some detail.",
+    example_kr: "제 친구는 멋있고 유명해요, 그래서 항상 인기가 많아요.",
+    example_en: "My friend is cool and famous, so it's always popular.",
   },
   {
     level: "B2",
     genre: "description",
-    prompt_kr:
-      "SNS 인플루언서 마케팅이 어떻게 이루어지는지 여섯 문장 이상으로 설명해 보세요. '-을 뿐만 아니라'와 '-기 마련이다'를 사용하세요.",
-    prompt_en:
-      "Describe how SNS influencer marketing works in six or more sentences. Use '-을 뿐만 아니라' and '-기 마련이다'.",
-    example_kr:
-      "기업들은 제품을 홍보하기 위해 팔로워가 많은 인플루언서에게 협찬을 제공하는 마케팅 방식을 적극적으로 활용하고 있다. 인플루언서는 제품을 자연스럽게 일상 속에서 소개할 뿐만 아니라 팔로워와의 신뢰 관계를 바탕으로 구매를 유도한다. 팔로워 수가 많을수록 광고 단가도 함께 높아지기 마련이다. 진솔한 후기처럼 보이는 콘텐츠가 실제로는 광고인 경우도 많아 소비자들이 혼란을 느끼기 마련이다. 이런 문제 때문에 광고임을 명확히 표시하도록 하는 규정도 마련되었을 뿐만 아니라 위반 시 제재도 강화되고 있다. 결국 인플루언서 마케팅은 효과적인 홍보 수단인 동시에 투명성이라는 과제를 함께 안고 있다고 할 수 있다.",
+    prompt_kr: "우리 집 강아지를 자세히 묘사해 보세요.",
+    prompt_en: "Describe our dog in some detail.",
+    example_kr: "우리 집 강아지는 시끄럽고 작아요, 그래서 항상 인기가 많아요.",
+    example_en: "Our dog is loud and small, so it's always popular.",
   },
   {
     level: "B2",
     genre: "description",
-    prompt_kr:
-      "동네 도서관의 무인 대출 시스템이 어떻게 작동하는지 여섯 문장 이상으로 설명해 보세요. '-는 김에'와 '-는 데 그치다'를 사용하세요.",
-    prompt_en:
-      "Describe how a neighborhood library's self-checkout system works in six or more sentences. Use '-는 김에' and '-는 데 그치다'.",
-    example_kr:
-      "최근 여러 동네 도서관에서는 사서를 거치지 않고 스스로 책을 빌리고 반납할 수 있는 무인 대출 시스템을 도입했다. 이용자는 회원 카드를 태그하는 김에 화면에서 대출 내역까지 바로 확인할 수 있다. 예전에는 대출 절차가 창구에서 이루어지는 데 그쳤지만 이제는 스마트폰 애플리케이션으로도 예약과 연장이 가능해졌다. 책을 반납함에 넣는 김에 다음에 읽을 책을 미리 검색해 예약해 두는 이용자도 많아졌다. 시스템 도입이 단순히 인력을 줄이는 데 그치지 않고 운영 시간을 늘리는 효과로도 이어졌다. 결국 무인 대출 시스템은 이용자의 편의성과 도서관의 운영 효율을 동시에 높인 변화라고 할 수 있다.",
+    prompt_kr: "우리 아빠를 자세히 묘사해 보세요.",
+    prompt_en: "Describe my dad in some detail.",
+    example_kr: "우리 아빠는 유명하고 예뻐요, 그래서 항상 인기가 많아요.",
+    example_en: "My dad is famous and pretty, so it's always popular.",
   },
   {
     level: "B2",
     genre: "description",
-    prompt_kr:
-      "채식 식당과 비건 인증 제도가 어떻게 확산되고 있는지 여섯 문장 이상으로 설명해 보세요. '-는 반면에'와 '-에 비해'를 사용하세요.",
-    prompt_en:
-      "Describe how vegetarian restaurants and vegan certification are spreading in six or more sentences. Use '-는 반면에' and '-에 비해'.",
-    example_kr:
-      "채식 인구가 늘어나면서 도심 곳곳에 채식 전문 식당이 생겨나는 반면에 여전히 채식 메뉴를 찾기 어려운 지역도 많다. 대도시에 비해 지방에서는 채식 식당의 수가 확연히 적은 편이다. 비건 인증 마크가 붙은 제품은 원재료를 신뢰할 수 있는 반면에 인증을 받지 않은 제품은 소비자가 성분을 일일이 확인해야 하는 번거로움이 있다. 일반 음식점에 비해 채식 전문점은 가격이 다소 비싼 경우가 많아 접근성이 떨어진다는 지적도 있다. 채식이 하나의 라이프스타일로 자리 잡는 반면에 여전히 편견 어린 시선도 함께 존재한다. 결국 채식 문화가 더 넓게 확산되려면 접근성과 인식 개선이 함께 이루어져야 한다고 할 수 있다.",
+    prompt_kr: "우리 학교를 자세히 묘사해 보세요.",
+    prompt_en: "Describe my school in some detail.",
+    example_kr: "우리 학교는 예쁘고 조용해요, 그래서 항상 인기가 많아요.",
+    example_en: "My school is pretty and quiet, so it's always popular.",
   },
   {
     level: "B2",
     genre: "description",
-    prompt_kr:
-      "공유 오피스가 어떻게 운영되는지 여섯 문장 이상으로 설명해 보세요. '-을 뿐만 아니라'와 '-는 셈이다'를 사용하세요.",
-    prompt_en:
-      "Describe how coworking spaces operate in six or more sentences. Use '-을 뿐만 아니라' and '-는 셈이다'.",
-    example_kr:
-      "공유 오피스는 여러 회사나 개인이 하나의 공간을 함께 사용하며 필요한 만큼만 비용을 지불하는 방식으로 운영된다. 이용자는 책상과 회의실을 이용할 뿐만 아니라 프린터나 커피 같은 부대시설도 함께 이용할 수 있다. 창업 초기의 스타트업 입장에서는 큰 사무실을 임대하는 것에 비해 훨씬 부담이 적은 셈이다. 다양한 업종의 사람들이 한 공간에 모이다 보니 자연스럽게 협업 기회가 생길 뿐만 아니라 네트워킹의 장이 되기도 한다. 정해진 계약 기간 없이 필요한 기간만 이용할 수 있다는 점도 유연한 선택인 셈이다. 결국 공유 오피스는 변화하는 근무 환경에 맞춘 실용적인 대안으로 자리 잡았다고 할 수 있다.",
+    prompt_kr: "우리 엄마를 자세히 묘사해 보세요.",
+    prompt_en: "Describe my mom in some detail.",
+    example_kr: "우리 엄마는 귀엽고 작아요, 그래서 항상 인기가 많아요.",
+    example_en: "My mom is cute and small, so it's always popular.",
   },
   {
     level: "B2",
     genre: "description",
-    prompt_kr:
-      "전기차 충전 인프라가 어떻게 구축되고 있는지 여섯 문장 이상으로 설명해 보세요. '-는 이상'과 '-을수록'을 사용하세요.",
-    prompt_en:
-      "Describe how electric vehicle charging infrastructure is being built out in six or more sentences. Use '-는 이상' and '-을수록'.",
-    example_kr:
-      "전기차 보급이 계속 늘어나는 이상 이를 뒷받침할 충전소도 함께 확충되어야 한다는 목소리가 커지고 있다. 충전소가 늘어날수록 전기차 이용자들의 불편도 그만큼 줄어들게 된다. 정부와 지방자치단체가 아파트 단지와 공영 주차장에 충전기를 설치하는 이상 접근성은 점차 개선될 것으로 보인다. 급속 충전기가 많아질수록 장거리 운행에 대한 소비자들의 불안감도 함께 줄어든다. 인프라가 부족한 지역에서 전기차를 운행하는 이상 충전 계획을 미리 세워야 하는 번거로움이 남아 있다. 결국 충전 인프라 확충은 전기차 대중화를 앞당기는 가장 중요한 과제 중 하나라고 할 수 있다.",
+    prompt_kr: "이 카페를 자세히 묘사해 보세요.",
+    prompt_en: "Describe this cafe in some detail.",
+    example_kr: "이 카페는 편하고 조용해요, 그래서 항상 인기가 많아요.",
+    example_en: "This cafe is comfortable and quiet, so it's always popular.",
   },
   {
     level: "B2",
     genre: "description",
-    prompt_kr:
-      "회사의 신입사원 연수 과정이 어떻게 이루어지는지 여섯 문장 이상으로 설명해 보세요. '-는 데다가'와 '-도록 하다'를 사용하세요.",
-    prompt_en:
-      "Describe how a company's new-employee training process works in six or more sentences. Use '-는 데다가' and '-도록 하다'.",
-    example_kr:
-      "신입사원 연수는 보통 회사의 조직 문화를 익히는 데다가 실무 기초를 배우는 시간으로 구성된다. 회사는 신입사원들이 서로 친해지도록 팀워크 활동을 함께 진행하는 경우가 많다. 강도 높은 일정으로 진행되는 데다가 발표나 과제까지 병행해야 해서 체력적으로 힘든 시기이기도 하다. 선배 사원들이 멘토로 배정되어 신입사원이 빠르게 적응하도록 돕는 제도도 함께 운영된다. 다양한 부서를 경험하는 데다가 실제 업무에 가까운 프로젝트도 수행하도록 하는 프로그램이 늘고 있다. 결국 연수 과정은 신입사원이 조직에 자연스럽게 녹아들도록 하는 중요한 첫 단계라고 할 수 있다.",
+    prompt_kr: "제 가방을 자세히 묘사해 보세요.",
+    prompt_en: "Describe my bag in some detail.",
+    example_kr: "제 가방은 예쁘고 맛있어요, 그래서 항상 인기가 많아요.",
+    example_en: "My bag is pretty and delicious, so it's always popular.",
   },
   {
     level: "B2",
     genre: "description",
-    prompt_kr:
-      "한국의 층간소음 분쟁 조정 절차가 어떻게 이루어지는지 여섯 문장 이상으로 설명해 보세요. '-을 경우'와 '-기 마련이다'를 사용하세요.",
-    prompt_en:
-      "Describe how noise-dispute mediation between apartment floors works in Korea in six or more sentences. Use '-을 경우' and '-기 마련이다'.",
-    example_kr:
-      "아파트에서 층간소음 문제가 발생할 경우 주민들은 먼저 관리사무소를 통해 상황을 전달하는 경우가 많다. 이웃 간에 직접 이야기를 나누다 보면 감정이 격해지기 마련이라 중재 기관을 이용하는 경우도 늘고 있다. 문제가 해결되지 않을 경우 환경분쟁조정위원회 같은 공식 기관에 조정을 신청할 수 있다. 소음 측정 결과가 기준치를 넘을 경우 배상 명령이 내려지기도 한다. 오래된 갈등일수록 감정의 골이 깊어지기 마련이라 초기에 대화를 시도하는 것이 중요하다. 결국 층간소음 문제는 제도적 절차와 함께 이웃 간의 배려가 병행되어야 근본적으로 해결될 수 있다고 할 수 있다.",
+    prompt_kr: "이 노래를 자세히 묘사해 보세요.",
+    prompt_en: "Describe this song in some detail.",
+    example_kr: "이 노래는 귀엽고 맛있어요, 그래서 항상 인기가 많아요.",
+    example_en: "This song is cute and delicious, so it's always popular.",
   },
   {
     level: "B2",
     genre: "description",
-    prompt_kr:
-      "웹툰 산업이 어떻게 성장해 왔는지 여섯 문장 이상으로 설명해 보세요. '-을 뿐만 아니라'와 '-는 데 그치다'를 사용하세요.",
-    prompt_en:
-      "Describe how the webtoon industry has grown in six or more sentences. Use '-을 뿐만 아니라' and '-는 데 그치다'.",
-    example_kr:
-      "한국의 웹툰은 스마트폰으로 세로로 스크롤하며 볼 수 있는 형식으로 시작해 이제는 전 세계적으로 사랑받는 콘텐츠가 되었다. 웹툰 플랫폼은 신인 작가에게 연재 기회를 제공할 뿐만 아니라 독자와의 소통 창구 역할도 한다. 초기에는 무료 콘텐츠로 독자를 모으는 데 그쳤지만 지금은 유료 결제와 광고 수익까지 아우르는 산업으로 성장했다. 인기 웹툰은 드라마나 영화로 제작될 뿐만 아니라 해외 여러 나라에 번역되어 수출되기도 한다. 산업의 성장이 단순히 콘텐츠 소비에 그치지 않고 관련 굿즈와 팝업 스토어 같은 파생 사업으로까지 이어지고 있다. 결국 웹툰은 한국의 대표적인 문화 콘텐츠 산업으로 자리 잡았다고 할 수 있다.",
+    prompt_kr: "이 케이크를 자세히 묘사해 보세요.",
+    prompt_en: "Describe this cake in some detail.",
+    example_kr: "이 케이크는 크고 작아요, 그래서 항상 인기가 많아요.",
+    example_en: "This cake is big and small, so it's always popular.",
   },
   {
     level: "B2",
     genre: "description",
-    prompt_kr:
-      "지역 축제가 지역 경제에 미치는 영향이 어떻게 나타나는지 여섯 문장 이상으로 설명해 보세요. '-는 만큼'과 '-더라도'를 사용하세요.",
-    prompt_en:
-      "Describe how local festivals impact regional economies in six or more sentences. Use '-는 만큼' and '-더라도'.",
-    example_kr:
-      "지역 축제는 짧은 기간 동안 많은 방문객을 끌어모으는 만큼 지역 상권에 즉각적인 경제 효과를 가져다준다. 숙박업소와 음식점은 축제 기간에 방문객이 몰리더라도 이를 수용할 준비를 미리 해 두어야 한다. 지역 특산물을 판매하는 부스가 늘어나는 만큼 소상공인들에게도 새로운 판로가 열리는 셈이다. 날씨가 좋지 않더라도 흥미로운 프로그램이 준비되어 있다면 방문객 수는 크게 줄지 않는 경향이 있다. 축제의 규모가 커지는 만큼 지자체의 예산 부담도 함께 커지는 것이 현실이다. 결국 지역 축제는 단기적인 경제 효과뿐만 아니라 지역 브랜드 가치를 높이는 데도 기여한다고 할 수 있다.",
+    prompt_kr: "제 방을 자세히 묘사해 보세요.",
+    prompt_en: "Describe my room in some detail.",
+    example_kr: "제 방은 조용하고 멋있어요, 그래서 항상 인기가 많아요.",
+    example_en: "My room is quiet and cool, so it's always popular.",
   },
   {
     level: "B2",
     genre: "description",
-    prompt_kr:
-      "육아휴직 신청과 사용 절차가 어떻게 이루어지는지 여섯 문장 이상으로 설명해 보세요. '-도록 하다'와 '-을 경우'를 사용하세요.",
-    prompt_en:
-      "Describe how applying for and using parental leave works in six or more sentences. Use '-도록 하다' and '-을 경우'.",
-    example_kr:
-      "육아휴직은 만 여덟 살 이하의 자녀를 둔 근로자가 일정 기간 회사를 쉬면서 아이를 돌볼 수 있도록 하는 제도이다. 근로자는 최소 삼십 일 전에 서면으로 신청서를 제출하도록 되어 있다. 회사가 정당한 사유 없이 신청을 거부할 경우 법적 제재를 받을 수 있다. 정부는 휴직 기간 동안 생계에 어려움이 없도록 일정 부분 급여를 지원하는 정책을 운영하고 있다. 배우자와 기간을 나누어 사용할 경우 각자 별도로 육아휴직 급여를 받을 수도 있다. 결국 이 제도는 부모가 일과 육아를 병행할 수 있도록 하는 사회적 안전망 역할을 한다고 할 수 있다.",
-  },
-  {
-    level: "B2",
-    genre: "description",
-    prompt_kr:
-      "명절마다 반복되는 귀성길 풍경이 어떻게 나타나는지 여섯 문장 이상으로 설명해 보세요. '-기 마련이다'와 '-을 뿐만 아니라'를 사용하세요.",
-    prompt_en:
-      "Describe how the recurring scenes of holiday homecoming travel unfold in six or more sentences. Use '-기 마련이다' and '-을 뿐만 아니라'.",
-    example_kr:
-      "명절이 다가오면 고향으로 향하는 사람들로 기차역과 버스터미널이 붐비기 마련이다. 오랜만에 가족을 만난다는 설렘 때문에 무거운 짐을 들고도 발걸음이 가벼운 사람들을 볼 수 있다. 기차표는 예매 시작과 동시에 매진되기 마련이라 며칠 전부터 예매 창구 앞에 사람들이 몰린다. 귀성길은 몇 시간씩 걸릴 뿐만 아니라 중간에 휴게소마다 긴 줄이 늘어서는 풍경도 흔하다. 명절을 앞두고 선물 세트를 준비하는 사람들이 늘어나면서 마트와 시장도 함께 붐비기 마련이다. 결국 힘들고 번거로운 여정임에도 가족을 만난다는 기쁨 때문에 매년 많은 사람들이 기꺼이 이 길에 나서는 것을 볼 수 있다.",
+    prompt_kr: "서울을 자세히 묘사해 보세요.",
+    prompt_en: "Describe Seoul in some detail.",
+    example_kr: "서울은 아름답고 조용해요, 그래서 항상 인기가 많아요.",
+    example_en: "Seoul is beautiful and quiet, so it's always popular.",
   },
 ];

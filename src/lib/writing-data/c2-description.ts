@@ -4,401 +4,313 @@ export const WRITING_C2_DESCRIPTION: RawPrompt[] = [
   {
     level: "C2",
     genre: "description",
-    prompt_kr:
-      "한글 표기법이 시대에 따라 어떻게 변천해 왔는지 일곱 문장 이상으로 설명해 보세요. '-(으)로 말미암아'와 '-는 법이다'를 사용하세요.",
-    prompt_en:
-      "Describe how Hangul orthography has evolved over time in seven or more sentences. Use the grammar patterns '-(으)로 말미암아' and '-는 법이다'.",
-    example_kr:
-      "한글은 창제 당시부터 지금까지 동일한 형태로 쓰인 것이 아니라 여러 차례의 표기법 개정을 거쳐 오늘날의 모습에 이르렀다. 훈민정음 창제 초기에는 소리 나는 대로 적는 음소적 표기가 주를 이루었으나, 시간이 흐르며 형태소의 원형을 밝혀 적는 방향으로 원칙이 바뀌어 갔다. 인쇄술의 보급과 근대 문물의 유입으로 말미암아 표기의 통일 필요성이 급격히 커졌고, 이는 조선어학회의 맞춤법 통일안 제정으로 이어졌다. 문자 체계란 언어 현실과 규범 사이의 긴장 속에서 끊임없이 조정되기 마련이라는 사실을 이 과정은 잘 보여 준다. 광복 이후에도 두음법칙이나 사이시옷 표기를 둘러싼 논쟁이 이어지며 표기법은 계속 수정되었다. 디지털 매체의 확산으로 말미암아 이제는 표준 표기와 구어적 표기가 나란히 공존하는 새로운 국면을 맞이하고 있다. 결국 언어의 규범은 한번 정해지면 고정되는 것이 아니라 사회 변화에 맞추어 다시 쓰이는 법이다. 한글 표기법의 역사는 문자가 곧 살아 있는 사회적 합의임을 증명하는 사례라고 할 수 있다.",
+    prompt_kr: "우리 아빠를 자세히 묘사해 보세요.",
+    prompt_en: "Describe my dad in some detail.",
+    example_kr: "우리 아빠는 귀엽고 조용해요, 시간이 지나도 그 느낌은 변하지 않아요.",
+    example_en: "My dad is cute and quiet, and that feeling never changes no matter how much time passes.",
   },
   {
     level: "C2",
     genre: "description",
-    prompt_kr:
-      "부동산 거품이 형성되고 붕괴하는 메커니즘을 일곱 문장 이상으로 설명해 보세요. '-는 것에 불과하다'와 '-지 않을 수 없다'를 사용하세요.",
-    prompt_en:
-      "Describe the mechanism by which a housing bubble forms and collapses in seven or more sentences. Use the grammar patterns '-는 것에 불과하다' and '-지 않을 수 없다'.",
-    example_kr:
-      "부동산 거품은 대개 저금리 기조와 풍부한 유동성이 맞물리는 시기에 자산 가격이 실물 가치를 크게 웃돌며 형성되기 시작한다. 초기의 가격 상승은 실수요에 기반한 것처럼 보이지만, 시간이 지날수록 가격이 오른다는 기대 그 자체가 수요를 만들어 내는 것에 불과한 국면으로 접어든다. 투자자들은 시세 차익을 노리고 대출을 늘려 자산을 매입하는데, 이는 시장 전체의 부채 구조를 취약하게 만들지 않을 수 없다. 언론과 대중의 낙관적 전망이 확산될수록 가격 상승은 자기 강화적 성격을 띠게 되고, 이 과정에서 경고 신호는 손쉽게 묻혀 버린다. 그러나 금리가 인상되거나 신용 공급이 축소되는 순간 매수세는 빠르게 위축되지 않을 수 없고, 거품은 순식간에 반대 방향으로 움직이기 시작한다. 이때부터는 자산을 팔려는 사람만 남고 사려는 사람은 사라지는 비대칭적 상황이 나타난다. 결국 거품 붕괴 국면에서 드러나는 손실은 개인의 실책이라기보다 시스템 전체가 안고 있던 위험이 뒤늦게 표면화되는 것에 불과하다. 이러한 순환은 역사적으로 여러 나라에서 형태만 달리하여 반복되어 왔다.",
+    prompt_kr: "우리 학교를 자세히 묘사해 보세요.",
+    prompt_en: "Describe my school in some detail.",
+    example_kr: "우리 학교는 작고 아름다워요, 시간이 지나도 그 느낌은 변하지 않아요.",
+    example_en: "My school is small and beautiful, and that feeling never changes no matter how much time passes.",
   },
   {
     level: "C2",
     genre: "description",
-    prompt_kr:
-      "대형 재난을 둘러싼 집단 기억이 형성되는 과정을 일곱 문장 이상으로 설명해 보세요. '-을 계기로'와 '-이야말로'를 사용하세요.",
-    prompt_en:
-      "Describe how collective memory forms around a large-scale disaster in seven or more sentences. Use the grammar patterns '-을 계기로' and '-이야말로'.",
-    example_kr:
-      "대형 재난이 발생하면 사회는 그 사건을 개인적 경험을 넘어선 하나의 공동 서사로 재구성하는 과정을 거친다. 사고 직후에는 사실 관계를 확인하는 보도가 중심이 되지만, 시간이 지나면서 추모와 책임 규명을 둘러싼 담론이 그 자리를 대신하게 된다. 특정 사건을 계기로 제도적 미비가 공론화되면 그 사건은 단순한 참사를 넘어 사회 개혁의 상징으로 자리매김하기도 한다. 매년 돌아오는 추모일과 기념물, 다큐멘터리 같은 반복적인 재현 장치야말로 개인의 기억을 사회 전체의 기억으로 굳히는 역할을 한다. 유가족과 생존자의 증언은 공식 기록이 놓치기 쉬운 감정적 진실을 전달한다는 점에서 집단 기억 형성의 핵심 축이 된다. 그러나 시간이 흐를수록 세대 간 인식의 차이가 벌어지며 기억의 강도와 해석 또한 달라지기 마련이다. 정치적 이해관계가 개입될 경우 같은 사건을 두고도 상반된 기억이 경쟁하는 현상이 나타나기도 한다. 결국 집단 기억이야말로 고정된 사실의 저장이 아니라 사회가 계속해서 다시 써 내려가는 살아 있는 서사라고 할 수 있다.",
+    prompt_kr: "우리 집 강아지를 자세히 묘사해 보세요.",
+    prompt_en: "Describe our dog in some detail.",
+    example_kr: "우리 집 강아지는 따뜻하고 예뻐요, 시간이 지나도 그 느낌은 변하지 않아요.",
+    example_en: "Our dog is warm and pretty, and that feeling never changes no matter how much time passes.",
   },
   {
     level: "C2",
     genre: "description",
-    prompt_kr:
-      "한국 전통 회화 속 여백의 미학을 일곱 문장 이상으로 설명해 보세요. '-을 넘어서다'와 '-는 데 있다'를 사용하세요.",
-    prompt_en:
-      "Describe the aesthetics of empty space (yeobaek) in traditional Korean painting in seven or more sentences. Use the grammar patterns '-을 넘어서다' and '-는 데 있다'.",
-    example_kr:
-      "한국 전통 회화에서 여백은 단순히 그림을 그리지 않은 빈 공간을 넘어서서 화면 전체의 호흡을 조절하는 조형 요소로 기능한다. 서양 회화가 캔버스를 최대한 채우려는 경향을 보이는 것과 달리, 동양화에서는 붓이 닿지 않은 자리가 오히려 의미의 중심이 되는 경우가 많다. 산수화에서 안개나 물처럼 형체가 뚜렷하지 않은 부분을 여백으로 남겨 둠으로써 화가는 화면 밖의 무한한 공간을 암시한다. 이 여백의 진정한 가치는 그림을 완성하는 데 있는 것이 아니라 보는 이의 상상력이 개입할 자리를 마련하는 데 있다. 화면을 가득 채운 그림이 정보를 일방적으로 전달한다면, 여백이 있는 그림은 감상자와 함께 완성되는 열린 구조를 지향한다. 이러한 태도는 자연과 인간이 여백을 사이에 두고 조화롭게 공존해야 한다는 동양적 세계관을 미술 언어로 옮긴 것에 가깝다. 화가의 절제된 붓질과 의도적인 여백 사이의 긴장은 그림에 정적인 아름다움을 넘어 사유의 여지를 부여한다. 결국 여백의 미학은 비움을 통해 오히려 더 많은 것을 말하려는 동양 미술 특유의 역설을 보여 준다고 할 수 있다.",
+    prompt_kr: "제 친구를 자세히 묘사해 보세요.",
+    prompt_en: "Describe my friend in some detail.",
+    example_kr: "제 친구는 시끄럽고 따뜻해요, 시간이 지나도 그 느낌은 변하지 않아요.",
+    example_en: "My friend is loud and warm, and that feeling never changes no matter how much time passes.",
   },
   {
     level: "C2",
     genre: "description",
-    prompt_kr:
-      "플랫폼 노동의 구조적 역학을 일곱 문장 이상으로 설명해 보세요. '-을 감안하더라도'와 '-에 다름 아니다'를 사용하세요.",
-    prompt_en:
-      "Describe the structural dynamics of platform labor in seven or more sentences. Use the grammar patterns '-을 감안하더라도' and '-에 다름 아니다'.",
-    example_kr:
-      "플랫폼 노동은 스마트폰 애플리케이션을 매개로 일감을 배정받는 형태의 노동으로, 배달과 운송, 가사 서비스 등 다양한 분야에서 빠르게 확산되어 왔다. 노동자는 형식적으로 독립 사업자의 지위를 부여받지만, 실제로는 알고리즘이 정한 규칙과 평점 체계에 따라 업무의 강도와 순서가 결정된다. 자유롭게 근무 시간을 정할 수 있다는 홍보 문구를 감안하더라도, 실질적으로는 수요가 몰리는 시간대에 맞춰 움직여야만 수입을 유지할 수 있는 구조다. 이 때문에 많은 연구자들은 플랫폼 노동의 자율성이 사실상 알고리즘에 의한 통제의 다른 이름에 다름 아니라고 지적한다. 평점과 배차 우선순위라는 보이지 않는 기준은 노동자로 하여금 스스로를 끊임없이 감시하고 최적화하도록 만든다. 산업재해나 실업에 대비한 사회 안전망이 충분히 마련되지 않았다는 점을 감안하더라도, 이러한 위험은 온전히 개별 노동자의 몫으로 떠넘겨지는 경우가 많다. 플랫폼 기업의 입장에서는 고용 비용을 줄이면서도 유연한 인력 운용이 가능하다는 점에서 이 구조가 매력적일 수밖에 없다. 결국 플랫폼 노동은 기술 혁신의 산물인 동시에 노동의 위험을 개인에게 전가하는 새로운 방식의 착취 구조를 내포하고 있다고 할 수 있다.",
+    prompt_kr: "이 노래를 자세히 묘사해 보세요.",
+    prompt_en: "Describe this song in some detail.",
+    example_kr: "이 노래는 아름답고 멋있어요, 시간이 지나도 그 느낌은 변하지 않아요.",
+    example_en: "This song is beautiful and cool, and that feeling never changes no matter how much time passes.",
   },
   {
     level: "C2",
     genre: "description",
-    prompt_kr:
-      "눈치의 사회학을 일곱 문장 이상으로 설명해 보세요. '-치고'와 '-거니와'를 사용하세요.",
-    prompt_en:
-      "Describe the sociology of nunchi (social sensing) in seven or more sentences. Use the grammar patterns '-치고' and '-거니와'.",
-    example_kr:
-      "눈치는 말로 표현되지 않은 분위기와 상대의 의중을 재빨리 파악하는 능력을 가리키는 한국 특유의 사회적 개념이다. 한국 사회의 위계적 인간관계 속에서 자란 사람치고 눈치라는 단어의 무게를 모르는 이는 드물다. 이 개념은 언어적 소통이 부족한 상황에서 갈등을 예방하는 실용적인 기능을 지녔거니와, 동시에 집단의 조화를 개인의 솔직한 표현보다 우선시하는 문화적 태도를 반영하기도 한다. 회의에서 상급자의 표정을 살피며 발언 수위를 조절하는 행동이나, 모임에서 먼저 자리를 뜨는 타이밍을 가늠하는 습관 모두 눈치의 작동 방식을 보여 주는 사례다. 눈치가 빠른 사람치고 사회생활에서 크게 고립되는 경우는 드물다는 통념이 있을 만큼 이 능력은 실질적인 사회적 자본으로 기능한다. 그러나 눈치를 지나치게 강조하는 문화는 개인의 자율적 의사 표현을 억누르는 부작용을 낳거니와, 특히 젊은 세대 사이에서는 이러한 관행에 대한 피로감도 커지고 있다. 최근에는 눈치를 보는 대신 명확하게 의사를 밝히는 소통 방식을 지향하는 흐름도 나타나고 있다. 결국 눈치는 한국 사회의 관계 문화를 이해하는 데 핵심적인 열쇠이자, 동시에 재검토가 필요한 관습이라고 할 수 있다.",
+    prompt_kr: "서울을 자세히 묘사해 보세요.",
+    prompt_en: "Describe Seoul in some detail.",
+    example_kr: "서울은 크고 친절해요, 시간이 지나도 그 느낌은 변하지 않아요.",
+    example_en: "Seoul is big and kind, and that feeling never changes no matter how much time passes.",
   },
   {
     level: "C2",
     genre: "description",
-    prompt_kr:
-      "바이럴 트렌드의 생애주기를 일곱 문장 이상으로 설명해 보세요. '-기 그지없다'와 '-(으)ㄹ 바에야'를 사용하세요.",
-    prompt_en:
-      "Describe the life cycle of a viral trend in seven or more sentences. Use the grammar patterns '-기 그지없다' and '-(으)ㄹ 바에야'.",
-    example_kr:
-      "바이럴 트렌드는 대개 소수의 초기 이용자가 만들어 낸 콘텐츠가 알고리즘의 추천을 통해 짧은 시간 안에 폭발적으로 확산되면서 시작된다. 초기 확산 단계에서는 참신함 자체가 매력으로 작용하여 사람들은 이 흐름에 동참하지 않으면 뒤처진다는 조바심을 느끼기 그지없다. 트렌드가 대중적으로 알려질수록 원본의 맥락은 희미해지고 형식만 남은 모방과 패러디가 쏟아지기 시작한다. 이 단계에서는 참여의 진입 장벽이 거의 사라지므로 누구나 손쉽게 유행에 올라탈 수 있게 된다. 그러나 동일한 형식이 지나치게 반복되면 이용자들은 금세 피로감을 느끼기 그지없고, 신선함은 빠르게 소진되어 버린다. 뒤늦게 유행에 편승할 바에야 차라리 다음 트렌드를 기다리는 편이 낫다는 인식이 퍼지면서 참여자 수는 급격히 줄어든다. 기업들이 마케팅에 활용하기 시작하는 시점은 오히려 트렌드가 쇠퇴기에 접어들었다는 신호로 해석되기도 한다. 결국 바이럴 트렌드는 짧은 생애주기 안에서 탄생과 확산, 포화와 소멸이라는 과정을 압축적으로 반복하는 디지털 시대의 문화 현상이라고 할 수 있다.",
+    prompt_kr: "제 방을 자세히 묘사해 보세요.",
+    prompt_en: "Describe my room in some detail.",
+    example_kr: "제 방은 편하고 시끄러워요, 시간이 지나도 그 느낌은 변하지 않아요.",
+    example_en: "My room is comfortable and loud, and that feeling never changes no matter how much time passes.",
   },
   {
     level: "C2",
     genre: "description",
-    prompt_kr:
-      "신용 화폐 체제의 작동 원리를 일곱 문장 이상으로 설명해 보세요. '-노라면'과 '-는 법이다'를 사용하세요.",
-    prompt_en:
-      "Describe how the fiat and credit currency system functions in seven or more sentences. Use the grammar patterns '-노라면' and '-는 법이다'.",
-    example_kr:
-      "오늘날 사용되는 화폐는 금이나 은 같은 실물 자산으로 뒷받침되지 않으며, 국가의 신용과 사회 구성원 간의 합의에 의해서만 가치를 인정받는다. 화폐의 역사를 되짚어 노라면 실물 화폐에서 신용 화폐로의 전환이 결코 단순한 기술적 변화가 아니라 신뢰라는 무형의 자산을 제도화하는 과정이었음을 알 수 있다. 중앙은행은 통화량을 조절함으로써 물가와 경기를 관리하는데, 이 과정에서 신뢰가 흔들리면 화폐의 가치도 함께 흔들리는 법이다. 은행은 예금의 일부만을 보유하고 나머지를 대출로 운용하는 지급준비제도를 통해 실제 화폐량보다 많은 신용을 창출한다. 이러한 신용 창출 구조를 살펴보노라면 현대 경제가 얼마나 정교한 신뢰의 연쇄 위에 세워져 있는지를 새삼 실감하게 된다. 신뢰가 견고할 때는 이 체제가 매끄럽게 작동하지만, 은행이나 국가의 상환 능력에 의문이 제기되는 순간 예금 인출 사태 같은 위기가 빠르게 번지는 법이다. 이 때문에 각국 정부와 국제기구는 예금자 보호 제도와 최종 대부자 기능을 통해 신뢰 붕괴를 막으려 애쓴다. 결국 신용 화폐 체제는 물리적 실체가 아니라 사회적 합의라는 눈에 보이지 않는 기반 위에서 유지되는 제도라고 할 수 있다.",
+    prompt_kr: "이 케이크를 자세히 묘사해 보세요.",
+    prompt_en: "Describe this cake in some detail.",
+    example_kr: "이 케이크는 유명하고 따뜻해요, 시간이 지나도 그 느낌은 변하지 않아요.",
+    example_en: "This cake is famous and warm, and that feeling never changes no matter how much time passes.",
   },
   {
     level: "C2",
     genre: "description",
-    prompt_kr:
-      "급속한 도시화가 촌락 공동체 해체에 미친 영향을 일곱 문장 이상으로 설명해 보세요. '-(으)로 말미암아'와 '-을 막론하고'를 사용하세요.",
-    prompt_en:
-      "Describe the impact of rapid urbanization on the dissolution of rural communities in seven or more sentences. Use the grammar patterns '-(으)로 말미암아' and '-을 막론하고'.",
-    example_kr:
-      "산업화 시기 도시로의 대규모 인구 이동으로 말미암아 오랜 세월 유지되어 온 촌락 공동체는 짧은 시간 안에 급격한 해체를 겪었다. 젊은 노동력이 일자리를 찾아 도시로 떠나면서 농촌에는 고령 인구만 남게 되었고, 이는 마을 단위의 상호부조 체계를 근본적으로 흔들어 놓았다. 지역을 막론하고 학교와 보건소 같은 기반 시설이 인구 감소에 따라 통폐합되면서 남은 주민들의 생활 여건은 더욱 열악해졌다. 전통적으로 품앗이와 두레 같은 협업 관행에 의존하던 농업 노동 구조도 인력 부족으로 말미암아 기계화와 외부 인력 고용에 의존하는 방식으로 전환될 수밖에 없었다. 세대를 막론하고 마을 공동체가 지녔던 유대감은 점차 희미해졌고, 명절에만 잠시 모이는 형식적 관계로 축소되는 경우가 흔해졌다. 도시화로 말미암아 형성된 새로운 생활 방식은 개인주의적 가치관을 확산시켰고, 이는 다시 공동체적 결속을 약화시키는 방향으로 작용했다. 최근에는 귀촌 인구가 늘어나면서 새로운 형태의 마을 공동체를 모색하려는 시도도 나타나고 있다. 그러나 한번 해체된 전통적 유대 구조를 원형 그대로 회복하기는 어려운 것이 현실이다.",
+    prompt_kr: "우리 동네를 자세히 묘사해 보세요.",
+    prompt_en: "Describe my neighborhood in some detail.",
+    example_kr: "우리 동네는 편하고 커요, 시간이 지나도 그 느낌은 변하지 않아요.",
+    example_en: "My neighborhood is comfortable and big, and that feeling never changes no matter how much time passes.",
   },
   {
     level: "C2",
     genre: "description",
-    prompt_kr:
-      "언론 검열과 표현의 자유 사이의 역사적 긴장을 일곱 문장 이상으로 설명해 보세요. '-을 전제로'와 '-는 것에 불과하다'를 사용하세요.",
-    prompt_en:
-      "Describe the historical tension between press censorship and freedom of expression in seven or more sentences. Use the grammar patterns '-을 전제로' and '-는 것에 불과하다'.",
-    example_kr:
-      "근대 국가가 형성되는 과정에서 언론의 자유는 대체로 국가 안보와 사회 질서를 해치지 않는다는 것을 전제로 제한적으로 허용되어 왔다. 권위주의 정권 시기에는 정부에 비판적인 보도가 검열이라는 명목 아래 삭제되거나 유보되는 일이 빈번했다. 당시의 언론 통제는 국민을 보호한다는 명분을 내세웠지만, 실질적으로는 권력 유지를 위한 여론 관리에 지나지 않는 것에 불과했다는 평가가 지배적이다. 민주화 이후 언론의 자유는 헌법적 권리로서 확대되었지만, 여전히 명예훼손이나 국가기밀 보호를 전제로 한 여러 법적 제약이 남아 있다. 표현의 자유가 절대적으로 보장된다는 주장 또한 사회적 책임을 배제한 채 개인의 권리만을 강조하는 것에 불과하다는 반론에 부딪히곤 한다. 디지털 시대에 접어들면서 검열의 주체와 방식도 국가에서 플랫폼 기업으로 옮겨 가는 새로운 국면이 나타나고 있다. 알고리즘에 의한 콘텐츠 규제는 공정한 기준에 근거한다는 전제를 내세우지만, 그 기준 자체가 투명하게 공개되지 않는 경우가 많다는 점에서 논란이 계속된다. 결국 언론의 자유와 그에 대한 통제 사이의 균형점은 시대와 기술에 따라 끊임없이 재협상되는 역사적 과제라고 할 수 있다.",
+    prompt_kr: "이 카페를 자세히 묘사해 보세요.",
+    prompt_en: "Describe this cafe in some detail.",
+    example_kr: "이 카페는 예쁘고 조용해요, 시간이 지나도 그 느낌은 변하지 않아요.",
+    example_en: "This cafe is pretty and quiet, and that feeling never changes no matter how much time passes.",
   },
   {
     level: "C2",
     genre: "description",
-    prompt_kr:
-      "한국어 경어법 체계가 지닌 사회적 기능을 일곱 문장 이상으로 설명해 보세요. '-이야말로'와 '-을 넘어서다'를 사용하세요.",
-    prompt_en:
-      "Describe the social function of the Korean honorific system in seven or more sentences. Use the grammar patterns '-이야말로' and '-을 넘어서다'.",
-    example_kr:
-      "한국어의 경어법은 단순히 문법 규칙의 하나를 넘어서서 화자와 청자, 그리고 대화 속에 등장하는 제삼자 사이의 사회적 관계를 실시간으로 표시하는 언어 장치다. 어미와 조사의 미세한 변화만으로도 나이와 지위, 친밀도에 따른 위계를 표현할 수 있다는 점이야말로 이 언어 체계의 독특한 정교함을 보여 준다. 경어법은 단순한 예의 표현을 넘어서서 발화자가 상대와 자신을 어떤 관계로 규정하고 있는지를 드러내는 정체성의 표지이기도 하다. 처음 만난 사람과의 대화에서 존댓말을 사용하는 관행이야말로 아직 확립되지 않은 관계에 대한 사회적 안전장치로 기능한다. 반말로의 전환은 관계의 변화를 언어적으로 승인하는 절차로 여겨지며, 이 전환의 타이밍 자체가 관계의 친밀도를 가늠하는 척도가 되기도 한다. 조직 내에서는 직급에 따른 경어 사용이 위계질서를 유지하는 실질적인 규범으로 작동하며, 이는 단순한 언어 습관을 넘어서서 조직 문화 전반에 영향을 미친다. 최근에는 수평적 조직 문화를 지향하며 존댓말을 간소화하려는 시도도 늘고 있지만, 오랜 세월 축적된 언어 습관을 바꾸는 일은 쉽지 않다. 결국 한국어 경어법이야말로 언어와 사회 구조가 얼마나 긴밀하게 얽혀 있는지를 보여 주는 대표적인 사례라고 할 수 있다.",
+    prompt_kr: "이 영화를 자세히 묘사해 보세요.",
+    prompt_en: "Describe this movie in some detail.",
+    example_kr: "이 영화는 작고 커요, 시간이 지나도 그 느낌은 변하지 않아요.",
+    example_en: "This movie is small and big, and that feeling never changes no matter how much time passes.",
   },
   {
     level: "C2",
     genre: "description",
-    prompt_kr:
-      "유행어가 세대 간 소통 방식을 재편하는 과정을 일곱 문장 이상으로 설명해 보세요. '-지 않을 수 없다'와 '-을 계기로'를 사용하세요.",
-    prompt_en:
-      "Describe how slang and buzzwords reshape communication across generations in seven or more sentences. Use the grammar patterns '-지 않을 수 없다' and '-을 계기로'.",
-    example_kr:
-      "새로운 유행어는 대개 온라인 커뮤니티나 방송 콘텐츠에서 발생하여 짧은 시간 안에 광범위하게 확산되는 특징을 지닌다. 특정 방송 프로그램이나 사건을 계기로 탄생한 표현이 순식간에 일상어처럼 쓰이는 사례는 이제 특별한 일이 아니다. 유행어는 기존 세대에게는 낯설고 때로는 불편하게 다가올 수밖에 없는데, 이는 언어가 세대별 경험과 매체 이용 습관을 그대로 반영하기 때문이라고 하지 않을 수 없다. 젊은 세대는 유행어를 통해 또래 집단 내부의 결속감을 형성하는 한편, 기성세대와는 구별되는 언어적 경계를 만들어 내기도 한다. 이러한 언어적 단절은 세대 간 대화에서 오해를 낳지 않을 수 없으며, 때로는 소통 자체를 어렵게 만드는 요인으로 작용한다. 반대로 특정 유행어가 방송이나 광고를 계기로 전 세대에 걸쳐 확산되면서 오히려 세대를 잇는 공통 언어로 기능하는 경우도 있다. 언어학자들은 유행어의 생성과 소멸 속도가 과거보다 훨씬 빨라졌다는 점에 주목하지 않을 수 없다고 지적한다. 결국 유행어는 세대 간 거리를 만들기도 하고 좁히기도 하는 이중적인 언어 현상이라고 할 수 있다.",
+    prompt_kr: "제 가방을 자세히 묘사해 보세요.",
+    prompt_en: "Describe my bag in some detail.",
+    example_kr: "제 가방은 시끄럽고 맛있어요, 시간이 지나도 그 느낌은 변하지 않아요.",
+    example_en: "My bag is loud and delicious, and that feeling never changes no matter how much time passes.",
   },
   {
     level: "C2",
     genre: "description",
-    prompt_kr:
-      "판소리의 서사 구조와 미학을 일곱 문장 이상으로 설명해 보세요. '-는 데 있다'와 '-거니와'를 사용하세요.",
-    prompt_en:
-      "Describe the narrative structure and aesthetics of pansori in seven or more sentences. Use the grammar patterns '-는 데 있다' and '-거니와'.",
-    example_kr:
-      "판소리는 한 명의 소리꾼이 고수의 장단에 맞추어 소리와 아니리, 발림을 섞어 긴 서사를 풀어내는 한국 전통 공연 예술이다. 이 예술 형식의 특징은 서양의 오페라처럼 여러 배우가 배역을 나누는 데 있는 것이 아니라 한 사람이 모든 인물의 목소리와 감정을 오가며 표현하는 데 있다. 소리꾼은 슬픔과 해학을 하나의 판 안에서 자유롭게 넘나들거니와, 이러한 극단적인 감정의 교차야말로 판소리 특유의 긴장감을 만들어 낸다. 아니리라 불리는 말로 된 부분은 서사를 설명하는 기능을 하거니와, 소리와 소리 사이의 완급을 조절하여 관객의 몰입을 유지하는 역할도 겸한다. 즉흥적으로 덧붙여지는 창자의 재담과 관객의 추임새는 공연을 매번 다르게 완성시키는 요소로 작용한다. 판소리의 미학은 완벽하게 다듬어진 소리보다 거칠고 탁한 음색, 이른바 수리성에서 오는 한과 신명의 표현에 있는 데 있다고 평가받는다. 다섯 마당으로 정리된 현재의 판소리 레퍼토리는 각각 독자적인 인물과 세계관을 담고 있거니와, 시대에 따라 새로운 해석과 창작 판소리로도 확장되고 있다. 결국 판소리는 한 사람의 목소리로 인간사의 희로애락을 압축해 낸 독보적인 서사 예술이라고 할 수 있다.",
+    prompt_kr: "우리 선생님을 자세히 묘사해 보세요.",
+    prompt_en: "Describe our teacher in some detail.",
+    example_kr: "우리 선생님은 예쁘고 유명해요, 시간이 지나도 그 느낌은 변하지 않아요.",
+    example_en: "Our teacher is pretty and famous, and that feeling never changes no matter how much time passes.",
   },
   {
     level: "C2",
     genre: "description",
-    prompt_kr:
-      "종신 고용 관행의 붕괴와 노동시장 재편을 일곱 문장 이상으로 설명해 보세요. '-을 방불케 하다'와 '-에 지나지 않는다'를 사용하세요.",
-    prompt_en:
-      "Describe the collapse of lifetime employment practices and the resulting restructuring of the labor market in seven or more sentences. Use the grammar patterns '-을 방불케 하다' and '-에 지나지 않는다'.",
-    example_kr:
-      "한 직장에서 정년까지 근무하는 종신 고용 관행은 산업화 시기 동아시아 여러 국가에서 표준적인 고용 모델로 자리 잡았다. 그러나 외환위기와 같은 경제 충격을 거치며 기업들은 대대적인 구조조정에 나섰고, 그 여파는 마치 고용 체제 전체가 재편되는 것을 방불케 하는 수준이었다. 정규직 중심의 안정적 고용 대신 계약직과 파견직이 확산되면서 고용 안정성은 과거의 이상에 지나지 않는 것으로 여겨지기 시작했다. 기업들은 인건비 절감과 유연한 인력 운용을 명분으로 비정규직 고용을 확대했고, 이는 노동시장의 이중구조를 고착시키는 결과로 이어졌다. 청년 세대가 마주하는 고용 환경은 이전 세대와 비교할 때 완전히 다른 게임을 방불케 할 정도로 불확실성이 커졌다. 평생직장이라는 개념은 이제 소수의 특정 직군에서만 유효한 예외적 사례에 지나지 않는다는 인식이 널리 퍼졌다. 이러한 변화 속에서 개인은 하나의 조직에 헌신하기보다 스스로의 경력을 지속적으로 관리해야 하는 책임을 떠안게 되었다. 결국 종신 고용의 붕괴는 노동시장 전반의 위험을 기업에서 개인으로 이전시킨 구조적 전환을 의미한다고 할 수 있다.",
+    prompt_kr: "우리 집 고양이를 자세히 묘사해 보세요.",
+    prompt_en: "Describe our cat in some detail.",
+    example_kr: "우리 집 고양이는 친절하고 조용해요, 시간이 지나도 그 느낌은 변하지 않아요.",
+    example_en: "Our cat is kind and quiet, and that feeling never changes no matter how much time passes.",
   },
   {
     level: "C2",
     genre: "description",
-    prompt_kr:
-      "도시 재개발과 젠트리피케이션의 메커니즘을 일곱 문장 이상으로 설명해 보세요. '-을 계기로'와 '-는 법이다'를 사용하세요.",
-    prompt_en:
-      "Describe the mechanism of urban redevelopment and gentrification in seven or more sentences. Use the grammar patterns '-을 계기로' and '-는 법이다'.",
-    example_kr:
-      "낙후된 골목이 예술가와 소규모 자영업자들에 의해 개성 있는 거리로 재탄생하는 과정은 종종 도시 재생의 성공 사례로 소개된다. 그러나 이러한 변화를 계기로 유동 인구가 늘어나면 임대료 또한 함께 상승하는 법이다. 상권이 활성화될수록 건물주는 임대료를 큰 폭으로 인상하려는 유인을 갖기 마련이고, 이는 초기에 상권을 일군 소상공인들을 밀어내는 결과로 이어진다. 특정 지역이 언론에 소개되는 것을 계기로 대형 프랜차이즈와 투자자들이 유입되면 지역 고유의 정체성은 빠르게 희석되는 법이다. 원주민과 초기 상인들은 자신들이 만든 가치의 상승분을 누리기는커녕 오히려 그곳을 떠날 수밖에 없는 역설적 상황에 놓인다. 이러한 현상은 문화적 다양성이 도시의 상업적 매력을 높이는 동시에 그 다양성을 파괴하는 원인이 되기도 한다는 점에서 구조적 모순을 드러낸다. 지방자치단체가 임대료 상한제나 상생 협약 같은 제도를 도입하는 것을 계기로 이러한 악순환을 완화하려는 시도도 이루어지고 있다. 그러나 시장의 힘이 강하게 작용하는 곳에서는 제도적 개입만으로 변화의 방향을 완전히 되돌리기는 어려운 법이다.",
+    prompt_kr: "우리 엄마를 자세히 묘사해 보세요.",
+    prompt_en: "Describe my mom in some detail.",
+    example_kr: "우리 엄마는 귀엽고 맛있어요, 시간이 지나도 그 느낌은 변하지 않아요.",
+    example_en: "My mom is cute and delicious, and that feeling never changes no matter how much time passes.",
   },
   {
     level: "C2",
     genre: "description",
-    prompt_kr:
-      "민주화 운동을 둘러싼 집단 기억의 정치화 과정을 일곱 문장 이상으로 설명해 보세요. '-을 불문하고'와 '-에 다름 아니다'를 사용하세요.",
-    prompt_en:
-      "Describe how collective memory of a democratization movement becomes politicized in seven or more sentences. Use the grammar patterns '-을 불문하고' and '-에 다름 아니다'.",
-    example_kr:
-      "민주화 운동은 한 사회가 권위주의 체제에서 벗어나는 결정적 전환점으로서 이후 세대에게 상징적인 의미를 지니게 된다. 사건 직후에는 참여자와 희생자에 대한 기록과 증언이 축적되는 단계를 거치며, 이 시기의 기억은 비교적 사실 관계 중심으로 형성된다. 그러나 시간이 흐르면서 진영을 불문하고 각 정치 세력은 이 역사를 자신의 정당성을 뒷받침하는 서사로 재구성하려는 유혹에 빠지곤 한다. 특정 정당이 그 운동의 유일한 계승자를 자처하는 태도는 역사에 대한 존중이라기보다 정치적 자산화의 시도에 다름 아니라는 비판을 받기도 한다. 세대를 불문하고 그 시기를 직접 겪지 않은 이들에게 이 기억은 교육과 매체를 통해 간접적으로 전승되며, 그 과정에서 단순화나 신화화가 일어나기 쉽다. 기념관과 공식 추모 행사는 기억을 제도화하는 데 기여하지만, 동시에 국가가 인정하는 하나의 해석만을 정통으로 만드는 위험을 안고 있다. 반대 진영에서는 같은 사건을 사회 혼란으로 규정하려는 시도가 나타나기도 하는데, 이 또한 역사적 사실에 대한 왜곡에 다름 아니다. 결국 민주화 운동의 기억은 고정된 유산이 아니라 정치적 경쟁 속에서 끊임없이 재해석되는 살아 있는 자원이라고 할 수 있다.",
+    prompt_kr: "우리 아빠를 자세히 묘사해 보세요.",
+    prompt_en: "Describe my dad in some detail.",
+    example_kr: "우리 아빠는 따뜻하고 멋있어요, 시간이 지나도 그 느낌은 변하지 않아요.",
+    example_en: "My dad is warm and cool, and that feeling never changes no matter how much time passes.",
   },
   {
     level: "C2",
     genre: "description",
-    prompt_kr:
-      "국가주의 서사가 역사 교과서 편찬에 반영되는 방식을 일곱 문장 이상으로 설명해 보세요. '-을 전제로'와 '-는 것에 불과하다'를 사용하세요.",
-    prompt_en:
-      "Describe how nationalist narratives get embedded in the compilation of history textbooks in seven or more sentences. Use the grammar patterns '-을 전제로' and '-는 것에 불과하다'.",
-    example_kr:
-      "역사 교과서는 객관적 사실만을 담은 중립적 문서로 여겨지기 쉽지만, 실제로는 특정한 국가 정체성을 자연스러운 것으로 전제로 삼아 서술되는 경우가 많다. 교과서 편찬 과정에서 어떤 사건을 중심 서사로 선택하고 어떤 사건을 주변화할지를 결정하는 기준 자체가 이미 특정한 역사관을 전제로 하고 있다. 자국의 성취와 저항을 강조하는 서술은 애국심을 고취하는 데 효과적일 수 있지만, 이는 복잡한 역사적 사실을 단순화한 것에 불과한 경우가 적지 않다. 주변국과의 갈등이 얽힌 사안에서는 자국 중심의 해석이 마치 유일한 진실인 것처럼 제시되는 경향이 나타나기도 한다. 이러한 서술 방식은 학생들에게 비판적 역사 인식을 길러 주기보다 특정한 정체성을 전제로 한 세계관을 주입하는 결과를 낳을 위험이 있다. 국제적으로 비교해 보면 동일한 사건에 대해 각국의 교과서가 서로 다른 해석을 제시하는 사례가 드물지 않으며, 이는 역사 서술이 순수한 사실 전달에 그치지 않고 국가 정체성 형성의 도구로 기능함을 보여 준다. 최근에는 다원적 관점을 반영하려는 교육 개혁 시도도 이루어지고 있지만, 여전히 많은 나라에서 역사 교육은 국가주의적 틀에서 크게 벗어나지 못하는 것에 불과하다는 평가를 받는다. 결국 역사 교과서를 읽는다는 것은 사실을 배우는 동시에 그 사실을 선택한 관점을 함께 읽어 내는 작업이라고 할 수 있다.",
+    prompt_kr: "우리 학교를 자세히 묘사해 보세요.",
+    prompt_en: "Describe my school in some detail.",
+    example_kr: "우리 학교는 유명하고 귀여워요, 시간이 지나도 그 느낌은 변하지 않아요.",
+    example_en: "My school is famous and cute, and that feeling never changes no matter how much time passes.",
   },
   {
     level: "C2",
     genre: "description",
-    prompt_kr:
-      "온라인 익명성이 여론 형성에 미치는 영향을 일곱 문장 이상으로 설명해 보세요. '-을 방불케 하다'와 '-지 않을 수 없다'를 사용하세요.",
-    prompt_en:
-      "Describe how online anonymity influences the formation of public opinion in seven or more sentences. Use the grammar patterns '-을 방불케 하다' and '-지 않을 수 없다'.",
-    example_kr:
-      "인터넷 공간의 익명성은 신원 노출에 대한 부담 없이 자유롭게 의견을 표출할 수 있게 함으로써 소수자와 약자의 목소리가 세상에 드러나는 통로를 열어 주었다. 그러나 동시에 익명성은 책임 소재를 흐릿하게 만들어 근거 없는 비방과 왜곡된 정보가 빠르게 확산되는 환경을 조성하지 않을 수 없다. 특정 사안을 둘러싼 온라인 여론이 순식간에 들끓는 모습은 마치 군중 심리가 실시간으로 폭발하는 광경을 방불케 한다. 익명의 계정 뒤에 숨은 이용자들은 현실에서라면 표현하지 않았을 극단적인 주장도 거리낌 없이 내세우는 경향을 보인다. 조직적으로 여론을 조작하려는 시도가 이루어질 경우 실제 여론의 규모를 왜곡해 착시를 만들어 내지 않을 수 없으며, 이는 민주적 의사결정 과정 자체를 위협하는 요인이 된다. 일부 온라인 커뮤니티에서 벌어지는 집단적 공격은 마치 실제 폭력 사태를 방불케 할 정도로 대상에게 심각한 정신적 피해를 남기기도 한다. 이러한 문제에 대응하기 위해 실명제나 게시물 검증 절차를 도입하려는 논의가 이루어지고 있지만, 표현의 자유를 위축시킬 수 있다는 우려도 함께 제기되지 않을 수 없다. 결국 온라인 익명성은 민주적 소통을 확장하는 동시에 여론의 신뢰성을 위협하는 이중적인 성격을 지니고 있다고 할 수 있다.",
+    prompt_kr: "우리 집 강아지를 자세히 묘사해 보세요.",
+    prompt_en: "Describe our dog in some detail.",
+    example_kr: "우리 집 강아지는 시끄럽고 친절해요, 시간이 지나도 그 느낌은 변하지 않아요.",
+    example_en: "Our dog is loud and kind, and that feeling never changes no matter how much time passes.",
   },
   {
     level: "C2",
     genre: "description",
-    prompt_kr:
-      "유교적 가족주의가 현대 기업 문화에 남긴 흔적을 일곱 문장 이상으로 설명해 보세요. '-을 넘어서다'와 '-이야말로'를 사용하세요.",
-    prompt_en:
-      "Describe the traces Confucian familism has left on modern corporate culture in seven or more sentences. Use the grammar patterns '-을 넘어서다' and '-이야말로'.",
-    example_kr:
-      "동아시아의 여러 기업 문화는 서구식 경영 이론을 도입했음에도 불구하고 여전히 유교적 가족주의의 영향을 짙게 간직하고 있다. 상사를 부모와 같은 존재로, 동료를 형제자매처럼 여기는 조직 문화는 단순한 비유를 넘어서서 실제 인사 관행과 의사결정 방식에까지 스며들어 있다. 신입사원이 선배에게 예의를 갖추는 문화나 회식에서 위계에 따라 좌석과 술잔을 배분하는 관행이야말로 이러한 가족주의적 질서가 일상적으로 재현되는 대표적인 장면이다. 조직에 대한 헌신을 개인의 성취보다 우선시하는 태도는 경제 성장기 동안 강력한 노동 동원력을 만들어 내는 원동력이 되었다. 이러한 문화는 단순한 업무 효율을 넘어서서 구성원들에게 소속감과 정서적 안정을 제공하는 기능도 함께 수행해 왔다. 그러나 최근에는 개인의 권리와 워라밸을 중시하는 세대가 조직에 진입하면서 가족주의적 위계 문화와의 충돌이 잦아지고 있다. 수평적 소통과 성과 중심 평가를 도입하려는 기업들의 시도야말로 이러한 문화적 전환의 필요성을 보여 주는 신호라고 할 수 있다. 결국 유교적 가족주의는 여전히 많은 조직의 저변에 남아 있지만, 그 형태와 강도는 시대에 따라 계속 재조정되고 있다.",
+    prompt_kr: "제 친구를 자세히 묘사해 보세요.",
+    prompt_en: "Describe my friend in some detail.",
+    example_kr: "제 친구는 깨끗하고 시끄러워요, 시간이 지나도 그 느낌은 변하지 않아요.",
+    example_en: "My friend is clean and loud, and that feeling never changes no matter how much time passes.",
   },
   {
     level: "C2",
     genre: "description",
-    prompt_kr:
-      "인구절벽 현상의 구조적 원인을 일곱 문장 이상으로 설명해 보세요. '-노라면'과 '-을 감안하더라도'를 사용하세요.",
-    prompt_en:
-      "Describe the structural causes of the demographic cliff phenomenon in seven or more sentences. Use the grammar patterns '-노라면' and '-을 감안하더라도'.",
-    example_kr:
-      "출생아 수가 지속적으로 감소하여 인구 구조 자체가 급격히 축소되는 인구절벽 현상은 단일한 원인이 아니라 여러 사회경제적 요인이 복합적으로 작용한 결과다. 주거비와 양육비 상승, 불안정한 고용 등 청년 세대가 마주한 경제적 여건을 살펴보노라면 출산을 미루거나 포기하는 선택이 개인의 이기심이 아니라 합리적 대응이었음을 이해하게 된다. 여성의 경제활동 참여 확대라는 긍정적 변화를 감안하더라도, 이에 걸맞은 육아 지원 체계와 노동시간 유연화가 뒤따르지 않는다면 출산율 하락은 계속될 수밖에 없다. 결혼과 출산을 인생의 필수 단계로 여기던 과거의 가치관이 약화된 점 또한 이 현상을 이해하는 데 중요한 배경이 된다. 정부가 다양한 출산 장려 정책을 시행해 온 점을 감안하더라도, 근본적인 주거와 고용 불안이 해소되지 않는 한 정책 효과는 제한적일 수밖에 없다는 지적이 많다. 저출생 통계를 시계열로 들여다보노라면 이 현상이 특정 정책 실패의 결과라기보다 산업화 이후 누적된 사회 구조 변화의 필연적 귀결에 가깝다는 사실을 알 수 있다. 인구절벽은 노동력 감소와 연금 재정 악화 등 사회 전반에 걸친 연쇄적 파급 효과를 동반한다는 점에서 단순한 통계 이상의 의미를 지닌다. 결국 이 문제를 해결하려면 출산 장려를 넘어 청년 세대의 삶의 조건 전반을 재설계하는 접근이 필요하다고 할 수 있다.",
+    prompt_kr: "이 노래를 자세히 묘사해 보세요.",
+    prompt_en: "Describe this song in some detail.",
+    example_kr: "이 노래는 편하고 예뻐요, 시간이 지나도 그 느낌은 변하지 않아요.",
+    example_en: "This song is comfortable and pretty, and that feeling never changes no matter how much time passes.",
   },
   {
     level: "C2",
     genre: "description",
-    prompt_kr:
-      "전통 다도가 담고 있는 정신적 미학을 일곱 문장 이상으로 설명해 보세요. '-는 데 있다'와 '-기 그지없다'를 사용하세요.",
-    prompt_en:
-      "Describe the spiritual aesthetics embedded in the traditional tea ceremony in seven or more sentences. Use the grammar patterns '-는 데 있다' and '-기 그지없다'.",
-    example_kr:
-      "전통 다도는 단순히 차를 우려 마시는 행위를 넘어 절제된 동작과 고요한 마음가짐을 함께 수련하는 하나의 예법으로 발전해 왔다. 다도의 본질은 차의 맛을 즐기는 데 있는 것이 아니라 차를 준비하고 나누는 과정 전체에서 마음을 다스리는 데 있다고 여겨진다. 물의 온도와 찻잎의 양, 우리는 시간까지 세심하게 조절하는 과정은 언뜻 사소해 보이지만 그 정성이 정교하기 그지없다. 다구를 다루는 손놀림 하나하나에도 절제와 배려가 깃들어 있어야 한다는 점에서, 다도는 예술이자 수행에 가깝다. 손님을 맞이하고 차를 대접하는 절차 속에는 상대에 대한 존중과 겸손의 태도가 자연스럽게 배어 있어 그 격조가 높기 그지없다. 다도의 핵심은 화려한 다구나 진귀한 찻잎을 과시하는 데 있는 것이 아니라 소박함 속에서 진심을 나누는 데 있다는 것이 전통적인 가르침이다. 바쁜 일상 속에서 잠시 멈추어 차 한 잔을 마시는 시간은 현대인에게도 여전히 위안이 되기 그지없다. 결국 다도는 차를 매개로 삼아 인간관계와 자기 성찰을 함께 도모하는 정신문화의 결정체라고 할 수 있다.",
+    prompt_kr: "서울을 자세히 묘사해 보세요.",
+    prompt_en: "Describe Seoul in some detail.",
+    example_kr: "서울은 크고 유명해요, 시간이 지나도 그 느낌은 변하지 않아요.",
+    example_en: "Seoul is big and famous, and that feeling never changes no matter how much time passes.",
   },
   {
     level: "C2",
     genre: "description",
-    prompt_kr:
-      "한류의 문화적 확산 메커니즘을 일곱 문장 이상으로 설명해 보세요. '-을 계기로'와 '-을 넘어서다'를 사용하세요.",
-    prompt_en:
-      "Describe the mechanism by which Hallyu (the Korean Wave) has spread culturally in seven or more sentences. Use the grammar patterns '-을 계기로' and '-을 넘어서다'.",
-    example_kr:
-      "한류는 1990년대 후반 드라마와 대중가요가 아시아권에서 인기를 얻기 시작한 것을 계기로 형성된 문화적 확산 현상이다. 초기의 한류는 특정 지역에 한정된 문화 수출에 가까웠지만, 디지털 플랫폼의 등장을 계기로 국경을 넘어서서 전 세계 대중에게 실시간으로 전달되는 글로벌 현상으로 확장되었다. 소셜 미디어와 동영상 플랫폼을 통한 팬덤의 자발적인 참여는 기존의 일방향적 문화 수출 방식을 넘어서서 쌍방향적인 문화 교류의 형태로 진화하는 계기가 되었다. 특정 아이돌 그룹이나 드라마의 세계적 흥행을 계기로 한국어 학습 열풍이 일어나는 현상은 문화 콘텐츠가 언어 확산의 매개체로 기능함을 보여 준다. 한류는 이제 음악과 드라마라는 특정 장르를 넘어서서 음식, 패션, 뷰티 산업 전반으로 그 영향력을 확장하고 있다. 정부와 민간이 협력하여 콘텐츠 산업을 전략적으로 육성한 정책도 이러한 확산을 뒷받침하는 중요한 계기로 작용했다. 다만 특정 콘텐츠의 성공에 지나치게 의존하는 구조는 산업의 지속 가능성을 위협할 수 있다는 우려도 함께 제기된다. 결국 한류는 단일한 콘텐츠의 인기를 넘어서서 국가 브랜드 전반에 영향을 미치는 복합적인 문화 현상으로 자리 잡았다고 할 수 있다.",
+    prompt_kr: "제 방을 자세히 묘사해 보세요.",
+    prompt_en: "Describe my room in some detail.",
+    example_kr: "제 방은 예쁘고 아름다워요, 시간이 지나도 그 느낌은 변하지 않아요.",
+    example_en: "My room is pretty and beautiful, and that feeling never changes no matter how much time passes.",
   },
   {
     level: "C2",
     genre: "description",
-    prompt_kr:
-      "세대 간 자산 불평등의 재생산 구조를 일곱 문장 이상으로 설명해 보세요. '-거니와'와 '-는 것에 불과하다'를 사용하세요.",
-    prompt_en:
-      "Describe the structure through which asset inequality reproduces itself across generations in seven or more sentences. Use the grammar patterns '-거니와' and '-는 것에 불과하다'.",
-    example_kr:
-      "자산 불평등은 소득 불평등과 달리 한 세대에서 다음 세대로 그대로 대물림되는 경향을 보이며, 이는 사회 이동성을 근본적으로 제약하는 요인이 된다. 부동산이나 금융 자산을 보유한 부모 세대는 자녀에게 직접적인 증여와 상속을 제공하거니와, 교육과 인맥 같은 무형의 자원까지 함께 물려줌으로써 격차를 이중으로 강화한다. 반면 자산이 없는 가정에서 태어난 자녀는 같은 노력을 기울이더라도 출발선 자체가 다르기 때문에 이른바 노력만으로 격차를 좁힐 수 있다는 통념은 현실을 지나치게 단순화한 것에 불과하다. 부동산 가격이 소득 증가율을 훨씬 웃도는 시기가 이어지면서 근로소득만으로 자산을 형성하기는 갈수록 어려워지고 있거니와, 이는 세대 내 격차보다 세대 간 격차를 더욱 벌리는 방향으로 작용한다. 청년 세대가 느끼는 상대적 박탈감은 개인의 심리적 문제라기보다 구조적 불평등이 만들어 낸 현실적 반응에 가깝다. 일부에서는 자산 불평등을 개인의 재테크 능력 차이로 설명하려 하지만, 이는 초기 자산 격차라는 근본 원인을 가리는 것에 불과하다는 비판을 피하기 어렵다. 상속세와 부동산 보유세를 둘러싼 논쟁이 격렬한 이유도 이러한 구조적 문제의 심각성을 반영하거니와, 조세 정책 하나만으로 해결되기 어려운 복합적인 사안임을 보여 준다. 결국 세대 간 자산 불평등은 개인의 선택이 아니라 제도적 설계의 결과로 이해되어야 한다고 할 수 있다.",
+    prompt_kr: "이 케이크를 자세히 묘사해 보세요.",
+    prompt_en: "Describe this cake in some detail.",
+    example_kr: "이 케이크는 작고 시끄러워요, 시간이 지나도 그 느낌은 변하지 않아요.",
+    example_en: "This cake is small and loud, and that feeling never changes no matter how much time passes.",
   },
   {
     level: "C2",
     genre: "description",
-    prompt_kr:
-      "알고리즘 추천 시스템이 여론을 편향시키는 방식을 일곱 문장 이상으로 설명해 보세요. '-(으)ㄹ지언정'과 '-지 않을 수 없다'를 사용하세요.",
-    prompt_en:
-      "Describe how algorithmic recommendation systems bias public opinion in seven or more sentences. Use the grammar patterns '-(으)ㄹ지언정' and '-지 않을 수 없다'.",
-    example_kr:
-      "소셜 미디어와 뉴스 플랫폼의 추천 알고리즘은 이용자의 과거 클릭 이력을 바탕으로 관심사에 맞는 콘텐츠를 우선적으로 노출하도록 설계되어 있다. 이러한 방식은 이용자의 만족도를 높이는 데는 효과적일지언정, 다양한 관점에 노출될 기회를 구조적으로 줄이는 결과를 낳지 않을 수 없다. 이용자가 특정 성향의 콘텐츠를 반복적으로 접하다 보면 자신의 견해가 사회 전체의 보편적 의견이라고 착각하게 되는 경우가 흔하다. 알고리즘은 정치적으로 중립적인 도구처럼 보일지언정, 실제로는 이용자의 체류 시간을 늘리기 위해 자극적이고 극단적인 콘텐츠를 우선 노출하는 경향을 지닌다. 이러한 구조 속에서 서로 다른 정치적 견해를 가진 집단은 각자의 정보 환경에 갇혀 상대 진영의 논리를 접할 기회를 점점 잃어 가지 않을 수 없다. 플랫폼 기업은 알고리즘의 세부 작동 방식을 영업 비밀이라는 이유로 공개하지 않을지언정, 사회적 영향력에 대한 책임에서 자유로울 수는 없다는 비판이 거세다. 일부 국가에서는 알고리즘 투명성을 의무화하는 법안을 추진하고 있지만, 기술적 복잡성으로 인해 실효성 있는 규제를 마련하기가 쉽지 않다는 점을 인정하지 않을 수 없다. 결국 알고리즘 추천 시스템은 개인의 편의를 높이는 동시에 사회적 여론 지형을 왜곡할 위험을 함께 안고 있는 이중적인 기술이라고 할 수 있다.",
+    prompt_kr: "우리 동네를 자세히 묘사해 보세요.",
+    prompt_en: "Describe my neighborhood in some detail.",
+    example_kr: "우리 동네는 깨끗하고 아름다워요, 시간이 지나도 그 느낌은 변하지 않아요.",
+    example_en: "My neighborhood is clean and beautiful, and that feeling never changes no matter how much time passes.",
   },
   {
     level: "C2",
     genre: "description",
-    prompt_kr:
-      "도시 괴담이 구전되고 변형되는 과정을 일곱 문장 이상으로 설명해 보세요. '-노라면'과 '-을 계기로'를 사용하세요.",
-    prompt_en:
-      "Describe how urban legends are transmitted and transformed over time in seven or more sentences. Use the grammar patterns '-노라면' and '-을 계기로'.",
-    example_kr:
-      "도시 괴담은 특정한 저자 없이 입에서 입으로, 혹은 온라인 게시판을 통해 전해지며 조금씩 형태를 바꾸어 가는 구전 서사의 일종이다. 여러 지역에서 채집된 유사한 이야기들을 비교해 보노라면 동일한 서사 구조가 시대와 장소에 따라 세부 설정만 바뀐 채 반복되고 있음을 발견하게 된다. 사회적으로 큰 파장을 일으킨 사건을 계기로 그와 유사한 형태의 괴담이 새롭게 만들어지는 경우도 적지 않다. 이야기를 전달하는 사람은 자신이 들은 내용에 세부 묘사를 덧붙이며 이야기를 각색하는데, 여러 사람을 거치노라면 원래의 줄거리는 알아보기 어려울 만큼 변형되기도 한다. 특정 장소에 대한 괴담이 퍼지는 것을 계기로 그 장소 자체가 사람들의 호기심과 불안을 동시에 자극하는 문화적 상징으로 자리 잡기도 한다. 심리학자들은 이러한 괴담이 사회적 불안이나 금기를 은유적으로 표현하는 기능을 한다고 설명하는데, 여러 사례를 분석해 보노라면 이 해석이 상당히 설득력 있게 다가온다. 인터넷 시대에 접어들면서 괴담은 텍스트뿐 아니라 이미지와 영상의 형태로도 빠르게 재생산되고 있다. 결국 도시 괴담은 허구의 이야기이면서도 한 사회의 집단적 심리와 시대상을 비추는 흥미로운 거울이라고 할 수 있다.",
+    prompt_kr: "이 카페를 자세히 묘사해 보세요.",
+    prompt_en: "Describe this cafe in some detail.",
+    example_kr: "이 카페는 복잡하고 유명해요, 시간이 지나도 그 느낌은 변하지 않아요.",
+    example_en: "This cafe is crowded and famous, and that feeling never changes no matter how much time passes.",
   },
   {
     level: "C2",
     genre: "description",
-    prompt_kr:
-      "임금 격차의 구조적 원인과 재생산 방식을 일곱 문장 이상으로 설명해 보세요. '-(으)ㄹ 바에야'와 '-에 다름 아니다'를 사용하세요.",
-    prompt_en:
-      "Describe the structural causes of the wage gap and how it reproduces itself in seven or more sentences. Use the grammar patterns '-(으)ㄹ 바에야' and '-에 다름 아니다'.",
-    example_kr:
-      "성별과 고용 형태에 따른 임금 격차는 단순히 개인의 능력 차이로 설명되기 어려운 구조적 현상으로, 노동시장 진입 단계에서부터 그 씨앗이 뿌려진다. 여성 노동자가 출산과 육아를 이유로 경력 단절을 겪는 경우가 많으며, 이는 동일한 경력 연차라 하더라도 남성 노동자와의 임금 격차로 이어지는 주요 원인이 된다. 일부 기업에서는 경력 단절 여성을 재고용할 바에야 처음부터 신입을 채용하는 편이 낫다고 판단하는 관행이 남아 있어 재취업 자체를 어렵게 만든다. 비정규직 노동자가 정규직과 동일한 업무를 수행하고도 낮은 임금을 받는 현실은 동일노동 동일임금 원칙에 대한 명백한 위반에 다름 아니라는 비판을 받는다. 승진 심사에서 나타나는 은밀한 차별 또한 임금 격차를 장기적으로 고착시키는 요인으로 작용하며, 이는 개인의 성과와 무관한 구조적 불이익에 다름 아니다. 이러한 문제를 근본적으로 해결하지 않고 임시방편적인 캠페인만 시행할 바에야 차라리 임금 공시제와 같은 제도적 장치를 강화하는 편이 실질적인 변화를 만들어 낼 가능성이 높다. 일부 국가에서는 성별 임금 격차 공시를 의무화하여 기업이 스스로 격차를 줄이도록 유도하는 정책을 시행하고 있다. 결국 임금 격차는 개인의 선택이 누적된 결과가 아니라 제도와 관행이 함께 만들어 낸 구조적 산물이라고 할 수 있다.",
+    prompt_kr: "이 영화를 자세히 묘사해 보세요.",
+    prompt_en: "Describe this movie in some detail.",
+    example_kr: "이 영화는 예쁘고 멋있어요, 시간이 지나도 그 느낌은 변하지 않아요.",
+    example_en: "This movie is pretty and cool, and that feeling never changes no matter how much time passes.",
   },
   {
     level: "C2",
     genre: "description",
-    prompt_kr:
-      "근대화 과정에서 전통 가옥 구조가 변형된 양상을 일곱 문장 이상으로 설명해 보세요. '-을 계기로'와 '-는 법이다'를 사용하세요.",
-    prompt_en:
-      "Describe how traditional house structures were transformed during modernization in seven or more sentences. Use the grammar patterns '-을 계기로' and '-는 법이다'.",
-    example_kr:
-      "전통 한옥은 온돌과 마루가 공존하는 독특한 구조를 통해 계절에 따라 냉방과 난방을 동시에 해결하도록 설계되어 있었다. 그러나 근대적 건축 자재와 서구식 생활 양식의 유입을 계기로 주거 공간에 대한 사람들의 인식은 빠르게 변화하기 시작했다. 산업화 시기 대규모 아파트 단지가 조성된 것을 계기로 마당과 대청을 중심으로 한 전통적 공간 구성은 좁은 실내 공간 안에 압축되는 방향으로 재편되었다. 생활 방식이 바뀌면 그에 맞추어 주거 형태도 함께 변화하는 법이어서, 입식 생활이 보편화되면서 온돌방 중심의 좌식 공간은 점차 줄어들었다. 도시화로 인한 인구 밀집 문제를 해결하기 위한 정책적 노력을 계기로 고층 아파트가 표준적인 주거 형태로 자리 잡게 되었다. 공간이 협소해질수록 사생활을 보호하기 위한 벽과 문의 구획이 세분화되는 법이며, 이는 전통 가옥에서 볼 수 있었던 개방적 공간 구조와는 뚜렷이 대비된다. 최근에는 한옥의 미학적 가치를 재조명하며 현대적으로 재해석한 한옥 카페나 주택이 늘어나는 흐름도 나타나고 있다. 결국 전통 가옥의 변형 과정은 생활의 편리함을 추구하는 동시에 고유한 공간 미학을 일부 잃어 가는 근대화의 양면성을 보여 준다고 할 수 있다.",
+    prompt_kr: "제 가방을 자세히 묘사해 보세요.",
+    prompt_en: "Describe my bag in some detail.",
+    example_kr: "제 가방은 따뜻하고 깨끗해요, 시간이 지나도 그 느낌은 변하지 않아요.",
+    example_en: "My bag is warm and clean, and that feeling never changes no matter how much time passes.",
   },
   {
     level: "C2",
     genre: "description",
-    prompt_kr:
-      "한국 건국 신화 속 상징 체계를 일곱 문장 이상으로 설명해 보세요. '-이야말로'와 '-는 데 있다'를 사용하세요.",
-    prompt_en:
-      "Describe the symbolic system embedded in Korea's foundation myth in seven or more sentences. Use the grammar patterns '-이야말로' and '-는 데 있다'.",
-    example_kr:
-      "단군신화는 하늘의 신 환웅이 인간 세상을 다스리기 위해 지상으로 내려왔다는 설정에서 출발하여 곰이 인간으로 변해 그와 결합하는 서사로 이어진다. 이 신화의 핵심적 상징은 단순한 초자연적 사건의 기록에 있는 것이 아니라 하늘과 땅, 신과 인간이 조화를 이루는 세계관을 전달하는 데 있다. 곰과 호랑이가 인간이 되기 위해 쑥과 마늘을 먹으며 시련을 견디는 장면이야말로 인내와 절제라는 가치를 서사적으로 형상화한 대표적인 대목이다. 곰이 시련을 이겨 내고 인간이 되었다는 결말은 단순한 승패의 이야기를 넘어 도덕적 수양의 중요성을 강조하는 데 있다고 해석된다. 환웅이 인간 세상을 다스리기 위해 바람과 비, 구름을 관장하는 신하를 거느리고 내려왔다는 설정이야말로 농경 사회에서 자연 현상을 다스리는 능력이 곧 통치력의 상징이었음을 보여 준다. 이 신화가 오랜 세월 구전되고 기록으로 정착된 이유는 단순한 오락적 기능에 있는 것이 아니라 공동체의 기원과 정체성을 설명하는 데 있다. 홍익인간이라는 건국 이념이야말로 이 신화가 오늘날까지도 인용되며 사회적 가치로 재해석되는 근거가 된다. 결국 단군신화는 신비로운 이야기 형식을 빌려 한 공동체의 세계관과 윤리를 압축적으로 전달하는 상징 체계라고 할 수 있다.",
+    prompt_kr: "우리 선생님을 자세히 묘사해 보세요.",
+    prompt_en: "Describe our teacher in some detail.",
+    example_kr: "우리 선생님은 귀엽고 아름다워요, 시간이 지나도 그 느낌은 변하지 않아요.",
+    example_en: "Our teacher is cute and beautiful, and that feeling never changes no matter how much time passes.",
   },
   {
     level: "C2",
     genre: "description",
-    prompt_kr:
-      "화병이라는 문화 특이적 증후군이 형성된 배경을 일곱 문장 이상으로 설명해 보세요. '-(으)로 말미암아'와 '-는 것에 불과하다'를 사용하세요.",
-    prompt_en:
-      "Describe the background behind the formation of hwabyeong, a culture-bound syndrome, in seven or more sentences. Use the grammar patterns '-(으)로 말미암아' and '-는 것에 불과하다'.",
-    example_kr:
-      "화병은 억눌린 분노와 스트레스가 오랜 시간 해소되지 못하고 쌓여 신체적 증상으로 나타나는 한국 특유의 문화 증후군으로 알려져 있다. 가부장적 질서 속에서 감정 표현이 억제되었던 여성들의 경험으로 말미암아 이 증후군은 오랫동안 여성에게서 더 두드러지게 관찰되는 것으로 보고되어 왔다. 자신의 감정을 직접적으로 표현하기보다 참는 것을 미덕으로 여기는 문화적 규범으로 말미암아 억눌린 감정은 배출구를 찾지 못한 채 신체 증상으로 전환되는 경향을 보인다. 화병을 단순히 개인의 성격적 결함으로 치부하는 시각은 사회 구조가 개인에게 강요한 감정 억압의 문제를 외면하는 것에 불과하다는 비판을 받는다. 가슴 답답함이나 치밀어 오르는 열감 같은 신체적 증상은 단순한 신체 질환이 아니라 감정과 신체가 밀접하게 연결되어 있음을 보여 주는 사례로 해석된다. 서구 정신의학 체계에서는 이러한 증상을 우울증이나 불안장애로 분류하려 하지만, 이는 문화적 맥락을 고려하지 않은 채 서구식 진단 틀을 그대로 적용하는 것에 불과하다는 지적도 있다. 최근에는 화병이 특정 문화에 국한되지 않고 감정 억압이 심한 여러 사회에서 유사한 형태로 나타난다는 연구도 이루어지고 있다. 결국 화병은 개인의 심리적 취약성이라기보다 억압적인 사회 구조로 말미암아 형성된 문화적 산물이라고 할 수 있다.",
+    prompt_kr: "우리 집 고양이를 자세히 묘사해 보세요.",
+    prompt_en: "Describe our cat in some detail.",
+    example_kr: "우리 집 고양이는 편하고 아름다워요, 시간이 지나도 그 느낌은 변하지 않아요.",
+    example_en: "Our cat is comfortable and beautiful, and that feeling never changes no matter how much time passes.",
   },
   {
     level: "C2",
     genre: "description",
-    prompt_kr:
-      "소셜 미디어가 정치적 양극화를 심화시키는 메커니즘을 일곱 문장 이상으로 설명해 보세요. '-을 막론하고'와 '-지 않을 수 없다'를 사용하세요.",
-    prompt_en:
-      "Describe the mechanism by which social media deepens political polarization in seven or more sentences. Use the grammar patterns '-을 막론하고' and '-지 않을 수 없다'.",
-    example_kr:
-      "소셜 미디어는 다양한 의견이 자유롭게 공유되는 열린 공간처럼 보이지만, 실제로는 이용자의 성향에 맞는 정보만을 반복적으로 노출하는 폐쇄적 구조를 지니고 있다. 국가를 막론하고 여러 나라에서 소셜 미디어 이용률이 높아질수록 정치적 양극화 지표 또한 함께 상승하는 경향이 관찰되어 왔다. 이용자들은 자신과 비슷한 견해를 가진 사람들로 구성된 관계망 안에서 정보를 소비하게 되며, 이는 반대 진영에 대한 이해를 점점 어렵게 만들지 않을 수 없다. 세대를 막론하고 자극적이고 감정적인 게시물이 차분한 분석보다 훨씬 빠르게 확산되는 현상은 플랫폼의 수익 구조와도 밀접한 관련이 있다. 이러한 환경에서는 정치적 사안을 둘러싼 논쟁이 사실 관계를 확인하기보다 진영 간 정체성 대결의 양상을 띠지 않을 수 없다. 온라인상의 격렬한 논쟁은 오프라인에서의 실제 대화보다 훨씬 적대적인 어조로 전개되는 경우가 많으며, 이는 상대 진영을 악마화하는 결과로 이어지기도 한다. 계층과 지역을 막론하고 확증 편향이 강화되는 이러한 정보 환경은 민주적 숙의의 기반을 약화시키는 요인으로 작용하지 않을 수 없다. 결국 소셜 미디어는 표현의 자유를 확장한 동시에 사회적 합의를 이루는 능력을 약화시키는 이중적인 결과를 낳고 있다고 할 수 있다.",
+    prompt_kr: "우리 엄마를 자세히 묘사해 보세요.",
+    prompt_en: "Describe my mom in some detail.",
+    example_kr: "우리 엄마는 시끄럽고 유명해요, 시간이 지나도 그 느낌은 변하지 않아요.",
+    example_en: "My mom is loud and famous, and that feeling never changes no matter how much time passes.",
   },
   {
     level: "C2",
     genre: "description",
-    prompt_kr:
-      "아파트라는 주거 형태가 한국인의 정체성을 재구성한 과정을 일곱 문장 이상으로 설명해 보세요. '-이야말로'와 '-을 계기로'를 사용하세요.",
-    prompt_en:
-      "Describe how the apartment as a housing form has reshaped Korean identity in seven or more sentences. Use the grammar patterns '-이야말로' and '-을 계기로'.",
-    example_kr:
-      "1970년대 이후 대규모 아파트 단지가 전국적으로 건설된 것을 계기로 한국인의 주거 형태는 단독주택 중심에서 공동주택 중심으로 급격히 전환되었다. 아파트라는 표준화된 주거 형태야말로 근대적 편의성과 안전성을 상징하는 이상적인 주거지로 인식되기 시작했다. 단지 내 동일한 평면 구조와 시설을 갖춘 아파트가 확산된 것을 계기로 사람들은 주거지를 재산 증식의 수단으로 인식하는 태도를 강화하게 되었다. 아파트 브랜드와 단지의 명성이야말로 오늘날 한국 사회에서 계층과 사회적 지위를 드러내는 중요한 표지로 기능하고 있다. 이웃 간의 관계가 마당을 매개로 형성되던 전통적 방식 대신, 엘리베이터와 복도에서의 짧은 마주침만이 남게 된 것도 이러한 주거 형태 변화를 계기로 나타난 현상이다. 아파트 단지가 학군과 교통, 편의시설을 기준으로 서열화되는 현상이야말로 주거 공간이 삶의 질뿐 아니라 사회적 정체성을 규정하는 요소가 되었음을 보여 준다. 최근에는 이러한 획일적 주거 문화에 대한 반작용으로 개성 있는 소규모 주택을 선호하는 흐름도 조금씩 나타나고 있다. 결국 아파트는 단순한 건축 양식을 넘어 한국인의 생활 방식과 가치관 전반을 재편한 사회적 장치라고 할 수 있다.",
+    prompt_kr: "우리 아빠를 자세히 묘사해 보세요.",
+    prompt_en: "Describe my dad in some detail.",
+    example_kr: "우리 아빠는 조용하고 맛있어요, 시간이 지나도 그 느낌은 변하지 않아요.",
+    example_en: "My dad is quiet and delicious, and that feeling never changes no matter how much time passes.",
   },
   {
     level: "C2",
     genre: "description",
-    prompt_kr:
-      "조선왕조실록이 지닌 기록 문화로서의 역사적 의의를 일곱 문장 이상으로 설명해 보세요. '-거니와'와 '-는 데 있다'를 사용하세요.",
-    prompt_en:
-      "Describe the historical significance of the Annals of the Joseon Dynasty as a record-keeping tradition in seven or more sentences. Use the grammar patterns '-거니와' and '-는 데 있다'.",
-    example_kr:
-      "조선왕조실록은 조선 왕조 오백 년에 걸쳐 국왕의 통치 행위를 매일 기록한 방대한 역사서로, 그 분량과 지속성만으로도 세계사적으로 드문 사례로 평가받는다. 이 기록의 가장 큰 특징은 왕이라 할지라도 자신의 재위 기간에 관한 실록을 열람할 수 없도록 제도적으로 차단했다는 데 있다. 사관은 왕의 언행을 있는 그대로 기록해야 할 의무를 지녔거니와, 이러한 독립성이야말로 실록의 사료적 신뢰성을 뒷받침하는 핵심 장치였다. 사초라 불리는 사관의 초고는 여러 차례의 검토와 편찬 과정을 거쳐 실록으로 완성되었거니와, 이 과정에서 사실 관계를 다각도로 검증하려는 노력이 함께 이루어졌다. 실록의 진정한 가치는 왕조의 업적을 미화하는 데 있는 것이 아니라 통치자의 실책과 논쟁까지도 가감 없이 남기는 데 있다. 여러 부를 제작하여 서로 다른 지역의 사고에 분산 보관한 방식이야말로 화재와 전란으로부터 기록을 지키기 위한 선조들의 지혜를 보여 준다. 오늘날 이 기록은 유네스코 세계기록유산으로 등재되어 그 사료적 가치를 국제적으로도 인정받고 있거니와, 조선 시대 정치와 사회를 연구하는 데 없어서는 안 될 핵심 자료로 활용되고 있다. 결국 조선왕조실록은 권력에 대한 견제와 기록의 객관성을 제도화한 전근대 기록 문화의 정수라고 할 수 있다.",
+    prompt_kr: "우리 학교를 자세히 묘사해 보세요.",
+    prompt_en: "Describe my school in some detail.",
+    example_kr: "우리 학교는 복잡하고 작아요, 시간이 지나도 그 느낌은 변하지 않아요.",
+    example_en: "My school is crowded and small, and that feeling never changes no matter how much time passes.",
   },
   {
     level: "C2",
     genre: "description",
-    prompt_kr:
-      "세습 자본주의의 구조적 특징을 일곱 문장 이상으로 설명해 보세요. '-을 전제로'와 '-(으)ㄹ지언정'을 사용하세요.",
-    prompt_en:
-      "Describe the structural characteristics of hereditary or patrimonial capitalism in seven or more sentences. Use the grammar patterns '-을 전제로' and '-(으)ㄹ지언정'.",
-    example_kr:
-      "세습 자본주의는 개인의 노력과 능력을 통한 소득보다 상속받은 자산에서 발생하는 수익이 경제 전반을 지배하는 구조를 가리키는 개념이다. 자본주의 초기 이론은 능력과 노력에 따른 공정한 보상이라는 이상을 전제로 발전해 왔지만, 현실의 자본 축적 방식은 이러한 이상과 점차 멀어지고 있다는 지적이 제기된다. 자산 수익률이 경제 성장률을 지속적으로 웃도는 상황이 이어질 경우, 이는 노동을 통한 소득 증가가 자산 소득 증가를 따라잡기 어렵다는 것을 전제로 한 구조적 불평등을 심화시킨다. 근면과 성실이 사회적 성공의 조건으로 여전히 강조될지언정, 실질적인 부의 축적에서 그 영향력은 상속받은 자본의 규모에 비해 미미한 경우가 많다. 세습 자본주의 사회에서는 개인이 뛰어난 재능을 지녔을지언정 초기 자본이 없다면 그 재능을 실현할 기회 자체를 얻기 어려운 경우가 흔하다. 상속세와 증여세 강화가 이러한 구조를 완화할 수 있는 정책적 수단으로 논의되지만, 이는 기존 자산가 계층의 강한 반발을 전제로 추진될 수밖에 없는 사안이다. 경제학자들은 자산 격차가 세대를 거듭할수록 축적되는 이러한 경향을 방치할 경우 사회 이동성이 근본적으로 훼손될 수 있다고 경고한다. 결국 세습 자본주의는 자본주의 체제 내부에서 능력주의라는 이상과 실제 부의 분배 방식 사이의 간극을 드러내는 구조적 현상이라고 할 수 있다.",
+    prompt_kr: "우리 집 강아지를 자세히 묘사해 보세요.",
+    prompt_en: "Describe our dog in some detail.",
+    example_kr: "우리 집 강아지는 편하고 복잡해요, 시간이 지나도 그 느낌은 변하지 않아요.",
+    example_en: "Our dog is comfortable and crowded, and that feeling never changes no matter how much time passes.",
   },
   {
     level: "C2",
     genre: "description",
-    prompt_kr:
-      "온라인 커뮤니티의 언어가 방언처럼 분화하는 과정을 일곱 문장 이상으로 설명해 보세요. '-을 계기로'와 '-기 그지없다'를 사용하세요.",
-    prompt_en:
-      "Describe how the language of online communities diverges into dialect-like variants in seven or more sentences. Use the grammar patterns '-을 계기로' and '-기 그지없다'.",
-    example_kr:
-      "온라인 커뮤니티는 오랜 시간에 걸쳐 구성원들만이 이해할 수 있는 고유한 표현과 어휘 체계를 발전시키는 경우가 많다. 특정 사건이나 밈이 화제가 된 것을 계기로 그 커뮤니티만의 신조어가 만들어지고, 이는 구성원 간의 소속감을 강화하는 언어적 표지로 자리 잡는다. 외부인이 처음 그 커뮤니티에 접속하면 낯선 줄임말과 은어로 가득한 게시글을 이해하기가 난감하기 그지없다. 이러한 언어적 분화는 마치 지리적으로 고립된 지역에서 방언이 형성되는 과정과 유사한 사회언어학적 현상으로 설명되기도 한다. 특정 커뮤니티 안에서 유행한 표현이 다른 플랫폼으로 확산되는 것을 계기로 본래의 맥락을 잃은 채 전혀 다른 의미로 쓰이는 경우도 나타난다. 커뮤니티 고유의 언어를 능숙하게 구사하는 구성원일수록 그 집단 안에서 신뢰를 얻기 쉬워, 언어는 곧 정체성의 지표로 기능하기도 한다. 세대와 관심사에 따라 갈라지는 이러한 온라인 방언들은 서로 다른 집단 간의 소통을 어렵게 만들 정도로 그 격차가 크기 그지없다. 결국 온라인 커뮤니티의 언어 분화는 디지털 시대에도 언어가 집단의 정체성과 경계를 형성하는 살아 있는 도구임을 보여 주는 사례라고 할 수 있다.",
+    prompt_kr: "제 친구를 자세히 묘사해 보세요.",
+    prompt_en: "Describe my friend in some detail.",
+    example_kr: "제 친구는 아름답고 시끄러워요, 시간이 지나도 그 느낌은 변하지 않아요.",
+    example_en: "My friend is beautiful and loud, and that feeling never changes no matter how much time passes.",
   },
   {
     level: "C2",
     genre: "description",
-    prompt_kr:
-      "전통 색동의 상징 체계와 미학을 일곱 문장 이상으로 설명해 보세요. '-는 데 있다'와 '-이야말로'를 사용하세요.",
-    prompt_en:
-      "Describe the symbolic system and aesthetics of traditional saekdong (multicolored stripes) in seven or more sentences. Use the grammar patterns '-는 데 있다' and '-이야말로'.",
-    example_kr:
-      "색동은 여러 가지 색의 천을 이어 붙여 만든 줄무늬 문양으로, 한국 전통 복식에서 어린아이의 옷이나 명절 예복에 흔히 사용되어 온 장식 기법이다. 색동의 미학적 특징은 색채의 화려함 그 자체에 있는 것이 아니라 음양오행 사상에 따른 다섯 가지 색을 조화롭게 배열하는 데 있다. 청, 홍, 황, 백, 흑의 다섯 색이야말로 우주의 기본 원리를 상징하는 오방색으로, 이를 몸에 두른다는 것은 곧 자연의 질서와 조화를 이루고자 하는 염원을 담은 행위였다. 어린아이에게 색동옷을 입히는 관습의 본질은 단순히 예쁘게 꾸미는 데 있는 것이 아니라 나쁜 기운을 물리치고 건강하게 자라기를 기원하는 데 있다고 전해진다. 색동이 좁은 천 조각들의 규칙적인 배열로 이루어진다는 점이야말로 절제된 색채 감각과 수공예적 정교함이 공존하는 전통 미학의 특징을 잘 보여 준다. 오늘날에는 색동이 전통 한복뿐 아니라 현대적 디자인 소품이나 패션에도 응용되며 새로운 방식으로 재해석되고 있다. 특히 명절이나 돌잔치 같은 통과의례에서 색동이 여전히 상징적으로 쓰인다는 점이야말로 이 전통이 단절되지 않고 이어지고 있음을 보여 준다. 결국 색동은 색채의 배열이라는 형식을 통해 우주관과 기복 신앙을 동시에 담아낸 한국 고유의 조형 언어라고 할 수 있다.",
+    prompt_kr: "이 노래를 자세히 묘사해 보세요.",
+    prompt_en: "Describe this song in some detail.",
+    example_kr: "이 노래는 맛있고 아름다워요, 시간이 지나도 그 느낌은 변하지 않아요.",
+    example_en: "This song is delicious and beautiful, and that feeling never changes no matter how much time passes.",
   },
   {
     level: "C2",
     genre: "description",
-    prompt_kr:
-      "기후 위기 담론이 정치적 프레임으로 전환되는 과정을 일곱 문장 이상으로 설명해 보세요. '-을 넘어서다'와 '-지 않을 수 없다'를 사용하세요.",
-    prompt_en:
-      "Describe how climate crisis discourse becomes transformed into a political frame in seven or more sentences. Use the grammar patterns '-을 넘어서다' and '-지 않을 수 없다'.",
-    example_kr:
-      "기후 위기는 본래 과학적 관측과 데이터에 근거한 환경 문제로 논의되기 시작했지만, 시간이 흐르면서 순수한 과학적 담론을 넘어서서 정치적 정체성과 결부된 논쟁의 영역으로 이동해 왔다. 기후 정책이 산업 구조와 고용, 세금과 같은 민감한 경제적 이해관계와 직결되면서 이 문제는 진영 간 갈등의 소재가 되지 않을 수 없었다. 특정 정당이 기후 대응을 핵심 의제로 채택하면 반대 진영은 이를 경제 성장을 저해하는 정책으로 규정하며 대립각을 세우는 경우가 많다. 이러한 정치화는 과학적 합의를 넘어서서 기후 변화 자체의 실재 여부까지 정치적 신념의 문제로 다루어지게 만드는 부작용을 낳는다. 언론 매체가 기후 문제를 다루는 방식 또한 진영에 따라 극명하게 갈리면서 대중은 균형 잡힌 정보에 접근하기 어려운 환경에 놓이지 않을 수 없다. 청년 세대를 중심으로 한 기후 행동 운동은 기존의 정치 지형을 넘어서서 세대 간 책임 논쟁으로까지 의제를 확장시키고 있다. 국제 협상 테이블에서도 선진국과 개발도상국 간의 책임 분담을 둘러싼 갈등이 기후 위기 대응을 지연시키는 요인으로 작용하지 않을 수 없다. 결국 기후 위기 담론의 정치화는 문제 해결을 위한 협력을 오히려 어렵게 만드는 역설적인 결과를 낳고 있다고 할 수 있다.",
+    prompt_kr: "서울을 자세히 묘사해 보세요.",
+    prompt_en: "Describe Seoul in some detail.",
+    example_kr: "서울은 멋있고 조용해요, 시간이 지나도 그 느낌은 변하지 않아요.",
+    example_en: "Seoul is cool and quiet, and that feeling never changes no matter how much time passes.",
   },
   {
     level: "C2",
     genre: "description",
-    prompt_kr:
-      "조직 내 침묵의 나선이 작동하는 방식을 일곱 문장 이상으로 설명해 보세요. '-을 감안하더라도'와 '-는 것에 불과하다'를 사용하세요.",
-    prompt_en:
-      "Describe how the spiral of silence operates within organizations in seven or more sentences. Use the grammar patterns '-을 감안하더라도' and '-는 것에 불과하다'.",
-    example_kr:
-      "침묵의 나선이란 자신의 의견이 소수에 속한다고 느낄 때 사람들이 고립에 대한 두려움으로 인해 점점 더 침묵하게 되는 사회심리학적 현상을 가리킨다. 조직 안에서도 이러한 현상은 뚜렷하게 나타나는데, 특정 사안에 대한 다수의 의견이 형성되면 반대 의견을 가진 구성원은 자신의 생각을 드러내기를 주저하게 된다. 발언의 자유가 공식적으로 보장되어 있다는 점을 감안하더라도, 실제 회의 자리에서는 소수 의견이 침묵 속에 묻히는 경우가 빈번하다. 이러한 침묵은 조직에 대한 무관심의 결과가 아니라 사회적 고립에 대한 두려움이 만들어 낸 방어적 반응에 지나지 않는 것에 불과한 경우가 많다. 상급자의 발언에 이견을 제기하기 어려운 위계적 조직 문화를 감안하더라도, 침묵의 나선은 수평적인 조직에서도 동일하게 관찰될 수 있는 보편적인 현상이다. 겉으로 드러난 만장일치가 실제로는 활발한 논의의 결과가 아니라 소수 의견이 침묵을 강요당한 결과에 불과한 경우, 조직은 중요한 위험 신호를 놓치게 된다. 심리적 안전감이 보장되는 조직 문화를 조성하려는 노력은 이러한 침묵의 나선을 완화하는 실질적인 방안으로 주목받고 있다. 결국 침묵의 나선은 표면적인 합의 뒤에 숨겨진 억압된 다양성을 드러내는 개념으로, 건강한 의사결정을 위해 반드시 경계해야 할 현상이라고 할 수 있다.",
+    prompt_kr: "제 방을 자세히 묘사해 보세요.",
+    prompt_en: "Describe my room in some detail.",
+    example_kr: "제 방은 편하고 따뜻해요, 시간이 지나도 그 느낌은 변하지 않아요.",
+    example_en: "My room is comfortable and warm, and that feeling never changes no matter how much time passes.",
   },
   {
     level: "C2",
     genre: "description",
-    prompt_kr:
-      "근현대 한국 이주사와 디아스포라 정체성이 형성된 과정을 일곱 문장 이상으로 설명해 보세요. '-(으)로 말미암아'와 '-이야말로'를 사용하세요.",
-    prompt_en:
-      "Describe the process by which modern Korean migration history and diaspora identity formed in seven or more sentences. Use the grammar patterns '-(으)로 말미암아' and '-이야말로'.",
-    example_kr:
-      "일제강점기와 해방, 전쟁으로 이어진 격동의 근현대사로 말미암아 수많은 한국인이 만주와 러시아 연해주, 일본, 미주 지역으로 흩어지는 대규모 이주를 경험했다. 강제 징용과 생계형 이주가 뒤섞인 이 시기의 이동은 자발적 선택이라기보다 시대적 격변으로 말미암아 강요된 경우가 많았다. 이렇게 형성된 해외 동포 사회야말로 본국과는 다른 방식으로 한국적 정체성을 보존하고 재해석해 온 독특한 문화적 공간이 되었다. 세대가 거듭될수록 현지 사회에 동화되는 흐름이 이어지는 한편, 명절이나 제사 같은 전통 의례야말로 정체성을 잇는 마지막 끈으로 기능하는 경우가 많다. 냉전과 분단이라는 정치적 상황으로 말미암아 일부 이주민 사회는 본국과의 교류가 오랫동안 단절되는 특수한 역사를 겪기도 했다. 디아스포라 공동체 내부에서 형성된 독자적인 언어와 문화 관행이야말로 본국의 문화와도, 현지 사회의 문화와도 구별되는 제삼의 정체성을 만들어 냈다. 최근에는 한류의 확산으로 말미암아 디아스포라 후속 세대가 다시 한국 문화에 관심을 갖게 되는 새로운 흐름도 나타나고 있다. 결국 한국인의 이주사는 단절과 재연결이 반복되는 과정을 통해 다층적인 디아스포라 정체성을 만들어 낸 역사적 궤적이라고 할 수 있다.",
+    prompt_kr: "이 케이크를 자세히 묘사해 보세요.",
+    prompt_en: "Describe this cake in some detail.",
+    example_kr: "이 케이크는 친절하고 편해요, 시간이 지나도 그 느낌은 변하지 않아요.",
+    example_en: "This cake is kind and comfortable, and that feeling never changes no matter how much time passes.",
   },
   {
     level: "C2",
     genre: "description",
-    prompt_kr:
-      "감정노동이 산업 구조 속에서 제도화되는 과정을 일곱 문장 이상으로 설명해 보세요. '-거니와'와 '-을 넘어서다'를 사용하세요.",
-    prompt_en:
-      "Describe how emotional labor becomes institutionalized within industrial structures in seven or more sentences. Use the grammar patterns '-거니와' and '-을 넘어서다'.",
-    example_kr:
-      "감정노동은 서비스업 종사자가 자신의 실제 감정과 무관하게 고객에게 친절하고 긍정적인 태도를 표현하도록 요구받는 노동 형태를 가리킨다. 서비스 산업이 확대되면서 기업들은 고객 만족을 핵심 경쟁력으로 삼았거니와, 이 과정에서 직원의 감정 표현 자체가 관리와 평가의 대상으로 편입되기 시작했다. 콜센터 상담원이나 판매직 근로자에게 요구되는 표준화된 인사말과 표정 관리는 단순한 서비스 매뉴얼을 넘어서서 노동자의 내면까지 규율하는 기제로 작용한다. 부당한 고객의 요구나 폭언에도 침착함을 유지해야 한다는 암묵적 규범은 노동자의 정신 건강에 상당한 부담을 지우거니와, 이는 장기적으로 정서적 소진과 우울로 이어지는 경우가 많다. 감정노동에 대한 사회적 인식이 낮았던 과거에는 이러한 부담이 개인의 몫으로만 여겨졌으나, 관련 연구가 축적되면서 이는 명백한 산업재해의 영역으로 다루어지고 있다. 감정노동자 보호법과 같은 제도적 장치가 마련된 것은 이 문제가 개인의 인내심 문제를 넘어서서 사회적 책임의 영역임을 인정한 결과라고 할 수 있다. 기업 문화 안에서 감정노동에 대한 존중이 자리 잡지 않는 한 제도적 보호만으로는 근본적인 개선을 기대하기 어렵거니와, 실질적인 변화를 위해서는 소비자의 인식 전환도 함께 요구된다. 결국 감정노동의 제도화는 서비스 산업의 성장이 노동의 새로운 형태와 새로운 위험을 동시에 만들어 낸 과정을 보여 준다고 할 수 있다.",
-  },
-  {
-    level: "C2",
-    genre: "description",
-    prompt_kr:
-      "온돌 난방 문화가 한국인의 주거 관습에 미친 영향을 일곱 문장 이상으로 설명해 보세요. '-는 법이다'와 '-에 지나지 않는다'를 사용하세요.",
-    prompt_en:
-      "Describe the influence of ondol (underfloor heating) culture on Korean housing customs in seven or more sentences. Use the grammar patterns '-는 법이다' and '-에 지나지 않는다'.",
-    example_kr:
-      "온돌은 아궁이에서 발생한 열기를 방바닥 아래의 구들장으로 통과시켜 실내 전체를 데우는 한국 고유의 난방 방식으로, 오랜 세월 한국인의 생활 습관 전반에 깊은 영향을 미쳐 왔다. 바닥을 데우는 난방 방식은 자연히 좌식 생활을 발전시키는 법이어서, 온돌 문화권에서는 침대나 높은 의자보다 방바닥에 앉고 눕는 생활 양식이 오랫동안 표준으로 자리 잡았다. 서구식 침대 문화를 단순히 편리함의 관점에서만 바라보는 시각은 온돌이 지닌 신체적, 정서적 효용을 간과한 것에 지나지 않는다는 지적도 있다. 따뜻한 바닥에 온 가족이 함께 모여 앉는 온돌 공간의 구조는 자연스럽게 가족 구성원 간의 물리적 거리를 좁히는 법이며, 이는 한국 특유의 가족 중심 주거 문화 형성에도 영향을 미쳤다. 현대식 아파트에 도입된 온수 순환식 바닥 난방은 전통 온돌의 원리를 계승한 것에 지나지 않지만, 열원과 시공 방식은 완전히 달라졌다. 겨울철 난방을 위해 땔감을 준비하고 아궁이를 관리하던 전통적 생활 리듬은 계절의 변화에 맞추어 삶을 조직하는 법을 사람들에게 자연스럽게 체득시켰다. 오늘날에도 많은 외국인들이 한국의 바닥 난방 방식을 경험한 뒤 그 독특함에 놀라움을 표하는 경우가 많다. 결국 온돌은 단순한 난방 기술을 넘어 한국인의 신체 습관과 가족 문화, 공간 인식 전반을 형성해 온 문화적 장치라고 할 수 있다.",
+    prompt_kr: "우리 동네를 자세히 묘사해 보세요.",
+    prompt_en: "Describe my neighborhood in some detail.",
+    example_kr: "우리 동네는 귀엽고 시끄러워요, 시간이 지나도 그 느낌은 변하지 않아요.",
+    example_en: "My neighborhood is cute and loud, and that feeling never changes no matter how much time passes.",
   },
 ];

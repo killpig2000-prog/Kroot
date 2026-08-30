@@ -1,9 +1,6 @@
 import type { CefrLevel } from "@/lib/tree";
 import type { RawPrompt, WritingGenre } from "@/lib/writing-data/types";
 import { DAILY_LIFE_PROMPTS } from "@/lib/writing-data/daily-life";
-import EXAMPLE_EN from "@/lib/writing-example-en.json";
-
-const exampleEn = EXAMPLE_EN as Record<string, string>;
 
 export type Prompt = RawPrompt & { key: string };
 
@@ -18,15 +15,14 @@ export const WRITING_GENRE_META: Record<WritingGenre, { icon: string; label: str
 export function getPromptsForLevel(level: CefrLevel): Prompt[] {
   return DAILY_LIFE_PROMPTS.filter((p) => p.level === level).map((p) => ({
     ...p,
-    example_en: p.example_en ?? exampleEn[`${p.level}:${p.example_kr}`],
     key: `writing:${p.level}:${p.prompt_kr}`,
   }));
 }
 
-/** Prompts per chapter — one API call grades the whole chapter at once. */
-export const CHAPTER_SIZE = 4;
+/** Prompts per chapter — small on purpose, since every board is a tile puzzle checked on the spot. */
+export const CHAPTER_SIZE = 3;
 
-// Each genre block (40 prompts) divides evenly into CHAPTER_SIZE, so a
+// Each genre block (39 prompts) divides evenly into CHAPTER_SIZE, so a
 // chapter never mixes genres.
 export function getChaptersForLevel(level: CefrLevel): Prompt[][] {
   const prompts = getPromptsForLevel(level);

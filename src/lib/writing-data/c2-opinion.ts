@@ -4,401 +4,313 @@ export const WRITING_C2_OPINION: RawPrompt[] = [
   {
     level: "C2",
     genre: "opinion",
-    prompt_kr:
-      "능력주의(meritocracy)의 한계에 대한 자신의 입장을 일곱 문장 이상으로 논해 보세요. '-는 법이다'와 '-는 데 있다'를 사용하세요.",
-    prompt_en:
-      "Argue your position on the limits of meritocracy in seven or more sentences. Use '-는 법이다' and '-는 데 있다'.",
-    example_kr:
-      "능력주의는 얼핏 가장 공정한 원칙처럼 보이지만, 나는 그 공정함이 상당 부분 허상에 가깝다고 생각한다. 노력한 만큼 보상받아야 한다는 원칙 자체를 부정할 생각은 없다. 그러나 애초에 노력할 수 있는 여건조차 사람마다 크게 다르다는 사실이 자꾸 마음에 걸린다. 부유한 집안에서 태어난 아이와 그렇지 않은 아이는 같은 출발선에 서 있는 것처럼 보이지만, 실은 전혀 다른 지점에서 경주를 시작하는 법이다. 그런데도 결과만 놓고 승자의 능력을 칭송하고 패자의 게으름을 탓한다면, 그것은 불평등을 정당화하는 세련된 언어에 지나지 않는다. 문제의 핵심은 노력에 보상하지 말자는 데 있는 것이 아니라, 노력을 시작하기도 전에 이미 승패가 상당 부분 결정되어 있다는 데 있다. 그러므로 능력주의가 진정한 공정함으로 기능하려면 결과의 평등이 아니라 최소한 출발의 평등만큼은 사회가 책임져야 한다고 본다. 나는 능력주의를 폐기하자는 것이 아니라, 그것이 신화가 아니라 실제로 작동하는 원칙이 되도록 그 전제 조건부터 손봐야 한다고 주장하고 싶다.",
+    prompt_kr: "매운 음식에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on spicy food.",
+    example_kr: "저는 매운 음식을 좋아하는 편인데 나이가 들수록 그 이유를 더 잘 알게 되는 것 같아요.",
+    example_en: "I tend to like spicy food, and the older I get, the more I seem to understand why.",
   },
   {
     level: "C2",
     genre: "opinion",
-    prompt_kr:
-      "예술이 반드시 관객을 필요로 하는지에 대한 자신의 입장을 일곱 문장 이상으로 논해 보세요. '-에 지나지 않는다'와 '-기 마련이다'를 사용하세요.",
-    prompt_en:
-      "Argue your position on whether art necessarily needs an audience, in seven or more sentences. Use '-에 지나지 않는다' and '-기 마련이다'.",
-    example_kr:
-      "예술이 반드시 관객을 필요로 하는가라는 질문에 나는 그렇지 않다고 답하고 싶다. 물론 작품이 누군가에게 가닿을 때 비로소 완성된다고 믿는 사람들의 생각도 충분히 이해한다. 그러나 아무도 보지 않는 그림이라도 그것을 그리는 동안 화가가 느꼈던 몰입과 발견은 이미 그 자체로 온전한 경험이라고 생각한다. 감상자가 없다면 그 창작은 그저 사적인 낙서에 지나지 않는다고 말하는 사람도 있겠지만, 나는 그 판단이 지나치게 성급하다고 본다. 창작이라는 행위는 본래 자기 내면을 정리하고 세계를 새롭게 이해하려는 시도이기 마련이고, 그 과정 자체에 이미 예술의 본질이 담겨 있다. 물론 예술이 사회 속에서 유통되고 해석될 때 더 풍부한 의미를 얻는다는 점도 부정할 수 없다. 그렇다 하더라도 관객의 존재 여부가 작품의 가치를 결정짓는 유일한 기준이 되어서는 안 된다고 생각한다. 결국 예술의 필요조건은 소통이 아니라 진실한 표현에 있다고 나는 믿는다.",
+    prompt_kr: "영화 보기에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on watching movies.",
+    example_kr: "저는 영화 보기를 좋아하는 편인데 나이가 들수록 그 이유를 더 잘 알게 되는 것 같아요.",
+    example_en: "I tend to like watching movies, and the older I get, the more I seem to understand why.",
   },
   {
     level: "C2",
     genre: "opinion",
-    prompt_kr:
-      "아직 태어나지 않은 미래 세대에 대한 도덕적 의무에 대해 일곱 문장 이상으로 논해 보세요. '-(으)ㄹ지언정'과 '-을 감안하더라도'를 사용하세요.",
-    prompt_en:
-      "Argue your position on our moral obligations to future generations, in seven or more sentences. Use '-(으)ㄹ지언정' and '-을 감안하더라도'.",
-    example_kr:
-      "아직 태어나지도 않은 미래 세대에게 우리가 도덕적 의무를 지닌다는 주장은 언뜻 추상적으로 들릴지언정, 나는 그것이 결코 공허한 말이 아니라고 생각한다. 물론 존재하지 않는 존재의 이익을 지금 어떻게 계산할 수 있느냐는 반론도 일리가 있다. 그들의 구체적인 필요나 욕구를 지금 정확히 예측할 수 없다는 불확실성을 감안하더라도, 최소한 살 수 있는 지구 환경을 물려주어야 한다는 원칙만큼은 흔들려서는 안 된다고 본다. 오늘 우리가 자원을 아무리 아껴 쓸지언정 그 이득을 직접 누리는 것은 우리 자신이 아니라 다음 세대일 것이다. 그럼에도 그 노력을 지금 하지 않는다면 훗날 그들이 감당해야 할 대가는 상상하기 어려울 만큼 클 것이다. 미래 세대의 존재가 불확실하다는 이유로 그들의 이익을 아예 계산에서 제외하는 것은 책임의 회피에 가깝다고 생각한다. 그러므로 나는 정책 결정에서 미래 세대의 이해관계를 현재 세대와 동등한 무게로 다뤄야 한다고 주장한다.",
+    prompt_kr: "겨울에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on winter.",
+    example_kr: "저는 겨울을 좋아하는 편인데 나이가 들수록 그 이유를 더 잘 알게 되는 것 같아요.",
+    example_en: "I tend to like winter, and the older I get, the more I seem to understand why.",
   },
   {
     level: "C2",
     genre: "opinion",
-    prompt_kr:
-      "문화 차용과 문화 교류의 차이에 대해 일곱 문장 이상으로 논해 보세요. '-기 그지없다'와 '-을 계기로 삼아'를 사용하세요.",
-    prompt_en:
-      "Argue your position on the difference between cultural appropriation and cultural exchange, in seven or more sentences. Use '-기 그지없다' and '-을 계기로 삼아'.",
-    example_kr:
-      "문화 차용과 문화 교류를 명확히 구분하지 않고 모든 차용을 싸잡아 비난하는 태도는 안타깝기 그지없다. 물론 특정 집단의 상징이나 전통을 맥락 없이 소비하며 이윤만 취하는 사례가 실제로 존재한다는 것은 인정해야 한다. 그러나 서로 다른 문화가 만나는 접촉 자체를 죄악시한다면 인류의 문화사는 애초에 성립할 수 없었을 것이다. 나는 어떤 요소를 가져오는 행위 자체보다 그것을 가져오는 태도가 더 중요한 기준이라고 생각한다. 기원을 인정하고 그 맥락을 존중하며 배우려는 자세로 접근한다면, 그 만남을 서로를 풍요롭게 하는 계기로 삼아 새로운 창작으로 이어질 수 있다. 반대로 원저작자에 대한 존중 없이 이국적인 요소만 떼어다 소비한다면 그것은 착취에 가깝다고 본다. 결국 핵심은 차용이냐 교류냐를 가르는 이분법이 아니라, 존중과 인정이라는 실질적인 태도에 있다고 나는 믿는다.",
+    prompt_kr: "혼밥에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on eating alone.",
+    example_kr: "저는 혼밥을 좋아하는 편인데 나이가 들수록 그 이유를 더 잘 알게 되는 것 같아요.",
+    example_en: "I tend to like eating alone, and the older I get, the more I seem to understand why.",
   },
   {
     level: "C2",
     genre: "opinion",
-    prompt_kr:
-      "'잊힐 권리'에 대한 자신의 입장을 일곱 문장 이상으로 논해 보세요. '-(으)로 말미암아'와 '-는 것에 불과하다'를 사용하세요.",
-    prompt_en:
-      "Argue your position on the 'right to be forgotten', in seven or more sentences. Use '-(으)로 말미암아' and '-는 것에 불과하다'.",
-    example_kr:
-      "디지털 기록이 영구히 남는 시대로 말미암아 '잊힐 권리'에 대한 요구는 갈수록 커지고 있으며, 나는 이 권리가 상당한 정당성을 지닌다고 생각한다. 젊은 시절의 실수나 왜곡된 정보가 평생 검색 결과 상단에 남아 한 사람의 삶을 계속 옥죄는 상황은 분명 부당하다. 그러나 이 권리를 무제한으로 인정한다면 그것은 결국 불편한 진실을 지우는 수단으로 변질되는 것에 불과하다는 우려도 무시할 수 없다. 공익과 관련된 정보, 특히 공직자의 과거 비리 같은 기록까지 삭제 요청의 대상이 된다면 그것은 잊힐 권리가 아니라 책임 회피의 도구가 될 것이다. 그러므로 나는 이 권리가 개인의 존엄과 알 권리 사이에서 정교하게 조율되어야 한다고 본다. 삭제의 기준은 공익성과 시간의 경과, 그리고 정보의 성격을 종합적으로 고려해 사안별로 판단해야 한다. 결국 잊힐 권리는 절대적 권리가 아니라 다른 권리들과 끊임없이 저울질되어야 하는 상대적 권리라고 나는 결론짓는다.",
+    prompt_kr: "단체 여행에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on group trips.",
+    example_kr: "저는 단체 여행을 좋아하는 편인데 나이가 들수록 그 이유를 더 잘 알게 되는 것 같아요.",
+    example_en: "I tend to like group trips, and the older I get, the more I seem to understand why.",
   },
   {
     level: "C2",
     genre: "opinion",
-    prompt_kr:
-      "기술 결정론에 대한 자신의 입장을 일곱 문장 이상으로 논해 보세요. '-거니와'와 '-(으)로 환원되다'를 사용하세요.",
-    prompt_en:
-      "Argue your position on technological determinism, in seven or more sentences. Use '-거니와' and '-(으)로 환원되다'.",
-    example_kr:
-      "기술이 사회 변화의 유일한 동력이라는 기술 결정론에는 나는 동의하기 어렵다. 새로운 기술이 등장할 때마다 우리의 생활 방식이 크게 달라진다는 것은 부정할 수 없거니와, 그 변화의 방향과 속도까지 기술 자체가 전적으로 결정한다고 보기는 어렵다. 같은 기술이라도 그것을 도입하는 사회의 제도와 가치관에 따라 전혀 다른 결과를 낳는 사례는 얼마든지 있다. 인간의 역사를 기술 발전 단계의 자동적인 산물로 환원되다시피 서술하는 것은 지나치게 단순하다고 생각한다. 오히려 어떤 기술을 개발할지, 그것을 어떻게 규제할지를 선택하는 것은 결국 인간의 정치적 결정이라는 점을 잊지 말아야 한다. 물론 일단 널리 퍼진 기술을 되돌리기 어렵다는 점에서 기술이 강력한 관성을 지닌다는 것도 인정한다. 그럼에도 그 관성 앞에서 인간이 완전히 무력한 존재는 아니라고 나는 믿는다. 결국 기술과 인간의 관계는 일방적인 지배가 아니라 끊임없는 상호 작용으로 이해되어야 한다.",
+    prompt_kr: "주말에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on weekends.",
+    example_kr: "저는 주말을 좋아하는 편인데 나이가 들수록 그 이유를 더 잘 알게 되는 것 같아요.",
+    example_en: "I tend to like weekends, and the older I get, the more I seem to understand why.",
   },
   {
     level: "C2",
     genre: "opinion",
-    prompt_kr:
-      "번역이 곧 원문에 대한 배신인지에 대해 일곱 문장 이상으로 논해 보세요. '-(으)ㄹ 바에야'와 '-노라면'을 사용하세요.",
-    prompt_en:
-      "Argue your position on whether translation is inherently a betrayal of the original text, in seven or more sentences. Use '-(으)ㄹ 바에야' and '-노라면'.",
-    example_kr:
-      "번역은 반역이라는 오래된 격언에 나는 절반만 동의한다. 원문의 미묘한 뉘앙스와 리듬을 다른 언어로 완벽히 옮기는 일이 근본적으로 불가능하다는 점은 인정한다. 그러나 그렇다고 번역이 원문에 대한 배신이라고 단정하는 것은 지나치다고 생각한다. 완벽하게 옮길 수 없다는 이유로 아예 옮기지 않을 바에야, 다소 불완전하더라도 다른 언어의 독자에게 그 세계를 열어 주는 편이 훨씬 값진 일이다. 번역가가 원문을 읽고 또 읽으며 최선의 표현을 찾아 헤매노라면 어느새 그 과정 자체가 또 하나의 창작이 되어 있음을 깨닫게 된다. 원문의 형식은 잃을지언정 그 안에 담긴 정신만큼은 새로운 언어 속에서 다시 살아날 수 있다고 나는 믿는다. 그러므로 번역을 배신이 아니라 또 다른 언어로의 이주, 혹은 재창조로 이해하는 편이 더 정확하다고 생각한다. 손실이 있다는 사실이 곧 배신을 의미하지는 않는다.",
+    prompt_kr: "독서에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on reading.",
+    example_kr: "저는 독서를 좋아하는 편인데 나이가 들수록 그 이유를 더 잘 알게 되는 것 같아요.",
+    example_en: "I tend to like reading, and the older I get, the more I seem to understand why.",
   },
   {
     level: "C2",
     genre: "opinion",
-    prompt_kr:
-      "넛지(nudge) 정책의 윤리적 정당성에 대해 일곱 문장 이상으로 논해 보세요. '-을 전제로'와 '-에 다름 아니다'를 사용하세요.",
-    prompt_en:
-      "Argue your position on the ethical legitimacy of nudge policies, in seven or more sentences. Use '-을 전제로' and '-에 다름 아니다'.",
-    example_kr:
-      "넛지, 즉 사람들의 선택을 부드럽게 유도하는 정책 설계에 대해 나는 조건부로 찬성하는 입장이다. 넛지는 기본적으로 개인이 여전히 다른 선택을 할 수 있다는 것을 전제로 설계되어야 정당성을 얻는다. 예컨대 건강한 음식을 눈에 잘 띄게 진열하는 정도는 선택의 자유를 침해하지 않으면서도 좋은 결과를 유도할 수 있는 방법이다. 그러나 그 설계 의도와 방식이 완전히 감추어진 채 이루어진다면, 그것은 설득이 아니라 조작에 다름 아니라고 생각한다. 사람들이 자신이 유도당하고 있다는 사실조차 알 수 없다면 자율성이라는 가치는 형해화되고 만다. 그러므로 넛지를 설계하는 기관은 그 목적과 방법을 투명하게 공개할 의무를 져야 한다고 본다. 또한 언제든 원래의 선택지로 되돌아갈 수 있는 통로를 분명히 열어 두어야 한다. 결국 넛지의 정당성은 그것이 자유를 완전히 대체하는가, 아니면 여전히 자유를 존중하며 보조하는가에 달려 있다.",
+    prompt_kr: "일찍 일어나기에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on waking up early.",
+    example_kr: "저는 일찍 일어나기를 좋아하는 편인데 나이가 들수록 그 이유를 더 잘 알게 되는 것 같아요.",
+    example_en: "I tend to like waking up early, and the older I get, the more I seem to understand why.",
   },
   {
     level: "C2",
     genre: "opinion",
-    prompt_kr:
-      "기억과 역사의 관계에 대해 일곱 문장 이상으로 논해 보세요. '-이야말로'와 '-을 무릅쓰고'를 사용하세요.",
-    prompt_en:
-      "Argue your position on the relationship between memory and history, in seven or more sentences. Use '-이야말로' and '-을 무릅쓰고'.",
-    example_kr:
-      "개인과 공동체의 기억은 흔히 부정확하다는 이유로 역사학의 엄밀함에 밀려나기 쉽지만, 나는 기억이야말로 역사가 놓치기 쉬운 감정의 결을 보존하는 소중한 자료라고 생각한다. 물론 기억은 시간이 지나며 왜곡되고 선택적으로 편집된다는 점에서 사료로서의 한계가 뚜렷하다. 그러나 공식 기록에 남지 않은 목소리를 되살리기 위해서는 왜곡의 위험을 무릅쓰고서라도 증언과 구술사를 수집할 필요가 있다. 역사가 사건의 뼈대를 세운다면 기억은 그 뼈대에 살아 있는 감정을 입히는 역할을 한다. 두 가지를 대립시키기보다는 서로를 보완하는 관계로 이해하는 것이 옳다고 본다. 물론 기억만으로 역사적 사실을 판단해서는 안 되며, 반드시 다른 자료와의 교차 검증을 거쳐야 한다. 그럼에도 불구하고 나는 공식 역사 서술에서 밀려난 기억들을 되찾는 작업이야말로 온전한 과거 이해를 위해 반드시 필요한 일이라고 믿는다.",
+    prompt_kr: "긴 여행에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on long trips.",
+    example_kr: "저는 긴 여행을 좋아하는 편인데 나이가 들수록 그 이유를 더 잘 알게 되는 것 같아요.",
+    example_en: "I tend to like long trips, and the older I get, the more I seem to understand why.",
   },
   {
     level: "C2",
     genre: "opinion",
-    prompt_kr:
-      "아름다움의 기준이 보편적인지 문화적으로 상대적인지에 대해 일곱 문장 이상으로 논해 보세요. '-는 셈이다'와 '-치고'를 사용하세요.",
-    prompt_en:
-      "Argue your position on whether beauty standards are universal or culturally relative, in seven or more sentences. Use '-는 셈이다' and '-치고'.",
-    example_kr:
-      "아름다움의 기준이 전적으로 문화에 따라 다르다는 주장에 나는 대체로 동의하지만 완전히는 아니다. 시대와 지역을 막론하고 대칭적인 얼굴이나 건강해 보이는 신체에 대한 선호가 어느 정도 공통적으로 나타난다는 연구를 무시할 수는 없다. 그러나 구체적으로 어떤 몸매, 어떤 피부색, 어떤 표정이 이상적이라고 여겨지는가는 사회마다 놀랍도록 다르다. 최근 전 세계 대중매체가 특정 지역의 미의 기준을 표준처럼 퍼뜨리는 현상치고 우려스럽지 않은 것이 없다. 이는 사실상 다양했던 아름다움의 감각을 단일한 상업적 기준으로 좁혀 가는 셈이다. 그 결과 많은 사람들이 자신의 고유한 특징을 결함처럼 여기며 불필요한 고통을 겪고 있다. 그러므로 나는 미적 기준의 보편성보다 그 기준이 누구의 이익을 위해 형성되고 유통되는지를 더 비판적으로 살펴야 한다고 생각한다.",
+    prompt_kr: "시골 생활에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on countryside life.",
+    example_kr: "저는 시골 생활을 좋아하는 편인데 나이가 들수록 그 이유를 더 잘 알게 되는 것 같아요.",
+    example_en: "I tend to like countryside life, and the older I get, the more I seem to understand why.",
   },
   {
     level: "C2",
     genre: "opinion",
-    prompt_kr:
-      "사생활 보호가 특권층의 사치가 되어 가는 현상에 대해 일곱 문장 이상으로 논해 보세요. '-을 넘어서다'와 '-을 불문하고'를 사용하세요.",
-    prompt_en:
-      "Argue your position on privacy becoming a luxury reserved for the privileged, in seven or more sentences. Use '-을 넘어서다' and '-을 불문하고'.",
-    example_kr:
-      "오늘날 사생활 보호는 어느새 특정 계층만이 온전히 누릴 수 있는 사치품이 되어 가고 있다는 데 나는 깊이 공감한다. 데이터 추적을 피하려면 유료 서비스를 이용하고 값비싼 보안 장비를 갖추어야 하는 현실은 이제 개인의 선택 문제를 넘어서서 구조적인 불평등의 문제가 되었다. 소득 수준을 불문하고 모두가 최소한의 사생활을 보장받아야 한다는 원칙은 점점 공허한 구호로 전락하고 있다. 저소득층은 무료 서비스의 대가로 자신의 데이터를 훨씬 더 많이 내주어야 하는 처지에 놓여 있다. 반면 여유가 있는 사람들은 프라이버시를 상품으로 구매하며 그 위험에서 비교적 자유롭다. 이런 격차를 그대로 방치한다면 사생활은 인권이 아니라 시장에서 거래되는 특권으로 굳어질 것이다. 그러므로 나는 최소한의 디지털 프라이버시를 기본권으로 규정하고 이를 제도적으로 보장하는 정책이 시급하다고 본다.",
+    prompt_kr: "짧은 낮잠에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on short naps.",
+    example_kr: "저는 짧은 낮잠을 좋아하는 편인데 나이가 들수록 그 이유를 더 잘 알게 되는 것 같아요.",
+    example_en: "I tend to like short naps, and the older I get, the more I seem to understand why.",
   },
   {
     level: "C2",
     genre: "opinion",
-    prompt_kr:
-      "결정론이 참이라 해도 도덕적 책임을 물을 수 있는지에 대해 일곱 문장 이상으로 논해 보세요. '-라 할지라도'와 '-을 방불케 하다'를 사용하세요.",
-    prompt_en:
-      "Argue your position on whether moral responsibility can survive even if determinism is true, in seven or more sentences. Use '-라 할지라도' and '-을 방불케 하다'.",
-    example_kr:
-      "모든 행동이 이전 원인에 의해 결정되어 있다는 결정론이 사실이라 할지라도, 나는 우리가 도덕적 책임이라는 개념을 완전히 포기해서는 안 된다고 생각한다. 물론 신경과학의 발전은 인간의 선택이 순수한 자유의지의 산물이 아니라 뇌의 물리적 작용의 결과일 수 있음을 점점 더 설득력 있게 보여 주고 있다. 이 논쟁을 접할 때마다 나는 철학 수업에서 벌어지는 치열한 논쟁을 방불케 하는 혼란을 느끼곤 한다. 그러나 결정론이 형이상학적으로 참이라 할지라도, 사회가 개인의 행위에 책임을 묻는 관행에는 여전히 중요한 실용적 기능이 있다. 책임을 묻지 않는다면 처벌과 교육, 배상이라는 사회적 장치 자체가 의미를 잃을 것이다. 그러므로 나는 형이상학적 자유의지가 없다 하더라도 사회적, 실천적 차원의 책임 개념은 유지되어야 한다고 주장한다. 결국 우리는 형이상학의 답을 기다리지 않고도 책임 있는 사회를 구성할 수 있다고 믿는다.",
+    prompt_kr: "여름에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on summer.",
+    example_kr: "저는 여름을 좋아하는 편인데 나이가 들수록 그 이유를 더 잘 알게 되는 것 같아요.",
+    example_en: "I tend to like summer, and the older I get, the more I seem to understand why.",
   },
   {
     level: "C2",
     genre: "opinion",
-    prompt_kr:
-      "정의가 실현되려면 용서가 뒤따라야 하는지에 대해 일곱 문장 이상으로 논해 보세요. '-는 데 있다'와 '-을 대가로 하여'를 사용하세요.",
-    prompt_en:
-      "Argue your position on whether justice requires forgiveness, in seven or more sentences. Use '-는 데 있다' and '-을 대가로 하여'.",
-    example_kr:
-      "정의가 실현되려면 반드시 용서가 뒤따라야 하는가라는 질문에 나는 그렇지 않다고 답하고 싶다. 정의의 핵심은 피해자의 감정을 특정한 방향으로 이끄는 데 있는 것이 아니라, 잘못에 상응하는 책임을 공정하게 묻는 데 있다고 생각한다. 용서는 피해자 개인의 내면에서 우러나야 하는 것이지, 사회가 강요하거나 기대할 수 있는 성질의 것이 아니다. 가해자의 반성을 대가로 하여 피해자가 자동으로 용서를 베풀어야 한다는 서사는 오히려 피해자에게 또 다른 부담을 지운다. 물론 용서가 당사자에게 치유의 길이 될 수 있다는 점은 존중한다. 그러나 용서하지 않는다고 해서 그 사람이 정의를 방해하고 있다고 비난할 수는 없다. 결국 정의는 용서와는 별개의 축으로 다루어져야 하며, 둘을 뒤섞는 순간 오히려 진정한 책임 규명이 흐려질 위험이 있다고 나는 본다.",
+    prompt_kr: "야식에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on late-night snacks.",
+    example_kr: "저는 야식을 좋아하는 편인데 나이가 들수록 그 이유를 더 잘 알게 되는 것 같아요.",
+    example_en: "I tend to like late-night snacks, and the older I get, the more I seem to understand why.",
   },
   {
     level: "C2",
     genre: "opinion",
-    prompt_kr:
-      "기본소득이 노동의 가치를 훼손하는지에 대해 일곱 문장 이상으로 논해 보세요. '-을 막론하고'와 '-에 다름 아니다'를 사용하세요.",
-    prompt_en:
-      "Argue your position on whether universal basic income undermines the value of work, in seven or more sentences. Use '-을 막론하고' and '-에 다름 아니다'.",
-    example_kr:
-      "기본소득이 노동 의욕을 근본적으로 무너뜨릴 것이라는 우려에 나는 전적으로 동의하지는 않는다. 물론 최소한의 생계가 보장되면 아무도 일하지 않을 것이라는 걱정은 직관적으로 그럴듯해 보인다. 그러나 소득 수준을 막론하고 사람들이 노동에서 얻고자 하는 것은 단지 생계비만이 아니라 성취감과 사회적 소속감이라는 사실을 간과해서는 안 된다. 자동화로 인해 일자리 자체가 줄어드는 시대에 노동을 통해서만 존엄을 증명하라고 요구하는 것은 비현실적인 요구에 다름 아니다. 오히려 최소한의 안전망이 있을 때 사람들은 위험을 감수하며 창업을 시도하거나 재교육을 받을 여유를 가질 수 있다. 물론 재원 마련의 문제와 노동시장에 미칠 부작용은 신중하게 검토되어야 한다. 그럼에도 나는 기본소득이 노동을 대체하는 것이 아니라 노동의 선택지를 넓혀 주는 장치로 설계될 수 있다고 믿는다.",
+    prompt_kr: "한국 음식에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on Korean food.",
+    example_kr: "저는 한국 음식을 좋아하는 편인데 나이가 들수록 그 이유를 더 잘 알게 되는 것 같아요.",
+    example_en: "I tend to like Korean food, and the older I get, the more I seem to understand why.",
   },
   {
     level: "C2",
     genre: "opinion",
-    prompt_kr:
-      "혐오 표현을 법으로 규제해야 하는지에 대해 일곱 문장 이상으로 논해 보세요. '-을 명분으로'와 '-을 무릅쓰고'를 사용하세요.",
-    prompt_en:
-      "Argue your position on whether hate speech should be legally restricted, in seven or more sentences. Use '-을 명분으로' and '-을 무릅쓰고'.",
-    example_kr:
-      "혐오 표현을 법으로 규제해야 하는가에 대해 나는 제한적으로 찬성하는 입장이다. 표현의 자유라는 원칙을 명분으로 삼아 특정 집단을 향한 조직적인 폭력 선동까지 방치하는 것은 옳지 않다고 본다. 실제로 혐오 표현은 소수자들의 안전과 존엄을 실질적으로 위협하며, 그 피해는 결코 추상적이지 않다. 그러나 표현의 자유가 위축될 위험을 무릅쓰고 규제의 범위를 지나치게 넓게 설정하는 것 역시 경계해야 한다고 생각한다. 무엇이 혐오이고 무엇이 정당한 비판인지의 경계가 모호해지면, 권력을 가진 쪽이 그 모호함을 자신에게 불리한 발언을 억누르는 도구로 악용할 수 있다. 그러므로 규제는 폭력을 직접적으로 선동하거나 특정 집단을 표적으로 삼는 경우처럼 명확한 기준을 갖춘 좁은 범위에 한정되어야 한다. 결국 자유와 안전 사이의 균형은 원칙의 문제가 아니라 정교한 설계의 문제라고 나는 본다.",
+    prompt_kr: "휴가에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on vacations.",
+    example_kr: "저는 휴가를 좋아하는 편인데 나이가 들수록 그 이유를 더 잘 알게 되는 것 같아요.",
+    example_en: "I tend to like vacations, and the older I get, the more I seem to understand why.",
   },
   {
     level: "C2",
     genre: "opinion",
-    prompt_kr:
-      "향수(nostalgia)가 역사적 판단을 왜곡하는지에 대해 일곱 문장 이상으로 논해 보세요. '-치고'와 '-을 불문하고'를 사용하세요.",
-    prompt_en:
-      "Argue your position on whether nostalgia distorts historical judgment, in seven or more sentences. Use '-치고' and '-을 불문하고'.",
-    example_kr:
-      "지나간 시절을 그리워하는 향수치고 완전히 순수한 감정은 드물다고 나는 생각한다. 사람들은 대개 힘들었던 부분은 지우고 좋았던 기억만 선택적으로 남기며 과거를 실제보다 아름답게 채색한다. 세대를 불문하고 흔히 나타나는 이 현상 자체는 자연스러운 심리적 방어기제일 수 있다. 그러나 이 향수가 개인의 회고를 넘어 정치적 언어로 동원될 때는 이야기가 달라진다. 과거의 특정 시기를 무조건 이상적인 시대로 그리는 서사는 그 시절의 불평등과 폭력을 편리하게 지워 버리는 경우가 많다. 그런 왜곡된 향수에 기대어 정책을 설계한다면 현재의 문제를 직시하는 대신 존재하지 않았던 과거로 되돌아가려는 헛된 시도로 이어질 위험이 크다. 그러므로 나는 향수를 개인적 위안의 영역에는 허용하되, 공적 판단의 근거로는 늘 경계해야 한다고 생각한다.",
+    prompt_kr: "추운 날씨에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on cold weather.",
+    example_kr: "저는 추운 날씨를 좋아하는 편인데 나이가 들수록 그 이유를 더 잘 알게 되는 것 같아요.",
+    example_en: "I tend to like cold weather, and the older I get, the more I seem to understand why.",
   },
   {
     level: "C2",
     genre: "opinion",
-    prompt_kr:
-      "자녀의 유전자를 조작하는 기술의 허용 범위에 대해 일곱 문장 이상으로 논해 보세요. '-을 방불케 하다'와 '-을 대가로 하여'를 사용하세요.",
-    prompt_en:
-      "Argue your position on how far genetic engineering of children should be permitted, in seven or more sentences. Use '-을 방불케 하다' and '-을 대가로 하여'.",
-    example_kr:
-      "유전자를 조작해 질병을 막는 기술과 아이를 더 뛰어나게 만들려는 기술은 전혀 다른 문제라고 나는 생각한다. 치명적인 유전 질환을 막기 위한 편집은 의학적 치료를 방불케 하는 정당한 개입으로 볼 수 있다. 그러나 지능이나 외모 같은 형질을 향상시키기 위한 편집은 전혀 다른 차원의 문제를 낳는다. 부유한 부모들이 막대한 비용을 대가로 하여 자녀에게 유전적 이점을 사 줄 수 있다면, 그것은 기존의 불평등을 생물학적 차원으로까지 고착시키는 결과를 낳을 것이다. 이미 사회경제적 격차가 여러 세대를 거치며 재생산되고 있는 상황에서, 유전자 편집까지 더해진다면 그 격차는 되돌릴 수 없는 수준으로 벌어질지도 모른다. 그러므로 나는 치료 목적의 유전자 편집은 신중하게 허용하되, 향상을 목적으로 한 편집은 강력하게 규제해야 한다고 본다. 기술이 가능하다는 사실이 그것을 반드시 허용해야 한다는 논거가 되지는 않는다.",
+    prompt_kr: "여행에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on traveling.",
+    example_kr: "저는 여행을 좋아하는 편인데 나이가 들수록 그 이유를 더 잘 알게 되는 것 같아요.",
+    example_en: "I tend to like traveling, and the older I get, the more I seem to understand why.",
   },
   {
     level: "C2",
     genre: "opinion",
-    prompt_kr:
-      "사형 제도가 정의를 실현하는 수단인지에 대해 일곱 문장 이상으로 논해 보세요. '-는 법이다'와 '-에 지나지 않는다'를 사용하세요.",
-    prompt_en:
-      "Argue your position on whether capital punishment achieves justice, in seven or more sentences. Use '-는 법이다' and '-에 지나지 않는다'.",
-    example_kr:
-      "사형 제도가 정의를 실현하는 최종적인 수단이라는 주장에 나는 동의하지 않는다. 아무리 신중한 재판이라도 인간이 진행하는 이상 오판의 가능성은 사라지지 않는 법이다. 실제로 사형이 집행된 뒤 나중에 무고함이 밝혀진 사례들은 이 제도의 위험성을 뼈아프게 증명해 왔다. 흉악 범죄에 대한 분노를 국가가 대신 실행해 주는 것이 사형의 실질적 기능이라면, 그것은 정의의 실현이라기보다 국가가 대행하는 복수에 지나지 않는다고 생각한다. 게다가 사형이 강력 범죄를 실제로 억제한다는 통계적 증거도 뚜렷하지 않다. 종신형과 같은 대안으로도 사회를 위험으로부터 충분히 보호할 수 있다면, 되돌릴 수 없는 형벌을 굳이 유지할 이유는 줄어든다. 그러므로 나는 사형 제도를 단계적으로 폐지하고 오판의 위험이 없는 형벌 체계로 나아가야 한다고 주장한다.",
+    prompt_kr: "도시 생활에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on city life.",
+    example_kr: "저는 도시 생활을 좋아하는 편인데 나이가 들수록 그 이유를 더 잘 알게 되는 것 같아요.",
+    example_en: "I tend to like city life, and the older I get, the more I seem to understand why.",
   },
   {
     level: "C2",
     genre: "opinion",
-    prompt_kr:
-      "국경이라는 것이 도덕적으로 정당화될 수 있는지에 대해 일곱 문장 이상으로 논해 보세요. '-(으)ㄹ지언정'과 '-기 그지없다'를 사용하세요.",
-    prompt_en:
-      "Argue your position on whether national borders are morally justifiable, in seven or more sentences. Use '-(으)ㄹ지언정' and '-기 그지없다'.",
-    example_kr:
-      "국경이라는 것이 도덕적으로 완전히 정당화될 수 있는가라는 질문에 나는 복잡한 심정으로 답하게 된다. 국가라는 공동체가 자원과 제도를 운영하기 위해 어느 정도의 경계를 설정할지언정, 그 경계가 사람의 생명과 존엄을 가로막는 벽이 되어서는 안 된다고 생각한다. 그런데 오늘날 자본과 상품은 국경을 자유롭게 넘나드는 반면, 정작 사람들은 그보다 훨씬 엄격한 장벽에 가로막히는 현실은 모순적이기 그지없다. 태어난 곳이라는 우연한 조건만으로 누군가의 삶의 기회가 극단적으로 갈린다는 사실은 도덕적으로 정당화하기 어렵다. 물론 국경을 완전히 없애자는 주장은 현실적으로 여러 부작용을 낳을 수 있다는 점도 인정한다. 그렇다면 적어도 난민이나 생존을 위해 이동하는 사람들에 대해서는 지금보다 훨씬 관대한 원칙을 적용해야 한다고 본다. 국경의 존재 자체를 부정하지는 않되, 그것이 특권을 지키는 도구로만 기능해서는 안 된다는 것이 내 생각이다.",
+    prompt_kr: "계획 세우기에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on making plans.",
+    example_kr: "저는 계획 세우기를 좋아하는 편인데 나이가 들수록 그 이유를 더 잘 알게 되는 것 같아요.",
+    example_en: "I tend to like making plans, and the older I get, the more I seem to understand why.",
   },
   {
     level: "C2",
     genre: "opinion",
-    prompt_kr:
-      "동물이 인간과 동등한 도덕적 지위를 지니는지에 대해 일곱 문장 이상으로 논해 보세요. '-(으)로 말미암아'와 '-거니와'를 사용하세요.",
-    prompt_en:
-      "Argue your position on whether animals hold moral status equal to humans, in seven or more sentences. Use '-(으)로 말미암아' and '-거니와'.",
-    example_kr:
-      "동물이 인간과 완전히 동등한 권리를 지녀야 하는가에 대해서는 신중한 입장이지만, 동물이 고통을 느낄 수 있다는 사실만으로도 상당한 도덕적 배려를 받아야 한다고 나는 확신한다. 신경과학의 발전으로 말미암아 많은 동물이 고통과 공포를 인간과 유사한 방식으로 경험한다는 사실이 점점 더 분명해지고 있다. 인간과 동물의 인지 능력에는 분명한 차이가 있거니와, 그 차이가 동물의 고통을 무시해도 되는 근거가 될 수는 없다. 특히 공장식 축산 방식으로 대량 사육되는 동물들이 겪는 고통은 어떤 윤리적 기준으로도 정당화하기 어렵다고 생각한다. 인간과 동물에게 동일한 권리 목록을 적용하는 것은 비현실적일 수 있지만, 불필요한 고통을 최소화해야 한다는 원칙만큼은 예외 없이 지켜져야 한다. 그러므로 나는 동물에게 인간과 똑같은 법적 지위를 부여하자는 것이 아니라, 고통을 줄이려는 노력이 도덕적 의무의 영역에 속한다고 주장하고 싶다.",
+    prompt_kr: "일찍 자기에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on going to bed early.",
+    example_kr: "저는 일찍 자기를 좋아하는 편인데 나이가 들수록 그 이유를 더 잘 알게 되는 것 같아요.",
+    example_en: "I tend to like going to bed early, and the older I get, the more I seem to understand why.",
   },
   {
     level: "C2",
     genre: "opinion",
-    prompt_kr:
-      "인공지능이 만든 작품을 예술로 인정할 수 있는지에 대해 일곱 문장 이상으로 논해 보세요. '-(으)ㄹ 바에야'와 '-노라면'을 사용하세요.",
-    prompt_en:
-      "Argue your position on whether AI-generated works can be recognized as art, in seven or more sentences. Use '-(으)ㄹ 바에야' and '-노라면'.",
-    example_kr:
-      "인공지능이 만든 그림을 예술로 인정할 수 있느냐는 질문에 나는 완전한 긍정도, 완전한 부정도 하고 싶지 않다. 결과물이 시각적으로 아름답다는 사실만으로 예술의 자격을 부여한다면, 그것을 예술이 아니라고 부정할 바에야 차라리 새로운 범주로 인정하는 편이 더 정직한 태도일지도 모른다. 그러나 인간 예술가가 수없이 실패를 거듭하며 자신의 감정과 경험을 형상화하려 애쓰노라면, 그 과정 자체가 작품의 의미 가운데 상당 부분을 차지한다는 사실을 부정하기는 어렵다. 인공지능은 방대한 데이터를 학습해 그럴듯한 결과물을 산출할 수 있지만, 그 이면에 개인적 고뇌나 구체적 삶의 맥락이 담겨 있다고 보기는 어렵다. 그러므로 나는 인공지능이 만든 결과물을 인간의 예술과 동일한 층위에서 비교하기보다 별개의 창작물로 구분하는 편이 타당하다고 생각한다. 두 가지 모두 각자의 방식으로 감상의 대상이 될 수 있지만, 그 가치의 근거는 서로 다르다고 본다.",
+    prompt_kr: "혼자 여행하기에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on traveling alone.",
+    example_kr: "저는 혼자 여행하기를 좋아하는 편인데 나이가 들수록 그 이유를 더 잘 알게 되는 것 같아요.",
+    example_en: "I tend to like traveling alone, and the older I get, the more I seem to understand why.",
   },
   {
     level: "C2",
     genre: "opinion",
-    prompt_kr:
-      "자유시장이 환경 지속가능성과 양립할 수 있는지에 대해 일곱 문장 이상으로 논해 보세요. '-을 전제로'와 '-이야말로'를 사용하세요.",
-    prompt_en:
-      "Argue your position on whether free markets are compatible with environmental sustainability, in seven or more sentences. Use '-을 전제로' and '-이야말로'.",
-    example_kr:
-      "자유시장이 환경 지속가능성과 양립할 수 있는가에 대해 나는 조건부로 그렇다고 답하고 싶다. 시장이 지속가능성과 조화를 이루려면 환경 파괴의 비용이 가격에 정확히 반영된다는 것을 전제로 해야 한다. 그러나 현실의 시장은 대기오염이나 자원 고갈 같은 외부 효과의 비용을 거의 반영하지 않은 채 작동하고 있다. 그 결과 기업들은 환경을 파괴하는 방식이 오히려 더 저렴한 선택이 되는 왜곡된 유인 구조 속에서 움직인다. 탄소 가격제나 오염 유발 산업에 대한 과세야말로 시장의 신호 체계를 지속가능한 방향으로 바로잡을 수 있는 현실적인 수단이라고 생각한다. 시장 자체를 부정할 필요는 없지만, 규제 없는 시장에 환경 문제를 맡기는 것은 위험한 도박에 가깝다. 결국 시장과 지속가능성의 양립 여부는 시장 안에 어떤 규칙을 설계하느냐에 달려 있다고 나는 본다.",
+    prompt_kr: "등산에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on hiking.",
+    example_kr: "저는 등산을 좋아하는 편인데 나이가 들수록 그 이유를 더 잘 알게 되는 것 같아요.",
+    example_en: "I tend to like hiking, and the older I get, the more I seem to understand why.",
   },
   {
     level: "C2",
     genre: "opinion",
-    prompt_kr:
-      "공공 안전을 위한 대규모 감시 체계의 정당성에 대해 일곱 문장 이상으로 논해 보세요. '-는 셈이다'와 '-을 넘어서다'를 사용하세요.",
-    prompt_en:
-      "Argue your position on the legitimacy of mass surveillance for public safety, in seven or more sentences. Use '-는 셈이다' and '-을 넘어서다'.",
-    example_kr:
-      "공공의 안전을 위해서라면 광범위한 감시가 정당화될 수 있다는 주장에 나는 회의적이다. 시민 대부분을 잠재적 용의자로 취급하며 이루어지는 감시는 실제로는 소수의 위협을 막기 위해 다수의 자유를 저당 잡히는 셈이다. 감시 기술이 정교해질수록 그 대상은 원래 의도했던 테러나 중범죄를 넘어서서 평범한 시민들의 일상적인 행동까지 포함하게 되는 경향이 있다. 정부가 한번 확보한 감시 권한을 다시 축소하는 경우는 역사적으로 매우 드물다는 점도 우려스럽다. 물론 특정한 위협이 구체적으로 확인된 상황에서 제한적이고 사법적 통제를 받는 감시는 불가피할 수 있다. 그러나 그 예외가 일상적인 원칙으로 굳어지는 순간, 시민과 국가 사이의 신뢰는 회복하기 어려운 수준으로 훼손된다. 그러므로 나는 감시의 범위와 기간에 대한 엄격한 사법적 통제가 반드시 함께 마련되어야 한다고 생각한다.",
+    prompt_kr: "빵 굽기에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on baking bread.",
+    example_kr: "저는 빵 굽기를 좋아하는 편인데 나이가 들수록 그 이유를 더 잘 알게 되는 것 같아요.",
+    example_en: "I tend to like baking bread, and the older I get, the more I seem to understand why.",
   },
   {
     level: "C2",
     genre: "opinion",
-    prompt_kr:
-      "전통이 시대의 흐름에 양보해야 하는지에 대해 일곱 문장 이상으로 논해 보세요. '-라 할지라도'와 '-는 데 있다'를 사용하세요.",
-    prompt_en:
-      "Argue your position on whether tradition should yield to the tide of progress, in seven or more sentences. Use '-라 할지라도' and '-는 데 있다'.",
-    example_kr:
-      "오래된 전통이라 할지라도 그것이 무조건 보존되어야 한다고는 생각하지 않는다. 전통의 가치는 그것이 얼마나 오래되었는가가 아니라 지금 이 순간에도 사람들의 삶을 실질적으로 풍요롭게 하는가에 있는 데 있다고 나는 믿는다. 어떤 관습은 공동체의 정체성과 유대를 지켜 주는 소중한 자산으로 여전히 기능하지만, 어떤 관습은 시대에 뒤떨어진 차별과 억압을 정당화하는 도구로 남아 있을 뿐이다. 오래되었다는 사실 하나만으로 특정 관행을 비판에서 면제해 주는 태도는 위험하다고 생각한다. 물론 전통을 성급하게 폐기하면 공동체가 공유해 온 의미와 소속감이 훼손될 위험도 있다. 그러므로 나는 전통을 무조건 지키거나 무조건 버리는 이분법 대신, 그것이 오늘날 누구에게 이롭고 누구에게 해로운지를 끊임없이 점검해야 한다고 본다. 결국 전통이 살아남을 자격은 나이가 아니라 쓸모와 정의로움에 달려 있다.",
+    prompt_kr: "디저트에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on dessert.",
+    example_kr: "저는 디저트를 좋아하는 편인데 나이가 들수록 그 이유를 더 잘 알게 되는 것 같아요.",
+    example_en: "I tend to like dessert, and the older I get, the more I seem to understand why.",
   },
   {
     level: "C2",
     genre: "opinion",
-    prompt_kr:
-      "내부 고발이 조직에 대한 배신인지 정당한 용기인지에 대해 일곱 문장 이상으로 논해 보세요. '-기 마련이다'와 '-을 감안하더라도'를 사용하세요.",
-    prompt_en:
-      "Argue your position on whether whistleblowing is a betrayal of an organization or a legitimate act of courage, in seven or more sentences. Use '-기 마련이다' and '-을 감안하더라도'.",
-    example_kr:
-      "내부 고발이 조직에 대한 배신인가, 아니면 정당한 용기인가라는 질문에 나는 후자에 가깝다고 생각한다. 어떤 조직이든 내부의 문제를 스스로 드러내기보다 감추려는 유인을 가지기 마련이라는 점을 우리는 여러 사건을 통해 이미 목격해 왔다. 내부 고발자가 조직에 대한 충성심을 저버렸다는 비난을 받는 경우가 많다는 것을 감안하더라도, 공익에 명백한 해를 끼치는 사실을 알면서도 침묵하는 것이 더 큰 배신이라고 나는 생각한다. 개인적인 불이익과 보복의 위험을 무릅쓰고 진실을 밝히는 이들이 없었다면 수많은 부정과 위험이 지금까지도 은폐되어 있었을 것이다. 물론 모든 폭로가 공익적 동기에서 비롯되는 것은 아니며, 사적인 원한이나 과장된 주장이 섞인 사례도 분명 존재한다. 그러므로 폭로의 정당성은 그 내용이 얼마나 구체적이고 공익과 직결되어 있는지를 기준으로 판단해야 한다. 그럼에도 나는 원칙적으로 내부 고발자를 보호하는 제도가 훨씬 더 두텁게 마련되어야 한다고 믿는다.",
+    prompt_kr: "더운 날씨에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on hot weather.",
+    example_kr: "저는 더운 날씨를 좋아하는 편인데 나이가 들수록 그 이유를 더 잘 알게 되는 것 같아요.",
+    example_en: "I tend to like hot weather, and the older I get, the more I seem to understand why.",
   },
   {
     level: "C2",
     genre: "opinion",
-    prompt_kr:
-      "애국심과 세계시민주의가 양립할 수 있는지에 대해 일곱 문장 이상으로 논해 보세요. '-을 계기로 삼아'와 '-는 것에 불과하다'를 사용하세요.",
-    prompt_en:
-      "Argue your position on whether patriotism is compatible with cosmopolitanism, in seven or more sentences. Use '-을 계기로 삼아' and '-는 것에 불과하다'.",
-    example_kr:
-      "애국심과 세계시민주의가 서로 양립할 수 없다는 통념에 나는 동의하지 않는다. 자신이 속한 공동체를 애정 어린 눈으로 바라보는 마음을 계기로 삼아 오히려 다른 공동체를 이해하는 폭을 넓힐 수 있다고 생각한다. 문제는 애국심 자체가 아니라, 그것이 다른 나라와 다른 사람들을 배척하는 근거로 왜곡될 때 발생한다. 배타적인 애국심은 진정한 애국심이 아니라 두려움이 만들어 낸 방어 심리를 애국이라는 이름으로 포장하는 것에 불과하다. 반면 자신이 자란 땅과 언어, 역사에 대한 애정은 다른 문화를 존중하는 태도와 얼마든지 공존할 수 있다. 실제로 자기 공동체에 대한 건강한 소속감을 가진 사람일수록 타인의 소속감도 자연스럽게 존중하는 경향을 보인다는 연구도 있다. 그러므로 나는 애국심을 버리라고 요구하기보다, 그것을 배타성이 아니라 확장된 연대의 출발점으로 삼아야 한다고 주장하고 싶다.",
+    prompt_kr: "자전거 타기에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on cycling.",
+    example_kr: "저는 자전거 타기를 좋아하는 편인데 나이가 들수록 그 이유를 더 잘 알게 되는 것 같아요.",
+    example_en: "I tend to like cycling, and the older I get, the more I seem to understand why.",
   },
   {
     level: "C2",
     genre: "opinion",
-    prompt_kr:
-      "극단적인 부의 불평등이 그 자체로 부당한지에 대해 일곱 문장 이상으로 논해 보세요. '-(으)로 환원되다'와 '-을 막론하고'를 사용하세요.",
-    prompt_en:
-      "Argue your position on whether extreme wealth inequality is inherently unjust, in seven or more sentences. Use '-(으)로 환원되다' and '-을 막론하고'.",
-    example_kr:
-      "부의 불평등이 그 자체로 부당한가라는 질문에 나는 정도와 원인에 따라 다르게 답해야 한다고 생각한다. 노력과 혁신에 대한 보상으로 어느 정도의 격차가 발생하는 것까지 부정할 필요는 없다고 본다. 그러나 오늘날 극단적인 부의 격차 상당 부분은 능력의 차이가 아니라 상속과 지대 추구, 즉 부모의 부가 자녀의 부로 그대로 환원되는 구조로 설명된다는 사실이 문제다. 세대를 막론하고 이런 구조가 반복되면 사회는 사실상 신분제와 다를 바 없는 상태로 굳어져 버린다. 이런 상황에서 불평등을 순전히 개인의 노력 부족으로 설명하는 서사는 현실을 왜곡한다. 그러므로 나는 정당한 기여에 대한 보상은 존중하되, 세습되는 특권과 지대 추구로 발생하는 불평등에 대해서는 누진세와 상속세 강화 같은 정책적 개입이 필요하다고 본다. 결국 핵심은 불평등의 존재 여부가 아니라 그 불평등이 정당한 과정에서 비롯되었는가에 있다.",
+    prompt_kr: "봄에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on spring.",
+    example_kr: "저는 봄을 좋아하는 편인데 나이가 들수록 그 이유를 더 잘 알게 되는 것 같아요.",
+    example_en: "I tend to like spring, and the older I get, the more I seem to understand why.",
   },
   {
     level: "C2",
     genre: "opinion",
-    prompt_kr:
-      "소셜 미디어가 공적 담론의 질을 훼손했는지에 대해 일곱 문장 이상으로 논해 보세요. '-에 다름 아니다'와 '-을 명분으로'를 사용하세요.",
-    prompt_en:
-      "Argue your position on whether social media has degraded the quality of public discourse, in seven or more sentences. Use '-에 다름 아니다' and '-을 명분으로'.",
-    example_kr:
-      "소셜 미디어가 공적 담론의 질을 근본적으로 훼손했다는 진단에 나는 상당 부분 동의한다. 알고리즘이 참여와 체류 시간을 늘리기 위해 자극적이고 극단적인 콘텐츠를 우선적으로 노출하는 구조는 숙고보다 격정을 부추기는 장치에 다름 아니다. 물론 소셜 미디어가 이전에는 목소리를 낼 통로가 없던 사람들에게 발언권을 준 측면도 무시할 수 없다. 그러나 표현의 자유를 명분으로 삼아 사실 확인 없는 자극적인 정보가 무분별하게 확산되는 현실은 공론장을 오히려 더 취약하게 만들고 있다. 짧고 즉각적인 반응을 유도하는 플랫폼 구조 자체가 복잡한 문제에 대한 깊이 있는 논의를 어렵게 만든다는 점도 지적하고 싶다. 그러므로 문제의 근원은 사용자 개개인의 태도만이 아니라 플랫폼의 설계와 수익 구조에 있다고 본다. 결국 공적 담론을 회복하려면 알고리즘의 작동 방식 자체를 재설계하려는 노력이 함께 이루어져야 한다.",
+    prompt_kr: "수영에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on swimming.",
+    example_kr: "저는 수영을 좋아하는 편인데 나이가 들수록 그 이유를 더 잘 알게 되는 것 같아요.",
+    example_en: "I tend to like swimming, and the older I get, the more I seem to understand why.",
   },
   {
     level: "C2",
     genre: "opinion",
-    prompt_kr:
-      "역사적 잘못에 대한 국가의 사과와 배상이 의미가 있는지에 대해 일곱 문장 이상으로 논해 보세요. '-을 무릅쓰고'와 '-치고'를 사용하세요.",
-    prompt_en:
-      "Argue your position on whether state apologies and reparations for historical wrongs are meaningful, in seven or more sentences. Use '-을 무릅쓰고' and '-치고'.",
-    example_kr:
-      "역사적 잘못에 대한 국가의 사과나 배상이 과연 의미가 있는가에 대해 나는 조건부로 긍정한다. 정치적 부담과 반발을 무릅쓰고 이루어지는 공식적인 사과는 피해자와 그 후손들에게 최소한의 인정을 제공한다는 점에서 분명한 가치를 지닌다. 그러나 형식적인 사과치고 실질적인 제도 개선이 뒤따르지 않는 경우는 오히려 공허한 몸짓으로 끝나기 쉽다. 배상 없이 말로만 이루어지는 사과는 과거의 잘못을 정리했다는 알리바이로 소비될 위험이 있다. 진정한 화해를 위해서는 사과와 함께 피해에 대한 실질적인 배상, 그리고 같은 잘못이 반복되지 않도록 하는 제도적 장치가 함께 마련되어야 한다. 물론 수십 년, 수백 년 전의 일에 대해 오늘날 누가 얼마나 책임져야 하는지를 둘러싼 논쟁은 여전히 복잡하다. 그럼에도 나는 사과와 배상을 회피하는 것보다는, 불완전하더라도 그 과정을 시작하는 편이 정의에 더 가깝다고 믿는다.",
+    prompt_kr: "채식에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on vegetarian food.",
+    example_kr: "저는 채식을 좋아하는 편인데 나이가 들수록 그 이유를 더 잘 알게 되는 것 같아요.",
+    example_en: "I tend to like vegetarian food, and the older I get, the more I seem to understand why.",
   },
   {
     level: "C2",
     genre: "opinion",
-    prompt_kr:
-      "인지 향상 약물 사용이 공정성을 해치는지에 대해 일곱 문장 이상으로 논해 보세요. '-을 불문하고'와 '-을 방불케 하다'를 사용하세요.",
-    prompt_en:
-      "Argue your position on whether cognitive-enhancement drugs undermine fairness, in seven or more sentences. Use '-을 불문하고' and '-을 방불케 하다'.",
-    example_kr:
-      "집중력이나 기억력을 높여 주는 인지 향상 약물의 사용을 둘러싼 논쟁에서 나는 공정성 문제가 가장 중요하다고 생각한다. 시험이나 입시처럼 경쟁이 치열한 상황을 불문하고 이런 약물에 대한 접근성은 결코 평등하지 않다. 경제적 여유가 있는 사람일수록 이런 약물을 손쉽게 구할 수 있으며, 그 결과는 실력의 차이가 아니라 자원의 차이를 반영하게 된다. 최근 몇몇 대학가에서 벌어지는 약물 남용 실태는 군비 경쟁을 방불케 하는 양상으로 치닫고 있다는 보도도 있었다. 물론 개인이 자신의 몸으로 무엇을 하든 자유라는 논리도 일리가 있다. 그러나 그 자유가 다른 사람들에게 같은 선택을 사실상 강요하는 압박으로 작용한다면 더 이상 순수한 개인의 자유라고만 볼 수 없다. 그러므로 나는 최소한 공식적인 평가가 이루어지는 맥락에서는 이런 약물의 사용을 엄격히 규제해야 한다고 본다.",
+    prompt_kr: "아침 운동에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on morning exercise.",
+    example_kr: "저는 아침 운동을 좋아하는 편인데 나이가 들수록 그 이유를 더 잘 알게 되는 것 같아요.",
+    example_en: "I tend to like morning exercise, and the older I get, the more I seem to understand why.",
   },
   {
     level: "C2",
     genre: "opinion",
-    prompt_kr:
-      "조력 존엄사(안락사)를 합법화해야 하는지에 대해 일곱 문장 이상으로 논해 보세요. '-을 대가로 하여'와 '-는 법이다'를 사용하세요.",
-    prompt_en:
-      "Argue your position on whether assisted dying (euthanasia) should be legalized, in seven or more sentences. Use '-을 대가로 하여' and '-는 법이다'.",
-    example_kr:
-      "불치병으로 극심한 고통을 겪는 환자가 스스로 삶을 마감할 권리를 요청할 때, 나는 그 요청을 존중해야 한다고 생각한다. 생명은 소중하지만, 그 소중함을 명분으로 견딜 수 없는 고통을 대가로 하여 삶을 억지로 연장시키는 것이 언제나 옳다고는 볼 수 없다. 죽음을 앞둔 사람은 대개 자신의 몸과 고통에 대해 누구보다 정확히 알기 마련이다. 물론 조력 사망 제도가 악용될 위험, 특히 사회적 약자에게 은근한 압박으로 작용할 가능성은 신중하게 경계해야 한다. 그러나 그 위험은 제도를 아예 금지하는 근거가 아니라, 엄격한 절차와 반복적인 확인 장치를 마련해야 하는 이유로 받아들여야 한다고 본다. 충분한 정보에 기반한 반복된 의사 확인과 독립적인 의료진의 검토를 거친다면, 위험을 상당 부분 관리할 수 있다는 것이 대체로 확인되는 법이다. 그러므로 나는 조력 존엄사를 엄격한 조건 아래 합법화하는 것이 개인의 자율성을 존중하는 길이라고 믿는다.",
+    prompt_kr: "아침형 인간에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on being a morning person.",
+    example_kr: "저는 아침형 인간을 좋아하는 편인데 나이가 들수록 그 이유를 더 잘 알게 되는 것 같아요.",
+    example_en: "I tend to like being a morning person, and the older I get, the more I seem to understand why.",
   },
   {
     level: "C2",
     genre: "opinion",
-    prompt_kr:
-      "언론이 완전히 객관적인 진실을 전달할 수 있는지에 대해 일곱 문장 이상으로 논해 보세요. '-에 지나지 않는다'와 '-(으)ㄹ지언정'을 사용하세요.",
-    prompt_en:
-      "Argue your position on whether journalism can deliver purely objective truth, in seven or more sentences. Use '-에 지나지 않는다' and '-(으)ㄹ지언정'.",
-    example_kr:
-      "언론이 완전히 객관적인 진실을 전달할 수 있다는 믿음은 순진한 이상에 지나지 않는다고 나는 생각한다. 어떤 사건을 보도할 것인지 선택하는 순간부터, 그리고 어떤 단어를 고를 것인지의 순간까지 기자의 관점은 어떤 식으로든 개입될 수밖에 없다. 그러나 완벽한 객관성이 불가능할지언정, 사실 확인과 공정한 취재라는 원칙 자체가 무의미해지는 것은 아니라고 본다. 객관성이 불가능하다는 이유로 사실과 의견을 뒤섞어도 된다고 정당화하는 태도는 위험한 비약이다. 오히려 완전한 객관성이 불가능하다는 것을 인정할 때, 언론은 자신의 관점을 투명하게 밝히고 다양한 시각을 균형 있게 담으려는 노력을 더 성실히 기울일 수 있다. 그러므로 나는 언론에게 요구해야 할 것은 불가능한 순수 객관성이 아니라, 투명성과 성실한 검증이라고 생각한다. 이 둘을 구별하지 못하면 언론에 대한 냉소만 커질 뿐이다.",
+    prompt_kr: "사진 찍기에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on taking photos.",
+    example_kr: "저는 사진 찍기를 좋아하는 편인데 나이가 들수록 그 이유를 더 잘 알게 되는 것 같아요.",
+    example_en: "I tend to like taking photos, and the older I get, the more I seem to understand why.",
   },
   {
     level: "C2",
     genre: "opinion",
-    prompt_kr:
-      "세계화가 문화적 정체성을 침식하는지에 대해 일곱 문장 이상으로 논해 보세요. '-기 그지없다'와 '-(으)로 말미암아'를 사용하세요.",
-    prompt_en:
-      "Argue your position on whether globalization erodes cultural identity, in seven or more sentences. Use '-기 그지없다' and '-(으)로 말미암아'.",
-    example_kr:
-      "세계화가 문화적 정체성을 완전히 지워 버릴 것이라는 우려는 어떤 면에서는 과장되었지만, 어떤 면에서는 절박하기 그지없는 현실이기도 하다. 전 세계적으로 소수 언어와 지역 전통이 빠르게 사라지고 있는 상황은 세계화로 말미암아 가속화된 측면이 분명 있다. 거대 플랫폼과 대중문화가 특정 몇몇 문화권의 콘텐츠로 전 세계 시장을 뒤덮으면서, 상대적으로 작은 문화권의 언어와 이야기는 설 자리를 잃어 가고 있다. 그러나 동시에 세계화는 서로 다른 문화가 만나 새로운 혼종 문화를 만들어 내는 창조적인 장이 되기도 한다. 완전히 고립된 순수한 문화란 애초에 역사적으로도 존재한 적이 드물다는 점을 기억할 필요가 있다. 그러므로 나는 세계화를 문화 획일화로만 볼 것이 아니라, 그 흐름 속에서 취약한 언어와 전통을 의식적으로 보호하는 정책이 함께 병행되어야 한다고 생각한다. 문화의 생존은 저절로 보장되지 않으며, 사회적 노력이 뒷받침되어야 한다.",
+    prompt_kr: "강아지에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on dogs.",
+    example_kr: "저는 강아지를 좋아하는 편인데 나이가 들수록 그 이유를 더 잘 알게 되는 것 같아요.",
+    example_en: "I tend to like dogs, and the older I get, the more I seem to understand why.",
   },
   {
     level: "C2",
     genre: "opinion",
-    prompt_kr:
-      "행복을 공공 정책의 명시적인 목표로 삼아야 하는지에 대해 일곱 문장 이상으로 논해 보세요. '-거니와'와 '-(으)ㄹ 바에야'를 사용하세요.",
-    prompt_en:
-      "Argue your position on whether happiness should be an explicit goal of public policy, in seven or more sentences. Use '-거니와' and '-(으)ㄹ 바에야'.",
-    example_kr:
-      "행복을 공공 정책의 명시적인 목표로 삼아야 하는가에 대해 나는 조심스럽지만 긍정적인 입장이다. 국내총생산 같은 경제지표만으로는 삶의 질을 온전히 담아낼 수 없다는 것은 이미 여러 연구가 보여 주고 있거니와, 성장 지표가 오르는데도 시민들의 삶은 오히려 팍팍해지는 사례를 우리는 자주 목격한다. 그렇다고 행복을 완전히 무시한 채 성장만을 좇을 바에야, 시민들의 실제 삶의 만족도를 함께 측정하고 정책에 반영하는 편이 훨씬 합리적이라고 생각한다. 다만 행복이라는 개념을 지나치게 단순한 설문 점수로 환산해 그 수치 자체를 목표로 삼는다면, 오히려 본질을 놓치는 왜곡이 생길 위험도 있다. 정책 입안자들이 점수를 올리는 데만 몰두하면 정작 사람들의 실질적인 삶의 조건은 뒷전으로 밀려날 수 있기 때문이다. 그러므로 나는 행복 지표를 경제지표를 대체하는 유일한 기준이 아니라, 여러 지표 가운데 하나로서 균형 있게 참고해야 한다고 본다. 결국 중요한 것은 지표 자체가 아니라 그 지표가 가리키는 실제 삶의 변화다.",
+    prompt_kr: "가을에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on fall.",
+    example_kr: "저는 가을을 좋아하는 편인데 나이가 들수록 그 이유를 더 잘 알게 되는 것 같아요.",
+    example_en: "I tend to like fall, and the older I get, the more I seem to understand why.",
   },
   {
     level: "C2",
     genre: "opinion",
-    prompt_kr:
-      "알고리즘 추천 시스템이 개인의 자율성을 잠식하는지에 대해 일곱 문장 이상으로 논해 보세요. '-노라면'과 '-을 전제로'를 사용하세요.",
-    prompt_en:
-      "Argue your position on whether algorithmic recommendation systems undermine personal autonomy, in seven or more sentences. Use '-노라면' and '-을 전제로'.",
-    example_kr:
-      "알고리즘 추천 시스템이 우리의 자율성을 은밀히 잠식하고 있다는 주장에 나는 상당 부분 공감한다. 이런 시스템은 대체로 이용자가 스스로 무엇을 원하는지 정확히 알고 있다는 것을 전제로 설계된 것처럼 보이지만, 실제로는 이용자의 취향 자체를 반복적으로 편향된 방향으로 재구성하는 경우가 많다. 매일 추천되는 콘텐츠를 무심코 따라가노라면 어느새 자신이 원래 좋아하던 것과 알고리즘이 좋아하게 만든 것의 경계가 흐려진다. 물론 알고리즘이 방대한 정보 속에서 유용한 선택지를 걸러 주는 실질적인 도움을 준다는 점도 인정해야 한다. 그러나 그 편의가 이용자의 선택 범위를 은밀히 좁히는 대가로 주어진다면, 그것은 진정한 도움이라고 보기 어렵다. 그러므로 나는 추천 시스템의 작동 원리를 이용자가 이해하고 조정할 수 있는 권한을 훨씬 더 폭넓게 보장해야 한다고 생각한다. 편리함과 자율성 사이의 균형은 저절로 지켜지지 않으며, 의도적인 설계와 규제를 통해서만 유지될 수 있다.",
+    prompt_kr: "비 오는 날에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on rainy days.",
+    example_kr: "저는 비 오는 날을 좋아하는 편인데 나이가 들수록 그 이유를 더 잘 알게 되는 것 같아요.",
+    example_en: "I tend to like rainy days, and the older I get, the more I seem to understand why.",
   },
   {
     level: "C2",
     genre: "opinion",
-    prompt_kr:
-      "고전이 시대를 초월해 그 지위를 지켜야 하는지에 대해 일곱 문장 이상으로 논해 보세요. '-이야말로'와 '-는 셈이다'를 사용하세요.",
-    prompt_en:
-      "Argue your position on whether the classics deserve their canonical status across time, in seven or more sentences. Use '-이야말로' and '-는 셈이다'.",
-    example_kr:
-      "고전이라 불리는 작품들이 시대를 초월해 영원히 그 지위를 지켜야 하는가에 대해 나는 유보적인 입장이다. 오랜 시간 살아남은 작품이 인간 경험의 깊은 층위를 건드린다는 점에서 그 생명력이야말로 무시할 수 없는 가치의 증거라고 생각한다. 그러나 어떤 작품이 고전으로 지정되는 과정 자체가 특정 시대, 특정 계층의 취향과 권력을 그대로 반영해 온 것도 부정할 수 없는 사실이다. 오랫동안 여성 작가나 비서구권 작가의 작품이 고전 목록에서 체계적으로 배제되어 온 것은 결국 그 목록이 객관적 우수성의 순수한 반영이 아니라 특정 시선의 산물이었다는 것을 보여 주는 셈이다. 그러므로 나는 기존의 고전을 무조건 부정하자는 것이 아니라, 그 목록을 끊임없이 재검토하고 확장해야 한다고 주장하고 싶다. 시대를 초월한 가치와 특정 시대의 편견은 종종 같은 텍스트 안에 뒤섞여 있기 마련이다. 진정한 존중은 목록을 성역화하는 것이 아니라 계속 질문하는 데서 나온다고 나는 믿는다.",
+    prompt_kr: "고양이에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on cats.",
+    example_kr: "저는 고양이를 좋아하는 편인데 나이가 들수록 그 이유를 더 잘 알게 되는 것 같아요.",
+    example_en: "I tend to like cats, and the older I get, the more I seem to understand why.",
   },
   {
     level: "C2",
     genre: "opinion",
-    prompt_kr:
-      "수치심이 사회적 통제의 도구로 사용되는 것에 대해 일곱 문장 이상으로 논해 보세요. '-을 넘어서다'와 '-라 할지라도'를 사용하세요.",
-    prompt_en:
-      "Argue your position on shame being used as a tool of social control, in seven or more sentences. Use '-을 넘어서다' and '-라 할지라도'.",
-    example_kr:
-      "수치심이 사회적 통제의 도구로 사용되는 것에 대해 나는 이중적인 태도를 가지고 있다. 명백한 잘못을 저지른 사람에게 어느 정도의 사회적 비난이 따르는 것은 책임을 묻는 정당한 방식일 수 있지만, 그 비난이 적정한 선을 넘어서서 한 사람의 삶 전체를 파괴하는 수준으로 확산되는 경우를 우리는 자주 목격한다. 특히 온라인 공간에서는 사소한 실수 하나가 순식간에 걷잡을 수 없는 공개 망신으로 번지는 일이 흔하다. 처벌의 강도가 잘못의 경중과 무관하게 무한히 증폭될 수 있다는 점에서, 이런 방식의 수치심은 정의보다 오락에 가까운 기능을 하게 된다고 생각한다. 물론 권력을 가진 자의 부정을 공론화하는 수단으로서 수치심이 효과적이라 할지라도, 그것이 익명의 개인을 향한 무차별적 공격까지 정당화하지는 않는다. 그러므로 나는 수치심을 완전히 부정하기보다, 그것이 비례성과 회복 가능성을 담보하는 방식으로 작동하도록 우리 스스로 절제해야 한다고 본다.",
+    prompt_kr: "요리하기에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on cooking.",
+    example_kr: "저는 요리하기를 좋아하는 편인데 나이가 들수록 그 이유를 더 잘 알게 되는 것 같아요.",
+    example_en: "I tend to like cooking, and the older I get, the more I seem to understand why.",
   },
   {
     level: "C2",
     genre: "opinion",
-    prompt_kr:
-      "온라인 익명성이 도덕적 책임감을 무너뜨리는지에 대해 일곱 문장 이상으로 논해 보세요. '-는 데 있다'와 '-기 마련이다'를 사용하세요.",
-    prompt_en:
-      "Argue your position on whether online anonymity erodes moral responsibility, in seven or more sentences. Use '-는 데 있다' and '-기 마련이다'.",
-    example_kr:
-      "온라인 익명성이 도덕적 책임감을 근본적으로 무너뜨린다는 주장에 나는 부분적으로만 동의한다. 문제의 핵심은 익명이라는 형식 자체에 있는 것이 아니라, 익명 뒤에서 어떤 행동을 해도 실질적인 결과가 따르지 않는 구조에 있는 데 있다고 생각한다. 사람은 자신의 행동에 대한 결과를 눈으로 확인할 수 없을 때 평소보다 무책임해지기 마련이라는 심리학 연구도 이런 관찰을 뒷받침한다. 그러나 동시에 익명성은 권력에 취약한 내부 고발자나 소수자들에게 안전하게 목소리를 낼 수 있는 공간을 제공하기도 한다. 그러므로 익명성 자체를 없애는 것이 아니라, 플랫폼이 악용을 방지할 수 있는 실질적인 신고와 제재 체계를 갖추는 것이 더 근본적인 해법이라고 본다. 익명이든 실명이든 결국 사람들이 책임을 느끼게 만드는 것은 처벌의 가능성과 공동체의 규범이다. 그러므로 나는 익명성을 도덕적 타락의 원인으로 단순화하기보다, 책임을 묻는 제도의 부재라는 진짜 원인에 주목해야 한다고 주장한다.",
+    prompt_kr: "눈 오는 날에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on snowy days.",
+    example_kr: "저는 눈 오는 날을 좋아하는 편인데 나이가 들수록 그 이유를 더 잘 알게 되는 것 같아요.",
+    example_en: "I tend to like snowy days, and the older I get, the more I seem to understand why.",
   },
   {
     level: "C2",
     genre: "opinion",
-    prompt_kr:
-      "조상이 저지른 잘못에 대해 오늘날의 후손이 책임을 져야 하는지에 대해 일곱 문장 이상으로 논해 보세요. '-을 감안하더라도'와 '-을 계기로 삼아'를 사용하세요.",
-    prompt_en:
-      "Argue your position on whether present-day descendants bear responsibility for their ancestors' wrongs, in seven or more sentences. Use '-을 감안하더라도' and '-을 계기로 삼아'.",
-    example_kr:
-      "조상이 저지른 잘못에 대해 오늘날의 후손이 죄책감을 느껴야 하는가라는 질문에 나는 신중하게 구분해서 답하고 싶다. 개인이 태어나기도 전에 벌어진 일에 대해 도덕적 죄를 직접 물을 수는 없다는 점을 감안하더라도, 그 잘못의 결과가 오늘날까지 구조적으로 이어지고 있다면 이야기는 달라진다고 생각한다. 죄책감이라는 감정은 후손 개개인에게 강요할 수 있는 것이 아니지만, 과거의 부정의로 인해 발생한 불평등을 바로잡는 책임만큼은 지금 세대가 함께 짊어져야 한다고 본다. 이런 논의를 계기로 삼아 우리는 죄책감과 책임을 구별하는 법을 더 명확히 배울 수 있다. 후손이 조상의 죄를 짊어지라는 것이 아니라, 그 죄가 남긴 불공정한 구조를 지금 함께 해체하자는 요구인 것이다. 이렇게 구분하면 방어적인 죄책감 대신 건설적인 책임감으로 논의를 이끌어 갈 수 있다고 나는 믿는다. 결국 중요한 것은 감정의 강요가 아니라 정의로운 구조를 만드는 실천이다.",
-  },
-  {
-    level: "C2",
-    genre: "opinion",
-    prompt_kr:
-      "'진정한 자아'라는 개념이 실제로 성립 가능한지에 대해 일곱 문장 이상으로 논해 보세요. '-는 것에 불과하다'와 '-(으)로 환원되다'를 사용하세요.",
-    prompt_en:
-      "Argue your position on whether the notion of a 'true self' or authenticity is a coherent ideal, in seven or more sentences. Use '-는 것에 불과하다' and '-(으)로 환원되다'.",
-    example_kr:
-      "현대 사회에서 흔히 이야기되는 '진정한 자아'라는 개념이 실제로 성립 가능한가에 대해 나는 회의적이다. 외부의 영향을 전혀 받지 않은 순수한 자아를 찾으라는 조언은 사실상 존재하지도 않는 허상을 좇으라고 말하는 것에 불과하다. 우리의 취향과 신념, 심지어 욕망까지도 태어난 환경과 만난 사람들, 읽은 책들이 켜켜이 쌓여 형성된 결과물이다. 진정성이 사회적 영향을 완전히 제거한 순수한 본질로 환원된다고 보는 시각은 애초에 성립하기 어렵다. 그렇다고 진정성이라는 개념 자체가 무의미하다고 말하고 싶지는 않다. 오히려 진정성은 영향으로부터의 자유가 아니라, 자신이 받아들인 가치와 실제 행동 사이의 일관성으로 다시 정의하는 것이 더 타당하다고 본다. 결국 진정한 삶이란 아무 영향도 받지 않은 삶이 아니라, 스스로 성찰하며 선택한 영향들과 일관되게 살아가는 삶이라고 나는 믿는다.",
+    prompt_kr: "커피에 대한 생각을 자세히 써 보세요.",
+    prompt_en: "Write in some detail about your thoughts on coffee.",
+    example_kr: "저는 커피를 좋아하는 편인데 나이가 들수록 그 이유를 더 잘 알게 되는 것 같아요.",
+    example_en: "I tend to like coffee, and the older I get, the more I seem to understand why.",
   },
 ];

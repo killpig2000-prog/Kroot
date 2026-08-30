@@ -1,9 +1,9 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { WRITING_GENRE_META, MIN_RESPONSE_LENGTH, type Prompt } from "@/lib/writing";
-import { isLocalMode, type Board, type BuildMode } from "@/lib/writing-builder";
-import { ChunkBoard, SlotBoard, TileBoard } from "@/components/writing/WritingBoards";
+import { WRITING_GENRE_META, type Prompt } from "@/lib/writing";
+import type { Board } from "@/lib/writing-builder";
+import { TileBoard } from "@/components/writing/WritingBoards";
 
 const CARD = "border border-line rounded-[16px] bg-cream max-w-[900px] overflow-hidden";
 const BTN_INK =
@@ -12,27 +12,19 @@ const EYEBROW = "text-[11px] font-extrabold tracking-[.1em] uppercase text-succe
 
 /** Per-question interaction state, owned by WritingSession. */
 export type Entry = {
-  mode: BuildMode;
-  /** Set once the learner toggled this question — beats the remembered typing preference. */
-  explicit?: boolean;
   /** Reseed counter — bumps on "shuffle" so a retry gets a fresh board. */
   attempt: number;
   picked: string[];
-  chosen: (string | null)[];
-  activeSlot: number;
-  text: string;
   checked: boolean | null;
-  /** How many times Check was pressed on a local board. */
+  /** How many times Check was pressed. */
   checks: number;
 };
 
-export function emptyEntry(mode: BuildMode): Entry {
-  return { mode, attempt: 0, picked: [], chosen: [], activeSlot: 0, text: "", checked: null, checks: 0 };
+export function emptyEntry(): Entry {
+  return { attempt: 0, picked: [], checked: null, checks: 0 };
 }
 
-export function entryDone(entry: Entry, board: Board): boolean {
-  if (board.mode === "type") return entry.text.trim().length >= MIN_RESPONSE_LENGTH;
-  if (board.mode === "chunks") return entry.picked.length >= 1;
+export function entryDone(entry: Entry): boolean {
   return entry.checked === true;
 }
 
@@ -44,11 +36,9 @@ export default function WritePhase({
   update,
   onCheck,
   onShuffle,
-  onToggleMode,
   submitting,
   ready,
   answeredCount,
-  needsGrader,
   onSubmit,
 }: {
   prompts: Prompt[];
@@ -58,23 +48,14 @@ export default function WritePhase({
   update: (index: number, patch: Partial<Entry>) => void;
   onCheck: (index: number) => void;
   onShuffle: (index: number) => void;
-  onToggleMode: (index: number) => void;
   submitting: boolean;
   ready: boolean;
   answeredCount: number;
-  /** False when every answer is a locally-checked board — no AI round trip. */
-  needsGrader: boolean;
   onSubmit: () => void;
 }) {
   const t = useTranslations("writing");
   const genre = prompts[0].genre;
   const genreMeta = WRITING_GENRE_META[genre];
-  const MODE_LABEL: Record<BuildMode, string> = {
-    tiles: t("phase.modeTiles"),
-    slots: t("phase.modeSlots"),
-    chunks: t("phase.modeChunks"),
-    type: t("phase.modeType"),
-  };
 
   return (
     <div className={CARD}>
@@ -100,8 +81,6 @@ export default function WritePhase({
         {prompts.map((prompt, i) => {
           const entry = entries[i];
           const board = boards[i];
-          const done = entryDone(entry, board);
-          const canToggle = prompt.level !== "C1" && prompt.level !== "C2";
           return (
             <div
               key={prompt.key}
@@ -128,95 +107,26 @@ export default function WritePhase({
                   </div>
                 )}
 
-                <div className="flex items-start justify-between gap-3 mb-3">
-                  <div>
-                    <p className="kr font-bold text-[16px] leading-[1.4]">{prompt.prompt_kr}</p>
-                    <p className="text-[13px] text-muted">{prompt.prompt_en}</p>
-                  </div>
-                  {canToggle && (
-                    <button
-                      type="button"
-                      onClick={() => onToggleMode(i)}
-                      className="flex-none text-[11.5px] font-bold px-2.5 py-1 rounded-full border border-line bg-warm text-muted hover:text-charcoal hover:border-faint transition-colors"
-                    >
-                      {board.mode === "type" ? t("phase.useBlocks") : t("phase.typeMyself")}
-                    </button>
-                  )}
+                <div className="mb-3">
+                  <p className="kr font-bold text-[16px] leading-[1.4]">{prompt.prompt_kr}</p>
+                  <p className="text-[13px] text-muted">{prompt.prompt_en}</p>
                 </div>
 
-                {board.mode !== "type" && (
-                  <div className="mb-3">
-                    <div className={EYEBROW}>{MODE_LABEL[board.mode]}</div>
-                    {board.mode !== "slots" && (
-                      <p
-                        className={
-                          (prompt.example_en?.length ?? 0) > 110
-                            ? "text-[15px] font-semibold leading-[1.55] text-charcoal max-w-[68ch]"
-                            : "text-[19px] font-extrabold leading-[1.3] tracking-[-0.01em]"
-                        }
-                        style={{ textWrap: "balance" }}
-                      >
-                        {prompt.example_en ?? t("phase.putWordsInOrder")}
-                      </p>
-                    )}
-                    {board.mode === "slots" && prompt.example_en && (
-                      <p className="text-[13.5px] text-muted leading-[1.5]">{prompt.example_en}</p>
-                    )}
-                  </div>
-                )}
+                <div className="mb-3">
+                  <div className={EYEBROW}>{t("phase.modeTiles")}</div>
+                  <p className="text-[19px] font-extrabold leading-[1.3] tracking-[-0.01em]" style={{ textWrap: "balance" }}>
+                    {prompt.example_en}
+                  </p>
+                </div>
 
-                {board.mode === "tiles" && (
-                  <TileBoard
-                    board={board}
-                    picked={entry.picked}
-                    checked={entry.checked}
-                    onChange={(picked) => update(i, { picked, checked: null })}
-                    onCheck={() => onCheck(i)}
-                    onShuffle={() => onShuffle(i)}
-                  />
-                )}
-                {board.mode === "slots" && (
-                  <SlotBoard
-                    board={board}
-                    chosen={board.slots.map((_, s) => entry.chosen[s] ?? null)}
-                    active={Math.min(entry.activeSlot, board.slots.length - 1)}
-                    checked={entry.checked}
-                    onActivate={(s) => update(i, { activeSlot: s })}
-                    onPick={(s, v) => {
-                      const chosen = board.slots.map((_, k) => entry.chosen[k] ?? null);
-                      chosen[s] = v;
-                      const nextEmpty = chosen.findIndex((c) => !c);
-                      update(i, { chosen, checked: null, activeSlot: nextEmpty >= 0 ? nextEmpty : s });
-                    }}
-                    onCheck={() => onCheck(i)}
-                  />
-                )}
-                {board.mode === "chunks" && (
-                  <ChunkBoard board={board} picked={entry.picked} onChange={(picked) => update(i, { picked })} />
-                )}
-                {board.mode === "type" && (
-                  <>
-                    <div
-                      className="rounded-lg"
-                      style={{ backgroundImage: "repeating-linear-gradient(transparent 0 31px, var(--c-warm-3) 31px 32px)" }}
-                    >
-                      <textarea
-                        value={entry.text}
-                        onChange={(e) => update(i, { text: e.target.value })}
-                        placeholder={`e.g. ${prompt.example_kr}`}
-                        rows={2}
-                        spellCheck={false}
-                        className="kr w-full min-h-[64px] resize-none bg-transparent border-none px-1 text-[15px] leading-[32px] text-charcoal placeholder:text-faint focus:outline-none"
-                      />
-                    </div>
-                    <div className="flex items-center justify-between mt-1.5 text-xs">
-                      <span className={done ? "text-success font-semibold" : "text-faint"}>
-                        {done ? t("phase.written") : t("phase.stillEmpty")}
-                      </span>
-                      <span className="text-faint tabular-nums">{entry.text.length} / 500</span>
-                    </div>
-                  </>
-                )}
+                <TileBoard
+                  board={board}
+                  picked={entry.picked}
+                  checked={entry.checked}
+                  onChange={(picked) => update(i, { picked, checked: null })}
+                  onCheck={() => onCheck(i)}
+                  onShuffle={() => onShuffle(i)}
+                />
               </div>
             </div>
           );
@@ -228,18 +138,15 @@ export default function WritePhase({
         <div className="flex items-center gap-2.5 text-[13px] text-muted">
           <span className="flex gap-1.5">
             {prompts.map((p, i) => (
-              <i key={p.key} className={`w-2.5 h-2.5 rounded-full ${entryDone(entries[i], boards[i]) ? "bg-success" : "bg-line"}`} />
+              <i key={p.key} className={`w-2.5 h-2.5 rounded-full ${entryDone(entries[i]) ? "bg-success" : "bg-line"}`} />
             ))}
           </span>
           {t("phase.doneCount", { done: answeredCount, total: prompts.length })}
-          {!needsGrader && ready && <span className="text-faint">{t("phase.noWait")}</span>}
         </div>
         <button className={BTN_INK} onClick={onSubmit} disabled={submitting || !ready}>
-          {submitting ? t("phase.saving") : needsGrader ? t("phase.submitFeedback") : t("phase.finishChapter")}
+          {submitting ? t("phase.saving") : t("phase.finishChapter")}
         </button>
       </div>
     </div>
   );
 }
-
-export { isLocalMode };

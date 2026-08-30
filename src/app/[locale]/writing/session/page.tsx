@@ -13,7 +13,6 @@ import {
   utcDayStartISO,
 } from "@/lib/writing";
 import { isCefrLevel, type CefrLevel } from "@/lib/tree";
-import { levelProgress, treeStageForLevel } from "@/lib/level";
 
 export default async function WritingChapterSessionPage({
   searchParams,
@@ -28,24 +27,20 @@ export default async function WritingChapterSessionPage({
 
   if (!user) redirect("/onboarding");
 
-  const [t, tn, { data: profile }, { data: costumeRows }, { data: todayRows }] = await Promise.all([
+  const [t, tn, { data: profile }, { data: todayRows }] = await Promise.all([
     getTranslations("writing"),
     getTranslations("nav"),
     supabase
       .from("profiles")
-      .select("display_name, current_level, streak_days, avatar_url, xp")
+      .select("display_name, current_level, streak_days, avatar_url")
       .eq("id", user.id)
       .single(),
-    supabase.from("user_costumes").select("costume_id").eq("user_id", user.id).eq("equipped", true),
     supabase
       .from("writing_progress")
       .select("prompt_key, completed_at")
       .eq("user_id", user.id)
       .gte("completed_at", utcDayStartISO()),
   ]);
-
-  const equippedIds = (costumeRows ?? []).map((r) => r.costume_id);
-  const treeStage = treeStageForLevel(levelProgress(profile?.xp ?? 0).level);
 
   const myLevel = (profile?.current_level ?? "A1") as CefrLevel;
   const level = isCefrLevel(sp.level) ? sp.level : myLevel;
@@ -124,9 +119,6 @@ export default async function WritingChapterSessionPage({
               level={level}
               chapterIndex={chapterIndex}
               hasNextChapter={hasNextChapter}
-              species={myLevel}
-              costumeIds={equippedIds}
-              treeStage={treeStage}
             />
           )}
         </main>
