@@ -13,7 +13,6 @@ import { playCorrect, playWrong, playStreak, playChapterClear } from "@/lib/sfx"
 import FinishedCard from "@/components/pronunciation/FinishedCard";
 import AnswerCapture from "@/components/pronunciation/AnswerCapture";
 import ScoreResult, { VERDICTS } from "@/components/pronunciation/ScoreResult";
-import WordPicker from "@/components/pronunciation/WordPicker";
 
 const MINUTES_PER_SESSION = 4;
 // The mic stays open this long before we force it to stop and grade whatever
@@ -24,9 +23,6 @@ const MAX_LISTEN_MS = 6000;
 const BTN_LINE = buttonClassName("line");
 const LABEL = "text-[11.5px] font-semibold tracking-[.06em] uppercase text-faint mb-2";
 
-// Words within a chapter can be practiced in any order (pick from the list);
-// the chapter clears — and the next one unlocks — once every word in it is
-// nailed, regardless of the order they were done in.
 export default function PronunciationChallenge({
   chapterKey,
   userId,
@@ -44,7 +40,7 @@ export default function PronunciationChallenge({
   const meta = TIER_META.find((t) => t.tier === chapter?.tier)!;
   const nextChapter = chapter ? chapters[chapter.index + 1] : undefined;
 
-  const [openId, setOpenId] = useState<string | null>(null);
+  const [index, setIndex] = useState(0);
   const [heard, setHeard] = useState<string | null>(null);
   const [score, setScore] = useState(0);
   const [typed, setTyped] = useState("");
@@ -80,8 +76,7 @@ export default function PronunciationChallenge({
     setError,
   } = useSpeechRecognition("ko-KR", MAX_LISTEN_MS);
 
-  const word = openId ? words.find((w) => w.id === openId) : undefined;
-  const wordNo = word ? words.findIndex((w) => w.id === word.id) + 1 : 0;
+  const word = words[index];
   const showFallback = typedFallback || !micOk;
 
   // Ticks the mic countdown ring while listening.
@@ -120,11 +115,6 @@ export default function PronunciationChallenge({
     setError(null);
   }
 
-  function openWord(id: string) {
-    setOpenId(id);
-    resetAnswer();
-  }
-
   if (!chapter || words.length === 0) {
     return (
       <div className="max-w-[680px] border border-line rounded-[14px] px-7 py-10 text-center">
@@ -136,30 +126,7 @@ export default function PronunciationChallenge({
     );
   }
 
-  async function logMinutesOnce() {
-    if (logged.current) return;
-    logged.current = true;
-    const result = await recordCompletion(supabase, "pronunciation", MINUTES_PER_SESSION);
-    if (result?.leveled_up) setLevelUp(result);
-    router.refresh();
-  }
-
-  // Runs once a word's outcome (graded or skipped) is settled: finishes the
-  // chapter if that was the last word left to nail, otherwise sends the
-  // learner back to the picker to choose the next one themselves.
-  function afterWord(updatedNailed: string[]) {
-    if (updatedNailed.length === words.length) {
-      setFinished(true);
-      playChapterClear();
-      void logMinutesOnce();
-    } else {
-      setOpenId(null);
-      resetAnswer();
-    }
-  }
-
   function grade(text: string) {
-    if (!word) return;
     const s = bestSimilarity(text, [word.kr]);
     const pct = Math.round(s * 100);
     setHeard(text);
@@ -201,10 +168,27 @@ export default function PronunciationChallenge({
   }
 
   function skip() {
-    if (!word) return;
-    const updated = nailed.includes(word.id) ? nailed : [...nailed, word.id];
-    setNailed(updated);
-    afterWord(updated);
+    setNailed((n) => (n.includes(word.id) ? n : [...n, word.id]));
+    next();
+  }
+
+  async function logMinutesOnce() {
+    if (logged.current) return;
+    logged.current = true;
+    const result = await recordCompletion(supabase, "pronunciation", MINUTES_PER_SESSION);
+    if (result?.leveled_up) setLevelUp(result);
+    router.refresh();
+  }
+
+  function next() {
+    if (index + 1 < words.length) {
+      setIndex(index + 1);
+      resetAnswer();
+    } else {
+      setFinished(true);
+      if (nailed.length === words.length) playChapterClear();
+      void logMinutesOnce();
+    }
   }
 
   if (finished) {
@@ -219,7 +203,7 @@ export default function PronunciationChallenge({
         meta={meta}
         nextChapter={nextChapter}
         onRunItBack={() => {
-          setOpenId(null);
+          setIndex(0);
           setNailed([]);
           setStreak(0);
           resetAnswer();
@@ -229,49 +213,23 @@ export default function PronunciationChallenge({
     );
   }
 
-  if (!word) {
-    return (
-      <>
-        <Link
-          href="/speaking"
-          className="inline-flex items-center gap-1 text-[12.5px] font-semibold text-faint hover:text-teal transition-colors mb-3"
-        >
-          ← Trail
-        </Link>
-        <WordPicker
-          chapterTitle={chapter.title}
-          chapterTip={chapter.tip}
-          meta={meta}
-          words={words}
-          nailed={nailed}
-          bestScores={bestScores}
-          onOpenWord={openWord}
-        />
-      </>
-    );
-  }
-
   const verdict = heard !== null ? VERDICTS[verdictFor(score)] : null;
-  const allNailed = nailed.length === words.length;
 
   return (
     <div>
-      <button
-        onClick={() => {
-          setOpenId(null);
-          resetAnswer();
-        }}
+      <Link
+        href="/speaking"
         className="inline-flex items-center gap-1 text-[12.5px] font-semibold text-faint hover:text-teal transition-colors mb-3"
       >
-        ← All words
-      </button>
+        ← Trail
+      </Link>
       <div className="flex items-center justify-between mb-3 flex-wrap gap-2">
         <div className="flex gap-[7px] flex-wrap">
-          {words.map((w) => (
+          {words.map((w, i) => (
             <span
               key={w.id}
               className={`w-[26px] h-1.5 rounded-full transition-colors ${
-                nailed.includes(w.id) ? "bg-teal" : w.id === word.id ? "bg-teal opacity-45" : "bg-line"
+                i < index ? "bg-teal" : i === index ? "bg-teal opacity-45" : "bg-line"
               }`}
             />
           ))}
@@ -293,7 +251,7 @@ export default function PronunciationChallenge({
             {meta.emoji} {word.groupTitle}
           </span>
           <span className="text-[12.5px] text-faint font-medium">
-            Word {wordNo} of {words.length}
+            Word {index + 1} of {words.length}
           </span>
         </div>
 
@@ -352,8 +310,8 @@ export default function PronunciationChallenge({
               setHeard(null);
               setTyped("");
             }}
-            onNext={() => afterWord(nailed)}
-            isFinishing={allNailed}
+            onNext={next}
+            isLastWord={index + 1 === words.length}
           />
         )}
       </div>

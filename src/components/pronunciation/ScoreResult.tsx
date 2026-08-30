@@ -21,7 +21,7 @@ export default function ScoreResult({
   onReplay,
   onTryAgain,
   onNext,
-  isFinishing,
+  isLastWord,
 }: {
   heard: string;
   targetKr: string;
@@ -32,8 +32,7 @@ export default function ScoreResult({
   onReplay: () => void;
   onTryAgain: () => void;
   onNext: () => void;
-  /** True when this word was the last one left to nail — the chapter finishes instead of going back to the word list. */
-  isFinishing: boolean;
+  isLastWord: boolean;
 }) {
   return (
     <div
@@ -89,7 +88,7 @@ export default function ScoreResult({
           Try again
         </button>
         <button className={BTN_TEAL} onClick={onNext}>
-          {isFinishing ? "Finish →" : "Back to words →"}
+          {isLastWord ? "Finish →" : "Next →"}
         </button>
       </div>
     </div>

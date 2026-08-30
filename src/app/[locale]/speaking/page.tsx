@@ -4,7 +4,7 @@ import Sidebar from "@/components/dashboard/Sidebar";
 import PronunciationChallenge from "@/components/pronunciation/PronunciationChallenge";
 import PronunciationTrail, { type ChapterProgress } from "@/components/pronunciation/PronunciationTrail";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
-import { orderedChapters, NAILED_THRESHOLD } from "@/lib/pronunciation";
+import { orderedChapters, NAILED_THRESHOLD, TIER_META, type Chapter } from "@/lib/pronunciation";
 
 export default async function SpeakingPage({
   searchParams,
@@ -29,13 +29,25 @@ export default async function SpeakingPage({
   for (const r of progressRows ?? []) bestScores[r.prompt_key] = r.best_score;
   const nailedIds = new Set(Object.keys(bestScores).filter((k) => bestScores[k] >= NAILED_THRESHOLD));
 
-  const chapters: ChapterProgress[] = orderedChapters().reduce<ChapterProgress[]>((acc, c) => {
+  // Chapters unlock a whole tier at a time, not one another individually:
+  // every chapter within a tier is open (in any order) as soon as the tier
+  // itself is unlocked, and the next tier opens only once every chapter in
+  // this one is fully cleared.
+  const statsFor = (c: Chapter) => {
     const total = c.items.length;
     const nailed = c.items.filter((w) => nailedIds.has(`${c.key}:${w.kr}`)).length;
-    const cleared = total > 0 && nailed === total;
-    const locked = acc.length > 0 && (acc[acc.length - 1].locked || !acc[acc.length - 1].cleared);
-    return [...acc, { ...c, total, nailed, cleared, locked }];
-  }, []);
+    return { total, nailed, cleared: total > 0 && nailed === total };
+  };
+
+  const allChapters = orderedChapters();
+  const chapters: ChapterProgress[] = [];
+  let tierUnlocked = true;
+  for (const { tier } of TIER_META) {
+    const tierChapters = allChapters.filter((c) => c.tier === tier).map((c) => ({ c, ...statsFor(c) }));
+    const locked = !tierUnlocked;
+    for (const s of tierChapters) chapters.push({ ...s.c, total: s.total, nailed: s.nailed, cleared: s.cleared, locked });
+    tierUnlocked = tierUnlocked && tierChapters.length > 0 && tierChapters.every((s) => s.cleared);
+  }
 
   const current = chapters.find((c) => !c.locked && !c.cleared) ?? null;
   const totalWords = chapters.reduce((n, c) => n + c.total, 0);
