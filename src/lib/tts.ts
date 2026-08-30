@@ -62,7 +62,20 @@ export type SpeakOptions = {
 
 // Bumped on every speak/stop so a slow fetch can't play over newer audio.
 let generation = 0;
-let currentAudio: HTMLAudioElement | null = null;
+// One reused <audio> element for the whole app, instead of a fresh `new
+// Audio()` per line. Safari (notably iOS) only treats an element as
+// "unlocked" for autoplay once it has played inside a user gesture; a new
+// element created from an async onended callback loses that permission and
+// silently fails to play, which is what stalled a dialogue after its first
+// line. Reusing the same element keeps it unlocked for the rest of the chain.
+let audioEl: HTMLAudioElement | null = null;
+function getAudioEl(): HTMLAudioElement {
+  if (!audioEl) {
+    audioEl = new Audio();
+    audioEl.preload = "auto";
+  }
+  return audioEl;
+}
 const urlCache = new Map<string, string>();
 const pending = new Map<string, Promise<string | null>>();
 
@@ -155,31 +168,46 @@ export function speakKorean(text: string, opts: SpeakOptions = {}): boolean {
   const spoken = JAMO_SOUND[clean] ?? clean;
 
   const gen = ++generation;
-  currentAudio?.pause();
-  currentAudio = null;
+  audioEl?.pause();
   if ("speechSynthesis" in window) window.speechSynthesis.cancel();
 
   // The pitch knob only ever distinguishes dialogue speakers — map the low
   // one to the male neural voice.
   const apiVoice = (opts.pitch ?? 1) < 0.9 ? "m" : "f";
 
+  // A dialogue is a chain of lines, each waiting on the previous one's
+  // onend — so a single line that never signals completion (a dropped
+  // "ended" event, a stuck decode, speechSynthesis silently failing on some
+  // mobile browsers) used to stall the whole conversation after one
+  // sentence. This watchdog guarantees the chain always moves on.
+  let settled = false;
+  const finish = () => {
+    if (settled || gen !== generation) return;
+    settled = true;
+    clearTimeout(watchdog);
+    opts.onend?.();
+  };
+  const watchdog = window.setTimeout(finish, Math.max(4000, spoken.length * 180));
+
   void (async () => {
     const url = await fetchAudioUrl(spoken, apiVoice);
     if (gen !== generation) return; // a newer speak/stop superseded this one
     if (!url) {
-      speakWithBrowser(spoken, opts);
+      speakWithBrowser(spoken, { ...opts, onend: finish });
       return;
     }
-    const audio = new Audio(url);
+    const audio = getAudioEl();
+    audio.pause();
+    audio.currentTime = 0;
+    audio.src = url;
     // Neural audio is already natural-paced; only honor explicit slowdowns.
     audio.playbackRate = opts.rate ?? 1;
-    audio.onended = () => opts.onend?.();
+    audio.onended = finish;
     audio.onerror = () => {
-      if (gen === generation) speakWithBrowser(spoken, opts);
+      if (gen === generation) speakWithBrowser(spoken, { ...opts, onend: finish });
     };
-    currentAudio = audio;
     audio.play().catch(() => {
-      if (gen === generation) speakWithBrowser(spoken, opts);
+      if (gen === generation) speakWithBrowser(spoken, { ...opts, onend: finish });
     });
   })();
 
@@ -189,7 +217,6 @@ export function speakKorean(text: string, opts: SpeakOptions = {}): boolean {
 export function stopSpeaking() {
   if (typeof window === "undefined") return;
   generation++;
-  currentAudio?.pause();
-  currentAudio = null;
+  audioEl?.pause();
   if ("speechSynthesis" in window) window.speechSynthesis.cancel();
 }

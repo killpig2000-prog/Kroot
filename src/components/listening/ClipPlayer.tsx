@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { buttonClassName } from "@/components/ui/Button";
 import { useSpeechSynthesis } from "@/hooks/useSpeechSynthesis";
@@ -7,7 +7,7 @@ import Character, { characterColor, characterVariant } from "@/components/listen
 import Waveform from "@/components/listening/Waveform";
 import TapText from "@/components/words/TapText";
 import { QUIZZES, type Dialogue } from "@/lib/listening-dialogues";
-import { estMinutes, saveHeard } from "@/lib/listening-resume";
+import { estMinutes } from "@/lib/listening-resume";
 import { getLocalizedDialogueLine } from "@/lib/listening-i18n";
 import type { CefrLevel } from "@/lib/tree";
 
@@ -32,7 +32,6 @@ export default function ClipPlayer({
   situationIcon,
   level,
   userId,
-  initialHeard,
   onExit,
   onFinished,
 }: {
@@ -44,8 +43,8 @@ export default function ClipPlayer({
   situationIcon: string;
   level: CefrLevel;
   userId: string | null;
-  initialHeard: number;
-  onExit: () => void;
+  /** Called with how many lines were heard before leaving, for partial XP. */
+  onExit: (heard: number) => void;
   onFinished: (correct: boolean | null) => void;
 }) {
   const t = useTranslations("listening.player");
@@ -54,7 +53,8 @@ export default function ClipPlayer({
   const lines = dialogue.lines;
   const [rate, setRate] = useState(1.0);
   const [showEn, setShowEn] = useState(false);
-  const [heard, setHeard] = useState(() => Math.min(initialHeard, lines.length));
+  // Clips always start at line 1 — no cross-visit resume.
+  const [heard, setHeard] = useState(0);
   const [picked, setPicked] = useState<number | null>(null);
   const [saving, setSaving] = useState(false);
   const { currentIndex, isPlaying, isSupported, playFrom, speakOne, stop } =
@@ -67,12 +67,8 @@ export default function ClipPlayer({
   const allHeard = heard >= lines.length;
 
   // A line counts as heard the moment it starts playing (adjusted during
-  // render, per the React "derive state from changing values" pattern)…
+  // render, per the React "derive state from changing values" pattern).
   if (currentIndex + 1 > heard) setHeard(currentIndex + 1);
-  // …and persisted so leaving mid-clip resumes at the right line.
-  useEffect(() => {
-    if (heard > 0 && heard < lines.length) saveHeard(dialogue.id, heard);
-  }, [heard, lines.length, dialogue.id]);
 
   // Dashboard "Continue" card.
   useSaveResume(userId, {
@@ -142,8 +138,9 @@ export default function ClipPlayer({
         <button
           className="text-[13px] font-bold text-muted hover:text-charcoal transition-colors flex-none"
           onClick={() => {
+            const finalHeard = heard;
             stop();
-            onExit();
+            onExit(finalHeard);
           }}
         >
           {t("allClips")}

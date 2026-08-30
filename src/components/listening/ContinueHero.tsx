@@ -1,11 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { buttonClassName } from "@/components/ui/Button";
 import Waveform from "@/components/listening/Waveform";
-import { estMinutes, loadHeard, loadLastListened } from "@/lib/listening-resume";
+import { estMinutes } from "@/lib/listening-resume";
 import { getLocalizedDialogueTitle } from "@/lib/listening-i18n";
 import type { LocalizedString } from "@/lib/listening-dialogues";
 import type { CefrLevel } from "@/lib/tree";
@@ -24,10 +23,10 @@ export type HeroClip = {
   lineCount: number;
 };
 
-// Listening home hero: the clip to go back to (last one left mid-way, else
-// the next unheard one), plus a small stats strip — minutes this week and
-// clips heard at this level. Resume positions live in localStorage, so the
-// pick happens after mount; the server renders the "next unheard" fallback.
+// Listening home hero: the next unheard clip, plus a small stats strip —
+// minutes this week and clips heard at this level. Clips always start at
+// line 1 (no mid-clip resume), so this always reads "Up next", never
+// "Continue" — see the 2026-08-30 listening fix.
 export default function ContinueHero({
   level,
   clips,
@@ -48,51 +47,18 @@ export default function ContinueHero({
   const t = useTranslations("listening.home");
   const locale = useLocale();
   const completed = new Set(completedIds);
-  const fallback = clips.find((c) => !completed.has(c.id)) ?? null;
-  const [pick, setPick] = useState<{ clip: HeroClip; heard: number } | null>(
-    fallback ? { clip: fallback, heard: 0 } : null
-  );
-
-  useEffect(() => {
-    const t = setTimeout(() => {
-      const last = loadLastListened();
-      const byLast = last ? clips.find((c) => c.id === last && !completed.has(c.id)) : null;
-      const candidates = byLast ? [byLast, ...clips] : clips;
-      for (const c of candidates) {
-        if (completed.has(c.id)) continue;
-        const h = loadHeard(c.id, c.lineCount);
-        if (h > 0 && h < c.lineCount) {
-          setPick({ clip: c, heard: h });
-          return;
-        }
-      }
-    }, 0);
-    return () => clearTimeout(t);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [clips, completedIds]);
+  const c = clips.find((clip) => !completed.has(clip.id)) ?? null;
 
   const total = weekMinutes.reduce((a, b) => a + b, 0);
   const peak = Math.max(1, ...weekMinutes);
   const DAYS = t("days").split(" ");
 
-  const resuming = !!pick && pick.heard > 0;
-  const c = pick?.clip;
-  const left = c ? estMinutes(c.lineCount - (pick?.heard ?? 0)) : 0;
-
   return (
     <div className="grid md:grid-cols-[minmax(0,1fr)_260px] border border-line rounded-[16px] bg-cream overflow-hidden mb-4 max-w-[980px]">
       <div className="px-[clamp(18px,3vw,26px)] py-5 md:py-6 flex flex-col gap-3.5 min-w-0">
         <span className="inline-flex items-center gap-2 text-[11.5px] font-extrabold tracking-[.1em] uppercase text-teal">
-          {resuming ? (
-            <span aria-hidden="true" className="inline-flex items-end gap-[2px] h-3">
-              {[0, 0.15, 0.3, 0.45].map((d) => (
-                <i key={d} className="eq-bar w-[3px] rounded-[2px] bg-teal" style={{ animationDelay: `${d}s` }} />
-              ))}
-            </span>
-          ) : (
-            <span aria-hidden="true">▶</span>
-          )}
-          {resuming ? t("continueTag") : t("upNextTag")}
+          <span aria-hidden="true">▶</span>
+          {t("upNextTag")}
         </span>
 
         {c ? (
@@ -103,17 +69,16 @@ export default function ContinueHero({
               </h2>
               <p className="text-[13.5px] text-muted mt-0.5">
                 {t("clipOf", { icon: c.situationIcon, situation: c.situationLabel, n: c.clipNo, total: c.clipCount, level })}
-                {resuming && t("stoppedAt", { heard: pick!.heard, total: c.lineCount })}
               </p>
             </div>
-            <Waveform seed={c.id} lineCount={c.lineCount} heard={pick?.heard ?? 0} barsPerLine={5} height={36} />
+            <Waveform seed={c.id} lineCount={c.lineCount} heard={0} barsPerLine={5} height={36} />
             <div className="flex items-center justify-between gap-3 flex-wrap">
               <div className="flex gap-3 text-[12.5px] text-muted tabular-nums">
-                <span>{t("linesOf", { heard: pick?.heard ?? 0, total: c.lineCount })}</span>
-                <span>{resuming ? t("minLeft", { min: left }) : t("minTotal", { min: left })}</span>
+                <span>{t("linesOf", { heard: 0, total: c.lineCount })}</span>
+                <span>{t("minTotal", { min: estMinutes(c.lineCount) })}</span>
               </div>
               <Link href={`/listening/${c.situationKey}?level=${level}&clip=${c.id}`} className={BTN_TEAL}>
-                {resuming ? t("resume") : t("start")}
+                {t("start")}
               </Link>
             </div>
           </>

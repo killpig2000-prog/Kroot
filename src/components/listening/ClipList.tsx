@@ -6,17 +6,15 @@ import { getLocalizedDialogueTitle } from "@/lib/listening-i18n";
 import type { Dialogue } from "@/lib/listening-dialogues";
 import type { CefrLevel } from "@/lib/tree";
 
-// Situation page: hero (icon, name, big progress ring), resume banner, and
-// the clips as a playlist table — #, title + Korean key phrase, length,
-// status pill.
+// Situation page: hero (icon, name, big progress ring) and the clips as a
+// playlist table — #, title + Korean key phrase, length, status pill. Every
+// row always opens its clip at line 1 — clips don't resume mid-way.
 export default function ClipList({
   dialogues,
   situation,
   level,
   completed,
-  heardMap,
   doneCount,
-  resumeTarget,
   newLevel,
   onOpenClip,
 }: {
@@ -24,17 +22,13 @@ export default function ClipList({
   situation: Situation;
   level: CefrLevel;
   completed: Set<string>;
-  heardMap: Record<string, number>;
   doneCount: number;
-  resumeTarget: Dialogue | undefined;
   newLevel: number | null;
   onOpenClip: (id: string) => void;
 }) {
   const t = useTranslations("listening.situation");
   const locale = useLocale();
   const totalLines = dialogues.reduce((n, d) => n + d.lines.length, 0);
-  const resumeHeard = resumeTarget ? (heardMap[resumeTarget.id] ?? 0) : 0;
-  const resumePct = resumeTarget ? Math.round((resumeHeard / resumeTarget.lines.length) * 100) : 0;
 
   return (
     <div className="max-w-[760px]">
@@ -75,35 +69,6 @@ export default function ClipList({
           </ProgressRing>
         </div>
 
-        {/* resume banner */}
-        {resumeTarget && (
-          <button
-            className="w-full flex items-center gap-3.5 px-[18px] py-3.5 bg-[var(--tint-teal)] border-b border-[var(--tint-teal-line)] text-left transition-colors hover:bg-[var(--tint-teal-line)]/40"
-            onClick={() => onOpenClip(resumeTarget.id)}
-          >
-            <span
-              aria-hidden="true"
-              className="w-11 h-11 rounded-full bg-teal text-white grid place-items-center text-[16px] pl-[3px] flex-none shadow-[0_4px_14px_rgba(34,137,128,.35)]"
-            >
-              ▶
-            </span>
-            <span className="min-w-0 flex-1">
-              <b className="block text-[14px]">{t("continueWhere")}</b>
-              <span className="text-[12.5px] text-muted">
-                {t("lineOf", {
-                  title: getLocalizedDialogueTitle(resumeTarget.title, locale),
-                  n: resumeHeard + 1,
-                  total: resumeTarget.lines.length,
-                })}
-              </span>
-            </span>
-            <span className="hidden sm:block w-[120px] h-1.5 rounded-full bg-[var(--tint-teal-line)] overflow-hidden">
-              <span className="block h-full bg-teal rounded-full" style={{ width: `${resumePct}%` }} />
-            </span>
-            <span className="text-[12px] font-bold text-teal tabular-nums">{resumePct}%</span>
-          </button>
-        )}
-
         {/* list head */}
         <div className="hidden sm:grid grid-cols-[40px_1fr_120px_70px] gap-3 px-[18px] py-2.5 text-[10.5px] font-bold tracking-[.1em] uppercase text-faint border-b border-line bg-warm">
           <span>{t("headNum")}</span>
@@ -114,8 +79,6 @@ export default function ClipList({
 
         {dialogues.map((d, i) => {
           const done = completed.has(d.id);
-          const heard = heardMap[d.id] ?? 0;
-          const inProgress = !done && heard > 0;
           const bars = waveHeights(d.id, Math.min(8, d.lines.length));
           return (
             <button
@@ -123,18 +86,14 @@ export default function ClipList({
               onClick={() => onOpenClip(d.id)}
               className={`w-full grid grid-cols-[34px_1fr_auto] sm:grid-cols-[40px_1fr_120px_70px] gap-3 items-center px-[18px] py-3 text-left transition-colors hover:bg-[var(--tint-teal)] ${
                 i < dialogues.length - 1 ? "border-b border-line" : ""
-              } ${inProgress ? "bg-[var(--tint-teal)]" : ""}`}
+              }`}
             >
               <span
                 className={`w-7 h-7 rounded-full grid place-items-center text-[12px] font-extrabold tabular-nums border ${
-                  done
-                    ? "bg-success-bg border-success-line text-success"
-                    : inProgress
-                      ? "bg-teal border-teal text-white text-[10px] pl-0.5"
-                      : "bg-warm border-line text-faint"
+                  done ? "bg-success-bg border-success-line text-success" : "bg-warm border-line text-faint"
                 }`}
               >
-                {done ? "✓" : inProgress ? "▶" : i + 1}
+                {done ? "✓" : i + 1}
               </span>
               <span className="min-w-0">
                 <b className={`block truncate text-[14px] ${done ? "font-medium text-muted" : "font-bold"}`}>
@@ -152,14 +111,10 @@ export default function ClipList({
               </span>
               <span
                 className={`justify-self-end text-[11px] font-bold px-2.5 py-[3px] rounded-full tabular-nums ${
-                  done
-                    ? "bg-success-bg text-success"
-                    : inProgress
-                      ? "bg-teal text-white"
-                      : "bg-warm text-faint"
+                  done ? "bg-success-bg text-success" : "bg-warm text-faint"
                 }`}
               >
-                {done ? t("pillHeard") : inProgress ? `${heard} / ${d.lines.length}` : "—"}
+                {done ? t("pillHeard") : "—"}
               </span>
             </button>
           );

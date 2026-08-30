@@ -128,10 +128,17 @@ export function useSpeechRecognition(lang = "ko-KR", maxDurationMs?: number) {
 export function useKoreanSpeaker() {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const isSupported = useBrowserSupport(() => "speechSynthesis" in window);
+  // Whether THIS instance is the one currently speaking — stopSpeaking() is
+  // a global cancel, and a TapText (which owns this hook) mounts/unmounts
+  // constantly as dialogue playback reveals lines and the speaking
+  // character alternates. Calling stopSpeaking() unconditionally on every
+  // unmount used to kill an unrelated, still-playing dialogue the instant
+  // any bubble's TapText unmounted — see the 2026-08-30 listening fix.
+  const speakingRef = useRef(false);
 
   useEffect(() => {
     return () => {
-      if (typeof window !== "undefined") stopSpeaking();
+      if (speakingRef.current && typeof window !== "undefined") stopSpeaking();
     };
   }, []);
 
@@ -139,10 +146,19 @@ export function useKoreanSpeaker() {
     (text: string, rate = 0.9) => {
       const started = speakKorean(text, {
         rate,
-        onend: () => setIsSpeaking(false),
-        onerror: () => setIsSpeaking(false),
+        onend: () => {
+          speakingRef.current = false;
+          setIsSpeaking(false);
+        },
+        onerror: () => {
+          speakingRef.current = false;
+          setIsSpeaking(false);
+        },
       });
-      if (started) setIsSpeaking(true);
+      if (started) {
+        speakingRef.current = true;
+        setIsSpeaking(true);
+      }
     },
     []
   );
