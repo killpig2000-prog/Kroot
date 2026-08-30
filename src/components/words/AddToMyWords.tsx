@@ -162,11 +162,20 @@ export default function AddToMyWords({
           </p>
         </>
       ) : status.kind === "full" ? (
+        // Inert, like the saved state: this replaces the add button in place,
+        // and a tap's trailing click arrives after React has already swapped
+        // the element — a link here would navigate on the press that filled
+        // the bank. The way to the bank goes on the hint line instead.
         <>
-          <Link href="/review/words" className={BTN_QUIET}>
+          <button type="button" disabled className={BTN_QUIET} aria-disabled="true">
             {t("bank.fullShort", { used, slots })}
-          </Link>
-          <p className="mt-2 text-sm text-[var(--soft)]">{t("bank.fullHint", { slots })}</p>
+          </button>
+          <p className="mt-2 text-sm text-[var(--soft)]">
+            {t("bank.fullHint", { slots })}{" "}
+            <Link href="/review/words" className="hover:underline">
+              {t("bank.seeAll")}
+            </Link>
+          </p>
         </>
       ) : status.kind === "unsaved" || status.kind === "loading" ? (
         <>
