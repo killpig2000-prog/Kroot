@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useLocale } from "next-intl";
 import { useRouter, usePathname } from "@/i18n/navigation";
+import { rememberLocale } from "@/i18n/locale";
 import AccountMenu from "@/components/dashboard/AccountMenu";
 import { Link } from "@/i18n/navigation";
 import { MAIN_ITEMS, SECTIONS, type NavColor } from "@/components/dashboard/navItems";
@@ -14,6 +15,9 @@ const LANGUAGES = [
   { code: "zh-Hans", label: "🇨🇳 中文" },
   { code: "vi", label: "🇻🇳 Tiếng Việt" },
 ];
+// Reachable by URL only (pilot, partial translations) — shown as the current
+// language when you're on it, but not offered in the list.
+const HIDDEN_LANGUAGES = [{ code: "es", label: "🇪🇸 Español" }];
 
 function NavItem({
   icon,
@@ -97,11 +101,13 @@ function LanguageSwitcher({ pathname, locale }: { pathname: string; locale: stri
   // English, silently stayed on the old locale. `pathname` from
   // @/i18n/navigation is already locale-less; let the router add the prefix.
   const handleLanguageChange = (code: string) => {
-    router.replace(pathname, { locale: code });
+    rememberLocale(code);
+    // Keep ?level=&unit= and #anchors — the switch shouldn't lose your place.
+    router.replace(`${pathname}${window.location.search}${window.location.hash}`, { locale: code });
     setOpen(false);
   };
 
-  const currentLang = LANGUAGES.find((l) => l.code === locale) || LANGUAGES[0];
+  const currentLang = [...LANGUAGES, ...HIDDEN_LANGUAGES].find((l) => l.code === locale) || LANGUAGES[0];
 
   return (
     <div className="relative">

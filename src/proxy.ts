@@ -2,6 +2,7 @@ import { createServerClient } from "@supabase/ssr";
 import createIntlMiddleware from "next-intl/middleware";
 import { NextResponse, type NextRequest } from "next/server";
 import { routing } from "@/i18n/routing";
+import { LOCALE_COOKIE, isAppLocale } from "@/i18n/locale";
 
 // The one proxy (Next 16's middleware). It does two things, in order:
 //
@@ -92,14 +93,29 @@ export async function proxy(request: NextRequest) {
   const bare = pathname.slice(prefix.length) || "/";
   const isProtected = PROTECTED_PREFIXES.some((p) => bare === p || bare.startsWith(`${p}/`));
 
+  // A URL without a prefix means "default locale" to next-intl, so every
+  // server redirect("/x"), typed URL or old bookmark dropped a ja/zh/vi user
+  // back into English. Send them to the language they last chose instead;
+  // the switcher rewrites the cookie before navigating so picking English
+  // still works. (localeDetection stays off — Accept-Language is ignored.)
+  const remembered = request.cookies.get(LOCALE_COOKIE)?.value;
+  const resolvedLocale = localeMatch ? localeMatch[1] : routing.defaultLocale;
+
   let response: NextResponse;
-  if (!user && isProtected) {
+  if (!localeMatch && isAppLocale(remembered) && remembered !== routing.defaultLocale) {
+    const url = request.nextUrl.clone();
+    url.pathname = `/${remembered}${pathname === "/" ? "" : pathname}`;
+    response = NextResponse.redirect(url);
+  } else if (!user && isProtected) {
     const url = request.nextUrl.clone();
     url.pathname = `${prefix}/auth/login`;
     url.search = `?next=${encodeURIComponent(pathname)}`;
     response = NextResponse.redirect(url);
   } else {
     response = handleI18n(request);
+    // Pin the cookie to the locale actually served (next-intl only writes it
+    // on some responses), so the choice survives the next bare URL.
+    response.cookies.set(LOCALE_COOKIE, resolvedLocale, { path: "/", maxAge: 60 * 60 * 24 * 365, sameSite: "lax" });
   }
   // Carry over any auth cookies the claims check refreshed — dropping them
   // would discard the rotated refresh token and invalidate the session.

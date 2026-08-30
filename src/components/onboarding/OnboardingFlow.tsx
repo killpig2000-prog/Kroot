@@ -3,6 +3,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
+import { stripLocale } from "@/i18n/locale";
+import LanguageLinks from "@/components/ui/LanguageLinks";
 import BrandMark from "@/components/ui/BrandMark";
 import { track } from "@/lib/analytics";
 import { createClient } from "@/lib/supabase/client";
@@ -46,7 +48,7 @@ const STEPS: { id: Step; label: "hangul" | "goal" | "test" | "level" | "account"
 const STEP_INDEX: Record<Step, number> = { gate: 0, goal: 1, quiz: 2, result: 3, signup: 4, confirm: 4, saving: 4 };
 
 function safeNext(raw: string | null): string {
-  if (raw && raw.startsWith("/") && !raw.startsWith("//")) return raw;
+  if (raw && raw.startsWith("/") && !raw.startsWith("//")) return stripLocale(raw);
   return "/dashboard";
 }
 
@@ -309,6 +311,7 @@ export default function OnboardingFlow({ lessons }: { lessons: FirstLessonsMap }
           </div>
         </div>
       </header>
+      <LanguageLinks className="text-center text-[12px] text-faint pt-3" />
 
       <main className="flex-1 flex items-center justify-center px-[18px] py-[clamp(24px,4vw,48px)]">
         <div className="w-[min(520px,100%)]">

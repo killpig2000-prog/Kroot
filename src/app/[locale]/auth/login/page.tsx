@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useRouter } from "@/i18n/navigation";
+import { stripLocale } from "@/i18n/locale";
 import Mascot from "@/components/onboarding/Mascot";
 import CuteError from "@/components/ui/CuteError";
 import { createClient } from "@/lib/supabase/client";
@@ -21,9 +22,12 @@ const ERROR_MESSAGES: Record<string, string> = {
   expired: "Your session expired. Please log in again.",
 };
 
-// Only allow same-site paths as post-login destinations.
+// Only allow same-site paths as post-login destinations. The proxy sends us
+// the full pathname (e.g. /ja/vocabulary); the locale prefix is dropped
+// because next-intl's router re-adds the active one, and the auth callback
+// lands on the bare path, which the proxy then re-prefixes from the cookie.
 function safeNext(raw: string | null): string {
-  if (raw && raw.startsWith("/") && !raw.startsWith("//")) return raw;
+  if (raw && raw.startsWith("/") && !raw.startsWith("//")) return stripLocale(raw);
   return "/dashboard";
 }
 
