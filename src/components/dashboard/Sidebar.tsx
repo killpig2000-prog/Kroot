@@ -266,13 +266,12 @@ export default function Sidebar(props: Props) {
         </button>
         <Brand />
         <span className="flex-1" />
-        <Link
-          href="/profile"
+        <span
           aria-label={tn("dayStreak", { n: props.streakDays })}
           className="flex items-center gap-1 h-8 px-2.5 rounded-full border border-[#ECD98A] bg-[#FEF9C3] text-[#5C4A0E] text-[12.5px] font-bold tabular-nums"
         >
           🔥 {props.streakDays}
-        </Link>
+        </span>
         <button
           type="button"
           onClick={() => setOpen(true)}
