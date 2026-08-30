@@ -1,14 +1,20 @@
 import type { CefrLevel } from "@/lib/tree";
+import { getPromptsForLevel, type Prompt } from "@/lib/writing";
 
 // Promotion (grade-up) test content + rules — separate from the onboarding
-// placement quiz in level-test.ts. A test covers four skills; listening and
-// reading are MCQ (scored locally), writing and speaking are free responses
-// graded by AI (/api/level-test/grade).
+// placement quiz in level-test.ts. A test covers three skills, all scored
+// locally, no AI: listening and reading are MCQ; writing is the same
+// tap-to-assemble tile board the Writing feature uses (build the target
+// sentence in order), sourced live from getPromptsForLevel(spec.to) so this
+// file doesn't duplicate that content. There is no speaking section — free
+// speech had no local scoring method once Gemini grading was removed
+// app-wide, and this test would rather ask more writing than fall back to a
+// weaker mechanic.
 //
-// Anti-memorization: each spec holds POOLS larger than what one attempt
-// serves. buildServedTest() samples questions/passages/prompts at random and
-// shuffles the options, so a retake (after the cooldown) sees a
-// different test.
+// Anti-memorization: listening/reading hold POOLS larger than what one
+// attempt serves; writing draws from Writing's own (much larger) prompt
+// pool. buildServedTest() samples at random and shuffles MCQ options, so a
+// retake (after the cooldown) sees a different test.
 
 export type McqQuestion = {
   /** Korean text; listening questions are played via TTS instead of shown. */
@@ -19,7 +25,6 @@ export type McqQuestion = {
 };
 
 export type ReadingSet = { passage: string; questions: McqQuestion[] };
-export type FreePrompt = { prompt: string; promptKr: string };
 
 export type PromotionTestSpec = {
   from: CefrLevel;
@@ -30,8 +35,8 @@ export type PromotionTestSpec = {
   /** Sampled down to readingCount passages per attempt. */
   readingPool: ReadingSet[];
   readingCount: number;
-  writingPool: FreePrompt[];
-  speakingPool: FreePrompt[];
+  /** How many tile-writing questions to serve, sampled from Writing's own pool for `to`. */
+  writingCount: number;
 };
 
 /** One concrete attempt, sampled from a spec's pools. */
@@ -40,8 +45,7 @@ export type ServedPromotionTest = {
   to: CefrLevel;
   listening: McqQuestion[];
   reading: ReadingSet[];
-  writing: FreePrompt;
-  speaking: FreePrompt;
+  writing: Prompt[];
 };
 
 // Pass rules: every skill ≥ MIN_SKILL and average ≥ MIN_AVG.
@@ -86,13 +90,12 @@ function fisherYates<T>(arr: T[], rng: () => number): T[] {
 // content a learner just saw on their last attempt at this grade.
 export const listeningKey = (q: McqQuestion): string => q.kr;
 export const readingKey = (set: ReadingSet): string => set.passage;
-export const promptKey = (p: FreePrompt): string => p.prompt;
+export const writingKey = (p: Prompt): string => p.key;
 
 export type ServedKeys = {
   listening: string[];
   reading: string[];
-  writing: string;
-  speaking: string;
+  writing: string[];
 };
 
 /** Keys of what a served test actually contains — store this after grading so the next attempt can exclude it. */
@@ -100,8 +103,7 @@ export function servedKeysOf(test: ServedPromotionTest): ServedKeys {
   return {
     listening: test.listening.map(listeningKey),
     reading: test.reading.map(readingKey),
-    writing: promptKey(test.writing),
-    speaking: promptKey(test.speaking),
+    writing: test.writing.map(writingKey),
   };
 }
 
@@ -109,7 +111,6 @@ export type ExcludeKeys = {
   listening?: string[];
   reading?: string[];
   writing?: string[];
-  speaking?: string[];
 };
 
 // Drop excluded items from a pool, but only if enough remain to serve the
@@ -133,8 +134,7 @@ export function buildServedTest(
   });
   const listeningPool = withoutSeen(spec.listeningPool, listeningKey, exclude?.listening, spec.listeningCount);
   const readingPool = withoutSeen(spec.readingPool, readingKey, exclude?.reading, spec.readingCount);
-  const writingPool = withoutSeen(spec.writingPool, promptKey, exclude?.writing, 1);
-  const speakingPool = withoutSeen(spec.speakingPool, promptKey, exclude?.speaking, 1);
+  const writingPool = withoutSeen(getPromptsForLevel(spec.to), writingKey, exclude?.writing, spec.writingCount);
   return {
     from: spec.from,
     to: spec.to,
@@ -144,8 +144,7 @@ export function buildServedTest(
     reading: fisherYates(readingPool, rng)
       .slice(0, spec.readingCount)
       .map((set) => ({ ...set, questions: set.questions.map(shuffledOptions) })),
-    writing: fisherYates(writingPool, rng)[0],
-    speaking: fisherYates(speakingPool, rng)[0],
+    writing: fisherYates(writingPool, rng).slice(0, spec.writingCount),
   };
 }
 
@@ -274,6 +273,7 @@ export const PROMOTION_TESTS: PromotionTestSpec[] = [
       { kr: "요즘 기타를 배우고 있어요.", question: "What are they learning?", options: ["guitar", "piano", "drums"], answer: "guitar" },
     ],
     readingCount: 2,
+    writingCount: 5,
     readingPool: [
       {
         passage:
@@ -777,304 +777,6 @@ export const PROMOTION_TESTS: PromotionTestSpec[] = [
         ],
       },
     ],
-    writingPool: [
-      {
-        prompt:
-          "Introduce yourself in Korean — 3 sentences or more. Include your name, one thing you did yesterday (past tense), and one thing you will do tomorrow (future tense).",
-        promptKr: "한국어로 자기소개를 3문장 이상 써 보세요. 이름, 어제 한 일(과거), 내일 할 일(미래)을 포함하세요.",
-      },
-      {
-        prompt:
-          "Describe your day in Korean — 3 sentences or more. Say when you get up, one thing you do every day, and one thing you like.",
-        promptKr: "하루 일과를 한국어로 3문장 이상 써 보세요. 몇 시에 일어나는지, 매일 하는 일, 좋아하는 것을 포함하세요.",
-      },
-      {
-        prompt:
-          "Write about your family or a friend in Korean — 3 sentences or more. Include who they are, what they do, and one thing you did together.",
-        promptKr: "가족이나 친구에 대해 한국어로 3문장 이상 써 보세요. 누구인지, 무엇을 하는지, 같이 한 일을 포함하세요.",
-      },
-      {
-        prompt:
-          "Describe your home or room in Korean — 3 sentences or more. Include where it is, what is in it, and one thing you like about it.",
-        promptKr: "집이나 방에 대해 한국어로 3문장 이상 써 보세요. 어디에 있는지, 무엇이 있는지, 마음에 드는 점을 포함하세요.",
-      },
-      {
-        prompt:
-          "Write about your favorite season in Korean — 3 sentences or more. Say which season you like, why you like it, and one thing you do in that season.",
-        promptKr: "좋아하는 계절에 대해 한국어로 3문장 이상 써 보세요. 어느 계절을 좋아하는지, 왜 좋아하는지, 그 계절에 하는 일을 포함하세요.",
-      },
-      {
-        prompt:
-          "Write about your job or school in Korean — 3 sentences or more. Say what it is, when you go, and one thing you do there every day.",
-        promptKr: "직장이나 학교에 대해 한국어로 3문장 이상 써 보세요. 무엇인지, 언제 가는지, 매일 하는 일을 포함하세요.",
-      },
-      {
-        prompt:
-          "Write about something you like and something you don't like in Korean — 3 sentences or more. Include one thing you like, one thing you dislike, and why.",
-        promptKr:
-          "좋아하는 것과 싫어하는 것에 대해 한국어로 3문장 이상 써 보세요. 좋아하는 것, 싫어하는 것, 이유를 포함하세요.",
-      },
-      {
-        prompt:
-          "Describe today's weather in Korean — 3 sentences or more. Say how the weather is, how it makes you feel, and what you will do because of it.",
-        promptKr:
-          "오늘 날씨에 대해 한국어로 3문장 이상 써 보세요. 날씨가 어떤지, 기분이 어떤지, 날씨 때문에 무엇을 할 것인지 포함하세요.",
-      },
-      {
-        prompt:
-          "Write about your favorite food in Korean — 3 sentences or more. Say what it is, why you like it, and when you usually eat it.",
-        promptKr:
-          "좋아하는 음식에 대해 한국어로 3문장 이상 써 보세요. 무엇인지, 왜 좋아하는지, 언제 먹는지 포함하세요.",
-      },
-      {
-        prompt:
-          "Write about your hobby in Korean — 3 sentences or more. Say what your hobby is, when you do it, and why you enjoy it.",
-        promptKr:
-          "취미에 대해 한국어로 3문장 이상 써 보세요. 취미가 무엇인지, 언제 하는지, 왜 즐거운지 포함하세요.",
-      },
-      {
-        prompt:
-          "Write about your plans for this weekend in Korean — 3 sentences or more. Use future tense and say what you will do and who you will do it with.",
-        promptKr:
-          "이번 주말 계획에 대해 한국어로 3문장 이상 써 보세요. 미래 시제를 사용해서 무엇을 할지, 누구와 할지 포함하세요.",
-      },
-      {
-        prompt:
-          "Write about a shopping trip you took in Korean — 3 sentences or more. Use past tense and say where you went, what you bought, and how much it cost.",
-        promptKr:
-          "쇼핑한 이야기를 한국어로 3문장 이상 써 보세요. 과거 시제를 사용해서 어디에 갔는지, 무엇을 샀는지, 얼마였는지 포함하세요.",
-      },
-      {
-        prompt:
-          "Write about a time you were sick in Korean — 3 sentences or more. Say what was wrong, what you did about it, and how you feel now.",
-        promptKr:
-          "아팠던 경험에 대해 한국어로 3문장 이상 써 보세요. 어디가 아팠는지, 무엇을 했는지, 지금 어떤지 포함하세요.",
-      },
-      {
-        prompt:
-          "Write about a trip you took in Korean — 3 sentences or more. Use past tense and say where you went, who you went with, and what you did there.",
-        promptKr:
-          "여행 이야기를 한국어로 3문장 이상 써 보세요. 과거 시제를 사용해서 어디에 갔는지, 누구와 갔는지, 무엇을 했는지 포함하세요.",
-      },
-      {
-        prompt:
-          "Describe your neighborhood or city in Korean — 3 sentences or more. Say where it is, what is nearby, and one thing you like about it.",
-        promptKr:
-          "동네나 도시에 대해 한국어로 3문장 이상 써 보세요. 어디에 있는지, 근처에 무엇이 있는지, 마음에 드는 점을 포함하세요.",
-      },
-      {
-        prompt:
-          "Write about a coworker or classmate in Korean — 3 sentences or more. Say who they are, what they are like, and one thing you did together.",
-        promptKr:
-          "직장 동료나 반 친구에 대해 한국어로 3문장 이상 써 보세요. 누구인지, 어떤 사람인지, 같이 한 일을 포함하세요.",
-      },
-      {
-        prompt:
-          "Write about your best friend in Korean — 3 sentences or more. Say how you met, what they are like, and why you like spending time with them.",
-        promptKr:
-          "가장 친한 친구에 대해 한국어로 3문장 이상 써 보세요. 어떻게 만났는지, 어떤 사람인지, 왜 같이 시간을 보내는 게 좋은지 포함하세요.",
-      },
-      {
-        prompt:
-          "Write about a pet or an animal you like in Korean — 3 sentences or more. Say what it is, what it looks like, and why you like it.",
-        promptKr:
-          "반려동물이나 좋아하는 동물에 대해 한국어로 3문장 이상 써 보세요. 무엇인지, 어떻게 생겼는지, 왜 좋아하는지 포함하세요.",
-      },
-      {
-        prompt:
-          "Write about how you use your phone or computer in Korean — 3 sentences or more. Say what you use it for, how often, and one app or website you like.",
-        promptKr:
-          "휴대폰이나 컴퓨터 사용에 대해 한국어로 3문장 이상 써 보세요. 무엇을 하는지, 얼마나 자주 하는지, 좋아하는 앱이나 사이트를 포함하세요.",
-      },
-      {
-        prompt:
-          "Write about how you feel today in Korean — 3 sentences or more. Say what your mood is, why, and what usually helps when you feel that way.",
-        promptKr:
-          "오늘 기분에 대해 한국어로 3문장 이상 써 보세요. 기분이 어떤지, 왜 그런지, 그럴 때 무엇이 도움이 되는지 포함하세요.",
-      },
-      {
-        prompt:
-          "Write about your plans for next month in Korean — 3 sentences or more. Use future tense and include at least two things you plan to do.",
-        promptKr:
-          "다음 달 계획에 대해 한국어로 3문장 이상 써 보세요. 미래 시제를 사용해서 할 일을 두 가지 이상 포함하세요.",
-      },
-      {
-        prompt:
-          "Write about a birthday party you went to in Korean — 3 sentences or more. Use past tense and say whose party it was, what you did, and what you ate.",
-        promptKr:
-          "다녀온 생일 파티에 대해 한국어로 3문장 이상 써 보세요. 과거 시제를 사용해서 누구의 생일이었는지, 무엇을 했는지, 무엇을 먹었는지 포함하세요.",
-      },
-      {
-        prompt:
-          "Describe your morning routine in Korean — 3 sentences or more. Say what time you wake up, what you do first, and what you eat for breakfast.",
-        promptKr:
-          "아침 일과에 대해 한국어로 3문장 이상 써 보세요. 몇 시에 일어나는지, 먼저 무엇을 하는지, 아침으로 무엇을 먹는지 포함하세요.",
-      },
-      {
-        prompt:
-          "Describe your evening routine in Korean — 3 sentences or more. Say what you do after dinner, when you go to bed, and one thing you do before sleeping.",
-        promptKr:
-          "저녁 일과에 대해 한국어로 3문장 이상 써 보세요. 저녁 식사 후 무엇을 하는지, 언제 자는지, 자기 전에 하는 일을 포함하세요.",
-      },
-      {
-        prompt:
-          "Write about your favorite restaurant or cafe in Korean — 3 sentences or more. Say where it is, what you usually order, and why you like it.",
-        promptKr:
-          "좋아하는 식당이나 카페에 대해 한국어로 3문장 이상 써 보세요. 어디에 있는지, 보통 무엇을 시키는지, 왜 좋아하는지 포함하세요.",
-      },
-      {
-        prompt:
-          "Write about a movie or drama you watched in Korean — 3 sentences or more. Use past tense and say what it was about and whether you liked it.",
-        promptKr:
-          "본 영화나 드라마에 대해 한국어로 3문장 이상 써 보세요. 과거 시제를 사용해서 무슨 내용인지, 재미있었는지 포함하세요.",
-      },
-      {
-        prompt:
-          "Write about your exercise habits in Korean — 3 sentences or more. Say what exercise you do, how often, and how it makes you feel.",
-        promptKr:
-          "운동 습관에 대해 한국어로 3문장 이상 써 보세요. 무슨 운동을 하는지, 얼마나 자주 하는지, 기분이 어떤지 포함하세요.",
-      },
-      {
-        prompt:
-          "Write about a family gathering in Korean — 3 sentences or more. Use past tense and say who came, what you ate, and what you did together.",
-        promptKr:
-          "가족 모임에 대해 한국어로 3문장 이상 써 보세요. 과거 시제를 사용해서 누가 왔는지, 무엇을 먹었는지, 같이 무엇을 했는지 포함하세요.",
-      },
-      {
-        prompt:
-          "Write about your favorite music in Korean — 3 sentences or more. Say what kind of music you like, one singer or band you like, and when you listen to it.",
-        promptKr:
-          "좋아하는 음악에 대해 한국어로 3문장 이상 써 보세요. 어떤 음악을 좋아하는지, 좋아하는 가수나 밴드, 언제 듣는지 포함하세요.",
-      },
-      {
-        prompt:
-          "Write about what you did last week in Korean — 3 sentences or more. Use past tense and include at least two different things you did.",
-        promptKr:
-          "지난주에 한 일에 대해 한국어로 3문장 이상 써 보세요. 과거 시제를 사용해서 서로 다른 일을 두 가지 이상 포함하세요.",
-      },
-    ],
-    speakingPool: [
-      {
-        prompt: "Answer out loud in Korean, 2 sentences or more: 주말에 보통 뭐 해요? (What do you usually do on weekends?)",
-        promptKr: "주말에 보통 뭐 해요? — 한국어로 2문장 이상 말해 보세요.",
-      },
-      {
-        prompt: "Answer out loud in Korean, 2 sentences or more: 어제 뭐 했어요? (What did you do yesterday?)",
-        promptKr: "어제 뭐 했어요? — 한국어로 2문장 이상 말해 보세요.",
-      },
-      {
-        prompt: "Answer out loud in Korean, 2 sentences or more: 무슨 음식을 좋아해요? (What food do you like?)",
-        promptKr: "무슨 음식을 좋아해요? — 한국어로 2문장 이상 말해 보세요.",
-      },
-      {
-        prompt: "Answer out loud in Korean, 2 sentences or more: 아침에 보통 뭐 먹어요? (What do you usually eat in the morning?)",
-        promptKr: "아침에 보통 뭐 먹어요? — 한국어로 2문장 이상 말해 보세요.",
-      },
-      {
-        prompt: "Answer out loud in Korean, 2 sentences or more: 집에서 회사(학교)까지 어떻게 가요? (How do you get from home to work/school?)",
-        promptKr: "집에서 회사(학교)까지 어떻게 가요? — 한국어로 2문장 이상 말해 보세요.",
-      },
-      {
-        prompt: "Answer out loud in Korean, 2 sentences or more: 무슨 계절을 좋아해요? (What season do you like?)",
-        promptKr: "무슨 계절을 좋아해요? — 한국어로 2문장 이상 말해 보세요.",
-      },
-      {
-        prompt: "Answer out loud in Korean, 2 sentences or more: 취미가 뭐예요? (What is your hobby?)",
-        promptKr: "취미가 뭐예요? — 한국어로 2문장 이상 말해 보세요.",
-      },
-      {
-        prompt: "Answer out loud in Korean, 2 sentences or more: 무슨 음악을 좋아해요? (What music do you like?)",
-        promptKr: "무슨 음악을 좋아해요? — 한국어로 2문장 이상 말해 보세요.",
-      },
-      {
-        prompt: "Answer out loud in Korean, 2 sentences or more: 오늘 기분이 어때요? (How do you feel today?)",
-        promptKr: "오늘 기분이 어때요? — 한국어로 2문장 이상 말해 보세요.",
-      },
-      {
-        prompt: "Answer out loud in Korean, 2 sentences or more: 가족이 몇 명이에요? (How many people are in your family?)",
-        promptKr: "가족이 몇 명이에요? — 한국어로 2문장 이상 말해 보세요.",
-      },
-      {
-        prompt: "Answer out loud in Korean, 2 sentences or more: 제일 친한 친구는 누구예요? (Who is your best friend?)",
-        promptKr: "제일 친한 친구는 누구예요? — 한국어로 2문장 이상 말해 보세요.",
-      },
-      {
-        prompt: "Answer out loud in Korean, 2 sentences or more: 지난 생일에 뭐 했어요? (What did you do on your last birthday?)",
-        promptKr: "지난 생일에 뭐 했어요? — 한국어로 2문장 이상 말해 보세요.",
-      },
-      {
-        prompt: "Answer out loud in Korean, 2 sentences or more: 다음 달에 뭐 할 거예요? (What will you do next month?)",
-        promptKr: "다음 달에 뭐 할 거예요? — 한국어로 2문장 이상 말해 보세요.",
-      },
-      {
-        prompt: "Answer out loud in Korean, 2 sentences or more: 어디에 살아요? (Where do you live?)",
-        promptKr: "어디에 살아요? — 한국어로 2문장 이상 말해 보세요.",
-      },
-      {
-        prompt: "Answer out loud in Korean, 2 sentences or more: 반려동물이 있어요? (Do you have a pet?)",
-        promptKr: "반려동물이 있어요? — 한국어로 2문장 이상 말해 보세요.",
-      },
-      {
-        prompt: "Answer out loud in Korean, 2 sentences or more: 스마트폰으로 보통 뭐 해요? (What do you usually do on your smartphone?)",
-        promptKr: "스마트폰으로 보통 뭐 해요? — 한국어로 2문장 이상 말해 보세요.",
-      },
-      {
-        prompt: "Answer out loud in Korean, 2 sentences or more: 어제 저녁에 뭐 먹었어요? (What did you eat for dinner yesterday?)",
-        promptKr: "어제 저녁에 뭐 먹었어요? — 한국어로 2문장 이상 말해 보세요.",
-      },
-      {
-        prompt: "Answer out loud in Korean, 2 sentences or more: 무슨 운동을 좋아해요? (What exercise do you like?)",
-        promptKr: "무슨 운동을 좋아해요? — 한국어로 2문장 이상 말해 보세요.",
-      },
-      {
-        prompt: "Answer out loud in Korean, 2 sentences or more: 아프면 보통 뭐 해요? (What do you usually do when you're sick?)",
-        promptKr: "아프면 보통 뭐 해요? — 한국어로 2문장 이상 말해 보세요.",
-      },
-      {
-        prompt: "Answer out loud in Korean, 2 sentences or more: 여행 가 본 곳 중에 어디가 제일 좋았어요? (Of the places you've traveled, which did you like best?)",
-        promptKr: "여행 가 본 곳 중에 어디가 제일 좋았어요? — 한국어로 2문장 이상 말해 보세요.",
-      },
-      {
-        prompt: "Answer out loud in Korean, 2 sentences or more: 쇼핑을 자주 해요? (Do you go shopping often?)",
-        promptKr: "쇼핑을 자주 해요? — 한국어로 2문장 이상 말해 보세요.",
-      },
-      {
-        prompt: "Answer out loud in Korean, 2 sentences or more: 저녁에 보통 뭐 해요? (What do you usually do in the evening?)",
-        promptKr: "저녁에 보통 뭐 해요? — 한국어로 2문장 이상 말해 보세요.",
-      },
-      {
-        prompt: "Answer out loud in Korean, 2 sentences or more: 밤에 몇 시에 자요? (What time do you go to bed at night?)",
-        promptKr: "밤에 몇 시에 자요? — 한국어로 2문장 이상 말해 보세요.",
-      },
-      {
-        prompt: "Answer out loud in Korean, 2 sentences or more: 요즘 날씨가 어때요? (How is the weather these days?)",
-        promptKr: "요즘 날씨가 어때요? — 한국어로 2문장 이상 말해 보세요.",
-      },
-      {
-        prompt: "Answer out loud in Korean, 2 sentences or more: 겨울에 보통 뭐 해요? (What do you usually do in winter?)",
-        promptKr: "겨울에 보통 뭐 해요? — 한국어로 2문장 이상 말해 보세요.",
-      },
-      {
-        prompt: "Answer out loud in Korean, 2 sentences or more: 회사나 학교에서 누구랑 제일 친해요? (Who are you closest with at work or school?)",
-        promptKr: "회사나 학교에서 누구랑 제일 친해요? — 한국어로 2문장 이상 말해 보세요.",
-      },
-      {
-        prompt: "Answer out loud in Korean, 2 sentences or more: 좋아하는 영화나 드라마가 있어요? (Do you have a movie or drama you like?)",
-        promptKr: "좋아하는 영화나 드라마가 있어요? — 한국어로 2문장 이상 말해 보세요.",
-      },
-      {
-        prompt: "Answer out loud in Korean, 2 sentences or more: 스트레스 받을 때 뭐 해요? (What do you do when you're stressed?)",
-        promptKr: "스트레스 받을 때 뭐 해요? — 한국어로 2문장 이상 말해 보세요.",
-      },
-      {
-        prompt: "Answer out loud in Korean, 2 sentences or more: 집에 뭐가 있어요? (What is in your home?)",
-        promptKr: "집에 뭐가 있어요? — 한국어로 2문장 이상 말해 보세요.",
-      },
-      {
-        prompt: "Answer out loud in Korean, 2 sentences or more: 지난주에 어디 갔어요? (Where did you go last week?)",
-        promptKr: "지난주에 어디 갔어요? — 한국어로 2문장 이상 말해 보세요.",
-      },
-    ],
   },
 
   // ──────────────────────────────────────────────────────────── A2 → B1
@@ -1187,6 +889,7 @@ export const PROMOTION_TESTS: PromotionTestSpec[] = [
       { kr: "이웃과 층간 소음 문제로 얘기를 나눴어요.", question: "What did they talk with their neighbor about?", options: ["noise between floors", "parking spaces", "trash disposal"], answer: "noise between floors" },
     ],
     readingCount: 2,
+    writingCount: 5,
     readingPool: [
       {
         passage:
@@ -1729,305 +1432,6 @@ export const PROMOTION_TESTS: PromotionTestSpec[] = [
         ],
       },
     ],
-    writingPool: [
-      {
-        prompt:
-          "Write 5 sentences or more in Korean about a trip you have taken. Where did you go, what did you do, and what was good or bad about it?",
-        promptKr: "여행 경험에 대해 한국어로 5문장 이상 써 보세요. 어디에 갔는지, 무엇을 했는지, 무엇이 좋았거나 아쉬웠는지 쓰세요.",
-      },
-      {
-        prompt:
-          "Write 5 sentences or more in Korean about your plans for next year. Use future tense and give a reason for at least one plan (-(으)려고 하다, -아/어서).",
-        promptKr: "내년 계획에 대해 한국어로 5문장 이상 써 보세요. 미래 시제를 쓰고, 계획 중 하나에는 이유를 붙이세요.",
-      },
-      {
-        prompt:
-          "Compare two things you know well (two cities, two foods, two seasons…) in Korean, 5 sentences or more. Use -보다 and say which one you prefer and why.",
-        promptKr: "잘 아는 두 가지(두 도시, 두 음식, 두 계절 등)를 한국어로 5문장 이상 비교해 보세요. '-보다'를 쓰고 무엇을 더 좋아하는지 이유와 함께 쓰세요.",
-      },
-      {
-        prompt:
-          "Write 5 sentences or more in Korean about a habit you started or changed recently. Say why you changed it and how your life is different now.",
-        promptKr: "최근에 새로 시작했거나 바꾼 습관에 대해 한국어로 5문장 이상 써 보세요. 왜 바꿨는지, 지금 생활이 어떻게 달라졌는지 쓰세요.",
-      },
-      {
-        prompt:
-          "Give advice in Korean, 5 sentences or more, to someone who just moved to a new city. Use expressions like -는 게 좋겠어요 or -아/어 보세요.",
-        promptKr: "새 도시로 이사 온 사람에게 한국어로 5문장 이상 조언해 보세요. '-는 게 좋겠어요'나 '-아/어 보세요' 같은 표현을 쓰세요.",
-      },
-      {
-        prompt:
-          "Write 5 sentences or more in Korean about a memorable experience at work or school. Explain what happened and why it was memorable (-기 때문에 or -아/어서).",
-        promptKr: "직장이나 학교에서 기억에 남는 경험에 대해 한국어로 5문장 이상 써 보세요. 무슨 일이 있었는지, 왜 기억에 남는지('-기 때문에' 또는 '-아/어서') 쓰세요.",
-      },
-      {
-        prompt:
-          "Write 5 sentences or more in Korean about a part-time job you have had or would like to have. Say what the work was/is like and use -는 것 or -기 at least once.",
-        promptKr: "해 본 적이 있거나 해 보고 싶은 아르바이트에 대해 한국어로 5문장 이상 써 보세요. 일이 어떤지 쓰고, '-는 것'이나 '-기'를 한 번 이상 사용하세요.",
-      },
-      {
-        prompt:
-          "Write 5 sentences or more in Korean about a club or hobby group you joined. How did you start, and what do you do together? Use -게 되다 at least once.",
-        promptKr: "가입한 동호회나 모임에 대해 한국어로 5문장 이상 써 보세요. 어떻게 시작했는지, 같이 무엇을 하는지 쓰고 '-게 되다'를 한 번 이상 사용하세요.",
-      },
-      {
-        prompt:
-          "Write 5 sentences or more in Korean about an embarrassing mistake or mishap you had. What happened and how did you feel? Use -고 말다 or -아/어 버리다 at least once.",
-        promptKr: "창피했던 실수나 사고에 대해 한국어로 5문장 이상 써 보세요. 무슨 일이 있었는지, 기분이 어땠는지 쓰고 '-고 말다'나 '-아/어 버리다'를 한 번 이상 사용하세요.",
-      },
-      {
-        prompt:
-          "Write 5 sentences or more in Korean about how you met one of your closest friends. Use the past tense and -게 되다 or -아/어서 to explain how the friendship started.",
-        promptKr: "가장 친한 친구를 어떻게 만났는지 한국어로 5문장 이상 써 보세요. 과거 시제를 쓰고 '-게 되다'나 '-아/어서'로 친해진 계기를 설명하세요.",
-      },
-      {
-        prompt:
-          "Write 5 sentences or more in Korean about a shopping experience, good or bad. What did you buy, and were you satisfied? Use -기로 하다 or -았/었더니 at least once.",
-        promptKr: "좋았거나 나빴던 쇼핑 경험에 대해 한국어로 5문장 이상 써 보세요. 무엇을 샀는지, 만족했는지 쓰고 '-기로 하다'나 '-았/었더니'를 한 번 이상 사용하세요.",
-      },
-      {
-        prompt:
-          "Write 5 sentences or more in Korean about a time you were sick or injured. What happened, what did you do, and how long did it take to recover? Use -는 바람에 or -아/어서 at least once.",
-        promptKr: "아프거나 다쳤던 경험에 대해 한국어로 5문장 이상 써 보세요. 무슨 일이 있었는지, 어떻게 했는지, 회복하는 데 얼마나 걸렸는지 쓰고 '-는 바람에'나 '-아/어서'를 한 번 이상 사용하세요.",
-      },
-      {
-        prompt:
-          "Write 5 sentences or more in Korean about moving to a new place (a new apartment, city, or country). What was difficult and what has gotten better? Use -아/어지다 at least once.",
-        promptKr: "새로운 곳(집, 도시, 나라 등)으로 이사한 경험에 대해 한국어로 5문장 이상 써 보세요. 무엇이 힘들었는지, 무엇이 나아졌는지 쓰고 '-아/어지다'를 한 번 이상 사용하세요.",
-      },
-      {
-        prompt:
-          "Write 5 sentences or more in Korean describing your typical weekend routine. What do you usually do, and is it different in each season? Use -곤 하다 or -는 편이다 at least once.",
-        promptKr: "보통 주말에 무엇을 하는지 한국어로 5문장 이상 써 보세요. 계절마다 다른지도 쓰고 '-곤 하다'나 '-는 편이다'를 한 번 이상 사용하세요.",
-      },
-      {
-        prompt:
-          "Write 5 sentences or more in Korean about a piece of technology (phone, app, appliance) that has changed how you live. Explain how you used to do things and how it's different now. Use -기 전에는 and -고 나서 at least once.",
-        promptKr: "생활을 바꿔 놓은 기술(휴대폰, 앱, 가전제품 등)에 대해 한국어로 5문장 이상 써 보세요. 예전에는 어떻게 했는지, 지금은 어떻게 다른지 쓰고 '-기 전에는'과 '-고 나서'를 한 번 이상 사용하세요.",
-      },
-      {
-        prompt:
-          "Write 5 sentences or more in Korean about your favorite food and how it is usually made or where you like to eat it. Use -는 데다가 or -아/어야 at least once.",
-        promptKr: "가장 좋아하는 음식에 대해 한국어로 5문장 이상 써 보세요. 보통 어떻게 만드는지, 어디서 먹는 걸 좋아하는지 쓰고 '-는 데다가'나 '-아/어야'를 한 번 이상 사용하세요.",
-      },
-      {
-        prompt:
-          "Write 5 sentences or more in Korean about a family event you attended recently (a wedding, birthday, holiday gathering). What happened and how did you feel? Use -던데 or -더라고요 at least once.",
-        promptKr: "최근에 참석한 가족 행사(결혼식, 생일, 명절 모임 등)에 대해 한국어로 5문장 이상 써 보세요. 무슨 일이 있었는지, 기분이 어땠는지 쓰고 '-던데'나 '-더라고요'를 한 번 이상 사용하세요.",
-      },
-      {
-        prompt:
-          "Write 5 sentences or more in Korean about which season you like best and why. Compare it to another season using -보다.",
-        promptKr: "가장 좋아하는 계절과 그 이유에 대해 한국어로 5문장 이상 써 보세요. '-보다'를 사용해서 다른 계절과 비교하세요.",
-      },
-      {
-        prompt:
-          "Write 5 sentences or more in Korean about a plan you are preparing for (a trip, an exam, a move). What have you already done and what is left to do? Use -아/어 놓다 or -기로 하다 at least once.",
-        promptKr: "준비하고 있는 계획(여행, 시험, 이사 등)에 대해 한국어로 5문장 이상 써 보세요. 이미 한 일과 남은 일을 쓰고 '-아/어 놓다'나 '-기로 하다'를 한 번 이상 사용하세요.",
-      },
-      {
-        prompt:
-          "Give your opinion in Korean, 5 sentences or more, on whether it's better to live alone or with roommates/family. Use -는 게 낫다 or -다고 생각하다.",
-        promptKr: "혼자 사는 것과 다른 사람과 같이 사는 것 중 무엇이 더 나은지 한국어로 5문장 이상 의견을 써 보세요. '-는 게 낫다'나 '-다고 생각하다'를 사용하세요.",
-      },
-      {
-        prompt:
-          "Write 5 sentences or more in Korean about the last time you traveled somewhere unfamiliar alone. What was hard about traveling by yourself, and what did you enjoy? Use -는 대신에 at least once.",
-        promptKr: "혼자 낯선 곳을 여행했던 경험에 대해 한국어로 5문장 이상 써 보세요. 혼자 여행하면서 힘들었던 점과 좋았던 점을 쓰고 '-는 대신에'를 한 번 이상 사용하세요.",
-      },
-      {
-        prompt:
-          "Write 5 sentences or more in Korean about a time your plans changed suddenly. What was the original plan, what happened, and how did you adjust? Use -려고 했는데 at least once.",
-        promptKr: "갑자기 계획이 바뀌었던 경험에 대해 한국어로 5문장 이상 써 보세요. 원래 계획이 무엇이었는지, 무슨 일이 있었는지, 어떻게 대처했는지 쓰고 '-려고 했는데'를 한 번 이상 사용하세요.",
-      },
-      {
-        prompt:
-          "Write 5 sentences or more in Korean giving your opinion on whether social media is good or bad for relationships. Use -기도 하고 -기도 하다 at least once.",
-        promptKr: "소셜 미디어가 인간관계에 좋은지 나쁜지 한국어로 5문장 이상 의견을 써 보세요. '-기도 하고 -기도 하다'를 한 번 이상 사용하세요.",
-      },
-      {
-        prompt:
-          "Write 5 sentences or more in Korean about a skill you taught yourself or learned from a friend rather than in a class. How did you learn it? Use -아/어 가면서 or -는 대로 at least once.",
-        promptKr: "학원이나 학교가 아니라 스스로 배웠거나 친구에게 배운 기술에 대해 한국어로 5문장 이상 써 보세요. 어떻게 배웠는지 쓰고 '-아/어 가면서'나 '-는 대로'를 한 번 이상 사용하세요.",
-      },
-      {
-        prompt:
-          "Write 5 sentences or more in Korean about a time you had to wait for something important (test results, a reply, a delivery). How did you feel while waiting? Use -는 동안 at least once.",
-        promptKr: "중요한 것(시험 결과, 답장, 배송 등)을 기다렸던 경험에 대해 한국어로 5문장 이상 써 보세요. 기다리는 동안 기분이 어땠는지 쓰고 '-는 동안'을 한 번 이상 사용하세요.",
-      },
-      {
-        prompt:
-          "Write 5 sentences or more in Korean about a restaurant or café you would recommend to a friend. Describe the food, the atmosphere, and why you like it. Use -(으)ㄴ/는데 at least once.",
-        promptKr: "친구에게 추천하고 싶은 식당이나 카페에 대해 한국어로 5문장 이상 써 보세요. 음식, 분위기, 좋아하는 이유를 쓰고 '-(으)ㄴ/는데'를 한 번 이상 사용하세요.",
-      },
-      {
-        prompt:
-          "Write 5 sentences or more in Korean about how your daily routine changes depending on the weather or season. Use -(으)ㄹ 때마다 at least once.",
-        promptKr: "날씨나 계절에 따라 일상이 어떻게 바뀌는지 한국어로 5문장 이상 써 보세요. '-(으)ㄹ 때마다'를 한 번 이상 사용하세요.",
-      },
-      {
-        prompt:
-          "Write 5 sentences or more in Korean about a disagreement or misunderstanding you had with a friend or family member and how you solved it. Use -았/었지만 at least once.",
-        promptKr: "친구나 가족과 있었던 오해나 다툼과 그것을 어떻게 해결했는지 한국어로 5문장 이상 써 보세요. '-았/었지만'을 한 번 이상 사용하세요.",
-      },
-      {
-        prompt:
-          "Write 5 sentences or more in Korean about a goal you are currently working toward. What are you doing to reach it, and what obstacles have you faced? Use -기 위해서 at least once.",
-        promptKr: "지금 이루려고 노력하고 있는 목표에 대해 한국어로 5문장 이상 써 보세요. 목표를 위해 무엇을 하고 있는지, 어떤 어려움이 있었는지 쓰고 '-기 위해서'를 한 번 이상 사용하세요.",
-      },
-      {
-        prompt:
-          "Write 5 sentences or more in Korean about the neighborhood you currently live in. What do you like or dislike about it, and would you recommend it to others? Use -(으)ㄴ/는 편이다 at least once.",
-        promptKr: "지금 살고 있는 동네에 대해 한국어로 5문장 이상 써 보세요. 좋은 점과 아쉬운 점을 쓰고, 다른 사람에게 추천하고 싶은지 쓰고 '-(으)ㄴ/는 편이다'를 한 번 이상 사용하세요.",
-      },
-    ],
-    speakingPool: [
-      {
-        prompt:
-          "Answer out loud in Korean, 3 sentences or more: 지금까지 가 본 곳 중에서 어디가 제일 좋았어요? 왜요? (Of the places you've been, which was the best and why?)",
-        promptKr: "지금까지 가 본 곳 중에서 어디가 제일 좋았어요? 왜요? — 한국어로 3문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Answer out loud in Korean, 3 sentences or more: 스트레스를 받을 때 어떻게 풀어요? (How do you relieve stress?)",
-        promptKr: "스트레스를 받을 때 어떻게 풀어요? — 한국어로 3문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Answer out loud in Korean, 3 sentences or more: 요즘 배우고 있는 것이 있어요? 왜 배워요? (Is there something you're learning these days? Why?)",
-        promptKr: "요즘 배우고 있는 것이 있어요? 왜 배워요? — 한국어로 3문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Answer out loud in Korean, 3 sentences or more: 바꾸고 싶은 습관이 있어요? 왜 바꾸고 싶어요? (Is there a habit you want to change? Why?)",
-        promptKr: "바꾸고 싶은 습관이 있어요? 왜 바꾸고 싶어요? — 한국어로 3문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Answer out loud in Korean, 3 sentences or more: 최근에 본 영화나 책 중에서 추천하고 싶은 것이 있어요? (Of the movies or books you've seen recently, is there one you'd recommend?)",
-        promptKr: "최근에 본 영화나 책 중에서 추천하고 싶은 것이 있어요? — 한국어로 3문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Answer out loud in Korean, 3 sentences or more: 이상적인 주말은 어떤 모습이에요? (What does your ideal weekend look like?)",
-        promptKr: "이상적인 주말은 어떤 모습이에요? — 한국어로 3문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Answer out loud in Korean, 3 sentences or more: 아르바이트를 해 본 적이 있어요? 어땠어요? (Have you ever had a part-time job? How was it?)",
-        promptKr: "아르바이트를 해 본 적이 있어요? 어땠어요? — 한국어로 3문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Answer out loud in Korean, 3 sentences or more: 요즘 참여하고 있는 동호회나 모임이 있어요? (Is there a club or group you're currently part of?)",
-        promptKr: "요즘 참여하고 있는 동호회나 모임이 있어요? — 한국어로 3문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Answer out loud in Korean, 3 sentences or more: 최근에 실수했던 일이 있어요? 어떤 일이었어요? (Have you made a mistake recently? What happened?)",
-        promptKr: "최근에 실수했던 일이 있어요? 어떤 일이었어요? — 한국어로 3문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Answer out loud in Korean, 3 sentences or more: 가장 친한 친구를 어떻게 만났어요? (How did you meet your closest friend?)",
-        promptKr: "가장 친한 친구를 어떻게 만났어요? — 한국어로 3문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Answer out loud in Korean, 3 sentences or more: 최근에 산 물건 중에서 제일 만족스러운 게 뭐예요? (What was the most satisfying thing you've bought recently?)",
-        promptKr: "최근에 산 물건 중에서 제일 만족스러운 게 뭐예요? — 한국어로 3문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Answer out loud in Korean, 3 sentences or more: 아팠을 때 어떻게 회복했어요? (When you were sick, how did you recover?)",
-        promptKr: "아팠을 때 어떻게 회복했어요? — 한국어로 3문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Answer out loud in Korean, 3 sentences or more: 이사한 적이 있어요? 새 동네는 어땠어요? (Have you ever moved? What was the new neighborhood like?)",
-        promptKr: "이사한 적이 있어요? 새 동네는 어땠어요? — 한국어로 3문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Answer out loud in Korean, 3 sentences or more: 주말에 보통 몇 시에 일어나요? 뭐 하면서 시간을 보내요? (What time do you usually wake up on weekends, and how do you spend your time?)",
-        promptKr: "주말에 보통 몇 시에 일어나요? 뭐 하면서 시간을 보내요? — 한국어로 3문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Answer out loud in Korean, 3 sentences or more: 요즘 자주 쓰는 앱이 있어요? 왜 자주 써요? (Is there an app you use often these days? Why?)",
-        promptKr: "요즘 자주 쓰는 앱이 있어요? 왜 자주 써요? — 한국어로 3문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Answer out loud in Korean, 3 sentences or more: 제일 좋아하는 음식이 뭐예요? 어디서 자주 먹어요? (What's your favorite food? Where do you often eat it?)",
-        promptKr: "제일 좋아하는 음식이 뭐예요? 어디서 자주 먹어요? — 한국어로 3문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Answer out loud in Korean, 3 sentences or more: 최근에 가족 행사에 간 적이 있어요? 어땠어요? (Have you attended a family event recently? How was it?)",
-        promptKr: "최근에 가족 행사에 간 적이 있어요? 어땠어요? — 한국어로 3문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Answer out loud in Korean, 3 sentences or more: 어느 계절을 제일 좋아해요? 이유가 뭐예요? (Which season do you like best? Why?)",
-        promptKr: "어느 계절을 제일 좋아해요? 이유가 뭐예요? — 한국어로 3문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Answer out loud in Korean, 3 sentences or more: 요즘 준비하고 있는 일이 있어요? 어떻게 준비하고 있어요? (Is there something you're preparing for these days? How are you preparing?)",
-        promptKr: "요즘 준비하고 있는 일이 있어요? 어떻게 준비하고 있어요? — 한국어로 3문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Answer out loud in Korean, 3 sentences or more: 혼자 사는 것과 다른 사람과 같이 사는 것 중 뭐가 더 좋아요? 왜요? (Which is better, living alone or with others? Why?)",
-        promptKr: "혼자 사는 것과 다른 사람과 같이 사는 것 중 뭐가 더 좋아요? 왜요? — 한국어로 3문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Answer out loud in Korean, 3 sentences or more: 혼자 여행해 본 적이 있어요? 어땠어요? (Have you traveled alone before? How was it?)",
-        promptKr: "혼자 여행해 본 적이 있어요? 어땠어요? — 한국어로 3문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Answer out loud in Korean, 3 sentences or more: 계획이 갑자기 바뀐 적이 있어요? 무슨 일이었어요? (Have your plans suddenly changed before? What happened?)",
-        promptKr: "계획이 갑자기 바뀐 적이 있어요? 무슨 일이었어요? — 한국어로 3문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Answer out loud in Korean, 3 sentences or more: 소셜 미디어가 인간관계에 도움이 된다고 생각해요? (Do you think social media helps relationships?)",
-        promptKr: "소셜 미디어가 인간관계에 도움이 된다고 생각해요? — 한국어로 3문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Answer out loud in Korean, 3 sentences or more: 학교나 학원이 아니라 스스로 배운 기술이 있어요? (Is there a skill you taught yourself, not in school or an academy?)",
-        promptKr: "학교나 학원이 아니라 스스로 배운 기술이 있어요? — 한국어로 3문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Answer out loud in Korean, 3 sentences or more: 중요한 결과를 기다렸던 적이 있어요? 기분이 어땠어요? (Have you waited for important results before? How did you feel?)",
-        promptKr: "중요한 결과를 기다렸던 적이 있어요? 기분이 어땠어요? — 한국어로 3문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Answer out loud in Korean, 3 sentences or more: 친구에게 추천하고 싶은 식당이나 카페가 있어요? (Is there a restaurant or café you'd recommend to a friend?)",
-        promptKr: "친구에게 추천하고 싶은 식당이나 카페가 있어요? — 한국어로 3문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Answer out loud in Korean, 3 sentences or more: 날씨에 따라 일상이 많이 바뀌어요? 어떻게 바뀌어요? (Does your daily life change a lot depending on the weather? How?)",
-        promptKr: "날씨에 따라 일상이 많이 바뀌어요? 어떻게 바뀌어요? — 한국어로 3문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Answer out loud in Korean, 3 sentences or more: 가족이나 친구와 오해가 생긴 적이 있어요? 어떻게 풀었어요? (Have you had a misunderstanding with family or friends? How did you resolve it?)",
-        promptKr: "가족이나 친구와 오해가 생긴 적이 있어요? 어떻게 풀었어요? — 한국어로 3문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Answer out loud in Korean, 3 sentences or more: 요즘 이루려고 노력하는 목표가 있어요? (Is there a goal you're currently working toward?)",
-        promptKr: "요즘 이루려고 노력하는 목표가 있어요? — 한국어로 3문장 이상 말해 보세요.",
-      },
-    ],
   },
 
   // ──────────────────────────────────────────────────────────── B1 → B2
@@ -2146,6 +1550,7 @@ export const PROMOTION_TESTS: PromotionTestSpec[] = [
       // NEW_SPEAKING
     ],
     readingCount: 2,
+    writingCount: 5,
     readingPool: [
       {
         passage:
@@ -2688,310 +2093,6 @@ export const PROMOTION_TESTS: PromotionTestSpec[] = [
         ],
       },
     ],
-    writingPool: [
-      {
-        prompt:
-          "In Korean, 6 sentences or more: describe a piece of news you heard recently and your opinion about it. Use indirect speech at least once (-다고 하다).",
-        promptKr: "최근에 들은 소식 하나를 소개하고 그것에 대한 생각을 한국어로 6문장 이상 써 보세요. 간접화법(-다고 하다)을 한 번 이상 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 6 sentences or more: write a review of a movie, book, or restaurant. Say what you expected, how it actually was, and whether you would recommend it.",
-        promptKr: "영화, 책, 식당 중 하나의 후기를 한국어로 6문장 이상 써 보세요. 기대했던 것, 실제 경험, 추천 여부를 포함하세요.",
-      },
-      {
-        prompt:
-          "In Korean, 6 sentences or more: a friend wants to start learning Korean. Give them advice — what to do, what to avoid, and why (-는 게 좋다, -지 않도록).",
-        promptKr: "한국어를 배우고 싶어 하는 친구에게 조언하는 글을 6문장 이상 써 보세요. 무엇을 하면 좋은지, 무엇을 피해야 하는지 이유와 함께 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 6 sentences or more: describe a big decision you made (a job, a move, a purchase) and how you felt before and after. Use -을수록 at least once.",
-        promptKr: "직업, 이사, 큰 구매 등 인생에서 내린 중요한 결정 하나를 소개하고, 그 전후에 느낀 감정을 한국어로 6문장 이상 써 보세요. -을수록을 한 번 이상 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 6 sentences or more: write about a rule or system change you've noticed recently (at work, in your building, or in your city) and give your opinion on whether it's a good idea.",
-        promptKr: "최근에 알게 된 규칙이나 제도의 변화(직장, 아파트, 도시 등)를 소개하고 그것에 대한 자신의 생각을 한국어로 6문장 이상 써 보세요.",
-      },
-      {
-        prompt:
-          "In Korean, 6 sentences or more: a friend is thinking about buying or adopting a pet. Give them advice about what to consider before deciding, using -는 게 좋다 and -도록 at least once each.",
-        promptKr: "반려동물을 키울지 고민하는 친구에게 결정하기 전에 고려할 점을 조언하는 글을 6문장 이상 써 보세요. -는 게 좋다와 -도록을 각각 한 번 이상 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 6 sentences or more: describe a habit you've been trying to build or break recently. Explain why you started, how it's going, and how you feel about it (-게 되다 at least once).",
-        promptKr: "최근에 만들거나 고치려고 노력 중인 습관을 소개하는 글을 한국어로 6문장 이상 써 보세요. 왜 시작했는지, 어떻게 되고 있는지, 그것에 대해 어떻게 느끼는지 쓰세요. -게 되다를 한 번 이상 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 6 sentences or more: write about a friendship that has changed over time (closer, more distant, or renewed). Describe what happened and how you feel about it now.",
-        promptKr: "시간이 지나면서 달라진 우정(더 가까워지거나, 멀어지거나, 다시 가까워진 관계)에 대해 한국어로 6문장 이상 써 보세요. 무슨 일이 있었는지, 지금은 어떻게 느끼는지 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 6 sentences or more: describe your ideal work-life balance and compare it to your current situation. Use -는 반면에 at least once.",
-        promptKr: "자신이 생각하는 이상적인 일과 삶의 균형을 소개하고 지금 상황과 비교하는 글을 한국어로 6문장 이상 써 보세요. -는 반면에를 한 번 이상 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 6 sentences or more: write about a trip you took that didn't go as planned. What went wrong, how you handled it, and what you learned.",
-        promptKr: "계획대로 되지 않았던 여행에 대해 한국어로 6문장 이상 써 보세요. 무엇이 잘못됐는지, 어떻게 해결했는지, 무엇을 배웠는지 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 6 sentences or more: describe how your relationship with money has changed since you started earning your own income. Use -기 전에 and -기 시작하다 at least once each.",
-        promptKr: "스스로 돈을 벌기 시작한 후로 돈에 대한 생각이 어떻게 바뀌었는지 한국어로 6문장 이상 써 보세요. -기 전에와 -기 시작하다를 각각 한 번 이상 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 6 sentences or more: a younger family member is choosing between two career paths. Give them advice on how to decide, using -는 게 좋다 at least once.",
-        promptKr: "진로를 두 가지 중에서 고민하는 어린 가족에게 결정하는 방법을 조언하는 글을 한국어로 6문장 이상 써 보세요. -는 게 좋다를 한 번 이상 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 6 sentences or more: describe a piece of technology (app, device, or service) that changed the way you live or work. Explain how life was before and after.",
-        promptKr: "생활이나 일하는 방식을 바꿔 놓은 기술(앱, 기기, 서비스 등)을 소개하는 글을 한국어로 6문장 이상 써 보세요. 그것을 쓰기 전과 후가 어떻게 달랐는지 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 6 sentences or more: write about a new hobby you started this year. What made you start it, and how has it affected your daily life?",
-        promptKr: "올해 새로 시작한 취미에 대해 한국어로 6문장 이상 써 보세요. 왜 시작하게 됐는지, 일상생활에 어떤 영향을 줬는지 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 6 sentences or more: describe moving to a new city or neighborhood. What was hardest to adjust to, and what do you like about it now? Use -는 데 (시간이) 걸리다 at least once.",
-        promptKr: "새로운 도시나 동네로 이사한 경험을 한국어로 6문장 이상 써 보세요. 적응하는 데 무엇이 가장 힘들었는지, 지금은 무엇이 좋은지 쓰세요. -는 데 (시간이) 걸리다를 한 번 이상 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 6 sentences or more: write about a health routine you keep (exercise, sleep, diet) and how it affects your energy and mood. Use -을수록 at least once.",
-        promptKr: "지키고 있는 건강 습관(운동, 수면, 식단 등)과 그것이 에너지와 기분에 미치는 영향을 한국어로 6문장 이상 써 보세요. -을수록을 한 번 이상 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 6 sentences or more: describe a disagreement you had with a family member and how it was resolved. Use indirect speech (-다고 하다) at least once.",
-        promptKr: "가족과 있었던 의견 차이와 그것이 어떻게 해결됐는지 한국어로 6문장 이상 써 보세요. 간접화법(-다고 하다)을 한 번 이상 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 6 sentences or more: write about a skill you are learning outside of work or school (a language, an instrument, a sport). Describe your progress and challenges.",
-        promptKr: "일이나 학교와 상관없이 배우고 있는 기술(언어, 악기, 운동 등)에 대해 한국어로 6문장 이상 써 보세요. 발전하고 있는 점과 어려운 점을 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 6 sentences or more: describe a personal goal you set for yourself this year and how you're tracking your progress toward it.",
-        promptKr: "올해 스스로 세운 목표와 그 목표를 향해 어떻게 나아가고 있는지 한국어로 6문장 이상 써 보세요.",
-      },
-      {
-        prompt:
-          "In Korean, 6 sentences or more: a friend is considering switching careers later in life. Give them advice about what to think through before deciding, using -도록 at least once.",
-        promptKr: "나이가 들어서 직업을 바꾸는 것을 고민하는 친구에게 결정하기 전에 생각해 볼 점을 조언하는 글을 한국어로 6문장 이상 써 보세요. -도록을 한 번 이상 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 6 sentences or more: write about how you manage your screen time or social media use. What changes have you made, and why?",
-        promptKr: "스마트폰이나 소셜 미디어 사용 시간을 어떻게 관리하고 있는지 한국어로 6문장 이상 써 보세요. 어떤 변화를 시도했는지, 왜 그랬는지 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 6 sentences or more: describe a mentor, teacher, or coworker who influenced how you think about your career. Explain what they taught you.",
-        promptKr: "직업에 대한 생각에 영향을 준 멘토, 선생님, 또는 동료를 소개하는 글을 한국어로 6문장 이상 써 보세요. 그 사람에게서 무엇을 배웠는지 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 6 sentences or more: write about a time you had to balance studying (or working) with taking care of your health. What did you sacrifice, and was it worth it?",
-        promptKr: "공부나 일과 건강 관리를 동시에 해야 했던 경험을 한국어로 6문장 이상 써 보세요. 무엇을 포기해야 했는지, 그럴 만한 가치가 있었는지 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 6 sentences or more: describe how your idea of an ideal travel destination has changed as you've gotten older. Use -았/었을 때 at least once.",
-        promptKr: "나이가 들면서 이상적으로 생각하는 여행지가 어떻게 바뀌었는지 한국어로 6문장 이상 써 보세요. -았/었을 때를 한 번 이상 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 6 sentences or more: write about a time you had to make a compromise in a close relationship (romantic, family, or friendship). What was the situation and outcome?",
-        promptKr: "가까운 관계(연인, 가족, 친구)에서 타협해야 했던 경험을 한국어로 6문장 이상 써 보세요. 어떤 상황이었는지, 결과는 어땠는지 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 6 sentences or more: describe your approach to saving or budgeting money. What method do you use, and how well is it working?",
-        promptKr: "돈을 저축하거나 예산을 관리하는 자신만의 방법을 한국어로 6문장 이상 써 보세요. 어떤 방법을 쓰는지, 효과가 있는지 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 6 sentences or more: write about returning to education as an adult (a class, a certification, a degree). Why did you decide to do it, and how has it gone?",
-        promptKr: "어른이 되어서 다시 공부를 시작한 경험(수업, 자격증, 학위 등)에 대해 한국어로 6문장 이상 써 보세요. 왜 결심했는지, 어떻게 진행되고 있는지 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 6 sentences or more: describe how technology has changed the way your family stays in touch, comparing now to when you were younger.",
-        promptKr: "기술이 가족과 연락하는 방식을 어떻게 바꿔 놓았는지, 어렸을 때와 비교해서 한국어로 6문장 이상 써 보세요.",
-      },
-      {
-        prompt:
-          "In Korean, 6 sentences or more: write about a personal growth moment — a time you realized you needed to change something about yourself. What triggered it, and what did you do?",
-        promptKr: "자기 자신에 대해 무언가 바꿔야 한다고 깨달은 순간에 대해 한국어로 6문장 이상 써 보세요. 무엇이 계기가 됐는지, 어떻게 했는지 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 6 sentences or more: describe a friend or family member you've grown apart from due to distance or busy schedules, and how you feel about it.",
-        promptKr: "거리나 바쁜 일정 때문에 멀어진 친구나 가족에 대해 한국어로 6문장 이상 써 보세요. 그것에 대해 어떻게 느끼는지 쓰세요.",
-      },
-    ],
-    speakingPool: [
-      {
-        prompt:
-          "Speak in Korean, 4 sentences or more: 최근에 본 영화나 드라마를 소개해 주세요. 줄거리와 감상을 말해 보세요. (Introduce a movie/drama you watched recently — plot and impressions.)",
-        promptKr: "최근에 본 영화나 드라마를 소개해 주세요. 줄거리와 감상을 한국어로 4문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 4 sentences or more: 살면서 가장 기억에 남는 일은 뭐예요? 언제, 무슨 일이 있었는지 말해 보세요. (Your most memorable experience — when and what happened.)",
-        promptKr: "살면서 가장 기억에 남는 일은 뭐예요? 언제, 무슨 일이 있었는지 한국어로 4문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 4 sentences or more: 도시 생활과 시골 생활 중 뭐가 더 좋다고 생각해요? 이유를 들어 말해 보세요. (City vs country life — which is better and why?)",
-        promptKr: "도시 생활과 시골 생활 중 뭐가 더 좋다고 생각해요? 이유를 들어 한국어로 4문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 4 sentences or more: 최근에 중고 물건을 사거나 판 경험이 있어요? 어떤 물건이었는지, 어땠는지 말해 보세요. (A recent experience buying or selling secondhand — what it was and how it went.)",
-        promptKr: "최근에 중고 물건을 사거나 판 경험이 있어요? 어떤 물건이었는지, 어땠는지 한국어로 4문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 4 sentences or more: 지금 하는 일이나 공부를 선택한 이유가 뭐예요? 만족하고 있어요? (Why did you choose your current job or field of study, and are you satisfied?)",
-        promptKr: "지금 하는 일이나 공부를 선택한 이유가 뭐예요? 만족하고 있는지 한국어로 4문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 4 sentences or more: 전기차와 일반 자동차 중 어느 쪽이 더 낫다고 생각해요? 이유를 들어 말해 보세요. (Electric cars vs. regular cars — which is better and why?)",
-        promptKr: "전기차와 일반 자동차 중 어느 쪽이 더 낫다고 생각해요? 이유를 들어 한국어로 4문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 4 sentences or more: 최근에 고치려고 노력한 습관이 있어요? 어떻게 되고 있는지 말해 보세요. (A habit you've recently tried to change — how is it going?)",
-        promptKr: "최근에 고치려고 노력한 습관이 있어요? 어떻게 되고 있는지 한국어로 4문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 4 sentences or more: 일과 삶의 균형을 어떻게 맞추고 있어요? 어려운 점이 있나요? (How do you balance work and life? Any challenges?)",
-        promptKr: "일과 삶의 균형을 어떻게 맞추고 있어요? 어려운 점이 있는지 한국어로 4문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 4 sentences or more: 계획대로 되지 않았던 여행 경험이 있어요? 무슨 일이 있었는지 말해 보세요. (A trip that didn't go as planned — what happened?)",
-        promptKr: "계획대로 되지 않았던 여행 경험이 있어요? 무슨 일이 있었는지 한국어로 4문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 4 sentences or more: 돈을 저축하는 자신만의 방법이 있어요? 소개해 주세요. (Do you have your own way of saving money? Share it.)",
-        promptKr: "돈을 저축하는 자신만의 방법이 있어요? 한국어로 4문장 이상 소개해 주세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 4 sentences or more: 스마트폰이나 소셜 미디어 사용 시간을 어떻게 관리하고 있어요? (How do you manage your phone or social media use?)",
-        promptKr: "스마트폰이나 소셜 미디어 사용 시간을 어떻게 관리하고 있는지 한국어로 4문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 4 sentences or more: 새로 시작한 취미가 있어요? 왜 시작했고 어때요? (A hobby you recently started — why, and how is it going?)",
-        promptKr: "새로 시작한 취미가 있어요? 왜 시작했고 어떤지 한국어로 4문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 4 sentences or more: 이사한 경험이 있어요? 새로운 곳에 적응하는 게 어땠는지 말해 보세요. (An experience moving — what was it like adjusting to a new place?)",
-        promptKr: "이사한 경험이 있어요? 새로운 곳에 적응하는 게 어땠는지 한국어로 4문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 4 sentences or more: 건강을 위해 지키고 있는 습관이 있어요? 어떤 효과가 있는지 말해 보세요. (A health habit you keep — what effect does it have?)",
-        promptKr: "건강을 위해 지키고 있는 습관이 있어요? 어떤 효과가 있는지 한국어로 4문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 4 sentences or more: 가족과 의견 차이가 있었던 경험이 있어요? 어떻게 해결했는지 말해 보세요. (A disagreement with family — how did you resolve it?)",
-        promptKr: "가족과 의견 차이가 있었던 경험이 있어요? 어떻게 해결했는지 한국어로 4문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 4 sentences or more: 일이나 학교와 상관없이 배우고 있는 기술이 있어요? 어떻게 하고 있는지 말해 보세요. (A skill you're learning outside work/school — how's it going?)",
-        promptKr: "일이나 학교와 상관없이 배우고 있는 기술이 있어요? 어떻게 하고 있는지 한국어로 4문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 4 sentences or more: 올해 세운 목표가 있어요? 얼마나 잘 진행되고 있는지 말해 보세요. (A goal you set this year — how well is it going?)",
-        promptKr: "올해 세운 목표가 있어요? 얼마나 잘 진행되고 있는지 한국어로 4문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 4 sentences or more: 진로를 바꾸는 것을 고민해 본 적 있어요? 어떤 생각이 들었어요? (Have you ever considered changing careers? What did you think?)",
-        promptKr: "진로를 바꾸는 것을 고민해 본 적 있어요? 어떤 생각이 들었는지 한국어로 4문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 4 sentences or more: 삶에 영향을 준 기술이나 앱이 있어요? 어떻게 바뀌었는지 말해 보세요. (Technology or an app that has influenced your life — how did things change?)",
-        promptKr: "삶에 영향을 준 기술이나 앱이 있어요? 어떻게 바뀌었는지 한국어로 4문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 4 sentences or more: 나에게 영향을 준 선생님이나 동료가 있어요? 무엇을 배웠는지 말해 보세요. (A teacher or coworker who influenced you — what did you learn?)",
-        promptKr: "나에게 영향을 준 선생님이나 동료가 있어요? 무엇을 배웠는지 한국어로 4문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 4 sentences or more: 나이가 들면서 여행 취향이 어떻게 바뀌었어요? (How has your travel taste changed as you've gotten older?)",
-        promptKr: "나이가 들면서 여행 취향이 어떻게 바뀌었는지 한국어로 4문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 4 sentences or more: 가까운 사람과 타협해야 했던 경험이 있어요? 어떤 상황이었는지 말해 보세요. (A time you had to compromise with someone close — what was the situation?)",
-        promptKr: "가까운 사람과 타협해야 했던 경험이 있어요? 어떤 상황이었는지 한국어로 4문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 4 sentences or more: 어른이 되어서 다시 공부를 시작한 적 있어요? 왜 그랬는지 말해 보세요. (Have you gone back to studying as an adult? Why?)",
-        promptKr: "어른이 되어서 다시 공부를 시작한 적 있어요? 왜 그랬는지 한국어로 4문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 4 sentences or more: 가족과 연락하는 방식이 예전과 비교해서 어떻게 달라졌어요? (How has the way you keep in touch with family changed compared to before?)",
-        promptKr: "가족과 연락하는 방식이 예전과 비교해서 어떻게 달라졌는지 한국어로 4문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 4 sentences or more: 자기 자신을 바꿔야겠다고 느낀 순간이 있어요? 무슨 일이 있었는지 말해 보세요. (A moment you felt you needed to change yourself — what happened?)",
-        promptKr: "자기 자신을 바꿔야겠다고 느낀 순간이 있어요? 무슨 일이 있었는지 한국어로 4문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 4 sentences or more: 바쁜 일정 때문에 멀어진 친구가 있어요? 그것에 대해 어떻게 느껴요? (A friend you've grown apart from due to a busy schedule — how do you feel about it?)",
-        promptKr: "바쁜 일정 때문에 멀어진 친구가 있어요? 그것에 대해 어떻게 느끼는지 한국어로 4문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 4 sentences or more: 스스로 돈을 벌기 시작한 후로 돈에 대한 생각이 어떻게 바뀌었어요? (How has your view of money changed since you started earning your own?)",
-        promptKr: "스스로 돈을 벌기 시작한 후로 돈에 대한 생각이 어떻게 바뀌었는지 한국어로 4문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 4 sentences or more: 공부나 일과 건강 관리를 동시에 하기 힘들었던 적 있어요? 어떻게 했는지 말해 보세요. (A time it was hard to balance study/work with health — how did you manage?)",
-        promptKr: "공부나 일과 건강 관리를 동시에 하기 힘들었던 적 있어요? 어떻게 했는지 한국어로 4문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 4 sentences or more: 시간이 지나면서 더 가까워지거나 멀어진 친구 관계가 있어요? 이야기해 주세요. (A friendship that has grown closer or more distant over time — tell me about it.)",
-        promptKr: "시간이 지나면서 더 가까워지거나 멀어진 친구 관계가 있어요? 한국어로 4문장 이상 이야기해 주세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 4 sentences or more: 후배나 어린 가족에게 진로에 대해 조언한다면 뭐라고 말하고 싶어요? (If you were to advise a junior or younger family member about career choices, what would you say?)",
-        promptKr: "후배나 어린 가족에게 진로에 대해 조언한다면 뭐라고 말하고 싶은지 한국어로 4문장 이상 말해 보세요.",
-      },
-    ],
   },
 
   // ──────────────────────────────────────────────────────────── B2 → C1
@@ -3104,6 +2205,7 @@ export const PROMOTION_TESTS: PromotionTestSpec[] = [
       { kr: "팟캐스트 광고 시장이 빠르게 성장하면서 전통적인 라디오 광고 매출은 계속 줄고 있습니다.", question: "What is happening as the podcast ad market grows?", options: ["traditional radio ad revenue continues to decline", "traditional radio ad revenue is also growing", "podcast platforms are shutting down", "advertisers are avoiding audio ads entirely"], answer: "traditional radio ad revenue continues to decline" },
     ],
     readingCount: 2,
+    writingCount: 5,
     readingPool: [
       {
         passage:
@@ -3719,310 +2821,6 @@ export const PROMOTION_TESTS: PromotionTestSpec[] = [
         ],
       },
     ],
-    writingPool: [
-      {
-        prompt:
-          "In Korean, 8 sentences or more: 'SNS가 우리 사회에 미치는 영향' — discuss both positive and negative sides, then state your own position with reasons.",
-        promptKr: "'SNS가 우리 사회에 미치는 영향'에 대해 긍정적 측면과 부정적 측면을 모두 논하고, 자신의 입장을 이유와 함께 한국어로 8문장 이상 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 8 sentences or more: some cities limit cars in the city center to reduce pollution. Do you agree or disagree? Present your argument with at least two reasons and one counterargument you reject.",
-        promptKr: "일부 도시는 오염을 줄이기 위해 도심 차량을 제한합니다. 찬성인가요, 반대인가요? 근거 두 가지 이상과, 반대 의견에 대한 반박 하나를 포함해 한국어로 8문장 이상 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 8 sentences or more: describe a social change you have observed in recent years (work culture, family, technology…), analyze its causes, and predict where it will lead.",
-        promptKr: "최근 몇 년간 관찰한 사회 변화(직장 문화, 가족, 기술 등) 하나를 골라 원인을 분석하고 앞으로의 방향을 예측하는 글을 한국어로 8문장 이상 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 8 sentences or more: some argue that writing paid reviews without disclosing payment should be strongly punished by law. Do you agree or disagree? Present at least two reasons and one counterargument you reject.",
-        promptKr: "대가를 받고 쓴 후기를 밝히지 않는 행위를 법으로 강하게 처벌해야 한다는 주장이 있습니다. 찬성인가요, 반대인가요? 근거 두 가지 이상과 반대 의견에 대한 반박 하나를 포함해 한국어로 8문장 이상 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 8 sentences or more: 'the rapid growth of the pet industry' — discuss both positive and negative sides, then state your own position with reasons.",
-        promptKr: "'반려동물 산업의 급성장'에 대해 긍정적 측면과 부정적 측면을 모두 논하고, 자신의 입장을 이유와 함께 한국어로 8문장 이상 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 8 sentences or more: propose one policy to address the country's declining birth rate, and explain why you think it would be effective, considering possible obstacles.",
-        promptKr: "저출산 문제를 해결하기 위한 정책을 하나 제안하고, 예상되는 어려움을 고려하여 그 정책이 효과적인 이유를 한국어로 8문장 이상 설명하세요.",
-      },
-      {
-        prompt:
-          "In Korean, 8 sentences or more: some companies are requiring employees to return to the office full-time, ending remote work options. Do you agree or disagree? Present at least two reasons and one counterargument you reject.",
-        promptKr: "일부 기업들이 재택근무를 폐지하고 전면 출근을 요구하고 있습니다. 찬성인가요, 반대인가요? 근거 두 가지 이상과 반대 의견에 대한 반박 하나를 포함해 한국어로 8문장 이상 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 8 sentences or more: some argue that using AI to screen job applicants' resumes makes hiring fairer and more efficient, while others say it introduces new biases. State your position with at least two reasons and one counterargument you reject.",
-        promptKr: "AI로 입사 지원자의 이력서를 심사하면 채용이 더 공정하고 효율적이라는 주장이 있는 반면, 새로운 편향을 만든다는 반론도 있습니다. 근거 두 가지 이상과 반대 의견에 대한 반박 하나를 포함해 자신의 입장을 한국어로 8문장 이상 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 8 sentences or more: 'overtourism in popular cities' — discuss both the economic benefits and the social/environmental costs, then state your own position with reasons.",
-        promptKr: "'인기 도시의 과잉 관광' 문제에 대해 경제적 이점과 사회·환경적 비용을 모두 논하고, 자신의 입장을 이유와 함께 한국어로 8문장 이상 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 8 sentences or more: some cities are imposing strict limits on the number of short-term vacation rentals to protect housing affordability for residents. Do you agree or disagree? Present at least two reasons and one counterargument you reject.",
-        promptKr: "일부 도시는 거주민의 주거비 부담을 줄이기 위해 단기 숙박 임대의 수를 엄격히 제한하고 있습니다. 찬성인가요, 반대인가요? 근거 두 가지 이상과 반대 의견에 대한 반박 하나를 포함해 한국어로 8문장 이상 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 8 sentences or more: some argue governments should build large amounts of public housing to control rising rents, while others say this discourages private investment. State your position with at least two reasons and one counterargument you reject.",
-        promptKr: "정부가 임대료 상승을 억제하기 위해 공공주택을 대규모로 공급해야 한다는 주장이 있는 반면, 이것이 민간 투자를 위축시킨다는 반론도 있습니다. 근거 두 가지 이상과 반대 의견에 대한 반박 하나를 포함해 자신의 입장을 한국어로 8문장 이상 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 8 sentences or more: 'the influence of social media on political opinion' — discuss both positive and negative sides, then state your own position with reasons.",
-        promptKr: "'소셜 미디어가 정치적 의견에 미치는 영향'에 대해 긍정적 측면과 부정적 측면을 모두 논하고, 자신의 입장을 이유와 함께 한국어로 8문장 이상 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 8 sentences or more: some argue platforms should verify users' real identities to reduce online harassment, while others say this threatens privacy and free expression. State your position with at least two reasons and one counterargument you reject.",
-        promptKr: "온라인 괴롭힘을 줄이기 위해 플랫폼이 사용자의 실명을 확인해야 한다는 주장이 있는 반면, 이것이 사생활과 표현의 자유를 위협한다는 반론도 있습니다. 근거 두 가지 이상과 반대 의견에 대한 반박 하나를 포함해 자신의 입장을 한국어로 8문장 이상 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 8 sentences or more: some cities are redesigning neighborhoods so that daily necessities are reachable within a 15-minute walk, reducing car dependence. Do you agree this is a good direction for urban planning? Present at least two reasons and one counterargument you reject.",
-        promptKr: "일부 도시는 자동차 의존을 줄이기 위해 도보 15분 안에 생활 필수시설을 이용할 수 있도록 동네를 재설계하고 있습니다. 이것이 도시 계획의 바람직한 방향이라고 생각하나요? 근거 두 가지 이상과 반대 의견에 대한 반박 하나를 포함해 한국어로 8문장 이상 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 8 sentences or more: propose one reform to the country's education system, and explain why you think it would be effective, considering possible obstacles.",
-        promptKr: "국가 교육 제도의 개혁안을 하나 제안하고, 예상되는 어려움을 고려하여 그 방안이 효과적인 이유를 한국어로 8문장 이상 설명하세요.",
-      },
-      {
-        prompt:
-          "In Korean, 8 sentences or more: some argue standardized exams should be replaced with project-based assessment in schools, while others say this makes evaluation less fair and consistent. State your position with at least two reasons and one counterargument you reject.",
-        promptKr: "학교에서 표준화된 시험을 프로젝트 기반 평가로 대체해야 한다는 주장이 있는 반면, 이것이 평가를 덜 공정하고 일관성 없게 만든다는 반론도 있습니다. 근거 두 가지 이상과 반대 의견에 대한 반박 하나를 포함해 자신의 입장을 한국어로 8문장 이상 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 8 sentences or more: 'the rise of preventive healthcare through wearable devices' — discuss both positive and negative sides, then state your own position with reasons.",
-        promptKr: "'웨어러블 기기를 통한 예방적 건강 관리의 확산'에 대해 긍정적 측면과 부정적 측면을 모두 논하고, 자신의 입장을 이유와 함께 한국어로 8문장 이상 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 8 sentences or more: some argue healthcare should be entirely funded and managed by the government, while others say private competition improves quality and efficiency. State your position with at least two reasons and one counterargument you reject.",
-        promptKr: "의료를 전적으로 정부가 재정 지원하고 관리해야 한다는 주장이 있는 반면, 민간 경쟁이 질과 효율성을 높인다는 반론도 있습니다. 근거 두 가지 이상과 반대 의견에 대한 반박 하나를 포함해 자신의 입장을 한국어로 8문장 이상 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 8 sentences or more: some argue individuals bear the greater responsibility for reducing plastic waste, while others say corporations and governments must lead the change. State your position with at least two reasons and one counterargument you reject.",
-        promptKr: "플라스틱 쓰레기를 줄이는 데 개인의 책임이 더 크다는 주장이 있는 반면, 기업과 정부가 변화를 주도해야 한다는 반론도 있습니다. 근거 두 가지 이상과 반대 의견에 대한 반박 하나를 포함해 자신의 입장을 한국어로 8문장 이상 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 8 sentences or more: propose one policy to reduce a city's carbon emissions, and explain why you think it would be effective, considering possible obstacles.",
-        promptKr: "도시의 탄소 배출을 줄이기 위한 정책을 하나 제안하고, 예상되는 어려움을 고려하여 그 정책이 효과적인 이유를 한국어로 8문장 이상 설명하세요.",
-      },
-      {
-        prompt:
-          "In Korean, 8 sentences or more: 'fast fashion and consumer culture' — discuss both the economic appeal and the environmental/social costs, then state your own position with reasons.",
-        promptKr: "'패스트 패션과 소비 문화'에 대해 경제적 매력과 환경·사회적 비용을 모두 논하고, 자신의 입장을 이유와 함께 한국어로 8문장 이상 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 8 sentences or more: some argue advertising aimed at children should be banned to curb excessive consumerism, while others say this restricts free enterprise and parental responsibility. State your position with at least two reasons and one counterargument you reject.",
-        promptKr: "과도한 소비주의를 억제하기 위해 아동 대상 광고를 금지해야 한다는 주장이 있는 반면, 이것이 자유로운 기업 활동과 부모의 책임을 제한한다는 반론도 있습니다. 근거 두 가지 이상과 반대 의견에 대한 반박 하나를 포함해 자신의 입장을 한국어로 8문장 이상 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 8 sentences or more: describe a lifestyle trend you have observed in recent years (minimalism, digital detox, solo living…), analyze its causes, and predict where it will lead.",
-        promptKr: "최근 몇 년간 관찰한 라이프스타일 트렌드(미니멀리즘, 디지털 디톡스, 1인 가구 등) 하나를 골라 원인을 분석하고 앞으로의 방향을 예측하는 글을 한국어로 8문장 이상 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 8 sentences or more: some argue remote work widens the gap between white-collar and service workers, deepening social inequality. Do you agree or disagree? Present at least two reasons and one counterargument you reject.",
-        promptKr: "재택근무가 사무직과 서비스직 사이의 격차를 벌려 사회 불평등을 심화시킨다는 주장이 있습니다. 찬성인가요, 반대인가요? 근거 두 가지 이상과 반대 의견에 대한 반박 하나를 포함해 한국어로 8문장 이상 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 8 sentences or more: some argue AI interviewing tools that analyze facial expressions and tone of voice should be banned in hiring. Do you agree or disagree? Present at least two reasons and one counterargument you reject.",
-        promptKr: "표정과 목소리 톤을 분석하는 AI 면접 도구를 채용 과정에서 금지해야 한다는 주장이 있습니다. 찬성인가요, 반대인가요? 근거 두 가지 이상과 반대 의견에 대한 반박 하나를 포함해 한국어로 8문장 이상 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 8 sentences or more: 'the effects of mass tourism on local communities' — discuss both positive and negative sides, then state your own position with reasons.",
-        promptKr: "'대규모 관광이 지역 사회에 미치는 영향'에 대해 긍정적 측면과 부정적 측면을 모두 논하고, 자신의 입장을 이유와 함께 한국어로 8문장 이상 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 8 sentences or more: some argue cities should prioritize green spaces and parks over new commercial development in urban planning. Do you agree or disagree? Present at least two reasons and one counterargument you reject.",
-        promptKr: "도시 계획에서 새로운 상업 개발보다 녹지와 공원을 우선시해야 한다는 주장이 있습니다. 찬성인가요, 반대인가요? 근거 두 가지 이상과 반대 의견에 대한 반박 하나를 포함해 한국어로 8문장 이상 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 8 sentences or more: some argue universities should shift focus from theoretical knowledge to practical job skills. Do you agree or disagree? Present at least two reasons and one counterargument you reject.",
-        promptKr: "대학이 이론적 지식보다 실무 역량 중심으로 방향을 바꿔야 한다는 주장이 있습니다. 찬성인가요, 반대인가요? 근거 두 가지 이상과 반대 의견에 대한 반박 하나를 포함해 한국어로 8문장 이상 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 8 sentences or more: describe a change you have observed in consumer culture in recent years (subscription services, secondhand markets, minimalism…), analyze its causes, and predict where it will lead.",
-        promptKr: "최근 몇 년간 관찰한 소비 문화 변화(구독 서비스, 중고 시장, 미니멀리즘 등) 하나를 골라 원인을 분석하고 앞으로의 방향을 예측하는 글을 한국어로 8문장 이상 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 8 sentences or more: some argue that social media companies should be legally responsible for the mental health effects of their platforms on teenagers. Do you agree or disagree? Present at least two reasons and one counterargument you reject.",
-        promptKr: "소셜 미디어 기업이 청소년의 정신 건강에 미치는 영향에 대해 법적 책임을 져야 한다는 주장이 있습니다. 찬성인가요, 반대인가요? 근거 두 가지 이상과 반대 의견에 대한 반박 하나를 포함해 한국어로 8문장 이상 쓰세요.",
-      },
-    ],
-    speakingPool: [
-      {
-        prompt:
-          "Speak in Korean, 5 sentences or more: 인공지능이 일자리에 미칠 영향에 대해 어떻게 생각하세요? 구체적인 예를 들어 의견을 말해 보세요.",
-        promptKr: "인공지능이 일자리에 미칠 영향에 대해 어떻게 생각하세요? 구체적인 예를 들어 한국어로 5문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 5 sentences or more: 환경 보호를 위해 개인이 할 수 있는 일과 정부가 해야 할 일을 비교해서 말해 보세요.",
-        promptKr: "환경 보호를 위해 개인이 할 수 있는 일과 정부가 해야 할 일을 비교해서 한국어로 5문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 5 sentences or more: 전통을 지키는 것과 변화를 받아들이는 것 중 무엇이 더 중요하다고 생각하세요? 근거를 들어 말해 보세요.",
-        promptKr: "전통을 지키는 것과 변화를 받아들이는 것 중 무엇이 더 중요하다고 생각하세요? 근거를 들어 한국어로 5문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 5 sentences or more: 온라인 후기를 얼마나 신뢰하세요? 후기를 볼 때 무엇을 확인하는지 말해 보세요.",
-        promptKr: "온라인 후기를 얼마나 신뢰하세요? 후기를 볼 때 무엇을 확인하는지 한국어로 5문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 5 sentences or more: 주 4일 근무제 도입에 찬성하세요, 반대하세요? 이유를 들어 말해 보세요.",
-        promptKr: "주 4일 근무제 도입에 찬성하세요, 반대하세요? 이유를 들어 한국어로 5문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 5 sentences or more: 반려동물을 기르는 것의 장점과 어려움에 대해 말해 보세요.",
-        promptKr: "반려동물을 기르는 것의 장점과 어려움에 대해 한국어로 5문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 5 sentences or more: 재택근무 폐지에 대해 어떻게 생각하세요? 근거를 들어 말해 보세요.",
-        promptKr: "재택근무 폐지에 대해 어떻게 생각하세요? 근거를 들어 한국어로 5문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 5 sentences or more: AI가 채용 과정에서 이력서를 심사하는 것에 대해 찬성하세요, 반대하세요? 이유를 들어 말해 보세요.",
-        promptKr: "AI가 채용 과정에서 이력서를 심사하는 것에 대해 찬성하세요, 반대하세요? 이유를 들어 한국어로 5문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 5 sentences or more: 인기 관광지의 과잉 관광 문제를 해결하려면 어떻게 해야 한다고 생각하세요?",
-        promptKr: "인기 관광지의 과잉 관광 문제를 해결하려면 어떻게 해야 한다고 생각하세요? 한국어로 5문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 5 sentences or more: 단기 숙박 임대를 제한하는 정책에 대해 찬성하세요, 반대하세요? 이유를 들어 말해 보세요.",
-        promptKr: "단기 숙박 임대를 제한하는 정책에 대해 찬성하세요, 반대하세요? 이유를 들어 한국어로 5문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 5 sentences or more: 정부가 공공주택을 대규모로 공급하는 것에 대해 어떻게 생각하세요? 근거를 들어 말해 보세요.",
-        promptKr: "정부가 공공주택을 대규모로 공급하는 것에 대해 어떻게 생각하세요? 근거를 들어 한국어로 5문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 5 sentences or more: 소셜 미디어가 정치적 의견에 미치는 영향에 대해 어떻게 생각하세요? 구체적인 예를 들어 말해 보세요.",
-        promptKr: "소셜 미디어가 정치적 의견에 미치는 영향에 대해 어떻게 생각하세요? 구체적인 예를 들어 한국어로 5문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 5 sentences or more: 온라인 실명제 도입에 찬성하세요, 반대하세요? 이유를 들어 말해 보세요.",
-        promptKr: "온라인 실명제 도입에 찬성하세요, 반대하세요? 이유를 들어 한국어로 5문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 5 sentences or more: '15분 도시' 개념에 대해 어떻게 생각하세요? 장단점을 들어 말해 보세요.",
-        promptKr: "'15분 도시' 개념에 대해 어떻게 생각하세요? 장단점을 들어 한국어로 5문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 5 sentences or more: 현재 교육 제도에서 바꾸고 싶은 점이 있다면 무엇인가요? 이유를 들어 말해 보세요.",
-        promptKr: "현재 교육 제도에서 바꾸고 싶은 점이 있다면 무엇인가요? 이유를 들어 한국어로 5문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 5 sentences or more: 표준화된 시험을 프로젝트 기반 평가로 대체하는 것에 대해 찬성하세요, 반대하세요?",
-        promptKr: "표준화된 시험을 프로젝트 기반 평가로 대체하는 것에 대해 찬성하세요, 반대하세요? 한국어로 5문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 5 sentences or more: 웨어러블 기기로 건강을 관리하는 것에 대해 어떻게 생각하세요? 장단점을 들어 말해 보세요.",
-        promptKr: "웨어러블 기기로 건강을 관리하는 것에 대해 어떻게 생각하세요? 장단점을 들어 한국어로 5문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 5 sentences or more: 의료를 정부가 관리해야 한다고 생각하세요, 민간 경쟁이 낫다고 생각하세요? 이유를 들어 말해 보세요.",
-        promptKr: "의료를 정부가 관리해야 한다고 생각하세요, 민간 경쟁이 낫다고 생각하세요? 이유를 들어 한국어로 5문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 5 sentences or more: 플라스틱 쓰레기를 줄이는 책임이 개인과 기업 중 누구에게 더 크다고 생각하세요?",
-        promptKr: "플라스틱 쓰레기를 줄이는 책임이 개인과 기업 중 누구에게 더 크다고 생각하세요? 한국어로 5문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 5 sentences or more: 도시의 탄소 배출을 줄이기 위해 어떤 정책이 필요하다고 생각하세요?",
-        promptKr: "도시의 탄소 배출을 줄이기 위해 어떤 정책이 필요하다고 생각하세요? 한국어로 5문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 5 sentences or more: 패스트 패션에 대해 어떻게 생각하세요? 장단점을 들어 말해 보세요.",
-        promptKr: "패스트 패션에 대해 어떻게 생각하세요? 장단점을 들어 한국어로 5문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 5 sentences or more: 아동 대상 광고를 금지해야 한다고 생각하세요? 이유를 들어 말해 보세요.",
-        promptKr: "아동 대상 광고를 금지해야 한다고 생각하세요? 이유를 들어 한국어로 5문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 5 sentences or more: 최근 관찰한 라이프스타일 트렌드(미니멀리즘, 디지털 디톡스, 1인 가구 등) 하나를 골라 그 원인과 전망을 말해 보세요.",
-        promptKr: "최근 관찰한 라이프스타일 트렌드 하나를 골라 그 원인과 전망을 한국어로 5문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 5 sentences or more: 재택근무가 사무직과 서비스직 사이의 격차를 벌린다는 주장에 대해 어떻게 생각하세요?",
-        promptKr: "재택근무가 사무직과 서비스직 사이의 격차를 벌린다는 주장에 대해 한국어로 5문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 5 sentences or more: 표정과 목소리를 분석하는 AI 면접 도구를 신뢰할 수 있다고 생각하세요? 이유를 들어 말해 보세요.",
-        promptKr: "표정과 목소리를 분석하는 AI 면접 도구를 신뢰할 수 있다고 생각하세요? 이유를 들어 한국어로 5문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 5 sentences or more: 대규모 관광이 지역 사회에 미치는 긍정적, 부정적 영향을 비교해서 말해 보세요.",
-        promptKr: "대규모 관광이 지역 사회에 미치는 긍정적, 부정적 영향을 비교해서 한국어로 5문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 5 sentences or more: 도시 계획에서 상업 개발과 녹지 공간 중 무엇을 우선해야 한다고 생각하세요?",
-        promptKr: "도시 계획에서 상업 개발과 녹지 공간 중 무엇을 우선해야 한다고 생각하세요? 한국어로 5문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 5 sentences or more: 대학이 이론보다 실무 역량 중심으로 바뀌어야 한다고 생각하세요? 이유를 들어 말해 보세요.",
-        promptKr: "대학이 이론보다 실무 역량 중심으로 바뀌어야 한다고 생각하세요? 이유를 들어 한국어로 5문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 5 sentences or more: 최근 소비 문화의 변화(구독 서비스, 중고 시장 등) 하나를 골라 그 원인과 전망을 말해 보세요.",
-        promptKr: "최근 소비 문화의 변화 하나를 골라 그 원인과 전망을 한국어로 5문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 5 sentences or more: 소셜 미디어 기업이 청소년 정신 건강에 대해 법적 책임을 져야 한다고 생각하세요?",
-        promptKr: "소셜 미디어 기업이 청소년 정신 건강에 대해 법적 책임을 져야 한다고 생각하세요? 한국어로 5문장 이상 말해 보세요.",
-      },
-    ],
   },
 
   // ──────────────────────────────────────────────────────────── C1 → C2
@@ -4135,6 +2933,7 @@ export const PROMOTION_TESTS: PromotionTestSpec[] = [
       { kr: "그 협상단은 상호 양보의 폭을 명문화함으로써 향후 분쟁의 소지를 줄이고자 했습니다.", question: "What did the negotiating team try to do by formally documenting the scope of mutual concessions?", options: ["reduce the potential for future disputes", "end the negotiation immediately", "avoid signing any agreement", "increase ambiguity intentionally"], answer: "reduce the potential for future disputes" },
     ],
     readingCount: 3,
+    writingCount: 5,
     readingPool: [
       {
         passage:
@@ -4638,310 +3437,6 @@ export const PROMOTION_TESTS: PromotionTestSpec[] = [
         ],
       },
     ],
-    writingPool: [
-      {
-        prompt:
-          "In Korean, 10 sentences or more: '과학 연구의 방향을 시장의 수요가 결정해도 되는가' — write a structured essay with an introduction, at least two arguments, one counterargument with rebuttal, and a conclusion.",
-        promptKr: "'과학 연구의 방향을 시장의 수요가 결정해도 되는가'에 대해 서론, 근거 두 가지 이상, 반론과 재반박, 결론을 갖춘 글을 한국어로 10문장 이상 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 10 sentences or more: discuss whether governments should regulate AI-generated content. Define the problem precisely, weigh freedom of expression against potential harms, and propose a concrete principle.",
-        promptKr: "정부가 AI 생성 콘텐츠를 규제해야 하는지에 대해 한국어로 10문장 이상 쓰세요. 문제를 정확히 정의하고, 표현의 자유와 잠재적 해악을 비교한 뒤, 구체적인 원칙을 제안하세요.",
-      },
-      {
-        prompt:
-          "In Korean, 10 sentences or more: '세대 갈등은 과장된 것인가, 실재하는 구조적 문제인가' — take a position and defend it using at least one social or economic concept.",
-        promptKr: "'세대 갈등은 과장된 것인가, 실재하는 구조적 문제인가'에 대해 입장을 정하고, 사회적·경제적 개념을 하나 이상 활용해 한국어로 10문장 이상 논증하세요.",
-      },
-      {
-        prompt:
-          "In Korean, 10 sentences or more: '전 국민 기본소득 도입에 찬성하는가, 반대하는가' — write a structured essay with an introduction, at least two arguments, one counterargument with rebuttal, and a conclusion.",
-        promptKr: "'전 국민 기본소득 도입에 찬성하는가, 반대하는가'에 대해 서론, 근거 두 가지 이상, 반론과 재반박, 결론을 갖춘 글을 한국어로 10문장 이상 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 10 sentences or more: discuss whether historical monuments tied to controversial figures should be removed or kept with added context. Define the problem precisely, weigh competing values, and propose a concrete principle.",
-        promptKr: "논란이 되는 인물과 관련된 역사적 기념물을 철거해야 하는지, 아니면 설명을 덧붙여 보존해야 하는지에 대해 한국어로 10문장 이상 쓰세요. 문제를 정확히 정의하고, 상충하는 가치를 비교한 뒤, 구체적인 원칙을 제안하세요.",
-      },
-      {
-        prompt:
-          "In Korean, 10 sentences or more: '재택근무 확대는 노동자의 삶을 실제로 개선하는가' — take a position and defend it using at least one economic or sociological concept.",
-        promptKr: "'재택근무 확대는 노동자의 삶을 실제로 개선하는가'에 대해 입장을 정하고, 경제적·사회적 개념을 하나 이상 활용해 한국어로 10문장 이상 논증하세요.",
-      },
-      {
-        prompt:
-          "In Korean, 10 sentences or more: '전 국민 기본소득의 재원을 기존 복지 제도를 축소해서 마련해도 되는가' — write a structured essay with an introduction, at least two arguments, one counterargument with rebuttal, and a conclusion.",
-        promptKr: "'전 국민 기본소득의 재원을 기존 복지 제도를 축소해서 마련해도 되는가'에 대해 서론, 근거 두 가지 이상, 반론과 재반박, 결론을 갖춘 글을 한국어로 10문장 이상 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 10 sentences or more: discuss whether governments should be allowed to use mass surveillance technology (CCTV networks, facial recognition) to prevent crime. Define the problem precisely, weigh public safety against individual privacy, and propose a concrete principle.",
-        promptKr: "범죄 예방을 위해 정부가 대규모 감시 기술(CCTV 네트워크, 안면 인식)을 사용하는 것이 정당한지에 대해 한국어로 10문장 이상 쓰세요. 문제를 정확히 정의하고, 공공 안전과 개인의 프라이버시를 비교한 뒤, 구체적인 원칙을 제안하세요.",
-      },
-      {
-        prompt:
-          "In Korean, 10 sentences or more: '인공지능이 작성한 글에도 저작권을 인정해야 하는가' — take a position and defend it using at least one legal or philosophical concept.",
-        promptKr: "'인공지능이 작성한 글에도 저작권을 인정해야 하는가'에 대해 입장을 정하고, 법적·철학적 개념을 하나 이상 활용해 한국어로 10문장 이상 논증하세요.",
-      },
-      {
-        prompt:
-          "In Korean, 10 sentences or more: '이민자 유입 제한은 자국민의 일자리를 보호하는 정당한 정책인가' — write a structured essay with an introduction, at least two arguments, one counterargument with rebuttal, and a conclusion.",
-        promptKr: "'이민자 유입 제한은 자국민의 일자리를 보호하는 정당한 정책인가'에 대해 서론, 근거 두 가지 이상, 반론과 재반박, 결론을 갖춘 글을 한국어로 10문장 이상 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 10 sentences or more: discuss whether online platforms should be allowed to remove speech they consider harmful, even when it is legal. Define the problem precisely, weigh free expression against potential harms, and propose a concrete principle.",
-        promptKr: "온라인 플랫폼이 합법적이지만 유해하다고 판단되는 발언을 삭제할 수 있어야 하는지에 대해 한국어로 10문장 이상 쓰세요. 문제를 정확히 정의하고, 표현의 자유와 잠재적 해악을 비교한 뒤, 구체적인 원칙을 제안하세요.",
-      },
-      {
-        prompt:
-          "In Korean, 10 sentences or more: '인간 배아에 대한 유전자 편집 기술을 질병 예방 목적으로 허용해야 하는가' — take a position and defend it using at least one ethical concept.",
-        promptKr: "'인간 배아에 대한 유전자 편집 기술을 질병 예방 목적으로 허용해야 하는가'에 대해 입장을 정하고, 윤리적 개념을 하나 이상 활용해 한국어로 10문장 이상 논증하세요.",
-      },
-      {
-        prompt:
-          "In Korean, 10 sentences or more: '경제 성장을 포기하더라도 탈성장을 지향해야 하는가' — write a structured essay with an introduction, at least two arguments, one counterargument with rebuttal, and a conclusion.",
-        promptKr: "'경제 성장을 포기하더라도 탈성장을 지향해야 하는가'에 대해 서론, 근거 두 가지 이상, 반론과 재반박, 결론을 갖춘 글을 한국어로 10문장 이상 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 10 sentences or more: discuss whether a society organized strictly by merit (meritocracy) is truly fair. Define the problem precisely, weigh equality of opportunity against unequal starting conditions, and propose a concrete principle.",
-        promptKr: "능력에 따라서만 자원을 배분하는 능력주의 사회가 과연 공정한지에 대해 한국어로 10문장 이상 쓰세요. 문제를 정확히 정의하고, 기회의 평등과 불평등한 출발선을 비교한 뒤, 구체적인 원칙을 제안하세요.",
-      },
-      {
-        prompt:
-          "In Korean, 10 sentences or more: '다른 문화의 전통 의상이나 상징을 상업적으로 사용하는 것은 문화 존중인가, 문화 착취인가' — take a position and defend it using at least one sociological concept.",
-        promptKr: "'다른 문화의 전통 의상이나 상징을 상업적으로 사용하는 것은 문화 존중인가, 문화 착취인가'에 대해 입장을 정하고, 사회학적 개념을 하나 이상 활용해 한국어로 10문장 이상 논증하세요.",
-      },
-      {
-        prompt:
-          "In Korean, 10 sentences or more: '개인이 자신에 관한 온라인 기록의 삭제를 요구할 권리(잊힐 권리)를 어디까지 인정해야 하는가' — write a structured essay with an introduction, at least two arguments, one counterargument with rebuttal, and a conclusion.",
-        promptKr: "'개인이 자신에 관한 온라인 기록의 삭제를 요구할 권리(잊힐 권리)를 어디까지 인정해야 하는가'에 대해 서론, 근거 두 가지 이상, 반론과 재반박, 결론을 갖춘 글을 한국어로 10문장 이상 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 10 sentences or more: discuss whether employers should be allowed to monitor employees' digital activity during work hours. Define the problem precisely, weigh organizational efficiency against employee autonomy, and propose a concrete principle.",
-        promptKr: "고용주가 근무 시간 중 직원의 디지털 활동을 감시할 수 있어야 하는지에 대해 한국어로 10문장 이상 쓰세요. 문제를 정확히 정의하고, 조직의 효율성과 직원의 자율성을 비교한 뒤, 구체적인 원칙을 제안하세요.",
-      },
-      {
-        prompt:
-          "In Korean, 10 sentences or more: '표현의 자유는 혐오 발언에도 적용되어야 하는가' — take a position and defend it using at least one legal or philosophical concept.",
-        promptKr: "'표현의 자유는 혐오 발언에도 적용되어야 하는가'에 대해 입장을 정하고, 법적·철학적 개념을 하나 이상 활용해 한국어로 10문장 이상 논증하세요.",
-      },
-      {
-        prompt:
-          "In Korean, 10 sentences or more: '난민 수용 의무는 국가 주권보다 우선하는가' — write a structured essay with an introduction, at least two arguments, one counterargument with rebuttal, and a conclusion.",
-        promptKr: "'난민 수용 의무는 국가 주권보다 우선하는가'에 대해 서론, 근거 두 가지 이상, 반론과 재반박, 결론을 갖춘 글을 한국어로 10문장 이상 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 10 sentences or more: discuss whether parents should be allowed to select non-medical traits (such as intelligence or appearance) for their children through genetic editing. Define the problem precisely, weigh reproductive freedom against social consequences, and propose a concrete principle.",
-        promptKr: "부모가 유전자 편집을 통해 자녀의 지능이나 외모 같은 비의료적 형질을 선택할 수 있어야 하는지에 대해 한국어로 10문장 이상 쓰세요. 문제를 정확히 정의하고, 생식의 자유와 사회적 결과를 비교한 뒤, 구체적인 원칙을 제안하세요.",
-      },
-      {
-        prompt:
-          "In Korean, 10 sentences or more: '탈성장 담론은 현실적인 대안인가, 이상론에 불과한가' — take a position and defend it using at least one economic concept.",
-        promptKr: "'탈성장 담론은 현실적인 대안인가, 이상론에 불과한가'에 대해 입장을 정하고, 경제적 개념을 하나 이상 활용해 한국어로 10문장 이상 논증하세요.",
-      },
-      {
-        prompt:
-          "In Korean, 10 sentences or more: '대학 입시에서 소외 계층을 위한 특별 전형은 역차별인가, 정당한 보정인가' — write a structured essay with an introduction, at least two arguments, one counterargument with rebuttal, and a conclusion.",
-        promptKr: "'대학 입시에서 소외 계층을 위한 특별 전형은 역차별인가, 정당한 보정인가'에 대해 서론, 근거 두 가지 이상, 반론과 재반박, 결론을 갖춘 글을 한국어로 10문장 이상 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 10 sentences or more: discuss whether AI-generated art and writing should be labeled as such whenever they are distributed publicly. Define the problem precisely, weigh consumer transparency against creative freedom, and propose a concrete principle.",
-        promptKr: "AI가 생성한 예술 작품이나 글을 공개적으로 배포할 때 반드시 표시해야 하는지에 대해 한국어로 10문장 이상 쓰세요. 문제를 정확히 정의하고, 소비자의 알 권리와 창작의 자유를 비교한 뒤, 구체적인 원칙을 제안하세요.",
-      },
-      {
-        prompt:
-          "In Korean, 10 sentences or more: '국가는 개인의 인터넷 사용 기록을 범죄 수사를 위해 무제한으로 수집할 수 있는가' — take a position and defend it using at least one legal concept.",
-        promptKr: "'국가는 개인의 인터넷 사용 기록을 범죄 수사를 위해 무제한으로 수집할 수 있는가'에 대해 입장을 정하고, 법적 개념을 하나 이상 활용해 한국어로 10문장 이상 논증하세요.",
-      },
-      {
-        prompt:
-          "In Korean, 10 sentences or more: '능력주의는 불평등을 정당화하는 이데올로기에 불과한가' — write a structured essay with an introduction, at least two arguments, one counterargument with rebuttal, and a conclusion.",
-        promptKr: "'능력주의는 불평등을 정당화하는 이데올로기에 불과한가'에 대해 서론, 근거 두 가지 이상, 반론과 재반박, 결론을 갖춘 글을 한국어로 10문장 이상 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 10 sentences or more: discuss whether individuals should have the right to have embarrassing but true news articles about them removed from search engines years later. Define the problem precisely, weigh personal reputation against public record and press freedom, and propose a concrete principle.",
-        promptKr: "개인이 수년 전의 당혹스럽지만 사실인 뉴스 기사를 검색 엔진에서 삭제할 권리를 가져야 하는지에 대해 한국어로 10문장 이상 쓰세요. 문제를 정확히 정의하고, 개인의 명예와 공공 기록·언론의 자유를 비교한 뒤, 구체적인 원칙을 제안하세요.",
-      },
-      {
-        prompt:
-          "In Korean, 10 sentences or more: '전통 요리나 음악을 다른 문화권에서 상업화하는 것은 어디까지 허용되는가' — take a position and defend it using at least one sociological or economic concept.",
-        promptKr: "'전통 요리나 음악을 다른 문화권에서 상업화하는 것은 어디까지 허용되는가'에 대해 입장을 정하고, 사회학적·경제적 개념을 하나 이상 활용해 한국어로 10문장 이상 논증하세요.",
-      },
-      {
-        prompt:
-          "In Korean, 10 sentences or more: '기본소득은 노동의 의미를 약화시키는가, 오히려 노동을 자유롭게 하는가' — write a structured essay with an introduction, at least two arguments, one counterargument with rebuttal, and a conclusion.",
-        promptKr: "'기본소득은 노동의 의미를 약화시키는가, 오히려 노동을 자유롭게 하는가'에 대해 서론, 근거 두 가지 이상, 반론과 재반박, 결론을 갖춘 글을 한국어로 10문장 이상 쓰세요.",
-      },
-      {
-        prompt:
-          "In Korean, 10 sentences or more: discuss whether social media companies should be legally responsible for algorithmically amplifying extremist content. Define the problem precisely, weigh platform accountability against the limits of automated moderation, and propose a concrete principle.",
-        promptKr: "소셜 미디어 기업이 알고리즘으로 극단주의 콘텐츠를 확산시킨 것에 법적 책임을 져야 하는지에 대해 한국어로 10문장 이상 쓰세요. 문제를 정확히 정의하고, 플랫폼의 책임과 자동화된 관리의 한계를 비교한 뒤, 구체적인 원칙을 제안하세요.",
-      },
-      {
-        prompt:
-          "In Korean, 10 sentences or more: '유전자 편집 기술의 발전은 결국 새로운 형태의 계급을 만들어낼 것인가' — take a position and defend it using at least one ethical or economic concept.",
-        promptKr: "'유전자 편집 기술의 발전은 결국 새로운 형태의 계급을 만들어낼 것인가'에 대해 입장을 정하고, 윤리적·경제적 개념을 하나 이상 활용해 한국어로 10문장 이상 논증하세요.",
-      },
-    ],
-    speakingPool: [
-      {
-        prompt:
-          "Speak in Korean, 6 sentences or more: 기초 과학 연구에 대한 정부 투자가 왜 필요한지, 혹은 불필요한지 논리적으로 주장해 보세요.",
-        promptKr: "기초 과학 연구에 대한 정부 투자가 왜 필요한지, 혹은 불필요한지 한국어로 6문장 이상 논리적으로 주장해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 6 sentences or more: '다수결이 항상 민주적인 것은 아니다'라는 주장에 대해 예를 들어 찬성 또는 반대 의견을 말해 보세요.",
-        promptKr: "'다수결이 항상 민주적인 것은 아니다'라는 주장에 대해 예를 들어 한국어로 6문장 이상 찬성 또는 반대 의견을 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 6 sentences or more: 인류가 앞으로 50년 안에 해결해야 할 가장 중요한 문제는 무엇이라고 생각하며, 왜 그것이 다른 문제보다 우선해야 하나요?",
-        promptKr: "인류가 앞으로 50년 안에 해결해야 할 가장 중요한 문제는 무엇이라고 생각하며, 왜 그것이 다른 문제보다 우선해야 하는지 한국어로 6문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 6 sentences or more: 인공지능이 창작물을 만들어낼 때 저작권을 누구에게 인정해야 하는지 논리적으로 주장해 보세요.",
-        promptKr: "인공지능이 창작물을 만들어낼 때 저작권을 누구에게 인정해야 하는지 한국어로 6문장 이상 논리적으로 주장해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 6 sentences or more: '경제 성장과 환경 보호는 양립할 수 없다'는 주장에 대해 예를 들어 찬성 또는 반대 의견을 말해 보세요.",
-        promptKr: "'경제 성장과 환경 보호는 양립할 수 없다'는 주장에 대해 예를 들어 한국어로 6문장 이상 찬성 또는 반대 의견을 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 6 sentences or more: 알고리즘이 추천하는 정보만 소비하는 것이 개인의 사고방식에 어떤 영향을 미친다고 생각하나요?",
-        promptKr: "알고리즘이 추천하는 정보만 소비하는 것이 개인의 사고방식에 어떤 영향을 미친다고 생각하는지 한국어로 6문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 6 sentences or more: 전 국민 기본소득의 재원을 기존 복지 제도를 축소해서 마련해도 되는지 논리적으로 주장해 보세요.",
-        promptKr: "전 국민 기본소득의 재원을 기존 복지 제도를 축소해서 마련해도 되는지 한국어로 6문장 이상 논리적으로 주장해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 6 sentences or more: '범죄 예방을 위한 정부의 대규모 감시는 정당하다'는 주장에 대해 예를 들어 찬성 또는 반대 의견을 말해 보세요.",
-        promptKr: "'범죄 예방을 위한 정부의 대규모 감시는 정당하다'는 주장에 대해 예를 들어 한국어로 6문장 이상 찬성 또는 반대 의견을 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 6 sentences or more: 인공지능이 작성한 글에도 저작권을 인정해야 하는지 논리적으로 주장해 보세요.",
-        promptKr: "인공지능이 작성한 글에도 저작권을 인정해야 하는지 한국어로 6문장 이상 논리적으로 주장해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 6 sentences or more: '이민자 유입 제한은 자국민의 일자리를 보호하는 정당한 정책이다'는 주장에 대해 예를 들어 찬성 또는 반대 의견을 말해 보세요.",
-        promptKr: "'이민자 유입 제한은 자국민의 일자리를 보호하는 정당한 정책이다'는 주장에 대해 예를 들어 한국어로 6문장 이상 찬성 또는 반대 의견을 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 6 sentences or more: 온라인 플랫폼이 합법적이지만 유해한 발언을 삭제할 수 있어야 하는지 논리적으로 주장해 보세요.",
-        promptKr: "온라인 플랫폼이 합법적이지만 유해한 발언을 삭제할 수 있어야 하는지 한국어로 6문장 이상 논리적으로 주장해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 6 sentences or more: 인간 배아에 대한 유전자 편집 기술을 질병 예방 목적으로 허용해야 하는지에 대해 예를 들어 찬성 또는 반대 의견을 말해 보세요.",
-        promptKr: "인간 배아에 대한 유전자 편집 기술을 질병 예방 목적으로 허용해야 하는지에 대해 예를 들어 한국어로 6문장 이상 찬성 또는 반대 의견을 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 6 sentences or more: 경제 성장을 포기하더라도 탈성장을 지향해야 하는지 논리적으로 주장해 보세요.",
-        promptKr: "경제 성장을 포기하더라도 탈성장을 지향해야 하는지 한국어로 6문장 이상 논리적으로 주장해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 6 sentences or more: '능력주의 사회는 진정으로 공정하다'는 주장에 대해 예를 들어 찬성 또는 반대 의견을 말해 보세요.",
-        promptKr: "'능력주의 사회는 진정으로 공정하다'는 주장에 대해 예를 들어 한국어로 6문장 이상 찬성 또는 반대 의견을 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 6 sentences or more: 다른 문화의 전통 의상이나 상징을 상업적으로 사용하는 것이 문화 존중인지 문화 착취인지 논리적으로 주장해 보세요.",
-        promptKr: "다른 문화의 전통 의상이나 상징을 상업적으로 사용하는 것이 문화 존중인지 문화 착취인지 한국어로 6문장 이상 논리적으로 주장해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 6 sentences or more: 개인이 자신에 관한 온라인 기록의 삭제를 요구할 권리(잊힐 권리)를 어디까지 인정해야 하는지 말해 보세요.",
-        promptKr: "개인이 자신에 관한 온라인 기록의 삭제를 요구할 권리(잊힐 권리)를 어디까지 인정해야 하는지 한국어로 6문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 6 sentences or more: '고용주는 근무 시간 중 직원의 디지털 활동을 감시할 수 있어야 한다'는 주장에 대해 예를 들어 찬성 또는 반대 의견을 말해 보세요.",
-        promptKr: "'고용주는 근무 시간 중 직원의 디지털 활동을 감시할 수 있어야 한다'는 주장에 대해 예를 들어 한국어로 6문장 이상 찬성 또는 반대 의견을 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 6 sentences or more: 표현의 자유는 혐오 발언에도 적용되어야 하는지 논리적으로 주장해 보세요.",
-        promptKr: "표현의 자유는 혐오 발언에도 적용되어야 하는지 한국어로 6문장 이상 논리적으로 주장해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 6 sentences or more: '난민 수용 의무는 국가 주권보다 우선한다'는 주장에 대해 예를 들어 찬성 또는 반대 의견을 말해 보세요.",
-        promptKr: "'난민 수용 의무는 국가 주권보다 우선한다'는 주장에 대해 예를 들어 한국어로 6문장 이상 찬성 또는 반대 의견을 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 6 sentences or more: 부모가 유전자 편집을 통해 자녀의 지능이나 외모 같은 비의료적 형질을 선택할 수 있어야 하는지 논리적으로 주장해 보세요.",
-        promptKr: "부모가 유전자 편집을 통해 자녀의 지능이나 외모 같은 비의료적 형질을 선택할 수 있어야 하는지 한국어로 6문장 이상 논리적으로 주장해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 6 sentences or more: 탈성장 담론이 현실적인 대안인지, 이상론에 불과한지 말해 보세요.",
-        promptKr: "탈성장 담론이 현실적인 대안인지, 이상론에 불과한지 한국어로 6문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 6 sentences or more: '대학 입시의 특별 전형은 역차별이다'는 주장에 대해 예를 들어 찬성 또는 반대 의견을 말해 보세요.",
-        promptKr: "'대학 입시의 특별 전형은 역차별이다'는 주장에 대해 예를 들어 한국어로 6문장 이상 찬성 또는 반대 의견을 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 6 sentences or more: AI가 생성한 예술 작품이나 글을 공개적으로 배포할 때 반드시 표시해야 하는지 논리적으로 주장해 보세요.",
-        promptKr: "AI가 생성한 예술 작품이나 글을 공개적으로 배포할 때 반드시 표시해야 하는지 한국어로 6문장 이상 논리적으로 주장해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 6 sentences or more: 국가가 개인의 인터넷 사용 기록을 범죄 수사를 위해 무제한으로 수집할 수 있는지에 대해 예를 들어 찬성 또는 반대 의견을 말해 보세요.",
-        promptKr: "국가가 개인의 인터넷 사용 기록을 범죄 수사를 위해 무제한으로 수집할 수 있는지에 대해 예를 들어 한국어로 6문장 이상 찬성 또는 반대 의견을 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 6 sentences or more: 능력주의가 불평등을 정당화하는 이데올로기에 불과한지 논리적으로 주장해 보세요.",
-        promptKr: "능력주의가 불평등을 정당화하는 이데올로기에 불과한지 한국어로 6문장 이상 논리적으로 주장해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 6 sentences or more: 개인이 수년 전의 당혹스럽지만 사실인 뉴스 기사를 검색 엔진에서 삭제할 권리를 가져야 하는지 말해 보세요.",
-        promptKr: "개인이 수년 전의 당혹스럽지만 사실인 뉴스 기사를 검색 엔진에서 삭제할 권리를 가져야 하는지 한국어로 6문장 이상 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 6 sentences or more: 전통 요리나 음악을 다른 문화권에서 상업화하는 것이 어디까지 허용되는지 논리적으로 주장해 보세요.",
-        promptKr: "전통 요리나 음악을 다른 문화권에서 상업화하는 것이 어디까지 허용되는지 한국어로 6문장 이상 논리적으로 주장해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 6 sentences or more: '기본소득은 노동의 의미를 약화시킨다'는 주장에 대해 예를 들어 찬성 또는 반대 의견을 말해 보세요.",
-        promptKr: "'기본소득은 노동의 의미를 약화시킨다'는 주장에 대해 예를 들어 한국어로 6문장 이상 찬성 또는 반대 의견을 말해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 6 sentences or more: 소셜 미디어 기업이 알고리즘으로 극단주의 콘텐츠를 확산시킨 것에 법적 책임을 져야 하는지 논리적으로 주장해 보세요.",
-        promptKr: "소셜 미디어 기업이 알고리즘으로 극단주의 콘텐츠를 확산시킨 것에 법적 책임을 져야 하는지 한국어로 6문장 이상 논리적으로 주장해 보세요.",
-      },
-      {
-        prompt:
-          "Speak in Korean, 6 sentences or more: 유전자 편집 기술의 발전이 결국 새로운 형태의 계급을 만들어낼 것인지 말해 보세요.",
-        promptKr: "유전자 편집 기술의 발전이 결국 새로운 형태의 계급을 만들어낼 것인지 한국어로 6문장 이상 말해 보세요.",
-      },
-    ],
   },
 ];
 
@@ -4949,7 +3444,7 @@ export function testForGrade(from: CefrLevel): PromotionTestSpec | null {
   return PROMOTION_TESTS.find((t) => t.from === from) ?? null;
 }
 
-export type SkillScores = { listening: number; reading: number; writing: number; speaking: number };
+export type SkillScores = { listening: number; reading: number; writing: number };
 
 export function testVerdict(scores: SkillScores): { passed: boolean; avg: number; weakest: keyof SkillScores } {
   const entries = Object.entries(scores) as [keyof SkillScores, number][];
@@ -4963,5 +3458,4 @@ export const SKILL_LABELS: Record<keyof SkillScores, { en: string; kr: string; h
   listening: { en: "Listening", kr: "듣기", href: "/listening" },
   reading: { en: "Reading", kr: "읽기", href: "/reading" },
   writing: { en: "Writing", kr: "쓰기", href: "/writing" },
-  speaking: { en: "Speaking", kr: "말하기", href: "/speaking" },
 };

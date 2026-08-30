@@ -19,6 +19,7 @@ export default function Mcq({
   const [correct, setCorrect] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);
   const qq = questions[index];
+  const DONT_KNOW = "__dont_know__";
 
   function answer(opt: string) {
     if (selected !== null) return;
@@ -73,6 +74,18 @@ export default function Mcq({
             </button>
           );
         })}
+        <button
+          onClick={() => answer(DONT_KNOW)}
+          className={`text-left border-[1.5px] border-dashed rounded-[12px] px-4 py-3 text-[13.5px] italic transition-colors ${
+            selected === null
+              ? "border-line text-muted hover:border-charcoal"
+              : selected === DONT_KNOW
+                ? "border-[#EF4444] bg-danger-bg text-charcoal"
+                : "border-line text-faint opacity-60"
+          }`}
+        >
+          모르겠어요 · I don&apos;t know
+        </button>
       </div>
     </div>
   );

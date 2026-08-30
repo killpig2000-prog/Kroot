@@ -36,8 +36,7 @@ describe("promotion test content invariants", () => {
     for (const t of PROMOTION_TESTS) {
       expect(t.listeningPool.length).toBeGreaterThan(t.listeningCount);
       expect(t.readingPool.length).toBeGreaterThan(t.readingCount);
-      expect(t.writingPool.length).toBeGreaterThanOrEqual(2);
-      expect(t.speakingPool.length).toBeGreaterThanOrEqual(2);
+      expect(t.writingCount).toBeGreaterThanOrEqual(2);
     }
   });
 
@@ -83,8 +82,7 @@ describe("buildServedTest", () => {
       const served = buildServedTest(t, seededRng(42));
       expect(served.listening.length).toBe(t.listeningCount);
       expect(served.reading.length).toBe(t.readingCount);
-      expect(t.writingPool.map((p) => p.prompt)).toContain(served.writing.prompt);
-      expect(t.speakingPool.map((p) => p.prompt)).toContain(served.speaking.prompt);
+      expect(served.writing.length).toBe(t.writingCount);
     }
   });
 
@@ -108,7 +106,7 @@ describe("buildServedTest", () => {
     const a = buildServedTest(PROMOTION_TESTS[2], seededRng(1));
     const b = buildServedTest(PROMOTION_TESTS[2], seededRng(999));
     const sig = (s: typeof a) =>
-      JSON.stringify([s.listening.map((q) => q.kr), s.reading.map((r) => r.passage), s.writing.prompt]);
+      JSON.stringify([s.listening.map((q) => q.kr), s.reading.map((r) => r.passage), s.writing.map((p) => p.key)]);
     expect(sig(a)).not.toBe(sig(b));
   });
 
@@ -122,19 +120,19 @@ describe("buildServedTest", () => {
 
 describe("testVerdict", () => {
   it("passes only with every skill ≥ MIN_SKILL and average ≥ MIN_AVG", () => {
-    expect(testVerdict({ listening: 70, reading: 70, writing: 70, speaking: 70 }).passed).toBe(true);
+    expect(testVerdict({ listening: 70, reading: 70, writing: 70 }).passed).toBe(true);
     // high average but one skill below the floor fails
     expect(
-      testVerdict({ listening: 100, reading: 100, writing: 100, speaking: MIN_SKILL - 1 }).passed
+      testVerdict({ listening: 100, reading: 100, writing: MIN_SKILL - 1 }).passed
     ).toBe(false);
     // all above the floor but average below MIN_AVG fails
-    expect(testVerdict({ listening: 60, reading: 60, writing: 60, speaking: 60 }).passed).toBe(
+    expect(testVerdict({ listening: 60, reading: 60, writing: 60 }).passed).toBe(
       60 >= MIN_AVG
     );
   });
 
   it("identifies the weakest skill", () => {
-    expect(testVerdict({ listening: 90, reading: 40, writing: 80, speaking: 70 }).weakest).toBe(
+    expect(testVerdict({ listening: 90, reading: 40, writing: 80 }).weakest).toBe(
       "reading"
     );
   });

@@ -16,13 +16,11 @@ const BTN_GREEN = buttonClassName("success");
 export default function ResultStage({
   spec,
   scores,
-  feedback,
   promoted,
   playerLevel,
 }: {
   spec: ServedPromotionTest;
   scores: SkillScores | null;
-  feedback: { writing?: string; speaking?: string };
   promoted: boolean;
   playerLevel: number;
 }) {
@@ -64,13 +62,6 @@ export default function ResultStage({
               <b className="flex-none w-9 text-right text-[13px] tabular-nums">{scores[k]}</b>
             </div>
           ))}
-        </div>
-      )}
-
-      {(feedback.writing || feedback.speaking) && (
-        <div className="bg-warm border border-line rounded-[12px] px-4 py-3 text-[13px] text-charcoal grid gap-1.5 mb-4">
-          {feedback.writing && <p>✏️ {feedback.writing}</p>}
-          {feedback.speaking && <p>🎙 {feedback.speaking}</p>}
         </div>
       )}
 
