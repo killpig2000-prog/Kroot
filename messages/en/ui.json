@@ -34,5 +34,28 @@
   "welcomeName": "Welcome, {name}",
   "recognizedSpeech": "Your recognized speech appears here",
   "tapMicAndSpeak": "Tap the mic and say it out loud",
-  "signInEmailNote": "A short note to your sign-in email"
+  "signInEmailNote": "A short note to your sign-in email",
+  "account": {
+    "learningProgress": "Learning progress",
+    "difficulty": "{level} difficulty",
+    "wordMemory": "Word memory",
+    "wordsStudied": "{count, plural, =1 {# word studied} other {# words studied}}",
+    "dueNow": "{count} due now",
+    "everyDay": "every day",
+    "everyNDays": "every {days} days",
+    "memorised": "memorised",
+    "reviewDue": "{count, plural, =1 {Review 1 word} other {Review # words}}",
+    "accuracy": "Accuracy",
+    "ofAnswers": "{correct}/{total} correct",
+    "overAttempts": "{count, plural, =1 {1 attempt} other {# attempts}}",
+    "overLessons": "{count, plural, =1 {1 lesson} other {# lessons}}",
+    "noScoreYet": "{skills} don't record a score yet.",
+    "wordsToPractise": "Words to practise",
+    "practiseThese": "Practise these",
+    "misses": "{count, plural, =1 {1 miss} other {# misses}}",
+    "levelHistory": "Level history",
+    "passed": "Passed",
+    "settings": "Settings",
+    "noStatsYet": "Finish your first unit and your stats show up here."
+  }
 }

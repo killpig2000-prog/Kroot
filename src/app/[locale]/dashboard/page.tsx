@@ -3,7 +3,6 @@ import { Link, redirect } from "@/i18n/navigation";
 import TreeCard from "@/components/dashboard/TreeCard";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
-import SkillBar from "@/components/dashboard/SkillBar";
 import Widgets from "@/components/dashboard/Widgets";
 import WordOfDayCard from "@/components/dashboard/WordOfDayCard";
 import FeedbackWidget from "@/components/dashboard/FeedbackWidget";
@@ -27,17 +26,6 @@ import { firstVisitState, NEW_ACCOUNT_DAYS, SHOW_ALL_COOKIE } from "@/lib/first-
 import { countCompletedSessions } from "@/lib/first-visit-server";
 import { slangOfTheDay } from "@/lib/slang";
 import type { CefrLevel } from "@/lib/tree";
-
-// The old Basics/Practice/Relax card list duplicated the sidebar; only the
-// four practice skills keep an in-page presence, as compact progress rows.
-const PRACTICE_SKILLS = [
-  { key: "grammar", href: "/grammar", kr: "문", en: "Grammar", bg: "#EEF2FF", color: "#423AC5" },
-  { key: "vocabulary", href: "/vocabulary", kr: "단", en: "Vocabulary", bg: "#F5F3FF", color: "#6B33CC" },
-  { key: "listening", href: "/listening", kr: "듣", en: "Listening", bg: "#F0FDF4", color: "#3E7C59" },
-  { key: "reading", href: "/reading", kr: "읽", en: "Reading", bg: "#EFF6FF", color: "#3363CC" },
-  { key: "writing", href: "/writing", kr: "쓰", en: "Writing", bg: "#FFFBEB", color: "#C47A25" },
-  { key: "pronunciation", href: "/speaking", kr: "발", en: "Pronunciation", bg: "#F0FDFA", color: "#228980" },
-];
 
 const MONTH_GOAL = 20;
 
@@ -496,45 +484,9 @@ export default async function DashboardPage() {
             </Link>
           )}
 
-          {/* learning progress — replaces the old category card list (the
-              sidebar already covers navigation); SkillBars live on here */}
-          <div className="border border-line rounded-[14px] bg-cream px-[22px] py-5 mb-[14px]">
-            <div className="flex items-baseline justify-between gap-3 mb-3.5 flex-wrap">
-              <b className="font-semibold text-[15px]">📈 Learning progress</b>
-              <small className="text-[12.5px] text-faint font-medium">{cefr} difficulty</small>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2.5">
-              {PRACTICE_SKILLS.map((c) => {
-                const done = quest?.skill_key === c.key && !!quest?.completed_at;
-                const prog = skillProgress[c.key];
-                return (
-                  <Link key={c.key} href={c.href} className="flex items-center gap-3 group">
-                    <span
-                      className="w-[30px] h-[30px] rounded-lg flex-none flex items-center justify-center kr text-[13px] transition-transform group-hover:scale-110"
-                      style={{ background: c.bg, color: c.color }}
-                    >
-                      {c.kr}
-                    </span>
-                    <span className="flex-1 min-w-0">
-                      <b className="font-semibold text-[13px] flex items-center gap-2">
-                        {c.en}
-                        {done && (
-                          <span className="text-[10.5px] font-semibold text-success bg-success-bg border border-success-line rounded-md px-1.5 py-px">
-                            +10 XP
-                          </span>
-                        )}
-                      </b>
-                      <SkillBar
-                        percent={prog.percent}
-                        note={`${prog.done}/${prog.total}${c.key === "pronunciation" ? "" : ` · ${cefr}`}`}
-                      />
-                    </span>
-                  </Link>
-                );
-              })}
-            </div>
-          </div>
+          {/* Learning progress moved to My account (/profile) 2026-08-30 — the
+              Garden answers "what do I do today", the account page "how am I
+              doing". skillProgress below stays: LevelMap needs overallPct. */}
 
           {/* study garden — the year grass, moved in from My growth; its
               pills absorb the old This week / month challenge widgets */}

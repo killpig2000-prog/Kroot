@@ -34,5 +34,28 @@
   "welcomeName": "Bienvenido, {name}",
   "recognizedSpeech": "Tu discurso reconocido aparecerá aquí",
   "tapMicAndSpeak": "Toca el micrófono y habla en voz alta",
-  "signInEmailNote": "Una nota breve para tu correo de inicio de sesión"
+  "signInEmailNote": "Una nota breve para tu correo de inicio de sesión",
+  "account": {
+    "learningProgress": "Tu progreso",
+    "difficulty": "Nivel {level}",
+    "wordMemory": "Memoria de palabras",
+    "wordsStudied": "{count, plural, =1 {# palabra estudiada} other {# palabras estudiadas}}",
+    "dueNow": "{count} para repasar",
+    "everyDay": "cada día",
+    "everyNDays": "cada {days} días",
+    "memorised": "memorizada",
+    "reviewDue": "{count, plural, =1 {Repasar 1 palabra} other {Repasar # palabras}}",
+    "accuracy": "Aciertos",
+    "ofAnswers": "{correct}/{total} correctas",
+    "overAttempts": "{count, plural, =1 {1 intento} other {# intentos}}",
+    "overLessons": "{count, plural, =1 {1 lección} other {# lecciones}}",
+    "noScoreYet": "{skills} todavía no dan puntuación.",
+    "wordsToPractise": "Palabras que se te resisten",
+    "practiseThese": "Practicarlas",
+    "misses": "{count, plural, =1 {1 fallo} other {# fallos}}",
+    "levelHistory": "Historial de nivel",
+    "passed": "Aprobado",
+    "settings": "Ajustes",
+    "noStatsYet": "Termina tu primera unidad y aquí verás tus datos."
+  }
 }

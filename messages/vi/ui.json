@@ -34,5 +34,28 @@
   "welcomeName": "Chào mừng, {name}",
   "recognizedSpeech": "Bài phát âm được nhận dạng sẽ xuất hiện ở đây",
   "tapMicAndSpeak": "Nhấn vào micrô và nói to",
-  "signInEmailNote": "Một lưu ý ngắn gửi đến email đăng nhập của bạn"
+  "signInEmailNote": "Một lưu ý ngắn gửi đến email đăng nhập của bạn",
+  "account": {
+    "learningProgress": "Tiến độ học",
+    "difficulty": "Trình độ {level}",
+    "wordMemory": "Ghi nhớ từ vựng",
+    "wordsStudied": "Đã học {count} từ",
+    "dueNow": "{count} từ cần ôn",
+    "everyDay": "mỗi ngày",
+    "everyNDays": "mỗi {days} ngày",
+    "memorised": "đã thuộc",
+    "reviewDue": "Ôn {count} từ",
+    "accuracy": "Độ chính xác",
+    "ofAnswers": "đúng {correct}/{total}",
+    "overAttempts": "{count} lần luyện",
+    "overLessons": "{count} bài",
+    "noScoreYet": "{skills} chưa tính điểm.",
+    "wordsToPractise": "Từ cần luyện thêm",
+    "practiseThese": "Luyện những từ này",
+    "misses": "sai {count} lần",
+    "levelHistory": "Lịch sử kiểm tra trình độ",
+    "passed": "Đạt",
+    "settings": "Cài đặt",
+    "noStatsYet": "Học xong bài đầu tiên là số liệu sẽ hiện ở đây."
+  }
 }

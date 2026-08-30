@@ -34,5 +34,28 @@
   "welcomeName": "ようこそ、{name} さん",
   "recognizedSpeech": "認識された音声がここに表示されます",
   "tapMicAndSpeak": "マイクをタップして大きな声で言ってください",
-  "signInEmailNote": "サインインメールへの短いメモ"
+  "signInEmailNote": "サインインメールへの短いメモ",
+  "account": {
+    "learningProgress": "学習の進み具合",
+    "difficulty": "{level} レベル",
+    "wordMemory": "単語の定着",
+    "wordsStudied": "学習した単語 {count} 語",
+    "dueNow": "復習 {count} 語",
+    "everyDay": "毎日",
+    "everyNDays": "{days} 日ごと",
+    "memorised": "定着",
+    "reviewDue": "{count} 語を復習する",
+    "accuracy": "正答率",
+    "ofAnswers": "{total} 問中 {correct} 問正解",
+    "overAttempts": "{count} 回の練習",
+    "overLessons": "{count} 課",
+    "noScoreYet": "{skills} はまだ点数がつきません。",
+    "wordsToPractise": "苦手な単語",
+    "practiseThese": "この単語を練習",
+    "misses": "{count} 回まちがえた",
+    "levelHistory": "レベル判定の記録",
+    "passed": "合格",
+    "settings": "設定",
+    "noStatsYet": "最初のユニットを終えると、ここに記録が出ます。"
+  }
 }
