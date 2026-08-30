@@ -17,6 +17,7 @@ const TIER_STYLE: Record<ChallengeTier, { c: string; soft: string; brd: string }
   3: { c: "#EA580C", soft: "#FFF7ED", brd: "#FED7AA" },
   4: { c: "#DC2626", soft: "#FEF2F2", brd: "#FECACA" },
   5: { c: "#7C2D12", soft: "#FDF2F0", brd: "#E7C4B4" },
+  6: { c: "#6B21A8", soft: "#F5F3FF", brd: "#DDD6FE" },
 };
 
 function Stone({ chapter, current }: { chapter: ChapterProgress; current: boolean }) {
@@ -69,7 +70,7 @@ export default function PronunciationTrail({
       <div
         className="absolute top-1.5 bottom-1.5 left-[9px] w-1 rounded-full"
         style={{
-          background: `linear-gradient(to bottom, ${TIER_STYLE[1].c}, ${TIER_STYLE[2].c}, ${TIER_STYLE[3].c}, ${TIER_STYLE[4].c}, ${TIER_STYLE[5].c})`,
+          background: `linear-gradient(to bottom, ${TIER_STYLE[1].c}, ${TIER_STYLE[2].c}, ${TIER_STYLE[3].c}, ${TIER_STYLE[4].c}, ${TIER_STYLE[5].c}, ${TIER_STYLE[6].c})`,
         }}
         aria-hidden="true"
       />

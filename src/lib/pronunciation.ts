@@ -352,6 +352,66 @@ export const SOUND_GROUPS: SoundGroup[] = [
       { kr: "그렇구나…", romanization: "geureokuna…", en: "Ah, I see. (trailing)" },
     ],
   },
+  {
+    key: "twister-ganjang",
+    title: "간장공장 공장장 — the soy sauce factory manager",
+    tip: "Every syllable ends in ㅇ or has a tense ㅈ/ㅊ — build it up piece by piece and don't let the endings blur into each other as it speeds up.",
+    items: [
+      { kr: "공장", romanization: "gongjang", en: "factory" },
+      { kr: "공장장", romanization: "gongjangjang", en: "factory manager" },
+      { kr: "간장공장", romanization: "ganjang gongjang", en: "soy sauce factory" },
+      { kr: "간장공장 공장장", romanization: "ganjang gongjang gongjangjang", en: "the soy sauce factory's manager" },
+      { kr: "강 공장장", romanization: "gang gongjangjang", en: "Manager Kang" },
+      { kr: "간장공장 공장장은 강 공장장이다", romanization: "ganjang gongjang gongjangjangeun gang gongjangjangida", en: "The soy sauce factory's manager is Manager Kang." },
+      { kr: "된장공장 공장장은 공 공장장이다", romanization: "doenjang gongjang gongjangjangeun gong gongjangjangida", en: "The soybean paste factory's manager is Manager Gong." },
+      { kr: "간장공장 공장장은 강 공장장이고 된장공장 공장장은 공 공장장이다", romanization: "ganjang gongjang gongjangjangeun gang gongjangjangigo doenjang gongjang gongjangjangeun gong gongjangjangida", en: "The soy sauce factory's manager is Manager Kang, and the soybean paste factory's manager is Manager Gong." },
+    ],
+  },
+  {
+    key: "twister-kongkkakji",
+    title: "콩깍지 — peeled or not?",
+    tip: "The tense ㄲ in 깍지 has to stay sharp every time it repeats — let it soften and 깐 (peeled) and 안 깐 (unpeeled) stop being distinguishable.",
+    items: [
+      { kr: "콩깍지", romanization: "kongkkakji", en: "bean pod" },
+      { kr: "깐 콩깍지", romanization: "kkan kongkkakji", en: "a peeled bean pod" },
+      { kr: "안 깐 콩깍지", romanization: "an kkan kongkkakji", en: "an unpeeled bean pod" },
+      { kr: "저 콩깍지", romanization: "jeo kongkkakji", en: "that bean pod" },
+      { kr: "저 콩깍지가 깐 콩깍지냐", romanization: "jeo kongkkakjiga kkan kongkkakjinya", en: "Is that bean pod a peeled one" },
+      { kr: "안 깐 콩깍지냐", romanization: "an kkan kongkkakjinya", en: "or an unpeeled one?" },
+      { kr: "콩깍지는 콩깍지인데", romanization: "kongkkakjineun kongkkakjinde", en: "it's a bean pod, all right, but —" },
+      { kr: "저기 있는 저 콩깍지가 깐 콩깍지인지 안 깐 콩깍지인지", romanization: "jeogi inneun jeo kongkkakjiga kkan kongkkakjinji an kkan kongkkakjinji", en: "whether that bean pod over there is a peeled one or an unpeeled one" },
+    ],
+  },
+  {
+    key: "twister-girin",
+    title: "기린 그림 — the giraffe drawing",
+    tip: "기린, 그린 and 그림 differ by one vowel each — the whole twister lives or dies on keeping ㅣ, ㅡ and ㅣ crisp while the tongue wants to average them out.",
+    items: [
+      { kr: "기린", romanization: "girin", en: "giraffe" },
+      { kr: "그린 기린", romanization: "geurin girin", en: "a drawn giraffe" },
+      { kr: "기린 그림", romanization: "girin geurim", en: "a giraffe drawing" },
+      { kr: "내가 그린 기린 그림", romanization: "naega geurin girin geurim", en: "the giraffe drawing I drew" },
+      { kr: "잘 그린 기린 그림", romanization: "jal geurin girin geurim", en: "a well-drawn giraffe drawing" },
+      { kr: "못 그린 기린 그림", romanization: "mot geurin girin geurim", en: "a poorly-drawn giraffe drawing" },
+      { kr: "내가 그린 기린 그림은 잘 그린 기린 그림이다", romanization: "naega geurin girin geurimeun jal geurin girin geurimida", en: "The giraffe drawing I drew is a well-drawn giraffe drawing." },
+      { kr: "네가 그린 기린 그림은 못 그린 기린 그림이다", romanization: "nega geurin girin geurimeun mot geurin girin geurimida", en: "The giraffe drawing you drew is a poorly-drawn giraffe drawing." },
+    ],
+  },
+  {
+    key: "twister-malttuk",
+    title: "말뚝 — tie the horse?",
+    tip: "말(horse) and 뚝 (a tense-ㄸ stake) collide over and over — 말 맬 말뚝 packs three near-identical syllables in a row that only the ending consonant tells apart.",
+    items: [
+      { kr: "말", romanization: "mal", en: "horse" },
+      { kr: "말뚝", romanization: "malttuk", en: "a stake, a post" },
+      { kr: "저 말뚝", romanization: "jeo malttuk", en: "that stake" },
+      { kr: "말 맬 말뚝", romanization: "mal mael malttuk", en: "a stake for tying a horse" },
+      { kr: "말 못 맬 말뚝", romanization: "mal mot mael malttuk", en: "a stake not for tying a horse" },
+      { kr: "저 말뚝이 말 맬 말뚝이냐", romanization: "jeo malttugi mal mael malttugin-ya", en: "Is that stake a stake for tying a horse," },
+      { kr: "말 못 맬 말뚝이냐", romanization: "mal mot mael malttugin-ya", en: "or a stake not for tying a horse?" },
+      { kr: "저 말뚝이 말 맬 말뚝이냐 말 못 맬 말뚝이냐", romanization: "jeo malttugi mal mael malttugin-ya mal mot mael malttugin-ya", en: "Is that stake a stake for tying a horse, or a stake not for tying a horse?" },
+    ],
+  },
 ];
 
 export function groupByKey(key: string) {
@@ -361,7 +421,7 @@ export function groupByKey(key: string) {
 // Challenge tiers, easy to brutal — vowel contrasts and single consonant
 // families first, connected-speech rules (assimilation, insertion, melody)
 // last, since those only make sense once the basics are solid.
-export type ChallengeTier = 1 | 2 | 3 | 4 | 5;
+export type ChallengeTier = 1 | 2 | 3 | 4 | 5 | 6;
 
 export const GROUP_TIER: Record<string, ChallengeTier> = {
   "eo-o": 1,
@@ -387,6 +447,10 @@ export const GROUP_TIER: Record<string, ChallengeTier> = {
   fortition: 5,
   "n-insertion": 5,
   intonation: 5,
+  "twister-ganjang": 6,
+  "twister-kongkkakji": 6,
+  "twister-girin": 6,
+  "twister-malttuk": 6,
 };
 
 export const TIER_META: { tier: ChallengeTier; name: string; emoji: string }[] = [
@@ -395,6 +459,7 @@ export const TIER_META: { tier: ChallengeTier; name: string; emoji: string }[] =
   { tier: 3, name: "Hardcore", emoji: "🔥" },
   { tier: 4, name: "Brutal", emoji: "💀" },
   { tier: 5, name: "Legendary", emoji: "👑" },
+  { tier: 6, name: "Tongue Twisters", emoji: "🌪️" },
 ];
 
 export function groupsForTier(tier: ChallengeTier): SoundGroup[] {
@@ -428,6 +493,10 @@ export const CHAPTER_BLURB: Record<string, string> = {
   fortition: "Sounds that toughen up",
   "n-insertion": "A surprise n",
   intonation: "Say it with feeling",
+  "twister-ganjang": "The soy sauce factory",
+  "twister-kongkkakji": "Peeled or not?",
+  "twister-girin": "The giraffe drawing",
+  "twister-malttuk": "Tie the horse?",
 };
 
 export function chapterBlurb(key: string): string {
