@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState, type ReactNode } from "react";
-import { createClient } from "@/lib/supabase/client";
+import { createClient, getClientUserId } from "@/lib/supabase/client";
 import { recordCompletion, awardPartialCredit, XP_POINTS } from "@/lib/activity";
 import { type Dialogue } from "@/lib/listening-dialogues";
 import type { Situation } from "@/lib/listening";
@@ -57,13 +57,11 @@ export default function ListeningSession({
     const xp = Math.max(0, full - Math.round(full * awardedRatio));
     setDone({ dialogue, correct, xp });
 
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    if (user) {
+    const userId = await getClientUserId(supabase);
+    if (userId) {
       // quiz_correct arrived in migration 0037; save the completion without
       // it when that migration hasn't reached this environment yet.
-      const row = { user_id: user.id, dialogue_id: dialogue.id, completed_at: new Date().toISOString() };
+      const row = { user_id: userId, dialogue_id: dialogue.id, completed_at: new Date().toISOString() };
       const { error } = await supabase
         .from("listening_progress")
         .upsert({ ...row, quiz_correct: correct }, { onConflict: "user_id,dialogue_id" });
@@ -81,10 +79,7 @@ export default function ListeningSession({
     if (completed.has(dialogue.id) || heard <= 0) return;
     const ratio = heard / dialogue.lines.length;
     const awardedRatio = loadAwardedRatio(dialogue.id);
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    if (!user) return;
+    if (!(await getClientUserId(supabase))) return;
     const { newAwardedRatio, result } = await awardPartialCredit(
       supabase,
       "listening",

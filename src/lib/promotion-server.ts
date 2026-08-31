@@ -1,6 +1,7 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { CefrLevel } from "@/lib/tree";
-import { VOCAB_TOPICS, getWordsForTopic } from "@/lib/vocabulary";
+import { VOCAB_TOPICS } from "@/lib/vocabulary";
+import { getWordsForTopic } from "@/lib/vocabulary-words";
 import { COOLDOWN_HOURS, ELIGIBILITY, type ExcludeKeys } from "@/lib/promotion-test";
 
 export type Eligibility = {

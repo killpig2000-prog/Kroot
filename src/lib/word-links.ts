@@ -1,5 +1,6 @@
 import { LEVEL_ORDER, type CefrLevel } from "@/lib/tree";
-import { getChaptersForTopic, type VocabWord } from "@/lib/vocabulary";
+import type { VocabWord } from "@/lib/vocabulary";
+import { getChaptersForTopic } from "@/lib/vocabulary-words";
 import { getLocalizedMeaning } from "@/lib/vocabulary-i18n";
 import { surfaceCandidates, tokenizeKorean } from "@/lib/word-bank";
 

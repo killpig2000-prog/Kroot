@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { showEverything } from "../../app/[locale]/dashboard/actions";
 import { buttonClassName } from "@/components/ui/Button";
@@ -19,12 +20,13 @@ export type FirstVisitStep = {
 };
 
 export function FirstVisitPlan({ steps }: { steps: FirstVisitStep[] }) {
+  const t = useTranslations("dashboard.firstVisit");
   const first = steps.find((s) => s.href);
   return (
     <div className="border-[1.5px] border-success rounded-[16px] bg-cream px-[clamp(18px,3vw,26px)] py-5 mb-[30px] shadow-[0_14px_30px_-18px_rgba(60,50,30,.3)]">
       <div className="flex items-baseline justify-between gap-3 mb-3.5 flex-wrap">
-        <b className="font-semibold text-[15.5px]">⏱️ Today · 5 minutes</b>
-        <small className="text-[11.5px] font-bold tracking-[.06em] uppercase text-success-deep">Start here</small>
+        <b className="font-semibold text-[15.5px]">⏱️ {t("todayFiveMinutes")}</b>
+        <small className="text-[11.5px] font-bold tracking-[.06em] uppercase text-success-deep">{t("startHere")}</small>
       </div>
 
       <ol className="mb-4 flex flex-col gap-2">
@@ -60,7 +62,7 @@ export function FirstVisitPlan({ steps }: { steps: FirstVisitStep[] }) {
 
       {first && (
         <Link href={first.href!} className={buttonClassName("success", "inline-block w-full sm:w-auto text-center")}>
-          Start step 1 →
+          {t("startStep1")}
         </Link>
       )}
     </div>
@@ -69,21 +71,22 @@ export function FirstVisitPlan({ steps }: { steps: FirstVisitStep[] }) {
 
 // What's still locked, drawn as dimmed placeholder rows so the learner can
 // see what the next sessions open up.
-const LOCKED_ROWS: { key: keyof FirstVisitUnlocks; icon: string; title: string; note: string }[] = [
-  { key: "quest", icon: "🎯", title: "Today's quest", note: "opens after session 1" },
-  { key: "wotd", icon: "단", title: "Word of the day", note: "opens after session 2" },
-  { key: "levelMap", icon: "🗺️", title: "Level map", note: "opens after session 3" },
-  { key: "heatmap", icon: "🌿", title: "Study garden", note: "opens at a 3-day streak" },
+const LOCKED_ROWS: { key: keyof FirstVisitUnlocks; icon: string }[] = [
+  { key: "quest", icon: "🎯" },
+  { key: "wotd", icon: "단" },
+  { key: "levelMap", icon: "🗺️" },
+  { key: "heatmap", icon: "🌿" },
 ];
 
 export function LockedWidgets({ unlocked }: { unlocked: FirstVisitUnlocks }) {
+  const t = useTranslations("dashboard.firstVisit");
   const rows = LOCKED_ROWS.filter((r) => !unlocked[r.key]);
   return (
     <div className="mb-[30px]">
       {rows.length > 0 && (
         <>
-          <p className="text-[11.5px] font-semibold tracking-[.06em] uppercase text-faint mb-2">Unlocks next</p>
-          <ul className="flex flex-col gap-2 mb-4" aria-label="Locked dashboard sections">
+          <p className="text-[11.5px] font-semibold tracking-[.06em] uppercase text-faint mb-2">{t("unlocksNext")}</p>
+          <ul className="flex flex-col gap-2 mb-4" aria-label={t("lockedAria")}>
             {rows.map((r) => (
               <li
                 key={r.key}
@@ -99,7 +102,8 @@ export function LockedWidgets({ unlocked }: { unlocked: FirstVisitUnlocks }) {
                 </span>
                 <span className="flex-1 min-w-0">
                   <b className="block font-semibold text-[13.5px] text-muted">
-                    🔒 {r.title} <span className="font-medium text-faint">— {r.note}</span>
+                    🔒 {t(`locked.${r.key}.title`)}{" "}
+                    <span className="font-medium text-faint">— {t(`locked.${r.key}.note`)}</span>
                   </b>
                   {/* faux content, blurred: a hint of the card that's coming */}
                   <span aria-hidden="true" className="mt-1.5 flex gap-2 blur-[2px] opacity-50">
@@ -115,7 +119,7 @@ export function LockedWidgets({ unlocked }: { unlocked: FirstVisitUnlocks }) {
 
       <form action={showEverything} className="text-right">
         <button type="submit" className="text-[12px] font-semibold text-faint hover:text-muted underline underline-offset-2 transition-colors">
-          Show everything now
+          {t("showEverything")}
         </button>
       </form>
     </div>

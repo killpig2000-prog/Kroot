@@ -1,7 +1,8 @@
 "use client";
 
 import { useMemo, useRef, useState } from "react";
-import { createClient } from "@/lib/supabase/client";
+import { useTranslations } from "next-intl";
+import { createClient, getClientUserId } from "@/lib/supabase/client";
 import { recordCompletion } from "@/lib/activity";
 import { clearResume } from "@/lib/resume";
 import { useSaveResume } from "@/hooks/useSaveResume";
@@ -21,6 +22,7 @@ function QuestionCard({
   total: number;
   onAnswered: (correct: boolean) => void;
 }) {
+  const t = useTranslations("grammarUi.quiz");
   const [picked, setPicked] = useState<number | null>(null);
   const answered = picked !== null;
   const correct = picked === quiz.ans;
@@ -29,10 +31,10 @@ function QuestionCard({
     <div className="border border-line rounded-[14px] p-[clamp(18px,2.5vw,24px)] mb-3.5">
       <div className="flex items-center justify-between gap-2 mb-2 flex-wrap">
         <p className={Q_LABEL} style={{ marginBottom: 0 }}>
-          Question {no}
+          {t("question", { n: no })}
         </p>
         <span className="text-[12.5px] text-faint font-medium">
-          {no} of {total}
+          {t("progress", { n: no, total })}
         </span>
       </div>
       <p className="font-bold text-[16.5px] tracking-[-0.01em] mb-3.5 kr">{quiz.q}</p>
@@ -87,8 +89,8 @@ function QuestionCard({
             }`}
           >
             {correct
-              ? "🌱 Correct!"
-              : `💧 Not quite — the answer is ${ABC[quiz.ans]}. ${quiz.opts[quiz.ans]}`}
+              ? t("correct")
+              : t("wrong", { letter: ABC[quiz.ans], text: quiz.opts[quiz.ans] })}
           </span>
         </div>
       )}
@@ -110,6 +112,7 @@ export default function GrammarQuizBlock({
   level?: string;
   userId?: string;
 }) {
+  const t = useTranslations("grammarUi");
   const supabase = useMemo(() => createClient(), []);
   const recorded = useRef(false);
   const answered = useRef(new Set<number>());
@@ -120,7 +123,7 @@ export default function GrammarQuizBlock({
   useSaveResume(
     userId,
     lessonKey
-      ? { skill: "grammar", href: `/grammar/${lessonKey}`, label: lessonTitle ?? lessonKey, detail: `Grammar${level ? ` · ${level}` : ""}` }
+      ? { skill: "grammar", href: `/grammar/${lessonKey}`, label: lessonTitle ?? lessonKey, detail: `${t("resumeDetail")}${level ? ` · ${level}` : ""}` }
       : null
   );
 
@@ -130,24 +133,24 @@ export default function GrammarQuizBlock({
     if (answered.current.size < quiz.length || recorded.current) return;
     recorded.current = true;
 
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    if (!user) return;
+    // The page already resolved the viewer server-side and passes it in; only
+    // fall back to reading the session when it didn't.
+    const uid = userId ?? (await getClientUserId(supabase));
+    if (!uid) return;
 
     setDone(true);
     if (lessonKey) {
       // 42P01 (table missing before migration 0035) is silently ignored.
       await supabase.from("grammar_progress").upsert(
         {
-          user_id: user.id,
+          user_id: uid,
           lesson_key: lessonKey,
           score: Math.round((correctCount.current / quiz.length) * 100),
           completed_at: new Date().toISOString(),
         },
         { onConflict: "user_id,lesson_key" }
       );
-      void clearResume(supabase, user.id, `/grammar/${lessonKey}`);
+      void clearResume(supabase, uid, `/grammar/${lessonKey}`);
     }
     const res = await recordCompletion(supabase, "grammar", 3);
     if (res?.leveled_up) setNewLevel(res.new_level);
@@ -168,11 +171,11 @@ export default function GrammarQuizBlock({
       {done && (
         <div className="mt-1" style={{ animation: "fadeUp .35s ease" }}>
           <span className="inline-flex items-center gap-2 text-[13px] font-semibold rounded-lg px-3 py-1.5 border bg-success-bg text-success border-success-line">
-            🌱 Quiz done — today&apos;s minutes are on your tree.
+            {t("quiz.done")}
           </span>
           {newLevel && (
             <p className="mt-2 text-[13.5px] font-semibold text-success">
-              🎉 Level up! Now Lv. {newLevel}
+              {t("quiz.levelUp", { n: newLevel })}
             </p>
           )}
         </div>

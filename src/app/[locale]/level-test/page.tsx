@@ -1,3 +1,4 @@
+import { getFormatter, getTranslations } from "next-intl/server";
 import { Link, redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
@@ -11,6 +12,9 @@ import type { CefrLevel } from "@/lib/tree";
 // Promotion test hub: shows eligibility progress for the current grade and,
 // once every requirement is met, the actual four-skill test.
 export default async function LevelTestPage() {
+  const t = await getTranslations("levelTest");
+  const tn = await getTranslations("nav");
+  const format = await getFormatter();
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
   if (!user) redirect("/onboarding");
@@ -48,24 +52,22 @@ export default async function LevelTestPage() {
           {/* breadcrumb */}
           <div className="flex gap-2 text-[13px] text-faint mb-[18px]">
             <Link href="/dashboard" className="hover:text-charcoal transition-colors">
-              Garden
+              {tn("garden")}
             </Link>
             <span>/</span>
-            <b className="text-charcoal font-semibold">Promotion test</b>
+            <b className="text-charcoal font-semibold">{t("breadcrumb")}</b>
           </div>
 
           <h1 className="font-bold text-[22px] tracking-[-0.02em] mb-1">
-            🎯 Promotion test {spec && `· ${spec.from} → ${spec.to}`}
+            🎯 {t("title")} {spec && t("titleLevels", { from: spec.from, to: spec.to })}
           </h1>
           <p className="text-[13.5px] text-muted mb-6">
-            Hold onto enough of your current grade and the test unlocks on its own. Pass it to open the next grade&apos;s content.
+            {t("intro")}
           </p>
 
           {!spec ? (
             <div className="border border-line rounded-[14px] px-5 py-5 text-[14px]">
-              {grade === "C2"
-                ? "You\u2019re already at the top grade (C2)! 🏆"
-                : `The ${grade} level-up test is coming soon.`}
+              {grade === "C2" ? t("topGrade") : t("comingSoon", { grade })}
             </div>
           ) : !elig ? null : elig.eligible ? (
             <TestRunner
@@ -76,20 +78,19 @@ export default async function LevelTestPage() {
           ) : (
             <div className="grid gap-4">
               <div className="border border-line rounded-[14px] p-5 grid gap-3.5">
-                <b className="text-[14.5px]">Requirements — what you&apos;re holding onto at {grade}</b>
+                <b className="text-[14.5px]">{t("requirements.title", { grade })}</b>
                 <div className="flex items-center gap-3 text-[13px]">
-                  <span className="flex-none w-[130px]">Words held</span>
+                  <span className="flex-none w-[130px]">{t("requirements.wordsHeld")}</span>
                   {bar(elig.wordsMastered, elig.wordsRequired)}
                   <b className="flex-none tabular-nums">
                     {elig.wordsMastered}/{elig.wordsRequired}
                   </b>
                 </div>
                 <p className="text-[12px] text-muted -mt-1.5">
-                  A word counts once it survives its first two reviews — you&apos;ve studied{" "}
-                  {elig.wordsSeen} {grade} {elig.wordsSeen === 1 ? "word" : "words"} so far.
+                  {t("requirements.wordsNote", { n: elig.wordsSeen, grade })}
                 </p>
                 <div className="flex items-center gap-3 text-[13px]">
-                  <span className="flex-none w-[130px]">Reading passages</span>
+                  <span className="flex-none w-[130px]">{t("requirements.readingPassages")}</span>
                   {bar(elig.readingDone, elig.readingRequired)}
                   <b className="flex-none tabular-nums">
                     {elig.readingDone}/{elig.readingRequired}
@@ -99,30 +100,32 @@ export default async function LevelTestPage() {
 
               {elig.cooldownUntil ? (
                 <div className="border border-amber-line bg-[var(--tint-amber)] rounded-[14px] px-5 py-4 text-[13.5px]">
-                  <b>Retake cooldown</b> — you can try again after{" "}
-                  {new Date(elig.cooldownUntil).toLocaleString("en-US", {
-                    month: "short",
-                    day: "numeric",
-                    hour: "numeric",
-                    minute: "2-digit",
-                  })}{" "}
-                  .
+                  <b>{t("cooldown.label")}</b> —{" "}
+                  {t("cooldown.body", {
+                    date: format.dateTime(new Date(elig.cooldownUntil), {
+                      month: "short",
+                      day: "numeric",
+                      hour: "numeric",
+                      minute: "2-digit",
+                    }),
+                  })}
                   {elig.lastWeakest && SKILL_LABELS[elig.lastWeakest as keyof SkillScores] && (
                     <>
                       {" "}
-                      Meanwhile, practice{" "}
                       <Link
                         href={SKILL_LABELS[elig.lastWeakest as keyof SkillScores].href}
                         className="font-bold text-success hover:underline"
                       >
-                        {SKILL_LABELS[elig.lastWeakest as keyof SkillScores].en} →
+                        {t("cooldown.practice", {
+                          skill: t(`skills.${elig.lastWeakest as keyof SkillScores}`),
+                        })}
                       </Link>
                     </>
                   )}
                 </div>
               ) : (
                 <p className="text-[13px] text-muted">
-                  Keep studying {grade} vocabulary and reading to fill the gauges. When every bar is full, the test opens right here.
+                  {t("requirements.keepStudying", { grade })}
                 </p>
               )}
             </div>

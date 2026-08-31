@@ -1,0 +1,47 @@
+{
+  "crumb": "スラング",
+  "tagline": "教科書には載らない言葉 — Kドラマ、K-POP、グループチャットからそのまま",
+  "taglineDot": "教科書には載らない言葉 — Kドラマ、K-POP、グループチャットからそのまま。",
+  "signupNudge": "登録すると毎日のスラングクイズに挑戦でき、木のXPがもらえます。",
+  "startFree": "無料で始める",
+  "startFreeArrow": "無料で始める →",
+  "listen": "再生",
+  "vibes": {
+    "spoken": "話し言葉",
+    "texting": "チャット",
+    "internet": "ネット"
+  },
+  "board": {
+    "collected": "{done}/{total} 集めました",
+    "all": "すべて {n}"
+  },
+  "card": {
+    "flipBack": "{word}を裏返す",
+    "reveal": "{word}の意味を見る",
+    "collected": "収集済み",
+    "tapToFlip": "タップでめくる",
+    "literally": "直訳「{text}」"
+  },
+  "hero": {
+    "ofTheDay": "今日のスラング"
+  },
+  "quiz": {
+    "title": "毎日のスラングチャレンジ",
+    "doneToday": "今日は達成 — {score}/{total}問正解。明日また新しい問題！",
+    "intro": "{n}個の表現の意味を当てよう · +{xp} XP",
+    "start": "開始 ▶",
+    "result": "{score}/{total}問正解 · +{xp} XP",
+    "praise": "ストリートトークもばっちり — また明日！",
+    "encourage": "下のカードをめくって、明日また挑戦しよう。",
+    "prompt": "これはどんな意味？ · {n}/{total}",
+    "score": "スコア {n}"
+  },
+  "share": {
+    "eyebrow": "Kroot · ストリートトーク 🇰🇷",
+    "startLearning": "学習を始める",
+    "origin": "由来",
+    "related": "似ているスラング",
+    "ctaTitle": "{kr}のようなスラングがあと{n}語、すべて無料",
+    "ctaBody": "全部めくって、音を聞いて、今まさに話されている韓国語を学ぼう — 教科書の韓国語だけじゃなく。"
+  }
+}

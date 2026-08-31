@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 
 // Where each quest skill sends the learner. Completion is NOT done here —
@@ -20,10 +21,11 @@ export default function QuestButton({
   skillKey: string;
   completed: boolean;
 }) {
+  const t = useTranslations("dashboard.quest");
   if (completed) {
     return (
       <span className="rounded-[9px] px-[18px] py-[9px] text-[13.5px] font-semibold text-success bg-success-bg border border-success-line">
-        Done ✓
+        {t("done")}
       </span>
     );
   }
@@ -32,7 +34,7 @@ export default function QuestButton({
       href={SKILL_HREF[skillKey] ?? "/dashboard"}
       className="rounded-[9px] px-[18px] py-[9px] text-[13.5px] font-semibold text-white bg-success transition-colors hover:bg-success-deep"
     >
-      Start ▸
+      {t("start")}
     </Link>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
 import Mascot from "@/components/onboarding/Mascot";
 import CuteError from "@/components/ui/CuteError";
@@ -16,6 +17,7 @@ const BTN_GREEN =
   "inline-flex items-center justify-center rounded-[9px] bg-success px-[18px] py-[9px] text-[13.5px] font-semibold text-white hover:bg-success-deep transition-colors";
 
 export default function UpdatePasswordPage() {
+  const t = useTranslations("auth");
   const router = useRouter();
   const supabase = useMemo(() => createClient(), []);
   const [error, setError] = useState<string | null>(null);
@@ -31,7 +33,7 @@ export default function UpdatePasswordPage() {
     const password = String(form.get("pw") || "");
     const confirm = String(form.get("pw2") || "");
     if (password !== confirm) {
-      setError("Passwords don't match.");
+      setError(t("errors.passwordsDiffer"));
       return;
     }
 
@@ -42,7 +44,7 @@ export default function UpdatePasswordPage() {
     if (error) {
       setError(
         error.message.includes("Auth session missing")
-          ? "This reset link expired or was opened in a different browser. Request a new one."
+          ? t("errors.resetLinkExpired")
           : error.message
       );
       return;
@@ -71,16 +73,16 @@ export default function UpdatePasswordPage() {
           <div className={CARD}>
             <Mascot />
             <h1 className="text-center font-semibold text-[clamp(20px,3vw,25px)] tracking-[-0.02em] leading-[1.25] mb-1">
-              Set a new password
+              {t("update.title")}
             </h1>
             <p className="text-center text-muted text-[13.5px] mb-6">
-              Pick something strong — at least 8 characters.
+              {t("update.sub")}
             </p>
 
             <form method="post" onSubmit={handleSubmit}>
               <div className="mb-3.5">
                 <label htmlFor="pw" className={LABEL}>
-                  New password
+                  {t("fields.newPassword")}
                 </label>
                 <input
                   id="pw"
@@ -88,14 +90,14 @@ export default function UpdatePasswordPage() {
                   type="password"
                   required
                   minLength={8}
-                  placeholder="At least 8 characters"
+                  placeholder={t("fields.minCharsPlaceholder")}
                   autoComplete="new-password"
                   className={FIELD}
                 />
               </div>
               <div className="mb-5">
                 <label htmlFor="pw2" className={LABEL}>
-                  Confirm password
+                  {t("fields.confirmPassword")}
                 </label>
                 <input
                   id="pw2"
@@ -103,7 +105,7 @@ export default function UpdatePasswordPage() {
                   type="password"
                   required
                   minLength={8}
-                  placeholder="Same password again"
+                  placeholder={t("fields.samePasswordPlaceholder")}
                   autoComplete="new-password"
                   className={FIELD}
                 />
@@ -112,12 +114,12 @@ export default function UpdatePasswordPage() {
               {error && <CuteError>{error}</CuteError>}
 
               <button type="submit" disabled={busy} className={`${BTN_GREEN} w-full disabled:opacity-60`}>
-                {submitting ? "Saving…" : "Save new password"}
+                {submitting ? t("update.submitting") : t("update.submit")}
               </button>
             </form>
             <p className="text-center text-[12.5px] text-muted mt-4">
               <Link href="/auth/forgot-password" className="text-charcoal font-semibold hover:underline">
-                Request a new link
+                {t("update.requestNewLink")}
               </Link>
             </p>
           </div>

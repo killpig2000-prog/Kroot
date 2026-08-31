@@ -116,5 +116,9 @@
   "errors": {
     "authFailed": "Ese enlace de acceso falló o caducó. Inténtalo de nuevo.",
     "rateLimit": "Acabamos de enviar demasiados correos: espera unos minutos e inténtalo de nuevo, o continúa con Google."
+  },
+  "mascot": {
+    "welcome": "¡bienvenido!",
+    "together": "vamos allá"
   }
 }

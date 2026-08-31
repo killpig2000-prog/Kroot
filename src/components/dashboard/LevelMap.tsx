@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { LEVEL_ORDER, SPECIES, type CefrLevel } from "@/lib/tree";
 
@@ -18,6 +19,7 @@ export default function LevelMap({
   /** 0-100: average completion across skills at the current level. */
   overallPct: number;
 }) {
+  const t = useTranslations("dashboard.levelMap");
   const idx = LEVEL_ORDER.indexOf(current);
   const next = LEVEL_ORDER[idx + 1] ?? null;
   const okCount = checks.filter((c) => c.ok).length;
@@ -25,14 +27,14 @@ export default function LevelMap({
   return (
     <div className="border border-line rounded-[14px] bg-cream px-[22px] py-5 mb-[14px]">
       <div className="flex items-baseline justify-between gap-3 mb-4 flex-wrap">
-        <b className="font-semibold text-[15px]">🗺️ Your path</b>
+        <b className="font-semibold text-[15px]">🗺️ {t("title")}</b>
         <small className="text-[12.5px] text-faint font-medium">
-          {next ? `${okCount}/${checks.length} checks toward ${next}` : "Top of the tree 🌟"}
+          {next ? t("checksToward", { done: okCount, total: checks.length, next }) : t("topOfTree")}
         </small>
       </div>
 
       {/* stepper */}
-      <ol className="flex items-center gap-0 mb-4" aria-label="Levels">
+      <ol className="flex items-center gap-0 mb-4" aria-label={t("levelsAria")}>
         {LEVEL_ORDER.map((lv, i) => {
           const state = i < idx ? "done" : i === idx ? "now" : "todo";
           return (
@@ -73,7 +75,9 @@ export default function LevelMap({
           <span className="text-[20px] flex-none">🎯</span>
           <span className="flex-1 min-w-0">
             <b className="block text-[13.5px]">
-              {eligible ? `Ready for the ${current} → ${next} test` : `Unlock ${next} · ${SPECIES[next].name}`}
+              {eligible
+                ? t("ready", { current, next })
+                : t("unlock", { next, species: SPECIES[next].name })}
             </b>
             <span className="flex gap-2.5 mt-0.5 flex-wrap">
               {checks.map((c) => (
@@ -83,7 +87,7 @@ export default function LevelMap({
               ))}
             </span>
           </span>
-          <span className="flex-none text-[13px] font-bold text-success">{eligible ? "Start →" : "Details →"}</span>
+          <span className="flex-none text-[13px] font-bold text-success">{eligible ? t("start") : t("details")}</span>
         </Link>
       ) : null}
     </div>

@@ -1,0 +1,94 @@
+{
+  "coins": "🌰 {coins} xu",
+  "intro": "Trang điểm cho cây của bạn và khu vườn quanh nó. Chạm vào một thẻ để thử ngay trên cây của mình, rồi mua và đeo luôn tại đây.",
+  "slots": {
+    "hat": "Mũ",
+    "face": "Mặt",
+    "neck": "Cổ",
+    "aura": "Hào quang",
+    "sky": "Bầu trời",
+    "ground": "Mặt đất",
+    "friend": "Bạn đồng hành"
+  },
+  "rarity": {
+    "common": "Thường",
+    "rare": "Hiếm",
+    "epic": "Sử thi",
+    "legendary": "Huyền thoại"
+  },
+  "errors": {
+    "notEnoughCoins": "Không đủ xu.",
+    "alreadyOwned": "Bạn đã có món này rồi.",
+    "levelTooLow": "Cây của bạn chưa đủ cao.",
+    "unavailable": "Món này hiện chưa có sẵn.",
+    "notOnSale": "Món này hiện không được bán.",
+    "generic": "Có gì đó không ổn — hãy thử lại."
+  },
+  "cta": {
+    "pick": "Chọn một món",
+    "takeOff": "Tháo ra",
+    "wear": "Đeo lên",
+    "claimAdmin": "Nhận và đeo · admin",
+    "unlocksAt": "Mở khoá ở Lv.{level}",
+    "needMore": "Cần thêm {n} 🌰",
+    "claim": "Nhận và đeo",
+    "buy": "Mua và đeo · 🌰 {price}"
+  },
+  "bought": "{name} là của bạn rồi — và đã lên cây.",
+  "featured": {
+    "badge": "Chỉ trong tuần này",
+    "meta": "{slot} {rarity} · 🌰 {price}{hasLevel, select, yes { · cần Lv.{level}} other {}} · hết hạn sau {date}",
+    "daysLeft": "còn {n} ngày"
+  },
+  "categories": "Danh mục vật phẩm",
+  "new": "MỚI",
+  "card": {
+    "wearing": "Đang đeo ✓",
+    "owned": "Đã có",
+    "locked": "🔒 Lv.{level}",
+    "price": "🌰 {price}",
+    "goal": "· mục tiêu của bạn · {ready, select, yes {mua được rồi} other {còn thiếu {n}}}{hasLevel, select, yes { · Lv.{level}} other {}}",
+    "setGoal": "Đặt làm mục tiêu"
+  },
+  "empty": "Ở đây chưa có gì được bán — hãy ghé lại vào mùa sau.",
+  "tryOn": {
+    "label": "Thử · trên cây của bạn",
+    "caption": "Lv. {level}",
+    "none": "—",
+    "reset": "Đặt lại",
+    "hint": "Chạm vào một thẻ để thử",
+    "selected": "{name} · {krName}"
+  },
+  "picker": {
+    "change": "Đổi ▾",
+    "auto": "Món rẻ nhất tiếp theo (tự động)",
+    "price": "🌰 {price}{hasLevel, select, yes { · Lv.{level}} other {}}"
+  },
+  "goal": {
+    "earnNote": "· mỗi nhiệm vụ hằng ngày được {quest}, mỗi 10 cấp được {bonus}",
+    "doQuest": "Làm nhiệm vụ hôm nay →",
+    "savingFor": "Đang để dành cho <b>{name}</b>",
+    "needsLevel": " · cần Lv.{level}",
+    "progressLabel": "Số xu đã dành cho {name}",
+    "savedLocked": "Đã đủ xu · mở khoá ở Lv.{level}",
+    "buyNow": "Bạn mua được ngay rồi →",
+    "questsToGo": "còn {n} nhiệm vụ nữa",
+    "orBonus": " · hoặc thưởng Lv.{level} (+{coins})",
+    "questDone": "Đã xong nhiệm vụ hôm nay ✓",
+    "questReady": "Nhiệm vụ hôm nay đang chờ ✏️"
+  },
+  "freeze": {
+    "title": "Thẻ giữ chuỗi",
+    "held": "đang giữ {n}/{max}",
+    "desc": "Nếu bạn nghỉ một ngày, một thẻ sẽ tự được dùng — chuỗi của bạn vẫn còn.",
+    "descStreak": "Nếu bạn nghỉ một ngày, một thẻ sẽ tự được dùng — chuỗi {n} ngày của bạn vẫn còn.",
+    "errNotEnough": "Không đủ xu — mỗi nhiệm vụ hằng ngày trả {coins} xu.",
+    "errMax": "Bạn chỉ giữ được tối đa {max} thẻ.",
+    "errPending": "Thẻ giữ chuỗi sắp mở (migration 0035 chưa được áp dụng).",
+    "errGeneric": "Hiện chưa mua được.",
+    "bought": "Thẻ đã sẵn sàng 🧊 — sẽ tự được dùng nếu bạn nghỉ một ngày.",
+    "maxed": "Đã giữ tối đa",
+    "buying": "Đang mua…",
+    "buy": "Mua · 🌰 {price}"
+  }
+}

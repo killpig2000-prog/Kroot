@@ -3,7 +3,8 @@ import { Link, redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import { createClient, getClaimsUser, getDashboardProfile } from "@/lib/supabase/server";
-import { CHAPTER_UNITS, MINUTES_PER_SESSION, getChaptersForTopic, unlockedVocabTiers } from "@/lib/vocabulary";
+import { CHAPTER_UNITS, MINUTES_PER_SESSION, unlockedVocabTiers } from "@/lib/vocabulary";
+import { getChaptersForTopic } from "@/lib/vocabulary-words";
 import { WORD_STATUSES, wordStatus } from "@/lib/word-notes";
 import WordStatusIcon from "@/components/vocabulary/WordStatusIcon";
 import VocabSearch from "@/components/vocabulary/VocabSearch";
@@ -220,7 +221,7 @@ export default async function VocabularyPage({
 
           {/* ── chapter chip bar ── */}
           <nav
-            aria-label="Chapters"
+            aria-label={t("allChapters")}
             className="mb-4 sticky top-[52px] md:top-0 z-20 -mx-1 px-1 pt-1 bg-warm/95 backdrop-blur-sm"
           >
             <div className="flex gap-2 overflow-x-auto lg:flex-wrap lg:overflow-visible pb-1.5">

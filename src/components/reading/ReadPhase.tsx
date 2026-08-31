@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { buttonClassName } from "@/components/ui/Button";
 import GlossedText from "@/components/reading/GlossedText";
@@ -45,22 +46,22 @@ function writeLargeText(large: boolean) {
   for (const notify of sizeListeners) notify();
 }
 
-const GENRE_LABELS: Record<string, string> = {
-  dialogue: "💬 Dialogue",
-  message: "💬 Messages",
-  notice: "📌 Notice",
-  email: "✉️ Email",
-  interview: "🎙️ Interview",
-  instruction: "📋 How-to",
-  review: "⭐ Review",
-  diary: "📔 Diary",
-  story: "📖 Story",
-  explainer: "💡 Explainer",
-  editorial: "📰 Editorial",
-  article: "📰 Article",
-  essay: "✍️ Essay",
-  academic: "🎓 Academic",
-  opinion: "💭 Opinion",
+const GENRE_ICONS: Record<string, string> = {
+  dialogue: "💬",
+  message: "💬",
+  notice: "📌",
+  email: "✉️",
+  interview: "🎙️",
+  instruction: "📋",
+  review: "⭐",
+  diary: "📔",
+  story: "📖",
+  explainer: "💡",
+  editorial: "📰",
+  article: "📰",
+  essay: "✍️",
+  academic: "🎓",
+  opinion: "💭",
 };
 
 const CHIP = "text-[11.5px] font-semibold tracking-[.04em] rounded-md px-2 py-0.5 border";
@@ -93,6 +94,8 @@ export default function ReadPhase({
   words: Gloss[];
   onContinue: () => void;
 }) {
+  const t = useTranslations("reading.read");
+  const tg = useTranslations("reading.genreChip");
   const genre = passage.genre ?? "";
   const [mode, setMode] = useState<TranslationMode>("tap");
   // Server-rendered at the normal size, then corrected on hydration.
@@ -249,15 +252,19 @@ export default function ReadPhase({
   const toolbar = (
     <div className="flex items-center gap-2 flex-wrap bg-cream border border-line rounded-[12px] px-2.5 py-2 mb-3.5">
       <span className={`${CHIP} bg-[var(--tint-sky)] border-sky-line text-sky-deep`}>
-        Chapter {chapterIndex + 1}
+        {t("chapterN", { n: chapterIndex + 1 })}
       </span>
-      {GENRE_LABELS[genre] && (
+      {GENRE_ICONS[genre] && (
         <span className={`${CHIP} bg-[var(--tint-amber)] border-amber-line text-amber`}>
-          {GENRE_LABELS[genre]}
+          {GENRE_ICONS[genre]} {tg(genre)}
         </span>
       )}
       <span className="text-[12.5px] text-faint">
-        {level} · {countKoreanWords(passage.body_kr)} words · ~{MINUTES_PER_PASSAGE} min
+        {t("meta", {
+          level,
+          words: countKoreanWords(passage.body_kr),
+          min: MINUTES_PER_PASSAGE,
+        })}
       </span>
       <span className="flex-1 min-w-1" />
       <button
@@ -270,7 +277,7 @@ export default function ReadPhase({
             : "bg-warm border-line text-muted hover:text-charcoal"
         }`}
       >
-        {speaking !== null ? "❚❚ Playing" : "▶ Listen"}
+        {speaking !== null ? `❚❚ ${t("playing")}` : `▶ ${t("listen")}`}
       </button>
       <button
         type="button"
@@ -280,9 +287,9 @@ export default function ReadPhase({
           large ? "bg-success-bg border-success text-success-deep" : "bg-warm border-line text-muted hover:text-charcoal"
         }`}
       >
-        <span className="kr">가</span> {large ? "Smaller" : "Larger"}
+        <span className="kr">가</span> {large ? t("smaller") : t("larger")}
       </button>
-      <div className="flex border border-line rounded-[9px] overflow-hidden bg-warm" role="group" aria-label="Translation">
+      <div className="flex border border-line rounded-[9px] overflow-hidden bg-warm" role="group" aria-label={t("translationLabel")}>
         {(["off", "tap", "all"] as TranslationMode[]).map((m) => (
           <button
             key={m}
@@ -293,7 +300,7 @@ export default function ReadPhase({
               mode === m ? "bg-[var(--tint-sky)] text-sky-deep" : "text-muted hover:text-charcoal"
             }`}
           >
-            {m === "off" ? "Off" : m === "tap" ? "On tap" : "All"}
+            {m === "off" ? t("transOff") : m === "tap" ? t("transTap") : t("transAll")}
           </button>
         ))}
       </div>
@@ -302,8 +309,7 @@ export default function ReadPhase({
 
   const hint = (
     <p className="text-[12.5px] text-faint mt-4 pt-3 border-t border-dashed border-line">
-      {mode === "tap" ? "Tap a line for its translation · " : ""}
-      dotted words open their vocabulary page
+      {mode === "tap" ? t("hintFull") : t("hintDotted")}
     </p>
   );
 
@@ -358,7 +364,7 @@ export default function ReadPhase({
             ✉️
           </span>
           <div className="min-w-0">
-            <p className="text-[10.5px] font-semibold text-muted uppercase tracking-[.05em]">Subject</p>
+            <p className="text-[10.5px] font-semibold text-muted uppercase tracking-[.05em]">{t("subject")}</p>
             <p className="kr font-semibold text-[15px] truncate">{passage.title_kr}</p>
             {mode !== "off" && (
               <p className="text-[12px] text-faint italic truncate">{passage.title_en}</p>
@@ -430,7 +436,7 @@ export default function ReadPhase({
     body = (
       <div className="relative rounded-[10px] border border-amber-line bg-[var(--tint-amber)] px-[clamp(16px,3vw,26px)] py-[clamp(18px,3.2vw,26px)]">
         <span className="absolute -top-3 left-5 bg-cream border border-amber-line rounded-full px-2.5 py-1 text-[12.5px] font-semibold text-amber">
-          ⭐ Review
+          ⭐ {tg("review")}
         </span>
         <h2 className="kr text-[16px] font-semibold mt-2.5 mb-1">{passage.title_kr}</h2>
         {mode !== "off" && <p className="text-[12.5px] text-faint italic mb-3">{passage.title_en}</p>}
@@ -467,7 +473,7 @@ export default function ReadPhase({
         {words.length > 0 && (
           <div className="bg-cream border border-line rounded-[12px] px-3.5 py-3">
             <h3 className="text-[11px] font-semibold tracking-[.08em] uppercase text-faint mb-2">
-              Words in this story
+              {t("wordsTitle")}
             </h3>
             <div className="flex flex-wrap gap-1.5">
               {words.slice(0, 14).map((w) => (
@@ -481,14 +487,13 @@ export default function ReadPhase({
               ))}
             </div>
             <p className="text-[11.5px] text-faint mt-2">
-              {words.length > 14 ? `+${words.length - 14} more · ` : ""}
-              each one opens its vocabulary page.
+              {words.length > 14 ? t("wordsNoteMore", { n: words.length - 14 }) : t("wordsNote")}
             </p>
           </div>
         )}
 
         <button className={BTN_BLUE} onClick={onContinue}>
-          Answer {passage.questions.length} questions →
+          {t("answerQuestions", { n: passage.questions.length })}
         </button>
       </aside>
     </div>

@@ -29,10 +29,11 @@ export default async function SituationPage({
 
   const { situationKey } = await params;
   const sp = await searchParams;
-  const [t, ts, th] = await Promise.all([
+  const [t, ts, th, tl] = await Promise.all([
     getTranslations("listening.situation"),
     getTranslations("listening.situations"),
     getTranslations("listening.home"),
+    getTranslations("listening"),
   ]);
   const myLevel = (profile?.current_level ?? "A1") as CefrLevel;
   const level = isCefrLevel(sp.level) ? sp.level : myLevel;
@@ -84,7 +85,7 @@ export default async function SituationPage({
           {/* breadcrumb */}
           <div className="flex gap-2 text-[13px] text-faint mb-[18px] flex-wrap">
             <Link href="/dashboard" className="hover:text-charcoal transition-colors">
-              Garden
+              {tl("crumbGarden")}
             </Link>
             <span>/</span>
             <Link href={`/listening?level=${level}`} className="hover:text-charcoal transition-colors">

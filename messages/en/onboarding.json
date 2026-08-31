@@ -116,5 +116,9 @@
   "errors": {
     "authFailed": "That sign-in link failed or expired. Please try again.",
     "rateLimit": "We've sent too many emails just now — please wait a few minutes and try again, or continue with Google instead."
+  },
+  "mascot": {
+    "welcome": "welcome!",
+    "together": "let's do this"
   }
 }

@@ -1,38 +1,34 @@
+import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { getWordsForTopic } from "@/lib/vocabulary";
+import { getWordsForTopic } from "@/lib/vocabulary-words";
 
 // The old /stats (Insights) page, now embedded at the bottom of My growth.
 // The section keeps the #insights anchor so old /stats links land here after
 // redirect.
 
-const SKILL_META: Record<string, { label: string; emoji: string }> = {
-  reading: { label: "Reading", emoji: "📰" },
-  writing: { label: "Writing", emoji: "✏️" },
-  listening: { label: "Listening", emoji: "🎧" },
-  speaking: { label: "Speaking", emoji: "🎙️" },
-  vocabulary: { label: "Vocabulary", emoji: "🃏" },
-  grammar: { label: "Grammar", emoji: "📖" },
-  pronunciation: { label: "Pronunciation", emoji: "🔊" },
-  hangul: { label: "Hangul", emoji: "🔤" },
-  slang: { label: "Slang", emoji: "💬" },
-  quest: { label: "Daily quests", emoji: "🗺️" },
+// Emoji only — the labels are translated under profile.insights.skills.
+const SKILL_EMOJI: Record<string, string> = {
+  reading: "📰",
+  writing: "✏️",
+  listening: "🎧",
+  speaking: "🎙️",
+  vocabulary: "🃏",
+  grammar: "📖",
+  pronunciation: "🔊",
+  hangul: "🔤",
+  slang: "💬",
+  quest: "🗺️",
 };
 
-// Leitner boxes 1-5, in watering terms.
-const BOX_LABELS = ["Just planted", "Sprouting", "Growing", "Rooted", "Deep roots"];
+// Leitner boxes 1-5.
+const BOX_KEYS = ["1", "2", "3", "4", "5"] as const;
 
 const CARD = "border border-line rounded-[14px] px-[22px] py-5";
 
-function SectionHead() {
-  return (
-    <div className="flex items-center gap-2 mt-2" id="insights">
-      <b className="font-bold text-[15px] tracking-[-0.01em]">📊 Insights</b>
-    </div>
-  );
-}
-
 export default async function InsightsSection({ userId }: { userId: string }) {
+  const t = await getTranslations("profile.insights");
+  const locale = await getLocale();
   const supabase = await createClient();
   const twoWeeksAgo = new Date();
   twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 13);
@@ -70,7 +66,7 @@ export default async function InsightsSection({ userId }: { userId: string }) {
     const date = d.toISOString().slice(0, 10);
     return {
       date,
-      label: d.toLocaleDateString("en-US", { weekday: "narrow" }),
+      label: d.toLocaleDateString(locale, { weekday: "narrow" }),
       xp: xpByDay.get(date) ?? 0,
     };
   });
@@ -78,7 +74,7 @@ export default async function InsightsSection({ userId }: { userId: string }) {
   const xpTotal14 = days.reduce((sum, d) => sum + d.xp, 0);
 
   const skillRows = [...xpBySkill.entries()]
-    .filter(([skill]) => SKILL_META[skill])
+    .filter(([skill]) => SKILL_EMOJI[skill])
     .sort((a, b) => b[1] - a[1]);
   const maxSkillXp = Math.max(...skillRows.map(([, xp]) => xp), 1);
 
@@ -132,15 +128,17 @@ export default async function InsightsSection({ userId }: { userId: string }) {
 
   return (
     <>
-      <SectionHead />
+      <div className="flex items-center gap-2 mt-2" id="insights">
+        <b className="font-bold text-[15px] tracking-[-0.01em]">{t("title")}</b>
+      </div>
 
       {/* headline tiles */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {[
-          { label: "word accuracy", value: vocabAccuracy !== null ? `${vocabAccuracy}%` : "—" },
-          { label: "reading accuracy", value: readingAccuracy !== null ? `${readingAccuracy}%` : "—" },
-          { label: "avg pronunciation score", value: speakingAvg !== null ? `${speakingAvg}` : "—" },
-          { label: "XP · 14 days", value: `${xpTotal14}` },
+          { label: t("tiles.wordAccuracy"), value: vocabAccuracy !== null ? `${vocabAccuracy}%` : "—" },
+          { label: t("tiles.readingAccuracy"), value: readingAccuracy !== null ? `${readingAccuracy}%` : "—" },
+          { label: t("tiles.pronunciationScore"), value: speakingAvg !== null ? `${speakingAvg}` : "—" },
+          { label: t("tiles.xp14"), value: `${xpTotal14}` },
         ].map((s) => (
           <div key={s.label} className={`${CARD} !px-4 !py-3.5 text-center`}>
             <b className="block text-[19px] font-extrabold tracking-[-0.02em] tabular-nums">
@@ -154,8 +152,8 @@ export default async function InsightsSection({ userId }: { userId: string }) {
       {/* XP timeline */}
       <div className={CARD}>
         <div className="flex justify-between items-baseline mb-4 gap-3">
-          <b className="font-semibold text-[15px] tracking-[-0.01em]">⚡ XP · last 14 days</b>
-          <span className="text-[12px] text-faint font-medium">XP / day</span>
+          <b className="font-semibold text-[15px] tracking-[-0.01em]">{t("xpTitle")}</b>
+          <span className="text-[12px] text-faint font-medium">{t("xpPerDay")}</span>
         </div>
         <div className="flex items-end gap-1.5 h-[110px]" aria-hidden="true">
           {days.map((d, i) => {
@@ -164,7 +162,7 @@ export default async function InsightsSection({ userId }: { userId: string }) {
               <div
                 key={d.date}
                 className="flex-1 flex flex-col justify-end items-center gap-1 h-full"
-                title={`${d.date}: ${d.xp} XP`}
+                title={t("xpDayTitle", { date: d.date, xp: d.xp })}
               >
                 <div
                   className={`w-full max-w-[22px] rounded-t-[4px] ${
@@ -184,18 +182,16 @@ export default async function InsightsSection({ userId }: { userId: string }) {
       {/* XP by skill */}
       <div className={CARD}>
         <b className="font-semibold text-[15px] tracking-[-0.01em] block mb-3.5">
-          🌱 Where your XP comes from
+          {t("bySkillTitle")}
         </b>
         {skillRows.length === 0 ? (
-          <p className="text-[13px] text-faint">
-            Finish a lesson and your per-skill breakdown starts filling in here.
-          </p>
+          <p className="text-[13px] text-faint">{t("bySkillEmpty")}</p>
         ) : (
           <div className="grid gap-2.5">
             {skillRows.map(([skill, xp]) => (
               <div key={skill} className="flex items-center gap-3">
                 <span className="flex-none w-[130px] text-[12.5px] font-semibold text-muted">
-                  {SKILL_META[skill].emoji} {SKILL_META[skill].label}
+                  {SKILL_EMOJI[skill]} {t(`skills.${skill}`)}
                 </span>
                 <span className="flex-1 h-2.5 rounded-full bg-[var(--tint-stone)] overflow-hidden">
                   <span
@@ -203,7 +199,7 @@ export default async function InsightsSection({ userId }: { userId: string }) {
                     style={{ width: `${Math.round((xp / maxSkillXp) * 100)}%` }}
                   />
                 </span>
-                <b className="flex-none w-[52px] text-right text-[12.5px] tabular-nums">{xp} XP</b>
+                <b className="flex-none w-[52px] text-right text-[12.5px] tabular-nums">{t("xpAmount", { xp })}</b>
               </div>
             ))}
           </div>
@@ -213,14 +209,14 @@ export default async function InsightsSection({ userId }: { userId: string }) {
       {/* Leitner boxes */}
       <div className={CARD}>
         <div className="flex justify-between items-baseline mb-3.5 gap-3">
-          <b className="font-semibold text-[15px] tracking-[-0.01em]">💧 How deep your words are rooted</b>
-          <span className="text-[12px] text-faint font-medium">{vocab.length} words</span>
+          <b className="font-semibold text-[15px] tracking-[-0.01em]">{t("boxesTitle")}</b>
+          <span className="text-[12px] text-faint font-medium">{t("wordCount", { n: vocab.length })}</span>
         </div>
         <div className="grid gap-2.5">
-          {BOX_LABELS.map((label, i) => (
-            <div key={label} className="flex items-center gap-3">
+          {BOX_KEYS.map((box, i) => (
+            <div key={box} className="flex items-center gap-3">
               <span className="flex-none w-[130px] text-[12.5px] font-semibold text-muted">
-                {label}
+                {t(`boxes.${box}`)}
               </span>
               <span className="flex-1 h-2.5 rounded-full bg-[var(--tint-stone)] overflow-hidden">
                 <span
@@ -240,15 +236,13 @@ export default async function InsightsSection({ userId }: { userId: string }) {
       {/* weakest words */}
       <div className={CARD}>
         <div className="flex justify-between items-baseline mb-3 gap-3">
-          <b className="font-semibold text-[15px] tracking-[-0.01em]">🥀 Words that need extra water</b>
+          <b className="font-semibold text-[15px] tracking-[-0.01em]">{t("weakestTitle")}</b>
           <Link href="/review" className="text-[12.5px] font-semibold text-success hover:underline">
-            Water them →
+            {t("weakestLink")}
           </Link>
         </div>
         {weakest.length === 0 ? (
-          <p className="text-[13px] text-faint">
-            Nothing wilting — every word you&apos;ve reviewed is doing fine. 🌱
-          </p>
+          <p className="text-[13px] text-faint">{t("weakestEmpty")}</p>
         ) : (
           <div className="grid gap-1">
             {weakest.map((w) => (
@@ -271,10 +265,7 @@ export default async function InsightsSection({ userId }: { userId: string }) {
         )}
       </div>
 
-      <p className="text-[12px] text-faint">
-        Per-skill XP starts counting from the day Insights launched — older XP shows in the
-        timeline but isn&apos;t broken down by skill.
-      </p>
+      <p className="text-[12px] text-faint">{t("footnote")}</p>
     </>
   );
 }

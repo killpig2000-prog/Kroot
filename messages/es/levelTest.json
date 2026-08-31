@@ -1,0 +1,59 @@
+{
+  "breadcrumb": "Prueba de ascenso",
+  "title": "Prueba de ascenso",
+  "titleLevels": "· {from} → {to}",
+  "intro": "Cuando domines lo suficiente de tu nivel actual, la prueba se desbloquea sola. Apruébala para abrir el contenido del siguiente nivel.",
+  "topGrade": "¡Ya estás en el nivel más alto (C2)! 🏆",
+  "comingSoon": "La prueba de ascenso de {grade} llegará pronto.",
+  "requirements": {
+    "title": "Requisitos: lo que estás reteniendo en {grade}",
+    "wordsHeld": "Palabras retenidas",
+    "wordsNote": "Una palabra cuenta cuando supera sus dos primeros repasos; hasta ahora has estudiado {n, plural, one {# palabra de {grade}} other {# palabras de {grade}}}.",
+    "readingPassages": "Textos de lectura",
+    "keepStudying": "Sigue estudiando vocabulario y lectura de {grade} para llenar las barras. Cuando estén todas llenas, la prueba se abre aquí mismo."
+  },
+  "cooldown": {
+    "label": "Espera para repetir",
+    "body": "puedes volver a intentarlo después del {date}.",
+    "practice": "Mientras tanto, practica {skill} →"
+  },
+  "skills": {
+    "listening": "Escucha",
+    "reading": "Lectura",
+    "writing": "Escritura"
+  },
+  "species": {
+    "A1": "Azalea",
+    "A2": "Forsitia",
+    "B1": "Cerezo",
+    "B2": "Caqui",
+    "C1": "Ginkgo",
+    "C2": "Pino"
+  },
+  "runner": {
+    "introTitle": "Prueba de ascenso · {from} → {to}",
+    "introBody": "Escucha ({listening}) → Lectura ({questions} preguntas sobre {passages, plural, one {# texto} other {# textos}}) → Escritura ({writing}: construye la frase con las palabras). Todo se corrige al instante, sin esperas. Las preguntas se sortean al azar en cada intento.",
+    "passRule": "Para aprobar: 70 o más de media, con 60 o más en cada destreza. Suspender no pasa nada: practica tu destreza más floja y repite la prueba dentro de {hours} horas.",
+    "start": "Empezar",
+    "listeningTitle": "1 · Escucha — toca 🔊 y responde",
+    "readingTitle": "2 · Lectura — texto {n}/{total}",
+    "writingProgress": "3 · Escritura — {done} / {total} hechas",
+    "seeResults": "Ver resultados →"
+  },
+  "mcq": {
+    "progress": "{title} · {n}/{total}",
+    "playAudio": "Reproducir audio",
+    "dontKnow": "No lo sé"
+  },
+  "result": {
+    "passedTitle": "¡Enhorabuena! ¡Has subido a {level}!",
+    "passedBody": "Tu {from} se convirtió en <b>{to}</b>.",
+    "contentOpen": "El contenido de {level} ya está abierto.",
+    "promotionFailed": "No pudimos aplicar el ascenso; revisa tu perfil en un momento.",
+    "failedTitle": "Todavía no… ¡pero estás cerca!",
+    "failedBody": "Puedes volver a intentarlo en {hours} horas.",
+    "weakest": "Tu destreza más floja fue <b>{skill}</b>.",
+    "practice": "Practica {skill} →",
+    "backToGarden": "Volver al jardín"
+  }
+}

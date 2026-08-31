@@ -1,13 +1,13 @@
 "use client";
 
 import { useMemo, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
 import LevelCreature from "@/components/dashboard/LevelCreature";
 import {
   COSTUMES,
   GARDEN_SLOTS,
-  RARITY_LABEL,
   SLOT_LABELS,
   SceneLayer,
   WEARABLE_SLOTS,
@@ -32,16 +32,17 @@ const RARITY_STYLE: Record<Rarity, { stripe: string; chip: string }> = {
 };
 const TABS: CostumeSlot[] = [...WEARABLE_SLOTS, ...GARDEN_SLOTS];
 
-function friendlyError(raw: string): string {
-  if (raw.includes("not enough coins")) return "Not enough coins.";
-  if (raw.includes("already owned")) return "You already own this.";
-  if (raw.includes("level too low")) return "Your tree isn't tall enough yet.";
+/** Maps a buy_costume() error onto a key under shop.errors. */
+function errorKey(raw: string): string {
+  if (raw.includes("not enough coins")) return "notEnoughCoins";
+  if (raw.includes("already owned")) return "alreadyOwned";
+  if (raw.includes("level too low")) return "levelTooLow";
   // Kroot Plus is gone, but buy_costume() still raises this for any catalog row
   // left with plus_only = true. Until migration 0042 clears those rows the error
   // is still reachable, so it needs copy that doesn't sell a tier we removed.
-  if (raw.includes("plus required")) return "This one isn't available right now.";
-  if (raw.includes("not available")) return "This item isn't on sale right now.";
-  return "Something went wrong — try again.";
+  if (raw.includes("plus required")) return "unavailable";
+  if (raw.includes("not available")) return "notOnSale";
+  return "generic";
 }
 
 /** The tree with a set of costumes, exactly as TreeCard draws it. */
@@ -95,6 +96,7 @@ export default function ShopClient({
   today: string;
   questDone?: boolean;
 }) {
+  const t = useTranslations("shop");
   const router = useRouter();
   const supabase = useMemo(() => createClient(), []);
   const now = useMemo(() => new Date(today), [today]);
@@ -113,7 +115,7 @@ export default function ShopClient({
   const [worn, setWorn] = useState<Partial<Record<CostumeSlot, string>>>(() => toMap(equipped));
   const [preview, setPreview] = useState<Partial<Record<CostumeSlot, string>>>(() => toMap(equipped));
   const [busy, setBusy] = useState(false);
-  const [message, setMessage] = useState<string | null>(null);
+  const [message, setMessage] = useState<{ text: string; good: boolean } | null>(null);
 
   // ── coin goal ──
   // A user-picked goal lives in localStorage only (null until hydrated, so
@@ -170,14 +172,14 @@ export default function ShopClient({
       } else {
         const { data, error } = await supabase.rpc("buy_costume", { p_costume_id: selected.id });
         if (error) {
-          setMessage(friendlyError(error.message));
+          setMessage({ text: t(`errors.${errorKey(error.message)}`), good: false });
           return;
         }
         if (typeof data === "number") setBalance(data);
         setOwnedSet((s) => new Set(s).add(selected.id));
         if (goalOverride === selected.id) writeStoredGoal(null);
         await equip(selected);
-        setMessage(`${selected.name} is yours — and on your tree.`);
+        setMessage({ text: t("bought", { name: selected.name }), good: true });
       }
       router.refresh();
     } finally {
@@ -186,14 +188,16 @@ export default function ShopClient({
   }
 
   // What the main button does for the item picked in this tab.
-  let cta: { label: string; disabled?: boolean; href?: string } = { label: "Pick an item", disabled: true };
+  let cta: { label: string; disabled?: boolean; href?: string } = { label: t("cta.pick"), disabled: true };
   if (selected) {
     const isOwned = ownedSet.has(selected.id);
-    if (isOwned) cta = { label: worn[selected.slot] === selected.id ? "Take off" : "Wear it" };
-    else if (isAdmin) cta = { label: "Claim & wear · admin" };
-    else if (isLevelLocked(selected, playerLevel)) cta = { label: `Unlocks at Lv.${selected.minPlayerLevel}`, disabled: true };
-    else if (balance < selected.price) cta = { label: `Need ${selected.price - balance} more 🌰`, disabled: true };
-    else cta = { label: selected.price === 0 ? "Claim & wear" : `Buy & wear · 🌰 ${selected.price}` };
+    if (isOwned) cta = { label: worn[selected.slot] === selected.id ? t("cta.takeOff") : t("cta.wear") };
+    else if (isAdmin) cta = { label: t("cta.claimAdmin") };
+    else if (isLevelLocked(selected, playerLevel))
+      cta = { label: t("cta.unlocksAt", { level: selected.minPlayerLevel ?? 0 }), disabled: true };
+    else if (balance < selected.price)
+      cta = { label: t("cta.needMore", { n: selected.price - balance }), disabled: true };
+    else cta = { label: selected.price === 0 ? t("cta.claim") : t("cta.buy", { price: selected.price }) };
   }
 
   return (
@@ -210,7 +214,7 @@ export default function ShopClient({
           goalCandidates.length > 0 ? (
             <details ref={pickerRef} className="relative inline-block">
               <summary className="list-none cursor-pointer select-none text-[12px] font-bold text-faint hover:text-charcoal [&::-webkit-details-marker]:hidden">
-                Change ▾
+                {t("picker.change")}
               </summary>
               <div className="absolute left-0 top-full mt-1 z-20 w-[250px] max-h-[264px] overflow-y-auto bg-cream border border-line rounded-[10px] shadow-[0_10px_22px_-12px_rgba(60,50,30,.35)] p-1">
                 {goalOverride && (
@@ -219,7 +223,7 @@ export default function ShopClient({
                     onClick={() => setGoal(null)}
                     className="w-full text-left rounded-lg px-2.5 py-1.5 text-[12px] font-semibold text-muted hover:bg-warm"
                   >
-                    Cheapest next item (auto)
+                    {t("picker.auto")}
                   </button>
                 )}
                 {goalCandidates.map((c) => {
@@ -234,8 +238,11 @@ export default function ShopClient({
                       <span aria-hidden="true">{c.icon ?? SLOT_LABELS[c.slot].icon}</span>
                       <span className="flex-1 min-w-0 truncate font-semibold">{c.name}</span>
                       <span className="text-muted tabular-nums whitespace-nowrap">
-                        🌰 {c.price}
-                        {isLevelLocked(c, playerLevel) ? ` · Lv.${c.minPlayerLevel}` : ""}
+                        {t("picker.price", {
+                          price: c.price,
+                          hasLevel: isLevelLocked(c, playerLevel) ? "yes" : "no",
+                          level: c.minPlayerLevel ?? 0,
+                        })}
                       </span>
                       {isGoal && <span className="text-success font-extrabold">✓</span>}
                     </button>
@@ -270,25 +277,31 @@ export default function ShopClient({
               </span>
               <span className="min-w-0">
                 <span className="block text-[10.5px] font-extrabold tracking-[.06em] uppercase text-[#B14F27]">
-                  This week only
+                  {t("featured.badge")}
                 </span>
                 <b className="block text-[14px] truncate">
                   {featured.name} <span className="kr text-muted font-semibold">{featured.krName}</span>
                 </b>
                 <small className="block text-[12.5px] text-muted">
-                  {RARITY_LABEL[featured.rarity]} {SLOT_LABELS[featured.slot].en.toLowerCase()} · 🌰 {featured.price}
-                  {featured.minPlayerLevel ? ` · needs Lv.${featured.minPlayerLevel}` : ""} · gone after {featured.availableUntil}
+                  {t("featured.meta", {
+                    rarity: t(`rarity.${featured.rarity}`),
+                    slot: t(`slots.${featured.slot}`).toLocaleLowerCase(),
+                    price: featured.price,
+                    hasLevel: featured.minPlayerLevel ? "yes" : "no",
+                    level: featured.minPlayerLevel ?? 0,
+                    date: featured.availableUntil,
+                  })}
                 </small>
               </span>
               <span className="text-[11.5px] font-extrabold tracking-[.04em] uppercase text-[#B14F27] whitespace-nowrap">
-                {daysLeft(featured.availableUntil, today)}d left
+                {t("featured.daysLeft", { n: daysLeft(featured.availableUntil, today) })}
               </span>
             </button>
           )}
 
           {/* right-edge fade hints that the category row scrolls sideways */}
           <div className="relative mb-3 after:content-[''] after:pointer-events-none after:absolute after:top-0 after:bottom-1.5 after:right-0 after:w-12 after:bg-gradient-to-l after:from-white after:to-transparent">
-          <div className="flex gap-1.5 overflow-x-auto pb-1.5 -mx-1 px-1 pr-12 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" role="tablist" aria-label="Item categories">
+          <div className="flex gap-1.5 overflow-x-auto pb-1.5 -mx-1 px-1 pr-12 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" role="tablist" aria-label={t("categories")}>
             {TABS.map((slot) => {
               const on = slot === tab;
               const isNew = GARDEN_SLOTS.includes(slot);
@@ -307,10 +320,10 @@ export default function ShopClient({
                   }`}
                 >
                   <span aria-hidden="true">{SLOT_LABELS[slot].icon}</span>
-                  {SLOT_LABELS[slot].en}
+                  {t(`slots.${slot}`)}
                   {isNew && (
                     <span className={`text-[9.5px] font-extrabold tracking-[.06em] rounded-full px-1.5 py-px ${on ? "bg-[#B7791F] text-white" : "bg-[#B14F27] text-white"}`}>
-                      NEW
+                      {t("new")}
                     </span>
                   )}
                 </button>
@@ -327,9 +340,22 @@ export default function ShopClient({
               const ids = Object.values({ ...preview, [c.slot]: c.id }).filter((v): v is string => !!v);
               const rs = RARITY_STYLE[c.rarity];
               let price: React.ReactNode;
-              if (isOwned) price = <span className="text-[12.5px] font-extrabold text-success">{worn[c.slot] === c.id ? "Wearing ✓" : "Owned"}</span>;
-              else if (locked) price = <span className="text-[12.5px] font-extrabold text-[#B7AE9C]">🔒 Lv.{c.minPlayerLevel}</span>;
-              else price = <span className="text-[12.5px] font-extrabold tabular-nums">🌰 {c.price}</span>;
+              if (isOwned)
+                price = (
+                  <span className="text-[12.5px] font-extrabold text-success">
+                    {worn[c.slot] === c.id ? t("card.wearing") : t("card.owned")}
+                  </span>
+                );
+              else if (locked)
+                price = (
+                  <span className="text-[12.5px] font-extrabold text-[#B7AE9C]">
+                    {t("card.locked", { level: c.minPlayerLevel ?? 0 })}
+                  </span>
+                );
+              else
+                price = (
+                  <span className="text-[12.5px] font-extrabold tabular-nums">{t("card.price", { price: c.price })}</span>
+                );
               // Only items you could save for get the goal control.
               const goalable = !isOwned && !isAdmin && c.price > 0;
               const isGoal = goalable && goal?.id === c.id;
@@ -348,7 +374,9 @@ export default function ShopClient({
                       <b className="block text-[13px] leading-tight">{c.name}</b>
                       <small className="block kr text-[11.5px] text-muted">{c.krName}</small>
                       <span className="flex items-center justify-between gap-1.5 mt-1.5">
-                        <span className={`text-[10px] font-extrabold tracking-[.06em] uppercase rounded px-1.5 py-px ${rs.chip}`}>{RARITY_LABEL[c.rarity]}</span>
+                        <span className={`text-[10px] font-extrabold tracking-[.06em] uppercase rounded px-1.5 py-px ${rs.chip}`}>
+                          {t(`rarity.${c.rarity}`)}
+                        </span>
                         {price}
                       </span>
                     </span>
@@ -357,12 +385,16 @@ export default function ShopClient({
                     <span className="block px-2.5 pb-2 -mt-1 text-[11px] leading-tight">
                       {isGoal ? (
                         <span className="font-bold text-[#B7791F]">
-                          · your goal · {toGo > 0 ? `${toGo} to go` : "ready to buy"}
-                          {locked ? ` · Lv.${c.minPlayerLevel}` : ""}
+                          {t("card.goal", {
+                            ready: toGo > 0 ? "no" : "yes",
+                            n: toGo,
+                            hasLevel: locked ? "yes" : "no",
+                            level: c.minPlayerLevel ?? 0,
+                          })}
                         </span>
                       ) : (
                         <button type="button" onClick={() => setGoal(c.id)} className="font-bold text-faint hover:text-charcoal transition-colors">
-                          Set as goal
+                          {t("card.setGoal")}
                         </button>
                       )}
                     </span>
@@ -371,18 +403,18 @@ export default function ShopClient({
               );
             })}
             {visible.length === 0 && (
-              <p className="col-span-full text-[13px] text-muted py-6 text-center">Nothing on sale here right now — check back next season.</p>
+              <p className="col-span-full text-[13px] text-muted py-6 text-center">{t("empty")}</p>
             )}
           </div>
         </div>
 
         {/* ── try-on ── */}
         <aside className="order-first lg:order-none border-b lg:border-b-0 lg:border-l border-line bg-warm p-4 lg:sticky lg:top-4 self-start">
-          <p className="text-[11.5px] font-extrabold tracking-[.08em] uppercase text-[#B7AE9C] mb-2">Try on · your tree</p>
+          <p className="text-[11.5px] font-extrabold tracking-[.08em] uppercase text-[#B7AE9C] mb-2">{t("tryOn.label")}</p>
           <figure className="relative m-0 mx-auto max-w-[230px] bg-cream border border-line p-1.5 pb-6 rotate-[1deg] shadow-[0_10px_22px_-12px_rgba(60,50,30,.35)] mb-3">
             <Scene ids={previewIds} stage={stage} species={species} className="px-2.5 pt-2.5" />
             <figcaption className="absolute bottom-1 left-0 right-0 text-center text-[10px] font-bold text-[#8A8478]">
-              <span className="kr">{SPECIES[species].krName}</span> · Lv. {playerLevel}
+              <span className="kr">{SPECIES[species].krName}</span> · {t("tryOn.caption", { level: playerLevel })}
             </figcaption>
           </figure>
 
@@ -396,8 +428,8 @@ export default function ShopClient({
                   onClick={() => setTab(slot)}
                   className={`text-left border rounded-lg px-2 py-1.5 ${it ? "border-success-line bg-success-bg" : "border-line bg-cream"} ${slot === tab ? "ring-2 ring-success-line" : ""}`}
                 >
-                  <small className="block text-[10px] tracking-[.06em] uppercase text-[#B7AE9C] font-extrabold">{SLOT_LABELS[slot].en}</small>
-                  <b className="block text-[12px] truncate">{it ? it.name : "—"}</b>
+                  <small className="block text-[10px] tracking-[.06em] uppercase text-[#B7AE9C] font-extrabold">{t(`slots.${slot}`)}</small>
+                  <b className="block text-[12px] truncate">{it ? it.name : t("tryOn.none")}</b>
                 </button>
               );
             })}
@@ -426,11 +458,12 @@ export default function ShopClient({
               }}
               className="rounded-[10px] px-3 py-2.5 text-[13px] font-extrabold border border-line bg-cream hover:border-faint transition-colors"
             >
-              Reset
+              {t("tryOn.reset")}
             </button>
           </div>
-          <p className={`text-[11.5px] mt-2 text-center ${message?.includes("yours") ? "text-success font-semibold" : "text-muted"}`}>
-            {message ?? (selected ? `${selected.name} · ${selected.krName}` : "Tap a card to try it on")}
+          <p className={`text-[11.5px] mt-2 text-center ${message?.good ? "text-success font-semibold" : "text-muted"}`}>
+            {message?.text ??
+              (selected ? t("tryOn.selected", { name: selected.name, krName: selected.krName }) : t("tryOn.hint"))}
           </p>
         </aside>
       </div>

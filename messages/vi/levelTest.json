@@ -1,0 +1,59 @@
+{
+  "breadcrumb": "Bài kiểm tra thăng cấp",
+  "title": "Bài kiểm tra thăng cấp",
+  "titleLevels": "· {from} → {to}",
+  "intro": "Khi bạn nắm chắc đủ nội dung ở cấp hiện tại, bài kiểm tra sẽ tự mở. Vượt qua là mở khóa nội dung của cấp tiếp theo.",
+  "topGrade": "Bạn đã ở cấp cao nhất (C2) rồi! 🏆",
+  "comingSoon": "Bài kiểm tra thăng cấp {grade} sắp ra mắt.",
+  "requirements": {
+    "title": "Điều kiện — bạn đang giữ được những gì ở {grade}",
+    "wordsHeld": "Từ đã nhớ",
+    "wordsNote": "Một từ chỉ được tính khi vượt qua hai lần ôn đầu tiên — đến giờ bạn đã học {n} từ {grade}.",
+    "readingPassages": "Bài đọc",
+    "keepStudying": "Tiếp tục học từ vựng và bài đọc {grade} để lấp đầy các thanh. Khi tất cả đã đầy, bài kiểm tra sẽ mở ngay tại đây."
+  },
+  "cooldown": {
+    "label": "Chờ trước khi thi lại",
+    "body": "bạn có thể thử lại sau {date}.",
+    "practice": "Trong lúc đó, hãy luyện {skill} →"
+  },
+  "skills": {
+    "listening": "Nghe",
+    "reading": "Đọc",
+    "writing": "Viết"
+  },
+  "species": {
+    "A1": "Đỗ quyên",
+    "A2": "Liên kiều",
+    "B1": "Anh đào",
+    "B2": "Hồng",
+    "C1": "Bạch quả",
+    "C2": "Thông"
+  },
+  "runner": {
+    "introTitle": "Bài kiểm tra thăng cấp · {from} → {to}",
+    "introBody": "Nghe ({listening}) → Đọc ({questions} câu hỏi trên {passages} bài đọc) → Viết ({writing}, ghép các từ thành câu). Mọi thứ được chấm ngay lập tức — không phải chờ. Câu hỏi được rút ngẫu nhiên ở mỗi lần thi.",
+    "passRule": "Để đạt: trung bình từ 70 trở lên và mọi kỹ năng từ 60 trở lên. Trượt cũng không sao — hãy luyện kỹ năng yếu nhất rồi thi lại sau {hours} giờ.",
+    "start": "Bắt đầu",
+    "listeningTitle": "1 · Nghe — chạm 🔊 rồi trả lời",
+    "readingTitle": "2 · Đọc — bài {n}/{total}",
+    "writingProgress": "3 · Viết — xong {done} / {total}",
+    "seeResults": "Xem kết quả →"
+  },
+  "mcq": {
+    "progress": "{title} · {n}/{total}",
+    "playAudio": "Phát âm thanh",
+    "dontKnow": "Tôi không biết"
+  },
+  "result": {
+    "passedTitle": "Chúc mừng! Bạn đã lên {level}!",
+    "passedBody": "Cây {from} của bạn đã lớn thành <b>{to}</b>.",
+    "contentOpen": "Nội dung {level} đã mở.",
+    "promotionFailed": "Chúng tôi chưa áp dụng được việc thăng cấp — hãy kiểm tra trang cá nhân sau ít phút.",
+    "failedTitle": "Chưa được — nhưng bạn đã rất gần rồi!",
+    "failedBody": "Bạn có thể thử lại sau {hours} giờ.",
+    "weakest": "Kỹ năng yếu nhất của bạn là <b>{skill}</b>.",
+    "practice": "Luyện {skill} →",
+    "backToGarden": "Về khu vườn"
+  }
+}

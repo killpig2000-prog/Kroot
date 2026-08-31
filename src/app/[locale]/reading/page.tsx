@@ -12,22 +12,22 @@ import { isDifficultyUnlocked } from "@/lib/level";
 // Genre keys are unique across all levels (diary/story repeat at every level;
 // the other two slots change per level to match real-world text types that
 // get harder as CEFR level rises — see [[chapter-list-garden-path]] memory).
-const GENRE_META: Record<string, { icon: string; label: string }> = {
-  diary: { icon: "📔", label: "Diary" },
-  story: { icon: "🎈", label: "Story" },
-  notice: { icon: "📌", label: "Notices" },
-  dialogue: { icon: "💬", label: "Dialogue" },
-  message: { icon: "📱", label: "Messages" },
-  instruction: { icon: "📋", label: "Instructions" },
-  email: { icon: "✉️", label: "Emails" },
-  explainer: { icon: "📚", label: "Explainers" },
-  review: { icon: "⭐", label: "Reviews" },
-  article: { icon: "📰", label: "Articles" },
-  opinion: { icon: "🗣️", label: "Opinion" },
-  editorial: { icon: "🏛️", label: "Editorials" },
-  essay: { icon: "🖋️", label: "Essays" },
-  academic: { icon: "🎓", label: "Academic" },
-  interview: { icon: "🎙️", label: "Interviews" },
+const GENRE_ICON: Record<string, string> = {
+  diary: "📔",
+  story: "🎈",
+  notice: "📌",
+  dialogue: "💬",
+  message: "📱",
+  instruction: "📋",
+  email: "✉️",
+  explainer: "📚",
+  review: "⭐",
+  article: "📰",
+  opinion: "🗣️",
+  editorial: "🏛️",
+  essay: "🖋️",
+  academic: "🎓",
+  interview: "🎙️",
 };
 
 const STATUS_STYLE: Record<string, { badge: string; seed: string; icon: string }> = {
@@ -53,7 +53,7 @@ export default async function ReadingMapPage({
 }: {
   searchParams: Promise<{ level?: string }>;
 }) {
-  const tn = await getTranslations("nav");
+  const [t, tn] = await Promise.all([getTranslations("reading"), getTranslations("nav")]);
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
 
@@ -118,7 +118,12 @@ export default async function ReadingMapPage({
               </span>
             </h1>
             <span className="text-[13px] text-muted">
-              Level {level} · <b className="text-sky-deep">{doneCount}</b> of {chapters.length} chapters read
+              {t.rich("map.progress", {
+                level,
+                done: doneCount,
+                total: chapters.length,
+                b: (chunks) => <b className="text-sky-deep">{chunks}</b>,
+              })}
             </span>
           </div>
 
@@ -143,12 +148,12 @@ export default async function ReadingMapPage({
               </span>
               <span className="flex-1 min-w-[170px]">
                 <b className="block font-semibold text-sm text-sky-deep">
-                  Continue · Chapter {continueIndex + 1}
+                  {t("map.continueChapter", { n: continueIndex + 1 })}
                 </b>
                 <span className="text-[13px] text-sky-deep truncate block">{continueChapter.title_en}</span>
               </span>
               <span className="text-[13px] font-semibold text-sky-deep transition-transform group-hover:translate-x-0.5">
-                Start →
+                {t("map.start")}
               </span>
             </Link>
           )}
@@ -160,7 +165,7 @@ export default async function ReadingMapPage({
               const groupDone = group.filter((g) => g.status === "done").length;
               const firstGenre = group[0].chapter[0].genre;
               const genre = group.every((g) => g.chapter[0].genre === firstGenre) ? firstGenre : undefined;
-              const meta = genre ? GENRE_META[genre] : undefined;
+              const icon = genre ? GENRE_ICON[genre] : undefined;
               return (
                 <details
                   key={gi}
@@ -169,18 +174,18 @@ export default async function ReadingMapPage({
                 >
                   <summary className="flex items-center gap-3 px-5 py-3.5 cursor-pointer select-none list-none [&::-webkit-details-marker]:hidden hover:bg-warm transition-colors">
                     <span className="flex-1 min-w-0">
-                      {meta ? (
+                      {icon && genre ? (
                         <>
                           <b className="font-bold text-[14.5px]">
-                            {meta.icon} {meta.label}
+                            {icon} {t(`genres.${genre}`)}
                           </b>
                           <small className="block text-[11.5px] text-faint font-normal truncate">
-                            Chapters {first}–{last}
+                            {t("map.chaptersRange", { first, last })}
                           </small>
                         </>
                       ) : (
                         <b className="font-bold text-[14.5px]">
-                          Chapters {first}–{last}
+                          {t("map.chaptersRange", { first, last })}
                         </b>
                       )}
                     </span>
@@ -211,10 +216,15 @@ export default async function ReadingMapPage({
                           circleClassName: style.seed,
                           ringClassName: status === "current" ? "ring-4 ring-sky-line/60" : undefined,
                           circleContent: style.icon,
-                          title: `Chapter ${i + 1}`,
+                          title: t("map.chapterN", { n: i + 1 }),
                           subtitle: passage.title_en,
                           badgeClassName: style.badge,
-                          badgeLabel: status === "done" ? "Done" : status === "current" ? "Read" : "Locked",
+                          badgeLabel:
+                            status === "done"
+                              ? t("map.statusDone")
+                              : status === "current"
+                                ? t("map.statusRead")
+                                : t("map.statusLocked"),
                           dim: status === "locked",
                         };
                       })}

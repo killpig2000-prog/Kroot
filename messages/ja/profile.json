@@ -1,0 +1,86 @@
+{
+  "identity": {
+    "fallbackName": "学習者",
+    "difficulty": "難易度 {level}",
+    "growingSince": "{date} から成長中",
+    "maxLevel": "星まで届きました 🌟",
+    "xpToNext": "Lv. {level} まで {into}/{needed} XP",
+    "streak": "🔥 {n}日連続",
+    "coins": "🌰 {n} コイン",
+    "freezes": "🧊 フリーズ {n}個"
+  },
+  "avatar": {
+    "change": "プロフィール写真を変更",
+    "edit": "編集",
+    "errType": "画像ファイルを選んでください。",
+    "errSize": "画像は {mb}MB 未満にしてください。"
+  },
+  "name": {
+    "edit": "名前を編集",
+    "save": "保存"
+  },
+  "grass": {
+    "title": "🌿 学習の庭 · {year}",
+    "minutesShort": "{n}分",
+    "dayTitle": "{date} · {n}分",
+    "less": "少",
+    "more": "多"
+  },
+  "reminders": {
+    "title": "⏰ 毎日のリマインダー",
+    "scheduleKnown": "1日1回、{time}ごろ — その日まだ学習していない場合だけ",
+    "scheduleUnknown": "1日1回 — その日まだ学習していない場合だけ",
+    "pushTitle": "プッシュ通知",
+    "pushDesc": "タブを閉じていても、この端末に届きます。",
+    "pushIos": "iPhoneではまずKrootをホーム画面に追加し（共有 → ホーム画面に追加）、そのあとオンにしてください。",
+    "pushUnsupported": "このブラウザでは使えません — Chrome、Edge、Firefox をお試しください。",
+    "emailTitle": "メール",
+    "emailDesc": "ログイン用のメールアドレスに短いお知らせを送ります。",
+    "emailNone": "この機能を使うには、アカウントにメールアドレスを追加してください。",
+    "errBlocked": "このサイトの通知がブロックされています — ブラウザの設定で許可してから、もう一度お試しください。",
+    "errNoKey": "この環境ではプッシュ通知がまだ設定されていません。",
+    "errUnsupported": "このブラウザはプッシュ通知に対応していません。",
+    "errSubscribe": "登録できませんでした — もう一度お試しください。",
+    "errSave": "保存できませんでした — もう一度お試しください。"
+  },
+  "insights": {
+    "title": "📊 分析",
+    "skills": {
+      "reading": "リーディング",
+      "writing": "ライティング",
+      "listening": "リスニング",
+      "speaking": "スピーキング",
+      "vocabulary": "単語",
+      "grammar": "文法",
+      "pronunciation": "発音",
+      "hangul": "ハングル",
+      "slang": "スラング",
+      "quest": "デイリークエスト"
+    },
+    "boxes": {
+      "1": "植えたばかり",
+      "2": "芽が出た",
+      "3": "成長中",
+      "4": "根づいた",
+      "5": "深く根を張った"
+    },
+    "tiles": {
+      "wordAccuracy": "単語の正解率",
+      "readingAccuracy": "リーディング正解率",
+      "pronunciationScore": "発音の平均スコア",
+      "xp14": "XP · 14日間"
+    },
+    "xpTitle": "⚡ XP · 過去14日間",
+    "xpPerDay": "XP / 日",
+    "xpDayTitle": "{date}: {xp} XP",
+    "bySkillTitle": "🌱 XPの内訳",
+    "bySkillEmpty": "レッスンを1つ終えると、スキルごとの内訳がここに表示されます。",
+    "xpAmount": "{xp} XP",
+    "boxesTitle": "💧 単語がどれくらい根づいているか",
+    "wordCount": "{n} 単語",
+    "weakestTitle": "🥀 もう少し復習したい単語",
+    "weakestLink": "復習する →",
+    "weakestEmpty": "しおれている単語はありません — 復習した単語はどれも順調です。🌱",
+    "footnote": "スキル別のXPは分析の公開日から集計しています。それ以前のXPはグラフには出ますが、スキル別には分かれません。"
+  }
+}

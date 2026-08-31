@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { tokenizeKorean } from "@/lib/word-bank";
 import type { Gloss } from "@/lib/word-links";
@@ -32,6 +33,7 @@ export default function GlossedText({
   glossary: Record<string, Gloss>;
   className?: string;
 }) {
+  const t = useTranslations("reading.gloss");
   const tokens = useMemo(() => tokenizeKorean(text), [text]);
   const [anchor, setAnchor] = useState<Anchor | null>(null);
   const closeTimer = useRef<number | null>(null);
@@ -164,9 +166,9 @@ export default function GlossedText({
               className="mt-2.5 pt-2.5 border-t border-dashed border-line flex items-center justify-between gap-2 text-[12.5px] font-semibold text-sky-deep hover:underline"
             >
               <span>
-                Open the word page
+                {t("openWordPage")}
                 <small className="block font-medium text-faint text-[11px]">
-                  {anchor.gloss.unitLabel} · examples, notes, save it
+                  {t("openSub", { unit: anchor.gloss.unitLabel })}
                 </small>
               </span>
               <span aria-hidden="true">→</span>

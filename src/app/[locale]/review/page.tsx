@@ -5,10 +5,12 @@ import Sidebar from "@/components/dashboard/Sidebar";
 import ReviewSession from "@/components/review/ReviewSession";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { REVIEW_SESSION_SIZE } from "@/lib/srs";
-import { VOCAB_TOPICS, getWordsForTopic, type VocabWordWithProgress } from "@/lib/vocabulary";
+import { VOCAB_TOPICS, type VocabWordWithProgress } from "@/lib/vocabulary";
+import { getWordsForTopic } from "@/lib/vocabulary-words";
 
 export default async function ReviewPage() {
   const tn = await getTranslations("nav");
+  const t = await getTranslations("vocabulary.practice");
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
 
@@ -76,10 +78,10 @@ export default async function ReviewPage() {
           {/* breadcrumb */}
           <div className="flex gap-2 text-[13px] text-faint mb-[18px]">
             <Link href="/dashboard" className="hover:text-charcoal transition-colors">
-              Garden
+              {tn("garden")}
             </Link>
             <span>/</span>
-            <b className="text-charcoal font-semibold">Practice</b>
+            <b className="text-charcoal font-semibold">{tn("practice")}</b>
           </div>
 
           {/* head */}
@@ -89,7 +91,7 @@ export default async function ReviewPage() {
                 💧
               </span>
               {tn("practice")}
-              <span className="ml-2 text-[13px] font-medium text-faint">review time</span>
+              <span className="ml-2 text-[13px] font-medium text-faint">{t("reviewTime")}</span>
             </h1>
             <span className="flex items-center gap-3 flex-wrap text-[13px] text-muted">
               <Link href="/review/words" className="font-semibold text-sky-deep hover:underline">
@@ -100,11 +102,11 @@ export default async function ReviewPage() {
 
           {migrationMissing ? (
             <div className="max-w-[560px] border border-[var(--tint-slate-line)] rounded-[14px] bg-[var(--tint-slate)] p-[18px]">
-              <b className="block font-semibold text-[14px] mb-1">Practice opens soon</b>
+              <b className="block font-semibold text-[14px] mb-1">{t("opensSoonTitle")}</b>
               <small className="block text-[13px] text-muted leading-[1.55]">
-                Run the included migration{" "}
-                <code className="text-[12px]">supabase/migrations/0022_srs_review.sql</code> to turn
-                on spaced-repetition review.
+                {t.rich("opensSoonBody", {
+                  code: (chunks) => <code className="text-[12px]">{chunks}</code>,
+                })}
               </small>
             </div>
           ) : dueWords.length > 0 ? (
@@ -113,27 +115,23 @@ export default async function ReviewPage() {
             <div className="max-w-[560px] border border-line rounded-[14px] p-[clamp(24px,4vw,32px)] text-center">
               <p className="text-4xl mb-2">🌿</p>
               <h2 className="font-bold text-[19px] tracking-[-0.02em] mb-1.5">
-                Nothing to review right now
+                {t("nothingTitle")}
               </h2>
               <p className="text-sm text-muted mb-5">
                 {(learnedCount ?? 0) > 0 ? (
                   <>
-                    All {learnedCount} learned words are still fresh.
-                    {nextDue &&
-                      ` The next one is due ${new Date(nextDue).toLocaleDateString("en-US", {
-                        month: "short",
-                        day: "numeric",
-                      })}.`}
+                    {t("allFresh", { count: learnedCount ?? 0 })}
+                    {nextDue && ` ${t("nextDue", { date: new Date(nextDue) })}`}
                   </>
                 ) : (
-                  <>Learn a few words first — they&apos;ll show up here when it&apos;s time to review them.</>
+                  <>{t("learnFirst")}</>
                 )}
               </p>
               <Link
                 href="/vocabulary"
                 className="inline-flex items-center justify-center rounded-[9px] bg-success px-[22px] py-2.5 text-sm font-semibold text-white hover:bg-success-deep transition-colors"
               >
-                Plant new words →
+                {t("plantNew")}
               </Link>
             </div>
           )}

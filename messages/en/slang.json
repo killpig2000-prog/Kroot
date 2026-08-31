@@ -1,0 +1,47 @@
+{
+  "crumb": "Slang",
+  "tagline": "The words textbooks skip — straight from K-dramas, K-pop, and group chats",
+  "taglineDot": "The words textbooks skip — straight from K-dramas, K-pop, and group chats.",
+  "signupNudge": "Sign up to take the daily slang quiz and earn XP for your tree.",
+  "startFree": "Start free",
+  "startFreeArrow": "Start free →",
+  "listen": "Listen",
+  "vibes": {
+    "spoken": "Spoken",
+    "texting": "Texting",
+    "internet": "Internet"
+  },
+  "board": {
+    "collected": "{done}/{total} collected",
+    "all": "All {n}"
+  },
+  "card": {
+    "flipBack": "Flip {word} back",
+    "reveal": "Reveal the meaning of {word}",
+    "collected": "Collected",
+    "tapToFlip": "Tap to flip",
+    "literally": "literally “{text}”"
+  },
+  "hero": {
+    "ofTheDay": "Slang of the day"
+  },
+  "quiz": {
+    "title": "Daily slang challenge",
+    "doneToday": "Done today — {score}/{total} correct. New round tomorrow!",
+    "intro": "{n, plural, one {Guess the meaning of # expression} other {Guess the meaning of # expressions}} · +{xp} XP",
+    "start": "Start ▶",
+    "result": "{score}/{total} correct · +{xp} XP",
+    "praise": "Fluent in Street Talk — see you tomorrow!",
+    "encourage": "Flip the cards below and come back tomorrow.",
+    "prompt": "What does it mean? · {n}/{total}",
+    "score": "score {n}"
+  },
+  "share": {
+    "eyebrow": "Kroot · Street Talk 🇰🇷",
+    "startLearning": "Start learning",
+    "origin": "Where it comes from",
+    "related": "More slang like this",
+    "ctaTitle": "{n} more slang words like {kr}, free",
+    "ctaBody": "Flip through them all, hear how they sound, and start learning the Korean that’s actually spoken today — not just textbook Korean."
+  }
+}

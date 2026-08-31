@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { useTranslations } from "next-intl";
 import SlangCard from "./SlangCard";
 import { VIBES, type SlangEntry, type SlangVibe } from "@/lib/slang";
 
@@ -18,6 +19,8 @@ function loadCollected(): Set<string> {
 }
 
 export default function SlangBoard({ entries }: { entries: SlangEntry[] }) {
+  const t = useTranslations("slang.board");
+  const tv = useTranslations("slang.vibes");
   const [vibe, setVibe] = useState<SlangVibe | "all">("all");
   const [collected, setCollected] = useState<Set<string>>(new Set());
 
@@ -60,7 +63,7 @@ export default function SlangBoard({ entries }: { entries: SlangEntry[] }) {
       {/* sticker-book progress */}
       <div className="flex items-center gap-3 mb-4 max-w-[420px]">
         <span className="text-[13px] font-bold text-[#C13E78] flex-none tabular-nums">
-          🃏 {collectedCount}/{entries.length} collected
+          🃏 {t("collected", { done: collectedCount, total: entries.length })}
         </span>
         <span className="flex-1 h-1.5 rounded-full bg-[var(--tint-pink)] border border-[var(--tint-pink-line)] overflow-hidden">
           <span
@@ -72,7 +75,7 @@ export default function SlangBoard({ entries }: { entries: SlangEntry[] }) {
 
       <div className="flex gap-2 mb-6 flex-wrap items-center">
         <button type="button" onClick={() => setVibe("all")} className={chip(vibe === "all")}>
-          All {entries.length}
+          {t("all", { n: entries.length })}
         </button>
         {VIBES.map((v) => {
           const count = entries.filter((e) => e.vibe === v.key).length;
@@ -83,7 +86,7 @@ export default function SlangBoard({ entries }: { entries: SlangEntry[] }) {
               onClick={() => setVibe(v.key)}
               className={chip(vibe === v.key)}
             >
-              {v.emoji} {v.label} {count}
+              {v.emoji} {tv(v.key)} {count}
             </button>
           );
         })}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
 import { stripLocale } from "@/i18n/locale";
 import Mascot from "@/components/onboarding/Mascot";
@@ -18,10 +19,9 @@ const BTN_GREEN =
 const BTN_OUTLINE =
   "inline-flex items-center justify-center rounded-[9px] border border-line bg-cream px-[18px] py-[9px] text-[13.5px] font-semibold text-charcoal hover:bg-warm transition-colors";
 
-const ERROR_MESSAGES: Record<string, string> = {
-  auth: "Sign-in link failed or expired. Please log in again.",
-  expired: "Your session expired. Please log in again.",
-};
+// Error codes the auth callback can put in ?error=; anything else is passed
+// through from Supabase as-is.
+const ERROR_CODES = ["auth", "expired"];
 
 // Only allow same-site paths as post-login destinations. The proxy sends us
 // the full pathname (e.g. /ja/vocabulary); the locale prefix is dropped
@@ -33,13 +33,14 @@ function safeNext(raw: string | null): string {
 }
 
 export default function LoginPage() {
+  const t = useTranslations("auth");
   const router = useRouter();
   const supabase = useMemo(() => createClient(), []);
   const [error, setError] = useState<string | null>(() => {
     if (typeof window === "undefined") return null;
     const code = new URLSearchParams(window.location.search).get("error");
     if (!code) return null;
-    return ERROR_MESSAGES[code] ?? decodeURIComponent(code);
+    return ERROR_CODES.includes(code) ? t(`errors.${code}`) : decodeURIComponent(code);
   });
   const [next] = useState(() =>
     typeof window === "undefined"
@@ -88,9 +89,9 @@ export default function LoginPage() {
     if (error) {
       setError(
         error.message === "Invalid login credentials"
-          ? "That email and password don't match our garden records. One more try — or reset your password below."
+          ? t("errors.badCredentials")
           : error.message === "Email not confirmed"
-            ? "Your seed isn't confirmed yet! Tap the link in your inbox first, then come back."
+            ? t("errors.notConfirmed")
             : error.message
       );
       return;
@@ -107,7 +108,7 @@ export default function LoginPage() {
     const email = String(new FormData(form ?? undefined).get("email") || "").trim();
     if (!email) {
       form?.reportValidity();
-      setError("Type your email above first, and we'll send the link there.");
+      setError(t("errors.emailFirst"));
       return;
     }
     setError(null);
@@ -123,7 +124,7 @@ export default function LoginPage() {
     if (error) {
       setError(
         /signups not allowed|not found/i.test(error.message)
-          ? "We couldn't find a garden for that email. New here? Plant your seed below."
+          ? t("errors.noAccount")
           : error.message
       );
       return;
@@ -151,18 +152,18 @@ export default function LoginPage() {
             <div className={CARD}>
               <Mascot />
               <h1 className="text-center font-semibold text-[clamp(20px,3vw,25px)] tracking-[-0.02em] leading-[1.25] mb-1">
-                Welcome back
+                {t("login.title")}
               </h1>
               <p className="text-center text-muted text-[13.5px] mb-6">
-                Your garden missed you. <span className="kr text-success">다시 만나서 반가워요!</span>
+                {t("login.sub")} <span className="kr text-success">다시 만나서 반가워요!</span>
               </p>
 
               <button type="button" className={`${BTN_OUTLINE} w-full mb-4`} onClick={handleGoogleLogin}>
-                Continue with Google
+                {t("login.google")}
               </button>
               <div className="flex items-center gap-3 mb-5 text-[11.5px] font-medium text-faint">
                 <span className="flex-1 h-px bg-line" />
-                or with email
+                {t("login.orEmail")}
                 <span className="flex-1 h-px bg-line" />
               </div>
 
@@ -172,7 +173,7 @@ export default function LoginPage() {
               <form ref={formRef} method="post" onSubmit={handleEmailLogin}>
                 <div className="mb-3.5">
                   <label htmlFor="email" className={LABEL}>
-                    Email
+                    {t("fields.email")}
                   </label>
                   <input
                     id="email"
@@ -186,14 +187,14 @@ export default function LoginPage() {
                 </div>
                 <div className="mb-5">
                   <label htmlFor="pw" className={LABEL}>
-                    Password
+                    {t("fields.password")}
                   </label>
                   <input
                     id="pw"
                     name="pw"
                     type="password"
                     required
-                    placeholder="Your password"
+                    placeholder={t("fields.passwordPlaceholder")}
                     autoComplete="current-password"
                     className={FIELD}
                   />
@@ -202,12 +203,12 @@ export default function LoginPage() {
                 {error && <CuteError>{error}</CuteError>}
                 {linkSentTo && (
                   <p className="text-[13px] text-success-deep bg-success-bg border border-success-line rounded-[9px] px-3.5 py-2.5 mb-3.5">
-                    Sign-in link sent to <b>{linkSentTo}</b> — tap it and you&apos;re in.
+                    {t.rich("login.linkSent", { email: linkSentTo, b: (chunks) => <b>{chunks}</b> })}
                   </p>
                 )}
 
                 <button type="submit" disabled={busy} className={`${BTN_GREEN} w-full disabled:opacity-60`}>
-                  {submitting ? "Watering…" : "Log in"}
+                  {submitting ? t("login.submitting") : t("login.submit")}
                 </button>
                 <button
                   type="button"
@@ -215,22 +216,22 @@ export default function LoginPage() {
                   disabled={busy}
                   className={`${BTN_OUTLINE} w-full mt-2.5 disabled:opacity-60`}
                 >
-                  Email me a sign-in link instead
+                  {t("login.magicLink")}
                 </button>
               </form>
 
               <p className="text-center text-[12.5px] text-muted mt-4">
                 <Link href="/auth/forgot-password" className="text-charcoal font-semibold hover:underline">
-                  Forgot your password?
+                  {t("login.forgot")}
                 </Link>
               </p>
               <p className="text-center text-[12.5px] text-muted mt-2">
-                New to Kroot?{" "}
+                {t("login.newHere")}{" "}
                 <Link
                   href={next === "/dashboard" ? "/onboarding" : `/onboarding?next=${encodeURIComponent(next)}`}
                   className="text-charcoal font-semibold hover:underline"
                 >
-                  Plant your seed
+                  {t("login.signUp")}
                 </Link>
               </p>
             </div>

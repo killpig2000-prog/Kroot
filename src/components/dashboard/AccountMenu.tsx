@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 import { SEASONS, applySeasonToDocument, seasonForDate } from "@/lib/seasons";
 import { applyModeToDocument, type ModeKey } from "@/lib/mode";
@@ -16,6 +17,7 @@ export default function AccountMenu({
   email: string;
   avatarUrl?: string | null;
 }) {
+  const t = useTranslations("dashboard.account");
   const supabase = useMemo(() => createClient(), []);
   const [open, setOpen] = useState(false);
   // Initial values come off the <html> attributes the layout rendered.
@@ -70,7 +72,7 @@ export default function AccountMenu({
             onClick={toggleMode}
             className="w-full flex items-center justify-between rounded-[9px] px-3 py-2 text-[13px] font-medium text-charcoal hover:bg-warm"
           >
-            <span>{mode === "dark" ? "🌙" : "☀️"} Dark mode</span>
+            <span>{mode === "dark" ? "🌙" : "☀️"} {t("darkMode")}</span>
             <span
               className={`w-9 h-5 rounded-full relative transition-colors ${
                 mode === "dark" ? "bg-success" : "bg-line"
@@ -90,7 +92,7 @@ export default function AccountMenu({
             className="w-full flex items-center justify-between rounded-[9px] px-3 py-2 text-[13px] font-medium text-charcoal hover:bg-warm"
           >
             <span>
-              {SEASONS[seasonForDate(new Date())].emoji} Seasonal theme
+              {SEASONS[seasonForDate(new Date())].emoji} {t("seasonalTheme")}
             </span>
             <span
               className={`w-9 h-5 rounded-full relative transition-colors ${
@@ -112,7 +114,7 @@ export default function AccountMenu({
               disabled={leaving}
               className="w-full text-left rounded-[9px] px-3 py-2 text-[13px] font-medium text-[#EF4444] hover:bg-danger-bg disabled:opacity-60"
             >
-              {leaving ? "Leaving…" : "🚪 Log out"}
+              {leaving ? t("leaving") : `🚪 ${t("logout")}`}
             </button>
           </div>
         </div>

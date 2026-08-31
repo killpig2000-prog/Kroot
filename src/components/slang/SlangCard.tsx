@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import SpeakButton from "./SpeakButton";
 import { VIBES, type SlangEntry } from "@/lib/slang";
 import TapText from "@/components/words/TapText";
@@ -9,10 +10,11 @@ const FACE =
   "absolute inset-0 flex flex-col items-center justify-center px-5 text-center [backface-visibility:hidden] rounded-[14px]";
 
 export function VibeChip({ vibe }: { vibe: SlangEntry["vibe"] }) {
+  const tv = useTranslations("slang.vibes");
   const meta = VIBES.find((v) => v.key === vibe);
   return (
     <span className="inline-block text-[11.5px] font-semibold text-[#C13E78] bg-[var(--tint-pink)] border border-[var(--tint-pink-line)] rounded-full px-2.5 py-[3px]">
-      {meta?.emoji} {meta?.label}
+      {meta?.emoji} {tv(vibe)}
     </span>
   );
 }
@@ -28,6 +30,7 @@ export default function SlangCard({
   /** Fired the first time the card is flipped to its meaning. */
   onReveal?: () => void;
 }) {
+  const t = useTranslations("slang.card");
   const [flipped, setFlipped] = useState(false);
 
   function flip() {
@@ -39,7 +42,7 @@ export default function SlangCard({
     <div
       role="button"
       tabIndex={0}
-      aria-label={flipped ? `Flip ${entry.kr} back` : `Reveal the meaning of ${entry.kr}`}
+      aria-label={flipped ? t("flipBack", { word: entry.kr }) : t("reveal", { word: entry.kr })}
       onClick={flip}
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.key === " ") {
@@ -58,7 +61,7 @@ export default function SlangCard({
           {collected && (
             <span
               className="absolute top-2.5 right-2.5 w-6 h-6 rounded-full bg-[var(--tint-pink)] border border-[var(--tint-pink-line)] text-[#C13E78] text-[12px] font-bold flex items-center justify-center"
-              title="Collected"
+              title={t("collected")}
             >
               ✓
             </span>
@@ -68,7 +71,7 @@ export default function SlangCard({
           <div className="mt-4 flex items-center gap-2">
             <SpeakButton text={entry.kr} />
             <span className="text-[11.5px] font-semibold tracking-[.06em] uppercase text-faint">
-              Tap to flip
+              {t("tapToFlip")}
             </span>
           </div>
         </div>
@@ -82,7 +85,7 @@ export default function SlangCard({
             <SpeakButton text={entry.kr} />
           </div>
           <span className="mt-1 text-[11.5px] text-faint italic">
-            literally &ldquo;{entry.literal}&rdquo;
+            {t("literally", { text: entry.literal })}
           </span>
           <b className="mt-1.5 font-bold text-[15px] tracking-[-0.01em] text-charcoal leading-snug">
             {entry.meaning}

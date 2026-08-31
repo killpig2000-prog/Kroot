@@ -1,0 +1,26 @@
+{
+  "name": {
+    "A1": "Hạt mầm bé",
+    "A2": "Chồi non",
+    "B1": "Cây non",
+    "B2": "Cây đang lớn",
+    "C1": "Cây trổ hoa",
+    "C2": "Cây ra quả"
+  },
+  "blurb": {
+    "A1": "Nằm trong đất, chờ ngày nảy mầm. Cây nào cũng bắt đầu từ đây!",
+    "A2": "Những chiếc lá đầu tiên đã nhú! Cứ tưới đều nhé.",
+    "B1": "Rễ đã vững, cành đang vươn. Đến C2 là ra quả!",
+    "B2": "Mỗi ngày một cao hơn — giờ đã sum suê lá.",
+    "C1": "Hoa nở là bạn sắp tới đích — tiếng Hàn gần như người bản xứ.",
+    "C2": "Hoa nở rộ, quả trĩu cành. Thành thạo gần như bản xứ — tuyệt vời!"
+  },
+  "species": {
+    "A1": "Đỗ quyên",
+    "A2": "Liên kiều",
+    "B1": "Hoa anh đào",
+    "B2": "Cây hồng",
+    "C1": "Bạch quả",
+    "C2": "Cây thông"
+  }
+}

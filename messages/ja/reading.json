@@ -1,0 +1,101 @@
+{
+  "crumb": "リーディング",
+  "map": {
+    "progress": "レベル{level} · {total}章中<b>{done}</b>章読了",
+    "continueChapter": "続きから · 第{n}章",
+    "start": "開始 →",
+    "chaptersRange": "第{first}〜{last}章",
+    "chapterN": "第{n}章",
+    "statusDone": "完了",
+    "statusRead": "読む",
+    "statusLocked": "ロック中"
+  },
+  "genres": {
+    "diary": "日記",
+    "story": "物語",
+    "notice": "お知らせ",
+    "dialogue": "会話",
+    "message": "メッセージ",
+    "instruction": "手順",
+    "email": "メール",
+    "explainer": "解説",
+    "review": "レビュー",
+    "article": "記事",
+    "opinion": "意見",
+    "editorial": "社説",
+    "essay": "エッセイ",
+    "academic": "論文",
+    "interview": "インタビュー"
+  },
+  "genreChip": {
+    "diary": "日記",
+    "story": "物語",
+    "notice": "お知らせ",
+    "dialogue": "会話",
+    "message": "メッセージ",
+    "instruction": "ハウツー",
+    "email": "メール",
+    "explainer": "解説",
+    "review": "レビュー",
+    "article": "記事",
+    "opinion": "意見",
+    "editorial": "社説",
+    "essay": "エッセイ",
+    "academic": "論文",
+    "interview": "インタビュー"
+  },
+  "session": {
+    "chapterN": "第{n}章",
+    "emptyTitle": "ここにはまだ物語がありません",
+    "emptyBody": "この章はまだ書かれていません。",
+    "backToMap": "マップに戻る",
+    "resumeDetail": "リーディング · 第{n}章 · {level}"
+  },
+  "read": {
+    "chapterN": "第{n}章",
+    "meta": "{level} · {words}語 · 約{min}分",
+    "listen": "再生",
+    "playing": "再生中",
+    "larger": "大きく",
+    "smaller": "小さく",
+    "translationLabel": "翻訳",
+    "transOff": "オフ",
+    "transTap": "タップで",
+    "transAll": "すべて",
+    "hintFull": "行をタップすると訳が出ます · 点線の単語は語彙ページに移動します",
+    "hintDotted": "点線の単語は語彙ページに移動します",
+    "subject": "件名",
+    "wordsTitle": "この物語の単語",
+    "wordsNote": "どれも語彙ページに移動します。",
+    "wordsNoteMore": "他{n}語 · どれも語彙ページに移動します。",
+    "answerQuestions": "{n}問に答える →"
+  },
+  "quiz": {
+    "passage": "本文",
+    "questionOf": "第{n}問 / 全{total}問",
+    "correctCount": "{n}問正解",
+    "whereItSays": "根拠はここ",
+    "theAnswer": "正解",
+    "seeResult": "結果を見る →",
+    "nextQuestion": "次の問題 →"
+  },
+  "summary": {
+    "title": "第{n}章クリア！",
+    "levelUp": "🎉 レベルアップ！Lv.{level}になりました",
+    "questionsRight": "問正解",
+    "readAgain": "もう一度読む",
+    "nothingMissed": "全問正解 — 物語をしっかり読み取れました。",
+    "wordsWithPage": "語に語彙ページがあります",
+    "openToSave": "開いて保存しよう。",
+    "openToSaveMore": "他{n}語 · 開いて保存しよう。",
+    "earned": "獲得",
+    "earnedReview": "獲得 · {n}問は復習",
+    "saving": "保存中…",
+    "nextChapter": "第{n}章 →",
+    "storyMap": "ストーリーマップ"
+  },
+  "gloss": {
+    "openWordPage": "単語ページを開く",
+    "openSub": "{unit} · 例文・メモ・保存"
+  }
+}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useTranslations } from "next-intl";
 import { buttonClassName } from "@/components/ui/Button";
 import { useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
@@ -38,6 +39,7 @@ export default function TestRunner({
   /** Numeric Lv.1-30 — sizes the tree in the pass animation. */
   playerLevel?: number;
 }) {
+  const t = useTranslations("levelTest.runner");
   const supabase = useMemo(() => createClient(), []);
   const router = useRouter();
   const totalReadingQuestions = spec.reading.reduce((n, set) => n + set.questions.length, 0);
@@ -120,16 +122,21 @@ export default function TestRunner({
     return (
       <div className="border border-line rounded-[14px] p-6">
         <b className="block text-[16px] mb-1.5">
-          Promotion test · {spec.from} → {spec.to}
+          {t("introTitle", { from: spec.from, to: spec.to })}
         </b>
         <p className="text-[13.5px] text-muted mb-3">
-          Listening ({spec.listening.length}) → Reading ({totalReadingQuestions} questions over {spec.reading.length} passage{spec.reading.length > 1 ? "s" : ""}) → Writing ({spec.writing.length}, build the sentence from the words). Everything is checked instantly — no waiting. Questions are drawn at random each attempt.
+          {t("introBody", {
+            listening: spec.listening.length,
+            questions: totalReadingQuestions,
+            passages: spec.reading.length,
+            writing: spec.writing.length,
+          })}
         </p>
         <p className="text-[12.5px] text-faint mb-4">
-          To pass: 70+ average with every skill at 60+. Failing is fine — practice your weakest skill and retake after {COOLDOWN_HOURS} hours.
+          {t("passRule", { hours: COOLDOWN_HOURS })}
         </p>
         <button onClick={() => setStage("listening")} className={BTN_GREEN}>
-          Start
+          {t("start")}
         </button>
       </div>
     );
@@ -139,7 +146,7 @@ export default function TestRunner({
     return (
       <div className="border border-line rounded-[14px] p-6">
         <Mcq
-          title="1 · Listening — tap 🔊, then answer"
+          title={t("listeningTitle")}
           questions={spec.listening}
           showKr={false}
           onDone={(c) => {
@@ -157,7 +164,7 @@ export default function TestRunner({
       <div className="border border-line rounded-[14px] p-6">
         <Mcq
           key={readingSet}
-          title={`2 · Reading — passage ${readingSet + 1}/${spec.reading.length}`}
+          title={t("readingTitle", { n: readingSet + 1, total: spec.reading.length })}
           questions={set.questions}
           showKr
           passage={set.passage}
@@ -175,7 +182,7 @@ export default function TestRunner({
     return (
       <div className="border border-line rounded-[14px] p-6">
         <p className="text-[11px] font-bold tracking-[.07em] uppercase text-faint mb-2">
-          3 · Writing — {writingDone} / {spec.writing.length} done
+          {t("writingProgress", { done: writingDone, total: spec.writing.length })}
         </p>
         <div className="grid gap-5">
           {spec.writing.map((p, i) => (
@@ -195,7 +202,7 @@ export default function TestRunner({
         </div>
         <div className="mt-5">
           <button onClick={finish} disabled={writingDone < spec.writing.length} className={BTN_GREEN}>
-            See results →
+            {t("seeResults")}
           </button>
         </div>
       </div>

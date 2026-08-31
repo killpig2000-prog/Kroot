@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import { Link, redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
@@ -12,6 +13,8 @@ export default async function GrammarLessonPage({
 }: {
   params: Promise<{ locale: string; lessonKey: string }>;
 }) {
+  const t = await getTranslations("grammarUi");
+  const tn = await getTranslations("nav");
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
 
@@ -28,7 +31,8 @@ export default async function GrammarLessonPage({
   if (!lesson) notFound();
 
   const no = lessonIndex(lesson.key) + 1;
-  const next = nextLesson(lesson.key);
+  const nextKey = nextLesson(lesson.key);
+  const next = nextKey ? (await getLocalizedLesson(nextKey.key, locale)) ?? nextKey : null;
 
   return (
     <div className="min-h-screen bg-warm text-charcoal">
@@ -44,11 +48,11 @@ export default async function GrammarLessonPage({
           {/* breadcrumb */}
           <div className="flex gap-2 text-[13px] text-faint mb-[18px] flex-wrap">
             <Link href="/dashboard" className="hover:text-charcoal transition-colors">
-              Garden
+              {tn("garden")}
             </Link>
             <span>/</span>
             <Link href="/grammar" className="hover:text-charcoal transition-colors">
-              Grammar
+              {t("breadcrumb")}
             </Link>
             <span>/</span>
             <b className="text-charcoal font-semibold">{lesson.title}</b>
@@ -63,7 +67,7 @@ export default async function GrammarLessonPage({
               {lesson.title}
             </h1>
             <span className="text-[13px] text-muted">
-              Lesson {no} · <b className="text-[var(--tint-indigo-ink)]">{lesson.level}</b> ·{" "}
+              {t("lessonNumber", { n: no })} · <b className="text-[var(--tint-indigo-ink)]">{lesson.level}</b> ·{" "}
               <span className="kr">{lesson.krTitle}</span>
             </span>
           </div>
@@ -96,7 +100,7 @@ export default async function GrammarLessonPage({
             {/* quiz */}
             <div className="flex items-center gap-2.5 mt-8 mb-3.5">
               <span className="text-[11.5px] font-semibold tracking-[.06em] uppercase text-faint">
-                Check yourself
+                {t("checkYourself")}
               </span>
               <span className="h-px flex-1 bg-line" />
             </div>
@@ -108,14 +112,14 @@ export default async function GrammarLessonPage({
                 href="/grammar"
                 className="rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-charcoal bg-cream border border-line hover:bg-warm transition-colors"
               >
-                ← All lessons
+                {t("allLessons")}
               </Link>
               {next && (
                 <Link
                   href={`/grammar/${next.key}`}
                   className="rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-[#423AC5] hover:bg-[#4338CA] transition-colors"
                 >
-                  Next: {next.title} →
+                  {t("nextLesson", { title: next.title })}
                 </Link>
               )}
             </div>

@@ -1,0 +1,117 @@
+{
+  "breadcrumb": "Guía",
+  "intro": "En Kroot nada está bloqueado por orden. Elige la ruta que encaje con tu motivo para aprender coreano y síguela parada a parada.",
+  "sections": {
+    "roadmaps": {
+      "title": "Rutas",
+      "note": "Elige una: hacer las dos a la vez es lo que hace que la gente se atasque. Cada parada es un enlace, así que entra por donde ya estés."
+    },
+    "extras": {
+      "title": "Dos cosas que la ruta no muestra",
+      "note": "Ninguna es una parada del camino: una lo sostiene por debajo y la otra lo cierra."
+    },
+    "progress": {
+      "title": "Cómo funciona el progreso",
+      "note": "Tres cosas que suenan relacionadas pero se mueven por separado."
+    }
+  },
+  "routes": {
+    "people": {
+      "tag": "Aquí empieza la mayoría",
+      "name": "Usar el coreano con gente",
+      "sub": "Series, viajes, amistades. Se salta la gramática que todavía no necesitas.",
+      "pace": "20 min al día",
+      "stops": {
+        "hangul": {
+          "task": "las 40 letras",
+          "freq": "1 hora"
+        },
+        "vocab": {
+          "task": "palabras que sostienen una conversación",
+          "freq": "10 min al día"
+        },
+        "listen": {
+          "task": "diálogos a velocidad real",
+          "freq": "3 veces por semana"
+        },
+        "pron": {
+          "task": "que te entiendan a la primera",
+          "freq": "5 min al día"
+        },
+        "slang": {
+          "task": "dejar de sonar a libro de texto",
+          "freq": "cuando te pique la curiosidad"
+        }
+      }
+    },
+    "exam": {
+      "tag": "Si necesitas el certificado",
+      "name": "Llegar a B2 o aprobar el TOPIK",
+      "sub": "Gramática en orden, sin saltarse nada. Tardas más en sentirte fluido, pero se sostiene.",
+      "pace": "30 min al día",
+      "stops": {
+        "hangul": {
+          "task": "las 40 letras",
+          "freq": "1 hora"
+        },
+        "grammar": {
+          "task": "todos los grupos, en orden",
+          "freq": "1 lección al día"
+        },
+        "vocab": {
+          "task": "unidades hasta B2",
+          "freq": "15 min al día"
+        },
+        "read": {
+          "task": "artículos y ensayos",
+          "freq": "3 veces por semana"
+        },
+        "write": {
+          "task": "diario y luego opinión",
+          "freq": "2 veces por semana"
+        }
+      }
+    }
+  },
+  "youAreHere": "Estás aquí",
+  "doneOn": "Hecho el {date}",
+  "review": {
+    "kicker": "Cada día",
+    "title": "Practica",
+    "body": "Cada palabra que estudias vuelve programada justo antes de que se te olvide. Tú no llevas nada de esto: solo apareces y riegas lo que toca.",
+    "whereLabel": "Dónde",
+    "whereValue": "Jardín → Practica",
+    "howLongLabel": "Cuánto dura",
+    "howLongValue": "unos minutos"
+  },
+  "test": {
+    "kicker": "De vez en cuando",
+    "title": "Prueba de ascenso",
+    "body": "Lo único que mueve tu nivel. Una palabra cuenta cuando ha superado sus dos primeros repasos espaciados, así que esto se va llenando según estudias: nunca decides tú cuándo estás listo.",
+    "unlocksLabel": "Se abre con",
+    "unlocksValue": "{words} palabras de tu nivel aún retenidas, más {passages} textos de lectura",
+    "youLabel": "Tú",
+    "youStats": "{wordsHeld}/{wordsRequired} palabras retenidas · {readingDone}/{readingRequired} textos",
+    "youReady": " · listo para {from} → {to}",
+    "toPassLabel": "Para aprobar",
+    "toPassValue": "60 o más en cada destreza, 70 o más de media"
+  },
+  "facts": {
+    "effort": {
+      "kicker": "Esfuerzo",
+      "title": "Nivel del árbol 1–120",
+      "body": "Cada sesión da XP. Subir de nivel significa tiempo dedicado: no cambia tu grado."
+    },
+    "ability": {
+      "kicker": "Competencia",
+      "title": "Grado A1–C2",
+      "body": "Solo se mueve cuando apruebas una prueba de ascenso. Ahí es cuando tu árbol cambia de especie."
+    },
+    "cosmetic": {
+      "kicker": "Estética",
+      "title": "El jardín",
+      "body": "Trajes, cielos y compañeros de la Tienda. Solo decoración, sin efecto en el aprendizaje."
+    }
+  },
+  "footer": "Aquí todo va a tu ritmo: los cuestionarios nunca bloquean tu progreso y nada caduca. Vuelve a esta página siempre que te sientas perdido."
+}

@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { notFound } from "next/navigation";
 import { LEVEL_ORDER, type CefrLevel } from "@/lib/tree";
 import { seoAlternates } from "@/lib/seo";
 import { getWordsByLevel } from "@/lib/vocab-slugs";
-import { CHAPTER_SIZE, unitLabel } from "@/lib/vocabulary";
+import { CHAPTER_SIZE } from "@/lib/vocabulary";
 
 // Per-level word index — the crawlable listing that links every word page.
 
@@ -38,9 +39,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function LevelIndexPage({ params }: Props) {
-  const level = parseLevel((await params).level);
+  const { locale, level: rawLevel } = await params;
+  const level = parseLevel(rawLevel);
   if (!level) notFound();
 
+  const t = await getTranslations({ locale, namespace: "words" });
   const words = getWordsByLevel(level);
 
   // Ten words per unit, matching the in-app study units, so a 600-word level
@@ -62,22 +65,19 @@ export default async function LevelIndexPage({ params }: Props) {
           href="/onboarding"
           className="rounded-full bg-[var(--leaf)] px-4 py-2 text-sm font-semibold text-white shadow-[0_3px_0_var(--leaf-shadow)]"
         >
-          Start learning
+          {t("startLearningShort")}
         </Link>
       </header>
 
       <main className="mx-auto max-w-3xl px-6 pb-16">
         <p className="mb-2 text-sm text-[var(--soft)]">
           <Link href="/words" className="hover:underline">
-            Korean Dictionary
+            {t("dictionary")}
           </Link>{" "}
-          · Level {level}
+          · {t("levelN", { level })}
         </p>
-        <h1 className="text-4xl font-bold">Korean {level} Vocabulary</h1>
-        <p className="mt-3 text-[var(--soft)]">
-          All {words.length} Level {level} words, each with romanization, meaning, and an example
-          sentence.
-        </p>
+        <h1 className="text-4xl font-bold">{t("levelTitle", { level })}</h1>
+        <p className="mt-3 text-[var(--soft)]">{t("levelIntro", { count: words.length, level })}</p>
 
         <nav className="mt-4 flex flex-wrap gap-2 text-sm">
           {LEVEL_ORDER.map((l) => (
@@ -97,7 +97,7 @@ export default async function LevelIndexPage({ params }: Props) {
 
         {/* jump bar: one anchor per unit of ten, scrolls sideways on phones */}
         <nav
-          aria-label="Jump to unit"
+          aria-label={t("jumpToUnit")}
           className="sticky top-0 z-10 -mx-6 mt-6 px-6 py-2 bg-[var(--sky)]/95 backdrop-blur-sm border-b border-black/5"
         >
           <div className="flex gap-1.5 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden text-xs">
@@ -116,9 +116,9 @@ export default async function LevelIndexPage({ params }: Props) {
         {units.map((u) => (
           <section key={u.index} id={`unit-${u.index + 1}`} className="mt-8 scroll-mt-14">
             <h2 className="text-lg font-bold">
-              <span className="text-[var(--deep)]">{unitLabel(u.index)}</span>
+              <span className="text-[var(--deep)]">{t("unitN", { n: u.index + 1 })}</span>
               <span className="ml-2 text-xs font-medium text-[var(--soft)] tabular-nums">
-                words {u.first}–{u.last}
+                {t("unitRange", { first: u.first, last: u.last })}
               </span>
             </h2>
             <ul className="mt-3 grid gap-2 sm:grid-cols-2">

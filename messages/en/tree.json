@@ -1,0 +1,26 @@
+{
+  "name": {
+    "A1": "Tiny Seed",
+    "A2": "Little Sprout",
+    "B1": "Young Tree",
+    "B2": "Growing Tree",
+    "C1": "Blossoming Tree",
+    "C2": "Fruit Tree"
+  },
+  "blurb": {
+    "A1": "Tucked in the soil, waiting to sprout. Every tree starts here!",
+    "A2": "First leaves are out! Keep the water coming.",
+    "B1": "Sturdy roots, growing branches. Fruit comes at C2!",
+    "B2": "Reaching higher every day — full and leafy now.",
+    "C1": "Blossoms mean you're close — almost native-level Korean.",
+    "C2": "Full bloom, full fruit. Near-native mastery — amazing work!"
+  },
+  "species": {
+    "A1": "Azalea",
+    "A2": "Forsythia",
+    "B1": "Cherry Blossom",
+    "B2": "Persimmon",
+    "C1": "Ginkgo",
+    "C2": "Pine"
+  }
+}

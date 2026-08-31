@@ -4,6 +4,7 @@
 // Glow", a sun-yellow gauge, and how many daily quests (or which 10th-level
 // bonus) closes the gap. Pure presentation — goal selection lives in
 // ShopClient, where the catalog/ownership state is.
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { useSyncExternalStore, type ReactNode } from "react";
 import type { Costume } from "@/lib/costumes";
@@ -54,8 +55,6 @@ export function questsToGo(price: number, balance: number): number {
   return Math.max(0, Math.ceil((price - balance) / QUEST_COINS));
 }
 
-const EARN_NOTE = `earn ${QUEST_COINS} per daily quest, ${LEVEL_BONUS_COINS} at every 10th level`;
-
 export default function ShopGoal({
   goal,
   balance,
@@ -80,18 +79,21 @@ export default function ShopGoal({
   picker?: ReactNode;
   onBuyNow: () => void;
 }) {
-  const shown = isAdmin ? "∞" : balance;
+  const t = useTranslations("shop");
+  const shown = isAdmin ? "∞" : String(balance);
 
   if (!goal || isAdmin) {
     return (
       <div className="flex items-center justify-between gap-3 flex-wrap px-4 sm:px-5 py-3.5 border-b border-line bg-warm">
         <p className="text-[14px] font-extrabold tabular-nums">
-          🌰 {shown} coins
-          <span className="text-[12.5px] font-semibold text-muted ml-2">· {EARN_NOTE}</span>
+          {t("coins", { coins: shown })}
+          <span className="text-[12.5px] font-semibold text-muted ml-2">
+            {t("goal.earnNote", { quest: QUEST_COINS, bonus: LEVEL_BONUS_COINS })}
+          </span>
         </p>
         {!questDone && (
           <Link href="/dashboard" className="text-[12.5px] font-bold text-success hover:underline whitespace-nowrap">
-            Do today&apos;s quest →
+            {t("goal.doQuest")}
           </Link>
         )}
       </div>
@@ -116,9 +118,14 @@ export default function ShopGoal({
           </p>
           <div className="flex items-center gap-2 flex-wrap mt-1.5 text-[13px] text-muted">
             <span className="truncate">
-              Saving for <b className="text-charcoal">{goal.name}</b>
+              {t.rich("goal.savingFor", {
+                name: goal.name,
+                b: (chunks) => <b className="text-charcoal">{chunks}</b>,
+              })}
               {goal.minPlayerLevel ? (
-                <span className={locked ? "text-[#B7AE9C] font-semibold" : ""}> · needs Lv.{goal.minPlayerLevel}</span>
+                <span className={locked ? "text-[#B7AE9C] font-semibold" : ""}>
+                  {t("goal.needsLevel", { level: goal.minPlayerLevel })}
+                </span>
               ) : null}
             </span>
             {picker}
@@ -129,7 +136,7 @@ export default function ShopGoal({
       <div
         className="mt-3 h-2.5 rounded-full bg-cream border border-line overflow-hidden"
         role="progressbar"
-        aria-label={`Coins saved toward ${goal.name}`}
+        aria-label={t("goal.progressLabel", { name: goal.name })}
         aria-valuemin={0}
         aria-valuemax={goal.price}
         aria-valuenow={Math.min(balance, goal.price)}
@@ -140,25 +147,23 @@ export default function ShopGoal({
       <div className="flex items-center justify-between gap-3 flex-wrap mt-2 text-[12.5px]">
         {affordable ? (
           locked ? (
-            <span className="font-bold text-muted">Saved up · unlocks at Lv.{goal.minPlayerLevel}</span>
+            <span className="font-bold text-muted">{t("goal.savedLocked", { level: goal.minPlayerLevel ?? 0 })}</span>
           ) : (
             <button type="button" onClick={onBuyNow} className="font-extrabold text-success hover:underline">
-              You can buy this now →
+              {t("goal.buyNow")}
             </button>
           )
         ) : (
           <span className="text-muted">
-            <b className="text-charcoal">
-              {quests} more {quests === 1 ? "quest" : "quests"}
-            </b>{" "}
-            · or Lv.{bonusLv} bonus (+{LEVEL_BONUS_COINS})
+            <b className="text-charcoal">{t("goal.questsToGo", { n: quests })}</b>
+            {t("goal.orBonus", { level: bonusLv, coins: LEVEL_BONUS_COINS })}
           </span>
         )}
         {questDone ? (
-          <span className="text-faint font-semibold whitespace-nowrap">Today&apos;s quest done ✓</span>
+          <span className="text-faint font-semibold whitespace-nowrap">{t("goal.questDone")}</span>
         ) : (
           <Link href="/dashboard" className="font-bold text-success hover:underline whitespace-nowrap">
-            Today&apos;s quest ready ✏️
+            {t("goal.questReady")}
           </Link>
         )}
       </div>

@@ -1,0 +1,153 @@
+{
+  "welcome": "欢迎，{name}",
+  "day": "第 {n} 天",
+  "loadError": "暂时没能加载你的进度——什么都没丢。稍后刷新一下。",
+  "quest": {
+    "title": "今日任务",
+    "done": "完成 ✓",
+    "go": "去做 →",
+    "start": "开始 ▸",
+    "descriptions": {
+      "writing": "写作 · 一章，几个问题 · 约 8 分钟",
+      "vocabulary": "复习 · 到期的单词 · 约 5 分钟",
+      "listening": "听力 · 一段适合你水平的对话 · 约 5 分钟",
+      "reading": "阅读 · 一篇短文 · 约 4 分钟",
+      "pronunciation": "发音 · 完成一章 · 约 4 分钟"
+    }
+  },
+  "review": {
+    "due": "有 {count} 个单词该复习了",
+    "dueShort": "{count} 个待复习",
+    "now": "现在复习 →",
+    "short": "复习 →"
+  },
+  "slang": {
+    "title": "今日俚语",
+    "flip": "翻开看看 →",
+    "hear": "听听它怎么用 →",
+    "short": "俚语 →"
+  },
+  "wotd": {
+    "title": "每日一词"
+  },
+  "hangul": {
+    "title": "完全没接触过韩语？",
+    "sub": "先学字母——40 个字母，一小时，永久免费。",
+    "cta": "从这里开始 →"
+  },
+  "garden": {
+    "thisWeek": "本周",
+    "total": "总计",
+    "bestStreak": "最长连续",
+    "monthGoal": "{month}目标"
+  },
+  "levelMap": {
+    "title": "你的路线",
+    "checksToward": "距离 {next} 已完成 {done}/{total} 项",
+    "topOfTree": "已到树顶 🌟",
+    "levelsAria": "等级",
+    "ready": "可以参加 {current} → {next} 测试了",
+    "unlock": "解锁 {next} · {species}",
+    "start": "开始 →",
+    "details": "详情 →",
+    "checkWordsHeld": "掌握的单词",
+    "checkReading": "阅读"
+  },
+  "tree": {
+    "levelBadge": "Lv. {level}",
+    "metresTall": "米高",
+    "maxed": "已经长到星星那里 🌟",
+    "xpToNext": "距离 Lv. {next} 还差 {into}/{needed} XP",
+    "phrases": {
+      "fighting": "加油！",
+      "goodToday": "今天状态不错！",
+      "thanksWater": "谢谢你浇的水",
+      "growTogether": "一起长大吧"
+    },
+    "keepsakes": {
+      "60": "鸟巢",
+      "70": "秋千",
+      "80": "鸟屋",
+      "90": "小灯串",
+      "100": "树屋",
+      "110": "风向标",
+      "120": "树顶星"
+    }
+  },
+  "growth": {
+    "closeAria": "关闭",
+    "dialogAria": "树木成长",
+    "promotion": "升级啦！",
+    "taller": "更高了！",
+    "grew": "你的树长大了！",
+    "newTree": "一棵全新的树！🌳",
+    "newTier": "新的一层树冠——还有一件纪念品 🌲",
+    "sayHello": "来认识一下{treeName}吧！🌳",
+    "note": "Lv. {level}——每天复习一点，看看它能长多高。",
+    "ok": "太好了！"
+  },
+  "firstVisit": {
+    "todayFiveMinutes": "今天 · 5 分钟",
+    "startHere": "从这里开始",
+    "startStep1": "开始第 1 步 →",
+    "unlocksNext": "接下来解锁",
+    "lockedAria": "已锁定的面板区块",
+    "showEverything": "立即显示全部",
+    "locked": {
+      "quest": {
+        "title": "今日任务",
+        "note": "完成 1 次学习后开启"
+      },
+      "wotd": {
+        "title": "每日一词",
+        "note": "完成 2 次学习后开启"
+      },
+      "levelMap": {
+        "title": "等级地图",
+        "note": "完成 3 次学习后开启"
+      },
+      "heatmap": {
+        "title": "学习花园",
+        "note": "连续学习 3 天后开启"
+      }
+    },
+    "steps": {
+      "hangul": "韩文字母",
+      "hangulDetail": "辅音",
+      "vocab": "词汇",
+      "vocabDetail": "第 1 单元（10 个词）",
+      "vocabDetailLevel": "第 1 单元（10 个词） · {level}",
+      "listening": "听力",
+      "listeningDetail": "一段简短对话",
+      "waterSeedling": "看看你的小苗 💧",
+      "minutes": "{n} 分钟",
+      "seconds": "{n} 秒"
+    }
+  },
+  "account": {
+    "darkMode": "深色模式",
+    "seasonalTheme": "季节主题",
+    "logout": "退出登录",
+    "leaving": "正在退出…"
+  },
+  "feedback": {
+    "closeAria": "关闭",
+    "dialogAria": "反馈",
+    "notice": "公告",
+    "launchedTitle": "Kroot 刚刚上线",
+    "launchedBody1": "这个应用还很早期，有不少不足。我们会继续改进。",
+    "launchedBody2": "如果你有任何想法或建议，我们非常愿意听。",
+    "send": "发送反馈",
+    "close": "关闭",
+    "hideToday": "今天不再显示",
+    "formSub": "一个 bug、一处别扭的地方、一个你希望有的功能——都欢迎。",
+    "placeholder": "你在想什么？",
+    "error": "没能发送出去，再试一次好吗？",
+    "sending": "发送中…",
+    "submit": "发送",
+    "cancel": "取消",
+    "thanksTitle": "谢谢你",
+    "thanksBody": "我们已经收到你的反馈。每一条我们都会读，并用它来决定接下来改进什么。",
+    "railLink": "发送反馈 →"
+  }
+}

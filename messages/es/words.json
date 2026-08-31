@@ -7,5 +7,24 @@
   "learnDescription": "Kroot enseña esta palabra con tarjetas, escucha y práctica de pronunciación — gratis, a tu ritmo.",
   "startLearning": "Comenzar a aprender — gratis",
   "seenInListening": "🎧 Visto en Escucha",
-  "seenInReading": "📖 Visto en Lectura"
+  "seenInReading": "📖 Visto en Lectura",
+  "nav": "Diccionario",
+  "startLearningShort": "Empezar a aprender",
+  "levelN": "Nivel {level}",
+  "hubTitle": "Diccionario de vocabulario coreano",
+  "hubIntro": "Cada palabra viene con romanización, un significado en inglés y una frase de ejemplo real, organizadas por nivel MCER para que siempre sepas qué aprender a continuación.",
+  "wordCount": "{count, plural, =1 {1 palabra} other {# palabras}}",
+  "levelTitle": "Vocabulario coreano de nivel {level}",
+  "levelIntro": "Las {count} palabras de nivel {level}, cada una con romanización, significado y una frase de ejemplo.",
+  "jumpToUnit": "Ir a una unidad",
+  "unitN": "Unidad {n}",
+  "unitRange": "palabras {first}–{last}",
+  "blurb": {
+    "A1": "Lo básico del día a día: saludos, comida, familia y las palabras que necesitas primero.",
+    "A2": "Palabras elementales para la rutina diaria, las compras y la conversación sencilla.",
+    "B1": "Vocabulario intermedio para dar opiniones, hablar del trabajo y moverte por Corea.",
+    "B2": "Palabras de nivel intermedio alto para noticias, cultura y conversación con matices.",
+    "C1": "Vocabulario avanzado para ideas abstractas, escritura formal y debate.",
+    "C2": "Palabras de dominio: sutiles, literarias y casi nativas."
+  }
 }

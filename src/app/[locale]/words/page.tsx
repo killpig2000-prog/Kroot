@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { LEVEL_ORDER } from "@/lib/tree";
 import { seoAlternates } from "@/lib/seo";
@@ -22,16 +23,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-const LEVEL_BLURBS: Record<string, string> = {
-  A1: "Everyday basics — greetings, food, family, and the words you need first.",
-  A2: "Elementary words for daily routines, shopping, and simple conversation.",
-  B1: "Intermediate vocabulary for opinions, work, and getting around Korea.",
-  B2: "Upper-intermediate words for news, culture, and nuanced conversation.",
-  C1: "Advanced vocabulary for abstract ideas, formal writing, and debate.",
-  C2: "Mastery-level words — subtle, literary, and near-native expressions.",
-};
+export default async function WordsHubPage({ params }: Props) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "words" });
 
-export default function WordsHubPage() {
   return (
     <div className="min-h-screen bg-[var(--sky)] text-[var(--ink)]">
       <header className="mx-auto flex max-w-3xl items-center justify-between px-6 py-5">
@@ -42,16 +37,13 @@ export default function WordsHubPage() {
           href="/onboarding"
           className="rounded-full bg-[var(--leaf)] px-4 py-2 text-sm font-semibold text-white shadow-[0_3px_0_var(--leaf-shadow)]"
         >
-          Start learning
+          {t("startLearningShort")}
         </Link>
       </header>
 
       <main className="mx-auto max-w-3xl px-6 pb-16">
-        <h1 className="text-4xl font-bold">Korean Vocabulary Dictionary</h1>
-        <p className="mt-3 text-[var(--soft)]">
-          Every word comes with romanization, an English meaning, and a real example sentence —
-          organized by CEFR level so you always know what to learn next.
-        </p>
+        <h1 className="text-4xl font-bold">{t("hubTitle")}</h1>
+        <p className="mt-3 text-[var(--soft)]">{t("hubIntro")}</p>
 
         <ul className="mt-8 grid gap-4 sm:grid-cols-2">
           {LEVEL_ORDER.map((level) => {
@@ -62,9 +54,9 @@ export default function WordsHubPage() {
                   href={`/words/level/${level.toLowerCase()}`}
                   className="block h-full rounded-3xl bg-[var(--cream)] p-6 shadow-[0_5px_0_var(--card-shadow)] hover:-translate-y-0.5 transition"
                 >
-                  <h2 className="text-2xl font-bold text-[var(--deep)]">Level {level}</h2>
-                  <p className="mt-1 text-sm text-[var(--soft)]">{words.length} words</p>
-                  <p className="mt-3 text-sm">{LEVEL_BLURBS[level]}</p>
+                  <h2 className="text-2xl font-bold text-[var(--deep)]">{t("levelN", { level })}</h2>
+                  <p className="mt-1 text-sm text-[var(--soft)]">{t("wordCount", { count: words.length })}</p>
+                  <p className="mt-3 text-sm">{t(`blurb.${level}`)}</p>
                 </Link>
               </li>
             );

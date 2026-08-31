@@ -7,5 +7,24 @@
   "learnDescription": "Kroot dạy từ này thông qua thẻ ghi nhớ, nghe và luyện phát âm — miễn phí, theo tốc độ của bạn.",
   "startLearning": "Bắt đầu học — miễn phí",
   "seenInListening": "🎧 Xuất hiện trong Nghe",
-  "seenInReading": "📖 Xuất hiện trong Đọc"
+  "seenInReading": "📖 Xuất hiện trong Đọc",
+  "nav": "Từ điển",
+  "startLearningShort": "Bắt đầu học",
+  "levelN": "Cấp độ {level}",
+  "hubTitle": "Từ điển từ vựng tiếng Hàn",
+  "hubIntro": "Mỗi từ đều có phiên âm, nghĩa tiếng Anh và một câu ví dụ thật — sắp xếp theo cấp độ CEFR để bạn luôn biết nên học gì tiếp theo.",
+  "wordCount": "{count, plural, other {# từ}}",
+  "levelTitle": "Từ vựng tiếng Hàn cấp {level}",
+  "levelIntro": "Toàn bộ {count} từ cấp {level}, mỗi từ đều có phiên âm, nghĩa và một câu ví dụ.",
+  "jumpToUnit": "Nhảy tới bài học",
+  "unitN": "Bài {n}",
+  "unitRange": "từ {first}–{last}",
+  "blurb": {
+    "A1": "Những điều cơ bản hằng ngày — chào hỏi, đồ ăn, gia đình và các từ bạn cần trước tiên.",
+    "A2": "Từ sơ cấp cho sinh hoạt hằng ngày, mua sắm và hội thoại đơn giản.",
+    "B1": "Từ vựng trung cấp để nêu ý kiến, nói về công việc và đi lại ở Hàn Quốc.",
+    "B2": "Từ trung cao cấp cho tin tức, văn hóa và hội thoại nhiều sắc thái.",
+    "C1": "Từ vựng nâng cao cho ý tưởng trừu tượng, văn viết trang trọng và tranh luận.",
+    "C2": "Từ ở mức thông thạo — tinh tế, mang tính văn chương, gần như người bản xứ."
+  }
 }

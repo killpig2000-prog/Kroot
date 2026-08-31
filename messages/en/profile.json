@@ -1,0 +1,86 @@
+{
+  "identity": {
+    "fallbackName": "Learner",
+    "difficulty": "{level} difficulty",
+    "growingSince": "growing since {date}",
+    "maxLevel": "Reached the stars 🌟",
+    "xpToNext": "{into}/{needed} XP to Lv. {level}",
+    "streak": "🔥 {n, plural, one {# day streak} other {# day streak}}",
+    "coins": "🌰 {n, plural, one {# coin} other {# coins}}",
+    "freezes": "🧊 {n, plural, one {# freeze} other {# freezes}}"
+  },
+  "avatar": {
+    "change": "Change profile photo",
+    "edit": "Edit",
+    "errType": "Please choose an image file.",
+    "errSize": "Image must be under {mb}MB."
+  },
+  "name": {
+    "edit": "Edit name",
+    "save": "Save"
+  },
+  "grass": {
+    "title": "🌿 Study garden · {year}",
+    "minutesShort": "{n}m",
+    "dayTitle": "{date} · {n} min",
+    "less": "less",
+    "more": "more"
+  },
+  "reminders": {
+    "title": "⏰ Daily reminder",
+    "scheduleKnown": "Once a day, around {time} — only if you haven't studied yet",
+    "scheduleUnknown": "Once a day — only if you haven't studied yet",
+    "pushTitle": "Push notification",
+    "pushDesc": "Works on this device even when the tab is closed.",
+    "pushIos": "On iPhone, add Kroot to your Home Screen first (Share → Add to Home Screen), then turn this on.",
+    "pushUnsupported": "Not supported in this browser — try Chrome, Edge, or Firefox.",
+    "emailTitle": "Email",
+    "emailDesc": "A short note to your sign-in email.",
+    "emailNone": "Add an email to your account to use this.",
+    "errBlocked": "Notifications are blocked for this site — allow them in your browser settings and try again.",
+    "errNoKey": "Push isn't set up on this deployment yet.",
+    "errUnsupported": "This browser doesn't support push notifications.",
+    "errSubscribe": "Couldn't subscribe — please try again.",
+    "errSave": "Couldn't save — please try again."
+  },
+  "insights": {
+    "title": "📊 Insights",
+    "skills": {
+      "reading": "Reading",
+      "writing": "Writing",
+      "listening": "Listening",
+      "speaking": "Speaking",
+      "vocabulary": "Vocabulary",
+      "grammar": "Grammar",
+      "pronunciation": "Pronunciation",
+      "hangul": "Hangul",
+      "slang": "Slang",
+      "quest": "Daily quests"
+    },
+    "boxes": {
+      "1": "Just planted",
+      "2": "Sprouting",
+      "3": "Growing",
+      "4": "Rooted",
+      "5": "Deep roots"
+    },
+    "tiles": {
+      "wordAccuracy": "word accuracy",
+      "readingAccuracy": "reading accuracy",
+      "pronunciationScore": "avg pronunciation score",
+      "xp14": "XP · 14 days"
+    },
+    "xpTitle": "⚡ XP · last 14 days",
+    "xpPerDay": "XP / day",
+    "xpDayTitle": "{date}: {xp} XP",
+    "bySkillTitle": "🌱 Where your XP comes from",
+    "bySkillEmpty": "Finish a lesson and your per-skill breakdown starts filling in here.",
+    "xpAmount": "{xp} XP",
+    "boxesTitle": "💧 How deep your words are rooted",
+    "wordCount": "{n, plural, one {# word} other {# words}}",
+    "weakestTitle": "🥀 Words that need extra review",
+    "weakestLink": "Review them →",
+    "weakestEmpty": "Nothing wilting — every word you've reviewed is doing fine. 🌱",
+    "footnote": "Per-skill XP starts counting from the day Insights launched — older XP shows in the timeline but isn't broken down by skill."
+  }
+}

@@ -1,15 +1,12 @@
+import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { Link, redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import VocabSession from "@/components/vocabulary/VocabSession";
 import { createClient, getClaimsUser, getDashboardProfile } from "@/lib/supabase/server";
-import {
-  VOCAB_TOPICS,
-  getChaptersForTopic,
-  sortForReview,
-  type VocabWordWithProgress,
-} from "@/lib/vocabulary";
+import { VOCAB_TOPICS, sortForReview, type VocabWordWithProgress } from "@/lib/vocabulary";
+import { getChaptersForTopic } from "@/lib/vocabulary-words";
 import { findMoreExamples } from "@/lib/vocab-examples";
 import { isCefrLevel, type CefrLevel } from "@/lib/tree";
 
@@ -24,6 +21,9 @@ export default async function VocabChapterSessionPage({
   const sp = await searchParams;
   const topic = VOCAB_TOPICS.find((t) => t.key === topicKey && t.available);
   if (!topic) notFound();
+
+  const tn = await getTranslations("nav");
+  const tv = await getTranslations("vocabulary");
 
   const chapterIndex = Number(sp.chapter ?? 0);
 
@@ -85,11 +85,11 @@ export default async function VocabChapterSessionPage({
           {/* breadcrumb */}
           <div className="flex gap-2 text-[13px] text-faint mb-[18px] flex-wrap">
             <Link href="/dashboard" className="hover:text-charcoal transition-colors">
-              Garden
+              {tn("garden")}
             </Link>
             <span>/</span>
             <Link href={`/vocabulary?level=${level}`} className="hover:text-charcoal transition-colors">
-              Vocabulary
+              {tn("vocabulary")}
             </Link>
             <span>/</span>
             <b className="text-charcoal font-semibold">{topic.label}</b>
@@ -104,7 +104,7 @@ export default async function VocabChapterSessionPage({
               {topic.label}
             </h1>
             <span className="text-[13px] text-muted">
-              Level {level} · set {chapterIndex + 1} of {chapters.length}
+              {tv("session.levelSet", { level, current: chapterIndex + 1, total: chapters.length })}
             </span>
           </div>
 

@@ -5,6 +5,8 @@
 // phone included, with no horizontal scroll.
 // Server component: pure markup from daily_activity data.
 
+import { getFormatter, getTranslations } from "next-intl/server";
+
 const CELL_COLORS = ["bg-[#F0EFED]", "bg-[#BBF7D0]", "bg-[#6BBF8A]", "bg-[#3E7C59]", "bg-[#2E5B41]"];
 const LEGEND_COLORS = ["#F0EFED", "#BBF7D0", "#6BBF8A", "#3E7C59", "#2E5B41"];
 
@@ -16,15 +18,15 @@ function level(minutes: number): number {
   return 4;
 }
 
-const MONTH_NAMES = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-
-export default function MonthlyGrass({
+export default async function MonthlyGrass({
   minutesByDate,
   headline,
 }: {
   minutesByDate: Map<string, number>;
   headline: { label: string; value: string }[];
 }) {
+  const t = await getTranslations("profile.grass");
+  const format = await getFormatter();
   const today = new Date();
   const year = today.getFullYear();
   const todayIso = today.toISOString().slice(0, 10);
@@ -50,13 +52,20 @@ export default function MonthlyGrass({
       cells.push({ date: iso, day: d, minutes, future });
     }
     while (cells.length < 42) cells.push(null);
-    return { mo, label: MONTH_NAMES[mo], total, anyPast, cells, isCurrent: mo === today.getMonth() };
+    return {
+      mo,
+      label: format.dateTime(new Date(Date.UTC(year, mo, 15)), { month: "short", timeZone: "UTC" }),
+      total,
+      anyPast,
+      cells,
+      isCurrent: mo === today.getMonth(),
+    };
   });
 
   return (
     <div className="border border-line rounded-[14px] px-[22px] py-5">
       <div className="flex items-center justify-between gap-3 mb-3.5 flex-wrap">
-        <b className="font-semibold text-[15px]">🌿 Study garden · {year}</b>
+        <b className="font-semibold text-[15px]">{t("title", { year: String(year) })}</b>
         <div className="flex gap-2 flex-wrap">
           {headline.map((h) => (
             <span
@@ -77,14 +86,14 @@ export default function MonthlyGrass({
                 {m.label}
               </span>
               {m.anyPast && (
-                <span className="text-[10px] text-faint tabular-nums">{m.total}m</span>
+                <span className="text-[10px] text-faint tabular-nums">{t("minutesShort", { n: m.total })}</span>
               )}
             </div>
             <div className="grid grid-cols-7 gap-[2px]">
               {m.cells.map((c, i) => (
                 <span
                   key={i}
-                  title={c ? `${c.date} · ${c.minutes} min` : undefined}
+                  title={c ? t("dayTitle", { date: c.date, n: c.minutes }) : undefined}
                   className={`aspect-square rounded-[2px] ${
                     !c
                       ? ""
@@ -100,11 +109,11 @@ export default function MonthlyGrass({
       </div>
 
       <div className="flex items-center gap-1.5 mt-4 text-[11px] text-faint">
-        less
+        {t("less")}
         {LEGEND_COLORS.map((c) => (
           <span key={c} className="w-[10px] h-[10px] rounded-[3px]" style={{ background: c }} />
         ))}
-        more
+        {t("more")}
       </div>
     </div>
   );

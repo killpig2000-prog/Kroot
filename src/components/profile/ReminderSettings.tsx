@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
+import { useLocale, useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 import { track } from "@/lib/analytics";
 import {
@@ -21,10 +22,9 @@ import {
 // the database untouched in case a paid plan ever makes a real schedule
 // possible — nothing reads it any more.
 const CRON_UTC_HOUR = 18;
-const clock = (h: number) => `${((h + 11) % 12) + 1} ${h < 12 ? "am" : "pm"}`;
-/** 18:00 UTC in this browser's clock — null on the server, where we can't know it. */
-const localSendTime = () =>
-  clock((((CRON_UTC_HOUR + Math.round(-new Date().getTimezoneOffset() / 60)) % 24) + 24) % 24);
+/** 18:00 UTC as an hour on this browser's clock — null on the server, where we can't know it. */
+const localSendHour = () =>
+  (((CRON_UTC_HOUR + Math.round(-new Date().getTimezoneOffset() / 60)) % 24) + 24) % 24;
 
 type Support = "unknown" | "ok" | "ios-install" | "none";
 const subscribeNever = () => () => {};
@@ -42,13 +42,15 @@ type Props = {
 
 // Reminders card on /profile: push toggle (Web Push) and email toggle (Brevo).
 export default function ReminderSettings({ userId, initialPush, initialEmail, hasEmail }: Props) {
+  const t = useTranslations("profile.reminders");
+  const locale = useLocale();
   const supabase = useMemo(() => createClient(), []);
   const [push, setPush] = useState(initialPush);
   const [email, setEmail] = useState(initialEmail);
   const [busy, setBusy] = useState<"push" | "email" | null>(null);
   const [note, setNote] = useState<string | null>(null);
   const support = useSyncExternalStore(subscribeNever, detectSupport, () => "unknown" as Support);
-  const sendTime = useSyncExternalStore<string | null>(subscribeNever, localSendTime, () => null);
+  const sendHour = useSyncExternalStore<number | null>(subscribeNever, localSendHour, () => null);
   const keyConfigured = !!process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
 
   useEffect(() => {
@@ -75,12 +77,12 @@ export default function ReminderSettings({ userId, initialPush, initialEmail, ha
       } else {
         setNote(
           r.reason === "denied"
-            ? "Notifications are blocked for this site — allow them in your browser settings and try again."
+            ? t("errBlocked")
             : r.reason === "no_key"
-              ? "Push isn't set up on this deployment yet."
+              ? t("errNoKey")
               : r.reason === "unsupported"
-                ? "This browser doesn't support push notifications."
-                : "Couldn't subscribe — please try again."
+                ? t("errUnsupported")
+                : t("errSubscribe")
         );
       }
     }
@@ -92,7 +94,7 @@ export default function ReminderSettings({ userId, initialPush, initialEmail, ha
     setNote(null);
     const next = !email;
     const { error } = await supabase.from("profiles").update({ reminder_email: next }).eq("id", userId);
-    if (error) setNote("Couldn't save — please try again.");
+    if (error) setNote(t("errSave"));
     else {
       setEmail(next);
       if (next) track("reminder_optin", { channel: "email" });
@@ -105,22 +107,27 @@ export default function ReminderSettings({ userId, initialPush, initialEmail, ha
   return (
     <div id="reminders" className="border border-line rounded-[14px] px-[22px] py-5">
       <div className="flex items-baseline justify-between gap-3 mb-4 flex-wrap">
-        <b className="font-semibold text-[15px]">⏰ Daily reminder</b>
+        <b className="font-semibold text-[15px]">{t("title")}</b>
         <small className="text-[12.5px] text-faint font-medium">
-          {sendTime ? `Once a day, around ${sendTime}` : "Once a day"} — only if you haven&apos;t studied yet
+          {sendHour === null
+            ? t("scheduleUnknown")
+            : t("scheduleKnown", {
+                // client-only branch, so a locale-formatted hour can't desync hydration
+                time: new Date(2000, 0, 1, sendHour).toLocaleTimeString(locale, { hour: "numeric" }),
+              })}
         </small>
       </div>
 
       <div className="grid grid-cols-1 gap-3">
         <Row
           icon="📱"
-          title="Push notification"
+          title={t("pushTitle")}
           desc={
             support === "ios-install"
-              ? "On iPhone, add Kroot to your Home Screen first (Share → Add to Home Screen), then turn this on."
+              ? t("pushIos")
               : support === "none"
-                ? "Not supported in this browser — try Chrome, Edge, or Firefox."
-                : "Works on this device even when the tab is closed."
+                ? t("pushUnsupported")
+                : t("pushDesc")
           }
           on={push}
           disabled={pushDisabled}
@@ -129,8 +136,8 @@ export default function ReminderSettings({ userId, initialPush, initialEmail, ha
         />
         <Row
           icon="✉️"
-          title="Email"
-          desc={hasEmail ? "A short note to your sign-in email." : "Add an email to your account to use this."}
+          title={t("emailTitle")}
+          desc={hasEmail ? t("emailDesc") : t("emailNone")}
           on={email}
           disabled={busy !== null || !hasEmail}
           busy={busy === "email"}

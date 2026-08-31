@@ -1,0 +1,94 @@
+{
+  "coins": "🌰 {coins} coins",
+  "intro": "Dress your tree and the garden around it. Tap a card to try it on your own tree, then buy and wear it right here.",
+  "slots": {
+    "hat": "Hats",
+    "face": "Face",
+    "neck": "Neck",
+    "aura": "Aura",
+    "sky": "Sky",
+    "ground": "Ground",
+    "friend": "Friend"
+  },
+  "rarity": {
+    "common": "Common",
+    "rare": "Rare",
+    "epic": "Epic",
+    "legendary": "Legendary"
+  },
+  "errors": {
+    "notEnoughCoins": "Not enough coins.",
+    "alreadyOwned": "You already own this.",
+    "levelTooLow": "Your tree isn't tall enough yet.",
+    "unavailable": "This one isn't available right now.",
+    "notOnSale": "This item isn't on sale right now.",
+    "generic": "Something went wrong — try again."
+  },
+  "cta": {
+    "pick": "Pick an item",
+    "takeOff": "Take off",
+    "wear": "Wear it",
+    "claimAdmin": "Claim & wear · admin",
+    "unlocksAt": "Unlocks at Lv.{level}",
+    "needMore": "Need {n} more 🌰",
+    "claim": "Claim & wear",
+    "buy": "Buy & wear · 🌰 {price}"
+  },
+  "bought": "{name} is yours — and on your tree.",
+  "featured": {
+    "badge": "This week only",
+    "meta": "{rarity} {slot} · 🌰 {price}{hasLevel, select, yes { · needs Lv.{level}} other {}} · gone after {date}",
+    "daysLeft": "{n}d left"
+  },
+  "categories": "Item categories",
+  "new": "NEW",
+  "card": {
+    "wearing": "Wearing ✓",
+    "owned": "Owned",
+    "locked": "🔒 Lv.{level}",
+    "price": "🌰 {price}",
+    "goal": "· your goal · {ready, select, yes {ready to buy} other {{n} to go}}{hasLevel, select, yes { · Lv.{level}} other {}}",
+    "setGoal": "Set as goal"
+  },
+  "empty": "Nothing on sale here right now — check back next season.",
+  "tryOn": {
+    "label": "Try on · your tree",
+    "caption": "Lv. {level}",
+    "none": "—",
+    "reset": "Reset",
+    "hint": "Tap a card to try it on",
+    "selected": "{name} · {krName}"
+  },
+  "picker": {
+    "change": "Change ▾",
+    "auto": "Cheapest next item (auto)",
+    "price": "🌰 {price}{hasLevel, select, yes { · Lv.{level}} other {}}"
+  },
+  "goal": {
+    "earnNote": "· earn {quest} per daily quest, {bonus} at every 10th level",
+    "doQuest": "Do today's quest →",
+    "savingFor": "Saving for <b>{name}</b>",
+    "needsLevel": " · needs Lv.{level}",
+    "progressLabel": "Coins saved toward {name}",
+    "savedLocked": "Saved up · unlocks at Lv.{level}",
+    "buyNow": "You can buy this now →",
+    "questsToGo": "{n, plural, one {# more quest} other {# more quests}}",
+    "orBonus": " · or Lv.{level} bonus (+{coins})",
+    "questDone": "Today's quest done ✓",
+    "questReady": "Today's quest ready ✏️"
+  },
+  "freeze": {
+    "title": "Streak freeze",
+    "held": "{n}/{max} held",
+    "desc": "Miss a day and a freeze is spent for you — your streak stays alive.",
+    "descStreak": "Miss a day and a freeze is spent for you — your {n}-day streak stays alive.",
+    "errNotEnough": "Not enough coins — daily quests pay {coins} each.",
+    "errMax": "You can hold at most {max}.",
+    "errPending": "Freezes open soon (migration 0035 pending).",
+    "errGeneric": "Couldn't buy that right now.",
+    "bought": "Frozen and ready 🧊 — it'll be used automatically if you miss a day.",
+    "maxed": "Max held",
+    "buying": "Freezing…",
+    "buy": "Buy · 🌰 {price}"
+  }
+}

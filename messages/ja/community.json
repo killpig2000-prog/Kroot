@@ -1,0 +1,63 @@
+{
+  "title": "コミュニティ",
+  "newPost": "新規投稿",
+  "newPostCta": "✍️ 新規投稿",
+  "all": "すべて",
+  "boards": {
+    "question": "質問掲示板",
+    "free": "自由掲示板",
+    "exchange": "言語交換"
+  },
+  "tableMissing": {
+    "title": "コミュニティは近日公開",
+    "body": "同梱のマイグレーション <code>{file}</code> を実行すると掲示板が使えるようになります。それまでは、こんな感じになるという見本です。"
+  },
+  "loadFailed": "投稿を読み込めませんでした。少し待ってから再読み込みしてください。",
+  "notice": {
+    "badge": "📌 お知らせ",
+    "team": "Krootチーム",
+    "officialBadge": "📌 公式のお知らせ",
+    "teamLine": "🌱 Krootチーム",
+    "closed": "お知らせにはコメントできません — これについて質問がありますか？",
+    "ask": "質問掲示板で聞いてみる →"
+  },
+  "empty": {
+    "title": "まだ何もありません",
+    "sub": "この掲示板の最初の投稿をしてみましょう。"
+  },
+  "comments": {
+    "heading": "コメント",
+    "count": "· {n}",
+    "unavailable": "コメントは近日公開 — <code>{file}</code> を実行すると使えるようになります。",
+    "none": "まだコメントはありません — 最初のひとりになりましょう。",
+    "delete": "削除",
+    "deleting": "削除中…",
+    "placeholder": "{name} として返信…",
+    "counter": "{n}/{max}",
+    "submit": "コメントする",
+    "posting": "投稿中…",
+    "errAdd": "コメントを追加できませんでした。少し待ってからもう一度お試しください。",
+    "errDelete": "そのコメントを削除できませんでした。"
+  },
+  "composer": {
+    "hint": "— 庭のみんなに話しかけてみましょう",
+    "titlePlaceholder": "タイトル",
+    "bodyPlaceholder": "投稿を書きましょう…",
+    "counter": "{n}/{max}",
+    "post": "投稿",
+    "posting": "投稿中…",
+    "err": "まだ投稿できませんでした — コミュニティのテーブルが未設定かもしれません。"
+  },
+  "deletePost": {
+    "confirm": "この投稿を削除しますか？元に戻せません。",
+    "delete": "削除",
+    "deleting": "削除中…",
+    "failed": "削除できませんでした。"
+  },
+  "timeAgo": {
+    "justNow": "たった今",
+    "minutes": "{n}分前",
+    "hours": "{n}時間前",
+    "days": "{n}日前"
+  }
+}

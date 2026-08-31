@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import type { CefrLevel } from "@/lib/tree";
 
@@ -29,12 +30,13 @@ export default function LevelTabs({
   accent: string;
   className?: string;
 }) {
+  const t = useTranslations("ui");
   const anyLocked = levels.some((lv) => !unlocked(lv));
   return (
     <div className={className}>
       <div
         role="tablist"
-        aria-label="Level"
+        aria-label={t("levelTabs.ariaLabel")}
         className="flex gap-1.5 overflow-x-auto -mx-1 px-1 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         {levels.map((lv) => {
@@ -44,7 +46,7 @@ export default function LevelTabs({
             return (
               <span
                 key={lv}
-                title="Pass the promotion test to unlock this level"
+                title={t("levelTabs.lockedTitle")}
                 aria-disabled="true"
                 className="flex-none inline-flex items-center gap-1 rounded-[9px] px-3 py-1.5 text-[13px] font-semibold border bg-warm border-line text-faint opacity-70 select-none"
               >
@@ -68,7 +70,7 @@ export default function LevelTabs({
                 <span
                   className={`text-[10px] font-bold uppercase tracking-[.06em] ${on ? "opacity-80" : "text-faint"}`}
                 >
-                  you
+                  {t("levelTabs.you")}
                 </span>
               )}
             </Link>
@@ -77,7 +79,7 @@ export default function LevelTabs({
       </div>
       {anyLocked && (
         <p className="text-[11.5px] text-faint mt-1">
-          🔒 Locked levels open when you pass the promotion test.
+          {t("levelTabs.lockedNote")}
         </p>
       )}
     </div>

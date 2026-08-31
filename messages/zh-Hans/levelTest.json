@@ -1,0 +1,59 @@
+{
+  "breadcrumb": "升级测试",
+  "title": "升级测试",
+  "titleLevels": "· {from} → {to}",
+  "intro": "当前等级掌握得足够扎实，测试就会自动解锁。通过后即可开启下一等级的内容。",
+  "topGrade": "你已经处于最高等级（C2）啦！🏆",
+  "comingSoon": "{grade} 的升级测试即将推出。",
+  "requirements": {
+    "title": "解锁条件 — 你在 {grade} 掌握了多少",
+    "wordsHeld": "已掌握词汇",
+    "wordsNote": "一个词通过前两次复习后才会计入 — 目前你已学习 {n} 个 {grade} 词汇。",
+    "readingPassages": "阅读篇章",
+    "keepStudying": "继续学习 {grade} 的词汇和阅读来填满进度条。全部填满后，测试就会在这里开启。"
+  },
+  "cooldown": {
+    "label": "重考冷却",
+    "body": "{date} 之后可以再试一次。",
+    "practice": "在此期间，先练习{skill} →"
+  },
+  "skills": {
+    "listening": "听力",
+    "reading": "阅读",
+    "writing": "写作"
+  },
+  "species": {
+    "A1": "杜鹃花",
+    "A2": "连翘",
+    "B1": "樱花树",
+    "B2": "柿子树",
+    "C1": "银杏",
+    "C2": "松树"
+  },
+  "runner": {
+    "introTitle": "升级测试 · {from} → {to}",
+    "introBody": "听力（{listening} 题）→ 阅读（{passages} 篇文章共 {questions} 题）→ 写作（{writing} 题，用给出的词拼出句子）。全部即时批改，无需等待。每次作答的题目都随机抽取。",
+    "passRule": "通过标准：平均 70 分以上，且每项技能都在 60 分以上。没通过也没关系 — 练习最弱的一项，{hours} 小时后再来。",
+    "start": "开始",
+    "listeningTitle": "1 · 听力 — 点 🔊 后作答",
+    "readingTitle": "2 · 阅读 — 第 {n}/{total} 篇",
+    "writingProgress": "3 · 写作 — 已完成 {done} / {total}",
+    "seeResults": "查看结果 →"
+  },
+  "mcq": {
+    "progress": "{title} · {n}/{total}",
+    "playAudio": "播放音频",
+    "dontKnow": "我不知道"
+  },
+  "result": {
+    "passedTitle": "恭喜！你升到了 {level}！",
+    "passedBody": "你的{from}长成了<b>{to}</b>。",
+    "contentOpen": "{level} 的内容已经开启。",
+    "promotionFailed": "升级没能生效 — 请稍后查看你的个人页面。",
+    "failedTitle": "还差一点点 — 但你已经很接近了！",
+    "failedBody": "{hours} 小时后可以再试一次。",
+    "weakest": "你最弱的一项是<b>{skill}</b>。",
+    "practice": "练习{skill} →",
+    "backToGarden": "返回花园"
+  }
+}

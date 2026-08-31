@@ -1,0 +1,86 @@
+{
+  "identity": {
+    "fallbackName": "Estudiante",
+    "difficulty": "dificultad {level}",
+    "growingSince": "creciendo desde {date}",
+    "maxLevel": "Llegaste a las estrellas 🌟",
+    "xpToNext": "{into}/{needed} XP para el Nv. {level}",
+    "streak": "🔥 {n, plural, one {# día seguido} other {# días seguidos}}",
+    "coins": "🌰 {n, plural, one {# moneda} other {# monedas}}",
+    "freezes": "🧊 {n, plural, one {# congelación} other {# congelaciones}}"
+  },
+  "avatar": {
+    "change": "Cambiar la foto de perfil",
+    "edit": "Editar",
+    "errType": "Elige un archivo de imagen.",
+    "errSize": "La imagen debe pesar menos de {mb} MB."
+  },
+  "name": {
+    "edit": "Editar nombre",
+    "save": "Guardar"
+  },
+  "grass": {
+    "title": "🌿 Jardín de estudio · {year}",
+    "minutesShort": "{n} min",
+    "dayTitle": "{date} · {n} min",
+    "less": "menos",
+    "more": "más"
+  },
+  "reminders": {
+    "title": "⏰ Recordatorio diario",
+    "scheduleKnown": "Una vez al día, sobre las {time} — solo si aún no has estudiado",
+    "scheduleUnknown": "Una vez al día — solo si aún no has estudiado",
+    "pushTitle": "Notificación push",
+    "pushDesc": "Funciona en este dispositivo aunque la pestaña esté cerrada.",
+    "pushIos": "En el iPhone, añade Kroot a la pantalla de inicio (Compartir → Añadir a pantalla de inicio) y luego actívalo.",
+    "pushUnsupported": "No es compatible con este navegador — prueba con Chrome, Edge o Firefox.",
+    "emailTitle": "Correo",
+    "emailDesc": "Un mensaje breve al correo con el que inicias sesión.",
+    "emailNone": "Añade un correo a tu cuenta para usar esta opción.",
+    "errBlocked": "Este sitio tiene las notificaciones bloqueadas — permítelas en los ajustes del navegador e inténtalo de nuevo.",
+    "errNoKey": "Las notificaciones push aún no están configuradas en esta versión.",
+    "errUnsupported": "Este navegador no admite notificaciones push.",
+    "errSubscribe": "No se pudo activar — inténtalo de nuevo.",
+    "errSave": "No se pudo guardar — inténtalo de nuevo."
+  },
+  "insights": {
+    "title": "📊 Análisis",
+    "skills": {
+      "reading": "Lectura",
+      "writing": "Escritura",
+      "listening": "Comprensión auditiva",
+      "speaking": "Expresión oral",
+      "vocabulary": "Vocabulario",
+      "grammar": "Gramática",
+      "pronunciation": "Pronunciación",
+      "hangul": "Hangul",
+      "slang": "Jerga",
+      "quest": "Misiones diarias"
+    },
+    "boxes": {
+      "1": "Recién plantada",
+      "2": "Brotando",
+      "3": "Creciendo",
+      "4": "Con raíces",
+      "5": "Raíces profundas"
+    },
+    "tiles": {
+      "wordAccuracy": "acierto en palabras",
+      "readingAccuracy": "acierto en lectura",
+      "pronunciationScore": "nota media de pronunciación",
+      "xp14": "XP · 14 días"
+    },
+    "xpTitle": "⚡ XP · últimos 14 días",
+    "xpPerDay": "XP / día",
+    "xpDayTitle": "{date}: {xp} XP",
+    "bySkillTitle": "🌱 De dónde viene tu XP",
+    "bySkillEmpty": "Termina una lección y aquí empezará a aparecer tu desglose por destreza.",
+    "xpAmount": "{xp} XP",
+    "boxesTitle": "💧 Qué tan arraigadas están tus palabras",
+    "wordCount": "{n, plural, one {# palabra} other {# palabras}}",
+    "weakestTitle": "🥀 Palabras que necesitan más repaso",
+    "weakestLink": "Repasarlas →",
+    "weakestEmpty": "Nada marchito — todas las palabras que has repasado van bien. 🌱",
+    "footnote": "El XP por destreza se cuenta desde el día en que se estrenó Análisis: el XP anterior aparece en la línea de tiempo, pero sin desglosar por destreza."
+  }
+}

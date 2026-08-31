@@ -10,6 +10,7 @@ import {
   type PointerEvent as ReactPointerEvent,
   type ReactNode,
 } from "react";
+import { useTranslations } from "next-intl";
 import { buttonClassName } from "@/components/ui/Button";
 import { speakKorean } from "@/lib/tts";
 import { VOCAB_ROOTS, type VocabWordWithProgress } from "@/lib/vocabulary";
@@ -63,6 +64,7 @@ export default function FlipPhase({
   onOpenRoot: () => void;
   onCloseRoot: () => void;
 }) {
+  const t = useTranslations("vocabulary");
   const status = WORD_STATUSES[wordStatus(wordCounts.correct + wordCounts.incorrect)];
   const root = word.root ? VOCAB_ROOTS[word.root] : undefined;
   const note = getWordNote(word.korean);
@@ -96,7 +98,7 @@ export default function FlipPhase({
       {/* the notebook page — swipe right = Got it, left = Still learning */}
       <SwipeCard key={word.key} enabled={flipped} nextWord={next} onSwipe={onAnswer}>
         <span className="absolute top-4 right-5 text-[10.5px] font-black tracking-[.06em] uppercase text-amber border-2 border-amber rounded-[6px] px-2 py-[3px] rotate-[-6deg] opacity-80 select-none">
-          {status.label}
+          {t(status.key)}
         </span>
 
         <div className="relative pt-6 pb-5 pr-[clamp(18px,4vw,26px)] pl-[clamp(40px,8vw,70px)]">
@@ -107,7 +109,7 @@ export default function FlipPhase({
                 <button
                   type="button"
                   onClick={() => speakKorean(word.korean)}
-                  title="Hear it"
+                  title={t("session.hearIt")}
                   className="inline-flex items-baseline gap-2 hover:text-[#6B33CC] transition-colors text-left"
                 >
                   {word.korean}
@@ -119,7 +121,7 @@ export default function FlipPhase({
             {hanja && (
               <span
                 className="kr font-black text-[clamp(36px,6vw,52px)] leading-none text-[#A08F4E] opacity-55 tracking-[.04em] select-none"
-                aria-label={`Hanja: ${hanja}`}
+                aria-label={t("session.hanjaAria", { hanja })}
               >
                 {hanja}
               </span>
@@ -146,7 +148,7 @@ export default function FlipPhase({
                 </p>
               )}
               {note?.origin && (
-                <p className="text-[12.5px] text-muted leading-[1.65] mb-3">from {note.origin}</p>
+                <p className="text-[12.5px] text-muted leading-[1.65] mb-3">{t("session.origin", { origin: note.origin })}</p>
               )}
 
               <div className="border-l-[3px] border-[var(--tint-violet-line)] pl-3.5 py-1 my-2 mb-3.5">
@@ -154,7 +156,7 @@ export default function FlipPhase({
                   <button
                     type="button"
                     onClick={() => speakKorean(word.example_kr)}
-                    title="Hear the sentence"
+                    title={t("session.hearSentence")}
                     className="text-left hover:text-[#6B33CC] transition-colors"
                   >
                     {word.example_kr} <span aria-hidden="true" className="text-[11px] opacity-70">🔊</span>
@@ -182,10 +184,10 @@ export default function FlipPhase({
                 </span>
                 <div className="flex gap-2">
                   <button className={BTN_LINE} onClick={() => onAnswer(false)}>
-                    Still learning
+                    {t("stillLearning")}
                   </button>
                   <button className={BTN_INK} onClick={() => onAnswer(true)}>
-                    Got it ✓
+                    {t("gotIt")}
                   </button>
                 </div>
               </div>
@@ -196,10 +198,10 @@ export default function FlipPhase({
                 className="border-[1.5px] border-dashed border-[var(--tint-violet-line)] rounded-[10px] bg-[var(--tint-violet)] px-[22px] py-3 text-[13.5px] font-semibold text-[#6B33CC] hover:bg-[var(--tint-violet-line)] transition-colors"
                 onClick={onFlip}
               >
-                👀 Reveal meaning
+                👀 {t("session.revealMeaning")}
               </button>
               <p className="text-[12px] text-faint mt-3">
-                {hanja ? "The hanja above is your hint." : "Say it out loud first — then flip."}
+                {hanja ? t("session.hintHanja") : t("session.hintSayIt")}
               </p>
             </div>
           )}
@@ -222,14 +224,14 @@ export default function FlipPhase({
             {root.syllable}
           </span>
           <div className="min-w-0">
-            <b className="block text-[13.5px] font-semibold">Bonus root: {root.name}</b>
-            <span className="text-[12.5px] text-[#713FC0]">A few more words that share this root</span>
+            <b className="block text-[13.5px] font-semibold">{t("session.bonusRoot", { name: root.name })}</b>
+            <span className="text-[12.5px] text-[#713FC0]">{t("session.bonusRootSub")}</span>
           </div>
           <button
             className="ml-auto flex-none bg-[#6B33CC] hover:bg-[#713FC0] text-white rounded-lg px-4 py-2 text-[12.5px] font-semibold transition-colors"
             onClick={onOpenRoot}
           >
-            Explore →
+            {t("session.explore")}
           </button>
         </div>
       )}
@@ -250,7 +252,7 @@ export default function FlipPhase({
             <button
               className="border-none bg-warm w-7 h-7 rounded-lg text-faint hover:text-charcoal text-[13px]"
               onClick={onCloseRoot}
-              aria-label="Close root panel"
+              aria-label={t("session.closeRoot")}
             >
               ✕
             </button>
@@ -295,6 +297,7 @@ function SwipeCard({
   onSwipe: (gotIt: boolean) => void;
   children: ReactNode;
 }) {
+  const t = useTranslations("vocabulary");
   const cardRef = useRef<HTMLDivElement>(null);
   // limit = release threshold for this drag: min(100px, 25% of the card width).
   const [drag, setDrag] = useState<{ dx: number; mode: DragMode; limit: number }>({
@@ -439,21 +442,21 @@ function SwipeCard({
             className="absolute top-[108px] left-1/2 z-10 pointer-events-none select-none text-[22px] font-black tracking-[.08em] uppercase text-[#3E7C59] border-[3px] border-[#3E7C59] rounded-[8px] px-2.5 py-1 -translate-x-1/2 rotate-[-12deg] whitespace-nowrap"
             style={{ opacity: dx > 0 ? stampOpacity : 0, transition: mode === "drag" ? "none" : "opacity 120ms ease" }}
           >
-            Got it ✓
+            {t("gotIt")}
           </span>
           <span
             aria-hidden="true"
             className="absolute top-[108px] left-1/2 z-10 pointer-events-none select-none text-[18px] font-black tracking-[.08em] uppercase text-muted border-[3px] border-current rounded-[8px] px-2.5 py-1 -translate-x-1/2 rotate-[12deg] whitespace-nowrap"
             style={{ opacity: dx < 0 ? stampOpacity : 0, transition: mode === "drag" ? "none" : "opacity 120ms ease" }}
           >
-            Still learning
+            {t("stillLearning")}
           </span>
         </div>
       </div>
 
       {enabled && (
         <p className="hidden [@media(pointer:coarse)]:block text-[11.5px] text-faint text-center mt-2.5">
-          Swipe right = Got it · left = Still learning
+          {t("session.swipeHint")}
         </p>
       )}
     </>
@@ -468,19 +471,21 @@ function MarginNote({
   ex: { kr: string; en: string; source: "reading" | "listening" };
   rotate?: number;
 }) {
+  const t = useTranslations("vocabulary");
+  const tw = useTranslations("words");
   return (
     <div
       className="bg-[var(--tint-amber)] border border-amber-line rounded-[6px] px-3 py-2.5 shadow-[0_5px_12px_rgba(0,0,0,0.07)] text-left"
       style={rotate ? { transform: `rotate(${rotate}deg)` } : undefined}
     >
       <p className="text-[10px] font-bold tracking-[0.07em] uppercase text-[#A08F4E] mb-1">
-        {ex.source === "reading" ? "📖 Seen in Reading" : "🎧 Seen in Listening"}
+        {ex.source === "reading" ? tw("seenInReading") : tw("seenInListening")}
       </p>
       <p className="kr text-[13px] font-medium text-charcoal leading-[1.45]">
         <button
           type="button"
           onClick={() => speakKorean(ex.kr)}
-          title="Hear the sentence"
+          title={t("session.hearSentence")}
           className="text-left hover:text-[#6B33CC] transition-colors"
         >
           {ex.kr}

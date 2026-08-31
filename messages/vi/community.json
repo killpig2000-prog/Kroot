@@ -1,0 +1,63 @@
+{
+  "title": "Cộng đồng",
+  "newPost": "Bài viết mới",
+  "newPostCta": "✍️ Bài viết mới",
+  "all": "Tất cả",
+  "boards": {
+    "question": "Bảng hỏi đáp",
+    "free": "Bảng tự do",
+    "exchange": "Trao đổi ngôn ngữ"
+  },
+  "tableMissing": {
+    "title": "Cộng đồng sắp mở",
+    "body": "Hãy chạy migration đi kèm <code>{file}</code> để bật bảng tin. Trong lúc chờ, đây là hình dung trước về nó."
+  },
+  "loadFailed": "Không tải được bài viết. Hãy thử tải lại sau giây lát.",
+  "notice": {
+    "badge": "📌 Thông báo",
+    "team": "Đội ngũ Kroot",
+    "officialBadge": "📌 Thông báo chính thức",
+    "teamLine": "🌱 Đội ngũ Kroot",
+    "closed": "Thông báo không nhận bình luận — bạn có thắc mắc về điều này?",
+    "ask": "Hỏi ở bảng hỏi đáp →"
+  },
+  "empty": {
+    "title": "Ở đây chưa có gì cả",
+    "sub": "Hãy là người đầu tiên đăng bài trên bảng này."
+  },
+  "comments": {
+    "heading": "Bình luận",
+    "count": "· {n}",
+    "unavailable": "Bình luận sắp mở — hãy chạy <code>{file}</code> để bật.",
+    "none": "Chưa có bình luận nào — hãy là người đầu tiên.",
+    "delete": "Xoá",
+    "deleting": "Đang xoá…",
+    "placeholder": "Trả lời với tên {name}…",
+    "counter": "{n}/{max}",
+    "submit": "Bình luận",
+    "posting": "Đang đăng…",
+    "errAdd": "Không thêm được bình luận của bạn. Hãy thử lại sau giây lát.",
+    "errDelete": "Không xoá được bình luận đó."
+  },
+  "composer": {
+    "hint": "— nói gì đó với khu vườn nào",
+    "titlePlaceholder": "Tiêu đề",
+    "bodyPlaceholder": "Viết bài của bạn…",
+    "counter": "{n}/{max}",
+    "post": "Đăng",
+    "posting": "Đang đăng…",
+    "err": "Chưa đăng được — có thể bảng dữ liệu cộng đồng chưa được thiết lập."
+  },
+  "deletePost": {
+    "confirm": "Xoá bài viết này? Thao tác này không thể hoàn tác.",
+    "delete": "Xoá",
+    "deleting": "Đang xoá…",
+    "failed": "Không xoá được."
+  },
+  "timeAgo": {
+    "justNow": "vừa xong",
+    "minutes": "{n} phút trước",
+    "hours": "{n} giờ trước",
+    "days": "{n} ngày trước"
+  }
+}

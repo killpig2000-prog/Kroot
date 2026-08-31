@@ -72,5 +72,82 @@
     "errMax": "{max} từ là mức tối đa.",
     "errAuth": "Đăng nhập để mua.",
     "errGeneric": "Hiện chưa mua được."
+  },
+  "unitN": "Bài {n}",
+  "session": {
+    "hearIt": "Nghe từ",
+    "hearSentence": "Nghe câu",
+    "hanjaAria": "Hán tự: {hanja}",
+    "revealMeaning": "Xem nghĩa",
+    "hintHanja": "Hán tự ở trên là gợi ý cho bạn.",
+    "hintSayIt": "Hãy đọc to trước, rồi mới lật thẻ.",
+    "origin": "từ {origin}",
+    "bonusRoot": "Gốc từ thêm: {name}",
+    "bonusRootSub": "Vài từ khác cùng gốc này",
+    "explore": "Khám phá →",
+    "closeRoot": "Đóng bảng gốc từ",
+    "swipeHint": "Vuốt phải = Hiểu rồi · vuốt trái = Còn đang học",
+    "emptyTitle": "Chưa có từ nào ở đây",
+    "emptyBody": "Chương này chưa có thẻ — hãy thử chương khác.",
+    "backToTopics": "Quay lại danh sách chủ đề",
+    "levelSet": "Cấp {level} · nhóm {current} trên {total}"
+  },
+  "quiz": {
+    "introTitle": "Bài kiểm tra của chương",
+    "introSub": "{known} trên {total} từ thấy dễ. Sẵn sàng điền vào chỗ trống chưa?",
+    "start": "Bắt đầu kiểm tra →",
+    "skip": "Bỏ qua bài kiểm tra",
+    "progress": "Kiểm tra · Câu {current} trên {total}",
+    "correctCount": "{count, plural, other {# câu đúng}}"
+  },
+  "summary": {
+    "title": "{count, plural, other {Hôm nay đã học # từ!}}",
+    "sub": "Những từ đó vừa bén rễ sâu hơn một chút.",
+    "levelUp": "Lên cấp! Bạn giờ là Lv. {level}",
+    "markedKnown": "Đã đánh dấu là biết",
+    "quizStat": "Kiểm tra",
+    "chapterDone": "Từ vựng · xong chương",
+    "moreWords": "{count, plural, other {# từ nữa}}"
+  },
+  "search": {
+    "trigger": "Tìm một từ",
+    "dialogLabel": "Tìm trong từ vựng",
+    "placeholder": "Tìm trong hơn 4.000 từ — 한국어, phiên âm hoặc tiếng Anh",
+    "hint": "Mọi cấp độ, mọi bài học — kết quả sẽ mở bài học dạy từ đó.",
+    "loading": "Đang tải bộ từ…",
+    "noMatch": "Không có kết quả cho “{query}” — thử cách viết tiếng Hàn hoặc nghĩa tiếng Anh."
+  },
+  "tap": {
+    "dialogLabel": "Chi tiết từ",
+    "lookingUp": "Đang tra…",
+    "hear": "Nghe {word}",
+    "saved": "Đã lưu ✓ — từ này sẽ quay lại trong lần ôn tới",
+    "planting": "Đang trồng…",
+    "save": "Trồng vào vườn",
+    "notInDeck": "Từ này chưa có trong bộ từ."
+  },
+  "detail": {
+    "back": "Quay lại",
+    "prev": "Trước",
+    "backToUnit": "Quay lại bài học",
+    "backToStory": "Quay lại bài đọc"
+  },
+  "practice": {
+    "reviewTime": "giờ ôn tập",
+    "opensSoonTitle": "Phần ôn tập sắp mở",
+    "opensSoonBody": "Hãy chạy migration đi kèm <code>supabase/migrations/0022_srs_review.sql</code> để bật chế độ ôn tập ngắt quãng.",
+    "nothingTitle": "Hiện chưa có gì để ôn tập",
+    "allFresh": "{count, plural, other {Cả # từ đã học vẫn còn mới.}}",
+    "nextDue": "Từ tiếp theo đến hạn vào {date, date, medium}.",
+    "learnFirst": "Hãy học vài từ trước — chúng sẽ xuất hiện ở đây khi đến lúc ôn.",
+    "plantNew": "Trồng từ mới →",
+    "progress": "Ôn tập · {current} trên {total}",
+    "watered": "Đã tưới {count} từ",
+    "doneTitle": "Đã tưới vườn xong!",
+    "doneSub": "{kept} trên {total} từ đã bén rễ sâu hơn.",
+    "doneSlipped": "Những từ chưa nhớ sẽ quay lại vào ngày mai.",
+    "backInCan": "Quay lại bình tưới:",
+    "nothingToReview": "Không có gì để ôn tập",
+    "levelUp": "Lên cấp! Bạn giờ là Lv. {level}"
   }
 }

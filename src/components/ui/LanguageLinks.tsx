@@ -1,6 +1,6 @@
 "use client";
 
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { rememberLocale } from "@/i18n/locale";
 
@@ -15,6 +15,7 @@ const LANGUAGES = [
 // the very first screen a ja/zh/vi visitor sees must let them switch.
 export default function LanguageLinks({ className = "" }: { className?: string }) {
   const locale = useLocale();
+  const t = useTranslations("ui");
   const pathname = usePathname();
   const router = useRouter();
 
@@ -24,7 +25,7 @@ export default function LanguageLinks({ className = "" }: { className?: string }
   }
 
   return (
-    <nav aria-label="Language" className={className}>
+    <nav aria-label={t("languageNav")} className={className}>
       {LANGUAGES.map((l, i) => (
         <span key={l.code}>
           {i > 0 && <span aria-hidden="true"> · </span>}

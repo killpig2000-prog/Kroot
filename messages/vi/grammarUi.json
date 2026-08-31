@@ -1,0 +1,18 @@
+{
+  "breadcrumb": "Ngữ pháp",
+  "lessonCount": "{n} bài học",
+  "lessonNumber": "Bài {n}",
+  "checkYourself": "Tự kiểm tra",
+  "allLessons": "← Tất cả bài học",
+  "nextLesson": "Tiếp: {title} →",
+  "hearExample": "Nghe {text}",
+  "resumeDetail": "Ngữ pháp",
+  "quiz": {
+    "question": "Câu {n}",
+    "progress": "{n} / {total}",
+    "correct": "🌱 Chính xác!",
+    "wrong": "💧 Chưa đúng — đáp án là {letter}. {text}",
+    "done": "🌱 Xong bài kiểm tra — số phút hôm nay đã ghi vào cây của bạn.",
+    "levelUp": "🎉 Lên cấp! Giờ là Lv. {n}"
+  }
+}

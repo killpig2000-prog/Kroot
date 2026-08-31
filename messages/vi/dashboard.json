@@ -1,0 +1,153 @@
+{
+  "welcome": "Chào mừng, {name}",
+  "day": "Ngày {n}",
+  "loadError": "Hiện chưa tải được tiến độ của bạn — không mất gì cả. Hãy tải lại sau giây lát.",
+  "quest": {
+    "title": "Nhiệm vụ hôm nay",
+    "done": "Xong ✓",
+    "go": "Bắt đầu →",
+    "start": "Bắt đầu ▸",
+    "descriptions": {
+      "writing": "Viết · một chương, vài câu hỏi · ~8 phút",
+      "vocabulary": "Ôn tập · những từ đến hạn · ~5 phút",
+      "listening": "Nghe · một đoạn hội thoại đúng trình độ · ~5 phút",
+      "reading": "Đọc · một đoạn ngắn · ~4 phút",
+      "pronunciation": "Phát âm · hoàn thành một chương · ~4 phút"
+    }
+  },
+  "review": {
+    "due": "{count} từ đã đến hạn ôn tập",
+    "dueShort": "{count} từ đến hạn",
+    "now": "Ôn ngay →",
+    "short": "Ôn tập →"
+  },
+  "slang": {
+    "title": "Tiếng lóng hôm nay",
+    "flip": "Lật xem →",
+    "hear": "Nghe trong hội thoại →",
+    "short": "Tiếng lóng →"
+  },
+  "wotd": {
+    "title": "Từ của ngày"
+  },
+  "hangul": {
+    "title": "Bạn hoàn toàn mới với tiếng Hàn?",
+    "sub": "Học bảng chữ cái trước — 40 chữ, một giờ, miễn phí mãi mãi.",
+    "cta": "Bắt đầu tại đây →"
+  },
+  "garden": {
+    "thisWeek": "tuần này",
+    "total": "tổng cộng",
+    "bestStreak": "chuỗi dài nhất",
+    "monthGoal": "mục tiêu {month}"
+  },
+  "levelMap": {
+    "title": "Lộ trình của bạn",
+    "checksToward": "{done}/{total} điều kiện để lên {next}",
+    "topOfTree": "Đã lên tới ngọn cây 🌟",
+    "levelsAria": "Trình độ",
+    "ready": "Sẵn sàng cho bài kiểm tra {current} → {next}",
+    "unlock": "Mở khóa {next} · {species}",
+    "start": "Bắt đầu →",
+    "details": "Chi tiết →",
+    "checkWordsHeld": "Từ đã nhớ",
+    "checkReading": "Đọc"
+  },
+  "tree": {
+    "levelBadge": "Cấp {level}",
+    "metresTall": "mét",
+    "maxed": "Đã chạm tới các vì sao 🌟",
+    "xpToNext": "{into}/{needed} XP để lên Cấp {next}",
+    "phrases": {
+      "fighting": "cố lên nhé!",
+      "goodToday": "hôm nay trông ổn lắm!",
+      "thanksWater": "cảm ơn vì đã tưới nước",
+      "growTogether": "cùng lớn lên nào"
+    },
+    "keepsakes": {
+      "60": "Tổ chim",
+      "70": "Xích đu dây",
+      "80": "Nhà cho chim",
+      "90": "Dây đèn lồng",
+      "100": "Nhà trên cây",
+      "110": "Chong chóng gió",
+      "120": "Ngôi sao trên ngọn"
+    }
+  },
+  "growth": {
+    "closeAria": "Đóng",
+    "dialogAria": "Cây lớn lên",
+    "promotion": "Thăng cấp!",
+    "taller": "Cao hơn rồi!",
+    "grew": "Cây của bạn đã lớn!",
+    "newTree": "Một cái cây hoàn toàn mới! 🌳",
+    "newTier": "Một tầng tán mới — và một kỷ vật 🌲",
+    "sayHello": "Chào {treeName} nào! 🌳",
+    "note": "Cấp {level} — ôn một chút mỗi ngày và xem cây lớn tới đâu.",
+    "ok": "Tuyệt!"
+  },
+  "firstVisit": {
+    "todayFiveMinutes": "Hôm nay · 5 phút",
+    "startHere": "Bắt đầu ở đây",
+    "startStep1": "Bắt đầu bước 1 →",
+    "unlocksNext": "Sắp mở khóa",
+    "lockedAria": "Các mục còn khóa trên trang chính",
+    "showEverything": "Hiện tất cả ngay",
+    "locked": {
+      "quest": {
+        "title": "Nhiệm vụ hôm nay",
+        "note": "mở sau buổi học 1"
+      },
+      "wotd": {
+        "title": "Từ của ngày",
+        "note": "mở sau buổi học 2"
+      },
+      "levelMap": {
+        "title": "Bản đồ trình độ",
+        "note": "mở sau buổi học 3"
+      },
+      "heatmap": {
+        "title": "Khu vườn học tập",
+        "note": "mở khi có chuỗi 3 ngày"
+      }
+    },
+    "steps": {
+      "hangul": "Hangul",
+      "hangulDetail": "Phụ âm",
+      "vocab": "Từ vựng",
+      "vocabDetail": "Bài 1 (10 từ)",
+      "vocabDetailLevel": "Bài 1 (10 từ) · {level}",
+      "listening": "Nghe",
+      "listeningDetail": "một đoạn hội thoại ngắn",
+      "waterSeedling": "Ghé thăm mầm cây của bạn 💧",
+      "minutes": "{n} phút",
+      "seconds": "{n} giây"
+    }
+  },
+  "account": {
+    "darkMode": "Chế độ tối",
+    "seasonalTheme": "Giao diện theo mùa",
+    "logout": "Đăng xuất",
+    "leaving": "Đang thoát…"
+  },
+  "feedback": {
+    "closeAria": "Đóng",
+    "dialogAria": "Góp ý",
+    "notice": "Thông báo",
+    "launchedTitle": "Kroot vừa mới ra mắt",
+    "launchedBody1": "Ứng dụng vẫn còn rất mới và còn nhiều thiếu sót. Chúng tôi đang tiếp tục cải thiện.",
+    "launchedBody2": "Nếu bạn có ý kiến hay đề xuất nào, chúng tôi rất mong được nghe.",
+    "send": "Gửi góp ý",
+    "close": "Đóng",
+    "hideToday": "Hôm nay đừng hiện nữa",
+    "formSub": "Một lỗi, một chỗ chưa mượt, một tính năng bạn mong có — đều được cả.",
+    "placeholder": "Bạn đang nghĩ gì?",
+    "error": "Chưa gửi được — bạn thử lại nhé?",
+    "sending": "Đang gửi…",
+    "submit": "Gửi",
+    "cancel": "Hủy",
+    "thanksTitle": "Cảm ơn bạn",
+    "thanksBody": "Chúng tôi đã nhận được góp ý của bạn. Mỗi tin nhắn đều được đọc và dùng để quyết định cải thiện điều gì tiếp theo.",
+    "railLink": "Gửi góp ý →"
+  }
+}

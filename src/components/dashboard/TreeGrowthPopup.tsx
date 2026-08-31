@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import TreeEvolution from "@/components/level-test/TreeEvolution";
 import { LEVEL_ORDER, LEVEL_PATH, type CefrLevel } from "@/lib/tree";
 import { treeStageForLevel, veteranTiers } from "@/lib/level";
@@ -27,6 +28,7 @@ export default function TreeGrowthPopup({
   level: number;
   species?: CefrLevel;
 }) {
+  const t = useTranslations("dashboard.growth");
   const [growth, setGrowth] = useState<Growth | null>(null);
 
   useEffect(() => {
@@ -48,7 +50,7 @@ export default function TreeGrowthPopup({
       !!prevStage && prevStage !== stage && LEVEL_ORDER.indexOf(stage) > LEVEL_ORDER.indexOf(prevStage);
     if (!speciesGrew && !stageGrew && !tiersGrew) return;
 
-    const t = setTimeout(() => {
+    const timer = setTimeout(() => {
       setGrowth({
         fromStage: prevStage ?? stage,
         toStage: stage,
@@ -58,7 +60,7 @@ export default function TreeGrowthPopup({
         grewTaller: !speciesGrew && !stageGrew && tiersGrew,
       });
     }, 500);
-    return () => clearTimeout(t);
+    return () => clearTimeout(timer);
   }, [level, species]);
 
   useEffect(() => {
@@ -76,7 +78,7 @@ export default function TreeGrowthPopup({
   return (
     <>
       <button
-        aria-label="Close"
+        aria-label={t("closeAria")}
         onClick={() => setGrowth(null)}
         className="fixed inset-0 z-[60] bg-[#282319]/45 cursor-default"
       />
@@ -84,18 +86,18 @@ export default function TreeGrowthPopup({
         <div
           role="dialog"
           aria-modal="true"
-          aria-label="Tree growth"
+          aria-label={t("dialogAria")}
           className="pointer-events-auto w-full max-w-[420px] bg-cream rounded-[24px] shadow-[0_30px_70px_-20px_rgba(40,35,25,.35)] px-8 pt-9 pb-8 text-center"
         >
           <b className="block text-[13px] font-extrabold tracking-[.08em] uppercase text-success mb-1">
-            {growth.promoted ? "Promotion!" : growth.grewTaller ? "Taller!" : "Your tree grew!"}
+            {growth.promoted ? t("promotion") : growth.grewTaller ? t("taller") : t("grew")}
           </b>
           <p className="text-[21px] font-extrabold text-charcoal mb-4 tracking-tight">
             {growth.promoted
-              ? "A brand new tree! 🌳"
+              ? t("newTree")
               : growth.grewTaller
-              ? "A new canopy tier — and a keepsake 🌲"
-              : `Say hello to the ${treeName}! 🌳`}
+              ? t("newTier")
+              : t("sayHello", { treeName })}
           </p>
 
           <TreeEvolution
@@ -106,13 +108,13 @@ export default function TreeGrowthPopup({
           />
 
           <p className="text-[13.5px] text-muted leading-relaxed mt-4 mb-6">
-            Lv. {level} — review a little every day and watch how far it grows.
+            {t("note", { level })}
           </p>
           <button
             onClick={() => setGrowth(null)}
             className="w-full rounded-[13px] bg-success text-white font-bold text-[14.5px] py-3.5 hover:bg-success-deep transition-colors"
           >
-            Nice!
+            {t("ok")}
           </button>
         </div>
       </div>

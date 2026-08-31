@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { SKILL_HREF } from "@/components/dashboard/QuestButton";
 
@@ -15,8 +16,13 @@ export default function TodaysQuestCard({
    * when this card sits side-by-side with the review card on mobile. */
   compact?: boolean;
 }) {
+  const t = useTranslations("dashboard.quest");
   if (!quest) return null;
   const completed = !!quest.completed_at;
+  // The description was written into daily_quests in whatever locale created
+  // the row, so render it from the skill key instead when we have a message.
+  const descKey = `descriptions.${quest.skill_key}`;
+  const description = t.has(descKey) ? t(descKey) : quest.description;
 
   if (compact) {
     const compactInner = (
@@ -25,7 +31,7 @@ export default function TodaysQuestCard({
           🎯
         </span>
         <span className="block text-[11.5px] font-semibold text-success-deep leading-tight line-clamp-2">
-          {quest.description}
+          {description}
         </span>
       </>
     );
@@ -34,7 +40,7 @@ export default function TodaysQuestCard({
       return (
         <div className="flex flex-col items-center text-center gap-1.5 rounded-[16px] border-[1.5px] border-success bg-success-bg px-3 py-3.5 h-full">
           {compactInner}
-          <span className="text-[10.5px] font-bold text-success">Done ✓</span>
+          <span className="text-[10.5px] font-bold text-success">{t("done")}</span>
         </div>
       );
     }
@@ -45,7 +51,7 @@ export default function TodaysQuestCard({
         className="group flex flex-col items-center text-center gap-1.5 rounded-[16px] border-[1.5px] border-success bg-success-bg px-3 py-3.5 h-full transition-all hover:-translate-y-0.5 hover:bg-[var(--tint-green)]"
       >
         {compactInner}
-        <span className="text-[10.5px] font-bold text-success">Go →</span>
+        <span className="text-[10.5px] font-bold text-success">{t("go")}</span>
       </Link>
     );
   }
@@ -56,8 +62,8 @@ export default function TodaysQuestCard({
         🎯
       </span>
       <span className="flex-1 min-w-0">
-        <b className="block font-semibold text-[15.5px] truncate text-charcoal">Today&apos;s quest</b>
-        <span className="block text-[12.5px] text-success-deep truncate">{quest.description}</span>
+        <b className="block font-semibold text-[15.5px] truncate text-charcoal">{t("title")}</b>
+        <span className="block text-[12.5px] text-success-deep truncate">{description}</span>
       </span>
     </>
   );
@@ -67,7 +73,7 @@ export default function TodaysQuestCard({
       <div className="mb-[30px] flex items-center gap-4 rounded-[16px] border-[1.5px] border-success bg-success-bg px-5 py-4">
         {inner}
         <span className="flex-none rounded-full bg-cream text-success text-[13px] font-bold px-4 py-2 border border-success-line">
-          Done ✓
+          {t("done")}
         </span>
       </div>
     );
@@ -81,7 +87,7 @@ export default function TodaysQuestCard({
       >
         {inner}
         <span className="flex-none rounded-full bg-success text-white text-[13px] font-bold px-4 py-2 transition-transform group-hover:translate-x-0.5">
-          Go →
+          {t("go")}
         </span>
       </Link>
     </div>

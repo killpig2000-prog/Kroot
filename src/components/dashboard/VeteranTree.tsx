@@ -4,14 +4,15 @@ import { FULLY_GROWN_LEVEL, MAX_LEVEL, VETERAN_TIER_SPAN, treeHeightMetres, vete
 import LevelCreature, { Pad } from "@/components/dashboard/LevelCreature";
 
 // Keepsakes hung on the tree, one per canopy tier past fully grown.
-export const VETERAN_MILESTONES: { level: number; name: string; kr: string }[] = [
-  { level: 60, name: "Bird's nest", kr: "둥지" },
-  { level: 70, name: "Rope swing", kr: "그네" },
-  { level: 80, name: "Birdhouse", kr: "새집" },
-  { level: 90, name: "Lantern string", kr: "등불" },
-  { level: 100, name: "Treehouse", kr: "트리하우스" },
-  { level: 110, name: "Weather vane", kr: "풍향계" },
-  { level: 120, name: "Star topper", kr: "별" },
+// `name` is rendered from messages (dashboard.tree.keepsakes.<level>).
+export const VETERAN_MILESTONES: { level: number; kr: string }[] = [
+  { level: 60, kr: "둥지" },
+  { level: 70, kr: "그네" },
+  { level: 80, kr: "새집" },
+  { level: 90, kr: "등불" },
+  { level: 100, kr: "트리하우스" },
+  { level: 110, kr: "풍향계" },
+  { level: 120, kr: "별" },
 ];
 
 // How much taller the frame gets per level past 50 (SVG units).

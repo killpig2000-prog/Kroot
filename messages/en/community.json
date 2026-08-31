@@ -1,0 +1,63 @@
+{
+  "title": "Community",
+  "newPost": "New post",
+  "newPostCta": "✍️ New post",
+  "all": "All",
+  "boards": {
+    "question": "Question board",
+    "free": "Free board",
+    "exchange": "Language exchange"
+  },
+  "tableMissing": {
+    "title": "Community opens soon",
+    "body": "Run the included migration <code>{file}</code> to turn the board on. Until then, here's a peek at what it looks like."
+  },
+  "loadFailed": "Couldn't load posts. Try refreshing in a moment.",
+  "notice": {
+    "badge": "📌 Notice",
+    "team": "Kroot team",
+    "officialBadge": "📌 Official notice",
+    "teamLine": "🌱 Kroot team",
+    "closed": "Comments are closed on notices — got a question about this?",
+    "ask": "Ask it on the Question board →"
+  },
+  "empty": {
+    "title": "Nothing here yet",
+    "sub": "Be the first to post on this board."
+  },
+  "comments": {
+    "heading": "Comments",
+    "count": "· {n}",
+    "unavailable": "Comments open soon — run <code>{file}</code> to turn them on.",
+    "none": "No comments yet — be the first.",
+    "delete": "Delete",
+    "deleting": "Deleting…",
+    "placeholder": "Reply as {name}…",
+    "counter": "{n}/{max}",
+    "submit": "Comment",
+    "posting": "Posting…",
+    "errAdd": "Couldn't add your comment. Try again in a moment.",
+    "errDelete": "Couldn't delete that comment."
+  },
+  "composer": {
+    "hint": "— say something to the garden",
+    "titlePlaceholder": "Title",
+    "bodyPlaceholder": "Write your post…",
+    "counter": "{n}/{max}",
+    "post": "Post",
+    "posting": "Posting…",
+    "err": "Couldn't post just yet — the community table may not be set up."
+  },
+  "deletePost": {
+    "confirm": "Delete this post? This can't be undone.",
+    "delete": "Delete",
+    "deleting": "Deleting…",
+    "failed": "Couldn't delete."
+  },
+  "timeAgo": {
+    "justNow": "just now",
+    "minutes": "{n}m ago",
+    "hours": "{n}h ago",
+    "days": "{n}d ago"
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "crumb": "Lectura",
+  "map": {
+    "progress": "Nivel {level} · <b>{done}</b> de {total} capítulos leídos",
+    "continueChapter": "Continuar · Capítulo {n}",
+    "start": "Empezar →",
+    "chaptersRange": "Capítulos {first}–{last}",
+    "chapterN": "Capítulo {n}",
+    "statusDone": "Hecho",
+    "statusRead": "Leer",
+    "statusLocked": "Bloqueado"
+  },
+  "genres": {
+    "diary": "Diario",
+    "story": "Relato",
+    "notice": "Avisos",
+    "dialogue": "Diálogo",
+    "message": "Mensajes",
+    "instruction": "Instrucciones",
+    "email": "Correos",
+    "explainer": "Explicaciones",
+    "review": "Reseñas",
+    "article": "Artículos",
+    "opinion": "Opinión",
+    "editorial": "Editoriales",
+    "essay": "Ensayos",
+    "academic": "Académico",
+    "interview": "Entrevistas"
+  },
+  "genreChip": {
+    "diary": "Diario",
+    "story": "Relato",
+    "notice": "Aviso",
+    "dialogue": "Diálogo",
+    "message": "Mensajes",
+    "instruction": "Cómo hacerlo",
+    "email": "Correo",
+    "explainer": "Explicación",
+    "review": "Reseña",
+    "article": "Artículo",
+    "opinion": "Opinión",
+    "editorial": "Editorial",
+    "essay": "Ensayo",
+    "academic": "Académico",
+    "interview": "Entrevista"
+  },
+  "session": {
+    "chapterN": "Capítulo {n}",
+    "emptyTitle": "Aquí todavía no hay ningún relato",
+    "emptyBody": "Este capítulo aún no está escrito.",
+    "backToMap": "Volver al mapa",
+    "resumeDetail": "Lectura · Capítulo {n} · {level}"
+  },
+  "read": {
+    "chapterN": "Capítulo {n}",
+    "meta": "{level} · {words, plural, one {# palabra} other {# palabras}} · ~{min} min",
+    "listen": "Escuchar",
+    "playing": "Sonando",
+    "larger": "Más grande",
+    "smaller": "Más pequeño",
+    "translationLabel": "Traducción",
+    "transOff": "No",
+    "transTap": "Al tocar",
+    "transAll": "Todo",
+    "hintFull": "Toca una línea para ver su traducción · las palabras punteadas abren su página de vocabulario",
+    "hintDotted": "Las palabras punteadas abren su página de vocabulario",
+    "subject": "Asunto",
+    "wordsTitle": "Palabras de este relato",
+    "wordsNote": "Cada una abre su página de vocabulario.",
+    "wordsNoteMore": "+{n} más · cada una abre su página de vocabulario.",
+    "answerQuestions": "{n, plural, one {Responder # pregunta} other {Responder # preguntas}} →"
+  },
+  "quiz": {
+    "passage": "El texto",
+    "questionOf": "Pregunta {n} de {total}",
+    "correctCount": "{n} correctas",
+    "whereItSays": "Dónde lo dice",
+    "theAnswer": "La respuesta",
+    "seeResult": "Ver mi resultado →",
+    "nextQuestion": "Siguiente pregunta →"
+  },
+  "summary": {
+    "title": "¡Capítulo {n} completado!",
+    "levelUp": "🎉 ¡Subiste de nivel! Ahora eres Lv. {level}",
+    "questionsRight": "preguntas acertadas",
+    "readAgain": "Leer el relato otra vez",
+    "nothingMissed": "Nada fallado: entendiste todo el relato.",
+    "wordsWithPage": "{n, plural, one {palabra de aquí tiene página de vocabulario} other {palabras de aquí tienen página de vocabulario}}",
+    "openToSave": "Abre una para guardarla.",
+    "openToSaveMore": "+{n} más · abre una para guardarla.",
+    "earned": "ganados",
+    "earnedReview": "{n, plural, one {ganados · # por repasar} other {ganados · # por repasar}}",
+    "saving": "Guardando…",
+    "nextChapter": "Capítulo {n} →",
+    "storyMap": "Mapa de relatos"
+  },
+  "gloss": {
+    "openWordPage": "Abrir la página de la palabra",
+    "openSub": "{unit} · ejemplos, notas, guardar"
+  }
+}

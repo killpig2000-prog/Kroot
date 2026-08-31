@@ -72,5 +72,82 @@
     "errMax": "{max} words is the maximum.",
     "errAuth": "Sign in to buy that.",
     "errGeneric": "Couldn't buy that right now."
+  },
+  "unitN": "Unit {n}",
+  "session": {
+    "hearIt": "Hear it",
+    "hearSentence": "Hear the sentence",
+    "hanjaAria": "Hanja: {hanja}",
+    "revealMeaning": "Reveal meaning",
+    "hintHanja": "The hanja above is your hint.",
+    "hintSayIt": "Say it out loud first — then flip.",
+    "origin": "from {origin}",
+    "bonusRoot": "Bonus root: {name}",
+    "bonusRootSub": "A few more words that share this root",
+    "explore": "Explore →",
+    "closeRoot": "Close root panel",
+    "swipeHint": "Swipe right = Got it · left = Still learning",
+    "emptyTitle": "No words here yet",
+    "emptyBody": "This chapter doesn’t have cards yet — try another one.",
+    "backToTopics": "Back to topics",
+    "levelSet": "Level {level} · set {current} of {total}"
+  },
+  "quiz": {
+    "introTitle": "Chapter quiz",
+    "introSub": "{known} of {total} felt easy. Ready to fill in the blanks?",
+    "start": "Start the quiz →",
+    "skip": "Skip the quiz",
+    "progress": "Quiz · Question {current} of {total}",
+    "correctCount": "{count, plural, =1 {1 correct} other {# correct}}"
+  },
+  "summary": {
+    "title": "{count, plural, =1 {1 word studied today!} other {# words studied today!}}",
+    "sub": "Those words are rooted a little deeper now.",
+    "levelUp": "Level up! You’re now Lv. {level}",
+    "markedKnown": "Marked known",
+    "quizStat": "Quiz",
+    "chapterDone": "Vocabulary · chapter done",
+    "moreWords": "{count, plural, =1 {1 more word} other {# more words}}"
+  },
+  "search": {
+    "trigger": "Find a word",
+    "dialogLabel": "Search vocabulary",
+    "placeholder": "Search 4,000+ words — 한국어, romanization, or English",
+    "hint": "Any level, any unit — results open the unit that teaches the word.",
+    "loading": "Loading the deck…",
+    "noMatch": "No match for “{query}” — try the Korean spelling or the English meaning."
+  },
+  "tap": {
+    "dialogLabel": "Word details",
+    "lookingUp": "Looking up…",
+    "hear": "Hear {word}",
+    "saved": "Saved ✓ — it’ll come up in your next review",
+    "planting": "Planting…",
+    "save": "Save to garden",
+    "notInDeck": "Not in the word deck yet."
+  },
+  "detail": {
+    "back": "Back",
+    "prev": "Prev",
+    "backToUnit": "Back to unit",
+    "backToStory": "Back to the story"
+  },
+  "practice": {
+    "reviewTime": "review time",
+    "opensSoonTitle": "Practice opens soon",
+    "opensSoonBody": "Run the included migration <code>supabase/migrations/0022_srs_review.sql</code> to turn on spaced-repetition review.",
+    "nothingTitle": "Nothing to review right now",
+    "allFresh": "{count, plural, =1 {The one word you’ve learned is still fresh.} other {All # learned words are still fresh.}}",
+    "nextDue": "The next one is due {date, date, medium}.",
+    "learnFirst": "Learn a few words first — they’ll show up here when it’s time to review them.",
+    "plantNew": "Plant new words →",
+    "progress": "Review · {current} of {total}",
+    "watered": "{count} watered",
+    "doneTitle": "Garden watered!",
+    "doneSub": "{kept} of {total} words are rooted deeper.",
+    "doneSlipped": "The ones that slipped will come back tomorrow.",
+    "backInCan": "Back in the watering can:",
+    "nothingToReview": "Nothing to review",
+    "levelUp": "Level up! You’re now Lv. {level}"
   }
 }

@@ -75,5 +75,24 @@
     "moreWords": "+{count} más",
     "nothingDue": "Nada pendiente. Tu próxima palabra vuelve {when}.",
     "nothingDuePlain": "Nada pendiente ahora mismo."
+  },
+  "error": {
+    "title": "Un pequeño tropiezo"
+  },
+  "levelTabs": {
+    "ariaLabel": "Nivel",
+    "lockedTitle": "Aprueba el examen de ascenso para desbloquear este nivel",
+    "you": "tú",
+    "lockedNote": "🔒 Los niveles bloqueados se abren cuando apruebas el examen de ascenso."
+  },
+  "languageNav": "Idioma",
+  "install": {
+    "title": "Ten Kroot en tu pantalla de inicio",
+    "ios": "Toca Compartir y luego «Añadir a pantalla de inicio»: la lección de hoy a un toque.",
+    "streak": "Un toque para proteger tu racha de {count, plural, =1 {1 día} other {# días}}.",
+    "generic": "Se abre como una app: la lección de hoy a un toque.",
+    "install": "Instalar",
+    "notNow": "Ahora no",
+    "dismissAria": "Descartar"
   }
 }

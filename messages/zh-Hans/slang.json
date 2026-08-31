@@ -1,0 +1,47 @@
+{
+  "crumb": "俚语",
+  "tagline": "教科书里学不到的词 — 直接来自韩剧、K-pop 和群聊",
+  "taglineDot": "教科书里学不到的词 — 直接来自韩剧、K-pop 和群聊。",
+  "signupNudge": "注册即可参加每日俚语测验，为你的小树赚取 XP。",
+  "startFree": "免费开始",
+  "startFreeArrow": "免费开始 →",
+  "listen": "朗读",
+  "vibes": {
+    "spoken": "口语",
+    "texting": "聊天",
+    "internet": "网络"
+  },
+  "board": {
+    "collected": "已收集 {done}/{total}",
+    "all": "全部 {n}"
+  },
+  "card": {
+    "flipBack": "把 {word} 翻回去",
+    "reveal": "查看 {word} 的意思",
+    "collected": "已收集",
+    "tapToFlip": "点按翻面",
+    "literally": "字面意思“{text}”"
+  },
+  "hero": {
+    "ofTheDay": "今日俚语"
+  },
+  "quiz": {
+    "title": "每日俚语挑战",
+    "doneToday": "今天已完成 — 答对 {score}/{total}。明天再来新一轮！",
+    "intro": "猜出 {n} 个表达的意思 · +{xp} XP",
+    "start": "开始 ▶",
+    "result": "答对 {score}/{total} · +{xp} XP",
+    "praise": "街头韩语说得很溜 — 明天见！",
+    "encourage": "翻翻下面的卡片，明天再来。",
+    "prompt": "这是什么意思？ · {n}/{total}",
+    "score": "得分 {n}"
+  },
+  "share": {
+    "eyebrow": "Kroot · 街头韩语 🇰🇷",
+    "startLearning": "开始学习",
+    "origin": "词源",
+    "related": "更多类似俚语",
+    "ctaTitle": "还有 {n} 个像 {kr} 这样的俚语，全部免费",
+    "ctaBody": "全部翻一遍，听听怎么读，学习今天真正在说的韩语 — 而不只是教科书韩语。"
+  }
+}

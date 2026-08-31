@@ -1,0 +1,86 @@
+{
+  "identity": {
+    "fallbackName": "Người học",
+    "difficulty": "độ khó {level}",
+    "growingSince": "lớn lên từ {date}",
+    "maxLevel": "Đã chạm tới những vì sao 🌟",
+    "xpToNext": "{into}/{needed} XP để lên Lv. {level}",
+    "streak": "🔥 chuỗi {n} ngày",
+    "coins": "🌰 {n} xu",
+    "freezes": "🧊 {n} thẻ đóng băng"
+  },
+  "avatar": {
+    "change": "Đổi ảnh đại diện",
+    "edit": "Sửa",
+    "errType": "Hãy chọn một tệp ảnh.",
+    "errSize": "Ảnh phải nhỏ hơn {mb}MB."
+  },
+  "name": {
+    "edit": "Sửa tên",
+    "save": "Lưu"
+  },
+  "grass": {
+    "title": "🌿 Khu vườn học tập · {year}",
+    "minutesShort": "{n} phút",
+    "dayTitle": "{date} · {n} phút",
+    "less": "ít",
+    "more": "nhiều"
+  },
+  "reminders": {
+    "title": "⏰ Nhắc nhở hằng ngày",
+    "scheduleKnown": "Mỗi ngày một lần, khoảng {time} — chỉ khi bạn chưa học hôm đó",
+    "scheduleUnknown": "Mỗi ngày một lần — chỉ khi bạn chưa học hôm đó",
+    "pushTitle": "Thông báo đẩy",
+    "pushDesc": "Vẫn đến được thiết bị này ngay cả khi bạn đã đóng tab.",
+    "pushIos": "Trên iPhone, hãy thêm Kroot vào Màn hình chính trước (Chia sẻ → Thêm vào MH chính), rồi mới bật mục này.",
+    "pushUnsupported": "Trình duyệt này không hỗ trợ — hãy thử Chrome, Edge hoặc Firefox.",
+    "emailTitle": "Email",
+    "emailDesc": "Một lời nhắn ngắn gửi tới email đăng nhập của bạn.",
+    "emailNone": "Hãy thêm email vào tài khoản để dùng được mục này.",
+    "errBlocked": "Trang này đang bị chặn thông báo — hãy cho phép trong cài đặt trình duyệt rồi thử lại.",
+    "errNoKey": "Bản triển khai này chưa thiết lập thông báo đẩy.",
+    "errUnsupported": "Trình duyệt này không hỗ trợ thông báo đẩy.",
+    "errSubscribe": "Không đăng ký được — hãy thử lại.",
+    "errSave": "Không lưu được — hãy thử lại."
+  },
+  "insights": {
+    "title": "📊 Phân tích",
+    "skills": {
+      "reading": "Đọc",
+      "writing": "Viết",
+      "listening": "Nghe",
+      "speaking": "Nói",
+      "vocabulary": "Từ vựng",
+      "grammar": "Ngữ pháp",
+      "pronunciation": "Phát âm",
+      "hangul": "Hangul",
+      "slang": "Tiếng lóng",
+      "quest": "Nhiệm vụ hằng ngày"
+    },
+    "boxes": {
+      "1": "Vừa gieo",
+      "2": "Nảy mầm",
+      "3": "Đang lớn",
+      "4": "Đã bén rễ",
+      "5": "Rễ ăn sâu"
+    },
+    "tiles": {
+      "wordAccuracy": "độ chính xác từ vựng",
+      "readingAccuracy": "độ chính xác bài đọc",
+      "pronunciationScore": "điểm phát âm trung bình",
+      "xp14": "XP · 14 ngày"
+    },
+    "xpTitle": "⚡ XP · 14 ngày qua",
+    "xpPerDay": "XP / ngày",
+    "xpDayTitle": "{date}: {xp} XP",
+    "bySkillTitle": "🌱 XP của bạn đến từ đâu",
+    "bySkillEmpty": "Hoàn thành một bài học và bảng chi tiết theo từng kỹ năng sẽ hiện ở đây.",
+    "xpAmount": "{xp} XP",
+    "boxesTitle": "💧 Từ vựng của bạn bén rễ sâu đến đâu",
+    "wordCount": "{n} từ",
+    "weakestTitle": "🥀 Những từ cần ôn thêm",
+    "weakestLink": "Ôn lại →",
+    "weakestEmpty": "Không có từ nào héo — mọi từ bạn đã ôn đều ổn cả. 🌱",
+    "footnote": "XP theo từng kỹ năng chỉ được tính từ ngày Phân tích ra mắt — XP cũ hơn vẫn hiện trong biểu đồ nhưng không tách theo kỹ năng."
+  }
+}

@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { OPEN_FEEDBACK_EVENT } from "@/components/dashboard/FeedbackWidget";
 
@@ -59,10 +60,11 @@ export default function Widgets({
   wotd: WordOfTheDay | null;
   slang?: SlangTeaser | null;
 }) {
+  const t = useTranslations("dashboard");
   return (
     <aside className="hidden xl:flex flex-col gap-5 border-l border-dashed border-dash bg-warm px-5 py-[26px] sticky top-0 h-screen overflow-y-auto">
       {slang && (
-        <WCard title="Today's slang" tag="💬" index={0}>
+        <WCard title={t("slang.title")} tag="💬" index={0}>
           <Link href="/slang" className="block group">
             <p className="kr text-[21px] font-bold text-[#AF3166] mb-0.5">
               {slang.kr}{" "}
@@ -70,14 +72,14 @@ export default function Widgets({
             </p>
             <p className="text-[12.5px] text-muted mb-2">{slang.meaning}</p>
             <span className="text-[12.5px] font-semibold text-[#C13E78] transition-transform inline-block group-hover:translate-x-0.5">
-              Flip it →
+              {t("slang.flip")}
             </span>
           </Link>
         </WCard>
       )}
 
       {wotd && (
-        <WCard title="Word of the day" tag="📖" index={1}>
+        <WCard title={t("wotd.title")} tag="📖" index={1}>
           <p className="kr text-2xl mb-0.5">{wotd.word}</p>
           <p className="text-[12.5px] text-faint mb-1.5">{wotd.roman}</p>
           <p className="text-[13.5px] text-muted mb-2.5">{wotd.mean}</p>
@@ -95,7 +97,7 @@ export default function Widgets({
         onClick={() => window.dispatchEvent(new CustomEvent(OPEN_FEEDBACK_EVENT))}
         className="mt-auto self-start text-[12px] font-semibold text-faint hover:text-muted transition-colors"
       >
-        Send feedback →
+        {t("feedback.railLink")}
       </button>
     </aside>
   );

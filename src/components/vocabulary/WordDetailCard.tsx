@@ -78,6 +78,7 @@ export default function WordDetailCard({
   const router = useRouter();
   const t = useTranslations("vocabulary");
   const tu = useTranslations("ui");
+  const tw = useTranslations("words");
   const [inBank, setInBank] = useState(initialInBank);
   const [savedCount, setSavedCount] = useState(initialSavedCount);
   const [adding, setAdding] = useState(false);
@@ -136,7 +137,7 @@ export default function WordDetailCard({
       <div className="flex items-center justify-between gap-3 mb-3.5">
         {backHref ? (
           <Link href={backHref} className="text-[12.5px] text-muted hover:text-charcoal transition-colors">
-            ← {backLabel ?? "Back"}
+            ← {backLabel ?? t("detail.back")}
           </Link>
         ) : fromBank ? (
           <Link href="/review/words" className="text-[12.5px] text-muted hover:text-charcoal transition-colors">
@@ -159,7 +160,7 @@ export default function WordDetailCard({
           aria-hidden="true"
         />
         <span className="absolute top-4 right-5 text-[10.5px] font-black tracking-[.06em] uppercase text-amber border-2 border-amber rounded-[6px] px-2 py-[3px] rotate-[-6deg] opacity-80 select-none">
-          {status.label}
+          {t(status.key)}
         </span>
 
         <div className="relative pt-6 pb-5 pr-[clamp(18px,4vw,26px)] pl-[clamp(40px,8vw,70px)]">
@@ -169,7 +170,7 @@ export default function WordDetailCard({
                 <button
                   type="button"
                   onClick={() => speakKorean(word.korean)}
-                  title="Hear it"
+                  title={t("session.hearIt")}
                   className="inline-flex items-baseline gap-2 hover:text-[#6B33CC] transition-colors text-left"
                 >
                   {word.korean}
@@ -181,7 +182,7 @@ export default function WordDetailCard({
             {hanja && (
               <span
                 className="kr font-black text-[clamp(36px,6vw,52px)] leading-none text-[#A08F4E] opacity-55 tracking-[.04em] select-none"
-                aria-label={`Hanja: ${hanja}`}
+                aria-label={t("session.hanjaAria", { hanja })}
               >
                 {hanja}
               </span>
@@ -201,14 +202,14 @@ export default function WordDetailCard({
               ))}
             </p>
           )}
-          {note?.origin && <p className="text-[12.5px] text-muted leading-[1.65] mb-3">from {note.origin}</p>}
+          {note?.origin && <p className="text-[12.5px] text-muted leading-[1.65] mb-3">{t("session.origin", { origin: note.origin })}</p>}
 
           <div className="border-l-[3px] border-[var(--tint-violet-line)] pl-3.5 py-1 my-2 mb-3.5">
             <p className="kr text-[16px] font-medium">
               <button
                 type="button"
                 onClick={() => speakKorean(word.example_kr)}
-                title="Hear the sentence"
+                title={t("session.hearSentence")}
                 className="text-left hover:text-[#6B33CC] transition-colors"
               >
                 {word.example_kr} <span aria-hidden="true" className="text-[11px] opacity-70">🔊</span>
@@ -225,13 +226,13 @@ export default function WordDetailCard({
                   className="bg-[var(--tint-amber)] border border-amber-line rounded-[6px] px-3 py-2.5 text-left"
                 >
                   <p className="text-[10px] font-bold tracking-[0.07em] uppercase text-[#A08F4E] mb-1">
-                    {ex.source === "reading" ? "📖 Seen in Reading" : "🎧 Seen in Listening"}
+                    {ex.source === "reading" ? tw("seenInReading") : tw("seenInListening")}
                   </p>
                   <p className="kr text-[13px] font-medium text-charcoal leading-[1.45]">
                     <button
                       type="button"
                       onClick={() => speakKorean(ex.kr)}
-                      title="Hear the sentence"
+                      title={t("session.hearSentence")}
                       className="text-left hover:text-[#6B33CC] transition-colors"
                     >
                       {ex.kr}
@@ -250,21 +251,21 @@ export default function WordDetailCard({
           doesn't have to reach into the card and the screen isn't half empty */}
       <div className="grid grid-cols-2 gap-2 mt-3.5">
         <button type="button" className={`${BTN_LINE} w-full justify-center`} disabled={saving !== null} onClick={() => advance(false)}>
-          {saving === "next" ? "Saving…" : "Still learning"}
+          {saving === "next" ? tu("saving") : t("stillLearning")}
         </button>
         <button type="button" className={`${BTN_INK} w-full justify-center`} disabled={saving !== null} onClick={() => advance(true)}>
-          {saving === "got-it" ? "Saving…" : "Got it ✓"}
+          {saving === "got-it" ? tu("saving") : t("gotIt")}
         </button>
       </div>
 
       <div className="flex items-center justify-between gap-3 mt-3 text-[12.5px]">
         {prevHref ? (
           <Link href={prevHref} className="font-semibold text-muted hover:text-charcoal transition-colors whitespace-nowrap">
-            ← Prev
+            ← {t("detail.prev")}
           </Link>
         ) : (
           <Link href={unitHref} className="font-semibold text-muted hover:text-charcoal transition-colors whitespace-nowrap">
-            ← Back to unit
+            ← {t("detail.backToUnit")}
           </Link>
         )}
         {/* The saved/full states replace the add button in place, so they must
@@ -298,7 +299,7 @@ export default function WordDetailCard({
       {!nextHref && (
         <div className="mt-2.5 text-right text-[12.5px]">
           <Link href={unitHref} className="font-semibold text-muted hover:text-charcoal transition-colors">
-            Back to unit →
+            {t("detail.backToUnit")} →
           </Link>
         </div>
       )}

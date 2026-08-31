@@ -1,0 +1,59 @@
+{
+  "breadcrumb": "Promotion test",
+  "title": "Promotion test",
+  "titleLevels": "· {from} → {to}",
+  "intro": "Hold onto enough of your current grade and the test unlocks on its own. Pass it to open the next grade's content.",
+  "topGrade": "You're already at the top grade (C2)! 🏆",
+  "comingSoon": "The {grade} level-up test is coming soon.",
+  "requirements": {
+    "title": "Requirements — what you're holding onto at {grade}",
+    "wordsHeld": "Words held",
+    "wordsNote": "A word counts once it survives its first two reviews — so far you've studied {n, plural, one {# {grade} word} other {# {grade} words}}.",
+    "readingPassages": "Reading passages",
+    "keepStudying": "Keep studying {grade} vocabulary and reading to fill the gauges. When every bar is full, the test opens right here."
+  },
+  "cooldown": {
+    "label": "Retake cooldown",
+    "body": "you can try again after {date}.",
+    "practice": "Meanwhile, practice {skill} →"
+  },
+  "skills": {
+    "listening": "Listening",
+    "reading": "Reading",
+    "writing": "Writing"
+  },
+  "species": {
+    "A1": "Azalea",
+    "A2": "Forsythia",
+    "B1": "Cherry Blossom",
+    "B2": "Persimmon",
+    "C1": "Ginkgo",
+    "C2": "Pine"
+  },
+  "runner": {
+    "introTitle": "Promotion test · {from} → {to}",
+    "introBody": "Listening ({listening}) → Reading ({questions} questions over {passages, plural, one {# passage} other {# passages}}) → Writing ({writing}, build the sentence from the words). Everything is checked instantly — no waiting. Questions are drawn at random each attempt.",
+    "passRule": "To pass: 70+ average with every skill at 60+. Failing is fine — practice your weakest skill and retake after {hours} hours.",
+    "start": "Start",
+    "listeningTitle": "1 · Listening — tap 🔊, then answer",
+    "readingTitle": "2 · Reading — passage {n}/{total}",
+    "writingProgress": "3 · Writing — {done} / {total} done",
+    "seeResults": "See results →"
+  },
+  "mcq": {
+    "progress": "{title} · {n}/{total}",
+    "playAudio": "Play audio",
+    "dontKnow": "I don't know"
+  },
+  "result": {
+    "passedTitle": "Congratulations! You leveled up to {level}!",
+    "passedBody": "Your {from} grew into a <b>{to}</b>.",
+    "contentOpen": "{level} content is now open.",
+    "promotionFailed": "We couldn't apply the promotion — check your profile shortly.",
+    "failedTitle": "Not quite yet — but you're close!",
+    "failedBody": "You can try again in {hours} hours.",
+    "weakest": "Your weakest skill was <b>{skill}</b>.",
+    "practice": "Practice {skill} →",
+    "backToGarden": "Back to Garden"
+  }
+}

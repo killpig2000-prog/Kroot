@@ -1,4 +1,5 @@
-import { CHAPTER_SIZE, getWordsForTopic } from "@/lib/vocabulary";
+import { CHAPTER_SIZE } from "@/lib/vocabulary";
+import { getWordsForTopic } from "@/lib/vocabulary-words";
 import { LEVEL_ORDER, type CefrLevel } from "@/lib/tree";
 
 // A flat, searchable snapshot of every word in the daily-life track, mapped

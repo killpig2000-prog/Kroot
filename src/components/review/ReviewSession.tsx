@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { recordCompletion, type ProgressResult } from "@/lib/activity";
@@ -19,6 +20,8 @@ export default function ReviewSession({
   userId: string;
 }) {
   const router = useRouter();
+  const t = useTranslations("vocabulary.practice");
+  const tu = useTranslations("ui");
   const supabase = useMemo(() => createClient(), []);
 
   const [questions] = useState<QuizQuestion[]>(() => buildQuizQuestions(words));
@@ -91,21 +94,21 @@ export default function ReviewSession({
     return (
       <div className={`${CARD} text-center`} style={{ animation: "fadeUp .4s ease" }}>
         <p className="text-4xl mb-2">💧</p>
-        <h2 className="font-bold text-[21px] tracking-[-0.02em] mb-1.5">Garden watered!</h2>
+        <h2 className="font-bold text-[21px] tracking-[-0.02em] mb-1.5">{t("doneTitle")}</h2>
         <p className="text-sm text-muted mb-5">
-          {kept} of {questions.length} words are rooted deeper.
-          {slipped > 0 && " The ones that slipped will come back tomorrow."}
+          {t("doneSub", { kept, total: questions.length })}
+          {slipped > 0 && ` ${t("doneSlipped")}`}
         </p>
         {levelUp && (
           <p className="text-sm font-semibold text-success mb-5 -mt-2">
-            🎉 Level up! You&apos;re now Lv. {levelUp.new_level}
+            🎉 {t("levelUp", { level: levelUp.new_level })}
           </p>
         )}
 
         {slipped > 0 && (
           <div className="text-left border border-amber-line bg-[var(--tint-amber)] rounded-[10px] px-4 py-3 mb-6">
             <b className="block text-[12.5px] font-semibold text-[#92400E] mb-1.5">
-              Back in the watering can:
+              {t("backInCan")}
             </b>
             <div className="flex flex-wrap gap-x-3 gap-y-1">
               {missed.map((w) => (
@@ -124,14 +127,14 @@ export default function ReviewSession({
             onClick={() => goTo("/dashboard")}
             disabled={navigating}
           >
-            {navigating ? "Saving…" : "Back to my garden"}
+            {navigating ? tu("saving") : tu("backToGarden")}
           </button>
           <button
             className="rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-charcoal bg-cream border border-line hover:bg-warm transition-colors disabled:opacity-60"
             onClick={() => goTo("/review")}
             disabled={navigating}
           >
-            {navigating ? "Saving…" : "More to water?"}
+            {navigating ? tu("saving") : tu("moreToWater")}
           </button>
         </div>
       </div>
@@ -142,9 +145,9 @@ export default function ReviewSession({
   if (!q) {
     return (
       <div className={`${CARD} text-center`}>
-        <p className="font-bold text-[17px] mb-1.5">Nothing to review</p>
+        <p className="font-bold text-[17px] mb-1.5">{t("nothingToReview")}</p>
         <Link href="/dashboard" className="text-sm font-semibold text-success hover:underline">
-          Back to my garden
+          {tu("backToGarden")}
         </Link>
       </div>
     );
@@ -155,10 +158,8 @@ export default function ReviewSession({
   return (
     <div className={CARD}>
       <div className="flex justify-between items-center mb-2.5 text-[12.5px] font-medium text-faint">
-        <span>
-          Review · {index + 1} of {questions.length}
-        </span>
-        <span>💧 {correct} watered</span>
+        <span>{t("progress", { current: index + 1, total: questions.length })}</span>
+        <span>💧 {t("watered", { count: correct })}</span>
       </div>
       <div className="h-1.5 bg-line rounded-full overflow-hidden mb-6">
         <i

@@ -1,0 +1,117 @@
+{
+  "breadcrumb": "Guide",
+  "intro": "Nothing in Kroot is locked by order. Pick whichever route matches why you're learning Korean, and follow it stop by stop.",
+  "sections": {
+    "roadmaps": {
+      "title": "Roadmaps",
+      "note": "Pick one — running both at once is how people stall. Every stop is a link, so jump in wherever you already are."
+    },
+    "extras": {
+      "title": "Two things the roadmap doesn't show",
+      "note": "Neither is a stop on the route — one runs underneath it, the other ends it."
+    },
+    "progress": {
+      "title": "How progress works",
+      "note": "Three things that sound related but move independently."
+    }
+  },
+  "routes": {
+    "people": {
+      "tag": "Most people start here",
+      "name": "Use Korean with people",
+      "sub": "Dramas, travel, friends. Skips the grammar you don't need yet.",
+      "pace": "20 min a day",
+      "stops": {
+        "hangul": {
+          "task": "the 40 letters",
+          "freq": "1 hour"
+        },
+        "vocab": {
+          "task": "words that carry a conversation",
+          "freq": "10 min a day"
+        },
+        "listen": {
+          "task": "dialogues at real speed",
+          "freq": "3× a week"
+        },
+        "pron": {
+          "task": "be understood first try",
+          "freq": "5 min a day"
+        },
+        "slang": {
+          "task": "stop sounding like a textbook",
+          "freq": "when curious"
+        }
+      }
+    },
+    "exam": {
+      "tag": "If you need the certificate",
+      "name": "Reach B2 or pass TOPIK",
+      "sub": "Grammar in order, nothing skipped. Slower to feel fluent, but it holds up.",
+      "pace": "30 min a day",
+      "stops": {
+        "hangul": {
+          "task": "the 40 letters",
+          "freq": "1 hour"
+        },
+        "grammar": {
+          "task": "every group, in order",
+          "freq": "1 lesson a day"
+        },
+        "vocab": {
+          "task": "units through B2",
+          "freq": "15 min a day"
+        },
+        "read": {
+          "task": "articles and essays",
+          "freq": "3× a week"
+        },
+        "write": {
+          "task": "journal, then opinion",
+          "freq": "2× a week"
+        }
+      }
+    }
+  },
+  "youAreHere": "You are here",
+  "doneOn": "Done {date}",
+  "review": {
+    "kicker": "Every day",
+    "title": "Practice",
+    "body": "Every word you study is scheduled to come back before you'd forget it. You don't track any of this — you just show up and water what's due.",
+    "whereLabel": "Where",
+    "whereValue": "Garden → Practice",
+    "howLongLabel": "How long",
+    "howLongValue": "a few minutes"
+  },
+  "test": {
+    "kicker": "Now and then",
+    "title": "Promotion test",
+    "body": "The only thing that moves your grade. A word counts once it has survived its first two spaced reviews, so this fills up as you study — you never decide when you're ready.",
+    "unlocksLabel": "Unlocks at",
+    "unlocksValue": "{words} words of your grade still held, plus {passages} reading passages",
+    "youLabel": "You",
+    "youStats": "{wordsHeld}/{wordsRequired} words held · {readingDone}/{readingRequired} passages",
+    "youReady": " · ready for {from} → {to}",
+    "toPassLabel": "To pass",
+    "toPassValue": "60+ in every skill, 70+ average"
+  },
+  "facts": {
+    "effort": {
+      "kicker": "Effort",
+      "title": "Tree level 1–120",
+      "body": "Every session earns XP. Leveling up means time put in — it doesn't change your grade."
+    },
+    "ability": {
+      "kicker": "Ability",
+      "title": "Grade A1–C2",
+      "body": "Moves only when you pass a promotion test. That's when your tree changes species."
+    },
+    "cosmetic": {
+      "kicker": "Cosmetic",
+      "title": "The garden",
+      "body": "Costumes, skies, and companions from the Shop. Dress-up only, no effect on learning."
+    }
+  },
+  "footer": "Everything here is self-paced — quizzes never block your progress and nothing expires. Come back to this page any time you feel lost."
+}

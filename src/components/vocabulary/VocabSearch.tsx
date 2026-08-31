@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { unitLabel } from "@/lib/vocabulary";
 import type { SearchEntry } from "@/lib/vocab-search-index";
 
 const MAX_RESULTS = 8;
@@ -17,6 +17,8 @@ const MAX_RESULTS = 8;
 // is a table of contents, and a big search box between the title and the
 // contents made it read as a search page first. Press "/" to open it.
 export default function VocabSearch() {
+  const t = useTranslations("vocabulary");
+  const tu = useTranslations("ui");
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [index, setIndex] = useState<SearchEntry[] | null>(null);
@@ -82,7 +84,7 @@ export default function VocabSearch() {
         aria-expanded={open}
       >
         <span aria-hidden="true" className="text-[13px] opacity-70">🔍</span>
-        Find a word
+        {t("search.trigger")}
         <kbd
           aria-hidden="true"
           className="hidden sm:inline-block ml-1 rounded-[5px] border border-line bg-warm px-1.5 text-[10.5px] font-bold text-faint leading-[16px]"
@@ -99,7 +101,7 @@ export default function VocabSearch() {
           <div
             role="dialog"
             aria-modal="true"
-            aria-label="Search vocabulary"
+            aria-label={t("search.dialogLabel")}
             onClick={(e) => e.stopPropagation()}
             className="w-full max-w-[560px] bg-cream border border-line rounded-[14px] shadow-[0_24px_60px_-24px_rgba(60,50,30,.55)] overflow-hidden"
             style={{ animation: "fadeUp .18s ease" }}
@@ -110,14 +112,14 @@ export default function VocabSearch() {
                 ref={inputRef}
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search 4,000+ words — 한국어, romanization, or English"
+                placeholder={t("search.placeholder")}
                 className="flex-1 min-w-0 bg-transparent text-[15px] outline-none placeholder:text-faint"
-                aria-label="Search vocabulary"
+                aria-label={t("search.dialogLabel")}
               />
               <button
                 type="button"
                 onClick={hide}
-                aria-label="Close search"
+                aria-label={tu("closeSearch")}
                 className="text-[13px] text-faint hover:text-charcoal transition-colors"
               >
                 ✕
@@ -126,13 +128,13 @@ export default function VocabSearch() {
 
             {!q ? (
               <p className="px-4 py-3 text-[12.5px] text-faint">
-                Any level, any unit — results open the unit that teaches the word.
+                {t("search.hint")}
               </p>
             ) : !index ? (
-              <p className="px-4 py-3 text-[13px] text-faint">Loading the deck…</p>
+              <p className="px-4 py-3 text-[13px] text-faint">{t("search.loading")}</p>
             ) : results.length === 0 ? (
               <p className="px-4 py-3 text-[13px] text-faint">
-                No match for “{query.trim()}” — try the Korean spelling or the English meaning.
+                {t("search.noMatch", { query: query.trim() })}
               </p>
             ) : (
               results.map((r) => (
@@ -145,7 +147,7 @@ export default function VocabSearch() {
                   <span className="kr flex-none font-bold text-[15px] min-w-[72px]">{r.kr}</span>
                   <span className="flex-1 min-w-0 text-[12.5px] text-muted truncate">{r.en}</span>
                   <span className="flex-none text-[11.5px] text-faint">
-                    {r.level} · {unitLabel(r.chapter)}
+                    {r.level} · {t("unitN", { n: r.chapter + 1 })}
                   </span>
                 </Link>
               ))

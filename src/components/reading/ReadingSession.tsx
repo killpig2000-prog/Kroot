@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import { useSaveResume } from "@/hooks/useSaveResume";
 import { clearResume } from "@/lib/resume";
 import { buttonClassName } from "@/components/ui/Button";
@@ -35,6 +36,7 @@ export default function ReadingSession({
   glossary: Record<string, Gloss>;
   words: Gloss[];
 }) {
+  const t = useTranslations("reading");
   const router = useRouter();
   const supabase = useMemo(() => createClient(), []);
 
@@ -66,7 +68,7 @@ export default function ReadingSession({
     skill: "reading",
     href: "",
     label: passage.title_kr,
-    detail: `Reading · Chapter ${chapterIndex + 1} · ${level}`,
+    detail: t("session.resumeDetail", { n: chapterIndex + 1, level }),
     progress:
       phase === "read" ? 0 : Math.round((qIndex / Math.max(1, passage.questions.length)) * 100),
   });
@@ -176,12 +178,13 @@ export default function ReadingSession({
 }
 
 export function ReadingEmpty() {
+  const t = useTranslations("reading.session");
   return (
     <div className="max-w-[680px] border border-line rounded-[14px] px-7 py-10 text-center">
-      <p className="font-bold text-[17px] tracking-[-0.01em] mb-1.5">No story here yet</p>
-      <p className="text-sm text-muted mb-5">This chapter isn&apos;t written yet.</p>
+      <p className="font-bold text-[17px] tracking-[-0.01em] mb-1.5">{t("emptyTitle")}</p>
+      <p className="text-sm text-muted mb-5">{t("emptyBody")}</p>
       <Link href="/reading" className={BTN_INK}>
-        Back to the map
+        {t("backToMap")}
       </Link>
     </div>
   );

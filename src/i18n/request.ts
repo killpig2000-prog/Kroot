@@ -10,7 +10,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
   // Pattern: messages/{locale}/{namespace}.json
   const messages: Record<string, Record<string, any>> = {};
 
-  const namespaces = ['common', 'nav', 'onboarding', 'vocabulary', 'words', 'ui', 'listening', 'writing', 'pronunciation', 'landing'];
+  const namespaces = ['common', 'nav', 'onboarding', 'vocabulary', 'words', 'ui', 'listening', 'writing', 'pronunciation', 'landing', 'dashboard', 'reading', 'slang', 'tree', 'profile', 'shop', 'community', 'levelTest', 'grammarUi', 'hangul', 'auth', 'notFound', 'guide'];
 
   for (const namespace of namespaces) {
     try {

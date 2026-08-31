@@ -1,0 +1,94 @@
+{
+  "coins": "🌰 {coins} monedas",
+  "intro": "Viste tu árbol y el jardín que lo rodea. Toca una tarjeta para probártela en tu propio árbol y cómprala y póntela aquí mismo.",
+  "slots": {
+    "hat": "Sombreros",
+    "face": "Cara",
+    "neck": "Cuello",
+    "aura": "Aura",
+    "sky": "Cielo",
+    "ground": "Suelo",
+    "friend": "Amigo"
+  },
+  "rarity": {
+    "common": "Común",
+    "rare": "Raro",
+    "epic": "Épico",
+    "legendary": "Legendario"
+  },
+  "errors": {
+    "notEnoughCoins": "No tienes monedas suficientes.",
+    "alreadyOwned": "Ya tienes este objeto.",
+    "levelTooLow": "Tu árbol todavía no es lo bastante alto.",
+    "unavailable": "Este objeto no está disponible ahora mismo.",
+    "notOnSale": "Este objeto no está a la venta ahora mismo.",
+    "generic": "Algo salió mal — inténtalo de nuevo."
+  },
+  "cta": {
+    "pick": "Elige un objeto",
+    "takeOff": "Quitar",
+    "wear": "Ponérselo",
+    "claimAdmin": "Conseguir y poner · admin",
+    "unlocksAt": "Se desbloquea en el Nv.{level}",
+    "needMore": "Te faltan {n} 🌰",
+    "claim": "Conseguir y poner",
+    "buy": "Comprar y poner · 🌰 {price}"
+  },
+  "bought": "{name} ya es tuyo — y está en tu árbol.",
+  "featured": {
+    "badge": "Solo esta semana",
+    "meta": "{rarity} · {slot} · 🌰 {price}{hasLevel, select, yes { · requiere Nv.{level}} other {}} · desaparece después del {date}",
+    "daysLeft": "quedan {n} d"
+  },
+  "categories": "Categorías de objetos",
+  "new": "NUEVO",
+  "card": {
+    "wearing": "Puesto ✓",
+    "owned": "En propiedad",
+    "locked": "🔒 Nv.{level}",
+    "price": "🌰 {price}",
+    "goal": "· tu meta · {ready, select, yes {ya puedes comprarlo} other {te faltan {n}}}{hasLevel, select, yes { · Nv.{level}} other {}}",
+    "setGoal": "Fijar como meta"
+  },
+  "empty": "Aquí no hay nada a la venta ahora mismo — vuelve la próxima temporada.",
+  "tryOn": {
+    "label": "Pruébalo · en tu árbol",
+    "caption": "Nv. {level}",
+    "none": "—",
+    "reset": "Restablecer",
+    "hint": "Toca una tarjeta para probártela",
+    "selected": "{name} · {krName}"
+  },
+  "picker": {
+    "change": "Cambiar ▾",
+    "auto": "El siguiente objeto más barato (automático)",
+    "price": "🌰 {price}{hasLevel, select, yes { · Nv.{level}} other {}}"
+  },
+  "goal": {
+    "earnNote": "· ganas {quest} por misión diaria y {bonus} cada diez niveles",
+    "doQuest": "Hacer la misión de hoy →",
+    "savingFor": "Ahorrando para <b>{name}</b>",
+    "needsLevel": " · requiere Nv.{level}",
+    "progressLabel": "Monedas ahorradas para {name}",
+    "savedLocked": "Ya ahorrado · se desbloquea en el Nv.{level}",
+    "buyNow": "Ya puedes comprarlo →",
+    "questsToGo": "{n, plural, one {# misión más} other {# misiones más}}",
+    "orBonus": " · o el bonus del Nv.{level} (+{coins})",
+    "questDone": "Misión de hoy hecha ✓",
+    "questReady": "La misión de hoy te espera ✏️"
+  },
+  "freeze": {
+    "title": "Congelar racha",
+    "held": "{n}/{max} en tu poder",
+    "desc": "Si faltas un día, se gasta una congelación por ti — tu racha sigue viva.",
+    "descStreak": "Si faltas un día, se gasta una congelación por ti — tu racha de {n} días sigue viva.",
+    "errNotEnough": "No tienes monedas suficientes — cada misión diaria da {coins}.",
+    "errMax": "Puedes tener {max} como máximo.",
+    "errPending": "Las congelaciones llegan pronto (falta aplicar la migración 0035).",
+    "errGeneric": "No se pudo comprar ahora mismo.",
+    "bought": "Congelación lista 🧊 — se usará sola si faltas un día.",
+    "maxed": "Máximo alcanzado",
+    "buying": "Congelando…",
+    "buy": "Comprar · 🌰 {price}"
+  }
+}

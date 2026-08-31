@@ -1,0 +1,59 @@
+{
+  "breadcrumb": "昇級テスト",
+  "title": "昇級テスト",
+  "titleLevels": "· {from} → {to}",
+  "intro": "今のレベルの内容が十分に身についていれば、テストは自動で解放されます。合格すると次のレベルの内容が開きます。",
+  "topGrade": "すでに最高レベル（C2）です！🏆",
+  "comingSoon": "{grade} の昇級テストは近日公開です。",
+  "requirements": {
+    "title": "条件 — {grade} でどれだけ定着しているか",
+    "wordsHeld": "定着した単語",
+    "wordsNote": "最初の2回の復習を乗り越えた単語がカウントされます — これまでに {grade} の単語を {n} 語学習しました。",
+    "readingPassages": "読解の文章",
+    "keepStudying": "{grade} の単語と読解を続けてゲージを埋めましょう。すべて満たされると、ここでテストが始まります。"
+  },
+  "cooldown": {
+    "label": "再受験のクールダウン",
+    "body": "{date} 以降にもう一度受けられます。",
+    "practice": "その間に{skill}を練習しましょう →"
+  },
+  "skills": {
+    "listening": "リスニング",
+    "reading": "リーディング",
+    "writing": "ライティング"
+  },
+  "species": {
+    "A1": "ツツジ",
+    "A2": "レンギョウ",
+    "B1": "サクラ",
+    "B2": "カキノキ",
+    "C1": "イチョウ",
+    "C2": "マツ"
+  },
+  "runner": {
+    "introTitle": "昇級テスト · {from} → {to}",
+    "introBody": "リスニング（{listening}問）→ リーディング（{passages}つの文章で{questions}問）→ ライティング（{writing}問、単語を並べて文を作ります）。すべてその場で採点され、待ち時間はありません。問題は毎回ランダムに出題されます。",
+    "passRule": "合格条件：平均70点以上、かつ全スキル60点以上。落ちても大丈夫です — 苦手なスキルを練習して、{hours}時間後にもう一度挑戦しましょう。",
+    "start": "開始",
+    "listeningTitle": "1 · リスニング — 🔊 をタップして答える",
+    "readingTitle": "2 · リーディング — 文章 {n}/{total}",
+    "writingProgress": "3 · ライティング — {done} / {total} 完了",
+    "seeResults": "結果を見る →"
+  },
+  "mcq": {
+    "progress": "{title} · {n}/{total}",
+    "playAudio": "音声を再生",
+    "dontKnow": "分かりません"
+  },
+  "result": {
+    "passedTitle": "おめでとうございます！{level} にレベルアップしました！",
+    "passedBody": "{from}が<b>{to}</b>に成長しました。",
+    "contentOpen": "{level} の内容が開放されました。",
+    "promotionFailed": "昇級を反映できませんでした — 少し経ってからプロフィールをご確認ください。",
+    "failedTitle": "今回は残念 — でもあと少しです！",
+    "failedBody": "{hours}時間後にもう一度挑戦できます。",
+    "weakest": "一番弱かったスキルは<b>{skill}</b>でした。",
+    "practice": "{skill}を練習する →",
+    "backToGarden": "ガーデンに戻る"
+  }
+}

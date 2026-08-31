@@ -1,19 +1,10 @@
+// Pure logic and types only. The word data itself — and the ~1 MB of example
+// overrides that come with it — lives in `lib/vocabulary-words`, so that a
+// client component importing a helper from here doesn't pull the deck into
+// its bundle. Server callers wanting words import that module directly.
 import { LEVEL_ORDER, type CefrLevel } from "@/lib/tree";
 import { isDifficultyUnlocked } from "@/lib/level";
 import type { RawVocabWord } from "@/lib/vocabulary-data/types";
-import { DAILY_LIFE_WORDS } from "@/lib/vocabulary-data/daily-life";
-import EXAMPLE_OVERRIDES from "@/lib/vocabulary-data/example-overrides.json";
-
-// Regenerated example sentences (see scripts/gen-vocab-examples.mts) whose
-// grammar actually matches the word's CEFR level, keyed by "{level}:{korean}".
-// Falls back to the hand-authored example_kr/example_en until a word's been
-// regenerated — never a missing example.
-function withExampleOverride(w: RawVocabWord): RawVocabWord {
-  const override = (EXAMPLE_OVERRIDES as Record<string, { example_kr: string; example_en: string }>)[
-    `${w.level}:${w.korean}`
-  ];
-  return override ? { ...w, example_kr: override.example_kr, example_en: override.example_en } : w;
-}
 
 export type VocabTopic = {
   key: string;
@@ -34,10 +25,6 @@ export const VOCAB_TOPICS: VocabTopic[] = [
   { key: "business", label: "Business", krLabel: "비즈니스", icon: "💼", bg: "#B7A6E3", color: "#fff", available: false },
   { key: "sports", label: "Sports", krLabel: "스포츠", icon: "⚽", bg: "#7FB8A4", color: "#fff", available: false },
 ];
-
-const TOPIC_WORD_SOURCES: Record<string, RawVocabWord[]> = {
-  "daily-life": DAILY_LIFE_WORDS,
-};
 
 // Shared Sino-Korean roots — surfaced as a "bonus root" panel on cards whose
 // word carries the matching `root` key.
@@ -102,34 +89,17 @@ export type VocabWordWithProgress = VocabWord & {
   moreExamples?: { kr: string; en: string; source: "reading" | "listening" }[];
 };
 
-export function getWordsForTopic(topicKey: string, level?: CefrLevel): VocabWord[] {
-  const raw = TOPIC_WORD_SOURCES[topicKey] ?? [];
-  return raw
-    .filter((w) => !level || w.level === level)
-    .map((w) => ({ ...withExampleOverride(w), topic_key: topicKey, key: `${topicKey}:${w.level}:${w.korean}` }));
-}
-
 // Units are plainly numbered ("Unit 7") — no curated titles. What a unit is
 // about is shown by its words, not a label. Five units make one chapter.
+//
+// The unitLabel() helper that used to live here is gone: it hardcoded an
+// English "Unit N", and every caller now formats the number through the
+// `vocabulary.unitN` message instead, so it localizes.
 export const CHAPTER_UNITS = 5;
-export function unitLabel(index: number): string {
-  return `Unit ${index + 1}`;
-}
 
 export const CHAPTER_SIZE = 10;
 export const MINUTES_PER_SESSION = 8;
 export const QUIZ_OPTION_COUNT = 4;
-
-// Splits a level's word list into fixed, deterministically-ordered chapters —
-// short enough to clear in a couple of minutes, so leveling up feels frequent.
-export function getChaptersForTopic(topicKey: string, level: CefrLevel): VocabWord[][] {
-  const words = getWordsForTopic(topicKey, level);
-  const chapters: VocabWord[][] = [];
-  for (let i = 0; i < words.length; i += CHAPTER_SIZE) {
-    chapters.push(words.slice(i, i + CHAPTER_SIZE));
-  }
-  return chapters;
-}
 
 // Tiers at/below the tested CEFR level are open; anything above requires a
 // promotion test — finishing the words alone never unlocks harder content.

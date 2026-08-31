@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+import { getLocale, getTranslations } from "next-intl/server";
 import { Link, redirect } from "@/i18n/navigation";
 import TreeCard from "@/components/dashboard/TreeCard";
 import BottomNav from "@/components/dashboard/BottomNav";
@@ -21,7 +22,8 @@ import { DIALOGUES } from "@/lib/listening-dialogues";
 import { getPassagesForLevel } from "@/lib/reading";
 import { getPromptsForLevel } from "@/lib/writing";
 import { chapterClearStats } from "@/lib/pronunciation";
-import { CHAPTER_SIZE, getWordsForTopic } from "@/lib/vocabulary";
+import { CHAPTER_SIZE } from "@/lib/vocabulary";
+import { getWordsForTopic } from "@/lib/vocabulary-words";
 import { firstVisitState, NEW_ACCOUNT_DAYS, SHOW_ALL_COOKIE } from "@/lib/first-visit";
 import { countCompletedSessions } from "@/lib/first-visit-server";
 import { slangOfTheDay } from "@/lib/slang";
@@ -29,7 +31,9 @@ import type { CefrLevel } from "@/lib/tree";
 
 const MONTH_GOAL = 20;
 
-// One quest per day, rotating through the four practice skills.
+// One quest per day, rotating through the four practice skills. `description`
+// is what gets stored on the daily_quests row (a locale-free fallback);
+// TodaysQuestCard renders the localized copy from skill_key.
 const QUEST_ROTATION = [
   { skill_key: "writing", title: "Today's quest", description: "Writing · one chapter, a few questions · ~8 min" },
   { skill_key: "vocabulary", title: "Today's quest", description: "Review · your due words · ~5 min" },
@@ -99,6 +103,7 @@ type Snapshot = {
 
 export default async function DashboardPage() {
   const supabase = await createClient();
+  const [t, locale] = await Promise.all([getTranslations("dashboard"), getLocale()]);
   const user = await getClaimsUser(supabase);
 
   if (!user) redirect("/onboarding");
@@ -182,8 +187,8 @@ export default async function DashboardPage() {
   ]);
   const promo = testForGrade(cefr);
   const promoChecks = [
-    { label: "Words held", ok: elig.wordsMastered >= elig.wordsRequired, value: `${elig.wordsMastered}/${elig.wordsRequired}` },
-    { label: "Reading", ok: elig.readingDone >= elig.readingRequired, value: `${elig.readingDone}/${elig.readingRequired}` },
+    { label: t("levelMap.checkWordsHeld"), ok: elig.wordsMastered >= elig.wordsRequired, value: `${elig.wordsMastered}/${elig.wordsRequired}` },
+    { label: t("levelMap.checkReading"), ok: elig.readingDone >= elig.readingRequired, value: `${elig.readingDone}/${elig.readingRequired}` },
   ];
   // Errors (e.g. migration 0022 not applied yet) just hide the review card.
   const dueCount = snapshot.due_count;
@@ -258,7 +263,7 @@ export default async function DashboardPage() {
   const activeDates = (activity ?? []).filter((a) => (a.minutes ?? 0) > 0).map((a) => a.activity_date);
   const longestStreak = Math.max(bestStreak(activeDates), streakDays);
   const monthDone = (activity ?? []).filter((a) => a.activity_date >= monthStart && (a.minutes ?? 0) > 0).length;
-  const monthShort = now.toLocaleDateString("en-US", { month: "short" });
+  const monthShort = now.toLocaleDateString(locale, { month: "short" });
 
   const displayName = profile?.display_name ?? "there";
   const { level, into, needed, pct } = levelProgress(profile?.xp ?? 0);
@@ -296,14 +301,14 @@ export default async function DashboardPage() {
     const steps: FirstVisitStep[] =
       cefr === "A1"
         ? [
-            { label: "Hangul", detail: "Consonants", time: "2 min", href: "/hangul" },
-            { label: "Vocab", detail: "Unit 1 (10 words)", time: "3 min", href: vocabUnit1 },
-            { label: "Review your seedling 💧", time: "10 s" },
+            { label: t("firstVisit.steps.hangul"), detail: t("firstVisit.steps.hangulDetail"), time: t("firstVisit.steps.minutes", { n: 2 }), href: "/hangul" },
+            { label: t("firstVisit.steps.vocab"), detail: t("firstVisit.steps.vocabDetail"), time: t("firstVisit.steps.minutes", { n: 3 }), href: vocabUnit1 },
+            { label: t("firstVisit.steps.waterSeedling"), time: t("firstVisit.steps.seconds", { n: 10 }) },
           ]
         : [
-            { label: "Vocab", detail: `Unit 1 (10 words) · ${cefr}`, time: "3 min", href: vocabUnit1 },
-            { label: "Listening", detail: "one short dialogue", time: "2 min", href: "/listening" },
-            { label: "Review your seedling 💧", time: "10 s" },
+            { label: t("firstVisit.steps.vocab"), detail: t("firstVisit.steps.vocabDetailLevel", { level: cefr }), time: t("firstVisit.steps.minutes", { n: 3 }), href: vocabUnit1 },
+            { label: t("firstVisit.steps.listening"), detail: t("firstVisit.steps.listeningDetail"), time: t("firstVisit.steps.minutes", { n: 2 }), href: "/listening" },
+            { label: t("firstVisit.steps.waterSeedling"), time: t("firstVisit.steps.seconds", { n: 10 }) },
           ];
 
     return (
@@ -319,9 +324,9 @@ export default async function DashboardPage() {
 
           <main className="min-w-0 max-w-[820px] px-[clamp(18px,3vw,36px)] pt-[26px] pb-[100px] md:pb-[60px]">
             <h1 className="font-semibold text-[clamp(20px,2.4vw,24px)] tracking-[-0.02em] mb-0.5">
-              Welcome, {displayName}
+              {t("welcome", { name: displayName })}
             </h1>
-            <p className="text-muted text-sm mb-6">Day {firstVisit.day}</p>
+            <p className="text-muted text-sm mb-6">{t("day", { n: firstVisit.day })}</p>
 
             <TreeCard
               level={level}
@@ -348,8 +353,8 @@ export default async function DashboardPage() {
                 <MonthlyGrass
                   minutesByDate={minutesByDate}
                   headline={[
-                    { label: "this week", value: `${weekTotal}m` },
-                    { label: "best streak", value: `${longestStreak}d` },
+                    { label: t("garden.thisWeek"), value: `${weekTotal}m` },
+                    { label: t("garden.bestStreak"), value: `${longestStreak}d` },
                   ]}
                 />
               </div>
@@ -387,7 +392,7 @@ export default async function DashboardPage() {
               role="status"
               className="mb-5 rounded-[10px] border border-amber-line bg-[var(--tint-amber)] px-4 py-3 text-sm text-charcoal"
             >
-              We couldn&apos;t load your progress just now — nothing is lost. Refresh in a moment.
+              {t("loadError")}
             </div>
           )}
 
@@ -415,9 +420,9 @@ export default async function DashboardPage() {
                 <span className="flex-none w-9 h-9 rounded-[10px] bg-cream border border-sky-line flex items-center justify-center text-[17px]">
                   💧
                 </span>
-                <b className="block text-[11.5px] font-semibold text-sky-deep leading-tight">{dueCount} due</b>
+                <b className="block text-[11.5px] font-semibold text-sky-deep leading-tight">{t("review.dueShort", { count: dueCount })}</b>
                 <span className="text-[10.5px] font-bold text-sky-deep transition-transform group-hover:translate-x-0.5">
-                  Review →
+                  {t("review.short")}
                 </span>
               </Link>
             </div>
@@ -441,11 +446,11 @@ export default async function DashboardPage() {
               </span>
               <span className="flex-1 min-w-0">
                 <b className="block font-semibold text-sm text-sky-deep">
-                  {dueCount} {dueCount === 1 ? "word is" : "words are"} due for review
+                  {t("review.due", { count: dueCount })}
                 </b>
               </span>
               <span className="w-full sm:w-auto pl-[54px] sm:pl-0 text-[13px] font-semibold text-sky-deep transition-transform group-hover:translate-x-0.5">
-                Review now →
+                {t("review.now")}
               </span>
             </Link>
           )}
@@ -469,7 +474,7 @@ export default async function DashboardPage() {
                 </span>
                 <b className="block text-[13px] font-semibold text-[#AF3166] leading-tight kr">{slang.kr}</b>
                 <span className="text-[10.5px] font-bold text-[#C13E78] transition-transform group-hover:translate-x-0.5">
-                  Slang →
+                  {t("slang.short")}
                 </span>
               </Link>
               <div className="flex flex-col items-center text-center gap-1.5 rounded-[16px] border border-line bg-cream px-3 py-3.5 h-full">
@@ -493,13 +498,13 @@ export default async function DashboardPage() {
             </span>
             <span className="flex-1 min-w-0">
               <b className="block font-semibold text-sm text-[#AF3166]">
-                Today&apos;s slang · <span className="kr">{slang.kr}</span>{" "}
+                {t("slang.title")} · <span className="kr">{slang.kr}</span>{" "}
                 <span className="font-medium text-[#C13E78] whitespace-nowrap">({slang.romanization})</span>
               </b>
               <span className="text-[13px] text-[#97687D]">{slang.meaning}</span>
             </span>
             <span className="w-full sm:w-auto pl-[54px] sm:pl-0 text-[13px] font-semibold text-[#C13E78] transition-transform group-hover:translate-x-0.5">
-              Hear it in context →
+              {t("slang.hear")}
             </span>
           </Link>
 
@@ -517,13 +522,13 @@ export default async function DashboardPage() {
               ㄱ
             </span>
             <span className="flex-1 min-w-0">
-              <b className="block font-semibold text-sm text-success-deep">Completely new to Korean?</b>
+              <b className="block font-semibold text-sm text-success-deep">{t("hangul.title")}</b>
               <span className="text-[13px] text-success-deep">
-                Learn the alphabet first — 40 letters, one hour, free forever.
+                {t("hangul.sub")}
               </span>
             </span>
             <span className="w-full sm:w-auto pl-[54px] sm:pl-0 text-[13px] font-semibold text-success transition-transform group-hover:translate-x-0.5">
-              Start here →
+              {t("hangul.cta")}
             </span>
           </Link>
           )}
@@ -542,10 +547,10 @@ export default async function DashboardPage() {
           <MonthlyGrass
             minutesByDate={minutesByDate}
             headline={[
-              { label: "this week", value: `${weekTotal}m` },
-              { label: "total", value: totalMinutes >= 90 ? `${Math.round(totalMinutes / 6) / 10}h` : `${totalMinutes}m` },
-              { label: "best streak", value: `${longestStreak}d` },
-              { label: `${monthShort} goal`, value: `${monthDone}/${MONTH_GOAL}` },
+              { label: t("garden.thisWeek"), value: `${weekTotal}m` },
+              { label: t("garden.total"), value: totalMinutes >= 90 ? `${Math.round(totalMinutes / 6) / 10}h` : `${totalMinutes}m` },
+              { label: t("garden.bestStreak"), value: `${longestStreak}d` },
+              { label: t("garden.monthGoal", { month: monthShort }), value: `${monthDone}/${MONTH_GOAL}` },
             ]}
           />
         </main>

@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { buttonClassName } from "@/components/ui/Button";
 import GlossedText from "@/components/reading/GlossedText";
 import type { Passage, PassageLine } from "@/lib/reading";
@@ -34,6 +35,7 @@ export default function QuizPhase({
   onAnswer: (optionIndex: number) => void;
   onNext: () => void;
 }) {
+  const t = useTranslations("reading.quiz");
   const question = passage.questions[qIndex];
   const answered = selected !== null;
   const gotIt = answered && selected === question.answerIndex;
@@ -46,7 +48,7 @@ export default function QuizPhase({
       {/* the passage, still there */}
       <div className="bg-cream border border-line rounded-[14px] px-[clamp(14px,2.6vw,20px)] py-[clamp(14px,2.6vw,18px)] order-2 lg:order-1">
         <h3 className="text-[11px] font-semibold tracking-[.08em] uppercase text-faint mb-2">
-          The passage
+          {t("passage")}
         </h3>
         <div className="max-h-[420px] overflow-y-auto grid gap-1 pr-1">
           {lines.map((line, i) => (
@@ -67,10 +69,8 @@ export default function QuizPhase({
       {/* the question */}
       <div className="bg-cream border border-line rounded-[14px] px-[clamp(16px,3vw,22px)] py-[clamp(16px,3vw,20px)] order-1 lg:order-2">
         <div className="flex justify-between items-center mb-2 text-[12.5px] font-medium text-faint">
-          <span>
-            Question {qIndex + 1} of {passage.questions.length}
-          </span>
-          <span>{correct} correct</span>
+          <span>{t("questionOf", { n: qIndex + 1, total: passage.questions.length })}</span>
+          <span>{t("correctCount", { n: correct })}</span>
         </div>
         <div className="flex gap-1 mb-5" aria-hidden="true">
           {passage.questions.map((_, i) => (
@@ -136,7 +136,7 @@ export default function QuizPhase({
             }`}
           >
             <p className="text-[11px] font-semibold tracking-[.07em] uppercase text-muted mb-1">
-              {evidence ? "Where it says so" : "The answer"}
+              {evidence ? t("whereItSays") : t("theAnswer")}
             </p>
             {evidence ? (
               <>
@@ -152,7 +152,7 @@ export default function QuizPhase({
         {/* No auto-advance: the reader moves on once they've read the line. */}
         <div className="flex justify-end mt-4">
           <button className={BTN_BLUE} onClick={onNext} disabled={!answered}>
-            {last ? "See how I did →" : "Next question →"}
+            {last ? t("seeResult") : t("nextQuestion")}
           </button>
         </div>
       </div>

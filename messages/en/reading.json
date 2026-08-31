@@ -1,0 +1,101 @@
+{
+  "crumb": "Reading",
+  "map": {
+    "progress": "Level {level} · <b>{done}</b> of {total} chapters read",
+    "continueChapter": "Continue · Chapter {n}",
+    "start": "Start →",
+    "chaptersRange": "Chapters {first}–{last}",
+    "chapterN": "Chapter {n}",
+    "statusDone": "Done",
+    "statusRead": "Read",
+    "statusLocked": "Locked"
+  },
+  "genres": {
+    "diary": "Diary",
+    "story": "Story",
+    "notice": "Notices",
+    "dialogue": "Dialogue",
+    "message": "Messages",
+    "instruction": "Instructions",
+    "email": "Emails",
+    "explainer": "Explainers",
+    "review": "Reviews",
+    "article": "Articles",
+    "opinion": "Opinion",
+    "editorial": "Editorials",
+    "essay": "Essays",
+    "academic": "Academic",
+    "interview": "Interviews"
+  },
+  "genreChip": {
+    "diary": "Diary",
+    "story": "Story",
+    "notice": "Notice",
+    "dialogue": "Dialogue",
+    "message": "Messages",
+    "instruction": "How-to",
+    "email": "Email",
+    "explainer": "Explainer",
+    "review": "Review",
+    "article": "Article",
+    "opinion": "Opinion",
+    "editorial": "Editorial",
+    "essay": "Essay",
+    "academic": "Academic",
+    "interview": "Interview"
+  },
+  "session": {
+    "chapterN": "Chapter {n}",
+    "emptyTitle": "No story here yet",
+    "emptyBody": "This chapter isn’t written yet.",
+    "backToMap": "Back to the map",
+    "resumeDetail": "Reading · Chapter {n} · {level}"
+  },
+  "read": {
+    "chapterN": "Chapter {n}",
+    "meta": "{level} · {words, plural, one {# word} other {# words}} · ~{min} min",
+    "listen": "Listen",
+    "playing": "Playing",
+    "larger": "Larger",
+    "smaller": "Smaller",
+    "translationLabel": "Translation",
+    "transOff": "Off",
+    "transTap": "On tap",
+    "transAll": "All",
+    "hintFull": "Tap a line for its translation · dotted words open their vocabulary page",
+    "hintDotted": "Dotted words open their vocabulary page",
+    "subject": "Subject",
+    "wordsTitle": "Words in this story",
+    "wordsNote": "Each one opens its vocabulary page.",
+    "wordsNoteMore": "+{n} more · each one opens its vocabulary page.",
+    "answerQuestions": "{n, plural, one {Answer # question} other {Answer # questions}} →"
+  },
+  "quiz": {
+    "passage": "The passage",
+    "questionOf": "Question {n} of {total}",
+    "correctCount": "{n} correct",
+    "whereItSays": "Where it says so",
+    "theAnswer": "The answer",
+    "seeResult": "See how I did →",
+    "nextQuestion": "Next question →"
+  },
+  "summary": {
+    "title": "Chapter {n} complete!",
+    "levelUp": "🎉 Level up! You’re now Lv. {level}",
+    "questionsRight": "questions right",
+    "readAgain": "Read the story again",
+    "nothingMissed": "Nothing missed — the whole story landed.",
+    "wordsWithPage": "{n, plural, one {word here has a vocabulary page} other {words here have a vocabulary page}}",
+    "openToSave": "Open one to save it.",
+    "openToSaveMore": "+{n} more · open one to save it.",
+    "earned": "earned",
+    "earnedReview": "{n, plural, one {earned · # to review} other {earned · # to review}}",
+    "saving": "Saving…",
+    "nextChapter": "Chapter {n} →",
+    "storyMap": "Story map"
+  },
+  "gloss": {
+    "openWordPage": "Open the word page",
+    "openSub": "{unit} · examples, notes, save it"
+  }
+}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import Mascot from "@/components/onboarding/Mascot";
 import CuteError from "@/components/ui/CuteError";
@@ -16,6 +17,7 @@ const BTN_GREEN =
   "inline-flex items-center justify-center rounded-[9px] bg-success px-[18px] py-[9px] text-[13.5px] font-semibold text-white hover:bg-success-deep transition-colors";
 
 export default function ForgotPasswordPage() {
+  const t = useTranslations("auth");
   const supabase = useMemo(() => createClient(), []);
   const [error, setError] = useState<string | null>(null);
   const [sent, setSent] = useState(false);
@@ -62,26 +64,25 @@ export default function ForgotPasswordPage() {
             {sent ? (
               <>
                 <h1 className="font-semibold text-[clamp(20px,3vw,25px)] tracking-[-0.02em] leading-[1.25] mb-1.5">
-                  Check your inbox
+                  {t("forgot.sentTitle")}
                 </h1>
                 <p className="text-muted text-[13.5px] leading-[1.6]">
-                  If that email has an account, we sent a reset link. Open it on this device to set
-                  a new password.
+                  {t("forgot.sentBody")}
                 </p>
               </>
             ) : (
               <>
                 <h1 className="text-center font-semibold text-[clamp(20px,3vw,25px)] tracking-[-0.02em] leading-[1.25] mb-1">
-                  Reset your password
+                  {t("forgot.title")}
                 </h1>
                 <p className="text-center text-muted text-[13.5px] mb-6">
-                  We&apos;ll email you a link to set a new one.
+                  {t("forgot.sub")}
                 </p>
 
                 <form method="post" onSubmit={handleSubmit}>
                   <div className="mb-5">
                     <label htmlFor="email" className={LABEL}>
-                      Email
+                      {t("fields.email")}
                     </label>
                     <input
                       id="email"
@@ -97,14 +98,14 @@ export default function ForgotPasswordPage() {
                   {error && <CuteError>{error}</CuteError>}
 
                   <button type="submit" disabled={busy} className={`${BTN_GREEN} w-full disabled:opacity-60`}>
-                    {submitting ? "Sending…" : "Send reset link"}
+                    {submitting ? t("forgot.submitting") : t("forgot.submit")}
                   </button>
                 </form>
               </>
             )}
             <p className="text-center text-[12.5px] text-muted mt-4">
               <Link href="/auth/login" className="text-charcoal font-semibold hover:underline">
-                Back to log in
+                {t("forgot.backToLogin")}
               </Link>
             </p>
           </div>

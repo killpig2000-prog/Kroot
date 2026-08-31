@@ -72,5 +72,82 @@
     "errMax": "{max}語が上限です。",
     "errAuth": "購入するにはログインしてください。",
     "errGeneric": "今は購入できませんでした。"
+  },
+  "unitN": "ユニット {n}",
+  "session": {
+    "hearIt": "音声を聞く",
+    "hearSentence": "文を聞く",
+    "hanjaAria": "漢字: {hanja}",
+    "revealMeaning": "意味を見る",
+    "hintHanja": "上の漢字がヒントです。",
+    "hintSayIt": "まず声に出してから、めくりましょう。",
+    "origin": "由来: {origin}",
+    "bonusRoot": "おまけの語根: {name}",
+    "bonusRootSub": "この語根を使う単語をもう少し",
+    "explore": "見てみる →",
+    "closeRoot": "語根パネルを閉じる",
+    "swipeHint": "右にスワイプ＝わかった・左＝まだ学習中",
+    "emptyTitle": "ここにはまだ単語がありません",
+    "emptyBody": "この章にはまだカードがありません。別の章を試してみてください。",
+    "backToTopics": "トピック一覧に戻る",
+    "levelSet": "レベル {level} · セット {current}/{total}"
+  },
+  "quiz": {
+    "introTitle": "章のクイズ",
+    "introSub": "{total}語のうち{known}語が簡単でした。穴埋めに挑戦しますか？",
+    "start": "クイズを始める →",
+    "skip": "クイズをスキップ",
+    "progress": "クイズ · 問題 {current}/{total}",
+    "correctCount": "{count, plural, other {正解 #}}"
+  },
+  "summary": {
+    "title": "{count, plural, other {今日は#語を学習しました！}}",
+    "sub": "その単語の根が少し深くなりました。",
+    "levelUp": "レベルアップ！ Lv. {level} になりました",
+    "markedKnown": "わかった",
+    "quizStat": "クイズ",
+    "chapterDone": "語彙 · 章を完了",
+    "moreWords": "{count, plural, other {あと#語}}"
+  },
+  "search": {
+    "trigger": "単語を探す",
+    "dialogLabel": "語彙を検索",
+    "placeholder": "4,000語以上から検索 — 한국어、ローマ字、英語",
+    "hint": "レベルもユニットも問いません。結果からその単語を学ぶユニットに移動できます。",
+    "loading": "単語データを読み込み中…",
+    "noMatch": "「{query}」に一致するものがありません。ハングルの綴りか英語の意味で試してください。"
+  },
+  "tap": {
+    "dialogLabel": "単語の詳細",
+    "lookingUp": "検索中…",
+    "hear": "{word} を聞く",
+    "saved": "保存しました ✓ — 次の復習で出てきます",
+    "planting": "植えています…",
+    "save": "庭に植える",
+    "notInDeck": "まだ単語デッキにありません。"
+  },
+  "detail": {
+    "back": "戻る",
+    "prev": "前へ",
+    "backToUnit": "ユニットに戻る",
+    "backToStory": "本文に戻る"
+  },
+  "practice": {
+    "reviewTime": "復習の時間",
+    "opensSoonTitle": "復習はもうすぐ使えます",
+    "opensSoonBody": "同梱のマイグレーション <code>supabase/migrations/0022_srs_review.sql</code> を実行すると、間隔反復の復習が有効になります。",
+    "nothingTitle": "いま復習するものはありません",
+    "allFresh": "{count, plural, other {学習した#語はまだ新しい状態です。}}",
+    "nextDue": "次の復習は {date, date, medium} です。",
+    "learnFirst": "まずは単語をいくつか学びましょう。復習の時期になるとここに出てきます。",
+    "plantNew": "新しい単語を植える →",
+    "progress": "復習 · {current}/{total}",
+    "watered": "{count}語に水やり",
+    "doneTitle": "庭に水をあげました！",
+    "doneSub": "{total}語のうち{kept}語の根が深くなりました。",
+    "doneSlipped": "取りこぼした単語は明日また出てきます。",
+    "backInCan": "またじょうろに戻る単語:",
+    "nothingToReview": "復習するものはありません",
+    "levelUp": "レベルアップ！ Lv. {level} になりました"
   }
 }

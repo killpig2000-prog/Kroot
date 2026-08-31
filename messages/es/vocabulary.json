@@ -22,13 +22,13 @@
   "wordBank": "Banco de palabras",
   "myWords": "Mis palabras",
   "dueForReview": "Para repasar",
-  "showChapters": "Show chapters",
-  "dueWords": "due words",
-  "review": "Review this chapter →",
-  "continue": "Continue this chapter →",
-  "study": "Study this chapter →",
-  "unitsOf": "Units {first}–{last}",
-  "doneOfTotal": "{done} of {total} units done",
+  "showChapters": "Mostrar capítulos",
+  "dueWords": "palabras pendientes",
+  "review": "Repasar este capítulo →",
+  "continue": "Continuar este capítulo →",
+  "study": "Estudiar este capítulo →",
+  "unitsOf": "Unidades {first}–{last}",
+  "doneOfTotal": "{done} de {total} unidades hechas",
   "bank": {
     "searchPlaceholder": "Busca en tus palabras",
     "missed": "fallada {count}×",
@@ -72,5 +72,82 @@
     "errMax": "{max} palabras es el máximo.",
     "errAuth": "Inicia sesión para comprar.",
     "errGeneric": "No se pudo comprar ahora mismo."
+  },
+  "unitN": "Unidad {n}",
+  "session": {
+    "hearIt": "Escuchar",
+    "hearSentence": "Escuchar la frase",
+    "hanjaAria": "Hanja: {hanja}",
+    "revealMeaning": "Ver el significado",
+    "hintHanja": "El hanja de arriba es tu pista.",
+    "hintSayIt": "Dilo en voz alta primero y luego voltea.",
+    "origin": "de {origin}",
+    "bonusRoot": "Raíz extra: {name}",
+    "bonusRootSub": "Algunas palabras más que comparten esta raíz",
+    "explore": "Explorar →",
+    "closeRoot": "Cerrar el panel de raíces",
+    "swipeHint": "Desliza a la derecha = Entendido · a la izquierda = Aún aprendiendo",
+    "emptyTitle": "Aquí todavía no hay palabras",
+    "emptyBody": "Este capítulo aún no tiene tarjetas: prueba con otro.",
+    "backToTopics": "Volver a los temas",
+    "levelSet": "Nivel {level} · serie {current} de {total}"
+  },
+  "quiz": {
+    "introTitle": "Prueba del capítulo",
+    "introSub": "{known} de {total} te resultaron fáciles. ¿Listo para rellenar los huecos?",
+    "start": "Empezar la prueba →",
+    "skip": "Saltar la prueba",
+    "progress": "Prueba · Pregunta {current} de {total}",
+    "correctCount": "{count, plural, =1 {1 acierto} other {# aciertos}}"
+  },
+  "summary": {
+    "title": "{count, plural, =1 {¡1 palabra estudiada hoy!} other {¡# palabras estudiadas hoy!}}",
+    "sub": "Esas palabras han echado raíces un poco más hondas.",
+    "levelUp": "¡Subiste de nivel! Ahora eres Nv. {level}",
+    "markedKnown": "Marcadas como conocidas",
+    "quizStat": "Prueba",
+    "chapterDone": "Vocabulario · capítulo terminado",
+    "moreWords": "{count, plural, =1 {1 palabra más} other {# palabras más}}"
+  },
+  "search": {
+    "trigger": "Buscar una palabra",
+    "dialogLabel": "Buscar en el vocabulario",
+    "placeholder": "Busca entre más de 4000 palabras: 한국어, romanización o inglés",
+    "hint": "Cualquier nivel, cualquier unidad: los resultados abren la unidad que enseña la palabra.",
+    "loading": "Cargando el mazo…",
+    "noMatch": "Ningún resultado para «{query}»: prueba con la escritura coreana o el significado en inglés."
+  },
+  "tap": {
+    "dialogLabel": "Detalles de la palabra",
+    "lookingUp": "Buscando…",
+    "hear": "Escuchar {word}",
+    "saved": "Guardada ✓: aparecerá en tu próximo repaso",
+    "planting": "Plantando…",
+    "save": "Plantar en el jardín",
+    "notInDeck": "Todavía no está en el mazo de palabras."
+  },
+  "detail": {
+    "back": "Volver",
+    "prev": "Anterior",
+    "backToUnit": "Volver a la unidad",
+    "backToStory": "Volver a la historia"
+  },
+  "practice": {
+    "reviewTime": "hora de repasar",
+    "opensSoonTitle": "El repaso se abre pronto",
+    "opensSoonBody": "Ejecuta la migración incluida <code>supabase/migrations/0022_srs_review.sql</code> para activar el repaso espaciado.",
+    "nothingTitle": "Ahora mismo no hay nada que repasar",
+    "allFresh": "{count, plural, =1 {La única palabra que has aprendido sigue fresca.} other {Las # palabras aprendidas siguen frescas.}}",
+    "nextDue": "La siguiente toca el {date, date, medium}.",
+    "learnFirst": "Aprende unas cuantas palabras primero: aparecerán aquí cuando toque repasarlas.",
+    "plantNew": "Plantar palabras nuevas →",
+    "progress": "Repaso · {current} de {total}",
+    "watered": "{count} regadas",
+    "doneTitle": "¡Jardín regado!",
+    "doneSub": "{kept} de {total} palabras tienen raíces más hondas.",
+    "doneSlipped": "Las que se te escaparon volverán mañana.",
+    "backInCan": "De vuelta en la regadera:",
+    "nothingToReview": "Nada que repasar",
+    "levelUp": "¡Subiste de nivel! Ahora eres Nv. {level}"
   }
 }

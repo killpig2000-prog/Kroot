@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { createClient } from "@/lib/supabase/client";
+import { createClient, getClientUserId } from "@/lib/supabase/client";
 import { track } from "@/lib/analytics";
 import { DEFAULT_WORD_BANK_SLOTS, countSavedWords, getWordBankSlots, saveToBank } from "@/lib/word-bank";
 
@@ -82,16 +82,13 @@ export default function AddToMyWords({
   useEffect(() => {
     let cancelled = false;
     (async () => {
-      let user = null;
-      try {
-        user = (await supabase.auth.getUser()).data.user;
-      } catch {
-        // Never leave the button spinning: treat an unreadable session as
-        // signed out, which still offers a way forward.
-        user = null;
-      }
+      // getClientUserId swallows its own errors and returns null, which is
+      // what the old try/catch here did: never leave the button spinning —
+      // treat an unreadable session as signed out, which still offers a way
+      // forward.
+      const userId = await getClientUserId(supabase);
       if (cancelled) return;
-      if (!user) {
+      if (!userId) {
         setStatus({ kind: "anon" });
         return;
       }
@@ -99,7 +96,7 @@ export default function AddToMyWords({
       const row = await supabase
         .from("vocabulary_progress")
         .select("saved")
-        .eq("user_id", user.id)
+        .eq("user_id", userId)
         .eq("word_key", wordKey)
         .maybeSingle();
       // Pre-0039 checkouts have no `saved` column: any row counts as saved.
@@ -108,15 +105,15 @@ export default function AddToMyWords({
         const fallback = await supabase
           .from("vocabulary_progress")
           .select("word_key")
-          .eq("user_id", user.id)
+          .eq("user_id", userId)
           .eq("word_key", wordKey)
           .maybeSingle();
         isSaved = fallback.data !== null;
       }
 
       const [count, capacity] = await Promise.all([
-        countSavedWords(supabase, user.id),
-        getWordBankSlots(supabase, user.id),
+        countSavedWords(supabase, userId),
+        getWordBankSlots(supabase, userId),
       ]);
       if (cancelled) return;
       setUsed(count);
@@ -135,8 +132,8 @@ export default function AddToMyWords({
       } else if (count >= capacity) {
         setStatus({ kind: "full" });
       } else {
-        setStatus({ kind: "unsaved", userId: user.id });
-        if (wantsSave) void save(user.id);
+        setStatus({ kind: "unsaved", userId });
+        if (wantsSave) void save(userId);
       }
     })();
     return () => {

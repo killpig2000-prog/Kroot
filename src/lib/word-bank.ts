@@ -12,7 +12,7 @@ let dictPromise: Promise<Map<string, VocabWord>> | null = null;
 
 function loadDict(): Promise<Map<string, VocabWord>> {
   if (!dictPromise) {
-    dictPromise = import("@/lib/vocabulary").then(({ getWordsForTopic }) => {
+    dictPromise = import("@/lib/vocabulary-words").then(({ getWordsForTopic }) => {
       const map = new Map<string, VocabWord>();
       for (const w of getWordsForTopic("daily-life")) {
         // Lower levels win when the same surface form appears twice; entries

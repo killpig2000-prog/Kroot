@@ -52,6 +52,7 @@ function isoDay(d: Date): string {
 export default async function ProfilePage() {
   const t = await getTranslations("ui.account");
   const tn = await getTranslations("nav");
+  const tp = await getTranslations("profile.identity");
   const format = await getFormatter();
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
@@ -146,7 +147,7 @@ export default async function ProfilePage() {
   const treeStage = LEVEL_PATH[treeStageForLevel(playerLevel)];
   const atMaxLevel = playerLevel >= MAX_LEVEL;
   const memberSince = profile?.created_at
-    ? new Date(profile.created_at).toLocaleDateString("en-US", { month: "short", year: "numeric" })
+    ? format.dateTime(new Date(profile.created_at), { month: "short", year: "numeric", timeZone: "UTC" })
     : "—";
 
   // ── level progress: the grey line under each skill name ──────────────────
@@ -335,7 +336,7 @@ export default async function ProfilePage() {
               <AvatarUploader userId={user.id} avatarUrl={profile?.avatar_url ?? null} />
               <div className="flex-1 min-w-[180px]">
                 <b className="font-semibold text-base flex items-center gap-2">
-                  <NameEditor userId={user.id} name={profile?.display_name ?? "Learner"} />
+                  <NameEditor userId={user.id} name={profile?.display_name ?? tp("fallbackName")} />
                 </b>
                 <span className="flex flex-wrap items-center text-[13px] text-muted">
                   {/* flex items: each segment wraps as a whole, never mid-phrase */}
@@ -345,29 +346,31 @@ export default async function ProfilePage() {
                   <span className="mx-1">·</span>
                   <span className="whitespace-nowrap">Lv. {playerLevel}</span>
                   <span className="mx-1">·</span>
-                  <span className="whitespace-nowrap">{level} difficulty</span>
+                  <span className="whitespace-nowrap">{tp("difficulty", { level })}</span>
                   <span className="mx-1">·</span>
-                  <span className="whitespace-nowrap">growing since {memberSince}</span>
+                  <span className="whitespace-nowrap">{tp("growingSince", { date: memberSince })}</span>
                 </span>
                 <div className="mt-2 max-w-[280px]">
                   <div className="h-[6px] rounded-full bg-success-bg border border-success-line overflow-hidden">
                     <div className="h-full rounded-full bg-success" style={{ width: `${pct}%` }} />
                   </div>
                   <small className="block mt-1 text-[12px] text-muted">
-                    {atMaxLevel ? "Reached the stars 🌟" : `${into}/${needed} XP to Lv. ${playerLevel + 1}`}
+                    {atMaxLevel
+                      ? tp("maxLevel")
+                      : tp("xpToNext", { into, needed, level: playerLevel + 1 })}
                   </small>
                 </div>
               </div>
               <div className="flex gap-2 flex-wrap">
                 <span className="text-[12.5px] font-semibold text-success bg-success-bg border border-success-line rounded-full px-3 py-1">
-                  🔥 {streakDays} day streak
+                  {tp("streak", { n: streakDays })}
                 </span>
                 <span className="text-[12.5px] font-semibold text-muted bg-warm border border-line rounded-full px-3 py-1">
-                  🌰 {profile?.coins ?? 0} coins
+                  {tp("coins", { n: profile?.coins ?? 0 })}
                 </span>
                 {(extras?.streak_freezes ?? 0) > 0 && (
                   <span className="text-[12.5px] font-semibold text-sky-deep bg-[var(--tint-sky)] border border-[var(--tint-sky-line)] rounded-full px-3 py-1">
-                    🧊 {extras?.streak_freezes} freeze{extras?.streak_freezes === 1 ? "" : "s"}
+                    {tp("freezes", { n: extras?.streak_freezes ?? 0 })}
                   </span>
                 )}
               </div>

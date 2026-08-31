@@ -1,10 +1,12 @@
+import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import WordDetailCard from "@/components/vocabulary/WordDetailCard";
 import { createClient, getClaimsUser, getDashboardProfile } from "@/lib/supabase/server";
-import { VOCAB_TOPICS, getChaptersForTopic, unitLabel } from "@/lib/vocabulary";
+import { VOCAB_TOPICS } from "@/lib/vocabulary";
+import { getChaptersForTopic } from "@/lib/vocabulary-words";
 import { findMoreExamples } from "@/lib/vocab-examples";
 import { DEFAULT_WORD_BANK_SLOTS, countSavedWords } from "@/lib/word-bank";
 import { isCefrLevel, type CefrLevel } from "@/lib/tree";
@@ -29,6 +31,8 @@ export default async function VocabWordPage({
   const sp = await searchParams;
   const topic = VOCAB_TOPICS.find((t) => t.key === topicKey && t.available);
   if (!topic) notFound();
+
+  const tv = await getTranslations("vocabulary");
 
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
@@ -142,9 +146,9 @@ export default async function VocabWordPage({
             slots={slots}
             fromBank={fromBank}
             backHref={backTo}
-            backLabel="Back to the story"
+            backLabel={tv("detail.backToStory")}
             unitHref={unitHref}
-            unitLabel={unitLabel(chapterIndex)}
+            unitLabel={tv("unitN", { n: chapterIndex + 1 })}
           />
         </main>
       </div>

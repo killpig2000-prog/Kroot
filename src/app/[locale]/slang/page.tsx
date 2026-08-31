@@ -30,7 +30,7 @@ export async function generateMetadata({
 // canonical per entry), so it renders signed-out too — just without the
 // app chrome and the XP-earning quiz.
 export default async function SlangPage() {
-  const tn = await getTranslations("nav");
+  const [t, tn] = await Promise.all([getTranslations("slang"), getTranslations("nav")]);
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
 
@@ -55,21 +55,19 @@ export default async function SlangPage() {
             href="/onboarding"
             className="rounded-full bg-success px-4 py-2 text-sm font-semibold text-white hover:bg-success-deep transition-colors"
           >
-            Start free
+            {t("startFree")}
           </Link>
         </header>
         <main className="mx-auto max-w-[980px] px-[clamp(18px,4vw,44px)] pb-16">
           <h1 className="font-bold text-[26px] tracking-[-0.02em] mb-1">{tn("koreanSlang")}</h1>
-          <p className="text-[14px] text-muted mb-6">
-            The words textbooks skip — straight from K-dramas, K-pop, and group chats.
-          </p>
+          <p className="text-[14px] text-muted mb-6">{t("taglineDot")}</p>
           <SlangHero entry={daily} />
           <div className="border border-dashed border-success-line bg-success-bg rounded-[14px] px-5 py-4 mb-6 flex items-center gap-3 flex-wrap">
             <span className="flex-1 min-w-[200px] text-[13.5px] text-success-deep">
-              Sign up to take the daily slang quiz and earn XP for your tree.
+              {t("signupNudge")}
             </span>
             <Link href="/onboarding" className="text-[13px] font-semibold text-success hover:underline">
-              Start free →
+              {t("startFreeArrow")}
             </Link>
           </div>
           <SlangBoard entries={SLANG} />
@@ -92,10 +90,10 @@ export default async function SlangPage() {
           {/* breadcrumb */}
           <div className="flex gap-2 text-[13px] text-faint mb-[18px]">
             <Link href="/dashboard" className="hover:text-charcoal transition-colors">
-              Garden
+              {tn("garden")}
             </Link>
             <span>/</span>
-            <b className="text-charcoal font-semibold">Slang</b>
+            <b className="text-charcoal font-semibold">{t("crumb")}</b>
           </div>
 
           {/* head */}
@@ -106,9 +104,7 @@ export default async function SlangPage() {
               </span>
               {tn("slang")}
             </h1>
-            <span className="text-[13px] text-muted">
-              The words textbooks skip — straight from K-dramas, K-pop, and group chats
-            </span>
+            <span className="text-[13px] text-muted">{t("tagline")}</span>
           </div>
 
           <SlangHero entry={daily} />

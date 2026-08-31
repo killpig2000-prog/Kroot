@@ -1,0 +1,18 @@
+{
+  "breadcrumb": "Grammar",
+  "lessonCount": "{n, plural, one {# lesson} other {# lessons}}",
+  "lessonNumber": "Lesson {n}",
+  "checkYourself": "Check yourself",
+  "allLessons": "← All lessons",
+  "nextLesson": "Next: {title} →",
+  "hearExample": "Hear {text}",
+  "resumeDetail": "Grammar",
+  "quiz": {
+    "question": "Question {n}",
+    "progress": "{n} of {total}",
+    "correct": "🌱 Correct!",
+    "wrong": "💧 Not quite — the answer is {letter}. {text}",
+    "done": "🌱 Quiz done — today's minutes are on your tree.",
+    "levelUp": "🎉 Level up! Now Lv. {n}"
+  }
+}

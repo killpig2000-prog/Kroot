@@ -2,15 +2,17 @@
 
 import { useRouter } from "@/i18n/navigation";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 
 export default function DeletePostButton({ postId }: { postId: string }) {
+  const t = useTranslations("community.deletePost");
   const router = useRouter();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState(false);
 
   async function remove() {
-    if (!window.confirm("Delete this post? This can't be undone.")) return;
+    if (!window.confirm(t("confirm"))) return;
     setBusy(true);
     setError(false);
     const supabase = createClient();
@@ -32,9 +34,9 @@ export default function DeletePostButton({ postId }: { postId: string }) {
         disabled={busy}
         className="rounded-[9px] border border-line px-3 py-1.5 text-[12.5px] font-semibold text-[#C13E78] transition-colors hover:border-[#C13E78] disabled:opacity-40"
       >
-        {busy ? "Deleting…" : "Delete"}
+        {busy ? t("deleting") : t("delete")}
       </button>
-      {error && <small className="text-[12px] text-[#C13E78]">Couldn&apos;t delete.</small>}
+      {error && <small className="text-[12px] text-[#C13E78]">{t("failed")}</small>}
     </span>
   );
 }

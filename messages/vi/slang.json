@@ -1,0 +1,47 @@
+{
+  "crumb": "Từ lóng",
+  "tagline": "Những từ sách giáo khoa bỏ qua — thẳng từ phim Hàn, K-pop và các nhóm chat",
+  "taglineDot": "Những từ sách giáo khoa bỏ qua — thẳng từ phim Hàn, K-pop và các nhóm chat.",
+  "signupNudge": "Đăng ký để làm bài đố từ lóng mỗi ngày và nhận XP cho cây của bạn.",
+  "startFree": "Bắt đầu miễn phí",
+  "startFreeArrow": "Bắt đầu miễn phí →",
+  "listen": "Nghe",
+  "vibes": {
+    "spoken": "Nói",
+    "texting": "Nhắn tin",
+    "internet": "Mạng"
+  },
+  "board": {
+    "collected": "Đã thu thập {done}/{total}",
+    "all": "Tất cả {n}"
+  },
+  "card": {
+    "flipBack": "Lật {word} lại",
+    "reveal": "Xem nghĩa của {word}",
+    "collected": "Đã thu thập",
+    "tapToFlip": "Chạm để lật",
+    "literally": "nghĩa đen “{text}”"
+  },
+  "hero": {
+    "ofTheDay": "Từ lóng hôm nay"
+  },
+  "quiz": {
+    "title": "Thử thách từ lóng hằng ngày",
+    "doneToday": "Hôm nay đã xong — đúng {score}/{total}. Mai có vòng mới!",
+    "intro": "Đoán nghĩa của {n} cách nói · +{xp} XP",
+    "start": "Bắt đầu ▶",
+    "result": "Đúng {score}/{total} · +{xp} XP",
+    "praise": "Nói tiếng lóng như dân bản xứ — hẹn gặp lại ngày mai!",
+    "encourage": "Lật các thẻ bên dưới và quay lại vào ngày mai.",
+    "prompt": "Từ này nghĩa là gì? · {n}/{total}",
+    "score": "điểm {n}"
+  },
+  "share": {
+    "eyebrow": "Kroot · Tiếng lóng đường phố 🇰🇷",
+    "startLearning": "Bắt đầu học",
+    "origin": "Nguồn gốc",
+    "related": "Từ lóng tương tự",
+    "ctaTitle": "Còn {n} từ lóng như {kr}, hoàn toàn miễn phí",
+    "ctaBody": "Lật xem tất cả, nghe cách phát âm và bắt đầu học tiếng Hàn đang được nói hôm nay — không chỉ tiếng Hàn trong sách."
+  }
+}

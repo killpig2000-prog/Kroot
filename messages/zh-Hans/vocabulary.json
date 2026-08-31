@@ -72,5 +72,82 @@
     "errMax": "{max} 个词就是上限。",
     "errAuth": "请先登录再购买。",
     "errGeneric": "现在无法购买。"
+  },
+  "unitN": "单元 {n}",
+  "session": {
+    "hearIt": "朗读单词",
+    "hearSentence": "朗读句子",
+    "hanjaAria": "汉字：{hanja}",
+    "revealMeaning": "显示释义",
+    "hintHanja": "上面的汉字就是提示。",
+    "hintSayIt": "先大声念一遍，再翻开卡片。",
+    "origin": "来自 {origin}",
+    "bonusRoot": "附加词根：{name}",
+    "bonusRootSub": "几个共用这个词根的单词",
+    "explore": "去看看 →",
+    "closeRoot": "关闭词根面板",
+    "swipeHint": "右滑＝明白了 · 左滑＝还在学习",
+    "emptyTitle": "这里还没有单词",
+    "emptyBody": "本章还没有卡片，换一章试试吧。",
+    "backToTopics": "返回主题列表",
+    "levelSet": "级别 {level} · 第 {current} 组，共 {total} 组"
+  },
+  "quiz": {
+    "introTitle": "本章测验",
+    "introSub": "{total} 个词里有 {known} 个觉得简单。要来做填空吗？",
+    "start": "开始测验 →",
+    "skip": "跳过测验",
+    "progress": "测验 · 第 {current} 题，共 {total} 题",
+    "correctCount": "{count, plural, other {答对 # 个}}"
+  },
+  "summary": {
+    "title": "{count, plural, other {今天学了 # 个单词！}}",
+    "sub": "这些词的根扎得更深了一点。",
+    "levelUp": "升级啦！你现在是 Lv. {level}",
+    "markedKnown": "标记为已掌握",
+    "quizStat": "测验",
+    "chapterDone": "词汇 · 本章完成",
+    "moreWords": "{count, plural, other {再学 # 个词}}"
+  },
+  "search": {
+    "trigger": "查一个词",
+    "dialogLabel": "搜索词汇",
+    "placeholder": "搜索 4,000+ 个单词 — 한국어、罗马音或英文",
+    "hint": "不限级别、不限单元 — 结果会打开教这个词的单元。",
+    "loading": "正在加载词库…",
+    "noMatch": "没有匹配“{query}”的结果 — 试试韩文写法或英文释义。"
+  },
+  "tap": {
+    "dialogLabel": "单词详情",
+    "lookingUp": "查询中…",
+    "hear": "朗读 {word}",
+    "saved": "已保存 ✓ — 下次复习会出现",
+    "planting": "种下中…",
+    "save": "种进花园",
+    "notInDeck": "词库里还没有这个词。"
+  },
+  "detail": {
+    "back": "返回",
+    "prev": "上一个",
+    "backToUnit": "返回单元",
+    "backToStory": "返回课文"
+  },
+  "practice": {
+    "reviewTime": "复习时间",
+    "opensSoonTitle": "复习功能即将开放",
+    "opensSoonBody": "运行随附的迁移 <code>supabase/migrations/0022_srs_review.sql</code> 即可开启间隔重复复习。",
+    "nothingTitle": "现在没有要复习的内容",
+    "allFresh": "{count, plural, other {已学的 # 个单词都还很新鲜。}}",
+    "nextDue": "下一个要复习的时间是 {date, date, medium}。",
+    "learnFirst": "先学几个单词吧 — 到复习时间它们就会出现在这里。",
+    "plantNew": "去种新单词 →",
+    "progress": "复习 · 第 {current} 个，共 {total} 个",
+    "watered": "已浇水 {count} 个",
+    "doneTitle": "花园浇过水啦！",
+    "doneSub": "{total} 个词中有 {kept} 个扎根更深了。",
+    "doneSlipped": "没答对的明天还会回来。",
+    "backInCan": "重新放回洒水壶：",
+    "nothingToReview": "没有要复习的内容",
+    "levelUp": "升级啦！你现在是 Lv. {level}"
   }
 }

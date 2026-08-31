@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import { buttonClassName } from "@/components/ui/Button";
 import { Link, useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
@@ -45,6 +46,7 @@ export default function VocabSession({
   hasNextChapter: boolean;
 }) {
   const router = useRouter();
+  const t = useTranslations("vocabulary.session");
   const supabase = useMemo(() => createClient(), []);
 
   const [phase, setPhase] = useState<Phase>("flip");
@@ -228,10 +230,10 @@ export default function VocabSession({
   if (words.length === 0) {
     return (
       <div className={`${CARD} text-center`}>
-        <p className="font-bold text-[17px] tracking-[-0.01em] mb-1.5">No words here yet</p>
-        <p className="text-sm text-muted mb-5">This chapter doesn&apos;t have cards yet — try another one.</p>
+        <p className="font-bold text-[17px] tracking-[-0.01em] mb-1.5">{t("emptyTitle")}</p>
+        <p className="text-sm text-muted mb-5">{t("emptyBody")}</p>
         <Link href="/vocabulary" className={BTN_INK}>
-          Back to topics
+          {t("backToTopics")}
         </Link>
       </div>
     );

@@ -2,7 +2,7 @@ import { Link, redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import ReadingSession, { ReadingEmpty } from "@/components/reading/ReadingSession";
-import { getLocale } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { getChaptersForLevel } from "@/lib/reading";
 import { buildGlossary, glossaryWords } from "@/lib/word-links";
@@ -15,6 +15,7 @@ export default async function ReadingChapterSessionPage({
 }) {
   const sp = await searchParams;
   const chapterIndex = Number(sp.chapter ?? 0);
+  const [t, tn] = await Promise.all([getTranslations("reading"), getTranslations("nav")]);
 
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
@@ -55,14 +56,14 @@ export default async function ReadingChapterSessionPage({
           {/* breadcrumb */}
           <div className="flex gap-2 text-[13px] text-faint mb-[18px] flex-wrap">
             <Link href="/dashboard" className="hover:text-charcoal transition-colors">
-              Garden
+              {tn("garden")}
             </Link>
             <span>/</span>
             <Link href={`/reading?level=${level}`} className="hover:text-charcoal transition-colors">
-              Reading
+              {t("crumb")}
             </Link>
             <span>/</span>
-            <b className="text-charcoal font-semibold">Chapter {chapterIndex + 1}</b>
+            <b className="text-charcoal font-semibold">{t("session.chapterN", { n: chapterIndex + 1 })}</b>
           </div>
 
           {/* head */}
@@ -71,7 +72,7 @@ export default async function ReadingChapterSessionPage({
               <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[var(--tint-sky)] text-sky-deep border border-sky-line items-center justify-center kr text-[15px] mr-[9px]">
                 읽
               </span>
-              {passage?.title_en ?? "Story Grove"}
+              {passage?.title_en ?? tn("storyGrove")}
             </h1>
           </div>
 

@@ -1,0 +1,27 @@
+{
+  "tabs": {
+    "consonants": "Consonantes",
+    "vowels": "Vocales",
+    "syllables": "Cómo se forman las sílabas"
+  },
+  "sections": {
+    "basicConsonants": "14 consonantes básicas",
+    "doubleConsonants": "5 consonantes dobles",
+    "basicVowels": "10 vocales básicas",
+    "compoundVowels": "Vocales compuestas",
+    "theIdea": "La idea",
+    "buildABlock": "Construye un bloque",
+    "readingPractice": "Práctica de lectura"
+  },
+  "builder": {
+    "consonant": "Consonante",
+    "vowel": "Vocal"
+  },
+  "blocks": {
+    "right": "vocal a la derecha",
+    "under": "vocal debajo",
+    "final": "consonante final abajo del todo"
+  },
+  "tapToReveal": "toca para ver",
+  "hear": "Escuchar {text}"
+}

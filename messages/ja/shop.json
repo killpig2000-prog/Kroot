@@ -1,0 +1,94 @@
+{
+  "coins": "🌰 {coins} コイン",
+  "intro": "木と、その周りの庭を飾りましょう。カードをタップすると自分の木で試着でき、そのまま購入して身につけられます。",
+  "slots": {
+    "hat": "帽子",
+    "face": "顔",
+    "neck": "首もと",
+    "aura": "オーラ",
+    "sky": "空",
+    "ground": "地面",
+    "friend": "お友だち"
+  },
+  "rarity": {
+    "common": "コモン",
+    "rare": "レア",
+    "epic": "エピック",
+    "legendary": "レジェンダリー"
+  },
+  "errors": {
+    "notEnoughCoins": "コインが足りません。",
+    "alreadyOwned": "これはすでに持っています。",
+    "levelTooLow": "木の背丈がまだ足りません。",
+    "unavailable": "これは今は入手できません。",
+    "notOnSale": "このアイテムは今は販売していません。",
+    "generic": "うまくいきませんでした — もう一度お試しください。"
+  },
+  "cta": {
+    "pick": "アイテムを選ぶ",
+    "takeOff": "外す",
+    "wear": "身につける",
+    "claimAdmin": "受け取って装備 · 管理者",
+    "unlocksAt": "Lv.{level} で解放",
+    "needMore": "あと {n} 🌰 必要",
+    "claim": "受け取って装備",
+    "buy": "購入して装備 · 🌰 {price}"
+  },
+  "bought": "{name} を手に入れました — 木にも飾りました。",
+  "featured": {
+    "badge": "今週限定",
+    "meta": "{rarity}の{slot} · 🌰 {price}{hasLevel, select, yes { · Lv.{level} が必要} other {}} · {date} で終了",
+    "daysLeft": "残り{n}日"
+  },
+  "categories": "アイテムのカテゴリー",
+  "new": "NEW",
+  "card": {
+    "wearing": "装備中 ✓",
+    "owned": "所持済み",
+    "locked": "🔒 Lv.{level}",
+    "price": "🌰 {price}",
+    "goal": "· 目標 · {ready, select, yes {購入できます} other {あと {n}}}{hasLevel, select, yes { · Lv.{level}} other {}}",
+    "setGoal": "目標にする"
+  },
+  "empty": "ここは今、販売中のアイテムがありません — 次の季節にまた覗いてみてください。",
+  "tryOn": {
+    "label": "試着 · あなたの木",
+    "caption": "Lv. {level}",
+    "none": "—",
+    "reset": "リセット",
+    "hint": "カードをタップすると試着できます",
+    "selected": "{name} · {krName}"
+  },
+  "picker": {
+    "change": "変更 ▾",
+    "auto": "いちばん安い次のアイテム（自動）",
+    "price": "🌰 {price}{hasLevel, select, yes { · Lv.{level}} other {}}"
+  },
+  "goal": {
+    "earnNote": "· デイリークエストで {quest}、10レベルごとに {bonus} もらえます",
+    "doQuest": "今日のクエストをやる →",
+    "savingFor": "<b>{name}</b> のために貯金中",
+    "needsLevel": " · Lv.{level} が必要",
+    "progressLabel": "{name} のために貯めたコイン",
+    "savedLocked": "貯まりました · Lv.{level} で解放",
+    "buyNow": "もう購入できます →",
+    "questsToGo": "あとクエスト {n}回",
+    "orBonus": " · または Lv.{level} のボーナス（+{coins}）",
+    "questDone": "今日のクエスト完了 ✓",
+    "questReady": "今日のクエストが待っています ✏️"
+  },
+  "freeze": {
+    "title": "ストリークフリーズ",
+    "held": "{n}/{max} 所持",
+    "desc": "1日休んでもフリーズが自動で使われ、連続記録は途切れません。",
+    "descStreak": "1日休んでもフリーズが自動で使われ、{n}日の連続記録は途切れません。",
+    "errNotEnough": "コインが足りません — デイリークエスト1回につき {coins} もらえます。",
+    "errMax": "最大 {max} 個まで持てます。",
+    "errPending": "フリーズは近日公開です（マイグレーション 0035 が未適用）。",
+    "errGeneric": "今は購入できませんでした。",
+    "bought": "フリーズの準備ができました 🧊 — 1日休んだときに自動で使われます。",
+    "maxed": "上限まで所持",
+    "buying": "購入中…",
+    "buy": "購入 · 🌰 {price}"
+  }
+}

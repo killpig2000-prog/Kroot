@@ -19,11 +19,10 @@ import { nextLevel, type CefrLevel } from "@/lib/tree";
 type Stop = {
   key: GuideStationKey;
   icon: string;
-  label: string;
+  /** nav namespace key for this section's name. */
+  navKey: string;
   href: string;
   color: string;
-  task: string;
-  freq: string;
 };
 
 // "You are here" accents — the sun token, plus its deeper edge/ink shades.
@@ -32,76 +31,39 @@ const SUN_INK = "#7A5A12";
 const SUN_PAPER = "#FFFBEA";
 
 const S = {
-  hangul: { icon: "🔤", label: "Hangul", href: "/hangul", color: "#C63958" },
-  grammar: { icon: "📖", label: "Grammar", href: "/grammar", color: "#423AC5" },
-  vocab: { icon: "🃏", label: "Vocabulary", href: "/vocabulary", color: "#6B33CC" },
-  listen: { icon: "🎧", label: "Listening", href: "/listening", color: "#3E7C59" },
-  pron: { icon: "🌶️", label: "Pronunciation", href: "/speaking", color: "#228980" },
-  write: { icon: "✏️", label: "Writing", href: "/writing", color: "#C47A25" },
-  read: { icon: "📰", label: "Reading", href: "/reading", color: "#3363CC" },
-  slang: { icon: "💬", label: "Slang", href: "/slang", color: "#C13E78" },
+  hangul: { icon: "🔤", navKey: "hangul", href: "/hangul", color: "#C63958" },
+  grammar: { icon: "📖", navKey: "grammar", href: "/grammar", color: "#423AC5" },
+  vocab: { icon: "🃏", navKey: "vocabulary", href: "/vocabulary", color: "#6B33CC" },
+  listen: { icon: "🎧", navKey: "listening", href: "/listening", color: "#3E7C59" },
+  pron: { icon: "🌶️", navKey: "pronunciation", href: "/speaking", color: "#228980" },
+  write: { icon: "✏️", navKey: "writing", href: "/writing", color: "#C47A25" },
+  read: { icon: "📰", navKey: "reading", href: "/reading", color: "#3363CC" },
+  slang: { icon: "💬", navKey: "slang", href: "/slang", color: "#C13E78" },
 } as const;
 
-const stop = (k: keyof typeof S, task: string, freq: string): Stop => ({ key: k, ...S[k], task, freq });
+const stop = (k: keyof typeof S): Stop => ({ key: k, ...S[k] });
 
 const ROUTES: {
+  key: "people" | "exam";
   icon: string;
   color: string;
-  tag: string;
-  name: string;
-  sub: string;
-  pace: string;
   stops: Stop[];
 }[] = [
   {
+    key: "people",
     icon: "🗣️",
     color: "#228980",
-    tag: "Most people start here",
-    name: "Use Korean with people",
-    sub: "Dramas, travel, friends. Skips the grammar you don't need yet.",
-    pace: "20 min a day",
-    stops: [
-      stop("hangul", "the 40 letters", "1 hour"),
-      stop("vocab", "words that carry a conversation", "10 min a day"),
-      stop("listen", "dialogues at real speed", "3× a week"),
-      stop("pron", "be understood first try", "5 min a day"),
-      stop("slang", "stop sounding like a textbook", "when curious"),
-    ],
+    stops: [stop("hangul"), stop("vocab"), stop("listen"), stop("pron"), stop("slang")],
   },
   {
+    key: "exam",
     icon: "🎓",
     color: "#423AC5",
-    tag: "If you need the certificate",
-    name: "Reach B2 or pass TOPIK",
-    sub: "Grammar in order, nothing skipped. Slower to feel fluent, but it holds up.",
-    pace: "30 min a day",
-    stops: [
-      stop("hangul", "the 40 letters", "1 hour"),
-      stop("grammar", "every group, in order", "1 lesson a day"),
-      stop("vocab", "units through B2", "15 min a day"),
-      stop("read", "articles and essays", "3× a week"),
-      stop("write", "journal, then opinion", "2× a week"),
-    ],
+    stops: [stop("hangul"), stop("grammar"), stop("vocab"), stop("read"), stop("write")],
   },
 ];
 
-const FACTS = [
-  {
-    kicker: "Effort",
-    title: "Tree level 1–120",
-    body: "Every session earns XP. Leveling up means time put in — it doesn't change your grade.",
-  },
-  {
-    kicker: "Ability",
-    title: "Grade A1–C2",
-    body: "Moves only when you pass a promotion test. That's when your tree changes species.",
-  },
-  {
-    kicker: "Cosmetic",
-    title: "The garden",
-    body: "Costumes, skies, and companions from the Shop. Dress-up only, no effect on learning.",
-  },
-];
+const FACTS = ["effort", "ability", "cosmetic"] as const;
 
 function SectionHead({ title, note }: { title: string; note: string }) {
   return (
@@ -119,6 +81,7 @@ function SectionHead({ title, note }: { title: string; note: string }) {
 
 export default async function GuidePage() {
   const tn = await getTranslations("nav");
+  const t = await getTranslations("guide");
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
 
@@ -157,10 +120,10 @@ export default async function GuidePage() {
           {/* breadcrumb */}
           <div className="flex gap-2 text-[13px] text-faint mb-4">
             <Link href="/dashboard" className="hover:text-charcoal transition-colors">
-              Garden
+              {tn("garden")}
             </Link>
             <span>/</span>
-            <b className="text-charcoal font-semibold">Guide</b>
+            <b className="text-charcoal font-semibold">{t("breadcrumb")}</b>
           </div>
 
           {/* head */}
@@ -172,16 +135,15 @@ export default async function GuidePage() {
               {tn("guide")}
             </h1>
             <p className="text-[13.5px] text-muted max-w-[56ch]">
-              Nothing in Kroot is locked by order. Pick whichever route matches why you&apos;re
-              learning Korean, and follow it stop by stop.
+              {t("intro")}
             </p>
           </div>
 
           {/* roadmaps */}
           <section className="mb-11">
             <SectionHead
-              title="Roadmaps"
-              note="Pick one — running both at once is how people stall. Every stop is a link, so jump in wherever you already are."
+              title={t("sections.roadmaps.title")}
+              note={t("sections.roadmaps.note")}
             />
 
             <div className="flex flex-col gap-3.5">
@@ -194,7 +156,7 @@ export default async function GuidePage() {
                   : null;
                 return (
                 <article
-                  key={route.name}
+                  key={route.key}
                   className="relative overflow-hidden rounded-[18px] border border-line bg-cream shadow-[0_1px_2px_rgba(27,36,48,.04),0_8px_24px_-16px_rgba(27,36,48,.16)]"
                 >
                   <span
@@ -223,28 +185,28 @@ export default async function GuidePage() {
                             borderColor: `${route.color}4D`,
                           }}
                         >
-                          {route.tag}
+                          {t(`routes.${route.key}.tag`)}
                         </span>
                         {/* on phones the pace sits beside the tag so the title keeps the full width */}
                         <span
                           className="sm:hidden flex-none text-[12px] font-black tracking-[-0.01em] tabular-nums whitespace-nowrap"
                           style={{ color: route.color }}
                         >
-                          {route.pace}
+                          {t(`routes.${route.key}.pace`)}
                         </span>
                       </span>
                       <b className="block text-[19px] font-black tracking-[-0.02em] text-balance">
-                        {route.name}
+                        {t(`routes.${route.key}.name`)}
                       </b>
                       <small className="block text-[12.5px] text-muted mt-1 leading-[1.55] max-w-[62ch]">
-                        {route.sub}
+                        {t(`routes.${route.key}.sub`)}
                       </small>
                     </span>
                     <span
                       className="hidden sm:inline flex-none pl-2 text-[13px] font-black tracking-[-0.01em] tabular-nums whitespace-nowrap"
                       style={{ color: route.color }}
                     >
-                      {route.pace}
+                      {t(`routes.${route.key}.pace`)}
                     </span>
                   </div>
 
@@ -273,7 +235,7 @@ export default async function GuidePage() {
                         : { background: `${route.color}8C` };
                       return (
                       <Link
-                        key={s.label}
+                        key={s.key}
                         href={isCurrent && v ? v.ctaHref : s.href}
                         aria-current={isCurrent ? "step" : undefined}
                         className={`group relative flex sm:flex-col items-start sm:items-center gap-3.5 sm:gap-0 sm:text-center px-0 sm:px-[7px] sm:h-full ${
@@ -339,7 +301,7 @@ export default async function GuidePage() {
                               className="inline-flex items-center gap-1 self-start sm:self-center bg-sun text-[9.5px] font-black uppercase tracking-[.09em] rounded-full px-2 py-[2.5px] mb-1.5"
                               style={{ color: SUN_INK }}
                             >
-                              <span aria-hidden="true">●</span> You are here
+                              <span aria-hidden="true">●</span> {t("youAreHere")}
                             </span>
                           )}
                           <b
@@ -352,16 +314,16 @@ export default async function GuidePage() {
                             }`}
                             style={{ "--stop-color": s.color } as React.CSSProperties}
                           >
-                            {s.label}
+                            {tn(s.navKey)}
                           </b>
                           {isDone && v ? (
                             <small className="block text-[12px] font-semibold text-success-deep leading-[1.5] mt-1 tabular-nums">
-                              {v.doneAt ? `Done ${formatDoneDate(v.doneAt)} · ` : ""}
+                              {v.doneAt ? `${t("doneOn", { date: formatDoneDate(v.doneAt) })} · ` : ""}
                               {v.detail}
                             </small>
                           ) : (
                             <small className="block text-[12px] text-muted leading-[1.5] mt-1 sm:max-w-[21ch] text-balance">
-                              {s.task}
+                              {t(`routes.${route.key}.stops.${s.key}.task`)}
                             </small>
                           )}
                           {isCurrent && v && (
@@ -405,7 +367,7 @@ export default async function GuidePage() {
                                   borderColor: `${s.color}38`,
                                 }}
                               >
-                                {s.freq}
+                                {t(`routes.${route.key}.stops.${s.key}.freq`)}
                               </span>
                             </span>
                           )}
@@ -423,8 +385,8 @@ export default async function GuidePage() {
           {/* the two surfaces that aren't on the sidebar at all */}
           <section className="mb-11">
             <SectionHead
-              title="Two things the roadmap doesn't show"
-              note="Neither is a stop on the route — one runs underneath it, the other ends it."
+              title={t("sections.extras.title")}
+              note={t("sections.extras.note")}
             />
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
@@ -438,29 +400,28 @@ export default async function GuidePage() {
                   </span>
                   <span>
                     <span className="block text-[9.5px] font-black uppercase tracking-[.09em] text-faint">
-                      Every day
+                      {t("review.kicker")}
                     </span>
                     <b className="block text-[16px] font-black tracking-[-0.015em] transition-colors group-hover:text-sky-deep">
-                      Watering time
+                      {t("review.title")}
                     </b>
                   </span>
                 </span>
                 <p className="text-[12.5px] text-muted leading-[1.6] mb-3">
-                  Every word you study is scheduled to come back before you&apos;d forget it. You
-                  don&apos;t track any of this — you just show up and water what&apos;s due.
+                  {t("review.body")}
                 </p>
                 <span className="flex flex-col gap-1.5 mt-auto pt-2.5 border-t border-[color:var(--c-warm-2)] text-[11.5px] text-muted leading-[1.5]">
                   <span>
                     <em className="not-italic font-black text-[9.5px] uppercase tracking-[.07em] text-faint mr-[7px]">
-                      Where
+                      {t("review.whereLabel")}
                     </em>
-                    Garden → Watering time
+                    {t("review.whereValue")}
                   </span>
                   <span>
                     <em className="not-italic font-black text-[9.5px] uppercase tracking-[.07em] text-faint mr-[7px]">
-                      How long
+                      {t("review.howLongLabel")}
                     </em>
-                    a few minutes
+                    {t("review.howLongValue")}
                   </span>
                 </span>
               </Link>
@@ -475,43 +436,47 @@ export default async function GuidePage() {
                   </span>
                   <span>
                     <span className="block text-[9.5px] font-black uppercase tracking-[.09em] text-faint">
-                      Now and then
+                      {t("test.kicker")}
                     </span>
                     <b className="block text-[16px] font-black tracking-[-0.015em] transition-colors group-hover:text-[#6B33CC]">
-                      Promotion test
+                      {t("test.title")}
                     </b>
                   </span>
                 </span>
                 <p className="text-[12.5px] text-muted leading-[1.6] mb-3">
-                  The only thing that moves your grade. A word counts once it has survived its first
-                  two spaced reviews, so this fills up as you study — you never decide when
-                  you&apos;re ready.
+                  {t("test.body")}
                 </p>
                 <span className="flex flex-col gap-1.5 mt-auto pt-2.5 border-t border-[color:var(--c-warm-2)] text-[11.5px] text-muted leading-[1.5]">
                   <span>
                     <em className="not-italic font-black text-[9.5px] uppercase tracking-[.07em] text-faint mr-[7px]">
-                      Unlocks at
+                      {t("test.unlocksLabel")}
                     </em>
-                    {ELIGIBILITY.targetMasteredWords} words of your grade still held, plus{" "}
-                    {ELIGIBILITY.minReadingPassages} reading passages
+                    {t("test.unlocksValue", {
+                      words: ELIGIBILITY.targetMasteredWords,
+                      passages: ELIGIBILITY.minReadingPassages,
+                    })}
                   </span>
                   {elig && gradeUp && (
                     <span className={elig.eligible ? "text-success-deep font-semibold" : ""}>
                       <em className="not-italic font-black text-[9.5px] uppercase tracking-[.07em] text-faint mr-[7px]">
-                        You
+                        {t("test.youLabel")}
                       </em>
                       <span className="tabular-nums">
-                        {elig.wordsMastered}/{elig.wordsRequired} words held · {elig.readingDone}/
-                        {elig.readingRequired} passages
+                        {t("test.youStats", {
+                          wordsHeld: elig.wordsMastered,
+                          wordsRequired: elig.wordsRequired,
+                          readingDone: elig.readingDone,
+                          readingRequired: elig.readingRequired,
+                        })}
                       </span>
-                      {elig.eligible ? ` · ready for ${grade} → ${gradeUp}` : ""}
+                      {elig.eligible ? t("test.youReady", { from: grade, to: gradeUp }) : ""}
                     </span>
                   )}
                   <span>
                     <em className="not-italic font-black text-[9.5px] uppercase tracking-[.07em] text-faint mr-[7px]">
-                      To pass
+                      {t("test.toPassLabel")}
                     </em>
-                    60+ in every skill, 70+ average
+                    {t("test.toPassValue")}
                   </span>
                 </span>
               </Link>
@@ -521,26 +486,27 @@ export default async function GuidePage() {
           {/* level vs grade vs garden */}
           <section className="mb-8">
             <SectionHead
-              title="How progress works"
-              note="Three things that sound related but move independently."
+              title={t("sections.progress.title")}
+              note={t("sections.progress.note")}
             />
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {FACTS.map((f) => (
-                <div key={f.title} className="rounded-[14px] border border-line bg-cream px-[15px] py-3.5">
+                <div key={f} className="rounded-[14px] border border-line bg-cream px-[15px] py-3.5">
                   <span className="block text-[10px] font-black uppercase tracking-[.09em] text-faint mb-1.5">
-                    {f.kicker}
+                    {t(`facts.${f}.kicker`)}
                   </span>
-                  <b className="block text-[14px] font-extrabold tracking-[-0.01em] mb-1">{f.title}</b>
-                  <p className="text-[12px] text-muted leading-[1.5]">{f.body}</p>
+                  <b className="block text-[14px] font-extrabold tracking-[-0.01em] mb-1">
+                    {t(`facts.${f}.title`)}
+                  </b>
+                  <p className="text-[12px] text-muted leading-[1.5]">{t(`facts.${f}.body`)}</p>
                 </div>
               ))}
             </div>
           </section>
 
           <p className="pt-[18px] border-t border-line text-[12.5px] text-muted max-w-[64ch]">
-            Everything here is self-paced — quizzes never block your progress and nothing expires.
-            Come back to this page any time you feel lost.
+            {t("footer")}
           </p>
         </main>
       </div>

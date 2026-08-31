@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { Link, redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
@@ -10,6 +11,8 @@ export default async function NewPostPage({
 }: {
   searchParams: Promise<{ board?: string }>;
 }) {
+  const t = await getTranslations("community");
+  const tn = await getTranslations("nav");
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
 
@@ -38,14 +41,14 @@ export default async function NewPostPage({
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] md:pb-[60px]">
           <div className="flex gap-2 text-[13px] text-faint mb-[18px]">
             <Link href="/dashboard" className="hover:text-charcoal transition-colors">
-              Garden
+              {tn("garden")}
             </Link>
             <span>/</span>
             <Link href="/community" className="hover:text-charcoal transition-colors">
-              Community
+              {t("title")}
             </Link>
             <span>/</span>
-            <b className="text-charcoal font-semibold">New post</b>
+            <b className="text-charcoal font-semibold">{t("newPost")}</b>
           </div>
 
           <div className="flex items-center justify-between gap-4 mb-[18px] flex-wrap">
@@ -53,7 +56,7 @@ export default async function NewPostPage({
               <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[var(--tint-slate)] text-[var(--tint-slate-ink)] border border-[var(--tint-slate-line)] items-center justify-center kr text-[15px] mr-[9px]">
                 글
               </span>
-              New post
+              {t("newPost")}
             </h1>
           </div>
 

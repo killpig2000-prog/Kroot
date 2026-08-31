@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useSyncExternalStore } from "react";
+import { useTranslations } from "next-intl";
 import { isIOS, isStandalone } from "@/lib/push-client";
 
 type Deferred = { prompt: () => Promise<void>; userChoice: Promise<{ outcome: string }> };
@@ -36,6 +37,7 @@ function subscribe(cb: () => void) {
 // Add to Home Screen dance). Hidden inside an installed app and for 14 days
 // after a dismissal.
 export default function InstallBanner({ streakDays }: { streakDays: number }) {
+  const t = useTranslations("ui.install");
   const detected = useSyncExternalStore(subscribe, snapshot, () => "hidden" as Mode);
   const [closed, setClosed] = useState(false);
   const mode: Mode = closed ? "hidden" : detected;
@@ -68,13 +70,13 @@ export default function InstallBanner({ streakDays }: { streakDays: number }) {
         📱
       </span>
       <span className="flex-1 min-w-[170px]">
-        <b className="block font-semibold text-sm">Keep Kroot on your home screen</b>
+        <b className="block font-semibold text-sm">{t("title")}</b>
         <span className="text-[13px] text-muted">
           {mode === "ios"
-            ? "Tap Share, then “Add to Home Screen” — one tap to today's lesson."
+            ? t("ios")
             : streakDays > 0
-              ? `One tap to protect your ${streakDays}-day streak.`
-              : "Opens like an app, one tap to today's lesson."}
+              ? t("streak", { count: streakDays })
+              : t("generic")}
         </span>
       </span>
       <span className="flex items-center gap-2">
@@ -84,16 +86,16 @@ export default function InstallBanner({ streakDays }: { streakDays: number }) {
             onClick={install}
             className="rounded-[9px] bg-success px-3.5 py-2 text-[13px] font-bold text-white hover:bg-success-deep transition-colors"
           >
-            Install
+            {t("install")}
           </button>
         )}
         <button
           type="button"
           onClick={dismiss}
           className="text-[13px] font-semibold text-faint hover:text-charcoal px-2 py-2"
-          aria-label="Dismiss"
+          aria-label={t("dismissAria")}
         >
-          Not now
+          {t("notNow")}
         </button>
       </span>
     </div>

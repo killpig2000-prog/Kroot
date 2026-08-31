@@ -1,0 +1,247 @@
+{
+  "lessons": {
+    "word-order": {
+      "title": "El orden de palabras en coreano (SOV)",
+      "summary": "El verbo siempre va al final. Lo demás es flexible porque el significado lo cargan las partículas.",
+      "sections": [
+        {
+          "heading": "Sujeto – Objeto – Verbo",
+          "explanation": "El inglés es Sujeto–Verbo–Objeto: “I eat bread.” El coreano es Sujeto–Objeto–Verbo: “Yo pan como.” En cuanto empiezas a esperar el verbo al final, la mayoría de las frases dejan de parecer un lío."
+        },
+        {
+          "heading": "Las partículas hacen el trabajo, así que el orden se mueve",
+          "explanation": "Como 은/는 marca el tema y 을/를 marca el objeto, puedes mover esos bloques para enfatizar y la frase sigue significando lo mismo. Solo el verbo está fijo al final."
+        },
+        {
+          "heading": "Puedes omitir lo evidente",
+          "explanation": "El coreano deja fuera el sujeto siempre que el contexto lo deja claro. Una respuesta de una sola palabra es una frase completa."
+        }
+      ],
+      "quiz": [
+        {
+          "q": "¿Dónde va el verbo en una frase coreana?",
+          "opts": [
+            "Al principio",
+            "En segundo lugar",
+            "Justo al final",
+            "En cualquier sitio"
+          ]
+        },
+        {
+          "q": "¿Qué frase significa 'Estudio coreano'?",
+          "opts": [
+            "저는 공부해요 한국어를.",
+            "저는 한국어를 공부해요.",
+            "공부해요 저는 한국어를.",
+            "한국어를 공부해요 저는."
+          ]
+        },
+        {
+          "q": "¿Por qué el coreano puede mover los sintagmas con tanta libertad?",
+          "opts": [
+            "Porque los verbos cambian de forma",
+            "Porque las partículas marcan el papel de cada palabra",
+            "Porque no hay sustantivos",
+            "Porque el orden de palabras es aleatorio"
+          ]
+        }
+      ]
+    },
+    "topic-vs-subject": {
+      "title": "은/는 frente a 이/가",
+      "summary": "은/는 establece el tema e invita al contraste. 이/가 señala quién hace algo exactamente.",
+      "sections": [
+        {
+          "heading": "Las formas",
+          "explanation": "Después de consonante se usan 은 e 이. Después de vocal, 는 y 가. Esa es toda la regla de escritura que necesitas."
+        },
+        {
+          "heading": "은/는: 'en cuanto a…'",
+          "explanation": "은/는 anuncia de qué va la frase y, de paso, la compara con otra cosa. Úsalo para presentarte y para contrastar dos cosas."
+        },
+        {
+          "heading": "이/가: 'es ESTE'",
+          "explanation": "이/가 identifica al sujeto, sobre todo cuando es información nueva o la respuesta a '¿quién?' y '¿qué?'. También es obligatorio con 있어요/없어요 y con verbos descriptivos como 좋다."
+        }
+      ],
+      "quiz": [
+        {
+          "q": "¿Qué partícula sigue a una palabra acabada en consonante, como 선생님?",
+          "opts": [
+            "는",
+            "은",
+            "가",
+            "를"
+          ]
+        },
+        {
+          "q": "'¿Quién vino?' — '친구___ 왔어요.' ¿Cuál encaja?",
+          "opts": [
+            "는",
+            "은",
+            "가",
+            "를"
+          ]
+        },
+        {
+          "q": "Quieres contrastar: 'El café me gusta, pero el té no.' ¿Qué partícula marca 커피 y 차?",
+          "opts": [
+            "이/가",
+            "은/는",
+            "을/를",
+            "에/에서"
+          ]
+        }
+      ]
+    },
+    "object-marker": {
+      "title": "La partícula de objeto 을/를",
+      "summary": "Marca aquello que recibe la acción: 을 después de consonante, 를 después de vocal.",
+      "sections": [
+        {
+          "heading": "Cuál usar",
+          "explanation": "을 va detrás de un sustantivo acabado en consonante; 를, detrás de uno acabado en vocal. La elección es puramente de sonido."
+        },
+        {
+          "heading": "Se pega a quien recibe la acción",
+          "explanation": "Lo que se come, se mira, se compra o se estudia lleva 을/를. Los verbos de movimiento como 가다 usan 에 en su lugar, no 을/를."
+        },
+        {
+          "heading": "En el habla informal desaparece",
+          "explanation": "El coreano hablado omite 을/를 constantemente cuando el sentido es obvio. Mantenlo al escribir y al hablar con cuidado."
+        }
+      ],
+      "quiz": [
+        {
+          "q": "'책' acaba en consonante. ¿Qué partícula de objeto la sigue?",
+          "opts": [
+            "를",
+            "을",
+            "이",
+            "가"
+          ]
+        },
+        {
+          "q": "¿Qué frase es correcta para 'Bebo café'?",
+          "opts": [
+            "커피을 마셔요.",
+            "커피를 마셔요.",
+            "커피가 마셔요.",
+            "커피에 마셔요."
+          ]
+        },
+        {
+          "q": "¿Qué marca 을/를?",
+          "opts": [
+            "El tema",
+            "El lugar",
+            "El objeto del verbo",
+            "El tiempo"
+          ]
+        }
+      ]
+    },
+    "to-be": {
+      "title": "이에요 / 예요 — ser",
+      "summary": "Añade 이에요 o 예요 a un sustantivo para decir 'es / soy / eres'.",
+      "sections": [
+        {
+          "heading": "Sustantivo + 이에요/예요",
+          "explanation": "Usa 이에요 después de consonante y 예요 después de vocal. No hay una palabra aparte para 'ser': se pega directamente al sustantivo."
+        },
+        {
+          "heading": "Preguntas y negaciones",
+          "explanation": "Para preguntar, mantén la misma forma y sube la entonación. Para 'no es', usa 이/가 아니에요."
+        },
+        {
+          "heading": "No lo confundas con 있어요",
+          "explanation": "이에요/예요 significa 'X es Y'. 있어요 significa 'hay / tengo'. No son intercambiables."
+        }
+      ],
+      "quiz": [
+        {
+          "q": "'의사' acaba en vocal. ¿Qué forma es correcta?",
+          "opts": [
+            "의사이에요",
+            "의사예요",
+            "의사가에요",
+            "의사있어요"
+          ]
+        },
+        {
+          "q": "¿Cómo se dice 'No soy estudiante'?",
+          "opts": [
+            "저는 학생이에요.",
+            "저는 학생이 아니에요.",
+            "저는 학생이 없어요.",
+            "저는 학생을 안 해요."
+          ]
+        },
+        {
+          "q": "¿Cuál significa 'Tengo un amigo'?",
+          "opts": [
+            "친구예요.",
+            "친구가 있어요.",
+            "친구가 아니에요.",
+            "친구를 예요."
+          ]
+        }
+      ]
+    },
+    "present-tense": {
+      "title": "Presente 아요 / 어요",
+      "summary": "Quita 다 de la forma de diccionario y añade 아요 o 어요 según la última vocal.",
+      "sections": [
+        {
+          "heading": "La regla",
+          "explanation": "Toma la raíz del verbo (la forma de diccionario menos 다). Si su última vocal es ㅏ o ㅗ, añade 아요. Si no, añade 어요. Los verbos con 하다 son irregulares y se convierten en 해요."
+        },
+        {
+          "heading": "Cuando las vocales se funden",
+          "explanation": "Si la raíz ya acaba en ㅏ o ㅓ, la 아/어 se absorbe en vez de duplicarse. 오 + 아요 se contrae en 와요, y 우 + 어요 en 워요."
+        },
+        {
+          "heading": "Una forma, tres funciones",
+          "explanation": "아요/어요 cubre el presente, el futuro cercano y las acciones habituales. Solo con la entonación se convierte en pregunta."
+        }
+      ],
+      "quiz": [
+        {
+          "q": "¿Cuál es la forma de presente de 먹다?",
+          "opts": [
+            "먹아요",
+            "먹어요",
+            "먹해요",
+            "먹이에요"
+          ]
+        },
+        {
+          "q": "공부하다 se convierte en…",
+          "opts": [
+            "공부하아요",
+            "공부하어요",
+            "공부해요",
+            "공부이에요"
+          ]
+        },
+        {
+          "q": "¿Qué raíces llevan 아요?",
+          "opts": [
+            "Las raíces cuya última vocal es ㅏ o ㅗ",
+            "Las raíces acabadas en consonante",
+            "Todos los verbos con 하다",
+            "Las raíces cuya última vocal es ㅜ"
+          ]
+        }
+      ]
+    }
+  },
+  "groups": {
+    "start-here": {
+      "title": "Empieza aquí"
+    },
+    "next-steps": {
+      "title": "Siguientes pasos"
+    }
+  }
+}

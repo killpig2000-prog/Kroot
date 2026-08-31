@@ -119,8 +119,12 @@ async function loadStats() {
   const since30 = daysAgo(29).toISOString();
   const since30Day = iso(daysAgo(29));
 
+  // admin_overview() (migration 0047) replaces ten separate reads: the total
+  // and push counts, the six-query N+1 over LEVELS, the streak histogram, and
+  // the reminder health check. The last two used to pull every matching row
+  // across the wire only to reduce them to a handful of numbers in JS.
   const [
-    total,
+    overviewRes,
     cohortRes,
     recentRes,
     activityRes,
@@ -129,12 +133,9 @@ async function loadStats() {
     onboardingEvents,
     placementQuestions,
     placementFinished,
-    pushCountRes,
     dormantRes,
-    streakRows,
-    ...levelCounts
   ] = await Promise.all([
-    db.from("profiles").select("id", { count: "exact", head: true }),
+    db.rpc("admin_overview", { p_today: today }),
     db.from("profiles").select("id, created_at").gte("created_at", since30Day),
     db
       .from("profiles")
@@ -157,7 +158,6 @@ async function loadStats() {
       .limit(20000),
     db.from("analytics_events").select("props").eq("event", "placement_question").gte("created_at", since30).limit(20000),
     db.from("analytics_events").select("props").eq("event", "placement_finished").gte("created_at", since30).limit(20000),
-    db.from("push_subscriptions").select("user_id", { count: "exact", head: true }),
     db
       .from("profiles")
       .select("display_name, current_level, streak_days, last_active_date")
@@ -166,9 +166,17 @@ async function loadStats() {
       .gt("streak_days", 0)
       .order("last_active_date", { ascending: false })
       .limit(10),
-    db.from("profiles").select("streak_days").gt("streak_days", 0),
-    ...LEVELS.map((lvl) => db.from("profiles").select("id", { count: "exact", head: true }).eq("current_level", lvl)),
   ]);
+
+  // Shape of admin_overview()'s jsonb. Every field has a fallback: a failed
+  // RPC should leave the page rendering zeros, not throw the admin out of it.
+  const overview = (overviewRes.data ?? {}) as {
+    total_users?: number;
+    level_counts?: Record<string, number>;
+    streak_buckets?: Record<string, number>;
+    push_count?: number;
+    reminders?: { last_run?: string | null; sent_today?: number };
+  };
 
   // Signups per day, last 30 days (oldest first)
   const cohortRows = cohortRes.data ?? [];
@@ -328,23 +336,20 @@ async function loadStats() {
   const feed = events.slice(0, 30).map((e) => ({ name: nameById.get(e.user_id) ?? "?", label: label(e.skill), points: e.points, at: e.created_at }));
 
   // Streak buckets
+  // Bucket keys must stay in step with the jsonb admin_overview() builds.
+  const buckets = overview.streak_buckets ?? {};
   const streakBuckets = [
-    { label: "1일", min: 1, max: 1 },
-    { label: "2–3일", min: 2, max: 3 },
-    { label: "4–6일", min: 4, max: 6 },
-    { label: "7–13일", min: 7, max: 13 },
-    { label: "14–29일", min: 14, max: 29 },
-    { label: "30일+", min: 30, max: Infinity },
-  ].map((b) => ({
-    label: b.label,
-    value: (streakRows.data ?? []).filter((r) => r.streak_days >= b.min && r.streak_days <= b.max).length,
-  }));
+    { label: "1일", key: "d1" },
+    { label: "2–3일", key: "d2_3" },
+    { label: "4–6일", key: "d4_6" },
+    { label: "7–13일", key: "d7_13" },
+    { label: "14–29일", key: "d14_29" },
+    { label: "30일+", key: "d30" },
+  ].map((b) => ({ label: b.label, value: Number(buckets[b.key] ?? 0) }));
 
   // Reminder cron health, straight from profiles.last_reminded_at
-  const reminderRows = (await db.from("profiles").select("last_reminded_at").not("last_reminded_at", "is", null)).data ?? [];
-  const lastRemindedTimes = reminderRows.map((r) => r.last_reminded_at as string).sort();
-  const lastRun = lastRemindedTimes.at(-1) ?? null;
-  const sentToday = lastRemindedTimes.filter((t) => t.slice(0, 10) === today).length;
+  const lastRun = overview.reminders?.last_run ?? null;
+  const sentToday = Number(overview.reminders?.sent_today ?? 0);
 
   const writingModes = LEVELS.map((code) => writingModeRows.get(code)).filter((v): v is NonNullable<typeof v> => !!v);
   const writingTotals = LEVELS.map((code) => {
@@ -362,7 +367,7 @@ async function loadStats() {
     : "0.0";
 
   return {
-    totalUsers: total.count ?? 0,
+    totalUsers: Number(overview.total_users ?? 0),
     signupsToday: signupsByDay.get(today) ?? 0,
     signups30d: [...signupsByDay.values()].reduce((a, b) => a + b, 0),
     signupsByDay: [...signupsByDay.entries()].map(([day, value]) => ({ day: day.slice(5), value })),
@@ -373,9 +378,9 @@ async function loadStats() {
     wauSeries,
     d1Pct: cohortRows.length ? Math.round((d1 / cohortRows.length) * 100) : 0,
     d7Pct: cohortRows.length ? Math.round((d7 / cohortRows.length) * 100) : 0,
-    avgStreak: streakRows.data?.length ? (streakRows.data.reduce((s, r) => s + r.streak_days, 0) / streakRows.data.length).toFixed(1) : "0.0",
+    avgStreak: String(buckets.avg ?? "0.0"),
     recent: recentRes.data ?? [],
-    byLevel: LEVELS.map((lvl, i) => ({ level: lvl, count: levelCounts[i].count ?? 0 })),
+    byLevel: LEVELS.map((lvl) => ({ level: lvl, count: Number(overview.level_counts?.[lvl] ?? 0) })),
     usage,
     feed,
     funnel: [
@@ -390,7 +395,7 @@ async function loadStats() {
     questionTiming,
     streakBuckets,
     dormant: dormantRes.data ?? [],
-    pushCount: pushCountRes.count ?? 0,
+    pushCount: Number(overview.push_count ?? 0),
     pwaInstalls,
     freezesBought,
     writingTotals,

@@ -1,9 +1,8 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
-import { createClient } from "@/lib/supabase/client";
 import { MAIN_ITEMS, SECTIONS, type NavColor } from "@/components/dashboard/navItems";
 
 // Four tabs (2026-08-28): Garden · Learn · Review · More — equal-width cells
@@ -120,51 +119,77 @@ function TabButton({
   );
 }
 
-export default function BottomNav() {
+// Both counts are things the server page usually already knows. Passing them
+// in skips the client fetches entirely; leaving them out keeps the old
+// self-fetching behaviour for pages that don't have them to hand.
+export default function BottomNav({
+  dueCount,
+  streakDays: streakDaysProp,
+}: {
+  dueCount?: number;
+  streakDays?: number | null;
+} = {}) {
   const pathname = usePathname();
   const [sheet, setSheet] = useState<Sheet>(null);
-  const [streakDays, setStreakDays] = useState<number | null>(null);
-  const [due, setDue] = useState<number>(0);
-  const supabase = useMemo(() => createClient(), []);
+  const [fetchedStreak, setFetchedStreak] = useState<number | null>(null);
+  const [fetchedDue, setFetchedDue] = useState<number>(0);
+  const due = dueCount ?? fetchedDue;
+  const streakDays = streakDaysProp ?? fetchedStreak;
 
-  // Words due for review — the badge on the Review tab. One cheap head-count
-  // per page load; silent when logged out or when the column doesn't exist.
+  // Words due for review — the badge on the Review tab. Runs once per mount,
+  // not per navigation: the count can't change without the user reviewing
+  // something, which reloads the page that owns it anyway.
+  //
+  // `createClient` is imported inside the effect on purpose. @supabase/ssr
+  // plus supabase-js is ~240 KB, and a top-level import put it in the initial
+  // bundle of every route this nav renders on — including /privacy and
+  // /offline, which never talk to Supabase at all.
   useEffect(() => {
+    if (dueCount !== undefined) return;
     let cancelled = false;
     (async () => {
-      const { data: auth } = await supabase.auth.getUser();
-      if (!auth.user) return;
+      const { createClient } = await import("@/lib/supabase/client");
+      const supabase = createClient();
+      // getClaims() verifies the JWT locally against a cached JWKS; getUser()
+      // is a ~300ms round trip to /auth/v1/user for the same id. Mirrors
+      // getClaimsUser in lib/supabase/server.
+      const { data: claimsData } = await supabase.auth.getClaims();
+      const userId = claimsData?.claims?.sub;
+      if (!userId) return;
       const { count, error } = await supabase
         .from("vocabulary_progress")
         .select("id", { count: "exact", head: true })
-        .eq("user_id", auth.user.id)
+        .eq("user_id", userId)
         .lte("next_review_at", new Date().toISOString());
-      if (!cancelled && !error) setDue(count ?? 0);
+      if (!cancelled && !error) setFetchedDue(count ?? 0);
     })();
     return () => {
       cancelled = true;
     };
-  }, [supabase, pathname]);
+  }, [dueCount]);
 
   // The streak note is a nice-to-have; fetch it lazily the first time a
   // sheet opens and stay silent when logged out or on error.
   useEffect(() => {
-    if (!sheet || streakDays !== null) return;
+    if (streakDaysProp !== undefined || !sheet || fetchedStreak !== null) return;
     let cancelled = false;
     (async () => {
-      const { data: auth } = await supabase.auth.getUser();
-      if (!auth.user) return;
+      const { createClient } = await import("@/lib/supabase/client");
+      const supabase = createClient();
+      const { data: claimsData } = await supabase.auth.getClaims();
+      const userId = claimsData?.claims?.sub;
+      if (!userId) return;
       const { data } = await supabase
         .from("profiles")
         .select("streak_days")
-        .eq("id", auth.user.id)
+        .eq("id", userId)
         .single();
-      if (!cancelled && typeof data?.streak_days === "number") setStreakDays(data.streak_days);
+      if (!cancelled && typeof data?.streak_days === "number") setFetchedStreak(data.streak_days);
     })();
     return () => {
       cancelled = true;
     };
-  }, [sheet, streakDays, supabase]);
+  }, [sheet, fetchedStreak, streakDaysProp]);
 
   // Close when the route changes (e.g. browser back) — computed during
   // render (not an effect) so it doesn't trigger an extra render. Body

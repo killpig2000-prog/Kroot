@@ -12,6 +12,7 @@ import { DEFAULT_WORD_BANK_SLOTS } from "@/lib/word-bank";
 
 export default async function ShopPage() {
   const tn = await getTranslations("nav");
+  const t = await getTranslations("shop");
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
 
@@ -74,10 +75,10 @@ export default async function ShopPage() {
           {/* breadcrumb */}
           <div className="flex gap-2 text-[13px] text-faint mb-[18px]">
             <Link href="/dashboard" className="hover:text-charcoal transition-colors">
-              Garden
+              {tn("garden")}
             </Link>
             <span>/</span>
-            <b className="text-charcoal font-semibold">Shop</b>
+            <b className="text-charcoal font-semibold">{tn("shop")}</b>
           </div>
 
           {/* head */}
@@ -90,14 +91,12 @@ export default async function ShopPage() {
             </h1>
             <div className="flex items-center gap-2">
               <span className="text-[12.5px] font-semibold text-success bg-success-bg border border-success-line rounded-full px-3 py-1">
-                🌰 {isAdmin ? "∞" : coins} coins
+                {t("coins", { coins: isAdmin ? "∞" : String(coins) })}
               </span>
             </div>
           </div>
 
-          <p className="text-[13px] text-muted mb-5 max-w-[70ch]">
-            Dress your tree and the garden around it. Tap a card to try it on your own tree, then buy and wear it right here.
-          </p>
+          <p className="text-[13px] text-muted mb-5 max-w-[70ch]">{t("intro")}</p>
 
           <StreakFreezeCard
             held={streakFreezes}

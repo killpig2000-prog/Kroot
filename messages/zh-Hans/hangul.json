@@ -1,0 +1,27 @@
+{
+  "tabs": {
+    "consonants": "辅音",
+    "vowels": "元音",
+    "syllables": "音节怎么拼"
+  },
+  "sections": {
+    "basicConsonants": "14 个基本辅音",
+    "doubleConsonants": "5 个双辅音",
+    "basicVowels": "10 个基本元音",
+    "compoundVowels": "复合元音",
+    "theIdea": "原理",
+    "buildABlock": "拼一个字",
+    "readingPractice": "阅读练习"
+  },
+  "builder": {
+    "consonant": "辅音",
+    "vowel": "元音"
+  },
+  "blocks": {
+    "right": "元音在右边",
+    "under": "元音在下面",
+    "final": "收音在最下方"
+  },
+  "tapToReveal": "点击显示",
+  "hear": "听 {text}"
+}

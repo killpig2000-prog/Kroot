@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { useEffect, useMemo, useState } from "react";
-import { createClient } from "@/lib/supabase/client";
+import { createClient, getClientUserId } from "@/lib/supabase/client";
 import BrandMark from "@/components/ui/BrandMark";
 
 export default function Nav() {
@@ -15,8 +15,7 @@ export default function Nav() {
 
   useEffect(() => {
     void (async () => {
-      const { data } = await supabase.auth.getUser();
-      setLoggedIn(Boolean(data.user));
+      setLoggedIn(Boolean(await getClientUserId(supabase)));
     })();
   }, [supabase]);
 

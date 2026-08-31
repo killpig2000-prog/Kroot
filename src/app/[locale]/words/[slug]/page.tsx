@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
+import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { notFound } from "next/navigation";
 import { localeUrl, seoAlternates } from "@/lib/seo";
@@ -41,6 +42,7 @@ export default async function WordPage({ params }: Props) {
   const word = getWordBySlug(slug);
   if (!word) notFound();
 
+  const t = await getTranslations({ locale, namespace: "words" });
   const related = relatedWords(word);
 
   const jsonLd = {
@@ -68,13 +70,13 @@ export default async function WordPage({ params }: Props) {
         </Link>
         <nav className="flex items-center gap-4 text-sm">
           <Link href="/words" className="hover:text-[var(--deep)]">
-            Dictionary
+            {t("nav")}
           </Link>
           <Link
             href="/onboarding"
             className="rounded-full bg-[var(--leaf)] px-4 py-2 font-semibold text-white shadow-[0_3px_0_var(--leaf-shadow)]"
           >
-            Start learning
+            {t("startLearningShort")}
           </Link>
         </nav>
       </header>
@@ -88,11 +90,11 @@ export default async function WordPage({ params }: Props) {
 
         <p className="mb-2 text-sm text-[var(--soft)]">
           <Link href="/words" className="hover:underline">
-            Korean Dictionary
+            {t("dictionary")}
           </Link>{" "}
           ·{" "}
           <Link href={`/words/level/${word.level.toLowerCase()}`} className="hover:underline">
-            Level {word.level}
+            {t("levelN", { level: word.level })}
           </Link>
         </p>
 
@@ -102,10 +104,10 @@ export default async function WordPage({ params }: Props) {
             {word.romanization} · <span className="text-[var(--ink)]">{word.meaning_en}</span>
           </p>
           <span className="mt-4 inline-block rounded-full bg-[var(--mint)] px-3 py-1 text-sm font-semibold text-[var(--deep)]">
-            Level {word.level}
+            {t("levelN", { level: word.level })}
           </span>
 
-          <h2 className="mt-8 text-lg font-bold">Example sentence</h2>
+          <h2 className="mt-8 text-lg font-bold">{t("exampleSentence")}</h2>
           <p className="mt-2 text-2xl">{word.example_kr}</p>
           <p className="mt-1 text-[var(--soft)]">{word.example_en}</p>
 
@@ -121,7 +123,7 @@ export default async function WordPage({ params }: Props) {
         </article>
 
         <section className="mt-10">
-          <h2 className="text-lg font-bold">More Level {word.level} words</h2>
+          <h2 className="text-lg font-bold">{t("moreLevelWords", { level: word.level })}</h2>
           <ul className="mt-4 grid gap-3 sm:grid-cols-2">
             {related.map((w) => (
               <li key={w.slug}>
@@ -141,17 +143,14 @@ export default async function WordPage({ params }: Props) {
 
         <section className="mt-12 rounded-3xl bg-[var(--mint)] p-8 text-center shadow-[0_6px_0_var(--mint-shadow)]">
           <h2 className="text-2xl font-bold text-[var(--deep)]">
-            Learn {word.korean} for real — not just read it
+            {t("learnForReal", { word: word.korean })}
           </h2>
-          <p className="mt-2 text-[var(--ink)]">
-            Kroot teaches this word with flashcards, listening, and speaking practice — free, at
-            your own pace.
-          </p>
+          <p className="mt-2 text-[var(--ink)]">{t("learnDescription")}</p>
           <Link
             href="/onboarding"
             className="mt-5 inline-block rounded-full bg-[var(--leaf)] px-6 py-3 font-semibold text-white shadow-[0_3px_0_var(--leaf-shadow)]"
           >
-            Start learning — free
+            {t("startLearning")}
           </Link>
         </section>
       </main>

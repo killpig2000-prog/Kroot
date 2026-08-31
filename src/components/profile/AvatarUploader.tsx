@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
 
@@ -13,6 +14,7 @@ export default function AvatarUploader({
   userId: string;
   avatarUrl: string | null;
 }) {
+  const t = useTranslations("profile.avatar");
   const router = useRouter();
   const supabase = useMemo(() => createClient(), []);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -26,11 +28,11 @@ export default function AvatarUploader({
     if (!file) return;
 
     if (!file.type.startsWith("image/")) {
-      setError("Please choose an image file.");
+      setError(t("errType"));
       return;
     }
     if (file.size > MAX_BYTES) {
-      setError("Image must be under 3MB.");
+      setError(t("errSize", { mb: MAX_BYTES / (1024 * 1024) }));
       return;
     }
 
@@ -67,7 +69,7 @@ export default function AvatarUploader({
       <button
         type="button"
         onClick={() => inputRef.current?.click()}
-        aria-label="Change profile photo"
+        aria-label={t("change")}
         className="relative w-14 h-14 rounded-full overflow-hidden bg-success-bg border border-line flex items-center justify-center text-2xl group"
       >
         {preview ? (
@@ -77,7 +79,7 @@ export default function AvatarUploader({
           "🦊"
         )}
         <span className="absolute inset-0 bg-black/35 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-[10px] font-bold">
-          {uploading ? "…" : "Edit"}
+          {uploading ? "…" : t("edit")}
         </span>
       </button>
       <input ref={inputRef} type="file" accept="image/*" className="hidden" onChange={handleFile} />

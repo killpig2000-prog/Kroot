@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { Link, redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
@@ -17,6 +18,8 @@ export default async function CommunityPage({
 }: {
   searchParams: Promise<{ board?: string }>;
 }) {
+  const t = await getTranslations("community");
+  const tn = await getTranslations("nav");
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
 
@@ -86,10 +89,10 @@ export default async function CommunityPage({
           {/* breadcrumb */}
           <div className="flex gap-2 text-[13px] text-faint mb-[18px]">
             <Link href="/dashboard" className="hover:text-charcoal transition-colors">
-              Garden
+              {tn("garden")}
             </Link>
             <span>/</span>
-            <b className="text-charcoal font-semibold">Community</b>
+            <b className="text-charcoal font-semibold">{t("title")}</b>
           </div>
 
           {/* head */}
@@ -98,20 +101,20 @@ export default async function CommunityPage({
               <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[var(--tint-slate)] text-[var(--tint-slate-ink)] border border-[var(--tint-slate-line)] items-center justify-center kr text-[15px] mr-[9px]">
                 모
               </span>
-              Community
+              {t("title")}
             </h1>
             <Link
               href="/community/new"
               className="rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold text-white bg-[#334155] border border-[var(--tint-slate-line)] transition-all hover:-translate-y-0.5"
             >
-              ✍️ New post
+              {t("newPostCta")}
             </Link>
           </div>
 
           {/* board tabs */}
           <div className="flex gap-2 mb-5 flex-wrap">
             <Link href="/community" className={tab(!board)}>
-              All
+              {t("all")}
             </Link>
             {BOARDS.map((b) => (
               <Link
@@ -119,27 +122,26 @@ export default async function CommunityPage({
                 href={`/community?board=${b.key}`}
                 className={tab(board === b.key)}
               >
-                {b.emoji} {b.label}
+                {b.emoji} {t(`boards.${b.key}`)}
               </Link>
             ))}
           </div>
 
           {tableMissing && (
             <div className="border border-[var(--tint-slate-line)] rounded-[14px] bg-[var(--tint-slate)] p-[18px] mb-5 max-w-[980px]">
-              <b className="block font-semibold text-[14px] mb-1">Community opens soon</b>
+              <b className="block font-semibold text-[14px] mb-1">{t("tableMissing.title")}</b>
               <small className="block text-[13px] text-muted leading-[1.55]">
-                Run the included migration{" "}
-                <code className="text-[12px]">supabase/migrations/0012_community_posts.sql</code> to
-                turn the board on. Until then, here&apos;s a peek at what it looks like.
+                {t.rich("tableMissing.body", {
+                  file: "supabase/migrations/0012_community_posts.sql",
+                  code: (chunks) => <code className="text-[12px]">{chunks}</code>,
+                })}
               </small>
             </div>
           )}
 
           {loadFailed && (
             <div className="border border-line rounded-[14px] bg-warm px-[18px] py-3.5 mb-5 max-w-[980px]">
-              <small className="text-[13px] text-muted">
-                Couldn&apos;t load posts. Try refreshing in a moment.
-              </small>
+              <small className="text-[13px] text-muted">{t("loadFailed")}</small>
             </div>
           )}
 
@@ -154,13 +156,13 @@ export default async function CommunityPage({
                 }`}
               >
                 <span className="text-[11.5px] font-bold rounded-full border border-[var(--tint-green-line)] bg-cream text-success-deep px-2.5 py-[3px] flex-none">
-                  📌 Notice
+                  {t("notice.badge")}
                 </span>
                 <b className="min-w-0 flex-1 font-semibold text-[14px] truncate">
                   {n.emoji} {n.title}
                 </b>
                 <span className="text-[12.5px] text-success-deep font-semibold flex-none hidden sm:inline">
-                  Kroot team
+                  {t("notice.team")}
                 </span>
               </Link>
             ))}

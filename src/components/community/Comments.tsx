@@ -2,8 +2,10 @@
 
 import { useRouter } from "@/i18n/navigation";
 import { useState } from "react";
+import { useLocale, useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
-import { timeAgo, type CommunityComment } from "@/lib/community";
+import { type CommunityComment } from "@/lib/community";
+import { formatTimeAgo } from "./time-ago";
 
 export default function Comments({
   postId,
@@ -19,6 +21,9 @@ export default function Comments({
   /** False when the comments table hasn't been migrated yet. */
   available: boolean;
 }) {
+  const t = useTranslations("community.comments");
+  const tt = useTranslations("community.timeAgo");
+  const locale = useLocale();
   const router = useRouter();
   const [draft, setDraft] = useState("");
   const [busy, setBusy] = useState(false);
@@ -42,7 +47,7 @@ export default function Comments({
 
     setBusy(false);
     if (insertError) {
-      setError("Couldn't add your comment. Try again in a moment.");
+      setError(t("errAdd"));
       return;
     }
     setDraft("");
@@ -55,7 +60,7 @@ export default function Comments({
     const { error: deleteError } = await supabase.from("community_comments").delete().eq("id", id);
     setDeletingId(null);
     if (deleteError) {
-      setError("Couldn't delete that comment.");
+      setError(t("errDelete"));
       return;
     }
     router.refresh();
@@ -64,21 +69,25 @@ export default function Comments({
   return (
     <section className="max-w-[980px] mt-5">
       <h2 className="font-semibold text-[15px] mb-2.5">
-        Comments{comments.length > 0 && <span className="text-muted"> · {comments.length}</span>}
+        {t("heading")}
+        {comments.length > 0 && (
+          <span className="text-muted"> {t("count", { n: comments.length })}</span>
+        )}
       </h2>
 
       {!available ? (
         <div className="border border-[var(--tint-slate-line)] rounded-[14px] bg-[var(--tint-slate)] px-[18px] py-3.5">
           <small className="text-[13px] text-muted">
-            Comments open soon — run{" "}
-            <code className="text-[12px]">supabase/migrations/0023_community_comments.sql</code> to
-            turn them on.
+            {t.rich("unavailable", {
+              file: "supabase/migrations/0023_community_comments.sql",
+              code: (chunks) => <code className="text-[12px]">{chunks}</code>,
+            })}
           </small>
         </div>
       ) : (
         <>
           {comments.length === 0 && (
-            <p className="text-[13px] text-faint mb-3">No comments yet — be the first.</p>
+            <p className="text-[13px] text-faint mb-3">{t("none")}</p>
           )}
           {comments.length > 0 && (
             <div className="border border-line rounded-[14px] bg-cream overflow-hidden mb-3">
@@ -94,7 +103,7 @@ export default function Comments({
                       {c.author_emoji ?? "🦊"} {c.author_name}
                       {c.author_plus && " 🌟"}
                     </span>
-                    <span className="text-[11.5px] text-faint">{timeAgo(c.created_at)}</span>
+                    <span className="text-[11.5px] text-faint">{formatTimeAgo(c.created_at, (k, v) => tt(k, v), locale)}</span>
                     {c.mine && (
                       <button
                         type="button"
@@ -102,7 +111,7 @@ export default function Comments({
                         disabled={deletingId === c.id}
                         className="ml-auto text-[11.5px] font-semibold text-[#C13E78] hover:underline disabled:opacity-40"
                       >
-                        {deletingId === c.id ? "Deleting…" : "Delete"}
+                        {deletingId === c.id ? t("deleting") : t("delete")}
                       </button>
                     )}
                   </div>
@@ -120,18 +129,18 @@ export default function Comments({
               onChange={(e) => setDraft(e.target.value)}
               rows={2}
               maxLength={1000}
-              placeholder={`Reply as ${displayName}…`}
+              placeholder={t("placeholder", { name: displayName })}
               className="w-full rounded-[10px] border border-line bg-warm px-3.5 py-2.5 text-[13.5px] leading-[1.55] outline-none transition-colors resize-y focus:border-[var(--tint-slate-line)] focus:bg-cream"
             />
             <div className="flex items-center mt-2">
-              <span className="text-[11.5px] text-faint">{draft.length}/1000</span>
+              <span className="text-[11.5px] text-faint">{t("counter", { n: draft.length, max: 1000 })}</span>
               <button
                 type="button"
                 onClick={submit}
                 disabled={!draft.trim() || busy}
                 className="ml-auto rounded-[9px] px-4 py-1.5 text-[12.5px] font-semibold text-white bg-[#334155] transition-all hover:-translate-y-0.5 disabled:opacity-40 disabled:translate-y-0"
               >
-                {busy ? "Posting…" : "Comment"}
+                {busy ? t("posting") : t("submit")}
               </button>
             </div>
           </div>

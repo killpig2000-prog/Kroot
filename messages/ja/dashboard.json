@@ -1,0 +1,153 @@
+{
+  "welcome": "{name}さん、ようこそ",
+  "day": "{n}日目",
+  "loadError": "いまは進捗を読み込めませんでした — データは残っています。少ししてから更新してください。",
+  "quest": {
+    "title": "今日のクエスト",
+    "done": "完了 ✓",
+    "go": "始める →",
+    "start": "開始 ▸",
+    "descriptions": {
+      "writing": "ライティング · 1チャプター、数問 · 約8分",
+      "vocabulary": "復習 · 今日の単語 · 約5分",
+      "listening": "リスニング · レベルに合った会話を1本 · 約5分",
+      "reading": "リーディング · 短い文章を1つ · 約4分",
+      "pronunciation": "発音 · 1チャプターをクリア · 約4分"
+    }
+  },
+  "review": {
+    "due": "{count}語が復習の時期です",
+    "dueShort": "{count}語",
+    "now": "いま復習する →",
+    "short": "復習 →"
+  },
+  "slang": {
+    "title": "今日のスラング",
+    "flip": "めくってみる →",
+    "hear": "会話で聞いてみる →",
+    "short": "スラング →"
+  },
+  "wotd": {
+    "title": "今日の単語"
+  },
+  "hangul": {
+    "title": "韓国語はまったく初めてですか?",
+    "sub": "まずは文字から — 40文字、1時間、ずっと無料。",
+    "cta": "ここから始める →"
+  },
+  "garden": {
+    "thisWeek": "今週",
+    "total": "合計",
+    "bestStreak": "最長記録",
+    "monthGoal": "{month}の目標"
+  },
+  "levelMap": {
+    "title": "あなたの道のり",
+    "checksToward": "{next}まで {done}/{total} 項目",
+    "topOfTree": "てっぺんに到達 🌟",
+    "levelsAria": "レベル",
+    "ready": "{current} → {next} のテストを受けられます",
+    "unlock": "{next}を開放 · {species}",
+    "start": "始める →",
+    "details": "詳しく →",
+    "checkWordsHeld": "覚えた単語",
+    "checkReading": "リーディング"
+  },
+  "tree": {
+    "levelBadge": "Lv. {level}",
+    "metresTall": "mの高さ",
+    "maxed": "星まで届きました 🌟",
+    "xpToNext": "Lv. {next} まで {into}/{needed} XP",
+    "phrases": {
+      "fighting": "その調子!",
+      "goodToday": "今日もいい感じ!",
+      "thanksWater": "水をありがとう",
+      "growTogether": "一緒に育とうね"
+    },
+    "keepsakes": {
+      "60": "鳥の巣",
+      "70": "ブランコ",
+      "80": "巣箱",
+      "90": "ランタンの飾り",
+      "100": "ツリーハウス",
+      "110": "風見鶏",
+      "120": "てっぺんの星"
+    }
+  },
+  "growth": {
+    "closeAria": "閉じる",
+    "dialogAria": "木の成長",
+    "promotion": "昇級!",
+    "taller": "もっと高く!",
+    "grew": "木が育ちました!",
+    "newTree": "まったく新しい木! 🌳",
+    "newTier": "新しい枝の層と、記念の飾り 🌲",
+    "sayHello": "{treeName}に会いましょう! 🌳",
+    "note": "Lv. {level} — 毎日少しずつ復習して、どこまで育つか見てみましょう。",
+    "ok": "いいね!"
+  },
+  "firstVisit": {
+    "todayFiveMinutes": "今日 · 5分",
+    "startHere": "ここから",
+    "startStep1": "ステップ1を始める →",
+    "unlocksNext": "次に開くもの",
+    "lockedAria": "ロック中のセクション",
+    "showEverything": "すべて表示する",
+    "locked": {
+      "quest": {
+        "title": "今日のクエスト",
+        "note": "1回学習すると開きます"
+      },
+      "wotd": {
+        "title": "今日の単語",
+        "note": "2回学習すると開きます"
+      },
+      "levelMap": {
+        "title": "レベルマップ",
+        "note": "3回学習すると開きます"
+      },
+      "heatmap": {
+        "title": "学習ガーデン",
+        "note": "3日続けると開きます"
+      }
+    },
+    "steps": {
+      "hangul": "ハングル",
+      "hangulDetail": "子音",
+      "vocab": "単語",
+      "vocabDetail": "ユニット1(10語)",
+      "vocabDetailLevel": "ユニット1(10語) · {level}",
+      "listening": "リスニング",
+      "listeningDetail": "短い会話を1つ",
+      "waterSeedling": "芽の様子を見る 💧",
+      "minutes": "{n}分",
+      "seconds": "{n}秒"
+    }
+  },
+  "account": {
+    "darkMode": "ダークモード",
+    "seasonalTheme": "季節のテーマ",
+    "logout": "ログアウト",
+    "leaving": "退出中…"
+  },
+  "feedback": {
+    "closeAria": "閉じる",
+    "dialogAria": "フィードバック",
+    "notice": "お知らせ",
+    "launchedTitle": "Kroot は公開したばかりです",
+    "launchedBody1": "まだ始まったばかりで、足りないところがたくさんあります。改善を続けています。",
+    "launchedBody2": "ご意見やご要望があれば、ぜひ聞かせてください。",
+    "send": "フィードバックを送る",
+    "close": "閉じる",
+    "hideToday": "今日はもう表示しない",
+    "formSub": "不具合、使いにくいところ、ほしい機能 — どれでも大歓迎です。",
+    "placeholder": "どんなことでもどうぞ",
+    "error": "送れませんでした。もう一度お試しください。",
+    "sending": "送信中…",
+    "submit": "送信",
+    "cancel": "キャンセル",
+    "thanksTitle": "ありがとうございます",
+    "thanksBody": "フィードバックを受け取りました。すべてのメッセージに目を通し、次に何を良くするかの参考にしています。",
+    "railLink": "フィードバックを送る →"
+  }
+}

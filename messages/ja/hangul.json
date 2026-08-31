@@ -1,0 +1,27 @@
+{
+  "tabs": {
+    "consonants": "子音",
+    "vowels": "母音",
+    "syllables": "文字の組み立て方"
+  },
+  "sections": {
+    "basicConsonants": "基本子音 14 個",
+    "doubleConsonants": "濃音 5 個",
+    "basicVowels": "基本母音 10 個",
+    "compoundVowels": "合成母音",
+    "theIdea": "しくみ",
+    "buildABlock": "文字を作ってみる",
+    "readingPractice": "読む練習"
+  },
+  "builder": {
+    "consonant": "子音",
+    "vowel": "母音"
+  },
+  "blocks": {
+    "right": "母音は右側",
+    "under": "母音は下側",
+    "final": "パッチムは一番下"
+  },
+  "tapToReveal": "タップして表示",
+  "hear": "{text} を聞く"
+}

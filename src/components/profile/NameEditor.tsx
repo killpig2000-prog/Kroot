@@ -1,10 +1,12 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
 
 export default function NameEditor({ userId, name }: { userId: string; name: string }) {
+  const t = useTranslations("profile.name");
   const supabase = useMemo(() => createClient(), []);
   const router = useRouter();
   const [editing, setEditing] = useState(false);
@@ -37,8 +39,8 @@ export default function NameEditor({ userId, name }: { userId: string; name: str
         <button
           type="button"
           onClick={() => setEditing(true)}
-          aria-label="Edit name"
-          title="Edit name"
+          aria-label={t("edit")}
+          title={t("edit")}
           className="text-[12px] text-faint hover:text-success transition-colors"
         >
           ✏️
@@ -69,7 +71,7 @@ export default function NameEditor({ userId, name }: { userId: string; name: str
         disabled={saving}
         className="rounded-lg bg-success px-2.5 py-1 text-[12px] font-bold text-white hover:bg-success-deep transition-colors disabled:opacity-60"
       >
-        {saving ? "…" : "Save"}
+        {saving ? "…" : t("save")}
       </button>
     </span>
   );

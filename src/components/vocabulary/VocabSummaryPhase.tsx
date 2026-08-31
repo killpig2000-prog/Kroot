@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { buttonClassName } from "@/components/ui/Button";
 import type { ProgressResult } from "@/lib/activity";
 import type { VocabWordWithProgress } from "@/lib/vocabulary";
@@ -32,6 +33,8 @@ export default function VocabSummaryPhase({
   navigating: boolean;
   onGoTo: (href: string) => void;
 }) {
+  const t = useTranslations("vocabulary");
+  const tu = useTranslations("ui");
   return (
     <div className={`${CARD} text-center`} style={{ animation: "fadeUp .4s ease" }}>
       <svg width="104" height="104" viewBox="0 0 150 160" aria-hidden="true" className="inline-block">
@@ -49,36 +52,36 @@ export default function VocabSummaryPhase({
         </g>
       </svg>
       <h2 className="font-bold text-[21px] tracking-[-0.02em] mt-3 mb-1.5">
-        {words.length} words studied today! 🌱
+        {t("summary.title", { count: words.length })} 🌱
       </h2>
-      <p className="text-sm text-muted mb-[22px]">Those words are rooted a little deeper now.</p>
+      <p className="text-sm text-muted mb-[22px]">{t("summary.sub")}</p>
       {levelUp && (
         <p className="text-sm font-semibold text-success mb-[22px] -mt-3">
-          🎉 Level up! You&apos;re now Lv. {levelUp.new_level}
+          🎉 {t("summary.levelUp", { level: levelUp.new_level })}
         </p>
       )}
 
       <div className="flex justify-center gap-3 mb-6 flex-wrap">
         <div className="border border-line rounded-[10px] px-5 py-3 min-w-[100px]">
           <b className="block text-[19px] font-bold text-success">{known}</b>
-          <small className="text-xs text-muted">Marked known</small>
+          <small className="text-xs text-muted">{t("summary.markedKnown")}</small>
         </div>
         <div className="border border-line rounded-[10px] px-5 py-3 min-w-[100px]">
           <b className="block text-[19px] font-bold">{tricky}</b>
-          <small className="text-xs text-muted">Still learning</small>
+          <small className="text-xs text-muted">{t("stillLearning")}</small>
         </div>
         {tookQuiz && (
           <div className="border border-line rounded-[10px] px-5 py-3 min-w-[100px]">
             <b className="block text-[19px] font-bold text-success">
               {quizKnown}/{quizKnown + quizTricky}
             </b>
-            <small className="text-xs text-muted">Quiz</small>
+            <small className="text-xs text-muted">{t("summary.quizStat")}</small>
           </div>
         )}
       </div>
 
       <span className="inline-flex items-center gap-2 bg-success-bg border border-success-line rounded-full px-[18px] py-2 text-[13.5px] font-semibold text-success mb-6">
-        💧 Vocabulary · chapter done
+        💧 {t("summary.chapterDone")}
       </span>
 
       <div className="flex justify-center gap-2.5 flex-wrap">
@@ -87,7 +90,7 @@ export default function VocabSummaryPhase({
           onClick={() => onGoTo(`/vocabulary?level=${words[0].level}`)}
           disabled={navigating}
         >
-          {navigating ? "Saving…" : "Choose another unit"}
+          {navigating ? tu("saving") : tu("chooseAnother")}
         </button>
         {hasNextChapter && (
           <button
@@ -97,7 +100,7 @@ export default function VocabSummaryPhase({
             }
             disabled={navigating}
           >
-            {navigating ? "Saving…" : `${words.length} more words`}
+            {navigating ? tu("saving") : t("summary.moreWords", { count: words.length })}
           </button>
         )}
       </div>

@@ -1,0 +1,27 @@
+{
+  "tabs": {
+    "consonants": "Phụ âm",
+    "vowels": "Nguyên âm",
+    "syllables": "Cách ghép âm tiết"
+  },
+  "sections": {
+    "basicConsonants": "14 phụ âm cơ bản",
+    "doubleConsonants": "5 phụ âm đôi",
+    "basicVowels": "10 nguyên âm cơ bản",
+    "compoundVowels": "Nguyên âm ghép",
+    "theIdea": "Nguyên tắc",
+    "buildABlock": "Ghép một chữ",
+    "readingPractice": "Luyện đọc"
+  },
+  "builder": {
+    "consonant": "Phụ âm",
+    "vowel": "Nguyên âm"
+  },
+  "blocks": {
+    "right": "nguyên âm bên phải",
+    "under": "nguyên âm bên dưới",
+    "final": "phụ âm cuối nằm dưới cùng"
+  },
+  "tapToReveal": "chạm để hiện",
+  "hear": "Nghe {text}"
+}

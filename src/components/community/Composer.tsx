@@ -2,6 +2,7 @@
 
 import { useRouter } from "@/i18n/navigation";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 import { BOARDS, type BoardKey } from "@/lib/community";
 
@@ -18,6 +19,7 @@ export default function Composer({
   defaultBoard?: BoardKey;
   disabled?: boolean;
 }) {
+  const t = useTranslations("community");
   const router = useRouter();
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
@@ -48,7 +50,7 @@ export default function Composer({
 
     setBusy(false);
     if (insertError || !data) {
-      setError("Couldn't post just yet — the community table may not be set up.");
+      setError(t("composer.err"));
       return;
     }
     router.push(`/community/${data.id}`);
@@ -62,7 +64,7 @@ export default function Composer({
           🦊
         </span>
         <b className="text-[13.5px] font-semibold">{displayName}</b>
-        <span className="text-[12.5px] text-faint">— say something to the garden</span>
+        <span className="text-[12.5px] text-faint">{t("composer.hint")}</span>
       </div>
 
       <div className="flex items-center gap-2.5 mb-2.5 flex-wrap">
@@ -74,7 +76,7 @@ export default function Composer({
         >
           {BOARDS.map((b) => (
             <option key={b.key} value={b.key}>
-              {b.emoji} {b.label}
+              {b.emoji} {t(`boards.${b.key}`)}
             </option>
           ))}
         </select>
@@ -83,7 +85,7 @@ export default function Composer({
           onChange={(e) => setTitle(e.target.value)}
           maxLength={100}
           disabled={disabled}
-          placeholder="Title"
+          placeholder={t("composer.titlePlaceholder")}
           className="flex-1 min-w-[200px] rounded-[10px] border border-line bg-warm px-3.5 py-2.5 text-[14px] font-semibold outline-none transition-colors focus:border-[var(--tint-slate-line)] focus:bg-cream disabled:opacity-60"
         />
       </div>
@@ -94,19 +96,19 @@ export default function Composer({
         rows={6}
         maxLength={2000}
         disabled={disabled}
-        placeholder="Write your post…"
+        placeholder={t("composer.bodyPlaceholder")}
         className="w-full rounded-[10px] border border-line bg-warm px-3.5 py-3 text-[14px] leading-[1.55] outline-none transition-colors resize-y focus:border-[var(--tint-slate-line)] focus:bg-cream disabled:opacity-60"
       />
 
       <div className="flex items-center gap-2.5 mt-3 flex-wrap">
-        <span className="text-[12px] text-faint">{body.length}/2000</span>
+        <span className="text-[12px] text-faint">{t("composer.counter", { n: body.length, max: 2000 })}</span>
         <button
           type="button"
           onClick={post}
           disabled={!canPost}
           className="ml-auto rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold text-white bg-[#334155] border border-[var(--tint-slate-line)] transition-all hover:-translate-y-0.5 disabled:opacity-40 disabled:translate-y-0"
         >
-          {busy ? "Posting…" : "Post"}
+          {busy ? t("composer.posting") : t("composer.post")}
         </button>
       </div>
 

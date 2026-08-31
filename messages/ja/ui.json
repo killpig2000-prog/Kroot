@@ -75,5 +75,24 @@
     "moreWords": "ほか {count} 語",
     "nothingDue": "復習待ちはありません。次の単語は{when}です。",
     "nothingDuePlain": "いま復習待ちの単語はありません。"
+  },
+  "error": {
+    "title": "ちょっとした問題です"
+  },
+  "levelTabs": {
+    "ariaLabel": "レベル",
+    "lockedTitle": "昇級テストに合格すると、このレベルが開きます",
+    "you": "あなた",
+    "lockedNote": "🔒 ロックされたレベルは、昇級テストに合格すると開きます。"
+  },
+  "languageNav": "言語",
+  "install": {
+    "title": "Kroot をホーム画面に置きましょう",
+    "ios": "共有ボタンから「ホーム画面に追加」をタップ — 今日のレッスンにワンタップで。",
+    "streak": "ワンタップで{count}日の連続記録を守れます。",
+    "generic": "アプリのように開いて、今日のレッスンにワンタップで。",
+    "install": "インストール",
+    "notNow": "今はしない",
+    "dismissAria": "閉じる"
   }
 }

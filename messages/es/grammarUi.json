@@ -1,0 +1,18 @@
+{
+  "breadcrumb": "Gramática",
+  "lessonCount": "{n, plural, one {# lección} other {# lecciones}}",
+  "lessonNumber": "Lección {n}",
+  "checkYourself": "Compruébalo",
+  "allLessons": "← Todas las lecciones",
+  "nextLesson": "Siguiente: {title} →",
+  "hearExample": "Escuchar {text}",
+  "resumeDetail": "Gramática",
+  "quiz": {
+    "question": "Pregunta {n}",
+    "progress": "{n} de {total}",
+    "correct": "🌱 ¡Correcto!",
+    "wrong": "💧 Casi — la respuesta es {letter}. {text}",
+    "done": "🌱 Cuestionario terminado: los minutos de hoy ya están en tu árbol.",
+    "levelUp": "🎉 ¡Has subido de nivel! Ahora Lv. {n}"
+  }
+}

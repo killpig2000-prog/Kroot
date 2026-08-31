@@ -1,7 +1,8 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { CefrLevel } from "@/lib/tree";
 import { GRAMMAR_GROUPS, lessonByKey } from "@/lib/grammar";
-import { getChaptersForTopic, getChapterStatuses } from "@/lib/vocabulary";
+import { getChapterStatuses } from "@/lib/vocabulary";
+import { getChaptersForTopic } from "@/lib/vocabulary-words";
 import { DIALOGUES } from "@/lib/listening-dialogues";
 import { SITUATIONS } from "@/lib/listening";
 import { getPassagesForLevel } from "@/lib/reading";

@@ -1,0 +1,26 @@
+{
+  "name": {
+    "A1": "Semillita",
+    "A2": "Brote pequeño",
+    "B1": "Árbol joven",
+    "B2": "Árbol en crecimiento",
+    "C1": "Árbol en flor",
+    "C2": "Árbol frutal"
+  },
+  "blurb": {
+    "A1": "Bajo la tierra, esperando brotar. ¡Todo árbol empieza aquí!",
+    "A2": "¡Ya salieron las primeras hojas! Sigue regando.",
+    "B1": "Raíces firmes, ramas que crecen. ¡La fruta llega en C2!",
+    "B2": "Más alto cada día: ahora está frondoso.",
+    "C1": "Las flores significan que ya casi estás: coreano casi nativo.",
+    "C2": "En plena flor y con fruto. Dominio casi nativo: ¡increíble!"
+  },
+  "species": {
+    "A1": "Azalea",
+    "A2": "Forsitia",
+    "B1": "Cerezo en flor",
+    "B2": "Caqui",
+    "C1": "Ginkgo",
+    "C2": "Pino"
+  }
+}

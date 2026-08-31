@@ -1,0 +1,153 @@
+{
+  "welcome": "Bienvenido, {name}",
+  "day": "Día {n}",
+  "loadError": "No pudimos cargar tu progreso ahora mismo — no se ha perdido nada. Actualiza en un momento.",
+  "quest": {
+    "title": "Misión de hoy",
+    "done": "Hecho ✓",
+    "go": "Vamos →",
+    "start": "Empezar ▸",
+    "descriptions": {
+      "writing": "Escritura · un capítulo, unas cuantas preguntas · ~8 min",
+      "vocabulary": "Repaso · tus palabras pendientes · ~5 min",
+      "listening": "Escucha · un diálogo de tu nivel · ~5 min",
+      "reading": "Lectura · un texto corto · ~4 min",
+      "pronunciation": "Pronunciación · completa un capítulo · ~4 min"
+    }
+  },
+  "review": {
+    "due": "{count, plural, =1 {1 palabra lista para repasar} other {# palabras listas para repasar}}",
+    "dueShort": "{count, plural, =1 {1 pendiente} other {# pendientes}}",
+    "now": "Repasar ahora →",
+    "short": "Repasar →"
+  },
+  "slang": {
+    "title": "Jerga de hoy",
+    "flip": "Dale la vuelta →",
+    "hear": "Escúchala en contexto →",
+    "short": "Jerga →"
+  },
+  "wotd": {
+    "title": "Palabra del día"
+  },
+  "hangul": {
+    "title": "¿Empiezas de cero con el coreano?",
+    "sub": "Aprende primero el alfabeto: 40 letras, una hora, gratis para siempre.",
+    "cta": "Empieza aquí →"
+  },
+  "garden": {
+    "thisWeek": "esta semana",
+    "total": "total",
+    "bestStreak": "mejor racha",
+    "monthGoal": "meta de {month}"
+  },
+  "levelMap": {
+    "title": "Tu camino",
+    "checksToward": "{done}/{total} requisitos hacia {next}",
+    "topOfTree": "En la copa del árbol 🌟",
+    "levelsAria": "Niveles",
+    "ready": "Listo para el examen de {current} → {next}",
+    "unlock": "Desbloquea {next} · {species}",
+    "start": "Empezar →",
+    "details": "Detalles →",
+    "checkWordsHeld": "Palabras dominadas",
+    "checkReading": "Lectura"
+  },
+  "tree": {
+    "levelBadge": "Nv. {level}",
+    "metresTall": "m de alto",
+    "maxed": "Ha llegado a las estrellas 🌟",
+    "xpToNext": "{into}/{needed} XP para el Nv. {next}",
+    "phrases": {
+      "fighting": "¡tú puedes!",
+      "goodToday": "¡hoy te veo muy bien!",
+      "thanksWater": "gracias por el agua",
+      "growTogether": "crezcamos juntos"
+    },
+    "keepsakes": {
+      "60": "Nido de pájaro",
+      "70": "Columpio de cuerda",
+      "80": "Casita de pájaros",
+      "90": "Guirnalda de farolillos",
+      "100": "Casa del árbol",
+      "110": "Veleta",
+      "120": "Estrella en la copa"
+    }
+  },
+  "growth": {
+    "closeAria": "Cerrar",
+    "dialogAria": "Tu árbol ha crecido",
+    "promotion": "¡Ascenso!",
+    "taller": "¡Más alto!",
+    "grew": "¡Tu árbol ha crecido!",
+    "newTree": "¡Un árbol nuevo! 🌳",
+    "newTier": "Una nueva copa — y un recuerdo 🌲",
+    "sayHello": "¡Saluda a {treeName}! 🌳",
+    "note": "Nv. {level}: repasa un poco cada día y verás hasta dónde llega.",
+    "ok": "¡Genial!"
+  },
+  "firstVisit": {
+    "todayFiveMinutes": "Hoy · 5 minutos",
+    "startHere": "Empieza aquí",
+    "startStep1": "Empezar el paso 1 →",
+    "unlocksNext": "Se desbloquea después",
+    "lockedAria": "Secciones bloqueadas del panel",
+    "showEverything": "Mostrarlo todo ahora",
+    "locked": {
+      "quest": {
+        "title": "Misión de hoy",
+        "note": "se abre tras la sesión 1"
+      },
+      "wotd": {
+        "title": "Palabra del día",
+        "note": "se abre tras la sesión 2"
+      },
+      "levelMap": {
+        "title": "Mapa de niveles",
+        "note": "se abre tras la sesión 3"
+      },
+      "heatmap": {
+        "title": "Jardín de estudio",
+        "note": "se abre con una racha de 3 días"
+      }
+    },
+    "steps": {
+      "hangul": "Hangul",
+      "hangulDetail": "Consonantes",
+      "vocab": "Vocabulario",
+      "vocabDetail": "Unidad 1 (10 palabras)",
+      "vocabDetailLevel": "Unidad 1 (10 palabras) · {level}",
+      "listening": "Escucha",
+      "listeningDetail": "un diálogo corto",
+      "waterSeedling": "Repasa con tu brote 💧",
+      "minutes": "{n} min",
+      "seconds": "{n} s"
+    }
+  },
+  "account": {
+    "darkMode": "Modo oscuro",
+    "seasonalTheme": "Tema de estación",
+    "logout": "Cerrar sesión",
+    "leaving": "Saliendo…"
+  },
+  "feedback": {
+    "closeAria": "Cerrar",
+    "dialogAria": "Comentarios",
+    "notice": "Aviso",
+    "launchedTitle": "Kroot acaba de lanzarse",
+    "launchedBody1": "La app todavía está empezando y tiene muchas carencias. Seguimos mejorándola.",
+    "launchedBody2": "Si tienes alguna opinión o sugerencia, nos encantaría escucharla.",
+    "send": "Enviar comentarios",
+    "close": "Cerrar",
+    "hideToday": "No volver a mostrar hoy",
+    "formSub": "Un fallo, algo que chirría, una función que echas de menos: todo es bienvenido.",
+    "placeholder": "¿Qué tienes en mente?",
+    "error": "No hemos podido enviarlo. ¿Lo intentas otra vez?",
+    "sending": "Enviando…",
+    "submit": "Enviar",
+    "cancel": "Cancelar",
+    "thanksTitle": "Gracias",
+    "thanksBody": "Hemos recibido tus comentarios. Leemos cada mensaje y nos ayudan a decidir qué mejorar a continuación.",
+    "railLink": "Enviar comentarios →"
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "title": "社区",
+  "newPost": "发新帖",
+  "newPostCta": "✍️ 发新帖",
+  "all": "全部",
+  "boards": {
+    "question": "提问版",
+    "free": "自由版",
+    "exchange": "语言交换"
+  },
+  "tableMissing": {
+    "title": "社区即将开放",
+    "body": "运行随附的迁移脚本 <code>{file}</code> 即可开启版块。在那之前，这里先给你看看它的样子。"
+  },
+  "loadFailed": "帖子加载失败。请稍后刷新试试。",
+  "notice": {
+    "badge": "📌 公告",
+    "team": "Kroot 团队",
+    "officialBadge": "📌 官方公告",
+    "teamLine": "🌱 Kroot 团队",
+    "closed": "公告不开放评论 — 对这条有疑问吗？",
+    "ask": "到提问版去问 →"
+  },
+  "empty": {
+    "title": "这里还什么都没有",
+    "sub": "来做这个版块的第一个发帖人吧。"
+  },
+  "comments": {
+    "heading": "评论",
+    "count": "· {n}",
+    "unavailable": "评论即将开放 — 运行 <code>{file}</code> 即可开启。",
+    "none": "还没有评论 — 来做第一个吧。",
+    "delete": "删除",
+    "deleting": "删除中…",
+    "placeholder": "以 {name} 的身份回复…",
+    "counter": "{n}/{max}",
+    "submit": "发表评论",
+    "posting": "发布中…",
+    "errAdd": "评论没能发出去。请稍后再试。",
+    "errDelete": "这条评论删不掉。"
+  },
+  "composer": {
+    "hint": "— 跟花园里的大家说点什么",
+    "titlePlaceholder": "标题",
+    "bodyPlaceholder": "写下你的帖子…",
+    "counter": "{n}/{max}",
+    "post": "发布",
+    "posting": "发布中…",
+    "err": "暂时发不出去 — 社区数据表可能还没配置好。"
+  },
+  "deletePost": {
+    "confirm": "要删除这个帖子吗？删除后无法恢复。",
+    "delete": "删除",
+    "deleting": "删除中…",
+    "failed": "删除失败。"
+  },
+  "timeAgo": {
+    "justNow": "刚刚",
+    "minutes": "{n} 分钟前",
+    "hours": "{n} 小时前",
+    "days": "{n} 天前"
+  }
+}

@@ -1,19 +1,24 @@
+import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { boardLabel, splitPost, timeAgo, type CommunityPost } from "@/lib/community";
+import { isBoardKey, splitPost, type CommunityPost } from "@/lib/community";
+import { formatTimeAgo } from "./time-ago";
 
-export default function PostList({
+export default async function PostList({
   posts,
   commentCounts = {},
 }: {
   posts: CommunityPost[];
   commentCounts?: Record<string, number>;
 }) {
+  const t = await getTranslations("community");
+  const locale = await getLocale();
+
   if (posts.length === 0) {
     return (
       <div className="border border-line rounded-[14px] bg-warm p-8 text-center max-w-[980px]">
         <span className="text-[26px] block mb-2">🌱</span>
-        <b className="block font-semibold text-[15px] mb-1">Nothing here yet</b>
-        <small className="text-[13px] text-muted">Be the first to post on this board.</small>
+        <b className="block font-semibold text-[15px] mb-1">{t("empty.title")}</b>
+        <small className="text-[13px] text-muted">{t("empty.sub")}</small>
       </div>
     );
   }
@@ -33,7 +38,7 @@ export default function PostList({
             }`}
           >
             <span className="text-[11.5px] font-semibold rounded-full border border-[var(--tint-slate-line)] bg-[var(--tint-slate)] text-[var(--tint-slate-ink)] px-2.5 py-[3px] flex-none">
-              {boardLabel(p.board)}
+              {t(`boards.${isBoardKey(p.board) ? p.board : "free"}`)}
             </span>
             <b className="min-w-0 flex-1 font-semibold text-[14px] truncate">
               {title}
@@ -48,7 +53,7 @@ export default function PostList({
               {p.author_plus && " 🌟"}
             </span>
             <span className="text-[12px] text-faint flex-none w-[64px] text-right">
-              {timeAgo(p.created_at)}
+              {formatTimeAgo(p.created_at, (k, v) => t(`timeAgo.${k}`, v), locale)}
             </span>
           </Link>
         );

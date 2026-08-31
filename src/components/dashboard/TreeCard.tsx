@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import { SceneLayer, skyFor } from "@/lib/costumes";
 import { LEVEL_ORDER, LEVEL_PATH, SPECIES, type CefrLevel } from "@/lib/tree";
 import { FULLY_GROWN_LEVEL, MAX_LEVEL, treeHeightMetres, treeStageForLevel } from "@/lib/level";
@@ -9,11 +10,12 @@ import SpeechBubble from "@/components/ui/SpeechBubble";
 import LevelCreature from "@/components/dashboard/LevelCreature";
 import TreeGrowthPopup from "@/components/dashboard/TreeGrowthPopup";
 
+// Korean stays as-is everywhere; only the gloss follows the UI language.
 const TREE_PHRASES = [
-  { kr: "화이팅!", en: "you got this!" },
-  { kr: "오늘도 좋아요!", en: "looking good today!" },
-  { kr: "물 줘서 고마워요", en: "thanks for the water" },
-  { kr: "같이 자라요", en: "let's grow together" },
+  { kr: "화이팅!", key: "fighting" },
+  { kr: "오늘도 좋아요!", key: "goodToday" },
+  { kr: "물 줘서 고마워요", key: "thanksWater" },
+  { kr: "같이 자라요", key: "growTogether" },
 ];
 
 // One label per 10-level tree stage; from 50 the tree only grows taller.
@@ -35,12 +37,14 @@ export default function TreeCard({
   /** CEFR grade — decides the tree species; promotion transforms the garden. */
   species?: CefrLevel;
 }) {
+  const t = useTranslations("dashboard.tree");
   const [fill, setFill] = useState(0);
   const equipped = costumeIds;
+  const phrases = TREE_PHRASES.map((p) => ({ kr: p.kr, en: t(`phrases.${p.key}`) }));
 
   useEffect(() => {
-    const t = setTimeout(() => setFill(progressPct), 200);
-    return () => clearTimeout(t);
+    const timer = setTimeout(() => setFill(progressPct), 200);
+    return () => clearTimeout(timer);
   }, [progressPct]);
 
   const stage = treeStageForLevel(level);
@@ -69,7 +73,7 @@ export default function TreeCard({
       {/* the tree, as a polaroid in the album */}
       <figure className="relative m-0 bg-cream border border-line p-1.5 pb-6 rotate-[1.2deg] shadow-[0_10px_22px_-12px_rgba(60,50,30,.35)]">
         <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
-          <SpeechBubble phrases={TREE_PHRASES} />
+          <SpeechBubble phrases={phrases} />
         </div>
         <div
           className="flex justify-center px-3 pt-3"
@@ -125,13 +129,13 @@ export default function TreeCard({
               veteran ? "bg-[var(--tint-amber)] text-[#B7791F] border-amber-line" : "bg-success-bg text-success border-success-line"
             }`}
           >
-            Lv. {level}
+            {t("levelBadge", { level })}
           </span>
         </h2>
         {veteran && (
           <p className="font-semibold text-[22px] text-[#B7791F] tracking-[-0.01em] tabular-nums mb-0.5">
             {metres}
-            <span className="text-[12px] text-muted font-bold ml-1">m tall</span>
+            <span className="text-[12px] text-muted font-bold ml-1">{t("metresTall")}</span>
           </p>
         )}
         <p className="text-[13.5px] text-muted mb-4">
@@ -146,7 +150,7 @@ export default function TreeCard({
             />
           </div>
           <span className="text-[12.5px] text-muted font-medium whitespace-nowrap">
-            {maxed ? "Reached the stars 🌟" : `${xpInto}/${xpNeeded} XP to Lv. ${level + 1}`}
+            {maxed ? t("maxed") : t("xpToNext", { into: xpInto, needed: xpNeeded, next: level + 1 })}
           </span>
         </div>
 
@@ -197,7 +201,7 @@ export default function TreeCard({
                         : "bg-cream border-line text-faint opacity-50"
                     }`}
                   >
-                    <span className="tabular-nums">Lv.{m.level}</span> · {m.name}
+                    <span className="tabular-nums">Lv.{m.level}</span> · {t(`keepsakes.${m.level}`)}
                     {on && " ✓"}
                   </span>
                 );

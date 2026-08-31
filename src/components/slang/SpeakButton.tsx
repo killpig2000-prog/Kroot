@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { useTranslations } from "next-intl";
 import { useBrowserSupport } from "@/hooks/useBrowserSupport";
 import { speakKorean, prefetchKorean } from "@/lib/tts";
 
@@ -8,13 +9,14 @@ import { speakKorean, prefetchKorean } from "@/lib/tts";
 // Lives on both card faces, so it stops click-through to the flip handler.
 export default function SpeakButton({
   text,
-  label = "Listen",
+  label,
   className = "",
 }: {
   text: string;
   label?: string;
   className?: string;
 }) {
+  const t = useTranslations("slang");
   const supported = useBrowserSupport(() => "speechSynthesis" in window);
 
   // Warm the audio cache as soon as this button appears, so the tap plays
@@ -28,7 +30,7 @@ export default function SpeakButton({
   return (
     <button
       type="button"
-      aria-label={`${label}: ${text}`}
+      aria-label={`${label ?? t("listen")}: ${text}`}
       onClick={(e) => {
         e.stopPropagation();
         speakKorean(text, { rate: 0.92 });

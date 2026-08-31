@@ -1,0 +1,101 @@
+{
+  "crumb": "Đọc",
+  "map": {
+    "progress": "Cấp độ {level} · đã đọc <b>{done}</b>/{total} chương",
+    "continueChapter": "Tiếp tục · Chương {n}",
+    "start": "Bắt đầu →",
+    "chaptersRange": "Chương {first}–{last}",
+    "chapterN": "Chương {n}",
+    "statusDone": "Đã xong",
+    "statusRead": "Đọc",
+    "statusLocked": "Đã khóa"
+  },
+  "genres": {
+    "diary": "Nhật ký",
+    "story": "Truyện",
+    "notice": "Thông báo",
+    "dialogue": "Hội thoại",
+    "message": "Tin nhắn",
+    "instruction": "Hướng dẫn",
+    "email": "Email",
+    "explainer": "Bài giải thích",
+    "review": "Đánh giá",
+    "article": "Bài báo",
+    "opinion": "Ý kiến",
+    "editorial": "Xã luận",
+    "essay": "Tản văn",
+    "academic": "Học thuật",
+    "interview": "Phỏng vấn"
+  },
+  "genreChip": {
+    "diary": "Nhật ký",
+    "story": "Truyện",
+    "notice": "Thông báo",
+    "dialogue": "Hội thoại",
+    "message": "Tin nhắn",
+    "instruction": "Cách làm",
+    "email": "Email",
+    "explainer": "Bài giải thích",
+    "review": "Đánh giá",
+    "article": "Bài báo",
+    "opinion": "Ý kiến",
+    "editorial": "Xã luận",
+    "essay": "Tản văn",
+    "academic": "Học thuật",
+    "interview": "Phỏng vấn"
+  },
+  "session": {
+    "chapterN": "Chương {n}",
+    "emptyTitle": "Chưa có truyện ở đây",
+    "emptyBody": "Chương này chưa được viết.",
+    "backToMap": "Quay lại bản đồ",
+    "resumeDetail": "Đọc · Chương {n} · {level}"
+  },
+  "read": {
+    "chapterN": "Chương {n}",
+    "meta": "{level} · {words} từ · ~{min} phút",
+    "listen": "Nghe",
+    "playing": "Đang phát",
+    "larger": "Lớn hơn",
+    "smaller": "Nhỏ hơn",
+    "translationLabel": "Bản dịch",
+    "transOff": "Tắt",
+    "transTap": "Khi chạm",
+    "transAll": "Tất cả",
+    "hintFull": "Chạm vào một dòng để xem bản dịch · từ gạch chấm sẽ mở trang từ vựng",
+    "hintDotted": "Từ gạch chấm sẽ mở trang từ vựng",
+    "subject": "Tiêu đề",
+    "wordsTitle": "Từ trong truyện này",
+    "wordsNote": "Mỗi từ đều mở trang từ vựng.",
+    "wordsNoteMore": "+{n} từ nữa · mỗi từ đều mở trang từ vựng.",
+    "answerQuestions": "Trả lời {n} câu hỏi →"
+  },
+  "quiz": {
+    "passage": "Bài đọc",
+    "questionOf": "Câu {n} / {total}",
+    "correctCount": "{n} câu đúng",
+    "whereItSays": "Chỗ nói điều đó",
+    "theAnswer": "Đáp án",
+    "seeResult": "Xem kết quả →",
+    "nextQuestion": "Câu tiếp theo →"
+  },
+  "summary": {
+    "title": "Hoàn thành chương {n}!",
+    "levelUp": "🎉 Lên cấp! Giờ bạn ở Lv. {level}",
+    "questionsRight": "câu đúng",
+    "readAgain": "Đọc lại truyện",
+    "nothingMissed": "Không sai câu nào — bạn đã hiểu trọn câu chuyện.",
+    "wordsWithPage": "từ ở đây có trang từ vựng",
+    "openToSave": "Mở một từ để lưu lại.",
+    "openToSaveMore": "+{n} từ nữa · mở một từ để lưu lại.",
+    "earned": "đã nhận",
+    "earnedReview": "đã nhận · {n} câu cần ôn",
+    "saving": "Đang lưu…",
+    "nextChapter": "Chương {n} →",
+    "storyMap": "Bản đồ truyện"
+  },
+  "gloss": {
+    "openWordPage": "Mở trang từ vựng",
+    "openSub": "{unit} · ví dụ, ghi chú, lưu lại"
+  }
+}

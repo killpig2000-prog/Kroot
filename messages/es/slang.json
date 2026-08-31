@@ -1,0 +1,47 @@
+{
+  "crumb": "Jerga",
+  "tagline": "Las palabras que los libros de texto se saltan — directas de los K-dramas, el K-pop y los chats de grupo",
+  "taglineDot": "Las palabras que los libros de texto se saltan — directas de los K-dramas, el K-pop y los chats de grupo.",
+  "signupNudge": "Regístrate para hacer el reto diario de jerga y ganar XP para tu árbol.",
+  "startFree": "Empieza gratis",
+  "startFreeArrow": "Empieza gratis →",
+  "listen": "Escuchar",
+  "vibes": {
+    "spoken": "Hablada",
+    "texting": "Mensajes",
+    "internet": "Internet"
+  },
+  "board": {
+    "collected": "{done}/{total} coleccionadas",
+    "all": "Todas {n}"
+  },
+  "card": {
+    "flipBack": "Girar {word} de nuevo",
+    "reveal": "Descubrir el significado de {word}",
+    "collected": "Coleccionada",
+    "tapToFlip": "Toca para girar",
+    "literally": "literalmente «{text}»"
+  },
+  "hero": {
+    "ofTheDay": "Jerga del día"
+  },
+  "quiz": {
+    "title": "Reto diario de jerga",
+    "doneToday": "Hecho hoy — {score}/{total} correctas. ¡Mañana hay ronda nueva!",
+    "intro": "{n, plural, one {Adivina el significado de # expresión} other {Adivina el significado de # expresiones}} · +{xp} XP",
+    "start": "Empezar ▶",
+    "result": "{score}/{total} correctas · +{xp} XP",
+    "praise": "Dominas la jerga de la calle — ¡hasta mañana!",
+    "encourage": "Gira las tarjetas de abajo y vuelve mañana.",
+    "prompt": "¿Qué significa? · {n}/{total}",
+    "score": "puntos {n}"
+  },
+  "share": {
+    "eyebrow": "Kroot · Jerga de la calle 🇰🇷",
+    "startLearning": "Empezar a aprender",
+    "origin": "De dónde viene",
+    "related": "Más jerga como esta",
+    "ctaTitle": "{n} palabras de jerga más como {kr}, gratis",
+    "ctaBody": "Pásalas todas, escucha cómo suenan y empieza a aprender el coreano que se habla de verdad hoy — no solo el de los libros."
+  }
+}

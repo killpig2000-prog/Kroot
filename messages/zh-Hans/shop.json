@@ -1,0 +1,94 @@
+{
+  "coins": "🌰 {coins} 枚金币",
+  "intro": "给你的树和它周围的花园换装。点一下卡片就能在自己的树上试穿，然后直接在这里购买并穿上。",
+  "slots": {
+    "hat": "帽子",
+    "face": "脸部",
+    "neck": "颈部",
+    "aura": "光环",
+    "sky": "天空",
+    "ground": "地面",
+    "friend": "伙伴"
+  },
+  "rarity": {
+    "common": "普通",
+    "rare": "稀有",
+    "epic": "史诗",
+    "legendary": "传说"
+  },
+  "errors": {
+    "notEnoughCoins": "金币不够。",
+    "alreadyOwned": "你已经拥有这件了。",
+    "levelTooLow": "你的树还不够高。",
+    "unavailable": "这件目前无法获得。",
+    "notOnSale": "这件目前没有出售。",
+    "generic": "出了点问题 — 请再试一次。"
+  },
+  "cta": {
+    "pick": "挑一件吧",
+    "takeOff": "脱下",
+    "wear": "穿上",
+    "claimAdmin": "领取并穿上 · 管理员",
+    "unlocksAt": "Lv.{level} 解锁",
+    "needMore": "还差 {n} 🌰",
+    "claim": "领取并穿上",
+    "buy": "购买并穿上 · 🌰 {price}"
+  },
+  "bought": "{name} 归你了 — 已经戴到树上啦。",
+  "featured": {
+    "badge": "仅限本周",
+    "meta": "{rarity}{slot} · 🌰 {price}{hasLevel, select, yes { · 需要 Lv.{level}} other {}} · {date} 后下架",
+    "daysLeft": "剩 {n} 天"
+  },
+  "categories": "物品分类",
+  "new": "新",
+  "card": {
+    "wearing": "穿着中 ✓",
+    "owned": "已拥有",
+    "locked": "🔒 Lv.{level}",
+    "price": "🌰 {price}",
+    "goal": "· 你的目标 · {ready, select, yes {可以买了} other {还差 {n}}}{hasLevel, select, yes { · Lv.{level}} other {}}",
+    "setGoal": "设为目标"
+  },
+  "empty": "这里暂时没有在售的物品 — 下个季节再来看看吧。",
+  "tryOn": {
+    "label": "试穿 · 你的树",
+    "caption": "Lv. {level}",
+    "none": "—",
+    "reset": "重置",
+    "hint": "点一下卡片就能试穿",
+    "selected": "{name} · {krName}"
+  },
+  "picker": {
+    "change": "更换 ▾",
+    "auto": "最便宜的下一件（自动）",
+    "price": "🌰 {price}{hasLevel, select, yes { · Lv.{level}} other {}}"
+  },
+  "goal": {
+    "earnNote": "· 每个每日任务得 {quest}，每升 10 级得 {bonus}",
+    "doQuest": "去做今天的任务 →",
+    "savingFor": "正在攒钱买 <b>{name}</b>",
+    "needsLevel": " · 需要 Lv.{level}",
+    "progressLabel": "为 {name} 攒下的金币",
+    "savedLocked": "已攒够 · Lv.{level} 解锁",
+    "buyNow": "现在就能买下 →",
+    "questsToGo": "还差 {n} 个任务",
+    "orBonus": " · 或 Lv.{level} 的奖励（+{coins}）",
+    "questDone": "今天的任务已完成 ✓",
+    "questReady": "今天的任务在等你 ✏️"
+  },
+  "freeze": {
+    "title": "连续冻结卡",
+    "held": "已持有 {n}/{max}",
+    "desc": "漏掉一天时会自动消耗一张冻结卡 — 你的连续记录不会断。",
+    "descStreak": "漏掉一天时会自动消耗一张冻结卡 — 你连续 {n} 天的记录不会断。",
+    "errNotEnough": "金币不够 — 每个每日任务可得 {coins} 枚。",
+    "errMax": "最多只能持有 {max} 张。",
+    "errPending": "冻结卡即将开放（迁移 0035 尚未应用）。",
+    "errGeneric": "现在买不了。",
+    "bought": "冻结卡准备好了 🧊 — 你漏掉一天时会自动使用。",
+    "maxed": "已达上限",
+    "buying": "购买中…",
+    "buy": "购买 · 🌰 {price}"
+  }
+}

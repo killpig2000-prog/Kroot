@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import { speakKorean, prefetchKorean } from "@/lib/tts";
 import type { McqQuestion } from "@/lib/promotion-test";
 
@@ -15,6 +16,7 @@ export default function Mcq({
   title: string;
   passage?: string;
 }) {
+  const t = useTranslations("levelTest.mcq");
   const [index, setIndex] = useState(0);
   const [correct, setCorrect] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);
@@ -40,7 +42,7 @@ export default function Mcq({
   return (
     <div>
       <p className="text-[11px] font-bold tracking-[.07em] uppercase text-faint mb-2">
-        {title} · {index + 1}/{questions.length}
+        {t("progress", { title, n: index + 1, total: questions.length })}
       </p>
       {passage && (
         <p className="kr border border-line bg-warm rounded-[12px] px-4 py-3 text-[15.5px] leading-[1.8] mb-4">
@@ -51,7 +53,7 @@ export default function Mcq({
         <button
           onClick={() => speakKorean(qq.kr)}
           className="mb-3 w-14 h-14 rounded-full bg-[#FF9E7D] text-white text-[22px] shadow-[0_3px_0_#f08560]"
-          aria-label="Play audio"
+          aria-label={t("playAudio")}
         >
           🔊
         </button>
@@ -88,7 +90,7 @@ export default function Mcq({
                 : "border-line text-faint opacity-60"
           }`}
         >
-          모르겠어요 · I don&apos;t know
+          {`모르겠어요 · ${t("dontKnow")}`}
         </button>
       </div>
     </div>

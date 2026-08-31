@@ -7,5 +7,24 @@
   "learnDescription": "Kroot teaches this word with flashcards, listening, and speaking practice — free, at your own pace.",
   "startLearning": "Start learning — free",
   "seenInListening": "🎧 Seen in Listening",
-  "seenInReading": "📖 Seen in Reading"
+  "seenInReading": "📖 Seen in Reading",
+  "nav": "Dictionary",
+  "startLearningShort": "Start learning",
+  "levelN": "Level {level}",
+  "hubTitle": "Korean Vocabulary Dictionary",
+  "hubIntro": "Every word comes with romanization, an English meaning, and a real example sentence — organized by CEFR level so you always know what to learn next.",
+  "wordCount": "{count, plural, =1 {1 word} other {# words}}",
+  "levelTitle": "Korean {level} Vocabulary",
+  "levelIntro": "All {count} Level {level} words, each with romanization, meaning, and an example sentence.",
+  "jumpToUnit": "Jump to unit",
+  "unitN": "Unit {n}",
+  "unitRange": "words {first}–{last}",
+  "blurb": {
+    "A1": "Everyday basics — greetings, food, family, and the words you need first.",
+    "A2": "Elementary words for daily routines, shopping, and simple conversation.",
+    "B1": "Intermediate vocabulary for opinions, work, and getting around Korea.",
+    "B2": "Upper-intermediate words for news, culture, and nuanced conversation.",
+    "C1": "Advanced vocabulary for abstract ideas, formal writing, and debate.",
+    "C2": "Mastery-level words — subtle, literary, and near-native expressions."
+  }
 }

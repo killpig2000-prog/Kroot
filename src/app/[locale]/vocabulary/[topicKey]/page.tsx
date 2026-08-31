@@ -1,7 +1,8 @@
 import { notFound } from "next/navigation";
 import { redirect } from "@/i18n/navigation";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
-import { VOCAB_TOPICS, getChapterStatuses, getChaptersForTopic, unlockedVocabTiers } from "@/lib/vocabulary";
+import { VOCAB_TOPICS, getChapterStatuses, unlockedVocabTiers } from "@/lib/vocabulary";
+import { getChaptersForTopic } from "@/lib/vocabulary-words";
 import { isCefrLevel, type CefrLevel } from "@/lib/tree";
 
 // Like the reference design, picking a topic drops you straight into the cards —

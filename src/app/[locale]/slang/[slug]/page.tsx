@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { notFound } from "next/navigation";
 import { localeUrl, seoAlternates } from "@/lib/seo";
@@ -42,6 +43,7 @@ export default async function SlangSharePage({ params }: Props) {
   const entry = getSlangBySlug(slug);
   if (!entry) notFound();
 
+  const [t, tv] = await Promise.all([getTranslations("slang"), getTranslations("slang.vibes")]);
   const vibe = VIBES.find((v) => v.key === entry.vibe);
   const related = relatedSlang(entry, 6);
 
@@ -73,22 +75,23 @@ export default async function SlangSharePage({ params }: Props) {
           slug={entry.slug}
           className="rounded-full bg-[#C13E78] px-4 py-2 text-sm font-semibold text-white shadow-[0_3px_0_#9D174D] hover:bg-[#C2185F] transition-colors"
         >
-          Start learning
+          {t("share.startLearning")}
         </ShareCta>
       </header>
 
       <main className="mx-auto max-w-3xl px-6 pb-16">
-        <p className="mb-2 text-sm text-[#C13E78] font-semibold">Kroot · Street Talk 🇰🇷</p>
+        <p className="mb-2 text-sm text-[#C13E78] font-semibold">{t("share.eyebrow")}</p>
 
         <article className="relative border border-[var(--tint-pink-line)] rounded-[22px] bg-cream p-8 sm:p-10 shadow-[0_14px_34px_-20px_rgba(219,39,119,.35)] text-center">
           {vibe && (
             <span className="inline-block text-[12px] font-semibold text-[#C13E78] bg-[var(--tint-pink)] border border-[var(--tint-pink-line)] rounded-full px-3 py-1 mb-5">
-              {vibe.emoji} {vibe.label}
+              {vibe.emoji} {tv(entry.vibe)}
             </span>
           )}
           <h1 className="kr text-[clamp(48px,9vw,72px)] font-bold leading-none">{entry.kr}</h1>
           <p className="mt-3 text-lg text-muted">
-            {entry.romanization} · <span className="italic">literally &ldquo;{entry.literal}&rdquo;</span>
+            {entry.romanization} ·{" "}
+            <span className="italic">{t("card.literally", { text: entry.literal })}</span>
           </p>
           <p className="mt-5 text-2xl font-bold text-charcoal">{entry.meaning}</p>
 
@@ -100,7 +103,7 @@ export default async function SlangSharePage({ params }: Props) {
           {entry.origin && (
             <div className="mt-5 text-left">
               <p className="text-[11px] font-bold tracking-[.08em] uppercase text-faint mb-1.5">
-                Where it comes from
+                {t("share.origin")}
               </p>
               <p className="text-[14.5px] text-muted leading-relaxed">{entry.origin}</p>
             </div>
@@ -108,7 +111,7 @@ export default async function SlangSharePage({ params }: Props) {
         </article>
 
         <section className="mt-10">
-          <h2 className="text-lg font-bold">More slang like this</h2>
+          <h2 className="text-lg font-bold">{t("share.related")}</h2>
           <ul className="mt-4 grid gap-3 sm:grid-cols-2">
             {related.map((e) => (
               <li key={e.slug}>
@@ -128,17 +131,14 @@ export default async function SlangSharePage({ params }: Props) {
 
         <section className="mt-12 rounded-[24px] bg-[var(--tint-pink)] border border-[var(--tint-pink-line)] p-8 text-center">
           <h2 className="text-2xl font-bold text-[#7C2A4B]">
-            106 more slang words like {entry.kr}, free
+            {t("share.ctaTitle", { n: 106, kr: entry.kr })}
           </h2>
-          <p className="mt-2 text-muted">
-            Flip through them all, hear how they sound, and start learning the Korean that&apos;s
-            actually spoken today — not just textbook Korean.
-          </p>
+          <p className="mt-2 text-muted">{t("share.ctaBody")}</p>
           <ShareCta
             slug={entry.slug}
             className="mt-5 inline-block rounded-full bg-[#C13E78] px-6 py-3 font-semibold text-white shadow-[0_3px_0_#9D174D] hover:bg-[#C2185F] transition-colors"
           >
-            Start free →
+            {t("startFreeArrow")}
           </ShareCta>
         </section>
       </main>

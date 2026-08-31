@@ -75,5 +75,24 @@
     "moreWords": "+{count} từ nữa",
     "nothingDue": "Chưa có từ nào cần ôn. Từ tiếp theo quay lại {when}.",
     "nothingDuePlain": "Chưa có từ nào cần ôn."
+  },
+  "error": {
+    "title": "Có chút trục trặc"
+  },
+  "levelTabs": {
+    "ariaLabel": "Trình độ",
+    "lockedTitle": "Vượt qua bài kiểm tra thăng cấp để mở trình độ này",
+    "you": "bạn",
+    "lockedNote": "🔒 Các trình độ bị khóa sẽ mở khi bạn vượt qua bài kiểm tra thăng cấp."
+  },
+  "languageNav": "Ngôn ngữ",
+  "install": {
+    "title": "Giữ Kroot trên màn hình chính",
+    "ios": "Chạm Chia sẻ, rồi chọn “Thêm vào MH chính” — một chạm là tới bài học hôm nay.",
+    "streak": "Một chạm để giữ chuỗi {count} ngày của bạn.",
+    "generic": "Mở như một ứng dụng, một chạm là tới bài học hôm nay.",
+    "install": "Cài đặt",
+    "notNow": "Để sau",
+    "dismissAria": "Bỏ qua"
   }
 }

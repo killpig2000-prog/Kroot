@@ -3,7 +3,7 @@ import { DIALOGUES } from "@/lib/listening-dialogues";
 import { getPassagesForLevel } from "@/lib/reading";
 import { getPromptsForLevel } from "@/lib/writing";
 import { chapterClearStats } from "@/lib/pronunciation";
-import { getWordsForTopic } from "@/lib/vocabulary";
+import { getWordsForTopic } from "@/lib/vocabulary-words";
 import { ELIGIBILITY } from "@/lib/promotion-test";
 import type { CefrLevel } from "@/lib/tree";
 

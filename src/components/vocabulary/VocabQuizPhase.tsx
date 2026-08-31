@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import type { QuizQuestion } from "@/lib/vocabulary";
 
 const CARD = "max-w-[560px] border border-line rounded-[14px] p-[clamp(20px,3vw,28px)]";
@@ -15,16 +16,15 @@ export default function VocabQuizPhase({
   selected: string | null;
   onAnswer: (option: string) => void;
 }) {
+  const t = useTranslations("vocabulary.quiz");
   const q = quizQuestions[quizIndex];
   const quizPct = quizQuestions.length ? (quizIndex / quizQuestions.length) * 100 : 0;
 
   return (
     <div className={CARD}>
       <div className="flex justify-between items-center mb-2.5 text-[12.5px] font-medium text-faint">
-        <span>
-          Quiz · Question {quizIndex + 1} of {quizQuestions.length}
-        </span>
-        <span>{quizKnown} correct</span>
+        <span>{t("progress", { current: quizIndex + 1, total: quizQuestions.length })}</span>
+        <span>{t("correctCount", { count: quizKnown })}</span>
       </div>
       <div className="h-1.5 bg-line rounded-full overflow-hidden mb-6">
         <i

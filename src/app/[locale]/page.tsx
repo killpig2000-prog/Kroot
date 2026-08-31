@@ -1,6 +1,4 @@
-"use client";
-
-import { useReveal } from "@/hooks/useReveal";
+import Reveal from "@/components/landing/Reveal";
 import Nav from "@/components/landing/Nav";
 import Hero from "@/components/landing/Hero";
 import SpeechStrip from "@/components/landing/SpeechStrip";
@@ -12,10 +10,9 @@ import WritingFeedbackDemo from "@/components/landing/WritingFeedbackDemo";
 import Final from "@/components/landing/Final";
 
 export default function LandingPage() {
-  useReveal();
-
   return (
     <div className="min-h-screen bg-warm text-charcoal">
+      <Reveal />
       <Nav />
       <Hero />
       <SpeechStrip />

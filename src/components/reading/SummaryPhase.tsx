@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { buttonClassName } from "@/components/ui/Button";
 import type { ProgressResult } from "@/lib/activity";
@@ -38,6 +39,8 @@ export default function SummaryPhase({
   onGoTo: (href: string) => void;
   onReRead: () => void;
 }) {
+  const t = useTranslations("reading.summary");
+
   return (
     <div className="max-w-[880px]" style={{ animation: "fadeUp .4s ease" }}>
       <div className="text-center mb-6">
@@ -59,11 +62,11 @@ export default function SummaryPhase({
           </text>
         </svg>
         <h2 className="font-bold text-[21px] tracking-[-0.02em] mt-3 mb-1.5">
-          Chapter {chapterIndex + 1} complete!
+          {t("title", { n: chapterIndex + 1 })}
         </h2>
         {levelUp && (
           <p className="text-sm font-semibold text-success">
-            🎉 Level up! You&apos;re now Lv. {levelUp.new_level}
+            {t("levelUp", { level: levelUp.new_level })}
           </p>
         )}
       </div>
@@ -73,7 +76,7 @@ export default function SummaryPhase({
           <b className="block text-[24px] font-bold text-sky-deep leading-tight">
             {correct}/{passage.questions.length}
           </b>
-          <small className="text-xs text-muted">questions right</small>
+          <small className="text-xs text-muted">{t("questionsRight")}</small>
           {missed.length > 0 && (
             <>
               <ul className="grid gap-1.5 mt-3">
@@ -85,18 +88,18 @@ export default function SummaryPhase({
                 ))}
               </ul>
               <button className={`${BTN_LINE} mt-3 w-full text-[13px]`} onClick={onReRead}>
-                Read the story again
+                {t("readAgain")}
               </button>
             </>
           )}
           {missed.length === 0 && (
-            <p className="text-[13px] text-muted mt-3">Nothing missed — the whole story landed.</p>
+            <p className="text-[13px] text-muted mt-3">{t("nothingMissed")}</p>
           )}
         </div>
 
         <div className="border border-line rounded-[12px] bg-cream px-4 py-3.5">
           <b className="block text-[24px] font-bold leading-tight">{words.length}</b>
-          <small className="text-xs text-muted">words here have a vocabulary page</small>
+          <small className="text-xs text-muted">{t("wordsWithPage", { n: words.length })}</small>
           {words.length > 0 && (
             <>
               <div className="flex flex-wrap gap-1.5 mt-3">
@@ -111,8 +114,9 @@ export default function SummaryPhase({
                 ))}
               </div>
               <p className="text-[11.5px] text-faint mt-2">
-                {words.length > 10 ? `+${words.length - 10} more · ` : ""}
-                open one to save it.
+                {words.length > 10
+                  ? t("openToSaveMore", { n: words.length - 10 })
+                  : t("openToSave")}
               </p>
             </>
           )}
@@ -121,7 +125,7 @@ export default function SummaryPhase({
         <div className="border border-line rounded-[12px] bg-cream px-4 py-3.5">
           <b className="block text-[24px] font-bold text-success leading-tight">+10 XP</b>
           <small className="text-xs text-muted">
-            earned{incorrect > 0 ? ` · ${incorrect} to review` : ""}
+            {incorrect > 0 ? t("earnedReview", { n: incorrect }) : t("earned")}
           </small>
           <div className="grid gap-2 mt-3">
             {hasNextChapter && (
@@ -130,7 +134,7 @@ export default function SummaryPhase({
                 onClick={() => onGoTo(`/reading/session?chapter=${chapterIndex + 1}&level=${level}`)}
                 disabled={navigating}
               >
-                {navigating ? "Saving…" : `Chapter ${chapterIndex + 2} →`}
+                {navigating ? t("saving") : t("nextChapter", { n: chapterIndex + 2 })}
               </button>
             )}
             <button
@@ -138,7 +142,7 @@ export default function SummaryPhase({
               onClick={() => onGoTo(`/reading?level=${level}`)}
               disabled={navigating}
             >
-              {navigating ? "Saving…" : "Story map"}
+              {navigating ? t("saving") : t("storyMap")}
             </button>
           </div>
         </div>

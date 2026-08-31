@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import { speakKorean, prefetchKorean } from "@/lib/tts";
 import {
   BASIC_CONSONANTS,
@@ -24,9 +25,9 @@ function speak(text: string) {
 }
 
 const TABS = [
-  { key: "consonants", label: "Consonants", kr: "자음" },
-  { key: "vowels", label: "Vowels", kr: "모음" },
-  { key: "syllables", label: "How syllables work", kr: "글자 만들기" },
+  { key: "consonants", kr: "자음" },
+  { key: "vowels", kr: "모음" },
+  { key: "syllables", kr: "글자 만들기" },
 ] as const;
 
 type TabKey = (typeof TABS)[number]["key"];
@@ -116,6 +117,7 @@ function JamoGrid({ items }: { items: Jamo[] }) {
 }
 
 function SyllableBuilder() {
+  const t = useTranslations("hangul");
   const [cho, setCho] = useState(0);
   const [jung, setJung] = useState(0);
   const syllable = composeSyllable(cho, jung);
@@ -123,7 +125,7 @@ function SyllableBuilder() {
 
   return (
     <div className="max-w-[820px] border border-line rounded-[14px] p-[clamp(20px,3vw,28px)] mb-8">
-      <p className={SECTION_LABEL}>Build a block</p>
+      <p className={SECTION_LABEL}>{t("sections.buildABlock")}</p>
 
       <div className="flex items-center justify-center gap-3 flex-wrap mb-6">
         <span
@@ -144,7 +146,7 @@ function SyllableBuilder() {
           onClick={() => speak(syllable)}
           className="kr w-[96px] h-[96px] rounded-[18px] border-[1.5px] flex flex-col items-center justify-center text-[42px] leading-none transition-transform duration-150 hover:scale-105"
           style={{ background: SOFT, borderColor: BRD, color: GREEN }}
-          aria-label={`Hear ${syllable}`}
+          aria-label={t("hear", { text: syllable })}
         >
           {syllable}
         </button>
@@ -153,7 +155,7 @@ function SyllableBuilder() {
         <b className="text-success">{rom}</b>
       </p>
 
-      <p className={SECTION_LABEL}>Consonant (초성)</p>
+      <p className={SECTION_LABEL}>{t("builder.consonant")} (초성)</p>
       <div className="flex flex-wrap gap-1.5 mb-5">
         {CHO.map((c, i) => (
           <button
@@ -170,7 +172,7 @@ function SyllableBuilder() {
         ))}
       </div>
 
-      <p className={SECTION_LABEL}>Vowel (중성)</p>
+      <p className={SECTION_LABEL}>{t("builder.vowel")} (중성)</p>
       <div className="flex flex-wrap gap-1.5">
         {JUNG.map((v, i) => (
           <button
@@ -191,6 +193,7 @@ function SyllableBuilder() {
 }
 
 function PracticeWordCard({ kr, rom, en }: { kr: string; rom: string; en: string }) {
+  const t = useTranslations("hangul");
   const [shown, setShown] = useState(false);
   return (
     <button
@@ -209,7 +212,7 @@ function PracticeWordCard({ kr, rom, en }: { kr: string; rom: string; en: string
           <small className="block text-[12px] text-muted">{en}</small>
         </span>
       ) : (
-        <small className="block text-[12px] text-faint">tap to reveal · 🔊</small>
+        <small className="block text-[12px] text-faint">{t("tapToReveal")} · 🔊</small>
       )}
     </button>
   );
@@ -226,6 +229,7 @@ const ALL_SPOKEN = [
 ];
 
 export default function HangulExplorer() {
+  const t = useTranslations("hangul");
   const [tab, setTab] = useState<TabKey>("consonants");
 
   useEffect(() => {
@@ -236,36 +240,36 @@ export default function HangulExplorer() {
     <div>
       {/* tabs */}
       <div className="flex gap-2 mb-6 flex-wrap">
-        {TABS.map((t) => (
+        {TABS.map((tab_) => (
           <button
-            key={t.key}
-            onClick={() => setTab(t.key)}
+            key={tab_.key}
+            onClick={() => setTab(tab_.key)}
             className={`rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold transition-all border ${
-              t.key === tab
+              tab_.key === tab
                 ? "bg-success border-success text-white"
                 : "bg-cream border-line text-muted hover:border-faint"
             }`}
           >
-            {t.label}
-            <span className="kr text-[10.5px] font-bold ml-1.5 opacity-85">{t.kr}</span>
+            {t(`tabs.${tab_.key}`)}
+            <span className="kr text-[10.5px] font-bold ml-1.5 opacity-85">{tab_.kr}</span>
           </button>
         ))}
       </div>
 
       {tab === "consonants" && (
         <div style={{ animation: "fadeUp .35s ease" }}>
-          <p className={SECTION_LABEL}>14 basic consonants · 기본 자음</p>
+          <p className={SECTION_LABEL}>{t("sections.basicConsonants")} · 기본 자음</p>
           <JamoGrid items={BASIC_CONSONANTS} />
-          <p className={SECTION_LABEL}>5 double consonants · 쌍자음</p>
+          <p className={SECTION_LABEL}>{t("sections.doubleConsonants")} · 쌍자음</p>
           <JamoGrid items={DOUBLE_CONSONANTS} />
         </div>
       )}
 
       {tab === "vowels" && (
         <div style={{ animation: "fadeUp .35s ease" }}>
-          <p className={SECTION_LABEL}>10 basic vowels · 기본 모음</p>
+          <p className={SECTION_LABEL}>{t("sections.basicVowels")} · 기본 모음</p>
           <JamoGrid items={BASIC_VOWELS} />
-          <p className={SECTION_LABEL}>Compound vowels · 복합 모음</p>
+          <p className={SECTION_LABEL}>{t("sections.compoundVowels")} · 복합 모음</p>
           <JamoGrid items={COMPOUND_VOWELS} />
         </div>
       )}
@@ -273,12 +277,12 @@ export default function HangulExplorer() {
       {tab === "syllables" && (
         <div style={{ animation: "fadeUp .35s ease" }}>
           <div className="max-w-[820px] border border-line rounded-[14px] p-[clamp(20px,3vw,28px)] mb-5">
-            <p className={SECTION_LABEL}>The idea</p>
+            <p className={SECTION_LABEL}>{t("sections.theIdea")}</p>
             <div className="flex gap-3 flex-wrap">
               {[
-                { block: "가", parts: "ㄱ + ㅏ", note: "vowel on the right" },
-                { block: "고", parts: "ㄱ + ㅗ", note: "vowel underneath" },
-                { block: "강", parts: "ㄱ + ㅏ + ㅇ", note: "final consonant at the bottom" },
+                { block: "가", parts: "ㄱ + ㅏ", note: t("blocks.right") },
+                { block: "고", parts: "ㄱ + ㅗ", note: t("blocks.under") },
+                { block: "강", parts: "ㄱ + ㅏ + ㅇ", note: t("blocks.final") },
               ].map((b) => (
                 <button
                   key={b.block}
@@ -295,7 +299,7 @@ export default function HangulExplorer() {
 
           <SyllableBuilder />
 
-          <p className={SECTION_LABEL}>Reading practice · 읽기 연습</p>
+          <p className={SECTION_LABEL}>{t("sections.readingPractice")} · 읽기 연습</p>
           <div className="grid grid-cols-[repeat(auto-fill,minmax(140px,1fr))] gap-3 max-w-[820px]">
             {PRACTICE_WORDS.map((w) => (
               <PracticeWordCard key={w.kr} {...w} />

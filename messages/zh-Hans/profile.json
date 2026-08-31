@@ -1,0 +1,86 @@
+{
+  "identity": {
+    "fallbackName": "学习者",
+    "difficulty": "{level} 难度",
+    "growingSince": "自 {date} 开始成长",
+    "maxLevel": "已抵达星辰 🌟",
+    "xpToNext": "距离 Lv. {level} 还差 {into}/{needed} XP",
+    "streak": "🔥 连续 {n} 天",
+    "coins": "🌰 {n} 枚金币",
+    "freezes": "🧊 {n} 张冻结卡"
+  },
+  "avatar": {
+    "change": "更换头像",
+    "edit": "编辑",
+    "errType": "请选择图片文件。",
+    "errSize": "图片需小于 {mb}MB。"
+  },
+  "name": {
+    "edit": "编辑名字",
+    "save": "保存"
+  },
+  "grass": {
+    "title": "🌿 学习花园 · {year}",
+    "minutesShort": "{n} 分钟",
+    "dayTitle": "{date} · {n} 分钟",
+    "less": "少",
+    "more": "多"
+  },
+  "reminders": {
+    "title": "⏰ 每日提醒",
+    "scheduleKnown": "每天一次，约 {time} — 仅在你当天还没学习时发送",
+    "scheduleUnknown": "每天一次 — 仅在你当天还没学习时发送",
+    "pushTitle": "推送通知",
+    "pushDesc": "即使标签页已关闭，也能送达这台设备。",
+    "pushIos": "在 iPhone 上请先把 Kroot 添加到主屏幕（分享 → 添加到主屏幕），然后再开启。",
+    "pushUnsupported": "此浏览器不支持 — 请试试 Chrome、Edge 或 Firefox。",
+    "emailTitle": "邮件",
+    "emailDesc": "向你的登录邮箱发送一条简短提醒。",
+    "emailNone": "请先为账号添加邮箱，才能使用此功能。",
+    "errBlocked": "本站的通知已被拦截 — 请在浏览器设置中允许后重试。",
+    "errNoKey": "此部署尚未配置推送通知。",
+    "errUnsupported": "此浏览器不支持推送通知。",
+    "errSubscribe": "订阅失败 — 请重试。",
+    "errSave": "保存失败 — 请重试。"
+  },
+  "insights": {
+    "title": "📊 学习分析",
+    "skills": {
+      "reading": "阅读",
+      "writing": "写作",
+      "listening": "听力",
+      "speaking": "口语",
+      "vocabulary": "词汇",
+      "grammar": "语法",
+      "pronunciation": "发音",
+      "hangul": "韩文字母",
+      "slang": "俚语",
+      "quest": "每日任务"
+    },
+    "boxes": {
+      "1": "刚种下",
+      "2": "发芽了",
+      "3": "生长中",
+      "4": "已扎根",
+      "5": "根深蒂固"
+    },
+    "tiles": {
+      "wordAccuracy": "单词正确率",
+      "readingAccuracy": "阅读正确率",
+      "pronunciationScore": "发音平均分",
+      "xp14": "XP · 14 天"
+    },
+    "xpTitle": "⚡ XP · 最近 14 天",
+    "xpPerDay": "XP / 天",
+    "xpDayTitle": "{date}：{xp} XP",
+    "bySkillTitle": "🌱 你的 XP 来自哪里",
+    "bySkillEmpty": "完成一节课，这里就会开始显示各项能力的明细。",
+    "xpAmount": "{xp} XP",
+    "boxesTitle": "💧 你的单词扎根有多深",
+    "wordCount": "{n} 个单词",
+    "weakestTitle": "🥀 需要多复习的单词",
+    "weakestLink": "去复习 →",
+    "weakestEmpty": "没有枯萎的单词 — 你复习过的每个词状态都不错。🌱",
+    "footnote": "分项 XP 从学习分析上线当天开始统计：更早的 XP 会出现在时间线里，但不会按能力拆分。"
+  }
+}

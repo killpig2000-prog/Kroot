@@ -1,0 +1,153 @@
+{
+  "welcome": "Welcome, {name}",
+  "day": "Day {n}",
+  "loadError": "We couldn't load your progress just now — nothing is lost. Refresh in a moment.",
+  "quest": {
+    "title": "Today's quest",
+    "done": "Done ✓",
+    "go": "Go →",
+    "start": "Start ▸",
+    "descriptions": {
+      "writing": "Writing · one chapter, a few questions · ~8 min",
+      "vocabulary": "Review · your due words · ~5 min",
+      "listening": "Listening · one dialogue at your level · ~5 min",
+      "reading": "Reading · one short passage · ~4 min",
+      "pronunciation": "Pronunciation · clear one chapter · ~4 min"
+    }
+  },
+  "review": {
+    "due": "{count, plural, =1 {1 word is due for review} other {# words are due for review}}",
+    "dueShort": "{count, plural, =1 {1 due} other {# due}}",
+    "now": "Review now →",
+    "short": "Review →"
+  },
+  "slang": {
+    "title": "Today's slang",
+    "flip": "Flip it →",
+    "hear": "Hear it in context →",
+    "short": "Slang →"
+  },
+  "wotd": {
+    "title": "Word of the day"
+  },
+  "hangul": {
+    "title": "Completely new to Korean?",
+    "sub": "Learn the alphabet first — 40 letters, one hour, free forever.",
+    "cta": "Start here →"
+  },
+  "garden": {
+    "thisWeek": "this week",
+    "total": "total",
+    "bestStreak": "best streak",
+    "monthGoal": "{month} goal"
+  },
+  "levelMap": {
+    "title": "Your path",
+    "checksToward": "{done}/{total} checks toward {next}",
+    "topOfTree": "Top of the tree 🌟",
+    "levelsAria": "Levels",
+    "ready": "Ready for the {current} → {next} test",
+    "unlock": "Unlock {next} · {species}",
+    "start": "Start →",
+    "details": "Details →",
+    "checkWordsHeld": "Words held",
+    "checkReading": "Reading"
+  },
+  "tree": {
+    "levelBadge": "Lv. {level}",
+    "metresTall": "m tall",
+    "maxed": "Reached the stars 🌟",
+    "xpToNext": "{into}/{needed} XP to Lv. {next}",
+    "phrases": {
+      "fighting": "you got this!",
+      "goodToday": "looking good today!",
+      "thanksWater": "thanks for the water",
+      "growTogether": "let's grow together"
+    },
+    "keepsakes": {
+      "60": "Bird's nest",
+      "70": "Rope swing",
+      "80": "Birdhouse",
+      "90": "Lantern string",
+      "100": "Treehouse",
+      "110": "Weather vane",
+      "120": "Star topper"
+    }
+  },
+  "growth": {
+    "closeAria": "Close",
+    "dialogAria": "Tree growth",
+    "promotion": "Promotion!",
+    "taller": "Taller!",
+    "grew": "Your tree grew!",
+    "newTree": "A brand new tree! 🌳",
+    "newTier": "A new canopy tier — and a keepsake 🌲",
+    "sayHello": "Say hello to the {treeName}! 🌳",
+    "note": "Lv. {level} — review a little every day and watch how far it grows.",
+    "ok": "Nice!"
+  },
+  "firstVisit": {
+    "todayFiveMinutes": "Today · 5 minutes",
+    "startHere": "Start here",
+    "startStep1": "Start step 1 →",
+    "unlocksNext": "Unlocks next",
+    "lockedAria": "Locked dashboard sections",
+    "showEverything": "Show everything now",
+    "locked": {
+      "quest": {
+        "title": "Today's quest",
+        "note": "opens after session 1"
+      },
+      "wotd": {
+        "title": "Word of the day",
+        "note": "opens after session 2"
+      },
+      "levelMap": {
+        "title": "Level map",
+        "note": "opens after session 3"
+      },
+      "heatmap": {
+        "title": "Study garden",
+        "note": "opens at a 3-day streak"
+      }
+    },
+    "steps": {
+      "hangul": "Hangul",
+      "hangulDetail": "Consonants",
+      "vocab": "Vocab",
+      "vocabDetail": "Unit 1 (10 words)",
+      "vocabDetailLevel": "Unit 1 (10 words) · {level}",
+      "listening": "Listening",
+      "listeningDetail": "one short dialogue",
+      "waterSeedling": "Review your seedling 💧",
+      "minutes": "{n} min",
+      "seconds": "{n} s"
+    }
+  },
+  "account": {
+    "darkMode": "Dark mode",
+    "seasonalTheme": "Seasonal theme",
+    "logout": "Log out",
+    "leaving": "Leaving…"
+  },
+  "feedback": {
+    "closeAria": "Close",
+    "dialogAria": "Feedback",
+    "notice": "Notice",
+    "launchedTitle": "Kroot has recently launched",
+    "launchedBody1": "The app is still early and has many shortcomings. We are continuing to improve it.",
+    "launchedBody2": "If you have any opinions or suggestions, we would appreciate hearing them.",
+    "send": "Send feedback",
+    "close": "Close",
+    "hideToday": "Don't show again today",
+    "formSub": "A bug, a rough edge, a feature you wish we had — all welcome.",
+    "placeholder": "What's on your mind?",
+    "error": "Couldn't send that — mind trying again?",
+    "sending": "Sending…",
+    "submit": "Send",
+    "cancel": "Cancel",
+    "thanksTitle": "Thank you",
+    "thanksBody": "Your feedback has been received. We read every message and use it to decide what to improve next.",
+    "railLink": "Send feedback →"
+  }
+}

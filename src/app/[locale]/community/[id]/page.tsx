@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { getLocale, getTranslations } from "next-intl/server";
 import { Link, redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
@@ -7,19 +8,22 @@ import DeletePostButton from "@/components/community/DeletePostButton";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import {
   SAMPLE_POSTS,
-  boardLabel,
   findNotice,
+  isBoardKey,
   isTableMissing,
   splitPost,
-  timeAgo,
   type CommunityComment,
 } from "@/lib/community";
+import { formatTimeAgo } from "@/components/community/time-ago";
 
 export default async function CommunityPostPage({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
+  const t = await getTranslations("community");
+  const tn = await getTranslations("nav");
+  const locale = await getLocale();
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
 
@@ -50,11 +54,11 @@ export default async function CommunityPostPage({
           <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] md:pb-[60px]">
             <div className="flex gap-2 text-[13px] text-faint mb-[18px]">
               <Link href="/dashboard" className="hover:text-charcoal transition-colors">
-                Garden
+                {tn("garden")}
               </Link>
               <span>/</span>
               <Link href="/community" className="hover:text-charcoal transition-colors">
-                Community
+                {t("title")}
               </Link>
               <span>/</span>
               <b className="text-charcoal font-semibold truncate max-w-[240px]">{notice.title}</b>
@@ -63,9 +67,9 @@ export default async function CommunityPostPage({
             <article className="border border-success-line rounded-[14px] bg-cream max-w-[980px] px-[22px] py-5">
               <div className="flex items-center gap-2.5 mb-2 flex-wrap">
                 <span className="text-[11.5px] font-bold rounded-full border border-[var(--tint-green-line)] bg-success-bg text-success-deep px-2.5 py-[3px]">
-                  📌 Official notice
+                  {t("notice.officialBadge")}
                 </span>
-                <span className="text-[12.5px] text-muted">🌱 Kroot team</span>
+                <span className="text-[12.5px] text-muted">{t("notice.teamLine")}</span>
               </div>
               <h1 className="font-bold text-[20px] tracking-[-0.01em] mb-2.5">
                 {notice.emoji} {notice.title}
@@ -74,12 +78,12 @@ export default async function CommunityPostPage({
             </article>
 
             <p className="text-[12.5px] text-faint mt-4 max-w-[980px]">
-              Comments are closed on notices — got a question about this?{" "}
+              {t("notice.closed")}{" "}
               <Link
                 href="/community/new?board=question"
                 className="font-semibold text-success hover:underline"
               >
-                Ask it on the Question board →
+                {t("notice.ask")}
               </Link>
             </p>
           </main>
@@ -136,11 +140,11 @@ export default async function CommunityPostPage({
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] md:pb-[60px]">
           <div className="flex gap-2 text-[13px] text-faint mb-[18px]">
             <Link href="/dashboard" className="hover:text-charcoal transition-colors">
-              Garden
+              {tn("garden")}
             </Link>
             <span>/</span>
             <Link href="/community" className="hover:text-charcoal transition-colors">
-              Community
+              {t("title")}
             </Link>
             <span>/</span>
             <b className="text-charcoal font-semibold truncate max-w-[240px]">{title}</b>
@@ -149,7 +153,7 @@ export default async function CommunityPostPage({
           <article className="border border-line rounded-[14px] bg-cream max-w-[980px] px-[22px] py-5">
             <div className="flex items-center gap-2.5 mb-2 flex-wrap">
               <span className="text-[11.5px] font-semibold rounded-full border border-[var(--tint-slate-line)] bg-[var(--tint-slate)] text-[var(--tint-slate-ink)] px-2.5 py-[3px]">
-                {boardLabel(post.board)}
+                {t(`boards.${isBoardKey(post.board) ? post.board : "free"}`)}
               </span>
               <span
                 className={`text-[12.5px] ${
@@ -162,7 +166,9 @@ export default async function CommunityPostPage({
                 {"author_plus" in post && post.author_plus && " 🌟"}
                 {post.country ? ` · ${post.country}` : ""}
               </span>
-              <span className="text-[12px] text-faint">{timeAgo(post.created_at)}</span>
+              <span className="text-[12px] text-faint">
+                {formatTimeAgo(post.created_at, (k, v) => t(`timeAgo.${k}`, v), locale)}
+              </span>
               {mine && (
                 <span className="ml-auto">
                   <DeletePostButton postId={post.id} />

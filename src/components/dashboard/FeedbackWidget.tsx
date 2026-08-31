@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import { usePathname } from "@/i18n/navigation";
 
 // Early-launch notice: shows on every dashboard load while we're actively
@@ -17,6 +18,7 @@ function localDateKey() {
 }
 
 export default function FeedbackWidget() {
+  const t = useTranslations("dashboard.feedback");
   const [view, setView] = useState<View>("closed");
   const [message, setMessage] = useState("");
   const [sending, setSending] = useState(false);
@@ -29,8 +31,8 @@ export default function FeedbackWidget() {
       hiddenToday = localStorage.getItem(HIDE_KEY) === localDateKey();
     } catch {}
     if (hiddenToday) return;
-    const t = setTimeout(() => setView("announce"), 600);
-    return () => clearTimeout(t);
+    const timer = setTimeout(() => setView("announce"), 600);
+    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
@@ -88,7 +90,7 @@ export default function FeedbackWidget() {
   return (
     <>
       <button
-        aria-label="Close"
+        aria-label={t("closeAria")}
         onClick={close}
         className="fixed inset-0 z-[60] bg-[#282319]/45 cursor-default"
       />
@@ -96,7 +98,7 @@ export default function FeedbackWidget() {
         <div
           role="dialog"
           aria-modal="true"
-          aria-label="Feedback"
+          aria-label={t("dialogAria")}
           className={`pointer-events-auto w-full bg-cream rounded-[24px] shadow-[0_30px_70px_-20px_rgba(40,35,25,.35)] ${
             view === "announce" ? "max-w-[420px] px-7 pt-7 pb-6" : "max-w-[380px] px-6 py-6"
           }`}
@@ -104,36 +106,35 @@ export default function FeedbackWidget() {
           {view === "announce" && (
             <>
               <span className="block text-[11px] font-bold uppercase tracking-[0.12em] text-faint mb-2">
-                Notice
+                {t("notice")}
               </span>
               <b className="block text-[18px] font-extrabold text-charcoal mb-3 tracking-tight">
-                Kroot has recently launched
+                {t("launchedTitle")}
               </b>
               <p className="text-[14px] text-muted leading-relaxed mb-2">
-                The app is still early and has many shortcomings. We are continuing to improve
-                it.
+                {t("launchedBody1")}
               </p>
               <p className="text-[14px] text-muted leading-relaxed mb-6">
-                If you have any opinions or suggestions, we would appreciate hearing them.
+                {t("launchedBody2")}
               </p>
               <button
                 onClick={() => setView("form")}
                 className="w-full rounded-[12px] bg-[#221F1B] text-white font-semibold text-[14px] py-3 hover:bg-[#3A3530] transition-colors"
               >
-                Send feedback
+                {t("send")}
               </button>
               <div className="flex items-center justify-between mt-3 pt-3 border-t border-line">
                 <button
                   onClick={dismissAnnouncement}
                   className="text-[13px] font-semibold text-muted hover:text-charcoal transition-colors py-1"
                 >
-                  Close
+                  {t("close")}
                 </button>
                 <button
                   onClick={hideForToday}
                   className="text-[13px] font-semibold text-faint hover:text-muted transition-colors py-1"
                 >
-                  Don&apos;t show again today
+                  {t("hideToday")}
                 </button>
               </div>
             </>
@@ -142,23 +143,23 @@ export default function FeedbackWidget() {
           {view === "form" && (
             <>
               <b className="block text-[15px] font-extrabold text-charcoal mb-1.5">
-                Send feedback
+                {t("send")}
               </b>
               <p className="text-[13px] text-muted mb-3.5">
-                A bug, a rough edge, a feature you wish we had — all welcome.
+                {t("formSub")}
               </p>
               <textarea
                 autoFocus
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                placeholder="What's on your mind?"
+                placeholder={t("placeholder")}
                 rows={5}
                 maxLength={2000}
                 className="w-full resize-none rounded-[11px] border border-line bg-cream px-3.5 py-3 text-[13.5px] text-charcoal placeholder:text-[#B7AE9C] focus:outline-none focus:border-success"
               />
               {error && (
                 <p className="text-[12px] text-danger mt-2">
-                  Couldn&apos;t send that — mind trying again?
+                  {t("error")}
                 </p>
               )}
               <div className="flex gap-2.5 mt-4">
@@ -167,13 +168,13 @@ export default function FeedbackWidget() {
                   disabled={!message.trim() || sending}
                   className="flex-1 rounded-[11px] bg-success text-white font-semibold text-[13.5px] py-2.5 hover:bg-success-deep transition-colors disabled:opacity-50 disabled:hover:bg-success"
                 >
-                  {sending ? "Sending…" : "Send"}
+                  {sending ? t("sending") : t("submit")}
                 </button>
                 <button
                   onClick={close}
                   className="rounded-[11px] border border-line bg-cream text-muted font-semibold text-[13.5px] px-4 py-2.5 hover:border-dash transition-colors"
                 >
-                  Cancel
+                  {t("cancel")}
                 </button>
               </div>
             </>
@@ -181,16 +182,15 @@ export default function FeedbackWidget() {
 
           {view === "sent" && (
             <>
-              <b className="block text-[16px] font-extrabold text-charcoal mb-1.5">Thank you</b>
+              <b className="block text-[16px] font-extrabold text-charcoal mb-1.5">{t("thanksTitle")}</b>
               <p className="text-[13.5px] text-muted leading-relaxed mb-5">
-                Your feedback has been received. We read every message and use it to decide
-                what to improve next.
+                {t("thanksBody")}
               </p>
               <button
                 onClick={close}
                 className="w-full rounded-[11px] bg-success text-white font-semibold text-[13.5px] py-2.5 hover:bg-success-deep transition-colors"
               >
-                Close
+                {t("close")}
               </button>
             </>
           )}

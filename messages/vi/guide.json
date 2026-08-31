@@ -1,0 +1,117 @@
+{
+  "breadcrumb": "Hướng dẫn",
+  "intro": "Không có gì trong Kroot bị khóa theo thứ tự. Hãy chọn lộ trình hợp với lý do bạn học tiếng Hàn, rồi đi từng chặng một.",
+  "sections": {
+    "roadmaps": {
+      "title": "Lộ trình",
+      "note": "Chỉ chọn một — chạy cả hai cùng lúc là lý do người ta bỏ dở. Mỗi chặng đều là một liên kết, nên bạn đang ở đâu thì vào từ đó."
+    },
+    "extras": {
+      "title": "Hai thứ lộ trình không hiển thị",
+      "note": "Cả hai đều không phải một chặng — một cái chạy bên dưới, cái kia khép lại lộ trình."
+    },
+    "progress": {
+      "title": "Tiến bộ hoạt động thế nào",
+      "note": "Ba thứ nghe có vẻ liên quan nhưng chạy độc lập với nhau."
+    }
+  },
+  "routes": {
+    "people": {
+      "tag": "Đa số bắt đầu từ đây",
+      "name": "Dùng tiếng Hàn với mọi người",
+      "sub": "Phim, du lịch, bạn bè. Bỏ qua phần ngữ pháp bạn chưa cần tới.",
+      "pace": "20 phút mỗi ngày",
+      "stops": {
+        "hangul": {
+          "task": "40 chữ cái",
+          "freq": "1 giờ"
+        },
+        "vocab": {
+          "task": "những từ giữ được cuộc trò chuyện",
+          "freq": "10 phút mỗi ngày"
+        },
+        "listen": {
+          "task": "hội thoại ở tốc độ thật",
+          "freq": "3 lần/tuần"
+        },
+        "pron": {
+          "task": "nói là người ta hiểu ngay",
+          "freq": "5 phút mỗi ngày"
+        },
+        "slang": {
+          "task": "thôi nói như sách giáo khoa",
+          "freq": "khi tò mò"
+        }
+      }
+    },
+    "exam": {
+      "tag": "Nếu bạn cần chứng chỉ",
+      "name": "Đạt B2 hoặc thi đỗ TOPIK",
+      "sub": "Ngữ pháp theo thứ tự, không bỏ sót. Cảm giác trôi chảy đến chậm hơn, nhưng nền vững hơn.",
+      "pace": "30 phút mỗi ngày",
+      "stops": {
+        "hangul": {
+          "task": "40 chữ cái",
+          "freq": "1 giờ"
+        },
+        "grammar": {
+          "task": "mọi nhóm, theo thứ tự",
+          "freq": "1 bài mỗi ngày"
+        },
+        "vocab": {
+          "task": "các phần đến hết B2",
+          "freq": "15 phút mỗi ngày"
+        },
+        "read": {
+          "task": "bài báo và bài luận",
+          "freq": "3 lần/tuần"
+        },
+        "write": {
+          "task": "nhật ký, rồi bài nêu ý kiến",
+          "freq": "2 lần/tuần"
+        }
+      }
+    }
+  },
+  "youAreHere": "Bạn đang ở đây",
+  "doneOn": "Xong {date}",
+  "review": {
+    "kicker": "Mỗi ngày",
+    "title": "Thực hành",
+    "body": "Mỗi từ bạn học đều được hẹn quay lại trước khi bạn kịp quên. Bạn không phải theo dõi gì cả — cứ ghé vào và tưới những gì đến hạn.",
+    "whereLabel": "Ở đâu",
+    "whereValue": "Khu vườn → Thực hành",
+    "howLongLabel": "Mất bao lâu",
+    "howLongValue": "vài phút"
+  },
+  "test": {
+    "kicker": "Thỉnh thoảng",
+    "title": "Bài kiểm tra thăng cấp",
+    "body": "Thứ duy nhất làm thay đổi cấp độ của bạn. Một từ chỉ được tính khi đã vượt qua hai lần ôn giãn cách đầu tiên, nên phần này tự đầy lên khi bạn học — bạn không bao giờ phải tự quyết định lúc nào mình sẵn sàng.",
+    "unlocksLabel": "Mở khóa khi",
+    "unlocksValue": "còn nhớ {words} từ ở cấp của bạn, cộng thêm {passages} bài đọc",
+    "youLabel": "Bạn",
+    "youStats": "{wordsHeld}/{wordsRequired} từ đã nhớ · {readingDone}/{readingRequired} bài đọc",
+    "youReady": " · sẵn sàng cho {from} → {to}",
+    "toPassLabel": "Để đạt",
+    "toPassValue": "từ 60 ở mọi kỹ năng, trung bình từ 70"
+  },
+  "facts": {
+    "effort": {
+      "kicker": "Nỗ lực",
+      "title": "Cấp cây 1–120",
+      "body": "Mỗi buổi học đều được XP. Lên cấp nghĩa là bạn đã bỏ thời gian ra — nó không đổi trình độ của bạn."
+    },
+    "ability": {
+      "kicker": "Trình độ",
+      "title": "Bậc A1–C2",
+      "body": "Chỉ thay đổi khi bạn vượt qua bài kiểm tra thăng cấp. Đó cũng là lúc cây của bạn đổi loài."
+    },
+    "cosmetic": {
+      "kicker": "Trang trí",
+      "title": "Khu vườn",
+      "body": "Trang phục, bầu trời và bạn đồng hành từ Cửa hàng. Chỉ để làm đẹp, không ảnh hưởng đến việc học."
+    }
+  },
+  "footer": "Mọi thứ ở đây đều theo nhịp của bạn — bài kiểm tra không bao giờ chặn tiến độ và không có gì hết hạn. Hãy quay lại trang này bất cứ khi nào bạn thấy lạc lối."
+}

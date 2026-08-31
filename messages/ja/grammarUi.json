@@ -1,0 +1,18 @@
+{
+  "breadcrumb": "文法",
+  "lessonCount": "{n} レッスン",
+  "lessonNumber": "レッスン {n}",
+  "checkYourself": "確認テスト",
+  "allLessons": "← レッスン一覧",
+  "nextLesson": "次へ：{title} →",
+  "hearExample": "{text} を聞く",
+  "resumeDetail": "文法",
+  "quiz": {
+    "question": "問題 {n}",
+    "progress": "{total} 問中 {n} 問目",
+    "correct": "🌱 正解！",
+    "wrong": "💧 惜しい — 正解は {letter}。{text}",
+    "done": "🌱 クイズ終了 — 今日の学習時間が木に反映されました。",
+    "levelUp": "🎉 レベルアップ！Lv. {n} になりました"
+  }
+}

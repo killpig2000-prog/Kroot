@@ -42,8 +42,10 @@ export const viewport: Viewport = {
 };
 
 // Generated rather than static so the homepage can declare a canonical that
-// names the locale being served. The landing page itself can't do it: it is a
-// "use client" component, and generateMetadata is server-only.
+// names the locale being served. (The landing page became a server component
+// in 2026-08, so it could now own this itself — but see the warning below:
+// `alternates` living here is load-bearing for other routes, so moving it is
+// an SEO change, not a cleanup.)
 //
 // Careful — Next merges metadata shallowly from the root segment down, so a
 // nested field the page doesn't set is INHERITED. `alternates` here therefore

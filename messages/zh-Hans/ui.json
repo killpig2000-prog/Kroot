@@ -75,5 +75,24 @@
     "moreWords": "还有 {count} 个",
     "nothingDue": "暂时没有待复习的词。下一个词{when}回来。",
     "nothingDuePlain": "暂时没有待复习的词。"
+  },
+  "error": {
+    "title": "出了点小状况"
+  },
+  "levelTabs": {
+    "ariaLabel": "等级",
+    "lockedTitle": "通过升级测试即可解锁这个等级",
+    "you": "你",
+    "lockedNote": "🔒 通过升级测试后，锁定的等级就会开启。"
+  },
+  "languageNav": "语言",
+  "install": {
+    "title": "把 Kroot 放到主屏幕上",
+    "ios": "点击分享，再选择“添加到主屏幕”——一键打开今天的课程。",
+    "streak": "一键守住你 {count} 天的连续记录。",
+    "generic": "像应用一样打开，一键开始今天的课程。",
+    "install": "安装",
+    "notNow": "以后再说",
+    "dismissAria": "关闭"
   }
 }

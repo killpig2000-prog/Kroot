@@ -75,5 +75,24 @@
     "moreWords": "+{count} more",
     "nothingDue": "Nothing due. Your next word comes back {when}.",
     "nothingDuePlain": "Nothing due right now."
+  },
+  "error": {
+    "title": "Small hiccup"
+  },
+  "levelTabs": {
+    "ariaLabel": "Level",
+    "lockedTitle": "Pass the promotion test to unlock this level",
+    "you": "you",
+    "lockedNote": "🔒 Locked levels open when you pass the promotion test."
+  },
+  "languageNav": "Language",
+  "install": {
+    "title": "Keep Kroot on your home screen",
+    "ios": "Tap Share, then “Add to Home Screen” — one tap to today's lesson.",
+    "streak": "One tap to protect your {count, plural, =1 {1-day} other {#-day}} streak.",
+    "generic": "Opens like an app, one tap to today's lesson.",
+    "install": "Install",
+    "notNow": "Not now",
+    "dismissAria": "Dismiss"
   }
 }

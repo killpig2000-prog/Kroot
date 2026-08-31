@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import SpeakButton from "./SpeakButton";
 import { VibeChip } from "./SlangCard";
 import type { SlangEntry } from "@/lib/slang";
@@ -7,11 +8,12 @@ import type { SlangEntry } from "@/lib/slang";
 // The "slang of the day" banner. The entry is chosen on the server so the
 // server and client agree on which word it is.
 export default function SlangHero({ entry }: { entry: SlangEntry }) {
+  const t = useTranslations("slang");
   return (
     <div className="border border-[var(--tint-pink-line)] rounded-[14px] bg-[var(--tint-pink)] p-[18px] md:p-6 mb-6 max-w-[980px] flex flex-col md:flex-row gap-5 md:items-center">
       <div className="md:w-[220px] shrink-0">
         <span className="inline-block text-[11.5px] font-semibold uppercase tracking-[0.06em] text-[#C13E78] mb-2">
-          Slang of the day
+          {t("hero.ofTheDay")}
         </span>
         <div className="flex items-center gap-2.5">
           <span className="kr text-[clamp(30px,5vw,42px)] leading-none text-charcoal">{entry.kr}</span>
@@ -23,7 +25,7 @@ export default function SlangHero({ entry }: { entry: SlangEntry }) {
       <div className="min-w-0 flex-1">
         <b className="block font-bold text-[17px] tracking-[-0.01em] text-charcoal">{entry.meaning}</b>
         <span className="block text-[12.5px] text-faint italic mt-0.5">
-          literally &ldquo;{entry.literal}&rdquo;
+          {t("card.literally", { text: entry.literal })}
         </span>
         {entry.origin && (
           <p className="text-[13px] text-muted mt-2 leading-[1.55]">{entry.origin}</p>

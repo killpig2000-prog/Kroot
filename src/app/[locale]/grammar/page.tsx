@@ -4,7 +4,7 @@ import { Link, redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
-import { GRAMMAR_GROUPS, GRAMMAR_LESSONS, lessonByKey, lessonsByLevel, getLocalizedLesson, getLocalizedGrammarGroup } from "@/lib/grammar";
+import { GRAMMAR_GROUPS, GRAMMAR_LESSONS, lessonsByLevel, getLocalizedLesson, getLocalizedGrammarGroup } from "@/lib/grammar";
 import { isDifficultyUnlocked } from "@/lib/level";
 import { LEVEL_ORDER, isCefrLevel, type CefrLevel } from "@/lib/tree";
 
@@ -16,6 +16,7 @@ export default async function GrammarPage({
   searchParams: Promise<{ level?: string; group?: string }>;
 }) {
   const tn = await getTranslations("nav");
+  const t = await getTranslations("grammarUi");
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
 
@@ -36,7 +37,10 @@ export default async function GrammarPage({
   // "Start here" / "Next steps" sit as pills in the same row as the CEFR
   // levels — a ?group= param picks one instead of a level, so there's one
   // lesson list on screen at a time rather than three stacked sections.
-  const selectedGroup = sp.group ? GRAMMAR_GROUPS.find((g) => g.key === sp.group) ?? null : null;
+  const groups = await Promise.all(
+    GRAMMAR_GROUPS.map(async (g) => (await getLocalizedGrammarGroup(g.key, locale)) ?? g)
+  );
+  const selectedGroup = sp.group ? groups.find((g) => g.key === sp.group) ?? null : null;
   const groupLessons = selectedGroup
     ? (
         await Promise.all(
@@ -44,7 +48,9 @@ export default async function GrammarPage({
         )
       ).filter((l): l is NonNullable<typeof l> => Boolean(l))
     : [];
-  const levelLessons = lessonsByLevel(level);
+  const levelLessons = (
+    await Promise.all(lessonsByLevel(level).map((l) => getLocalizedLesson(l.key, locale)))
+  ).filter((l): l is NonNullable<typeof l> => Boolean(l));
   const shownLessons = selectedGroup ? groupLessons : levelLessons;
 
   return (
@@ -68,7 +74,7 @@ export default async function GrammarPage({
               {tn("grammar")}
             </h1>
             <span className="text-[13px] text-muted">
-              {GRAMMAR_LESSONS.length} lessons
+              {t("lessonCount", { n: GRAMMAR_LESSONS.length })}
             </span>
           </div>
 
@@ -76,7 +82,7 @@ export default async function GrammarPage({
               list on screen at a time instead of three stacked sections. */}
           <section className="max-w-[820px] mb-8">
             <div className="flex gap-2 mb-4 flex-wrap">
-              {GRAMMAR_GROUPS.map((group) => (
+              {groups.map((group) => (
                 <Link
                   key={group.key}
                   href={`/grammar?group=${group.key}`}
@@ -107,7 +113,7 @@ export default async function GrammarPage({
                 </span>
               )}
               <span className="h-px flex-1 bg-line" />
-              <span className="text-[12px] text-faint">{shownLessons.length} lessons</span>
+              <span className="text-[12px] text-faint">{t("lessonCount", { n: shownLessons.length })}</span>
             </div>
 
             <div className="border border-line rounded-[14px] overflow-hidden">

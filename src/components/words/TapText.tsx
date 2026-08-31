@@ -2,7 +2,8 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { createClient } from "@/lib/supabase/client";
+import { useTranslations } from "next-intl";
+import { createClient, getClientUserId } from "@/lib/supabase/client";
 import { track } from "@/lib/analytics";
 import { lookupWord, plantWord, tokenizeKorean } from "@/lib/word-bank";
 import { useKoreanSpeaker } from "@/hooks/useSpeechRecognition";
@@ -42,6 +43,7 @@ export default function TapText({
   source: TapSource;
   className?: string;
 }) {
+  const t = useTranslations("vocabulary.tap");
   const supabase = useMemo(() => createClient(), []);
   const tokens = useMemo(() => tokenizeKorean(text), [text]);
   const [pop, setPop] = useState<Popover | null>(null);
@@ -99,10 +101,7 @@ export default function TapText({
 
     let uid = resolvedUser;
     if (uid === undefined) {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      uid = user?.id ?? null;
+      uid = await getClientUserId(supabase);
       setSessionUser(uid);
     }
 
@@ -167,7 +166,7 @@ export default function TapText({
           <div
             ref={popRef}
             role="dialog"
-            aria-label="Word details"
+            aria-label={t("dialogLabel")}
             onClick={(e) => e.stopPropagation()}
             className="fixed z-[100] bg-cream border border-line rounded-[12px] shadow-[0_8px_24px_rgba(24,20,10,.12)] p-3 text-left text-charcoal font-body"
             style={{
@@ -179,7 +178,7 @@ export default function TapText({
             }}
           >
             {pop.word === "loading" ? (
-              <p className="text-[13px] text-muted">Looking up…</p>
+              <p className="text-[13px] text-muted">{t("lookingUp")}</p>
             ) : pop.word ? (
               <>
                 <div className="flex items-start justify-between gap-2">
@@ -196,7 +195,7 @@ export default function TapText({
                   {ttsOk && (
                     <button
                       type="button"
-                      aria-label={`Hear ${pop.word.korean}`}
+                      aria-label={t("hear", { word: pop.word.korean })}
                       onClick={() => speak(pop.token)}
                       className="flex-none w-8 h-8 rounded-full bg-warm border border-line text-[13px] hover:border-faint transition-colors"
                     >
@@ -206,7 +205,7 @@ export default function TapText({
                   {resolvedUser &&
                     (pop.saved ? (
                       <span className="text-[12px] font-semibold text-success leading-snug">
-                        Saved ✓ — it&apos;ll come up in Watering time
+                        {t("saved")}
                       </span>
                     ) : (
                       <button
@@ -215,7 +214,7 @@ export default function TapText({
                         disabled={pop.saving}
                         className="flex-1 rounded-[9px] bg-success text-white text-[12.5px] font-semibold px-3 py-1.5 hover:bg-success-deep transition-colors disabled:opacity-60"
                       >
-                        {pop.saving ? "Planting…" : "🌱 Save to garden"}
+                        {pop.saving ? t("planting") : `🌱 ${t("save")}`}
                       </button>
                     ))}
                 </div>
@@ -227,7 +226,7 @@ export default function TapText({
                   {ttsOk && (
                     <button
                       type="button"
-                      aria-label={`Hear ${pop.token}`}
+                      aria-label={t("hear", { word: pop.token })}
                       onClick={() => speak(pop.token)}
                       className="flex-none w-8 h-8 rounded-full bg-warm border border-line text-[13px] hover:border-faint transition-colors"
                     >
@@ -235,7 +234,7 @@ export default function TapText({
                     </button>
                   )}
                 </div>
-                <p className="text-[12.5px] text-muted mt-1.5 leading-snug">Not in the word deck yet.</p>
+                <p className="text-[12.5px] text-muted mt-1.5 leading-snug">{t("notInDeck")}</p>
               </>
             )}
           </div>,

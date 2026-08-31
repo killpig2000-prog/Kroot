@@ -1,12 +1,14 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 import { recordCompletion } from "@/lib/activity";
 import { SLANG, type SlangEntry } from "@/lib/slang";
 
 const QUESTIONS = 5;
 const OPTIONS = 4;
+const QUIZ_XP = 4;
 
 // Deterministic PRNG so today's quiz is the same on every visit (and safe to
 // build during render).
@@ -55,6 +57,7 @@ function buildQuiz(dayKey: string): Question[] {
 const DONE_KEY = "kroot-slang-quiz";
 
 export default function SlangQuiz() {
+  const t = useTranslations("slang.quiz");
   const supabase = useMemo(() => createClient(), []);
   const day = todayKey();
   const quiz = useMemo(() => buildQuiz(day), [day]);
@@ -117,11 +120,11 @@ export default function SlangQuiz() {
         <div className="flex items-center gap-3.5 flex-wrap">
           <span className="text-[22px] flex-none">🎯</span>
           <div className="flex-1 min-w-[180px]">
-            <b className="block text-[14px] font-bold text-[#AF3166]">Daily slang challenge</b>
+            <b className="block text-[14px] font-bold text-[#AF3166]">{t("title")}</b>
             <span className="text-[12.5px] text-[#97687D]">
               {doneToday !== null
-                ? `Done today — ${doneToday}/${QUESTIONS} correct. New round tomorrow!`
-                : `Guess the meaning of ${QUESTIONS} expressions · +4 XP`}
+                ? t("doneToday", { score: doneToday, total: QUESTIONS })
+                : t("intro", { n: QUESTIONS, xp: QUIZ_XP })}
             </span>
           </div>
           {doneToday === null && (
@@ -129,7 +132,7 @@ export default function SlangQuiz() {
               onClick={start}
               className="flex-none rounded-[9px] px-[18px] py-2 text-[13px] font-semibold text-white bg-[#C13E78] hover:bg-[#AF3166] transition-colors"
             >
-              Start ▶
+              {t("start")}
             </button>
           )}
         </div>
@@ -138,12 +141,10 @@ export default function SlangQuiz() {
           <span className="text-[22px] flex-none">{score >= 4 ? "🏆" : score >= 2 ? "🌱" : "💧"}</span>
           <div className="flex-1">
             <b className="block text-[14px] font-bold text-[#AF3166]">
-              {score}/{quiz.length} correct · +4 XP
+              {t("result", { score, total: quiz.length, xp: QUIZ_XP })}
             </b>
             <span className="text-[12.5px] text-[#97687D]">
-              {score >= 4
-                ? "Fluent in Street Talk — see you tomorrow!"
-                : "Flip the cards below and come back tomorrow."}
+              {score >= 4 ? t("praise") : t("encourage")}
             </span>
           </div>
         </div>
@@ -151,10 +152,10 @@ export default function SlangQuiz() {
         <div>
           <div className="flex items-center justify-between mb-2.5">
             <b className="text-[12px] font-bold tracking-[.06em] uppercase text-[#C13E78]">
-              What does it mean? · {qIndex + 1}/{quiz.length}
+              {t("prompt", { n: qIndex + 1, total: quiz.length })}
             </b>
             <span className="text-[12px] font-semibold text-[#97687D] tabular-nums">
-              score {score}
+              {t("score", { n: score })}
             </span>
           </div>
           <p className="kr text-[22px] font-bold mb-3">

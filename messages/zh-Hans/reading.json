@@ -1,0 +1,101 @@
+{
+  "crumb": "阅读",
+  "map": {
+    "progress": "{level} 级 · 已读 <b>{done}</b>/{total} 章",
+    "continueChapter": "继续 · 第 {n} 章",
+    "start": "开始 →",
+    "chaptersRange": "第 {first}–{last} 章",
+    "chapterN": "第 {n} 章",
+    "statusDone": "已完成",
+    "statusRead": "阅读",
+    "statusLocked": "已锁定"
+  },
+  "genres": {
+    "diary": "日记",
+    "story": "故事",
+    "notice": "公告",
+    "dialogue": "对话",
+    "message": "消息",
+    "instruction": "说明",
+    "email": "邮件",
+    "explainer": "科普",
+    "review": "评论",
+    "article": "文章",
+    "opinion": "观点",
+    "editorial": "社论",
+    "essay": "随笔",
+    "academic": "学术",
+    "interview": "访谈"
+  },
+  "genreChip": {
+    "diary": "日记",
+    "story": "故事",
+    "notice": "公告",
+    "dialogue": "对话",
+    "message": "消息",
+    "instruction": "操作步骤",
+    "email": "邮件",
+    "explainer": "科普",
+    "review": "评论",
+    "article": "文章",
+    "opinion": "观点",
+    "editorial": "社论",
+    "essay": "随笔",
+    "academic": "学术",
+    "interview": "访谈"
+  },
+  "session": {
+    "chapterN": "第 {n} 章",
+    "emptyTitle": "这里还没有故事",
+    "emptyBody": "本章尚未编写。",
+    "backToMap": "返回地图",
+    "resumeDetail": "阅读 · 第 {n} 章 · {level}"
+  },
+  "read": {
+    "chapterN": "第 {n} 章",
+    "meta": "{level} · {words} 个词 · 约 {min} 分钟",
+    "listen": "朗读",
+    "playing": "播放中",
+    "larger": "放大",
+    "smaller": "缩小",
+    "translationLabel": "翻译",
+    "transOff": "关闭",
+    "transTap": "点按显示",
+    "transAll": "全部",
+    "hintFull": "点按一行查看翻译 · 虚线单词可打开词汇页",
+    "hintDotted": "虚线单词可打开词汇页",
+    "subject": "主题",
+    "wordsTitle": "本篇中的单词",
+    "wordsNote": "点开任意一个即可查看词汇页。",
+    "wordsNoteMore": "还有 {n} 个 · 点开任意一个即可查看词汇页。",
+    "answerQuestions": "回答 {n} 道题 →"
+  },
+  "quiz": {
+    "passage": "原文",
+    "questionOf": "第 {n} 题 / 共 {total} 题",
+    "correctCount": "答对 {n} 题",
+    "whereItSays": "原文依据",
+    "theAnswer": "正确答案",
+    "seeResult": "查看成绩 →",
+    "nextQuestion": "下一题 →"
+  },
+  "summary": {
+    "title": "第 {n} 章完成！",
+    "levelUp": "🎉 升级啦！现在是 Lv. {level}",
+    "questionsRight": "题答对",
+    "readAgain": "再读一遍故事",
+    "nothingMissed": "全部答对 — 整个故事都读懂了。",
+    "wordsWithPage": "个词有词汇页",
+    "openToSave": "点开一个把它收藏。",
+    "openToSaveMore": "还有 {n} 个 · 点开一个把它收藏。",
+    "earned": "已获得",
+    "earnedReview": "已获得 · {n} 题待复习",
+    "saving": "保存中…",
+    "nextChapter": "第 {n} 章 →",
+    "storyMap": "故事地图"
+  },
+  "gloss": {
+    "openWordPage": "打开词汇页",
+    "openSub": "{unit} · 例句、笔记、收藏"
+  }
+}

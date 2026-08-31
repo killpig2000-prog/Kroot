@@ -1,0 +1,117 @@
+{
+  "breadcrumb": "指南",
+  "intro": "Kroot 里没有任何内容被顺序锁住。挑一条符合你学韩语目的的路线，一站一站地走。",
+  "sections": {
+    "roadmaps": {
+      "title": "路线图",
+      "note": "只选一条 — 两条一起走最容易半途而废。每一站都是链接，你现在在哪儿就从哪儿开始。"
+    },
+    "extras": {
+      "title": "路线图上看不到的两件事",
+      "note": "它们都不是路线上的一站 — 一个在底下支撑，一个为路线收尾。"
+    },
+    "progress": {
+      "title": "进步是怎么算的",
+      "note": "三样听起来相关、其实各走各的东西。"
+    }
+  },
+  "routes": {
+    "people": {
+      "tag": "多数人从这里开始",
+      "name": "和人用韩语交流",
+      "sub": "韩剧、旅行、朋友。跳过你现在还用不上的语法。",
+      "pace": "每天 20 分钟",
+      "stops": {
+        "hangul": {
+          "task": "40 个字母",
+          "freq": "1 小时"
+        },
+        "vocab": {
+          "task": "撑得起对话的词",
+          "freq": "每天 10 分钟"
+        },
+        "listen": {
+          "task": "真实语速的对话",
+          "freq": "每周 3 次"
+        },
+        "pron": {
+          "task": "一次就被听懂",
+          "freq": "每天 5 分钟"
+        },
+        "slang": {
+          "task": "别再一开口像课本",
+          "freq": "好奇时"
+        }
+      }
+    },
+    "exam": {
+      "tag": "如果你需要证书",
+      "name": "达到 B2 或通过 TOPIK",
+      "sub": "语法按顺序来，一个不落。感觉流利会慢一些，但根基更稳。",
+      "pace": "每天 30 分钟",
+      "stops": {
+        "hangul": {
+          "task": "40 个字母",
+          "freq": "1 小时"
+        },
+        "grammar": {
+          "task": "每个分组，按顺序",
+          "freq": "每天 1 课"
+        },
+        "vocab": {
+          "task": "一直学到 B2 单元",
+          "freq": "每天 15 分钟"
+        },
+        "read": {
+          "task": "文章与随笔",
+          "freq": "每周 3 次"
+        },
+        "write": {
+          "task": "先日记，再议论",
+          "freq": "每周 2 次"
+        }
+      }
+    }
+  },
+  "youAreHere": "你在这里",
+  "doneOn": "{date} 完成",
+  "review": {
+    "kicker": "每天",
+    "title": "练习",
+    "body": "你学过的每个词都会在你快忘掉之前安排回来。这些你都不用记 — 来一趟，把到期的浇了就行。",
+    "whereLabel": "位置",
+    "whereValue": "花园 → 练习",
+    "howLongLabel": "用时",
+    "howLongValue": "几分钟"
+  },
+  "test": {
+    "kicker": "偶尔",
+    "title": "升级测试",
+    "body": "唯一能改变你等级的东西。一个词要熬过前两次间隔复习才算数，所以只要坚持学，这里就会慢慢填满 — 你不需要自己判断准备好没有。",
+    "unlocksLabel": "解锁条件",
+    "unlocksValue": "本等级仍掌握着 {words} 个词，外加 {passages} 篇阅读",
+    "youLabel": "你",
+    "youStats": "已掌握 {wordsHeld}/{wordsRequired} 个词 · 阅读 {readingDone}/{readingRequired} 篇",
+    "youReady": " · 已可挑战 {from} → {to}",
+    "toPassLabel": "通过标准",
+    "toPassValue": "每项技能 60 分以上，平均 70 分以上"
+  },
+  "facts": {
+    "effort": {
+      "kicker": "投入",
+      "title": "树的等级 1–120",
+      "body": "每次学习都能获得经验值。升级代表你投入的时间，不会改变你的语言等级。"
+    },
+    "ability": {
+      "kicker": "能力",
+      "title": "等级 A1–C2",
+      "body": "只有通过升级测试才会变动。那时你的树也会换一个品种。"
+    },
+    "cosmetic": {
+      "kicker": "装饰",
+      "title": "花园",
+      "body": "商店里的服装、天空和伙伴。纯装饰，不影响学习。"
+    }
+  },
+  "footer": "这里的一切都由你自己掌握节奏 — 测验不会挡住你的进度，也没有任何东西会过期。迷茫的时候随时回到这一页。"
+}

@@ -7,5 +7,24 @@
   "learnDescription": "Kroot通过闪卡、听力和发音练习来教授这个单词 — 完全免费，按您的进度。",
   "startLearning": "免费开始学习",
   "seenInListening": "🎧 在听力中出现",
-  "seenInReading": "📖 在阅读中出现"
+  "seenInReading": "📖 在阅读中出现",
+  "nav": "词典",
+  "startLearningShort": "开始学习",
+  "levelN": "{level} 级",
+  "hubTitle": "韩语词汇词典",
+  "hubIntro": "每个单词都配有罗马音、英文释义和真实例句，并按 CEFR 级别整理，让你随时知道接下来该学什么。",
+  "wordCount": "{count, plural, other {# 个单词}}",
+  "levelTitle": "韩语 {level} 级词汇",
+  "levelIntro": "{level} 级的全部 {count} 个单词，每个都带罗马音、释义和例句。",
+  "jumpToUnit": "跳转到单元",
+  "unitN": "单元 {n}",
+  "unitRange": "单词 {first}–{last}",
+  "blurb": {
+    "A1": "日常基础 — 问候、饮食、家人，以及你最先需要的词。",
+    "A2": "用于日常作息、购物和简单对话的初级词汇。",
+    "B1": "表达观点、谈工作、在韩国出行的中级词汇。",
+    "B2": "看新闻、聊文化、细腻表达的中高级词汇。",
+    "C1": "用于抽象概念、正式写作和辩论的高级词汇。",
+    "C2": "精通级词汇 — 细微、文雅、接近母语的表达。"
+  }
 }

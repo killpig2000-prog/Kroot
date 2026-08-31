@@ -1,0 +1,63 @@
+{
+  "title": "Comunidad",
+  "newPost": "Nueva publicación",
+  "newPostCta": "✍️ Nueva publicación",
+  "all": "Todo",
+  "boards": {
+    "question": "Tablón de preguntas",
+    "free": "Tablón libre",
+    "exchange": "Intercambio de idiomas"
+  },
+  "tableMissing": {
+    "title": "La comunidad abre pronto",
+    "body": "Ejecuta la migración incluida <code>{file}</code> para activar el tablón. Mientras tanto, aquí tienes un adelanto de cómo se ve."
+  },
+  "loadFailed": "No se pudieron cargar las publicaciones. Prueba a actualizar en un momento.",
+  "notice": {
+    "badge": "📌 Aviso",
+    "team": "Equipo de Kroot",
+    "officialBadge": "📌 Aviso oficial",
+    "teamLine": "🌱 Equipo de Kroot",
+    "closed": "Los avisos no admiten comentarios — ¿tienes alguna duda sobre esto?",
+    "ask": "Pregúntalo en el tablón de preguntas →"
+  },
+  "empty": {
+    "title": "Aquí todavía no hay nada",
+    "sub": "Sé la primera persona en publicar en este tablón."
+  },
+  "comments": {
+    "heading": "Comentarios",
+    "count": "· {n}",
+    "unavailable": "Los comentarios abren pronto — ejecuta <code>{file}</code> para activarlos.",
+    "none": "Aún no hay comentarios — sé la primera persona.",
+    "delete": "Eliminar",
+    "deleting": "Eliminando…",
+    "placeholder": "Responde como {name}…",
+    "counter": "{n}/{max}",
+    "submit": "Comentar",
+    "posting": "Publicando…",
+    "errAdd": "No se pudo añadir tu comentario. Inténtalo de nuevo en un momento.",
+    "errDelete": "No se pudo eliminar ese comentario."
+  },
+  "composer": {
+    "hint": "— cuéntale algo al jardín",
+    "titlePlaceholder": "Título",
+    "bodyPlaceholder": "Escribe tu publicación…",
+    "counter": "{n}/{max}",
+    "post": "Publicar",
+    "posting": "Publicando…",
+    "err": "Todavía no se pudo publicar — puede que la tabla de la comunidad no esté configurada."
+  },
+  "deletePost": {
+    "confirm": "¿Eliminar esta publicación? No se puede deshacer.",
+    "delete": "Eliminar",
+    "deleting": "Eliminando…",
+    "failed": "No se pudo eliminar."
+  },
+  "timeAgo": {
+    "justNow": "ahora mismo",
+    "minutes": "hace {n} min",
+    "hours": "hace {n} h",
+    "days": "hace {n} d"
+  }
+}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { useTranslations } from "next-intl";
 import type { GrammarExample } from "@/lib/grammar";
 import { speakKorean, prefetchKorean } from "@/lib/tts";
 import TapText from "@/components/words/TapText";
@@ -17,6 +18,7 @@ export default function ExampleBox({
   /** Enables tap-to-save on every Korean word (null = signed out). */
   userId?: string | null;
 }) {
+  const t = useTranslations("grammarUi");
   useEffect(() => {
     prefetchKorean(examples.map((ex) => ex.kr));
   }, [examples]);
@@ -33,7 +35,7 @@ export default function ExampleBox({
             <p className="text-[13px] text-muted mt-0.5">{ex.en}</p>
           </div>
           <button
-            aria-label={`Hear ${ex.kr}`}
+            aria-label={t("hearExample", { text: ex.kr })}
             onClick={() => speak(ex.kr)}
             className="flex-none text-sm text-faint hover:text-[var(--tint-indigo-ink)] hover:scale-110 transition-all mt-1"
           >

@@ -1,16 +1,18 @@
+import { useTranslations } from "next-intl";
 import SpeechBubble from "@/components/ui/SpeechBubble";
 
-const MASCOT_PHRASES = [
-  { kr: "환영해요!", en: "welcome!" },
-  { kr: "같이 해봐요", en: "let's do this" },
-];
-
 export default function Mascot() {
+  const t = useTranslations("onboarding.mascot");
+  const phrases = [
+    { kr: "환영해요!", en: t("welcome") },
+    { kr: "같이 해봐요", en: t("together") },
+  ];
+
   return (
     <div className="relative flex justify-center mb-4">
       <div className="border border-line rounded-[12px] bg-warm px-6 pt-7 pb-3 relative">
         <div className="absolute -top-2 left-1/2 -translate-x-1/2 z-10">
-          <SpeechBubble phrases={MASCOT_PHRASES} />
+          <SpeechBubble phrases={phrases} />
         </div>
         <svg className="bob w-[76px] h-[76px]" viewBox="0 0 100 100" aria-hidden="true">
           <ellipse cx="50" cy="88" rx="28" ry="5" fill="#E3DDD0" />

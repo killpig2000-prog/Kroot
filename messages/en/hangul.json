@@ -1,0 +1,27 @@
+{
+  "tabs": {
+    "consonants": "Consonants",
+    "vowels": "Vowels",
+    "syllables": "How syllables work"
+  },
+  "sections": {
+    "basicConsonants": "14 basic consonants",
+    "doubleConsonants": "5 double consonants",
+    "basicVowels": "10 basic vowels",
+    "compoundVowels": "Compound vowels",
+    "theIdea": "The idea",
+    "buildABlock": "Build a block",
+    "readingPractice": "Reading practice"
+  },
+  "builder": {
+    "consonant": "Consonant",
+    "vowel": "Vowel"
+  },
+  "blocks": {
+    "right": "vowel on the right",
+    "under": "vowel underneath",
+    "final": "final consonant at the bottom"
+  },
+  "tapToReveal": "tap to reveal",
+  "hear": "Hear {text}"
+}
