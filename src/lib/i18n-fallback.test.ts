@@ -18,6 +18,12 @@ describe("isTranslated — real translations survive", () => {
     expect(isTranslated("Tôi uống nước.", "I drink water.", "vi")).toBe(true);
     // A proper noun shared with the English must not condemn the sentence.
     expect(isTranslated("Tên tôi là Maria.", "My name is Maria.", "vi")).toBe(true);
+    // Accented words must tokenize whole: "Tôi" split into "T"/"i" collides
+    // with English "I" and used to get these real sentences thrown away.
+    expect(isTranslated("Tôi đói.", "I am hungry.", "vi")).toBe(true);
+    expect(isTranslated("Tôi làm kimchi từ bắp cải.", "I make kimchi with cabbage.", "vi")).toBe(
+      true
+    );
   });
 });
 
@@ -44,6 +50,15 @@ describe("isTranslated — placeholders are rejected", () => {
         "This maze-like alley itself should be seen as a living map bearing witness to modern commercial history.",
         "vi"
       )
+    ).toBe(false);
+  });
+
+  it("rejects the short mixed fragments the same pass produced", () => {
+    expect(isTranslated("what する you 意地悪", "What are you being mean about?", "ja")).toBe(false);
+    expect(isTranslated("です it far?", "Is it far?", "ja")).toBe(false);
+    expect(isTranslated("いいえ it's close.", "No, it's close.", "ja")).toBe(false);
+    expect(
+      isTranslated("then the giá là bound to là cao", "Then the price is bound to be high.", "vi")
     ).toBe(false);
   });
 
