@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Link } from "@/i18n/navigation";
 import { notFound } from "next/navigation";
-import { SITE_URL } from "@/lib/site";
+import { localeUrl, seoAlternates } from "@/lib/seo";
 import { VIBES } from "@/lib/slang";
 import { PUBLIC_SLANG, getSlangBySlug, relatedSlang } from "@/lib/slang-slugs";
 import ShareCta from "@/components/slang/ShareCta";
@@ -11,7 +11,7 @@ import ShareCta from "@/components/slang/ShareCta";
 // meant to be linked straight into fandom communities and shared from
 // there — not just discovered inside the app.
 
-type Props = { params: Promise<{ slug: string }> };
+type Props = { params: Promise<{ locale: string; slug: string }> };
 
 export function generateStaticParams() {
   return PUBLIC_SLANG.map(({ slug }) => ({ slug }));
@@ -20,7 +20,7 @@ export function generateStaticParams() {
 export const dynamicParams = false;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params;
+  const { locale, slug } = await params;
   const entry = getSlangBySlug(slug);
   if (!entry) return {};
   const title = `${entry.kr} (${entry.romanization}) — what does it mean? | Kroot`;
@@ -28,14 +28,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title,
     description,
-    alternates: { canonical: `${SITE_URL}/slang/${entry.slug}` },
-    openGraph: { title, description, url: `${SITE_URL}/slang/${entry.slug}`, siteName: "Kroot" },
+    // Self-referential per locale plus the full hreflang set. Hardcoding the
+    // bare English URL here meant /ja/slang/... declared the English page as
+    // canonical and de-indexed itself.
+    alternates: seoAlternates(locale, `/slang/${entry.slug}`),
+    openGraph: { title, description, url: localeUrl(locale, `/slang/${entry.slug}`), siteName: "Kroot" },
     twitter: { card: "summary_large_image", title, description },
   };
 }
 
 export default async function SlangSharePage({ params }: Props) {
-  const { slug } = await params;
+  const { locale, slug } = await params;
   const entry = getSlangBySlug(slug);
   if (!entry) notFound();
 
@@ -51,7 +54,7 @@ export default async function SlangSharePage({ params }: Props) {
     inDefinedTermSet: {
       "@type": "DefinedTermSet",
       name: "Kroot Korean Slang — Street Talk",
-      url: `${SITE_URL}/slang`,
+      url: localeUrl(locale, "/slang"),
     },
   };
 

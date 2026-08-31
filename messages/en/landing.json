@@ -1,0 +1,150 @@
+{
+  "nav": {
+    "practice": "Practice",
+    "howItGrows": "How it grows",
+    "myGarden": "My garden →",
+    "login": "Log in",
+    "startFree": "Start free 🌱"
+  },
+  "hero": {
+    "titleLine1": "You already love Korea.",
+    "titleHighlight": "Now learn to speak it.",
+    "sub": "K-drama, K-food, K-everything — you're halfway there. Kroot turns that love into real Korean, one tiny lesson a day.",
+    "cta": "Find my level (3 min)",
+    "note": "— every lesson free, no credit card, from 한글 to fluency",
+    "photos": {
+      "hanok": "Bukchon 한옥",
+      "night": "first night in Seoul",
+      "food": "first 떡볶이 🌶️",
+      "cafe": "café study ☕"
+    }
+  },
+  "speech": {
+    "hello": "hello",
+    "awesome": "awesome",
+    "thankYou": "thank you",
+    "really": "really?",
+    "delicious": "delicious",
+    "superFun": "super fun",
+    "youGotThis": "you got this",
+    "loveYou": "love you"
+  },
+  "levelTest": {
+    "badge": "pop quiz",
+    "title": "Find your level in 3 minutes",
+    "sub": "A short adaptive test finds your level (A1–C2) and stops as soon as it's sure. Can't read Hangul yet? Say so and start there — no account needed.",
+    "cardTitle": "Level test · Q3",
+    "cardTag": "vocabulary",
+    "question": "— what does it mean?",
+    "options": {
+      "ok": "It's okay / I'm fine",
+      "expensive": "It's expensive",
+      "seeYou": "See you tomorrow"
+    },
+    "tipTitle": "✏️ How it's scored",
+    "tipBody": "Vocabulary, grammar and listening mixed — usually 4 to 10 questions. Results on the CEFR scale learners and employers actually use!",
+    "cta": "Start the level test"
+  },
+  "categories": {
+    "badge": "what's inside",
+    "title": "6 tools you'll reach for every day",
+    "sub": "All free — collect them one by one, like stickers.",
+    "items": {
+      "listening": {
+        "label": "Listening",
+        "desc": "A1–C2 clips with subtitle toggle"
+      },
+      "pronunciation": {
+        "label": "Pronunciation",
+        "desc": "Say it into the mic — score 80+ to clear each chapter"
+      },
+      "writing": {
+        "label": "Writing",
+        "desc": "Write a sentence, get feedback"
+      },
+      "reading": {
+        "label": "Reading",
+        "desc": "Tap any word for a hint"
+      },
+      "vocabulary": {
+        "label": "Vocabulary",
+        "desc": "4,000+ flashcards by topic"
+      },
+      "slang": {
+        "label": "Slang",
+        "desc": "Real phrases textbooks skip"
+      }
+    }
+  },
+  "growth": {
+    "badge": "growth album",
+    "title": "Your tree grows every day",
+    "sub": "Every quiz and every recording waters it. Level up, and your tree grows a little taller.",
+    "captions": {
+      "A1": "Day 1 — zzz… 안녕?",
+      "A2": "Day 16 — first sprout!",
+      "B1": "Ordered coffee in Korean ✌️",
+      "B2": "K-drama, no subtitles 🎬",
+      "C1": "In full bloom 🌸",
+      "C2": "Korean friends: 대박! 😲👑"
+    }
+  },
+  "pronunciation": {
+    "badge": "pronunciation trail",
+    "title": "Say it out loud. The mic keeps score.",
+    "sub": "23 chapters of the sounds English speakers actually trip on — from ㄹ to double consonants. Nail a word at 80+ and it's cleared for good.",
+    "chapterTag": "🌶️ Spicy · ㄹ chapter",
+    "best": "best 92",
+    "gloss": "ramyeon · instant noodles",
+    "tip": "💡 Tap the tip of your tongue once against the ridge behind your top teeth — closer to the 'tt' in 'butter' than an English R or L.",
+    "resultLabel": "Result",
+    "score": "🔥 Nailed it! · 92",
+    "heard": "heard",
+    "footer": "📊 23 chapters across <b>5 tiers</b> — 🌱 Warm-up to 👑 Legendary. Score 80+ to clear one for good."
+  },
+  "writing": {
+    "badge": "AI corrections",
+    "title": "Write a sentence. Get told exactly what to fix.",
+    "sub": "Not just right or wrong — a natural rewrite, a grammar score, and a one-line reason, every single time you write.",
+    "promptTag": "✍️ Writing · reply prompt",
+    "promptGloss": "What did you do yesterday? I met a friend!",
+    "yourAnswer": "Your answer",
+    "resultLabel": "Result",
+    "naturalLabel": "Natural way to say it",
+    "grammarLabel": "Grammar",
+    "feedback": "Good sentence! Use <k>-아서/어서</k> instead of <g>-고</g> when the second action happens because of the first — it reads more natural here.",
+    "footer": "📊 4 genres per level — <b>journal, replies, description, opinion</b> — A1 through C2."
+  },
+  "final": {
+    "title": "Paste in your first page today",
+    "tagline": "put down roots today 🌱",
+    "cta": "Start free — 3-min level test",
+    "note": "every lesson free · no credit card · from Hangul to fluency",
+    "about": "About",
+    "privacy": "Privacy",
+    "contact": "Contact",
+    "copyright": "© 2026 Kroot"
+  },
+  "community": {
+    "badge": "from learners",
+    "title": "Postcards from around the world",
+    "sub": "You're never learning alone — question board, free board, language exchange.",
+    "posts": {
+      "maria": {
+        "from": "MARIA · BRAZIL",
+        "text": "“은/는 vs 이/가 finally clicked for me here. Three months of daily practice and counting!”",
+        "meta": "Question board · translated from Portuguese"
+      },
+      "kenta": {
+        "from": "KENTA · JAPAN",
+        "text": "“Passed TOPIK Level 3 today! Six months of daily watering streaks was the answer.”",
+        "meta": "Free board · translated from Japanese"
+      },
+      "amara": {
+        "from": "AMARA · NIGERIA",
+        "text": "“Looking for a 30-min-a-week speaking partner — happy to help with your English!”",
+        "meta": "Language exchange · original in English"
+      }
+    }
+  }
+}

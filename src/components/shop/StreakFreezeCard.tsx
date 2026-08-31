@@ -9,20 +9,19 @@ export const FREEZE_PRICE = 150;
 export const FREEZE_MAX = 3;
 
 // Consumable: one freeze covers one missed day so the streak survives.
-// Spent automatically by touch_streak() (migration 0035); stacks with the
-// Plus shield (Plus covers the first missed day, freezes cover the rest).
+// Spent automatically by touch_streak() (migration 0035). Freezes used to
+// stack on top of the Kroot Plus shield; Plus is gone, so they are now the
+// only thing standing between a missed day and a broken streak.
 export default function StreakFreezeCard({
   held,
   coins,
   isAdmin,
   streakDays,
-  hasPlus,
 }: {
   held: number;
   coins: number;
   isAdmin: boolean;
   streakDays: number;
-  hasPlus: boolean;
 }) {
   const supabase = useMemo(() => createClient(), []);
   const router = useRouter();
@@ -71,7 +70,6 @@ export default function StreakFreezeCard({
         </b>
         <span className="text-[13px] text-sky-deep">
           Miss a day and a freeze is spent for you — your{streakDays > 0 ? ` ${streakDays}-day` : ""} streak stays alive.
-          {hasPlus ? " Stacks with your Plus shield." : ""}
         </span>
         {msg && <span className="block text-[12.5px] mt-1 text-sky-deep">{msg}</span>}
       </div>

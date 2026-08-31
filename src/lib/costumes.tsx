@@ -31,8 +31,6 @@ export type Costume = {
   icon?: string;
   // Minimum player level (Lv.) required to buy it — the same axis the tree grows on.
   minPlayerLevel?: number;
-  // Claimable only with an active Kroot Plus subscription (enforced server-side).
-  plusOnly?: boolean;
   // Limited-time: on sale only inside this window (ISO dates, UTC). Mirrors
   // costume_catalog.available_from/until, enforced in buy_costume().
   availableFrom?: string;
@@ -1449,9 +1447,9 @@ export function isAvailable(c: Costume, now: Date = new Date()): boolean {
   return true;
 }
 
-// Kroot Plus waives every player-level gate — a subscriber never sees "Unlocks
-// at Lv.X" (matches buy_costume(), which does the same server-side).
-export function isLevelLocked(c: Costume, playerLevel: number, hasPlus = false): boolean {
-  if (hasPlus) return false;
+// Level gates are absolute now. They used to be waived for Kroot Plus
+// subscribers; that tier was removed, so there is no longer any way past
+// "Unlocks at Lv.X" other than growing the tree.
+export function isLevelLocked(c: Costume, playerLevel: number): boolean {
   return !!c.minPlayerLevel && playerLevel < c.minPlayerLevel;
 }

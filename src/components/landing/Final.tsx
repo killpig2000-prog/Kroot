@@ -1,7 +1,9 @@
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import BrandMark from "@/components/ui/BrandMark";
 
 export default function Final() {
+  const t = useTranslations("landing.final");
   return (
     <>
       <section className="relative bg-cream border-t border-dashed border-dash text-center py-[clamp(56px,9vw,92px)] px-6 overflow-hidden">
@@ -12,19 +14,19 @@ export default function Final() {
           요
         </span>
         <h2 className="relative z-10 font-black text-[clamp(24px,3.4vw,34px)] tracking-[-0.02em] text-charcoal mb-2 text-balance">
-          Paste in your first page today
+          {t("title")}
         </h2>
         <p className="relative z-10 text-[15px] font-extrabold text-success-deep mb-5">
-          <span className="kr">오늘, 뿌리를 내리세요</span> — put down roots today 🌱
+          <span className="kr">오늘, 뿌리를 내리세요</span> — {t("tagline")}
         </p>
         <Link
           href="/onboarding"
           className="relative z-10 inline-block rounded-[10px] bg-success px-[28px] py-[13px] text-[14.5px] font-bold text-white shadow-[0_6px_0_#2E5B41] hover:translate-y-[2px] hover:shadow-[0_4px_0_#2E5B41] transition-all"
         >
-          Start free — 3-min level test
+          {t("cta")}
         </Link>
         <p className="relative z-10 mt-3.5 text-[12px] italic text-[#8A8478]">
-          every lesson free · no credit card · from Hangul to fluency
+          {t("note")}
         </p>
       </section>
 
@@ -35,12 +37,11 @@ export default function Final() {
             Kroot
           </span>
           <div className="flex gap-5 font-medium">
-            <a href="#" className="hover:text-charcoal transition-colors">About</a>
-            <Link href="/pricing" className="hover:text-charcoal transition-colors">Pricing</Link>
-            <Link href="/privacy" className="hover:text-charcoal transition-colors">Privacy</Link>
-            <a href="#" className="hover:text-charcoal transition-colors">Contact</a>
+            <a href="#" className="hover:text-charcoal transition-colors">{t("about")}</a>
+            <Link href="/privacy" className="hover:text-charcoal transition-colors">{t("privacy")}</Link>
+            <a href="#" className="hover:text-charcoal transition-colors">{t("contact")}</a>
           </div>
-          <span>© 2026 Kroot</span>
+          <span>{t("copyright")}</span>
         </div>
       </footer>
     </>

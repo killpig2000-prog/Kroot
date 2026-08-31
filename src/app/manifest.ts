@@ -23,7 +23,11 @@ export default function manifest(): MetadataRoute.Manifest {
       { src: "/icon-maskable-512.png", sizes: "512x512", type: "image/png", purpose: "maskable" },
     ],
     shortcuts: [
-      { name: "Water my words", short_name: "Review", url: "/review?source=pwa", icons: [{ src: "/icon-192.png", sizes: "192x192" }] },
+      // The plain-language copy pass renamed this surface twice ("water my
+      // words" → Review → Practice) and the manifest was missed both times, so
+      // anyone who installed the PWA still long-presses the icon and sees a
+      // watering can. nav.practice is the label the app itself uses.
+      { name: "Practice", short_name: "Practice", url: "/review?source=pwa", icons: [{ src: "/icon-192.png", sizes: "192x192" }] },
       { name: "Listening", url: "/listening?source=pwa", icons: [{ src: "/icon-192.png", sizes: "192x192" }] },
     ],
   };

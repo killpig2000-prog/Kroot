@@ -1,11 +1,13 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import BrandMark from "@/components/ui/BrandMark";
 
 export default function Nav() {
+  const t = useTranslations("landing.nav");
   const supabase = useMemo(() => createClient(), []);
   // null = session unknown (first paint) — show the logged-out buttons, then
   // swap to the garden link once the client session check resolves.
@@ -30,8 +32,8 @@ export default function Nav() {
         </Link>
 
         <div className="hidden md:flex gap-7 text-[13px] font-semibold text-[#7A746A]">
-          <a href="#learn" className="hover:text-charcoal transition-colors">Practice</a>
-          <a href="#grow" className="hover:text-charcoal transition-colors">How it grows</a>
+          <a href="#learn" className="hover:text-charcoal transition-colors">{t("practice")}</a>
+          <a href="#grow" className="hover:text-charcoal transition-colors">{t("howItGrows")}</a>
         </div>
 
         {loggedIn ? (
@@ -39,7 +41,7 @@ export default function Nav() {
             href="/dashboard"
             className="inline-flex rounded-full bg-success px-[16px] sm:px-[18px] py-[8px] text-[12.5px] font-bold text-white hover:bg-success-deep transition-colors"
           >
-            My garden →
+            {t("myGarden")}
           </Link>
         ) : (
           <div className="flex items-center gap-2">
@@ -47,13 +49,13 @@ export default function Nav() {
               href="/auth/login"
               className="inline-flex rounded-full border-[1.5px] border-line bg-cream px-[14px] sm:px-[16px] py-[7px] text-[12.5px] font-bold text-charcoal hover:bg-warm transition-colors"
             >
-              Log in
+              {t("login")}
             </Link>
             <Link
               href="/onboarding"
               className="inline-flex rounded-full bg-success px-[14px] sm:px-[17px] py-[8px] text-[12.5px] font-bold text-white hover:bg-success-deep transition-colors"
             >
-              Start free 🌱
+              {t("startFree")}
             </Link>
           </div>
         )}

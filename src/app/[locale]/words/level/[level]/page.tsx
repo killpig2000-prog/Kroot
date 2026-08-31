@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 import { Link } from "@/i18n/navigation";
 import { notFound } from "next/navigation";
 import { LEVEL_ORDER, type CefrLevel } from "@/lib/tree";
-import { SITE_URL } from "@/lib/site";
+import { seoAlternates } from "@/lib/seo";
 import { getWordsByLevel } from "@/lib/vocab-slugs";
 import { CHAPTER_SIZE, unitLabel } from "@/lib/vocabulary";
 
 // Per-level word index — the crawlable listing that links every word page.
 
-type Props = { params: Promise<{ level: string }> };
+type Props = { params: Promise<{ locale: string; level: string }> };
 
 export function generateStaticParams() {
   return LEVEL_ORDER.map((level) => ({ level: level.toLowerCase() }));
@@ -22,7 +22,8 @@ function parseLevel(value: string): CefrLevel | undefined {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const level = parseLevel((await params).level);
+  const { locale, level: rawLevel } = await params;
+  const level = parseLevel(rawLevel);
   if (!level) return {};
   const count = getWordsByLevel(level).length;
   const title = `${count} Korean ${level} Vocabulary Words with Examples | Kroot`;
@@ -30,7 +31,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title,
     description,
-    alternates: { canonical: `${SITE_URL}/words/level/${level.toLowerCase()}` },
+    // Self-referential per locale plus the full hreflang set; the old
+    // hardcoded English canonical de-indexed every localized level index.
+    alternates: seoAlternates(locale, `/words/level/${level.toLowerCase()}`),
   };
 }
 

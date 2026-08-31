@@ -3,8 +3,8 @@ import { createClient } from "@/lib/supabase/server";
 import { getWordsForTopic } from "@/lib/vocabulary";
 
 // The old /stats (Insights) page, now embedded at the bottom of My growth.
-// Plus members get real data; free plans see a blurred teaser. The section
-// keeps the #insights anchor so old /stats links land here after redirect.
+// The section keeps the #insights anchor so old /stats links land here after
+// redirect.
 
 const SKILL_META: Record<string, { label: string; emoji: string }> = {
   reading: { label: "Reading", emoji: "📰" },
@@ -28,55 +28,11 @@ function SectionHead() {
   return (
     <div className="flex items-center gap-2 mt-2" id="insights">
       <b className="font-bold text-[15px] tracking-[-0.01em]">📊 Insights</b>
-      <span className="text-[10.5px] font-bold tracking-[.04em] text-[#92400E] bg-[var(--tint-amber)] border border-amber-line rounded-md px-1.5 py-0.5">
-        🌟 PLUS
-      </span>
     </div>
   );
 }
 
-export default async function InsightsSection({
-  userId,
-  plusActive,
-}: {
-  userId: string;
-  plusActive: boolean;
-}) {
-  if (!plusActive) {
-    return (
-      <>
-        <SectionHead />
-        <div className="border border-amber-line bg-[var(--tint-amber)] rounded-[14px] px-[22px] py-5">
-          <p className="text-[13px] text-muted leading-[1.65] mb-3">
-            Accuracy by skill, your weakest words ready for extra watering, how deep each word
-            is rooted, and a day-by-day XP timeline — for Plus members.
-          </p>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 select-none mb-4" aria-hidden="true">
-            {[
-              { label: "word accuracy", value: "87%" },
-              { label: "weakest word", value: "약속" },
-              { label: "deep-rooted words", value: "142" },
-              { label: "XP this week", value: "215" },
-            ].map((s) => (
-              <div key={s.label} className="border border-line bg-cream rounded-[14px] px-4 py-3.5 text-center">
-                <b className="block text-[18px] font-extrabold tracking-[-0.02em] blur-[6px]">
-                  {s.value}
-                </b>
-                <small className="text-[11.5px] text-faint">{s.label}</small>
-              </div>
-            ))}
-          </div>
-          <Link
-            href="/pricing"
-            className="inline-flex rounded-[10px] bg-success px-4 py-2 text-[13px] font-bold text-white hover:bg-success-deep transition-colors"
-          >
-            Unlock with Kroot Plus →
-          </Link>
-        </div>
-      </>
-    );
-  }
-
+export default async function InsightsSection({ userId }: { userId: string }) {
   const supabase = await createClient();
   const twoWeeksAgo = new Date();
   twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 13);

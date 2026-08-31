@@ -14,7 +14,8 @@ export type ReminderProfile = {
   last_active_date: string | null;
   reminder_push: boolean;
   reminder_email: boolean;
-  reminder_hour: number;
+  /** Legacy: the cron runs once a day for everyone, so nothing reads this. */
+  reminder_hour?: number;
   last_reminded_at: string | null;
   streak_freezes: number;
 };

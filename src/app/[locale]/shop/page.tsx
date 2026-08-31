@@ -8,7 +8,6 @@ import WordBankSlotsCard from "@/components/shop/WordBankSlotsCard";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import type { CefrLevel } from "@/lib/tree";
 import { levelFromXp, treeStageForLevel } from "@/lib/level";
-import { isPlus } from "@/lib/plus";
 import { DEFAULT_WORD_BANK_SLOTS } from "@/lib/word-bank";
 
 export default async function ShopPage() {
@@ -21,12 +20,11 @@ export default async function ShopPage() {
   const [{ data: profile }, { data: costumeRows }] = await Promise.all([
     supabase
       .from("profiles")
-      .select("display_name, coins, xp, current_level, streak_days, avatar_url, plus_until, is_admin")
+      .select("display_name, coins, xp, current_level, streak_days, avatar_url, is_admin")
       .eq("id", user.id)
       .single(),
     supabase.from("user_costumes").select("costume_id, equipped").eq("user_id", user.id),
   ]);
-  const hasPlus = isPlus(profile?.plus_until);
   const owned = (costumeRows ?? []).map((r) => r.costume_id);
   const equipped = (costumeRows ?? []).filter((r) => r.equipped).map((r) => r.costume_id);
 
@@ -94,18 +92,6 @@ export default async function ShopPage() {
               <span className="text-[12.5px] font-semibold text-success bg-success-bg border border-success-line rounded-full px-3 py-1">
                 🌰 {isAdmin ? "∞" : coins} coins
               </span>
-              {hasPlus ? (
-                <span className="text-[12.5px] font-semibold text-[#B7791F] bg-[var(--tint-amber)] border border-amber-line rounded-full px-3 py-1">
-                  🌟 Plus
-                </span>
-              ) : (
-                <Link
-                  href="/pricing"
-                  className="text-[12.5px] font-semibold text-[#B7791F] bg-[var(--tint-amber)] border border-amber-line rounded-full px-3 py-1 hover:border-[#B7791F] transition-colors"
-                >
-                  🌟 Plus wardrobe →
-                </Link>
-              )}
             </div>
           </div>
 
@@ -118,7 +104,6 @@ export default async function ShopPage() {
             coins={coins}
             isAdmin={isAdmin}
             streakDays={profile?.streak_days ?? 0}
-            hasPlus={hasPlus}
           />
 
           <WordBankSlotsCard slots={wordBankSlots} coins={coins} isAdmin={isAdmin} />
@@ -128,7 +113,6 @@ export default async function ShopPage() {
             coins={coins}
             isAdmin={isAdmin}
             playerLevel={playerLevel}
-            hasPlus={hasPlus}
             species={species}
             stage={stage}
             owned={owned}

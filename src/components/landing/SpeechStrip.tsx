@@ -1,15 +1,18 @@
+import { useTranslations } from "next-intl";
+
 const PHRASES = [
-  { kr: "안녕하세요", en: "hello" },
-  { kr: "대박", en: "awesome" },
-  { kr: "감사합니다", en: "thank you" },
-  { kr: "진짜?", en: "really?" },
-  { kr: "맛있어요", en: "delicious" },
-  { kr: "꿀잼", en: "super fun" },
-  { kr: "화이팅", en: "you got this" },
-  { kr: "사랑해", en: "love you" },
-];
+  { kr: "안녕하세요", key: "hello" },
+  { kr: "대박", key: "awesome" },
+  { kr: "감사합니다", key: "thankYou" },
+  { kr: "진짜?", key: "really" },
+  { kr: "맛있어요", key: "delicious" },
+  { kr: "꿀잼", key: "superFun" },
+  { kr: "화이팅", key: "youGotThis" },
+  { kr: "사랑해", key: "loveYou" },
+] as const;
 
 export default function SpeechStrip() {
+  const t = useTranslations("landing.speech");
   const track = [...PHRASES, ...PHRASES];
   return (
     <>
@@ -18,7 +21,7 @@ export default function SpeechStrip() {
           {track.map((p, i) => (
             <span key={i} className="text-[13.5px] text-[#8A8478] font-medium">
               <span className="kr text-charcoal text-[15px] mr-[7px]">{p.kr}</span>
-              {p.en}
+              {t(p.key)}
             </span>
           ))}
         </div>

@@ -117,6 +117,7 @@ export default async function DashboardPage() {
   // See supabase/migrations/0041_dashboard_snapshot.sql (SECURITY INVOKER —
   // every read still goes through the caller's RLS).
   const { data: snapshotRaw, error: snapshotError } = await supabase.rpc("dashboard_snapshot", { p_today: today });
+  if (snapshotError) console.error("dashboard_snapshot failed:", snapshotError.message);
   const snapshot = (snapshotError ? null : (snapshotRaw as Snapshot | null)) ?? {
     profile: null,
     extras: null,
@@ -377,6 +378,18 @@ export default async function DashboardPage() {
 
         <main className="min-w-0 px-[clamp(18px,3vw,36px)] pt-[26px] pb-[100px] md:pb-[60px]">
           <Greeting name={displayName} />
+
+          {/* The snapshot RPC failed, so everything below is the empty
+              fallback. Say so: an empty garden otherwise reads as "all my
+              progress is gone" rather than "we couldn't load it". */}
+          {snapshotError && (
+            <div
+              role="status"
+              className="mb-5 rounded-[10px] border border-amber-line bg-[var(--tint-amber)] px-4 py-3 text-sm text-charcoal"
+            >
+              We couldn&apos;t load your progress just now — nothing is lost. Refresh in a moment.
+            </div>
+          )}
 
           <TreeCard
             level={level}

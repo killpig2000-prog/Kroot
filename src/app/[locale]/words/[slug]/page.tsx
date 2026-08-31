@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { Link } from "@/i18n/navigation";
 import { notFound } from "next/navigation";
-import { SITE_URL } from "@/lib/site";
+import { localeUrl, seoAlternates } from "@/lib/seo";
 import { PUBLIC_VOCAB_WORDS, getWordBySlug, relatedWords } from "@/lib/vocab-slugs";
 import { wordBankKey } from "@/lib/word-bank";
 import AddToMyWords from "@/components/words/AddToMyWords";
@@ -11,7 +11,7 @@ import BankBackLink from "@/components/words/BankBackLink";
 // Public SEO dictionary page — one statically generated page per vocabulary
 // word, crawlable without login, funnelling visitors into onboarding.
 
-type Props = { params: Promise<{ slug: string }> };
+type Props = { params: Promise<{ locale: string; slug: string }> };
 
 export function generateStaticParams() {
   return PUBLIC_VOCAB_WORDS.map(({ slug }) => ({ slug }));
@@ -20,7 +20,7 @@ export function generateStaticParams() {
 export const dynamicParams = false;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params;
+  const { locale, slug } = await params;
   const word = getWordBySlug(slug);
   if (!word) return {};
   const title = `${word.korean} (${word.romanization}) — “${word.meaning_en}” in Korean | Kroot`;
@@ -28,13 +28,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title,
     description,
-    alternates: { canonical: `${SITE_URL}/words/${word.slug}` },
-    openGraph: { title, description, url: `${SITE_URL}/words/${word.slug}`, siteName: "Kroot" },
+    // Self-referential per locale plus the full hreflang set. Hardcoding the
+    // bare English URL here meant /ja/words/... declared the English page as
+    // canonical and de-indexed itself.
+    alternates: seoAlternates(locale, `/words/${word.slug}`),
+    openGraph: { title, description, url: localeUrl(locale, `/words/${word.slug}`), siteName: "Kroot" },
   };
 }
 
 export default async function WordPage({ params }: Props) {
-  const { slug } = await params;
+  const { locale, slug } = await params;
   const word = getWordBySlug(slug);
   if (!word) notFound();
 
@@ -49,7 +52,7 @@ export default async function WordPage({ params }: Props) {
     inDefinedTermSet: {
       "@type": "DefinedTermSet",
       name: `Kroot Korean Vocabulary — Level ${word.level}`,
-      url: `${SITE_URL}/words/level/${word.level.toLowerCase()}`,
+      url: localeUrl(locale, `/words/level/${word.level.toLowerCase()}`),
     },
   };
 

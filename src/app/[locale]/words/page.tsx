@@ -1,18 +1,26 @@
 import type { Metadata } from "next";
 import { Link } from "@/i18n/navigation";
 import { LEVEL_ORDER } from "@/lib/tree";
-import { SITE_URL } from "@/lib/site";
+import { seoAlternates } from "@/lib/seo";
 import { getWordsByLevel } from "@/lib/vocab-slugs";
 
 // Public dictionary hub — links every level index so crawlers can reach all
 // word pages within two hops of the homepage.
 
-export const metadata: Metadata = {
-  title: "Korean Vocabulary Dictionary — words by CEFR level | Kroot",
-  description:
-    "Browse thousands of Korean words with romanization, English meanings, and example sentences, organized by CEFR level from A1 beginner to C2 advanced.",
-  alternates: { canonical: `${SITE_URL}/words` },
-};
+type Props = { params: Promise<{ locale: string }> };
+
+// Metadata has to be generated rather than static: the canonical must name
+// the locale actually being served. The old constant pointed every locale at
+// the bare English URL, which told Google to drop /ja/words and friends.
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  return {
+    title: "Korean Vocabulary Dictionary — words by CEFR level | Kroot",
+    description:
+      "Browse thousands of Korean words with romanization, English meanings, and example sentences, organized by CEFR level from A1 beginner to C2 advanced.",
+    alternates: seoAlternates(locale, "/words"),
+  };
+}
 
 const LEVEL_BLURBS: Record<string, string> = {
   A1: "Everyday basics — greetings, food, family, and the words you need first.",

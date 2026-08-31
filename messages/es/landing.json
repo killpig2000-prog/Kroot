@@ -1,0 +1,150 @@
+{
+  "nav": {
+    "practice": "Practica",
+    "howItGrows": "Cómo crece",
+    "myGarden": "Mi jardín →",
+    "login": "Iniciar sesión",
+    "startFree": "Empieza gratis 🌱"
+  },
+  "hero": {
+    "titleLine1": "Ya te encanta Corea.",
+    "titleHighlight": "Ahora aprende a hablarlo.",
+    "sub": "K-dramas, K-comida, K-todo: ya llevas medio camino. Kroot convierte ese cariño en coreano de verdad, con una lección pequeña al día.",
+    "cta": "Descubre mi nivel (3 min)",
+    "note": "— todas las lecciones gratis, sin tarjeta, del 한글 a la fluidez",
+    "photos": {
+      "hanok": "한옥 en Bukchon",
+      "night": "primera noche en Seúl",
+      "food": "mi primer 떡볶이 🌶️",
+      "cafe": "estudiar en el café ☕"
+    }
+  },
+  "speech": {
+    "hello": "hola",
+    "awesome": "increíble",
+    "thankYou": "gracias",
+    "really": "¿en serio?",
+    "delicious": "delicioso",
+    "superFun": "superdivertido",
+    "youGotThis": "¡tú puedes!",
+    "loveYou": "te quiero"
+  },
+  "levelTest": {
+    "badge": "test rápido",
+    "title": "Descubre tu nivel en 3 minutos",
+    "sub": "Un test adaptativo corto encuentra tu nivel (A1–C2) y para en cuanto lo tiene claro. ¿Todavía no lees hangul? Dilo y empieza por ahí, sin crear cuenta.",
+    "cardTitle": "Test de nivel · P3",
+    "cardTag": "vocabulario",
+    "question": "— ¿qué significa?",
+    "options": {
+      "ok": "Está bien / Estoy bien",
+      "expensive": "Es caro",
+      "seeYou": "Hasta mañana"
+    },
+    "tipTitle": "✏️ Cómo se puntúa",
+    "tipBody": "Vocabulario, gramática y comprensión auditiva mezclados: normalmente de 4 a 10 preguntas. ¡El resultado sale en la escala CEFR que de verdad usan estudiantes y empresas!",
+    "cta": "Empezar el test de nivel"
+  },
+  "categories": {
+    "badge": "qué hay dentro",
+    "title": "6 herramientas que usarás cada día",
+    "sub": "Todo gratis: colecciónalas una a una, como pegatinas.",
+    "items": {
+      "listening": {
+        "label": "Escucha",
+        "desc": "Clips de A1 a C2 con subtítulos que puedes activar"
+      },
+      "pronunciation": {
+        "label": "Pronunciación",
+        "desc": "Dilo al micrófono: 80+ puntos para superar cada capítulo"
+      },
+      "writing": {
+        "label": "Escritura",
+        "desc": "Escribe una frase y recibe corrección"
+      },
+      "reading": {
+        "label": "Lectura",
+        "desc": "Toca cualquier palabra para ver una pista"
+      },
+      "vocabulary": {
+        "label": "Vocabulario",
+        "desc": "Más de 4.000 tarjetas por tema"
+      },
+      "slang": {
+        "label": "Jerga",
+        "desc": "Frases reales que los libros se saltan"
+      }
+    }
+  },
+  "growth": {
+    "badge": "álbum de crecimiento",
+    "title": "Tu árbol crece cada día",
+    "sub": "Cada quiz y cada grabación lo riegan. Sube de nivel y tu árbol crece un poco más.",
+    "captions": {
+      "A1": "Día 1 — zzz… 안녕?",
+      "A2": "Día 16 — ¡el primer brote!",
+      "B1": "Pedí un café en coreano ✌️",
+      "B2": "K-drama sin subtítulos 🎬",
+      "C1": "En plena floración 🌸",
+      "C2": "Amigos coreanos: ¡대박! 😲👑"
+    }
+  },
+  "pronunciation": {
+    "badge": "ruta de pronunciación",
+    "title": "Dilo en voz alta. El micrófono puntúa.",
+    "sub": "23 capítulos con los sonidos que de verdad se le atragantan a quien habla inglés: de la ㄹ a las consonantes dobles. Consigue 80+ en una palabra y queda superada para siempre.",
+    "chapterTag": "🌶️ Picante · capítulo ㄹ",
+    "best": "mejor 92",
+    "gloss": "ramyeon · fideos instantáneos",
+    "tip": "💡 Toca una sola vez con la punta de la lengua la encía detrás de los dientes de arriba: se parece más a la 'tt' de 'butter' que a una R o una L inglesas.",
+    "resultLabel": "Resultado",
+    "score": "🔥 ¡Clavado! · 92",
+    "heard": "se oyó",
+    "footer": "📊 23 capítulos en <b>5 rangos</b> — de 🌱 Calentamiento a 👑 Legendario. Con 80+ superas uno para siempre."
+  },
+  "writing": {
+    "badge": "correcciones con IA",
+    "title": "Escribe una frase. Te decimos justo qué corregir.",
+    "sub": "No solo bien o mal: cada vez que escribes recibes una reescritura natural, una nota de gramática y una razón en una línea.",
+    "promptTag": "✍️ Escritura · consigna de respuesta",
+    "promptGloss": "¿Qué hiciste ayer? ¡Yo quedé con un amigo!",
+    "yourAnswer": "Tu respuesta",
+    "resultLabel": "Resultado",
+    "naturalLabel": "Cómo se diría de forma natural",
+    "grammarLabel": "Gramática",
+    "feedback": "¡Buena frase! Cuando la segunda acción ocurre a causa de la primera, usa <k>-아서/어서</k> en lugar de <g>-고</g>: aquí suena mucho más natural.",
+    "footer": "📊 4 géneros por nivel — <b>diario, respuestas, descripción, opinión</b> — de A1 a C2."
+  },
+  "final": {
+    "title": "Pega hoy tu primera página",
+    "tagline": "echa raíces hoy 🌱",
+    "cta": "Empieza gratis — test de nivel de 3 min",
+    "note": "todas las lecciones gratis · sin tarjeta · del hangul a la fluidez",
+    "about": "Acerca de",
+    "privacy": "Privacidad",
+    "contact": "Contacto",
+    "copyright": "© 2026 Kroot"
+  },
+  "community": {
+    "badge": "de otros estudiantes",
+    "title": "Postales de todo el mundo",
+    "sub": "Nunca aprendes en soledad: tablón de preguntas, tablón libre e intercambio de idiomas.",
+    "posts": {
+      "maria": {
+        "from": "MARÍA · BRASIL",
+        "text": "«은/는 frente a 이/가 por fin me hizo clic aquí. ¡Tres meses practicando a diario y sigo!»",
+        "meta": "Tablón de preguntas · traducido del portugués"
+      },
+      "kenta": {
+        "from": "KENTA · JAPÓN",
+        "text": "«¡Hoy aprobé el TOPIK nivel 3! Seis meses regando a diario sin fallar fueron la clave.»",
+        "meta": "Tablón libre · traducido del japonés"
+      },
+      "amara": {
+        "from": "AMARA · NIGERIA",
+        "text": "«Busco pareja de conversación 30 min a la semana; ¡encantada de ayudarte con el inglés!»",
+        "meta": "Intercambio de idiomas · original en inglés"
+      }
+    }
+  }
+}

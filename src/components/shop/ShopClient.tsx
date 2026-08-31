@@ -36,7 +36,10 @@ function friendlyError(raw: string): string {
   if (raw.includes("not enough coins")) return "Not enough coins.";
   if (raw.includes("already owned")) return "You already own this.";
   if (raw.includes("level too low")) return "Your tree isn't tall enough yet.";
-  if (raw.includes("plus required")) return "This one is for Kroot Plus members.";
+  // Kroot Plus is gone, but buy_costume() still raises this for any catalog row
+  // left with plus_only = true. Until migration 0042 clears those rows the error
+  // is still reachable, so it needs copy that doesn't sell a tier we removed.
+  if (raw.includes("plus required")) return "This one isn't available right now.";
   if (raw.includes("not available")) return "This item isn't on sale right now.";
   return "Something went wrong — try again.";
 }
@@ -74,7 +77,6 @@ export default function ShopClient({
   coins,
   isAdmin = false,
   playerLevel,
-  hasPlus,
   species,
   stage,
   owned,
@@ -86,7 +88,6 @@ export default function ShopClient({
   coins: number;
   isAdmin?: boolean;
   playerLevel: number;
-  hasPlus: boolean;
   species: CefrLevel;
   stage: CefrLevel;
   owned: string[];
@@ -136,7 +137,7 @@ export default function ShopClient({
   const goalCandidates = COSTUMES.filter((c) => !ownedSet.has(c.id) && c.price > 0 && isAvailable(c, now)).sort(
     (a, b) => a.price - b.price,
   );
-  const defaultGoal = goalCandidates.find((c) => !isLevelLocked(c, playerLevel, hasPlus) && c.price > balance);
+  const defaultGoal = goalCandidates.find((c) => !isLevelLocked(c, playerLevel) && c.price > balance);
   const overrideGoal = goalOverride ? goalCandidates.find((c) => c.id === goalOverride) : undefined;
   // A stored goal that was since bought (or left the catalog) is ignored and
   // the default takes over; buying the goal item clears the stored id below.
@@ -190,7 +191,7 @@ export default function ShopClient({
     const isOwned = ownedSet.has(selected.id);
     if (isOwned) cta = { label: worn[selected.slot] === selected.id ? "Take off" : "Wear it" };
     else if (isAdmin) cta = { label: "Claim & wear · admin" };
-    else if (isLevelLocked(selected, playerLevel, hasPlus)) cta = { label: `Unlocks at Lv.${selected.minPlayerLevel}`, disabled: true };
+    else if (isLevelLocked(selected, playerLevel)) cta = { label: `Unlocks at Lv.${selected.minPlayerLevel}`, disabled: true };
     else if (balance < selected.price) cta = { label: `Need ${selected.price - balance} more 🌰`, disabled: true };
     else cta = { label: selected.price === 0 ? "Claim & wear" : `Buy & wear · 🌰 ${selected.price}` };
   }
@@ -202,7 +203,7 @@ export default function ShopClient({
         balance={balance}
         isAdmin={isAdmin}
         playerLevel={playerLevel}
-        locked={goal ? isLevelLocked(goal, playerLevel, hasPlus) : false}
+        locked={goal ? isLevelLocked(goal, playerLevel) : false}
         questDone={questDone}
         preview={goal ? <Scene ids={[goal.id]} stage={stage} species={species} className="w-full h-full" /> : null}
         picker={
@@ -234,7 +235,7 @@ export default function ShopClient({
                       <span className="flex-1 min-w-0 truncate font-semibold">{c.name}</span>
                       <span className="text-muted tabular-nums whitespace-nowrap">
                         🌰 {c.price}
-                        {isLevelLocked(c, playerLevel, hasPlus) ? ` · Lv.${c.minPlayerLevel}` : ""}
+                        {isLevelLocked(c, playerLevel) ? ` · Lv.${c.minPlayerLevel}` : ""}
                       </span>
                       {isGoal && <span className="text-success font-extrabold">✓</span>}
                     </button>
@@ -322,7 +323,7 @@ export default function ShopClient({
             {visible.map((c) => {
               const on = preview[c.slot] === c.id;
               const isOwned = ownedSet.has(c.id);
-              const locked = isLevelLocked(c, playerLevel, hasPlus);
+              const locked = isLevelLocked(c, playerLevel);
               const ids = Object.values({ ...preview, [c.slot]: c.id }).filter((v): v is string => !!v);
               const rs = RARITY_STYLE[c.rarity];
               let price: React.ReactNode;

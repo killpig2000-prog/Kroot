@@ -42,6 +42,11 @@ export default function OfflinePage() {
           You&apos;re offline right now. Your streak is safe — reconnect and today&apos;s lesson
           will be right where you left it.
         </p>
+        {/* A real <a>, not next/link, on purpose: this page is the service
+            worker's fallback for a failed navigation, so it renders with no JS
+            bundle and no router. Its whole job is to make the browser attempt a
+            fresh network navigation, which a client-side Link cannot do. */}
+        {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
         <a href="/dashboard" style={btn}>
           Try again
         </a>

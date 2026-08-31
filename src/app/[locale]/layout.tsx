@@ -9,9 +9,8 @@ import "../globals.css";
 import { routing } from "@/i18n/routing";
 import { MODE_COOKIE, resolveMode } from "@/lib/mode";
 import { SEASON_COOKIE, seasonForDate } from "@/lib/seasons";
+import { seoAlternates } from "@/lib/seo";
 import { SITE_URL } from "@/lib/site";
-import { createClient, getClaimsUser } from "@/lib/supabase/server";
-import { isPlus } from "@/lib/plus";
 import SeasonalEffects from "@/components/ui/SeasonalEffects";
 import PwaRegister from "@/components/pwa/PwaRegister";
 
@@ -42,21 +41,37 @@ export const viewport: Viewport = {
   themeColor: "#6BBF8A",
 };
 
-export const metadata: Metadata = {
-  metadataBase: new URL(SITE_URL),
-  title: "Kroot — Grow your Korean, one little sprout at a time",
-  description:
-    "Kroot is a cozy garden where your Korean grows every day — with a friendly AI tutor, tiny lessons, and friends from all over the world.",
-  verification: {
-    google: "9_zaAq2WS5tU8bwdzzy7MF64LuKXCwJThp-S2V5ObPM",
-  },
-  applicationName: "Kroot",
-  appleWebApp: { capable: true, title: "Kroot", statusBarStyle: "default" },
-  icons: {
-    icon: [{ url: "/icon.svg", type: "image/svg+xml" }, { url: "/icon-192.png", sizes: "192x192", type: "image/png" }],
-    apple: "/apple-touch-icon.png",
-  },
-};
+// Generated rather than static so the homepage can declare a canonical that
+// names the locale being served. The landing page itself can't do it: it is a
+// "use client" component, and generateMetadata is server-only.
+//
+// Careful — Next merges metadata shallowly from the root segment down, so a
+// nested field the page doesn't set is INHERITED. `alternates` here therefore
+// becomes the default for every route under [locale] that doesn't declare its
+// own, pointing it at "/". Any new public, indexable page must set its own
+// alternates (seoAlternates(locale, path)) or it will canonicalize itself away
+// into the homepage. The pages that matter already do; the rest are blocked in
+// robots.txt, and /onboarding inheriting the homepage canonical is the one
+// live case, which is harmless for a thin funnel page.
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  return {
+    metadataBase: new URL(SITE_URL),
+    title: "Kroot — Grow your Korean, one little sprout at a time",
+    description:
+      "Kroot is a cozy garden where your Korean grows every day — with a friendly AI tutor, tiny lessons, and friends from all over the world.",
+    alternates: seoAlternates(locale, "/"),
+    verification: {
+      google: "9_zaAq2WS5tU8bwdzzy7MF64LuKXCwJThp-S2V5ObPM",
+    },
+    applicationName: "Kroot",
+    appleWebApp: { capable: true, title: "Kroot", statusBarStyle: "default" },
+    icons: {
+      icon: [{ url: "/icon.svg", type: "image/svg+xml" }, { url: "/icon-192.png", sizes: "192x192", type: "image/png" }],
+      apple: "/apple-touch-icon.png",
+    },
+  };
+}
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -82,21 +97,6 @@ export default async function RootLayout({ children, params }: Props) {
   const seasonEnabled = cookieStore.get(SEASON_COOKIE)?.value === "on"; // default off
   const season = seasonForDate(new Date());
 
-  // Plus members get a denser seasonal drift with golden sparkles.
-  let plusActive = false;
-  if (seasonEnabled) {
-    const supabase = await createClient();
-    const user = await getClaimsUser(supabase);
-    if (user) {
-      const { data } = await supabase
-        .from("profiles")
-        .select("plus_until")
-        .eq("id", user.id)
-        .single();
-      plusActive = isPlus(data?.plus_until);
-    }
-  }
-
   return (
     <html
       lang={locale}
@@ -107,7 +107,7 @@ export default async function RootLayout({ children, params }: Props) {
       <body>
         <NextIntlClientProvider messages={messages}>
           {children}
-          <SeasonalEffects season={season} initialEnabled={seasonEnabled} plus={plusActive} />
+          <SeasonalEffects season={season} initialEnabled={seasonEnabled} />
           <PwaRegister />
         </NextIntlClientProvider>
         <Analytics />

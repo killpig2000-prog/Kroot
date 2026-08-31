@@ -12,27 +12,19 @@ import {
   unsubscribeFromPush,
 } from "@/lib/push-client";
 
-// Choices are LOCAL hours — the cron compares UTC, so we convert on save and
-// back on display using this browser's offset. (A DST change can shift the
-// real send time by an hour until the setting is touched again; acceptable
-// for a "sometime in the evening" nudge and avoids a timezone column.)
-const HOURS = [
-  { local: 7, label: "Morning" },
-  { local: 12, label: "Midday" },
-  { local: 18, label: "Evening" },
-  { local: 22, label: "Late" },
-];
-const offsetHours = () => Math.round(-new Date().getTimezoneOffset() / 60);
-const localToUtc = (h: number) => (((h - offsetHours()) % 24) + 24) % 24;
-const utcToLocal = (h: number) => (((h + offsetHours()) % 24) + 24) % 24;
+// There used to be a "send it around" picker here with four local-hour presets
+// (Morning/Midday/Evening/Late) written into profiles.reminder_hour. The cron
+// can only run once a day on Vercel Hobby, so three of the four choices were a
+// lie and the popular one ("Evening" → 22:00 UTC in the US) meant the reminder
+// never arrived at all. The picker is gone rather than kept as decoration: we
+// send one nudge a day at 18:00 UTC and now say so. reminder_hour is left in
+// the database untouched in case a paid plan ever makes a real schedule
+// possible — nothing reads it any more.
+const CRON_UTC_HOUR = 18;
 const clock = (h: number) => `${((h + 11) % 12) + 1} ${h < 12 ? "am" : "pm"}`;
-/** Nearest preset to a stored UTC hour, so the select never shows a blank. */
-const nearestLocal = (utc: number) => {
-  const local = utcToLocal(utc);
-  return HOURS.reduce((best, h) =>
-    Math.abs(h.local - local) < Math.abs(best.local - local) ? h : best
-  ).local;
-};
+/** 18:00 UTC in this browser's clock — null on the server, where we can't know it. */
+const localSendTime = () =>
+  clock((((CRON_UTC_HOUR + Math.round(-new Date().getTimezoneOffset() / 60)) % 24) + 24) % 24);
 
 type Support = "unknown" | "ok" | "ios-install" | "none";
 const subscribeNever = () => () => {};
@@ -45,20 +37,18 @@ type Props = {
   userId: string;
   initialPush: boolean;
   initialEmail: boolean;
-  initialHour: number;
   hasEmail: boolean;
 };
 
-// Reminders card on /profile: push toggle (Web Push), email toggle (Brevo),
-// and the hour the daily nudge goes out.
-export default function ReminderSettings({ userId, initialPush, initialEmail, initialHour, hasEmail }: Props) {
+// Reminders card on /profile: push toggle (Web Push) and email toggle (Brevo).
+export default function ReminderSettings({ userId, initialPush, initialEmail, hasEmail }: Props) {
   const supabase = useMemo(() => createClient(), []);
   const [push, setPush] = useState(initialPush);
   const [email, setEmail] = useState(initialEmail);
-  const [hour, setHour] = useState(initialHour);
-  const [busy, setBusy] = useState<"push" | "email" | "hour" | null>(null);
+  const [busy, setBusy] = useState<"push" | "email" | null>(null);
   const [note, setNote] = useState<string | null>(null);
   const support = useSyncExternalStore(subscribeNever, detectSupport, () => "unknown" as Support);
+  const sendTime = useSyncExternalStore<string | null>(subscribeNever, localSendTime, () => null);
   const keyConfigured = !!process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
 
   useEffect(() => {
@@ -110,21 +100,15 @@ export default function ReminderSettings({ userId, initialPush, initialEmail, in
     setBusy(null);
   }
 
-  async function changeHour(localHour: number) {
-    setBusy("hour");
-    const utc = localToUtc(localHour);
-    setHour(utc);
-    await supabase.from("profiles").update({ reminder_hour: utc }).eq("id", userId);
-    setBusy(null);
-  }
-
   const pushDisabled = busy !== null || support === "none" || support === "ios-install" || !keyConfigured;
 
   return (
     <div id="reminders" className="border border-line rounded-[14px] px-[22px] py-5">
       <div className="flex items-baseline justify-between gap-3 mb-4 flex-wrap">
         <b className="font-semibold text-[15px]">⏰ Daily reminder</b>
-        <small className="text-[12.5px] text-faint font-medium">Only when you haven&apos;t studied yet</small>
+        <small className="text-[12.5px] text-faint font-medium">
+          {sendTime ? `Once a day, around ${sendTime}` : "Once a day"} — only if you haven&apos;t studied yet
+        </small>
       </div>
 
       <div className="grid grid-cols-1 gap-3">
@@ -152,22 +136,6 @@ export default function ReminderSettings({ userId, initialPush, initialEmail, in
           busy={busy === "email"}
           onToggle={toggleEmail}
         />
-
-        <div className="flex items-center justify-between gap-3 flex-wrap pt-1">
-          <span className="text-[13.5px] font-semibold">Send it around</span>
-          <select
-            value={nearestLocal(hour)}
-            disabled={busy !== null}
-            onChange={(e) => changeHour(Number(e.target.value))}
-            className="text-[13px] font-semibold border border-line rounded-[9px] px-3 py-2 bg-cream"
-          >
-            {HOURS.map((h) => (
-              <option key={h.local} value={h.local}>
-                {h.label} · {clock(h.local)} your time
-              </option>
-            ))}
-          </select>
-        </div>
       </div>
 
       {note && <p className="mt-3 text-[12.5px] text-danger">{note}</p>}

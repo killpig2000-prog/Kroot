@@ -83,7 +83,7 @@ export default async function ProfilePage() {
     // Migration 0035 columns, tolerant of a not-yet-applied migration.
     supabase
       .from("profiles")
-      .select("reminder_push, reminder_email, reminder_hour, streak_freezes")
+      .select("reminder_push, reminder_email, streak_freezes")
       .eq("id", user.id)
       .maybeSingle(),
     supabase
@@ -410,7 +410,6 @@ export default async function ProfilePage() {
               userId={user.id}
               initialPush={extras?.reminder_push ?? false}
               initialEmail={extras?.reminder_email ?? false}
-              initialHour={extras?.reminder_hour ?? 18}
               hasEmail={!!user.email}
             />
           </div>

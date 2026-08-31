@@ -1,11 +1,24 @@
+import type { Metadata } from "next";
+import { Link } from "@/i18n/navigation";
 import Nav from "@/components/landing/Nav";
+import { seoAlternates } from "@/lib/seo";
 
-export const metadata = {
-  title: "Privacy Policy — Kroot",
-  description: "How Kroot collects, uses, and protects your data.",
-};
+// In the sitemap for all five locales, so it needs a self-referential
+// canonical and the hreflang set like every other public page.
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  return {
+    title: "Privacy Policy — Kroot",
+    description: "How Kroot collects, uses, and protects your data.",
+    alternates: seoAlternates(locale, "/privacy"),
+  };
+}
 
-const EFFECTIVE_DATE = "August 29, 2026";
+const EFFECTIVE_DATE = "August 31, 2026";
 const CONTACT_EMAIL = "killpig2000@gmail.com";
 
 function Section({ id, title, children }: { id: string; title: string; children: React.ReactNode }) {
@@ -44,8 +57,7 @@ export default function PrivacyPage() {
             <li><b>Learning data</b> — your level, streak, XP, which words and lessons you&apos;ve studied, quiz answers, spaced-repetition history, and any writing you submit for correction.</li>
             <li><b>Usage events</b> — which pages and features you use, so we know what&apos;s actually helping people learn. These are tied to your account (or an anonymous ID before you sign up), never sold, and never shared with advertisers.</li>
             <li><b>Support messages</b> — anything you send through the in-app feedback form, along with the page you sent it from.</li>
-            <li><b>Push notification token</b> — only if you turn on streak reminders. You can turn this off at any time in <a href="/profile#reminders">Settings</a>.</li>
-            <li><b>Payment status</b> — if you subscribe to Kroot Plus, we know that you&apos;re subscribed and until when. Kroot never sees or stores your card number; that&apos;s handled entirely by Stripe.</li>
+            <li><b>Push notification token</b> — only if you turn on streak reminders. You can turn this off at any time in <Link href="/profile#reminders">Settings</Link>.</li>
           </ul>
           <p>Kroot doesn&apos;t knowingly collect precise location, contacts, or any data beyond what&apos;s listed above, and doesn&apos;t run third-party ad tracking.</p>
         </Section>
@@ -68,7 +80,6 @@ export default function PrivacyPage() {
           <ul>
             <li><b>Supabase</b> — hosts the database and handles login (stores your account, progress, and password securely).</li>
             <li><b>Vercel</b> — hosts the app and provides privacy-focused, cookie-free traffic analytics.</li>
-            <li><b>Stripe</b> — processes Kroot Plus payments. Your card details go directly to Stripe; Kroot never receives them.</li>
             <li><b>Brevo</b> — sends transactional emails (sign-up confirmation, password reset, reminders).</li>
             <li><b>Microsoft</b> — converts Korean text to speech audio for pronunciation playback. Only the text being read is sent, not your identity.</li>
           </ul>

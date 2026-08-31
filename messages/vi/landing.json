@@ -1,0 +1,150 @@
+{
+  "nav": {
+    "practice": "Thực hành",
+    "howItGrows": "Cây lớn thế nào",
+    "myGarden": "Khu vườn của tôi →",
+    "login": "Đăng nhập",
+    "startFree": "Bắt đầu miễn phí 🌱"
+  },
+  "hero": {
+    "titleLine1": "Bạn đã yêu Hàn Quốc rồi.",
+    "titleHighlight": "Giờ thì học nói tiếng Hàn.",
+    "sub": "Phim Hàn, món Hàn, mọi thứ Hàn — bạn đã đi được nửa đường. Kroot biến tình yêu đó thành tiếng Hàn thật, mỗi ngày một bài nhỏ.",
+    "cta": "Tìm trình độ của tôi (3 phút)",
+    "note": "— mọi bài học đều miễn phí, không cần thẻ, từ 한글 đến trôi chảy",
+    "photos": {
+      "hanok": "한옥 ở Bukchon",
+      "night": "đêm đầu tiên ở Seoul",
+      "food": "lần đầu ăn 떡볶이 🌶️",
+      "cafe": "học ở quán cà phê ☕"
+    }
+  },
+  "speech": {
+    "hello": "xin chào",
+    "awesome": "tuyệt vời",
+    "thankYou": "cảm ơn",
+    "really": "thật à?",
+    "delicious": "ngon quá",
+    "superFun": "vui cực",
+    "youGotThis": "cố lên!",
+    "loveYou": "yêu bạn"
+  },
+  "levelTest": {
+    "badge": "kiểm tra nhanh",
+    "title": "Tìm trình độ của bạn trong 3 phút",
+    "sub": "Một bài kiểm tra thích ứng ngắn sẽ tìm ra trình độ của bạn (A1–C2) và dừng ngay khi đã chắc chắn. Chưa đọc được Hangul? Cứ nói vậy và bắt đầu từ đó — không cần tài khoản.",
+    "cardTitle": "Kiểm tra trình độ · Câu 3",
+    "cardTag": "từ vựng",
+    "question": "— nghĩa là gì?",
+    "options": {
+      "ok": "Không sao / Tôi ổn",
+      "expensive": "Đắt quá",
+      "seeYou": "Hẹn gặp lại ngày mai"
+    },
+    "tipTitle": "✏️ Cách chấm điểm",
+    "tipBody": "Từ vựng, ngữ pháp và nghe xen kẽ nhau — thường 4 đến 10 câu. Kết quả theo thang CEFR mà người học và nhà tuyển dụng thật sự dùng!",
+    "cta": "Bắt đầu bài kiểm tra"
+  },
+  "categories": {
+    "badge": "bên trong có gì",
+    "title": "6 công cụ bạn sẽ dùng mỗi ngày",
+    "sub": "Tất cả đều miễn phí — sưu tầm từng cái một, như sticker.",
+    "items": {
+      "listening": {
+        "label": "Nghe",
+        "desc": "Đoạn hội thoại A1–C2, bật tắt phụ đề tùy ý"
+      },
+      "pronunciation": {
+        "label": "Phát âm",
+        "desc": "Nói vào micro — đạt 80+ để qua mỗi chương"
+      },
+      "writing": {
+        "label": "Viết",
+        "desc": "Viết một câu, nhận ngay nhận xét"
+      },
+      "reading": {
+        "label": "Đọc",
+        "desc": "Chạm vào từ nào cũng có gợi ý"
+      },
+      "vocabulary": {
+        "label": "Từ vựng",
+        "desc": "Hơn 4.000 thẻ từ theo chủ đề"
+      },
+      "slang": {
+        "label": "Từ lóng",
+        "desc": "Những câu thật mà sách giáo khoa bỏ qua"
+      }
+    }
+  },
+  "growth": {
+    "badge": "album trưởng thành",
+    "title": "Cây của bạn lớn lên mỗi ngày",
+    "sub": "Mỗi câu đố, mỗi lần ghi âm đều là một lần tưới nước. Lên cấp, cây của bạn lại cao thêm một chút.",
+    "captions": {
+      "A1": "Ngày 1 — zzz… 안녕?",
+      "A2": "Ngày 16 — chồi đầu tiên!",
+      "B1": "Gọi cà phê bằng tiếng Hàn ✌️",
+      "B2": "Xem phim Hàn không phụ đề 🎬",
+      "C1": "Nở rộ 🌸",
+      "C2": "Bạn người Hàn: 대박! 😲👑"
+    }
+  },
+  "pronunciation": {
+    "badge": "hành trình phát âm",
+    "title": "Nói to lên. Micro sẽ chấm điểm.",
+    "sub": "23 chương dành cho những âm mà người nói tiếng Anh hay vấp — từ ㄹ đến phụ âm căng. Đạt 80+ ở một từ là qua luôn.",
+    "chapterTag": "🌶️ Cay · chương ㄹ",
+    "best": "cao nhất 92",
+    "gloss": "ramyeon · mì gói",
+    "tip": "💡 Chạm nhẹ đầu lưỡi một cái vào lợi phía sau răng cửa trên — gần với âm 'tt' trong 'butter' hơn là R hay L của tiếng Anh.",
+    "resultLabel": "Kết quả",
+    "score": "🔥 Chuẩn luôn! · 92",
+    "heard": "nghe được",
+    "footer": "📊 23 chương chia thành <b>5 bậc</b> — từ 🌱 Khởi động đến 👑 Huyền thoại. Đạt 80+ là qua luôn một chương."
+  },
+  "writing": {
+    "badge": "AI sửa bài",
+    "title": "Viết một câu. Biết ngay phải sửa gì.",
+    "sub": "Không chỉ đúng hay sai — mỗi lần viết bạn đều nhận được câu viết lại tự nhiên, điểm ngữ pháp và một dòng lý do.",
+    "promptTag": "✍️ Viết · đề bài trả lời",
+    "promptGloss": "Hôm qua bạn làm gì? Mình đã gặp bạn!",
+    "yourAnswer": "Câu trả lời của bạn",
+    "resultLabel": "Kết quả",
+    "naturalLabel": "Cách nói tự nhiên",
+    "grammarLabel": "Ngữ pháp",
+    "feedback": "Câu tốt! Khi hành động thứ hai xảy ra vì hành động thứ nhất, hãy dùng <k>-아서/어서</k> thay cho <g>-고</g> — ở đây nghe tự nhiên hơn.",
+    "footer": "📊 4 thể loại mỗi cấp độ — <b>nhật ký, trả lời, miêu tả, ý kiến</b> — từ A1 đến C2."
+  },
+  "final": {
+    "title": "Dán trang đầu tiên của bạn hôm nay",
+    "tagline": "hãy bén rễ ngay hôm nay 🌱",
+    "cta": "Bắt đầu miễn phí — kiểm tra trình độ 3 phút",
+    "note": "mọi bài học miễn phí · không cần thẻ · từ Hangul đến trôi chảy",
+    "about": "Giới thiệu",
+    "privacy": "Quyền riêng tư",
+    "contact": "Liên hệ",
+    "copyright": "© 2026 Kroot"
+  },
+  "community": {
+    "badge": "từ người học",
+    "title": "Bưu thiếp từ khắp thế giới",
+    "sub": "Bạn không bao giờ học một mình — bảng hỏi đáp, bảng tự do, trao đổi ngôn ngữ.",
+    "posts": {
+      "maria": {
+        "from": "MARIA · BRAZIL",
+        "text": "“은/는 với 이/가 cuối cùng cũng vỡ ra ở đây. Ba tháng luyện mỗi ngày và vẫn đang tiếp tục!”",
+        "meta": "Bảng hỏi đáp · dịch từ tiếng Bồ Đào Nha"
+      },
+      "kenta": {
+        "from": "KENTA · NHẬT BẢN",
+        "text": "“Hôm nay mình đậu TOPIK cấp 3! Sáu tháng tưới cây liên tục mỗi ngày chính là câu trả lời.”",
+        "meta": "Bảng tự do · dịch từ tiếng Nhật"
+      },
+      "amara": {
+        "from": "AMARA · NIGERIA",
+        "text": "“Mình đang tìm bạn luyện nói 30 phút mỗi tuần — sẵn sàng giúp bạn tiếng Anh!”",
+        "meta": "Trao đổi ngôn ngữ · nguyên văn tiếng Anh"
+      }
+    }
+  }
+}

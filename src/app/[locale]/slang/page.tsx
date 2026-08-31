@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
@@ -6,13 +7,24 @@ import SlangBoard from "@/components/slang/SlangBoard";
 import SlangHero from "@/components/slang/SlangHero";
 import SlangQuiz from "@/components/slang/SlangQuiz";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
+import { seoAlternates } from "@/lib/seo";
 import { SLANG, slangOfTheDay } from "@/lib/slang";
 
-export const metadata = {
-  title: "Korean Slang — the words textbooks skip | Kroot",
-  description:
-    "Real Korean slang from K-dramas, K-pop, and group chats — meaning, nuance, and an example for each, plus a daily pick.",
-};
+// The board was in nobody's sitemap and declared no canonical at all, even
+// though it is the hub every /slang/[slug] page links back to.
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  return {
+    title: "Korean Slang — the words textbooks skip | Kroot",
+    description:
+      "Real Korean slang from K-dramas, K-pop, and group chats — meaning, nuance, and an example for each, plus a daily pick.",
+    alternates: seoAlternates(locale, "/slang"),
+  };
+}
 
 // Public page: the slang board is a search-engine entry point (sitemap +
 // canonical per entry), so it renders signed-out too — just without the
