@@ -19,16 +19,6 @@
       "cafe": "estudiar en el café ☕"
     }
   },
-  "speech": {
-    "hello": "hola",
-    "awesome": "increíble",
-    "thankYou": "gracias",
-    "really": "¿en serio?",
-    "delicious": "delicioso",
-    "superFun": "superdivertido",
-    "youGotThis": "¡tú puedes!",
-    "loveYou": "te quiero"
-  },
   "levelTest": {
     "badge": "test rápido",
     "title": "Descubre tu nivel en 3 minutos",
@@ -44,6 +34,19 @@
     "tipTitle": "✏️ Cómo se puntúa",
     "tipBody": "Vocabulario, gramática y comprensión auditiva mezclados: normalmente de 4 a 10 preguntas. ¡El resultado sale en la escala CEFR que de verdad usan estudiantes y empresas!",
     "cta": "Empezar el test de nivel"
+  },
+  "today": {
+    "badge": "un día en Kroot",
+    "title": "Una misión al día, ya elegida por ti",
+    "sub": "Sin feed, sin armar tu propio plan, sin decidir qué estudiar. Ábrelo, haz lo único que toca hoy, riega el árbol y ciérralo.",
+    "cardTitle": "Misión de hoy",
+    "dayLabel": "DÍA 74",
+    "questTitle": "Comprensión auditiva",
+    "questDesc": "Un diálogo a tu nivel · ~5 min",
+    "go": "Empezar →",
+    "reviewTitle": "Repaso",
+    "reviewDesc": "Hoy tocan 12 palabras",
+    "streak": "Regando el árbol desde hace <b>6 días seguidos</b>"
   },
   "categories": {
     "badge": "qué hay dentro",

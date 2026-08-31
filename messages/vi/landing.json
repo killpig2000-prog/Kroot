@@ -19,16 +19,6 @@
       "cafe": "học ở quán cà phê ☕"
     }
   },
-  "speech": {
-    "hello": "xin chào",
-    "awesome": "tuyệt vời",
-    "thankYou": "cảm ơn",
-    "really": "thật à?",
-    "delicious": "ngon quá",
-    "superFun": "vui cực",
-    "youGotThis": "cố lên!",
-    "loveYou": "yêu bạn"
-  },
   "levelTest": {
     "badge": "kiểm tra nhanh",
     "title": "Tìm trình độ của bạn trong 3 phút",
@@ -44,6 +34,19 @@
     "tipTitle": "✏️ Cách chấm điểm",
     "tipBody": "Từ vựng, ngữ pháp và nghe xen kẽ nhau — thường 4 đến 10 câu. Kết quả theo thang CEFR mà người học và nhà tuyển dụng thật sự dùng!",
     "cta": "Bắt đầu bài kiểm tra"
+  },
+  "today": {
+    "badge": "một ngày trên Kroot",
+    "title": "Mỗi ngày một nhiệm vụ, đã được chọn sẵn cho bạn",
+    "sub": "Không có news feed, không phải tự soạn giáo trình, không phải phân vân học gì. Mở lên, làm việc đang đến hạn, tưới cây, rồi đóng lại.",
+    "cardTitle": "Nhiệm vụ hôm nay",
+    "dayLabel": "NGÀY 74",
+    "questTitle": "Nghe",
+    "questDesc": "Một đoạn hội thoại đúng trình độ của bạn · ~5 phút",
+    "go": "Bắt đầu →",
+    "reviewTitle": "Ôn tập",
+    "reviewDesc": "Hôm nay có 12 từ đến hạn",
+    "streak": "Đã tưới cây <b>6 ngày liên tiếp</b>"
   },
   "categories": {
     "badge": "bên trong có gì",

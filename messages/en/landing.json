@@ -19,16 +19,6 @@
       "cafe": "café study ☕"
     }
   },
-  "speech": {
-    "hello": "hello",
-    "awesome": "awesome",
-    "thankYou": "thank you",
-    "really": "really?",
-    "delicious": "delicious",
-    "superFun": "super fun",
-    "youGotThis": "you got this",
-    "loveYou": "love you"
-  },
   "levelTest": {
     "badge": "pop quiz",
     "title": "Find your level in 3 minutes",
@@ -44,6 +34,19 @@
     "tipTitle": "✏️ How it's scored",
     "tipBody": "Vocabulary, grammar and listening mixed — usually 4 to 10 questions. Results on the CEFR scale learners and employers actually use!",
     "cta": "Start the level test"
+  },
+  "today": {
+    "badge": "a day on Kroot",
+    "title": "One quest a day, already picked for you",
+    "sub": "No feed, no deciding what to study. Open it, do the one thing that's due, water the tree, close it.",
+    "cardTitle": "Today's quest",
+    "dayLabel": "DAY 74",
+    "questTitle": "Listening",
+    "questDesc": "One dialogue at your level · ~5 min",
+    "go": "Go →",
+    "reviewTitle": "Review",
+    "reviewDesc": "12 words due today",
+    "streak": "Watered <b>6 days running</b>"
   },
   "categories": {
     "badge": "what's inside",

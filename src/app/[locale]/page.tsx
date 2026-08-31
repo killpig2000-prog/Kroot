@@ -1,12 +1,13 @@
 import Reveal from "@/components/landing/Reveal";
 import Nav from "@/components/landing/Nav";
 import Hero from "@/components/landing/Hero";
-import SpeechStrip from "@/components/landing/SpeechStrip";
 import LevelTest from "@/components/landing/LevelTest";
+import TodayQuest from "@/components/landing/TodayQuest";
 import Categories from "@/components/landing/Categories";
-import Growth from "@/components/landing/Growth";
 import PronunciationDemo from "@/components/landing/PronunciationDemo";
 import WritingFeedbackDemo from "@/components/landing/WritingFeedbackDemo";
+import Growth from "@/components/landing/Growth";
+import Community from "@/components/landing/Community";
 import Final from "@/components/landing/Final";
 import { setRequestLocale } from "next-intl/server";
 
@@ -27,12 +28,13 @@ export default async function LandingPage({ params }: Props) {
       <Reveal />
       <Nav />
       <Hero />
-      <SpeechStrip />
       <LevelTest />
+      <TodayQuest />
       <Categories />
-      <Growth />
       <PronunciationDemo />
       <WritingFeedbackDemo />
+      <Growth />
+      <Community />
       <Final />
     </div>
   );

@@ -19,16 +19,6 @@
       "cafe": "咖啡馆自习 ☕"
     }
   },
-  "speech": {
-    "hello": "你好",
-    "awesome": "厉害",
-    "thankYou": "谢谢",
-    "really": "真的吗？",
-    "delicious": "好吃",
-    "superFun": "超有趣",
-    "youGotThis": "加油！",
-    "loveYou": "我爱你"
-  },
   "levelTest": {
     "badge": "小测验",
     "title": "3 分钟找到你的水平",
@@ -44,6 +34,19 @@
     "tipTitle": "✏️ 怎么评分",
     "tipBody": "词汇、语法和听力混合出题，通常 4 到 10 题。结果按学习者和企业真正在用的 CEFR 等级给出！",
     "cta": "开始水平测验"
+  },
+  "today": {
+    "badge": "Kroot 的一天",
+    "title": "每天一个任务，已经替你选好",
+    "sub": "没有信息流，不用自己搭配学习计划，也不用纠结学什么。打开、做完今天该做的那件事、给树浇水、关闭。",
+    "cardTitle": "今日任务",
+    "dayLabel": "第 74 天",
+    "questTitle": "听力",
+    "questDesc": "一段贴合你水平的对话 · 约 5 分钟",
+    "go": "开始 →",
+    "reviewTitle": "复习",
+    "reviewDesc": "今天有 12 个词到期",
+    "streak": "已连续浇水 <b>6 天</b>"
   },
   "categories": {
     "badge": "里面有什么",
