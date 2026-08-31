@@ -185,7 +185,9 @@ export default function ReviewSession({
     );
   }
 
-  const pct = (index / questions.length) * 100;
+  // Matches the "N of total" label beside it, which counts the question on
+  // screen — the bar used to sit one step behind it.
+  const pct = ((index + 1) / questions.length) * 100;
 
   return (
     <div className={CARD}>

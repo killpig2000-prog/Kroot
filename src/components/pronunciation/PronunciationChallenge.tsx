@@ -62,7 +62,9 @@ export default function PronunciationChallenge({
     href: `/speaking?chapter=${chapterKey}`,
     label: chapter?.title ?? chapterKey,
     detail: "Pronunciation practice",
-    progress: words.length ? Math.round((nailed.length / words.length) * 100) : 0,
+    // How far through the chapter, not how much was mastered — otherwise the
+    // resume card sits at 0% for a learner who is on the last word.
+    progress: words.length ? Math.round(((index + 1) / words.length) * 100) : 0,
   });
 
   const { speak, isSpeaking, isSupported: ttsOk } = useKoreanSpeaker();
@@ -168,7 +170,11 @@ export default function PronunciationChallenge({
   }
 
   function skip() {
-    setNailed((n) => (n.includes(word.id) ? n : [...n, word.id]));
+    // Skipping moves on; it does not earn the word. `nailed` is the mastery
+    // list — it drives the checkmarks, the finish count and the ring — and
+    // adding a skipped word to it let a learner who tapped Skip through the
+    // whole chapter finish with the same perfect card as one who scored 80+
+    // on every word. Chapter progress is tracked by position instead.
     next();
   }
 

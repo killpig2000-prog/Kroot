@@ -18,7 +18,10 @@ export default function VocabQuizPhase({
 }) {
   const t = useTranslations("vocabulary.quiz");
   const q = quizQuestions[quizIndex];
-  const quizPct = quizQuestions.length ? (quizIndex / quizQuestions.length) * 100 : 0;
+  // Track the label above it ("3 of 10"), which counts the question on screen.
+  // Reading from the pre-increment index left the bar a step behind, so the
+  // last question showed "10 of 10" over a bar stuck at 90%.
+  const quizPct = quizQuestions.length ? ((quizIndex + 1) / quizQuestions.length) * 100 : 0;
 
   return (
     <div className={CARD}>
