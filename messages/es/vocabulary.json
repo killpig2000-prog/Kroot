@@ -134,6 +134,7 @@
   },
   "practice": {
     "reviewTime": "hora de repasar",
+    "sessionLength": "Duración de la sesión",
     "opensSoonTitle": "El repaso se abre pronto",
     "opensSoonBody": "Ejecuta la migración incluida <code>supabase/migrations/0022_srs_review.sql</code> para activar el repaso espaciado.",
     "nothingTitle": "Ahora mismo no hay nada que repasar",

@@ -134,6 +134,7 @@
   },
   "practice": {
     "reviewTime": "giờ ôn tập",
+    "sessionLength": "Số từ mỗi lượt",
     "opensSoonTitle": "Phần ôn tập sắp mở",
     "opensSoonBody": "Hãy chạy migration đi kèm <code>supabase/migrations/0022_srs_review.sql</code> để bật chế độ ôn tập ngắt quãng.",
     "nothingTitle": "Hiện chưa có gì để ôn tập",

@@ -1,4 +1,5 @@
 import type { DialogueLine, LocalizedString } from "@/lib/listening-dialogues";
+import { isTranslated } from "@/lib/i18n-fallback";
 
 export function getLocalizedDialogueTitle(title: LocalizedString | string, locale: string): string {
   if (typeof title === "string") return title;
@@ -10,7 +11,11 @@ export function getLocalizedDialogueTitle(title: LocalizedString | string, local
     en: title.en,
   };
 
-  return titles[locale] || title.en;
+  const localized = titles[locale];
+  if (locale === "en") return title.en;
+  // Most of this data set is the English title with a word swapped; showing
+  // the English itself is the honest version of that.
+  return isTranslated(localized, title.en, locale) ? localized : title.en;
 }
 
 export function getLocalizedDialogueLine(line: DialogueLine, locale: string): string {
@@ -21,5 +26,7 @@ export function getLocalizedDialogueLine(line: DialogueLine, locale: string): st
     en: line.en,
   };
 
-  return lines[locale] || line.en;
+  const localized = lines[locale];
+  if (locale === "en") return line.en;
+  return isTranslated(localized, line.en, locale) ? localized : line.en;
 }

@@ -134,6 +134,7 @@
   },
   "practice": {
     "reviewTime": "review time",
+    "sessionLength": "Session length",
     "opensSoonTitle": "Practice opens soon",
     "opensSoonBody": "Run the included migration <code>supabase/migrations/0022_srs_review.sql</code> to turn on spaced-repetition review.",
     "nothingTitle": "Nothing to review right now",

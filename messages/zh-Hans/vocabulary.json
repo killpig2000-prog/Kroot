@@ -134,6 +134,7 @@
   },
   "practice": {
     "reviewTime": "复习时间",
+    "sessionLength": "每次复习题数",
     "opensSoonTitle": "复习功能即将开放",
     "opensSoonBody": "运行随附的迁移 <code>supabase/migrations/0022_srs_review.sql</code> 即可开启间隔重复复习。",
     "nothingTitle": "现在没有要复习的内容",

@@ -16,5 +16,15 @@ export function nextReviewAt(box: number, from: Date = new Date()): string {
 }
 
 // How many due words make a satisfying single review session — past this
-// it starts to feel like a slog rather than a quick review.
+// it starts to feel like a slog rather than a quick review. It's only the
+// default: a learner sitting on a backlog can ask for a longer session, so
+// nothing may assume the number is exactly ten.
 export const REVIEW_SESSION_SIZE = 10;
+export const REVIEW_SESSION_SIZES = [10, 20, 30, 50] as const;
+
+export function resolveReviewSize(raw: string | string[] | undefined): number {
+  const value = Number(Array.isArray(raw) ? raw[0] : raw);
+  return (REVIEW_SESSION_SIZES as readonly number[]).includes(value)
+    ? value
+    : REVIEW_SESSION_SIZE;
+}

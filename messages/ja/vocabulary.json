@@ -134,6 +134,7 @@
   },
   "practice": {
     "reviewTime": "復習の時間",
+    "sessionLength": "1回の問題数",
     "opensSoonTitle": "復習はもうすぐ使えます",
     "opensSoonBody": "同梱のマイグレーション <code>supabase/migrations/0022_srs_review.sql</code> を実行すると、間隔反復の復習が有効になります。",
     "nothingTitle": "いま復習するものはありません",
