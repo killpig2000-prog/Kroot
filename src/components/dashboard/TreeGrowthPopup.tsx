@@ -35,13 +35,28 @@ export default function TreeGrowthPopup({
     if (!species) return;
     const stage = treeStageForLevel(level);
 
-    const prevSpecies = localStorage.getItem("kroot-tree-species") as CefrLevel | null;
-    localStorage.setItem("kroot-tree-species", species);
-    const prevStage = localStorage.getItem("kroot-tree-stage") as CefrLevel | null;
-    localStorage.setItem("kroot-tree-stage", stage);
     const tiers = veteranTiers(level);
-    const prevTiersRaw = localStorage.getItem("kroot-tree-tiers");
-    localStorage.setItem("kroot-tree-tiers", String(tiers));
+
+    // This runs on the dashboard — the first screen after signing in. Safari's
+    // private mode, a browser set to block site data, and a full quota all
+    // make setItem throw, and an unguarded throw here takes the whole page
+    // down through the error boundary. Treat storage being unavailable as
+    // "no previous milestone recorded": the celebration silently doesn't fire,
+    // which is the right way for an animation to fail.
+    let prevSpecies: CefrLevel | null = null;
+    let prevStage: CefrLevel | null = null;
+    let prevTiersRaw: string | null = null;
+    try {
+      prevSpecies = localStorage.getItem("kroot-tree-species") as CefrLevel | null;
+      prevStage = localStorage.getItem("kroot-tree-stage") as CefrLevel | null;
+      prevTiersRaw = localStorage.getItem("kroot-tree-tiers");
+      localStorage.setItem("kroot-tree-species", species);
+      localStorage.setItem("kroot-tree-stage", stage);
+      localStorage.setItem("kroot-tree-tiers", String(tiers));
+    } catch {
+      return;
+    }
+
     const tiersGrew = prevTiersRaw !== null && tiers > Number(prevTiersRaw);
 
     const speciesGrew =

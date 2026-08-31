@@ -102,7 +102,7 @@ async function processFile(filepath: string): Promise<void> {
   console.log(`\nProcessing ${path.basename(filepath)}...`);
 
   let content = fs.readFileSync(filepath, "utf-8");
-  let modified = false;
+  const modified = false;
 
   // Find all dialogue objects and process them
   // This is a careful regex-based replacement to preserve file format

@@ -86,7 +86,7 @@ async function processFile(filePath: string): Promise<void> {
   console.log(`Processing: ${path.basename(filePath)}`);
   console.log("=".repeat(60));
 
-  let content = fs.readFileSync(filePath, "utf-8");
+  const content = fs.readFileSync(filePath, "utf-8");
 
   // Find all en strings that need translation
   const enMatches = content.match(/en:\s*"([^"]+)"/g) || [];

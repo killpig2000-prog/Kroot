@@ -157,7 +157,7 @@ function SidebarBody({
           <button
             type="button"
             onClick={onClose}
-            aria-label="Close menu"
+            aria-label={tn("closeMenu")}
             className="ml-auto -mr-1 w-8 h-8 rounded-lg text-lg text-muted hover:bg-cream flex items-center justify-center"
           >
             ×
@@ -251,7 +251,7 @@ export default function Sidebar(props: Props) {
         <button
           type="button"
           onClick={() => setOpen(true)}
-          aria-label="Open menu"
+          aria-label={tn("openMenu")}
           aria-expanded={open}
           className="w-10 h-10 rounded-[10px] flex flex-col items-center justify-center gap-[5px] hover:bg-cream active:bg-cream"
         >
@@ -270,7 +270,7 @@ export default function Sidebar(props: Props) {
         <button
           type="button"
           onClick={() => setOpen(true)}
-          aria-label="Account"
+          aria-label={tn("account")}
           className="w-9 h-9 rounded-full bg-warm border border-line flex items-center justify-center text-base overflow-hidden"
         >
           {avatar}
@@ -288,7 +288,7 @@ export default function Sidebar(props: Props) {
       <aside
         role="dialog"
         aria-modal="true"
-        aria-label="Menu"
+        aria-label={tn("menu")}
         aria-hidden={!open}
         className={`md:hidden fixed inset-y-0 left-0 z-[70] w-[280px] max-w-[85vw] flex flex-col gap-1 border-r border-dashed border-dash bg-warm px-3.5 py-5 overflow-y-auto shadow-[12px_0_40px_-24px_rgba(40,35,25,.5)] transition-transform duration-250 ease-[cubic-bezier(.2,.8,.2,1)] motion-reduce:transition-none ${
           open ? "translate-x-0" : "-translate-x-full"

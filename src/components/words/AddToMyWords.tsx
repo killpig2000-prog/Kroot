@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { createClient, getClientUserId } from "@/lib/supabase/client";
+import type { SupabaseClient } from "@supabase/supabase-js";
 import { track } from "@/lib/analytics";
 import { DEFAULT_WORD_BANK_SLOTS, countSavedWords, getWordBankSlots, saveToBank } from "@/lib/word-bank";
 
@@ -40,7 +40,15 @@ export default function AddToMyWords({
 }) {
   const t = useTranslations("vocabulary");
   const tu = useTranslations("ui");
-  const supabase = useMemo(() => createClient(), []);
+  // The word pages are prerendered public SEO pages, and @supabase/supabase-js
+  // is 66KB compressed. Loading it at module scope put it in the critical path
+  // of every crawl and every reader who never touches this button; behind a
+  // dynamic import it is fetched after paint instead, and only once.
+  const sbRef = useRef<Promise<SupabaseClient> | null>(null);
+  function getSupabase(): Promise<SupabaseClient> {
+    sbRef.current ??= import("@/lib/supabase/client").then((m) => m.createClient());
+    return sbRef.current;
+  }
   const [status, setStatus] = useState<Status>({ kind: "loading" });
   const [used, setUsed] = useState(0);
   const [slots, setSlots] = useState(DEFAULT_WORD_BANK_SLOTS);
@@ -55,7 +63,7 @@ export default function AddToMyWords({
     savingRef.current = true;
     setSaving(true);
     setFailed(false);
-    const res = await saveToBank(supabase, userId, wordKey);
+    const res = await saveToBank(await getSupabase(), userId, wordKey);
     setSaving(false);
     savingRef.current = false;
     if (!res.ok) {
@@ -86,7 +94,12 @@ export default function AddToMyWords({
       // what the old try/catch here did: never leave the button spinning —
       // treat an unreadable session as signed out, which still offers a way
       // forward.
+      const [supabase, { getClientUserId }] = await Promise.all([
+        getSupabase(),
+        import("@/lib/supabase/client"),
+      ]);
       const userId = await getClientUserId(supabase);
+      if (cancelled) return;
       if (cancelled) return;
       if (!userId) {
         setStatus({ kind: "anon" });
@@ -141,7 +154,7 @@ export default function AddToMyWords({
       if (toastTimer.current) clearTimeout(toastTimer.current);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [supabase, wordKey]);
+  }, [wordKey]);
 
   const loginHref = `/auth/login?next=${encodeURIComponent(`/words/${slug}?save=1`)}`;
 

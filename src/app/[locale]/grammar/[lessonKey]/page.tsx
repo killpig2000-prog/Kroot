@@ -6,7 +6,7 @@ import Sidebar from "@/components/dashboard/Sidebar";
 import ExampleBox from "@/components/grammar/ExampleBox";
 import GrammarQuizBlock from "@/components/grammar/GrammarQuiz";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
-import { lessonByKey, lessonIndex, nextLesson, getLocalizedLesson } from "@/lib/grammar";
+import { lessonIndex, nextLesson, getLocalizedLesson } from "@/lib/grammar";
 
 export default async function GrammarLessonPage({
   params,

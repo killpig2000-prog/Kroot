@@ -110,8 +110,14 @@ export default function TestRunner({
       if (!applyErr) {
         setPromoted(true);
         // The big evolution moment happens right here — don't repeat the
-        // dashboard's promotion banner on top of it.
-        localStorage.setItem("kroot-tree-species", spec.to);
+        // dashboard's promotion banner on top of it. Guarded because storage
+        // throws in private mode: worst case the learner sees the banner
+        // twice, which is far better than losing a passed promotion.
+        try {
+          localStorage.setItem("kroot-tree-species", spec.to);
+        } catch {
+          // storage blocked — the dashboard will just congratulate them again
+        }
       }
       router.refresh();
     }

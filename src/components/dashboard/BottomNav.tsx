@@ -222,7 +222,7 @@ export default function BottomNav({
     <>
       {sheet && (
         <button
-          aria-label="Close menu"
+          aria-label={tn("closeMenu")}
           onClick={close}
           className="md:hidden fixed inset-0 z-40 bg-[#282319]/35 cursor-default"
         />

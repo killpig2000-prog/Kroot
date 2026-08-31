@@ -18,7 +18,6 @@ import FlipPhase from "@/components/vocabulary/FlipPhase";
 import QuizIntroPhase from "@/components/vocabulary/QuizIntroPhase";
 import VocabQuizPhase from "@/components/vocabulary/VocabQuizPhase";
 import VocabSummaryPhase from "@/components/vocabulary/VocabSummaryPhase";
-import { getLocalizedMeaning } from "@/lib/vocabulary-i18n";
 
 const QUIZ_BONUS_MINUTES = 3;
 

@@ -24,5 +24,9 @@
   "freezesReady": "{n} lượt đóng băng",
   "myProgress": "Tiến độ của tôi",
   "basics": "Cơ bản",
-  "relax": "Thư giãn"
+  "relax": "Thư giãn",
+  "openMenu": "Mở menu",
+  "closeMenu": "Đóng menu",
+  "account": "Tài khoản",
+  "menu": "Menu"
 }

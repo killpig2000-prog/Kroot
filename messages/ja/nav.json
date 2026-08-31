@@ -24,5 +24,9 @@
   "freezesReady": "フリーズ {n} 個",
   "myProgress": "学習状況",
   "basics": "基本",
-  "relax": "リラックス"
+  "relax": "リラックス",
+  "openMenu": "メニューを開く",
+  "closeMenu": "メニューを閉じる",
+  "account": "アカウント",
+  "menu": "メニュー"
 }

@@ -1,5 +1,10 @@
 import { hasLocale } from 'next-intl';
 import { getRequestConfig } from 'next-intl/server';
+
+// The message shape next-intl expects back, derived from its own signature
+// rather than restated as `any`.
+type RequestConfig = Awaited<ReturnType<Parameters<typeof getRequestConfig>[0]>>;
+type Messages = NonNullable<RequestConfig['messages']>;
 import { routing } from './routing';
 
 export default getRequestConfig(async ({ requestLocale }) => {
@@ -8,7 +13,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
 
   // Load and merge all namespaced message files for this locale
   // Pattern: messages/{locale}/{namespace}.json
-  const messages: Record<string, Record<string, any>> = {};
+  const messages: Record<string, Messages[string]> = {};
 
   const namespaces = ['common', 'nav', 'onboarding', 'vocabulary', 'words', 'ui', 'listening', 'writing', 'pronunciation', 'landing', 'dashboard', 'reading', 'slang', 'tree', 'profile', 'shop', 'community', 'levelTest', 'grammarUi', 'hangul', 'auth', 'notFound', 'guide'];
 
@@ -16,7 +21,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
     try {
       const mod = await import(`../../messages/${locale}/${namespace}.json`);
       messages[namespace] = mod.default || mod;
-    } catch (error) {
+    } catch {
       // Missing namespace — log but don't crash. next-intl will return
       // the key itself when a translation is not found.
       console.warn(`No ${namespace}.json found for locale ${locale}`);
@@ -25,6 +30,6 @@ export default getRequestConfig(async ({ requestLocale }) => {
 
   return {
     locale,
-    messages: messages as any,
+    messages,
   };
 });

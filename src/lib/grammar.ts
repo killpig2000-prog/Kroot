@@ -2892,11 +2892,14 @@ async function loadExampleOverrides(
   locale: string
 ): Promise<Record<string, GrammarExample[]>> {
   try {
-    const module = await import(
+    // Not named `module`: assigning to that identifier is flagged by
+    // @next/next/no-assign-module-variable because it can shadow the module
+    // wrapper the bundler generates.
+    const overrides = await import(
       /* @vite-ignore */ `./grammar-example-overrides-${locale}.json`
     );
-    return module.default || {};
-  } catch (error) {
+    return overrides.default || {};
+  } catch {
     // Fallback: return empty object if locale-specific file doesn't exist
     return {};
   }

@@ -2,7 +2,6 @@
 
 import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
-import { createClient } from "@/lib/supabase/client";
 import { recordCompletion } from "@/lib/activity";
 import { SLANG, type SlangEntry } from "@/lib/slang";
 
@@ -58,7 +57,6 @@ const DONE_KEY = "kroot-slang-quiz";
 
 export default function SlangQuiz() {
   const t = useTranslations("slang.quiz");
-  const supabase = useMemo(() => createClient(), []);
   const day = todayKey();
   const quiz = useMemo(() => buildQuiz(day), [day]);
   // Read the "done today" flag lazily on the client; before hydration we show
@@ -93,7 +91,11 @@ export default function SlangQuiz() {
     } catch {
       // ignore
     }
-    await recordCompletion(supabase, "slang", 2);
+    // Imported on completion, not at module scope: /slang is a public SEO
+    // page and most visitors never open the quiz, but a top-level import put
+    // all of @supabase/supabase-js in the chunk every one of them downloads.
+    const { createClient } = await import("@/lib/supabase/client");
+    await recordCompletion(createClient(), "slang", 2);
   }
 
   function pick(i: number) {

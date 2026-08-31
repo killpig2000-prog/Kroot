@@ -8,8 +8,20 @@ import Growth from "@/components/landing/Growth";
 import PronunciationDemo from "@/components/landing/PronunciationDemo";
 import WritingFeedbackDemo from "@/components/landing/WritingFeedbackDemo";
 import Final from "@/components/landing/Final";
+import { setRequestLocale } from "next-intl/server";
 
-export default function LandingPage() {
+type Props = { params: Promise<{ locale: string }> };
+
+// Without setRequestLocale, next-intl resolves the locale by reading the
+// proxy's header — a headers() call — which opted this page into dynamic
+// rendering. Every other public page got this in 4f0e1d2 and now serves
+// X-Vercel-Cache: HIT; the landing page was missed because it took no params
+// and so had no locale to hand over. It was the last public route still
+// React-rendered by a function on every visit, which is a poor trade for the
+// one page the whole site funnels new visitors to.
+export default async function LandingPage({ params }: Props) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   return (
     <div className="min-h-screen bg-warm text-charcoal">
       <Reveal />

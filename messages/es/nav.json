@@ -24,5 +24,9 @@
   "freezesReady": "{n} congelaciones listas",
   "myProgress": "Mi progreso",
   "basics": "Básicos",
-  "relax": "Relax"
+  "relax": "Relax",
+  "openMenu": "Abrir menú",
+  "closeMenu": "Cerrar menú",
+  "account": "Cuenta",
+  "menu": "Menú"
 }

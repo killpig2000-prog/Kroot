@@ -130,7 +130,7 @@ function applyTranslationsToFile(
   filepath: string,
   translations: TranslationMap
 ): string {
-  let content = fs.readFileSync(filepath, "utf-8");
+  const content = fs.readFileSync(filepath, "utf-8");
   const originalContent = content;
 
   // Process each line that contains en: "..."

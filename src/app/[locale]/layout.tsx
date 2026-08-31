@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Fredoka, Noto_Sans_KR, Nunito } from "next/font/google";
 import { notFound } from "next/navigation";
 import { Analytics } from "@vercel/analytics/next";
-import { NextIntlClientProvider } from "next-intl";
+import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import "../globals.css";
 import { routing } from "@/i18n/routing";
@@ -106,8 +106,9 @@ type Props = {
 export default async function RootLayout({ children, params }: Props) {
   const { locale } = await params;
 
-  // Validate that the locale is supported
-  if (!routing.locales.includes(locale as any)) {
+  // Validate that the locale is supported. hasLocale narrows `locale` to the
+  // union for us, which is what the `as any` was papering over.
+  if (!hasLocale(routing.locales, locale)) {
     notFound();
   }
 

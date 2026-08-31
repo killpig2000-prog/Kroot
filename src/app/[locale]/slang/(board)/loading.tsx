@@ -1,6 +1,14 @@
 // Mirrors the real /slang page (breadcrumb, header, pink "slang of the day"
 // hero card, daily quiz banner, sticker-book progress bar + vibe filter
 // chips, and the flip-card grid) instead of a generic row list.
+//
+// It lives in a (board) route group, not directly under slang/, so that it
+// wraps ONLY the board. A loading file covers its segment and every child, and
+// the moment its fallback renders the response has committed to 200 — after
+// which notFound() can no longer set a status. That made /slang/<unknown>
+// answer 200 with a skeleton that never resolves. The board itself is genuinely
+// dynamic (auth + profile lookup), so it keeps its fallback; /slang/[slug] is
+// prerendered and needs none.
 export default function Loading() {
   return (
     <div className="min-h-screen bg-warm">

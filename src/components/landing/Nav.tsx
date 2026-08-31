@@ -2,22 +2,32 @@
 
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { useEffect, useMemo, useState } from "react";
-import { createClient, getClientUserId } from "@/lib/supabase/client";
+import { useEffect, useState } from "react";
 import BrandMark from "@/components/ui/BrandMark";
 
 export default function Nav() {
   const t = useTranslations("landing.nav");
-  const supabase = useMemo(() => createClient(), []);
   // null = session unknown (first paint) — show the logged-out buttons, then
   // swap to the garden link once the client session check resolves.
   const [loggedIn, setLoggedIn] = useState<boolean | null>(null);
 
   useEffect(() => {
+    let live = true;
     void (async () => {
-      setLoggedIn(Boolean(await getClientUserId(supabase)));
+      // Imported here, not at module scope. Nothing else on the landing page
+      // touches Supabase, and a static top-level import pulled all of
+      // @supabase/supabase-js — auth, PostgREST and the phoenix realtime
+      // client the app never uses — into the first chunk every visitor
+      // downloads: 66KB compressed to decide one button's label. The page is
+      // fully readable and interactive without it.
+      const { createClient, getClientUserId } = await import("@/lib/supabase/client");
+      const userId = await getClientUserId(createClient());
+      if (live) setLoggedIn(Boolean(userId));
     })();
-  }, [supabase]);
+    return () => {
+      live = false;
+    };
+  }, []);
 
   return (
     <nav className="sticky top-0 z-50 border-b border-dashed border-dash bg-cream/95 backdrop-blur-sm">

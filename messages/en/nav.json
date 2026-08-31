@@ -24,5 +24,9 @@
   "freezesReady": "{n} freezes ready",
   "myProgress": "My progress",
   "basics": "Basics",
-  "relax": "Relax"
+  "relax": "Relax",
+  "openMenu": "Open menu",
+  "closeMenu": "Close menu",
+  "account": "Account",
+  "menu": "Menu"
 }
