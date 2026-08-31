@@ -1,6 +1,23 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import Polaroid from "@/components/landing/Polaroid";
+import LevelCreature from "@/components/dashboard/LevelCreature";
+import type { CefrLevel } from "@/lib/tree";
+
+// A loose, playful cluster rather than the A1→C2 growth ladder Growth.tsx
+// already shows further down — six different-sized trees sharing one yard,
+// each popping up on its own beat (see .tree-garden in globals.css). Three
+// size tiers (not just one breakpoint) because the corner polaroids appear
+// at sm and stay fairly wide through the whole 640–1023 range, so the row
+// has to stay small until md and only reaches full size at lg.
+const GARDEN: { level: CefrLevel; cls: string; d: number }[] = [
+  { level: "A1", cls: "w-[18px] md:w-[26px] lg:w-[42px]", d: 0.1 },
+  { level: "B1", cls: "w-[29px] md:w-[42px] lg:w-[68px]", d: 0.34 },
+  { level: "A2", cls: "w-[21px] md:w-[30px] lg:w-[48px]", d: 0.22 },
+  { level: "C2", cls: "w-[46px] md:w-[67px] lg:w-[108px]", d: 0.7 },
+  { level: "B2", cls: "w-[39px] md:w-[57px] lg:w-[92px]", d: 0.46 },
+  { level: "C1", cls: "w-[37px] md:w-[54px] lg:w-[88px]", d: 0.58 },
+];
 
 export default function Hero() {
   const t = useTranslations("landing.hero");
@@ -43,6 +60,24 @@ export default function Hero() {
         <p className="mt-3.5 text-[12.5px] italic text-[#8A8478]">
           {t("note")}
         </p>
+
+        {/* a preview of the garden every lesson grows — full story in Growth */}
+        <div
+          aria-hidden="true"
+          className="tree-garden relative z-10 flex justify-center items-end gap-1 md:gap-1.5 lg:gap-2 mt-9 mx-auto w-fit max-w-full"
+        >
+          <span
+            aria-hidden="true"
+            className="absolute inset-x-2 bottom-1 h-5 rounded-[50%] bg-success-bg/70 blur-md"
+          />
+          {GARDEN.map(({ level, cls, d }) => (
+            <div key={level} className="tree relative" style={{ "--d": `${d}s` } as React.CSSProperties}>
+              <svg viewBox="0 0 220 230" className={`block aspect-[220/230] ${cls}`}>
+                <LevelCreature level={level} />
+              </svg>
+            </div>
+          ))}
+        </div>
       </div>
     </header>
   );
