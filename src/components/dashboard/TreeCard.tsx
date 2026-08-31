@@ -9,6 +9,8 @@ import VeteranTree, { VETERAN_MILESTONES, veteranFrameHeight } from "@/component
 import SpeechBubble from "@/components/ui/SpeechBubble";
 import LevelCreature from "@/components/dashboard/LevelCreature";
 import TreeGrowthPopup from "@/components/dashboard/TreeGrowthPopup";
+import AvatarUploader from "@/components/profile/AvatarUploader";
+import NameEditor from "@/components/profile/NameEditor";
 
 // Korean stays as-is everywhere; only the gloss follows the UI language.
 const TREE_PHRASES = [
@@ -28,6 +30,12 @@ export default function TreeCard({
   xpNeeded,
   costumeIds = [],
   species,
+  userId,
+  displayName,
+  avatarUrl,
+  coins,
+  streakDays,
+  streakFreezes,
 }: {
   level: number;
   progressPct: number;
@@ -36,9 +44,19 @@ export default function TreeCard({
   costumeIds?: string[];
   /** CEFR grade — decides the tree species; promotion transforms the garden. */
   species?: CefrLevel;
+  userId: string;
+  displayName: string;
+  avatarUrl: string | null;
+  coins: number;
+  streakDays: number;
+  streakFreezes: number;
 }) {
   const t = useTranslations("dashboard.tree");
+  // Identity chips reuse the /profile strings — the card absorbed that page's
+  // identity header (2026-09-01), so the copy moved with it.
+  const ti = useTranslations("profile.identity");
   const [fill, setFill] = useState(0);
+  const [openTab, setOpenTab] = useState<"growth" | "keepsakes" | null>(null);
   const equipped = costumeIds;
   const phrases = TREE_PHRASES.map((p) => ({ kr: p.kr, en: t(`phrases.${p.key}`) }));
 
@@ -48,7 +66,6 @@ export default function TreeCard({
   }, [progressPct]);
 
   const stage = treeStageForLevel(level);
-  const { treeName } = LEVEL_PATH[stage];
   const sp = SPECIES[species ?? stage];
   const stageIdx = LEVEL_ORDER.indexOf(stage);
   const maxed = level >= MAX_LEVEL;
@@ -71,7 +88,7 @@ export default function TreeCard({
         style={{ background: "rgba(190,227,248,.65)", borderColor: "rgba(150,200,230,.45)" }}
       />
       {/* the tree, as a polaroid in the album */}
-      <figure className="relative m-0 bg-cream border border-line p-1.5 pb-6 rotate-[1.2deg] shadow-[0_10px_22px_-12px_rgba(60,50,30,.35)]">
+      <figure className="relative m-0 bg-cream border border-line p-1.5 pb-1.5 rotate-[1.2deg] shadow-[0_10px_22px_-12px_rgba(60,50,30,.35)]">
         <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
           <SpeechBubble phrases={phrases} />
         </div>
@@ -119,30 +136,55 @@ export default function TreeCard({
             </g>
           </svg>
         </div>
+        {/* species lives on the polaroid, not in the identity block */}
+        <figcaption className="text-center text-[11.5px] font-bold text-muted pt-1.5">
+          {sp.name} <span className="kr font-semibold text-faint ml-1">{sp.krName}</span>
+        </figcaption>
       </figure>
 
       <div>
-        <h2 className="font-semibold text-lg tracking-[-0.01em] mb-0.5">
-          {sp.name} <span className="text-faint font-medium">· {treeName}</span>
-          <span
-            className={`inline-block ml-2 text-[12.5px] font-semibold border rounded-md px-2 py-px align-[2px] ${
-              veteran ? "bg-[var(--tint-amber)] text-[#B7791F] border-amber-line" : "bg-success-bg text-success border-success-line"
-            }`}
-          >
-            {t("levelBadge", { level })}
+        {/* streak / coins / freezes — top-right on wide cards, a leading row
+            when the card stacks on mobile (absolute children leave the grid) */}
+        <div className="flex flex-wrap gap-1.5 mb-3 sm:mb-0 sm:absolute sm:top-3 sm:right-3.5 sm:justify-end sm:z-10">
+          <span className="text-[12px] font-semibold text-success bg-success-bg border border-success-line rounded-full px-2.5 py-0.5">
+            {ti("streak", { n: streakDays })}
           </span>
-        </h2>
+          <span className="text-[12px] font-semibold text-muted bg-warm border border-line rounded-full px-2.5 py-0.5">
+            {ti("coins", { n: coins })}
+          </span>
+          {streakFreezes > 0 && (
+            <span className="text-[12px] font-semibold text-sky-deep bg-[var(--tint-sky)] border border-[var(--tint-sky-line)] rounded-full px-2.5 py-0.5">
+              {ti("freezes", { n: streakFreezes })}
+            </span>
+          )}
+        </div>
+
+        <div className="flex items-center gap-3 mb-1">
+          <AvatarUploader userId={userId} avatarUrl={avatarUrl} />
+          <h2 className="font-semibold text-lg tracking-[-0.01em] flex items-center gap-2 min-w-0">
+            <NameEditor userId={userId} name={displayName} />
+            {species && (
+              <span className="flex-none text-[11.5px] font-extrabold tracking-[.03em] text-success bg-success-bg border border-success-line rounded-md px-1.5 py-px">
+                {species}
+              </span>
+            )}
+          </h2>
+        </div>
         {veteran && (
           <p className="font-semibold text-[22px] text-[#B7791F] tracking-[-0.01em] tabular-nums mb-0.5">
             {metres}
             <span className="text-[12px] text-muted font-bold ml-1">{t("metresTall")}</span>
           </p>
         )}
-        <p className="text-[13.5px] text-muted mb-4">
-          <span className="kr font-semibold">{sp.krName}</span>
-        </p>
 
-        <div className="flex items-center gap-3 mb-4">
+        <div className="flex items-center gap-3 mb-3.5 mt-2.5">
+          <span
+            className={`flex-none text-[12.5px] font-semibold border rounded-md px-2 py-px ${
+              veteran ? "bg-[var(--tint-amber)] text-[#B7791F] border-amber-line" : "bg-success-bg text-success border-success-line"
+            }`}
+          >
+            {t("levelBadge", { level })}
+          </span>
           <div className="flex-1 h-1.5 bg-warm-3 rounded-full overflow-hidden">
             <i
               className={`not-italic block h-full rounded-full transition-[width] duration-1000 ${veteran ? "bg-[#B7791F]" : "bg-success"}`}
@@ -154,59 +196,91 @@ export default function TreeCard({
           </span>
         </div>
 
-        <div className="flex gap-2">
-          {LEVEL_ORDER.map((lv, idx) => {
-            const state = idx < stageIdx ? "done" : idx === stageIdx ? "now" : "todo";
-            return (
-              <div
-                key={lv}
-                className={`flex-1 rounded-lg py-[7px] px-1 text-center text-sm border transition-all ${
-                  state === "now"
-                    ? "bg-success-bg border-success-line"
-                    : state === "done"
-                    ? "bg-cream border-line"
-                    : "bg-cream border-line grayscale opacity-45"
-                }`}
-              >
-                <span className={state === "now" ? "inline-block bob" : undefined}>
-                  {LEVEL_PATH[lv].icon}
-                </span>
-                <small
-                  className={`block text-[10.5px] font-semibold mt-px ${
-                    state === "now" ? "text-success" : state === "done" ? "text-muted" : "text-faint"
-                  }`}
-                >
-                  {STAGE_RANGES[idx]}
-                </small>
-              </div>
-            );
-          })}
+        {/* growth stages + veteran keepsakes fold behind tabs — the strip ate
+            most of the card's height while answering an occasional question */}
+        <div className="flex gap-2 border-t border-dashed border-line pt-3">
+          <button
+            type="button"
+            aria-expanded={openTab === "growth"}
+            onClick={() => setOpenTab(openTab === "growth" ? null : "growth")}
+            className={`text-[12.5px] font-semibold rounded-full px-3 py-1 border transition-colors ${
+              openTab === "growth"
+                ? "bg-success-bg border-success-line text-success"
+                : "bg-warm border-line text-muted hover:text-success hover:border-success-line"
+            }`}
+          >
+            🌱 {t("growthTab")}{" "}
+            <span className={`inline-block text-[10px] transition-transform ${openTab === "growth" ? "rotate-180" : ""}`}>▾</span>
+          </button>
+          {veteran && (
+            <button
+              type="button"
+              aria-expanded={openTab === "keepsakes"}
+              onClick={() => setOpenTab(openTab === "keepsakes" ? null : "keepsakes")}
+              className={`text-[12.5px] font-semibold rounded-full px-3 py-1 border transition-colors ${
+                openTab === "keepsakes"
+                  ? "bg-[var(--tint-amber)] border-amber-line text-[#B7791F]"
+                  : "bg-warm border-line text-muted hover:text-[#B7791F] hover:border-amber-line"
+              }`}
+            >
+              🏅 {t("keepsakesTab")}{" "}
+              <span className={`inline-block text-[10px] transition-transform ${openTab === "keepsakes" ? "rotate-180" : ""}`}>▾</span>
+            </button>
+          )}
         </div>
 
-        {/* keepsake ladder — what the taller tree has earned, and what's next */}
-        {veteran && (
-          <div className="mt-4 pt-3.5 border-t border-dashed border-line">
-            <div className="flex flex-wrap gap-1.5">
-              {VETERAN_MILESTONES.map((m) => {
-                const on = level >= m.level;
-                const next = nextKeepsake?.level === m.level;
-                return (
-                  <span
-                    key={m.level}
-                    className={`text-[12px] font-semibold rounded-full px-2.5 py-1 border ${
-                      on
-                        ? "bg-[var(--tint-amber)] border-amber-line text-[#B7791F]"
-                        : next
-                        ? "bg-cream border-line text-muted"
-                        : "bg-cream border-line text-faint opacity-50"
+        {openTab === "growth" && (
+          <div className="flex gap-2 mt-3">
+            {LEVEL_ORDER.map((lv, idx) => {
+              const state = idx < stageIdx ? "done" : idx === stageIdx ? "now" : "todo";
+              return (
+                <div
+                  key={lv}
+                  className={`flex-1 rounded-lg py-[7px] px-1 text-center text-sm border transition-all ${
+                    state === "now"
+                      ? "bg-success-bg border-success-line"
+                      : state === "done"
+                      ? "bg-cream border-line"
+                      : "bg-cream border-line grayscale opacity-45"
+                  }`}
+                >
+                  <span className={state === "now" ? "inline-block bob" : undefined}>
+                    {LEVEL_PATH[lv].icon}
+                  </span>
+                  <small
+                    className={`block text-[10.5px] font-semibold mt-px ${
+                      state === "now" ? "text-success" : state === "done" ? "text-muted" : "text-faint"
                     }`}
                   >
-                    <span className="tabular-nums">Lv.{m.level}</span> · {t(`keepsakes.${m.level}`)}
-                    {on && " ✓"}
-                  </span>
-                );
-              })}
-            </div>
+                    {STAGE_RANGES[idx]}
+                  </small>
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+        {openTab === "keepsakes" && veteran && (
+          <div className="flex flex-wrap gap-1.5 mt-3">
+            {VETERAN_MILESTONES.map((m) => {
+              const on = level >= m.level;
+              const next = nextKeepsake?.level === m.level;
+              return (
+                <span
+                  key={m.level}
+                  className={`text-[12px] font-semibold rounded-full px-2.5 py-1 border ${
+                    on
+                      ? "bg-[var(--tint-amber)] border-amber-line text-[#B7791F]"
+                      : next
+                      ? "bg-cream border-line text-muted"
+                      : "bg-cream border-line text-faint opacity-50"
+                  }`}
+                >
+                  <span className="tabular-nums">Lv.{m.level}</span> · {t(`keepsakes.${m.level}`)}
+                  {on && " ✓"}
+                </span>
+              );
+            })}
           </div>
         )}
 

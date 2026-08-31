@@ -182,10 +182,14 @@ export default async function DashboardPage() {
 
   // Promotion eligibility runs after the main batch (it needs the grade);
   // internally it fans out its own queries in parallel.
-  const [elig, analyticsSessions] = await Promise.all([
+  const [elig, analyticsSessions, coinsRes] = await Promise.all([
     computeEligibility(supabase, user.id, cefr),
     maybeNew ? countCompletedSessions(user.id) : Promise.resolve(null),
+    // coins isn't in the snapshot RPC's profile row; a parallel read here
+    // beats a function migration for one integer (see 0041's rationale).
+    supabase.from("profiles").select("coins").eq("id", user.id).maybeSingle(),
   ]);
+  const coins = coinsRes.error ? 0 : coinsRes.data?.coins ?? 0;
   const promo = testForGrade(cefr);
   const promoChecks = [
     { label: t("levelMap.checkWordsHeld"), ok: elig.wordsMastered >= elig.wordsRequired, value: `${elig.wordsMastered}/${elig.wordsRequired}` },
@@ -339,6 +343,12 @@ export default async function DashboardPage() {
               xpNeeded={needed}
               costumeIds={equippedIds}
               species={cefr}
+              userId={user.id}
+              displayName={displayName}
+              avatarUrl={profile?.avatar_url ?? null}
+              coins={coins}
+              streakDays={streakDays}
+              streakFreezes={extras?.streak_freezes ?? 0}
             />
 
             <FirstVisitPlan steps={steps} />
@@ -407,6 +417,12 @@ export default async function DashboardPage() {
             xpNeeded={needed}
             costumeIds={equippedIds}
             species={cefr}
+            userId={user.id}
+            displayName={displayName}
+            avatarUrl={profile?.avatar_url ?? null}
+            coins={coins}
+            streakDays={streakDays}
+            streakFreezes={extras?.streak_freezes ?? 0}
           />
 
           {/* today's quest — the one always-visible recommendation. Resuming

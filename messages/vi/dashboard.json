@@ -72,7 +72,9 @@
       "100": "Nhà trên cây",
       "110": "Chong chóng gió",
       "120": "Ngôi sao trên ngọn"
-    }
+    },
+    "growthTab": "Giai đoạn phát triển",
+    "keepsakesTab": "Kỷ vật"
   },
   "growth": {
     "closeAria": "Đóng",

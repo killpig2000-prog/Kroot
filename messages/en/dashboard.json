@@ -72,7 +72,9 @@
       "100": "Treehouse",
       "110": "Weather vane",
       "120": "Star topper"
-    }
+    },
+    "growthTab": "Growth stages",
+    "keepsakesTab": "Keepsakes"
   },
   "growth": {
     "closeAria": "Close",

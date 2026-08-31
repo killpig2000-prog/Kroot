@@ -72,7 +72,9 @@
       "100": "Casa del árbol",
       "110": "Veleta",
       "120": "Estrella en la copa"
-    }
+    },
+    "growthTab": "Etapas de crecimiento",
+    "keepsakesTab": "Recuerdos"
   },
   "growth": {
     "closeAria": "Cerrar",

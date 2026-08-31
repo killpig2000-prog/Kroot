@@ -2,8 +2,6 @@ import { getFormatter, getTranslations } from "next-intl/server";
 import { redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
-import AvatarUploader from "@/components/profile/AvatarUploader";
-import NameEditor from "@/components/profile/NameEditor";
 import ReminderSettings from "@/components/profile/ReminderSettings";
 import HeadlineKpis, { type Headline } from "@/components/profile/HeadlineKpis";
 import SkillAccuracy, { type SkillScore, type SkillPending } from "@/components/profile/SkillAccuracy";
@@ -12,13 +10,13 @@ import BestHours from "@/components/profile/BestHours";
 import WordsToReview, { type DueWord } from "@/components/profile/WordsToReview";
 import { computeSkillProgress } from "@/components/profile/skill-progress";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
-import { LEVEL_PATH, SPECIES, type CefrLevel } from "@/lib/tree";
-import { levelProgress, treeStageForLevel, MAX_LEVEL } from "@/lib/level";
+import { type CefrLevel } from "@/lib/tree";
 import { PUBLIC_VOCAB_WORDS } from "@/lib/vocab-slugs";
 
-// My account (2026-08-30, rebuilt): an ANALYSIS page. Identity at the top,
-// then a headline that states the conclusion, per-skill accuracy, when the
-// learner actually studies, and their words. The old SRS box ladder and the
+// My account (2026-08-30, rebuilt): an ANALYSIS page. A headline that states
+// the conclusion, per-skill accuracy, when the learner actually studies, and
+// their words. Identity (avatar, name, XP) moved to the dashboard TreeCard
+// 2026-09-01. The old SRS box ladder and the
 // level-test history are gone — the ladder was unreadable ("how to read it,
 // I have no idea") and the history answered a question nobody asked.
 //
@@ -52,7 +50,6 @@ function isoDay(d: Date): string {
 export default async function ProfilePage() {
   const t = await getTranslations("ui.account");
   const tn = await getTranslations("nav");
-  const tp = await getTranslations("profile.identity");
   const format = await getFormatter();
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
@@ -78,7 +75,7 @@ export default async function ProfilePage() {
   ] = await Promise.all([
     supabase
       .from("profiles")
-      .select("display_name, current_level, streak_days, created_at, avatar_url, coins, xp")
+      .select("display_name, current_level, streak_days, avatar_url")
       .eq("id", user.id)
       .single(),
     // Migration 0035 columns, tolerant of a not-yet-applied migration.
@@ -141,14 +138,6 @@ export default async function ProfilePage() {
 
   const level = (profile?.current_level ?? "A1") as CefrLevel;
   const streakDays = profile?.streak_days ?? 0;
-
-  const xp = profile?.xp ?? 0;
-  const { level: playerLevel, into, needed, pct } = levelProgress(xp);
-  const treeStage = LEVEL_PATH[treeStageForLevel(playerLevel)];
-  const atMaxLevel = playerLevel >= MAX_LEVEL;
-  const memberSince = profile?.created_at
-    ? format.dateTime(new Date(profile.created_at), { month: "short", year: "numeric", timeZone: "UTC" })
-    : "—";
 
   // ── level progress: the grey line under each skill name ──────────────────
   const skillProgress = computeSkillProgress({
@@ -331,52 +320,10 @@ export default async function ProfilePage() {
           {/* grid-cols-1 pins the track to minmax(0,1fr); a bare auto track
               grows to the widest card's max-content and overflows on mobile */}
           <div className="max-w-[820px] grid grid-cols-1 gap-3.5">
-            {/* 1. identity */}
-            <div className="border border-line rounded-[14px] px-[22px] py-5 flex items-center gap-4 flex-wrap">
-              <AvatarUploader userId={user.id} avatarUrl={profile?.avatar_url ?? null} />
-              <div className="flex-1 min-w-[180px]">
-                <b className="font-semibold text-base flex items-center gap-2">
-                  <NameEditor userId={user.id} name={profile?.display_name ?? tp("fallbackName")} />
-                </b>
-                <span className="flex flex-wrap items-center text-[13px] text-muted">
-                  {/* flex items: each segment wraps as a whole, never mid-phrase */}
-                  <span className="whitespace-nowrap">{SPECIES[level].name} {SPECIES[level].emoji}</span>
-                  <span className="mx-1">·</span>
-                  <span className="whitespace-nowrap">{treeStage.treeName}</span>
-                  <span className="mx-1">·</span>
-                  <span className="whitespace-nowrap">Lv. {playerLevel}</span>
-                  <span className="mx-1">·</span>
-                  <span className="whitespace-nowrap">{tp("difficulty", { level })}</span>
-                  <span className="mx-1">·</span>
-                  <span className="whitespace-nowrap">{tp("growingSince", { date: memberSince })}</span>
-                </span>
-                <div className="mt-2 max-w-[280px]">
-                  <div className="h-[6px] rounded-full bg-success-bg border border-success-line overflow-hidden">
-                    <div className="h-full rounded-full bg-success" style={{ width: `${pct}%` }} />
-                  </div>
-                  <small className="block mt-1 text-[12px] text-muted">
-                    {atMaxLevel
-                      ? tp("maxLevel")
-                      : tp("xpToNext", { into, needed, level: playerLevel + 1 })}
-                  </small>
-                </div>
-              </div>
-              <div className="flex gap-2 flex-wrap">
-                <span className="text-[12.5px] font-semibold text-success bg-success-bg border border-success-line rounded-full px-3 py-1">
-                  {tp("streak", { n: streakDays })}
-                </span>
-                <span className="text-[12.5px] font-semibold text-muted bg-warm border border-line rounded-full px-3 py-1">
-                  {tp("coins", { n: profile?.coins ?? 0 })}
-                </span>
-                {(extras?.streak_freezes ?? 0) > 0 && (
-                  <span className="text-[12.5px] font-semibold text-sky-deep bg-[var(--tint-sky)] border border-[var(--tint-sky-line)] rounded-full px-3 py-1">
-                    {tp("freezes", { n: extras?.streak_freezes ?? 0 })}
-                  </span>
-                )}
-              </div>
-            </div>
+            {/* Identity (avatar, name, XP, chips) moved to the dashboard's
+                TreeCard 2026-09-01 — this page is analysis only. */}
 
-            {/* 2. the conclusion, then the headline numbers behind it */}
+            {/* 1. the conclusion, then the headline numbers behind it */}
             {hasAnything && (
               <HeadlineKpis
                 headline={headline}
@@ -387,16 +334,16 @@ export default async function ProfilePage() {
               />
             )}
 
-            {/* 3. accuracy per skill — the point of the page */}
+            {/* 2. accuracy per skill — the point of the page */}
             {scores.length > 0 && <SkillAccuracy scores={scores} pending={pending} />}
 
-            {/* 4. when you study */}
+            {/* 3. when you study */}
             {totalMinutes > 0 && <StudyDays days={chartDays} streakDays={streakDays} />}
 
-            {/* 5. your best hours — client-side, the reader's own timezone */}
+            {/* 4. your best hours — client-side, the reader's own timezone */}
             {hourTimestamps.length >= MIN_HOUR_EVENTS && <BestHours timestamps={hourTimestamps} />}
 
-            {/* 6. the due queue — the whole of what this card is for */}
+            {/* 5. the due queue — the whole of what this card is for */}
             {hasVocab && <WordsToReview words={dueWords} dueCount={dueCount} nextReturn={nextReturn} />}
 
             {/* nothing studied yet: one line instead of a stack of empty cards */}
@@ -406,7 +353,7 @@ export default async function ProfilePage() {
               </div>
             )}
 
-            {/* 7. settings */}
+            {/* 6. settings */}
             <h2 className="font-semibold text-[15px] mt-3.5">{t("settings")}</h2>
 
             <ReminderSettings
