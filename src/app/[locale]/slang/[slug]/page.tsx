@@ -18,7 +18,10 @@ export function generateStaticParams() {
   return PUBLIC_SLANG.map(({ slug }) => ({ slug }));
 }
 
-export const dynamicParams = false;
+// Must stay true: the [locale] layout only generates `en`, so any other
+// locale is an ungenerated param combination. An unknown slug still 404s --
+// the page calls notFound() below.
+export const dynamicParams = true;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, slug } = await params;

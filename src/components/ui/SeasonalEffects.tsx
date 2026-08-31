@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import { SEASONS, type SeasonKey } from "@/lib/seasons";
+import { useMemo, useSyncExternalStore } from "react";
+import { SEASONS, SEASON_COOKIE, seasonForDate, type SeasonKey } from "@/lib/seasons";
 
 // Full-screen seasonal layer: a soft color tint (multiply, so white surfaces
 // pick up the season's hue) plus drifting particles. Pure CSS animation;
@@ -16,43 +16,66 @@ const TINTS: Record<SeasonKey, string> = {
 };
 
 const PARTICLE_COUNT = 6;
-// Plus members get a denser drift with golden sparkles mixed in.
-const PLUS_PARTICLE_COUNT = 14;
 
-export default function SeasonalEffects({
-  season,
-  initialEnabled,
-  plus = false,
-}: {
-  season: SeasonKey;
-  initialEnabled: boolean;
-  plus?: boolean;
-}) {
-  const [enabled, setEnabled] = useState(initialEnabled);
+// The two values this layer needs — the wall clock and a cookie the
+// AccountMenu toggle writes — both live outside React, so they are read
+// through useSyncExternalStore.
 
-  // AccountMenu dispatches this when the toggle flips — fade, don't reload.
-  useEffect(() => {
-    const onToggle = (e: Event) => setEnabled(Boolean((e as CustomEvent).detail?.enabled));
-    window.addEventListener("kroot-season", onToggle);
-    return () => window.removeEventListener("kroot-season", onToggle);
-  }, []);
+const SEASON_ON = new RegExp(`(?:^|;\\s*)${SEASON_COOKIE}=on`);
 
-  const rise = SEASONS[season].direction === "rise";
+// AccountMenu writes the cookie and then dispatches this, so re-reading the
+// cookie on the event is enough — the layer fades rather than reloading.
+function subscribeToggle(onChange: () => void) {
+  window.addEventListener("kroot-season", onChange);
+  return () => window.removeEventListener("kroot-season", onChange);
+}
 
-  // Deterministic seeds (no randomness) so server and client render the same.
+function noopSubscribe() {
+  return () => {};
+}
+
+// Resolves its own season and on/off state on the client rather than taking
+// them as props.
+//
+// The root layout used to read the season cookie with `await cookies()` and
+// pass the result down, which opted every route in the app into dynamic
+// rendering for the sake of a decorative overlay. It also meant `season` was
+// computed by `seasonForDate(new Date())` at render — fine while every page
+// was dynamic, but frozen at build time the moment any of them went static.
+//
+// Reading it here fixes both: the layout stays static, and the season is
+// whatever it is when the visitor actually loads the page.
+export default function SeasonalEffects() {
+  // Server snapshots are null/false: there is no cookie and no clock to read
+  // during prerender, so the layer renders nothing and fades in on hydration.
+  // It is decorative, so arriving a frame late is invisible.
+  const season = useSyncExternalStore<SeasonKey | null>(
+    noopSubscribe,
+    () => seasonForDate(new Date()),
+    () => null,
+  );
+  const enabled = useSyncExternalStore(
+    subscribeToggle,
+    () => SEASON_ON.test(document.cookie),
+    () => false,
+  );
+
+  const rise = season ? SEASONS[season].direction === "rise" : false;
+
+  // Deterministic seeds (no randomness) so repeated renders agree.
   const seeds = useMemo(() => {
+    if (!season) return [];
     const { particles } = SEASONS[season];
     const base = rise ? 18 : 11; // bubbles drift up slowly
-    const count = plus ? PLUS_PARTICLE_COUNT : PARTICLE_COUNT;
-    // Plus mixes a golden sparkle into every fourth particle.
-    const pool = plus ? [...particles, "✨"] : particles;
-    return Array.from({ length: count }, (_, i) => ({
+    return Array.from({ length: PARTICLE_COUNT }, (_, i) => ({
       left: (i * 97 + 13) % 100,
       dur: base + ((i * 53) % 80) / 10,
       delay: -((i * 31) % 160) / 10,
-      char: plus && i % 4 === 3 ? "✨" : pool[i % particles.length],
+      char: particles[i % particles.length],
     }));
-  }, [season, rise, plus]);
+  }, [season, rise]);
+
+  if (!season) return null;
 
   return (
     <div

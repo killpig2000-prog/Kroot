@@ -15,7 +15,10 @@ export function generateStaticParams() {
   return LEVEL_ORDER.map((level) => ({ level: level.toLowerCase() }));
 }
 
-export const dynamicParams = false;
+// Must stay true: the [locale] layout only generates `en`, so any other
+// locale is an ungenerated param combination. An unknown slug still 404s --
+// the page calls notFound() below.
+export const dynamicParams = true;
 
 function parseLevel(value: string): CefrLevel | undefined {
   const upper = value.toUpperCase();

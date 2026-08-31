@@ -1,14 +1,13 @@
 import type { Metadata, Viewport } from "next";
 import { Fredoka, Noto_Sans_KR, Nunito } from "next/font/google";
-import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { Analytics } from "@vercel/analytics/next";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import "../globals.css";
 import { routing } from "@/i18n/routing";
-import { MODE_COOKIE, resolveMode } from "@/lib/mode";
-import { SEASON_COOKIE, seasonForDate } from "@/lib/seasons";
+import { DARK_MODE_ENABLED, DEFAULT_MODE, MODE_COOKIE } from "@/lib/mode";
+import { SEASON_COOKIE } from "@/lib/seasons";
 import { seoAlternates } from "@/lib/seo";
 import { SITE_URL } from "@/lib/site";
 import SeasonalEffects from "@/components/ui/SeasonalEffects";
@@ -22,10 +21,18 @@ const fredoka = Fredoka({
 
 // Learning content must stay legible to absolute beginners, so all Korean
 // renders in a textbook-shape sans (Noto Sans KR) rather than a display font.
+//
+// Weights track what the app actually uses. It loaded 400/500/700 for a long
+// time while `font-semibold` (600) is by far the most common weight in the
+// codebase (~319 uses against ~73 for `font-medium`), so the most common
+// Korean text on the site was being rendered by the browser picking a
+// neighbouring weight rather than a real cut. 600 replaces 500 rather than
+// joining it: Noto Sans KR splits into 100+ unicode-range chunks per weight,
+// and each extra weight is another ~100 files fetched at build time.
 const notoSansKr = Noto_Sans_KR({
   variable: "--font-noto-kr",
   subsets: ["latin"],
-  weight: ["400", "500", "700"],
+  weight: ["400", "600", "700"],
 });
 
 const nunito = Nunito({
@@ -75,8 +82,20 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   };
 }
 
+// English only, on purpose. Crossed with the ~4,100 word pages and ~150 slang
+// pages below this segment, returning all five locales would prerender north
+// of 21,000 routes on every build — far too slow for the free Vercel tier.
+// English is the indexed set (see seoAlternates); the other four locales are
+// still fully available, just rendered on demand and then cached.
+//
+// The child routes that prerender many params (`words/[slug]`,
+// `slang/[slug]`, `words/level/[level]`) therefore must NOT set
+// `dynamicParams = false` — with only `en` generated here, a non-English
+// request for one of them is a param combination that was never generated,
+// and would 404 outright. Each of those pages calls notFound() for an
+// unknown slug anyway, so nothing indexable is lost by generating on demand.
 export function generateStaticParams() {
-  return routing.locales.map((locale) => ({ locale }));
+  return [{ locale: routing.defaultLocale }];
 }
 
 type Props = {
@@ -94,22 +113,40 @@ export default async function RootLayout({ children, params }: Props) {
 
   const messages = await getMessages();
 
-  const cookieStore = await cookies();
-  const mode = resolveMode(cookieStore.get(MODE_COOKIE)?.value);
-  const seasonEnabled = cookieStore.get(SEASON_COOKIE)?.value === "on"; // default off
-  const season = seasonForDate(new Date());
-
   return (
     <html
       lang={locale}
-      data-mode={mode}
-      {...(seasonEnabled ? { "data-season": season } : {})}
+      data-mode={DEFAULT_MODE}
       className={`${fredoka.variable} ${notoSansKr.variable} ${nunito.variable}`}
     >
       <body>
+        {/* Applies the visitor's saved theme and seasonal-effects preference
+            before anything paints.
+
+            This used to be `await cookies()` in this component. cookies() is a
+            request-time API, and reading it in the ROOT layout opted every
+            single route in the app into dynamic rendering — including the
+            ~4,100 word pages and ~150 slang pages that carry
+            generateStaticParams specifically so they can be prerendered for
+            search. They were being rendered by a function on every crawl.
+
+            Two cookies, two `<html>` attributes, no data the server needs:
+            reading them on the client costs nothing and lets the whole tree go
+            static. It runs as the first child of <body>, so it executes before
+            the browser paints any content and there is no flash. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var c=document.cookie,d=document.documentElement;` +
+              `var m=/(?:^|;\\s*)${MODE_COOKIE}=(light|dark)/.exec(c);` +
+              `d.dataset.mode=${DARK_MODE_ENABLED ? '(m?m[1]:"light")' : '"light"'};` +
+              `if(/(?:^|;\\s*)${SEASON_COOKIE}=on/.test(c)){var n=new Date().getMonth()+1;` +
+              `d.dataset.season=n>=3&&n<=5?"spring":n>=6&&n<=8?"summer":n>=9&&n<=11?"autumn":"winter";}` +
+              `}catch(e){}})()`,
+          }}
+        />
         <NextIntlClientProvider messages={messages}>
           {children}
-          <SeasonalEffects season={season} initialEnabled={seasonEnabled} />
+          <SeasonalEffects />
           <PwaRegister />
         </NextIntlClientProvider>
         <Analytics />

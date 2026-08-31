@@ -10,15 +10,10 @@ export const DEFAULT_MODE: ModeKey = "light";
 // primary button render pale grey, reading as disabled.
 export const DARK_MODE_ENABLED = true;
 
-export function isModeKey(value: string | undefined | null): value is ModeKey {
-  return value === "light" || value === "dark";
-}
-
-/** The mode actually applied, honouring the kill switch above. */
-export function resolveMode(cookieValue: string | undefined | null): ModeKey {
-  if (!DARK_MODE_ENABLED) return "light";
-  return isModeKey(cookieValue) ? cookieValue : DEFAULT_MODE;
-}
+// isModeKey/resolveMode used to run in the root layout, against the cookie
+// read there. That read is gone — it made every route in the app dynamic — and
+// the same logic now lives in the pre-paint inline script in the layout, which
+// has to be plain inlined JS. Nothing else called them.
 
 // Kept outside components so lint doesn't flag render-time DOM writes.
 export function applyModeToDocument(mode: ModeKey) {
