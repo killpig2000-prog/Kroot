@@ -39,24 +39,30 @@ export default function StreakFreezeCard({
     if (busy || full) return;
     setBusy(true);
     setMsg(null);
-    const { data, error } = await supabase.rpc("buy_streak_freeze");
-    if (error) {
-      setMsg(
-        error.message.includes("not enough coins")
-          ? t("errNotEnough", { coins: QUEST_COINS })
-          : error.message.includes("max freezes")
-            ? t("errMax", { max: FREEZE_MAX })
-            : error.code === "PGRST202"
-              ? t("errPending")
-              : t("errGeneric")
-      );
-    } else {
-      setCount(typeof data === "number" ? data : count + 1);
-      setMsg(t("bought"));
-      track("streak_freeze_bought", { held: count + 1 });
-      router.refresh();
+    try {
+      const { data, error } = await supabase.rpc("buy_streak_freeze");
+      if (error) {
+        setMsg(
+          error.message.includes("not enough coins")
+            ? t("errNotEnough", { coins: QUEST_COINS })
+            : error.message.includes("max freezes")
+              ? t("errMax", { max: FREEZE_MAX })
+              : error.code === "PGRST202"
+                ? t("errPending")
+                : t("errGeneric")
+        );
+      } else {
+        setCount(typeof data === "number" ? data : count + 1);
+        setMsg(t("bought"));
+        track("streak_freeze_bought", { held: count + 1 });
+        router.refresh();
+      }
+    } catch {
+      setMsg(t("errGeneric"));
+    } finally {
+      // The rpc throwing used to leave Buy disabled until a reload.
+      setBusy(false);
     }
-    setBusy(false);
   }
 
   return (

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { buttonClassName } from "@/components/ui/Button";
 import { Link, useRouter } from "@/i18n/navigation";
@@ -53,6 +53,7 @@ export default function ChallengePlay({
   const [typed, setTyped] = useState("");
   const [typedFallback, setTypedFallback] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
+  const scoringRef = useRef(false);
 
   const { speak, isSpeaking, isSupported: ttsOk } = useKoreanSpeaker();
   const { isSupported: micOk, isListening, interim, error, listen, setError } = useSpeechRecognition(
@@ -65,6 +66,9 @@ export default function ChallengePlay({
   const bestStars = starsFor(challenge, best);
 
   async function score(text: string, ms: number) {
+    // A fast double-tap on "check" used to fire the run twice.
+    if (scoringRef.current) return;
+    scoringRef.current = true;
     const accuracy = Math.round(bestSimilarity(text, [challenge.kr]) * 100);
     const result: ChallengeResult = { accuracy, ms };
     setRun(result);
@@ -81,29 +85,36 @@ export default function ChallengePlay({
     const nextBest = improved ? result : best;
     setBest(nextBest);
 
-    if (userId && improved) {
-      const { error: upsertError } = await supabase.from("challenge_progress").upsert(
-        {
-          user_id: userId,
-          challenge_key: challenge.key,
-          best_accuracy: accuracy,
-          best_ms: ms,
-          updated_at: new Date().toISOString(),
-        },
-        { onConflict: "user_id,challenge_key" },
-      );
-      // Migration 0038 may not have reached this environment yet — a missing
-      // table must never break the run, it just won't persist.
-      if (upsertError && !isTableMissing(upsertError)) {
-        setSaveError(t("saveError"));
-      } else {
-        setSaveError(null);
+    try {
+      if (userId && improved) {
+        const { error: upsertError } = await supabase.from("challenge_progress").upsert(
+          {
+            user_id: userId,
+            challenge_key: challenge.key,
+            best_accuracy: accuracy,
+            best_ms: ms,
+            updated_at: new Date().toISOString(),
+          },
+          { onConflict: "user_id,challenge_key" },
+        );
+        // Migration 0038 may not have reached this environment yet — a missing
+        // table must never break the run, it just won't persist.
+        if (upsertError && !isTableMissing(upsertError)) {
+          setSaveError(t("saveError"));
+        } else {
+          setSaveError(null);
+        }
       }
-    }
 
-    if (userId) {
-      await recordCompletion(supabase, "pronunciation", MINUTES_PER_RUN);
-      router.refresh();
+      if (userId) {
+        await recordCompletion(supabase, "pronunciation", MINUTES_PER_RUN);
+        router.refresh();
+      }
+    } catch {
+      // The score is already on screen; only persistence failed.
+      setSaveError(t("saveError"));
+    } finally {
+      scoringRef.current = false;
     }
   }
 

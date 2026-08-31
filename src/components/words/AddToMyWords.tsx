@@ -63,25 +63,32 @@ export default function AddToMyWords({
     savingRef.current = true;
     setSaving(true);
     setFailed(false);
-    const res = await saveToBank(await getSupabase(), userId, wordKey);
-    setSaving(false);
-    savingRef.current = false;
-    if (!res.ok) {
-      if (res.reason === "full") {
-        setUsed(res.used);
-        setSlots(res.slots);
-        setStatus({ kind: "full" });
-      } else {
-        setFailed(true);
+    try {
+      const res = await saveToBank(await getSupabase(), userId, wordKey);
+      if (!res.ok) {
+        if (res.reason === "full") {
+          setUsed(res.used);
+          setSlots(res.slots);
+          setStatus({ kind: "full" });
+        } else {
+          setFailed(true);
+        }
+        return;
       }
-      return;
+      track("word_saved", { source: "dictionary", level });
+      setUsed((n) => n + 1);
+      setStatus({ kind: "saved" });
+      setToast(true);
+      if (toastTimer.current) clearTimeout(toastTimer.current);
+      toastTimer.current = setTimeout(() => setToast(false), 10_000);
+    } catch {
+      setFailed(true);
+    } finally {
+      // Both of these had to be released here: a throw left the button
+      // disabled AND savingRef latched, so every later tap returned early.
+      setSaving(false);
+      savingRef.current = false;
     }
-    track("word_saved", { source: "dictionary", level });
-    setUsed((n) => n + 1);
-    setStatus({ kind: "saved" });
-    setToast(true);
-    if (toastTimer.current) clearTimeout(toastTimer.current);
-    toastTimer.current = setTimeout(() => setToast(false), 10_000);
   }
 
   // Resolve session + saved state once; honour ?save=1 from the login round

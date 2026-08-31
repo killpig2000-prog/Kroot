@@ -21,14 +21,19 @@ export default function NameEditor({ userId, name }: { userId: string; name: str
       return;
     }
     setSaving(true);
-    const { error } = await supabase
-      .from("profiles")
-      .update({ display_name: next })
-      .eq("id", userId);
-    setSaving(false);
-    if (!error) {
-      setEditing(false);
-      router.refresh();
+    try {
+      const { error } = await supabase
+        .from("profiles")
+        .update({ display_name: next })
+        .eq("id", userId);
+      if (!error) {
+        setEditing(false);
+        router.refresh();
+      }
+    } catch {
+      // Stay in edit mode with the draft intact so the save can be retried.
+    } finally {
+      setSaving(false);
     }
   };
 

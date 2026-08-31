@@ -96,22 +96,29 @@ export default function LoginPage() {
     const email = String(form.get("email") || "").trim();
     const password = String(form.get("pw") || "");
 
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    setSubmitting(false);
+    try {
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
 
-    if (error) {
-      setError(
-        error.message === "Invalid login credentials"
-          ? t("errors.badCredentials")
-          : error.message === "Email not confirmed"
-            ? t("errors.notConfirmed")
-            : error.message
-      );
-      return;
+      if (error) {
+        setError(
+          error.message === "Invalid login credentials"
+            ? t("errors.badCredentials")
+            : error.message === "Email not confirmed"
+              ? t("errors.notConfirmed")
+              : error.message
+        );
+        return;
+      }
+
+      router.replace(next);
+      router.refresh();
+    } catch {
+      setError(t("errors.network"));
+    } finally {
+      // A dropped connection used to leave Sign in disabled for good — the
+      // worst possible place for it, since a reload is the only way out.
+      setSubmitting(false);
     }
-
-    router.push(next);
-    router.refresh();
   }
 
   // Learners who signed up with a magic link have no password — offer the
@@ -126,23 +133,28 @@ export default function LoginPage() {
     }
     setError(null);
     setSubmitting(true);
-    const { error } = await supabase.auth.signInWithOtp({
-      email,
-      options: {
-        shouldCreateUser: false,
-        emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}`,
-      },
-    });
-    setSubmitting(false);
-    if (error) {
-      setError(
-        /signups not allowed|not found/i.test(error.message)
-          ? t("errors.noAccount")
-          : error.message
-      );
-      return;
+    try {
+      const { error } = await supabase.auth.signInWithOtp({
+        email,
+        options: {
+          shouldCreateUser: false,
+          emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}`,
+        },
+      });
+      if (error) {
+        setError(
+          /signups not allowed|not found/i.test(error.message)
+            ? t("errors.noAccount")
+            : error.message
+        );
+        return;
+      }
+      setLinkSentTo(email);
+    } catch {
+      setError(t("errors.network"));
+    } finally {
+      setSubmitting(false);
     }
-    setLinkSentTo(email);
   }
 
   return (

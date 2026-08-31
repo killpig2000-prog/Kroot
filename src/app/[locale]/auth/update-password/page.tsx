@@ -38,20 +38,27 @@ export default function UpdatePasswordPage() {
     }
 
     setSubmitting(true);
-    const { error } = await supabase.auth.updateUser({ password });
-    setSubmitting(false);
+    try {
+      const { error } = await supabase.auth.updateUser({ password });
 
-    if (error) {
-      setError(
-        error.message.includes("Auth session missing")
-          ? t("errors.resetLinkExpired")
-          : error.message
-      );
-      return;
+      if (error) {
+        setError(
+          error.message.includes("Auth session missing")
+            ? t("errors.resetLinkExpired")
+            : error.message
+        );
+        return;
+      }
+
+      // replace, not push: the reset session is spent, so backing into this
+      // form again would only produce "Auth session missing".
+      router.replace("/dashboard");
+      router.refresh();
+    } catch {
+      setError(t("errors.network"));
+    } finally {
+      setSubmitting(false);
     }
-
-    router.push("/dashboard");
-    router.refresh();
   }
 
   return (

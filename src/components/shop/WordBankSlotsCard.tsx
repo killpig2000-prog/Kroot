@@ -33,24 +33,29 @@ export default function WordBankSlotsCard({
     if (busy || maxed) return;
     setBusy(true);
     setMsg(null);
-    const { data, error } = await supabase.rpc("buy_word_bank_slots");
-    if (error) {
-      setMsg(
-        error.message.includes("not enough coins")
-          ? t("slots.errNotEnough")
-          : error.message.includes("max slots")
-            ? t("slots.errMax", { max: MAX_WORD_BANK_SLOTS })
-            : error.message.includes("not authenticated")
-              ? t("slots.errAuth")
-              : t("slots.errGeneric")
-      );
-    } else {
-      const now = typeof data === "number" ? data : next;
-      setSlots(now);
-      setMsg(t("slots.bought", { slots: now }));
-      router.refresh();
+    try {
+      const { data, error } = await supabase.rpc("buy_word_bank_slots");
+      if (error) {
+        setMsg(
+          error.message.includes("not enough coins")
+            ? t("slots.errNotEnough")
+            : error.message.includes("max slots")
+              ? t("slots.errMax", { max: MAX_WORD_BANK_SLOTS })
+              : error.message.includes("not authenticated")
+                ? t("slots.errAuth")
+                : t("slots.errGeneric")
+        );
+      } else {
+        const now = typeof data === "number" ? data : next;
+        setSlots(now);
+        setMsg(t("slots.bought", { slots: now }));
+        router.refresh();
+      }
+    } catch {
+      setMsg(t("slots.errGeneric"));
+    } finally {
+      setBusy(false);
     }
-    setBusy(false);
   }
 
   return (

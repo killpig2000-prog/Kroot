@@ -34,27 +34,33 @@ export default function Composer({
     setBusy(true);
     setError(null);
 
-    const content = [title.trim().replace(/\n/g, " "), body.trim()].filter(Boolean).join("\n");
-    const supabase = createClient();
-    const { data, error: insertError } = await supabase
-      .from("community_posts")
-      .insert({
-        user_id: userId,
-        author_name: displayName,
-        author_emoji: "🦊",
-        board,
-        content,
-      })
-      .select("id")
-      .single();
+    try {
+      const content = [title.trim().replace(/\n/g, " "), body.trim()].filter(Boolean).join("\n");
+      const supabase = createClient();
+      const { data, error: insertError } = await supabase
+        .from("community_posts")
+        .insert({
+          user_id: userId,
+          author_name: displayName,
+          author_emoji: "🦊",
+          board,
+          content,
+        })
+        .select("id")
+        .single();
 
-    setBusy(false);
-    if (insertError || !data) {
+      if (insertError || !data) {
+        setError(t("composer.err"));
+        return;
+      }
+      router.push(`/community/${data.id}`);
+      router.refresh();
+    } catch {
       setError(t("composer.err"));
-      return;
+    } finally {
+      // A throw used to leave the post button disabled with the draft trapped.
+      setBusy(false);
     }
-    router.push(`/community/${data.id}`);
-    router.refresh();
   }
 
   return (

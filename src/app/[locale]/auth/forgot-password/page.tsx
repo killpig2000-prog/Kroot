@@ -31,16 +31,21 @@ export default function ForgotPasswordPage() {
     setSubmitting(true);
 
     const email = String(new FormData(e.currentTarget).get("email") || "").trim();
-    const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/auth/callback?next=/auth/update-password`,
-    });
-    setSubmitting(false);
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/auth/callback?next=/auth/update-password`,
+      });
 
-    if (error) {
-      setError(error.message);
-      return;
+      if (error) {
+        setError(error.message);
+        return;
+      }
+      setSent(true);
+    } catch {
+      setError(t("errors.network"));
+    } finally {
+      setSubmitting(false);
     }
-    setSent(true);
   }
 
   return (

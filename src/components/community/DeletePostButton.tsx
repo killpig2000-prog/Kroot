@@ -15,15 +15,27 @@ export default function DeletePostButton({ postId }: { postId: string }) {
     if (!window.confirm(t("confirm"))) return;
     setBusy(true);
     setError(false);
-    const supabase = createClient();
-    const { error: deleteError } = await supabase.from("community_posts").delete().eq("id", postId);
-    setBusy(false);
-    if (deleteError) {
+    try {
+      const supabase = createClient();
+      const { error: deleteError } = await supabase
+        .from("community_posts")
+        .delete()
+        .eq("id", postId);
+      if (deleteError) {
+        setError(true);
+        return;
+      }
+      // replace, not push: back from /community would otherwise return to this
+      // post's page, which no longer exists.
+      router.replace("/community");
+      router.refresh();
+    } catch {
+      // A throw here (offline, a blip) is the same story as a returned error.
       setError(true);
-      return;
+    } finally {
+      // Never leave the button stuck saying "Deleting…" with no way back.
+      setBusy(false);
     }
-    router.push("/community");
-    router.refresh();
   }
 
   return (

@@ -36,34 +36,48 @@ export default function Comments({
     setBusy(true);
     setError(null);
 
-    const supabase = createClient();
-    const { error: insertError } = await supabase.from("community_comments").insert({
-      post_id: postId,
-      user_id: userId,
-      author_name: displayName,
-      author_emoji: "🦊",
-      content,
-    });
+    try {
+      const supabase = createClient();
+      const { error: insertError } = await supabase.from("community_comments").insert({
+        post_id: postId,
+        user_id: userId,
+        author_name: displayName,
+        author_emoji: "🦊",
+        content,
+      });
 
-    setBusy(false);
-    if (insertError) {
+      if (insertError) {
+        setError(t("errAdd"));
+        return;
+      }
+      setDraft("");
+      router.refresh();
+    } catch {
       setError(t("errAdd"));
-      return;
+    } finally {
+      // Always release the button — a throw used to leave it disabled for good.
+      setBusy(false);
     }
-    setDraft("");
-    router.refresh();
   }
 
   async function remove(id: string) {
     setDeletingId(id);
-    const supabase = createClient();
-    const { error: deleteError } = await supabase.from("community_comments").delete().eq("id", id);
-    setDeletingId(null);
-    if (deleteError) {
+    try {
+      const supabase = createClient();
+      const { error: deleteError } = await supabase
+        .from("community_comments")
+        .delete()
+        .eq("id", id);
+      if (deleteError) {
+        setError(t("errDelete"));
+        return;
+      }
+      router.refresh();
+    } catch {
       setError(t("errDelete"));
-      return;
+    } finally {
+      setDeletingId(null);
     }
-    router.refresh();
   }
 
   return (
