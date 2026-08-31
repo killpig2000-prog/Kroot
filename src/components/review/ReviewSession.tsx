@@ -6,7 +6,12 @@ import { Link, useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { recordCompletion, type ProgressResult } from "@/lib/activity";
 import { nextBox, nextReviewAt } from "@/lib/srs";
-import { buildQuizQuestions, type QuizQuestion, type VocabWordWithProgress } from "@/lib/vocabulary";
+import {
+  buildQuizQuestions,
+  seedFromWords,
+  type QuizQuestion,
+  type VocabWordWithProgress,
+} from "@/lib/vocabulary";
 
 const REVIEW_MINUTES = 5;
 
@@ -24,7 +29,11 @@ export default function ReviewSession({
   const tu = useTranslations("ui");
   const supabase = useMemo(() => createClient(), []);
 
-  const [questions] = useState<QuizQuestion[]>(() => buildQuizQuestions(words));
+  // Seeded: this initializer runs during render on the server and again while
+  // hydrating, so the two must agree on the option order.
+  const [questions] = useState<QuizQuestion[]>(() =>
+    buildQuizQuestions(words, seedFromWords(words))
+  );
   const [index, setIndex] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);
   const [correct, setCorrect] = useState(0);
@@ -83,7 +92,15 @@ export default function ReviewSession({
 
   async function goTo(href: string) {
     setNavigating(true);
-    await logOnce();
+    // Logging progress must never block the way out. When this RPC failed
+    // (offline, a blip) the await rejected, router.push never ran, and the
+    // learner was left tapping a dead "continue" button at the end of a
+    // finished session with no way forward but a reload.
+    try {
+      await logOnce();
+    } catch {
+      // best effort — the session is over either way
+    }
     router.push(href);
     router.refresh();
   }

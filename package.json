@@ -7,9 +7,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "vitest run"
+    "test": "vitest run",
+    "translate:vocab": "ts-node scripts/translate-vocabulary-all-languages.mts",
+    "translate:listening": "ts-node scripts/translate-listening-gemini.mts"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.24.1",
     "@supabase/ssr": "^0.12.3",
     "@supabase/supabase-js": "^2.110.8",
     "@vercel/analytics": "^2.0.1",

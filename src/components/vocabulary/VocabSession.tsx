@@ -221,7 +221,15 @@ export default function VocabSession({
 
   async function goTo(href: string) {
     setNavigating(true);
-    await logMinutesOnce();
+    // Logging progress must never block the way out. When this RPC failed
+    // (offline, a blip) the await rejected, router.push never ran, and the
+    // learner was left tapping a dead "continue" button at the end of a
+    // finished session with no way forward but a reload.
+    try {
+      await logMinutesOnce();
+    } catch {
+      // best effort — the session is over either way
+    }
     router.push(href);
     router.refresh();
   }

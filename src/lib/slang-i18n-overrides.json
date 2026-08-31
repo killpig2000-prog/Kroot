@@ -1,0 +1,2598 @@
+{
+  "꿀잼": {
+    "ja": {
+      "meaning": "すごく面白い、最高に楽しい",
+      "nuance": "ポップな若者言葉、SNS文化から",
+      "example": "このドラマ本当に面白いよ"
+    },
+    "zh": {
+      "meaning": "超有趣，非常好玩",
+      "nuance": "网络用语，年轻人常用",
+      "example": "这部剧超级有意思"
+    },
+    "vi": {
+      "meaning": "rất vui, cực kỳ thú vị",
+      "nuance": "ngôn ngữ mạng xã hội",
+      "example": "Bộ phim này thực sự rất vui"
+    }
+  },
+  "노잼": {
+    "ja": {
+      "meaning": "つまらない、面白くない",
+      "nuance": "ネガティブ、退屈さを表現",
+      "example": "その映画は本当に退屈だった"
+    },
+    "zh": {
+      "meaning": "很无聊，一点不好玩",
+      "nuance": "消极表达，表示厌烦",
+      "example": "那部电影特别无聊"
+    },
+    "vi": {
+      "meaning": "chán ngắt, không vui vẻ",
+      "nuance": "biểu đạt tiêu cực",
+      "example": "Bộ phim đó rất chán"
+    }
+  },
+  "대박": {
+    "ja": {
+      "meaning": "素晴らしい、まじで、驚き",
+      "nuance": "肯定または否定的な驚きの両方",
+      "example": "えっ、満点を取ったの？"
+    },
+    "zh": {
+      "meaning": "太棒了，不会吧，惊人的",
+      "nuance": "可表达积极或消极的震惊",
+      "example": "不会吧！你满分了？"
+    },
+    "vi": {
+      "meaning": "tuyệt vời, không thể tin, kinh ngạc",
+      "nuance": "dùng cho cảm xúc ngạc nhiên",
+      "example": "Không tin được! Cậu được điểm tuyệt đối?"
+    }
+  },
+  "헐": {
+    "ja": {
+      "meaning": "ワオ、オーマイゴッド、衝撃",
+      "nuance": "純粋な驚きの表現",
+      "example": "わあ、外に雪が降ってる"
+    },
+    "zh": {
+      "meaning": "哇哦，不可思议，震撼",
+      "nuance": "纯粹表达震惊",
+      "example": "哇，外面下雪了"
+    },
+    "vi": {
+      "meaning": "Ôi, không thể tin, sốc",
+      "nuance": "biểu đạt sự kinh ngạc",
+      "example": "Trời ơi, ngoài kia đang tuyết rơi"
+    }
+  },
+  "짱": {
+    "ja": {
+      "meaning": "最高、素晴らしい、一番",
+      "nuance": "褒める時に使う、カジュアル",
+      "example": "お母さんの料理は最高だ"
+    },
+    "zh": {
+      "meaning": "最好的，最棒的，顶级",
+      "nuance": "赞美用语，很随意",
+      "example": "妈妈的做饭手艺一流"
+    },
+    "vi": {
+      "meaning": "tuyệt nhất, rất tốt, số 1",
+      "nuance": "khen ngợi, bình thường và tự nhiên",
+      "example": "Các món ăn của mẹ tôi là tốt nhất"
+    }
+  },
+  "멘붕": {
+    "ja": {
+      "meaning": "メンタルが壊れた、パニック",
+      "nuance": "過度に圧倒された状態",
+      "example": "プレゼンが消えてしまってパニックになった"
+    },
+    "zh": {
+      "meaning": "精神崩溃，完全崩盘",
+      "nuance": "感到极度不知所措",
+      "example": "演讲稿丢了，我彻底崩溃了"
+    },
+    "vi": {
+      "meaning": "sụp đổ tinh thần, hoảng loạn",
+      "nuance": "cảm thấy bị ngập đầu",
+      "example": "Tài liệu trình bày mất, tôi sụp đổ hoàn toàn"
+    }
+  },
+  "심쿵": {
+    "ja": {
+      "meaning": "胸がドキドキする、心ときめく",
+      "nuance": "恋愛的なドキドキ感",
+      "example": "その笑顔は本当に素敵だ"
+    },
+    "zh": {
+      "meaning": "心跳加速，心花怒放",
+      "nuance": "恋爱的悸动感",
+      "example": "那个笑容真的令人怦然心动"
+    },
+    "vi": {
+      "meaning": "trái tim nhảy loạn xạ, yêu ngay",
+      "nuance": "cảm giác lãng mạn, tình yêu",
+      "example": "Nụ cười đó thực sự khiến tôi yêu"
+    }
+  },
+  "최애": {
+    "ja": {
+      "meaning": "最愛、一番好き",
+      "nuance": "ファンダム文化から、推しに使う",
+      "example": "そのメンバーが一番好きです"
+    },
+    "zh": {
+      "meaning": "最爱，最喜欢的",
+      "nuance": "粉丝文化用语",
+      "example": "那个成员是我的最爱"
+    },
+    "vi": {
+      "meaning": "yêu thích nhất, người ưa thích",
+      "nuance": "từ văn hoá fan hâm mộ",
+      "example": "Thành viên đó là người yêu thích nhất của tôi"
+    }
+  },
+  "불금": {
+    "ja": {
+      "meaning": "燃える金曜日、楽しい金曜夜",
+      "nuance": "週末の始まりの興奮",
+      "example": "今日は燃える金曜日だけど、何する？"
+    },
+    "zh": {
+      "meaning": "火热的星期五，周末party",
+      "nuance": "周末开始的兴奋",
+      "example": "今天周五，你想做什么？"
+    },
+    "vi": {
+      "meaning": "thứ Sáu rực rỡ, đêm vui",
+      "nuance": "sự phấn khích của cuối tuần",
+      "example": "Hôm nay là thứ Sáu cuối tuần, bạn định làm gì?"
+    }
+  },
+  "치맥": {
+    "ja": {
+      "meaning": "チキンとビール、最高の組み合わせ",
+      "nuance": "韓国文化、食べ物の組み合わせ",
+      "example": "雨の日はチキンとビールが最高だね"
+    },
+    "zh": {
+      "meaning": "炸鸡配啤酒，国民搭配",
+      "nuance": "韓國文化、完美食物组合",
+      "example": "下雨天吃炸鸡配啤酒最舒服"
+    },
+    "vi": {
+      "meaning": "gà rán kèm bia, sự kết hợp quốc dân",
+      "nuance": "văn hoá Hàn Quốc, thực phẩm hoàn hảo",
+      "example": "Ngày mưa, gà rán kèm bia là tốt nhất"
+    }
+  },
+  "JMT": {
+    "ja": {
+      "meaning": "驚くほど美味しい",
+      "nuance": "ネット用語、食べ物の賞賛",
+      "example": "ここのトッポッキは本当に美味しい"
+    },
+    "zh": {
+      "meaning": "叹为观止的美味，绝了",
+      "nuance": "网络用语，表达美食赞美",
+      "example": "这里的辣年糕真的绝了"
+    },
+    "vi": {
+      "meaning": "ngon tuyệt vời, tuyệt diệu",
+      "nuance": "từ mạng xã hội, khen ngợi đồ ăn",
+      "example": "Bánh cay ở đây thực sự tuyệt vời"
+    }
+  },
+  "TMI": {
+    "ja": {
+      "meaning": "情報過多、言いすぎ",
+      "nuance": "誰も聞いていない詳細情報",
+      "example": "聞かれてないのに、今日3回転んだ。"
+    },
+    "zh": {
+      "meaning": "信息过多，多余信息",
+      "nuance": "没人问的细节",
+      "example": "其实我今天摔了三次"
+    },
+    "vi": {
+      "meaning": "quá nhiều thông tin, lạm bàn",
+      "nuance": "chi tiết không ai yêu cầu",
+      "example": "Ngoài lề, tôi hôm nay ngã ba lần"
+    }
+  },
+  "갑분싸": {
+    "ja": {
+      "meaning": "急に雰囲気が冷える",
+      "nuance": "尴尬な沈黙",
+      "example": "私のジョークで雰囲気が冷えた"
+    },
+    "zh": {
+      "meaning": "气氛突然冷下来，尴尬沉默",
+      "nuance": "令人尴尬的冷场",
+      "example": "我的笑话让气氛完全冷掉了"
+    },
+    "vi": {
+      "meaning": "bầu không khí đột ngột lạnh đi",
+      "nuance": "sự im lặng ngượng ngập",
+      "example": "Câu chuyện của tôi làm bầu không khí lạnh"
+    }
+  },
+  "인싸": {
+    "ja": {
+      "meaning": "社交的、社交蝶",
+      "nuance": "グループの中心人物",
+      "example": "彼はどこに行っても人気者だ"
+    },
+    "zh": {
+      "meaning": "社交达人，人气王",
+      "nuance": "圈子里的中心人物",
+      "example": "他无论去哪里都很受欢迎"
+    },
+    "vi": {
+      "meaning": "người xã giao, bướm xã hội",
+      "nuance": "người ở trung tâm nhóm",
+      "example": "Anh ấy có mặt ở đâu cũng được yêu thích"
+    }
+  },
+  "아싸": {
+    "ja": {
+      "meaning": "幸せな一匹狼",
+      "nuance": "グループ活動を避ける人",
+      "example": "私は一匹狼だから、家が一番好きだ"
+    },
+    "zh": {
+      "meaning": "快乐的独行者，宅男宅女",
+      "nuance": "不喜欢集体活动的人",
+      "example": "我是独行者，家里最舒服"
+    },
+    "vi": {
+      "meaning": "nhất thân một mình, độc lập",
+      "nuance": "người không thích hoạt động nhóm",
+      "example": "Tôi là người độc lập, ở nhà tốt nhất"
+    }
+  },
+  "솔까말": {
+    "ja": {
+      "meaning": "正直に言うと、嘘じゃなくて",
+      "nuance": "本音を言う時の前置き",
+      "example": "正直に言うと、これは少し高い"
+    },
+    "zh": {
+      "meaning": "说实话，坦白说",
+      "nuance": "说真话前的开场",
+      "example": "说实话，这个有点贵"
+    },
+    "vi": {
+      "meaning": "thành thật nói, không nói dối",
+      "nuance": "mở đầu khi nói sự thật",
+      "example": "Thành thật nói, cái này hơi đắt"
+    }
+  },
+  "혼밥": {
+    "ja": {
+      "meaning": "一人でご飯を食べる、故意に",
+      "nuance": "一人の食事を楽しむ",
+      "example": "今日のお昼は一人で食べた"
+    },
+    "zh": {
+      "meaning": "独自一人吃饭，享受孤独",
+      "nuance": "一个人的进餐体验",
+      "example": "我今天午餐自己一个人吃"
+    },
+    "vi": {
+      "meaning": "ăn một mình, tự thưởng thức",
+      "nuance": "trải nghiệm ăn cơm độc lập",
+      "example": "Hôm nay tôi tự ăn trưa một mình"
+    }
+  },
+  "혼술": {
+    "ja": {
+      "meaning": "一人で家飲みする",
+      "nuance": "一人の飲酒体験",
+      "example": "金曜の夜は一人飲みのチャンス"
+    },
+    "zh": {
+      "meaning": "独自一人喝酒，家饮",
+      "nuance": "一个人在家喝酒",
+      "example": "周五晚上是一个人家饮的时间"
+    },
+    "vi": {
+      "meaning": "uống rượu một mình tại nhà",
+      "nuance": "trải nghiệm uống rượu riêng tư",
+      "example": "Tối thứ Sáu là lúc uống rượu một mình"
+    }
+  },
+  "존맛": {
+    "ja": {
+      "meaning": "信じられないくらい美味しい",
+      "nuance": "すごく美味しいの汚い言い方",
+      "example": "このラーメンは信じられないほど美味しい"
+    },
+    "zh": {
+      "meaning": "非常美味，令人惊叹",
+      "nuance": "粗俗的美食赞美",
+      "example": "这碗拉面太好吃了"
+    },
+    "vi": {
+      "meaning": "cực kỳ ngon, tuyệt diệu",
+      "nuance": "cách khen ngợi đồ ăn thô",
+      "example": "Mì ramen này cực kỳ ngon"
+    }
+  },
+  "케바케": {
+    "ja": {
+      "meaning": "ケースバイケース、場合による",
+      "nuance": "状況に応じて異なる",
+      "example": "それはケースバイケースだね、人による"
+    },
+    "zh": {
+      "meaning": "具体情况具体分析，因人而异",
+      "nuance": "取决于情况和人",
+      "example": "那是因人而异，因情况而定"
+    },
+    "vi": {
+      "meaning": "tùy trường hợp, tùy từng người",
+      "nuance": "phụ thuộc vào tình huống",
+      "example": "Điều đó tùy thuộc vào từng người"
+    }
+  },
+  "썸": {
+    "ja": {
+      "meaning": "付き合う前の曖昧な関係",
+      "nuance": "恋の初期段階",
+      "example": "私たちはまだ付き合っていない、曖昧な段階だ"
+    },
+    "zh": {
+      "meaning": "暧昧期，还未确认的关系",
+      "nuance": "恋爱的初始阶段",
+      "example": "我们还没有正式交往，还在试探"
+    },
+    "vi": {
+      "meaning": "mối quan hệ mơ hồ, chưa xác định",
+      "nuance": "giai đoạn đầu tình yêu",
+      "example": "Chúng ta vẫn đang trong giai đoạn thử"
+    }
+  },
+  "현타": {
+    "ja": {
+      "meaning": "突然現実に打ちのめされる",
+      "nuance": "人生について目が覚める瞬間",
+      "example": "朝3時に人生について考え始めた"
+    },
+    "zh": {
+      "meaning": "现实打击，突然清醒",
+      "nuance": "对人生的深刻反思",
+      "example": "凌晨三点突然意识到现实"
+    },
+    "vi": {
+      "meaning": "sốc hiện thực, tỉnh ngộ đột ngột",
+      "nuance": "nhận thức về cuộc sống",
+      "example": "Lúc 3 giờ sáng tôi đột ngột tỉnh mộng"
+    }
+  },
+  "갓생": {
+    "ja": {
+      "meaning": "素晴らしい規律ある生活",
+      "nuance": "自己管理が完璧な生活",
+      "example": "最近は早朝運動で素晴らしい生活を送っている"
+    },
+    "zh": {
+      "meaning": "完美自律的生活，神圣的人生",
+      "nuance": "高度自律的生活方式",
+      "example": "最近坚持早起运动，过着完美自律的生活"
+    },
+    "vi": {
+      "meaning": "cuộc sống tự giác hoàn hảo",
+      "nuance": "tự kỷ luật cao độ",
+      "example": "Gần đây tôi tập thể dục sáng sớm, sống rất tự giác"
+    }
+  },
+  "억텐": {
+    "ja": {
+      "meaning": "無理して盛り上げようとする",
+      "nuance": "わざとらしい熱意",
+      "example": "その反応は本当に無理に見える"
+    },
+    "zh": {
+      "meaning": "强颜欢笑，勉强装热情",
+      "nuance": "做作的热烈反应",
+      "example": "那个反应看起来很勉强"
+    },
+    "vi": {
+      "meaning": "làm giả nhiệt tình, cười ngoáy",
+      "nuance": "phản ứng giả tạo",
+      "example": "Phản ứng đó có vẻ rất giả tạo"
+    }
+  },
+  "얼죽아": {
+    "ja": {
+      "meaning": "冬でもアイスコーヒーを飲む人",
+      "nuance": "年中冷たい飲み物の好み",
+      "example": "マイナス10度でもアイスコーヒーを注文する"
+    },
+    "zh": {
+      "meaning": "全年都喝冰咖啡的人",
+      "nuance": "不顾季节的冰饮偏好",
+      "example": "零下十度还是坚持喝冰美式"
+    },
+    "vi": {
+      "meaning": "người uống cà phê đá quanh năm",
+      "nuance": "sở thích uống lạnh bất kỳ thời nào",
+      "example": "Dù âm 10 độ tôi vẫn uống cà phê đá"
+    }
+  },
+  "아아": {
+    "ja": {
+      "meaning": "アイスアメリカーノ",
+      "nuance": "略語、カフェ注文",
+      "example": "アイスアメリカーノをください"
+    },
+    "zh": {
+      "meaning": "冰美式咖啡",
+      "nuance": "缩写，咖啡馆常用",
+      "example": "来一杯冰美式"
+    },
+    "vi": {
+      "meaning": "cà phê đá americano",
+      "nuance": "viết tắt, thường dùng ở quán cà phê",
+      "example": "Cho tôi một cà phê đá"
+    }
+  },
+  "국룰": {
+    "ja": {
+      "meaning": "国民的な標準的やり方",
+      "nuance": "国全体の習慣",
+      "example": "チキンにはコーラが国民的ルールだ"
+    },
+    "zh": {
+      "meaning": "国民标准，约定俗成",
+      "nuance": "全国通行的做法",
+      "example": "炸鸡配可乐是国民搭配"
+    },
+    "vi": {
+      "meaning": "luật quốc gia, tiêu chuẩn quốc dân",
+      "nuance": "thói quen toàn quốc",
+      "example": "Gà rán kèm cola là luật quốc dân"
+    }
+  },
+  "가성비": {
+    "ja": {
+      "meaning": "コストパフォーマンス、値段の割に良い",
+      "nuance": "製品の価値評価",
+      "example": "このノートパソコンの性能対価格は本当に良い"
+    },
+    "zh": {
+      "meaning": "性价比，价格对比性能",
+      "nuance": "产品价值评估",
+      "example": "这台笔记本的性价比真的很高"
+    },
+    "vi": {
+      "meaning": "tỷ lệ hiệu suất-giá cả, rất đáng giá",
+      "nuance": "đánh giá giá trị sản phẩm",
+      "example": "Chiếc laptop này có tỷ lệ giá/hiệu suất rất tốt"
+    }
+  },
+  "가심비": {
+    "ja": {
+      "meaning": "値段の割に心が満たされる",
+      "nuance": "感情的な価値がある製品",
+      "example": "高くても心の価値で買った"
+    },
+    "zh": {
+      "meaning": "价格对比心理满足度，值得买",
+      "nuance": "产品的情感价值",
+      "example": "虽然贵但是买了开心"
+    },
+    "vi": {
+      "meaning": "giá trị tâm lý, đáng tiền vì hạnh phúc",
+      "nuance": "giá trị cảm xúc của sản phẩm",
+      "example": "Dù mắc nhưng tôi mua vì nó làm tôi vui"
+    }
+  },
+  "소확행": {
+    "ja": {
+      "meaning": "小さいが確実な幸せ",
+      "nuance": "日常の小さな喜び",
+      "example": "帰路のタイ焼きが私の小さな幸せだ"
+    },
+    "zh": {
+      "meaning": "小小的确定幸福，日常小确幸",
+      "nuance": "生活中小小的快乐",
+      "example": "下班路上吃鲷鱼烧是我的小确幸"
+    },
+    "vi": {
+      "meaning": "nhỏ nhưng chắc chắn hạnh phúc",
+      "nuance": "những khoảnh khắc nhỏ trong ngày",
+      "example": "Bánh cá trên đường về nhà là hạnh phúc nhỏ của tôi"
+    }
+  },
+  "워라밸": {
+    "ja": {
+      "meaning": "仕事とプライベートのバランス",
+      "nuance": "人生の質の優先順位",
+      "example": "給与より仕事と生活のバランスが重要だ"
+    },
+    "zh": {
+      "meaning": "工作和生活的平衡",
+      "nuance": "生活质量的优先级",
+      "example": "比起薪水，工作生活平衡更重要"
+    },
+    "vi": {
+      "meaning": "cân bằng công việc và cuộc sống",
+      "nuance": "ưu tiên chất lượng cuộc sống",
+      "example": "Cân bằng công việc quan trọng hơn lương"
+    }
+  },
+  "칼퇴": {
+    "ja": {
+      "meaning": "定時に退勤する、キッチリ",
+      "nuance": "残業をしない、仕事の後すぐ帰る",
+      "example": "今日は絶対に定時に帰るつもりだ"
+    },
+    "zh": {
+      "meaning": "准点下班，按时离开",
+      "nuance": "拒绝加班，立刻走人",
+      "example": "今天我一定要按时下班"
+    },
+    "vi": {
+      "meaning": "rời khỏi công việc đúng giờ",
+      "nuance": "không làm thêm giờ",
+      "example": "Hôm nay tôi chắc chắn sẽ về đúng giờ"
+    }
+  },
+  "월급루팡": {
+    "ja": {
+      "meaning": "給料泥棒、何もしない社員",
+      "nuance": "仕事をしないでお金をもらう",
+      "example": "今日は月給泥棒をした"
+    },
+    "zh": {
+      "meaning": "拿工资的小偷，白吃饭的人",
+      "nuance": "在公司混日子，只领工资",
+      "example": "今天我又是月薪大盗"
+    },
+    "vi": {
+      "meaning": "trộm lương, không làm gì mà lĩnh tiền",
+      "nuance": "nhân viên ăn bám công ty",
+      "example": "Hôm nay tôi lại làm \"trộm lương\""
+    }
+  },
+  "열정페이": {
+    "ja": {
+      "meaning": "安い給料で『やりがいで働け』と言う",
+      "nuance": "不公正な労働条件",
+      "example": "そのインターンシップは完全に熱情給だ"
+    },
+    "zh": {
+      "meaning": "低薪酬，却要求用热情工作",
+      "nuance": "不公平的劳动条件",
+      "example": "那个实习完全是热情薪酬"
+    },
+    "vi": {
+      "meaning": "lương thấp nhưng yêu cầu làm việc với đam mê",
+      "nuance": "điều kiện lao động bất công",
+      "example": "Thực tập đó hoàn toàn là lương đam mê"
+    }
+  },
+  "취준생": {
+    "ja": {
+      "meaning": "就職活動をしている学生",
+      "nuance": "求職中の若者",
+      "example": "私はまだ就職活動をしています"
+    },
+    "zh": {
+      "meaning": "求职中的人，准备找工作",
+      "nuance": "正在找工作的年轻人",
+      "example": "我还在找工作"
+    },
+    "vi": {
+      "meaning": "người đang tìm việc, sinh viên xin việc",
+      "nuance": "thanh niên đang tìm kiếm công việc",
+      "example": "Tôi vẫn đang tìm kiếm công việc"
+    }
+  },
+  "갑질": {
+    "ja": {
+      "meaning": "権力を使って他人を虐待する",
+      "nuance": "立場を利用した嫌がらせ",
+      "example": "お客さんが従業員に暴力的に接している"
+    },
+    "zh": {
+      "meaning": "仗势欺人，利用权力欺压",
+      "nuance": "利用地位骚扰他人",
+      "example": "客人对员工很蛮横"
+    },
+    "vi": {
+      "meaning": "lạm dụng quyền lực, bắt nạt",
+      "nuance": "áp bức người có địa vị thấp hơn",
+      "example": "Khách hàng đối xử hợp sai với nhân viên"
+    }
+  },
+  "꼰대": {
+    "ja": {
+      "meaning": "時代遅れな年上の人",
+      "nuance": "古い考え方の人",
+      "example": "そんなことを言うとオッサン扱いされる"
+    },
+    "zh": {
+      "meaning": "固执的老人，思想陈旧",
+      "nuance": "守着旧思想的人",
+      "example": "那样说会被说是老古董"
+    },
+    "vi": {
+      "meaning": "người già cỗi, suy nghĩ lỗi thời",
+      "nuance": "người bám víu vào cái cũ",
+      "example": "Nói vậy sẽ bị gọi là kẻ lỗi thời"
+    }
+  },
+  "라떼는": {
+    "ja": {
+      "meaning": "'昔はこうだった'の定番オープニング",
+      "nuance": "時代遅れな人の決まり文句",
+      "example": "また『昔は...』という話が始まった"
+    },
+    "zh": {
+      "meaning": "'我那个年代'的开场白，陈词滥调",
+      "nuance": "过时人士的常用说法",
+      "example": "又开始讲\"我那个年代\"的故事了"
+    },
+    "vi": {
+      "meaning": "cơn lốc \"hồi xưa tôi\", nói chuyện cũ",
+      "nuance": "câu mở đầu điển hình của người lỗi thời",
+      "example": "Lại bắt đầu kể chuyện \"hồi xưa\""
+    }
+  },
+  "금수저": {
+    "ja": {
+      "meaning": "生まれつき金持ち",
+      "nuance": "恵まれた生まれ",
+      "example": "彼は金持ちの家に生まれたから心配ない"
+    },
+    "zh": {
+      "meaning": "富贵出身，生在富裕家庭",
+      "nuance": "优越的出生环境",
+      "example": "他出生富贵，不用担心"
+    },
+    "vi": {
+      "meaning": "sinh ra giàu có，xuất thân quý tộc",
+      "nuance": "môi trường sinh ra may mắn",
+      "example": "Anh ấy sinh ra trong gia đình giàu có"
+    }
+  },
+  "흙수저": {
+    "ja": {
+      "meaning": "生まれつき貧しい",
+      "nuance": "恵まれない生まれ",
+      "example": "貧しい環境から頑張ればいい"
+    },
+    "zh": {
+      "meaning": "贫苦出身，白手起家",
+      "nuance": "困难的出生环境",
+      "example": "从贫穷出身靠努力改变"
+    },
+    "vi": {
+      "meaning": "sinh ra nghèo, xuất thân thấp",
+      "nuance": "hoàn cảnh sinh ra bất lợi",
+      "example": "Sinh ra từ gia đình nghèo nhưng cố gắng"
+    }
+  },
+  "영끌": {
+    "ja": {
+      "meaning": "最後の一円まで借りてモノを買う",
+      "nuance": "全力で購買する",
+      "example": "全力で借金して家を買った"
+    },
+    "zh": {
+      "meaning": "倾尽所有借钱买东西",
+      "nuance": "竭尽全力购买",
+      "example": "借尽所有钱来买房子"
+    },
+    "vi": {
+      "meaning": "vay hết tiền để mua đồ",
+      "nuance": "cố gắng tối đa để mua sắm",
+      "example": "Vay hết tiền để mua ngôi nhà"
+    }
+  },
+  "텅장": {
+    "ja": {
+      "meaning": "銀行口座が空っぽ",
+      "nuance": "お金がない状態",
+      "example": "家賃が出たらすぐに口座が空っぽだ"
+    },
+    "zh": {
+      "meaning": "银行账户空空如也，穷光蛋",
+      "nuance": "没有钱的状态",
+      "example": "交完房租账户就空了"
+    },
+    "vi": {
+      "meaning": "tài khoản trống rỗi, túi cạn",
+      "nuance": "không có tiền",
+      "example": "Trả tiền thuê xong tài khoản trống"
+    }
+  },
+  "플렉스": {
+    "ja": {
+      "meaning": "お金を使って見せびらかす",
+      "nuance": "豪華さをアピール",
+      "example": "今日は少し見せびらかしてしまった"
+    },
+    "zh": {
+      "meaning": "炫耀金钱，铺张浪费",
+      "nuance": "展示富有",
+      "example": "今天有点炫富了"
+    },
+    "vi": {
+      "meaning": "khoe khoang tiền bạc, phô trương",
+      "nuance": "tỏ ra giàu có",
+      "example": "Hôm nay tôi có chút phô trương"
+    }
+  },
+  "지름신": {
+    "ja": {
+      "meaning": "衝動買いの悪魔が降りてくる",
+      "nuance": "購買衝動に支配される",
+      "example": "深夜2時に衝動買いの悪魔が来た"
+    },
+    "zh": {
+      "meaning": "冲动购物之神降临",
+      "nuance": "被冲动购物所控制",
+      "example": "凌晨两点购物之神附身了"
+    },
+    "vi": {
+      "meaning": "thần mua hàng tấn công, không kìm lại",
+      "nuance": "bị kiểm soát bởi mua sắm",
+      "example": "Thần mua hàng đã xuất hiện lúc 2 giờ sáng"
+    }
+  },
+  "개이득": {
+    "ja": {
+      "meaning": "大きな利益、良い買い物",
+      "nuance": "超お得な状況",
+      "example": "半値で買った、大当たり！"
+    },
+    "zh": {
+      "meaning": "巨大利润，大便宜",
+      "nuance": "超划算",
+      "example": "半价买到，太赚了！"
+    },
+    "vi": {
+      "meaning": "lợi nhuận khổng lồ, deal quá tốt",
+      "nuance": "siêu rẻ",
+      "example": "Mua được giá nửa, siêu rẻ!"
+    }
+  },
+  "개꿀": {
+    "ja": {
+      "meaning": "甘い、簡単でいい",
+      "nuance": "超快適な状況",
+      "example": "テレワークは本当に快適だ"
+    },
+    "zh": {
+      "meaning": "甘蜜，太舒服，完美",
+      "nuance": "超舒适的情况",
+      "example": "在家工作太舒服了"
+    },
+    "vi": {
+      "meaning": "ngọt ngào, quá tuyệt vời",
+      "nuance": "tình huống siêu thoải mái",
+      "example": "Làm việc tại nhà thực sự tuyệt vời"
+    }
+  },
+  "꿀팁": {
+    "ja": {
+      "meaning": "本当に役立つ生活ハック",
+      "nuance": "実用的なアドバイス",
+      "example": "これは本当に役立つコツだ"
+    },
+    "zh": {
+      "meaning": "真正有用的生活小贴士",
+      "nuance": "实用建议",
+      "example": "这个建议真的很有用"
+    },
+    "vi": {
+      "meaning": "mẹo hay, mẹo hữu ích",
+      "nuance": "lời khuyên thực tế",
+      "example": "Đây là mẹo thực sự hữu ích"
+    }
+  },
+  "혜자": {
+    "ja": {
+      "meaning": "価格の割に量が多い",
+      "nuance": "太っ腹な商品",
+      "example": "このお弁当の量は量が多い"
+    },
+    "zh": {
+      "meaning": "价格便宜量又足，太大方",
+      "nuance": "物美价廉",
+      "example": "这个便当量超多"
+    },
+    "vi": {
+      "meaning": "giá rẻ lượng nhiều, hào phóng",
+      "nuance": "vật có giá trị cao",
+      "example": "Hộp cơm này lượng rất nhiều"
+    }
+  },
+  "창렬": {
+    "ja": {
+      "meaning": "高い割に少ない、悪い買い物",
+      "nuance": "太抠门な商品",
+      "example": "価格を見て、ぼったくりだと思った"
+    },
+    "zh": {
+      "meaning": "贵得不合理，量还少，垃圾品质",
+      "nuance": "奸商品质",
+      "example": "看价格就觉得是天价"
+    },
+    "vi": {
+      "meaning": "mắc nhưng lượng ít, chất lượng kém",
+      "nuance": "sản phẩm xấc láo",
+      "example": "Nhìn giá tôi cảm thấy bị cắt cổ"
+    }
+  },
+  "존버": {
+    "ja": {
+      "meaning": "辛抱強く待つ、買い控える",
+      "nuance": "状況が良くなるまで我慢する",
+      "example": "しばらく持ちこたえたら上がるだろう"
+    },
+    "zh": {
+      "meaning": "坚持住，耐心等待回升",
+      "nuance": "忍耐等待情况改善",
+      "example": "坚持一下应该会上升"
+    },
+    "vi": {
+      "meaning": "kiên nhẫn đợi chờ, không bán",
+      "nuance": "kiên trì đợi tình huống tốt hơn",
+      "example": "Kiên nhẫn chút nữa nó sẽ tăng"
+    }
+  },
+  "고인물": {
+    "ja": {
+      "meaning": "ずっと遊んでいるベテラン",
+      "nuance": "新参者が太刀打ちできない人",
+      "example": "このゲームはベテランだけが残っている"
+    },
+    "zh": {
+      "meaning": "老玩家，资深人士",
+      "nuance": "新手无法竞争的人",
+      "example": "这个游戏只有老手留下来了"
+    },
+    "vi": {
+      "meaning": "cựu chiến binh, người có kinh nghiệm",
+      "nuance": "người mà tân thủ không thể cạnh tranh",
+      "example": "Chỉ có những tay chơi cũ còn lại"
+    }
+  },
+  "뉴비": {
+    "ja": {
+      "meaning": "初心者、新しく始めた人",
+      "nuance": "経験が浅い",
+      "example": "私は完全な初心者だからよくわかりません"
+    },
+    "zh": {
+      "meaning": "新手，初学者",
+      "nuance": "经验不足",
+      "example": "我是完全的新手"
+    },
+    "vi": {
+      "meaning": "tân thủ, người mới bắt đầu",
+      "nuance": "thiếu kinh nghiệm",
+      "example": "Tôi là tân thủ hoàn toàn"
+    }
+  },
+  "만렙": {
+    "ja": {
+      "meaning": "最高レベル、エキスパート",
+      "nuance": "何かの専門家",
+      "example": "お母さんはキムチ作りの達人です"
+    },
+    "zh": {
+      "meaning": "满级，专家，顶尖高手",
+      "nuance": "某事的行家",
+      "example": "我妈妈是做泡菜的高手"
+    },
+    "vi": {
+      "meaning": "cấp tối đa, chuyên gia",
+      "nuance": "cao手trong cái gì đó",
+      "example": "Mẹ tôi là chuyên gia làm kimchi"
+    }
+  },
+  "본캐": {
+    "ja": {
+      "meaning": "本当の自分、メインのアイデンティティ",
+      "nuance": "日常生活での主要な役割",
+      "example": "本当の自分は会社員です"
+    },
+    "zh": {
+      "meaning": "真实身份，主要的自己",
+      "nuance": "日常生活中的主要角色",
+      "example": "我真实的身份是上班族"
+    },
+    "vi": {
+      "meaning": "bản dạng chính, bản thân thực",
+      "nuance": "vai trò chính trong cuộc sống",
+      "example": "Thân phận thực của tôi là nhân viên văn phòng"
+    }
+  },
+  "부캐": {
+    "ja": {
+      "meaning": "第二の自分、サイドプロジェクト",
+      "nuance": "副業や趣味のアイデンティティ",
+      "example": "週末のパン屋さんは私の別人格だ"
+    },
+    "zh": {
+      "meaning": "第二身份，副业身份",
+      "nuance": "副项目或爱好身份",
+      "example": "周末面包店老板是我的副业"
+    },
+    "vi": {
+      "meaning": "bản dạng thứ hai, vai trò phụ",
+      "nuance": "nhân vật trong dự án phụ",
+      "example": "Chủ tiệm bánh cuối tuần là vai trò phụ của tôi"
+    }
+  },
+  "현생": {
+    "ja": {
+      "meaning": "現実の生活、オフラインの生活",
+      "nuance": "ゲームより優先される現実生活",
+      "example": "現実生活が忙しいので行きます"
+    },
+    "zh": {
+      "meaning": "现实生活，真实世界",
+      "nuance": "比游戏更优先的现实",
+      "example": "现实生活太忙了，再见"
+    },
+    "vi": {
+      "meaning": "cuộc sống thực, đời sống offline",
+      "nuance": "cuộc sống thực tế ưu tiên hơn game",
+      "example": "Cuộc sống thực quá bận rộn, tạm biệt"
+    }
+  },
+  "덕후": {
+    "ja": {
+      "meaning": "熱心なファン、オタク",
+      "nuance": "何かにハマっている人",
+      "example": "私は本来は電車マニアです"
+    },
+    "zh": {
+      "meaning": "死忠粉，深度爱好者",
+      "nuance": "对某事物深度痴迷的人",
+      "example": "我其实是铁道迷"
+    },
+    "vi": {
+      "meaning": "fan cuồng nhiệt, người mê",
+      "nuance": "người say mê điều gì đó",
+      "example": "Tôi thực sự là fan cuồng về tàu hỏa"
+    }
+  },
+  "덕질": {
+    "ja": {
+      "meaning": "ファン活動、趣味を極める行為",
+      "nuance": "推し活動や応援活動",
+      "example": "最近はファン活動で忙しい"
+    },
+    "zh": {
+      "meaning": "粉丝活动，应援行为",
+      "nuance": "为爱豆支持和打投",
+      "example": "最近忙着粉丝活动"
+    },
+    "vi": {
+      "meaning": "hoạt động fan, ủng hộ",
+      "nuance": "các hoạt động ứng viên",
+      "example": "Gần đây tôi bận với hoạt động fan"
+    }
+  },
+  "입덕": {
+    "ja": {
+      "meaning": "ファンになる、ハマる",
+      "nuance": "新しくファンになること",
+      "example": "その舞台を見てすぐにハマった"
+    },
+    "zh": {
+      "meaning": "成为粉丝，入坑",
+      "nuance": "新近成为粉丝",
+      "example": "看了那个舞台马上入坑了"
+    },
+    "vi": {
+      "meaning": "trở thành fan, bị hấp dẫn",
+      "nuance": "mới trở thành fan của",
+      "example": "Nhìn cái sân khấu đó tôi liền bị hấp dẫn"
+    }
+  },
+  "탈덕": {
+    "ja": {
+      "meaning": "ファンをやめる、ハマりから抜ける",
+      "nuance": "ファン活動から脱出すること",
+      "example": "昨年はファンをやめました"
+    },
+    "zh": {
+      "meaning": "脱离粉丝身份，退坑",
+      "nuance": "停止粉丝活动",
+      "example": "去年我退坑了"
+    },
+    "vi": {
+      "meaning": "bỏ cuộc, thôi fan",
+      "nuance": "dừng hoạt động fan",
+      "example": "Năm ngoái tôi đã thôi fan"
+    }
+  },
+  "성덕": {
+    "ja": {
+      "meaning": "夢が叶ったファン、推しに会ったファン",
+      "nuance": "成功したファン活動の象徴",
+      "example": "サイン字をもらったから成功したファンだ"
+    },
+    "zh": {
+      "meaning": "成功的粉丝，梦想成真",
+      "nuance": "实现粉丝梦想的象征",
+      "example": "拿到签名就是成功的粉丝了"
+    },
+    "vi": {
+      "meaning": "fan thành công, ước mơ thành hiện thực",
+      "nuance": "biểu tượng của fan thành công",
+      "example": "Có được chữ ký là fan thành công"
+    }
+  },
+  "인생템": {
+    "ja": {
+      "meaning": "人生が変わるほど素晴らしい商品",
+      "nuance": "必須アイテム、神商品",
+      "example": "このクリームは本当に人生を変えた"
+    },
+    "zh": {
+      "meaning": "人生必备品，神级产品",
+      "nuance": "改变生活的商品",
+      "example": "这个面霜真的改变了我的生活"
+    },
+    "vi": {
+      "meaning": "sản phẩm thay đổi cuộc sống",
+      "nuance": "vật bất khủng bố, sản phẩm linh thiêng",
+      "example": "Kem này thực sự đã thay đổi cuộc sống tôi"
+    }
+  },
+  "인생샷": {
+    "ja": {
+      "meaning": "人生最高の写真、ベストショット",
+      "nuance": "最高の角度や時間の写真",
+      "example": "ここでベストショットを撮った"
+    },
+    "zh": {
+      "meaning": "人生最佳照片，神照片",
+      "nuance": "最完美的角度和时刻",
+      "example": "在这里拍到了人生最佳照片"
+    },
+    "vi": {
+      "meaning": "ảnh đẹp nhất cuộc đời",
+      "nuance": "góc máy và thời điểm hoàn hảo",
+      "example": "Tôi chụp ảnh đẹp nhất ở đây"
+    }
+  },
+  "짤": {
+    "ja": {
+      "meaning": "ミーム画像、ネット画像",
+      "nuance": "インターネット文化の一部",
+      "example": "そのミームはどこから来た？"
+    },
+    "zh": {
+      "meaning": "表情包，网络图片",
+      "nuance": "互联网文化的一部分",
+      "example": "那个表情包哪里来的？"
+    },
+    "vi": {
+      "meaning": "hình ảnh meme, ảnh mạng",
+      "nuance": "một phần của văn hoá internet",
+      "example": "Meme đó từ đâu?"
+    }
+  },
+  "움짤": {
+    "ja": {
+      "meaning": "GIF画像、動く画像",
+      "nuance": "インターネット上の動画クリップ",
+      "example": "GIFで作って送ってください"
+    },
+    "zh": {
+      "meaning": "GIF图，动图",
+      "nuance": "网络上的动画剪辑",
+      "example": "转成GIF发给我"
+    },
+    "vi": {
+      "meaning": "ảnh GIF, ảnh động",
+      "nuance": "đoạn video trên internet",
+      "example": "Chuyển thành GIF và gửi cho tôi"
+    }
+  },
+  "어그로": {
+    "ja": {
+      "meaning": "注目を集めるために挑発する",
+      "nuance": "わざと問題を起こす行為",
+      "example": "注目を集めるために煽動しないで"
+    },
+    "zh": {
+      "meaning": "蓄意挑衅，引起关注",
+      "nuance": "故意惹事的行为",
+      "example": "别为了吸引关注而挑衅"
+    },
+    "vi": {
+      "meaning": "cố tình gây chú ý, kích động",
+      "nuance": "hành động cố tình gây rối",
+      "example": "Đừng cố ý kích động để thu hút sự chú ý"
+    }
+  },
+  "관종": {
+    "ja": {
+      "meaning": "注目を集めたがる人",
+      "nuance": "構ってちゃん",
+      "example": "本当に構ってちゃんだ"
+    },
+    "zh": {
+      "meaning": "喜欢关注，爱出风头的人",
+      "nuance": "渴望被关注的人",
+      "example": "真的是个爱出风头的人"
+    },
+    "vi": {
+      "meaning": "người sích xin chú ý",
+      "nuance": "người thích được chú ý",
+      "example": "Người này thực sự cần sự chú ý"
+    }
+  },
+  "뇌피셜": {
+    "ja": {
+      "meaning": "頭の中で作った意見を事実のように言う",
+      "nuance": "根拠のない推測",
+      "example": "それは単なるあなたの想像じゃない？"
+    },
+    "zh": {
+      "meaning": "脑补的观点，毫无根据",
+      "nuance": "无事实依据的推测",
+      "example": "那不就是你编的吗？"
+    },
+    "vi": {
+      "meaning": "ý kiến tự tạo, không có cơ sở",
+      "nuance": "suy đoán vô căn cứ",
+      "example": "Đó chỉ là thứ bạn tưởng tượng?"
+    }
+  },
+  "팩폭": {
+    "ja": {
+      "meaning": "残酷で否定できない真実を突きつける",
+      "nuance": "痛い指摘",
+      "example": "友人に言い返された"
+    },
+    "zh": {
+      "meaning": "真实的打击，无法反驳的事实",
+      "nuance": "痛苦的指责",
+      "example": "朋友给我一个现实的教训"
+    },
+    "vi": {
+      "meaning": "sự thật đau lòng, nhận định cay đắng",
+      "nuance": "chỉ trích mạnh",
+      "example": "Bạn bè tôi bắn ra sự thật"
+    }
+  },
+  "답정너": {
+    "ja": {
+      "meaning": "答えが決まっているのに聞く人",
+      "nuance": "きっと反対意見は聞かない人",
+      "example": "それは決まった答えじゃない？"
+    },
+    "zh": {
+      "meaning": "问题的答案已经定了，你只需同意",
+      "nuance": "不会真正听其他意见",
+      "example": "这不是早就决定了吗？"
+    },
+    "vi": {
+      "meaning": "câu trả lời đã được quyết định, chỉ cần bạn đồng ý",
+      "nuance": "sẽ không lắng nghe ý kiến khác",
+      "example": "Đó không phải đã được quyết định sẵn?"
+    }
+  },
+  "안물안궁": {
+    "ja": {
+      "meaning": "誰も聞いていない、別に知りたくない",
+      "nuance": "ぶっきらぼうな拒否",
+      "example": "誰も聞いていないのに、なぜ話すの？"
+    },
+    "zh": {
+      "meaning": "没人问，不关心",
+      "nuance": "生硬的拒绝",
+      "example": "没人问你，为什么要说？"
+    },
+    "vi": {
+      "meaning": "không ai hỏi, không quan tâm",
+      "nuance": "từ chối thô lỗ",
+      "example": "Không ai hỏi cậu, tại sao phải nói?"
+    }
+  },
+  "낄끼빠빠": {
+    "ja": {
+      "meaning": "付き合う時は付き合う、抜く時は抜く",
+      "nuance": "場の空気を読む能力",
+      "example": "場の雰囲気に合わせてください"
+    },
+    "zh": {
+      "meaning": "要进就进，要退就退，看场景",
+      "nuance": "读懂气氛的能力",
+      "example": "看场景要会识相"
+    },
+    "vi": {
+      "meaning": "khi tham gia thì tham gia, khi rút lui thì rút lui",
+      "nuance": "khả năng đọc không khí",
+      "example": "Hãy biết đọc không khí"
+    }
+  },
+  "사바사": {
+    "ja": {
+      "meaning": "人それぞれ、状況による",
+      "nuance": "多様性を認める表現",
+      "example": "それは人によるね"
+    },
+    "zh": {
+      "meaning": "因人而异，每个人不同",
+      "nuance": "承认多样性的表达",
+      "example": "那取决于个人"
+    },
+    "vi": {
+      "meaning": "mỗi người khác nhau, tùy trường hợp",
+      "nuance": "biểu đạt chấp nhận đa dạng",
+      "example": "Điều đó phụ thuộc vào từng người"
+    }
+  },
+  "취존": {
+    "ja": {
+      "meaning": "好みを尊重しよう",
+      "nuance": "個性を認める表現",
+      "example": "ミント チョコレートも尊重しよう"
+    },
+    "zh": {
+      "meaning": "尊重个人品味，不批评",
+      "nuance": "认可个性的表达",
+      "example": "要尊重薄荷巧克力爱好者"
+    },
+    "vi": {
+      "meaning": "tôn trọng thị hiếu, không phê bình",
+      "nuance": "biểu đạt chấp nhận cá nhân",
+      "example": "Hãy tôn trọng người yêu thích sô-cô-la bạc hà"
+    }
+  },
+  "열일": {
+    "ja": {
+      "meaning": "頑張って働く、活躍する",
+      "nuance": "人間以外にも使える",
+      "example": "エアコンが今日は活躍している"
+    },
+    "zh": {
+      "meaning": "努力工作，发挥作用",
+      "nuance": "可用于非人类的事物",
+      "example": "空调今天在努力工作"
+    },
+    "vi": {
+      "meaning": "làm việc chăm chỉ, phát huy tác dụng",
+      "nuance": "có thể dùng cho vật không phải con người",
+      "example": "Máy lạnh hôm nay đang hoạt động tốt"
+    }
+  },
+  "흑역사": {
+    "ja": {
+      "meaning": "削除したい恥ずかしい過去",
+      "nuance": "黒い歴史、忘れたい時代",
+      "example": "中学の写真は私の黒歴史だ"
+    },
+    "zh": {
+      "meaning": "想要删除的尴尬过去",
+      "nuance": "黑色历史，想忘记的时代",
+      "example": "初中的照片是我的黑历史"
+    },
+    "vi": {
+      "meaning": "quá khứ xấu hổ cần xóa",
+      "nuance": "lịch sử đen, thời kỳ muốn quên",
+      "example": "Ảnh trung học là lịch sử đen của tôi"
+    }
+  },
+  "웃프다": {
+    "ja": {
+      "meaning": "面白いけど少し悲しい",
+      "nuance": "複雑な感情",
+      "example": "おかしいけどちょっと悲しい話聞きたい？"
+    },
+    "zh": {
+      "meaning": "好笑又悲伤，有些唏嘘",
+      "nuance": "复杂的情感",
+      "example": "这是个搞笑又悲伤的故事，要听吗？"
+    },
+    "vi": {
+      "meaning": "vui cười nhưng hơi buồn",
+      "nuance": "cảm xúc phức tạp",
+      "example": "Đó là một câu chuyện hài hước nhưng buồn"
+    }
+  },
+  "병맛": {
+    "ja": {
+      "meaning": "質の悪さがループして面白い",
+      "nuance": "意図的に低品質だが中毒性",
+      "example": "このウェブトゥーンはおかしいが見続けてしまう"
+    },
+    "zh": {
+      "meaning": "质量糟糕到荒唐反而有趣",
+      "nuance": "故意低质，但很上瘾",
+      "example": "这个网漫很垃圾但我停不下来"
+    },
+    "vi": {
+      "meaning": "chất lượng tệ đến hài hước",
+      "nuance": "cố tình thấp chất lượng nhưng gây nghiện",
+      "example": "Bộ truyện này tệ nhưng tôi không thể dừng"
+    }
+  },
+  "드립": {
+    "ja": {
+      "meaning": "即興ジョーク、アドリブ",
+      "nuance": "急に言うユーモア",
+      "example": "ジョークはもうやめて"
+    },
+    "zh": {
+      "meaning": "即兴笑话，临时想到的",
+      "nuance": "突然说的幽默",
+      "example": "别再开玩笑了"
+    },
+    "vi": {
+      "meaning": "trò đùa tức thời, linh cảm",
+      "nuance": "tiếu lâm đột ngột",
+      "example": "Bỏ những câu đùa đi"
+    }
+  },
+  "뇌절": {
+    "ja": {
+      "meaning": "ジョークを何度も繰り返して台無しにする",
+      "nuance": "ユーモアを枯死させる",
+      "example": "それは3回目だからジョークが死んだ"
+    },
+    "zh": {
+      "meaning": "把笑话重复太多次，失去效果",
+      "nuance": "把幽默消磨殆尽",
+      "example": "第三次了，这个笑话死了"
+    },
+    "vi": {
+      "meaning": "lặp lại trò đùa quá nhiều lần làm hỏng",
+      "nuance": "tiêu diệt humor",
+      "example": "Lần thứ ba rồi, trò đùa này chết rồi"
+    }
+  },
+  "아무말 대잔치": {
+    "ja": {
+      "meaning": "ランダムな言葉の洪水",
+      "nuance": "深夜の意識の流れ",
+      "example": "夜が遅いから無意味な話をしている"
+    },
+    "zh": {
+      "meaning": "乱七八糟的胡言乱语",
+      "nuance": "深夜的意识流",
+      "example": "很晚了，我在说废话"
+    },
+    "vi": {
+      "meaning": "lời nói vô nghĩa, xáo trộn",
+      "nuance": "dòng ý thức của đêm muộn",
+      "example": "Rất muộn nên tôi đang nói ngô ngữ"
+    }
+  },
+  "노답": {
+    "ja": {
+      "meaning": "希望がない、解決不可能",
+      "nuance": "打つ手がない状況",
+      "example": "この状況は本当に希望がない"
+    },
+    "zh": {
+      "meaning": "无解，完全没希望",
+      "nuance": "无法解决的情况",
+      "example": "这个情况真的无解"
+    },
+    "vi": {
+      "meaning": "vô vọng, không có cách giải",
+      "nuance": "tình huống không thể giải quyết",
+      "example": "Tình huống này thực sự vô vọng"
+    }
+  },
+  "킹받다": {
+    "ja": {
+      "meaning": "本当に腹が立つ",
+      "nuance": "物凄く怒っている",
+      "example": "その話し方は本当に腹が立つ"
+    },
+    "zh": {
+      "meaning": "特别生气，极其烦恼",
+      "nuance": "非常愤怒",
+      "example": "那种说话方式特别烦人"
+    },
+    "vi": {
+      "meaning": "cực kỳ tức giận, phẫn nộ",
+      "nuance": "rất tức giận",
+      "example": "Cách nói chuyện đó cực kỳ khó chịu"
+    }
+  },
+  "킹정": {
+    "ja": {
+      "meaning": "百パーセント同意",
+      "nuance": "強い同意の表現",
+      "example": "それは本当に同意"
+    },
+    "zh": {
+      "meaning": "百分百同意，完全赞成",
+      "nuance": "强烈同意的表达",
+      "example": "我完全赞成"
+    },
+    "vi": {
+      "meaning": "100% đồng ý, tán thành hoàn toàn",
+      "nuance": "biểu đạt sự đồng ý mạnh mẽ",
+      "example": "Tôi hoàn toàn đồng ý"
+    }
+  },
+  "인정": {
+    "ja": {
+      "meaning": "同意する、本当だ",
+      "nuance": "短い同意の返答",
+      "example": "そうだね、本当に"
+    },
+    "zh": {
+      "meaning": "同意，真的",
+      "nuance": "简短同意的回复",
+      "example": "对，确实"
+    },
+    "vi": {
+      "meaning": "đồng ý, đúng vậy",
+      "nuance": "phản hồi đồng ý ngắn gọn",
+      "example": "Đúng, chính xác"
+    }
+  },
+  "실화냐": {
+    "ja": {
+      "meaning": "本当の話？本当？",
+      "nuance": "信じられない状況",
+      "example": "この価格は本当？"
+    },
+    "zh": {
+      "meaning": "真的吗？不会吧",
+      "nuance": "难以置信的情况",
+      "example": "这个价格真的假的？"
+    },
+    "vi": {
+      "meaning": "thật không? Có thể tin không?",
+      "nuance": "tình huống khó tin",
+      "example": "Giá này có thật không?"
+    }
+  },
+  "이왜진": {
+    "ja": {
+      "meaning": "なぜこれが本当なのか",
+      "nuance": "不可思议なことが起こった",
+      "example": "なぜこれが本当なのか...本当に売り切れだ"
+    },
+    "zh": {
+      "meaning": "为什么这是真的，荒唐事实",
+      "nuance": "发生了不可思议的事",
+      "example": "为什么这是真的...真的卖光了"
+    },
+    "vi": {
+      "meaning": "tại sao điều này lại là thật",
+      "nuance": "có chuyện khó tin xảy ra",
+      "example": "Tại sao điều này lại là thật...thực sự hết hàng"
+    }
+  },
+  "오조오억": {
+    "ja": {
+      "meaning": "とんでもなく大きな数字",
+      "nuance": "誇張した数え方",
+      "example": "その場面を何度も見た"
+    },
+    "zh": {
+      "meaning": "巨大得离谱的数字，一百万次",
+      "nuance": "夸张的计数方式",
+      "example": "那个场景看了无数遍"
+    },
+    "vi": {
+      "meaning": "số lượng lớn đến vô lý",
+      "nuance": "cách đếm phóng đại",
+      "example": "Tôi đã xem cảnh đó vô số lần"
+    }
+  },
+  "쩐다": {
+    "ja": {
+      "meaning": "すごい、圧倒的",
+      "nuance": "感心や感動の表現",
+      "example": "その技術は本当にすごい"
+    },
+    "zh": {
+      "meaning": "厉害，不可思议，技术超群",
+      "nuance": "钦佩和惊叹的表达",
+      "example": "技术真的超强"
+    },
+    "vi": {
+      "meaning": "tuyệt vời, không thể tin được",
+      "nuance": "biểu đạt sự ngưỡng mộ",
+      "example": "Kỹ thuật thực sự tuyệt vời"
+    }
+  },
+  "오지다": {
+    "ja": {
+      "meaning": "極端で激しい、ワイルド",
+      "nuance": "感動や賞賛",
+      "example": "今日の天気は激しいね"
+    },
+    "zh": {
+      "meaning": "极其疯狂，野蛮",
+      "nuance": "钦佩或赞叹",
+      "example": "今天的天气野性十足"
+    },
+    "vi": {
+      "meaning": "cực kỳ điên rồ, hoang dã",
+      "nuance": "cảm thán hoặc tán thưởng",
+      "example": "Thời tiết hôm nay thực sự hoang dã"
+    }
+  },
+  "각": {
+    "ja": {
+      "meaning": "完璧なセットアップ、チャンス",
+      "nuance": "理想的な状況",
+      "example": "今日はチキンの夜だ"
+    },
+    "zh": {
+      "meaning": "完美的设置，时机成熟",
+      "nuance": "理想的情况",
+      "example": "今天是炸鸡夜的时候"
+    },
+    "vi": {
+      "meaning": "thiết lập hoàn hảo, cơ hội",
+      "nuance": "tình huống lý tưởng",
+      "example": "Hôm nay là đêm gà rán"
+    }
+  },
+  "억까": {
+    "ja": {
+      "meaning": "不公正な批判、不当な批評",
+      "nuance": "根拠のない否定的評価",
+      "example": "それはちょっと不当な批判だと思う"
+    },
+    "zh": {
+      "meaning": "无理由的批评，不公平的评价",
+      "nuance": "毫无根据的否定",
+      "example": "这个批评有点不公平"
+    },
+    "vi": {
+      "meaning": "chỉ trích không công bằng, phê bình vô cớ",
+      "nuance": "đánh giá tiêu cực vô lý",
+      "example": "Phê bình đó hơi không công bằng"
+    }
+  },
+  "쉴드": {
+    "ja": {
+      "meaning": "盾になって守る、擁護する",
+      "nuance": "時には不理不理な擁護",
+      "example": "今回は彼をかばえない"
+    },
+    "zh": {
+      "meaning": "为某人辩护，盾牌",
+      "nuance": "有时过度维护",
+      "example": "这次我没法替他说话"
+    },
+    "vi": {
+      "meaning": "bảo vệ, bào chữa cho",
+      "nuance": "đôi khi vượt quá mức",
+      "example": "Lần này tôi không thể bảo vệ anh ấy"
+    }
+  },
+  "국뽕": {
+    "ja": {
+      "meaning": "過度な愛国心",
+      "nuance": "国への酔っぱらった愛情",
+      "example": "この映画は愛国心が強いね"
+    },
+    "zh": {
+      "meaning": "过度的爱国心，国家自豪感",
+      "nuance": "有些夸大的爱国精神",
+      "example": "这部电影爱国心很浓"
+    },
+    "vi": {
+      "meaning": "chủ nghĩa yêu nước quá mức",
+      "nuance": "tình yêu nước được phóng đại",
+      "example": "Bộ phim này có tình yêu nước rất mạnh"
+    }
+  },
+  "발연기": {
+    "ja": {
+      "meaning": "とても下手な演技",
+      "nuance": "映画俳優の悪い演技",
+      "example": "主役の演技がひどくて見られない"
+    },
+    "zh": {
+      "meaning": "演技很烂，表现糟糕",
+      "nuance": "演员的坏演技",
+      "example": "主角的演技太差了"
+    },
+    "vi": {
+      "meaning": "diễn xuất tệ hại, quá dở",
+      "nuance": "tài năng diễn xuất kém",
+      "example": "Diễn xuất của diễn viên chính rất tệ"
+    }
+  },
+  "먹방": {
+    "ja": {
+      "meaning": "食べる様子を見せる放送",
+      "nuance": "大食いの動画",
+      "example": "寝る前にムクバンを見ると後悔する"
+    },
+    "zh": {
+      "meaning": "吃播，吃东西的直播",
+      "nuance": "展示食物的视频",
+      "example": "睡前看吃播总是后悔"
+    },
+    "vi": {
+      "meaning": "phát sóng ăn cơm, video ăn uống",
+      "nuance": "video thưởng thức thức ăn",
+      "example": "Xem phát sóng ăn trước khi ngủ luôn hối hận"
+    }
+  },
+  "쿡방": {
+    "ja": {
+      "meaning": "料理を作る放送",
+      "nuance": "料理の動画",
+      "example": "最近は料理番組で料理を学んでいます"
+    },
+    "zh": {
+      "meaning": "烹饪直播，做菜视频",
+      "nuance": "烹饪展示",
+      "example": "最近从烹饪直播学做菜"
+    },
+    "vi": {
+      "meaning": "phát sóng nấu ăn, video nấu ăn",
+      "nuance": "video hướng dẫn nấu ăn",
+      "example": "Gần đây tôi học nấu ăn từ phát sóng nấu"
+    }
+  },
+  "좋댓구알": {
+    "ja": {
+      "meaning": "高く、コメント、購読、ベルをクリック",
+      "nuance": "YouTubeの標準的なリクエスト",
+      "example": "高く、コメント、購読、ベルのお願い！"
+    },
+    "zh": {
+      "meaning": "点赞、评论、订阅、开启提醒",
+      "nuance": "YouTube标准请求",
+      "example": "请点赞、评论、订阅并开启提醒！"
+    },
+    "vi": {
+      "meaning": "thích, bình luận, đăng ký, bật thông báo",
+      "nuance": "yêu cầu chuẩn YouTube",
+      "example": "Vui lòng thích, bình luận, đăng ký và bật thông báo!"
+    }
+  },
+  "인급동": {
+    "ja": {
+      "meaning": "YouTubeのトレンディングページ",
+      "nuance": "注目の動画ランキング",
+      "example": "その動画がトレンドの1位だった"
+    },
+    "zh": {
+      "meaning": "YouTube趋势榜，热门视频",
+      "nuance": "视频热度排名",
+      "example": "那个视频是趋势榜第一"
+    },
+    "vi": {
+      "meaning": "YouTube trending, video nóng",
+      "nuance": "bảng xếp hạng video phổ biến",
+      "example": "Video đó là số 1 trên trending"
+    }
+  },
+  "광클": {
+    "ja": {
+      "meaning": "狂ったようにクリックする",
+      "nuance": "チケット購入の必死の試み",
+      "example": "チケット販売で必死にクリックしたのに失敗した"
+    },
+    "zh": {
+      "meaning": "疯狂点击，拼命抢票",
+      "nuance": "争取有限商品的努力",
+      "example": "拼命点击想买票但还是失败了"
+    },
+    "vi": {
+      "meaning": "click như điên, cố gắng tối đa",
+      "nuance": "nỗ lực giành lấy hàng hạn chế",
+      "example": "Tôi click như điên để mua vé nhưng thất bại"
+    }
+  },
+  "프사": {
+    "ja": {
+      "meaning": "プロフィール画像",
+      "nuance": "ソーシャルメディアの顔",
+      "example": "プロフィール画像を変えたね？"
+    },
+    "zh": {
+      "meaning": "头像，个人资料图片",
+      "nuance": "社交媒体身份",
+      "example": "你换头像了？"
+    },
+    "vi": {
+      "meaning": "ảnh đại diện, hình cá nhân",
+      "nuance": "gương mặt truyền thông xã hội",
+      "example": "Cậu đã đổi ảnh đại diện?"
+    }
+  },
+  "셀카": {
+    "ja": {
+      "meaning": "自撮り写真",
+      "nuance": "一人で自分を撮った写真",
+      "example": "自撮りを1枚撮りましょう"
+    },
+    "zh": {
+      "meaning": "自拍照",
+      "nuance": "自己拍摄的照片",
+      "example": "我们一起自拍吧"
+    },
+    "vi": {
+      "meaning": "tự sướng, ảnh tự chụp",
+      "nuance": "ảnh tự quay của bản thân",
+      "example": "Chúng ta tự sướng được không?"
+    }
+  },
+  "얼공": {
+    "ja": {
+      "meaning": "顔を初めて見せる",
+      "nuance": "顔のお披露目",
+      "example": "10000人の購読者に達したら顔を見せます"
+    },
+    "zh": {
+      "meaning": "第一次露脸，揭面",
+      "nuance": "首次展示真容",
+      "example": "订阅数达到一万时我会露脸"
+    },
+    "vi": {
+      "meaning": "lần đầu tiên lộ mặt",
+      "nuance": "giới thiệu mặt mũi lần đầu",
+      "example": "Khi có mười ngàn subscriber tôi sẽ lộ mặt"
+    }
+  },
+  "귀요미": {
+    "ja": {
+      "meaning": "可愛い人やペット",
+      "nuance": "愛らしい存在",
+      "example": "私たちの犬は本当に可愛いです"
+    },
+    "zh": {
+      "meaning": "可爱的人或宠物",
+      "nuance": "讨人喜欢的存在",
+      "example": "我们的狗真的很可爱"
+    },
+    "vi": {
+      "meaning": "người hoặc thú cưng dễ thương",
+      "nuance": "sự tồn tại đáng yêu",
+      "example": "Chú chó của chúng ta thực sự rất dễ thương"
+    }
+  },
+  "훈남": {
+    "ja": {
+      "meaning": "温かく見えるハンサムな男",
+      "nuance": "優しい雰囲気の男性",
+      "example": "新しい子は本当にハンサムです"
+    },
+    "zh": {
+      "meaning": "温暖型帅哥，暖男",
+      "nuance": "温和气质的男性",
+      "example": "新来的人真的很帅"
+    },
+    "vi": {
+      "meaning": "chàng trai đẹp trai với khí chất ấm áp",
+      "nuance": "nam tính với bầu không khí hiền lành",
+      "example": "Người mới tới thực sự rất đẹp trai"
+    }
+  },
+  "몸짱": {
+    "ja": {
+      "meaning": "完璧な体の人",
+      "nuance": "筋肉質で健康的",
+      "example": "3ヶ月で筋肉質になった"
+    },
+    "zh": {
+      "meaning": "身材好的人，肌肉发达",
+      "nuance": "强壮和健康",
+      "example": "三个月内练成健美身材"
+    },
+    "vi": {
+      "meaning": "người có cơ bắp phát triển",
+      "nuance": "mạnh mẽ và khỏe mạnh",
+      "example": "Trong ba tháng anh ấy đã tập được cơ bắp"
+    }
+  },
+  "얼짱": {
+    "ja": {
+      "meaning": "一番美しい顔の人",
+      "nuance": "学校の美女",
+      "example": "彼女は学校の一番美しい人だったそうです"
+    },
+    "zh": {
+      "meaning": "长相最美的人，校花",
+      "nuance": "学校里最漂亮的",
+      "example": "听说她是学校最漂亮的"
+    },
+    "vi": {
+      "meaning": "người đẹp nhất, hotgirl",
+      "nuance": "được coi là xinh đẹp nhất",
+      "example": "Cô ấy được cho là xinh đẹp nhất ở trường"
+    }
+  },
+  "썸남": {
+    "ja": {
+      "meaning": "曖昧な関係の男性",
+      "nuance": "付き合う前の男性",
+      "example": "曖昧な関係の男性から連絡が来た"
+    },
+    "zh": {
+      "meaning": "暧昧对象，未确认的男朋友",
+      "nuance": "交往前的男性",
+      "example": "暧昧对象给我发了消息"
+    },
+    "vi": {
+      "meaning": "chàng trai trong mối quan hệ mơ hồ",
+      "nuance": "nam giới trước khi chính thức hẹn hò",
+      "example": "Chàng trai tôi đang hẹn hò tệp tin tôi"
+    }
+  },
+  "삼귀다": {
+    "ja": {
+      "meaning": "付き合う一歩手前の段階",
+      "nuance": "ほぼ付き合っている",
+      "example": "私たちはまだ付き合っていないが、ほぼそう"
+    },
+    "zh": {
+      "meaning": "差一步才交往，准恋人",
+      "nuance": "几乎已经在一起",
+      "example": "我们还没正式交往，但差不多"
+    }
+  },
+  "밀당": {
+    "ja": {
+      "meaning": "ロマンスゲーム、押したり引いたり",
+      "nuance": "感情的な駆け引き",
+      "example": "ゲームをしないで、ただ言ってください"
+    },
+    "zh": {
+      "meaning": "推拉游戏，若即若离",
+      "nuance": "感情的试探",
+      "example": "别玩游戏了，直说吧"
+    },
+    "vi": {
+      "meaning": "trò chơi lôi cuốn, hay lảng tránh",
+      "nuance": "thử thách cảm xúc",
+      "example": "Bỏ trò chơi và nói thẳng đi"
+    }
+  },
+  "모쏠": {
+    "ja": {
+      "meaning": "一度も付き合ったことがない人",
+      "nuance": "永遠のシングル",
+      "example": "私はいまだに誰とも付き合ったことがありません"
+    },
+    "zh": {
+      "meaning": "从未谈过恋爱，铁血单身",
+      "nuance": "永久的单身",
+      "example": "我还没有谈过恋爱"
+    },
+    "vi": {
+      "meaning": "chưa bao giờ hẹn hò, độc thân vĩnh viễn",
+      "nuance": "luôn ở một mình",
+      "example": "Tôi chưa bao giờ hẹn hò"
+    }
+  },
+  "금사빠": {
+    "ja": {
+      "meaning": "すぐに恋に落ちやすい人",
+      "nuance": "ロマンティック",
+      "example": "彼はすぐに落ちやすいから、もう一度恋をしたそうです"
+    },
+    "zh": {
+      "meaning": "容易陷入爱情，一见钟情",
+      "nuance": "浪漫主义者",
+      "example": "他容易陷入爱情，又喜欢上了"
+    },
+    "vi": {
+      "meaning": "dễ bị lôi cuốn bởi tình yêu",
+      "nuance": "lãng mạn",
+      "example": "Anh ấy dễ bị lôi cuốn, bây giờ lại bị cuốn"
+    }
+  },
+  "남사친": {
+    "ja": {
+      "meaning": "男の友人、恋愛関係ではない",
+      "nuance": "純粋な友情",
+      "example": "彼はただの友人です、勘違いしないでください"
+    },
+    "zh": {
+      "meaning": "男性朋友，非恋爱关系",
+      "nuance": "纯粹友谊",
+      "example": "他只是朋友，别误会"
+    },
+    "vi": {
+      "meaning": "bạn nam, không phải tình yêu",
+      "nuance": "tình bạn thuần khiết",
+      "example": "Anh ấy chỉ là bạn bè, đừng hiểu lầm"
+    }
+  },
+  "품절남": {
+    "ja": {
+      "meaning": "結婚して誰かの物になった男",
+      "nuance": "市場から外れた男性",
+      "example": "その俳優は結婚したから市場から外れた"
+    },
+    "zh": {
+      "meaning": "已婚男性，不在市场上",
+      "nuance": "情感市场中的已占有",
+      "example": "那个演员结婚了，不在市场上了"
+    },
+    "vi": {
+      "meaning": "đã kết hôn, không còn độc thân",
+      "nuance": "từng không còn khả dụng",
+      "example": "Diễn viên đó đã kết hôn, không còn độc thân"
+    }
+  },
+  "애교": {
+    "ja": {
+      "meaning": "故意に可愛らしく見えるようにする",
+      "nuance": "誰かを落とすためのキュート演技",
+      "example": "可愛らしいふりはやめて、効かない"
+    },
+    "zh": {
+      "meaning": "装可爱，卖萌",
+      "nuance": "吸引他人的可爱表演",
+      "example": "别装可爱了，没用"
+    },
+    "vi": {
+      "meaning": "giả vờ dễ thương, bán độc",
+      "nuance": "biểu diễn dễ thương để quyến rũ",
+      "example": "Đừng giả vờ dễ thương nữa, vô dụng"
+    }
+  },
+  "심멎": {
+    "ja": {
+      "meaning": "心が止まるほど素晴らしい",
+      "nuance": "強い印象的な瞬間",
+      "example": "その場面で心が止まった"
+    },
+    "zh": {
+      "meaning": "心跳停止，被震撼",
+      "nuance": "留下深刻印象",
+      "example": "那一幕让我心跳停止"
+    },
+    "vi": {
+      "meaning": "trái tim ngừng đập",
+      "nuance": "khoảnh khắc ấn tượng mạnh mẽ",
+      "example": "Cảnh đó làm tim tôi ngừng đập"
+    }
+  },
+  "안구정화": {
+    "ja": {
+      "meaning": "目の保養、美しい光景",
+      "nuance": "視覚的に満足感",
+      "example": "この写真は本当に目の保養だ"
+    },
+    "zh": {
+      "meaning": "眼睛净化，视觉享受",
+      "nuance": "视觉满足",
+      "example": "这张照片真的是眼睛净化"
+    },
+    "vi": {
+      "meaning": "làm mắt sáng, thỏa mãn thị giác",
+      "nuance": "thoả mãn thị giác",
+      "example": "Tấm ảnh này thực sự làm mắt sáng"
+    }
+  },
+  "눈호강": {
+    "ja": {
+      "meaning": "目の喜び、美しい光景",
+      "nuance": "視覚的贅沢さ",
+      "example": "夜景のおかげで目が喜ぶ"
+    },
+    "zh": {
+      "meaning": "眼睛享受，视觉盛宴",
+      "nuance": "视觉上的奢侈",
+      "example": "感谢夜景，我的眼睛很享受"
+    },
+    "vi": {
+      "meaning": "mắt thưởng thức, bữa tiệc thị giác",
+      "nuance": "xa hoa về mặt thị giác",
+      "example": "Cảnh đêm làm mắt tôi thưởng thức"
+    }
+  },
+  "오글거리다": {
+    "ja": {
+      "meaning": "とても不快で、つま先が丸くなる",
+      "nuance": "過度な恥ずかしさ",
+      "example": "その台詞は不快すぎます"
+    },
+    "zh": {
+      "meaning": "尴尬到蜷缩脚趾，极度反感",
+      "nuance": "极度尴尬",
+      "example": "那句台词太尴尬了"
+    },
+    "vi": {
+      "meaning": "quá xấu hổ, co rúc chân ngón",
+      "nuance": "cảm giác xấu hổ cực độ",
+      "example": "Dòng đó quá xấu hổ"
+    }
+  },
+  "짠내": {
+    "ja": {
+      "meaning": "心が痛い、かわいそうな雰囲気",
+      "nuance": "心を打つサッドネス",
+      "example": "その話は本当に心が痛い"
+    },
+    "zh": {
+      "meaning": "令人心疼，悲伤气氛",
+      "nuance": "触及心灵的悲哀",
+      "example": "那个故事真的很心疼"
+    },
+    "vi": {
+      "meaning": "cảm giác đau lòng, buồn bã",
+      "nuance": "nỗi buồn vấn động trái tim",
+      "example": "Câu chuyện đó thực sự đau lòng"
+    }
+  },
+  "정색": {
+    "ja": {
+      "meaning": "急に真剣になる",
+      "nuance": "ジョークから真面目へ",
+      "example": "冗談なのに、なぜ急に真剣になったのですか？"
+    },
+    "zh": {
+      "meaning": "突然严肃起来",
+      "nuance": "从笑话变成认真",
+      "example": "只是开玩笑，为什么突然认真？"
+    },
+    "vi": {
+      "meaning": "đột ngột trở nên nghiêm肃",
+      "nuance": "từ đùa cợt thành nghiêm túc",
+      "example": "Chỉ là đùa cợt, sao đột ngột nghiêm túc?"
+    }
+  },
+  "아재개그": {
+    "ja": {
+      "meaning": "おっさんジョーク、つまらないジョーク",
+      "nuance": "古い世代のユーモア",
+      "example": "もう1つおっさんジョークですか？"
+    },
+    "zh": {
+      "meaning": "老年笑话，冷笑话",
+      "nuance": "老一代的幽默",
+      "example": "又是老年笑话？"
+    },
+    "vi": {
+      "meaning": "trò đùa của bố mẹ, trò đùa tệ",
+      "nuance": "hài hước của thế hệ cũ",
+      "example": "Lại là trò đùa ông bố nữa?"
+    }
+  },
+  "초딩": {
+    "ja": {
+      "meaning": "小学生、または子どもらしい大人",
+      "nuance": "幼稚な行動",
+      "example": "子どもみたいに行動しないで"
+    },
+    "zh": {
+      "meaning": "小学生，或行为幼稚的成人",
+      "nuance": "幼稚行为",
+      "example": "别像小孩一样行动"
+    },
+    "vi": {
+      "meaning": "học sinh tiểu học, hay hành động như trẻ",
+      "nuance": "hành vi sơ khai",
+      "example": "Đừng hành động như trẻ con"
+    }
+  },
+  "어른이": {
+    "ja": {
+      "meaning": "子どものものを好む大人",
+      "nuance": "成人チャイルドフリー",
+      "example": "私は子どものものを買う大人です"
+    },
+    "zh": {
+      "meaning": "热爱儿童用品的成人",
+      "nuance": "成人儿童迷",
+      "example": "我是买儿童用品的成人"
+    },
+    "vi": {
+      "meaning": "người lớn yêu thích đồ chơi trẻ em",
+      "nuance": "người lớn có sở thích trẻ em",
+      "example": "Tôi là người lớn yêu thích đồ chơi Lego"
+    }
+  },
+  "혼코노": {
+    "ja": {
+      "meaning": "一人でカラオケボックスに行く",
+      "nuance": "一人で歌唱体験",
+      "example": "ストレスを感じたら一人でカラオケに行きます"
+    },
+    "zh": {
+      "meaning": "一个人去唱歌房，独自K歌",
+      "nuance": "单独的唱歌体验",
+      "example": "有压力时我一个人去K歌"
+    },
+    "vi": {
+      "meaning": "đi hát karaoke một mình",
+      "nuance": "trải nghiệm hát độc lập",
+      "example": "Khi có áp lực tôi một mình đi K"
+    }
+  },
+  "카공족": {
+    "ja": {
+      "meaning": "[Translation needed: People who study for hours in cafes]",
+      "nuance": "[Nuance needed]",
+      "example": "[Example needed: During exams the cafes are full of studiers.]"
+    },
+    "zh": {
+      "meaning": "[需要翻译: People who study for hours in cafes]",
+      "nuance": "[需要细微差别]",
+      "example": "[需要例句: During exams the cafes are full of studiers.]"
+    },
+    "vi": {
+      "meaning": "[Cần dịch: People who study for hours in cafes]",
+      "nuance": "[Cần tính chất]",
+      "example": "[Cần ví dụ: During exams the cafes are full of studiers.]"
+    }
+  },
+  "파이어족": {
+    "ja": {
+      "meaning": "[Translation needed: People saving hard to retire early]",
+      "nuance": "[Nuance needed]",
+      "example": "[Example needed: I'm saving hard to retire early.]"
+    },
+    "zh": {
+      "meaning": "[需要翻译: People saving hard to retire early]",
+      "nuance": "[需要细微差别]",
+      "example": "[需要例句: I'm saving hard to retire early.]"
+    },
+    "vi": {
+      "meaning": "[Cần dịch: People saving hard to retire early]",
+      "nuance": "[Cần tính chất]",
+      "example": "[Cần ví dụ: I'm saving hard to retire early.]"
+    }
+  },
+  "슬세권": {
+    "ja": {
+      "meaning": "[Translation needed: A neighbourhood where everything is within slipper-walking distance]",
+      "nuance": "[Nuance needed]",
+      "example": "[Example needed: Everything's a slipper-walk away here — so convenient.]"
+    },
+    "zh": {
+      "meaning": "[需要翻译: A neighbourhood where everything is within slipper-walking distance]",
+      "nuance": "[需要细微差别]",
+      "example": "[需要例句: Everything's a slipper-walk away here — so convenient.]"
+    },
+    "vi": {
+      "meaning": "[Cần dịch: A neighbourhood where everything is within slipper-walking distance]",
+      "nuance": "[Cần tính chất]",
+      "example": "[Cần ví dụ: Everything's a slipper-walk away here — so convenient.]"
+    }
+  },
+  "소맥": {
+    "ja": {
+      "meaning": "[Translation needed: Soju mixed into beer]",
+      "nuance": "[Nuance needed]",
+      "example": "[Example needed: Let's do soju-beers tonight.]"
+    },
+    "zh": {
+      "meaning": "[需要翻译: Soju mixed into beer]",
+      "nuance": "[需要细微差别]",
+      "example": "[需要例句: Let's do soju-beers tonight.]"
+    },
+    "vi": {
+      "meaning": "[Cần dịch: Soju mixed into beer]",
+      "nuance": "[Cần tính chất]",
+      "example": "[Cần ví dụ: Let's do soju-beers tonight.]"
+    }
+  },
+  "편맥": {
+    "ja": {
+      "meaning": "[Translation needed: A cheap beer outside a convenience store]",
+      "nuance": "[Nuance needed]",
+      "example": "[Example needed: Grab a convenience-store beer after work?]"
+    },
+    "zh": {
+      "meaning": "[需要翻译: A cheap beer outside a convenience store]",
+      "nuance": "[需要细微差别]",
+      "example": "[需要例句: Grab a convenience-store beer after work?]"
+    },
+    "vi": {
+      "meaning": "[Cần dịch: A cheap beer outside a convenience store]",
+      "nuance": "[Cần tính chất]",
+      "example": "[Cần ví dụ: Grab a convenience-store beer after work?]"
+    }
+  },
+  "술찌": {
+    "ja": {
+      "meaning": "[Translation needed: A lightweight who can't hold their drink]",
+      "nuance": "[Nuance needed]",
+      "example": "[Example needed: I'm a lightweight — one glass and I'm done.]"
+    },
+    "zh": {
+      "meaning": "[需要翻译: A lightweight who can't hold their drink]",
+      "nuance": "[需要细微差别]",
+      "example": "[需要例句: I'm a lightweight — one glass and I'm done.]"
+    },
+    "vi": {
+      "meaning": "[Cần dịch: A lightweight who can't hold their drink]",
+      "nuance": "[Cần tính chất]",
+      "example": "[Cần ví dụ: I'm a lightweight — one glass and I'm done.]"
+    }
+  },
+  "부먹": {
+    "ja": {
+      "meaning": "[Translation needed: Team pour-the-sauce-over-it (sweet and sour pork)]",
+      "nuance": "[Nuance needed]",
+      "example": "[Example needed: I'm firmly on the pour-the-sauce team.]"
+    },
+    "zh": {
+      "meaning": "[需要翻译: Team pour-the-sauce-over-it (sweet and sour pork)]",
+      "nuance": "[需要细微差别]",
+      "example": "[需要例句: I'm firmly on the pour-the-sauce team.]"
+    },
+    "vi": {
+      "meaning": "[Cần dịch: Team pour-the-sauce-over-it (sweet and sour pork)]",
+      "nuance": "[Cần tính chất]",
+      "example": "[Cần ví dụ: I'm firmly on the pour-the-sauce team.]"
+    }
+  },
+  "찍먹": {
+    "ja": {
+      "meaning": "[Translation needed: Team dip-it-in-the-sauce]",
+      "nuance": "[Nuance needed]",
+      "example": "[Example needed: Dipping is obviously the correct way.]"
+    },
+    "zh": {
+      "meaning": "[需要翻译: Team dip-it-in-the-sauce]",
+      "nuance": "[需要细微差别]",
+      "example": "[需要例句: Dipping is obviously the correct way.]"
+    },
+    "vi": {
+      "meaning": "[Cần dịch: Team dip-it-in-the-sauce]",
+      "nuance": "[Cần tính chất]",
+      "example": "[Cần ví dụ: Dipping is obviously the correct way.]"
+    }
+  },
+  "겉바속촉": {
+    "ja": {
+      "meaning": "[Translation needed: Crispy outside, juicy inside — the ideal texture]",
+      "nuance": "[Nuance needed]",
+      "example": "[Example needed: This croissant is crisp outside, soft inside.]"
+    },
+    "zh": {
+      "meaning": "[需要翻译: Crispy outside, juicy inside — the ideal texture]",
+      "nuance": "[需要细微差别]",
+      "example": "[需要例句: This croissant is crisp outside, soft inside.]"
+    },
+    "vi": {
+      "meaning": "[Cần dịch: Crispy outside, juicy inside — the ideal texture]",
+      "nuance": "[Cần tính chất]",
+      "example": "[Cần ví dụ: This croissant is crisp outside, soft inside.]"
+    }
+  },
+  "단짠": {
+    "ja": {
+      "meaning": "[Translation needed: The sweet-and-salty combo you can't stop eating]",
+      "nuance": "[Nuance needed]",
+      "example": "[Example needed: Sweet then salty, over and over — unbeatable.]"
+    },
+    "zh": {
+      "meaning": "[需要翻译: The sweet-and-salty combo you can't stop eating]",
+      "nuance": "[需要细微差别]",
+      "example": "[需要例句: Sweet then salty, over and over — unbeatable.]"
+    },
+    "vi": {
+      "meaning": "[Cần dịch: The sweet-and-salty combo you can't stop eating]",
+      "nuance": "[Cần tính chất]",
+      "example": "[Cần ví dụ: Sweet then salty, over and over — unbeatable.]"
+    }
+  },
+  "맛점": {
+    "ja": {
+      "meaning": "[Translation needed: 'Have a good lunch!']",
+      "nuance": "[Nuance needed]",
+      "example": "[Example needed: Enjoy your lunch!]"
+    },
+    "zh": {
+      "meaning": "[需要翻译: 'Have a good lunch!']",
+      "nuance": "[需要细微差别]",
+      "example": "[需要例句: Enjoy your lunch!]"
+    },
+    "vi": {
+      "meaning": "[Cần dịch: 'Have a good lunch!']",
+      "nuance": "[Cần tính chất]",
+      "example": "[Cần ví dụ: Enjoy your lunch!]"
+    }
+  },
+  "해장": {
+    "ja": {
+      "meaning": "[Translation needed: Curing a hangover, usually with hot soup]",
+      "nuance": "[Nuance needed]",
+      "example": "[Example needed: Let's get soup to kill this hangover.]"
+    },
+    "zh": {
+      "meaning": "[需要翻译: Curing a hangover, usually with hot soup]",
+      "nuance": "[需要细微差别]",
+      "example": "[需要例句: Let's get soup to kill this hangover.]"
+    },
+    "vi": {
+      "meaning": "[Cần dịch: Curing a hangover, usually with hot soup]",
+      "nuance": "[Cần tính chất]",
+      "example": "[Cần ví dụ: Let's get soup to kill this hangover.]"
+    }
+  },
+  "오운완": {
+    "ja": {
+      "meaning": "[Translation needed: Posting proof you finished today's workout]",
+      "nuance": "[Nuance needed]",
+      "example": "[Example needed: Workout done — got it in again today.]"
+    },
+    "zh": {
+      "meaning": "[需要翻译: Posting proof you finished today's workout]",
+      "nuance": "[需要细微差别]",
+      "example": "[需要例句: Workout done — got it in again today.]"
+    },
+    "vi": {
+      "meaning": "[Cần dịch: Posting proof you finished today's workout]",
+      "nuance": "[Cần tính chất]",
+      "example": "[Cần ví dụ: Workout done — got it in again today.]"
+    }
+  },
+  "홈트": {
+    "ja": {
+      "meaning": "[Translation needed: Working out at home]",
+      "nuance": "[Nuance needed]",
+      "example": "[Example needed: I've been getting by with home workouts.]"
+    },
+    "zh": {
+      "meaning": "[需要翻译: Working out at home]",
+      "nuance": "[需要细微差别]",
+      "example": "[需要例句: I've been getting by with home workouts.]"
+    },
+    "vi": {
+      "meaning": "[Cần dịch: Working out at home]",
+      "nuance": "[Cần tính chất]",
+      "example": "[Cần ví dụ: I've been getting by with home workouts.]"
+    }
+  },
+  "치팅데이": {
+    "ja": {
+      "meaning": "[Translation needed: The day you let yourself eat anything]",
+      "nuance": "[Nuance needed]",
+      "example": "[Example needed: Tomorrow's my cheat day, so hang in there.]"
+    },
+    "zh": {
+      "meaning": "[需要翻译: The day you let yourself eat anything]",
+      "nuance": "[需要细微差别]",
+      "example": "[需要例句: Tomorrow's my cheat day, so hang in there.]"
+    },
+    "vi": {
+      "meaning": "[Cần dịch: The day you let yourself eat anything]",
+      "nuance": "[Cần tính chất]",
+      "example": "[Cần ví dụ: Tomorrow's my cheat day, so hang in there.]"
+    }
+  },
+  "케미": {
+    "ja": {
+      "meaning": "[Translation needed: The spark between two people on screen or off]",
+      "nuance": "[Nuance needed]",
+      "example": "[Example needed: The chemistry between those two actors is incredible.]"
+    },
+    "zh": {
+      "meaning": "[需要翻译: The spark between two people on screen or off]",
+      "nuance": "[需要细微差别]",
+      "example": "[需要例句: The chemistry between those two actors is incredible.]"
+    },
+    "vi": {
+      "meaning": "[Cần dịch: The spark between two people on screen or off]",
+      "nuance": "[Cần tính chất]",
+      "example": "[Cần ví dụ: The chemistry between those two actors is incredible.]"
+    }
+  },
+  "반모": {
+    "ja": {
+      "meaning": "[Translation needed: Agreeing to drop the formal speech with someone]",
+      "nuance": "[Nuance needed]",
+      "example": "[Example needed: Should we switch to casual speech?]"
+    },
+    "zh": {
+      "meaning": "[需要翻译: Agreeing to drop the formal speech with someone]",
+      "nuance": "[需要细微差别]",
+      "example": "[需要例句: Should we switch to casual speech?]"
+    },
+    "vi": {
+      "meaning": "[Cần dịch: Agreeing to drop the formal speech with someone]",
+      "nuance": "[Cần tính chất]",
+      "example": "[Cần ví dụ: Should we switch to casual speech?]"
+    }
+  },
+  "밥약": {
+    "ja": {
+      "meaning": "[Translation needed: Plans to get a meal with someone]",
+      "nuance": "[Nuance needed]",
+      "example": "[Example needed: I set up a meal with my senior.]"
+    },
+    "zh": {
+      "meaning": "[需要翻译: Plans to get a meal with someone]",
+      "nuance": "[需要细微差别]",
+      "example": "[需要例句: I set up a meal with my senior.]"
+    },
+    "vi": {
+      "meaning": "[Cần dịch: Plans to get a meal with someone]",
+      "nuance": "[Cần tính chất]",
+      "example": "[Cần ví dụ: I set up a meal with my senior.]"
+    }
+  },
+  "N포세대": {
+    "ja": {
+      "meaning": "[Translation needed: A generation giving up on however many life milestones]",
+      "nuance": "[Nuance needed]",
+      "example": "[Example needed: There's a reason they call us the give-it-all-up generation.]"
+    },
+    "zh": {
+      "meaning": "[需要翻译: A generation giving up on however many life milestones]",
+      "nuance": "[需要细微差别]",
+      "example": "[需要例句: There's a reason they call us the give-it-all-up generation.]"
+    },
+    "vi": {
+      "meaning": "[Cần dịch: A generation giving up on however many life milestones]",
+      "nuance": "[Cần tính chất]",
+      "example": "[Cần ví dụ: There's a reason they call us the give-it-all-up generation.]"
+    }
+  },
+  "ㅇㅈ": {
+    "ja": {
+      "meaning": "[Translation needed: Agreed / true]",
+      "nuance": "[Nuance needed]",
+      "example": "[Example needed: Agreed. I think so too.]"
+    },
+    "zh": {
+      "meaning": "[需要翻译: Agreed / true]",
+      "nuance": "[需要细微差别]",
+      "example": "[需要例句: Agreed. I think so too.]"
+    },
+    "vi": {
+      "meaning": "[Cần dịch: Agreed / true]",
+      "nuance": "[Cần tính chất]",
+      "example": "[Cần ví dụ: Agreed. I think so too.]"
+    }
+  },
+  "ㅇㅋ": {
+    "ja": {
+      "meaning": "[Translation needed: Okay]",
+      "nuance": "[Nuance needed]",
+      "example": "[Example needed: OK, see you later.]"
+    },
+    "zh": {
+      "meaning": "[需要翻译: Okay]",
+      "nuance": "[需要细微差别]",
+      "example": "[需要例句: OK, see you later.]"
+    },
+    "vi": {
+      "meaning": "[Cần dịch: Okay]",
+      "nuance": "[Cần tính chất]",
+      "example": "[Cần ví dụ: OK, see you later.]"
+    }
+  },
+  "ㄱㅅ": {
+    "ja": {
+      "meaning": "[Translation needed: Thanks]",
+      "nuance": "[Nuance needed]",
+      "example": "[Example needed: Thanks for the help!]"
+    },
+    "zh": {
+      "meaning": "[需要翻译: Thanks]",
+      "nuance": "[需要细微差别]",
+      "example": "[需要例句: Thanks for the help!]"
+    },
+    "vi": {
+      "meaning": "[Cần dịch: Thanks]",
+      "nuance": "[Cần tính chất]",
+      "example": "[Cần ví dụ: Thanks for the help!]"
+    }
+  },
+  "ㅈㅅ": {
+    "ja": {
+      "meaning": "[Translation needed: Sorry]",
+      "nuance": "[Nuance needed]",
+      "example": "[Example needed: Sorry I'm late.]"
+    },
+    "zh": {
+      "meaning": "[需要翻译: Sorry]",
+      "nuance": "[需要细微差别]",
+      "example": "[需要例句: Sorry I'm late.]"
+    },
+    "vi": {
+      "meaning": "[Cần dịch: Sorry]",
+      "nuance": "[Cần tính chất]",
+      "example": "[Cần ví dụ: Sorry I'm late.]"
+    }
+  },
+  "ㅇㅇ": {
+    "ja": {
+      "meaning": "[Translation needed: Yeah / uh-huh]",
+      "nuance": "[Nuance needed]",
+      "example": "[Example needed: Yeah, got it.]"
+    },
+    "zh": {
+      "meaning": "[需要翻译: Yeah / uh-huh]",
+      "nuance": "[需要细微差别]",
+      "example": "[需要例句: Yeah, got it.]"
+    },
+    "vi": {
+      "meaning": "[Cần dịch: Yeah / uh-huh]",
+      "nuance": "[Cần tính chất]",
+      "example": "[Cần ví dụ: Yeah, got it.]"
+    }
+  },
+  "ㅋㅋㅋ": {
+    "ja": {
+      "meaning": "[Translation needed: Hahaha]",
+      "nuance": "[Nuance needed]",
+      "example": "[Example needed: Hahaha, that's actually funny.]"
+    },
+    "zh": {
+      "meaning": "[需要翻译: Hahaha]",
+      "nuance": "[需要细微差别]",
+      "example": "[需要例句: Hahaha, that's actually funny.]"
+    },
+    "vi": {
+      "meaning": "[Cần dịch: Hahaha]",
+      "nuance": "[Cần tính chất]",
+      "example": "[Cần ví dụ: Hahaha, that's actually funny.]"
+    }
+  },
+  "ㅠㅠ": {
+    "ja": {
+      "meaning": "[Translation needed: Crying — sad or overwhelmed]",
+      "nuance": "[Nuance needed]",
+      "example": "[Example needed: I bombed the exam 😭]"
+    },
+    "zh": {
+      "meaning": "[需要翻译: Crying — sad or overwhelmed]",
+      "nuance": "[需要细微差别]",
+      "example": "[需要例句: I bombed the exam 😭]"
+    },
+    "vi": {
+      "meaning": "[Cần dịch: Crying — sad or overwhelmed]",
+      "nuance": "[Cần tính chất]",
+      "example": "[Cần ví dụ: I bombed the exam 😭]"
+    }
+  },
+  "ㄷㄷ": {
+    "ja": {
+      "meaning": "[Translation needed: Whoa — shaking with shock]",
+      "nuance": "[Nuance needed]",
+      "example": "[Example needed: I saw the price and shuddered.]"
+    },
+    "zh": {
+      "meaning": "[需要翻译: Whoa — shaking with shock]",
+      "nuance": "[需要细微差别]",
+      "example": "[需要例句: I saw the price and shuddered.]"
+    },
+    "vi": {
+      "meaning": "[Cần dịch: Whoa — shaking with shock]",
+      "nuance": "[Cần tính chất]",
+      "example": "[Cần ví dụ: I saw the price and shuddered.]"
+    }
+  },
+  "ㅇㄱㄹㅇ": {
+    "ja": {
+      "meaning": "[Translation needed: This is for real]",
+      "nuance": "[Nuance needed]",
+      "example": "[Example needed: For real, this is so good.]"
+    },
+    "zh": {
+      "meaning": "[需要翻译: This is for real]",
+      "nuance": "[需要细微差别]",
+      "example": "[需要例句: For real, this is so good.]"
+    },
+    "vi": {
+      "meaning": "[Cần dịch: This is for real]",
+      "nuance": "[Cần tính chất]",
+      "example": "[Cần ví dụ: For real, this is so good.]"
+    }
+  }
+}

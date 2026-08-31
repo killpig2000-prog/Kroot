@@ -163,23 +163,56 @@ export type QuizQuestion = {
   options: string[];
 };
 
-// Pure (no Math.random side effects at import/render time) — call this from an
-// event handler, not during render, per the impure-during-render lint rule.
-export function buildQuizQuestions(words: VocabWord[]): QuizQuestion[] {
+function mulberry32(seed: number): () => number {
+  let a = seed >>> 0;
+  return () => {
+    a = (a + 0x6d2b79f5) >>> 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+// Fisher-Yates. `sort(() => rand() - 0.5)` is not a shuffle: it biases the
+// result and, with a seeded rand, the comparator's call order is not even
+// stable across engines.
+function shuffle<T>(items: T[], rand: () => number): T[] {
+  const out = [...items];
+  for (let i = out.length - 1; i > 0; i--) {
+    const j = Math.floor(rand() * (i + 1));
+    [out[i], out[j]] = [out[j], out[i]];
+  }
+  return out;
+}
+
+// Derives a stable seed from the words themselves, so the server and the
+// client independently arrive at the same order.
+export function seedFromWords(words: { key: string }[]): number {
+  let seed = 0;
+  for (const w of words) for (const ch of w.key) seed = (seed * 31 + ch.charCodeAt(0)) | 0;
+  return seed;
+}
+
+// Deterministic when given a seed. ReviewSession builds its questions during
+// render (both on the server and again while hydrating), so an unseeded
+// Math.random shuffle made the two disagree and React threw the whole tree
+// away — the answer buttons visibly reordered under the user's finger.
+export function buildQuizQuestions(words: VocabWord[], seed?: number): QuizQuestion[] {
   if (words.length === 0) return [];
   const mode = quizModeForLevel(words[0].level);
+  const rand = seed === undefined ? Math.random : mulberry32(seed);
 
   return words
     .filter((w) => mode === "meaning" || w.example_kr)
     .map((word) => {
       const distractorPool = words.filter((w) => w.key !== word.key && w.korean !== word.korean);
-      const shuffled = [...distractorPool].sort(() => Math.random() - 0.5);
+      const shuffled = shuffle(distractorPool, rand);
       const distractors = shuffled.slice(0, QUIZ_OPTION_COUNT - 1);
 
       const correctAnswer = mode === "meaning" ? word.meaning_en : word.korean;
       const distractorValues =
         mode === "meaning" ? distractors.map((d) => d.meaning_en) : distractors.map((d) => d.korean);
-      const options = [correctAnswer, ...distractorValues].sort(() => Math.random() - 0.5);
+      const options = shuffle([correctAnswer, ...distractorValues], rand);
 
       const prompt = mode === "meaning" ? word.korean : blankOutWord(word.example_kr, word.korean);
       return { word, mode, prompt, options };

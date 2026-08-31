@@ -27,6 +27,7 @@ import { getWordsForTopic } from "@/lib/vocabulary-words";
 import { firstVisitState, NEW_ACCOUNT_DAYS, SHOW_ALL_COOKIE } from "@/lib/first-visit";
 import { countCompletedSessions } from "@/lib/first-visit-server";
 import { slangOfTheDay } from "@/lib/slang";
+import { REVIEW_SESSION_SIZE } from "@/lib/srs";
 import type { CefrLevel } from "@/lib/tree";
 
 const MONTH_GOAL = 20;
@@ -191,7 +192,10 @@ export default async function DashboardPage() {
     { label: t("levelMap.checkReading"), ok: elig.readingDone >= elig.readingRequired, value: `${elig.readingDone}/${elig.readingRequired}` },
   ];
   // Errors (e.g. migration 0022 not applied yet) just hide the review card.
-  const dueCount = snapshot.due_count;
+  // Cap the displayed count to match what a /review session actually pulls
+  // (REVIEW_SESSION_SIZE) — the true due count can run into the dozens, and
+  // showing that number here just makes the badge lie about session length.
+  const dueCount = Math.min(snapshot.due_count, REVIEW_SESSION_SIZE);
 
   const tally = (doneKeys: Set<string>, levelKeys: string[], cap?: number) => {
     const done = levelKeys.filter((k) => doneKeys.has(k)).length;

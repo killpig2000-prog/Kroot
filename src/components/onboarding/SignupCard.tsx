@@ -63,10 +63,37 @@ export function SignupCard({
           </span>
         </div>
 
-        <button type="button" className={`${BTN_OUTLINE} w-full`} onClick={onGoogle} disabled={!agreed}>
+        {/* Consent gates BOTH paths, so it sits above both rather than inside
+            the email form. It used to live below the divider, which meant a
+            visitor who wanted Google had to scroll down into the email
+            section, find a checkbox, tick it, and scroll back up to a button
+            that had been disabled the whole time — most just filled in the
+            email form instead. */}
+        <label className="flex gap-2 items-start text-[12px] text-muted mb-3.5">
+          <input type="checkbox" className="mt-[3px] accent-[var(--c-success)]" checked={agreed} onChange={(e) => setAgreed(e.target.checked)} />
+          <span>
+            {t.rich("agree", {
+              link: (chunks) => (
+                <Link href="/privacy" className="text-charcoal font-semibold hover:underline">
+                  {chunks}
+                </Link>
+              ),
+            })}
+          </span>
+        </label>
+
+        {/* Google carries the primary style and the email form the outline
+            one, which is the reverse of how this card used to read. The two
+            paths are not equivalent: Google is uncapped, while the email link
+            goes through a rate-limited sender, so a burst of signups on the
+            email path is the one thing that can actually turn people away at
+            the door. Pointing the eye at the button that always works is
+            free. */}
+        <button type="button" className={`${BTN_GREEN} w-full`} onClick={onGoogle} disabled={!agreed}>
           <GoogleMark />
           {t("google")}
         </button>
+        <p className="text-center text-[11.5px] text-faint mt-2">{t("googleFast")}</p>
         <div className="flex items-center gap-3 my-4 text-[11.5px] font-medium text-faint">
           <span className="flex-1 h-px bg-line" />
           {t("orEmail")}
@@ -82,22 +109,9 @@ export function SignupCard({
             {t("nameLabel")}
           </label>
           <input id="name" name="name" type="text" required autoComplete="given-name" placeholder={t("namePlaceholder")} className={`${FIELD} mb-3`} />
-          <label className="flex gap-2 items-start text-[12px] text-muted mb-3.5">
-            <input type="checkbox" className="mt-[3px] accent-[var(--c-success)]" checked={agreed} onChange={(e) => setAgreed(e.target.checked)} />
-            <span>
-              {t.rich("agree", {
-                link: (chunks) => (
-                  <Link href="/privacy" className="text-charcoal font-semibold hover:underline">
-                    {chunks}
-                  </Link>
-                ),
-              })}
-            </span>
-          </label>
-
           {error && <CuteError>{error}</CuteError>}
 
-          <button type="submit" className={`${BTN_GREEN} w-full`} disabled={!agreed || sending || !hydrated}>
+          <button type="submit" className={`${BTN_OUTLINE} w-full`} disabled={!agreed || sending || !hydrated}>
             {sending ? t("sending") : t("sendLink")}
           </button>
         </form>

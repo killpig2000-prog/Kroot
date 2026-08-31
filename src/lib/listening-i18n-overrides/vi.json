@@ -1,0 +1,314 @@
+{
+  "airport-c2y-language": {
+    "title": "Suy ngẫm văn học về thông báo ở sân bay",
+    "lines": [
+      {
+        "speaker": "작가",
+        "en": "Khi tôi lắng nghe kỹ ngôn ngữ của các thông báo ở sân bay, có những lúc tôi cảm thấy sự lịch sự ẩn chứa trong đó thực chất lại tạo ra một sự xa lạ nào đó."
+      },
+      {
+        "speaker": "청자",
+        "en": "Đó là một góc nhìn thú vị. Tôi lại cảm thấy những biểu đạt khuôn mẫu đó mang lại cảm giác an tâm."
+      },
+      {
+        "speaker": "작가",
+        "en": "Dù mang lại cảm giác an tâm đó, chẳng phải người ta cũng có cảm giác câu chuyện cá nhân của mỗi hành khách bị xóa bỏ, và mọi người bị biến thành một sự tồn tại vô danh trong cùng một quy trình sao?"
+      },
+      {
+        "speaker": "청자",
+        "en": "Nhìn theo cách đó, hình như có một nhịp điệu mang tính quan nhiêu ngay cả trong một câu đơn giản như 'Bây giờ chúng tôi sẽ bắt đầu cho hành khách lên máy bay.'"
+      },
+      {
+        "speaker": "작가",
+        "en": "Tôi thường trích dẫn nhịp điệu đó trong các tiểu thuyết của mình. Tôi muốn thể hiện thời điểm mà câu chuyện của một cá nhân va chạm với ngôn ngữ của thể chế."
+      },
+      {
+        "speaker": "청자",
+        "en": "Nhưng mặt khác, tôi thắc mắc liệu ngôn ngữ phi cá nhân đó có thực sự cần thiết trong các tình huống khủng hoảng hay không. Có những khoảnh khắc mà cảm xúc không nên can thiệp vào."
+      },
+      {
+        "speaker": "작가",
+        "en": "Đó là một điểm hợp lý. Đó là lý do tại sao, thay vì chỉ trích ngôn ngữ này, tôi muốn biến chính tính hai mặt đó thành chủ đề sáng tác của mình."
+      },
+      {
+        "speaker": "청자",
+        "en": "Bạn có kế hoạch viết một câu chuyện lấy bối cảnh ở sân bay cho tiểu thuyết tiếp theo không?"
+      },
+      {
+        "speaker": "작가",
+        "en": "Có chứ, thực ra tôi đang phát triển ý tưởng đó ngay lúc này. Tôi muốn đan xen các mốc thời gian khác nhau của những nhân vật vô tình lướt qua nhau trước cửa khởi hành."
+      }
+    ]
+  },
+  "airport-c2y-drones": {
+    "title": "Tranh luận về việc máy bay không người lái xâm nhập làm gián đoạn các chuyến bay",
+    "lines": [
+      {
+        "speaker": "보도자",
+        "en": "Tối qua đường băng đã bị đóng cửa hơn ba tiếng đồng hồ vì phát hiện một máy bay không người lái ở vùng trời lân cận. Chúng ta sẽ tìm hiểu lý do tại sao điều này lại tiếp tục tái diễn."
+      },
+      {
+        "speaker": "보안 전문가",
+        "en": "Hệ thống ứng phó hiện tại chủ yếu được thiết kế quanh việc phát hiện, còn các biện pháp vô hiệu hóa thực tế lại bị hạn chế do thiếu cơ sở pháp lý."
+      },
+      {
+        "speaker": "보도자",
+        "en": "Vô hiệu hóa nghĩa là các biện pháp vật lý như bắn hạ sao? Chẳng phải điều đó thực chất sẽ nguy hiểm hơn sao?"
+      },
+      {
+        "speaker": "보안 전문가",
+        "en": "Thường là gây nhiễu tín hiệu hoặc chiếm quyền điều khiển tín hiệu chứ không phải bắn hạ vật lý. Nhưng điều đó cũng bị kiểm soát khá nghiêm ngặt vì tác động tiềm ẩn đến mạng thông tin liên lạc dân sự."
+      },
+      {
+        "speaker": "보도자",
+        "en": "Vậy ý ông là về cơ bản chúng ta chỉ còn lại các giải pháp xử lý sau sự việc như xác định và xử phạt chủ sở hữu máy bay không người lái?"
+      },
+      {
+        "speaker": "보안 전문가",
+        "en": "Vấn đề là chỉ riêng việc xử lý sau sự việc không thể ngăn chặn sự tái diễn. Từ góc độ phòng ngừa, tôi nghĩ chúng ta cần bắt buộc đăng ký máy bay không người lái và chia sẻ vị trí theo thời gian thực trong bán kính sân bay."
+      },
+      {
+        "speaker": "보도자",
+        "en": "Chẳng phải một hệ thống như vậy vẫn ít có tính ràng buộc đối với một người vận hành cố tình có ý đồ xấu sao? Ngay từ đầu họ có thể chỉ lén lút cho bay mà không hề đăng ký."
+      },
+      {
+        "speaker": "보안 전문가",
+        "en": "Đúng vậy. Đó chính xác là lý do tại sao tôi nói chúng ta cần một chiến lược kép: xây dựng mạng lưới cảm biến phát hiện dày đặc song song với hệ thống đăng ký."
+      },
+      {
+        "speaker": "보도자",
+        "en": "Vậy cuối cùng, trừ khi công nghệ và thể chế cùng đồng hành, những sự cố hoãn chuyến như thế này chắc chắn sẽ còn tiếp diễn."
+      }
+    ]
+  },
+  "airport-c1z-offset": {
+    "title": "Tranh luận về độ tin cậy của chương trình bù đắp carbon",
+    "lines": [
+      {
+        "speaker": "민주",
+        "en": "Bạn có thấy tùy chọn bù đắp carbon khi làm thủ tục không? Có vẻ hãng hàng không nào hiện nay cũng có rồi."
+      },
+      {
+        "speaker": "태석",
+        "en": "Tớ có thấy nhưng không trả tiền. Thật sự tớ không tin số tiền đó thực sự đi về đâu."
+      },
+      {
+        "speaker": "민주",
+        "en": "Họ nói số tiền đó được dùng cho các dự án trồng cây hoặc năng lượng tái tạo — sao bạn lại không tin?"
+      },
+      {
+        "speaker": "태석",
+        "en": "Đã có vài trường hợp được báo cáo về việc những cây vốn dĩ đằng nào cũng sẽ được trồng lại bị gắn nhãn là kết quả bù đắp carbon của họ. Đó là vấn đề gọi là 'tính bổ sung'."
+      },
+      {
+        "speaker": "민주",
+        "en": "Tớ cũng từng nghe về chuyện đó. Nhưng làm được điều gì đó chẳng phải vẫn tốt hơn là không làm gì sao?"
+      },
+      {
+        "speaker": "태석",
+        "en": "Nó thực sự có thể phản tác dụng. Một khi bạn trả tiền và cảm giác tội lỗi biến mất, áp lực phải thực sự giảm nhu cầu đi lại bằng đường hàng không sẽ giảm đi."
+      },
+      {
+        "speaker": "민주",
+        "en": "Vậy giải pháp thay thế là gì? Chúng ta đâu thể ngừng bay hoàn toàn được."
+      },
+      {
+        "speaker": "태석",
+        "en": "Tớ nghĩ tốt hơn là nên chọn các chương trình bù đắp được chứng nhận bởi các cơ quan kiểm định độc lập, hoặc quyên góp trực tiếp cho một tổ chức môi trường uy tín thay vì thông qua hãng hàng không."
+      },
+      {
+        "speaker": "민주",
+        "en": "Vậy rốt cuộc người tiêu dùng phải tự mình xác minh mọi thứ. Thật là mệt mỏi."
+      }
+    ]
+  },
+  "airport-c1z-biophilic": {
+    "title": "Nhà thiết kế sân bay nói về xu hướng kiến trúc hòa hợp thiên nhiên",
+    "lines": [
+      {
+        "speaker": "기자",
+        "en": "Các nhà ga gần đây thậm chí còn có cả cây xanh và thác nước trong nhà — tại sao xu hướng thiết kế này lại xuất hiện?"
+      },
+      {
+        "speaker": "건축가",
+        "en": "Đó là vì các nghiên cứu cho thấy mức độ căng thẳng của hành khách tại sân bay là khá cao. Người ta đã chứng minh rằng các yếu tố tự nhiên giúp làm giảm những chỉ số đó."
+      },
+      {
+        "speaker": "기자",
+        "en": "Vậy không chỉ để cho đẹp mắt, nó còn hướng tới hiệu quả tâm lý."
+      },
+      {
+        "speaker": "건축가",
+        "en": "Chính xác. Từ giếng trời cho đến cây cảnh trong nhà, chúng tôi gọi đây là 'thiết kế biophilic' (hòa hợp thiên nhiên), và nó có tác dụng khiến thời gian chờ đợi cảm giác như ngắn hơn thực tế."
+      },
+      {
+        "speaker": "기자",
+        "en": "Nhưng chi phí bảo trì chắc chắn là không nhỏ. Chi phí đó rốt cuộc chẳng phải sẽ phản ánh vào phí sử dụng sao?"
+      },
+      {
+        "speaker": "건축가",
+        "en": "Khoản đầu tư ban đầu rất lớn, nhưng nhiều phân tích cho thấy nó sẽ được bù đắp về lâu dài vì khi thời gian lưu lại của hành khách tăng lên, doanh thu bán lẻ cũng sẽ tăng theo."
+      },
+      {
+        "speaker": "기자",
+        "en": "Vậy đây là một thiết kế mà tính thẩm mỹ và lợi ích thương mại đan xen với nhau."
+      },
+      {
+        "speaker": "건축가",
+        "en": "Tôi không thể phủ nhận điều đó. Nhưng nếu kết quả là hành khách lên máy bay ít lo âu và bớt mệt mỏi hơn, tôi nghĩ đó là một thiết kế có ý nghĩa."
+      }
+    ]
+  },
+  "airport-c1z-flightshame": {
+    "title": "Hai học giả tranh luận về hội chứng 'xấu hổ khi đi máy bay'",
+    "lines": [
+      {
+        "speaker": "교수A",
+        "en": "Phong trào 'xấu hổ khi đi máy bay' bắt nguồn từ Châu Âu và đã lan sang Hàn Quốc — đồng nghiệp có nghĩ rằng nó thực sự làm giảm nhu cầu đi lại bằng đường hàng không không?"
+      },
+      {
+        "speaker": "교수B",
+        "en": "Có những thống kê cho thấy sự sụt giảm đáng kể trong việc sử dụng các tuyến đường ngắn ở một số quốc gia. Nhưng chúng ta cần phân biệt xem điều đó là do cảm giác tội lỗi hay do các giải pháp thay thế bằng đường sắt đã cải thiện."
+      },
+      {
+        "speaker": "교수A",
+        "en": "Tôi hoài nghi về chính phương pháp kêu gọi lựa chọn đạo đức cá nhân. Hầu hết khí thải hàng không đến từ vận tải hàng hóa hoặc nhu cầu công tác, chứ không phải du lịch cá nhân."
+      },
+      {
+        "speaker": "교수B",
+        "en": "Điều đó có thể tranh cãi về mặt thống kê. Cũng có dữ liệu từ IATA cho thấy nhu cầu hành khách quốc tế là động lực chính làm tăng lượng khí thải."
+      },
+      {
+        "speaker": "교수A",
+        "en": "Ngay cả khi điều đó đúng, tôi nghĩ việc đổ lỗi cho cá nhân có tác dụng phụ là làm mờ đi các vấn đề mang tính cấu trúc — như miễn thuế nhiên liệu hoặc trợ cấp."
+      },
+      {
+        "speaker": "교수B",
+        "en": "Tôi đồng ý. Tuy nhiên, tôi không nghĩ đây là một phong trào hoàn toàn vô nghĩa, vì việc chuyển biến nhận thức cộng đồng cuối cùng sẽ chuyển hóa thành áp lực chính sách."
+      },
+      {
+        "speaker": "교수A",
+        "en": "Vậy kết luận là lựa chọn cá nhân và cải cách thể chế cần phải đi đôi với nhau."
+      },
+      {
+        "speaker": "교수B",
+        "en": "Đúng vậy, tôi không nghĩ một mình yếu tố nào có thể giải quyết được vấn đề khí thải."
+      }
+    ]
+  },
+  "airport-c1z-pilotunion": {
+    "title": "Trích đoạn đàm phán giữa công đoàn phi công và ban quản lý",
+    "lines": [
+      {
+        "speaker": "노조대표",
+        "en": "Yêu cầu cốt lõi mà chúng tôi đưa ra trong cuộc đàm phán này là mở rộng thời gian nghỉ ngơi tối thiểu để ngăn ngừa tình trạng tích tụ mệt mỏi."
+      },
+      {
+        "speaker": "인사임원",
+        "en": "Tăng thời gian nghỉ ngơi làm giảm số lượng chuyến bay được vận hành, và đó là yêu cầu không thể thực hiện nếu không tuyển thêm người."
+      },
+      {
+        "speaker": "노조대표",
+        "en": "Vậy thì cứ tuyển thêm người đi. Hiện tại số giờ bay trung bình hàng tháng của các cơ trưởng đang tiến gần đến giới hạn tối đa theo luật định."
+      },
+      {
+        "speaker": "인사임원",
+        "en": "Chi phí lao động tăng chắc chắn sẽ dẫn đến giá vé cao hơn. Chúng tôi cũng phải xem xét gánh nặng cho người tiêu dùng."
+      },
+      {
+        "speaker": "노조대표",
+        "en": "Tôi muốn hỏi điều nào là vấn đề nghiêm trọng hơn — một phi công mệt mỏi ngồi trong buồng lái, hay giá vé tăng thêm vài nghìn won."
+      },
+      {
+        "speaker": "인사임원",
+        "en": "Chúng tôi không coi nhẹ an toàn. Chỉ là chúng tôi cũng cần cân nhắc đến tính bền vững của doanh nghiệp."
+      },
+      {
+        "speaker": "노조대표",
+        "en": "Chúng tôi đã đưa ra dữ liệu mô phỏng làm bằng chứng. Chúng tôi muốn nhận được một đề xuất cụ thể trong tuần này."
+      },
+      {
+        "speaker": "인사임원",
+        "en": "Chúng tôi sẽ xem xét và mang bản đề xuất sửa đổi đến buổi đàm phán tiếp theo."
+      }
+    ]
+  },
+  "airport-c1z-baggagescandal": {
+    "title": "Phóng viên phanh phui bê bối xử lý hành lý",
+    "lines": [
+      {
+        "speaker": "기자",
+        "en": "Chúng tôi đã thu thập được các tài liệu nội bộ cho thấy tỷ lệ hành lý bị hư hỏng của công ty ông cao gấp ba lần mức trung bình của ngành. Ông giải thích sao về điều này?"
+      },
+      {
+        "speaker": "홍보팀장",
+        "en": "Tôi nghĩ trước tiên chúng tôi cần xác minh nguồn gốc và thời gian lấy mẫu của tài liệu đó. Nó khác biệt đáng kể so với thống kê chính thức của chúng tôi."
+      },
+      {
+        "speaker": "기자",
+        "en": "Tôi không thể tiết lộ nguồn tin, nhưng đó là dữ liệu bao gồm các báo cáo hư hỏng được gửi trong sáu tháng qua. Cũng có manh mún cho rằng các thống kê đã bị báo cáo thấp hơn thực tế."
+      },
+      {
+        "speaker": "홍보팀장",
+        "en": "Chúng tôi tiếp nhận và xử lý mọi trường hợp được báo cáo theo đúng quy định. Tuyên bố về việc báo cáo thấp hơn thực tế vẫn chưa được xác minh."
+      },
+      {
+        "speaker": "기자",
+        "en": "Vậy ông có sẵn sàng chấp nhận kiểm chứng công khai thông qua một cuộc kiểm toán nội bộ không?"
+      },
+      {
+        "speaker": "홍보팀장",
+        "en": "Việc có công khai kết quả kiểm toán hay không là vấn đề cần thảo luận với bộ phận pháp lý. Ngay lúc này tôi chưa thể đưa ra câu trả lời chắc chắn."
+      },
+      {
+        "speaker": "기자",
+        "en": "Đến khi nào cuộc thảo luận đó mới kết thúc? Người tiêu dùng muốn có câu trả lời ngay bây giờ."
+      },
+      {
+        "speaker": "홍보팀장",
+        "en": "Chúng tôi sẽ tổng hợp quan điểm chính thức trong tuần này và phản hồi lại cho anh/chị."
+      },
+      {
+        "speaker": "기자",
+        "en": "Tôi sẽ đảm bảo rằng câu trả lời đó được ghi nhận chính thức."
+      }
+    ]
+  },
+  "airport-c1z-visadiplomacy": {
+    "title": "Tranh luận về ngoại giao có đi có lại trong miễn thị thực",
+    "lines": [
+      {
+        "speaker": "연구원A",
+        "en": "Chính phủ nước ta vừa ký hiệp định miễn thị thực với quốc gia đó. Dưới góc độ du lịch, chẳng phải đó là điều tích cực sao?"
+      },
+      {
+        "speaker": "연구원B",
+        "en": "Xét về mặt con số thì đúng vậy. Nhưng có ý kiến chỉ trích rằng đó là một hiệp định bất đối xứng chỉ có lợi cho công dân nước mình so với công dân nước bạn, vi phạm nguyên tắc có đi có lại."
+      },
+      {
+        "speaker": "연구원A",
+        "en": "Việc khăng khăng đòi hỏi tính tương hỗ hoàn toàn thường khiến ngay từ đầu rất khó đạt được thỏa thuận. Chẳng phải một phương pháp tiếp cận theo từng giai đoạn sẽ thực tế hơn sao?"
+      },
+      {
+        "speaker": "연구원B",
+        "en": "Vấn đề là 'theo từng giai đoạn' trên thực tế thường biến thành sự hoãn lại vô thời hạn. Dư luận trong nước cũng rất khắt khe về vấn đề công bằng."
+      },
+      {
+        "speaker": "연구원A",
+        "en": "Dù vậy, cũng có quan điểm cho rằng về mặt ngoại giao, sự mở cửa chủ động có thể là một quân bài giúp tăng sức mạnh đàm phán."
+      },
+      {
+        "speaker": "연구원B",
+        "en": "Chúng ta cần xác minh xem quân bài đó có thực sự lôi kéo được các biện pháp tương hỗ từ nước bạn hay không. Nhìn vào các trường hợp trong quá khứ, nhiều sự việc rốt cuộc đã không đi đến đâu."
+      },
+      {
+        "speaker": "연구원A",
+        "en": "Vậy rốt cuộc chúng ta cần một điều khoản tạo ra các chỉ số đánh giá định lượng và bắt buộc xem xét lại sau một khoảng thời gian nhất định."
+      },
+      {
+        "speaker": "연구원B",
+        "en": "Đúng vậy, nếu không có biện pháp bảo vệ như vậy, có nguy cơ cao các hiệp định này sẽ chẳng khác gì biểu tượng mang tính chính trị đơn thuần."
+      }
+    ]
+  }
+}

@@ -110,18 +110,25 @@ export default function WritingSession({
       completed_at: completedAt,
       score: a.score,
     }));
-    const { error } = await supabase.from("writing_progress").upsert(rows, { onConflict: "user_id,prompt_key" });
-    if (error && isColumnMissing(error)) {
-      // Migration 0037 (writing_progress.score) hasn't run here yet — retry without it.
-      await supabase.from("writing_progress").upsert(
-        rows.map((r) => ({ user_id: r.user_id, prompt_key: r.prompt_key, response_text: r.response_text, completed_at: r.completed_at })),
-        { onConflict: "user_id,prompt_key" }
-      );
+    // The learner has already done the work; a failed save must still show
+    // them their result rather than stranding them on a disabled button.
+    try {
+      const { error } = await supabase.from("writing_progress").upsert(rows, { onConflict: "user_id,prompt_key" });
+      if (error && isColumnMissing(error)) {
+        // Migration 0037 (writing_progress.score) hasn't run here yet — retry without it.
+        await supabase.from("writing_progress").upsert(
+          rows.map((r) => ({ user_id: r.user_id, prompt_key: r.prompt_key, response_text: r.response_text, completed_at: r.completed_at })),
+          { onConflict: "user_id,prompt_key" }
+        );
+      }
+      await logMinutesOnce();
+    } catch {
+      // best effort
+    } finally {
+      setSubmitting(false);
     }
 
     setResult({ score, answers });
-    await logMinutesOnce();
-    setSubmitting(false);
     setPhase("compare");
   }
 
@@ -136,7 +143,15 @@ export default function WritingSession({
 
   async function goTo(href: string) {
     setNavigating(true);
-    await logMinutesOnce();
+    // Logging progress must never block the way out. When this RPC failed
+    // (offline, a blip) the await rejected, router.push never ran, and the
+    // learner was left tapping a dead "continue" button at the end of a
+    // finished session with no way forward but a reload.
+    try {
+      await logMinutesOnce();
+    } catch {
+      // best effort — the session is over either way
+    }
     router.push(href);
     router.refresh();
   }

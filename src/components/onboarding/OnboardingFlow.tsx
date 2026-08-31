@@ -82,6 +82,7 @@ export default function OnboardingFlow({ lessons }: { lessons: FirstLessonsMap }
   const customNext = params.next !== "/dashboard";
 
   const [step, setStep] = useState<Step>("gate");
+  const stepRef = useRef<Step>("gate");
   const [userId, setUserId] = useState<string | null>(null);
   const [canRead, setCanRead] = useState<boolean | null>(null);
   const [goal, setGoal] = useState<Goal | null>(null);
@@ -109,6 +110,36 @@ export default function OnboardingFlow({ lessons }: { lessons: FirstLessonsMap }
     return () => clearInterval(id);
   }, [resendCooldown]);
 
+  // Every forward move gets its own history entry, so the browser Back button
+  // walks back through the wizard. Without this the whole flow lived in one
+  // entry and Back ejected the learner to the landing page, losing the level
+  // test they had just sat. The entry carries the quiz run too, so Back works
+  // question-by-question inside the test.
+  useEffect(() => {
+    window.history.replaceState({ ...window.history.state, kroot: { step: "gate" } }, "");
+    function onPop(e: PopStateEvent) {
+      // Once we are off /onboarding the browser has left the flow; let it.
+      if (!window.location.pathname.endsWith("/onboarding")) return;
+      const snap = (e.state as { kroot?: { step: Step; run?: Run } } | null)?.kroot;
+      stepRef.current = snap?.step ?? "gate";
+      setStep(stepRef.current);
+      if (snap?.run) setRun(snap.run);
+    }
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
+  }, []);
+
+  // Advance a step and record it, so Back can come back to where we were.
+  // The pushState must stay outside the setState updater: React re-invokes
+  // updaters in development, which would push the entry twice and make Back
+  // need two presses per step.
+  const goToStep = useCallback((next: Step, snapshotRun?: Run) => {
+    if (stepRef.current === next && !snapshotRun) return;
+    stepRef.current = next;
+    window.history.pushState({ ...window.history.state, kroot: { step: next, run: snapshotRun } }, "");
+    setStep(next);
+  }, []);
+
   const orderedLessons = useCallback(
     (p: Placement) => orderForGoal(lessons[p.route] ?? lessons[p.level], p.goal),
     [lessons]
@@ -118,6 +149,7 @@ export default function OnboardingFlow({ lessons }: { lessons: FirstLessonsMap }
     async (p: Placement, uid: string) => {
       if (saving.current) return;
       saving.current = true;
+      stepRef.current = "saving";
       setStep("saving");
       await supabase.from("level_test_results").insert({
         user_id: uid,
@@ -179,16 +211,17 @@ export default function OnboardingFlow({ lessons }: { lessons: FirstLessonsMap }
   function gate(v: boolean) {
     setCanRead(v);
     track("placement_gate", { can_read: v });
-    setStep("goal");
+    goToStep("goal");
   }
 
   function afterGoal() {
     if (goal) track("placement_gate", { goal });
     if (canRead) {
-      setRun(startRun(buildTest()));
+      const fresh = startRun(buildTest());
+      setRun(fresh);
       questionShownAt.current = Date.now();
       track("level_test_started", { kind: "placement" });
-      setStep("quiz");
+      goToStep("quiz", fresh);
     } else {
       showResult(skippedPlacement(false, goal));
     }
@@ -204,7 +237,7 @@ export default function OnboardingFlow({ lessons }: { lessons: FirstLessonsMap }
       questions: p.total,
       stopped_at: p.stoppedAt,
     });
-    setStep("result");
+    goToStep("result");
   }
 
   function answer(choice: number) {
@@ -214,7 +247,11 @@ export default function OnboardingFlow({ lessons }: { lessons: FirstLessonsMap }
     track("placement_question", { band: q.lv, type: q.type, right: choice === q.ans, unknown: choice === -1, ms });
     questionShownAt.current = Date.now();
     setRun(next);
-    if (next.done) showResult(placementFromRun(next, goal));
+    if (next.done) {
+      showResult(placementFromRun(next, goal));
+    } else {
+      window.history.pushState({ ...window.history.state, kroot: { step: "quiz", run: next } }, "");
+    }
   }
 
   function replaceQuestion() {
@@ -234,7 +271,7 @@ export default function OnboardingFlow({ lessons }: { lessons: FirstLessonsMap }
     }
     track("signup_started", { level: placement.level, goal: placement.goal });
     setError(null);
-    setStep("signup");
+    goToStep("signup");
   }
 
   // Where the auth callback should send them: back here, placement attached.
@@ -284,7 +321,7 @@ export default function OnboardingFlow({ lessons }: { lessons: FirstLessonsMap }
     track("signup", { method: "magic_link", goal: placement.goal });
     if (step === "confirm") setResent(true);
     setEmail(addr);
-    setStep("confirm");
+    goToStep("confirm");
     setResendCooldown(30);
   }
 
@@ -354,7 +391,7 @@ export default function OnboardingFlow({ lessons }: { lessons: FirstLessonsMap }
               onResend={() => magicLink(email, "")}
               onChangeEmail={() => {
                 setResent(false);
-                setStep("signup");
+                window.history.back();
               }}
             />
           )}

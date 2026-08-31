@@ -1,180 +1,128 @@
 #!/usr/bin/env node
-/**
- * Translate 4,111 vocabulary words (meaning + example sentence) to Spanish,
- * Japanese, Chinese (Simplified), Vietnamese in parallel.
- * Generates messages/{locale}/{level}_{korean}.json overlay files.
- */
+import { GoogleGenerativeAI } from "@google/generative-ai";
+import * as fs from "fs";
+import * as path from "path";
 
-import fs from 'fs/promises';
-import path from 'path';
-import { createClient } from '@supabase/supabase-js';
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
+const model = genAI.getGenerativeModel({ model: "gemini-3.6-flash" });
 
-const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY || process.env.GEMINI_API_KEY;
-const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const SUPABASE_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY;
+type TargetLang = "ja" | "zh" | "vi" | "es";
 
-if (!GOOGLE_API_KEY) throw new Error('GOOGLE_API_KEY or GEMINI_API_KEY env var not set');
-if (!SUPABASE_URL || !SUPABASE_KEY) throw new Error('Supabase env vars not set');
-
-const TARGET_LANGUAGES = ['es', 'ja', 'zh-Hans', 'vi'] as const;
-const LANGUAGE_NAMES: Record<string, string> = {
-  es: 'Spanish (Latin American)',
-  ja: 'Japanese',
-  'zh-Hans': 'Chinese (Simplified)',
-  vi: 'Vietnamese',
-};
-
-const LEVELS = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
-const BATCH_SIZE = 20;
-const CONCURRENCY = 3;
-
-interface VocabWord {
+type VocabWord = {
   korean: string;
   romanization: string;
   meaning_en: string;
-  example_kr: string;
   example_en: string;
-  level: string;
-}
+};
 
-interface TranslatedWord {
-  korean: string;
-  meaning: string;
-  example: string;
-}
+const TARGET_LANGS: TargetLang[] = ["ja", "zh", "vi", "es"];
+const BATCH_SIZE = 30;
+const DELAY_MS = 3000;
 
-async function fetchVocabulary(): Promise<VocabWord[]> {
-  console.log('📚 Fetching vocabulary from Supabase...');
-  const supabase = createClient(SUPABASE_URL!, SUPABASE_KEY!);
+function loadAllWords(): VocabWord[] {
+  const vocabDir = "src/lib/vocabulary-data";
+  const files = fs
+    .readdirSync(vocabDir)
+    .filter((f) => f.startsWith("daily-life-") && f.endsWith(".ts") && f !== "daily-life.ts")
+    .map((f) => path.join(vocabDir, f));
 
-  const { data, error } = await supabase
-    .from('vocabulary')
-    .select('korean, romanization, meaning_en, example_kr, example_en, level')
-    .order('level')
-    .order('korean');
+  const words: VocabWord[] = [];
+  const wordRegex =
+    /\{\s*level:\s*"[^"]+",\s*korean:\s*"([^"]+)",\s*romanization:\s*"([^"]+)",\s*meaning_en:\s*"([^"]+)",\s*example_kr:\s*"[^"]*",\s*example_en:\s*"([^"]+)"/g;
 
-  if (error) throw new Error(`Supabase fetch failed: ${error.message}`);
-  console.log(`✓ Fetched ${data?.length || 0} words\n`);
-  return data || [];
+  for (const file of files) {
+    const content = fs.readFileSync(file, "utf-8");
+    let match;
+    while ((match = wordRegex.exec(content))) {
+      words.push({
+        korean: match[1],
+        romanization: match[2],
+        meaning_en: match[3],
+        example_en: match[4],
+      });
+    }
+  }
+
+  return words;
 }
 
 async function translateBatch(
   words: VocabWord[],
-  targetLang: string
-): Promise<TranslatedWord[]> {
-  const langName = LANGUAGE_NAMES[targetLang];
+  targetLang: TargetLang
+): Promise<Record<string, { meaning: string; example: string }>> {
+  const langName: Record<TargetLang, string> = {
+    ja: "Japanese",
+    zh: "Simplified Chinese",
+    vi: "Vietnamese",
+    es: "Spanish",
+  };
 
-  const prompt = `You are a professional translator specializing in Korean language education.
-Translate these Korean vocabulary words and example sentences to ${langName}.
-Keep translations concise, natural, and appropriate for language learners.
-${targetLang === 'ja' ? 'Use hiragana for particles and helper words.' : ''}
-${targetLang === 'zh-Hans' ? 'Use Simplified Chinese.' : ''}
-Return ONLY valid JSON array, no markdown or explanation.
+  const prompt = `Translate these ${words.length} Korean vocabulary words into ${langName[targetLang]}. Translate BOTH the meaning and the example sentence fully into that language. Keep translations natural for learners.
 
-Words to translate (JSON array):
-${JSON.stringify(
-  words.map((w) => ({
-    korean: w.korean,
-    romanization: w.romanization,
-    meaning_en: w.meaning_en,
-    example_kr: w.example_kr,
-    example_en: w.example_en,
-  })),
-  null,
-  2
-)}
+Words:
+${words.map((w) => `• ${w.korean}: meaning="${w.meaning_en}" | example="${w.example_en}"`).join("\n")}
 
-Return an array of objects with {korean, meaning, example} fields in ${langName}:`;
+Respond with ONLY a JSON object mapping each Korean word to {meaning, example}. No other text.`;
 
-  const response = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      contents: [{ parts: [{ text: prompt }] }],
-      generationConfig: { temperature: 0.3, topP: 0.95 },
-    }),
-    signal: AbortSignal.timeout(60000),
-  });
+  try {
+    const response = await model.generateContent({
+      contents: [{ role: "user", parts: [{ text: prompt }] }],
+    });
 
-  if (!response.ok) {
-    const err = await response.text();
-    throw new Error(`Gemini API error: ${response.status} ${err.substring(0, 200)}`);
-  }
-
-  const data = await response.json() as any;
-  const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-  if (!text) throw new Error('No response text from Gemini');
-
-  // Extract JSON array
-  const jsonMatch = text.match(/\[[\s\S]*\]/);
-  if (!jsonMatch) throw new Error(`Could not extract JSON from response`);
-
-  return JSON.parse(jsonMatch[0]) as TranslatedWord[];
-}
-
-async function sleep(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
-async function translateLanguage(
-  words: VocabWord[],
-  targetLang: string
-) {
-  console.log(`\n🌍 Translating ${LANGUAGE_NAMES[targetLang]} (${words.length} words)...\n`);
-
-  const results: Record<string, any> = {};
-  let completed = 0;
-
-  for (let i = 0; i < words.length; i += BATCH_SIZE * CONCURRENCY) {
-    const batchGroups = [];
-    for (let c = 0; c < CONCURRENCY && i + c * BATCH_SIZE < words.length; c++) {
-      const start = i + c * BATCH_SIZE;
-      const end = Math.min(start + BATCH_SIZE, words.length);
-      batchGroups.push(words.slice(start, end));
+    if (!response.response?.text) {
+      console.error(`[${targetLang}] Empty response`);
+      return {};
     }
 
-    const promises = batchGroups.map((batch) => translateBatch(batch, targetLang));
-    const batchResults = await Promise.all(promises);
-
-    for (const batch of batchResults) {
-      for (const item of batch) {
-        const key = `${item.korean}`;
-        results[key] = {
-          meaning: item.meaning,
-          example: item.example,
-        };
-        completed++;
-        if (completed % 100 === 0) {
-          console.log(`  ${completed}/${words.length} words translated`);
-        }
-      }
+    const text = response.response.text();
+    const jsonMatch = text.match(/\{[\s\S]*\}/);
+    if (!jsonMatch) {
+      console.error(`[${targetLang}] No JSON found`);
+      return {};
     }
-
-    // Rate limiting
-    await sleep(1000);
+    return JSON.parse(jsonMatch[0]);
+  } catch (error) {
+    console.error(`[${targetLang}] Error:`, (error as Error).message);
+    return {};
   }
-
-  // Write to JSON file
-  const filePath = path.join('src', 'lib', 'vocabulary-data', 'i18n-overrides', `${targetLang}.json`);
-  await fs.writeFile(filePath, JSON.stringify(results, null, 2));
-  console.log(`✓ Written to ${filePath} (${Object.keys(results).length} entries)\n`);
 }
 
 async function main() {
-  try {
-    console.log('🚀 Starting vocabulary translation for all languages\n');
+  console.log("Loading vocabulary...");
+  const words = loadAllWords();
+  console.log(`Loaded ${words.length} words\n`);
 
-    const allWords = await fetchVocabulary();
+  const outDir = "src/lib/vocabulary-data/i18n-overrides";
+  if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
 
-    // Translate each language in parallel
-    const promises = TARGET_LANGUAGES.map((lang) => translateLanguage(allWords, lang));
-    await Promise.all(promises);
+  for (const lang of TARGET_LANGS) {
+    console.log(`\n=== Translating to ${lang.toUpperCase()} ===`);
+    const allTranslations: Record<string, { meaning: string; example: string }> = {};
 
-    console.log('✅ All vocabulary translations completed!');
-  } catch (err) {
-    console.error('❌ Translation failed:', err instanceof Error ? err.message : err);
-    process.exit(1);
+    for (let i = 0; i < words.length; i += BATCH_SIZE) {
+      const batch = words.slice(i, Math.min(i + BATCH_SIZE, words.length));
+      const batchNum = Math.floor(i / BATCH_SIZE) + 1;
+      const totalBatches = Math.ceil(words.length / BATCH_SIZE);
+
+      console.log(`  Batch ${batchNum}/${totalBatches} (${batch.length} words)...`);
+      const batchTranslations = await translateBatch(batch, lang);
+      Object.assign(allTranslations, batchTranslations);
+      console.log(`    ✓ ${Object.keys(batchTranslations).length} translated`);
+
+      if (i + BATCH_SIZE < words.length) {
+        await new Promise((r) => setTimeout(r, DELAY_MS));
+      }
+    }
+
+    const outputFile = path.join(outDir, `${lang}.json`);
+    fs.writeFileSync(outputFile, JSON.stringify(allTranslations, null, 2));
+    console.log(`✓ Saved ${Object.keys(allTranslations).length} / ${words.length} to ${outputFile}`);
   }
+
+  console.log("\n✓ All translations complete!");
 }
 
-main();
+main().catch((e) => {
+  console.error(e);
+  process.exit(1);
+});
