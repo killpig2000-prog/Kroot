@@ -10,6 +10,7 @@
   "allChapters": "すべての章",
   "stillLearning": "まだ学習中",
   "gotIt": "わかった ✓",
+  "saveFailed": "保存できませんでした。通信状況を確認して、もう一度タップしてください。",
   "new": "新規",
   "learning": "学習中",
   "known": "わかった",
@@ -147,6 +148,7 @@
     "doneTitle": "庭に水をあげました！",
     "doneSub": "{total}語のうち{kept}語の根が深くなりました。",
     "doneSlipped": "取りこぼした単語は明日また出てきます。",
+    "saveFailed": "一部が保存できませんでした。その単語はまた出てきます。",
     "backInCan": "またじょうろに戻る単語:",
     "nothingToReview": "復習するものはありません",
     "levelUp": "レベルアップ！ Lv. {level} になりました"

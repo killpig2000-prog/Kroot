@@ -88,6 +88,7 @@ export default function WordDetailCard({
   const hanja = hanjaOf(word.korean);
   // Which button is mid-save, so it can say so instead of just greying out.
   const [saving, setSaving] = useState<"next" | "got-it" | null>(null);
+  const [saveFailed, setSaveFailed] = useState(false);
 
   // Warm the audio cache for every 🔊 on this page as soon as it loads, so
   // the first tap plays instantly instead of waiting on a cold TTS synthesis.
@@ -97,21 +98,37 @@ export default function WordDetailCard({
 
   async function advance(gotIt: boolean) {
     setSaving(gotIt ? "got-it" : "next");
+    setSaveFailed(false);
     const supabase = createClient();
     const nb = nextBox(box, gotIt);
-    await supabase.from("vocabulary_progress").upsert(
-      {
-        user_id: userId,
-        word_key: word.key,
-        correct_count: correctCount + (gotIt ? 1 : 0),
-        incorrect_count: incorrectCount + (gotIt ? 0 : 1),
-        last_reviewed_at: new Date().toISOString(),
-        box: nb,
-        next_review_at: nextReviewAt(nb),
-      },
-      { onConflict: "user_id,word_key" }
-    );
-    router.push(nextHref ?? unitHref);
+    try {
+      const { error } = await supabase.from("vocabulary_progress").upsert(
+        {
+          user_id: userId,
+          word_key: word.key,
+          correct_count: correctCount + (gotIt ? 1 : 0),
+          incorrect_count: incorrectCount + (gotIt ? 0 : 1),
+          last_reviewed_at: new Date().toISOString(),
+          box: nb,
+          next_review_at: nextReviewAt(nb),
+        },
+        { onConflict: "user_id,word_key" }
+      );
+      // Moving on would hide the loss: the word would come back unprogressed
+      // days later with nothing to explain it. Stay put so the tap can be
+      // repeated.
+      if (error) {
+        setSaveFailed(true);
+        return;
+      }
+      router.push(nextHref ?? unitHref);
+    } catch {
+      setSaveFailed(true);
+    } finally {
+      // Both buttons key off `saving`; leaving it set stranded the learner on
+      // the word with no way forward.
+      setSaving(null);
+    }
   }
 
   // Add-to-word-bank: flags the row saved with untouched counts, so picking a
@@ -257,6 +274,12 @@ export default function WordDetailCard({
           {saving === "got-it" ? tu("saving") : t("gotIt")}
         </button>
       </div>
+
+      {saveFailed && (
+        <p role="status" className="mt-2 text-[12.5px] text-danger text-center">
+          {t("saveFailed")}
+        </p>
+      )}
 
       <div className="flex items-center justify-between gap-3 mt-3 text-[12.5px]">
         {prevHref ? (

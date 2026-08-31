@@ -10,6 +10,7 @@
   "allChapters": "Tất cả chương",
   "stillLearning": "Còn đang học",
   "gotIt": "Hiểu rồi ✓",
+  "saveFailed": "Chưa lưu được. Hãy kiểm tra kết nối và chạm lại.",
   "new": "Mới",
   "learning": "Đang học",
   "known": "Đã biết",
@@ -147,6 +148,7 @@
     "doneTitle": "Đã tưới vườn xong!",
     "doneSub": "{kept} trên {total} từ đã bén rễ sâu hơn.",
     "doneSlipped": "Những từ chưa nhớ sẽ quay lại vào ngày mai.",
+    "saveFailed": "Một phần của lượt học chưa lưu được — những từ đó sẽ quay lại.",
     "backInCan": "Quay lại bình tưới:",
     "nothingToReview": "Không có gì để ôn tập",
     "levelUp": "Lên cấp! Bạn giờ là Lv. {level}"

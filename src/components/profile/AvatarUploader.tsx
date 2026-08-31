@@ -57,7 +57,19 @@ export default function AvatarUploader({
     } = supabase.storage.from("avatars").getPublicUrl(path);
     const bustCache = `${publicUrl}?v=${crypto.randomUUID()}`;
 
-    await supabase.from("profiles").update({ avatar_url: bustCache }).eq("id", userId);
+    // The file is in storage, but until the profile row points at it nobody
+    // sees the new avatar. Showing it anyway made a failed update look like a
+    // save that mysteriously reverted on the next load.
+    const { error: profileError } = await supabase
+      .from("profiles")
+      .update({ avatar_url: bustCache })
+      .eq("id", userId);
+
+    if (profileError) {
+      setError(profileError.message);
+      setUploading(false);
+      return;
+    }
 
     setPreview(bustCache);
     setUploading(false);

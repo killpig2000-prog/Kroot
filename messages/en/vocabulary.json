@@ -10,6 +10,7 @@
   "allChapters": "All chapters",
   "stillLearning": "Still learning",
   "gotIt": "Got it ✓",
+  "saveFailed": "Couldn't save that just now — check your connection and tap again.",
   "new": "New",
   "learning": "Learning",
   "known": "Known",
@@ -147,6 +148,7 @@
     "doneTitle": "Garden watered!",
     "doneSub": "{kept} of {total} words are rooted deeper.",
     "doneSlipped": "The ones that slipped will come back tomorrow.",
+    "saveFailed": "Some of this session didn't save — those words will come round again.",
     "backInCan": "Back in the watering can:",
     "nothingToReview": "Nothing to review",
     "levelUp": "Level up! You’re now Lv. {level}"

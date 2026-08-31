@@ -10,6 +10,7 @@
   "allChapters": "所有章节",
   "stillLearning": "还在学习",
   "gotIt": "明白了 ✓",
+  "saveFailed": "刚才没能保存。请检查网络后再点一次。",
   "new": "新的",
   "learning": "学习中",
   "known": "已知",
@@ -147,6 +148,7 @@
     "doneTitle": "花园浇过水啦！",
     "doneSub": "{total} 个词中有 {kept} 个扎根更深了。",
     "doneSlipped": "没答对的明天还会回来。",
+    "saveFailed": "本次有部分没能保存，这些词之后还会再出现。",
     "backInCan": "重新放回洒水壶：",
     "nothingToReview": "没有要复习的内容",
     "levelUp": "升级啦！你现在是 Lv. {level}"

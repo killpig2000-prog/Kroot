@@ -103,7 +103,7 @@ export default function ReadingSession({
 
     const final = answersRef.current;
 
-    await supabase.from("reading_progress").upsert(
+    const { error } = await supabase.from("reading_progress").upsert(
       {
         user_id: userId,
         passage_key: passage.key,
@@ -113,6 +113,14 @@ export default function ReadingSession({
       },
       { onConflict: "user_id,passage_key" }
     );
+
+    // Don't stay latched on a failed write. goTo() calls this again on the way
+    // out, and that second attempt is the only chance the chapter has of being
+    // recorded — the upsert is keyed on (user, passage), so a retry is safe.
+    if (error) {
+      loggedMinutes.current = false;
+      return;
+    }
 
     const result = await recordCompletion(supabase, "reading", MINUTES_PER_PASSAGE);
     if (result?.leveled_up) setLevelUp(result);

@@ -10,6 +10,7 @@
   "allChapters": "Todos los capítulos",
   "stillLearning": "Aún aprendiendo",
   "gotIt": "Entendido ✓",
+  "saveFailed": "No se pudo guardar. Revisa tu conexión y vuelve a tocar.",
   "new": "Nuevo",
   "learning": "Aprendiendo",
   "known": "Conocido",
@@ -147,6 +148,7 @@
     "doneTitle": "¡Jardín regado!",
     "doneSub": "{kept} de {total} palabras tienen raíces más hondas.",
     "doneSlipped": "Las que se te escaparon volverán mañana.",
+    "saveFailed": "Parte de esta sesión no se guardó; esas palabras volverán a aparecer.",
     "backInCan": "De vuelta en la regadera:",
     "nothingToReview": "Nada que repasar",
     "levelUp": "¡Subiste de nivel! Ahora eres Nv. {level}"

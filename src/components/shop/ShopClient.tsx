@@ -150,15 +150,34 @@ export default function ShopClient({
     setPreview((p) => (p[c.slot] === c.id ? { ...p, [c.slot]: undefined } : { ...p, [c.slot]: c.id }));
   }
 
+  // These used to update `worn` whatever the database said, so a failed write
+  // showed the costume on and quietly took it off again at the next reload.
   async function equip(c: Costume) {
-    await supabase.from("user_costumes").update({ equipped: false }).eq("user_id", userId).eq("slot", c.slot);
-    await supabase.from("user_costumes").update({ equipped: true }).eq("user_id", userId).eq("costume_id", c.id);
+    const cleared = await supabase
+      .from("user_costumes")
+      .update({ equipped: false })
+      .eq("user_id", userId)
+      .eq("slot", c.slot);
+    if (cleared.error) return false;
+    const { error } = await supabase
+      .from("user_costumes")
+      .update({ equipped: true })
+      .eq("user_id", userId)
+      .eq("costume_id", c.id);
+    if (error) return false;
     setWorn((w) => ({ ...w, [c.slot]: c.id }));
+    return true;
   }
 
   async function unequip(c: Costume) {
-    await supabase.from("user_costumes").update({ equipped: false }).eq("user_id", userId).eq("costume_id", c.id);
+    const { error } = await supabase
+      .from("user_costumes")
+      .update({ equipped: false })
+      .eq("user_id", userId)
+      .eq("costume_id", c.id);
+    if (error) return false;
     setWorn((w) => ({ ...w, [c.slot]: undefined }));
+    return true;
   }
 
   async function act() {
@@ -167,8 +186,12 @@ export default function ShopClient({
     setMessage(null);
     try {
       if (ownedSet.has(selected.id)) {
-        if (worn[selected.slot] === selected.id) await unequip(selected);
-        else await equip(selected);
+        const ok =
+          worn[selected.slot] === selected.id ? await unequip(selected) : await equip(selected);
+        if (!ok) {
+          setMessage({ text: t("errors.generic"), good: false });
+          return;
+        }
       } else {
         const { data, error } = await supabase.rpc("buy_costume", { p_costume_id: selected.id });
         if (error) {

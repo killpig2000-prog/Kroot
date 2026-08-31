@@ -4,7 +4,7 @@ import { useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { createClient, getClientUserId } from "@/lib/supabase/client";
 import { recordCompletion } from "@/lib/activity";
-import { clearResume } from "@/lib/resume";
+import { clearResume, isTableMissing } from "@/lib/resume";
 import { useSaveResume } from "@/hooks/useSaveResume";
 import type { GrammarQuiz as Quiz } from "@/lib/grammar";
 
@@ -140,8 +140,7 @@ export default function GrammarQuizBlock({
 
     setDone(true);
     if (lessonKey) {
-      // 42P01 (table missing before migration 0035) is silently ignored.
-      await supabase.from("grammar_progress").upsert(
+      const { error } = await supabase.from("grammar_progress").upsert(
         {
           user_id: uid,
           lesson_key: lessonKey,
@@ -150,6 +149,14 @@ export default function GrammarQuizBlock({
         },
         { onConflict: "user_id,lesson_key" }
       );
+      // 42P01 (table missing before migration 0035) stays ignored on purpose.
+      // Anything else means the lesson was not recorded, so release the guard:
+      // answering the last question again is then able to retry it, instead of
+      // the lesson silently staying incomplete on the grammar list.
+      if (error && !isTableMissing(error)) {
+        recorded.current = false;
+        answered.current.delete(i);
+      }
       void clearResume(supabase, uid, `/grammar/${lessonKey}`);
     }
     const res = await recordCompletion(supabase, "grammar", 3);

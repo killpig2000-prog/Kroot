@@ -41,6 +41,7 @@ export default function ReviewSession({
   const [done, setDone] = useState(false);
   const [levelUp, setLevelUp] = useState<ProgressResult | null>(null);
   const [navigating, setNavigating] = useState(false);
+  const [saveFailed, setSaveFailed] = useState(false);
   const boxes = useRef<Record<string, number>>(
     Object.fromEntries(words.map((w) => [w.key, w.box ?? 1]))
   );
@@ -59,18 +60,26 @@ export default function ReviewSession({
     if (gotIt) setCorrect((c) => c + 1);
     else if (word) setMissed((m) => (m.some((w) => w.key === word.key) ? m : [...m, word]));
 
-    await supabase.from("vocabulary_progress").upsert(
-      {
-        user_id: userId,
-        word_key: q.word.key,
-        correct_count: (word?.correct_count ?? 0) + (gotIt ? 1 : 0),
-        incorrect_count: (word?.incorrect_count ?? 0) + (gotIt ? 0 : 1),
-        last_reviewed_at: new Date().toISOString(),
-        box,
-        next_review_at: nextReviewAt(box),
-      },
-      { onConflict: "user_id,word_key" }
-    );
+    // Interrupting the quiz over a failed write would be worse than finishing
+    // it, but the learner still has to be told at the end — otherwise the
+    // words come back undone with nothing to explain it.
+    try {
+      const { error } = await supabase.from("vocabulary_progress").upsert(
+        {
+          user_id: userId,
+          word_key: q.word.key,
+          correct_count: (word?.correct_count ?? 0) + (gotIt ? 1 : 0),
+          incorrect_count: (word?.incorrect_count ?? 0) + (gotIt ? 0 : 1),
+          last_reviewed_at: new Date().toISOString(),
+          box,
+          next_review_at: nextReviewAt(box),
+        },
+        { onConflict: "user_id,word_key" }
+      );
+      if (error) setSaveFailed(true);
+    } catch {
+      setSaveFailed(true);
+    }
 
     setTimeout(() => {
       setSelected(null);
@@ -119,6 +128,12 @@ export default function ReviewSession({
         {levelUp && (
           <p className="text-sm font-semibold text-success mb-5 -mt-2">
             🎉 {t("levelUp", { level: levelUp.new_level })}
+          </p>
+        )}
+
+        {saveFailed && (
+          <p role="status" className="text-[13px] text-danger mb-5 -mt-2">
+            {t("saveFailed")}
           </p>
         )}
 
