@@ -84,3 +84,15 @@ export function withLocalePrefixes(paths: string[]): string[] {
       .map((locale) => `/${locale}${path}`),
   ]);
 }
+
+// Serialises structured data for a <script type="application/ld+json"> block.
+//
+// The browser reads that block as raw text until it meets "</script", so a
+// plain JSON.stringify would let any "<" inside the data close the tag early
+// and turn the rest of the page into markup. Nothing in our word or slang
+// content contains one today; escaping is what keeps that true no matter what
+// the datasets grow to hold. "\u003c" is a legal JSON escape, so parsers still
+// see the original character.
+export function jsonLd(data: unknown): string {
+  return JSON.stringify(data).replace(/</g, "\\u003c");
+}

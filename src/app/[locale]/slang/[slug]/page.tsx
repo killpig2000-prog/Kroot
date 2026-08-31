@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { notFound } from "next/navigation";
-import { localeUrl, seoAlternates } from "@/lib/seo";
+import { jsonLd as jsonLdScript, localeUrl, seoAlternates } from "@/lib/seo";
 import { VIBES } from "@/lib/slang";
 import { PUBLIC_SLANG, getSlangBySlug, relatedSlang } from "@/lib/slang-slugs";
 import ShareCta from "@/components/slang/ShareCta";
@@ -75,7 +75,7 @@ export default async function SlangSharePage({ params }: Props) {
     <div className="min-h-screen bg-[var(--tint-pink)] text-charcoal">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(jsonLd) }}
       />
 
       <header className="mx-auto flex max-w-3xl items-center justify-between px-6 py-5">

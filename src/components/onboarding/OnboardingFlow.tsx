@@ -131,9 +131,13 @@ export default function OnboardingFlow({ lessons }: { lessons: FirstLessonsMap }
       const { error: applyErr } = await supabase.rpc("apply_level_test", { p_level: p.level });
       if (applyErr) console.error("apply_level_test failed:", applyErr.message);
       if (p.goal) {
-        // Column arrives with migration 0036; harmless until then.
+        // Only reached when the learner was already signed in (Google OAuth,
+        // or a repeat run) — a magic-link sign-up carries the goal in its
+        // metadata and handle_new_user() stores it. This UPDATE needs the
+        // column-level grant from migration 0048; without it Postgres answers
+        // "permission denied for table profiles" and the answer is lost.
         const { error: goalErr } = await supabase.from("profiles").update({ goal: p.goal }).eq("id", uid);
-        if (goalErr && !/goal/.test(goalErr.message)) console.error("goal save failed:", goalErr.message);
+        if (goalErr) console.error("goal save failed:", goalErr.message);
       }
       track("onboarding_completed", {
         level: p.level,

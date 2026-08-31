@@ -3,7 +3,7 @@ import { Suspense } from "react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { notFound } from "next/navigation";
-import { localeUrl, seoAlternates } from "@/lib/seo";
+import { jsonLd as jsonLdScript, localeUrl, seoAlternates } from "@/lib/seo";
 import { PUBLIC_VOCAB_WORDS, getWordBySlug, relatedWords } from "@/lib/vocab-slugs";
 import { wordBankKey } from "@/lib/word-bank";
 import AddToMyWords from "@/components/words/AddToMyWords";
@@ -68,7 +68,7 @@ export default async function WordPage({ params }: Props) {
     <div className="min-h-screen bg-[var(--sky)] text-[var(--ink)]">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(jsonLd) }}
       />
       <header className="mx-auto flex max-w-3xl items-center justify-between px-6 py-5">
         <Link href="/" className="font-bold text-[var(--deep)] text-xl">

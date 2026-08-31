@@ -19,9 +19,23 @@ const BTN_GREEN =
 const BTN_OUTLINE =
   "inline-flex items-center justify-center rounded-[9px] border border-line bg-cream px-[18px] py-[9px] text-[13.5px] font-semibold text-charcoal hover:bg-warm transition-colors";
 
-// Error codes the auth callback can put in ?error=; anything else is passed
-// through from Supabase as-is.
-const ERROR_CODES = ["auth", "expired"];
+// The only values ?error= may render. Anything else is discarded rather than
+// shown, because this parameter is attacker-controllable: the page is reached
+// by a plain GET, so a crafted link puts arbitrary text on the real login
+// screen, under the real domain, next to a real password field. React escapes
+// it so it is not XSS — it is a ready-made phishing page ("your account is
+// locked, email support@...") that we would be hosting ourselves.
+const ERROR_CODES = ["auth", "expired"] as const;
+
+function messageKeyFor(code: string | null): (typeof ERROR_CODES)[number] | null {
+  if (!code) return null;
+  if ((ERROR_CODES as readonly string[]).includes(code)) {
+    return code as (typeof ERROR_CODES)[number];
+  }
+  // Keep the real reason for us, show the visitor a generic one.
+  console.warn("login: unrecognised ?error= value discarded");
+  return "auth";
+}
 
 // Only allow same-site paths as post-login destinations. The proxy sends us
 // the full pathname (e.g. /ja/vocabulary); the locale prefix is dropped
@@ -38,9 +52,8 @@ export default function LoginPage() {
   const supabase = useMemo(() => createClient(), []);
   const [error, setError] = useState<string | null>(() => {
     if (typeof window === "undefined") return null;
-    const code = new URLSearchParams(window.location.search).get("error");
-    if (!code) return null;
-    return ERROR_CODES.includes(code) ? t(`errors.${code}`) : decodeURIComponent(code);
+    const key = messageKeyFor(new URLSearchParams(window.location.search).get("error"));
+    return key ? t(`errors.${key}`) : null;
   });
   const [next] = useState(() =>
     typeof window === "undefined"
