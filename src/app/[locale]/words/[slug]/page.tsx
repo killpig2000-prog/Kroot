@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { notFound } from "next/navigation";
 import { localeUrl, seoAlternates } from "@/lib/seo";
@@ -42,6 +42,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function WordPage({ params }: Props) {
   const { locale, slug } = await params;
+  // Docs ask for this in every layout AND page: the layout's copy is not
+  // guaranteed to be set before a sibling page renders.
+  setRequestLocale(locale);
   const word = getWordBySlug(slug);
   if (!word) notFound();
 

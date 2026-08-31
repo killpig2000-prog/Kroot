@@ -3,7 +3,7 @@ import { Fredoka, Noto_Sans_KR, Nunito } from "next/font/google";
 import { notFound } from "next/navigation";
 import { Analytics } from "@vercel/analytics/next";
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages } from "next-intl/server";
+import { getMessages, setRequestLocale } from "next-intl/server";
 import "../globals.css";
 import { routing } from "@/i18n/routing";
 import { DARK_MODE_ENABLED, DEFAULT_MODE, MODE_COOKIE } from "@/lib/mode";
@@ -111,7 +111,17 @@ export default async function RootLayout({ children, params }: Props) {
     notFound();
   }
 
-  const messages = await getMessages();
+  // Both calls take the locale from the route params rather than letting
+  // next-intl infer it. Left implicit, they resolve it by reading the header
+  // the proxy sets — a headers() call, which opts the segment and everything
+  // under it into dynamic rendering. That is the other half of what was
+  // keeping the word and slang pages off the prerender: removing cookies()
+  // from this file was necessary but not sufficient.
+  //
+  // setRequestLocale seeds the same value for descendants, so a page or
+  // component calling getTranslations("ns") without a locale stays static too.
+  setRequestLocale(locale);
+  const messages = await getMessages({ locale });
 
   return (
     <html
@@ -144,7 +154,7 @@ export default async function RootLayout({ children, params }: Props) {
               `}catch(e){}})()`,
           }}
         />
-        <NextIntlClientProvider messages={messages}>
+        <NextIntlClientProvider locale={locale} messages={messages}>
           {children}
           <SeasonalEffects />
           <PwaRegister />

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { notFound } from "next/navigation";
 import { LEVEL_ORDER, type CefrLevel } from "@/lib/tree";
@@ -43,6 +43,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function LevelIndexPage({ params }: Props) {
   const { locale, level: rawLevel } = await params;
+  // Docs ask for this in every layout AND page: the layout's copy is not
+  // guaranteed to be set before a sibling page renders.
+  setRequestLocale(locale);
   const level = parseLevel(rawLevel);
   if (!level) notFound();
 
