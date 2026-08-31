@@ -116,7 +116,8 @@
   },
   "errors": {
     "authFailed": "该登录链接无效或已过期。请重试。",
-    "rateLimit": "我们刚刚发送了太多邮件 — 请等几分钟再试，或改用 Google 继续。"
+    "rateLimit": "我们刚刚发送了太多邮件 — 请等几分钟再试，或改用 Google 继续。",
+    "network": "无法连接服务器。请检查网络后重试。"
   },
   "mascot": {
     "welcome": "欢迎！",

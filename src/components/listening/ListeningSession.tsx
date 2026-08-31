@@ -62,11 +62,23 @@ export default function ListeningSession({
       // quiz_correct arrived in migration 0037; save the completion without
       // it when that migration hasn't reached this environment yet.
       const row = { user_id: userId, dialogue_id: dialogue.id, completed_at: new Date().toISOString() };
-      const { error } = await supabase
+      let { error } = await supabase
         .from("listening_progress")
         .upsert({ ...row, quiz_correct: correct }, { onConflict: "user_id,dialogue_id" });
       if (error && isColumnMissing(error)) {
-        await supabase.from("listening_progress").upsert(row, { onConflict: "user_id,dialogue_id" });
+        ({ error } = await supabase
+          .from("listening_progress")
+          .upsert(row, { onConflict: "user_id,dialogue_id" }));
+      }
+      // The clip was marked done in local state before this ran, so the list
+      // would keep claiming it until a reload put the truth back. Take the
+      // checkmark off instead of letting the two disagree.
+      if (error) {
+        setCompleted((prev) => {
+          const back = new Set(prev);
+          back.delete(dialogue.id);
+          return back;
+        });
       }
       const res = await recordCompletion(supabase, "listening", 3, awardedRatio);
       if (res?.leveled_up) setNewLevel(res.new_level);

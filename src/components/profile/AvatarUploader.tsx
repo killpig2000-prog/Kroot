@@ -38,7 +38,16 @@ export default function AvatarUploader({
 
     setError(null);
     setUploading(true);
+    try {
+      await upload(file);
+    } catch {
+      setError(t("errUpload"));
+    } finally {
+      setUploading(false);
+    }
+  }
 
+  async function upload(file: File) {
     const ext = file.name.split(".").pop() || "jpg";
     const path = `${userId}/avatar.${ext}`;
 
@@ -48,7 +57,6 @@ export default function AvatarUploader({
 
     if (uploadError) {
       setError(uploadError.message);
-      setUploading(false);
       return;
     }
 
@@ -67,12 +75,10 @@ export default function AvatarUploader({
 
     if (profileError) {
       setError(profileError.message);
-      setUploading(false);
       return;
     }
 
     setPreview(bustCache);
-    setUploading(false);
     router.refresh();
   }
 

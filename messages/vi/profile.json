@@ -13,7 +13,8 @@
     "change": "Đổi ảnh đại diện",
     "edit": "Sửa",
     "errType": "Hãy chọn một tệp ảnh.",
-    "errSize": "Ảnh phải nhỏ hơn {mb}MB."
+    "errSize": "Ảnh phải nhỏ hơn {mb}MB.",
+    "errUpload": "Tải lên thất bại. Hãy kiểm tra kết nối và thử lại."
   },
   "name": {
     "edit": "Sửa tên",

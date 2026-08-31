@@ -300,29 +300,36 @@ export default function OnboardingFlow({ lessons }: { lessons: FirstLessonsMap }
     if (!placement) return;
     setError(null);
     setSending(true);
-    const { error } = await supabase.auth.signInWithOtp({
-      email: addr,
-      options: {
-        shouldCreateUser: true,
-        emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(callbackNext(placement))}`,
-        data: { display_name: name || undefined, goal: placement.goal ?? undefined },
-      },
-    });
-    setSending(false);
-    if (error) {
-      // The mailer allows only a handful of emails per hour; make that actionable.
-      setError(
-        /rate limit/i.test(error.message)
-          ? t("errors.rateLimit")
-          : error.message
-      );
-      return;
+    try {
+      const { error } = await supabase.auth.signInWithOtp({
+        email: addr,
+        options: {
+          shouldCreateUser: true,
+          emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(callbackNext(placement))}`,
+          data: { display_name: name || undefined, goal: placement.goal ?? undefined },
+        },
+      });
+      if (error) {
+        // The mailer allows only a handful of emails per hour; make that actionable.
+        setError(
+          /rate limit/i.test(error.message)
+            ? t("errors.rateLimit")
+            : error.message
+        );
+        return;
+      }
+      track("signup", { method: "magic_link", goal: placement.goal });
+      if (step === "confirm") setResent(true);
+      setEmail(addr);
+      goToStep("confirm");
+      setResendCooldown(30);
+    } catch {
+      setError(t("errors.network"));
+    } finally {
+      // Sign-up is the one button that must never die on a dropped request:
+      // the learner has just finished the placement test to get here.
+      setSending(false);
     }
-    track("signup", { method: "magic_link", goal: placement.goal });
-    if (step === "confirm") setResent(true);
-    setEmail(addr);
-    goToStep("confirm");
-    setResendCooldown(30);
   }
 
   const active = STEP_INDEX[step];

@@ -13,7 +13,8 @@
     "change": "更换头像",
     "edit": "编辑",
     "errType": "请选择图片文件。",
-    "errSize": "图片需小于 {mb}MB。"
+    "errSize": "图片需小于 {mb}MB。",
+    "errUpload": "上传失败。请检查网络后重试。"
   },
   "name": {
     "edit": "编辑名字",

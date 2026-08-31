@@ -54,6 +54,7 @@ export default function ChallengePlay({
   const [typedFallback, setTypedFallback] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
   const scoringRef = useRef(false);
+  const loggedRef = useRef(false);
 
   const { speak, isSpeaking, isSupported: ttsOk } = useKoreanSpeaker();
   const { isSupported: micOk, isListening, interim, error, listen, setError } = useSpeechRecognition(
@@ -106,7 +107,11 @@ export default function ChallengePlay({
         }
       }
 
-      if (userId) {
+      // Once per visit, like every other session component. "Run again" is
+      // meant to let a learner beat their own time, not to pay out XP and
+      // study minutes on every lap of the same line.
+      if (userId && !loggedRef.current) {
+        loggedRef.current = true;
         await recordCompletion(supabase, "pronunciation", MINUTES_PER_RUN);
         router.refresh();
       }

@@ -116,7 +116,8 @@
   },
   "errors": {
     "authFailed": "Liên kết đăng nhập đó không hợp lệ hoặc đã hết hạn. Vui lòng thử lại.",
-    "rateLimit": "Chúng tôi vừa gửi quá nhiều email — vui lòng đợi vài phút rồi thử lại, hoặc tiếp tục với Google."
+    "rateLimit": "Chúng tôi vừa gửi quá nhiều email — vui lòng đợi vài phút rồi thử lại, hoặc tiếp tục với Google.",
+    "network": "Không kết nối được máy chủ. Hãy kiểm tra kết nối và thử lại."
   },
   "mascot": {
     "welcome": "chào mừng!",

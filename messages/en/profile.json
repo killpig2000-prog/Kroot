@@ -13,7 +13,8 @@
     "change": "Change profile photo",
     "edit": "Edit",
     "errType": "Please choose an image file.",
-    "errSize": "Image must be under {mb}MB."
+    "errSize": "Image must be under {mb}MB.",
+    "errUpload": "Upload failed. Check your connection and try again."
   },
   "name": {
     "edit": "Edit name",

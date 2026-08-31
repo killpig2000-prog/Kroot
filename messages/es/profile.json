@@ -13,7 +13,8 @@
     "change": "Cambiar la foto de perfil",
     "edit": "Editar",
     "errType": "Elige un archivo de imagen.",
-    "errSize": "La imagen debe pesar menos de {mb} MB."
+    "errSize": "La imagen debe pesar menos de {mb} MB.",
+    "errUpload": "Error al subir. Revisa tu conexión e inténtalo de nuevo."
   },
   "name": {
     "edit": "Editar nombre",
