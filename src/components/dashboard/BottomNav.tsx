@@ -212,11 +212,16 @@ export default function BottomNav({
   // Back closes the sheet rather than leaving the page — it is a hardware
   // button in the Play Store wrapper.
   const closeSheet = useCallback(() => setSheet(null), []);
-  useBackToClose(sheet !== null, closeSheet);
+  const dismissSheet = useBackToClose(sheet !== null, closeSheet);
 
   const tn = useTranslations("nav");
   const close = () => setSheet(null);
-  const toggle = (s: Exclude<Sheet, null>) => setSheet((cur) => (cur === s ? null : s));
+  // Tapping the open tab again closes it — route that through dismiss so the
+  // history entry the sheet added goes with it.
+  const toggle = (s: Exclude<Sheet, null>) => {
+    if (sheet === s) dismissSheet();
+    else setSheet(s);
+  };
   const sections = sheet === "learn" ? LEARN_SECTIONS : sheet === "more" ? MORE_SECTIONS : [];
 
   const onGarden = !sheet && pathname === "/dashboard";
@@ -229,7 +234,7 @@ export default function BottomNav({
       {sheet && (
         <button
           aria-label={tn("closeMenu")}
-          onClick={close}
+          onClick={dismissSheet}
           className="md:hidden fixed inset-0 z-40 bg-[#282319]/35 cursor-default"
         />
       )}

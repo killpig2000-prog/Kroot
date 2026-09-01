@@ -48,17 +48,17 @@ export default function VocabSearch() {
     setOpen(false);
     setQuery("");
   }, []);
-  useBackToClose(open, close);
+  const dismiss = useBackToClose(open, close);
 
   useEffect(() => {
     if (!open) return;
     inputRef.current?.focus();
     function onKey(e: KeyboardEvent) {
-      if (e.key === "Escape") hide();
+      if (e.key === "Escape") dismiss();
     }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [open]);
+  }, [open, dismiss]);
 
   // "/" opens search from anywhere on the page, unless you're already typing.
   useEffect(() => {
@@ -104,7 +104,7 @@ export default function VocabSearch() {
       {open && (
         <div
           className="fixed inset-0 z-50 flex items-start justify-center px-4 pt-[clamp(24px,12vh,120px)] bg-[#282319]/35"
-          onClick={hide}
+          onClick={dismiss}
         >
           <div
             role="dialog"
@@ -126,7 +126,7 @@ export default function VocabSearch() {
               />
               <button
                 type="button"
-                onClick={hide}
+                onClick={dismiss}
                 aria-label={tu("closeSearch")}
                 className="text-[13px] text-faint hover:text-charcoal transition-colors"
               >

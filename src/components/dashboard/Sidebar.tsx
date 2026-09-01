@@ -219,21 +219,21 @@ export default function Sidebar(props: Props) {
 
   // Back closes the drawer instead of leaving the page.
   const closeDrawer = useCallback(() => setOpen(false), []);
-  useBackToClose(open, closeDrawer);
+  const dismissDrawer = useBackToClose(open, closeDrawer);
 
   useEffect(() => {
     if (!open) return;
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
+      if (e.key === "Escape") dismissDrawer();
     };
     document.addEventListener("keydown", onKey);
     return () => {
       document.body.style.overflow = prev;
       document.removeEventListener("keydown", onKey);
     };
-  }, [open]);
+  }, [open, dismissDrawer]);
 
   const avatar = props.avatarUrl ? (
     // eslint-disable-next-line @next/next/no-img-element
@@ -287,7 +287,7 @@ export default function Sidebar(props: Props) {
         className={`md:hidden fixed inset-0 z-[60] bg-[#282319]/35 transition-opacity duration-200 ${
           open ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
-        onClick={() => setOpen(false)}
+        onClick={dismissDrawer}
         aria-hidden="true"
       />
       <aside
@@ -299,7 +299,7 @@ export default function Sidebar(props: Props) {
           open ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <SidebarBody {...props} pathname={pathname} locale={locale} onClose={() => setOpen(false)} />
+        <SidebarBody {...props} pathname={pathname} locale={locale} onClose={dismissDrawer} />
       </aside>
     </>
   );
