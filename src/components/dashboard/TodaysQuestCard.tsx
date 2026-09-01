@@ -73,7 +73,7 @@ export default function TodaysQuestCard({
 
   if (completed) {
     return (
-      <div className="mb-[30px] flex items-center gap-4 rounded-[16px] border-[1.5px] border-success bg-success-bg px-5 py-4">
+      <div className="mb-4 flex items-center gap-4 rounded-[16px] border-[1.5px] border-success bg-success-bg px-5 py-4">
         {inner}
         <span className="flex-none rounded-full bg-cream text-success text-[13px] font-bold px-4 py-2 border border-success-line">
           {t("done")}
@@ -83,7 +83,7 @@ export default function TodaysQuestCard({
   }
 
   return (
-    <div className="mb-[30px]">
+    <div className="mb-4">
       <Link
         href={SKILL_HREF[quest.skill_key] ?? "/dashboard"}
         className="group flex items-center gap-4 rounded-[16px] border-[1.5px] border-success bg-success-bg px-5 py-4 transition-all hover:-translate-y-0.5 hover:bg-[var(--tint-green)]"

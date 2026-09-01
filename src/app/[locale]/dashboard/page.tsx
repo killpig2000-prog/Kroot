@@ -207,11 +207,13 @@ export default async function DashboardPage() {
   // Errors (e.g. migration 0022 not applied yet) just hide the review card.
   // User feedback: an uncapped backlog badge (once past a hundred+ words)
   // read as a scary, un-clearable number rather than something to act on.
-  // Capped at this user's daily review cap (10, +5 per purchased bonus, see
-  // lib/srs.ts) minus what they've already done today — matches /review and
-  // BottomNav's badge exactly.
+  // Capped at this user's daily review cap (10, +10 per set tier, see
+  // lib/srs.ts) — matches /review and BottomNav's badge exactly. Zeroes out
+  // only once today's total review count reaches the cap, not "cap minus
+  // whatever was already done" (a session always fills to the full cap).
   const reviewCap = dailyReviewCap(reviewCapacityBonus);
-  const dueCount = Math.min(snapshot.due_count, Math.max(0, reviewCap - (reviewedTodayCount ?? 0)));
+  const reviewDoneForToday = (reviewedTodayCount ?? 0) >= reviewCap;
+  const dueCount = reviewDoneForToday ? 0 : Math.min(snapshot.due_count, reviewCap);
 
   const tally = (doneKeys: Set<string>, levelKeys: string[], cap?: number) => {
     const done = levelKeys.filter((k) => doneKeys.has(k)).length;
@@ -443,7 +445,7 @@ export default async function DashboardPage() {
               side-by-side with the review card on mobile so they don't eat
               two full-width rows; sm+ keeps the original stacked cards. */}
           {quest && dueCount > 0 && (
-            <div className="grid grid-cols-2 gap-3 mb-[30px] sm:hidden">
+            <div className="grid grid-cols-2 gap-3 mb-4 sm:hidden">
               <TodaysQuestCard quest={quest} compact />
               <Link
                 href="/review"
@@ -468,7 +470,7 @@ export default async function DashboardPage() {
           {dueCount > 0 && (
             <Link
               href="/review"
-              className={`flex flex-wrap sm:flex-nowrap items-center gap-x-3.5 gap-y-2 border border-sky-line bg-[var(--tint-sky)] rounded-[14px] px-5 py-4 mb-[30px] transition-all hover:-translate-y-0.5 group ${
+              className={`flex flex-wrap sm:flex-nowrap items-center gap-x-3.5 gap-y-2 border border-sky-line bg-[var(--tint-sky)] rounded-[14px] px-5 py-4 mb-4 transition-all hover:-translate-y-0.5 group ${
                 quest ? "hidden sm:flex" : ""
               }`}
             >

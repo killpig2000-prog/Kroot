@@ -77,10 +77,15 @@ export default async function ReviewPage() {
       getWordsForTopic(t.key).map((w) => [w.key, w] as const)
     )
   );
-  const remainingToday = Math.max(0, cap - (reviewedTodayCount ?? 0));
+  // Always fill a session up to the full cap — not "cap minus whatever was
+  // already reviewed today". A word just reviewed drops out of the due
+  // query on its own (next_review_at moves forward), so there's no
+  // duplicate risk; doneForToday (below) is what actually stops the day
+  // once reviewedTodayCount reaches cap. User: "10개로 하면 복습은 10개로
+  // 채워져야하는데 지금 8개로 채워지고있어".
   const dueWords: VocabWordWithProgress[] = doneForToday
     ? []
-    : (dueRows ?? []).slice(0, remainingToday).flatMap((row) => {
+    : (dueRows ?? []).slice(0, cap).flatMap((row) => {
         const word = wordByKey.get(row.word_key);
         if (!word) return [];
         return [

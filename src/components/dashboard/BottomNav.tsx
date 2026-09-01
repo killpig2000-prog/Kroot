@@ -177,8 +177,8 @@ export default function BottomNav({
         supabase.from("profiles").select("review_capacity_bonus").eq("id", userId).maybeSingle(),
       ]);
       const cap = dailyReviewCap(profileRow?.review_capacity_bonus ?? 0);
-      const remaining = Math.max(0, cap - (reviewedToday ?? 0));
-      if (!cancelled && !error) setFetchedDue(Math.min(due ?? 0, remaining));
+      const doneForToday = (reviewedToday ?? 0) >= cap;
+      if (!cancelled && !error) setFetchedDue(doneForToday ? 0 : Math.min(due ?? 0, cap));
     })();
     return () => {
       cancelled = true;

@@ -47,7 +47,7 @@ export default async function HeadlineKpis({
   return (
     <div className="border border-line rounded-[14px] bg-cream px-[22px] py-5">
       {headline && (
-        <p className="text-[15px] font-semibold leading-snug mb-4 max-w-[46ch]">
+        <p className="text-[15px] font-semibold leading-snug mb-4">
           {headline.kind === "compare"
             ? t("headlineCompare", { best: tn(headline.bestKey), worst: tn(headline.worstKey) })
             : t("headlineSingle", { skill: tn(headline.skillKey) })}
