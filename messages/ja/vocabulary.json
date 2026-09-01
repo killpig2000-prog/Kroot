@@ -132,7 +132,8 @@
     "back": "戻る",
     "prev": "前へ",
     "backToUnit": "ユニットに戻る",
-    "backToStory": "本文に戻る"
+    "backToStory": "本文に戻る",
+    "backToVocab": "全チャプター"
   },
   "practice": {
     "reviewTime": "復習の時間",

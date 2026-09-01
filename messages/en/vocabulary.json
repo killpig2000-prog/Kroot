@@ -132,7 +132,8 @@
     "back": "Back",
     "prev": "Prev",
     "backToUnit": "Back to unit",
-    "backToStory": "Back to the story"
+    "backToStory": "Back to the story",
+    "backToVocab": "All chapters"
   },
   "practice": {
     "reviewTime": "review time",

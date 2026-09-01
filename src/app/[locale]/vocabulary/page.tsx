@@ -283,7 +283,7 @@ export default async function VocabularyPage({
                         >
                           <span className="text-[11px] text-faint tabular-nums text-right">{n}</span>
                           <span title={`${WORD_STATUSES[status].label}${thirsty ? " · due" : ""}`}>
-                            {thirsty ? <span className="text-[14px]">💧</span> : <WordStatusIcon status={status} />}
+                            <WordStatusIcon status={status} />
                           </span>
                           <span className="kr font-bold text-[17px] leading-tight">{w.korean}</span>
                           <span className="min-w-0">

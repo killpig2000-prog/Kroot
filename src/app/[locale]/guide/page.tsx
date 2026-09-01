@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { getTranslations } from "next-intl/server";
 import { Link, redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
@@ -209,17 +210,19 @@ export default async function GuidePage() {
                   {/* Stops only — icon, step number, name. Every stop is a link straight
                       into its section (the current stop's link goes straight into the
                       specific session it left off at); no per-stop description text. */}
-                  <div className="relative px-3.5 pt-[22px] pb-5 grid grid-cols-1 sm:grid-cols-5 gap-4 sm:gap-3">
+                  <div className="relative px-3.5 pt-[22px] pb-5 flex flex-col sm:flex-row sm:items-start gap-1">
                     {route.stops.map((s, i) => {
                       const v = views?.[i] ?? null;
                       const isDone = v?.status === "done";
                       const isCurrent = v?.status === "current";
+                      const hasNext = i < route.stops.length - 1;
                       return (
+                      <Fragment key={s.key}>
+                      <div className="flex sm:flex-1 sm:flex-col items-center gap-3.5 sm:gap-2">
                       <Link
-                        key={s.key}
                         href={isCurrent && v ? v.ctaHref : s.href}
                         aria-current={isCurrent ? "step" : undefined}
-                        className="group flex sm:flex-col items-center sm:items-center gap-3.5 sm:gap-2 sm:text-center"
+                        className="group flex sm:flex-col items-center sm:items-center gap-3.5 sm:gap-2 sm:text-center sm:w-full"
                       >
                         <span
                           className={`relative z-[1] flex-none w-11 h-11 rounded-[13px] flex items-center justify-center text-[19px] border-[1.5px] transition-transform duration-200 group-hover:-translate-y-[3px] ${
@@ -254,6 +257,16 @@ export default async function GuidePage() {
                           {tn(s.navKey)}
                         </b>
                       </Link>
+                      </div>
+                      {hasNext && (
+                        <span
+                          aria-hidden="true"
+                          className="self-center flex-none text-[15px] font-black text-[#D6D3CC] rotate-90 sm:rotate-0 sm:self-start sm:mt-[27px]"
+                        >
+                          →
+                        </span>
+                      )}
+                      </Fragment>
                       );
                     })}
                   </div>

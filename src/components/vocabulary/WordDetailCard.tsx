@@ -319,6 +319,12 @@ export default function WordDetailCard({
         )}
       </div>
 
+      <div className="mt-2 text-[12.5px]">
+        <Link href="/vocabulary" className="font-semibold text-faint hover:text-charcoal transition-colors whitespace-nowrap">
+          ← {t("detail.backToVocab")}
+        </Link>
+      </div>
+
       {!nextHref && (
         <div className="mt-2.5 text-right text-[12.5px]">
           <Link href={unitHref} className="font-semibold text-muted hover:text-charcoal transition-colors">

@@ -132,7 +132,8 @@
     "back": "返回",
     "prev": "上一个",
     "backToUnit": "返回单元",
-    "backToStory": "返回课文"
+    "backToStory": "返回课文",
+    "backToVocab": "全部章节"
   },
   "practice": {
     "reviewTime": "复习时间",
