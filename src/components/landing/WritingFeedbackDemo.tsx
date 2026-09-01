@@ -1,11 +1,16 @@
 import { useTranslations } from "next-intl";
 
+const CIRC = 2 * Math.PI * 30;
+
 // A static preview of the Writing flow — the prompt you're given, and the
-// AI's graded result that follows. Copy mirrors the real UI (see
-// WritingSession.tsx) but this isn't live/interactive — it's a snapshot of
-// the flow, not a working demo.
+// graded result that follows. Not live/interactive, but the score ring
+// mirrors the real result screen's SVG progress circle (see
+// CompareResult.tsx) instead of a plain text badge, so the shape of the
+// feedback matches what actually appears in-app.
 export default function WritingFeedbackDemo() {
   const t = useTranslations("landing.writing");
+  const score = 88;
+  const ringOffset = CIRC - (score / 100) * CIRC;
   return (
     <section className="bg-cream border-t border-dashed border-dash py-[clamp(52px,8vw,88px)] px-6">
       <div className="text-center mb-1.5">
@@ -64,9 +69,28 @@ export default function WritingFeedbackDemo() {
             저는 어제 친구를 만나서 영화를 봤어요.
           </p>
 
-          <div className="flex items-center gap-2 mb-3">
-            <span className="inline-flex items-center gap-1.5 text-[12px] font-semibold rounded-lg border border-amber-line bg-warm px-2.5 py-1 text-muted">
-              {t("grammarLabel")} <b className="text-charcoal">88</b>/100
+          <div className="flex items-center gap-3 mb-3.5">
+            <div className="relative w-[64px] h-[64px] flex-none">
+              <svg viewBox="0 0 64 64" className="w-full h-full -rotate-90" aria-hidden="true">
+                <circle cx="32" cy="32" r="30" fill="none" stroke="var(--color-line)" strokeWidth="5" />
+                <circle
+                  cx="32"
+                  cy="32"
+                  r="30"
+                  fill="none"
+                  stroke="var(--color-success)"
+                  strokeWidth="5"
+                  strokeLinecap="round"
+                  strokeDasharray={CIRC}
+                  strokeDashoffset={ringOffset}
+                />
+              </svg>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <span className="text-[16px] font-extrabold tracking-[-0.02em] tabular-nums">{score}</span>
+              </div>
+            </div>
+            <span className="text-[11px] font-bold tracking-[.06em] uppercase text-muted">
+              {t("grammarLabel")}
             </span>
           </div>
           <p className="text-[12px] text-muted leading-[1.6] mb-4">

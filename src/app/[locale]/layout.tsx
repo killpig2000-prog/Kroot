@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Fredoka, Noto_Sans_KR, Nunito } from "next/font/google";
+import { Bricolage_Grotesque, Fredoka, Instrument_Sans, Noto_Sans_KR, Nunito } from "next/font/google";
 import { notFound } from "next/navigation";
 import { Analytics } from "@vercel/analytics/next";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
@@ -39,6 +39,21 @@ const nunito = Nunito({
   variable: "--font-nunito",
   subsets: ["latin"],
   weight: ["400", "600", "700"],
+});
+
+// Landing-only chrome fonts — the "Kroot 자연 스크롤판" mockup's typography,
+// scoped to the marketing page via [data-landing] in globals.css. Everything
+// past the landing page keeps Nunito/Fredoka.
+const bricolage = Bricolage_Grotesque({
+  variable: "--font-bricolage",
+  subsets: ["latin"],
+  weight: ["400", "600", "800"],
+});
+
+const instrumentSans = Instrument_Sans({
+  variable: "--font-instrument",
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
 });
 
 // The palette is light-only; dark is our own invert filter behind the in-app
@@ -128,7 +143,7 @@ export default async function RootLayout({ children, params }: Props) {
     <html
       lang={locale}
       data-mode={DEFAULT_MODE}
-      className={`${fredoka.variable} ${notoSansKr.variable} ${nunito.variable}`}
+      className={`${fredoka.variable} ${notoSansKr.variable} ${nunito.variable} ${bricolage.variable} ${instrumentSans.variable}`}
     >
       <body>
         {/* Applies the visitor's saved theme and seasonal-effects preference

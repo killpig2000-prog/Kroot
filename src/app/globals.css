@@ -249,6 +249,20 @@ html[data-mode="dark"] {
   --color-chart-miss: var(--c-chart-miss);
 }
 
+/* Landing-only typography from the "Kroot 자연 스크롤판" mockup. The
+   mockup's color palette turned out to already match this file's tokens
+   value-for-value (--c-warm/--c-charcoal/--c-success* etc. are the same
+   hexes as the mockup's --paper/--ink/--leaf*) — the one real visual
+   difference is the font stack, so that's the only thing scoped here. */
+[data-landing] {
+  --font-body: var(--font-instrument), var(--font-noto-kr), sans-serif;
+}
+[data-landing] h1,
+[data-landing] h2,
+[data-landing] h3 {
+  font-family: var(--font-bricolage), var(--font-noto-kr), sans-serif;
+}
+
 * {
   box-sizing: border-box;
 }

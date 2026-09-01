@@ -7,7 +7,6 @@ import Categories from "@/components/landing/Categories";
 import PronunciationDemo from "@/components/landing/PronunciationDemo";
 import WritingFeedbackDemo from "@/components/landing/WritingFeedbackDemo";
 import Growth from "@/components/landing/Growth";
-import Community from "@/components/landing/Community";
 import Final from "@/components/landing/Final";
 import { setRequestLocale } from "next-intl/server";
 
@@ -24,7 +23,7 @@ export default async function LandingPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
   return (
-    <div className="min-h-screen bg-warm text-charcoal">
+    <div data-landing className="min-h-screen bg-warm text-charcoal">
       <Reveal />
       <Nav />
       <Hero />
@@ -34,7 +33,6 @@ export default async function LandingPage({ params }: Props) {
       <PronunciationDemo />
       <WritingFeedbackDemo />
       <Growth />
-      <Community />
       <Final />
     </div>
   );
