@@ -129,12 +129,15 @@ export default function ReviewSession({
           {t("doneSub", { kept, total: questions.length })}
           {slipped > 0 && ` ${t("doneSlipped")}`}
         </p>
-        {levelUp && (levelUp.leveled_up || levelUp.coins_earned > 0) && (
-          <p className="text-sm font-semibold text-success mb-5 -mt-2">
-            {levelUp.leveled_up && <>🎉 {t("levelUp", { level: levelUp.new_level })}</>}
-            {levelUp.leveled_up && levelUp.coins_earned > 0 && " · "}
-            {levelUp.coins_earned > 0 && tu("coinsEarned", { n: levelUp.coins_earned })}
+        {levelUp?.leveled_up && (
+          <p className="text-sm font-semibold text-success mb-2 -mt-2">
+            🎉 {t("levelUp", { level: levelUp.new_level })}
           </p>
+        )}
+        {(levelUp?.coins_earned ?? 0) > 0 && (
+          <span className="inline-flex items-center gap-1.5 text-[13px] font-bold px-3 py-1.5 rounded-full border bg-[var(--tint-amber)] text-[#B7791F] border-amber-line mb-5">
+            {tu("coinsEarned", { n: levelUp!.coins_earned })}
+          </span>
         )}
 
         {saveFailed && (

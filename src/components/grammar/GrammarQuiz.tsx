@@ -179,15 +179,18 @@ export default function GrammarQuizBlock({
       ))}
 
       {done && (
-        <div className="mt-1" style={{ animation: "fadeUp .35s ease" }}>
+        <div className="mt-1 flex flex-wrap items-center gap-2" style={{ animation: "fadeUp .35s ease" }}>
           <span className="inline-flex items-center gap-2 text-[13px] font-semibold rounded-lg px-3 py-1.5 border bg-success-bg text-success border-success-line">
             {t("quiz.done")}
           </span>
-          {(newLevel || coinsEarned > 0) && (
-            <p className="mt-2 text-[13.5px] font-semibold text-success">
-              {newLevel && t("quiz.levelUp", { n: newLevel })}
-              {newLevel && coinsEarned > 0 && " · "}
-              {coinsEarned > 0 && tu("coinsEarned", { n: coinsEarned })}
+          {coinsEarned > 0 && (
+            <span className="inline-flex items-center gap-1.5 text-[13px] font-semibold rounded-lg px-3 py-1.5 border bg-[var(--tint-amber)] text-[#B7791F] border-amber-line">
+              {tu("coinsEarned", { n: coinsEarned })}
+            </span>
+          )}
+          {newLevel && (
+            <p className="w-full mt-1 text-[13.5px] font-semibold text-success">
+              {t("quiz.levelUp", { n: newLevel })}
             </p>
           )}
         </div>

@@ -63,11 +63,9 @@ export default function FinishedCard({
       <p className="text-sm text-muted mb-[22px]">
         {t("sub", { n: words.length })}
       </p>
-      {levelUp && (levelUp.leveled_up || levelUp.coins_earned > 0) && (
+      {levelUp?.leveled_up && (
         <p className="text-sm font-semibold text-success mb-[22px] -mt-3">
-          {levelUp.leveled_up && t("levelUp", { level: levelUp.new_level })}
-          {levelUp.leveled_up && levelUp.coins_earned > 0 && " · "}
-          {levelUp.coins_earned > 0 && tu("coinsEarned", { n: levelUp.coins_earned })}
+          {t("levelUp", { level: levelUp.new_level })}
         </p>
       )}
       <div className="flex justify-center gap-3 mb-6 flex-wrap">
@@ -85,6 +83,12 @@ export default function FinishedCard({
           <b className="block text-[19px] font-bold text-success">+{XP_POINTS.pronunciation} XP</b>
           <small className="text-xs text-muted">{t("earned")}</small>
         </div>
+        {(levelUp?.coins_earned ?? 0) > 0 && (
+          <div className="border border-amber-line bg-[var(--tint-amber)] rounded-[10px] px-5 py-3 min-w-[100px]">
+            <b className="block text-[19px] font-bold text-[#B7791F]">{tu("coinsEarned", { n: levelUp!.coins_earned })}</b>
+            <small className="text-xs text-muted">{tu("coinsEarnedLabel")}</small>
+          </div>
+        )}
       </div>
 
       {weakWords.length > 0 && (

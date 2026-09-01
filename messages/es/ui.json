@@ -95,5 +95,6 @@
     "notNow": "Ahora no",
     "dismissAria": "Descartar"
   },
-  "coinsEarned": "+{n} 🪙"
+  "coinsEarned": "+{n} 🪙",
+  "coinsEarnedLabel": "Monedas ganadas"
 }

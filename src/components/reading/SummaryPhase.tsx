@@ -65,12 +65,8 @@ export default function SummaryPhase({
         <h2 className="font-bold text-[21px] tracking-[-0.02em] mt-3 mb-1.5">
           {t("title", { n: chapterIndex + 1 })}
         </h2>
-        {levelUp && (levelUp.leveled_up || levelUp.coins_earned > 0) && (
-          <p className="text-sm font-semibold text-success">
-            {levelUp.leveled_up && t("levelUp", { level: levelUp.new_level })}
-            {levelUp.leveled_up && levelUp.coins_earned > 0 && " · "}
-            {levelUp.coins_earned > 0 && tu("coinsEarned", { n: levelUp.coins_earned })}
-          </p>
+        {levelUp?.leveled_up && (
+          <p className="text-sm font-semibold text-success">{t("levelUp", { level: levelUp.new_level })}</p>
         )}
       </div>
 
@@ -124,6 +120,13 @@ export default function SummaryPhase({
             </>
           )}
         </div>
+
+        {(levelUp?.coins_earned ?? 0) > 0 && (
+          <div className="border border-amber-line rounded-[12px] bg-[var(--tint-amber)] px-4 py-3.5">
+            <b className="block text-[24px] font-bold text-[#B7791F] leading-tight">{tu("coinsEarned", { n: levelUp!.coins_earned })}</b>
+            <small className="text-xs text-muted">{tu("coinsEarnedLabel")}</small>
+          </div>
+        )}
 
         <div className="border border-line rounded-[12px] bg-cream px-4 py-3.5">
           <b className="block text-[24px] font-bold text-success leading-tight">+10 XP</b>

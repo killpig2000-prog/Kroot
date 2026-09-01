@@ -95,5 +95,6 @@
     "notNow": "今はしない",
     "dismissAria": "閉じる"
   },
-  "coinsEarned": "+{n} 🪙"
+  "coinsEarned": "+{n} 🪙",
+  "coinsEarnedLabel": "獲得コイン"
 }

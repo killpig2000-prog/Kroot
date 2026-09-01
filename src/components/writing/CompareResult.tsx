@@ -125,9 +125,10 @@ export default function CompareResult({
           </div>
         </div>
         {(levelUp?.coins_earned ?? 0) > 0 && (
-          <p className="text-center text-xs font-semibold text-muted py-2 border-t border-line">
-            {tu("coinsEarned", { n: levelUp!.coins_earned })}
-          </p>
+          <div className="flex items-center justify-center gap-1.5 border-t border-amber-line bg-[var(--tint-amber)] py-2.5">
+            <b className="text-[15px] font-extrabold text-[#B7791F]">{tu("coinsEarned", { n: levelUp!.coins_earned })}</b>
+            <span className="text-[12px] font-semibold text-[#B7791F]/80">{tu("coinsEarnedLabel")}</span>
+          </div>
         )}
       </div>
 

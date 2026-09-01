@@ -95,5 +95,6 @@
     "notNow": "以后再说",
     "dismissAria": "关闭"
   },
-  "coinsEarned": "+{n} 🪙"
+  "coinsEarned": "+{n} 🪙",
+  "coinsEarnedLabel": "获得金币"
 }

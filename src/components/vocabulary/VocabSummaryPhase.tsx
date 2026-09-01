@@ -55,11 +55,9 @@ export default function VocabSummaryPhase({
         {t("summary.title", { count: words.length })} 🌱
       </h2>
       <p className="text-sm text-muted mb-[22px]">{t("summary.sub")}</p>
-      {levelUp && (levelUp.leveled_up || levelUp.coins_earned > 0) && (
+      {levelUp?.leveled_up && (
         <p className="text-sm font-semibold text-success mb-[22px] -mt-3">
-          {levelUp.leveled_up && <>🎉 {t("summary.levelUp", { level: levelUp.new_level })}</>}
-          {levelUp.leveled_up && levelUp.coins_earned > 0 && " · "}
-          {levelUp.coins_earned > 0 && tu("coinsEarned", { n: levelUp.coins_earned })}
+          🎉 {t("summary.levelUp", { level: levelUp.new_level })}
         </p>
       )}
 
@@ -78,6 +76,12 @@ export default function VocabSummaryPhase({
               {quizKnown}/{quizKnown + quizTricky}
             </b>
             <small className="text-xs text-muted">{t("summary.quizStat")}</small>
+          </div>
+        )}
+        {(levelUp?.coins_earned ?? 0) > 0 && (
+          <div className="border border-amber-line bg-[var(--tint-amber)] rounded-[10px] px-5 py-3 min-w-[100px]">
+            <b className="block text-[19px] font-bold text-[#B7791F]">{tu("coinsEarned", { n: levelUp!.coins_earned })}</b>
+            <small className="text-xs text-muted">{tu("coinsEarnedLabel")}</small>
           </div>
         )}
       </div>

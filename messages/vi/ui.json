@@ -95,5 +95,6 @@
     "notNow": "Để sau",
     "dismissAria": "Bỏ qua"
   },
-  "coinsEarned": "+{n} 🪙"
+  "coinsEarned": "+{n} 🪙",
+  "coinsEarnedLabel": "Xu kiếm được"
 }

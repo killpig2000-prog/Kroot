@@ -95,5 +95,6 @@
     "notNow": "Not now",
     "dismissAria": "Dismiss"
   },
-  "coinsEarned": "+{n} 🪙"
+  "coinsEarned": "+{n} 🪙",
+  "coinsEarnedLabel": "Coins earned"
 }
