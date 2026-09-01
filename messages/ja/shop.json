@@ -1,5 +1,5 @@
 {
-  "coins": "🌰 {coins} コイン",
+  "coins": "🪙 {coins} コイン",
   "intro": "木と、その周りの庭を飾りましょう。カードをタップすると自分の木で試着でき、そのまま購入して身につけられます。",
   "slots": {
     "hat": "帽子",
@@ -30,14 +30,14 @@
     "wear": "身につける",
     "claimAdmin": "受け取って装備 · 管理者",
     "unlocksAt": "Lv.{level} で解放",
-    "needMore": "あと {n} 🌰 必要",
+    "needMore": "あと {n} 🪙 必要",
     "claim": "受け取って装備",
-    "buy": "購入して装備 · 🌰 {price}"
+    "buy": "購入して装備 · 🪙 {price}"
   },
   "bought": "{name} を手に入れました — 木にも飾りました。",
   "featured": {
     "badge": "今週限定",
-    "meta": "{rarity}の{slot} · 🌰 {price}{hasLevel, select, yes { · Lv.{level} が必要} other {}} · {date} で終了",
+    "meta": "{rarity}の{slot} · 🪙 {price}{hasLevel, select, yes { · Lv.{level} が必要} other {}} · {date} で終了",
     "daysLeft": "残り{n}日"
   },
   "categories": "アイテムのカテゴリー",
@@ -46,7 +46,7 @@
     "wearing": "装備中 ✓",
     "owned": "所持済み",
     "locked": "🔒 Lv.{level}",
-    "price": "🌰 {price}",
+    "price": "🪙 {price}",
     "goal": "· 目標 · {ready, select, yes {購入できます} other {あと {n}}}{hasLevel, select, yes { · Lv.{level}} other {}}",
     "setGoal": "目標にする"
   },
@@ -62,7 +62,7 @@
   "picker": {
     "change": "変更 ▾",
     "auto": "いちばん安い次のアイテム（自動）",
-    "price": "🌰 {price}{hasLevel, select, yes { · Lv.{level}} other {}}"
+    "price": "🪙 {price}{hasLevel, select, yes { · Lv.{level}} other {}}"
   },
   "goal": {
     "earnNote": "· デイリークエストで {quest}、10レベルごとに {bonus} もらえます",
@@ -89,6 +89,6 @@
     "bought": "フリーズの準備ができました 🧊 — 1日休んだときに自動で使われます。",
     "maxed": "上限まで所持",
     "buying": "購入中…",
-    "buy": "購入 · 🌰 {price}"
+    "buy": "購入 · 🪙 {price}"
   }
 }

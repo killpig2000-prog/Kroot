@@ -6,7 +6,7 @@
     "maxLevel": "Reached the stars 🌟",
     "xpToNext": "{into}/{needed} XP to Lv. {level}",
     "streak": "🔥 {n, plural, one {# day streak} other {# day streak}}",
-    "coins": "🌰 {n, plural, one {# coin} other {# coins}}",
+    "coins": "🪙 {n, plural, one {# coin} other {# coins}}",
     "freezes": "🧊 {n, plural, one {# freeze} other {# freezes}}"
   },
   "avatar": {

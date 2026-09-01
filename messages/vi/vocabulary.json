@@ -68,7 +68,7 @@
     "atMax": "Bạn đã đạt mức tối đa {max} từ.",
     "maxed": "Tối đa",
     "buying": "Đang mua…",
-    "buy": "Mua · 🌰 {price}",
+    "buy": "Mua · 🪙 {price}",
     "bought": "Giờ sổ từ chứa được {slots} từ.",
     "errNotEnough": "Không đủ xu — mỗi nhiệm vụ hằng ngày trả 10 xu.",
     "errMax": "{max} từ là mức tối đa.",

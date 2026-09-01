@@ -68,7 +68,7 @@
     "atMax": "Ya tienes el máximo de {max} palabras.",
     "maxed": "Máximo",
     "buying": "Comprando…",
-    "buy": "Comprar · 🌰 {price}",
+    "buy": "Comprar · 🪙 {price}",
     "bought": "Ahora caben {slots} palabras.",
     "errNotEnough": "No tienes suficientes monedas: cada misión diaria da 10.",
     "errMax": "{max} palabras es el máximo.",

@@ -6,7 +6,7 @@
     "maxLevel": "星まで届きました 🌟",
     "xpToNext": "Lv. {level} まで {into}/{needed} XP",
     "streak": "🔥 {n}日連続",
-    "coins": "🌰 {n} コイン",
+    "coins": "🪙 {n} コイン",
     "freezes": "🧊 フリーズ {n}個"
   },
   "avatar": {

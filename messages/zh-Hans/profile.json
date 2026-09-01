@@ -6,7 +6,7 @@
     "maxLevel": "已抵达星辰 🌟",
     "xpToNext": "距离 Lv. {level} 还差 {into}/{needed} XP",
     "streak": "🔥 连续 {n} 天",
-    "coins": "🌰 {n} 枚金币",
+    "coins": "🪙 {n} 枚金币",
     "freezes": "🧊 {n} 张冻结卡"
   },
   "avatar": {

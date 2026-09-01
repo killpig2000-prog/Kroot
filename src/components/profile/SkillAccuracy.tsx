@@ -56,7 +56,6 @@ export default async function SkillAccuracy({
 
               <span className="min-w-0 flex-1 sm:flex-none sm:w-[128px]">
                 <b className="font-semibold text-[13px] block truncate">{tn(s.key)}</b>
-                <small className="block text-[11.5px] text-faint truncate tabular-nums">{s.progress}</small>
               </span>
 
               <span className="hidden sm:block flex-1 min-w-[40px] h-[6px] rounded-full bg-chart-dim overflow-hidden">
@@ -93,7 +92,6 @@ export default async function SkillAccuracy({
                     {g?.kr}
                   </span>
                   <b className="font-semibold text-[12.5px] truncate">{tn(p.key)}</b>
-                  <small className="text-[11.5px] text-faint truncate tabular-nums">{p.progress}</small>
                 </div>
               );
             })}

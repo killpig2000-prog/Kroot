@@ -1,5 +1,5 @@
 {
-  "coins": "🌰 {coins} xu",
+  "coins": "🪙 {coins} xu",
   "intro": "Trang điểm cho cây của bạn và khu vườn quanh nó. Chạm vào một thẻ để thử ngay trên cây của mình, rồi mua và đeo luôn tại đây.",
   "slots": {
     "hat": "Mũ",
@@ -30,14 +30,14 @@
     "wear": "Đeo lên",
     "claimAdmin": "Nhận và đeo · admin",
     "unlocksAt": "Mở khoá ở Lv.{level}",
-    "needMore": "Cần thêm {n} 🌰",
+    "needMore": "Cần thêm {n} 🪙",
     "claim": "Nhận và đeo",
-    "buy": "Mua và đeo · 🌰 {price}"
+    "buy": "Mua và đeo · 🪙 {price}"
   },
   "bought": "{name} là của bạn rồi — và đã lên cây.",
   "featured": {
     "badge": "Chỉ trong tuần này",
-    "meta": "{slot} {rarity} · 🌰 {price}{hasLevel, select, yes { · cần Lv.{level}} other {}} · hết hạn sau {date}",
+    "meta": "{slot} {rarity} · 🪙 {price}{hasLevel, select, yes { · cần Lv.{level}} other {}} · hết hạn sau {date}",
     "daysLeft": "còn {n} ngày"
   },
   "categories": "Danh mục vật phẩm",
@@ -46,7 +46,7 @@
     "wearing": "Đang đeo ✓",
     "owned": "Đã có",
     "locked": "🔒 Lv.{level}",
-    "price": "🌰 {price}",
+    "price": "🪙 {price}",
     "goal": "· mục tiêu của bạn · {ready, select, yes {mua được rồi} other {còn thiếu {n}}}{hasLevel, select, yes { · Lv.{level}} other {}}",
     "setGoal": "Đặt làm mục tiêu"
   },
@@ -62,7 +62,7 @@
   "picker": {
     "change": "Đổi ▾",
     "auto": "Món rẻ nhất tiếp theo (tự động)",
-    "price": "🌰 {price}{hasLevel, select, yes { · Lv.{level}} other {}}"
+    "price": "🪙 {price}{hasLevel, select, yes { · Lv.{level}} other {}}"
   },
   "goal": {
     "earnNote": "· mỗi nhiệm vụ hằng ngày được {quest}, mỗi 10 cấp được {bonus}",
@@ -89,6 +89,6 @@
     "bought": "Thẻ đã sẵn sàng 🧊 — sẽ tự được dùng nếu bạn nghỉ một ngày.",
     "maxed": "Đã giữ tối đa",
     "buying": "Đang mua…",
-    "buy": "Mua · 🌰 {price}"
+    "buy": "Mua · 🪙 {price}"
   }
 }

@@ -6,7 +6,7 @@
     "maxLevel": "Llegaste a las estrellas 🌟",
     "xpToNext": "{into}/{needed} XP para el Nv. {level}",
     "streak": "🔥 {n, plural, one {# día seguido} other {# días seguidos}}",
-    "coins": "🌰 {n, plural, one {# moneda} other {# monedas}}",
+    "coins": "🪙 {n, plural, one {# moneda} other {# monedas}}",
     "freezes": "🧊 {n, plural, one {# congelación} other {# congelaciones}}"
   },
   "avatar": {

@@ -4,16 +4,13 @@ import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
-import {
-  MAX_REVIEW_CAPACITY_BONUS,
-  REVIEW_CAPACITY_PER_PURCHASE,
-  REVIEW_CAPACITY_PRICE,
-  dailyReviewCap,
-} from "@/lib/srs";
+import { MAX_REVIEW_CAPACITY_BONUS, dailyReviewCap, reviewCapacityTiers } from "@/lib/srs";
 
-// Permanent upgrade: +5 daily review slots for 100 coins, up to +20 (30/day
-// total). Mirrors WordBankSlotsCard's shape exactly; the cap is enforced in
-// buy_review_capacity() (migration 0056) — this only reflects it.
+// Permanent upgrade, picked by tier (10/20/30 daily, not one +5 click at a
+// time) — buy_review_capacity(target_bonus) (migration 0057) charges the
+// cumulative price for every 10-block between the current bonus and the
+// chosen tier. Mirrors WordBankSlotsCard's pricing (200 coins/10) but as a
+// picker since there's more than one size to jump to.
 export default function ReviewCapacityButton({
   capacityBonus,
   coins,
@@ -30,30 +27,39 @@ export default function ReviewCapacityButton({
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
 
+  // reviewCapacityTiers() prices are cumulative from zero bonus, so the
+  // actual charge for a jump is the target's price minus the current tier's.
+  const allTiers = reviewCapacityTiers();
+  const priceAt = (b: number) => allTiers.find((tier) => tier.bonus === b)?.price ?? 0;
+  const availableTiers = useMemo(
+    () => allTiers.filter((tier) => tier.bonus > bonus).map((tier) => ({ bonus: tier.bonus, delta: tier.price - priceAt(bonus) })),
+    [bonus] // eslint-disable-line react-hooks/exhaustive-deps
+  );
+
   const maxed = bonus >= MAX_REVIEW_CAPACITY_BONUS;
-  const affordable = isAdmin || coins >= REVIEW_CAPACITY_PRICE;
+  const [target, setTarget] = useState<number>(availableTiers[0]?.bonus ?? bonus);
+  const selected = availableTiers.find((tier) => tier.bonus === target) ?? availableTiers[0];
+  const affordable = isAdmin || (selected ? coins >= selected.delta : false);
   const cap = dailyReviewCap(bonus);
-  const nextCap = dailyReviewCap(Math.min(bonus + REVIEW_CAPACITY_PER_PURCHASE, MAX_REVIEW_CAPACITY_BONUS));
 
   async function buy() {
-    if (busy || maxed) return;
+    if (busy || maxed || !selected) return;
     setBusy(true);
     setMsg(null);
     try {
-      const { data, error } = await supabase.rpc("buy_review_capacity");
+      const { data, error } = await supabase.rpc("buy_review_capacity", { p_target_bonus: selected.bonus });
       if (error) {
         setMsg(
           error.message.includes("not enough coins")
             ? t("errNotEnough")
-            : error.message.includes("max capacity")
-              ? t("errMax", { max: MAX_REVIEW_CAPACITY_BONUS })
-              : error.message.includes("not authenticated")
-                ? t("errAuth")
-                : t("errGeneric")
+            : error.message.includes("not authenticated")
+              ? t("errAuth")
+              : t("errGeneric")
         );
       } else {
-        const now = typeof data === "number" ? data : Math.min(bonus + REVIEW_CAPACITY_PER_PURCHASE, MAX_REVIEW_CAPACITY_BONUS);
+        const now = typeof data === "number" ? data : selected.bonus;
         setBonus(now);
+        setTarget(now);
         setMsg(t("bought", { count: dailyReviewCap(now) }));
         router.refresh();
       }
@@ -73,23 +79,34 @@ export default function ReviewCapacityButton({
             {t("capacity", { count: cap })}
           </span>
         </b>
-        <span className="text-[12px] text-faint">
-          {maxed ? t("atMax", { max: dailyReviewCap(MAX_REVIEW_CAPACITY_BONUS) }) : t("upgrade", { from: cap, to: nextCap })}
-        </span>
         {msg && <span className="block text-[11.5px] mt-0.5 text-success-deep">{msg}</span>}
       </div>
-      <button
-        type="button"
-        onClick={buy}
-        disabled={busy || maxed || !affordable}
-        className="flex-none rounded-[9px] bg-success px-3.5 py-2 text-[12.5px] font-bold text-white hover:bg-success-deep transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        {maxed
-          ? t("maxed")
-          : busy
-            ? t("buying")
-            : t("buy", { step: REVIEW_CAPACITY_PER_PURCHASE, price: REVIEW_CAPACITY_PRICE })}
-      </button>
+
+      {maxed ? (
+        <span className="text-[12px] text-faint">{t("atMax", { max: dailyReviewCap(MAX_REVIEW_CAPACITY_BONUS) })}</span>
+      ) : (
+        <div className="flex items-center gap-2">
+          <select
+            value={target}
+            onChange={(e) => setTarget(Number(e.target.value))}
+            className="rounded-[9px] border border-line bg-cream px-2 py-1.5 text-[12.5px] font-semibold text-charcoal"
+          >
+            {availableTiers.map((tier) => (
+              <option key={tier.bonus} value={tier.bonus}>
+                {dailyReviewCap(tier.bonus)}/day
+              </option>
+            ))}
+          </select>
+          <button
+            type="button"
+            onClick={buy}
+            disabled={busy || !selected || !affordable}
+            className="flex-none rounded-[9px] bg-success px-3.5 py-2 text-[12.5px] font-bold text-white hover:bg-success-deep transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {busy ? t("buying") : t("buy", { step: selected?.bonus ? selected.bonus - bonus : 0, price: selected?.delta ?? 0 })}
+          </button>
+        </div>
+      )}
     </div>
   );
 }

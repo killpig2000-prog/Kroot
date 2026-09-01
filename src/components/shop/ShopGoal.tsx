@@ -1,6 +1,6 @@
 "use client";
 
-// Coin-goal header for the Garden Shop: "45 / 95 🌰 · Saving for Firefly
+// Coin-goal header for the Garden Shop: "45 / 95 🪙 · Saving for Firefly
 // Glow", a sun-yellow gauge, and how many daily quests (or which 10th-level
 // bonus) closes the gap. Pure presentation — goal selection lives in
 // ShopClient, where the catalog/ownership state is.
@@ -114,7 +114,7 @@ export default function ShopGoal({
         </span>
         <div className="min-w-0">
           <p className="text-[22px] leading-none font-extrabold tabular-nums tracking-[-0.02em]">
-            {balance} <span className="text-faint font-bold">/ {goal.price}</span> 🌰
+            {balance} <span className="text-faint font-bold">/ {goal.price}</span> 🪙
           </p>
           <div className="flex items-center gap-2 flex-wrap mt-1.5 text-[13px] text-muted">
             <span className="truncate">

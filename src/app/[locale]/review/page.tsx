@@ -120,7 +120,7 @@ export default async function ReviewPage() {
               {tn("garden")}
             </Link>
             <span>/</span>
-            <b className="text-charcoal font-semibold">{tn("practice")}</b>
+            <b className="text-charcoal font-semibold">{tn("review")}</b>
           </div>
 
           {/* head */}
@@ -129,7 +129,7 @@ export default async function ReviewPage() {
               <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[var(--tint-sky)] text-sky-deep border border-sky-line items-center justify-center text-[15px] mr-[9px]">
                 💧
               </span>
-              {tn("practice")}
+              {tn("review")}
               <span className="ml-2 text-[13px] font-medium text-faint">{t("reviewTime")}</span>
             </h1>
             <span className="flex items-center gap-3 flex-wrap text-[13px] text-muted">

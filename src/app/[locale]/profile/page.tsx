@@ -10,6 +10,7 @@ import BestHours from "@/components/profile/BestHours";
 import WordsToReview, { type DueWord } from "@/components/profile/WordsToReview";
 import { computeSkillProgress } from "@/components/profile/skill-progress";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
+import { dailyReviewCap } from "@/lib/srs";
 import { type CefrLevel } from "@/lib/tree";
 import { PUBLIC_VOCAB_WORDS } from "@/lib/vocab-slugs";
 
@@ -263,8 +264,12 @@ export default async function ProfilePage() {
   // Only the due queue. No box distribution, no stage labels, no intervals:
   // the learner wants this card to manage what needs reviewing, and a
   // collection-health meter is a number they cannot act on.
+  // The real backlog is never shown — only how many are actually reachable
+  // today (this account's daily cap), so this card can't say a bigger number
+  // than /review itself will ever hand out. See [[review daily cap]].
   const due = vocabRows.filter((r) => r.next_review_at != null && r.next_review_at <= nowIso);
-  const dueCount = due.length;
+  const reviewCap = dailyReviewCap(extras?.review_capacity_bonus ?? 0);
+  const dueCount = Math.min(due.length, reviewCap);
 
   const dueWords: DueWord[] = due
     // hardest first, then whatever came due earliest
@@ -273,7 +278,7 @@ export default async function ProfilePage() {
         (b.incorrect_count ?? 0) - (a.incorrect_count ?? 0) ||
         (a.next_review_at ?? "").localeCompare(b.next_review_at ?? "")
     )
-    .slice(0, DUE_LIST_MAX)
+    .slice(0, Math.min(DUE_LIST_MAX, dueCount))
     .map((r) => {
       const korean = koreanFromWordKey(r.word_key);
       const entry = WORD_BY_KOREAN.get(korean);

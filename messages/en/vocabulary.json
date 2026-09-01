@@ -68,7 +68,7 @@
     "atMax": "You're at the maximum of {max} words.",
     "maxed": "Max",
     "buying": "Buying…",
-    "buy": "Buy · 🌰 {price}",
+    "buy": "Buy · 🪙 {price}",
     "bought": "Room for {slots} words now.",
     "errNotEnough": "Not enough coins — daily quests pay 10 each.",
     "errMax": "{max} words is the maximum.",

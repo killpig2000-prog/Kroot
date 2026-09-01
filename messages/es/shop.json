@@ -1,5 +1,5 @@
 {
-  "coins": "🌰 {coins} monedas",
+  "coins": "🪙 {coins} monedas",
   "intro": "Viste tu árbol y el jardín que lo rodea. Toca una tarjeta para probártela en tu propio árbol y cómprala y póntela aquí mismo.",
   "slots": {
     "hat": "Sombreros",
@@ -30,14 +30,14 @@
     "wear": "Ponérselo",
     "claimAdmin": "Conseguir y poner · admin",
     "unlocksAt": "Se desbloquea en el Nv.{level}",
-    "needMore": "Te faltan {n} 🌰",
+    "needMore": "Te faltan {n} 🪙",
     "claim": "Conseguir y poner",
-    "buy": "Comprar y poner · 🌰 {price}"
+    "buy": "Comprar y poner · 🪙 {price}"
   },
   "bought": "{name} ya es tuyo — y está en tu árbol.",
   "featured": {
     "badge": "Solo esta semana",
-    "meta": "{rarity} · {slot} · 🌰 {price}{hasLevel, select, yes { · requiere Nv.{level}} other {}} · desaparece después del {date}",
+    "meta": "{rarity} · {slot} · 🪙 {price}{hasLevel, select, yes { · requiere Nv.{level}} other {}} · desaparece después del {date}",
     "daysLeft": "quedan {n} d"
   },
   "categories": "Categorías de objetos",
@@ -46,7 +46,7 @@
     "wearing": "Puesto ✓",
     "owned": "En propiedad",
     "locked": "🔒 Nv.{level}",
-    "price": "🌰 {price}",
+    "price": "🪙 {price}",
     "goal": "· tu meta · {ready, select, yes {ya puedes comprarlo} other {te faltan {n}}}{hasLevel, select, yes { · Nv.{level}} other {}}",
     "setGoal": "Fijar como meta"
   },
@@ -62,7 +62,7 @@
   "picker": {
     "change": "Cambiar ▾",
     "auto": "El siguiente objeto más barato (automático)",
-    "price": "🌰 {price}{hasLevel, select, yes { · Nv.{level}} other {}}"
+    "price": "🪙 {price}{hasLevel, select, yes { · Nv.{level}} other {}}"
   },
   "goal": {
     "earnNote": "· ganas {quest} por misión diaria y {bonus} cada diez niveles",
@@ -89,6 +89,6 @@
     "bought": "Congelación lista 🧊 — se usará sola si faltas un día.",
     "maxed": "Máximo alcanzado",
     "buying": "Congelando…",
-    "buy": "Comprar · 🌰 {price}"
+    "buy": "Comprar · 🪙 {price}"
   }
 }

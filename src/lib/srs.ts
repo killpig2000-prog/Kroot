@@ -18,15 +18,25 @@ export function nextReviewAt(box: number, from: Date = new Date()): string {
 // The review session size, fixed site-wide — no picker, no exceptions.
 export const REVIEW_SESSION_SIZE = 10;
 
-// A learner can raise their own daily cap by buying capacity — see migration
-// 0056 / buy_review_capacity(). +5 slots for 100 coins, up to +20 (30/day
-// total). This helper folds the purchased bonus into the effective cap;
-// every place that enforces the daily limit should read through it rather
-// than using REVIEW_SESSION_SIZE directly.
-export const REVIEW_CAPACITY_PRICE = 100;
-export const REVIEW_CAPACITY_PER_PURCHASE = 5;
-export const MAX_REVIEW_CAPACITY_BONUS = 20;
+// A learner can raise their own daily cap by buying capacity in 10-unit
+// tiers — see migration 0057 / buy_review_capacity(target_bonus). 200 coins
+// per +10 (same rate as buy_word_bank_slots), up to +30 (40/day total).
+// This helper folds the purchased bonus into the effective cap; every place
+// that enforces the daily limit should read through it rather than using
+// REVIEW_SESSION_SIZE directly.
+export const REVIEW_CAPACITY_PRICE_PER_STEP = 200;
+export const REVIEW_CAPACITY_STEP = 10;
+export const MAX_REVIEW_CAPACITY_BONUS = 30;
 
 export function dailyReviewCap(capacityBonus: number): number {
   return REVIEW_SESSION_SIZE + Math.max(0, Math.min(capacityBonus, MAX_REVIEW_CAPACITY_BONUS));
+}
+
+/** Every tier a learner can buy up to, as (bonus, cumulativeCoinPrice) pairs. */
+export function reviewCapacityTiers(): { bonus: number; price: number }[] {
+  const tiers = [];
+  for (let bonus = REVIEW_CAPACITY_STEP; bonus <= MAX_REVIEW_CAPACITY_BONUS; bonus += REVIEW_CAPACITY_STEP) {
+    tiers.push({ bonus, price: (bonus / REVIEW_CAPACITY_STEP) * REVIEW_CAPACITY_PRICE_PER_STEP });
+  }
+  return tiers;
 }

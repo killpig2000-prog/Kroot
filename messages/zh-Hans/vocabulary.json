@@ -68,7 +68,7 @@
     "atMax": "已达上限 {max} 个词。",
     "maxed": "已满级",
     "buying": "购买中…",
-    "buy": "购买 · 🌰 {price}",
+    "buy": "购买 · 🪙 {price}",
     "bought": "现在可以放 {slots} 个词了。",
     "errNotEnough": "金币不足 — 每日任务各给 10 枚。",
     "errMax": "{max} 个词就是上限。",

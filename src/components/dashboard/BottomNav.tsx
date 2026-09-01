@@ -320,7 +320,7 @@ export default function BottomNav({
             <span className="text-[21px] leading-none" style={onReview ? {} : { filter: "grayscale(1)", opacity: 0.55 }}>
               💧
             </span>
-            {tn("practice")}
+            {tn("review")}
             {due > 0 && (
               <span className="absolute top-1 left-[calc(50%+6px)] min-w-[18px] h-[18px] px-1 rounded-full bg-[#DC2626] text-white text-[10.5px] font-bold leading-[18px] text-center tabular-nums">
                 {due > 99 ? "99+" : due}

@@ -25,13 +25,16 @@ export default function TodaysQuestCard({
   const description = t.has(descKey) ? t(descKey) : quest.description;
 
   if (compact) {
+    // Short label only — no description sentence. It used to line-clamp the
+    // full quest description here, which read as two full lines of text
+    // stacked over "Go →" in a card meant to be a quick button.
     const compactInner = (
       <>
         <span className="flex-none w-9 h-9 rounded-[10px] bg-cream border border-success-line flex items-center justify-center text-[17px]">
           🎯
         </span>
-        <span className="block text-[11.5px] font-semibold text-success-deep leading-tight line-clamp-2">
-          {description}
+        <span className="block text-[11.5px] font-semibold text-success-deep leading-tight">
+          {t("title")}
         </span>
       </>
     );

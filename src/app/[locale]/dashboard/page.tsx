@@ -452,10 +452,9 @@ export default async function DashboardPage() {
                 <span className="flex-none w-9 h-9 rounded-[10px] bg-cream border border-sky-line flex items-center justify-center text-[17px]">
                   💧
                 </span>
-                <b className="block text-[11.5px] font-semibold text-sky-deep leading-tight">{t("review.dueShort", { count: dueCount })}</b>
-                <span className="text-[10.5px] font-bold text-sky-deep transition-transform group-hover:translate-x-0.5">
+                <b className="block text-[12px] font-semibold text-sky-deep leading-tight group-hover:translate-x-0.5 transition-transform">
                   {t("review.short")}
-                </span>
+                </b>
               </Link>
             </div>
           )}
@@ -504,18 +503,20 @@ export default async function DashboardPage() {
                 <span className="flex-none w-9 h-9 rounded-[10px] bg-cream border border-[var(--tint-pink-line)] flex items-center justify-center text-[17px]">
                   💬
                 </span>
-                <b className="block text-[13px] font-semibold text-[#AF3166] leading-tight kr">{slang.kr}</b>
+                <b className="block text-[11.5px] font-semibold text-[#AF3166] leading-tight">{t("slang.title")}</b>
                 <span className="text-[10.5px] font-bold text-[#C13E78] transition-transform group-hover:translate-x-0.5">
                   {t("slang.short")}
                 </span>
               </Link>
-              <div className="flex flex-col items-center text-center gap-1.5 rounded-[16px] border border-line bg-cream px-3 py-3.5 h-full">
+              <Link
+                href="/vocabulary"
+                className="group flex flex-col items-center text-center gap-1.5 rounded-[16px] border border-line bg-cream px-3 py-3.5 h-full transition-all hover:-translate-y-0.5"
+              >
                 <span className="flex-none w-9 h-9 rounded-[10px] bg-warm border border-line flex items-center justify-center text-[15px] font-semibold text-success-deep uppercase">
                   W
                 </span>
-                <b className="block text-[13px] font-semibold text-charcoal leading-tight kr">{wotd.word}</b>
-                <span className="text-[10.5px] text-muted leading-tight line-clamp-1">{wotd.mean}</span>
-              </div>
+                <b className="block text-[11.5px] font-semibold text-charcoal leading-tight">{t("wotd.title")}</b>
+              </Link>
             </div>
           )}
 

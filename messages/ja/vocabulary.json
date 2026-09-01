@@ -68,7 +68,7 @@
     "atMax": "最大の{max}語に達しています。",
     "maxed": "上限",
     "buying": "購入中…",
-    "buy": "購入 · 🌰 {price}",
+    "buy": "購入 · 🪙 {price}",
     "bought": "{slots}語まで入るようになりました。",
     "errNotEnough": "コインが足りません — デイリークエストで10枚もらえます。",
     "errMax": "{max}語が上限です。",
