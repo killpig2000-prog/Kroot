@@ -33,7 +33,7 @@
   "doneOfTotal": "{done} de {total} unidades hechas",
   "bank": {
     "searchPlaceholder": "Busca en tus palabras",
-    "missed": "fallada {count}×",
+    "due": "toca repasar",
     "remove": "Quitar {word}",
     "removed": "Eliminada",
     "undo": "Deshacer",
@@ -158,5 +158,14 @@
     "backInCan": "De vuelta en la regadera:",
     "nothingToReview": "Nada que repasar",
     "levelUp": "¡Subiste de nivel! Ahora eres Nv. {level}"
-  }
+  },
+  "dayN": "Día {n}",
+  "dayOf": "Día {day} de {total}",
+  "wordsLearnedCount": "{n} palabras aprendidas",
+  "startDay": "Empezar Día {n} →",
+  "minWords": "{n} palabras · ~{min} min",
+  "tryTheseTricky": "{n} palabra(s) difíciles de la última vez van primero",
+  "studyAgain": "Estudiar de nuevo",
+  "quizThese": "Repasar estas {n}",
+  "wordsCount": "{n} palabras"
 }

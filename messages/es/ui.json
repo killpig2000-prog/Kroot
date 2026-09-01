@@ -65,7 +65,6 @@
     "bestHours": "Tus mejores horas",
     "peakHour": "Sobre todo hacia las {hour}",
     "sessionsAt": "{hour} · {count, plural, =1 {1 sesión} other {# sesiones}}",
-    "misses": "{count} fallos",
     "reviewDue": "{count, plural, =1 {Repasar 1 palabra} other {Repasar # palabras}}",
     "settings": "Ajustes",
     "noStatsYet": "Termina tu primera unidad y aquí verás tus datos.",
@@ -105,5 +104,8 @@
     "dismissAria": "Descartar"
   },
   "coinsEarned": "+{n} 🪙",
-  "coinsEarnedLabel": "Monedas ganadas"
+  "coinsEarnedLabel": "Monedas ganadas",
+  "levelUp": "¡Subiste de nivel! Ahora eres nivel {level}.",
+  "noCoinsThisTime": "Sin monedas esta vez",
+  "xpEarned": "XP de {skill}"
 }

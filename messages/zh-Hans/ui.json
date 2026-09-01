@@ -65,7 +65,6 @@
     "bestHours": "你的高效时段",
     "peakHour": "{hour} 前后最多",
     "sessionsAt": "{hour} · {count} 次",
-    "misses": "错 {count} 次",
     "reviewDue": "复习这 {count} 个词",
     "settings": "设置",
     "noStatsYet": "学完第一个单元后，这里就会显示你的数据。",
@@ -105,5 +104,8 @@
     "dismissAria": "关闭"
   },
   "coinsEarned": "+{n} 🪙",
-  "coinsEarnedLabel": "获得金币"
+  "coinsEarnedLabel": "获得金币",
+  "levelUp": "升级了！你现在是{level}级。",
+  "noCoinsThisTime": "本次没有金币",
+  "xpEarned": "{skill} XP"
 }

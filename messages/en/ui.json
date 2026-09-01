@@ -65,7 +65,6 @@
     "bestHours": "Your best hours",
     "peakHour": "Busiest around {hour}",
     "sessionsAt": "{hour} · {count, plural, =1 {1 session} other {# sessions}}",
-    "misses": "missed {count}×",
     "reviewDue": "{count, plural, =1 {Review 1 word} other {Review # words}}",
     "settings": "Settings",
     "noStatsYet": "Finish your first unit and your stats show up here.",
@@ -105,5 +104,8 @@
     "dismissAria": "Dismiss"
   },
   "coinsEarned": "+{n} 🪙",
-  "coinsEarnedLabel": "Coins earned"
+  "coinsEarnedLabel": "Coins earned",
+  "levelUp": "Level up! You're now level {level}.",
+  "noCoinsThisTime": "No coins this time",
+  "xpEarned": "{skill} XP"
 }

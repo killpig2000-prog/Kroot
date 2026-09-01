@@ -57,13 +57,9 @@ export default async function WordsToReview({
                     <b className="kr font-semibold text-[14px]">{w.korean}</b>
                     {w.meaning && <span className="text-[12.5px] text-muted"> · {w.meaning}</span>}
                   </span>
-                  {/* the right-hand signal always says why this row is here */}
-                  <small
-                    className={`flex-none text-[11.5px] font-semibold tabular-nums ${
-                      w.misses > 0 ? "text-chart-miss" : "text-faint"
-                    }`}
-                  >
-                    {w.misses > 0 ? t("misses", { count: w.misses }) : t("dueToday")}
+                  <small className="flex-none flex items-center gap-1 text-[11.5px] font-semibold tabular-nums text-sky-deep">
+                    <span aria-hidden="true">💧</span>
+                    {t("dueToday")}
                   </small>
                 </>
               );

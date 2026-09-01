@@ -19,7 +19,7 @@ export type BankItem = {
   meaning: string;
   /** In-app vocabulary page for this word, when it's still in the deck. */
   href: string | null;
-  incorrectCount: number;
+  isDue: boolean;
 };
 
 type Pending = { item: BankItem; index: number };
@@ -215,10 +215,10 @@ export default function WordBankList({
                 >
                   {item.meaning}
                 </span>
-                {item.incorrectCount > 0 && (
-                  <span className="mt-auto pt-[7px] flex items-center gap-1 text-[10.5px] font-bold text-amber">
-                    <i className="not-italic block w-[5px] h-[5px] rounded-full bg-amber" />
-                    {t("bank.missed", { count: item.incorrectCount })}
+                {item.isDue && (
+                  <span className="mt-auto pt-[7px] flex items-center gap-1 text-[10.5px] font-bold text-sky-deep">
+                    <span aria-hidden="true">💧</span>
+                    {t("bank.due")}
                   </span>
                 )}
               </>

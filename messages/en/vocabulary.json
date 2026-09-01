@@ -33,7 +33,7 @@
   "dueForReview": "Due for review",
   "bank": {
     "searchPlaceholder": "Search your words",
-    "missed": "missed {count}×",
+    "due": "due for review",
     "remove": "Remove {word}",
     "removed": "Removed",
     "undo": "Undo",
@@ -158,5 +158,14 @@
     "backInCan": "Back in the watering can:",
     "nothingToReview": "Nothing to review",
     "levelUp": "Level up! You’re now Lv. {level}"
-  }
+  },
+  "dayN": "Day {n}",
+  "dayOf": "Day {day} of {total}",
+  "wordsLearnedCount": "{n} words learned",
+  "startDay": "Start Day {n} →",
+  "minWords": "{n} words · ~{min} min",
+  "tryTheseTricky": "{n} tricky word(s) from last time come first",
+  "studyAgain": "Study again",
+  "quizThese": "Quiz these {n}",
+  "wordsCount": "{n} words"
 }

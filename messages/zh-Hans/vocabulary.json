@@ -33,7 +33,7 @@
   "dueForReview": "需要复习",
   "bank": {
     "searchPlaceholder": "搜索你的单词",
-    "missed": "错了 {count} 次",
+    "due": "到期复习",
     "remove": "删除 {word}",
     "removed": "已删除",
     "undo": "撤销",
@@ -158,5 +158,14 @@
     "backInCan": "重新放回洒水壶：",
     "nothingToReview": "没有要复习的内容",
     "levelUp": "升级啦！你现在是 Lv. {level}"
-  }
+  },
+  "dayN": "第{n}天",
+  "dayOf": "第{day}天 / 共{total}天",
+  "wordsLearnedCount": "已学{n}个单词",
+  "startDay": "开始第{n}天 →",
+  "minWords": "{n}个单词 · 约{min}分钟",
+  "tryTheseTricky": "上次的{n}个难词会优先出现",
+  "studyAgain": "再学一次",
+  "quizThese": "测验这{n}个",
+  "wordsCount": "{n}个单词"
 }

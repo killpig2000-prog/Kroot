@@ -65,7 +65,6 @@
     "bestHours": "Giờ học tốt nhất",
     "peakHour": "Nhiều nhất quanh {hour}",
     "sessionsAt": "{hour} · {count} lượt",
-    "misses": "sai {count} lần",
     "reviewDue": "Ôn {count} từ",
     "settings": "Cài đặt",
     "noStatsYet": "Học xong bài đầu tiên là số liệu sẽ hiện ở đây.",
@@ -105,5 +104,8 @@
     "dismissAria": "Bỏ qua"
   },
   "coinsEarned": "+{n} 🪙",
-  "coinsEarnedLabel": "Xu kiếm được"
+  "coinsEarnedLabel": "Xu kiếm được",
+  "levelUp": "Lên cấp! Bạn hiện là cấp độ {level}.",
+  "noCoinsThisTime": "Lần này không có xu",
+  "xpEarned": "XP {skill}"
 }

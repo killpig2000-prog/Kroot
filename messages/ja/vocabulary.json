@@ -33,7 +33,7 @@
   "dueForReview": "復習が必要",
   "bank": {
     "searchPlaceholder": "単語を検索",
-    "missed": "{count}回まちがえた",
+    "due": "復習日",
     "remove": "{word} を削除",
     "removed": "削除しました",
     "undo": "元に戻す",
@@ -158,5 +158,14 @@
     "backInCan": "またじょうろに戻る単語:",
     "nothingToReview": "復習するものはありません",
     "levelUp": "レベルアップ！ Lv. {level} になりました"
-  }
+  },
+  "dayN": "{n}日目",
+  "dayOf": "{total}日中 {day}日目",
+  "wordsLearnedCount": "{n}語を習得",
+  "startDay": "{n}日目を始める →",
+  "minWords": "{n}語 · 約{min}分",
+  "tryTheseTricky": "前回の苦手な{n}語が最初に出ます",
+  "studyAgain": "もう一度学習",
+  "quizThese": "この{n}語をクイズ",
+  "wordsCount": "{n}語"
 }

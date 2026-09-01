@@ -92,6 +92,7 @@ export default async function MyWordsPage({ params }: { params: Promise<{ locale
     return null;
   }
 
+  const nowIso = new Date().toISOString();
   const items: BankItem[] = rows.map((r) => {
     const w = wordByKey.get(r.word_key);
     // word_key is "topic:level:korean" — a row whose deck entry moved still
@@ -103,7 +104,7 @@ export default async function MyWordsPage({ params }: { params: Promise<{ locale
       romanization: w?.romanization ?? "",
       meaning: w ? getLocalizedMeaning(w, locale) : "",
       href: vocabHref(r.word_key),
-      incorrectCount: r.incorrect_count ?? 0,
+      isDue: r.next_review_at != null && r.next_review_at <= nowIso,
     };
   });
 

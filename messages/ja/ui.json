@@ -65,7 +65,6 @@
     "bestHours": "よく学ぶ時間帯",
     "peakHour": "{hour} ごろが最多",
     "sessionsAt": "{hour} · {count} 回",
-    "misses": "{count} 回まちがえた",
     "reviewDue": "{count} 語を復習する",
     "settings": "設定",
     "noStatsYet": "最初のユニットを終えると、ここに記録が出ます。",
@@ -105,5 +104,8 @@
     "dismissAria": "閉じる"
   },
   "coinsEarned": "+{n} 🪙",
-  "coinsEarnedLabel": "獲得コイン"
+  "coinsEarnedLabel": "獲得コイン",
+  "levelUp": "レベルアップ！レベル{level}になりました。",
+  "noCoinsThisTime": "今回はコインなし",
+  "xpEarned": "{skill}のXP"
 }

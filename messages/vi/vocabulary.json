@@ -33,7 +33,7 @@
   "dueForReview": "Cần ôn tập",
   "bank": {
     "searchPlaceholder": "Tìm trong từ của bạn",
-    "missed": "sai {count} lần",
+    "due": "đến hạn ôn tập",
     "remove": "Xóa {word}",
     "removed": "Đã xóa",
     "undo": "Hoàn tác",
@@ -158,5 +158,14 @@
     "backInCan": "Quay lại bình tưới:",
     "nothingToReview": "Không có gì để ôn tập",
     "levelUp": "Lên cấp! Bạn giờ là Lv. {level}"
-  }
+  },
+  "dayN": "Ngày {n}",
+  "dayOf": "Ngày {day} / {total}",
+  "wordsLearnedCount": "Đã học {n} từ",
+  "startDay": "Bắt đầu Ngày {n} →",
+  "minWords": "{n} từ · ~{min} phút",
+  "tryTheseTricky": "{n} từ khó lần trước sẽ ra trước",
+  "studyAgain": "Học lại",
+  "quizThese": "Kiểm tra {n} từ này",
+  "wordsCount": "{n} từ"
 }
