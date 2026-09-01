@@ -100,7 +100,7 @@ export default function ReviewSession({
     if (logged.current) return;
     logged.current = true;
     const result = await recordCompletion(supabase, "vocabulary", REVIEW_MINUTES);
-    if (result?.leveled_up) setLevelUp(result);
+    if (result?.leveled_up || result?.coins_earned) setLevelUp(result);
   }
 
   async function goTo(href: string) {
@@ -129,9 +129,11 @@ export default function ReviewSession({
           {t("doneSub", { kept, total: questions.length })}
           {slipped > 0 && ` ${t("doneSlipped")}`}
         </p>
-        {levelUp && (
+        {levelUp && (levelUp.leveled_up || levelUp.coins_earned > 0) && (
           <p className="text-sm font-semibold text-success mb-5 -mt-2">
-            🎉 {t("levelUp", { level: levelUp.new_level })}
+            {levelUp.leveled_up && <>🎉 {t("levelUp", { level: levelUp.new_level })}</>}
+            {levelUp.leveled_up && levelUp.coins_earned > 0 && " · "}
+            {levelUp.coins_earned > 0 && tu("coinsEarned", { n: levelUp.coins_earned })}
           </p>
         )}
 

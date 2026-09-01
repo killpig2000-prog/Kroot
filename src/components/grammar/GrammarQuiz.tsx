@@ -113,11 +113,13 @@ export default function GrammarQuizBlock({
   userId?: string;
 }) {
   const t = useTranslations("grammarUi");
+  const tu = useTranslations("ui");
   const supabase = useMemo(() => createClient(), []);
   const recorded = useRef(false);
   const answered = useRef(new Set<number>());
   const correctCount = useRef(0);
   const [newLevel, setNewLevel] = useState<number | null>(null);
+  const [coinsEarned, setCoinsEarned] = useState(0);
   const [done, setDone] = useState(false);
 
   useSaveResume(
@@ -161,6 +163,7 @@ export default function GrammarQuizBlock({
     }
     const res = await recordCompletion(supabase, "grammar", 3);
     if (res?.leveled_up) setNewLevel(res.new_level);
+    setCoinsEarned(res?.coins_earned ?? 0);
   }
 
   return (
@@ -180,9 +183,11 @@ export default function GrammarQuizBlock({
           <span className="inline-flex items-center gap-2 text-[13px] font-semibold rounded-lg px-3 py-1.5 border bg-success-bg text-success border-success-line">
             {t("quiz.done")}
           </span>
-          {newLevel && (
+          {(newLevel || coinsEarned > 0) && (
             <p className="mt-2 text-[13.5px] font-semibold text-success">
-              {t("quiz.levelUp", { n: newLevel })}
+              {newLevel && t("quiz.levelUp", { n: newLevel })}
+              {newLevel && coinsEarned > 0 && " · "}
+              {coinsEarned > 0 && tu("coinsEarned", { n: coinsEarned })}
             </p>
           )}
         </div>

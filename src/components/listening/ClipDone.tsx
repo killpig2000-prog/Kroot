@@ -30,6 +30,8 @@ export default function ClipDone({
   level,
   correct,
   xp,
+  coinsEarned,
+  newLevel,
   next,
   userId,
   onReplay,
@@ -45,6 +47,10 @@ export default function ClipDone({
   /** null = this clip has no quiz. */
   correct: boolean | null;
   xp: number;
+  /** Coins the award_xp call actually granted; arrives after `xp` (which is a local estimate shown immediately). */
+  coinsEarned: number;
+  /** Set only when this completion crossed a level boundary. */
+  newLevel: number | null;
   next: Dialogue | null;
   userId: string | null;
   onReplay: () => void;
@@ -53,6 +59,8 @@ export default function ClipDone({
   onNext: () => void;
 }) {
   const t = useTranslations("listening.done");
+  const tf = useTranslations("listening.finished");
+  const tu = useTranslations("ui");
   const locale = useLocale();
   const supabase = useMemo(() => createClient(), []);
   const [words, setWords] = useState<ClipWord[] | null>(null);
@@ -137,10 +145,20 @@ export default function ClipDone({
           <span className="text-[12.5px] font-bold px-[11px] py-1.5 rounded-full border bg-[var(--tint-teal)] text-teal border-[var(--tint-teal-line)]">
             {t("minXp", { min: estMinutes(dialogue.lines.length), xp })}
           </span>
+          {coinsEarned > 0 && (
+            <span className="text-[12.5px] font-bold px-[11px] py-1.5 rounded-full border bg-[var(--tint-amber)] text-[#B7791F] border-amber-line">
+              {tu("coinsEarned", { n: coinsEarned })}
+            </span>
+          )}
           <span className="text-[12.5px] font-bold px-[11px] py-1.5 rounded-full border bg-cream text-muted border-line tabular-nums">
             {situationIcon} {situationLabel} · {clipNo} / {clipCount}
           </span>
         </div>
+        {newLevel && (
+          <p className="text-[13.5px] font-semibold text-success -mt-1 mb-4">
+            {tf("levelUp", { level: newLevel })}
+          </p>
+        )}
 
         {words && words.length > 0 && (
           <div className="flex justify-center gap-2 flex-wrap mb-5">

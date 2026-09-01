@@ -40,6 +40,7 @@ export default function SummaryPhase({
   onReRead: () => void;
 }) {
   const t = useTranslations("reading.summary");
+  const tu = useTranslations("ui");
 
   return (
     <div className="max-w-[880px]" style={{ animation: "fadeUp .4s ease" }}>
@@ -64,9 +65,11 @@ export default function SummaryPhase({
         <h2 className="font-bold text-[21px] tracking-[-0.02em] mt-3 mb-1.5">
           {t("title", { n: chapterIndex + 1 })}
         </h2>
-        {levelUp && (
+        {levelUp && (levelUp.leveled_up || levelUp.coins_earned > 0) && (
           <p className="text-sm font-semibold text-success">
-            {t("levelUp", { level: levelUp.new_level })}
+            {levelUp.leveled_up && t("levelUp", { level: levelUp.new_level })}
+            {levelUp.leveled_up && levelUp.coins_earned > 0 && " · "}
+            {levelUp.coins_earned > 0 && tu("coinsEarned", { n: levelUp.coins_earned })}
           </p>
         )}
       </div>

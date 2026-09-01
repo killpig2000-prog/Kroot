@@ -20,6 +20,8 @@ export type ProgressResult = {
   new_xp: number;
   new_level: number;
   leveled_up: boolean;
+  /** Coins this call actually granted — 0 when the activity bonus's proof-of-progress check didn't pass. */
+  coins_earned: number;
 };
 
 /** Add study minutes to today's daily_activity row (server-side, atomic). */

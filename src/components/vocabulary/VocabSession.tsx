@@ -216,7 +216,7 @@ export default function VocabSession({
 
     const minutes = MINUTES_PER_SESSION + (tookQuiz ? QUIZ_BONUS_MINUTES : 0);
     const result = await recordCompletion(supabase, "vocabulary", minutes);
-    if (result?.leveled_up) setLevelUp(result);
+    if (result?.leveled_up || result?.coins_earned) setLevelUp(result);
   }
 
   async function goTo(href: string) {

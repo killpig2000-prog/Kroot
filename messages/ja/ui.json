@@ -94,5 +94,6 @@
     "install": "インストール",
     "notNow": "今はしない",
     "dismissAria": "閉じる"
-  }
+  },
+  "coinsEarned": "+{n} 🪙"
 }

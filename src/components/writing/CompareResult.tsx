@@ -40,6 +40,7 @@ export default function CompareResult({
   onGoTo: (href: string) => void;
 }) {
   const t = useTranslations("writing.result");
+  const tu = useTranslations("ui");
   const firstTryCount = answers.filter((a) => a.checks <= 1).length;
   const practicedCount = answers.length - firstTryCount;
   const offset = CIRC - (Math.max(0, Math.min(100, score)) / 100) * CIRC;
@@ -103,7 +104,7 @@ export default function CompareResult({
             </b>
             <span className="text-xs text-muted">{t("checkedOneGo")}</span>
           </div>
-          {levelUp ? (
+          {levelUp?.leveled_up ? (
             <div className="px-4 sm:px-6 py-4">
               <b className="block text-[20px] sm:text-[22px] font-extrabold tracking-[-0.02em] tabular-nums">
                 {t("levelUpValue", { n: levelUp.new_level })}
@@ -123,6 +124,11 @@ export default function CompareResult({
             <span className="text-xs text-muted">{t("yourLevel")}</span>
           </div>
         </div>
+        {(levelUp?.coins_earned ?? 0) > 0 && (
+          <p className="text-center text-xs font-semibold text-muted py-2 border-t border-line">
+            {tu("coinsEarned", { n: levelUp!.coins_earned })}
+          </p>
+        )}
       </div>
 
       <div className="flex flex-col gap-3">

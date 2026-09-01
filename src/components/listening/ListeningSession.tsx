@@ -13,7 +13,14 @@ import ClipDone from "@/components/listening/ClipDone";
 import FinishedAllCard from "@/components/listening/FinishedAllCard";
 import ClipList from "@/components/listening/ClipList";
 
-type DoneInfo = { dialogue: Dialogue; correct: boolean | null; xp: number };
+type DoneInfo = {
+  dialogue: Dialogue;
+  correct: boolean | null;
+  xp: number;
+  /** Filled in once the award_xp RPC resolves — 0 until then, never negative. */
+  coinsEarned: number;
+  newLevel: number | null;
+};
 
 // Session: clip list → player (always starts at line 1 — no cross-visit
 // resume) → done screen → next clip, and the all-done celebration after
@@ -55,7 +62,7 @@ export default function ListeningSession({
     setOpenId(null);
     const full = XP_POINTS.listening ?? 12;
     const xp = Math.max(0, full - Math.round(full * awardedRatio));
-    setDone({ dialogue, correct, xp });
+    setDone({ dialogue, correct, xp, coinsEarned: 0, newLevel: null });
 
     const userId = await getClientUserId(supabase);
     if (userId) {
@@ -82,6 +89,16 @@ export default function ListeningSession({
       }
       const res = await recordCompletion(supabase, "listening", 3, awardedRatio);
       if (res?.leveled_up) setNewLevel(res.new_level);
+      // The screen already rendered with the local xp estimate above; merge
+      // in the server-confirmed coins (and level-up, for this exact card —
+      // `newLevel` state only reaches FinishedAllCard/ClipList) once the RPC
+      // returns. Guarded on dialogue identity: a fast learner can already be
+      // on the next clip by the time this resolves.
+      setDone((prev) =>
+        prev && prev.dialogue.id === dialogue.id
+          ? { ...prev, coinsEarned: res?.coins_earned ?? 0, newLevel: res?.leveled_up ? res.new_level : null }
+          : prev
+      );
     }
   }
 
@@ -150,6 +167,8 @@ export default function ListeningSession({
         level={level}
         correct={done.correct}
         xp={done.xp}
+        coinsEarned={done.coinsEarned}
+        newLevel={done.newLevel}
         next={next}
         userId={userId}
         onReplay={() => {

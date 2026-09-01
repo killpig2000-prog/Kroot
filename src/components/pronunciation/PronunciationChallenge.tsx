@@ -182,7 +182,7 @@ export default function PronunciationChallenge({
     if (logged.current) return;
     logged.current = true;
     const result = await recordCompletion(supabase, "pronunciation", MINUTES_PER_SESSION);
-    if (result?.leveled_up) setLevelUp(result);
+    if (result?.leveled_up || result?.coins_earned) setLevelUp(result);
     router.refresh();
   }
 

@@ -123,7 +123,7 @@ export default function ReadingSession({
     }
 
     const result = await recordCompletion(supabase, "reading", MINUTES_PER_PASSAGE);
-    if (result?.leveled_up) setLevelUp(result);
+    if (result?.leveled_up || result?.coins_earned) setLevelUp(result);
   }
 
   async function goTo(href: string) {

@@ -34,6 +34,7 @@ export default function FinishedCard({
   onRunItBack: () => void;
 }) {
   const t = useTranslations("pronunciation.finished");
+  const tu = useTranslations("ui");
   const weakWords = words
     .filter((w) => (attempts[w.id]?.count ?? 0) > 1)
     .sort((a, b) => (attempts[a.id]?.best ?? 0) - (attempts[b.id]?.best ?? 0))
@@ -62,9 +63,11 @@ export default function FinishedCard({
       <p className="text-sm text-muted mb-[22px]">
         {t("sub", { n: words.length })}
       </p>
-      {levelUp && (
+      {levelUp && (levelUp.leveled_up || levelUp.coins_earned > 0) && (
         <p className="text-sm font-semibold text-success mb-[22px] -mt-3">
-          {t("levelUp", { level: levelUp.new_level })}
+          {levelUp.leveled_up && t("levelUp", { level: levelUp.new_level })}
+          {levelUp.leveled_up && levelUp.coins_earned > 0 && " · "}
+          {levelUp.coins_earned > 0 && tu("coinsEarned", { n: levelUp.coins_earned })}
         </p>
       )}
       <div className="flex justify-center gap-3 mb-6 flex-wrap">

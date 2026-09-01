@@ -138,7 +138,7 @@ export default function WritingSession({
     void clearResume(supabase, userId);
 
     const res = await recordCompletion(supabase, "writing", MINUTES_PER_CHAPTER);
-    if (res?.leveled_up) setLevelUp(res);
+    if (res?.leveled_up || res?.coins_earned) setLevelUp(res);
   }
 
   async function goTo(href: string) {

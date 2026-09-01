@@ -55,9 +55,11 @@ export default function VocabSummaryPhase({
         {t("summary.title", { count: words.length })} 🌱
       </h2>
       <p className="text-sm text-muted mb-[22px]">{t("summary.sub")}</p>
-      {levelUp && (
+      {levelUp && (levelUp.leveled_up || levelUp.coins_earned > 0) && (
         <p className="text-sm font-semibold text-success mb-[22px] -mt-3">
-          🎉 {t("summary.levelUp", { level: levelUp.new_level })}
+          {levelUp.leveled_up && <>🎉 {t("summary.levelUp", { level: levelUp.new_level })}</>}
+          {levelUp.leveled_up && levelUp.coins_earned > 0 && " · "}
+          {levelUp.coins_earned > 0 && tu("coinsEarned", { n: levelUp.coins_earned })}
         </p>
       )}
 

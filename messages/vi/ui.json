@@ -94,5 +94,6 @@
     "install": "Cài đặt",
     "notNow": "Để sau",
     "dismissAria": "Bỏ qua"
-  }
+  },
+  "coinsEarned": "+{n} 🪙"
 }

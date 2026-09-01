@@ -94,5 +94,6 @@
     "install": "安装",
     "notNow": "以后再说",
     "dismissAria": "关闭"
-  }
+  },
+  "coinsEarned": "+{n} 🪙"
 }
