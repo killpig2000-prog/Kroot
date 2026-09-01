@@ -89,6 +89,10 @@ export default function WordDetailCard({
   // Which button is mid-save, so it can say so instead of just greying out.
   const [saving, setSaving] = useState<"next" | "got-it" | null>(null);
   const [saveFailed, setSaveFailed] = useState(false);
+  // Got it is a toggle now, separate from moving on — tap it to check the
+  // word off, tap again to undo. Navigating to the next word is its own
+  // button, so a learner can check off several words before moving on.
+  const [marked, setMarked] = useState(status.key === "known");
 
   // Warm the audio cache for every 🔊 on this page as soon as it loads, so
   // the first tap plays instantly instead of waiting on a cold TTS synthesis.
@@ -96,32 +100,32 @@ export default function WordDetailCard({
     prefetchKorean([word.korean, word.example_kr, ...word.moreExamples.map((ex) => ex.kr)]);
   }, [word.korean, word.example_kr, word.moreExamples]);
 
-  async function advance(gotIt: boolean) {
+  // Tapping "Got it" while already checked undoes it (back to still
+  // learning); any other tap sets the state the button says.
+  async function mark(gotIt: boolean) {
+    const next = gotIt && marked ? false : gotIt;
     setSaving(gotIt ? "got-it" : "next");
     setSaveFailed(false);
     const supabase = createClient();
-    const nb = nextBox(box, gotIt);
+    const nb = nextBox(box, next);
     try {
       const { error } = await supabase.from("vocabulary_progress").upsert(
         {
           user_id: userId,
           word_key: word.key,
-          correct_count: correctCount + (gotIt ? 1 : 0),
-          incorrect_count: incorrectCount + (gotIt ? 0 : 1),
+          correct_count: correctCount + (next ? 1 : 0),
+          incorrect_count: incorrectCount + (next ? 0 : 1),
           last_reviewed_at: new Date().toISOString(),
           box: nb,
           next_review_at: nextReviewAt(nb),
         },
         { onConflict: "user_id,word_key" }
       );
-      // Moving on would hide the loss: the word would come back unprogressed
-      // days later with nothing to explain it. Stay put so the tap can be
-      // repeated.
       if (error) {
         setSaveFailed(true);
         return;
       }
-      router.push(nextHref ?? unitHref);
+      setMarked(next);
     } catch {
       setSaveFailed(true);
     } finally {
@@ -129,6 +133,10 @@ export default function WordDetailCard({
       // the word with no way forward.
       setSaving(null);
     }
+  }
+
+  function goNext() {
+    router.push(nextHref ?? unitHref);
   }
 
   // Add-to-word-bank: flags the row saved with untouched counts, so picking a
@@ -176,9 +184,27 @@ export default function WordDetailCard({
           className="absolute top-0 bottom-0 left-[clamp(28px,6vw,52px)] w-px bg-[var(--tint-rose-line)] opacity-70 pointer-events-none"
           aria-hidden="true"
         />
-        <span className="absolute top-4 right-5 text-[10.5px] font-black tracking-[.06em] uppercase text-amber border-2 border-amber rounded-[6px] px-2 py-[3px] rotate-[-6deg] opacity-80 select-none">
-          {t(status.key)}
-        </span>
+        {marked ? (
+          <span
+            aria-label={t("gotIt")}
+            className="absolute top-3.5 right-4 w-9 h-9 rounded-full bg-success flex items-center justify-center shadow-[0_4px_0_var(--color-success-deep)] rotate-[-6deg] select-none"
+          >
+            <svg viewBox="0 0 16 16" className="w-[18px] h-[18px]" aria-hidden="true">
+              <path
+                d="M3.2 8.4 6.4 11.6 12.8 5.2"
+                fill="none"
+                stroke="white"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </span>
+        ) : (
+          <span className="absolute top-4 right-5 text-[10.5px] font-black tracking-[.06em] uppercase text-amber border-2 border-amber rounded-[6px] px-2 py-[3px] rotate-[-6deg] opacity-80 select-none">
+            {t(status.key)}
+          </span>
+        )}
 
         <div className="relative pt-6 pb-5 pr-[clamp(18px,4vw,26px)] pl-[clamp(40px,8vw,70px)]">
           <div className="grid grid-cols-[1fr_auto] gap-4 items-start mb-1 pr-16">
@@ -267,13 +293,26 @@ export default function WordDetailCard({
       {/* actions — a bar under the page, full card width, so the thumb
           doesn't have to reach into the card and the screen isn't half empty */}
       <div className="grid grid-cols-2 gap-2 mt-3.5">
-        <button type="button" className={`${BTN_LINE} w-full justify-center`} disabled={saving !== null} onClick={() => advance(false)}>
+        <button type="button" className={`${BTN_LINE} w-full justify-center`} disabled={saving !== null} onClick={() => mark(false)}>
           {saving === "next" ? tu("saving") : t("stillLearning")}
         </button>
-        <button type="button" className={`${BTN_INK} w-full justify-center`} disabled={saving !== null} onClick={() => advance(true)}>
-          {saving === "got-it" ? tu("saving") : t("gotIt")}
+        <button
+          type="button"
+          className={`${marked ? BTN_INK : BTN_LINE} w-full justify-center`}
+          disabled={saving !== null}
+          onClick={() => mark(true)}
+        >
+          {saving === "got-it" ? tu("saving") : marked ? `✓ ${t("gotIt")}` : t("gotIt")}
         </button>
       </div>
+
+      <button
+        type="button"
+        onClick={goNext}
+        className={`${BTN_INK} w-full justify-center mt-2`}
+      >
+        {t("detail.next")}
+      </button>
 
       {saveFailed && (
         <p role="status" className="mt-2 text-[12.5px] text-danger text-center">
@@ -291,15 +330,20 @@ export default function WordDetailCard({
             ← {t("detail.backToUnit")}
           </Link>
         )}
-        {/* The saved/full states replace the add button in place, so they must
-            never be links: a tap's trailing click lands ~50-300ms after
-            touchend, by which time React has swapped the element — the word
-            got saved AND the learner was thrown to /review/words. They stay
-            plain status now; the sidebar carries the way to the word bank. */}
+        {/* The add button swaps into this saved state in place — a fast tap's
+            trailing click used to land after that swap and fire whatever was
+            now underneath, so this stayed a static status. It's a real
+            button now instead, but only ever rendered after `inBank` is
+            already true on a prior render, so that same-tap race can't
+            reach it: a tap here is always a separate, deliberate tap. */}
         {inBank ? (
-          <span className="min-w-0 inline-flex items-center gap-1.5 rounded-[10px] border border-success-line bg-success-bg px-3 py-2 font-semibold text-success-deep">
+          <button
+            type="button"
+            onClick={() => router.push("/review/words")}
+            className="min-w-0 inline-flex items-center gap-1.5 rounded-[10px] border border-success-line bg-success-bg px-3 py-2 font-semibold text-success-deep hover:bg-success-line transition-colors"
+          >
             <span className="truncate">{t("bank.savedWithCount", { used: savedCount, slots })}</span>
-          </span>
+          </button>
         ) : addError === "full" ? (
           <span className="min-w-0 inline-flex items-center gap-1.5 rounded-[10px] border border-amber-line bg-[var(--tint-amber)] px-3 py-2 font-semibold text-[#B7791F]">
             <span className="truncate">{t("bank.fullShort", { used: savedCount, slots })}</span>
