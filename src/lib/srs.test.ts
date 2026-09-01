@@ -1,5 +1,13 @@
 import { describe, expect, it } from "vitest";
-import { MAX_BOX, SRS_INTERVALS_DAYS, nextBox, nextReviewAt } from "@/lib/srs";
+import {
+  MAX_BOX,
+  REVIEW_SESSION_SIZE,
+  REVIEW_SESSION_SIZES,
+  SRS_INTERVALS_DAYS,
+  nextBox,
+  nextReviewAt,
+  resolveReviewSize,
+} from "@/lib/srs";
 
 describe("nextBox", () => {
   it("advances one box on a correct review", () => {
@@ -36,5 +44,27 @@ describe("nextReviewAt", () => {
   it("clamps an out-of-range box to the nearest valid interval", () => {
     expect(nextReviewAt(0, from)).toBe(nextReviewAt(1, from));
     expect(nextReviewAt(99, from)).toBe(nextReviewAt(MAX_BOX, from));
+  });
+});
+
+describe("resolveReviewSize", () => {
+  it("defaults to the standard session for anything it doesn't recognise", () => {
+    expect(resolveReviewSize(undefined)).toBe(REVIEW_SESSION_SIZE);
+    expect(resolveReviewSize("")).toBe(REVIEW_SESSION_SIZE);
+    expect(resolveReviewSize("abc")).toBe(REVIEW_SESSION_SIZE);
+    // Not on the offered list: a hand-typed ?n= must not become the limit.
+    expect(resolveReviewSize("500")).toBe(REVIEW_SESSION_SIZE);
+    expect(resolveReviewSize("-5")).toBe(REVIEW_SESSION_SIZE);
+    expect(resolveReviewSize("0")).toBe(REVIEW_SESSION_SIZE);
+  });
+
+  it("accepts each offered size", () => {
+    for (const size of REVIEW_SESSION_SIZES) {
+      expect(resolveReviewSize(String(size))).toBe(size);
+    }
+  });
+
+  it("takes the first value when the query string repeats ?n=", () => {
+    expect(resolveReviewSize(["20", "30"])).toBe(20);
   });
 });

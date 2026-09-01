@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import { useBackToClose } from "@/hooks/useBackToClose";
 import type { SearchEntry } from "@/lib/vocab-search-index";
 
 const MAX_RESULTS = 8;
@@ -41,6 +42,13 @@ export default function VocabSearch() {
     setOpen(false);
     setQuery("");
   }
+
+  // Escape closes it on a keyboard; Back does the same on a phone.
+  const close = useCallback(() => {
+    setOpen(false);
+    setQuery("");
+  }, []);
+  useBackToClose(open, close);
 
   useEffect(() => {
     if (!open) return;

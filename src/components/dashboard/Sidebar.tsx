@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter, usePathname } from "@/i18n/navigation";
 import { rememberLocale } from "@/i18n/locale";
+import { useBackToClose } from "@/hooks/useBackToClose";
 import AccountMenu from "@/components/dashboard/AccountMenu";
 import { Link } from "@/i18n/navigation";
 import { MAIN_ITEMS, SECTIONS, type NavColor } from "@/components/dashboard/navItems";
@@ -215,6 +216,10 @@ export default function Sidebar(props: Props) {
     setOpenForPathname(pathname);
     setOpen(false);
   }
+
+  // Back closes the drawer instead of leaving the page.
+  const closeDrawer = useCallback(() => setOpen(false), []);
+  useBackToClose(open, closeDrawer);
 
   useEffect(() => {
     if (!open) return;

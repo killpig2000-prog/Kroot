@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { MAIN_ITEMS, SECTIONS, type NavColor } from "@/components/dashboard/navItems";
+import { useBackToClose } from "@/hooks/useBackToClose";
 
 // Four tabs (2026-08-28): Garden · Learn · Review · More — equal-width cells
 // that fill the bar edge to edge (2026-08-29), so each tap target is a quarter
@@ -207,6 +208,11 @@ export default function BottomNav({
       document.body.style.overflow = prev;
     };
   }, [sheet]);
+
+  // Back closes the sheet rather than leaving the page — it is a hardware
+  // button in the Play Store wrapper.
+  const closeSheet = useCallback(() => setSheet(null), []);
+  useBackToClose(sheet !== null, closeSheet);
 
   const tn = useTranslations("nav");
   const close = () => setSheet(null);
