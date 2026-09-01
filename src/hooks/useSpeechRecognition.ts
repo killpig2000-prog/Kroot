@@ -166,16 +166,19 @@ export function useKoreanSpeaker() {
 
   const speak = useCallback(
     (text: string, rate = 0.9) => {
+      const done = () => {
+        speakingRef.current = false;
+        setIsSpeaking(false);
+      };
       const started = speakKorean(text, {
         rate,
-        onend: () => {
-          speakingRef.current = false;
-          setIsSpeaking(false);
-        },
-        onerror: () => {
-          speakingRef.current = false;
-          setIsSpeaking(false);
-        },
+        onend: done,
+        onerror: done,
+        // Without this the ref latches true for a superseded utterance, and
+        // the unmount cleanup above then calls the global stopSpeaking() on
+        // someone else's still-playing dialogue — the 2026-08-30 bug, reached
+        // by a different road.
+        oncancel: done,
       });
       if (started) {
         speakingRef.current = true;

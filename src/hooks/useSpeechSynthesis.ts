@@ -62,6 +62,15 @@ export function useSpeechSynthesis(lines: DialogueLine[], rate = 0.9) {
           rate: rateRef.current,
           pitch: speakerPitch(lines[i].speaker),
           onend: () => speakNext(i + 1),
+          // Something else took the audio floor (a tapped word's speaker
+          // button, most often). The chain is over — say so, instead of
+          // leaving the pause button and "playing line N" hint running over
+          // silence until the learner reloads.
+          oncancel: () => {
+            indexRef.current = -1;
+            setCurrentIndex(-1);
+            setIsPlaying(false);
+          },
         });
       };
 
@@ -87,14 +96,16 @@ export function useSpeechSynthesis(lines: DialogueLine[], rate = 0.9) {
       indexRef.current = i;
       setCurrentIndex(i);
       setIsPlaying(true);
+      const clear = () => {
+        indexRef.current = -1;
+        setCurrentIndex(-1);
+        setIsPlaying(false);
+      };
       speakKorean(lines[i].kr, {
         rate: rateRef.current,
         pitch: speakerPitch(lines[i].speaker),
-        onend: () => {
-          indexRef.current = -1;
-          setCurrentIndex(-1);
-          setIsPlaying(false);
-        },
+        onend: clear,
+        oncancel: clear,
       });
     },
     [isSupported, lines, speakerPitch]

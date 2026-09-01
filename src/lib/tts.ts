@@ -58,10 +58,27 @@ export type SpeakOptions = {
   pitch?: number;
   onend?: () => void;
   onerror?: () => void;
+  /**
+   * This utterance was superseded by a newer speak/stop before it finished.
+   * Distinct from onend on purpose: a caller chaining lines must NOT advance
+   * on a cancel (newer audio is already playing), but it does have to drop
+   * its own "still playing" state, or the UI narrates a dialogue that died.
+   */
+  oncancel?: () => void;
 };
 
 // Bumped on every speak/stop so a slow fetch can't play over newer audio.
 let generation = 0;
+// The in-flight utterance's cancel handler, so the next speak/stop can tell
+// it that it lost the floor. Cleared as soon as an utterance settles.
+let cancelCurrent: (() => void) | null = null;
+
+/** Retire the in-flight utterance, notifying whoever was waiting on it. */
+function supersede() {
+  const prev = cancelCurrent;
+  cancelCurrent = null;
+  prev?.();
+}
 // One reused <audio> element for the whole app, instead of a fresh `new
 // Audio()` per line. Safari (notably iOS) only treats an element as
 // "unlocked" for autoplay once it has played inside a user gesture; a new
@@ -84,7 +101,14 @@ const pending = new Map<string, Promise<string | null>>();
 // a function invocation.
 const ENGINE = "edge-tts";
 
-async function cachedPublicUrl(text: string, apiVoice: "f" | "m"): Promise<string | null> {
+/**
+ * A url means the phrase is already synthesized. `null` means storage
+ * answered that it genuinely isn't there, so synthesizing is the right next
+ * step. `undefined` means we couldn't tell — a 429 or a server error — and
+ * treating that as "absent" is how a burst of warm-ups turns into a burst of
+ * re-synthesis for audio that already exists.
+ */
+async function cachedPublicUrl(text: string, apiVoice: "f" | "m"): Promise<string | null | undefined> {
   const base = process.env.NEXT_PUBLIC_SUPABASE_URL;
   if (!base || !crypto?.subtle) return null;
   const bytes = new TextEncoder().encode(`${ENGINE}|${apiVoice}|${text}`);
@@ -94,7 +118,9 @@ async function cachedPublicUrl(text: string, apiVoice: "f" | "m"): Promise<strin
     .join("");
   const url = `${base}/storage/v1/object/public/tts/${hash}.mp3`;
   const res = await fetch(url, { method: "HEAD" }).catch(() => null);
-  return res?.ok ? url : null;
+  if (!res) return undefined; // network failure — unknown, not absent
+  if (res.ok) return url;
+  return res.status === 404 ? null : undefined;
 }
 
 async function fetchAudioUrl(text: string, apiVoice: "f" | "m"): Promise<string | null> {
@@ -111,6 +137,10 @@ async function fetchAudioUrl(text: string, apiVoice: "f" | "m"): Promise<string 
         urlCache.set(key, cached);
         return cached;
       }
+      // Storage couldn't answer. Fall back to the browser voice for this tap
+      // rather than paying to re-synthesize a phrase that is probably already
+      // in the bucket; the next attempt re-checks.
+      if (cached === undefined) return null;
       const res = await fetch("/api/tts", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -136,13 +166,37 @@ async function fetchAudioUrl(text: string, apiVoice: "f" | "m"): Promise<string 
 
 // Warm the audio cache for phrases the learner is about to hear (a vocab
 // deck, a dialogue's lines) so the first tap plays instantly.
+// How many warm-ups may be in flight at once. Firing the whole list in
+// parallel is what /hangul used to do with its 87 phrases, and Supabase
+// storage answered a chunk of them with 429 — which fetchAudioUrl reads as
+// "not cached yet" and answers by re-synthesizing audio that already exists.
+// A queue keeps the warm-up a warm-up.
+const PREFETCH_CONCURRENCY = 4;
+const prefetchQueue: (() => Promise<unknown>)[] = [];
+let prefetchActive = 0;
+
+function drainPrefetchQueue() {
+  while (prefetchActive < PREFETCH_CONCURRENCY && prefetchQueue.length) {
+    const job = prefetchQueue.shift()!;
+    prefetchActive++;
+    void job().finally(() => {
+      prefetchActive--;
+      drainPrefetchQueue();
+    });
+  }
+}
+
 export function prefetchKorean(texts: string[], apiVoice: "f" | "m" = "f") {
   if (typeof window === "undefined") return;
   for (const t of texts) {
     const clean = sanitizeKorean(t);
     const spoken = JAMO_SOUND[clean] ?? clean;
-    if (/[가-힣]/.test(spoken)) void fetchAudioUrl(spoken, apiVoice);
+    if (!/[가-힣]/.test(spoken)) continue;
+    // Already cached or already being fetched — no need to queue it at all.
+    if (urlCache.has(`${apiVoice}|${spoken}`) || pending.has(`${apiVoice}|${spoken}`)) continue;
+    prefetchQueue.push(() => fetchAudioUrl(spoken, apiVoice));
   }
+  drainPrefetchQueue();
 }
 
 function speakWithBrowser(text: string, opts: SpeakOptions) {
@@ -170,6 +224,8 @@ export function speakKorean(text: string, opts: SpeakOptions = {}): boolean {
   const gen = ++generation;
   audioEl?.pause();
   if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+  // After the generation moved, so the retired caller can't resurrect itself.
+  supersede();
 
   // The pitch knob only ever distinguishes dialogue speakers — map the low
   // one to the male neural voice.
@@ -185,9 +241,19 @@ export function speakKorean(text: string, opts: SpeakOptions = {}): boolean {
     if (settled || gen !== generation) return;
     settled = true;
     clearTimeout(watchdog);
+    // Clear before onend: a chaining caller starts the next line synchronously
+    // from inside it, and that speak must not read this one as still in flight.
+    if (cancelCurrent === cancel) cancelCurrent = null;
     opts.onend?.();
   };
+  const cancel = () => {
+    if (settled) return;
+    settled = true;
+    clearTimeout(watchdog);
+    opts.oncancel?.();
+  };
   const watchdog = window.setTimeout(finish, Math.max(4000, spoken.length * 180));
+  cancelCurrent = cancel;
 
   void (async () => {
     const url = await fetchAudioUrl(spoken, apiVoice);
@@ -219,4 +285,5 @@ export function stopSpeaking() {
   generation++;
   audioEl?.pause();
   if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+  supersede();
 }
