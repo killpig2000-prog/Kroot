@@ -1,6 +1,7 @@
 "use client"; // Error boundaries must be Client Components
 
 import { useEffect } from "react";
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 
 // Something threw at runtime = the tree wilted a little. Watering (retry)
@@ -12,6 +13,11 @@ export default function Error({
   error: Error & { digest?: string };
   unstable_retry: () => void;
 }) {
+  // This boundary renders inside the [locale] layout, so the messages
+  // provider is above it — it was the one screen still hardcoded in English,
+  // shown to a learner at the worst possible moment.
+  const t = useTranslations("error");
+
   useEffect(() => {
     console.error(error);
   }, [error]);
@@ -21,7 +27,7 @@ export default function Error({
       <div className="text-center max-w-[440px]">
         <div className="inline-block border border-line rounded-[14px] bg-warm px-8 pt-7 pb-4 mb-5 relative">
           <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 bg-cream border border-line rounded-full px-3 py-1 text-[11.5px] font-semibold whitespace-nowrap">
-            <span className="kr">앗, 미안해요!</span> <span className="text-faint">oops, sorry!</span>
+            <span className="kr">앗, 미안해요!</span> <span className="text-faint">{t("bubble")}</span>
           </span>
           {/* A wilted little tree — droopy leaf, dizzy eyes, one sweat drop */}
           <svg className="w-[92px] h-[92px]" viewBox="0 0 100 100" aria-hidden="true">
@@ -43,31 +49,29 @@ export default function Error({
         </div>
 
         <h1 className="font-bold text-[clamp(20px,4vw,25px)] tracking-[-0.02em] mb-2">
-          Our tree wilted for a second
+          {t("title")}
         </h1>
-        <p className="text-[14px] text-muted leading-[1.65] mb-7">
-          Something went wrong on our side — your progress is safe and rooted.
-          <br />
-          A splash of water usually fixes it.
-        </p>
+        <p className="text-[14px] text-muted leading-[1.65] mb-7">{t("body")}</p>
 
         <div className="flex justify-center gap-2.5 flex-wrap">
           <button
             onClick={() => unstable_retry()}
             className="rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-success hover:bg-success-deep transition-colors"
           >
-            Try again
+            {t("retry")}
           </button>
           <Link
             href="/dashboard"
             className="rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-charcoal bg-cream border border-line hover:bg-warm transition-colors"
           >
-            Back to my garden
+            {t("backToGarden")}
           </Link>
         </div>
 
         {error.digest && (
-          <p className="mt-6 text-[11.5px] text-[#CFC8B8] tabular-nums">error id: {error.digest}</p>
+          <p className="mt-6 text-[11.5px] text-[#CFC8B8] tabular-nums">
+            {t("errorId", { id: error.digest })}
+          </p>
         )}
       </div>
     </main>

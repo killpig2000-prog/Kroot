@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { isRateLimited } from "@/lib/rate-limit";
 
 export async function POST(request: Request) {
   const supabase = await createClient();
@@ -7,6 +8,13 @@ export async function POST(request: Request) {
     data: { user },
   } = await supabase.auth.getUser();
   if (!user) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
+
+  // The other two write routes are limited; this one was not. Signed in, so
+  // the user id is the key — generous enough that nobody with something to
+  // say hits it.
+  if (isRateLimited("feedback", user.id, 20, 60_000)) {
+    return NextResponse.json({ error: "rate_limited" }, { status: 429 });
+  }
 
   const body = await request.json().catch(() => null);
   const message = typeof body?.message === "string" ? body.message.trim() : "";

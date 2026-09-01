@@ -10,6 +10,7 @@ import {
   buildQuizQuestions,
   seedFromWords,
   type QuizQuestion,
+  type VocabWord,
   type VocabWordWithProgress,
 } from "@/lib/vocabulary";
 
@@ -19,9 +20,12 @@ const CARD = "max-w-[560px] border border-line rounded-[14px] p-[clamp(20px,3vw,
 
 export default function ReviewSession({
   words,
+  pool,
   userId,
 }: {
   words: VocabWordWithProgress[];
+  /** Same-level words the quiz draws its wrong answers from. */
+  pool?: VocabWord[];
   userId: string;
 }) {
   const router = useRouter();
@@ -32,7 +36,7 @@ export default function ReviewSession({
   // Seeded: this initializer runs during render on the server and again while
   // hydrating, so the two must agree on the option order.
   const [questions] = useState<QuizQuestion[]>(() =>
-    buildQuizQuestions(words, seedFromWords(words))
+    buildQuizQuestions(words, seedFromWords(words), pool)
   );
   const [index, setIndex] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);

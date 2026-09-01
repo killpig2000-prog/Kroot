@@ -58,7 +58,23 @@ export function splitPassageLines(passage: Passage): PassageLine[] {
     (structured ? text.split("\n") : text.split(/(?<=[.!?])\s+/)).filter(Boolean);
   const kr = split(passage.body_kr);
   const en = split(passage.body_en);
-  return kr.map((line, i) => ({ kr: line, en: en[i] ?? "" }));
+  if (kr.length === 0) return [];
+
+  // The two languages don't always break into the same number of pieces — one
+  // Korean sentence can land as two English ones, and prose splitting on
+  // [.!?] also breaks after "Dr." and friends. Zipping by index then showed
+  // every later line the translation of the line before it and left the last
+  // line blank (29 of 960 passages). Group instead: each Korean line takes its
+  // proportional share of the English, so nothing is dropped or duplicated and
+  // the drift stays local to the mismatch.
+  if (kr.length === en.length) {
+    return kr.map((line, i) => ({ kr: line, en: en[i] }));
+  }
+  return kr.map((line, i) => {
+    const from = Math.round((i * en.length) / kr.length);
+    const to = Math.round(((i + 1) * en.length) / kr.length);
+    return { kr: line, en: en.slice(from, Math.max(to, from + 1)).join(" ") };
+  });
 }
 
 /** Rough reading length, shown in the reader's toolbar. */

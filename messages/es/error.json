@@ -1,0 +1,8 @@
+{
+  "bubble": "¡vaya, lo sentimos!",
+  "title": "Nuestro árbol se marchitó un momento",
+  "body": "Algo salió mal por nuestra parte — tu progreso está a salvo y bien enraizado. Un poco de agua suele arreglarlo.",
+  "retry": "Intentar de nuevo",
+  "backToGarden": "Volver a mi jardín",
+  "errorId": "id del error: {id}"
+}

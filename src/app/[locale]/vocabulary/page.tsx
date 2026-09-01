@@ -365,7 +365,7 @@ export default async function VocabularyPage({
                 </div>
               </>
             ) : (
-              <p className="text-[13px] text-muted py-6">No chapters at this level yet.</p>
+              <p className="text-[13px] text-muted py-6">{t("noChaptersAtLevel")}</p>
             )}
 
             {/* growth legend + tally */}

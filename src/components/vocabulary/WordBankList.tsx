@@ -134,7 +134,10 @@ export default function WordBankList({
 
   const grid = "grid grid-cols-2 sm:grid-cols-[repeat(auto-fill,minmax(158px,1fr))] gap-2 sm:gap-2.5";
 
-  if (initialItems.length === 0) {
+  // `items`, not the prop it was seeded from: removing the last word left the
+  // page rendering a search box over nothing, reading "No matches for ''",
+  // with no way back to the vocabulary list until a reload.
+  if (items.length === 0) {
     return (
       <div className="max-w-[680px]">
         <div className="text-center pb-5">

@@ -46,8 +46,12 @@ export default function AnswerCapture({
         <div className="inline-flex items-center gap-2.5 text-[12.5px] font-semibold text-success bg-success-bg border border-success-line rounded-full pl-3 pr-1.5 py-1.5">
           {t("nailedBefore")}
           <button
-            className="text-[11.5px] font-bold bg-cream border border-success-line rounded-full px-2.5 py-1 hover:bg-success-bg transition-colors"
+            className="text-[11.5px] font-bold bg-cream border border-success-line rounded-full px-2.5 py-1 hover:bg-success-bg transition-colors disabled:opacity-45"
             onClick={onSkip}
+            // Skipping mid-listen moved to the next word while the recogniser
+            // was still running, and the result then scored the learner's
+            // speech against the word they had just left.
+            disabled={isListening}
           >
             {t("skip")}
           </button>

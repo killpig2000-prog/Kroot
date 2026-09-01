@@ -32,7 +32,10 @@ export async function POST(request: Request) {
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
   const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
-  if (isRateLimited("track", user?.id ?? anonId ?? ip, 120, 60_000)) {
+  // Keyed on the signed-in user or the IP — never on anon_id, which comes
+  // from the request body: rotating it per request made the cap unreachable
+  // and left anonymous writes to analytics_events effectively unlimited.
+  if (isRateLimited("track", user?.id ?? ip, 120, 60_000)) {
     return NextResponse.json({ error: "rate_limited" }, { status: 429 });
   }
 

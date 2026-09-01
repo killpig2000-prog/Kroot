@@ -197,15 +197,27 @@ export function seedFromWords(words: { key: string }[]): number {
 // render (both on the server and again while hydrating), so an unseeded
 // Math.random shuffle made the two disagree and React threw the whole tree
 // away — the answer buttons visibly reordered under the user's finger.
-export function buildQuizQuestions(words: VocabWord[], seed?: number): QuizQuestion[] {
+export function buildQuizQuestions(
+  words: VocabWord[],
+  seed?: number,
+  // Where the wrong answers come from. A review session can be as short as one
+  // due word, and drawing only from the session left a "quiz" with a single
+  // option — the answer, alone. Callers that can afford a wider pool (the
+  // review page picks same-level words server-side) pass one.
+  pool: VocabWord[] = words,
+): QuizQuestion[] {
   if (words.length === 0) return [];
-  const mode = quizModeForLevel(words[0].level);
   const rand = seed === undefined ? Math.random : mulberry32(seed);
 
   return words
-    .filter((w) => mode === "meaning" || w.example_kr)
-    .map((word) => {
-      const distractorPool = words.filter((w) => w.key !== word.key && w.korean !== word.korean);
+    // The mode follows each word's own level: /review mixes levels, and taking
+    // it from words[0] asked an A1 learner to fill a C1 blank and vice versa.
+    .map((word) => ({ word, mode: quizModeForLevel(word.level) }))
+    .filter(({ word, mode }) => mode === "meaning" || word.example_kr)
+    .map(({ word, mode }) => {
+      const distractorPool = (pool.length > words.length ? pool : words).filter(
+        (w) => w.key !== word.key && w.korean !== word.korean && w.level === word.level,
+      );
       const shuffled = shuffle(distractorPool, rand);
       const distractors = shuffled.slice(0, QUIZ_OPTION_COUNT - 1);
 

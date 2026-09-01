@@ -46,6 +46,9 @@ export default async function ReviewPage({
 
   // Pre-0022 the next_review_at column doesn't exist yet.
   const migrationMissing = error?.code === "42703";
+  // Any other failure used to fall through to the 🌿 "nothing to review" card,
+  // telling a learner with a real backlog that they were all caught up.
+  const loadFailed = !!error && !migrationMissing;
   let nextDue: string | null = null;
   if (!migrationMissing && (dueRows ?? []).length === 0) {
     const { data: upcoming } = await supabase
@@ -84,6 +87,15 @@ export default async function ReviewPage({
       },
     ];
   });
+
+  // Wrong answers for the quiz. Without this the options came only from the
+  // session itself, so a learner with two words due got a two-option quiz.
+  // Same levels as the words being reviewed, capped to keep the payload small.
+  const dueKeys = new Set(dueWords.map((w) => w.key));
+  const dueLevels = new Set(dueWords.map((w) => w.level));
+  const distractorPool = [...wordByKey.values()]
+    .filter((w) => dueLevels.has(w.level) && !dueKeys.has(w.key))
+    .slice(0, 120);
 
   return (
     <div className="min-h-screen bg-warm text-charcoal">
@@ -151,8 +163,15 @@ export default async function ReviewPage({
                 })}
               </small>
             </div>
+          ) : loadFailed ? (
+            <div className="max-w-[560px] border border-line bg-danger-bg rounded-[14px] p-[18px]">
+              <b className="block font-semibold text-[14px] mb-1">{t("loadFailedTitle")}</b>
+              <small className="block text-[13px] text-muted leading-[1.55]">
+                {t("loadFailedBody")}
+              </small>
+            </div>
           ) : dueWords.length > 0 ? (
-            <ReviewSession words={dueWords} userId={user.id} />
+            <ReviewSession words={dueWords} pool={distractorPool} userId={user.id} />
           ) : (
             <div className="max-w-[560px] border border-line rounded-[14px] p-[clamp(24px,4vw,32px)] text-center">
               <p className="text-4xl mb-2">🌿</p>

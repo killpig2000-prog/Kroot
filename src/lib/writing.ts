@@ -12,10 +12,28 @@ export const WRITING_GENRE_META: Record<WritingGenre, { icon: string; label: str
   opinion: { icon: "🗣️", label: "Opinion", blurb: "Take a side and say why" },
 };
 
+/**
+ * The key a completed prompt is stored under.
+ *
+ * It used to be `writing:{level}:{prompt_kr}`, but prompt_kr is the
+ * *instruction* ("친구의 메시지에 답장해 보세요."), which every prompt in a
+ * genre shares — all 39 replies in a level collapsed onto one key, and 936
+ * prompts onto 474. One finished chapter therefore marked its whole genre
+ * complete, counted ~13 chapters against the 3-a-day cap, filled the
+ * dashboard's writing bar, and left the assemble boards with no distractors
+ * to draw from (getSiblingPrompts excludes by key).
+ *
+ * example_kr is the model answer, and is unique across all 936 prompts — see
+ * the uniqueness test in writing.test.ts, which is what was missing.
+ */
+function promptKey(p: RawPrompt): string {
+  return `writing:${p.level}:${p.genre}:${p.example_kr}`;
+}
+
 export function getPromptsForLevel(level: CefrLevel): Prompt[] {
   return DAILY_LIFE_PROMPTS.filter((p) => p.level === level).map((p) => ({
     ...p,
-    key: `writing:${p.level}:${p.prompt_kr}`,
+    key: promptKey(p),
   }));
 }
 

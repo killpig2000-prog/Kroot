@@ -1,0 +1,8 @@
+{
+  "bubble": "oops, sorry!",
+  "title": "Our tree wilted for a second",
+  "body": "Something went wrong on our side — your progress is safe and rooted. A splash of water usually fixes it.",
+  "retry": "Try again",
+  "backToGarden": "Back to my garden",
+  "errorId": "error id: {id}"
+}

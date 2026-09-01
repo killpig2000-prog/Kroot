@@ -21,6 +21,11 @@ const BTN_GHOST = "text-[12.5px] font-semibold text-muted hover:text-charcoal un
 function useHoldToSpeak() {
   const timer = useRef<number | null>(null);
   const spoke = useRef(false);
+  // A tile held down as the board changes would otherwise still speak, 450ms
+  // later, over whatever replaced it.
+  useEffect(() => () => {
+    if (timer.current) window.clearTimeout(timer.current);
+  }, []);
   return {
     start(text: string) {
       spoke.current = false;

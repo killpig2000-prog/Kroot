@@ -1,0 +1,8 @@
+{
+  "bubble": "ôi, xin lỗi nhé!",
+  "title": "Cây của chúng ta héo mất một lúc",
+  "body": "Có gì đó trục trặc ở phía chúng tôi — tiến độ của bạn vẫn an toàn. Tưới chút nước là thường ổn lại ngay.",
+  "retry": "Thử lại",
+  "backToGarden": "Về vườn của tôi",
+  "errorId": "mã lỗi: {id}"
+}
