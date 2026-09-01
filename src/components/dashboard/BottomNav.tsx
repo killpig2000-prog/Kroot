@@ -5,29 +5,30 @@ import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { MAIN_ITEMS, SECTIONS, type NavColor } from "@/components/dashboard/navItems";
 import { useBackToClose } from "@/hooks/useBackToClose";
-import { dailyReviewCap } from "@/lib/srs";
 
-// Four tabs (2026-08-28): Garden · Learn · Review · More — equal-width cells
-// that fill the bar edge to edge (2026-08-29), so each tap target is a quarter
-// of the screen rather than a 60px pill in the middle. Learning used to
-// sit two taps deep behind a single "Menu" while the Shop had a tab of its
-// own; now the first study action is one tap away and the review queue
-// carries a due-count badge, which is the cheapest retention nudge we have.
-type Sheet = "learn" | "more" | null;
+// Four tabs: Garden · Basics · Practice · More — equal-width cells that fill
+// the bar edge to edge. Basics (guide/hangul/grammar/vocab) and Practice
+// (listening/pronunciation/writing/reading) used to share one "Learn" tab's
+// sheet and a separate tab linked straight to /review — that review tab's
+// label collided with the sidebar's own "Practice" section name and read as
+// broken. Split into their own tabs instead; review is reached from the
+// dashboard's own Today's review card, not a bottom-nav shortcut.
+type Sheet = "basics" | "practice" | "more" | null;
 
 // nav.json keys: single-word labels lowercase 1:1 ("Garden" → garden);
 // multi-word ones are stored as the key itself ("My account" → myAccount).
 const navKey = (label: string) =>
   label === "My progress" ? "myProgress" : label === "My word bank" ? "myWords" : /[A-Z]/.test(label.slice(1)) ? label : label.toLowerCase();
 
-const LEARN_SECTIONS = SECTIONS.filter((s) => s.title === "Basics" || s.title === "Practice");
+const BASICS_SECTIONS = SECTIONS.filter((s) => s.title === "Basics");
+const PRACTICE_SECTIONS = SECTIONS.filter((s) => s.title === "Practice");
 const MORE_SECTIONS = [
   // MAIN_ITEMS already carries Garden + My account.
   { title: "myPage", items: MAIN_ITEMS },
   ...SECTIONS.filter((s) => s.title !== "Basics" && s.title !== "Practice"),
 ];
-const LEARN_PATHS = LEARN_SECTIONS.flatMap((s) => s.items.map((i) => i.href));
-
+const BASICS_PATHS = BASICS_SECTIONS.flatMap((s) => s.items.map((i) => i.href));
+const PRACTICE_PATHS = PRACTICE_SECTIONS.flatMap((s) => s.items.map((i) => i.href));
 
 function Tile({
   icon,
@@ -90,14 +91,12 @@ function TabButton({
   on,
   onClick,
   expanded,
-  badge,
 }: {
   icon: string;
   label: string;
   on: boolean;
   onClick: () => void;
   expanded?: boolean;
-  badge?: number;
 }) {
   return (
     <button
@@ -112,78 +111,18 @@ function TabButton({
         {icon}
       </span>
       {label}
-      {badge !== undefined && badge > 0 && (
-        <span className="absolute top-1 left-[calc(50%+6px)] min-w-[18px] h-[18px] px-1 rounded-full bg-[#DC2626] text-white text-[10.5px] font-bold leading-[18px] text-center tabular-nums">
-          {badge > 99 ? "99+" : badge}
-        </span>
-      )}
     </button>
   );
 }
 
-// Both counts are things the server page usually already knows. Passing them
-// in skips the client fetches entirely; leaving them out keeps the old
-// self-fetching behaviour for pages that don't have them to hand.
-export default function BottomNav({
-  dueCount,
-  streakDays: streakDaysProp,
-}: {
-  dueCount?: number;
-  streakDays?: number | null;
-} = {}) {
+// streakDays is something the server page usually already knows. Passing it
+// in skips the client fetch entirely; leaving it out keeps the old
+// self-fetching behaviour for pages that don't have it to hand.
+export default function BottomNav({ streakDays: streakDaysProp }: { streakDays?: number | null } = {}) {
   const pathname = usePathname();
   const [sheet, setSheet] = useState<Sheet>(null);
   const [fetchedStreak, setFetchedStreak] = useState<number | null>(null);
-  const [fetchedDue, setFetchedDue] = useState<number>(0);
-  const due = dueCount ?? fetchedDue;
   const streakDays = streakDaysProp ?? fetchedStreak;
-
-  // Words due for review — the badge on the Review tab. Runs once per mount,
-  // not per navigation: the count can't change without the user reviewing
-  // something, which reloads the page that owns it anyway.
-  //
-  // `createClient` is imported inside the effect on purpose. @supabase/ssr
-  // plus supabase-js is ~240 KB, and a top-level import put it in the initial
-  // bundle of every route this nav renders on — including /privacy and
-  // /offline, which never talk to Supabase at all.
-  useEffect(() => {
-    if (dueCount !== undefined) return;
-    let cancelled = false;
-    (async () => {
-      const { createClient } = await import("@/lib/supabase/client");
-      const supabase = createClient();
-      // getClaims() verifies the JWT locally against a cached JWKS; getUser()
-      // is a ~300ms round trip to /auth/v1/user for the same id. Mirrors
-      // getClaimsUser in lib/supabase/server.
-      const { data: claimsData } = await supabase.auth.getClaims();
-      const userId = claimsData?.claims?.sub;
-      if (!userId) return;
-      const nowIso = new Date().toISOString();
-      const todayStartIso = `${nowIso.slice(0, 10)}T00:00:00.000Z`;
-      // Same daily cap as /review and the dashboard card: once the cap's
-      // worth of words is reviewed today, the badge reads 0 even if a
-      // bigger backlog remains — see review/page.tsx's doneForToday.
-      const [{ count: due, error }, { count: reviewedToday }, { data: profileRow }] = await Promise.all([
-        supabase
-          .from("vocabulary_progress")
-          .select("id", { count: "exact", head: true })
-          .eq("user_id", userId)
-          .lte("next_review_at", nowIso),
-        supabase
-          .from("vocabulary_progress")
-          .select("id", { count: "exact", head: true })
-          .eq("user_id", userId)
-          .gte("last_reviewed_at", todayStartIso),
-        supabase.from("profiles").select("review_capacity_bonus").eq("id", userId).maybeSingle(),
-      ]);
-      const cap = dailyReviewCap(profileRow?.review_capacity_bonus ?? 0);
-      const doneForToday = (reviewedToday ?? 0) >= cap;
-      if (!cancelled && !error) setFetchedDue(doneForToday ? 0 : Math.min(due ?? 0, cap));
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, [dueCount]);
 
   // The streak note is a nice-to-have; fetch it lazily the first time a
   // sheet opens and stay silent when logged out or on error.
@@ -238,12 +177,12 @@ export default function BottomNav({
     if (sheet === s) dismissSheet();
     else setSheet(s);
   };
-  const sections = sheet === "learn" ? LEARN_SECTIONS : sheet === "more" ? MORE_SECTIONS : [];
+  const sections = sheet === "basics" ? BASICS_SECTIONS : sheet === "practice" ? PRACTICE_SECTIONS : sheet === "more" ? MORE_SECTIONS : [];
 
   const onGarden = !sheet && pathname === "/dashboard";
-  const onLearn = sheet === "learn" || (!sheet && LEARN_PATHS.some((p) => pathname.startsWith(p)));
-  const onReview = !sheet && pathname.startsWith("/review");
-  const onMore = sheet === "more" || (!sheet && !onGarden && !onLearn && !onReview && pathname !== "/dashboard");
+  const onBasics = sheet === "basics" || (!sheet && BASICS_PATHS.some((p) => pathname.startsWith(p)));
+  const onPractice = sheet === "practice" || (!sheet && PRACTICE_PATHS.some((p) => pathname.startsWith(p)));
+  const onMore = sheet === "more" || (!sheet && !onGarden && !onBasics && !onPractice && pathname !== "/dashboard");
 
   return (
     <>
@@ -259,7 +198,7 @@ export default function BottomNav({
         {sheet && (
           <div
             role="dialog"
-            aria-label={sheet === "learn" ? tn("basics") : tn("more")}
+            aria-label={sheet === "basics" ? tn("basics") : sheet === "practice" ? tn("practice") : tn("more")}
             className="sheet-up bg-warm border-t-[1.5px] border-dashed border-dash rounded-t-[22px] px-4 pt-2.5 pb-4 max-h-[70vh] overflow-y-auto"
           >
             <div className="w-10 h-1 rounded-full bg-dash mx-auto mb-1" aria-hidden="true" />
@@ -309,24 +248,8 @@ export default function BottomNav({
             </span>
             {tn("garden")}
           </Link>
-          <TabButton icon="📚" label={tn("basics")} on={onLearn} expanded={sheet === "learn"} onClick={() => toggle("learn")} />
-          <Link
-            href="/review"
-            onClick={close}
-            className={`relative flex flex-col items-center justify-center gap-0.5 min-h-[56px] py-1 text-[11.5px] transition-colors ${
-              onReview ? "text-success-deep font-bold" : "text-faint font-medium hover:text-muted"
-            }`}
-          >
-            <span className="text-[21px] leading-none" style={onReview ? {} : { filter: "grayscale(1)", opacity: 0.55 }}>
-              💧
-            </span>
-            {tn("review")}
-            {due > 0 && (
-              <span className="absolute top-1 left-[calc(50%+6px)] min-w-[18px] h-[18px] px-1 rounded-full bg-[#DC2626] text-white text-[10.5px] font-bold leading-[18px] text-center tabular-nums">
-                {due > 99 ? "99+" : due}
-              </span>
-            )}
-          </Link>
+          <TabButton icon="📚" label={tn("basics")} on={onBasics} expanded={sheet === "basics"} onClick={() => toggle("basics")} />
+          <TabButton icon="🎧" label={tn("practice")} on={onPractice} expanded={sheet === "practice"} onClick={() => toggle("practice")} />
           <TabButton icon="🌿" label={tn("more")} on={onMore} expanded={sheet === "more"} onClick={() => toggle("more")} />
         </nav>
       </div>

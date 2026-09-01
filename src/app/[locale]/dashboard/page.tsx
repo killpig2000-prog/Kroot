@@ -454,7 +454,7 @@ export default async function DashboardPage() {
                 <span className="flex-none w-9 h-9 rounded-[10px] bg-cream border border-sky-line flex items-center justify-center text-[17px]">
                   💧
                 </span>
-                <b className="block text-[12px] font-semibold text-sky-deep leading-tight group-hover:translate-x-0.5 transition-transform">
+                <b className="block text-[13px] font-bold text-sky-deep leading-tight group-hover:translate-x-0.5 transition-transform">
                   {t("review.short")}
                 </b>
               </Link>
@@ -478,8 +478,7 @@ export default async function DashboardPage() {
                 💧
               </span>
               <span className="flex-1 min-w-0">
-                <b className="block font-semibold text-[15.5px] text-sky-deep truncate">{t("review.title")}</b>
-                <span className="block text-[12.5px] text-sky-deep truncate">{t("review.due", { count: dueCount })}</span>
+                <b className="block font-bold text-[18px] text-sky-deep truncate">{t("review.title")}</b>
               </span>
               <span className="w-full sm:w-auto pl-[54px] sm:pl-0 text-[13px] font-semibold text-sky-deep transition-transform group-hover:translate-x-0.5">
                 {t("review.now")}
@@ -504,10 +503,7 @@ export default async function DashboardPage() {
                 <span className="flex-none w-9 h-9 rounded-[10px] bg-cream border border-[var(--tint-pink-line)] flex items-center justify-center text-[17px]">
                   💬
                 </span>
-                <b className="block text-[11.5px] font-semibold text-[#AF3166] leading-tight">{t("slang.title")}</b>
-                <span className="text-[10.5px] font-bold text-[#C13E78] transition-transform group-hover:translate-x-0.5">
-                  {t("slang.short")}
-                </span>
+                <b className="block text-[13px] font-bold text-[#AF3166] leading-tight">{t("slang.title")}</b>
               </Link>
               <Link
                 href="/vocabulary"
@@ -516,7 +512,7 @@ export default async function DashboardPage() {
                 <span className="flex-none w-9 h-9 rounded-[10px] bg-warm border border-line flex items-center justify-center text-[15px] font-semibold text-success-deep uppercase">
                   W
                 </span>
-                <b className="block text-[11.5px] font-semibold text-charcoal leading-tight">{t("wotd.title")}</b>
+                <b className="block text-[13px] font-bold text-charcoal leading-tight">{t("wotd.title")}</b>
               </Link>
             </div>
           )}

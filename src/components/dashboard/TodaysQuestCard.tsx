@@ -12,17 +12,13 @@ export default function TodaysQuestCard({
   compact = false,
 }: {
   quest?: { skill_key: string; description: string; completed_at: string | null } | null;
-  /** Half-width paired layout (icon + description stacked, no title) — used
-   * when this card sits side-by-side with the review card on mobile. */
+  /** Half-width paired layout — used when this card sits side-by-side with
+   * the review card on mobile. */
   compact?: boolean;
 }) {
   const t = useTranslations("dashboard.quest");
   if (!quest) return null;
   const completed = !!quest.completed_at;
-  // The description was written into daily_quests in whatever locale created
-  // the row, so render it from the skill key instead when we have a message.
-  const descKey = `descriptions.${quest.skill_key}`;
-  const description = t.has(descKey) ? t(descKey) : quest.description;
 
   if (compact) {
     // Short label only — no description sentence. It used to line-clamp the
@@ -33,7 +29,7 @@ export default function TodaysQuestCard({
         <span className="flex-none w-9 h-9 rounded-[10px] bg-cream border border-success-line flex items-center justify-center text-[17px]">
           🎯
         </span>
-        <span className="block text-[11.5px] font-semibold text-success-deep leading-tight">
+        <span className="block text-[13px] font-bold text-success-deep leading-tight">
           {t("title")}
         </span>
       </>
@@ -65,8 +61,7 @@ export default function TodaysQuestCard({
         🎯
       </span>
       <span className="flex-1 min-w-0">
-        <b className="block font-semibold text-[15.5px] truncate text-charcoal">{t("title")}</b>
-        <span className="block text-[12.5px] text-success-deep truncate">{description}</span>
+        <b className="block font-bold text-[18px] truncate text-charcoal">{t("title")}</b>
       </span>
     </>
   );

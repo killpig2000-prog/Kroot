@@ -3,12 +3,9 @@ import { Link, redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import ShopClient from "@/components/shop/ShopClient";
-import StreakFreezeCard from "@/components/shop/StreakFreezeCard";
-import WordBankSlotsCard from "@/components/shop/WordBankSlotsCard";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import type { CefrLevel } from "@/lib/tree";
 import { levelFromXp, treeStageForLevel } from "@/lib/level";
-import { DEFAULT_WORD_BANK_SLOTS } from "@/lib/word-bank";
 
 export default async function ShopPage() {
   const tn = await getTranslations("nav");
@@ -31,23 +28,6 @@ export default async function ShopPage() {
 
   const isAdmin = profile?.is_admin ?? false;
   const coins = profile?.coins ?? 0;
-  // Migration 0035 column — tolerant of a not-yet-applied migration.
-  const { data: freezeRow, error: freezeErr } = await supabase
-    .from("profiles")
-    .select("streak_freezes")
-    .eq("id", user.id)
-    .maybeSingle();
-  const streakFreezes = freezeErr ? 0 : (freezeRow?.streak_freezes ?? 0);
-  // Migration 0039 column — same tolerant read.
-  const { data: slotsRow, error: slotsErr } = await supabase
-    .from("profiles")
-    .select("word_bank_slots")
-    .eq("id", user.id)
-    .maybeSingle();
-  const wordBankSlots = slotsErr
-    ? DEFAULT_WORD_BANK_SLOTS
-    : ((slotsRow as { word_bank_slots?: number | null } | null)?.word_bank_slots ??
-      DEFAULT_WORD_BANK_SLOTS);
   const species = (profile?.current_level ?? "A1") as CefrLevel;
   const playerLevel = levelFromXp(profile?.xp ?? 0);
   const stage = treeStageForLevel(playerLevel);
@@ -95,17 +75,6 @@ export default async function ShopPage() {
               </span>
             </div>
           </div>
-
-          <p className="text-[13px] text-muted mb-5 max-w-[70ch]">{t("intro")}</p>
-
-          <StreakFreezeCard
-            held={streakFreezes}
-            coins={coins}
-            isAdmin={isAdmin}
-            streakDays={profile?.streak_days ?? 0}
-          />
-
-          <WordBankSlotsCard slots={wordBankSlots} coins={coins} isAdmin={isAdmin} />
 
           <ShopClient
             userId={user.id}
