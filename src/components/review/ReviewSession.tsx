@@ -4,8 +4,9 @@ import { useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
-import { recordCompletion, type ProgressResult } from "@/lib/activity";
-import { nextBox, nextReviewAt } from "@/lib/srs";
+import { recordCompletion, XP_POINTS, type ProgressResult } from "@/lib/activity";
+import { nextBox, nextReviewAt, SRS_INTERVALS_DAYS } from "@/lib/srs";
+import ResultShell, { ResultRing, ResultTag } from "@/components/results/ResultShell";
 import {
   buildQuizQuestions,
   seedFromWords,
@@ -17,6 +18,7 @@ import {
 const REVIEW_MINUTES = 5;
 
 const CARD = "max-w-[560px] border border-line rounded-[14px] p-[clamp(20px,3vw,28px)]";
+const COLOR = "#3E7C59";
 
 export default function ReviewSession({
   words,
@@ -121,36 +123,87 @@ export default function ReviewSession({
   if (done) {
     const kept = correct;
     const slipped = missed.length;
-    return (
-      <div className={`${CARD} text-center`} style={{ animation: "fadeUp .4s ease" }}>
-        <p className="text-4xl mb-2">💧</p>
-        <h2 className="font-bold text-[21px] tracking-[-0.02em] mb-1.5">{t("doneTitle")}</h2>
-        <p className="text-sm text-muted mb-5">
-          {t("doneSub", { kept, total: questions.length })}
-          {slipped > 0 && ` ${t("doneSlipped")}`}
-        </p>
-        {levelUp?.leveled_up && (
-          <p className="text-sm font-semibold text-success mb-2 -mt-2">
-            🎉 {t("levelUp", { level: levelUp.new_level })}
-          </p>
-        )}
-        {(levelUp?.coins_earned ?? 0) > 0 && (
-          <span className="inline-flex items-center gap-1.5 text-[13px] font-bold px-3 py-1.5 rounded-full border bg-[var(--tint-amber)] text-[#B7791F] border-amber-line mb-5">
-            {tu("coinsEarned", { n: levelUp!.coins_earned })}
-          </span>
-        )}
+    const movedUp = words.filter((w) => (boxes.current[w.key] ?? 1) > (w.box ?? 1)).length;
+    const movedDown = words.filter((w) => (boxes.current[w.key] ?? 1) < (w.box ?? 1)).length;
+    const dueBuckets = SRS_INTERVALS_DAYS.map((days, i) => ({
+      days,
+      count: words.filter((w) => (boxes.current[w.key] ?? 1) === i + 1).length,
+    }));
 
-        {saveFailed && (
-          <p role="status" className="text-[13px] text-danger mb-5 -mt-2">
-            {t("saveFailed")}
-          </p>
+    return (
+      <ResultShell
+        color={COLOR}
+        categoryLabel="Review"
+        ring={
+          <ResultRing
+            pct={questions.length ? (kept / questions.length) * 100 : 0}
+            center={kept}
+            unit={`/${questions.length}`}
+            label={t("doneTitle")}
+            color={COLOR}
+          />
+        }
+        headline={t("doneTitle")}
+        sub={
+          <>
+            {t("doneSub", { kept, total: questions.length })}
+            {slipped > 0 && ` ${t("doneSlipped")}`}
+          </>
+        }
+        tags={
+          <>
+            {movedUp > 0 && <ResultTag tone="good">↑ {movedUp} moved up</ResultTag>}
+            {movedDown > 0 && <ResultTag tone="warn">↓ {movedDown} back to box 1</ResultTag>}
+          </>
+        }
+        levelUp={levelUp}
+        xpValue={XP_POINTS.vocabulary}
+        xpLabel={tu("xpEarned", { skill: "Review" })}
+        actions={
+          <>
+            <button
+              className="rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-success hover:bg-success-deep transition-colors disabled:opacity-60"
+              onClick={() => goTo("/dashboard")}
+              disabled={navigating}
+            >
+              {navigating ? tu("saving") : tu("backToGarden")}
+            </button>
+            <button
+              className="rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-charcoal bg-cream border border-line hover:bg-warm transition-colors disabled:opacity-60"
+              onClick={() => goTo("/review")}
+              disabled={navigating}
+            >
+              {navigating ? tu("saving") : tu("moreToWater")}
+            </button>
+          </>
+        }
+      >
+        {saveFailed && <p role="status" className="text-[13px] text-danger">{t("saveFailed")}</p>}
+
+        {dueBuckets.some((b) => b.count > 0) && (
+          <div>
+            <b className="block text-[11.5px] font-bold tracking-[.06em] uppercase text-faint mb-2">Coming back</b>
+            <div className="grid grid-cols-5 gap-2">
+              {dueBuckets.map((b) => (
+                <div
+                  key={b.days}
+                  className={`text-center rounded-[10px] border px-1.5 py-2 ${
+                    b.count > 0 ? "border-success-line bg-success-bg" : "border-line bg-warm"
+                  }`}
+                >
+                  <b className={`block text-[18px] font-bold tabular-nums ${b.count > 0 ? "text-success-deep" : "text-faint"}`}>
+                    {b.count}
+                  </b>
+                  <small className="text-[10.5px] text-faint font-semibold">{b.days}d</small>
+                </div>
+              ))}
+            </div>
+          </div>
         )}
 
         {slipped > 0 && (
-          <div className="text-left border border-amber-line bg-[var(--tint-amber)] rounded-[10px] px-4 py-3 mb-6">
-            <b className="block text-[12.5px] font-semibold text-[#92400E] mb-1.5">
-              {t("backInCan")}
-            </b>
+          <div className="text-left border border-amber-line bg-[var(--tint-amber)] rounded-[10px] px-4 py-3">
+            <b className="block text-[12.5px] font-semibold text-[#92400E] mb-1.5">{t("backInCan")}</b>
             <div className="flex flex-wrap gap-x-3 gap-y-1">
               {missed.map((w) => (
                 <span key={w.key} className="text-[13px]">
@@ -161,24 +214,7 @@ export default function ReviewSession({
             </div>
           </div>
         )}
-
-        <div className="flex justify-center gap-2.5 flex-wrap">
-          <button
-            className="rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-success hover:bg-success-deep transition-colors disabled:opacity-60"
-            onClick={() => goTo("/dashboard")}
-            disabled={navigating}
-          >
-            {navigating ? tu("saving") : tu("backToGarden")}
-          </button>
-          <button
-            className="rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-charcoal bg-cream border border-line hover:bg-warm transition-colors disabled:opacity-60"
-            onClick={() => goTo("/review")}
-            disabled={navigating}
-          >
-            {navigating ? tu("saving") : tu("moreToWater")}
-          </button>
-        </div>
-      </div>
+      </ResultShell>
     );
   }
 

@@ -48,6 +48,7 @@ export default function ListeningSession({
   const [completed, setCompleted] = useState<Set<string>>(() => new Set(completedIds));
   const [openId, setOpenId] = useState<string | null>(initialOpenId);
   const [newLevel, setNewLevel] = useState<number | null>(null);
+  const [coinsEarned, setCoinsEarned] = useState(0);
   const [done, setDone] = useState<DoneInfo | null>(null);
   const [justFinishedAll, setJustFinishedAll] = useState(false);
 
@@ -89,6 +90,7 @@ export default function ListeningSession({
       }
       const res = await recordCompletion(supabase, "listening", 3, awardedRatio);
       if (res?.leveled_up) setNewLevel(res.new_level);
+      if (res?.coins_earned) setCoinsEarned((c) => c + res.coins_earned);
       // The screen already rendered with the local xp estimate above; merge
       // in the server-confirmed coins (and level-up, for this exact card —
       // `newLevel` state only reaches FinishedAllCard/ClipList) once the RPC
@@ -148,7 +150,7 @@ export default function ListeningSession({
         situationLabel={situation.label}
         clipCount={dialogues.length}
         level={level}
-        newLevel={newLevel}
+        levelUp={{ leveled_up: newLevel !== null, new_level: newLevel ?? 0, coins_earned: coinsEarned, new_xp: 0 }}
         onBackToClips={() => setJustFinishedAll(false)}
       />
     );

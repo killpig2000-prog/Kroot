@@ -67,6 +67,7 @@ export default function SlangQuiz() {
   const [score, setScore] = useState(0);
   const [finished, setFinished] = useState(false);
   const [doneToday, setDoneToday] = useState<number | null>(null);
+  const [answers, setAnswers] = useState<boolean[]>([]);
 
   function start() {
     try {
@@ -104,6 +105,7 @@ export default function SlangQuiz() {
     const correct = i === quiz[qIndex].answer;
     if (correct) setScore((s) => s + 1);
     const finalScore = score + (correct ? 1 : 0);
+    setAnswers((a) => [...a, correct]);
     setTimeout(() => {
       if (qIndex + 1 < quiz.length) {
         setQIndex(qIndex + 1);
@@ -139,15 +141,31 @@ export default function SlangQuiz() {
           )}
         </div>
       ) : finished ? (
-        <div className="flex items-center gap-3.5 flex-wrap">
-          <span className="text-[22px] flex-none">{score >= 4 ? "🏆" : score >= 2 ? "🌱" : "💧"}</span>
-          <div className="flex-1">
-            <b className="block text-[14px] font-bold text-[#AF3166]">
-              {t("result", { score, total: quiz.length, xp: QUIZ_XP })}
-            </b>
-            <span className="text-[12.5px] text-[#97687D]">
-              {score >= 4 ? t("praise") : t("encourage")}
-            </span>
+        <div>
+          <div className="flex items-center gap-3.5 flex-wrap mb-3">
+            <span className="text-[22px] flex-none">{score >= 4 ? "🏆" : score >= 2 ? "🌱" : "💧"}</span>
+            <div className="flex-1">
+              <b className="block text-[14px] font-bold text-[#AF3166]">
+                {t("result", { score, total: quiz.length, xp: QUIZ_XP })}
+              </b>
+              <span className="text-[12.5px] text-[#97687D]">
+                {score >= 4 ? t("praise") : t("encourage")}
+              </span>
+            </div>
+          </div>
+          <div className="grid gap-1 bg-cream border border-[var(--tint-pink-line)] rounded-[10px] overflow-hidden">
+            {quiz.map((qq, i) => (
+              <div
+                key={qq.entry.kr}
+                className="grid grid-cols-[16px_1fr_auto] items-center gap-2 px-3 py-1.5 border-b border-[var(--tint-pink-line)] last:border-b-0 text-[13px]"
+              >
+                <span className={answers[i] ? "text-success font-bold" : "text-danger font-bold"}>
+                  {answers[i] ? "✓" : "✕"}
+                </span>
+                <span className="kr font-semibold truncate">{qq.entry.kr}</span>
+                <span className="text-[11.5px] text-[#97687D]">{qq.entry.meaning}</span>
+              </div>
+            ))}
           </div>
         </div>
       ) : (

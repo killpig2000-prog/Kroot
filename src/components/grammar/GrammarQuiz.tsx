@@ -3,10 +3,13 @@
 import { useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { createClient, getClientUserId } from "@/lib/supabase/client";
-import { recordCompletion } from "@/lib/activity";
+import { recordCompletion, XP_POINTS, type ProgressResult } from "@/lib/activity";
 import { clearResume, isTableMissing } from "@/lib/resume";
 import { useSaveResume } from "@/hooks/useSaveResume";
+import ResultShell, { ResultRing } from "@/components/results/ResultShell";
 import type { GrammarQuiz as Quiz } from "@/lib/grammar";
+
+const GRAMMAR_COLOR = "#423AC5";
 
 const ABC = ["A", "B", "C", "D"];
 const Q_LABEL = "text-[11.5px] font-semibold tracking-[.06em] uppercase text-faint mb-2";
@@ -118,8 +121,7 @@ export default function GrammarQuizBlock({
   const recorded = useRef(false);
   const answered = useRef(new Set<number>());
   const correctCount = useRef(0);
-  const [newLevel, setNewLevel] = useState<number | null>(null);
-  const [coinsEarned, setCoinsEarned] = useState(0);
+  const [levelUp, setLevelUp] = useState<ProgressResult | null>(null);
   const [done, setDone] = useState(false);
 
   useSaveResume(
@@ -162,8 +164,7 @@ export default function GrammarQuizBlock({
       void clearResume(supabase, uid, `/grammar/${lessonKey}`);
     }
     const res = await recordCompletion(supabase, "grammar", 3);
-    if (res?.leveled_up) setNewLevel(res.new_level);
-    setCoinsEarned(res?.coins_earned ?? 0);
+    setLevelUp(res);
   }
 
   return (
@@ -179,20 +180,25 @@ export default function GrammarQuizBlock({
       ))}
 
       {done && (
-        <div className="mt-1 flex flex-wrap items-center gap-2" style={{ animation: "fadeUp .35s ease" }}>
-          <span className="inline-flex items-center gap-2 text-[13px] font-semibold rounded-lg px-3 py-1.5 border bg-success-bg text-success border-success-line">
-            {t("quiz.done")}
-          </span>
-          {coinsEarned > 0 && (
-            <span className="inline-flex items-center gap-1.5 text-[13px] font-semibold rounded-lg px-3 py-1.5 border bg-[var(--tint-amber)] text-[#B7791F] border-amber-line">
-              {tu("coinsEarned", { n: coinsEarned })}
-            </span>
-          )}
-          {newLevel && (
-            <p className="w-full mt-1 text-[13.5px] font-semibold text-success">
-              {t("quiz.levelUp", { n: newLevel })}
-            </p>
-          )}
+        <div className="mt-3.5">
+          <ResultShell
+            color={GRAMMAR_COLOR}
+            categoryLabel="Grammar"
+            meta={lessonTitle}
+            ring={
+              <ResultRing
+                pct={(correctCount.current / quiz.length) * 100}
+                center={correctCount.current}
+                unit={`/${quiz.length}`}
+                label="correct"
+                color={GRAMMAR_COLOR}
+              />
+            }
+            headline={t("quiz.done")}
+            levelUp={levelUp}
+            xpValue={XP_POINTS.grammar}
+            xpLabel={tu("xpEarned", { skill: "Grammar" })}
+          />
         </div>
       )}
     </div>

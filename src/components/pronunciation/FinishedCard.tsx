@@ -1,12 +1,11 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { buttonClassName } from "@/components/ui/Button";
+import ResultShell, { ResultRing, ResultTag } from "@/components/results/ResultShell";
 import { XP_POINTS, type ProgressResult } from "@/lib/activity";
 import { type ChallengeWord } from "@/lib/pronunciation";
 
-const TEAL = "#228980";
-const RAINBOW =
-  "conic-gradient(from 0deg, #EF4444, #F97316, #EAB308, #22C55E, #06B6D4, #6366F1, #A855F7, #EF4444)";
+const COLOR = "#228980";
 const BTN_TEAL = buttonClassName("teal");
 const BTN_LINE = buttonClassName("line");
 
@@ -34,70 +33,57 @@ export default function FinishedCard({
   onRunItBack: () => void;
 }) {
   const t = useTranslations("pronunciation.finished");
+  const tn = useTranslations("nav");
   const tu = useTranslations("ui");
-  const weakWords = words
+  const weak = words
     .filter((w) => (attempts[w.id]?.count ?? 0) > 1)
-    .sort((a, b) => (attempts[a.id]?.best ?? 0) - (attempts[b.id]?.best ?? 0))
-    .slice(0, 4);
+    .sort((a, b) => (attempts[a.id]?.best ?? 0) - (attempts[b.id]?.best ?? 0));
 
   return (
-    <div
-      className="max-w-[680px] text-center border border-line rounded-[14px] px-7 py-10"
-      style={{ animation: "fadeUp .4s ease" }}
+    <ResultShell
+      color={COLOR}
+      categoryLabel={tn("speaking")}
+      ring={
+        <ResultRing
+          pct={perfect ? 100 : (nailed.length / words.length) * 100}
+          center={nailed.length}
+          unit={`/${words.length}`}
+          label={t("nailed")}
+          color={COLOR}
+        />
+      }
+      headline={perfect ? t("perfect") : cleared ? t("cleared") : t("round")}
+      sub={t("sub", { n: words.length })}
+      tags={
+        <>
+          <ResultTag tone="good">🔥 {bestStreak}</ResultTag>
+          {weak.length > 0 && <ResultTag tone="warn">{weak.length} took extra tries</ResultTag>}
+        </>
+      }
+      levelUp={levelUp}
+      xpValue={XP_POINTS.pronunciation}
+      xpLabel={tu("xpEarned", { skill: tn("speaking") })}
+      actions={
+        <>
+          <Link href="/speaking" className={BTN_TEAL}>
+            {t("backToPractice")}
+          </Link>
+          <button className={BTN_LINE} onClick={onRunItBack}>
+            {t("runItBack")}
+          </button>
+          {cleared && !perfect && (
+            <Link href="/speaking?tab=challenge" className={BTN_LINE}>
+              {t("tryChallenge")}
+            </Link>
+          )}
+        </>
+      }
     >
-      <div
-        className="w-[104px] h-[104px] mx-auto mb-3 rounded-full flex items-center justify-center"
-        style={{
-          background: perfect
-            ? RAINBOW
-            : `conic-gradient(${TEAL} ${(nailed.length / words.length) * 360}deg, #E3DDD0 0)`,
-        }}
-      >
-        <div className="w-[84px] h-[84px] rounded-full bg-cream flex items-center justify-center text-[34px]">
-          {perfect ? "🌈" : cleared ? "🎉" : "🎤"}
-        </div>
-      </div>
-      <h2 className="font-bold text-[21px] tracking-[-0.02em] mt-1 mb-1.5">
-        {perfect ? t("perfect") : cleared ? t("cleared") : t("round")}
-      </h2>
-      <p className="text-sm text-muted mb-[22px]">
-        {t("sub", { n: words.length })}
-      </p>
-      {levelUp?.leveled_up && (
-        <p className="text-sm font-semibold text-success mb-[22px] -mt-3">
-          {t("levelUp", { level: levelUp.new_level })}
-        </p>
-      )}
-      <div className="flex justify-center gap-3 mb-6 flex-wrap">
-        <div className="border border-line rounded-[10px] px-5 py-3 min-w-[100px]">
-          <b className="block text-[19px] font-bold text-success">
-            {nailed.length}/{words.length}
-          </b>
-          <small className="text-xs text-muted">{t("nailed")}</small>
-        </div>
-        <div className="border border-line rounded-[10px] px-5 py-3 min-w-[100px]">
-          <b className="block text-[19px] font-bold">🔥 {bestStreak}</b>
-          <small className="text-xs text-muted">{t("bestStreak")}</small>
-        </div>
-        <div className="border border-line rounded-[10px] px-5 py-3 min-w-[100px]">
-          <b className="block text-[19px] font-bold text-success">+{XP_POINTS.pronunciation} XP</b>
-          <small className="text-xs text-muted">{t("earned")}</small>
-        </div>
-        {(levelUp?.coins_earned ?? 0) > 0 && (
-          <div className="border border-amber-line bg-[var(--tint-amber)] rounded-[10px] px-5 py-3 min-w-[100px]">
-            <b className="block text-[19px] font-bold text-[#B7791F]">{tu("coinsEarned", { n: levelUp!.coins_earned })}</b>
-            <small className="text-xs text-muted">{tu("coinsEarnedLabel")}</small>
-          </div>
-        )}
-      </div>
-
-      {weakWords.length > 0 && (
-        <div className="text-left bg-[var(--tint-amber)] border border-amber-line rounded-[10px] px-4 py-3 mb-6">
-          <b className="block text-[11px] font-bold tracking-[.06em] text-[#B45309] mb-2">
-            {t("tookTries")}
-          </b>
+      {weak.length > 0 && (
+        <div className="text-left bg-[var(--tint-amber)] border border-amber-line rounded-[10px] px-4 py-3">
+          <b className="block text-[11px] font-bold tracking-[.06em] text-[#B45309] mb-2">{t("tookTries")}</b>
           <div className="flex flex-wrap gap-2">
-            {weakWords.map((w) => (
+            {weak.slice(0, 4).map((w) => (
               <span
                 key={w.id}
                 className="kr inline-flex items-center gap-1.5 text-[13px] font-medium bg-cream border border-amber-line rounded-full px-2.5 py-1"
@@ -111,24 +97,10 @@ export default function FinishedCard({
       )}
 
       {saveError && (
-        <p className="text-[12px] text-[#C63958] bg-[var(--tint-rose)] border border-[var(--tint-rose-line)] rounded-[8px] px-3 py-2 mb-5">
+        <p className="text-[12px] text-[#C63958] bg-[var(--tint-rose)] border border-[var(--tint-rose-line)] rounded-[8px] px-3 py-2">
           ⚠️ {saveError}
         </p>
       )}
-
-      <div className="flex justify-center gap-2.5 flex-wrap">
-        <Link href="/speaking" className={BTN_TEAL}>
-          {t("backToPractice")}
-        </Link>
-        <button className={BTN_LINE} onClick={onRunItBack}>
-          {t("runItBack")}
-        </button>
-        {cleared && !perfect && (
-          <Link href="/speaking?tab=challenge" className={BTN_LINE}>
-            {t("tryChallenge")}
-          </Link>
-        )}
-      </div>
-    </div>
+    </ResultShell>
   );
 }
