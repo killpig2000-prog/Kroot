@@ -1,5 +1,6 @@
 import { createHash } from "crypto";
 import { NextResponse, after } from "next/server";
+import { createClient as createServiceClient } from "@supabase/supabase-js";
 import { MsEdgeTTS, OUTPUT_FORMAT } from "msedge-tts";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { isRateLimited } from "@/lib/rate-limit";
@@ -69,8 +70,22 @@ export async function POST(request: Request) {
   // filename is a content hash of (engine, voice, text), so the object never
   // changes under that name — a year-long cache is safe and keeps repeat
   // plays off Supabase egress (was defaulting to 1 hour).
+  // Written with the service role, not the caller's session. The bucket used
+  // to accept an insert from any authenticated user (migration 0025), and
+  // because the object name is a hash of (engine, voice, text) that the client
+  // computes too, anyone could plant audio under the name of a phrase that
+  // hadn't been synthesized yet and have every learner hear it. Migration 0049
+  // drops that policy, so this is now the only writer — and the name it writes
+  // under is derived from the text it just synthesized, right here.
   after(async () => {
-    const { error } = await supabase.storage
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+    if (!url || !serviceKey) {
+      console.error("tts cache write skipped: service role key not configured");
+      return;
+    }
+    const db = createServiceClient(url, serviceKey, { auth: { persistSession: false } });
+    const { error } = await db.storage
       .from("tts")
       .upload(objectPath, audio, { contentType: "audio/mpeg", cacheControl: "31536000", upsert: true });
     if (error) console.error("tts cache write failed:", error.message);
