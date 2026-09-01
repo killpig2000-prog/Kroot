@@ -132,12 +132,9 @@ export default async function GrammarPage({
                     <b className="block font-semibold text-[15px] leading-[1.35]">
                       {lesson.title}
                     </b>
-                    <span className="kr block text-[12.5px] font-medium text-faint whitespace-nowrap truncate mb-0.5">
+                    <span className="kr block text-[12.5px] font-medium text-faint whitespace-nowrap truncate">
                       {lesson.krTitle}
                     </span>
-                    <small className="block text-[12.5px] text-muted leading-[1.5]">
-                      {lesson.summary}
-                    </small>
                   </span>
                   <span className="hidden sm:inline-block flex-none text-[11.5px] font-semibold text-[var(--tint-indigo-ink)] bg-[var(--tint-indigo)] border border-[var(--tint-indigo-line)] rounded-full px-2.5 py-[3px]">
                     {lesson.level}

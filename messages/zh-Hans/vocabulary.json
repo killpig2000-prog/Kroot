@@ -142,6 +142,8 @@
     "loadFailedTitle": "无法加载复习内容",
     "loadFailedBody": "获取待复习单词时出错。请重新加载页面，数据没有丢失。",
     "nothingTitle": "现在没有要复习的内容",
+    "doneTodayTitle": "今天的复习已完成",
+    "doneTodayBody": "已完成 {count} 个词 — 剩下的会在明天出现。",
     "allFresh": "{count, plural, other {已学的 # 个单词都还很新鲜。}}",
     "nextDue": "下一个要复习的时间是 {date, date, medium}。",
     "learnFirst": "先学几个单词吧 — 到复习时间它们就会出现在这里。",

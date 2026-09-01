@@ -142,6 +142,8 @@
     "loadFailedTitle": "Couldn't load your review",
     "loadFailedBody": "Something went wrong fetching your due words. Reload the page — nothing has been lost.",
     "nothingTitle": "Nothing to review right now",
+    "doneTodayTitle": "Today's review is done",
+    "doneTodayBody": "{count} words down — the rest of your backlog will be here tomorrow.",
     "allFresh": "{count, plural, =1 {The one word you’ve learned is still fresh.} other {All # learned words are still fresh.}}",
     "nextDue": "The next one is due {date, date, medium}.",
     "learnFirst": "Learn a few words first — they’ll show up here when it’s time to review them.",

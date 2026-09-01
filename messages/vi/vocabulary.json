@@ -142,6 +142,8 @@
     "loadFailedTitle": "Không tải được phần ôn tập",
     "loadFailedBody": "Đã xảy ra lỗi khi lấy các từ đến hạn. Hãy tải lại trang — không có gì bị mất.",
     "nothingTitle": "Hiện chưa có gì để ôn tập",
+    "doneTodayTitle": "Đã ôn tập xong hôm nay",
+    "doneTodayBody": "{count} từ đã xong — phần còn lại sẽ xuất hiện vào ngày mai.",
     "allFresh": "{count, plural, other {Cả # từ đã học vẫn còn mới.}}",
     "nextDue": "Từ tiếp theo đến hạn vào {date, date, medium}.",
     "learnFirst": "Hãy học vài từ trước — chúng sẽ xuất hiện ở đây khi đến lúc ôn.",

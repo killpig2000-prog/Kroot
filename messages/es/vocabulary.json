@@ -142,6 +142,8 @@
     "loadFailedTitle": "No se pudo cargar tu repaso",
     "loadFailedBody": "Hubo un error al obtener tus palabras pendientes. Recarga la página; no se ha perdido nada.",
     "nothingTitle": "Ahora mismo no hay nada que repasar",
+    "doneTodayTitle": "Repaso de hoy completado",
+    "doneTodayBody": "{count} palabras listas — el resto de tu lista aparecerá mañana.",
     "allFresh": "{count, plural, =1 {La única palabra que has aprendido sigue fresca.} other {Las # palabras aprendidas siguen frescas.}}",
     "nextDue": "La siguiente toca el {date, date, medium}.",
     "learnFirst": "Aprende unas cuantas palabras primero: aparecerán aquí cuando toque repasarlas.",

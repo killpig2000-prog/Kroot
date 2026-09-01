@@ -163,7 +163,7 @@ export default async function WritingMapPage({
                         {meta.icon} {t(`genres.${genre}.label`)}
                       </b>
                       <small className="block text-[11.5px] text-faint font-normal truncate">
-                        {t(`genres.${genre}.blurb`)} · {t("map.chaptersRange", { first, last })}
+                        {t("map.chaptersRange", { first, last })}
                       </small>
                     </span>
                     <span className="flex-none flex items-center gap-2">
@@ -198,7 +198,9 @@ export default async function WritingMapPage({
                           ringClassName: status === "current" ? "ring-4 ring-amber-line/60" : undefined,
                           circleContent: status === "done" ? "✓" : i + 1,
                           title: t("map.chapterN", { n: i + 1 }),
-                          subtitle: t("map.questionsOf", { n: chapter.length, prompt: chapter[0].prompt_en }),
+                          // Just the first question's prompt, no "N questions ·"
+                          // prefix — keeps this to one line instead of wrapping.
+                          subtitle: chapter[0].prompt_en,
                           badgeClassName: STATUS_BADGE[status],
                           badgeLabel:
                             status === "done"

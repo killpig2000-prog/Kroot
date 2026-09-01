@@ -142,6 +142,8 @@
     "loadFailedTitle": "復習を読み込めませんでした",
     "loadFailedBody": "復習する単語の取得に失敗しました。ページを再読み込みしてください。データは失われていません。",
     "nothingTitle": "いま復習するものはありません",
+    "doneTodayTitle": "今日の復習は完了",
+    "doneTodayBody": "{count}語終わりました — 残りは明日また出てきます。",
     "allFresh": "{count, plural, other {学習した#語はまだ新しい状態です。}}",
     "nextDue": "次の復習は {date, date, medium} です。",
     "learnFirst": "まずは単語をいくつか学びましょう。復習の時期になるとここに出てきます。",

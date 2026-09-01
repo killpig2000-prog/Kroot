@@ -24,7 +24,8 @@ export default async function ReviewPage({
   const sessionSize = resolveReviewSize(sp.n);
 
   const nowIso = new Date().toISOString();
-  const [{ data: profile }, { data: dueRows, error }, { count: learnedCount }, { count: dueTotal }] =
+  const todayStartIso = `${nowIso.slice(0, 10)}T00:00:00.000Z`;
+  const [{ data: profile }, { data: dueRows, error }, { count: learnedCount }, { count: dueTotal }, { count: reviewedTodayCount }] =
     await Promise.all([
       supabase.from("profiles").select("display_name, streak_days, avatar_url").eq("id", user.id).single(),
       supabase
@@ -42,7 +43,18 @@ export default async function ReviewPage({
         .select("id", { count: "exact", head: true })
         .eq("user_id", user.id)
         .lte("next_review_at", nowIso),
+      // Words already reviewed today — once this hits REVIEW_SESSION_SIZE,
+      // review is done for the day even if the backlog isn't empty. User:
+      // clearing one 10-word batch shouldn't immediately surface the next
+      // 10 of a much larger backlog — that's a slog, not "done for today".
+      supabase
+        .from("vocabulary_progress")
+        .select("id", { count: "exact", head: true })
+        .eq("user_id", user.id)
+        .gte("last_reviewed_at", todayStartIso),
     ]);
+
+  const doneForToday = (reviewedTodayCount ?? 0) >= REVIEW_SESSION_SIZE;
 
   // Pre-0022 the next_review_at column doesn't exist yet.
   const migrationMissing = error?.code === "42703";
@@ -74,19 +86,21 @@ export default async function ReviewPage({
       getWordsForTopic(t.key).map((w) => [w.key, w] as const)
     )
   );
-  const dueWords: VocabWordWithProgress[] = (dueRows ?? []).flatMap((row) => {
-    const word = wordByKey.get(row.word_key);
-    if (!word) return [];
-    return [
-      {
-        ...word,
-        correct_count: row.correct_count ?? 0,
-        incorrect_count: row.incorrect_count ?? 0,
-        last_reviewed_at: row.last_reviewed_at ?? null,
-        box: row.box ?? 1,
-      },
-    ];
-  });
+  const dueWords: VocabWordWithProgress[] = doneForToday
+    ? []
+    : (dueRows ?? []).flatMap((row) => {
+        const word = wordByKey.get(row.word_key);
+        if (!word) return [];
+        return [
+          {
+            ...word,
+            correct_count: row.correct_count ?? 0,
+            incorrect_count: row.incorrect_count ?? 0,
+            last_reviewed_at: row.last_reviewed_at ?? null,
+            box: row.box ?? 1,
+          },
+        ];
+      });
 
   // Wrong answers for the quiz. Without this the options came only from the
   // session itself, so a learner with two words due got a two-option quiz.
@@ -169,6 +183,16 @@ export default async function ReviewPage({
               <small className="block text-[13px] text-muted leading-[1.55]">
                 {t("loadFailedBody")}
               </small>
+            </div>
+          ) : doneForToday ? (
+            <div className="max-w-[560px] border border-line rounded-[14px] p-[clamp(24px,4vw,32px)] text-center">
+              <p className="text-4xl mb-2">✅</p>
+              <h2 className="font-bold text-[19px] tracking-[-0.02em] mb-1.5">
+                {t("doneTodayTitle")}
+              </h2>
+              <p className="text-sm text-muted">
+                {t("doneTodayBody", { count: REVIEW_SESSION_SIZE })}
+              </p>
             </div>
           ) : dueWords.length > 0 ? (
             <ReviewSession words={dueWords} pool={distractorPool} userId={user.id} />

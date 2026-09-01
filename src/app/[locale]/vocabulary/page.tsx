@@ -7,7 +7,6 @@ import { CHAPTER_UNITS, MINUTES_PER_SESSION, unlockedVocabTiers } from "@/lib/vo
 import { getChaptersForTopic } from "@/lib/vocabulary-words";
 import { WORD_STATUSES, wordStatus } from "@/lib/word-notes";
 import WordStatusIcon from "@/components/vocabulary/WordStatusIcon";
-import VocabSearch from "@/components/vocabulary/VocabSearch";
 import { LEVEL_ORDER, isCefrLevel, type CefrLevel } from "@/lib/tree";
 import { getLocalizedMeaning } from "@/lib/vocabulary-i18n";
 
@@ -138,11 +137,6 @@ export default async function VocabularyPage({
         />
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[170px] md:pb-[60px] max-w-[980px]">
-          {/* breadcrumb + word lookup */}
-          <div className="flex justify-end mb-[18px]">
-            <VocabSearch />
-          </div>
-
           {/* head */}
           <div className="flex items-end justify-between gap-4 mb-5 flex-wrap">
             <div>

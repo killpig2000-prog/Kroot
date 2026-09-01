@@ -23,6 +23,7 @@ import { getPassagesForLevel } from "@/lib/reading";
 import { getPromptsForLevel } from "@/lib/writing";
 import { chapterClearStats } from "@/lib/pronunciation";
 import { CHAPTER_SIZE } from "@/lib/vocabulary";
+import { REVIEW_SESSION_SIZE } from "@/lib/srs";
 import { getWordsForTopic } from "@/lib/vocabulary-words";
 import { firstVisitState, NEW_ACCOUNT_DAYS, SHOW_ALL_COOKIE } from "@/lib/first-visit";
 import { countCompletedSessions } from "@/lib/first-visit-server";
@@ -195,10 +196,12 @@ export default async function DashboardPage() {
     { label: t("levelMap.checkReading"), ok: elig.readingDone >= elig.readingRequired, value: `${elig.readingDone}/${elig.readingRequired}` },
   ];
   // Errors (e.g. migration 0022 not applied yet) just hide the review card.
-  // This is the real backlog, not the session length: /review lets a learner
-  // choose how many of them to take at once, so capping the badge at the
-  // default session size would hide words they can actually sit down and do.
-  const dueCount = snapshot.due_count;
+  // User feedback: an uncapped backlog badge (once past a hundred+ words)
+  // read as a scary, un-clearable number rather than something to act on.
+  // Capped at the default review session size (10) — the badge always
+  // matches "one comfortable sitting", and /review itself still lets a
+  // learner pull a bigger batch (20/30/50) if they want to clear more.
+  const dueCount = Math.min(snapshot.due_count, REVIEW_SESSION_SIZE);
 
   const tally = (doneKeys: Set<string>, levelKeys: string[], cap?: number) => {
     const done = levelKeys.filter((k) => doneKeys.has(k)).length;
