@@ -24,7 +24,13 @@ export const QUESTIONS: Question[] = [
   { type: "Words", lv: 1, word: '"친구"', ask: "What does this mean?", opts: ["Friend 🧑‍🤝‍🧑", "Family", "Teacher", "Neighbour"], ans: 0 },
   { type: "Words", lv: 1, word: '"사과"', ask: "Pick the right meaning!", opts: ["Grape", "Apple 🍎", "Peach", "Pear"], ans: 1 },
   { type: "Grammar", lv: 1, word: "저___ 미국 사람이에요.", ask: "Fill in the blank.", opts: ["는", "를", "에", "와"], ans: 0 },
+  { type: "Grammar", lv: 1, word: "이것___ 뭐예요?", ask: "Fill in the blank.", opts: ["은", "가", "를", "도"], ans: 0 },
+  { type: "Grammar", lv: 1, word: "저는 물___ 마셔요.", ask: "Fill in the blank.", opts: ["을", "가", "는", "에"], ans: 0 },
+  { type: "Grammar", lv: 1, word: "안녕히 ___ 세요.", ask: "Fill in the blank (said when someone else is leaving).", opts: ["가", "먹", "자", "보"], ans: 0 },
   { type: "Listening", lv: 1, audio: "이름이 뭐예요?", ask: "You heard a question — what is being asked?", opts: ["Your name 🙂", "Your age", "Your address", "The time"], ans: 0 },
+  { type: "Listening", lv: 1, audio: "만나서 반가워요.", ask: "What is the speaker doing?", opts: ["Greeting you, glad to meet you", "Saying goodbye", "Apologizing", "Asking a favor"], ans: 0 },
+  { type: "Listening", lv: 1, audio: "화장실이 어디예요?", ask: "What is the speaker asking about?", opts: ["Where the bathroom is 🚻", "What time it is", "How much it costs", "Where the exit is"], ans: 0 },
+  { type: "Listening", lv: 1, audio: "이거 하나 주세요.", ask: "What does the speaker want?", opts: ["One of this, please", "Directions", "A discount", "The bathroom"], ans: 0 },
 
   // ---------- lv 2 (A2) ----------
   { type: "Grammar", lv: 2, word: "저는 학생___.", ask: "Fill in the blank.", opts: ["이에요", "예요", "있어요", "해요"], ans: 0 },
@@ -34,7 +40,11 @@ export const QUESTIONS: Question[] = [
   { type: "Grammar", lv: 2, word: "어제 영화를 봤___.", ask: "Fill in the blank (polite past).", opts: ["어요", "아요", "해요", "이에요"], ans: 0 },
   { type: "Grammar", lv: 2, word: "학교___ 가요.", ask: "Choose the right particle.", opts: ["에", "을", "도", "만"], ans: 0 },
   { type: "Words", lv: 2, word: '"일찍"', ask: "Closest in meaning?", opts: ["Early", "Late", "Slowly", "Again"], ans: 0 },
+  { type: "Grammar", lv: 2, word: "내일 친구를 만날 ___ 이에요.", ask: "Fill in the blank (simple future).", opts: ["거", "적", "때", "것도"], ans: 0 },
   { type: "Listening", lv: 2, audio: "이거 얼마예요?", ask: "What is the speaker asking about?", opts: ["The price 💰", "The size", "The way there", "The opening hours"], ans: 0 },
+  { type: "Listening", lv: 2, audio: "주말에 뭐 했어요?", ask: "What is being asked?", opts: ["What you did on the weekend", "Where you're going", "What time it is", "How you feel"], ans: 0 },
+  { type: "Listening", lv: 2, audio: "저는 커피보다 차를 더 좋아해요.", ask: "What does the speaker prefer?", opts: ["Tea over coffee", "Coffee over tea", "Neither", "Both equally"], ans: 0 },
+  { type: "Listening", lv: 2, audio: "몇 시에 만날까요?", ask: "What is the speaker proposing to decide?", opts: ["What time to meet", "Where to eat", "Who is coming", "How to get there"], ans: 0 },
 
   // ---------- lv 3 (B1) ----------
   { type: "Listening", lv: 3, audio: "지금 몇 시예요?", ask: "You heard a question — what is being asked?", opts: ["The time ⏰", "The price", "The weather", "Your name"], ans: 0 },
@@ -44,7 +54,11 @@ export const QUESTIONS: Question[] = [
   { type: "Words", lv: 3, word: '"포기하다"', ask: "Closest in meaning?", opts: ["To give up", "To promise", "To prepare", "To succeed"], ans: 0 },
   { type: "Grammar", lv: 3, word: "친구를 만나기 ___ 카페에 갔어요.", ask: "Fill in the blank.", opts: ["위해", "때문", "대신", "동안"], ans: 0 },
   { type: "Grammar", lv: 3, word: "한국에 가 ___ 싶어요.", ask: "Fill in the blank.", opts: ["고", "서", "면", "지만"], ans: 0 },
+  { type: "Words", lv: 3, word: '"당연하다"', ask: "Closest in meaning?", opts: ["To be natural / obvious", "To be surprising", "To be rare", "To be forbidden"], ans: 0 },
+  { type: "Grammar", lv: 3, word: "이 책은 읽으면 읽___ 재미있어요.", ask: "Fill in the blank (the more..., the more...).", opts: ["을수록", "자마자", "는데도", "다가"], ans: 0 },
   { type: "Listening", lv: 3, audio: "다음 주에 시간 괜찮으세요?", ask: "What does the speaker want to know?", opts: ["Whether you're free next week 📅", "Where you live", "What you ate", "How much it costs"], ans: 0 },
+  { type: "Listening", lv: 3, audio: "죄송하지만 조금 늦을 것 같아요.", ask: "What is the speaker saying?", opts: ["They'll probably be a bit late", "They're cancelling", "They arrived early", "They forgot something"], ans: 0 },
+  { type: "Listening", lv: 3, audio: "가는 길에 편의점 좀 들러도 될까요?", ask: "What is the speaker asking?", opts: ["Whether they can stop by a convenience store on the way", "Where the nearest bank is", "If they can borrow money", "If they can leave early"], ans: 0 },
 
   // ---------- lv 4 (B2) ----------
   { type: "Words", lv: 4, word: '"번거롭다"', ask: "Closest in meaning?", opts: ["Troublesome", "Delicious", "Peaceful", "Generous"], ans: 0 },
@@ -55,6 +69,10 @@ export const QUESTIONS: Question[] = [
   { type: "Grammar", lv: 4, word: "비가 올 ___ 우산을 챙기세요.", ask: "Fill in the blank.", opts: ["테니까", "는데도", "기에는", "자마자"], ans: 0 },
   { type: "Grammar", lv: 4, word: "그 사람은 성실___ 성격도 좋아요.", ask: "Fill in the blank.", opts: ["할 뿐만 아니라", "하기 위해", "하자마자", "하더라도"], ans: 0 },
   { type: "Listening", lv: 4, audio: "예약을 변경하고 싶은데요.", ask: "What does the speaker want?", opts: ["To change a reservation", "To cancel a payment", "To order more food", "To file a complaint"], ans: 0 },
+  { type: "Grammar", lv: 4, word: "아무리 바빠___ 연락은 해야죠.", ask: "Fill in the blank.", opts: ["도", "면", "니까", "자마자"], ans: 0 },
+  { type: "Listening", lv: 4, audio: "생각보다 훨씬 복잡하네요.", ask: "What is the speaker's reaction?", opts: ["It's more complicated than expected", "It's simpler than expected", "It's exactly as expected", "It's finished already"], ans: 0 },
+  { type: "Listening", lv: 4, audio: "이 서류부터 작성해 주시겠어요?", ask: "What is being requested?", opts: ["To fill out this form first", "To sign at the bottom", "To submit it online", "To make a copy"], ans: 0 },
+  { type: "Listening", lv: 4, audio: "일정이 갑자기 앞당겨졌어요.", ask: "What happened to the schedule?", opts: ["It was moved up earlier than planned", "It was pushed back", "It was cancelled", "It stayed the same"], ans: 0 },
 
   // ---------- lv 5 (C1) ----------
   { type: "Listening", lv: 5, audio: "회의가 연기됐다는 소식 들으셨어요?", ask: "What happened to the meeting?", opts: ["It was postponed", "It was cancelled", "It ended early", "It went well"], ans: 0 },
@@ -64,7 +82,11 @@ export const QUESTIONS: Question[] = [
   { type: "Grammar", lv: 5, word: "결과가 어떻___ 최선을 다합시다.", ask: "Fill in the blank.", opts: ["든지", "자마자", "길래", "더니"], ans: 0 },
   { type: "Grammar", lv: 5, word: "아무리 바쁘___ 밥은 먹어야죠.", ask: "Fill in the blank.", opts: ["더라도", "자마자", "는 바람에", "길래"], ans: 0 },
   { type: "Grammar", lv: 5, word: "사고가 나는 바람에 늦었어요.", ask: "What does ~는 바람에 express here?", opts: ["An unexpected cause of a bad result", "A purpose", "A polite request", "A future plan"], ans: 0 },
+  { type: "Words", lv: 5, word: '"수긍하다"', ask: "Closest in meaning?", opts: ["To accept, agree with", "To dispute", "To ignore", "To postpone"], ans: 0 },
+  { type: "Grammar", lv: 5, word: "그는 말을 하려다 ___ 그만두었다.", ask: "Fill in the blank.", opts: ["말고", "말며", "마니", "말자"], ans: 0 },
   { type: "Listening", lv: 5, audio: "이번 정책은 실효성이 떨어진다는 지적이 많습니다.", ask: "What is being said about the policy?", opts: ["Many say it isn't effective", "Many say it costs too much", "It was praised widely", "It takes effect next year"], ans: 0 },
+  { type: "Listening", lv: 5, audio: "협상이 막판까지 진통을 겪었습니다.", ask: "What is being said about the negotiation?", opts: ["It went through difficulty until the very end", "It ended quickly and smoothly", "It was cancelled", "It hasn't started yet"], ans: 0 },
+  { type: "Listening", lv: 5, audio: "이 문제는 근본적인 해결책이 필요해 보입니다.", ask: "What does the speaker think the problem needs?", opts: ["A fundamental solution", "A quick temporary fix", "More funding only", "No action at all"], ans: 0 },
 
   // ---------- lv 6 (C2) ----------
   { type: "Words", lv: 6, word: '"미봉책"', ask: "This word refers to…", opts: ["A stopgap measure", "A grand strategy", "A final decision", "An old custom"], ans: 0 },
@@ -74,15 +96,22 @@ export const QUESTIONS: Question[] = [
   { type: "Words", lv: 6, word: '"설상가상"', ask: "This idiom describes…", opts: ["One misfortune piled on another", "An unexpected windfall", "A perfectly timed rescue", "A quiet, uneventful spell"], ans: 0 },
   { type: "Grammar", lv: 6, word: "그런 실수를 하다니 어처구니가 ___.", ask: "Fill in the blank.", opts: ["없다", "많다", "좋다", "크다"], ans: 0 },
   { type: "Grammar", lv: 6, word: "논의가 원점으로 ___.", ask: "Fill in the blank (back to square one).", opts: ["돌아갔다", "올라갔다", "넘어갔다", "내려갔다"], ans: 0 },
+  { type: "Grammar", lv: 6, word: "그는 승진은커녕 ___ 위기에 처했다.", ask: "Fill in the blank.", opts: ["해고될", "축하받을", "휴가 갈", "칭찬받을"], ans: 0 },
   { type: "Listening", lv: 6, audio: "그 사안은 여론의 뭇매를 맞고 결국 백지화됐습니다.", ask: "What happened to the issue?", opts: ["It was scrapped after public backlash", "It passed despite objections", "It was quietly postponed", "It was handed to a committee"], ans: 0 },
+  { type: "Listening", lv: 6, audio: "그 발언이 도화선이 되어 논란이 걷잡을 수 없이 커졌습니다.", ask: "What triggered the growing controversy?", opts: ["That remark sparked it off", "A leaked document", "A court ruling", "A press conference"], ans: 0 },
+  { type: "Listening", lv: 6, audio: "그는 궁지에 몰리자 결국 입장을 번복했습니다.", ask: "What did the person do when cornered?", opts: ["Reversed their position", "Doubled down", "Resigned immediately", "Stayed silent"], ans: 0 },
+  { type: "Grammar", lv: 6, word: "그의 성공은 노력의 산물이라 해도 과언이 ___.", ask: "Fill in the blank.", opts: ["아니다", "맞다", "옳다", "크다"], ans: 0 },
+  { type: "Listening", lv: 6, audio: "정부는 이번 사태의 책임 소재를 규명하겠다고 밝혔습니다.", ask: "What did the government say it would do?", opts: ["Determine who is responsible for the incident", "Cover up the incident", "Ignore public criticism", "Postpone the investigation indefinitely"], ans: 0 },
 ];
 
 /** Question levels present in the pool, ascending. */
 export const TEST_BANDS = [1, 2, 3, 4, 5, 6] as const;
+/** How many questions of each skill type a band draws (Words + Grammar + Listening). */
+export const PER_TYPE = 2;
 /** How many questions each band contributes to a served paper. */
-export const PER_BAND = 3;
+export const PER_BAND = PER_TYPE * QUESTION_TYPES.length;
 /** Correct answers needed to pass a band and move up. */
-export const BAND_PASS = 2;
+export const BAND_PASS = 4;
 
 // Small deterministic PRNG so a seeded test renders identically on the server
 // and the client (avoids a hydration mismatch before the quiz starts).
@@ -123,11 +152,23 @@ function shuffleOptions(q: Question, rand: () => number): Question {
   return { ...q, opts: order.map((i) => q.opts[i]), ans: order.indexOf(q.ans) };
 }
 
+/**
+ * Draw PER_TYPE questions of every skill type within a band, so a paper can
+ * never skip a whole skill (e.g. no Listening) the way pure random draw from
+ * the band pool could.
+ */
 export function buildTest(seed?: number): Question[] {
   const rand = seed === undefined ? Math.random : mulberry32(seed);
-  return TEST_BANDS.flatMap((lv) =>
-    pickSome(QUESTIONS.filter((q) => q.lv === lv), PER_BAND, rand).map((q) => shuffleOptions(q, rand))
-  );
+  return TEST_BANDS.flatMap((lv) => {
+    const drawn = QUESTION_TYPES.flatMap((type) =>
+      pickSome(
+        QUESTIONS.filter((q) => q.lv === lv && q.type === type),
+        PER_TYPE,
+        rand
+      )
+    );
+    return pickSome(drawn, drawn.length, rand).map((q) => shuffleOptions(q, rand));
+  });
 }
 
 export type Level = {
@@ -240,7 +281,7 @@ export function replaceCurrent(run: Run): Run {
   const q = currentQuestion(run);
   if (!q) return run;
   const seen = new Set(run.paper.map((x) => x.word ?? x.audio));
-  const unused = QUESTIONS.filter((x) => x.lv === q.lv && !seen.has(x.word ?? x.audio));
+  const unused = QUESTIONS.filter((x) => x.lv === q.lv && x.type === q.type && !seen.has(x.word ?? x.audio));
   const paper = [...run.paper];
   if (unused.length > 0) {
     paper[run.index] = shuffleOptions(unused[Math.floor(Math.random() * unused.length)], Math.random);

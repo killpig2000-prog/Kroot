@@ -50,39 +50,39 @@ describe("buildTest option shuffle", () => {
 
 describe("adaptive run", () => {
   it("stops at the first band that can no longer be passed", () => {
-    const run = answerBand(startRun(buildTest(1)), [false, false]);
+    const run = answerBand(startRun(buildTest(1)), [false, false, false]);
     expect(run.done).toBe(true);
     expect(run.stoppedAt).toBe(1);
-    expect(run.answered).toBe(2);
+    expect(run.answered).toBe(3);
     expect(levelFromRun(run).code).toBe("A1");
   });
 
   it("moves up as soon as a band is certain", () => {
-    const run = answerBand(startRun(buildTest(2)), [true, true]);
+    const run = answerBand(startRun(buildTest(2)), [true, true, true, true]);
     expect(run.done).toBe(false);
     expect(run.band).toBe(2);
     expect(run.passed).toEqual([1]);
     expect(currentQuestion(run)!.lv).toBe(2);
   });
 
-  it("uses the third question when the first two split", () => {
-    let run = answerBand(startRun(buildTest(3)), [true, false]);
+  it("keeps going while a band is still undecided", () => {
+    let run = answerBand(startRun(buildTest(3)), [true, false, true, false]);
     expect(run.done).toBe(false);
     expect(run.band).toBe(1);
-    run = answerBand(run, [true]);
+    run = answerBand(run, [true, true]);
     expect(run.passed).toEqual([1]);
     expect(run.bandHits).toBe(0);
   });
 
   it("places a learner who fails B1 at A2 with B1 as the next goal", () => {
-    let run = answerBand(startRun(buildTest(4)), [true, true]); // A1
-    run = answerBand(run, [true, true]); // A2
-    run = answerBand(run, [false, false]); // B1
+    let run = answerBand(startRun(buildTest(4)), Array(BAND_PASS).fill(true)); // A1
+    run = answerBand(run, Array(BAND_PASS).fill(true)); // A2
+    run = answerBand(run, Array(PER_BAND - BAND_PASS + 1).fill(false)); // B1
     expect(run.done).toBe(true);
     const p = placementFromRun(run, "drama");
     expect(p.level).toBe("A2");
     expect(p.stoppedAt).toBe("B1");
-    expect(p.total).toBe(6);
+    expect(p.total).toBe(BAND_PASS * 2 + (PER_BAND - BAND_PASS + 1));
     expect(p.skipped).toBe(false);
   });
 
@@ -95,7 +95,7 @@ describe("adaptive run", () => {
   });
 
   it("ignores answers once done", () => {
-    const run = answerBand(startRun(buildTest(6)), [false, false]);
+    const run = answerBand(startRun(buildTest(6)), Array(PER_BAND - BAND_PASS + 1).fill(false));
     expect(answerRun(run, 0)).toBe(run);
   });
 

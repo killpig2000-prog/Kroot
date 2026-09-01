@@ -167,7 +167,7 @@ export const PROMOTION_TESTS: PromotionTestSpec[] = [
   {
     from: "A1",
     to: "A2",
-    listeningCount: 8,
+    listeningCount: 10,
     listeningPool: [
       L("저는 물을 마셔요.", "What did you hear?", ["I drink water", "I eat rice", "I go home"], "I drink water"),
       L("내일 학교에 가요.", "When are they going to school?", ["tomorrow", "yesterday", "now"], "tomorrow"),
@@ -272,8 +272,8 @@ export const PROMOTION_TESTS: PromotionTestSpec[] = [
       { kr: "짐을 캐리어에 다 쌌어요.", question: "What did they pack?", options: ["the suitcase", "a backpack", "a box"], answer: "the suitcase" },
       { kr: "요즘 기타를 배우고 있어요.", question: "What are they learning?", options: ["guitar", "piano", "drums"], answer: "guitar" },
     ],
-    readingCount: 2,
-    writingCount: 5,
+    readingCount: 3,
+    writingCount: 7,
     readingPool: [
       {
         passage:
@@ -784,7 +784,7 @@ export const PROMOTION_TESTS: PromotionTestSpec[] = [
   {
     from: "A2",
     to: "B1",
-    listeningCount: 8,
+    listeningCount: 10,
     listeningPool: [
       L("배가 아파서 병원에 갔어요.", "Why did they go to the hospital?", ["their stomach hurt", "their head hurt", "they had a cold"], "their stomach hurt"),
       L("한국에 가 본 적이 있어요?", "What are they asking?", ["if you have been to Korea", "if you will go to Korea", "if you like Korea"], "if you have been to Korea"),
@@ -888,8 +888,8 @@ export const PROMOTION_TESTS: PromotionTestSpec[] = [
       { kr: "새 스마트워치 사용법을 배우고 있어요.", question: "What are they learning to use?", options: ["a smartwatch", "a laptop", "a printer"], answer: "a smartwatch" },
       { kr: "이웃과 층간 소음 문제로 얘기를 나눴어요.", question: "What did they talk with their neighbor about?", options: ["noise between floors", "parking spaces", "trash disposal"], answer: "noise between floors" },
     ],
-    readingCount: 2,
-    writingCount: 5,
+    readingCount: 3,
+    writingCount: 7,
     readingPool: [
       {
         passage:
@@ -1439,7 +1439,7 @@ export const PROMOTION_TESTS: PromotionTestSpec[] = [
   {
     from: "B1",
     to: "B2",
-    listeningCount: 10,
+    listeningCount: 12,
     listeningPool: [
       L("일기예보에서 주말에 눈이 온다고 했어요.", "What did the forecast say?", ["it will snow this weekend", "it will rain this weekend", "it snowed last weekend", "the weekend will be warm"], "it will snow this weekend"),
       L("회의가 취소됐다는 소식 들었어요?", "What news are they asking about?", ["the meeting was canceled", "the meeting was moved up", "a new meeting was added", "the meeting ran long"], "the meeting was canceled"),
@@ -1549,8 +1549,8 @@ export const PROMOTION_TESTS: PromotionTestSpec[] = [
 
       // NEW_SPEAKING
     ],
-    readingCount: 2,
-    writingCount: 5,
+    readingCount: 3,
+    writingCount: 7,
     readingPool: [
       {
         passage:
@@ -2100,7 +2100,7 @@ export const PROMOTION_TESTS: PromotionTestSpec[] = [
   {
     from: "B2",
     to: "C1",
-    listeningCount: 10,
+    listeningCount: 12,
     listeningPool: [
       L("정부는 내년부터 새로운 환경 정책을 시행할 예정입니다.", "What is the government planning?", ["to implement a new environmental policy next year", "to cancel an environmental policy", "to survey public opinion on the environment", "to raise environmental fines this year"], "to implement a new environmental policy next year"),
       L("이번 조사에 따르면 청년 실업률이 감소한 것으로 나타났습니다.", "What did the survey find?", ["youth unemployment decreased", "youth unemployment increased", "youth wages decreased", "more youths started businesses"], "youth unemployment decreased"),
@@ -2204,8 +2204,8 @@ export const PROMOTION_TESTS: PromotionTestSpec[] = [
       { kr: "직장 내 세대 차이를 줄이기 위해 멘토링 프로그램을 도입하는 기업이 늘고 있습니다.", question: "What are more companies introducing?", options: ["mentoring programs to reduce generational gaps at work", "mandatory retirement at an earlier age", "salary cuts for older employees", "separate offices for each generation"], answer: "mentoring programs to reduce generational gaps at work" },
       { kr: "팟캐스트 광고 시장이 빠르게 성장하면서 전통적인 라디오 광고 매출은 계속 줄고 있습니다.", question: "What is happening as the podcast ad market grows?", options: ["traditional radio ad revenue continues to decline", "traditional radio ad revenue is also growing", "podcast platforms are shutting down", "advertisers are avoiding audio ads entirely"], answer: "traditional radio ad revenue continues to decline" },
     ],
-    readingCount: 2,
-    writingCount: 5,
+    readingCount: 3,
+    writingCount: 7,
     readingPool: [
       {
         passage:
@@ -2828,7 +2828,7 @@ export const PROMOTION_TESTS: PromotionTestSpec[] = [
   {
     from: "C1",
     to: "C2",
-    listeningCount: 12,
+    listeningCount: 14,
     listeningPool: [
       L("이 학설은 오랫동안 정설로 여겨졌으나 최근 반박되는 추세입니다.", "What is happening to this theory?", ["long accepted, it is now increasingly refuted", "it has just been proposed", "it was never taken seriously", "it has been proven beyond doubt"], "long accepted, it is now increasingly refuted"),
       L("유전자 편집 기술은 윤리적 논란을 불러일으키고 있습니다.", "What does gene-editing technology provoke?", ["ethical controversy", "unanimous support", "economic growth", "little public interest"], "ethical controversy"),
@@ -2846,6 +2846,13 @@ export const PROMOTION_TESTS: PromotionTestSpec[] = [
       L("문화유산 보존과 도시 개발 사이의 갈등이 심화되고 있습니다.", "What conflict is deepening?", ["between heritage preservation and urban development", "between two construction companies", "between citizens and tourists", "between old and new architects"], "between heritage preservation and urban development"),
       L("소득 불평등의 심화는 사회 통합을 저해하는 요인으로 지목됩니다.", "What is deepening income inequality blamed for?", ["undermining social cohesion", "raising average income", "reducing crime", "slowing inflation"], "undermining social cohesion"),
       L("그 이론은 여러 학문 분야에 걸쳐 폭넓게 응용되고 있습니다.", "How is the theory being used?", ["applied broadly across many disciplines", "confined to one narrow field", "taught only in high schools", "rejected by every field"], "applied broadly across many disciplines"),
+      L("이 판결은 향후 유사 소송의 선례가 될 것으로 전망됩니다.", "What is this ruling expected to become?", ["a precedent for future similar lawsuits", "a one-off exception with no impact", "the final ruling on all future cases", "grounds for a criminal charge"], "a precedent for future similar lawsuits"),
+      L("경기 침체가 장기화되면서 중소기업의 자금난이 가중되고 있습니다.", "What is worsening as the downturn drags on?", ["small businesses' funding difficulties", "large corporations' stock prices", "consumer spending on luxury goods", "the national birth rate"], "small businesses' funding difficulties"),
+      L("그 소설은 기존의 서사 구조를 해체하는 실험적 시도로 평가받습니다.", "How is the novel evaluated?", ["as an experimental attempt to deconstruct conventional narrative", "as a faithful retelling of a classic", "as a commercial failure", "as a children's story"], "as an experimental attempt to deconstruct conventional narrative"),
+      L("과도한 규제가 오히려 혁신을 저해한다는 주장이 제기되고 있습니다.", "What argument is being raised?", ["excessive regulation actually hinders innovation", "regulation always boosts innovation", "innovation requires no regulation", "regulation has no effect either way"], "excessive regulation actually hinders innovation"),
+      L("연구진은 표본 크기의 한계로 결론을 일반화하는 데 신중을 기했습니다.", "Why were the researchers cautious about generalizing?", ["the sample size was limited", "the funding ran out", "the equipment malfunctioned", "the results were unanimous"], "the sample size was limited"),
+      L("이 협약은 양국 간 오랜 무역 마찰을 해소하는 계기가 될 전망입니다.", "What is this agreement expected to resolve?", ["long-standing trade friction between the two countries", "a border dispute", "a currency crisis", "a diplomatic boycott"], "long-standing trade friction between the two countries"),
+      L("그 발언은 문맥과 무관하게 확대 해석되며 논란을 키웠습니다.", "How did the remark fuel controversy?", ["it was overinterpreted out of context", "it was clearly and precisely worded", "it was never reported", "it was retracted immediately"], "it was overinterpreted out of context"),
       { kr: "자동화가 확산되면서 숙련 노동자조차 일자리 대체 위협에서 자유롭지 않습니다.", question: "What does the spread of automation threaten?", options: ["even skilled workers with job displacement", "only unskilled workers", "management positions exclusively", "nobody, since automation creates only new jobs"], answer: "even skilled workers with job displacement" },
       { kr: "그 도시는 대중교통 확충보다 도로 확장을 우선시해 교통 정체가 오히려 심화되었습니다.", question: "What happened after the city prioritized road expansion over transit?", options: ["traffic congestion actually worsened", "traffic disappeared entirely", "public transit usage soared", "road expansion was cancelled"], answer: "traffic congestion actually worsened" },
       { kr: "역사학자들은 그 사건에 대한 공식 기록이 승자의 관점만 반영했다고 지적합니다.", question: "What do historians point out about the official record?", options: ["it reflects only the victor's perspective", "it is completely unbiased", "it was written by the losing side", "no records survived at all"], answer: "it reflects only the victor's perspective" },
@@ -2932,8 +2939,8 @@ export const PROMOTION_TESTS: PromotionTestSpec[] = [
       { kr: "탄소 국경세 도입을 둘러싸고 수출 의존도가 높은 국가들의 반발이 거세지고 있습니다.", question: "Why is opposition growing among export-dependent countries?", options: ["the introduction of a carbon border tax", "a sudden rise in oil prices", "a new immigration law", "a currency devaluation"], answer: "the introduction of a carbon border tax" },
       { kr: "그 협상단은 상호 양보의 폭을 명문화함으로써 향후 분쟁의 소지를 줄이고자 했습니다.", question: "What did the negotiating team try to do by formally documenting the scope of mutual concessions?", options: ["reduce the potential for future disputes", "end the negotiation immediately", "avoid signing any agreement", "increase ambiguity intentionally"], answer: "reduce the potential for future disputes" },
     ],
-    readingCount: 3,
-    writingCount: 5,
+    readingCount: 4,
+    writingCount: 7,
     readingPool: [
       {
         passage:
