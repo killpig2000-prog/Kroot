@@ -2594,5 +2594,924 @@
       "nuance": "[Cần tính chất]",
       "example": "[Cần ví dụ: For real, this is so good.]"
     }
+  },
+  "es": {},
+  "kkul-jaem": {
+    "es": {
+      "meaning_es": "Muy divertido, un gran tiempo",
+      "example_es": "Este drama es muy divertido en serio."
+    }
+  },
+  "no-jaem": {
+    "es": {
+      "meaning_es": "Aburrido, nada gracioso",
+      "example_es": "Esa película fue un rollo total."
+    }
+  },
+  "dae-bak": {
+    "es": {
+      "meaning_es": "Increíble / ¡no me digas! (sorpresa buena o mala)",
+      "example_es": "¡No me digas! ¿Sacaste 100 en el examen?"
+    }
+  },
+  "heol": {
+    "es": {
+      "meaning_es": "Guau / ¡Dios mío! — incredulidad pura",
+      "example_es": "Guau, está nevando afuera ahorita."
+    }
+  },
+  "jjang": {
+    "es": {
+      "meaning_es": "Lo mejor, increíble",
+      "example_es": "La comida de mi mamá es la mejor."
+    }
+  },
+  "men-bung": {
+    "es": {
+      "meaning_es": "Colapso mental, completamente abrumado",
+      "example_es": "Se perdieron mis diapositivas y me volví loco."
+    }
+  },
+  "sim-kung": {
+    "es": {
+      "meaning_es": "Encantador, digno de deseo",
+      "example_es": "Esa sonrisa es honestamente digna de deseo."
+    }
+  },
+  "choe-ae": {
+    "es": {
+      "meaning_es": "Tu favorito absoluto (favorito)",
+      "example_es": "Ese es mi miembro favorito."
+    }
+  },
+  "bul-geum": {
+    "es": {
+      "meaning_es": "Viernes de fuego — la noche en que comienza la diversión",
+      "example_es": "Es viernes de fuego, ¿qué vas a hacer?"
+    }
+  },
+  "chi-maek": {
+    "es": {
+      "meaning_es": "Pollo frito con cerveza, la combinación nacional",
+      "example_es": "En día lluvioso, pollo con cerveza gana."
+    }
+  },
+  "jei-em-ti": {
+    "es": {
+      "meaning_es": "Deliciosamente irreal",
+      "example_es": "El tteokbokki aquí es irreal."
+    }
+  },
+  "ti-em-ai": {
+    "es": {
+      "meaning_es": "Más detalles de lo que alguien pidió",
+      "example_es": "TMI, pero me caí tres veces hoy."
+    }
+  },
+  "gap-bun-ssa": {
+    "es": {
+      "meaning_es": "Ese silencio incómodo después de una broma mala",
+      "example_es": "Mi broma mató el ambiente completamente."
+    }
+  },
+  "in-ssa": {
+    "es": {
+      "meaning_es": "Una mariposa social, siempre en el centro de todo",
+      "example_es": "Adondequiera que vaya, son la vida de la fiesta."
+    }
+  },
+  "a-ssa": {
+    "es": {
+      "meaning_es": "Un lobo solitario feliz que evita el drama de grupo",
+      "example_es": "Soy un lobo solitario, así que la casa es lo mejor."
+    }
+  },
+  "sol-kka-mal": {
+    "es": {
+      "meaning_es": "No voy a mentir, honestamente…",
+      "example_es": "No voy a mentir, esto es un poco caro."
+    }
+  },
+  "hon-bap": {
+    "es": {
+      "meaning_es": "Comer una comida solo, a propósito",
+      "example_es": "Comí solo en el almuerzo hoy."
+    }
+  },
+  "hon-sul": {
+    "es": {
+      "meaning_es": "Beber solo en casa",
+      "example_es": "Viernes por la noche me pide un trago solo."
+    }
+  },
+  "jon-mat": {
+    "es": {
+      "meaning_es": "Insanamente sabroso (un poco grosero)",
+      "example_es": "Este ramen es insanamente bueno."
+    }
+  },
+  "ke-ba-ke": {
+    "es": {
+      "meaning_es": "Depende de la situación",
+      "example_es": "Eso depende de cada caso, varía según la persona."
+    }
+  },
+  "sseom": {
+    "es": {
+      "meaning_es": "La etapa de casi-citas antes de ser oficial",
+      "example_es": "Todavía estamos en esa fase de casi-citas."
+    }
+  },
+  "hyeon-ta": {
+    "es": {
+      "meaning_es": "Ese golpe repentino de ¿qué estoy haciendo con mi vida?",
+      "example_es": "Me golpeó la realidad a las 3 de la mañana."
+    }
+  },
+  "gat-saeng": {
+    "es": {
+      "meaning_es": "Vivir una vida notablemente disciplinada",
+      "example_es": "Últimamente estoy viviendo mi mejor vida disciplinada con entrenamientos matutinos."
+    }
+  },
+  "eok-ten": {
+    "es": {
+      "meaning_es": "Entusiasmo falso que obviamente estás forzando",
+      "example_es": "Esa reacción es un entusiasmo totalmente forzado."
+    }
+  },
+  "eol-juk-a": {
+    "es": {
+      "meaning_es": "Alguien que bebe americano helado todo el año",
+      "example_es": "Hace menos diez grados y sigo pidiendo helado."
+    }
+  },
+  "a-a": {
+    "es": {
+      "meaning_es": "Americano helado",
+      "example_es": "Un americano helado, por favor."
+    }
+  },
+  "gung-nul": {
+    "es": {
+      "meaning_es": "La forma estándar no escrita de hacer algo",
+      "example_es": "Con pollo, cola es la forma estándar de hacerlo."
+    }
+  },
+  "ga-seong-bi": {
+    "es": {
+      "meaning_es": "Buen valor por tu dinero",
+      "example_es": "Esta computadora portátil tiene muy buen valor por el dinero."
+    }
+  },
+  "ga-sim-bi": {
+    "es": {
+      "meaning_es": "Vale la pena por lo feliz que te hace, no por el precio",
+      "example_es": "Era caro pero me hizo feliz, así que valió la pena."
+    }
+  },
+  "so-hwak-haeng": {
+    "es": {
+      "meaning_es": "Un pequeño placer cotidiano en el que puedes contar",
+      "example_es": "Un pastel de pez en el camino a casa es mi pequeña alegría."
+    }
+  },
+  "wo-ra-bael": {
+    "es": {
+      "meaning_es": "Balance trabajo-vida",
+      "example_es": "El balance trabajo-vida me importa más que el salario."
+    }
+  },
+  "kal-toe": {
+    "es": {
+      "meaning_es": "Dejar el trabajo exactamente a tiempo",
+      "example_es": "Hoy me voy a las seis en punto, sin importar qué."
+    }
+  },
+  "wol-geup-ru-pang": {
+    "es": {
+      "meaning_es": "Alguien que flojea en el trabajo pero cobra su salario",
+      "example_es": "Hoy básicamente robaré mi salario y no haré nada."
+    }
+  },
+  "yeol-jeong-pei": {
+    "es": {
+      "meaning_es": "Ser mal pagado y que te digan que estés agradecido por la experiencia",
+      "example_es": "Esa pasantía paga puro en 'experiencia' y nada más."
+    }
+  },
+  "chwi-jun-saeng": {
+    "es": {
+      "meaning_es": "Alguien en medio de una búsqueda de empleo",
+      "example_es": "Todavía estoy buscando empleo."
+    }
+  },
+  "gap-jil": {
+    "es": {
+      "meaning_es": "Comportarse de forma abusiva hacia alguien con menos poder",
+      "example_es": "Los clientes abusando del personal es lo peor."
+    }
+  },
+  "kkon-dae": {
+    "es": {
+      "meaning_es": "Una persona mayor que le da sermones a todos desde arriba",
+      "example_es": "Dile eso y te llamarán anticuado."
+    }
+  },
+  "ra-tte-neun": {
+    "es": {
+      "meaning_es": "'En mis tiempos…' — el discurso clásico anticuado",
+      "example_es": "Aquí viene otro discurso de 'en mis tiempos'."
+    }
+  },
+  "geum-su-jeo": {
+    "es": {
+      "meaning_es": "Nacido rico, destinado al éxito",
+      "example_es": "Nacieron ricos, así que no tienen preocupaciones."
+    }
+  },
+  "heuk-su-jeo": {
+    "es": {
+      "meaning_es": "Nacido sin nada, comenzando desde cero",
+      "example_es": "Aunque empieces sin nada, si trabajas duro puedes lograrlo."
+    }
+  },
+  "yeong-kkeul": {
+    "es": {
+      "meaning_es": "Pedir prestado cada centavo que puedas para comprar algo grande",
+      "example_es": "Pidieron prestado hasta el último peso para comprar una casa."
+    }
+  },
+  "teong-jang": {
+    "es": {
+      "meaning_es": "Una cuenta bancaria drenada a nada",
+      "example_es": "Pagué la renta y mi cuenta está vacía."
+    }
+  },
+  "peul-lek-seu": {
+    "es": {
+      "meaning_es": "Gastar dinero y presumirlo",
+      "example_es": "Hoy gasté un poco."
+    }
+  },
+  "ji-reum-sin": {
+    "es": {
+      "meaning_es": "El espíritu que te posee para ir de compras impulsivamente",
+      "example_es": "El demonio de las compras me atrapó a las 2 de la mañana."
+    }
+  },
+  "gae-i-deuk": {
+    "es": {
+      "meaning_es": "Una enorme ganancia, una ganga total",
+      "example_es": "¡Lo compré a mitad de precio, enorme ganancia!"
+    }
+  },
+  "gae-kkul": {
+    "es": {
+      "meaning_es": "Dulce, sin esfuerzo, demasiado bueno",
+      "example_es": "Trabajar desde casa es muy dulce."
+    }
+  },
+  "kkul-tip": {
+    "es": {
+      "meaning_es": "Un consejo genuinamente útil para la vida",
+      "example_es": "Ese es un consejo genuinamente útil."
+    }
+  },
+  "hye-ja": {
+    "es": {
+      "meaning_es": "Generoso por el precio — más de lo que pagaste",
+      "example_es": "Esta lonchera da mucho más de lo que cuesta."
+    }
+  },
+  "chang-nyeol": {
+    "es": {
+      "meaning_es": "Demasiado caro y tacaño — lo opuesto a 혜자",
+      "example_es": "Vi el precio y pensé que era una estafa."
+    }
+  },
+  "jon-beo": {
+    "es": {
+      "meaning_es": "Resistir grimacemente hasta que las cosas se levanten",
+      "example_es": "Solo resiste y subirá."
+    }
+  },
+  "go-in-mul": {
+    "es": {
+      "meaning_es": "Un veterano que ha estado tanto tiempo que los principiantes no pueden competir",
+      "example_es": "Solo quedan los veteranos hardcore en este juego."
+    }
+  },
+  "nyu-bi": {
+    "es": {
+      "meaning_es": "Un principiante, alguien que recién comienza",
+      "example_es": "Soy totalmente principiante, no sé mucho aún."
+    }
+  },
+  "man-rep": {
+    "es": {
+      "meaning_es": "Maximizado — un experto absoluto en algo",
+      "example_es": "Mi mamá es de máximo nivel haciendo kimchi."
+    }
+  },
+  "bon-kae": {
+    "es": {
+      "meaning_es": "Tu verdadero yo / tu identidad de trabajo diario",
+      "example_es": "Mi identidad principal es empleado de oficina."
+    }
+  },
+  "bu-kae": {
+    "es": {
+      "meaning_es": "Una segunda personalidad — tu trabajo secundario o alter ego",
+      "example_es": "Los fines de semana mi alter ego dirige una panadería."
+    }
+  },
+  "hyeon-saeng": {
+    "es": {
+      "meaning_es": "Tu vida sin conexión, la que sigue interrumpiendo la diversión",
+      "example_es": "La vida real me llama, me tengo que ir."
+    }
+  },
+  "deok-hu": {
+    "es": {
+      "meaning_es": "Un superfan, profundamente dedicado a un hobby",
+      "example_es": "En realidad soy un nerd de trenes."
+    }
+  },
+  "deok-jil": {
+    "es": {
+      "meaning_es": "Todo lo que haces por tu fandom",
+      "example_es": "He estado ocupado con mis cosas de fandom últimamente."
+    }
+  },
+  "ip-deok": {
+    "es": {
+      "meaning_es": "Entrar a un fandom por primera vez",
+      "example_es": "Vi ese escenario y quedé enganchado de inmediato."
+    }
+  },
+  "tal-deok": {
+    "es": {
+      "meaning_es": "Salir de un fandom",
+      "example_es": "Salí de ese fandom el año pasado."
+    }
+  },
+  "seong-deok": {
+    "es": {
+      "meaning_es": "Un fan cuyo sueño se hizo realidad — conoció a su ídolo o se convirtió en uno",
+      "example_es": "Conseguí el autógrafo, ahora soy un fan que lo logró."
+    }
+  },
+  "in-saeng-tem": {
+    "es": {
+      "meaning_es": "Un producto tan bueno que cambió tu rutina",
+      "example_es": "Esta crema es un producto milagroso para mí."
+    }
+  },
+  "in-saeng-syat": {
+    "es": {
+      "meaning_es": "La mejor foto que alguien te haya tomado jamás",
+      "example_es": "Tomé la foto de mi vida aquí."
+    }
+  },
+  "jjal": {
+    "es": {
+      "meaning_es": "Una imagen de meme",
+      "example_es": "¿De dónde sacaste ese meme?"
+    }
+  },
+  "um-jjal": {
+    "es": {
+      "meaning_es": "Un GIF",
+      "example_es": "Conviértelo en GIF y envíamelo."
+    }
+  },
+  "eo-geu-ro": {
+    "es": {
+      "meaning_es": "Deliberadamente provocar atención o una pelea",
+      "example_es": "Deja de buscar conflicto por atención."
+    }
+  },
+  "gwan-jong": {
+    "es": {
+      "meaning_es": "Un buscador de atención",
+      "example_es": "Es totalmente buscador de atención."
+    }
+  },
+  "noe-pi-syeol": {
+    "es": {
+      "meaning_es": "Algo que inventaste en tu cabeza y afirmaste como hecho",
+      "example_es": "¿Eso no es algo que acabas de inventar?"
+    }
+  },
+  "paek-pok": {
+    "es": {
+      "meaning_es": "Golpear a alguien con una verdad innegable y dolorosa",
+      "example_es": "Mi amigo me golpeó con algunos hechos brutales."
+    }
+  },
+  "dap-jeong-neo": {
+    "es": {
+      "meaning_es": "Alguien que hace una pregunta pero solo quiere una respuesta",
+      "example_es": "Ya decidiste lo que quieres que diga."
+    }
+  },
+  "an-mul-an-gung": {
+    "es": {
+      "meaning_es": "Nadie preguntó",
+      "example_es": "Nadie preguntó, así que ¿por qué lo dices?"
+    }
+  },
+  "kkil-kki-ppa-ppa": {
+    "es": {
+      "meaning_es": "Sé cuándo eres bienvenido y cuándo debes irte",
+      "example_es": "Lee el ambiente, sabe cuándo retirarse."
+    }
+  },
+  "sa-ba-sa": {
+    "es": {
+      "meaning_es": "Varía de persona a persona",
+      "example_es": "Eso realmente depende de la persona."
+    }
+  },
+  "chwi-jon": {
+    "es": {
+      "meaning_es": "Respeta las preferencias de otras personas",
+      "example_es": "Deja que a la gente le guste el chocolate menta en paz."
+    }
+  },
+  "yeol-il": {
+    "es": {
+      "meaning_es": "Trabajando duro, ganándose su lugar",
+      "example_es": "El aire acondicionado realmente se está ganando su lugar hoy."
+    }
+  },
+  "heuk-yeok-sa": {
+    "es": {
+      "meaning_es": "Un pasado vergonzoso que preferirías borrar",
+      "example_es": "Las fotos de la secundaria son mi era oscura."
+    }
+  },
+  "ut-peu-da": {
+    "es": {
+      "meaning_es": "Divertido pero un poco trágico",
+      "example_es": "Es una historia divertida pero triste, ¿quieres escucharla?"
+    }
+  },
+  "byeong-mat": {
+    "es": {
+      "meaning_es": "Tan al azar y mal hecho que vuelve a ser divertido",
+      "example_es": "Este webtoon es absurdo pero no puedo dejar de leer."
+    }
+  },
+  "deu-rip": {
+    "es": {
+      "meaning_es": "Un chiste rápido o un acto que improvises",
+      "example_es": "Deja de hacer chistes."
+    }
+  },
+  "noe-jeol": {
+    "es": {
+      "meaning_es": "Arrastrar un chiste demasiado lejos",
+      "example_es": "Si es la tercera vez con ese chiste, lo mataste."
+    }
+  },
+  "a-mu-mal dae-jan-chi": {
+    "es": {
+      "meaning_es": "Un flujo de total sinsentido",
+      "example_es": "Es tarde, así que estoy hablando puro sinsentido."
+    }
+  },
+  "no-dap": {
+    "es": {
+      "meaning_es": "Sin remedio, imposible de arreglar",
+      "example_es": "Esta situación es genuinamente sin remedio."
+    }
+  },
+  "king-bat-da": {
+    "es": {
+      "meaning_es": "Ser irritantemente molesto",
+      "example_es": "Ese tono de voz es irritante."
+    }
+  },
+  "king-jeong": {
+    "es": {
+      "meaning_es": "Absolutamente de acuerdo",
+      "example_es": "Estoy cien por ciento de acuerdo con eso."
+    }
+  },
+  "in-jeong": {
+    "es": {
+      "meaning_es": "De acuerdo, verdad",
+      "example_es": "Sí, fair."
+    }
+  },
+  "sil-hwa-nya": {
+    "es": {
+      "meaning_es": "¿Esto está pasando realmente?!",
+      "example_es": "¿Este precio es en serio?"
+    }
+  },
+  "i-wae-jin": {
+    "es": {
+      "meaning_es": "Reaccionando a algo demasiado absurdo para ser verdad — pero lo es",
+      "example_es": "¿Cómo es esto real? Realmente está agotado."
+    }
+  },
+  "o-jo-o-eok": {
+    "es": {
+      "meaning_es": "Un número absurdamente grande — 'un billón'",
+      "example_es": "He visto esa escena un billón de veces."
+    }
+  },
+  "jjeon-da": {
+    "es": {
+      "meaning_es": "Eso es increíble / asombroso",
+      "example_es": "Sus habilidades son irreales."
+    }
+  },
+  "o-ji-da": {
+    "es": {
+      "meaning_es": "Extremo, salvaje, exagerado",
+      "example_es": "El clima hoy es salvaje."
+    }
+  },
+  "gak": {
+    "es": {
+      "meaning_es": "La configuración perfecta / condiciones para algo",
+      "example_es": "Hoy se ve como una noche de pollo frito."
+    }
+  },
+  "eok-kka": {
+    "es": {
+      "meaning_es": "Crítica que no es justa o merecida",
+      "example_es": "Esa crítica se siente injusta para mí."
+    }
+  },
+  "swil-deu": {
+    "es": {
+      "meaning_es": "Defender a alguien, a menudo más allá de la razón",
+      "example_es": "No puedo defenderlos en esto."
+    }
+  },
+  "guk-ppong": {
+    "es": {
+      "meaning_es": "Orgullo patriótico excesivo",
+      "example_es": "Esta película es bastante patriótica."
+    }
+  },
+  "bal-yeon-gi": {
+    "es": {
+      "meaning_es": "Actuación dolorosamente mala",
+      "example_es": "La actuación del protagonista es tan mala que no puedo verla."
+    }
+  },
+  "meok-bang": {
+    "es": {
+      "meaning_es": "Un video de alguien comiendo mucho, deliciosamente",
+      "example_es": "Ver mukbang antes de dormir siempre es un error."
+    }
+  },
+  "kuk-bang": {
+    "es": {
+      "meaning_es": "Un programa de cocina o transmisión",
+      "example_es": "He estado aprendiendo a cocinar de transmisiones de cocina."
+    }
+  },
+  "jo-taet-gu-al": {
+    "es": {
+      "meaning_es": "La solicitud completa de YouTube: me gusta, comenta, suscríbete, notificaciones",
+      "example_es": "¡Por favor me gusta, comenta, suscríbete y activa las notificaciones!"
+    }
+  },
+  "in-geup-dong": {
+    "es": {
+      "meaning_es": "La página de tendencias de YouTube",
+      "example_es": "Ese video es número uno en tendencias."
+    }
+  },
+  "gwang-keul": {
+    "es": {
+      "meaning_es": "Hacer clic frenéticamente para conseguir boletos o un artículo limitado",
+      "example_es": "Hice clic como loco para las entradas y aún así falté."
+    }
+  },
+  "peu-sa": {
+    "es": {
+      "meaning_es": "Foto de perfil",
+      "example_es": "¿Cambiaste tu foto de perfil?"
+    }
+  },
+  "sel-ka": {
+    "es": {
+      "meaning_es": "Una selfie",
+      "example_es": "Tomemos una selfie juntos."
+    }
+  },
+  "eol-gong": {
+    "es": {
+      "meaning_es": "Mostrar tu cara en línea por primera vez",
+      "example_es": "Haré una revelación de cara cuando llegue a diez mil suscriptores."
+    }
+  },
+  "gwi-yo-mi": {
+    "es": {
+      "meaning_es": "Una persona o mascota adorable",
+      "example_es": "Mi cachorro es tan adorable."
+    }
+  },
+  "hun-nam": {
+    "es": {
+      "meaning_es": "Un chico que es guapo de una manera cálida y amable",
+      "example_es": "El chico nuevo tiene ese factor atractivo y amable."
+    }
+  },
+  "mom-jjang": {
+    "es": {
+      "meaning_es": "Alguien en muy buena forma física",
+      "example_es": "Se pusieron musculoso en tres meses."
+    }
+  },
+  "eol-jjang": {
+    "es": {
+      "meaning_es": "Alguien con una cara impresionante",
+      "example_es": "Aparentemente eran el más guapo de la escuela."
+    }
+  },
+  "sseom-nam": {
+    "es": {
+      "meaning_es": "El chico con el que estás en la etapa de casi-citas",
+      "example_es": "El chico que estoy viendo me envió un mensaje."
+    }
+  },
+  "sam-gwi-da": {
+    "es": {
+      "meaning_es": "Estar un paso antes de estar en una relación",
+      "example_es": "Todavía no estamos saliendo, estamos en el punto nueve de la etapa tres."
+    }
+  },
+  "mil-dang": {
+    "es": {
+      "meaning_es": "Jugar a caliente y frío en un romance",
+      "example_es": "Deja de jugar y solo dilo."
+    }
+  },
+  "mo-ssol": {
+    "es": {
+      "meaning_es": "Alguien que nunca ha estado en una relación",
+      "example_es": "Todavía no he estado con nadie."
+    }
+  },
+  "geum-sa-ppa": {
+    "es": {
+      "meaning_es": "Alguien que se enamora a la menor provocación",
+      "example_es": "Se enamora al instante, se enamoró de nuevo."
+    }
+  },
+  "nam-sa-chin": {
+    "es": {
+      "meaning_es": "Un amigo masculino, estrictamente platónico",
+      "example_es": "Es solo un amigo, no malentiendas."
+    }
+  },
+  "pum-jeol-nam": {
+    "es": {
+      "meaning_es": "Un hombre que ahora está casado o en pareja",
+      "example_es": "Ese actor ahora está fuera del mercado."
+    }
+  },
+  "ae-gyo": {
+    "es": {
+      "meaning_es": "Ser deliberadamente, juguetonamente lindo para ganar a alguien",
+      "example_es": "No hagas el acto de ser lindito, no funcionará."
+    }
+  },
+  "sim-meot": {
+    "es": {
+      "meaning_es": "Tan impactante que tu corazón se detiene",
+      "example_es": "Mi corazón se paró en esa escena."
+    }
+  },
+  "an-gu-jeong-hwa": {
+    "es": {
+      "meaning_es": "Algo tan agradable de ver que purifica tus ojos",
+      "example_es": "Esta foto es un regalo para los ojos."
+    }
+  },
+  "nun-ho-gang": {
+    "es": {
+      "meaning_es": "Un banquete para los ojos",
+      "example_es": "La vista nocturna fue un banquete para los ojos."
+    }
+  },
+  "o-geul-geo-ri-da": {
+    "es": {
+      "meaning_es": "Ser tan vergonzoso que tus dedos se crispen",
+      "example_es": "Esa línea es incómodamente vergonzosa."
+    }
+  },
+  "jjan-nae": {
+    "es": {
+      "meaning_es": "Un destello de algo un poco patético pero adorable",
+      "example_es": "Esa historia es un poco trágicamente triste."
+    }
+  },
+  "jeong-saek": {
+    "es": {
+      "meaning_es": "Soltar la sonrisa y ponerse serio de repente",
+      "example_es": "Era una broma, ¿por qué tan serio de repente?"
+    }
+  },
+  "a-jae-gae-geu": {
+    "es": {
+      "meaning_es": "Una broma de papá",
+      "example_es": "¿Otra broma de papá?"
+    }
+  },
+  "cho-ding": {
+    "es": {
+      "meaning_es": "Un niño de primaria — o un adulto actuando como uno",
+      "example_es": "No actúes como un niño."
+    }
+  },
+  "eo-reu-ni": {
+    "es": {
+      "meaning_es": "Un adulto que aún ama las cosas para niños",
+      "example_es": "Soy un adulto que aún compra Lego."
+    }
+  },
+  "hon-ko-no": {
+    "es": {
+      "meaning_es": "Ir a una cabina de karaoke de monedas solo",
+      "example_es": "Cuando me estreso voy a cantar solo."
+    }
+  },
+  "ka-gong-jok": {
+    "es": {
+      "meaning_es": "Personas que estudian durante horas en cafés",
+      "example_es": "Durante los exámenes hay muchos estudiantes en cafés."
+    }
+  },
+  "pa-i-eo-jok": {
+    "es": {
+      "meaning_es": "Personas que ahorran mucho para retirarse temprano",
+      "example_es": "Estoy ahorrando para poder retirarme temprano."
+    }
+  },
+  "seul-se-gwon": {
+    "es": {
+      "meaning_es": "Un vecindario donde todo está a un paseo en chancletas",
+      "example_es": "Todo aquí está a un paseo en chancletas, muy conveniente."
+    }
+  },
+  "so-maek": {
+    "es": {
+      "meaning_es": "Soju mezclado en cerveza",
+      "example_es": "Hagamos soju-cervezas esta noche."
+    }
+  },
+  "pyeon-maek": {
+    "es": {
+      "meaning_es": "Una cerveza barata afuera de una tienda de conveniencia",
+      "example_es": "¿Una cerveza de tienda de conveniencia después del trabajo?"
+    }
+  },
+  "sul-jji": {
+    "es": {
+      "meaning_es": "Un ligero que no puede aguantar la bebida",
+      "example_es": "Soy un ligero, una copa y termine."
+    }
+  },
+  "bu-meok": {
+    "es": {
+      "meaning_es": "Equipo vierte la salsa sobre (cerdo agridulce)",
+      "example_es": "Definitivamente estoy en el equipo de verter la salsa."
+    }
+  },
+  "jjik-meok": {
+    "es": {
+      "meaning_es": "Equipo mójalo en la salsa",
+      "example_es": "Mojar es obviamente la forma correcta."
+    }
+  },
+  "geot-ba-sok-chok": {
+    "es": {
+      "meaning_es": "Afuera crujiente, adentro jugoso — la textura ideal",
+      "example_es": "Este cruasán es crujiente afuera, suave adentro."
+    }
+  },
+  "dan-jjan": {
+    "es": {
+      "meaning_es": "La combinación dulce y salada que no puedes dejar de comer",
+      "example_es": "Dulce y luego salado, una y otra vez, inmejorable."
+    }
+  },
+  "mat-jeom": {
+    "es": {
+      "meaning_es": "¡Que disfrutes tu almuerzo!",
+      "example_es": "¡Que disfrutes tu almuerzo!"
+    }
+  },
+  "hae-jang": {
+    "es": {
+      "meaning_es": "Curar una resaca, generalmente con sopa caliente",
+      "example_es": "Comamos sopa para curarnos de esta resaca."
+    }
+  },
+  "o-un-wan": {
+    "es": {
+      "meaning_es": "Publicar prueba de que terminaste el ejercicio de hoy",
+      "example_es": "¡Ejercicio hecho! Lo logré de nuevo hoy."
+    }
+  },
+  "hom-teu": {
+    "es": {
+      "meaning_es": "Hacer ejercicio en casa",
+      "example_es": "Últimamente estoy aguantando con ejercicio en casa."
+    }
+  },
+  "chi-ting-de-i": {
+    "es": {
+      "meaning_es": "El día en que te permites comer lo que sea",
+      "example_es": "Mañana es mi día de trampa, así que resiste."
+    }
+  },
+  "ke-mi": {
+    "es": {
+      "meaning_es": "La química entre dos personas en pantalla o fuera",
+      "example_es": "La química entre esos dos actores es increíble."
+    }
+  },
+  "ban-mo": {
+    "es": {
+      "meaning_es": "Acordar abandonar el habla formal con alguien",
+      "example_es": "¿Deberíamos cambiar a habla casual?"
+    }
+  },
+  "bap-yak": {
+    "es": {
+      "meaning_es": "Planes para comer con alguien",
+      "example_es": "Establecí planes para comer con mi senior."
+    }
+  },
+  "en-po-se-dae": {
+    "es": {
+      "meaning_es": "Una generación renunciando a sin embargo muchos hitos de vida",
+      "example_es": "¿Hay una razón por la que nos llamen la generación de renuncia?"
+    }
+  },
+  "i-ji": {
+    "es": {
+      "meaning_es": "De acuerdo / verdad",
+      "example_es": "De acuerdo. Pienso lo mismo."
+    }
+  },
+  "o-k": {
+    "es": {
+      "meaning_es": "Está bien",
+      "example_es": "Está bien, nos vemos luego."
+    }
+  },
+  "gi-s": {
+    "es": {
+      "meaning_es": "Gracias",
+      "example_es": "¡Gracias por la ayuda!"
+    }
+  },
+  "ji-s": {
+    "es": {
+      "meaning_es": "Disculpa",
+      "example_es": "Disculpa llegué tarde."
+    }
+  },
+  "eung-eung": {
+    "es": {
+      "meaning_es": "Sí / ajá",
+      "example_es": "Sí, entendido."
+    }
+  },
+  "keu-keu-keu": {
+    "es": {
+      "meaning_es": "Jajaja",
+      "example_es": "Jajaja, eso es realmente gracioso."
+    }
+  },
+  "yu-yu": {
+    "es": {
+      "meaning_es": "Llorando — triste o abrumado",
+      "example_es": "Reprobé el examen 😭"
+    }
+  },
+  "deu-deu": {
+    "es": {
+      "meaning_es": "Guau — temblando de conmoción",
+      "example_es": "Vi el precio y temblé."
+    }
+  },
+  "i-gi-ri-o": {
+    "es": {
+      "meaning_es": "Esto es en serio",
+      "example_es": "En serio, esto está muy bueno."
+    }
   }
 }

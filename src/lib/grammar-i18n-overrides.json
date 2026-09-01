@@ -68,6 +68,23 @@
         "Câu nào có nghĩa là \"Tôi học tiếng Hàn\"?",
         "Tại sao tiếng Hàn có thể di chuyển cụm từ một cách tự do như vậy?"
       ]
+    },
+    "es": {
+      "title": "Orden de palabras coreano (SOV)",
+      "sections": [
+        {
+          "heading": "Sujeto – Objeto – Verbo",
+          "explanation": "El inglés es Sujeto–Verbo–Objeto: 'Yo como pan'. El coreano es Sujeto–Objeto–Verbo: 'Yo pan como'. Una vez que esperes el verbo al final, la mayoría de las oraciones dejan de parecer desordenadas."
+        },
+        {
+          "heading": "Las partículas hacen el trabajo, así que el orden puede cambiar",
+          "explanation": "Debido a que 은/는 marca el tema y 을/를 marca el objeto, puedes mover esos fragmentos para enfatizar y la oración sigue significando lo mismo. Solo el verbo está fijado al final."
+        },
+        {
+          "heading": "Puedes dejar caer lo que es obvio",
+          "explanation": "El coreano omite el sujeto siempre que el contexto lo haga claro. Una respuesta de una palabra es una oración completa."
+        }
+      ]
     }
   },
   "topic-vs-subject": {
@@ -138,6 +155,23 @@
         "Hạt từ nào đứng sau một từ kết thúc bằng phụ âm như 선생님?",
         "\"Ai đến rồi?\" — \"친구___ 왔어요.\" Cái nào phù hợp?",
         "Bạn muốn tương phản: \"Tôi thích cà phê, nhưng trà thì không.\" Hạt từ nào đánh dấu 커피 và 차?"
+      ]
+    },
+    "es": {
+      "title": "은/는 vs 이/가",
+      "sections": [
+        {
+          "heading": "Las formas",
+          "explanation": "Después de una consonante usa 은 e 이. Después de una vocal usa 는 y 가. Esa es la única regla de ortografía que necesitas."
+        },
+        {
+          "heading": "은/는: 'en cuanto a…'",
+          "explanation": "은/는 anuncia de qué trata la oración e implícitamente la compara con otra cosa. Úsalo para presentarte a ti mismo y para contrastar dos cosas."
+        },
+        {
+          "heading": "이/가: 'es ESTE'",
+          "explanation": "이/가 identifica el sujeto, especialmente información nueva o la respuesta a '¿quién?' y '¿qué?'. También es requerido con 있어요/없어요 y con verbos descriptivos como 좋다."
+        }
       ]
     }
   },
@@ -210,6 +244,23 @@
         "Câu nào đúng cho \"Tôi uống cà phê\"?",
         "을/를 đánh dấu cái gì?"
       ]
+    },
+    "es": {
+      "title": "El marcador de objeto 을/를",
+      "sections": [
+        {
+          "heading": "Cuál usar",
+          "explanation": "을 va después de un sustantivo que termina en consonante; 를 después de uno que termina en vocal. La elección es puramente por sonido."
+        },
+        {
+          "heading": "Se une al receptor de la acción",
+          "explanation": "Todo lo que se come, se ve, se compra o se estudia recibe 을/를. Los verbos de movimiento como 가다 usan 에 en su lugar, no 을/를."
+        },
+        {
+          "heading": "En el habla casual desaparece",
+          "explanation": "El coreano hablado deja caer 을/를 constantemente cuando el significado es obvio. Mantenlo en la escritura y en el habla cuidadosa."
+        }
+      ]
     }
   },
   "to-be": {
@@ -280,6 +331,23 @@
         "의사 kết thúc bằng nguyên âm. Hình thức nào đúng?",
         "Bạn nói \"Tôi không phải là học sinh\" như thế nào?",
         "Cái nào có nghĩa là \"Tôi có một người bạn\"?"
+      ]
+    },
+    "es": {
+      "title": "이에요 / 예요 — ser",
+      "sections": [
+        {
+          "heading": "Sustantivo + 이에요/예요",
+          "explanation": "Usa 이에요 después de una consonante y 예요 después de una vocal. No hay una palabra separada para 'ser' — se pega directamente al sustantivo."
+        },
+        {
+          "heading": "Preguntas y negativos",
+          "explanation": "Para una pregunta, mantén la misma forma y sube la entonación. Para 'no es', usa 이/가 아니에요."
+        },
+        {
+          "heading": "No lo confundas con 있어요",
+          "explanation": "이에요/예요 significa 'X es Y'. 있어요 significa 'hay / tengo'. No son intercambiables."
+        }
       ]
     }
   },
@@ -352,6 +420,23 @@
         "공부하다 trở thành…",
         "Những gốc nào dùng 아요?"
       ]
+    },
+    "es": {
+      "title": "Tiempo presente 아요 / 어요",
+      "sections": [
+        {
+          "heading": "La regla",
+          "explanation": "Toma la raíz del verbo (forma de diccionario menos 다). Si su última vocal es ㅏ o ㅗ, suma 아요. De lo contrario suma 어요. Los verbos 하다 son irregulares y se convierten en 해요."
+        },
+        {
+          "heading": "Cuando las vocales se fusionan",
+          "explanation": "Si la raíz ya termina en ㅏ o ㅓ, la 아/어 se absorbe en lugar de duplicarse. ㅗ + 아요 se contrae a 와요, y ㅜ + 어요 a 워요."
+        },
+        {
+          "heading": "Una forma, tres trabajos",
+          "explanation": "아요/어요 cubre el presente, el futuro cercano y las acciones habituales. La entonación sola lo convierte en una pregunta."
+        }
+      ]
     }
   },
   "negation": {
@@ -422,6 +507,23 @@
         "Bạn phủ định 공부해요 như thế nào?",
         "Hình thức phủ định dài của 먹어요 là cái nào?",
         "Phản đối của 있어요 là gì?"
+      ]
+    },
+    "es": {
+      "title": "Decir que no: 안 y 지 않다",
+      "sections": [
+        {
+          "heading": "안 + verbo",
+          "explanation": "La forma corta. Solo coloca 안 inmediatamente antes del verbo conjugado. Esto es lo que escucharás más en la conversación."
+        },
+        {
+          "heading": "Raíz + 지 않아요",
+          "explanation": "La forma larga. Ligeramente más formal y más enfática, común en la escritura. Mismo significado que 안."
+        },
+        {
+          "heading": "Los verbos 하다 se dividen",
+          "explanation": "Con los compuestos 하다, 안 va entre el sustantivo y 하다 — no enfrente de toda la cosa. También observa que el opuesto de 있다 es la palabra separada 없다, y el de 알다 es 모르다."
+        }
       ]
     }
   },
@@ -494,6 +596,23 @@
         "해요 ở quá khứ là…",
         "\"Tôi gặp một người bạn hôm qua\" là…"
       ]
+    },
+    "es": {
+      "title": "Tiempo pasado 았어요 / 었어요",
+      "sections": [
+        {
+          "heading": "El atajo",
+          "explanation": "Haz primero la forma 아요/어요, suelta la 요, y suma ㅆ어요 a esa sílaba. 가요 → 갔어요. Esto funciona para casi todos los verbos."
+        },
+        {
+          "heading": "En oraciones completas",
+          "explanation": "Nada más en la oración cambia — solo la terminación del verbo se mueve al pasado."
+        },
+        {
+          "heading": "Pasado de 'ser'",
+          "explanation": "이에요/예요 se convierte en 이었어요/였어요, y 있어요/없어요 se convierten en 있었어요/없었어요."
+        }
+      ]
     }
   },
   "location-particles": {
@@ -564,6 +683,23 @@
         "Câu \"Tôi học tập ở trường\" dùng hạt từ nào sau 학교?",
         "Câu nào đúng cho \"Tôi đi đến trường\"?",
         "에서 có nghĩa gì ngoài \"ở\"?"
+      ]
+    },
+    "es": {
+      "title": "에 y 에서",
+      "sections": [
+        {
+          "heading": "에 — dónde vas, cuándo sucede",
+          "explanation": "Usa 에 con verbos de movimiento (가다, 오다) y con 있다/없다 para dónde algo se sienta. También se une a tiempos y fechas."
+        },
+        {
+          "heading": "에서 — dónde sucede la acción",
+          "explanation": "Si una actividad real sucede en algún lugar — comiendo, estudiando, trabajando — usa 에서. También significa 'desde' un punto de partida."
+        },
+        {
+          "heading": "El contraste en un par",
+          "explanation": "'집에 있어요' es un estado — estoy en casa. '집에서 일해요' es una acción — trabajo desde casa. Pregúntate si realmente se está haciendo algo allí."
+        }
       ]
     }
   },
@@ -636,6 +772,23 @@
         "Bạn khi nào dùng 시 trong động từ?",
         "Đại từ nào là từ lịch sự cho \"tôi\"?"
       ]
+    },
+    "es": {
+      "title": "Fundamentos de 존댓말",
+      "sections": [
+        {
+          "heading": "Tres niveles que encontrarás",
+          "explanation": "반말 (casual, sin 요) es para amigos cercanos y niños. 해요체 (termina en 요) es educado y seguro casi en cualquier lugar. 합쇼체 (termina en 습니다/ㅂ니다) es formal — noticias, presentaciones, el ejército, servicio al cliente."
+        },
+        {
+          "heading": "Honorífico 시",
+          "explanation": "Para mostrar respeto hacia la persona de la que hablas (no el oyente), inserta 으시/시 en el verbo. Nunca úsalo sobre ti mismo."
+        },
+        {
+          "heading": "Palabras humildes para ti mismo",
+          "explanation": "Algunas palabras tienen una versión humilde que usas cuando te refieres a ti mismo en compañía educada: 저 en lugar de 나, 제 en lugar de 내."
+        }
+      ]
     }
   },
   "numbers-counters": {
@@ -706,6 +859,23 @@
         "Bạn dùng hệ thống số nào cho tiền bạc?",
         "Bạn nói \"hai tách cà phê\" như thế nào?",
         "Trong \"두시삼십분\", tại sao giờ và phút là hệ thống khác nhau?"
+      ]
+    },
+    "es": {
+      "title": "Números y contadores",
+      "sections": [
+        {
+          "heading": "Dos sistemas",
+          "explanation": "Los números coreanos nativos (하나, 둘, 셋…) cuentan cosas, personas y horas. Los números Sino-Coreanos (일, 이, 삼…) manejan dinero, fechas, minutos, números de teléfono y cualquier cosa superior a 99."
+        },
+        {
+          "heading": "Contadores",
+          "explanation": "No puedes solo decir 'dos gatos'. El patrón es sustantivo + número + contador: 개 para objetos, 명 para personas, 마리 para animales, 잔 para tazas, 병 para botellas."
+        },
+        {
+          "heading": "Los cuatro que cambian de forma",
+          "explanation": "Antes de un contador, 하나/둘/셋/넷 se acortan a 한/두/세/네. 스물 se convierte en 스무. Todo lo demás mantiene su forma."
+        }
       ]
     }
   },
@@ -778,6 +948,23 @@
         "'책' ends in a consonant. Which form of 와/과 follows it?",
         "How do you join two clauses, as in 'I eat and I drink'?"
       ]
+    },
+    "es": {
+      "title": "Diciendo 'y' y 'con'",
+      "sections": [
+        {
+          "heading": "Uniendo dos sustantivos",
+          "explanation": "Para unir sustantivos, adjunta 하고 (neutral, muy común en habla), 와/과 (un poco más formal y usado en escritura), o (이)랑 (casual). 와 sigue a una vocal, 과 a una consonante; 이랑 sigue a una consonante, 랑 a una vocal. 하고 nunca cambia."
+        },
+        {
+          "heading": "Las mismas palabras significan 'con'",
+          "explanation": "Adjunta la misma partícula a una persona y obtienes 'junto con'. Añadir 같이 o 함께 después lo hace explícito."
+        },
+        {
+          "heading": "No uses estas para unir oraciones",
+          "explanation": "하고 y 와/과 solo unen sustantivos. Para unir dos cláusulas completas necesitas la terminación de verbo ~고. El inglés 'and' cubre ambos trabajos, el coreano los mantiene separados."
+        }
+      ]
     }
   },
   "demonstratives": {
@@ -848,6 +1035,23 @@
         "You want the book the listener is holding. Which word do you use?",
         "What does 저 mark?",
         "Which is the natural spoken way to ask 'How much is this?'"
+      ]
+    },
+    "es": {
+      "title": "이 / 그 / 저 — este, ese, ese de allá",
+      "sections": [
+        {
+          "heading": "Tres distancias, no dos",
+          "explanation": "이 está cerca del hablante, 그 está cerca del oyente o algo que ambos ya hablaron, y 저 está lejos de ambos. El inglés solo tiene esto y eso, así que 그 es el que necesita práctica."
+        },
+        {
+          "heading": "De pie solo: 이것 / 그것 / 저것",
+          "explanation": "이/그/저 debe estar delante de un sustantivo. Para decir este solo, suma 것 (cosa). En el habla estos se contraen a 이거, 그거, 저거."
+        },
+        {
+          "heading": "Lugares: 여기 / 거기 / 저기",
+          "explanation": "La misma división de tres vías se aplica a los lugares. 여기 es aquí, 거기 es allá por ti o el lugar que mencionamos, 저기 es allá a la vista de ambos. 저기요 también es cómo educadamente atraes la atención de un extraño."
+        }
       ]
     }
   },
@@ -932,6 +1136,27 @@
         "Stems ending in a vowel take…",
         "'그 영화는 재미있을 거예요' most likely means…"
       ]
+    },
+    "es": {
+      "title": "Futuro con ~(으)ㄹ 거예요",
+      "sections": [
+        {
+          "heading": "Construyendo la forma",
+          "explanation": "Toma la raíz del verbo. Si termina en una vocal, adjunta ㄹ 거예요 directamente a esa sílaba. Si termina en una consonante, adjunta 을 거예요. Las raíces que terminan en ㄹ simplemente toman 거예요."
+        },
+        {
+          "heading": "Planes e intenciones",
+          "explanation": "Con un sujeto de primera persona esto es tu plan. Es la forma que usas cuando alguien te pregunta qué vas a hacer este fin de semana."
+        },
+        {
+          "heading": "Conjeturas sobre otras personas",
+          "explanation": "Con un sujeto de tercera persona la misma forma se convierte en una predicción: probablemente, apuesto. El contexto te dice cuál es el significado."
+        },
+        {
+          "heading": "El atajo futuro cercano 아/어요",
+          "explanation": "Para algo ya fijo e inminente, 아/어요 simple con una palabra de tiempo es más natural que la forma de futuro completo. Ambos son correctos; la forma simple suena más establecida."
+        }
+      ]
     }
   },
   "want-to": {
@@ -1002,6 +1227,23 @@
         "How do you say 'I want to eat'?",
         "Which form describes what your friend wants?",
         "Which particle does 필요하다 take?"
+      ]
+    },
+    "es": {
+      "title": "Queriendo cosas: ~고 싶다",
+      "sections": [
+        {
+          "heading": "Raíz + 고 싶어요",
+          "explanation": "Sin coincidencia de vocales necesaria — 고 싶다 se adjunta directamente a cualquier raíz de verbo. Conjuga 싶다 como un verbo descriptivo normal: 싶어요, 싶었어요, 싶을 거예요."
+        },
+        {
+          "heading": "Otras personas quieren: 고 싶어하다",
+          "explanation": "El coreano trata el deseo de otra persona como algo que observas, no algo que sientas. Así que para él/ella/ellos, cambia a 고 싶어해요. Usar 고 싶어요 simple sobre alguien más suena mal."
+        },
+        {
+          "heading": "Queriendo una cosa, no una acción",
+          "explanation": "고 싶다 necesita un verbo. Para querer un sustantivo, usa 갖고 싶다 (quiero tener) o 필요하다 (necesitar), que toma 이/가, no 을/를."
+        }
       ]
     }
   },
@@ -1074,6 +1316,23 @@
         "What is the difference between 안 가요 and 못 가요?",
         "Which is most natural for 'I know how to swim'?"
       ]
+    },
+    "es": {
+      "title": "Habilidad: ~(으)ㄹ 수 있다 y 못",
+      "sections": [
+        {
+          "heading": "Poder y no poder",
+          "explanation": "수 literalmente significa una forma o método. Raíz + (으)ㄹ 수 있어요 es 'hay una forma de hacerlo' — puedes. Cambia 있어요 por 없어요 y no puedes. El (으) sigue la misma regla que la forma de futuro."
+        },
+        {
+          "heading": "못 — bloqueado por circunstancia",
+          "explanation": "못 va justo antes del verbo, exactamente donde va 안. La diferencia es significado: 안 es 'elijo no', 못 es 'no puedo'. Con compuestos 하다, 못 se coloca entre el sustantivo y 해요."
+        },
+        {
+          "heading": "Saber cómo: ~(으)ㄹ 줄 알다",
+          "explanation": "Para una habilidad aprendida — nadar, conducir, tocar un instrumento — el coreano prefiere (으)ㄹ 줄 알아요 (sé cómo) sobre (으)ㄹ 수 있어요. El negativo es (으)ㄹ 줄 몰라요."
+        }
+      ]
     }
   },
   "purpose-basics": {
@@ -1132,6 +1391,19 @@
         "'책을 사러 가요' means…",
         "~(으)러 must be followed by…",
         "Which turns '요리하다' into 'cooking' as a noun?"
+      ]
+    },
+    "es": {
+      "title": "Ir a algún lugar para hacer algo: ~(으)러",
+      "sections": [
+        {
+          "heading": "Raíz + (으)러 + 가다/오다",
+          "explanation": "Solo funciona con un verbo de movimiento al final — 가다, 오다, 다니다. Sin batchim toma 러, un batchim toma 으러. Las dos cláusulas comparten el mismo sujeto."
+        },
+        {
+          "heading": "Convirtiendo un verbo en 'hacerlo' / 'haciéndolo': ~는 것",
+          "explanation": "는 것 convierte una frase de verbo completa en un sustantivo — 'el acto de hacer X'. Es la forma cotidiana de decir 'nadar' o 'nado' como sujeto u objeto, antes de necesitar algo más sofisticado."
+        }
       ]
     }
   },
@@ -1192,6 +1464,19 @@
         "Where does the modifier go relative to the noun?",
         "~는 on an action verb marks…"
       ]
+    },
+    "es": {
+      "title": "Verbos delante de sustantivos: ~는",
+      "sections": [
+        {
+          "heading": "Raíz + 는 + sustantivo",
+          "explanation": "Adjunta 는 a una raíz de verbo de acción y colócalo directamente antes del sustantivo que describe — el modificador siempre viene primero, opuesto al orden de palabras inglés."
+        },
+        {
+          "heading": "Solo para acciones que suceden ahora",
+          "explanation": "Esta forma 는 es solo tiempo presente. Hablar de algo que ya sucedió, o que aún no sucede, necesita una terminación diferente (으)ㄴ o (으)ㄹ — esa es la próxima lección."
+        }
+      ]
     }
   },
   "wonder-ji": {
@@ -1238,6 +1523,15 @@
         "'내일 비가 올지 모르겠어요' means…",
         "~(으)ㄹ지 most naturally pairs with…",
         "What does ~ㄹ지 말지 express?"
+      ]
+    },
+    "es": {
+      "title": "Preguntándose si: ~(으)ㄹ지",
+      "sections": [
+        {
+          "heading": "Raíz + (으)ㄹ지 + 모르다/궁금하다",
+          "explanation": "La misma regla de batchim que el tiempo futuro: sin batchim toma ㄹ지, un batchim toma 을지. Reporta una pregunta sí/no sin resolver dentro de una oración más grande."
+        }
       ]
     }
   },
@@ -1297,6 +1591,19 @@
         "'비가 오면 안 가요' means…",
         "Where does past tense go in a (으)면 sentence?",
         "~(으)면 can mean…"
+      ]
+    },
+    "es": {
+      "title": "Si / cuando: ~(으)면",
+      "sections": [
+        {
+          "heading": "Raíz + (으)면",
+          "explanation": "Sin batchim toma 면, un batchim toma 으면. La cláusula 면 nunca lleva tiempo en sí misma — 았/었 o 겠 va solo en el verbo final, exactamente como ~아/어서."
+        },
+        {
+          "heading": "'Si' y 'cuando' se superponen aquí",
+          "explanation": "A diferencia del inglés, el coreano no fuerza una elección entre 'si' y 'cuando' para algo que se espera que suceda — (으)면 cubre ambos. Una palabra separada (때) existe para 'cuando' sobre un momento fijo, pero eso es para después."
+        }
       ]
     }
   },
@@ -1369,6 +1676,23 @@
         "Which sentence type can NOT follow ~아/어서?",
         "'집에 가서 잘 거예요' means…"
       ]
+    },
+    "es": {
+      "title": "Porque: ~아/어서",
+      "sections": [
+        {
+          "heading": "Razón y resultado",
+          "explanation": "Conjuga el primer verbo en su forma 아/어 y suma 서. La cláusula de razón nunca lleva tiempo — pon 았/었 o 겠 solo en el verbo final."
+        },
+        {
+          "heading": "Sin comandos o sugerencias después",
+          "explanation": "Esta es la única restricción a recordar: no puedes seguir 아/어서 con una orden o una sugerencia 'hagamos'. Para esos necesitas ~(으)니까 en su lugar."
+        },
+        {
+          "heading": "El uso de 'y luego'",
+          "explanation": "Con verbos de acción, 아/어서 también puede unir dos pasos donde el segundo depende del primero — vas a algún lugar y luego haces algo allí. Compara con simple ~고, que solo lista pasos sin relación."
+        }
+      ]
     }
   },
   "requests": {
@@ -1439,6 +1763,23 @@
         "'앉다' ends in a consonant. Which polite instruction is correct?",
         "What does adding 주세요 to a request add?",
         "How do you say 'please don't worry'?"
+      ]
+    },
+    "es": {
+      "title": "Pidiendo educadamente: ~(으)세요 y ~아/어 주세요",
+      "sections": [
+        {
+          "heading": "(으)세요 — instrucción educada",
+          "explanation": "Este es el honorífico 시 más la terminación educada. Suma 세요 después de una raíz de vocal y 으세요 después de una consonante. Cubre todo desde por favor siéntate hasta que tengas un buen día."
+        },
+        {
+          "heading": "아/어 주세요 — hazlo por mí",
+          "explanation": "주다 significa dar. Adjuntarlo después de la forma 아/어 suma el sentido de hacer la acción como un favor al hablante. Esto es lo que usas en tiendas, taxis y restaurantes."
+        },
+        {
+          "heading": "Suavizando y solicitudes negativas",
+          "explanation": "Coloca 좀 antes del verbo para suavizar cualquier solicitud — literalmente significa un poco pero funciona como por favor. Para por favor no, usa 지 마세요."
+        }
       ]
     }
   },
@@ -1511,6 +1852,23 @@
         "What does 앉아 있어요 mean?",
         "Which form describes an ongoing situation like 'I work at a bank'?"
       ]
+    },
+    "es": {
+      "title": "En progreso: ~고 있다",
+      "sections": [
+        {
+          "heading": "Ahora mismo",
+          "explanation": "Adjunta 고 있어요 a cualquier raíz de verbo de acción, sin coincidencia de vocales. 아/어요 simple también puede describir el presente, pero 고 있어요 lo deja explícito que la acción está en curso."
+        },
+        {
+          "heading": "Situaciones en curso",
+          "explanation": "También cubre cosas verdaderas a lo largo de un período de tiempo, incluso si no las estás haciendo en este segundo — dónde trabajas, qué estás estudiando estos días."
+        },
+        {
+          "heading": "Estado, no acción: ~아/어 있다",
+          "explanation": "Los verbos que describen un estado resultante — una puerta abierta, alguien sentado — usan 아/어 있다 en su lugar. 앉고 있어요 significa en el acto de sentarse; 앉아 있어요 significa ya sentado."
+        }
+      ]
     }
   },
   "connect-go-jiman": {
@@ -1581,6 +1939,23 @@
         "Which ending means 'but'?",
         "Can ~고 carry a past-tense marker on the first clause?",
         "Which word starts a new sentence with 'but'?"
+      ]
+    },
+    "es": {
+      "title": "Uniendo cláusulas: ~고 y ~지만",
+      "sections": [
+        {
+          "heading": "~고 — y",
+          "explanation": "Adjunta 고 a la raíz simple, sin coincidencia de vocales y sin tiempo en la primera cláusula. Lista las cosas en orden o simplemente amontona hechos."
+        },
+        {
+          "heading": "~지만 — pero",
+          "explanation": "Adjunta 지만 a la raíz para un contraste. A diferencia de 고, esta sí puede llevar tiempo: 했지만 significa lo hizo, pero."
+        },
+        {
+          "heading": "Comenzando una oración fresca",
+          "explanation": "Para comenzar una nueva oración con y o pero, usa los conectores independientes 그리고 y 그렇지만 / 하지만. Hacen el mismo trabajo entre oraciones que 고 y 지만 hacen dentro de una."
+        }
       ]
     }
   },
@@ -1653,6 +2028,23 @@
         "'여기에서 사진을 찍으면 안 돼요' means…",
         "Which form asks for permission?"
       ]
+    },
+    "es": {
+      "title": "Tengo que y no debo",
+      "sections": [
+        {
+          "heading": "~아/어야 되다 / 하다 — tengo que",
+          "explanation": "Toma la forma 아/어, suma 야, luego 돼요 o 해요. 돼요 es más común en el habla, 해요 ligeramente más formal. Significan lo mismo."
+        },
+        {
+          "heading": "~(으)면 안 되다 — no debo",
+          "explanation": "Literalmente si lo haces, no funcionará. Esta es la forma estándar para establecer una regla o una prohibición."
+        },
+        {
+          "heading": "~아/어도 되다 — puedes",
+          "explanation": "Cambia 야 por 도 y obtienes permiso en lugar de obligación. Como pregunta es cómo preguntas si algo está permitido."
+        }
+      ]
     }
   },
   "formal-style": {
@@ -1723,6 +2115,23 @@
         "'먹다' ends in a consonant. What is its formal present form?",
         "How do you turn ~습니다 into a question?",
         "Where would you most expect this style?"
+      ]
+    },
+    "es": {
+      "title": "El estilo formal ~(스)ㅂ니다",
+      "sections": [
+        {
+          "heading": "Haciendo la forma",
+          "explanation": "Después de una raíz de vocal suma ㅂ니다; después de una raíz de consonante suma 습니다. Las preguntas cambian 다 por 까: ㅂ니까 / 습니까. Nota que la ortografía es 니다 pero la pronunciación es más cercana a nida con una m suave antes."
+        },
+        {
+          "heading": "Dónde lo encuentras",
+          "explanation": "Transmisiones, reuniones de empresa, anuncios, el ejército, y cualquiera sirviendo a un cliente. Las frases fijas que ya conoces — 감사합니다, 안녕하십니까 — son este estilo."
+        },
+        {
+          "heading": "Pasado y futuro en este estilo",
+          "explanation": "Adjunta los mismos marcadores de tiempo primero, luego la terminación. 았/었 + 습니다 da 았습니다/었습니다; el futuro usa (으)ㄹ 것입니다, frecuentemente acortado a (으)ㄹ 겁니다."
+        }
       ]
     }
   },
@@ -1795,6 +2204,23 @@
         "Which is correct for 'Thank you for helping me'?",
         "Can ~(으)니까 carry a past-tense marker?"
       ]
+    },
+    "es": {
+      "title": "~(으)니까 vs ~아/어서",
+      "sections": [
+        {
+          "heading": "Construyendo ~(으)니까",
+          "explanation": "Suma 니까 a una raíz de vocal y 으니까 a una raíz de consonante. A diferencia de 아/어서, esta toma marcadores de tiempo felizmente: 했으니까, 갔으니까."
+        },
+        {
+          "heading": "La línea divisoria",
+          "explanation": "아/어서 establece una causa objetiva y no puede preceder a un comando, una solicitud o una forma 'hagamos'. 니까 da el propio razonamiento del hablante y puede preceder a todos ellos. Cuando tengas dudas antes de un imperativo, usa 니까."
+        },
+        {
+          "heading": "Dónde cada uno es fijo",
+          "explanation": "Las disculpas y los agradecimientos son territorio clásico de 아/어서 — 늦어서 죄송합니다 está establecido, y 늦으니까 죄송합니다 suena como que culpas al oyente. Conversamente, 니까 también introduce un descubrimiento: hice X, y luego descubrí Y."
+        }
+      ]
     }
   },
   "neunde": {
@@ -1865,6 +2291,23 @@
         "Which form follows a descriptive verb stem ending in a vowel, like 예쁘-?",
         "What does ending a sentence with ~는데요 achieve?",
         "Which noun form of ~는데 is correct?"
+      ]
+    },
+    "es": {
+      "title": "El versátil ~는데 / ~(으)ㄴ데",
+      "sections": [
+        {
+          "heading": "Qué forma usar",
+          "explanation": "Los verbos de acción toman 는데. Los verbos descriptivos toman (으)ㄴ데 — ㄴ데 después de una vocal, 은데 después de una consonante. Los sustantivos toman 인데. En tiempo pasado todo toma 았/었는데."
+        },
+        {
+          "heading": "Configurando el fondo",
+          "explanation": "Su trabajo principal es dar al oyente la situación antes de que llegue el punto. El inglés hace esto con una coma y una pausa; el coreano lo hace con 는데."
+        },
+        {
+          "heading": "Terminando educadamente",
+          "explanation": "Terminar una oración en 는데요 deja la solicitud sin decir, que es exactamente por qué suena educado. También es cómo señalas un desacuerdo leve sin confrontación."
+        }
       ]
     }
   },
@@ -1937,6 +2380,23 @@
         "What does ~았/었으면 좋겠어요 express?",
         "Which sentence treats the rain as uncertain?"
       ]
+    },
+    "es": {
+      "title": "Condicionales: ~(으)면",
+      "sections": [
+        {
+          "heading": "El condicional básico",
+          "explanation": "Suma 면 a una raíz de vocal, 으면 a una raíz de consonante. El coreano no distingue 'si' de 'siempre que' aquí — el contexto decide. 았/었으면 pasado lo cambia a un deseo o un contrafáctico."
+        },
+        {
+          "heading": "Patrones construidos sobre 면",
+          "explanation": "Varios puntos de gramática cotidiana son solo 면 más algo: (으)면 되다 (es suficiente para), (으)면 좋겠다 (espero), (으)ㄹ 때 es el 'cuando' neutral para un evento único en lugar de una condición."
+        },
+        {
+          "heading": "면 vs 때 vs 니까",
+          "explanation": "면 es una condición que puede o no suceder. (으)ㄹ 때 es un marco de tiempo que sí sucede. 니까 es una razón. Elegir la incorrecta cambia la oración de una posibilidad a un hecho."
+        }
+      ]
     }
   },
   "try-boda": {
@@ -2007,6 +2467,23 @@
         "What does 먹어 보세요 mean?",
         "How do you say 'I've never seen that movie'?",
         "In the past tense, ~아/어 봤어요 expresses…"
+      ]
+    },
+    "es": {
+      "title": "Intentando cosas: ~아/어 보다",
+      "sections": [
+        {
+          "heading": "Inténtalo",
+          "explanation": "Conjuga el verbo en su forma 아/어 y suma 보다. Suaviza una instrucción en una invitación, razón por la que llena recetas, guías turísticas y el habla de asistentes de tienda."
+        },
+        {
+          "heading": "Pasado = experiencia",
+          "explanation": "En tiempo pasado, 아/어 봤어요 significa que lo has hecho al menos una vez. La forma más completa 아/어 본 적이 있다 hace explícita la lectura de experiencia; su negativo es 본 적이 없다."
+        },
+        {
+          "heading": "No para 보다 mismo",
+          "explanation": "No dices 봐 보다 para intentar mirar. Usa 보다 solo, o 한번 보다. También nota que 보이다 (ser visible) es un verbo completamente diferente."
+        }
       ]
     }
   },
@@ -2079,6 +2556,23 @@
         "Which ending do descriptive verbs take for the plain present, as in 'a pretty flower'?",
         "재미있다 modifies a noun as…"
       ]
+    },
+    "es": {
+      "title": "Convirtiendo verbos en adjetivos",
+      "sections": [
+        {
+          "heading": "Los verbos de acción a través de tres tiempos",
+          "explanation": "Para verbos de acción: (으)ㄴ es pasado, 는 es presente, (으)ㄹ es futuro o no realizado. El modificador siempre viene antes del sustantivo, y la cláusula completa con él."
+        },
+        {
+          "heading": "Verbos descriptivos",
+          "explanation": "Los verbos descriptivos usan (으)ㄴ para el presente simple — 예쁘다 se convierte en 예쁜. Su forma 는 (예쁘던 aparte) no se usa para el presente, que es el error más común del aprendiz aquí. 있다 y 없다 se comportan como verbos de acción y toman 는."
+        },
+        {
+          "heading": "Cláusulas largas enfrente del sustantivo",
+          "explanation": "Porque el modificador puede ser una oración completa, el coreano amontona mucha información antes del sustantivo donde el inglés la seguiría con 'que' o 'cuál'. Lee desde el sustantivo hacia atrás para desempacar."
+        }
+      ]
     }
   },
   "indirect-speech": {
@@ -2150,6 +2644,23 @@
         "'They suggested we go together' uses which form?",
         "When the request is for the speaker's own benefit, 주라고 becomes…"
       ]
+    },
+    "es": {
+      "title": "Reportando lo que la gente dijo",
+      "sections": [
+        {
+          "heading": "Afirmaciones: ~(ㄴ/는)다고 하다",
+          "explanation": "Pon el verbo citado en su forma escrita simple primero, luego suma 고 하다. Los verbos de acción se convierten en ㄴ/는다고, los verbos descriptivos en 다고, los sustantivos en (이)라고, pasado en 았/었다고."
+        },
+        {
+          "heading": "Preguntas, sugerencias, órdenes",
+          "explanation": "Las preguntas toman (느)냐고, las sugerencias toman 자고, y los órdenes toman (으)라고. El verbo después de ellos es usualmente 하다, pero 묻다, 부탁하다 y 시키다 también funcionan."
+        },
+        {
+          "heading": "Dame: ~아/어 달라고",
+          "explanation": "Una solicitud dirigida al hablante usa 달라고 en lugar de 주라고. 주라고 significa pedir a alguien que se la dé a un tercero. Esta distinción no tiene equivalente en inglés y vale la pena memorizar."
+        }
+      ]
     }
   },
   "experience-degree": {
@@ -2220,6 +2731,23 @@
         "'이 식당은 비싼 편이에요' means…",
         "In '서울이 부산보다 커요', what does 보다 attach to?",
         "What must follow 별로?"
+      ]
+    },
+    "es": {
+      "title": "Hablando de frecuencia y grado",
+      "sections": [
+        {
+          "heading": "~(으)ㄴ / ~는 편이다 — tiende a ser",
+          "explanation": "Adjunta la forma modificadora más 편이다 para decir algo que cae en un lado de una escala en lugar de ser absolutamente así. Las afirmaciones directas pueden sonar bruscas en coreano, así que esto es muy común."
+        },
+        {
+          "heading": "~만큼 y ~보다 — comparaciones",
+          "explanation": "보다 marca lo que comparas (que), y 만큼 marca un grado igual (tanto como). 더 y 덜 suman más y menos. Nota que 보다 se adjunta al estándar, que es el inverso del orden de palabras inglés."
+        },
+        {
+          "heading": "Palabras de frecuencia",
+          "explanation": "항상, 자주, 가끔, 별로, 전혀 se sientan antes del verbo. 별로 y 전혀 requieren un verbo negativo para seguir — dejar el verbo positivo es agramatical."
+        }
       ]
     }
   },
@@ -2304,6 +2832,27 @@
         "모르다 conjugates to…",
         "Which of these is a REGULAR verb despite ending in ㅂ?"
       ]
+    },
+    "es": {
+      "title": "Las familias de verbos irregulares",
+      "sections": [
+        {
+          "heading": "ㅂ y ㄷ irregulares",
+          "explanation": "Los irregulares ㅂ convierten ㅂ en 우 antes de una terminación de vocal: 춥다 se convierte en 추워요. Los irregulares ㄷ convierten ㄷ en ㄹ: 듣다 se convierte en 들어요. Ambos son regulares antes de terminaciones de consonante."
+        },
+        {
+          "heading": "ㅅ y 르 irregulares",
+          "explanation": "Los irregulares ㅅ sueltan la ㅅ pero mantienen las vocales separadas: 낫다 se convierte en 나아요. Los irregulares 르 duplican la ㄹ y toman 라/러: 모르다 se convierte en 몰라요, 부르다 se convierte en 불러요."
+        },
+        {
+          "heading": "ㅡ, ㄹ y ㅎ",
+          "explanation": "La vocal ㅡ cae antes de 아/어: 바쁘다 se convierte en 바빠요, 예쁘다 se convierte en 예뻐요. Las raíces que terminan en ㄹ la sueltan antes de ㄴ, ㅂ, ㅅ: 살다 se convierte en 삽니다, 사세요. El irregular ㅎ en adjetivos de color se convierte en ㅐ: 그렇다 se convierte en 그래요."
+        },
+        {
+          "heading": "Los parecidos que son regulares",
+          "explanation": "No todos los tallos que terminan en ㅂ o ㄷ son irregulares. 좁다, 입다, 잡다 son verbos ㅂ regulares; 받다, 닫다, 믿다 son verbos ㄷ regulares. No hay regla — estos tienen que aprenderse individualmente."
+        }
+      ]
     }
   },
   "passive-causative": {
@@ -2374,6 +2923,23 @@
         "보다 in its passive form is…",
         "What does 먹이다 mean?",
         "Which is the general-purpose causative that works on almost any verb?"
+      ]
+    },
+    "es": {
+      "title": "Básicos de pasiva y causativa",
+      "sections": [
+        {
+          "heading": "Pasiva con 이/히/리/기",
+          "explanation": "Una de cuatro sílabas se coloca en la raíz para convertir el objeto en el sujeto. Cuál toma un verbo es fijo por el verbo, no por una regla, así que apréndelos en parejas. El viejo objeto ahora toma 이/가."
+        },
+        {
+          "heading": "Causativa con 이/히/리/기/우/구/추",
+          "explanation": "Los mismos infijos más tres más hacen que alguien haga algo. 먹다 se convierte en 먹이다 (alimentar), 자다 se convierte en 재우다 (poner a dormir), 앉다 se convierte en 앉히다 (sentar)."
+        },
+        {
+          "heading": "Las alternativas regulares",
+          "explanation": "Cuando un verbo no tiene forma de infijo, usa 아/어지다 para la pasiva y 게 하다 para la causativa. Estas funcionan en casi cualquier verbo y son la salida segura."
+        }
       ]
     }
   },
@@ -2446,6 +3012,23 @@
         "In speech, 는 것이 contracts to…",
         "Which form belongs in a formal written notice?"
       ]
+    },
+    "es": {
+      "title": "Haciendo verbos en sustantivos",
+      "sections": [
+        {
+          "heading": "~기 — la actividad en sí",
+          "explanation": "Adjunta 기 a una raíz simple. Nombra una actividad en el abstracto y es lo que los patrones fijos como 기 쉽다, 기 전에 y 기 때문에 se construyen. También es la forma usada en títulos e instrucciones."
+        },
+        {
+          "heading": "~는 것 — la instancia concreta",
+          "explanation": "것 significa cosa, así que 는 것 se refiere al acto específico o hecho en cuestión. En el habla se contrae a 는 게 (sujeto) y 는 걸 (objeto). Úsalo cuando puedas señalar lo que quieres decir."
+        },
+        {
+          "heading": "~(으)ㅁ — el sustantivo escrito",
+          "explanation": "El más formal de los tres. Aparece en entradas de diccionarios, avisos, memos y notas, donde establece un hecho compactamente. Algunos sustantivos ㅁ se han congelado en vocabulario ordinario: 웃음, 믿음, 죽음."
+        }
+      ]
     }
   },
   "deoni": {
@@ -2516,6 +3099,23 @@
         "Who is the subject of a ~더니 clause?",
         "'아침을 안 먹었더니 배가 고파요' implies the speaker…",
         "What extra requirement does ~더니 carry?"
+      ]
+    },
+    "es": {
+      "title": "~더니 y ~았/었더니",
+      "sections": [
+        {
+          "heading": "~더니 — observé, y luego",
+          "explanation": "Adjunta 더니 a la raíz para unir algo que presenciaste personalmente con lo que siguió. El sujeto debe ser alguien que no sea el hablante, y debes haberlo visto por ti mismo."
+        },
+        {
+          "heading": "~았/었더니 — hice, y luego descubrí",
+          "explanation": "Con el marcador pasado enfrente, el sujeto cambia al hablante. Hiciste algo, y la segunda cláusula es el resultado o descubrimiento. Esta es la forma para fui allá y encontré que…"
+        },
+        {
+          "heading": "Manteniéndolo separado de ~니까",
+          "explanation": "니까 da una razón; 더니 reporta una secuencia que presenciaste e frecuentemente implica que la segunda cláusula fue una consecuencia natural. Cambiarlos no es agramatical pero cambia el sabor de porque a seguro que."
+        }
       ]
     }
   },
@@ -2588,6 +3188,23 @@
         "Which cannot follow ~길래?",
         "'날씨가 좋길래 산책했어요' means…"
       ]
+    },
+    "es": {
+      "title": "~길래 — como era así, yo…",
+      "sections": [
+        {
+          "heading": "Cómo funciona",
+          "explanation": "Adjunta 길래 a la raíz. La primera cláusula es una circunstancia externa que observaste; la segunda es lo que decidiste hacer al respecto. El sujeto de la segunda cláusula es casi siempre el hablante."
+        },
+        {
+          "heading": "Por qué no solo 니까",
+          "explanation": "니까 es razonamiento neutral y funciona con cualquier sujeto y cualquier tipo de oración siguiente. 길래 es más estrecha: un disparador externo más tu propia acción pasada. No puede ser seguida por un comando, una sugerencia o un plan de futuro simple."
+        },
+        {
+          "heading": "En preguntas: qué demonios",
+          "explanation": "En una pregunta, 길래 pregunta qué circunstancia produjo un resultado sorprendente. Lleva una nota de curiosidad o ligero reproche."
+        }
+      ]
     }
   },
   "baram-e": {
@@ -2658,6 +3275,23 @@
         "What kind of result does ~는 바람에 always describe?",
         "Which marker credits a good outcome?",
         "Which is the neutral 'because of'?"
+      ]
+    },
+    "es": {
+      "title": "Culpando y acreditando una causa",
+      "sections": [
+        {
+          "heading": "~는 바람에 — por culpa de, sin intención",
+          "explanation": "Adjunta 는 바람에 a una raíz de verbo de acción. El resultado es siempre inesperado y usualmente no deseado, y toda la oración se sienta en el pasado. No puedes usarlo sobre algo que planeaste."
+        },
+        {
+          "heading": "~탓에 / ~때문에 — culpa y causa simple",
+          "explanation": "때문에 es neutral porque de. 탓에 asigna culpa y solo cabe con resultados malos. Ambos se adjuntan a sustantivos directamente y a verbos a través de la forma modificadora: 는 탓에, 기 때문에."
+        },
+        {
+          "heading": "~덕분에 — gracias a",
+          "explanation": "La imagen especular de 탓에: acredita un resultado bueno. Nota que 때문에 no puede comenzar una oración por sí solo — usa 그렇기 때문에 para eso."
+        }
       ]
     }
   },
@@ -2730,6 +3364,23 @@
         "Descriptive verbs like 춥다 in this style are written…",
         "Why does the written plain style feel neutral rather than rude in print?"
       ]
+    },
+    "es": {
+      "title": "El estilo simple escrito ~ㄴ/는다",
+      "sections": [
+        {
+          "heading": "Las cuatro terminaciones",
+          "explanation": "Los verbos de acción toman ㄴ다 después de una vocal y 는다 después de una consonante. Los verbos descriptivos y 있다/없다 toman simple 다. Los sustantivos toman (이)다. Pasado es 았/었다 para todo, futuro (으)ㄹ 것이다."
+        },
+        {
+          "heading": "Es un registro, no grosería",
+          "explanation": "Este estilo no tiene oyente construido, así que es ni educado ni grosero — simplemente no dirige a nadie. Por eso se ajusta a texto impreso. Hablado a la cara de una persona, sin embargo, llega como 반말 brusco."
+        },
+        {
+          "heading": "Otras cosas que cambian en la escritura",
+          "explanation": "El coreano escrito también prefiere 나 sobre 저, deja caer la mayoría de las partículas finales como 요 y 네, reemplaza 그래서 con 따라서 o 그러므로, y favorece vocabulario Sino-Coreano sobre equivalentes nativos."
+        }
+      ]
     }
   },
   "quotation-contraction": {
@@ -2800,6 +3451,23 @@
         "What does 온대요 come from?",
         "Which contraction reports a suggestion?",
         "How do you quote a noun, as in 'they say he's a doctor'?"
+      ]
+    },
+    "es": {
+      "title": "Citaciones contraídas: ~대요, ~냬요, ~재요, ~래요",
+      "sections": [
+        {
+          "heading": "Las cuatro contracciones",
+          "explanation": "다고 해요 se convierte en 대요, 냐고 해요 se convierte en 냬요, 자고 해요 se convierte en 재요, y (으)라고 해요 se convierte en (으)래요. Estas dominan el habla casual — las formas completas suenan rígidas en la conversación."
+        },
+        {
+          "heading": "Chismes que no presenciaste",
+          "explanation": "대요 también funciona sin fuente nombrada, significando se dice que o aparentemente. Así es cómo pasas pronósticos del tiempo, chismes y cosas que leíste."
+        },
+        {
+          "heading": "No lo confundas con ~ㄴ대요 como sorpresa",
+          "explanation": "Los sustantivos citan como (이)래요, no 대요: 학생이래요. También, un 대요 ascendente al final de tu propia pregunta lo convierte en una expresión de incredulidad. El tono lleva mucho aquí."
+        }
       ]
     }
   },
@@ -2872,6 +3540,23 @@
         "Does ~자마자 take a tense marker on the first clause?",
         "'제가 말한 대로 하세요' means…"
       ]
+    },
+    "es": {
+      "title": "Tan pronto como: ~자마자 y ~는 대로",
+      "sections": [
+        {
+          "heading": "~자마자 — inmediatamente después",
+          "explanation": "Adjunta 자마자 a la raíz simple. Funciona para pasado y futuro por igual y simplemente reporta que dos eventos se tocaron. Sin tiempo va en la primera cláusula."
+        },
+        {
+          "heading": "~는 대로 — tan pronto como, para cosas aún por venir",
+          "explanation": "Adjunta 는 대로 a un verbo de acción. Lleva un sentido de intención, así que señala hacia adelante y no puede describir un accidente pasado. Es la forma estándar para hacer compromisos."
+        },
+        {
+          "heading": "El otro significado de 대로: exactamente como",
+          "explanation": "Después de un modificador pasado o un sustantivo, 대로 significa de acuerdo a. 말한 대로 es como dije; 계획대로 es según el plan. Misma palabra, trabajo completamente diferente."
+        }
+      ]
     }
   },
   "retrospective-deo": {
@@ -2942,6 +3627,23 @@
         "What does the 더 marker require?",
         "'제가 다니던 학교' means…",
         "Why is '제가 예쁘더라고요' odd?"
+      ]
+    },
+    "es": {
+      "title": "Recordando con ~더라고요 y ~던",
+      "sections": [
+        {
+          "heading": "~더라고요 — lo vi por mí mismo",
+          "explanation": "Adjunta 더라고요 a la raíz para reportar un descubrimiento que hiciste en persona. La regla es estricta: debes haberlo presenciado, y el sujeto normalmente no es tú, porque no te observas a ti mismo desde afuera."
+        },
+        {
+          "heading": "~던 — el modificador de memoria",
+          "explanation": "던 enfrente de un sustantivo marca algo recordado: en curso de vuelta entonces, repetido de vuelta entonces, o dejado sin terminar. 았/었던 marca un pasado completado que ahora recuerdas como distante."
+        },
+        {
+          "heading": "También ~더라 y ~던데요",
+          "explanation": "La versión casual es 더라. Combinada con 는데 obtienes 던데요, que reporta una observación mientras invitas al oyente a responder."
+        }
       ]
     }
   },
@@ -3014,6 +3716,23 @@
         "Which can be followed by a command?",
         "'지금 나가려고 해요' means…"
       ]
+    },
+    "es": {
+      "title": "Propósito: ~(으)려고, ~기 위해, ~고자",
+      "sections": [
+        {
+          "heading": "~(으)려고 — intención personal",
+          "explanation": "La cotidiana. El sujeto de ambas cláusulas debe ser la misma persona, y la segunda cláusula no puede ser un comando o una sugerencia. Por sí solo, (으)려고 하다 significa estar a punto de o tener la intención de."
+        },
+        {
+          "heading": "~기 위해(서) — por el bien de",
+          "explanation": "Más formal y orientado al objetivo, común en escritura y discursos. A diferencia de (으)려고, puede ser seguido por un comando. Después de un sustantivo, usa 을/를 위해."
+        },
+        {
+          "heading": "~고자 y ~(으)러",
+          "explanation": "고자 es la más formal del conjunto y pertenece al lenguaje escrito y ceremonial. (으)러 es diferente nuevamente: solo se adjunta a un objetivo seguido por un verbo de movimiento — ir o venir a algún lugar para hacer algo."
+        }
+      ]
     }
   },
   "concessive": {
@@ -3084,6 +3803,23 @@
         "Which is the everyday 'even if'?",
         "Which adverb commonly pairs with these concessive endings?",
         "Where would you expect ~(으)ㄹ지라도?"
+      ]
+    },
+    "es": {
+      "title": "Incluso si: ~아/어도 y ~더라도",
+      "sections": [
+        {
+          "heading": "~아/어도 — incluso si, aunque",
+          "explanation": "Toma la forma 아/어 y suma 도. Cubre tanto una concesión real (aunque así sea) como una hipotética (incluso si fuera así). El tiempo va en el verbo final."
+        },
+        {
+          "heading": "~더라도 — incluso suponiendo",
+          "explanation": "Más fuerte e hipotético que 아/어도. Concede algo que consideras improbable o extremo, y frecuentemente empareja con 아무리 o 설령."
+        },
+        {
+          "heading": "~(으)ㄹ지라도 y ~(으)ㄴ들",
+          "explanation": "Estos pertenecen a escritura formal y retórica. (으)ㄹ지라도 es un incluso aunque elevado; (으)ㄴ들 es un incluso si retórico, usualmente implicando que no haría diferencia."
+        }
       ]
     }
   },
@@ -3156,6 +3892,23 @@
         "Which pattern means 'the more X, the more Y'?",
         "'먹을 만큼만 가져가세요' tells you to take…"
       ]
+    },
+    "es": {
+      "title": "Grado y proporción",
+      "sections": [
+        {
+          "heading": "~(으)ㄹ 정도로 — al grado que",
+          "explanation": "Pon una comparación vívida en la primera cláusula y 정도로 la convierte en una medida de la segunda. El inglés usualmente lo renderiza como tan… que."
+        },
+        {
+          "heading": "~(으)ㄹ 만큼 — tanto como",
+          "explanation": "Cercano a 정도로 pero enfocado en igualar una cantidad en lugar de ilustrar un extremo. 만큼 también se adjunta directamente a sustantivos para tanto como X."
+        },
+        {
+          "heading": "~(으)면 ~(으)ㄹ수록 — cuanto más, más",
+          "explanation": "Repite el mismo verbo en ambas ranuras: 면 condicional primero, luego (으)ㄹ수록. En el habla la primera mitad frecuentemente se deja caer, dejando solo (으)ㄹ수록."
+        }
+      ]
     }
   },
   "general-truth": {
@@ -3227,6 +3980,23 @@
         "'거의 다 끝난 셈이에요' means…",
         "Which warns that something undesirable is likely?"
       ]
+    },
+    "es": {
+      "title": "Estableciendo verdades generales",
+      "sections": [
+        {
+          "heading": "~기 마련이다 — está destinado a suceder",
+          "explanation": "Adjunta 기 마련이다 a una raíz para decir que el resultado es solo natural dado cómo son las cosas. Lleva un tono resignado, mundano y aparece constantemente en proverbios y consejos. 게 마련이다 es una variante igualmente correcta."
+        },
+        {
+          "heading": "~는 법이다 — así es cómo funciona",
+          "explanation": "법 significa ley o forma. Esta terminación afirma un principio en lugar de una tendencia, así que suena más didáctica que 기 마련이다. Es lo que un anciano dice al entregar una lección de vida."
+        },
+        {
+          "heading": "Patrones vecinos",
+          "explanation": "~는 셈이다 dice que equivale a; ~기 십상이다 advierte que algo malo es probable; ~는 경향이 있다 establece una tendencia más neutralmente y pertenece al registro escrito o académico."
+        }
+      ]
     }
   },
   "ppun-manira": {
@@ -3297,6 +4067,23 @@
         "What particle usually appears in the second clause after ~뿐만 아니라?",
         "'저는 제 일을 했을 뿐입니다' means…",
         "Which is the spoken equivalent for adding a point?"
+      ]
+    },
+    "es": {
+      "title": "No solo eso: ~(으)ㄹ 뿐만 아니라",
+      "sections": [
+        {
+          "heading": "~(으)ㄹ 뿐만 아니라 — no solo… sino también",
+          "explanation": "Adjunta el modificador (으)ㄹ más 뿐만 아니라 a un verbo, o 뿐만 아니라 directamente a un sustantivo. La segunda cláusula usualmente lleva 도. Es el conector estándar para construir un caso en la escritura."
+        },
+        {
+          "heading": "~(으)ㄹ 뿐이다 — nada más que",
+          "explanation": "Dejado positivo, 뿐이다 restringe: eso y nada más. Frecuentemente lleva una nota de modestia o de despido, dependiendo de a qué lo adjuntes."
+        },
+        {
+          "heading": "El mismo trabajo, otros registros",
+          "explanation": "En el habla, 도 ~고 o 게다가 hace la adición. En escritura formal también encontrarás ~(으)ㅁ은 물론이고 y ~기도 하다. Elegir entre ellos es mayormente una decisión de registro, no de significado."
+        }
       ]
     }
   },
@@ -3381,6 +4168,27 @@
         "가능성 breaks down as 가능 plus which suffix?",
         "Which prefix means 'not yet'?"
       ]
+    },
+    "es": {
+      "title": "Construcción de palabras 한자어",
+      "sections": [
+        {
+          "heading": "~적 (的) — el sufijo -ico / -al",
+          "explanation": "적 convierte un sustantivo Sino-Coreano en un modificador. 적인 va antes de un sustantivo, 적으로 antes de un verbo, y 적 desnudo se usa en frases escritas compactas. Este único sufijo cubre la mayoría de adjetivos abstractos en coreano académico."
+        },
+        {
+          "heading": "~화 (化), ~성 (性), ~력 (力)",
+          "explanation": "화 es -ización (자동화, automatización), 성 es -idad (가능성, posibilidad), 력 es poder o capacidad (능력, habilidad). Reconocerlas te permite decodificar palabras que nunca has visto."
+        },
+        {
+          "heading": "Prefijos: 무~, 미~, 재~, 반~",
+          "explanation": "무 es sin (무료, gratuito), 미 es aún no (미완성, inacabado), 재 es re- (재검토, re-examen), 반 es anti- (반대, oposición). Se comportan exactamente como sus contrapartes en inglés."
+        },
+        {
+          "heading": "Pares nativos y Sino",
+          "explanation": "La mayoría de conceptos tienen tanto una palabra nativa como Sino-Coreana, y la Sino es el registro formal. Conocer el par te permite cambiar de registro deliberadamente en lugar de por accidente."
+        }
+      ]
     }
   },
   "nuanced-endings": {
@@ -3464,6 +4272,27 @@
         "'일이 있거든요' supplies…",
         "Which ending works like an English tag question?"
       ]
+    },
+    "es": {
+      "title": "Terminaciones de oración que llevan actitud",
+      "sections": [
+        {
+          "heading": "~잖아요 — ya lo sabes",
+          "explanation": "Úsalo para recordarle al oyente conocimiento compartido. Puede sonar cálido y colaborativo, o impaciente, dependiendo enteramente del tono — razón por la cual a los aprendices frecuentemente se les advierte que no lo usen con extraños."
+        },
+        {
+          "heading": "~거든요 — aquí está el fondo",
+          "explanation": "Suministra una razón que el oyente aún no tiene, frecuentemente preparando lo que estás a punto de decir. Terminar una primera oración en 거든요 señala que más está por venir."
+        },
+        {
+          "heading": "~네요 y ~군요 — realización fresca",
+          "explanation": "Ambas marcan algo que acabas de notar. 네요 es el cotidiano hablado y suena ligeramente impresionado; 군요 (o 구나 casualmente) es un poco más literario y lee como ah, ya veo."
+        },
+        {
+          "heading": "~지요 / ~죠 — buscando acuerdo",
+          "explanation": "지요 asume que el oyente está de acuerdo, como una pregunta de etiqueta en inglés. También suaviza una sugerencia u oferta, y en la primera persona señala aceptación voluntaria."
+        }
+      ]
     }
   },
   "conjecture-endings": {
@@ -3534,6 +4363,23 @@
         "Which form offers to handle something on the listener's behalf?",
         "'그때 말할 걸 그랬어요' expresses…",
         "What does the bound noun 터 contribute?"
+      ]
+    },
+    "es": {
+      "title": "Conjetura: ~(으)ㄹ 텐데, ~(으)ㄹ 테니까, ~(으)ㄹ 걸",
+      "sections": [
+        {
+          "heading": "~(으)ㄹ 텐데 — esperaría…, pero",
+          "explanation": "터 es un sustantivo limitado que significa expectativa. 텐데 establece una suposición y deja una preocupación o contraste colgando. Terminar en 텐데요 es una forma común de expresar preocupación educadamente."
+        },
+        {
+          "heading": "~(으)ㄹ 테니까 — ya que espero, deberías",
+          "explanation": "La misma 터 más 니까. La primera cláusula es tu predicción o tu propia intención; la segunda le dice al oyente qué sigue de ello. Esta es la forma natural para ofrecer manejar algo."
+        },
+        {
+          "heading": "~(으)ㄹ 걸(요) y ~(으)ㄹ 걸 그랬다",
+          "explanation": "(으)ㄹ 걸요 es una conjetura suave: probablemente, diría. Pero pasado 았/었을 걸 그랬다 es completamente diferente — es arrepentimiento por un camino no tomado."
+        }
       ]
     }
   },
@@ -3606,6 +4452,23 @@
         "'~(으)ㅁ에도 불구하고' means…",
         "Which is the formal written equivalent of 때문에?"
       ]
+    },
+    "es": {
+      "title": "Conectores para prosa formal",
+      "sections": [
+        {
+          "heading": "Contraste: ~(으)ㄴ/는 반면(에)",
+          "explanation": "반면 significa el lado opuesto. Establece dos hechos uno contra el otro de forma balanceada, a diferencia de 지만 que simplemente da la vuelta. El coreano escrito fuertemente lo prefiere para comparación estructurada."
+        },
+        {
+          "heading": "Concesión: ~(으)ㅁ에도 불구하고",
+          "explanation": "El formal a pesar de. Se adjunta al nominalizador ㅁ, o directamente a un sustantivo con 에도 불구하고. Resérválo para escribir; en el habla suena como un comunicado de prensa."
+        },
+        {
+          "heading": "Causa: ~(으)로 인해 y ~에 따라",
+          "explanation": "(으)로 인해 es el formal debido a, usado donde el habla usaría 때문에. 에 따라 significa de acuerdo a o dependiendo de, y marca una variable que el resultado rastrea."
+        }
+      ]
     }
   },
   "regret-necessity": {
@@ -3676,6 +4539,23 @@
         "What must always follow 밖에?",
         "'넘어질 뻔했어요' means…",
         "Which ending expresses that something regrettably ended up happening?"
+      ]
+    },
+    "es": {
+      "title": "Arrepentimiento, retrospectiva y sin opción",
+      "sections": [
+        {
+          "heading": "~았/었어야 했다 — debería haber",
+          "explanation": "Pon el verbo en el pasado, suma 어야, luego 했다 o 하는데. Establece una obligación no cumplida. La variante 했는데 lo suaviza en un arrepentimiento persistente en lugar de un veredicto."
+        },
+        {
+          "heading": "~(으)ㄹ 수밖에 없다 — sin opción más que",
+          "explanation": "밖에 significa fuera de, y siempre demanda un verbo negativo. Literalmente no hay nada fuera de hacerlo, así que: no tengo opción. También puede describir un resultado inevitable en lugar de una decisión."
+        },
+        {
+          "heading": "~(으)ㄹ 뻔했다 y ~고 말았다",
+          "explanation": "(으)ㄹ 뻔했다 es un punto muy cercano: casi sucedió pero no. 고 말았다 es lo opuesto — terminó sucediendo, usualmente para consternación del hablante."
+        }
       ]
     }
   },
@@ -3748,6 +4628,23 @@
         "What kind of cause does ~는 통에 describe?",
         "'너무 놀란 나머지 소리를 질렀어요' means the scream was…"
       ]
+    },
+    "es": {
+      "title": "Sustantivos limitados que dan forma a una cláusula",
+      "sections": [
+        {
+          "heading": "~는 김에 — mientras lo haces",
+          "explanation": "Ya estás haciendo una cosa, así que aprovechas la oportunidad para hacer otra. Las dos acciones deben genuinamente superponerse; no puedes usarlo para recados no relacionados."
+        },
+        {
+          "heading": "~는 통에 — en toda la conmoción",
+          "explanation": "Cercano a 바람에 pero más ruidoso: la causa es caótica o disruptiva, y el resultado es siempre negativo. Común con multitudes, ruido y confusión."
+        },
+        {
+          "heading": "~(으)ㄴ 나머지 y ~는 차에",
+          "explanation": "나머지 significa el resto: una emoción extrema o estado se derrama en un acto no intencionado. 는 차에 (o 던 차에) marca un momento que ya estaba en marcha cuando otra cosa sucedió."
+        }
+      ]
     }
   },
   "hedged-assertions": {
@@ -3818,6 +4715,23 @@
         "Which pattern signals 'the point being that' in formal writing?",
         "Which is the written, more measured version of ~것 같다?",
         "'~(으)ㄴ 것으로 나타났다' is used to report…"
+      ]
+    },
+    "es": {
+      "title": "Enmarcando una afirmación cuidadosamente",
+      "sections": [
+        {
+          "heading": "~는 것이다 — el punto siendo que",
+          "explanation": "En la escritura y habla formal, 는 것이다 reafirma un punto enfáticamente o extrae su significado. Señala al lector que esta oración es la conclusión, no solo otro hecho."
+        },
+        {
+          "heading": "~(으)ㄴ/는 듯하다 y ~(으)ㄴ/는 것 같다",
+          "explanation": "것 같다 es el cotidiano parece. 듯하다 es su primo escrito y suena más medido. 는 듯이 como adverbio significa como si, describiendo manera en lugar de probabilidad."
+        },
+        {
+          "heading": "Defensas académicas",
+          "explanation": "La investigación y el periodismo usan un conjunto fijo: ~(으)ㄹ 것으로 보인다 (parece probable), ~(으)ㄴ 것으로 나타났다 (se encontró que es), ~(으)ㄴ 것으로 알려졌다 (se sabe que es). Aprender estos tres desbloquea la mayoría del periódico."
+        }
       ]
     }
   },
@@ -3890,6 +4804,23 @@
         "What normally follows 은/는커녕?",
         "'건강이야말로 가장 중요하다' singles health out as…"
       ]
+    },
+    "es": {
+      "title": "Partículas enfáticas: 조차, 마저, 커녕, 이야말로",
+      "sections": [
+        {
+          "heading": "조차 y 마저 — incluso esto también",
+          "explanation": "Ambas significan incluso, adjuntadas al artículo menos esperado, y ambas normalmente se sientan en oraciones negativas o no deseadas. 조차 enfatiza que el mínimo no fue cumplido; 마저 enfatiza que la última cosa restante también se ha ido."
+        },
+        {
+          "heading": "커녕 — lejos de eso",
+          "explanation": "은/는커녕 descarta el primer artículo como fuera de la cuestión y luego niega algo mucho más modesto también. La segunda mitad casi siempre lleva 도 y un negativo."
+        },
+        {
+          "heading": "(이)야말로 y (이)나마",
+          "explanation": "(이)야말로 destaca algo como la muy cosa: esto sobre todo. (이)나마 es opuesto en espíritu — acepta algo inadecuado como al menos mejor que nada."
+        }
+      ]
     }
   },
   "news-register": {
@@ -3960,6 +4891,23 @@
         "What typically replaces the topic particle in a Korean headline?",
         "'~(으)ㄹ 전망이다' marks…",
         "Which verb means 'pointed out'?"
+      ]
+    },
+    "es": {
+      "title": "Leyendo las noticias",
+      "sections": [
+        {
+          "heading": "Compresión de titulares",
+          "explanation": "Los titulares coreanos despojañ partículas, usan el sustantivo desnudo o la forma ㄴ/는다, y marcan el futuro con una raíz desnuda más 할 듯 o 전망. Un guión o coma frecuentemente reemplaza la partícula de tema."
+        },
+        {
+          "heading": "Los verbos de reportaje",
+          "explanation": "El texto del cuerpo cicla a través de un pequeño conjunto: 밝혔다 (declaró), 전했다 (reportó), 덧붙였다 (añadió), 지적했다 (señaló), 강조했다 (enfatizó). Aprenderlas hace cualquier artículo mucho más fácil de escanear."
+        },
+        {
+          "heading": "Atribución y marcos de pronóstico",
+          "explanation": "Tres marcos llevan la mayoría de la cobertura: ~(으)ㄴ 것으로 알려졌다 (se entiende que), ~(으)ㄹ 전망이다 (se pronostica que), y ~(으)ㄴ 데 따르면 o ~에 따르면 (según)."
+        }
       ]
     }
   },
@@ -4032,6 +4980,23 @@
         "및 can join…",
         "Which connector means 'that is to say'?"
       ]
+    },
+    "es": {
+      "title": "Escritura académica y analítica",
+      "sections": [
+        {
+          "heading": "Sustantivos en lugar de verbos",
+          "explanation": "El coreano académico comprime cláusulas en frases de sustantivo usando (으)ㅁ y 기, luego las une con verbos Sino-Coreanos como 이루어지다, 제시하다, 규명하다. Las oraciones se hacen más largas pero cada una lleva más."
+        },
+        {
+          "heading": "Enmarcación impersonal",
+          "explanation": "El autor es 본고, 본 연구 o 필자 en lugar de 나. Los reclamos se establecen a distancia con ~(으)ㄹ 수 있다, ~(으)ㄴ 것으로 판단된다 y ~다고 볼 수 있다."
+        },
+        {
+          "heading": "Conectores de argumentos",
+          "explanation": "따라서 (por lo tanto), 그러므로 (de ahí), 즉 (es decir), 한편 (mientras tanto), 다만 (dicho esto), 아울러 (además), 및 (y, entre sustantivos solo). Estos reemplazan sus equivalentes conversacionales completamente."
+        }
+      ]
     }
   },
   "speech-levels-full": {
@@ -4102,6 +5067,23 @@
         "Which speech level survives mainly in period dramas and old public signs?",
         "'말 놓으셔도 됩니다' invites the listener to…",
         "Dropping abruptly into 반말 with a stranger reads as…"
+      ]
+    },
+    "es": {
+      "title": "El rango completo de niveles de habla",
+      "sections": [
+        {
+          "heading": "Los seis niveles",
+          "explanation": "하십시오체 (más formal), 해요체 (informal educado), 하오체 y 하게체 (niveles medios más antiguos), 해체 y 해라체 (casual y simple). Solo 하십시오체, 해요체, 해체 y 해라체 están completamente vivos hoy."
+        },
+        {
+          "heading": "Dónde sobreviven los viejos niveles",
+          "explanation": "하오체 persiste en dramas de época, señales públicas (출입을 금하오) y literatura traducida. 하게체 pertenece a profesores dirigiéndose a estudiantes y hombres mayores dirigiéndose a hombres adultos jóvenes. Leerlas es una habilidad de comprensión más que de producción."
+        },
+        {
+          "heading": "Cambiando a mediados de conversación",
+          "explanation": "Los coreanos se mueven entre niveles dentro de una conversación para señalar calidez, distancia, irritación o un cambio al registro privado. Una caída abrupta a 반말 con un extraño es un acto de agresión; un cambio a 하십시오체 con un amigo lee como sarcasmo o repentina formalidad."
+        }
       ]
     }
   },
@@ -4186,6 +5168,27 @@
         "What is the honorific noun for 나이?",
         "Why is '커피 나오셨습니다' criticised?"
       ]
+    },
+    "es": {
+      "title": "El sistema honorífico completo",
+      "sections": [
+        {
+          "heading": "Tres honoríficos separados",
+          "explanation": "주체 높임 eleva el sujeto de la oración (시, 께서, 님). 객체 높임 eleva el objeto o receptor (께, 드리다, 뵙다, 여쭙다). 상대 높임 es el nivel de habla dirigido al oyente. Los tres pueden operar en una oración independientemente."
+        },
+        {
+          "heading": "Vocabulario supletico",
+          "explanation": "Algunas palabras intercambian completamente en lugar de tomar 시: 먹다 se convierte en 드시다 o 잡수시다, 자다 se convierte en 주무시다, 있다 se convierte en 계시다, 말하다 se convierte en 말씀하시다, 죽다 se convierte en 돌아가시다. Los sustantivos también cambian: 밥 se convierte en 진지, 나이 se convierte en 연세, 집 se convierte en 댁."
+        },
+        {
+          "heading": "압존법 y su declive",
+          "explanation": "Tradicionalmente bajabas una persona de rango medio cuando hablabas con alguien superior a ellos — diciéndole a tu abuelo que 아버지가 왔습니다, no 오셨습니다. El uso moderno, y el Instituto Nacional de Lengua Coreana, ahora aceptan el honorífico en la mayoría de configuraciones familiares y de lugar de trabajo. Los aprendices deberían reconocer 압존법 pero no necesitan aplicarlo."
+        },
+        {
+          "heading": "El error sobre-honorífico",
+          "explanation": "El coreano de servicio ha esparcido 시 sobre objetos inanimados: 커피 나오셨습니다. Esta 사물 존대 es ampliamente criticada como incorrecta, aunque la escucharás constantemente en cafés y tiendas. Reconócela; no la copies."
+        }
+      ]
     }
   },
   "idiomatic-expressions": {
@@ -4256,6 +5259,23 @@
         "What does 발이 넓다 mean?",
         "'미역국을 먹었어요' in a school context means…",
         "Which verb goes with 감기?"
+      ]
+    },
+    "es": {
+      "title": "Idiomas de partes del cuerpo y cotidianos",
+      "sections": [
+        {
+          "heading": "Ojos, oídos, manos y pies",
+          "explanation": "El coreano construye una enorme parte de sus idiomas a partir de partes del cuerpo. Estos están congelados — no puedes intercambiar el sustantivo o el verbo y mantener el significado."
+        },
+        {
+          "heading": "Sentimientos y vida social",
+          "explanation": "Otro clúster describe estados emocionales y relaciones. 미역국을 먹다 es uno famoso: la sopa de alga es resbaladiza, así que comerla significa que resbalaste — es decir, reprobaste un examen."
+        },
+        {
+          "heading": "Colocaciones de verbos comunes",
+          "explanation": "Algunos emparejamientos simplemente tienen que ser memorizados como unidades porque la elección de verbo es impredecible del inglés. Acertar estas es uno de los indicadores más claros de fluidez avanzada."
+        }
       ]
     }
   },
@@ -4328,6 +5348,23 @@
         "새옹지마 means…",
         "작심삼일 describes…"
       ]
+    },
+    "es": {
+      "title": "사자성어 — idiomas de cuatro caracteres",
+      "sections": [
+        {
+          "heading": "Cómo funcionan",
+          "explanation": "Cada uno es cuatro caracteres chinos llevando una historia o moral completa. Funcionan como sustantivos y usualmente toman 이다 o se encajan como un comentario sobre una situación. Los hablantes educados los despliegan constantemente en la escritura."
+        },
+        {
+          "heading": "En oraciones reales",
+          "explanation": "La mayoría de menudo aparecen como el predicado de una oración de resumen, o introducidas por 말 그대로 o 그야말로 para énfasis."
+        },
+        {
+          "heading": "Un conjunto de trabajo",
+          "explanation": "Una docena o así cubre la mayoría del uso real. Apréndelos con la situación adjunta en lugar de como listas de vocabulario — la situación es lo que desencadena el recuerdo."
+        }
+      ]
     }
   },
   "cause-nuance": {
@@ -4398,6 +5435,23 @@
         "Which marker introduces the agent of a formal passive?",
         "'상황에 따라 달라져요' expresses…",
         "Why is '태풍에 의해 피해가 발생했다' less natural than '태풍으로 인해'?"
+      ]
+    },
+    "es": {
+      "title": "Distinguiendo los marcadores de causa",
+      "sections": [
+        {
+          "heading": "~에 의해 — el agente",
+          "explanation": "Marca al responsable en una oración pasiva: quién o qué realizó la acción. Es lo más cercano que el coreano tiene al inglés by en una construcción pasiva, y pertenece firmemente al registro escrito."
+        },
+        {
+          "heading": "~(으)로 인해 — la causa",
+          "explanation": "Marca una causa no-agentiva: un evento o condición que produjo un resultado. Intercambiarla por 에 의해 lo hace sonar como si el clima actuara deliberadamente."
+        },
+        {
+          "heading": "~에 따라 — la variable",
+          "explanation": "Marca algo que el resultado rastrea o se conforma a: una regla, un estándar, o un factor que el resultado varía con. Es correlación y conformidad, no causación."
+        }
       ]
     }
   },
@@ -4470,6 +5524,23 @@
         "What can 시키다 attach to?",
         "Which causative can also mean 'let'?"
       ]
+    },
+    "es": {
+      "title": "Distinciones finas en causativas",
+      "sections": [
+        {
+          "heading": "Las causativas de sufijo son directas",
+          "explanation": "Las formas 이/히/리/기/우/구/추 usualmente describen al causador haciendo físicamente: 먹이다 es alimentar con cuchara, 입히다 es vestir a alguien tú mismo. El causativo frecuentemente no está actuando independientemente en absoluto."
+        },
+        {
+          "heading": "~게 하다 es indirecto",
+          "explanation": "El causativo realiza la acción; lo hiciste suceder por instrucción o permiso. Dependiendo del contexto puede ser hacer, dejar o hacer que alguien haga algo."
+        },
+        {
+          "heading": "~시키다 — solo sustantivos Sino-Coreanos",
+          "explanation": "시키다 se adjunta a un sustantivo de acción Sino-Coreano, haciendo el verbo 하다 causativo: 공부하다 se convierte en 공부시키다. También significa ordenar comida. Adjuntarlo a una raíz de verbo nativo es agramatical."
+        }
+      ]
     }
   },
   "literary-forms": {
@@ -4540,6 +5611,23 @@
         "Where would you expect to meet ~노라?",
         "What does ~리라 express?",
         "읍니다 is…"
+      ]
+    },
+    "es": {
+      "title": "Formas literarias y arcaicas",
+      "sections": [
+        {
+          "heading": "Declarativas elevadas",
+          "explanation": "~노라 (una declaración de primera persona solemne), ~도다 y ~로다 (exclamatorio), ~리라 (un voto o profecía sobre el futuro). Estos pertenecen a poesía, himnos y clásicos traducidos."
+        },
+        {
+          "heading": "Conectores arcaicos",
+          "explanation": "~느니 (más bien que), ~거늘 (mientras que, sin embargo), ~건대 (en cuanto a, si se me permite). Los encuentras en proverbios y discurso formal más que en cualquier otro lugar."
+        },
+        {
+          "heading": "Leyendo ortografía antigua",
+          "explanation": "Textos pre-1988 usan ortografías que ya no coinciden con el estándar: 읍니다 para 습니다, 어떻읍니까 para 어떻습니까, y la letra obsoleta ㆍ en textos muy antiguos. Los dramas históricos también reviven 하오체 y 하게체 al por mayor."
+        }
       ]
     }
   },
@@ -4612,6 +5700,24 @@
         "What happens to 을/를 and 이/가 in casual speech?",
         "Which of these belongs to written register?"
       ]
+    },
+    "es": {
+      "title": "구어체 vs 문어체",
+      "sections": [
+        {
+          "heading": "Contracciones y partículas caídas",
+          "explanation": "El habla contrae implacablemente — 이것은 a 이건, 나는 a 난, 무엇을 a 뭘 — y deja caer 을/를 e 이/가 siempre que el contexto lo permita. La escritura restaura todos ellos."
+        },
+        {
+          "heading": "Vocabulario diferente para la misma idea",
+          "explanation": "Las palabras nativas dominan el habla y las palabras Sino-Coreanas dominan la escritura. 그래서 se convierte en 따라서, 하지만 se convierte en 그러나, 아주 se convierte en 매우, 되게 se convierte en 상당히."
+        },
+        {
+          "heading": "Relleno, cobertura y longitud de oración",
+          "explanation": "El habla está llena de 좀, 뭐, 그냥, 약간 y 는데요 al final; la escritura los elimina completamente y empaca el contenido en oraciones más largas, nominalizadas. Un error avanzado común es escribir exactamente como se habla, que lee como no serio."
+        }
+      ]
     }
-  }
+  },
+  "es": {}
 }

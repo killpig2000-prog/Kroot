@@ -1,0 +1,258 @@
+{
+  "translations": {
+    "rieul": {
+      "explanation_es": "No es una R inglesa ni exactamente una L. Toca la punta de tu lengua una vez contra la cresta detrás de tus dientes superiores — más parecido a la suave 'tt' en 'butter'. Al final de una sílaba se relaja en una L.",
+      "examples_es": {
+        "라면": "fideos instantáneos",
+        "사랑": "amor",
+        "빨리": "rápidamente",
+        "일요일": "domingo",
+        "노래": "canción",
+        "물": "agua"
+      }
+    },
+    "tense": {
+      "explanation_es": "Tensa tu garganta y sostén el sonido antes de liberarlo — sin ningún soplo de aire. Piensa en la 'k' tensa y cortada en 'sky' en lugar de la 'k' con aire en 'key'.",
+      "examples_es": {
+        "꽃": "flor",
+        "딸기": "fresa",
+        "빵": "pan",
+        "싸요": "es barato",
+        "짜요": "es salado",
+        "꿈": "sueño"
+      }
+    },
+    "aspirated": {
+      "explanation_es": "Lo opuesto a los consonantes tensos: expulsa un fuerte soplo de aire. Sostén una hoja de papel frente a tu boca — debería revolotear cada vez.",
+      "examples_es": {
+        "커피": "café",
+        "토마토": "tomate",
+        "포도": "uvas",
+        "치즈": "queso",
+        "친구": "amigo",
+        "택시": "taxi"
+      }
+    },
+    "triplet-k": {
+      "explanation_es": "Tres letras diferentes, un lugar en la boca. 가 es simple y suave con casi sin aire, 카 explota con aire, 까 es apretado y cortado. Dícelas en seguida hasta que oigas tres sonidos distintos.",
+      "examples_es": {
+        "감": "caqui",
+        "캄캄하다": "estar completamente oscuro",
+        "깜빡": "un parpadeo / olvidar",
+        "개": "perro",
+        "캐다": "excavar",
+        "깨": "sésamo"
+      }
+    },
+    "triplet-t": {
+      "explanation_es": "Misma posición de lengua, tres niveles de presión. 달 (luna) es suave, 탈 (máscara) viene con una ráfaga de aire, 딸 (hija) es tensa y aguda. Mezclarlos cambia completamente la palabra.",
+      "examples_es": {
+        "달": "luna",
+        "탈": "máscara",
+        "딸": "hija",
+        "도": "también",
+        "토요일": "sábado",
+        "또": "de nuevo"
+      }
+    },
+    "triplet-p": {
+      "explanation_es": "Labios juntos para los tres. 불 (fuego) es suave, 풀 (pasto) emite aire, 뿔 (cuerno) sale con presión. El inglés 'b' y 'p' están entre los sonidos coreanos, así que apunta más allá en ambas direcciones.",
+      "examples_es": {
+        "불": "fuego",
+        "풀": "pasto / pegamento",
+        "뿔": "cuerno",
+        "방": "habitación",
+        "팡": "sonido de explosión",
+        "빵": "pan"
+      }
+    },
+    "triplet-s": {
+      "explanation_es": "ㅅ solo es ligero, casi sin aire. ㅆ es presionado fuerte con una garganta tensa y sin aire escapando. 사다 significa comprar, 싸다 significa ser barato — vale la pena acertar en la caja.",
+      "examples_es": {
+        "사다": "comprar",
+        "싸다": "ser barato",
+        "살": "carne / años de edad",
+        "쌀": "arroz sin cocinar",
+        "시": "poema / la hora",
+        "씨": "semilla / Señor, Señora"
+      }
+    },
+    "eo-o": {
+      "explanation_es": "ㅓ es una 'uh' abierta y sin redondeado con la mandíbula relajada. ㅗ es redondeado — empuja tus labios hacia adelante en un pequeño círculo como 'oh'. Mezclarlos convierte 정말 en 종말.",
+      "examples_es": {
+        "머리": "cabeza / cabello",
+        "정말": "realmente",
+        "동생": "hermano/a menor",
+        "서울": "Seúl",
+        "거기": "allí",
+        "고기": "carne"
+      }
+    },
+    "eu-u": {
+      "explanation_es": "ㅡ tiene labios extendidos, sonriendo con la lengua hacia atrás — sin redondeado en absoluto. ㅜ es totalmente redondeado como 'oo' en 'food'. Los hablantes de inglés generalmente sobre-redondean ㅡ.",
+      "examples_es": {
+        "그림": "cuadro",
+        "구름": "nube",
+        "음악": "música",
+        "우유": "leche",
+        "느낌": "sentimiento",
+        "누나": "hermana mayor (de un chico)"
+      }
+    },
+    "ae-e": {
+      "explanation_es": "En el habla cuidadosa, ㅐ es una 'a' más ancha y plana como en 'cat', y ㅔ es más tensa, como 'bed'. La mayoría de hablantes de Seúl ahora los fusionan, así que los oyentes confían en el contexto — 개 (perro) y 게 (cangrejo) suenan casi idénticos.",
+      "examples_es": {
+        "개": "perro",
+        "게": "cangrejo",
+        "내": "mi",
+        "네": "sí / tu",
+        "새": "pájaro",
+        "세": "tres"
+      }
+    },
+    "y-vowels": {
+      "explanation_es": "Cada uno de estos es un rápido 'y' deslizándose directamente hacia la vocal base — un golpe suave, no dos sílabas. 여기 es 'yuh-gi', nunca 'ee-uh-gi'.",
+      "examples_es": {
+        "여기": "aquí",
+        "야채": "vegetales",
+        "요리": "cocina",
+        "유리": "vidrio",
+        "예약": "reserva",
+        "겨울": "invierno"
+      }
+    },
+    "ui": {
+      "explanation_es": "Tres pronunciaciones, una letra. Al inicio de una palabra es un verdadero deslizamiento de ㅡ a ㅣ (의사). En otros lugares se aplana a 이 (회의 → 회이), y como partícula posesiva se dice 에 (나의 → 나에).",
+      "examples_es": {
+        "의사": "médico",
+        "의자": "silla",
+        "회의": "reunión",
+        "나의 꿈": "mi sueño",
+        "민주주의": "democracia",
+        "의미": "significado"
+      }
+    },
+    "batchim": {
+      "explanation_es": "Los consonantes finales se detienen, no se liberan. Tu boca se cierra sobre el sonido y lo sostiene — 밥 termina con los labios cerrados sin 'buh' después.",
+      "examples_es": {
+        "밥": "arroz / comida",
+        "책": "libro",
+        "옷": "ropa",
+        "산": "montaña",
+        "봄": "primavera",
+        "강": "río"
+      }
+    },
+    "batchim-seven": {
+      "explanation_es": "Veintisiete posibles 받침 se colapsan en solo siete sonidos: ㄱ ㄴ ㄷ ㄹ ㅁ ㅂ ㅇ. Así que ㅅ ㅆ ㅈ ㅊ ㅌ todas terminan en una ㄷ sostenida, y ㅍ cae en ㅂ — 잎 se dice 입.",
+      "examples_es": {
+        "낮": "daytime",
+        "낫": "hoz",
+        "꽃": "flor",
+        "부엌": "cocina",
+        "잎": "hoja",
+        "밖": "afuera"
+      }
+    },
+    "double-batchim": {
+      "explanation_es": "Cuando dos consonantes comparten un 받침, solo uno se pronuncia antes de una pausa. 값 es 갑, 앉다 es 안따, 읽다 es 익따 — pero el silencioso se despierta cuando una vocal sigue (값이 → 갑씨).",
+      "examples_es": {
+        "값": "precio",
+        "값이": "el precio (sujeto)",
+        "앉다": "sentarse",
+        "읽다": "leer",
+        "닭": "pollo",
+        "없어요": "no hay"
+      }
+    },
+    "linking": {
+      "explanation_es": "Cuando una sílaba termina en consonante y la siguiente comienza con vocal, el consonante se desliza. 한국어 suena como 한구거, no 한국·어.",
+      "examples_es": {
+        "한국어": "idioma coreano",
+        "음악이": "la música (sujeto)",
+        "맛있어요": "está delicioso",
+        "책을": "libro (objeto)",
+        "발음": "pronunciación",
+        "집에": "a/en casa"
+      }
+    },
+    "hieut": {
+      "explanation_es": "ㅎ rara vez sobrevive el contacto. Antes de una vocal desaparece (좋아요 → 조아요); antes de ㄱ ㄷ ㅈ se fusiona en un sonido aspirado (좋다 → 조타, 많고 → 만코).",
+      "examples_es": {
+        "좋아요": "está bien / me gusta",
+        "좋다": "ser bueno",
+        "많이": "mucho",
+        "많고": "muchos, y…",
+        "싫어요": "no me gusta",
+        "괜찮아요": "está bien"
+      }
+    },
+    "nasal": {
+      "explanation_es": "Una oclusiva antes de una nasal se convierte en una nasal ella misma. 감사합니다 es realmente 감사함니다, y 국물 sale como 궁물. Deja que tu nariz haga el trabajo.",
+      "examples_es": {
+        "감사합니다": "gracias",
+        "국물": "caldo",
+        "십만": "cien mil",
+        "작년": "año pasado",
+        "한국말": "el idioma coreano",
+        "앞문": "puerta frontal"
+      }
+    },
+    "lateral": {
+      "explanation_es": "ㄴ junto a ㄹ cede y se convierte en ㄹ. 연락 se dice 열락, 신라 es 실라, 편리 es 펼리. Ambos consonantes terminan siendo el mismo sonido fluido.",
+      "examples_es": {
+        "연락": "contacto, ponerse en contacto",
+        "신라": "Silla (dinastía)",
+        "편리하다": "ser conveniente",
+        "설날": "Año Nuevo Lunar",
+        "일년": "un año",
+        "관리": "gestión"
+      }
+    },
+    "palatal": {
+      "explanation_es": "Una ㄷ o ㅌ final seguida de 이 o 히 se desliza hacia adelante a ㅈ o ㅊ. 굳이 es 구지, 같이 es 가치, 닫히다 es 다치다. La lengua toma el atajo.",
+      "examples_es": {
+        "같이": "juntos",
+        "굳이": "innecesariamente, insistentemente",
+        "해돋이": "salida del sol",
+        "닫히다": "ser cerrado",
+        "붙이다": "pegar",
+        "밭이": "el campo (sujeto)"
+      }
+    },
+    "fortition": {
+      "explanation_es": "Después de una oclusiva 받침 (ㄱ ㄷ ㅂ), el siguiente consonante simple se tensa. 학교 es 학꾜, 식당 es 식땅, 숟가락 es 숟까락. Nadie lo escribe, pero todos lo dicen.",
+      "examples_es": {
+        "학교": "escuela",
+        "식당": "restaurante",
+        "숟가락": "cuchara",
+        "약국": "farmacia",
+        "젓가락": "palillos",
+        "잡지": "revista"
+      }
+    },
+    "n-insertion": {
+      "explanation_es": "En palabras compuestas, un 받침 de consonante que se encuentra con 이/야/여/요/유 brota una ㄴ. 무슨 일 es 무슨 닐, 색연필 es 생년필, 담요 es 담뇨.",
+      "examples_es": {
+        "무슨 일": "qué pasa",
+        "색연필": "lápiz de color",
+        "담요": "manta",
+        "한여름": "pleno verano",
+        "꽃잎": "pétalo de flor",
+        "십육": "dieciséis"
+      }
+    },
+    "intonation": {
+      "explanation_es": "El coreano marca preguntas con tono, no con orden de palabras: 밥 먹었어요 sube al final para preguntar y baja para afirmar. Mantén las sílabas uniformemente cronometradas — enfatizar una como hace el inglés suena extranjero.",
+      "examples_es": {
+        "밥 먹었어요?": "¿Comiste? (subiendo)",
+        "밥 먹었어요.": "Comí. (bajando)",
+        "진짜요?": "¿De verdad? (subiendo)",
+        "가자!": "¡Vamos!",
+        "어떻게 해요?": "¿Qué hacemos?",
+        "그렇구나…": "Ah, entiendo. (disminuyendo)"
+      }
+    }
+  },
+  "count": 19
+}
