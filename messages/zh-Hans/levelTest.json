@@ -46,14 +46,22 @@
     "dontKnow": "我不知道"
   },
   "result": {
-    "passedTitle": "恭喜！你升到了 {level}！",
-    "passedBody": "你的{from}长成了<b>{to}</b>。",
+    "passedTitle": "你的等级是 {level}",
+    "passedBody": "测试结果表明你已准备好学习<b>{to}</b>的内容。",
     "contentOpen": "{level} 的内容已经开启。",
     "promotionFailed": "升级没能生效 — 请稍后查看你的个人页面。",
     "failedTitle": "还差一点点 — 但你已经很接近了！",
     "failedBody": "{hours} 小时后可以再试一次。",
     "weakest": "你最弱的一项是<b>{skill}</b>。",
     "practice": "练习{skill} →",
-    "backToGarden": "返回花园"
+    "backToGarden": "返回花园",
+    "preview": "📚 {level} 内容预览",
+    "previewNote": "以下是你接下来要学的内容：",
+    "adjustLevel": "等级不太对？",
+    "adjustNote": "你可以从不同的等级开始 — 之后总是可以升级的。",
+    "startLevel": "从 {level} 开始",
+    "sampleReading": "关于 {topic} 的阅读文章",
+    "sampleListening": "{level} 速度的听力对话",
+    "sampleWriting": "写一个简短的回应"
   }
 }

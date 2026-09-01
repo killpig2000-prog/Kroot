@@ -46,14 +46,22 @@
     "dontKnow": "Tôi không biết"
   },
   "result": {
-    "passedTitle": "Chúc mừng! Bạn đã lên {level}!",
-    "passedBody": "Cây {from} của bạn đã lớn thành <b>{to}</b>.",
+    "passedTitle": "Trình độ của bạn là {level}",
+    "passedBody": "Kết quả kiểm tra cho thấy bạn đã sẵn sàng cho nội dung <b>{to}</b>.",
     "contentOpen": "Nội dung {level} đã mở.",
     "promotionFailed": "Chúng tôi chưa áp dụng được việc thăng cấp — hãy kiểm tra trang cá nhân sau ít phút.",
     "failedTitle": "Chưa được — nhưng bạn đã rất gần rồi!",
     "failedBody": "Bạn có thể thử lại sau {hours} giờ.",
     "weakest": "Kỹ năng yếu nhất của bạn là <b>{skill}</b>.",
     "practice": "Luyện {skill} →",
-    "backToGarden": "Về khu vườn"
+    "backToGarden": "Về khu vườn",
+    "preview": "📚 Xem trước nội dung {level}",
+    "previewNote": "Đây là những gì bạn sẽ học tiếp:",
+    "adjustLevel": "Không hợp lý?",
+    "adjustNote": "Bạn có thể bắt đầu với một trình độ khác — bạn luôn có thể nâng cấp sau.",
+    "startLevel": "Bắt đầu với {level}",
+    "sampleReading": "Bài đọc về {topic}",
+    "sampleListening": "Cuộc hội thoại nghe ở tốc độ {level}",
+    "sampleWriting": "Viết một phản hồi ngắn"
   }
 }

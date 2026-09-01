@@ -46,14 +46,22 @@
     "dontKnow": "I don't know"
   },
   "result": {
-    "passedTitle": "Congratulations! You leveled up to {level}!",
-    "passedBody": "Your {from} grew into a <b>{to}</b>.",
+    "passedTitle": "Your level is {level}",
+    "passedBody": "Test results show you're ready for <b>{to}</b> content.",
     "contentOpen": "{level} content is now open.",
     "promotionFailed": "We couldn't apply the promotion — check your profile shortly.",
     "failedTitle": "Not quite yet — but you're close!",
     "failedBody": "You can try again in {hours} hours.",
     "weakest": "Your weakest skill was <b>{skill}</b>.",
     "practice": "Practice {skill} →",
-    "backToGarden": "Back to Garden"
+    "backToGarden": "Back to Garden",
+    "preview": "📚 {level} content preview",
+    "previewNote": "Here's what you'll study next:",
+    "adjustLevel": "Not quite right?",
+    "adjustNote": "You can start with a different level — you can always level up later.",
+    "startLevel": "Start with {level}",
+    "sampleReading": "Reading passage about {topic}",
+    "sampleListening": "Listening conversation at {level} pace",
+    "sampleWriting": "Write a short response"
   }
 }

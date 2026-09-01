@@ -46,14 +46,22 @@
     "dontKnow": "No lo sé"
   },
   "result": {
-    "passedTitle": "¡Enhorabuena! ¡Has subido a {level}!",
-    "passedBody": "Tu {from} se convirtió en <b>{to}</b>.",
+    "passedTitle": "Tu nivel es {level}",
+    "passedBody": "Los resultados de la prueba muestran que estás listo para el contenido <b>{to}</b>.",
     "contentOpen": "El contenido de {level} ya está abierto.",
     "promotionFailed": "No pudimos aplicar el ascenso; revisa tu perfil en un momento.",
     "failedTitle": "Todavía no… ¡pero estás cerca!",
     "failedBody": "Puedes volver a intentarlo en {hours} horas.",
     "weakest": "Tu destreza más floja fue <b>{skill}</b>.",
     "practice": "Practica {skill} →",
-    "backToGarden": "Volver al jardín"
+    "backToGarden": "Volver al jardín",
+    "preview": "📚 Vista previa del contenido de {level}",
+    "previewNote": "Esto es lo que estudiarás a continuación:",
+    "adjustLevel": "¿No parece correcto?",
+    "adjustNote": "Puedes empezar con un nivel diferente — siempre puedes subir después.",
+    "startLevel": "Comenzar con {level}",
+    "sampleReading": "Texto de lectura sobre {topic}",
+    "sampleListening": "Conversación de escucha a ritmo {level}",
+    "sampleWriting": "Escribe una respuesta corta"
   }
 }

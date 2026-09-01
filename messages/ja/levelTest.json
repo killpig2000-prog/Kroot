@@ -46,14 +46,22 @@
     "dontKnow": "分かりません"
   },
   "result": {
-    "passedTitle": "おめでとうございます！{level} にレベルアップしました！",
-    "passedBody": "{from}が<b>{to}</b>に成長しました。",
+    "passedTitle": "あなたのレベルは{level}です",
+    "passedBody": "テスト結果により、<b>{to}</b>の内容に進む準備ができています。",
     "contentOpen": "{level} の内容が開放されました。",
     "promotionFailed": "昇級を反映できませんでした — 少し経ってからプロフィールをご確認ください。",
     "failedTitle": "今回は残念 — でもあと少しです！",
     "failedBody": "{hours}時間後にもう一度挑戦できます。",
     "weakest": "一番弱かったスキルは<b>{skill}</b>でした。",
     "practice": "{skill}を練習する →",
-    "backToGarden": "ガーデンに戻る"
+    "backToGarden": "ガーデンに戻る",
+    "preview": "📚 {level}の内容プレビュー",
+    "previewNote": "次に学ぶ内容をご紹介します：",
+    "adjustLevel": "レベルが合わない?",
+    "adjustNote": "別のレベルから始めることができます — あとでレベルアップできます。",
+    "startLevel": "{level}で開始",
+    "sampleReading": "{topic}についての読解文",
+    "sampleListening": "{level}ペースのリスニング会話",
+    "sampleWriting": "短い応答を作成"
   }
 }
