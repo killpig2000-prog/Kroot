@@ -74,7 +74,21 @@
     "dueToday": "đến hạn hôm nay",
     "moreWords": "+{count} từ nữa",
     "nothingDue": "Chưa có từ nào cần ôn. Từ tiếp theo quay lại {when}.",
-    "nothingDuePlain": "Chưa có từ nào cần ôn."
+    "nothingDuePlain": "Chưa có từ nào cần ôn.",
+    "reviewCapacity": {
+      "title": "Sức chứa ôn tập",
+      "capacity": "{count}/ngày",
+      "upgrade": "Ôn tập {to} từ mỗi ngày thay vì {from}.",
+      "atMax": "Bạn đã đạt mức tối đa {max} từ mỗi ngày.",
+      "maxed": "Tối đa",
+      "buying": "Đang mua…",
+      "buy": "+{step} · 🌰 {price}",
+      "bought": "Giờ bạn có thể ôn {count} từ mỗi ngày.",
+      "errNotEnough": "Không đủ xu — nhiệm vụ hằng ngày trả 10 xu mỗi lần.",
+      "errMax": "{max} mỗi ngày là mức tối đa.",
+      "errAuth": "Đăng nhập để mua.",
+      "errGeneric": "Không thể mua lúc này."
+    }
   },
   "error": {
     "title": "Có chút trục trặc"

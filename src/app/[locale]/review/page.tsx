@@ -4,15 +4,11 @@ import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import ReviewSession from "@/components/review/ReviewSession";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
-import { REVIEW_SESSION_SIZE, REVIEW_SESSION_SIZES, resolveReviewSize } from "@/lib/srs";
+import { MAX_REVIEW_CAPACITY_BONUS, REVIEW_SESSION_SIZE, dailyReviewCap } from "@/lib/srs";
 import { VOCAB_TOPICS, type VocabWordWithProgress } from "@/lib/vocabulary";
 import { getWordsForTopic } from "@/lib/vocabulary-words";
 
-export default async function ReviewPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ n?: string }>;
-}) {
+export default async function ReviewPage() {
   const tn = await getTranslations("nav");
   const t = await getTranslations("vocabulary.practice");
   const supabase = await createClient();
@@ -20,29 +16,30 @@ export default async function ReviewPage({
 
   if (!user) redirect("/auth/login?next=/review");
 
-  const sp = await searchParams;
-  const sessionSize = resolveReviewSize(sp.n);
-
+  // Review is REVIEW_SESSION_SIZE (10) words a day, everywhere in the app —
+  // no picker. A learner can raise that by buying capacity (0056,
+  // buy_review_capacity, +5/purchase) from the Words to review card on
+  // /profile; dailyReviewCap folds that bonus in.
   const nowIso = new Date().toISOString();
   const todayStartIso = `${nowIso.slice(0, 10)}T00:00:00.000Z`;
-  const [{ data: profile }, { data: dueRows, error }, { count: learnedCount }, { count: dueTotal }, { count: reviewedTodayCount }] =
+  const [{ data: profile }, { data: dueRows, error }, { count: learnedCount }, { count: reviewedTodayCount }] =
     await Promise.all([
-      supabase.from("profiles").select("display_name, streak_days, avatar_url").eq("id", user.id).single(),
+      supabase
+        .from("profiles")
+        .select("display_name, streak_days, avatar_url, review_capacity_bonus")
+        .eq("id", user.id)
+        .single(),
+      // Fetched up to the maximum possible cap (base + max purchasable bonus);
+      // sliced down to this user's actual cap once the profile row is in.
       supabase
         .from("vocabulary_progress")
         .select("*")
         .eq("user_id", user.id)
         .lte("next_review_at", nowIso)
         .order("next_review_at", { ascending: true })
-        .limit(sessionSize),
+        .limit(REVIEW_SESSION_SIZE + MAX_REVIEW_CAPACITY_BONUS),
       // Everything learned so far, for the empty state.
       supabase.from("vocabulary_progress").select("id", { count: "exact", head: true }).eq("user_id", user.id),
-      // The real backlog, so the picker can offer only sizes that exist.
-      supabase
-        .from("vocabulary_progress")
-        .select("id", { count: "exact", head: true })
-        .eq("user_id", user.id)
-        .lte("next_review_at", nowIso),
       // Words already reviewed today — once this hits REVIEW_SESSION_SIZE,
       // review is done for the day even if the backlog isn't empty. User:
       // clearing one 10-word batch shouldn't immediately surface the next
@@ -54,7 +51,8 @@ export default async function ReviewPage({
         .gte("last_reviewed_at", todayStartIso),
     ]);
 
-  const doneForToday = (reviewedTodayCount ?? 0) >= REVIEW_SESSION_SIZE;
+  const cap = dailyReviewCap(profile?.review_capacity_bonus ?? 0);
+  const doneForToday = (reviewedTodayCount ?? 0) >= cap;
 
   // Pre-0022 the next_review_at column doesn't exist yet.
   const migrationMissing = error?.code === "42703";
@@ -73,22 +71,16 @@ export default async function ReviewPage({
     nextDue = upcoming?.[0]?.next_review_at ?? null;
   }
 
-  // Only offer a longer session when the backlog can actually fill it — the
-  // default is always offered so a learner can get back to a short session.
-  const backlog = dueTotal ?? 0;
-  const sizeChoices = REVIEW_SESSION_SIZES.filter(
-    (size) => size === REVIEW_SESSION_SIZE || size <= backlog
-  );
-
   // Resolve due keys back to static word data.
   const wordByKey = new Map(
     VOCAB_TOPICS.filter((t) => t.available).flatMap((t) =>
       getWordsForTopic(t.key).map((w) => [w.key, w] as const)
     )
   );
+  const remainingToday = Math.max(0, cap - (reviewedTodayCount ?? 0));
   const dueWords: VocabWordWithProgress[] = doneForToday
     ? []
-    : (dueRows ?? []).flatMap((row) => {
+    : (dueRows ?? []).slice(0, remainingToday).flatMap((row) => {
         const word = wordByKey.get(row.word_key);
         if (!word) return [];
         return [
@@ -141,27 +133,6 @@ export default async function ReviewPage({
               <span className="ml-2 text-[13px] font-medium text-faint">{t("reviewTime")}</span>
             </h1>
             <span className="flex items-center gap-3 flex-wrap text-[13px] text-muted">
-              {sizeChoices.length > 1 && (
-                <span className="flex items-center gap-1.5">
-                  <span className="text-faint">{t("sessionLength")}</span>
-                  <span className="inline-flex rounded-[9px] border border-line overflow-hidden">
-                    {sizeChoices.map((size) => (
-                      <Link
-                        key={size}
-                        href={size === REVIEW_SESSION_SIZE ? "/review" : `/review?n=${size}`}
-                        aria-current={size === sessionSize ? "true" : undefined}
-                        className={`px-2.5 py-1 text-[12.5px] font-semibold transition-colors ${
-                          size === sessionSize
-                            ? "bg-success text-white"
-                            : "bg-cream text-muted hover:bg-warm"
-                        }`}
-                      >
-                        {size}
-                      </Link>
-                    ))}
-                  </span>
-                </span>
-              )}
               <Link href="/review/words" className="font-semibold text-sky-deep hover:underline">
                 📚 {tn("myWords")} →
               </Link>
@@ -191,7 +162,7 @@ export default async function ReviewPage({
                 {t("doneTodayTitle")}
               </h2>
               <p className="text-sm text-muted">
-                {t("doneTodayBody", { count: REVIEW_SESSION_SIZE })}
+                {t("doneTodayBody", { count: cap })}
               </p>
             </div>
           ) : dueWords.length > 0 ? (

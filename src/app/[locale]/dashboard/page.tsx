@@ -23,7 +23,7 @@ import { getPassagesForLevel } from "@/lib/reading";
 import { getPromptsForLevel } from "@/lib/writing";
 import { chapterClearStats } from "@/lib/pronunciation";
 import { CHAPTER_SIZE } from "@/lib/vocabulary";
-import { REVIEW_SESSION_SIZE } from "@/lib/srs";
+import { dailyReviewCap } from "@/lib/srs";
 import { getWordsForTopic } from "@/lib/vocabulary-words";
 import { firstVisitState, NEW_ACCOUNT_DAYS, SHOW_ALL_COOKIE } from "@/lib/first-visit";
 import { countCompletedSessions } from "@/lib/first-visit-server";
@@ -182,14 +182,23 @@ export default async function DashboardPage() {
 
   // Promotion eligibility runs after the main batch (it needs the grade);
   // internally it fans out its own queries in parallel.
-  const [elig, analyticsSessions, coinsRes] = await Promise.all([
+  const todayStartIso = `${today}T00:00:00.000Z`;
+  const [elig, analyticsSessions, coinsRes, { count: reviewedTodayCount }] = await Promise.all([
     computeEligibility(supabase, user.id, cefr),
     maybeNew ? countCompletedSessions(user.id) : Promise.resolve(null),
     // coins isn't in the snapshot RPC's profile row; a parallel read here
     // beats a function migration for one integer (see 0041's rationale).
-    supabase.from("profiles").select("coins").eq("id", user.id).maybeSingle(),
+    // review_capacity_bonus rides along for the same reason.
+    supabase.from("profiles").select("coins, review_capacity_bonus").eq("id", user.id).maybeSingle(),
+    // Same daily cap accounting as /review and BottomNav's badge.
+    supabase
+      .from("vocabulary_progress")
+      .select("id", { count: "exact", head: true })
+      .eq("user_id", user.id)
+      .gte("last_reviewed_at", todayStartIso),
   ]);
   const coins = coinsRes.error ? 0 : coinsRes.data?.coins ?? 0;
+  const reviewCapacityBonus = coinsRes.error ? 0 : coinsRes.data?.review_capacity_bonus ?? 0;
   const promo = testForGrade(cefr);
   const promoChecks = [
     { label: t("levelMap.checkWordsHeld"), ok: elig.wordsMastered >= elig.wordsRequired, value: `${elig.wordsMastered}/${elig.wordsRequired}` },
@@ -198,10 +207,11 @@ export default async function DashboardPage() {
   // Errors (e.g. migration 0022 not applied yet) just hide the review card.
   // User feedback: an uncapped backlog badge (once past a hundred+ words)
   // read as a scary, un-clearable number rather than something to act on.
-  // Capped at the default review session size (10) — the badge always
-  // matches "one comfortable sitting", and /review itself still lets a
-  // learner pull a bigger batch (20/30/50) if they want to clear more.
-  const dueCount = Math.min(snapshot.due_count, REVIEW_SESSION_SIZE);
+  // Capped at this user's daily review cap (10, +5 per purchased bonus, see
+  // lib/srs.ts) minus what they've already done today — matches /review and
+  // BottomNav's badge exactly.
+  const reviewCap = dailyReviewCap(reviewCapacityBonus);
+  const dueCount = Math.min(snapshot.due_count, Math.max(0, reviewCap - (reviewedTodayCount ?? 0)));
 
   const tally = (doneKeys: Set<string>, levelKeys: string[], cap?: number) => {
     const done = levelKeys.filter((k) => doneKeys.has(k)).length;

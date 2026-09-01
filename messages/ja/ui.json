@@ -74,7 +74,21 @@
     "dueToday": "今日が復習日",
     "moreWords": "ほか {count} 語",
     "nothingDue": "復習待ちはありません。次の単語は{when}です。",
-    "nothingDuePlain": "いま復習待ちの単語はありません。"
+    "nothingDuePlain": "いま復習待ちの単語はありません。",
+    "reviewCapacity": {
+      "title": "復習の上限",
+      "capacity": "1日{count}語",
+      "upgrade": "1日{from}語から{to}語に増やす。",
+      "atMax": "1日{max}語が上限です。",
+      "maxed": "上限",
+      "buying": "購入中…",
+      "buy": "+{step} · 🌰 {price}",
+      "bought": "1日{count}語まで復習できます。",
+      "errNotEnough": "コインが足りません — デイリークエストで1回10枚。",
+      "errMax": "1日{max}語が上限です。",
+      "errAuth": "購入するにはログインしてください。",
+      "errGeneric": "購入できませんでした。"
+    }
   },
   "error": {
     "title": "ちょっとした問題です"

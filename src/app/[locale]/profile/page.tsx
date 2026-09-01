@@ -78,10 +78,10 @@ export default async function ProfilePage() {
       .select("display_name, current_level, streak_days, avatar_url")
       .eq("id", user.id)
       .single(),
-    // Migration 0035 columns, tolerant of a not-yet-applied migration.
+    // Migration 0035/0056 columns, tolerant of a not-yet-applied migration.
     supabase
       .from("profiles")
-      .select("reminder_push, reminder_email, streak_freezes")
+      .select("reminder_push, reminder_email, streak_freezes, coins, review_capacity_bonus, is_admin")
       .eq("id", user.id)
       .maybeSingle(),
     supabase
@@ -344,7 +344,16 @@ export default async function ProfilePage() {
             {hourTimestamps.length >= MIN_HOUR_EVENTS && <BestHours timestamps={hourTimestamps} />}
 
             {/* 5. the due queue — the whole of what this card is for */}
-            {hasVocab && <WordsToReview words={dueWords} dueCount={dueCount} nextReturn={nextReturn} />}
+            {hasVocab && (
+              <WordsToReview
+                words={dueWords}
+                dueCount={dueCount}
+                nextReturn={nextReturn}
+                capacityBonus={extras?.review_capacity_bonus ?? 0}
+                coins={extras?.coins ?? 0}
+                isAdmin={extras?.is_admin ?? false}
+              />
+            )}
 
             {/* nothing studied yet: one line instead of a stack of empty cards */}
             {!hasAnything && (

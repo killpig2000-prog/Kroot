@@ -1,5 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import ReviewCapacityButton from "@/components/profile/ReviewCapacityButton";
 
 // "Words to review" — the only word card on My account (2026-08-30).
 //
@@ -21,11 +22,18 @@ export default async function WordsToReview({
   words,
   dueCount,
   nextReturn,
+  capacityBonus,
+  coins,
+  isAdmin,
 }: {
   words: DueWord[]; // hardest first, already capped
   dueCount: number;
   /** already-formatted relative time of the next word coming back, when nothing is due */
   nextReturn: string | null;
+  /** how many extra daily review slots this account has bought — see lib/srs.ts */
+  capacityBonus: number;
+  coins: number;
+  isAdmin: boolean;
 }) {
   const t = await getTranslations("ui.account");
   const extra = dueCount - words.length;
@@ -89,6 +97,8 @@ export default async function WordsToReview({
           </Link>
         </>
       )}
+
+      <ReviewCapacityButton capacityBonus={capacityBonus} coins={coins} isAdmin={isAdmin} />
     </div>
   );
 }

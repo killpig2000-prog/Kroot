@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { MAIN_ITEMS, SECTIONS, type NavColor } from "@/components/dashboard/navItems";
 import { useBackToClose } from "@/hooks/useBackToClose";
-import { REVIEW_SESSION_SIZE } from "@/lib/srs";
+import { dailyReviewCap } from "@/lib/srs";
 
 // Four tabs (2026-08-28): Garden · Learn · Review · More — equal-width cells
 // that fill the bar edge to edge (2026-08-29), so each tap target is a quarter
@@ -160,10 +160,10 @@ export default function BottomNav({
       if (!userId) return;
       const nowIso = new Date().toISOString();
       const todayStartIso = `${nowIso.slice(0, 10)}T00:00:00.000Z`;
-      // Same daily cap as /review and the dashboard card: once
-      // REVIEW_SESSION_SIZE words are reviewed today, the badge reads 0
-      // even if a bigger backlog remains — see review/page.tsx's doneForToday.
-      const [{ count: due, error }, { count: reviewedToday }] = await Promise.all([
+      // Same daily cap as /review and the dashboard card: once the cap's
+      // worth of words is reviewed today, the badge reads 0 even if a
+      // bigger backlog remains — see review/page.tsx's doneForToday.
+      const [{ count: due, error }, { count: reviewedToday }, { data: profileRow }] = await Promise.all([
         supabase
           .from("vocabulary_progress")
           .select("id", { count: "exact", head: true })
@@ -174,8 +174,10 @@ export default function BottomNav({
           .select("id", { count: "exact", head: true })
           .eq("user_id", userId)
           .gte("last_reviewed_at", todayStartIso),
+        supabase.from("profiles").select("review_capacity_bonus").eq("id", userId).maybeSingle(),
       ]);
-      const remaining = Math.max(0, REVIEW_SESSION_SIZE - (reviewedToday ?? 0));
+      const cap = dailyReviewCap(profileRow?.review_capacity_bonus ?? 0);
+      const remaining = Math.max(0, cap - (reviewedToday ?? 0));
       if (!cancelled && !error) setFetchedDue(Math.min(due ?? 0, remaining));
     })();
     return () => {
@@ -257,7 +259,7 @@ export default function BottomNav({
         {sheet && (
           <div
             role="dialog"
-            aria-label={sheet === "learn" ? tn("learn") : tn("more")}
+            aria-label={sheet === "learn" ? tn("basics") : tn("more")}
             className="sheet-up bg-warm border-t-[1.5px] border-dashed border-dash rounded-t-[22px] px-4 pt-2.5 pb-4 max-h-[70vh] overflow-y-auto"
           >
             <div className="w-10 h-1 rounded-full bg-dash mx-auto mb-1" aria-hidden="true" />
@@ -307,7 +309,7 @@ export default function BottomNav({
             </span>
             {tn("garden")}
           </Link>
-          <TabButton icon="📚" label={tn("learn")} on={onLearn} expanded={sheet === "learn"} onClick={() => toggle("learn")} />
+          <TabButton icon="📚" label={tn("basics")} on={onLearn} expanded={sheet === "learn"} onClick={() => toggle("learn")} />
           <Link
             href="/review"
             onClick={close}

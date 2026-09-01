@@ -74,7 +74,21 @@
     "dueToday": "toca hoy",
     "moreWords": "+{count} más",
     "nothingDue": "Nada pendiente. Tu próxima palabra vuelve {when}.",
-    "nothingDuePlain": "Nada pendiente ahora mismo."
+    "nothingDuePlain": "Nada pendiente ahora mismo.",
+    "reviewCapacity": {
+      "title": "Capacidad de repaso",
+      "capacity": "{count}/día",
+      "upgrade": "Repasa {to} palabras al día en vez de {from}.",
+      "atMax": "Estás en el máximo de {max} palabras al día.",
+      "maxed": "Máx.",
+      "buying": "Comprando…",
+      "buy": "+{step} · 🌰 {price}",
+      "bought": "Ahora repasas {count} palabras al día.",
+      "errNotEnough": "No tienes suficientes monedas — las misiones diarias dan 10 cada una.",
+      "errMax": "{max} al día es el máximo.",
+      "errAuth": "Inicia sesión para comprar eso.",
+      "errGeneric": "No se pudo comprar eso ahora."
+    }
   },
   "error": {
     "title": "Un pequeño tropiezo"
