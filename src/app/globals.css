@@ -374,6 +374,67 @@ html.js-reveal .reveal:not(.in) {
   transform: translateY(22px);
 }
 
+/* One-time launch splash (SplashScreen.tsx) — fixed brand colors, matching
+   manifest.ts's background_color/theme_color, not the light/dark tokens
+   above: this is what the OS-native splash already looks like, so it must
+   render identically regardless of the viewer's site theme. */
+.splash {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  background: #FFF9EC;
+  opacity: 1;
+  transition: opacity 0.4s ease;
+}
+.splash-leave {
+  opacity: 0;
+  pointer-events: none;
+}
+.splash-mark {
+  width: 84px;
+  height: 84px;
+  opacity: 0;
+  transform: translateY(26px) scale(0.7);
+  animation:
+    splashMarkDrop 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0.05s forwards,
+    splashMarkBob 2.4s ease-in-out 1s infinite;
+  filter: drop-shadow(0 10px 18px rgba(62, 124, 89, 0.18));
+}
+.splash-word {
+  font-weight: 700;
+  font-size: 22px;
+  letter-spacing: 0.01em;
+  color: #2E4A38;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: splashWordRise 0.5s ease-out 0.5s forwards;
+}
+@keyframes splashMarkDrop {
+  0% { opacity: 0; transform: translateY(26px) scale(0.7); }
+  60% { opacity: 1; transform: translateY(-8px) scale(1.06); }
+  80% { transform: translateY(3px) scale(0.98); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes splashMarkBob {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-6px) scale(1); }
+}
+@keyframes splashWordRise {
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .splash-mark, .splash-word {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
 .float {
   animation: bob 4s ease-in-out infinite;
 }

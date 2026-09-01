@@ -12,6 +12,7 @@ import { seoAlternates } from "@/lib/seo";
 import { SITE_URL } from "@/lib/site";
 import SeasonalEffects from "@/components/ui/SeasonalEffects";
 import PwaRegister from "@/components/pwa/PwaRegister";
+import SplashScreen from "@/components/pwa/SplashScreen";
 
 const fredoka = Fredoka({
   variable: "--font-fredoka",
@@ -187,6 +188,7 @@ export default async function RootLayout({ children, params }: Props) {
           {children}
           <SeasonalEffects />
           <PwaRegister />
+          <SplashScreen />
         </NextIntlClientProvider>
         <Analytics />
       </body>
