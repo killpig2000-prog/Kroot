@@ -10,13 +10,13 @@ import type { CefrLevel } from "@/lib/tree";
 // size tiers (not just one breakpoint) because the corner polaroids appear
 // at sm and stay fairly wide through the whole 640–1023 range, so the row
 // has to stay small until md and only reaches full size at lg.
-const GARDEN: { level: CefrLevel; cls: string; d: number }[] = [
-  { level: "A1", cls: "w-[18px] md:w-[26px] lg:w-[42px]", d: 0.1 },
-  { level: "B1", cls: "w-[29px] md:w-[42px] lg:w-[68px]", d: 0.34 },
-  { level: "A2", cls: "w-[21px] md:w-[30px] lg:w-[48px]", d: 0.22 },
-  { level: "C2", cls: "w-[46px] md:w-[67px] lg:w-[108px]", d: 0.7 },
-  { level: "B2", cls: "w-[39px] md:w-[57px] lg:w-[92px]", d: 0.46 },
-  { level: "C1", cls: "w-[37px] md:w-[54px] lg:w-[88px]", d: 0.58 },
+const GARDEN: { level: CefrLevel; cls: string; d: number; lift: number }[] = [
+  { level: "A1", cls: "w-[26px] md:w-[38px] lg:w-[58px]", d: 0.1, lift: 0 },
+  { level: "B1", cls: "w-[42px] md:w-[60px] lg:w-[92px]", d: 0.34, lift: 8 },
+  { level: "A2", cls: "w-[31px] md:w-[44px] lg:w-[66px]", d: 0.22, lift: -4 },
+  { level: "C2", cls: "w-[64px] md:w-[92px] lg:w-[142px]", d: 0.7, lift: 6 },
+  { level: "B2", cls: "w-[55px] md:w-[78px] lg:w-[122px]", d: 0.46, lift: -7 },
+  { level: "C1", cls: "w-[52px] md:w-[74px] lg:w-[116px]", d: 0.58, lift: 3 },
 ];
 
 export default function Hero() {
@@ -24,7 +24,7 @@ export default function Hero() {
   return (
     <header className="relative overflow-hidden bg-cream text-center px-6 pt-[clamp(56px,9vw,96px)] pb-[clamp(72px,10vw,120px)]">
       {/* giant hangul letterforms in the paper */}
-      <span aria-hidden="true" className="absolute font-black text-[#F0EBDD] leading-none select-none top-[-20px] left-[38%] text-[clamp(90px,15vw,170px)]">
+      <span aria-hidden="true" className="absolute font-black text-[#F0EBDD] leading-none select-none top-[12px] left-[38%] text-[clamp(90px,15vw,170px)]">
         한
       </span>
       <span aria-hidden="true" className="absolute font-black text-[#F0EBDD] leading-none select-none bottom-[-26px] right-[36%] text-[clamp(72px,12vw,140px)]">
@@ -38,6 +38,30 @@ export default function Hero() {
       <Polaroid scene="cafe" caption={t("photos.cafe")} tape="blue" className="hidden sm:block absolute right-[6%] bottom-[38px] w-[148px] h-[140px] -rotate-3" />
 
       <div className="relative z-10 max-w-[540px] mx-auto">
+        {/* a preview of the garden every lesson grows — full story in Growth */}
+        <div
+          aria-hidden="true"
+          className="tree-garden relative z-20 flex justify-center items-end gap-1 md:gap-1.5 lg:gap-2 mb-2 mx-auto w-fit max-w-full"
+        >
+          <span
+            aria-hidden="true"
+            className="absolute inset-x-2 bottom-1 h-5 rounded-[50%] bg-success-bg/70 blur-md"
+          />
+          {GARDEN.map(({ level, cls, d, lift }) => (
+            // Outer div carries the per-tree height offset via margin (not
+            // transform) so it doesn't fight the .tree class's own
+            // transform-based pop-up animation, which is driven purely by
+            // --d/CSS below.
+            <div key={level} style={{ marginBottom: `${lift}px` }}>
+              <div className="tree relative" style={{ "--d": `${d}s` } as React.CSSProperties}>
+                <svg viewBox="0 0 220 230" className={`block aspect-[220/230] ${cls}`}>
+                  <LevelCreature level={level} />
+                </svg>
+              </div>
+            </div>
+          ))}
+        </div>
+
         <h1 className="font-black text-[clamp(30px,4.6vw,48px)] leading-[1.24] tracking-[-0.02em] text-charcoal mb-3.5 text-balance">
           {t("titleLine1")}
           <br />
@@ -60,24 +84,6 @@ export default function Hero() {
         <p className="mt-3.5 text-[12.5px] italic text-[#8A8478]">
           {t("note")}
         </p>
-
-        {/* a preview of the garden every lesson grows — full story in Growth */}
-        <div
-          aria-hidden="true"
-          className="tree-garden relative z-10 flex justify-center items-end gap-1 md:gap-1.5 lg:gap-2 mt-9 mx-auto w-fit max-w-full"
-        >
-          <span
-            aria-hidden="true"
-            className="absolute inset-x-2 bottom-1 h-5 rounded-[50%] bg-success-bg/70 blur-md"
-          />
-          {GARDEN.map(({ level, cls, d }) => (
-            <div key={level} className="tree relative" style={{ "--d": `${d}s` } as React.CSSProperties}>
-              <svg viewBox="0 0 220 230" className={`block aspect-[220/230] ${cls}`}>
-                <LevelCreature level={level} />
-              </svg>
-            </div>
-          ))}
-        </div>
       </div>
     </header>
   );
