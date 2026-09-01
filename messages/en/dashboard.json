@@ -19,7 +19,8 @@
     "due": "{count, plural, =1 {1 word is due for review} other {# words are due for review}}",
     "dueShort": "{count, plural, =1 {1 due} other {# due}}",
     "now": "Review now →",
-    "short": "Review →"
+    "short": "Review →",
+    "title": "Today's review"
   },
   "slang": {
     "title": "Today's slang",

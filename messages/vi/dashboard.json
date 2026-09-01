@@ -19,7 +19,8 @@
     "due": "{count} từ đã đến hạn ôn tập",
     "dueShort": "{count} từ đến hạn",
     "now": "Ôn ngay →",
-    "short": "Ôn tập →"
+    "short": "Ôn tập →",
+    "title": "Ôn tập hôm nay"
   },
   "slang": {
     "title": "Tiếng lóng hôm nay",

@@ -19,7 +19,8 @@
     "due": "有 {count} 个单词该复习了",
     "dueShort": "{count} 个待复习",
     "now": "现在复习 →",
-    "short": "复习 →"
+    "short": "复习 →",
+    "title": "今日复习"
   },
   "slang": {
     "title": "今日俚语",

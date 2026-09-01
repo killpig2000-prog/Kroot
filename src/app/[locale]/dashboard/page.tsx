@@ -472,13 +472,12 @@ export default async function DashboardPage() {
                 quest ? "hidden sm:flex" : ""
               }`}
             >
-              <span className="flex-none w-10 h-10 rounded-[10px] bg-cream border border-sky-line flex items-center justify-center text-lg transition-transform group-hover:scale-110">
+              <span className="flex-none w-12 h-12 rounded-[12px] bg-cream border border-sky-line flex items-center justify-center text-[22px] transition-transform group-hover:scale-110">
                 💧
               </span>
               <span className="flex-1 min-w-0">
-                <b className="block font-semibold text-sm text-sky-deep">
-                  {t("review.due", { count: dueCount })}
-                </b>
+                <b className="block font-semibold text-[15.5px] text-sky-deep truncate">{t("review.title")}</b>
+                <span className="block text-[12.5px] text-sky-deep truncate">{t("review.due", { count: dueCount })}</span>
               </span>
               <span className="w-full sm:w-auto pl-[54px] sm:pl-0 text-[13px] font-semibold text-sky-deep transition-transform group-hover:translate-x-0.5">
                 {t("review.now")}

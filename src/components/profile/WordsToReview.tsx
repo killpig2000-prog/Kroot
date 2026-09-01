@@ -23,17 +23,13 @@ export default async function WordsToReview({
   dueCount,
   nextReturn,
   capacityBonus,
-  coins,
-  isAdmin,
 }: {
   words: DueWord[]; // hardest first, already capped
   dueCount: number;
   /** already-formatted relative time of the next word coming back, when nothing is due */
   nextReturn: string | null;
-  /** how many extra daily review slots this account has bought — see lib/srs.ts */
+  /** how many extra daily review slots this account has set — see lib/srs.ts */
   capacityBonus: number;
-  coins: number;
-  isAdmin: boolean;
 }) {
   const t = await getTranslations("ui.account");
   const extra = dueCount - words.length;
@@ -98,7 +94,7 @@ export default async function WordsToReview({
         </>
       )}
 
-      <ReviewCapacityButton capacityBonus={capacityBonus} coins={coins} isAdmin={isAdmin} />
+      <ReviewCapacityButton capacityBonus={capacityBonus} />
     </div>
   );
 }

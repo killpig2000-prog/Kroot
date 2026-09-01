@@ -19,7 +19,8 @@
     "due": "{count}語が復習の時期です",
     "dueShort": "{count}語",
     "now": "いま復習する →",
-    "short": "復習 →"
+    "short": "復習 →",
+    "title": "今日の復習"
   },
   "slang": {
     "title": "今日のスラング",

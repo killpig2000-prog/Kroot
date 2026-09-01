@@ -78,16 +78,11 @@
     "reviewCapacity": {
       "title": "Sức chứa ôn tập",
       "capacity": "{count}/ngày",
-      "upgrade": "Ôn tập {to} từ mỗi ngày thay vì {from}.",
-      "atMax": "Bạn đã đạt mức tối đa {max} từ mỗi ngày.",
-      "maxed": "Tối đa",
-      "buying": "Đang mua…",
-      "buy": "+{step} · 🪙 {price}",
+      "buying": "Đang lưu…",
+      "buy": "Áp dụng",
       "bought": "Giờ bạn có thể ôn {count} từ mỗi ngày.",
-      "errNotEnough": "Không đủ xu — nhiệm vụ hằng ngày trả 10 xu mỗi lần.",
-      "errMax": "{max} mỗi ngày là mức tối đa.",
-      "errAuth": "Đăng nhập để mua.",
-      "errGeneric": "Không thể mua lúc này."
+      "errAuth": "Đăng nhập để thay đổi.",
+      "errGeneric": "Không thể lưu lúc này."
     }
   },
   "error": {

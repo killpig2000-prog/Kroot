@@ -355,8 +355,6 @@ export default async function ProfilePage() {
                 dueCount={dueCount}
                 nextReturn={nextReturn}
                 capacityBonus={extras?.review_capacity_bonus ?? 0}
-                coins={extras?.coins ?? 0}
-                isAdmin={extras?.is_admin ?? false}
               />
             )}
 

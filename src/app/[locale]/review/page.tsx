@@ -96,12 +96,21 @@ export default async function ReviewPage() {
 
   // Wrong answers for the quiz. Without this the options came only from the
   // session itself, so a learner with two words due got a two-option quiz.
-  // Same levels as the words being reviewed, capped to keep the payload small.
+  // Bug found live: a review session almost always spans several CEFR
+  // levels (SRS due dates don't care what level a word is), but
+  // wordByKey.values() lists words grouped by level — a flat slice(0, 120)
+  // over the whole due-levels set could land entirely inside one level
+  // (A2 alone has 433 words), leaving zero candidates for every other level
+  // and collapsing those words' quizzes to a single "option" (the answer,
+  // alone). Per-level capping guarantees every due level gets its own share.
   const dueKeys = new Set(dueWords.map((w) => w.key));
   const dueLevels = new Set(dueWords.map((w) => w.level));
-  const distractorPool = [...wordByKey.values()]
-    .filter((w) => dueLevels.has(w.level) && !dueKeys.has(w.key))
-    .slice(0, 120);
+  const PER_LEVEL_CAP = 30;
+  const distractorPool = [...dueLevels].flatMap((lvl) =>
+    [...wordByKey.values()]
+      .filter((w) => w.level === lvl && !dueKeys.has(w.key))
+      .slice(0, PER_LEVEL_CAP)
+  );
 
   return (
     <div className="min-h-screen bg-warm text-charcoal">

@@ -19,7 +19,8 @@
     "due": "{count, plural, =1 {1 palabra lista para repasar} other {# palabras listas para repasar}}",
     "dueShort": "{count, plural, =1 {1 pendiente} other {# pendientes}}",
     "now": "Repasar ahora →",
-    "short": "Repasar →"
+    "short": "Repasar →",
+    "title": "Repaso de hoy"
   },
   "slang": {
     "title": "Jerga de hoy",

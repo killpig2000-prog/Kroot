@@ -78,16 +78,11 @@
     "reviewCapacity": {
       "title": "复习额度",
       "capacity": "每天 {count} 个",
-      "upgrade": "每天复习 {to} 个词，而不是 {from} 个。",
-      "atMax": "已达到每天 {max} 个的上限。",
-      "maxed": "已满",
-      "buying": "购买中…",
-      "buy": "+{step} · 🪙 {price}",
+      "buying": "保存中…",
+      "buy": "应用",
       "bought": "现在每天可以复习 {count} 个词。",
-      "errNotEnough": "金币不够 — 每日任务每个给 10 枚。",
-      "errMax": "每天 {max} 个是上限。",
-      "errAuth": "请登录后再购买。",
-      "errGeneric": "暂时无法购买。"
+      "errAuth": "请登录后再修改。",
+      "errGeneric": "暂时无法保存。"
     }
   },
   "error": {

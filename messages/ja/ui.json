@@ -78,16 +78,11 @@
     "reviewCapacity": {
       "title": "復習の上限",
       "capacity": "1日{count}語",
-      "upgrade": "1日{from}語から{to}語に増やす。",
-      "atMax": "1日{max}語が上限です。",
-      "maxed": "上限",
-      "buying": "購入中…",
-      "buy": "+{step} · 🪙 {price}",
+      "buying": "保存中…",
+      "buy": "設定",
       "bought": "1日{count}語まで復習できます。",
-      "errNotEnough": "コインが足りません — デイリークエストで1回10枚。",
-      "errMax": "1日{max}語が上限です。",
-      "errAuth": "購入するにはログインしてください。",
-      "errGeneric": "購入できませんでした。"
+      "errAuth": "設定するにはログインしてください。",
+      "errGeneric": "保存できませんでした。"
     }
   },
   "error": {

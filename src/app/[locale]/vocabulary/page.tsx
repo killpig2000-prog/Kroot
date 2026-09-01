@@ -3,7 +3,7 @@ import { Link, redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import { createClient, getClaimsUser, getDashboardProfile } from "@/lib/supabase/server";
-import { CHAPTER_UNITS, MINUTES_PER_SESSION, unlockedVocabTiers } from "@/lib/vocabulary";
+import { CHAPTER_UNITS, unlockedVocabTiers } from "@/lib/vocabulary";
 import { getChaptersForTopic } from "@/lib/vocabulary-words";
 import { WORD_STATUSES, wordStatus } from "@/lib/word-notes";
 import WordStatusIcon from "@/components/vocabulary/WordStatusIcon";
@@ -11,7 +11,6 @@ import { LEVEL_ORDER, isCefrLevel, type CefrLevel } from "@/lib/tree";
 import { getLocalizedMeaning } from "@/lib/vocabulary-i18n";
 
 const TOPIC_KEY = "daily-life";
-const PREVIEW_WORDS = 5;
 
 // One tier only: chapters. Units still exist underneath as the session-sized
 // bite (10 words), but the page never asks the user to pick one — a chapter
@@ -164,54 +163,6 @@ export default async function VocabularyPage({
               </p>
             </div>
           </div>
-
-          {/* ── up next ── */}
-          {upNext && (
-            <section
-              aria-label={t("upNext")}
-              className="grid grid-cols-1 sm:grid-cols-[minmax(0,1fr)_auto] gap-3 sm:gap-[18px] items-center bg-cream border border-[var(--tint-violet-line)] rounded-[14px] px-4 py-4 sm:px-[22px] sm:py-[18px] mb-5 shadow-[0_4px_0_#DDD6FE]"
-            >
-              <div className="min-w-0">
-                <h2 className="font-bold text-[20px] sm:text-[24px] tracking-[-0.02em] leading-[1.15]">
-                  Chapter {upNext.index + 1}
-                </h2>
-                <p className="text-[12.5px] text-muted mt-1.5 tabular-nums">
-                  {upNext.words.length} words · ~{MINUTES_PER_SESSION} min a session
-                  {upNext.status === "done" ? (
-                    <span className="text-success font-bold"> · all rooted</span>
-                  ) : upNext.known > 0 ? (
-                    <span className="text-amber font-bold"> · 🌱 {upNext.known} already sprouted</span>
-                  ) : null}
-                </p>
-                <p className="text-[13.5px] font-medium mt-2 truncate">
-                  <span className="kr">
-                    {resumeUnit(upNext)
-                      .words.slice(0, PREVIEW_WORDS)
-                      .map((w) => w.korean)
-                      .join(" · ")}
-                  </span>
-                  <span className="text-faint"> …</span>
-                </p>
-              </div>
-              {/* On phones the action lives in the bar pinned above the bottom nav. */}
-              <div className="hidden sm:flex flex-col gap-2 items-stretch min-w-[220px]">
-                <Link
-                  href={sessionHref(upNext)}
-                  className="inline-flex items-center justify-center rounded-[9px] px-5 py-[11px] text-sm font-bold text-white bg-success hover:bg-success-deep transition-colors whitespace-nowrap"
-                >
-                  {ctaLabel(upNext)}
-                </Link>
-                {waterCount > 0 && (
-                  <Link
-                    href="/review"
-                    className="inline-flex items-center justify-center rounded-[9px] px-4 py-2 text-[13px] font-bold text-sky-deep bg-[var(--tint-sky)] border border-sky-line hover:bg-sky-line transition-colors whitespace-nowrap"
-                  >
-                    💧 Review {waterCount} due word{waterCount === 1 ? "" : "s"}
-                  </Link>
-                )}
-              </div>
-            </section>
-          )}
 
           {/* ── chapter chip bar ── */}
           <nav
