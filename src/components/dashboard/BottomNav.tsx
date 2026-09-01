@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { MAIN_ITEMS, SECTIONS, type NavColor } from "@/components/dashboard/navItems";
 import { useBackToClose } from "@/hooks/useBackToClose";
+import { REVIEW_SESSION_SIZE } from "@/lib/srs";
 
 // Four tabs (2026-08-28): Garden · Learn · Review · More — equal-width cells
 // that fill the bar edge to edge (2026-08-29), so each tap target is a quarter
@@ -157,12 +158,25 @@ export default function BottomNav({
       const { data: claimsData } = await supabase.auth.getClaims();
       const userId = claimsData?.claims?.sub;
       if (!userId) return;
-      const { count, error } = await supabase
-        .from("vocabulary_progress")
-        .select("id", { count: "exact", head: true })
-        .eq("user_id", userId)
-        .lte("next_review_at", new Date().toISOString());
-      if (!cancelled && !error) setFetchedDue(count ?? 0);
+      const nowIso = new Date().toISOString();
+      const todayStartIso = `${nowIso.slice(0, 10)}T00:00:00.000Z`;
+      // Same daily cap as /review and the dashboard card: once
+      // REVIEW_SESSION_SIZE words are reviewed today, the badge reads 0
+      // even if a bigger backlog remains — see review/page.tsx's doneForToday.
+      const [{ count: due, error }, { count: reviewedToday }] = await Promise.all([
+        supabase
+          .from("vocabulary_progress")
+          .select("id", { count: "exact", head: true })
+          .eq("user_id", userId)
+          .lte("next_review_at", nowIso),
+        supabase
+          .from("vocabulary_progress")
+          .select("id", { count: "exact", head: true })
+          .eq("user_id", userId)
+          .gte("last_reviewed_at", todayStartIso),
+      ]);
+      const remaining = Math.max(0, REVIEW_SESSION_SIZE - (reviewedToday ?? 0));
+      if (!cancelled && !error) setFetchedDue(Math.min(due ?? 0, remaining));
     })();
     return () => {
       cancelled = true;
