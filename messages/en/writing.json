@@ -10,8 +10,6 @@
     "levelSub": "Level {level} · write a little, see one natural way to say it",
     "progress": "{done} of {total} chapters written",
     "genresNote": "4 genres · journal, replies, description, opinion",
-    "capReached": "🌙 Today's {n} chapters are written — more open tomorrow.",
-    "continueTomorrow": "Tomorrow's chapter",
     "continueChapter": "Continue · Chapter {n}",
     "questionsOf": "{n} questions · {prompt}",
     "write": "Write →",
@@ -19,14 +17,11 @@
     "statusDone": "Done",
     "statusWrite": "Write",
     "statusLocked": "Locked",
-    "tomorrowBadge": "🌙 Tomorrow",
     "chapterN": "Chapter {n}"
   },
   "session": {
     "chapterN": "Chapter {n}",
     "levelChapterOf": "Level {level} · chapter {n} of {total}",
-    "capTitle": "Today's {n} chapters are done",
-    "capBody": "Writing opens {n} chapters a day — this one unlocks tomorrow. Great pace today!",
     "allChapters": "All chapters",
     "emptyTitle": "No prompt here yet",
     "emptyBody": "This page hasn't been written yet.",

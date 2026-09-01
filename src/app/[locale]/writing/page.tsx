@@ -6,11 +6,8 @@ import Sidebar from "@/components/dashboard/Sidebar";
 import ChapterPathGroup from "@/components/chapters/ChapterPathGroup";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import {
-  CHAPTERS_PER_DAY,
-  chaptersCompletedToday,
   getChapterStatuses,
   getChaptersForLevel,
-  promptKeysCompletedToday,
   WRITING_GENRE_META,
 } from "@/lib/writing";
 import { LEVEL_ORDER, isCefrLevel, type CefrLevel } from "@/lib/tree";
@@ -52,13 +49,6 @@ export default async function WritingMapPage({
   const completedKeys = new Set((progress ?? []).map((p) => p.prompt_key));
   const statuses = getChapterStatuses(chapters, completedKeys);
   const doneCount = statuses.filter((s) => s === "done").length;
-
-  // At most CHAPTERS_PER_DAY finished per UTC day — a chapter already
-  // completed today stays open, but a fresh "current" one waits.
-  const todayKeys = promptKeysCompletedToday(progress);
-  const capReached = chaptersCompletedToday(chapters, todayKeys) >= CHAPTERS_PER_DAY;
-  const waitsTomorrow = (chapter: (typeof chapters)[number]) =>
-    capReached && !chapter.every((p) => todayKeys.has(p.key));
 
   // 40 chapters is a long scroll — group into one collapsible set per genre
   // (a run of consecutive chapters sharing a genre), with the set containing
@@ -129,41 +119,30 @@ export default async function WritingMapPage({
                 style={{ width: `${chapters.length ? (doneCount / chapters.length) * 100 : 0}%` }}
               />
             </div>
-            {capReached && <p className="text-[12.5px] text-muted mt-2.5">{t("map.capReached", { n: CHAPTERS_PER_DAY })}</p>}
           </div>
 
           {/* continue card: one obvious next step above the chapter groups */}
-          {continueChapter && (() => {
-            const waitTomorrow = waitsTomorrow(continueChapter);
-            return (
-              <Link
-                href={`/writing/session?chapter=${continueIndex}&level=${level}`}
-                aria-disabled={waitTomorrow}
-                className={`flex items-center gap-3.5 border-[1.5px] rounded-[14px] px-5 py-4 mb-6 max-w-[720px] transition-all ${
-                  waitTomorrow
-                    ? "border-line bg-warm opacity-70 pointer-events-none"
-                    : "border-amber-line bg-[var(--tint-amber)] hover:-translate-y-0.5 group"
-                }`}
-              >
-                <span className="flex-none w-10 h-10 rounded-[10px] bg-cream border border-amber-line flex items-center justify-center text-lg transition-transform group-hover:scale-110">
-                  {waitTomorrow ? "🌙" : "✏️"}
+          {continueChapter && (
+            <Link
+              href={`/writing/session?chapter=${continueIndex}&level=${level}`}
+              className="flex items-center gap-3.5 border-[1.5px] border-amber-line bg-[var(--tint-amber)] rounded-[14px] px-5 py-4 mb-6 max-w-[720px] transition-all hover:-translate-y-0.5 group"
+            >
+              <span className="flex-none w-10 h-10 rounded-[10px] bg-cream border border-amber-line flex items-center justify-center text-lg transition-transform group-hover:scale-110">
+                ✏️
+              </span>
+              <span className="flex-1 min-w-[170px]">
+                <b className="block font-semibold text-sm text-[#B45309]">
+                  {t("map.continueChapter", { n: continueIndex + 1 })}
+                </b>
+                <span className="text-[13px] text-[#92702B] truncate block">
+                  {t("map.questionsOf", { n: continueChapter.length, prompt: continueChapter[0].prompt_en })}
                 </span>
-                <span className="flex-1 min-w-[170px]">
-                  <b className="block font-semibold text-sm text-[#B45309]">
-                    {waitTomorrow ? t("map.continueTomorrow") : t("map.continueChapter", { n: continueIndex + 1 })}
-                  </b>
-                  <span className="text-[13px] text-[#92702B] truncate block">
-                    {t("map.questionsOf", { n: continueChapter.length, prompt: continueChapter[0].prompt_en })}
-                  </span>
-                </span>
-                {!waitTomorrow && (
-                  <span className="text-[13px] font-semibold text-amber transition-transform group-hover:translate-x-0.5">
-                    {t("map.write")}
-                  </span>
-                )}
-              </Link>
-            );
-          })()}
+              </span>
+              <span className="text-[13px] font-semibold text-amber transition-transform group-hover:translate-x-0.5">
+                {t("map.write")}
+              </span>
+            </Link>
+          )}
 
           <div className="grid gap-3 max-w-[720px]">
             {groups.map((group, gi) => {
@@ -206,25 +185,23 @@ export default async function WritingMapPage({
                       lineColorClassName="border-amber-line"
                       hoverClassName="hover:bg-[var(--tint-amber)]"
                       nodes={group.map(({ chapter, status, index: i }) => {
-                        const waitTomorrow = status === "current" && waitsTomorrow(chapter);
-                        const dim = status === "locked" || waitTomorrow;
+                        const dim = status === "locked";
                         return {
                           key: i,
                           href: dim ? undefined : `/writing/session?chapter=${i}&level=${level}`,
                           circleClassName:
                             status === "done"
                               ? "bg-success-bg text-success border-success-line"
-                              : status === "current" && !waitTomorrow
+                              : status === "current"
                               ? "bg-[var(--tint-amber)] text-amber border-amber-line"
                               : "bg-warm text-faint border-line",
-                          ringClassName: status === "current" && !waitTomorrow ? "ring-4 ring-amber-line/60" : undefined,
+                          ringClassName: status === "current" ? "ring-4 ring-amber-line/60" : undefined,
                           circleContent: status === "done" ? "✓" : i + 1,
                           title: t("map.chapterN", { n: i + 1 }),
                           subtitle: t("map.questionsOf", { n: chapter.length, prompt: chapter[0].prompt_en }),
-                          badgeClassName: waitTomorrow ? STATUS_BADGE.locked : STATUS_BADGE[status],
-                          badgeLabel: waitTomorrow
-                            ? t("map.tomorrowBadge")
-                            : status === "done"
+                          badgeClassName: STATUS_BADGE[status],
+                          badgeLabel:
+                            status === "done"
                               ? t("map.statusDone")
                               : status === "current"
                                 ? t("map.statusWrite")

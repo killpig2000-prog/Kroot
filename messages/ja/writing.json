@@ -26,8 +26,6 @@
     "levelSub": "レベル {level} · 少し書いて、自然な言い方を見てみよう",
     "progress": "{total}章中{done}章を執筆済み",
     "genresNote": "4つのジャンル · 日記、返信、描写、意見",
-    "capReached": "🌙 今日の{n}章を書き終えました — 続きは明日開放されます。",
-    "continueTomorrow": "明日の章",
     "continueChapter": "続き · 第{n}章",
     "questionsOf": "{n}問 · {prompt}",
     "write": "書く →",
@@ -35,14 +33,11 @@
     "statusDone": "完了",
     "statusWrite": "書く",
     "statusLocked": "ロック中",
-    "tomorrowBadge": "🌙 明日",
     "chapterN": "第{n}章"
   },
   "session": {
     "chapterN": "第{n}章",
     "levelChapterOf": "レベル {level} · 第{n}章 / 全{total}章",
-    "capTitle": "今日の{n}章は完了しました",
-    "capBody": "ライティングは1日{n}章まで開放されます — この章は明日解放されます。今日もいいペースでした!",
     "allChapters": "全ての章",
     "emptyTitle": "まだこのプロンプトはありません",
     "emptyBody": "このページはまだ作成されていません。",

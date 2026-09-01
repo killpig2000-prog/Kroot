@@ -53,42 +53,24 @@ export function getChaptersForLevel(level: CefrLevel): Prompt[][] {
 
 export type ChapterStatus = "done" | "current" | "locked";
 
-// Chapters open in a rolling window: the first unwritten one plus the next
-// few, so one awkward chapter never blocks the whole notebook.
-const OPEN_WINDOW = 3;
-
+// Chapter N opens once chapter N-1 is done, one at a time. It used to open a
+// rolling window of three, which paired with the old daily cap: the AI grader
+// cost money per submission, so the notebook let you roam a little and then
+// stopped you for the day. The boards are checked on the spot now and cost
+// nothing to run, so finishing one chapter is what opens the next — and
+// nothing else stops you.
+//
+// (Vocabulary has a function of the same shape, but its chapter list is not
+// gated by it — every word there is open from the start, on purpose.)
 export function getChapterStatuses(chapters: Prompt[][], completedKeys: Set<string>): ChapterStatus[] {
-  const done = chapters.map(
-    (chapter) => chapter.length > 0 && chapter.every((p) => completedKeys.has(p.key))
-  );
-  const firstOpen = done.findIndex((d) => !d);
-  return done.map((d, i) => {
-    if (d) return "done";
-    if (firstOpen >= 0 && i < firstOpen + OPEN_WINDOW) return "current";
-    return "locked";
-  });
-}
-
-/** UTC start of today, as an ISO string — the daily-limit boundary. */
-export function utcDayStartISO(): string {
-  return new Date().toISOString().slice(0, 10) + "T00:00:00.000Z";
-}
-
-/** At most this many chapters can be finished per UTC day. */
-export const CHAPTERS_PER_DAY = 3;
-
-/** prompt_keys completed today (UTC) — the input to the daily chapter cap. */
-export function promptKeysCompletedToday(
-  rows: { prompt_key: string; completed_at: string }[] | null | undefined
-): Set<string> {
-  const dayStart = utcDayStartISO();
-  return new Set((rows ?? []).filter((r) => r.completed_at >= dayStart).map((r) => r.prompt_key));
-}
-
-/** How many whole chapters were finished today, given today's completed prompt_keys. */
-export function chaptersCompletedToday(chapters: Prompt[][], todayKeys: Set<string>): number {
-  return chapters.filter((chapter) => chapter.length > 0 && chapter.every((p) => todayKeys.has(p.key)))
-    .length;
+  const statuses: ChapterStatus[] = [];
+  let previousDone = true;
+  for (const chapter of chapters) {
+    const done = chapter.length > 0 && chapter.every((p) => completedKeys.has(p.key));
+    statuses.push(done ? "done" : previousDone ? "current" : "locked");
+    previousDone = done;
+  }
+  return statuses;
 }
 
 /**

@@ -26,8 +26,6 @@
     "levelSub": "Nivel {level} · escribe un poco y descubre una forma natural de decirlo",
     "progress": "{done} de {total} capítulos escritos",
     "genresNote": "4 géneros · diario, respuestas, descripción, opinión",
-    "capReached": "🌙 Ya completaste los {n} capítulos de hoy — mañana se abren más.",
-    "continueTomorrow": "Capítulo de mañana",
     "continueChapter": "Continuar · Capítulo {n}",
     "questionsOf": "{n} preguntas · {prompt}",
     "write": "Escribir →",
@@ -35,14 +33,11 @@
     "statusDone": "Hecho",
     "statusWrite": "Escribir",
     "statusLocked": "Bloqueado",
-    "tomorrowBadge": "🌙 Mañana",
     "chapterN": "Capítulo {n}"
   },
   "session": {
     "chapterN": "Capítulo {n}",
     "levelChapterOf": "Nivel {level} · capítulo {n} de {total}",
-    "capTitle": "Ya completaste los {n} capítulos de hoy",
-    "capBody": "Escritura abre {n} capítulos al día — este se desbloquea mañana. ¡Buen ritmo hoy!",
     "allChapters": "Todos los capítulos",
     "emptyTitle": "Todavía no hay una consigna aquí",
     "emptyBody": "Esta página aún no se ha escrito.",

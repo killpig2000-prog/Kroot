@@ -4,14 +4,7 @@ import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import WritingSession, { WritingEmpty } from "@/components/writing/WritingSession";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
-import {
-  CHAPTERS_PER_DAY,
-  chaptersCompletedToday,
-  getChaptersForLevel,
-  getSiblingPrompts,
-  promptKeysCompletedToday,
-  utcDayStartISO,
-} from "@/lib/writing";
+import { getChaptersForLevel, getSiblingPrompts } from "@/lib/writing";
 import { isCefrLevel, type CefrLevel } from "@/lib/tree";
 
 export default async function WritingChapterSessionPage({
@@ -27,7 +20,7 @@ export default async function WritingChapterSessionPage({
 
   if (!user) redirect("/onboarding");
 
-  const [t, tn, { data: profile }, { data: todayRows }] = await Promise.all([
+  const [t, tn, { data: profile }] = await Promise.all([
     getTranslations("writing"),
     getTranslations("nav"),
     supabase
@@ -35,11 +28,6 @@ export default async function WritingChapterSessionPage({
       .select("display_name, current_level, streak_days, avatar_url")
       .eq("id", user.id)
       .single(),
-    supabase
-      .from("writing_progress")
-      .select("prompt_key, completed_at")
-      .eq("user_id", user.id)
-      .gte("completed_at", utcDayStartISO()),
   ]);
 
   const myLevel = (profile?.current_level ?? "A1") as CefrLevel;
@@ -47,13 +35,6 @@ export default async function WritingChapterSessionPage({
   const chapters = getChaptersForLevel(level);
   const prompts = chapters[chapterIndex];
   const hasNextChapter = chapterIndex + 1 < chapters.length;
-
-  // At most CHAPTERS_PER_DAY finished per UTC day — a chapter already
-  // completed today stays open for re-reading, but a fresh one waits.
-  const todayKeys = promptKeysCompletedToday(todayRows);
-  const chapterDoneToday = !!prompts && prompts.every((p) => todayKeys.has(p.key));
-  const capReached = chaptersCompletedToday(chapters, todayKeys) >= CHAPTERS_PER_DAY;
-  const dailyCapped = !!prompts && capReached && !chapterDoneToday;
 
   return (
     <div className="min-h-screen bg-warm text-charcoal">
@@ -94,20 +75,6 @@ export default async function WritingChapterSessionPage({
 
           {!prompts ? (
             <WritingEmpty />
-          ) : dailyCapped ? (
-            <div className="border border-line rounded-[14px] bg-cream max-w-[900px] px-7 py-10 text-center">
-              <p className="text-[40px] mb-2">🌙</p>
-              <h2 className="font-bold text-[19px] tracking-[-0.02em] mb-1.5">{t("session.capTitle", { n: CHAPTERS_PER_DAY })}</h2>
-              <p className="text-sm text-muted mb-6 max-w-[420px] mx-auto leading-[1.7]">
-                {t("session.capBody", { n: CHAPTERS_PER_DAY })}
-              </p>
-              <Link
-                href={`/writing?level=${level}`}
-                className="rounded-[9px] px-[18px] py-[9px] text-sm font-semibold text-charcoal bg-cream border border-line hover:bg-warm transition-colors"
-              >
-                {t("session.allChapters")}
-              </Link>
-            </div>
           ) : (
             <WritingSession
               // Remount when the chapter changes so the previous chapter's

@@ -26,8 +26,6 @@
     "levelSub": "等级 {level} · 写一点点,看看地道的说法",
     "progress": "已完成 {done} / {total} 章",
     "genresNote": "4种体裁 · 日记、回复、描写、观点",
-    "capReached": "🌙 今天的 {n} 章已完成 —— 明天解锁更多。",
-    "continueTomorrow": "明天的章节",
     "continueChapter": "继续 · 第{n}章",
     "questionsOf": "{n}题 · {prompt}",
     "write": "去写 →",
@@ -35,14 +33,11 @@
     "statusDone": "已完成",
     "statusWrite": "去写",
     "statusLocked": "已锁定",
-    "tomorrowBadge": "🌙 明天",
     "chapterN": "第{n}章"
   },
   "session": {
     "chapterN": "第{n}章",
     "levelChapterOf": "等级 {level} · 第{n}章,共{total}章",
-    "capTitle": "今天的 {n} 章已完成",
-    "capBody": "写作每天开放 {n} 章 —— 这一章明天解锁。今天进度很棒!",
     "allChapters": "全部章节",
     "emptyTitle": "这里还没有题目",
     "emptyBody": "这个页面还没有内容。",

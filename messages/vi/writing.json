@@ -26,8 +26,6 @@
     "levelSub": "Cấp độ {level} · viết một chút, xem cách nói tự nhiên",
     "progress": "Đã viết {done}/{total} chương",
     "genresNote": "4 thể loại · nhật ký, trả lời, miêu tả, ý kiến",
-    "capReached": "🌙 Đã hoàn thành {n} chương hôm nay — mở thêm vào ngày mai.",
-    "continueTomorrow": "Chương của ngày mai",
     "continueChapter": "Tiếp tục · Chương {n}",
     "questionsOf": "{n} câu hỏi · {prompt}",
     "write": "Viết →",
@@ -35,14 +33,11 @@
     "statusDone": "Đã xong",
     "statusWrite": "Viết",
     "statusLocked": "Đã khóa",
-    "tomorrowBadge": "🌙 Ngày mai",
     "chapterN": "Chương {n}"
   },
   "session": {
     "chapterN": "Chương {n}",
     "levelChapterOf": "Cấp độ {level} · chương {n} / {total}",
-    "capTitle": "Đã hoàn thành {n} chương hôm nay",
-    "capBody": "Viết mở {n} chương mỗi ngày — chương này sẽ mở vào ngày mai. Hôm nay bạn làm rất tốt!",
     "allChapters": "Tất cả chương",
     "emptyTitle": "Chưa có đề bài ở đây",
     "emptyBody": "Trang này chưa được soạn.",
