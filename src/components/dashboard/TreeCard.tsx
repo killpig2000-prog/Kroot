@@ -35,7 +35,6 @@ export default function TreeCard({
   avatarUrl,
   coins,
   streakDays,
-  streakFreezes,
 }: {
   level: number;
   progressPct: number;
@@ -143,8 +142,8 @@ export default function TreeCard({
       </figure>
 
       <div>
-        {/* streak / coins / freezes — top-right on wide cards, a leading row
-            when the card stacks on mobile (absolute children leave the grid) */}
+        {/* streak / coins — top-right on wide cards, a leading row when the
+            card stacks on mobile (absolute children leave the grid) */}
         <div className="flex flex-wrap gap-1.5 mb-3 sm:mb-0 sm:absolute sm:top-3 sm:right-3.5 sm:justify-end sm:z-10">
           <span className="text-[12px] font-semibold text-success bg-success-bg border border-success-line rounded-full px-2.5 py-0.5">
             {ti("streak", { n: streakDays })}
@@ -152,11 +151,6 @@ export default function TreeCard({
           <span className="text-[12px] font-semibold text-muted bg-warm border border-line rounded-full px-2.5 py-0.5">
             {ti("coins", { n: coins })}
           </span>
-          {streakFreezes > 0 && (
-            <span className="text-[12px] font-semibold text-sky-deep bg-[var(--tint-sky)] border border-[var(--tint-sky-line)] rounded-full px-2.5 py-0.5">
-              {ti("freezes", { n: streakFreezes })}
-            </span>
-          )}
         </div>
 
         <div className="flex items-center gap-3 mb-1">

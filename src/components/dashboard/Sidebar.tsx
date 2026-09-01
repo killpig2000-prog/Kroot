@@ -144,7 +144,6 @@ function SidebarBody({
   email,
   streakDays,
   avatarUrl,
-  streakFreezes = 0,
   pathname,
   locale,
   onClose,
@@ -188,11 +187,6 @@ function SidebarBody({
           <span className="text-lg">🔥</span>
           <div>
             <b className="block text-[13.5px] font-semibold leading-tight text-[#5C4A0E]">{tn("dayStreak", { n: streakDays })}</b>
-            {streakFreezes > 0 && (
-              <small className="text-[11.5px] text-[#8A7420]">
-                🧊 {streakFreezes} freeze{streakFreezes === 1 ? "" : "s"} ready
-              </small>
-            )}
           </div>
         </div>
 
