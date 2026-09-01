@@ -144,13 +144,26 @@ export default async function RootLayout({ children, params }: Props) {
             Two cookies, two `<html>` attributes, no data the server needs:
             reading them on the client costs nothing and lets the whole tree go
             static. It runs as the first child of <body>, so it executes before
-            the browser paints any content and there is no flash. */}
+            the browser paints any content and there is no flash.
+
+            No regex literals in here. The first version used two, and whatever
+            processes this inline script in the production build ate part of
+            one: the served HTML has carried
+            `var m=/(?:^|;\s*)kroot-moded.dataset.mode=...` since 2e56f1c —
+            `=(light|dark)/.exec(c);` simply gone, leaving an unterminated
+            regex that threw SyntaxError on every page load, so neither
+            preference was ever applied in production. Plain string parsing
+            survives the same pipeline and does the same job. */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var c=document.cookie,d=document.documentElement;` +
-              `var m=/(?:^|;\\s*)${MODE_COOKIE}=(light|dark)/.exec(c);` +
-              `d.dataset.mode=${DARK_MODE_ENABLED ? '(m?m[1]:"light")' : '"light"'};` +
-              `if(/(?:^|;\\s*)${SEASON_COOKIE}=on/.test(c)){var n=new Date().getMonth()+1;` +
+            __html:
+              `(function(){try{var c=";"+document.cookie,d=document.documentElement;` +
+              `function v(k){var i=c.indexOf(";"+k+"=");if(i<0){i=c.indexOf("; "+k+"=");}` +
+              `if(i<0)return "";var s=c.slice(i).indexOf("=")+i+1,e=c.indexOf(";",s);` +
+              `return c.slice(s,e<0?c.length:e).trim();}` +
+              `var m=v(${JSON.stringify(MODE_COOKIE)});` +
+              `d.dataset.mode=${DARK_MODE_ENABLED ? '(m==="dark"?"dark":"light")' : '"light"'};` +
+              `if(v(${JSON.stringify(SEASON_COOKIE)})==="on"){var n=new Date().getMonth()+1;` +
               `d.dataset.season=n>=3&&n<=5?"spring":n>=6&&n<=8?"summer":n>=9&&n<=11?"autumn":"winter";}` +
               `}catch(e){}})()`,
           }}
