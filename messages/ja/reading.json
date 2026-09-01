@@ -84,6 +84,7 @@
     "levelUp": "🎉 レベルアップ！Lv.{level}になりました",
     "questionsRight": "問正解",
     "readAgain": "もう一度読む",
+    "missedCount": "{n}問 間違い",
     "nothingMissed": "全問正解 — 物語をしっかり読み取れました。",
     "wordsWithPage": "語に語彙ページがあります",
     "openToSave": "開いて保存しよう。",

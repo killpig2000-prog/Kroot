@@ -84,6 +84,7 @@
     "levelUp": "🎉 ¡Subiste de nivel! Ahora eres Lv. {level}",
     "questionsRight": "preguntas acertadas",
     "readAgain": "Leer el relato otra vez",
+    "missedCount": "{n, plural, one {# fallada} other {# falladas}}",
     "nothingMissed": "Nada fallado: entendiste todo el relato.",
     "wordsWithPage": "{n, plural, one {palabra de aquí tiene página de vocabulario} other {palabras de aquí tienen página de vocabulario}}",
     "openToSave": "Abre una para guardarla.",

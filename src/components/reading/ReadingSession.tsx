@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useRef, useState } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useSaveResume } from "@/hooks/useSaveResume";
 import { clearResume } from "@/lib/resume";
 import { buttonClassName } from "@/components/ui/Button";
@@ -37,10 +37,11 @@ export default function ReadingSession({
   words: Gloss[];
 }) {
   const t = useTranslations("reading");
+  const locale = useLocale();
   const router = useRouter();
   const supabase = useMemo(() => createClient(), []);
 
-  const lines = useMemo(() => splitPassageLines(passage), [passage]);
+  const lines = useMemo(() => splitPassageLines(passage, locale), [passage, locale]);
   // Which line answers each question — computed once, from the English text.
   const evidence = useMemo(
     () => passage.questions.map((q) => findEvidenceLine(lines, q)),

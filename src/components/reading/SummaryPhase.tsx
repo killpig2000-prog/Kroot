@@ -1,9 +1,10 @@
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { buttonClassName } from "@/components/ui/Button";
 import ResultShell, { ResultRing, ResultTag } from "@/components/results/ResultShell";
 import { XP_POINTS, type ProgressResult } from "@/lib/activity";
 import type { Passage } from "@/lib/reading";
+import { getLocalizedQuestion } from "@/lib/reading-i18n";
 import type { Gloss } from "@/lib/word-links";
 
 const BTN_BLUE = buttonClassName("sky");
@@ -44,6 +45,7 @@ export default function SummaryPhase({
   const t = useTranslations("reading.summary");
   const tn = useTranslations("nav");
   const tu = useTranslations("ui");
+  const locale = useLocale();
   const total = passage.questions.length;
   const pct = total ? Math.round((correct / total) * 100) : 100;
 
@@ -59,7 +61,7 @@ export default function SummaryPhase({
           {missed.length === 0 ? (
             <ResultTag tone="good">{t("nothingMissed")}</ResultTag>
           ) : (
-            <ResultTag tone="warn">{missed.length} missed</ResultTag>
+            <ResultTag tone="warn">{t("missedCount", { n: missed.length })}</ResultTag>
           )}
           {words.length > 0 && <ResultTag>{t("wordsWithPage", { n: words.length })}</ResultTag>}
         </>
@@ -97,7 +99,7 @@ export default function SummaryPhase({
             {missed.map((i) => (
               <li key={i} className="flex gap-2 text-[13px] text-muted leading-snug">
                 <span className="text-danger font-bold flex-none">✕</span>
-                <span>{passage.questions[i].question_en}</span>
+                <span>{getLocalizedQuestion(passage.questions[i], locale)}</span>
               </li>
             ))}
           </ul>

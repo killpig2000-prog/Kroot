@@ -84,6 +84,7 @@
     "levelUp": "🎉 升级啦！现在是 Lv. {level}",
     "questionsRight": "题答对",
     "readAgain": "再读一遍故事",
+    "missedCount": "答错 {n} 题",
     "nothingMissed": "全部答对 — 整个故事都读懂了。",
     "wordsWithPage": "个词有词汇页",
     "openToSave": "点开一个把它收藏。",

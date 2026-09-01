@@ -84,6 +84,7 @@
     "levelUp": "🎉 Lên cấp! Giờ bạn ở Lv. {level}",
     "questionsRight": "câu đúng",
     "readAgain": "Đọc lại truyện",
+    "missedCount": "Sai {n} câu",
     "nothingMissed": "Không sai câu nào — bạn đã hiểu trọn câu chuyện.",
     "wordsWithPage": "từ ở đây có trang từ vựng",
     "openToSave": "Mở một từ để lưu lại.",

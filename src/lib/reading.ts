@@ -1,6 +1,7 @@
 import type { CefrLevel } from "@/lib/tree";
 import type { RawPassage, ReadingQuestion } from "@/lib/reading-data/types";
 import { DAILY_LIFE_PASSAGES } from "@/lib/reading-data/daily-life";
+import { getLocalizedBody } from "@/lib/reading-i18n";
 
 export type Passage = RawPassage & { key: string };
 
@@ -52,12 +53,16 @@ const STRUCTURED_GENRES = new Set([
   "interview",
 ]);
 
-export function splitPassageLines(passage: Passage): PassageLine[] {
+export function splitPassageLines(passage: Passage, locale = "en"): PassageLine[] {
   const structured = STRUCTURED_GENRES.has(passage.genre ?? "");
   const split = (text: string) =>
     (structured ? text.split("\n") : text.split(/(?<=[.!?])\s+/)).filter(Boolean);
   const kr = split(passage.body_kr);
-  const en = split(passage.body_en);
+  // Split against the localized body when one exists (falls back to English
+  // otherwise) so a Spanish reader sees Spanish translation lines, not the
+  // structure of a language they don't read.
+  const localizedBody = getLocalizedBody(passage, locale);
+  const en = split(localizedBody);
   if (kr.length === 0) return [];
 
   // The two languages don't always break into the same number of pieces — one

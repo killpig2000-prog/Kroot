@@ -5,6 +5,7 @@ import ReadingSession, { ReadingEmpty } from "@/components/reading/ReadingSessio
 import { getLocale, getTranslations } from "next-intl/server";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { getChaptersForLevel } from "@/lib/reading";
+import { getLocalizedTitle } from "@/lib/reading-i18n";
 import { buildGlossary, glossaryWords } from "@/lib/word-links";
 import { isCefrLevel, type CefrLevel } from "@/lib/tree";
 
@@ -72,7 +73,7 @@ export default async function ReadingChapterSessionPage({
               <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[var(--tint-sky)] text-sky-deep border border-sky-line items-center justify-center kr text-[15px] mr-[9px]">
                 읽
               </span>
-              {passage?.title_en ?? tn("storyGrove")}
+              {passage ? getLocalizedTitle(passage, locale) : tn("storyGrove")}
             </h1>
           </div>
 

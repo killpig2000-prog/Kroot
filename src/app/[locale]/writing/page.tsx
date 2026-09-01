@@ -1,6 +1,6 @@
 import LevelTabs from "@/components/ui/LevelTabs";
 import { Link, redirect } from "@/i18n/navigation";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import ChapterPathGroup from "@/components/chapters/ChapterPathGroup";
@@ -10,6 +10,7 @@ import {
   getChaptersForLevel,
   WRITING_GENRE_META,
 } from "@/lib/writing";
+import { getLocalizedPrompt } from "@/lib/writing-i18n";
 import { LEVEL_ORDER, isCefrLevel, type CefrLevel } from "@/lib/tree";
 import { isDifficultyUnlocked } from "@/lib/level";
 
@@ -29,9 +30,10 @@ export default async function WritingMapPage({
 
   if (!user) redirect("/onboarding");
 
-  const [t, tn, { data: profile }, { data: progress }, sp] = await Promise.all([
+  const [t, tn, locale, { data: profile }, { data: progress }, sp] = await Promise.all([
     getTranslations("writing"),
     getTranslations("nav"),
+    getLocale(),
     supabase
       .from("profiles")
       .select("display_name, current_level, streak_days, avatar_url, xp")
@@ -135,7 +137,7 @@ export default async function WritingMapPage({
                   {t("map.continueChapter", { n: continueIndex + 1 })}
                 </b>
                 <span className="text-[13px] text-[#92702B] truncate block">
-                  {t("map.questionsOf", { n: continueChapter.length, prompt: continueChapter[0].prompt_en })}
+                  {t("map.questionsOf", { n: continueChapter.length, prompt: getLocalizedPrompt(continueChapter[0], locale) })}
                 </span>
               </span>
               <span className="text-[13px] font-semibold text-amber transition-transform group-hover:translate-x-0.5">
@@ -200,7 +202,7 @@ export default async function WritingMapPage({
                           title: t("map.chapterN", { n: i + 1 }),
                           // Just the first question's prompt, no "N questions ·"
                           // prefix — keeps this to one line instead of wrapping.
-                          subtitle: chapter[0].prompt_en,
+                          subtitle: getLocalizedPrompt(chapter[0], locale),
                           badgeClassName: STATUS_BADGE[status],
                           badgeLabel:
                             status === "done"

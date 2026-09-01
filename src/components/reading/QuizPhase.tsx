@@ -1,9 +1,10 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { buttonClassName } from "@/components/ui/Button";
 import GlossedText from "@/components/reading/GlossedText";
 import type { Passage, PassageLine } from "@/lib/reading";
+import { getLocalizedQuestion } from "@/lib/reading-i18n";
 import type { Gloss } from "@/lib/word-links";
 
 const ABC = ["A", "B", "C", "D"];
@@ -36,6 +37,7 @@ export default function QuizPhase({
   onNext: () => void;
 }) {
   const t = useTranslations("reading.quiz");
+  const locale = useLocale();
   const question = passage.questions[qIndex];
   const answered = selected !== null;
   const gotIt = answered && selected === question.answerIndex;
@@ -90,7 +92,7 @@ export default function QuizPhase({
         </div>
 
         <p className="font-bold text-[17px] tracking-[-0.01em] mb-3.5 leading-snug">
-          {question.question_en}
+          {getLocalizedQuestion(question, locale)}
         </p>
 
         <div className="grid gap-2.5">

@@ -1,4 +1,4 @@
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import LevelTabs from "@/components/ui/LevelTabs";
 import { Link, redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
@@ -6,6 +6,7 @@ import Sidebar from "@/components/dashboard/Sidebar";
 import ChapterPathGroup from "@/components/chapters/ChapterPathGroup";
 import { createClient, getClaimsUser, getDashboardProfile } from "@/lib/supabase/server";
 import { getChapterStatuses, getChaptersForLevel } from "@/lib/reading";
+import { getLocalizedTitle } from "@/lib/reading-i18n";
 import { LEVEL_ORDER, isCefrLevel, type CefrLevel } from "@/lib/tree";
 import { isDifficultyUnlocked } from "@/lib/level";
 
@@ -53,7 +54,7 @@ export default async function ReadingMapPage({
 }: {
   searchParams: Promise<{ level?: string }>;
 }) {
-  const [t, tn] = await Promise.all([getTranslations("reading"), getTranslations("nav")]);
+  const [t, tn, locale] = await Promise.all([getTranslations("reading"), getTranslations("nav"), getLocale()]);
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
 
@@ -150,7 +151,7 @@ export default async function ReadingMapPage({
                 <b className="block font-semibold text-sm text-sky-deep">
                   {t("map.continueChapter", { n: continueIndex + 1 })}
                 </b>
-                <span className="text-[13px] text-sky-deep truncate block">{continueChapter.title_en}</span>
+                <span className="text-[13px] text-sky-deep truncate block">{getLocalizedTitle(continueChapter, locale)}</span>
               </span>
               <span className="text-[13px] font-semibold text-sky-deep transition-transform group-hover:translate-x-0.5">
                 {t("map.start")}
@@ -217,7 +218,7 @@ export default async function ReadingMapPage({
                           ringClassName: status === "current" ? "ring-4 ring-sky-line/60" : undefined,
                           circleContent: style.icon,
                           title: t("map.chapterN", { n: i + 1 }),
-                          subtitle: passage.title_en,
+                          subtitle: getLocalizedTitle(passage, locale),
                           badgeClassName: style.badge,
                           badgeLabel:
                             status === "done"

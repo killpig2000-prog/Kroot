@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { buttonClassName } from "@/components/ui/Button";
 import GlossedText from "@/components/reading/GlossedText";
 import { countKoreanWords, MINUTES_PER_PASSAGE, type Passage, type PassageLine } from "@/lib/reading";
+import { getLocalizedTitle } from "@/lib/reading-i18n";
 import { speakKorean, stopSpeaking, prefetchKorean } from "@/lib/tts";
 import type { Gloss } from "@/lib/word-links";
 
@@ -96,6 +97,8 @@ export default function ReadPhase({
 }) {
   const t = useTranslations("reading.read");
   const tg = useTranslations("reading.genreChip");
+  const locale = useLocale();
+  const localizedTitle = getLocalizedTitle(passage, locale);
   const genre = passage.genre ?? "";
   const [mode, setMode] = useState<TranslationMode>("tap");
   // Server-rendered at the normal size, then corrected on hydration.
@@ -367,7 +370,7 @@ export default function ReadPhase({
             <p className="text-[10.5px] font-semibold text-muted uppercase tracking-[.05em]">{t("subject")}</p>
             <p className="kr font-semibold text-[15px] truncate">{passage.title_kr}</p>
             {mode !== "off" && (
-              <p className="text-[12px] text-faint italic truncate">{passage.title_en}</p>
+              <p className="text-[12px] text-faint italic truncate">{localizedTitle}</p>
             )}
           </div>
         </div>
@@ -385,7 +388,7 @@ export default function ReadPhase({
           </span>
           <h2 className="kr text-[16px] font-semibold">{passage.title_kr}</h2>
         </div>
-        {mode !== "off" && <p className="text-[13px] text-faint italic mb-4">{passage.title_en}</p>}
+        {mode !== "off" && <p className="text-[13px] text-faint italic mb-4">{localizedTitle}</p>}
         <div className="grid gap-1.5">
           {lines.map(({ kr }, i) => {
             const [speaker, text] = splitSpeaker(kr);
@@ -413,7 +416,7 @@ export default function ReadPhase({
     body = (
       <>
         <h2 className="kr text-[17px] font-semibold mb-1">{passage.title_kr}</h2>
-        {mode !== "off" && <p className="text-[13px] text-faint italic mb-4">{passage.title_en}</p>}
+        {mode !== "off" && <p className="text-[13px] text-faint italic mb-4">{localizedTitle}</p>}
         <div className="grid gap-1.5">
           {shown.map(({ line, i }, step) =>
             revealable(
@@ -439,7 +442,7 @@ export default function ReadPhase({
           ⭐ {tg("review")}
         </span>
         <h2 className="kr text-[16px] font-semibold mt-2.5 mb-1">{passage.title_kr}</h2>
-        {mode !== "off" && <p className="text-[12.5px] text-faint italic mb-3">{passage.title_en}</p>}
+        {mode !== "off" && <p className="text-[12.5px] text-faint italic mb-3">{localizedTitle}</p>}
         <div className="grid gap-1">
           {lines.map((_, i) => revealable(i, krLine(i)))}
         </div>
@@ -450,7 +453,7 @@ export default function ReadPhase({
       <>
         <div className="mb-5 pb-4 border-b border-dashed border-line">
           <h2 className="kr text-[20px] font-semibold tracking-[-0.01em]">{passage.title_kr}</h2>
-          {mode !== "off" && <p className="text-[13.5px] text-faint italic mt-0.5">{passage.title_en}</p>}
+          {mode !== "off" && <p className="text-[13.5px] text-faint italic mt-0.5">{localizedTitle}</p>}
         </div>
         <div className="grid gap-0.5">
           {lines.map((_, i) => revealable(i, krLine(i)))}

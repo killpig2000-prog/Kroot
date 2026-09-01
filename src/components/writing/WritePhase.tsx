@@ -1,7 +1,8 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { WRITING_GENRE_META, type Prompt } from "@/lib/writing";
+import { getLocalizedExample, getLocalizedPrompt, getLocalizedStimulus } from "@/lib/writing-i18n";
 import type { Board } from "@/lib/writing-builder";
 import { TileBoard } from "@/components/writing/WritingBoards";
 
@@ -54,6 +55,7 @@ export default function WritePhase({
   onSubmit: () => void;
 }) {
   const t = useTranslations("writing");
+  const locale = useLocale();
   const genre = prompts[0].genre;
   const genreMeta = WRITING_GENRE_META[genre];
 
@@ -102,20 +104,22 @@ export default function WritePhase({
                     </span>
                     <div className="rounded-[12px] rounded-tl-[4px] bg-warm border border-line px-3.5 py-2.5 max-w-[92%]">
                       <p className="kr text-[13.5px] leading-[1.65] text-charcoal">{prompt.stimulus_kr}</p>
-                      {prompt.stimulus_en && <p className="text-[11.5px] text-muted leading-[1.5] mt-1">{prompt.stimulus_en}</p>}
+                      {prompt.stimulus_en && (
+                        <p className="text-[11.5px] text-muted leading-[1.5] mt-1">{getLocalizedStimulus(prompt, locale)}</p>
+                      )}
                     </div>
                   </div>
                 )}
 
                 <div className="mb-3">
                   <p className="kr font-bold text-[16px] leading-[1.4]">{prompt.prompt_kr}</p>
-                  <p className="text-[13px] text-muted">{prompt.prompt_en}</p>
+                  <p className="text-[13px] text-muted">{getLocalizedPrompt(prompt, locale)}</p>
                 </div>
 
                 <div className="mb-3">
                   <div className={EYEBROW}>{t("phase.modeTiles")}</div>
                   <p className="text-[19px] font-extrabold leading-[1.3] tracking-[-0.01em]" style={{ textWrap: "balance" }}>
-                    {prompt.example_en}
+                    {getLocalizedExample(prompt, locale)}
                   </p>
                 </div>
 

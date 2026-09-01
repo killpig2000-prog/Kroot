@@ -84,6 +84,7 @@
     "levelUp": "🎉 Level up! You’re now Lv. {level}",
     "questionsRight": "questions right",
     "readAgain": "Read the story again",
+    "missedCount": "{n, plural, one {# missed} other {# missed}}",
     "nothingMissed": "Nothing missed — the whole story landed.",
     "wordsWithPage": "{n, plural, one {word here has a vocabulary page} other {words here have a vocabulary page}}",
     "openToSave": "Open one to save it.",
