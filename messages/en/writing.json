@@ -31,11 +31,13 @@
     "answersHint": "{n} answers · tap the words below into order.",
     "holdTipTitle": "💡 Hold any word to hear it",
     "holdTipBody": "Say the sentence out loud before you tap — it sticks better.",
-    "qOf": "OF {n}",
+    "qOf": "Question {n} of {total}",
     "modeTiles": "Build it",
     "doneCount": "{done} / {total} done",
     "saving": "Saving…",
-    "finishChapter": "Finish chapter"
+    "finishChapter": "Finish chapter",
+    "back": "Back",
+    "nextQuestion": "Next question"
   },
   "board": {
     "tapWords": "Tap the words below, in order",
@@ -43,8 +45,8 @@
     "hearIt": "🔊 hear it",
     "tryAgain": "Try again",
     "check": "Check",
-    "holdWord": "Hold a word to hear it",
-    "shuffle": "shuffle"
+    "reset": "Reset",
+    "remove": "Remove {word}"
   },
   "result": {
     "headline90": "Perfect! Every answer came together fast.",

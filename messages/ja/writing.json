@@ -47,11 +47,13 @@
     "answersHint": "{n}問 · 下の単語をタップして順番に並べよう。",
     "holdTipTitle": "💡 単語を長押しすると発音が聞けます",
     "holdTipBody": "タップする前に声に出して言ってみよう — 定着しやすくなります。",
-    "qOf": "全{n}問中",
+    "qOf": "第{n}問 / 全{total}問",
     "modeTiles": "組み立てる",
     "doneCount": "{done} / {total} 完了",
     "saving": "保存中…",
-    "finishChapter": "章を完了する"
+    "finishChapter": "章を完了する",
+    "back": "戻る",
+    "nextQuestion": "次の問題"
   },
   "board": {
     "tapWords": "下の単語を順番にタップしよう",
@@ -59,8 +61,8 @@
     "hearIt": "🔊 発音を聞く",
     "tryAgain": "もう一度",
     "check": "確認",
-    "holdWord": "単語を長押しすると発音が聞けます",
-    "shuffle": "シャッフル"
+    "reset": "リセット",
+    "remove": "{word}を削除"
   },
   "result": {
     "headline90": "完璧!どれも素早く組み立てられました。",

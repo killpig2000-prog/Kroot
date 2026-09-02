@@ -47,11 +47,13 @@
     "answersHint": "{n}道题 · 点击下方单词按顺序排列。",
     "holdTipTitle": "💡 长按任意单词可以听发音",
     "holdTipBody": "点击前先大声说一遍 —— 更容易记住。",
-    "qOf": "共{n}题",
+    "qOf": "第 {n} 题 / 共 {total} 题",
     "modeTiles": "拼句子",
     "doneCount": "{done} / {total} 完成",
     "saving": "保存中…",
-    "finishChapter": "完成本章"
+    "finishChapter": "完成本章",
+    "back": "返回",
+    "nextQuestion": "下一题"
   },
   "board": {
     "tapWords": "按顺序点击下面的单词",
@@ -59,8 +61,8 @@
     "hearIt": "🔊 听发音",
     "tryAgain": "再试一次",
     "check": "检查",
-    "holdWord": "长按单词可以听发音",
-    "shuffle": "打乱"
+    "reset": "重置",
+    "remove": "移除 {word}"
   },
   "result": {
     "headline90": "完美!每句都很快拼对了。",

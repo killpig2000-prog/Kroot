@@ -47,11 +47,13 @@
     "answersHint": "{n} câu · chạm vào các từ bên dưới theo đúng thứ tự.",
     "holdTipTitle": "💡 Giữ vào một từ để nghe phát âm",
     "holdTipBody": "Đọc to câu trước khi chạm — sẽ nhớ lâu hơn.",
-    "qOf": "TRÊN {n}",
+    "qOf": "Câu {n} trên {total}",
     "modeTiles": "Ghép câu",
     "doneCount": "{done} / {total} hoàn thành",
     "saving": "Đang lưu…",
-    "finishChapter": "Hoàn thành chương"
+    "finishChapter": "Hoàn thành chương",
+    "back": "Quay lại",
+    "nextQuestion": "Câu tiếp theo"
   },
   "board": {
     "tapWords": "Chạm vào các từ bên dưới, theo đúng thứ tự",
@@ -59,8 +61,8 @@
     "hearIt": "🔊 nghe phát âm",
     "tryAgain": "Thử lại",
     "check": "Kiểm tra",
-    "holdWord": "Giữ vào một từ để nghe phát âm",
-    "shuffle": "xáo trộn"
+    "reset": "Đặt lại",
+    "remove": "Xóa {word}"
   },
   "result": {
     "headline90": "Hoàn hảo! Câu nào cũng ghép nhanh.",

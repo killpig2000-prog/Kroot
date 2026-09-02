@@ -76,7 +76,7 @@ export default function WritingSession({
     setEntries((prev) => prev.map((e, i) => (i === index ? { ...e, ...patch } : e)));
   }
 
-  function shuffle(index: number) {
+  function reset(index: number) {
     update(index, { attempt: entries[index].attempt + 1, picked: [] });
   }
 
@@ -166,7 +166,7 @@ export default function WritingSession({
         entries={entries}
         boards={boards}
         update={update}
-        onShuffle={shuffle}
+        onReset={reset}
         submitting={submitting}
         ready={ready}
         answeredCount={answeredCount}

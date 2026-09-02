@@ -201,7 +201,7 @@ export default function TestRunner({
                 checked={writingEntries[i].checked}
                 onChange={(picked) => updateWriting(i, { picked, checked: null })}
                 onCheck={() => checkWriting(i)}
-                onShuffle={() => shuffleWriting(i)}
+                onReset={() => shuffleWriting(i)}
               />
             </div>
           ))}

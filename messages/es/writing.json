@@ -47,11 +47,13 @@
     "answersHint": "{n} respuestas · toca las palabras de abajo en orden.",
     "holdTipTitle": "💡 Mantén presionada una palabra para escucharla",
     "holdTipBody": "Di la frase en voz alta antes de tocar — así se te queda mejor.",
-    "qOf": "DE {n}",
+    "qOf": "Pregunta {n} de {total}",
     "modeTiles": "Armar la frase",
     "doneCount": "{done} / {total} completadas",
     "saving": "Guardando…",
-    "finishChapter": "Terminar capítulo"
+    "finishChapter": "Terminar capítulo",
+    "back": "Atrás",
+    "nextQuestion": "Siguiente pregunta"
   },
   "board": {
     "tapWords": "Toca las palabras de abajo, en orden",
@@ -59,8 +61,8 @@
     "hearIt": "🔊 escuchar",
     "tryAgain": "Intentar de nuevo",
     "check": "Revisar",
-    "holdWord": "Mantén presionada una palabra para escucharla",
-    "shuffle": "mezclar"
+    "reset": "Reiniciar",
+    "remove": "Quitar {word}"
   },
   "result": {
     "headline90": "¡Perfecto! Armaste todo rapidísimo.",

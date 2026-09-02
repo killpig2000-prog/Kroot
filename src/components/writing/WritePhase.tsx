@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { WRITING_GENRE_META, type Prompt } from "@/lib/writing";
 import { getLocalizedExample, getLocalizedPrompt, getLocalizedStimulus } from "@/lib/writing-i18n";
@@ -9,6 +10,8 @@ import { TileBoard } from "@/components/writing/WritingBoards";
 const CARD = "border border-line rounded-[16px] bg-cream max-w-[900px] overflow-hidden";
 const BTN_INK =
   "rounded-[10px] px-5 py-[11px] text-sm font-bold text-white bg-success hover:bg-success-deep transition-colors disabled:bg-line disabled:text-faint";
+const BTN_LINE =
+  "rounded-[10px] px-5 py-[11px] text-sm font-bold text-charcoal bg-cream border border-line hover:bg-warm transition-colors disabled:opacity-40";
 const EYEBROW = "text-[11px] font-extrabold tracking-[.1em] uppercase text-success mb-1.5";
 
 /** Per-question interaction state, owned by WritingSession. Checking now
@@ -35,7 +38,7 @@ export default function WritePhase({
   entries,
   boards,
   update,
-  onShuffle,
+  onReset,
   submitting,
   ready,
   answeredCount,
@@ -46,7 +49,7 @@ export default function WritePhase({
   entries: Entry[];
   boards: Board[];
   update: (index: number, patch: Partial<Entry>) => void;
-  onShuffle: (index: number) => void;
+  onReset: (index: number) => void;
   submitting: boolean;
   ready: boolean;
   answeredCount: number;
@@ -56,6 +59,15 @@ export default function WritePhase({
   const locale = useLocale();
   const genre = prompts[0].genre;
   const genreMeta = WRITING_GENRE_META[genre];
+
+  // One question on screen at a time — with N tile boards stacked, the page
+  // was a wall of buttons (a Check per board, a shuffle per board, tiles on
+  // tiles) and finding "the one for this question" took real hunting.
+  const [step, setStep] = useState(0);
+  const last = prompts.length - 1;
+  const prompt = prompts[step];
+  const entry = entries[step];
+  const board = boards[step];
 
   return (
     <div className={CARD}>
@@ -76,76 +88,77 @@ export default function WritePhase({
         </div>
       </div>
 
-      {/* questions */}
-      <div className="flex flex-col">
-        {prompts.map((prompt, i) => {
-          const entry = entries[i];
-          const board = boards[i];
-          return (
-            <div
-              key={prompt.key}
-              className={`grid grid-cols-1 sm:grid-cols-[56px_1fr] gap-x-4 px-5 sm:px-[clamp(20px,3vw,32px)] py-[22px] ${
-                i > 0 ? "border-t border-line" : ""
+      {/* one question */}
+      <div key={prompt.key} className="px-5 sm:px-[clamp(20px,3vw,32px)] py-[22px]">
+        <div className="flex items-center gap-2 mb-3">
+          {prompts.map((p, i) => (
+            <button
+              key={p.key}
+              type="button"
+              aria-label={t("phase.qOf", { n: i + 1, total: prompts.length })}
+              aria-current={i === step}
+              onClick={() => setStep(i)}
+              className={`w-2.5 h-2.5 rounded-full transition-colors ${
+                i === step ? "bg-amber" : entryDone(entries[i], boards[i]) ? "bg-success" : "bg-line"
               }`}
-            >
-              <div className="text-[13px] font-extrabold text-amber tracking-[.02em] pt-[3px] mb-2 sm:mb-0">
-                Q{i + 1}
-                <small className="block text-[10.5px] text-faint font-semibold tracking-[.08em] mt-0.5">
-                  {t("phase.qOf", { n: prompts.length })}
-                </small>
-              </div>
-              <div>
-                {prompt.stimulus_kr && (
-                  <div className="mb-3 flex gap-2 items-start">
-                    <span className="flex-none w-7 h-7 rounded-full bg-[var(--tint-sky)] border border-sky-line flex items-center justify-center text-[13px]">
-                      💬
-                    </span>
-                    <div className="rounded-[12px] rounded-tl-[4px] bg-warm border border-line px-3.5 py-2.5 max-w-[92%]">
-                      <p className="kr text-[13.5px] leading-[1.65] text-charcoal">{prompt.stimulus_kr}</p>
-                      {prompt.stimulus_en && (
-                        <p className="text-[11.5px] text-muted leading-[1.5] mt-1">{getLocalizedStimulus(prompt, locale)}</p>
-                      )}
-                    </div>
-                  </div>
-                )}
+            />
+          ))}
+          <span className="text-[11px] font-semibold text-faint tracking-[.05em] uppercase ml-1">
+            {t("phase.qOf", { n: step + 1, total: prompts.length })}
+          </span>
+        </div>
 
-                <div className="mb-3">
-                  <p className="kr font-bold text-[16px] leading-[1.4]">{prompt.prompt_kr}</p>
-                  <p className="text-[13px] text-muted">{getLocalizedPrompt(prompt, locale)}</p>
-                </div>
-
-                <div className="mb-3">
-                  <div className={EYEBROW}>{t("phase.modeTiles")}</div>
-                  <p className="text-[19px] font-extrabold leading-[1.3] tracking-[-0.01em]" style={{ textWrap: "balance" }}>
-                    {getLocalizedExample(prompt, locale)}
-                  </p>
-                </div>
-
-                <TileBoard
-                  board={board}
-                  picked={entry.picked}
-                  onChange={(picked) => update(i, { picked })}
-                  onShuffle={() => onShuffle(i)}
-                />
-              </div>
+        {prompt.stimulus_kr && (
+          <div className="mb-3 flex gap-2 items-start">
+            <span className="flex-none w-7 h-7 rounded-full bg-[var(--tint-sky)] border border-sky-line flex items-center justify-center text-[13px]">
+              💬
+            </span>
+            <div className="rounded-[12px] rounded-tl-[4px] bg-warm border border-line px-3.5 py-2.5 max-w-[92%]">
+              <p className="kr text-[13.5px] leading-[1.65] text-charcoal">{prompt.stimulus_kr}</p>
+              {prompt.stimulus_en && (
+                <p className="text-[11.5px] text-muted leading-[1.5] mt-1">{getLocalizedStimulus(prompt, locale)}</p>
+              )}
             </div>
-          );
-        })}
+          </div>
+        )}
+
+        <div className="mb-3">
+          <p className="kr font-bold text-[16px] leading-[1.4]">{prompt.prompt_kr}</p>
+          <p className="text-[13px] text-muted">{getLocalizedPrompt(prompt, locale)}</p>
+        </div>
+
+        <div className="mb-3">
+          <div className={EYEBROW}>{t("phase.modeTiles")}</div>
+          <p className="text-[19px] font-extrabold leading-[1.3] tracking-[-0.01em]" style={{ textWrap: "balance" }}>
+            {getLocalizedExample(prompt, locale)}
+          </p>
+        </div>
+
+        <TileBoard
+          board={board}
+          picked={entry.picked}
+          onChange={(picked) => update(step, { picked })}
+          onReset={() => onReset(step)}
+        />
       </div>
 
       {/* footer */}
       <div className="flex items-center justify-between gap-3 px-5 sm:px-[clamp(20px,3vw,32px)] py-[18px] border-t border-line bg-cream flex-wrap">
-        <div className="flex items-center gap-2.5 text-[13px] text-muted">
-          <span className="flex gap-1.5">
-            {prompts.map((p, i) => (
-              <i key={p.key} className={`w-2.5 h-2.5 rounded-full ${entryDone(entries[i], boards[i]) ? "bg-success" : "bg-line"}`} />
-            ))}
-          </span>
-          {t("phase.doneCount", { done: answeredCount, total: prompts.length })}
+        <div className="flex items-center gap-3">
+          <button type="button" className={BTN_LINE} onClick={() => setStep((s) => s - 1)} disabled={step === 0}>
+            {t("phase.back")}
+          </button>
+          <span className="text-[13px] text-muted">{t("phase.doneCount", { done: answeredCount, total: prompts.length })}</span>
         </div>
-        <button className={BTN_INK} onClick={onSubmit} disabled={submitting || !ready}>
-          {submitting ? t("phase.saving") : t("phase.finishChapter")}
-        </button>
+        {step < last ? (
+          <button type="button" className={BTN_INK} onClick={() => setStep((s) => s + 1)}>
+            {t("phase.nextQuestion")}
+          </button>
+        ) : (
+          <button type="button" className={BTN_INK} onClick={onSubmit} disabled={submitting || !ready}>
+            {submitting ? t("phase.saving") : t("phase.finishChapter")}
+          </button>
+        )}
       </div>
     </div>
   );
