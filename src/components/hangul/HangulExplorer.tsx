@@ -276,27 +276,6 @@ export default function HangulExplorer() {
 
       {tab === "syllables" && (
         <div style={{ animation: "fadeUp .35s ease" }}>
-          <div className="max-w-[820px] border border-line rounded-[14px] p-[clamp(20px,3vw,28px)] mb-5">
-            <p className={SECTION_LABEL}>{t("sections.theIdea")}</p>
-            <div className="flex gap-3 flex-wrap">
-              {[
-                { block: "가", parts: "ㄱ + ㅏ", note: t("blocks.right") },
-                { block: "고", parts: "ㄱ + ㅗ", note: t("blocks.under") },
-                { block: "강", parts: "ㄱ + ㅏ + ㅇ", note: t("blocks.final") },
-              ].map((b) => (
-                <button
-                  key={b.block}
-                  onClick={() => speak(b.block)}
-                  className="flex-1 min-w-[160px] border border-line rounded-xl px-4 py-3.5 bg-warm text-center transition-all hover:border-success hover:bg-success-bg hover:-translate-y-0.5"
-                >
-                  <b className="kr block text-[30px] font-medium mb-1">{b.block}</b>
-                  <small className="kr block text-[13px] text-success font-semibold">{b.parts}</small>
-                  <small className="block text-[11.5px] text-faint mt-0.5">{b.note}</small>
-                </button>
-              ))}
-            </div>
-          </div>
-
           <SyllableBuilder />
 
           <p className={SECTION_LABEL}>{t("sections.readingPractice")} · 읽기 연습</p>
