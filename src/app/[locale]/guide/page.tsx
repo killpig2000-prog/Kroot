@@ -133,12 +133,7 @@ export default async function GuidePage() {
 
           {/* head */}
           <div className="pb-5 mb-7 border-b border-line">
-            <h1 className="font-bold text-[26px] tracking-[-0.025em] flex items-center mb-1 text-balance">
-              <span className="inline-flex w-8 h-8 rounded-[9px] bg-[var(--tint-sky)] text-sky-deep border border-sky-line items-center justify-center text-[16px] mr-2.5">
-                🧭
-              </span>
-              {tn("guide")}
-            </h1>
+            <h1 className="font-bold text-[26px] tracking-[-0.025em] mb-1 text-balance">{tn("guide")}</h1>
           </div>
 
           {/* roadmaps */}
@@ -173,12 +168,6 @@ export default async function GuidePage() {
                     className="flex items-start gap-3.5 pl-6 pr-[22px] pt-[18px] pb-[17px] border-b border-[color:var(--c-warm-2)]"
                     style={{ background: `linear-gradient(to right, ${route.color}0D, transparent 60%)` }}
                   >
-                    <span
-                      className="flex-none w-[38px] h-[38px] rounded-[11px] flex items-center justify-center text-[19px] border"
-                      style={{ background: `${route.color}1A`, borderColor: `${route.color}4D` }}
-                    >
-                      {route.icon}
-                    </span>
                     <span className="min-w-0 flex-1">
                       <span className="flex items-center justify-between gap-2 mb-1.5">
                         <span
@@ -212,7 +201,7 @@ export default async function GuidePage() {
                   </div>
 
                   {/* stops */}
-                  {/* Stops only — icon, step number, name. Every stop is a link straight
+                  {/* Stops only — step number, name. Every stop is a link straight
                       into its section (the current stop's link goes straight into the
                       specific session it left off at); no per-stop description text. */}
                   <div className="relative px-3.5 pt-[22px] pb-5 flex flex-col sm:flex-row sm:items-start gap-1">
@@ -230,26 +219,18 @@ export default async function GuidePage() {
                         className="group flex sm:flex-col items-center sm:items-center gap-3.5 sm:gap-2 sm:text-center sm:w-full"
                       >
                         <span
-                          className={`relative z-[1] flex-none w-11 h-11 rounded-[13px] flex items-center justify-center text-[19px] border-[1.5px] transition-transform duration-200 group-hover:-translate-y-[3px] ${
+                          className={`relative z-[1] flex-none w-11 h-11 rounded-[13px] flex items-center justify-center text-[15px] font-black border-[1.5px] transition-transform duration-200 group-hover:-translate-y-[3px] ${
                             isCurrent
                               ? "shadow-[0_0_0_5px_#fff,0_0_0_9px_rgba(255,214,107,.4)]"
                               : "shadow-[0_0_0_5px_#fff]"
                           }`}
                           style={
                             isCurrent
-                              ? { background: SUN_PAPER, borderColor: SUN_EDGE }
-                              : { background: `${s.color}1A`, borderColor: `${s.color}6B` }
+                              ? { background: SUN_PAPER, borderColor: SUN_EDGE, color: SUN_EDGE }
+                              : { background: `${s.color}1A`, borderColor: `${s.color}6B`, color: s.color }
                           }
                         >
-                          {s.icon}
-                          <span
-                            className="absolute z-[2] -top-1.5 -left-1.5 sm:left-auto sm:-right-1.5 min-w-[18px] h-[18px] px-[5px] rounded-full text-white text-[10px] font-black flex items-center justify-center leading-none tabular-nums shadow-[0_0_0_2.5px_#fff]"
-                            style={{
-                              background: isDone ? "var(--c-success)" : isCurrent ? SUN_EDGE : s.color,
-                            }}
-                          >
-                            {isDone ? "✓" : i + 1}
-                          </span>
+                          {isDone ? "✓" : i + 1}
                         </span>
                         <b
                           className={`block text-[14px] font-black tracking-[-0.015em] transition-colors ${
@@ -281,45 +262,25 @@ export default async function GuidePage() {
             </div>
           </section>
 
-          {/* practice ground: the four skills you actually train on, every
-              day, for as long as you study — distinct from the roadmap
-              above (a one-time walk through the basics). */}
+          {/* practice ground: one brief intro, then the four skills as plain
+              links — Basics polishes the pieces, this is where you actually
+              use them, every day, for as long as you study. Kept as short
+              as the rest of the page; no per-skill cards. */}
           <section className="mb-11">
             <SectionHead
               title={t("sections.practice.title")}
               note={t("sections.practice.note")}
             />
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="flex flex-wrap gap-2">
               {PRACTICE_STOPS.map((s) => (
                 <Link
                   key={s.key}
                   href={s.href}
-                  className="group relative overflow-hidden rounded-[14px] border border-line bg-cream px-[18px] py-4 transition-all hover:-translate-y-0.5 hover:shadow-[0_8px_20px_-14px_rgba(27,36,48,.3)]"
+                  className="text-[13.5px] font-bold rounded-full border px-3.5 py-[7px] transition-colors hover:bg-warm"
+                  style={{ color: s.color, borderColor: `${s.color}6B`, background: `${s.color}0D` }}
                 >
-                  <span className="absolute inset-y-0 left-0 w-[3px]" style={{ background: s.color }} />
-                  <div className="flex items-start gap-3.5">
-                    <span
-                      className="flex-none w-11 h-11 rounded-[13px] flex items-center justify-center text-[19px] border-[1.5px] transition-transform duration-200 group-hover:-translate-y-[2px]"
-                      style={{ background: `${s.color}1A`, borderColor: `${s.color}6B` }}
-                    >
-                      {s.icon}
-                    </span>
-                    <div className="min-w-0 flex-1">
-                      <div className="flex items-center justify-between gap-2 mb-1">
-                        <b className="text-[15px] font-black tracking-[-0.015em]">{tn(s.navKey)}</b>
-                        <span
-                          className="flex-none text-[10.5px] font-bold tabular-nums whitespace-nowrap"
-                          style={{ color: s.color }}
-                        >
-                          {t(`sections.practice.stops.${s.key}.freq`)}
-                        </span>
-                      </div>
-                      <p className="text-[12.5px] text-muted leading-[1.5]">
-                        {t(`sections.practice.stops.${s.key}.body`)}
-                      </p>
-                    </div>
-                  </div>
+                  {tn(s.navKey)}
                 </Link>
               ))}
             </div>
@@ -365,12 +326,7 @@ export default async function GuidePage() {
 
             {/* level (grade) test: what triggers it */}
             <div className="rounded-[14px] border border-[var(--tint-violet-line)] bg-[var(--tint-violet)] px-[18px] py-4">
-              <span className="flex items-center gap-3 mb-2">
-                <span className="flex-none w-9 h-9 rounded-[11px] bg-cream border border-[var(--tint-violet-line)] flex items-center justify-center text-[18px]">
-                  🎓
-                </span>
-                <b className="text-[15px] font-black tracking-[-0.015em]">{t("test.title")}</b>
-              </span>
+              <b className="block text-[15px] font-black tracking-[-0.015em] mb-2">{t("test.title")}</b>
               <p className="text-[12.5px] text-muted leading-[1.6] mb-2.5">
                 {t("test.unlocksValue", {
                   words: ELIGIBILITY.targetMasteredWords,
