@@ -15,6 +15,8 @@ import {
   composeSyllable,
   type Jamo,
 } from "@/lib/hangul";
+import { HANGUL_STROKES } from "@/lib/hangul-strokes";
+import StrokeOrderGlyph from "@/components/hangul/StrokeOrderGlyph";
 
 const GREEN = "#3E7C59";
 const SOFT = "#F0FDF4";
@@ -88,10 +90,14 @@ function JamoGrid({ items }: { items: Jamo[] }) {
         >
           <div className="flex items-center gap-3 min-w-0 flex-1">
             <span
-              className="kr flex-none w-20 h-20 rounded-xl bg-cream border flex items-center justify-center text-[52px]"
+              className="kr flex-none w-24 h-24 rounded-xl bg-cream border flex items-center justify-center text-[52px] p-2.5"
               style={{ borderColor: BRD, color: GREEN }}
             >
-              {selected.char}
+              {HANGUL_STROKES[selected.char] ? (
+                <StrokeOrderGlyph char={selected.char} />
+              ) : (
+                selected.char
+              )}
             </span>
             <p className="text-[13px] text-muted leading-[1.55] min-w-0">
               <b className="text-charcoal">{selected.rom}</b>
