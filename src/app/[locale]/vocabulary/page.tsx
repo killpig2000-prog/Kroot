@@ -6,7 +6,7 @@ import { createClient, getClaimsUser, getDashboardProfile } from "@/lib/supabase
 import { CHAPTER_UNITS, unlockedVocabTiers } from "@/lib/vocabulary";
 import { getChaptersForTopic } from "@/lib/vocabulary-words";
 import { WORD_STATUSES, wordStatus } from "@/lib/word-notes";
-import WordStatusIcon from "@/components/vocabulary/WordStatusIcon";
+import ChapterDays, { type ChapterDay } from "@/components/vocabulary/ChapterDays";
 import { LEVEL_ORDER, isCefrLevel, type CefrLevel } from "@/lib/tree";
 import { getLocalizedMeaning } from "@/lib/vocabulary-i18n";
 
@@ -268,46 +268,41 @@ export default async function VocabularyPage({
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-x-8">
-                  {selected.units.map((u, ui) => {
+                {(() => {
+                  const days: ChapterDay[] = selected.units.map((u, ui) => {
                     const start = selected.units.slice(0, ui).reduce((sum, p) => sum + p.words.length, 0);
-                    return u.words.map((w, wi) => {
-                      const status = wordStatus(reviewsByKey.get(w.key) ?? 0);
-                      const thirsty = thirstyKeys.has(w.key);
-                      const n = start + wi + 1;
-                      return (
-                        <Link
-                          key={w.key}
-                          href={wordHref(u.index, wi)}
-                          className="group grid grid-cols-[26px_22px_minmax(84px,auto)_1fr_16px] sm:grid-cols-[26px_22px_112px_1fr_16px] items-center gap-x-3 gap-y-0.5 py-2.5 border-b border-dashed border-dash hover:bg-warm transition-colors -mx-2 px-2 rounded-[6px]"
-                        >
-                          <span className="text-[11px] text-faint tabular-nums text-right">{n}</span>
-                          <span title={`${WORD_STATUSES[status].label}${thirsty ? " · due" : ""}`}>
-                            <WordStatusIcon status={status} />
-                          </span>
-                          <span className="kr font-bold text-[17px] leading-tight">{w.korean}</span>
-                          <span className="min-w-0">
-                            <span className="block text-[13px] font-semibold">{getLocalizedMeaning(w, locale)}</span>
-                          </span>
-                          <svg
-                            aria-hidden="true"
-                            viewBox="0 0 16 16"
-                            className="w-4 h-4 text-faint group-hover:text-charcoal group-hover:translate-x-0.5 transition-all"
-                          >
-                            <path
-                              d="M6 3.5 10.5 8 6 12.5"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="1.8"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                          </svg>
-                        </Link>
-                      );
-                    });
-                  })}
-                </div>
+                    return {
+                      index: u.index,
+                      start: start + 1,
+                      end: start + u.words.length,
+                      known: u.known,
+                      total: u.words.length,
+                      done: u.status === "done",
+                      words: u.words.map((w, wi) => {
+                        const status = wordStatus(reviewsByKey.get(w.key) ?? 0);
+                        const thirsty = thirstyKeys.has(w.key);
+                        return {
+                          key: w.key,
+                          href: wordHref(u.index, wi),
+                          n: start + wi + 1,
+                          korean: w.korean,
+                          meaning: getLocalizedMeaning(w, locale),
+                          status,
+                          statusLabel: `${WORD_STATUSES[status].label}${thirsty ? " · due" : ""}`,
+                        };
+                      }),
+                    };
+                  });
+                  const defaultOpen = days.findIndex((d) => !d.done);
+                  return (
+                    <ChapterDays
+                      days={days}
+                      defaultOpen={defaultOpen === -1 ? days.length - 1 : defaultOpen}
+                      dayLabel={(n) => t("dayN", { n })}
+                      doneLabel={t("known")}
+                    />
+                  );
+                })()}
               </>
             ) : (
               <p className="text-[13px] text-muted py-6">{t("noChaptersAtLevel")}</p>
