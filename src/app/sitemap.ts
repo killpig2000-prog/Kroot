@@ -8,6 +8,8 @@ import { GRAMMAR_LESSONS } from "@/lib/grammar";
 import { PUBLIC_READING_PASSAGES } from "@/lib/reading-slugs";
 import { SITUATIONS } from "@/lib/listening";
 import { DIALOGUES } from "@/lib/listening-dialogues";
+import { PUBLIC_WRITING_PROMPTS } from "@/lib/writing-slugs";
+import { SOUND_GROUPS } from "@/lib/pronunciation";
 
 // Every public page, plus the hreflang cluster for the ones that are really
 // translated.
@@ -65,6 +67,23 @@ const PUBLIC_PAGES: PublicPage[] = [
     priority: 0.6,
   })),
   { path: "/korean-hangul", changeFrequency: "monthly", priority: 0.8 },
+  { path: "/korean-writing", changeFrequency: "weekly", priority: 0.9 },
+  ...LEVEL_ORDER.map((level) => ({
+    path: `/korean-writing/level/${level.toLowerCase()}`,
+    changeFrequency: "weekly" as const,
+    priority: 0.8,
+  })),
+  ...PUBLIC_WRITING_PROMPTS.map((prompt) => ({
+    path: `/korean-writing/${prompt.slug}`,
+    changeFrequency: "monthly" as const,
+    priority: 0.6,
+  })),
+  { path: "/korean-pronunciation", changeFrequency: "monthly", priority: 0.8 },
+  ...SOUND_GROUPS.map((group) => ({
+    path: `/korean-pronunciation/${group.key}`,
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  })),
   ...LEVEL_ORDER.map((level) => ({
     path: `/words/level/${level.toLowerCase()}`,
     changeFrequency: "weekly" as const,

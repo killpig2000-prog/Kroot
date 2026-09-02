@@ -1,0 +1,13 @@
+{
+  "startLearningShort": "Empieza a aprender",
+  "startLearning": "Empieza a aprender — gratis",
+  "hubTitle": "Práctica de escritura en coreano",
+  "hubIntro": "Consignas de escritura reales con oraciones modelo y traducción al inglés, organizadas por nivel CEFR para que siempre sepas qué practicar después.",
+  "levelN": "Nivel {level}",
+  "promptCount": "{count, plural, =1 {1 consigna} other {# consignas}}",
+  "theyWrote": "Te escribieron",
+  "modelAnswer": "Respuesta modelo",
+  "learnForReal": "Practica escritura de verdad — arma la oración tú mismo",
+  "learnDescription": "Kroot convierte esto en un rompecabezas para armar tocando, corregido al instante — gratis, a tu ritmo.",
+  "moreInGenre": "Más consignas de {genre}"
+}

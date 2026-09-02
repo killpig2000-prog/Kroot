@@ -1,0 +1,13 @@
+{
+  "startLearningShort": "开始学习",
+  "startLearning": "免费开始学习",
+  "hubTitle": "韩语写作练习",
+  "hubIntro": "真实的写作题目配范文句子和英文翻译，按 CEFR 等级分类，让你随时知道接下来该练什么。",
+  "levelN": "等级 {level}",
+  "promptCount": "{count} 道题目",
+  "theyWrote": "对方写给你的",
+  "modelAnswer": "范文答案",
+  "learnForReal": "真正练习写作 — 自己拼出句子",
+  "learnDescription": "Kroot 会把这个变成一个点选拼句小游戏，即时批改 — 免费，按你自己的节奏。",
+  "moreInGenre": "更多{genre}题目"
+}

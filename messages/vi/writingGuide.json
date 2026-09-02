@@ -1,0 +1,13 @@
+{
+  "startLearningShort": "Bắt đầu học",
+  "startLearning": "Bắt đầu học — miễn phí",
+  "hubTitle": "Luyện viết tiếng Hàn",
+  "hubIntro": "Các đề bài viết thực tế kèm câu trả lời mẫu và bản dịch tiếng Anh, sắp xếp theo trình độ CEFR để bạn luôn biết nên luyện gì tiếp theo.",
+  "levelN": "Trình độ {level}",
+  "promptCount": "{count, plural, =1 {1 đề bài} other {# đề bài}}",
+  "theyWrote": "Họ đã viết cho bạn",
+  "modelAnswer": "Câu trả lời mẫu",
+  "learnForReal": "Luyện viết thật sự — tự ghép câu",
+  "learnDescription": "Kroot biến bài này thành một câu đố ghép chữ bằng cách chạm, được chấm ngay lập tức — miễn phí, theo nhịp độ của bạn.",
+  "moreInGenre": "Thêm đề bài {genre}"
+}

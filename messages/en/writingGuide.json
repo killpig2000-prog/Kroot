@@ -1,0 +1,13 @@
+{
+  "startLearningShort": "Start learning",
+  "startLearning": "Start learning — free",
+  "hubTitle": "Korean Writing Practice",
+  "hubIntro": "Real writing prompts with model-answer sentences and English translations, organized by CEFR level so you always know what to practice next.",
+  "levelN": "Level {level}",
+  "promptCount": "{count, plural, =1 {1 prompt} other {# prompts}}",
+  "theyWrote": "They wrote to you",
+  "modelAnswer": "Model answer",
+  "learnForReal": "Practice writing for real — build the sentence yourself",
+  "learnDescription": "Kroot turns this into a tap-to-assemble puzzle, checked instantly — free, at your own pace.",
+  "moreInGenre": "More {genre} prompts"
+}
