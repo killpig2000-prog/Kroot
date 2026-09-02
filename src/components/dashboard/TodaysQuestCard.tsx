@@ -29,7 +29,7 @@ export default function TodaysQuestCard({
         <span className="flex-none w-9 h-9 rounded-[10px] bg-cream border border-success-line flex items-center justify-center text-[17px]">
           🎯
         </span>
-        <span className="block text-[13px] font-bold text-success-deep leading-tight">
+        <span className="block text-[15px] font-bold text-success-deep leading-tight">
           {t("title")}
         </span>
       </>
@@ -39,18 +39,20 @@ export default function TodaysQuestCard({
       return (
         <div className="flex flex-col items-center text-center gap-1.5 rounded-[16px] border-[1.5px] border-success bg-success-bg px-3 py-3.5 h-full">
           {compactInner}
-          <span className="text-[10.5px] font-bold text-success">{t("done")}</span>
+          <span className="text-[11.5px] font-bold text-success">{t("done")}</span>
         </div>
       );
     }
 
+    // The "Go" hint under the title used to duplicate what the whole card
+    // already is — a tappable button — so it's gone; the other three
+    // compact boxes (Review, Slang, Word of the day) never had one either.
     return (
       <Link
         href={SKILL_HREF[quest.skill_key] ?? "/dashboard"}
         className="group flex flex-col items-center text-center gap-1.5 rounded-[16px] border-[1.5px] border-success bg-success-bg px-3 py-3.5 h-full transition-all hover:-translate-y-0.5 hover:bg-[var(--tint-green)]"
       >
         {compactInner}
-        <span className="text-[10.5px] font-bold text-success">{t("go")}</span>
       </Link>
     );
   }

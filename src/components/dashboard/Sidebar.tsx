@@ -16,20 +16,19 @@ const navKey = (label: string) =>
   label === "My progress" ? "myProgress" : label === "My word bank" ? "myWords" : label.toLowerCase();
 
 const LANGUAGES = [
-  { code: "en", label: "🇬🇧 English" },
-  { code: "ja", label: "🇯🇵 日本語" },
-  { code: "zh-Hans", label: "🇨🇳 中文" },
-  { code: "vi", label: "🇻🇳 Tiếng Việt" },
+  { code: "en", label: "English" },
+  { code: "ja", label: "日本語" },
+  { code: "zh-Hans", label: "中文" },
+  { code: "vi", label: "Tiếng Việt" },
 ];
 // Reachable by URL only (pilot, partial translations) — shown as the current
 // language when you're on it, but not offered in the list.
-const HIDDEN_LANGUAGES = [{ code: "es", label: "🇪🇸 Español" }];
+const HIDDEN_LANGUAGES = [{ code: "es", label: "Español" }];
 
-// The sidebar renders every item quiet on purpose — plain emoji, no color
-// tiles, no "Popular" badges (those still show in the phone Menu sheet).
+// The sidebar renders every item quiet on purpose — text only, no emoji, no
+// color tiles, no "Popular" badges (those still show in the phone Menu sheet).
 // 13 always-visible destinations beat an accordion that hides half of them.
 function NavItem({
-  icon,
   label,
   href,
   on,
@@ -55,7 +54,6 @@ function NavItem({
           : "rounded-[9px] text-charcoal font-medium hover:bg-cream hover:text-success-deep"
       }`}
     >
-      <span className="flex-none w-5 text-center text-[14px]">{icon}</span>
       <span className="flex-1 min-w-0 truncate">{tn(navKey(label))}</span>
       {isNew && !on && (
         <span className="flex-none text-[8.5px] font-extrabold tracking-[.04em] text-white bg-[#9333EA] rounded-full px-[5px] py-px">
@@ -109,7 +107,7 @@ function LanguageSwitcher({ pathname, locale }: { pathname: string; locale: stri
         onClick={() => setOpen(!open)}
         className="w-full flex items-center justify-between gap-2 px-2.5 py-2 text-[13.5px] rounded-[9px] text-charcoal font-medium hover:bg-cream transition-colors text-left"
       >
-        <span className="truncate">🌐 Language</span>
+        <span className="truncate">Language</span>
         <span className="text-xs">▼</span>
       </button>
 
