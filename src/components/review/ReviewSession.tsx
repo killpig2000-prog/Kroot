@@ -4,7 +4,7 @@ import { useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
-import { recordCompletion, XP_POINTS, type ProgressResult } from "@/lib/activity";
+import { awardPartialCredit, recordCompletion, XP_POINTS, type ProgressResult } from "@/lib/activity";
 import { nextBox, nextReviewAt, SRS_INTERVALS_DAYS } from "@/lib/srs";
 import ResultShell, { ResultRing, ResultTag } from "@/components/results/ResultShell";
 import {
@@ -103,6 +103,26 @@ export default function ReviewSession({
     logged.current = true;
     const result = await recordCompletion(supabase, "vocabulary", REVIEW_MINUTES);
     if (result?.leveled_up || result?.coins_earned) setLevelUp(result);
+  }
+
+  // Leaving before the last question: each answered word already got its
+  // SRS row updated (see answer() above — it upserts immediately, not just
+  // at the end), so it's already out of the due queue. Only the reward was
+  // still all-or-nothing; pay out XP for the fraction actually answered.
+  const [exiting, setExiting] = useState(false);
+  async function exitEarly() {
+    if (logged.current || exiting) return;
+    setExiting(true);
+    logged.current = true;
+    try {
+      if (index > 0) {
+        await awardPartialCredit(supabase, "vocabulary", index / questions.length, 0);
+      }
+    } catch {
+      // best effort — leaving must never get stuck on a failed award
+    }
+    router.push("/dashboard");
+    router.refresh();
   }
 
   async function goTo(href: string) {
@@ -238,7 +258,18 @@ export default function ReviewSession({
     <div className={CARD}>
       <div className="flex justify-between items-center mb-2.5 text-[12.5px] font-medium text-faint">
         <span>{t("progress", { current: index + 1, total: questions.length })}</span>
-        <span>💧 {t("watered", { count: correct })}</span>
+        <div className="flex items-center gap-3">
+          <span>💧 {t("watered", { count: correct })}</span>
+          <button
+            type="button"
+            onClick={exitEarly}
+            disabled={exiting}
+            className="text-faint hover:text-charcoal transition-colors disabled:opacity-50"
+            aria-label={tu("exit")}
+          >
+            ✕
+          </button>
+        </div>
       </div>
       <div className="h-1.5 bg-line rounded-full overflow-hidden mb-6">
         <i
