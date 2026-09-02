@@ -48,6 +48,7 @@ export default async function StudyDays({
                 y={H - h}
                 width={SLOT - 4}
                 height={h}
+                rx={2}
                 fill={d.minutes > 0 ? "var(--c-chart)" : "var(--c-chart-dim)"}
               >
                 <title>{t("tooltipMinutes", { date: d.date, count: d.minutes })}</title>

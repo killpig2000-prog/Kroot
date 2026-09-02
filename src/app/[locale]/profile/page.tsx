@@ -8,7 +8,9 @@ import SkillAccuracy, { type SkillScore, type SkillPending } from "@/components/
 import StudyDays, { type StudyDay } from "@/components/profile/StudyDays";
 import BestHours from "@/components/profile/BestHours";
 import WordsToReview, { type DueWord } from "@/components/profile/WordsToReview";
-import { computeSkillProgress } from "@/components/profile/skill-progress";
+import WeekdayPattern, { type WeekdayMinutes } from "@/components/profile/WeekdayPattern";
+import SkillMix, { type SkillShare } from "@/components/profile/SkillMix";
+import { computeSkillProgress, PRACTICE_SKILLS } from "@/components/profile/skill-progress";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { dailyReviewCap } from "@/lib/srs";
 import { type CefrLevel } from "@/lib/tree";
@@ -104,7 +106,7 @@ export default async function ProfilePage() {
     supabase.from("daily_activity").select("activity_date, minutes").eq("user_id", user.id),
     supabase
       .from("xp_events")
-      .select("created_at")
+      .select("created_at, points, skill")
       .eq("user_id", user.id)
       .order("created_at", { ascending: false })
       .limit(1000),
@@ -116,7 +118,9 @@ export default async function ProfilePage() {
   const speakingRows = speakingRes.error ? [] : speakingRes.data ?? [];
   const grammarRows = grammarRes.error ? [] : grammarRes.data ?? [];
   const activityRows = activityRes.error ? [] : activityRes.data ?? [];
-  const xpRows = xpRes.error ? [] : xpRes.data ?? [];
+
+  type XpRow = { created_at: string; points: number | null; skill: string | null };
+  const xpRows = (xpRes.error ? [] : (xpRes.data as XpRow[] | null) ?? []) as XpRow[];
 
   type WritingRow = { prompt_key: string; score: number | null };
   type ListeningRow = { dialogue_id: string; quiz_correct: boolean | null };
@@ -258,7 +262,37 @@ export default async function ProfilePage() {
     return { date, minutes: minutesByDate.get(date) ?? 0 };
   });
 
-  const hourTimestamps = xpRows.map((r) => r.created_at as string).filter(Boolean);
+  const hourTimestamps = xpRows.map((r) => r.created_at).filter(Boolean);
+
+  // ── weekly rhythm: total minutes per day of week, across every day on record ──
+  const weekdayTotals = Array.from({ length: 7 }, () => 0); // index = JS getUTCDay()
+  for (const r of activityRows) {
+    const d = new Date(`${r.activity_date}T00:00:00Z`);
+    if (!Number.isNaN(d.getTime())) weekdayTotals[d.getUTCDay()] += r.minutes ?? 0;
+  }
+  const weekdayMinutes: WeekdayMinutes[] = [1, 2, 3, 4, 5, 6, 0].map((dow) => ({
+    dow,
+    minutes: weekdayTotals[dow],
+  }));
+
+  // ── practice mix: share of XP earned per skill (migration 0024 column, ─────
+  // unused elsewhere on this page). Rows from before that migration, or from
+  // non-skill sources, carry skill = null and are left out of the split.
+  const pointsBySkill = new Map<string, number>();
+  let totalSkillPoints = 0;
+  for (const r of xpRows) {
+    if (!r.skill) continue;
+    const pts = r.points ?? 0;
+    pointsBySkill.set(r.skill, (pointsBySkill.get(r.skill) ?? 0) + pts);
+    totalSkillPoints += pts;
+  }
+  const skillShares: SkillShare[] = PRACTICE_SKILLS.map((s) => s.key)
+    .filter((key) => pointsBySkill.has(key))
+    .map((key) => ({
+      key,
+      percent: Math.round(((pointsBySkill.get(key) ?? 0) / totalSkillPoints) * 100),
+    }))
+    .filter((s) => s.percent > 0);
 
   // ── words to review ──────────────────────────────────────────────────────
   // Only the due queue. No box distribution, no stage labels, no intervals:
@@ -345,8 +379,14 @@ export default async function ProfilePage() {
             {/* 3. when you study */}
             {totalMinutes > 0 && <StudyDays days={chartDays} streakDays={streakDays} />}
 
+            {/* 3b. which weekday you actually show up on, across all-time */}
+            {totalMinutes > 0 && <WeekdayPattern days={weekdayMinutes} />}
+
             {/* 4. your best hours — client-side, the reader's own timezone */}
             {hourTimestamps.length >= MIN_HOUR_EVENTS && <BestHours timestamps={hourTimestamps} />}
+
+            {/* 4b. where the practice time actually goes, by skill */}
+            {skillShares.length >= 2 && <SkillMix shares={skillShares} />}
 
             {/* 5. the due queue — the whole of what this card is for */}
             {hasVocab && (

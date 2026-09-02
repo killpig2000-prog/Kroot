@@ -73,6 +73,7 @@ export default function BestHours({ timestamps }: { timestamps: string[] }) {
                 y={H - height}
                 width={SLOT - 4}
                 height={height}
+                rx={2}
                 fill={near && count > 0 ? "var(--c-chart)" : "var(--c-chart-dim)"}
               >
                 <title>{t("sessionsAt", { hour: hourLabel(h), count })}</title>
