@@ -63,6 +63,11 @@ const ROUTES: {
   },
 ];
 
+// The four stations you come back to every day, for as long as you study —
+// as opposed to the roadmap above, which you walk through once. Basics
+// polishes the pieces; this is the actual training ground.
+const PRACTICE_STOPS: Stop[] = [stop("listen"), stop("pron"), stop("write"), stop("read")];
+
 const FACTS = ["effort", "ability", "cosmetic"] as const;
 
 function SectionHead({ title, note }: { title: string; note: string }) {
@@ -273,6 +278,50 @@ export default async function GuidePage() {
                 </article>
                 );
               })}
+            </div>
+          </section>
+
+          {/* practice ground: the four skills you actually train on, every
+              day, for as long as you study — distinct from the roadmap
+              above (a one-time walk through the basics). */}
+          <section className="mb-11">
+            <SectionHead
+              title={t("sections.practice.title")}
+              note={t("sections.practice.note")}
+            />
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {PRACTICE_STOPS.map((s) => (
+                <Link
+                  key={s.key}
+                  href={s.href}
+                  className="group relative overflow-hidden rounded-[14px] border border-line bg-cream px-[18px] py-4 transition-all hover:-translate-y-0.5 hover:shadow-[0_8px_20px_-14px_rgba(27,36,48,.3)]"
+                >
+                  <span className="absolute inset-y-0 left-0 w-[3px]" style={{ background: s.color }} />
+                  <div className="flex items-start gap-3.5">
+                    <span
+                      className="flex-none w-11 h-11 rounded-[13px] flex items-center justify-center text-[19px] border-[1.5px] transition-transform duration-200 group-hover:-translate-y-[2px]"
+                      style={{ background: `${s.color}1A`, borderColor: `${s.color}6B` }}
+                    >
+                      {s.icon}
+                    </span>
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center justify-between gap-2 mb-1">
+                        <b className="text-[15px] font-black tracking-[-0.015em]">{tn(s.navKey)}</b>
+                        <span
+                          className="flex-none text-[10.5px] font-bold tabular-nums whitespace-nowrap"
+                          style={{ color: s.color }}
+                        >
+                          {t(`sections.practice.stops.${s.key}.freq`)}
+                        </span>
+                      </div>
+                      <p className="text-[12.5px] text-muted leading-[1.5]">
+                        {t(`sections.practice.stops.${s.key}.body`)}
+                      </p>
+                    </div>
+                  </div>
+                </Link>
+              ))}
             </div>
           </section>
 

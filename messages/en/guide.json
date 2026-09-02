@@ -6,6 +6,28 @@
       "title": "Roadmaps",
       "note": "Pick one — running both at once is how people stall. Every stop is a link, so jump in wherever you already are."
     },
+    "practice": {
+      "title": "Practice ground",
+      "note": "Basics teaches the pieces. This is where you actually use them — every day, for as long as you study Korean.",
+      "stops": {
+        "listen": {
+          "body": "Train your ear on real-speed dialogue until it stops sounding fast.",
+          "freq": "3× a week"
+        },
+        "pron": {
+          "body": "Say it out loud until a native understands you the first time.",
+          "freq": "5 min a day"
+        },
+        "write": {
+          "body": "Build real sentences from what you've learned — no multiple choice.",
+          "freq": "2× a week"
+        },
+        "read": {
+          "body": "Read short passages fast enough that you stop translating in your head.",
+          "freq": "3× a week"
+        }
+      }
+    },
     "extras": {
       "title": "Two things the roadmap doesn't show",
       "note": "Neither is a stop on the route — one runs underneath it, the other ends it."
