@@ -33,6 +33,7 @@ export default async function SpeakingPage({
   if (!user) redirect("/onboarding");
 
   const t = await getTranslations("pronunciation");
+  const tn = await getTranslations("nav");
 
   const [{ data: profile }, { data: progressRows }, challengeRes] = await Promise.all([
     supabase
@@ -120,7 +121,7 @@ export default async function SpeakingPage({
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] md:pb-[60px]">
           <div className="flex gap-2 text-[13px] text-faint mb-[18px]">
             <Link href="/dashboard" className="hover:text-charcoal transition-colors">
-              Garden
+              {tn("garden")}
             </Link>
             <span>/</span>
             <b className="text-charcoal font-semibold">{t("title")}</b>

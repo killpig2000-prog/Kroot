@@ -1,7 +1,7 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { CefrLevel } from "@/lib/tree";
 import { GRAMMAR_GROUPS, lessonByKey } from "@/lib/grammar";
-import { getChapterStatuses } from "@/lib/vocabulary";
+import { CHAPTER_UNITS, getChapterStatuses } from "@/lib/vocabulary";
 import { getChaptersForTopic } from "@/lib/vocabulary-words";
 import { DIALOGUES } from "@/lib/listening-dialogues";
 import { SITUATIONS } from "@/lib/listening";
@@ -172,7 +172,10 @@ export async function getGuideProgress(
       : `${learnedWords.length} / ${stationWords.length} learned · Unit ${unitIdx + 1} of ${units.length}`,
     doneAt: vocabMet ? maxIso(learnedWords.map((w) => vocabByKey.get(w.key)!)) : undefined,
     percent: pct(learnedWords.length, stationWords.length),
-    ctaHref: `/vocabulary/${VOCAB_TOPIC}/session?chapter=${unitIdx}&level=${grade}`,
+    // The chapter browser (chapter chips + Day accordion), not straight into
+    // the flashcard session — a learner following the roadmap should land
+    // somewhere they can see where they are, not get dropped into a card.
+    ctaHref: `/vocabulary?level=${grade}&chapter=${Math.floor(unitIdx / CHAPTER_UNITS)}`,
     ctaLabel: `${learnedWords.length ? "Continue" : "Start"} Unit ${unitIdx + 1} →`,
     note: learnedWords.length
       ? `${learnedWords.length} / ${stationWords.length} learned so far`
