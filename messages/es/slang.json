@@ -34,7 +34,8 @@
     "praise": "Dominas la jerga de la calle — ¡hasta mañana!",
     "encourage": "Gira las tarjetas de abajo y vuelve mañana.",
     "prompt": "¿Qué significa? · {n}/{total}",
-    "score": "puntos {n}"
+    "score": "puntos {n}",
+    "close": "Cerrar"
   },
   "share": {
     "eyebrow": "Kroot · Jerga de la calle 🇰🇷",

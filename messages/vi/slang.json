@@ -34,7 +34,8 @@
     "praise": "Nói tiếng lóng như dân bản xứ — hẹn gặp lại ngày mai!",
     "encourage": "Lật các thẻ bên dưới và quay lại vào ngày mai.",
     "prompt": "Từ này nghĩa là gì? · {n}/{total}",
-    "score": "điểm {n}"
+    "score": "điểm {n}",
+    "close": "Đóng"
   },
   "share": {
     "eyebrow": "Kroot · Tiếng lóng đường phố 🇰🇷",

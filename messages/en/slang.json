@@ -34,7 +34,8 @@
     "praise": "Fluent in Street Talk — see you tomorrow!",
     "encourage": "Flip the cards below and come back tomorrow.",
     "prompt": "What does it mean? · {n}/{total}",
-    "score": "score {n}"
+    "score": "score {n}",
+    "close": "Close"
   },
   "share": {
     "eyebrow": "Kroot · Street Talk 🇰🇷",

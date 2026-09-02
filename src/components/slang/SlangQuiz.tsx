@@ -141,8 +141,16 @@ export default function SlangQuiz() {
           )}
         </div>
       ) : finished ? (
-        <div>
-          <div className="flex items-center gap-3.5 flex-wrap mb-3">
+        <div className="relative">
+          <button
+            type="button"
+            onClick={() => setDoneToday(score)}
+            aria-label={t("close")}
+            className="absolute -top-1 -right-1 w-7 h-7 rounded-full flex items-center justify-center text-[13px] text-[#97687D] hover:text-[#AF3166] hover:bg-cream transition-colors"
+          >
+            <span aria-hidden="true">✕</span>
+          </button>
+          <div className="flex items-center gap-3.5 flex-wrap mb-3 pr-7">
             <span className="text-[22px] flex-none">{score >= 4 ? "🏆" : score >= 2 ? "🌱" : "💧"}</span>
             <div className="flex-1">
               <b className="block text-[14px] font-bold text-[#AF3166]">

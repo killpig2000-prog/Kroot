@@ -34,7 +34,8 @@
     "praise": "街头韩语说得很溜 — 明天见！",
     "encourage": "翻翻下面的卡片，明天再来。",
     "prompt": "这是什么意思？ · {n}/{total}",
-    "score": "得分 {n}"
+    "score": "得分 {n}",
+    "close": "关闭"
   },
   "share": {
     "eyebrow": "Kroot · 街头韩语 🇰🇷",
