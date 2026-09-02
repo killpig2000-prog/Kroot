@@ -236,7 +236,16 @@ export function speakKorean(text: string, opts: SpeakOptions = {}): boolean {
   // "ended" event, a stuck decode, speechSynthesis silently failing on some
   // mobile browsers) used to stall the whole conversation after one
   // sentence. This watchdog guarantees the chain always moves on.
+  //
+  // It runs in two phases so it can't misread "still fetching" as "done
+  // playing": a generous fetch-phase timeout covers fetchAudioUrl (cold
+  // /api/tts synthesis + a Supabase auth round trip can genuinely take a
+  // few seconds, especially the first line or two of a chain, before the
+  // prefetch queue has warmed anything up) without moving the dialogue on
+  // mid-fetch; once playback actually starts, it's replaced with the
+  // playback-duration watchdog that was here before.
   let settled = false;
+  let watchdog: number;
   const finish = () => {
     if (settled || gen !== generation) return;
     settled = true;
@@ -252,13 +261,19 @@ export function speakKorean(text: string, opts: SpeakOptions = {}): boolean {
     clearTimeout(watchdog);
     opts.oncancel?.();
   };
-  const watchdog = window.setTimeout(finish, Math.max(4000, spoken.length * 180));
+  const armPlaybackWatchdog = () => {
+    if (settled) return;
+    clearTimeout(watchdog);
+    watchdog = window.setTimeout(finish, Math.max(4000, spoken.length * 180));
+  };
+  watchdog = window.setTimeout(finish, 8000);
   cancelCurrent = cancel;
 
   void (async () => {
     const url = await fetchAudioUrl(spoken, apiVoice);
     if (gen !== generation) return; // a newer speak/stop superseded this one
     if (!url) {
+      armPlaybackWatchdog();
       speakWithBrowser(spoken, { ...opts, onend: finish });
       return;
     }
@@ -270,11 +285,20 @@ export function speakKorean(text: string, opts: SpeakOptions = {}): boolean {
     audio.playbackRate = opts.rate ?? 1;
     audio.onended = finish;
     audio.onerror = () => {
-      if (gen === generation) speakWithBrowser(spoken, { ...opts, onend: finish });
+      if (gen === generation) {
+        armPlaybackWatchdog();
+        speakWithBrowser(spoken, { ...opts, onend: finish });
+      }
     };
-    audio.play().catch(() => {
-      if (gen === generation) speakWithBrowser(spoken, { ...opts, onend: finish });
-    });
+    audio
+      .play()
+      .then(() => armPlaybackWatchdog())
+      .catch(() => {
+        if (gen === generation) {
+          armPlaybackWatchdog();
+          speakWithBrowser(spoken, { ...opts, onend: finish });
+        }
+      });
   })();
 
   return true;
