@@ -169,7 +169,7 @@ export default async function VocabularyPage({
             aria-label={t("allChapters")}
             className="mb-4 sticky top-[52px] md:top-0 z-20 -mx-1 px-1 pt-1 bg-warm/95 backdrop-blur-sm"
           >
-            <div className="flex gap-2 overflow-x-auto lg:flex-wrap lg:overflow-visible pb-1.5">
+            <div className="flex gap-2 overflow-x-auto pb-1.5">
               {chapters.map((c) => {
                 const current = c.index === selected?.index;
                 return (
