@@ -30,14 +30,14 @@ function StrokeSvg({ strokes }: { strokes: (typeof HANGUL_STROKES)[string] }) {
             dot.setAttribute("cy", String(start.y));
             dot.style.opacity = "1";
           }
-          p.style.transition = "stroke-dashoffset .55s cubic-bezier(.3,.6,.3,1)";
+          p.style.transition = "stroke-dashoffset .83s cubic-bezier(.3,.6,.3,1)";
           p.style.strokeDashoffset = "0";
-        }, i * 600)
+        }, i * 900)
       );
     });
 
     if (dot) {
-      timers.push(setTimeout(() => { dot.style.opacity = "0"; }, (paths.length - 1) * 600 + 650));
+      timers.push(setTimeout(() => { dot.style.opacity = "0"; }, (paths.length - 1) * 900 + 975));
     }
 
     return () => timers.forEach(clearTimeout);
@@ -52,7 +52,7 @@ function StrokeSvg({ strokes }: { strokes: (typeof HANGUL_STROKES)[string] }) {
             pathRefs.current[i] = el;
           }}
           d={s.d}
-          transform={s.mirror ? "translate(100 0) scale(-1 1)" : undefined}
+          transform={s.transform}
           fill="none"
           stroke={GREEN}
           strokeWidth={7}
@@ -67,11 +67,12 @@ function StrokeSvg({ strokes }: { strokes: (typeof HANGUL_STROKES)[string] }) {
 
 /**
  * Animated stroke-order drawing for the character shown in the Hangul
- * detail panel — tap to replay. Only the 14 basic consonants and 10 basic
- * vowels have stroke data (see hangul-strokes.ts); anything else returns
- * null so the caller falls back to a plain glyph.
+ * detail panel — tap to replay (and hear it again). Only the basic
+ * consonants/vowels and their doubled/compound forms have stroke data (see
+ * hangul-strokes.ts); anything else returns null so the caller falls back
+ * to a plain glyph.
  */
-export default function StrokeOrderGlyph({ char }: { char: string }) {
+export default function StrokeOrderGlyph({ char, onReplay }: { char: string; onReplay?: () => void }) {
   const strokes = HANGUL_STROKES[char];
   const [replayKey, setReplayKey] = useState(0);
 
@@ -80,7 +81,10 @@ export default function StrokeOrderGlyph({ char }: { char: string }) {
   return (
     <button
       type="button"
-      onClick={() => setReplayKey((k) => k + 1)}
+      onClick={() => {
+        setReplayKey((k) => k + 1);
+        onReplay?.();
+      }}
       aria-label="Replay stroke order"
       className="block w-full h-full"
     >

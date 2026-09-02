@@ -94,7 +94,7 @@ function JamoGrid({ items }: { items: Jamo[] }) {
               style={{ borderColor: BRD, color: GREEN }}
             >
               {HANGUL_STROKES[selected.char] ? (
-                <StrokeOrderGlyph char={selected.char} />
+                <StrokeOrderGlyph char={selected.char} onReplay={() => speak(selected.char)} />
               ) : (
                 selected.char
               )}
