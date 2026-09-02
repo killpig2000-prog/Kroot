@@ -50,8 +50,6 @@ export default function ChallengePlay({
   const supabase = useMemo(() => createClient(), []);
   const [best, setBest] = useState<ChallengeResult | null>(initialBest);
   const [run, setRun] = useState<ChallengeResult | null>(null);
-  const [typed, setTyped] = useState("");
-  const [typedFallback, setTypedFallback] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
   const scoringRef = useRef(false);
   const loggedRef = useRef(false);
@@ -61,7 +59,6 @@ export default function ChallengePlay({
     "ko-KR",
     MAX_LISTEN_MS,
   );
-  const showFallback = typedFallback || !micOk;
 
   const runStars = run ? starsFor(challenge, run) : 0;
   const bestStars = starsFor(challenge, best);
@@ -125,7 +122,6 @@ export default function ChallengePlay({
 
   function reset() {
     setRun(null);
-    setTyped("");
     setError(null);
   }
 
@@ -217,33 +213,8 @@ export default function ChallengePlay({
                 </>
               )}
               {error && <p className="text-[12.5px] text-[var(--c-danger)] text-center max-w-[420px]">{error}</p>}
-              {!showFallback ? (
-                <button
-                  className="text-[12.5px] font-semibold text-muted hover:text-charcoal transition-colors"
-                  onClick={() => setTypedFallback(true)}
-                >
-                  {t("typeInstead")}
-                </button>
-              ) : (
-                <div className="w-full max-w-[460px]">
-                  {!micOk && (
-                    <p className="text-[12.5px] text-muted mb-2 text-center">
-                      {t("noMic")}
-                    </p>
-                  )}
-                  <textarea
-                    value={typed}
-                    onChange={(e) => setTyped(e.target.value)}
-                    placeholder={t("placeholder")}
-                    rows={2}
-                    className="kr w-full resize-none rounded-[10px] border border-line bg-cream px-3.5 py-2.5 text-[16px] outline-none focus:border-[var(--c-danger)] transition-colors"
-                  />
-                  <div className="flex justify-end mt-2">
-                    <button className={BTN_EMBER} disabled={!typed.trim()} onClick={() => void score(typed.trim(), 0)}>
-                      {t("check")}
-                    </button>
-                  </div>
-                </div>
+              {!micOk && (
+                <p className="text-[12.5px] text-muted text-center max-w-[420px]">{t("noMic")}</p>
               )}
             </div>
           ) : (
