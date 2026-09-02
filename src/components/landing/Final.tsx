@@ -31,6 +31,23 @@ export default function Final() {
       </section>
 
       <footer className="bg-cream border-t border-dashed border-dash">
+        {/* Public, no-login pages (word/slang dictionary, grammar/reading/
+            listening/writing/pronunciation guides, hangul) have no other
+            internal link into them — this is the only place a crawler (or a
+            visitor) reaches them from the site's highest-authority page. */}
+        <div className="max-w-[1080px] mx-auto px-[clamp(18px,4vw,28px)] pt-7 pb-5 border-b border-dashed border-dash">
+          <p className="text-[11px] font-bold uppercase tracking-wide text-faint mb-3">{t("resources")}</p>
+          <nav className="flex flex-wrap gap-x-5 gap-y-2 text-[12.5px] font-medium text-muted">
+            <Link href="/words" className="hover:text-charcoal transition-colors">{t("linkWords")}</Link>
+            <Link href="/slang" className="hover:text-charcoal transition-colors">{t("linkSlang")}</Link>
+            <Link href="/korean-grammar" className="hover:text-charcoal transition-colors">{t("linkGrammar")}</Link>
+            <Link href="/korean-reading" className="hover:text-charcoal transition-colors">{t("linkReading")}</Link>
+            <Link href="/korean-listening" className="hover:text-charcoal transition-colors">{t("linkListening")}</Link>
+            <Link href="/korean-writing" className="hover:text-charcoal transition-colors">{t("linkWriting")}</Link>
+            <Link href="/korean-pronunciation" className="hover:text-charcoal transition-colors">{t("linkPronunciation")}</Link>
+            <Link href="/korean-hangul" className="hover:text-charcoal transition-colors">{t("linkHangul")}</Link>
+          </nav>
+        </div>
         <div className="max-w-[1080px] mx-auto px-[clamp(18px,4vw,28px)] py-6 flex justify-between items-center gap-4 flex-wrap text-[12px] text-faint">
           <span className="flex items-center gap-[9px] font-bold text-[13.5px] text-charcoal">
             <BrandMark size={24} />

@@ -126,7 +126,16 @@
     "about": "关于",
     "privacy": "隐私",
     "contact": "联系我们",
-    "copyright": "© 2026 Kroot"
+    "copyright": "© 2026 Kroot",
+    "resources": "免费韩语资源",
+    "linkWords": "韩语词典",
+    "linkSlang": "韩语俚语",
+    "linkGrammar": "语法指南",
+    "linkReading": "阅读练习",
+    "linkListening": "听力练习",
+    "linkWriting": "写作练习",
+    "linkPronunciation": "发音指南",
+    "linkHangul": "学习谚文"
   },
   "community": {
     "badge": "来自学习者",

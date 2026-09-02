@@ -126,7 +126,16 @@
     "about": "Giới thiệu",
     "privacy": "Quyền riêng tư",
     "contact": "Liên hệ",
-    "copyright": "© 2026 Kroot"
+    "copyright": "© 2026 Kroot",
+    "resources": "Tài nguyên tiếng Hàn miễn phí",
+    "linkWords": "Từ điển tiếng Hàn",
+    "linkSlang": "Tiếng lóng Hàn Quốc",
+    "linkGrammar": "Hướng dẫn ngữ pháp",
+    "linkReading": "Luyện đọc",
+    "linkListening": "Luyện nghe",
+    "linkWriting": "Luyện viết",
+    "linkPronunciation": "Hướng dẫn phát âm",
+    "linkHangul": "Học Hangul"
   },
   "community": {
     "badge": "từ người học",

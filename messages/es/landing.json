@@ -126,7 +126,16 @@
     "about": "Acerca de",
     "privacy": "Privacidad",
     "contact": "Contacto",
-    "copyright": "© 2026 Kroot"
+    "copyright": "© 2026 Kroot",
+    "resources": "Recursos gratuitos de coreano",
+    "linkWords": "Diccionario coreano",
+    "linkSlang": "Jerga coreana",
+    "linkGrammar": "Guía de gramática",
+    "linkReading": "Práctica de lectura",
+    "linkListening": "Práctica de escucha",
+    "linkWriting": "Práctica de escritura",
+    "linkPronunciation": "Guía de pronunciación",
+    "linkHangul": "Aprende Hangul"
   },
   "community": {
     "badge": "de otros estudiantes",

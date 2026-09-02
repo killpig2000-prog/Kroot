@@ -126,7 +126,16 @@
     "about": "Kroot について",
     "privacy": "プライバシー",
     "contact": "お問い合わせ",
-    "copyright": "© 2026 Kroot"
+    "copyright": "© 2026 Kroot",
+    "resources": "無料の韓国語コンテンツ",
+    "linkWords": "韓国語辞書",
+    "linkSlang": "韓国語スラング",
+    "linkGrammar": "文法ガイド",
+    "linkReading": "リーディング練習",
+    "linkListening": "リスニング練習",
+    "linkWriting": "ライティング練習",
+    "linkPronunciation": "発音ガイド",
+    "linkHangul": "ハングルを学ぶ"
   },
   "community": {
     "badge": "学習者から",
