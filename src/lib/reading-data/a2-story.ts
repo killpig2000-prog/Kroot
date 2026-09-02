@@ -9,10 +9,10 @@ export const READING_A2_STORY: RawPassage[] = [
     title_ja: "傘をなくしました", title_zh: "弄丢了雨伞", title_vi: "Tôi làm mất ô",
     body_kr: "어제 비가 많이 왔어요. 저는 지하철역에서 우산을 샀어요. 카페에서 커피를 마시고 우산을 놓고 나왔어요. 오늘 아침에 우산이 없어서 다시 비를 맞았어요. 내일은 우산을 꼭 챙길 거예요.",
     body_en: "It rained a lot yesterday. I bought an umbrella at the subway station. I left it behind after having coffee at a cafe. This morning I got wet in the rain because I didn't have it. Tomorrow I will definitely bring my umbrella.",
-    body_ja: "昨日は雨がたくさん降りました。私は地下鉄の駅で傘を買いました。カフェでコーヒーを飲んで、傘を置いて出てきてしまいました。今朝は傘がなくてまた雨に濡れました。明日は必ず傘を持っていきます。", body_zh: "昨天雨下得很大。我在地铁站买了一把伞。在咖啡馆喝咖啡后把伞忘在那里了。今天早上因为没有伞又淋雨了。明天我一定要记得带伞。" body_vi: "Hôm qua trời mưa rất to. Tôi đã mua một chiếc ô ở ga tàu điện ngầm. Sau khi uống cà phê ở quán, tôi để quên ô ở đó rồi ra về. Sáng nay vì không có ô nên tôi lại bị ướt mưa. Ngày mai tôi nhất định sẽ mang theo ô.",
+    body_ja: "昨日は雨がたくさん降りました。私は地下鉄の駅で傘を買いました。カフェでコーヒーを飲んで、傘を置いて出てきてしまいました。今朝は傘がなくてまた雨に濡れました。明日は必ず傘を持っていきます。", body_zh: "昨天雨下得很大。我在地铁站买了一把伞。在咖啡馆喝咖啡后把伞忘在那里了。今天早上因为没有伞又淋雨了。明天我一定要记得带伞。", body_vi: "Hôm qua trời mưa rất to. Tôi đã mua một chiếc ô ở ga tàu điện ngầm. Sau khi uống cà phê ở quán, tôi để quên ô ở đó rồi ra về. Sáng nay vì không có ô nên tôi lại bị ướt mưa. Ngày mai tôi nhất định sẽ mang theo ô.",
     questions: [
-      { question_en: "Where did the narrator buy the umbrella?", question_ja: "語り手はどこで傘を買いましたか。", question_zh: "叙述者在哪里买的伞？" question_vi: "Người kể chuyện mua ô ở đâu?", options: ["At the subway station","At a cafe","At home","At school"], answerIndex: 0 },
-      { question_en: "What happened this morning?", question_ja: "今朝何が起こりましたか。", question_zh: "今天早上发生了什么？" question_vi: "Sáng nay chuyện gì đã xảy ra?", options: ["The narrator got wet in the rain","The narrator stayed home","The narrator bought a new umbrella","The narrator found the umbrella"], answerIndex: 0 },
+      { question_en: "Where did the narrator buy the umbrella?", question_ja: "語り手はどこで傘を買いましたか。", question_zh: "叙述者在哪里买的伞？", question_vi: "Người kể chuyện mua ô ở đâu?", options: ["At the subway station","At a cafe","At home","At school"], answerIndex: 0 },
+      { question_en: "What happened this morning?", question_ja: "今朝何が起こりましたか。", question_zh: "今天早上发生了什么？", question_vi: "Sáng nay chuyện gì đã xảy ra?", options: ["The narrator got wet in the rain","The narrator stayed home","The narrator bought a new umbrella","The narrator found the umbrella"], answerIndex: 0 },
     ],
   },
   {
@@ -23,10 +23,10 @@ export const READING_A2_STORY: RawPassage[] = [
     title_ja: "遊園地で", title_zh: "在游乐园", title_vi: "Ở công viên giải trí",
     body_kr: "지난 주말에 친구와 놀이공원에 갔어요. 우리는 무서운 롤러코스터를 탔어요. 저는 너무 무서워서 소리를 질렀어요. 그래도 재미있어서 세 번이나 더 탔어요. 다음에는 부모님과 같이 갈 거예요.",
     body_en: "Last weekend I went to an amusement park with a friend. We rode a scary roller coaster. I screamed because I was so scared. Still, it was fun, so I rode it three more times. Next time I will go with my parents.",
-    body_ja: "先週末、友達と遊園地に行きました。私たちは怖いジェットコースターに乗りました。私はとても怖くて叫んでしまいました。それでも楽しくて、さらに三回も乗りました。次は両親と一緒に行くつもりです。", body_zh: "上周末和朋友去了游乐园。我们坐了可怕的过山车。我太害怕了大叫起来。不过还是很好玩，又坐了三次。下次要和父母一起去。" body_vi: "Cuối tuần trước tôi đi công viên giải trí cùng bạn. Chúng tôi đi tàu lượn siêu tốc đáng sợ. Tôi sợ quá nên đã hét lên. Tuy vậy vì vui nên tôi còn đi thêm ba lần nữa. Lần sau tôi sẽ đi cùng bố mẹ.",
+    body_ja: "先週末、友達と遊園地に行きました。私たちは怖いジェットコースターに乗りました。私はとても怖くて叫んでしまいました。それでも楽しくて、さらに三回も乗りました。次は両親と一緒に行くつもりです。", body_zh: "上周末和朋友去了游乐园。我们坐了可怕的过山车。我太害怕了大叫起来。不过还是很好玩，又坐了三次。下次要和父母一起去。", body_vi: "Cuối tuần trước tôi đi công viên giải trí cùng bạn. Chúng tôi đi tàu lượn siêu tốc đáng sợ. Tôi sợ quá nên đã hét lên. Tuy vậy vì vui nên tôi còn đi thêm ba lần nữa. Lần sau tôi sẽ đi cùng bố mẹ.",
     questions: [
-      { question_en: "Who did the narrator go with?", question_ja: "語り手は誰と一緒に行きましたか。", question_zh: "叙述者和谁一起去的？" question_vi: "Người kể chuyện đi cùng ai?", options: ["A sister","Alone","A teacher","A friend"], answerIndex: 3 },
-      { question_en: "How many times did they ride the roller coaster in total?", question_ja: "全部で何回ジェットコースターに乗りましたか。", question_zh: "他们一共坐了几次过山车？" question_vi: "Tổng cộng họ đã đi tàu lượn mấy lần?", options: ["Three times","Twice","Once","Four times"], answerIndex: 3 },
+      { question_en: "Who did the narrator go with?", question_ja: "語り手は誰と一緒に行きましたか。", question_zh: "叙述者和谁一起去的？", question_vi: "Người kể chuyện đi cùng ai?", options: ["A sister","Alone","A teacher","A friend"], answerIndex: 3 },
+      { question_en: "How many times did they ride the roller coaster in total?", question_ja: "全部で何回ジェットコースターに乗りましたか。", question_zh: "他们一共坐了几次过山车？", question_vi: "Tổng cộng họ đã đi tàu lượn mấy lần?", options: ["Three times","Twice","Once","Four times"], answerIndex: 3 },
     ],
   },
   {
@@ -37,10 +37,10 @@ export const READING_A2_STORY: RawPassage[] = [
     title_ja: "絵を描きました", title_zh: "画了一幅画", title_vi: "Tôi đã vẽ tranh",
     body_kr: "지난주에 처음으로 유화를 그렸어요. 색을 고르는 것이 생각보다 어려웠어요. 실수로 물감을 옷에 묻혔어요. 그래도 완성된 그림이 마음에 들었어요. 이번 주말에도 새 그림을 그릴 거예요.",
     body_en: "Last week I painted with oil paints for the first time. Choosing colors was harder than I thought. I accidentally got paint on my clothes. Still, I liked the finished painting. This weekend I will paint a new picture again.",
-    body_ja: "先週、初めて油絵を描きました。色を選ぶことは思ったより難しかったです。うっかり絵の具を服につけてしまいました。それでも完成した絵が気に入りました。今週末もまた新しい絵を描くつもりです。", body_zh: "上周第一次画了油画。选颜色比想象中难。不小心把颜料弄到衣服上了。不过完成的画我很满意。这个周末我还要画新的画。" body_vi: "Tuần trước lần đầu tiên tôi vẽ tranh sơn dầu. Chọn màu khó hơn tôi tưởng. Tôi vô tình làm dây màu ra quần áo. Tuy vậy tôi rất thích bức tranh đã hoàn thành. Cuối tuần này tôi cũng sẽ vẽ bức tranh mới.",
+    body_ja: "先週、初めて油絵を描きました。色を選ぶことは思ったより難しかったです。うっかり絵の具を服につけてしまいました。それでも完成した絵が気に入りました。今週末もまた新しい絵を描くつもりです。", body_zh: "上周第一次画了油画。选颜色比想象中难。不小心把颜料弄到衣服上了。不过完成的画我很满意。这个周末我还要画新的画。", body_vi: "Tuần trước lần đầu tiên tôi vẽ tranh sơn dầu. Chọn màu khó hơn tôi tưởng. Tôi vô tình làm dây màu ra quần áo. Tuy vậy tôi rất thích bức tranh đã hoàn thành. Cuối tuần này tôi cũng sẽ vẽ bức tranh mới.",
     questions: [
-      { question_en: "What was harder than expected?", question_ja: "何が思ったより難しかったですか。", question_zh: "什么比想象中更难？" question_vi: "Điều gì khó hơn dự đoán?", options: ["Choosing colors","Finding a class","Buying paint","Cleaning the brush"], answerIndex: 0 },
-      { question_en: "What happened by accident?", question_ja: "何が偶然起こりましたか。", question_zh: "意外发生了什么事？" question_vi: "Chuyện gì đã xảy ra ngoài ý muốn?", options: ["The canvas tore","The painting fell","Paint got on clothes","The brush broke"], answerIndex: 2 },
+      { question_en: "What was harder than expected?", question_ja: "何が思ったより難しかったですか。", question_zh: "什么比想象中更难？", question_vi: "Điều gì khó hơn dự đoán?", options: ["Choosing colors","Finding a class","Buying paint","Cleaning the brush"], answerIndex: 0 },
+      { question_en: "What happened by accident?", question_ja: "何が偶然起こりましたか。", question_zh: "意外发生了什么事？", question_vi: "Chuyện gì đã xảy ra ngoài ý muốn?", options: ["The canvas tore","The painting fell","Paint got on clothes","The brush broke"], answerIndex: 2 },
     ],
   },
   {
@@ -51,10 +51,10 @@ export const READING_A2_STORY: RawPassage[] = [
     title_ja: "初めてヨガをしました", title_zh: "第一次上瑜伽课", title_vi: "Lần đầu tập yoga",
     body_kr: "어제 처음으로 요가 수업에 갔어요. 동작이 생각보다 어려워서 몸이 많이 아팠어요. 선생님이 천천히 하라고 말씀하셨어요. 수업이 끝난 후에 마음이 편안해졌어요. 다음 주에도 요가 수업을 들을 거예요.",
     body_en: "Yesterday I went to a yoga class for the first time. The poses were harder than I expected, so my body hurt a lot. The teacher told me to move slowly. After class, I felt relaxed. I will take a yoga class again next week.",
-    body_ja: "昨日、初めてヨガの授業に行きました。動作が思ったより難しくて体がとても痛かったです。先生はゆっくりやるように言いました。授業が終わった後、気持ちが楽になりました。来週もヨガの授業を受けるつもりです。", body_zh: "昨天第一次去上瑜伽课。动作比想象中难，身体很疼。老师让我慢慢做。下课后心情变得很放松。下周我还要去上瑜伽课。" body_vi: "Hôm qua lần đầu tiên tôi đi học yoga. Động tác khó hơn tôi tưởng nên cơ thể rất đau. Giáo viên bảo tôi hãy làm chậm lại. Sau khi học xong tôi cảm thấy tâm trạng dễ chịu. Tuần sau tôi cũng sẽ học yoga tiếp.",
+    body_ja: "昨日、初めてヨガの授業に行きました。動作が思ったより難しくて体がとても痛かったです。先生はゆっくりやるように言いました。授業が終わった後、気持ちが楽になりました。来週もヨガの授業を受けるつもりです。", body_zh: "昨天第一次去上瑜伽课。动作比想象中难，身体很疼。老师让我慢慢做。下课后心情变得很放松。下周我还要去上瑜伽课。", body_vi: "Hôm qua lần đầu tiên tôi đi học yoga. Động tác khó hơn tôi tưởng nên cơ thể rất đau. Giáo viên bảo tôi hãy làm chậm lại. Sau khi học xong tôi cảm thấy tâm trạng dễ chịu. Tuần sau tôi cũng sẽ học yoga tiếp.",
     questions: [
-      { question_en: "Why did the narrator's body hurt?", question_ja: "なぜ語り手の体が痛かったのですか。", question_zh: "叙述者的身体为什么疼？" question_vi: "Tại sao cơ thể người kể chuyện bị đau?", options: ["The floor was hard","The class was too long","The poses were hard","The room was cold"], answerIndex: 2 },
-      { question_en: "How did the narrator feel after class?", question_ja: "授業の後、語り手はどう感じましたか。", question_zh: "下课后叙述者感觉怎么样？" question_vi: "Sau giờ học người kể chuyện cảm thấy thế nào?", options: ["Bored","Sleepy","Relaxed","Angry"], answerIndex: 2 },
+      { question_en: "Why did the narrator's body hurt?", question_ja: "なぜ語り手の体が痛かったのですか。", question_zh: "叙述者的身体为什么疼？", question_vi: "Tại sao cơ thể người kể chuyện bị đau?", options: ["The floor was hard","The class was too long","The poses were hard","The room was cold"], answerIndex: 2 },
+      { question_en: "How did the narrator feel after class?", question_ja: "授業の後、語り手はどう感じましたか。", question_zh: "下课后叙述者感觉怎么样？", question_vi: "Sau giờ học người kể chuyện cảm thấy thế nào?", options: ["Bored","Sleepy","Relaxed","Angry"], answerIndex: 2 },
     ],
   },
   {
@@ -65,10 +65,10 @@ export const READING_A2_STORY: RawPassage[] = [
     title_ja: "階段で転びました", title_zh: "在楼梯上摔倒了", title_vi: "Tôi bị ngã ở cầu thang",
     body_kr: "오늘 아침에 급하게 계단을 내려갔어요. 신발끈이 풀려서 그만 넘어졌어요. 무릎을 조금 다쳤지만 크게 다치지 않았어요. 친구가 걱정하면서 저를 도와줬어요. 다음부터는 계단에서 천천히 걸을 거예요.",
     body_en: "This morning I hurried down the stairs. My shoelace was untied, and I fell. I hurt my knee a little but wasn't badly injured. My friend worriedly helped me. From now on, I will walk slowly on stairs.",
-    body_ja: "今朝、急いで階段を下りました。靴ひもがほどけて転んでしまいました。膝を少しけがしましたが、大きなけがではありませんでした。友達が心配しながら私を助けてくれました。これからは階段でゆっくり歩くつもりです。", body_zh: "今天早上急急忙忙下楼梯。鞋带松了，结果摔倒了。膝盖受了点小伤，但没有大碍。朋友很担心地帮助了我。以后我要在楼梯上慢慢走。" body_vi: "Sáng nay tôi vội vàng đi xuống cầu thang. Vì dây giày bị tuột nên tôi đã ngã. Tôi bị thương nhẹ ở đầu gối nhưng không nghiêm trọng. Bạn tôi lo lắng và giúp đỡ tôi. Từ nay tôi sẽ đi cầu thang chậm rãi hơn.",
+    body_ja: "今朝、急いで階段を下りました。靴ひもがほどけて転んでしまいました。膝を少しけがしましたが、大きなけがではありませんでした。友達が心配しながら私を助けてくれました。これからは階段でゆっくり歩くつもりです。", body_zh: "今天早上急急忙忙下楼梯。鞋带松了，结果摔倒了。膝盖受了点小伤，但没有大碍。朋友很担心地帮助了我。以后我要在楼梯上慢慢走。", body_vi: "Sáng nay tôi vội vàng đi xuống cầu thang. Vì dây giày bị tuột nên tôi đã ngã. Tôi bị thương nhẹ ở đầu gối nhưng không nghiêm trọng. Bạn tôi lo lắng và giúp đỡ tôi. Từ nay tôi sẽ đi cầu thang chậm rãi hơn.",
     questions: [
-      { question_en: "Why did the narrator fall?", question_ja: "なぜ語り手は転びましたか。", question_zh: "叙述者为什么摔倒？" question_vi: "Tại sao người kể chuyện bị ngã?", options: ["It was dark","The stairs were wet","The shoelace was untied","The stairs were broken"], answerIndex: 2 },
-      { question_en: "Who helped the narrator?", question_ja: "誰が語り手を助けましたか。", question_zh: "谁帮助了叙述者？" question_vi: "Ai đã giúp người kể chuyện?", options: ["No one","A teacher","A stranger","A friend"], answerIndex: 3 },
+      { question_en: "Why did the narrator fall?", question_ja: "なぜ語り手は転びましたか。", question_zh: "叙述者为什么摔倒？", question_vi: "Tại sao người kể chuyện bị ngã?", options: ["It was dark","The stairs were wet","The shoelace was untied","The stairs were broken"], answerIndex: 2 },
+      { question_en: "Who helped the narrator?", question_ja: "誰が語り手を助けましたか。", question_zh: "谁帮助了叙述者？", question_vi: "Ai đã giúp người kể chuyện?", options: ["No one","A teacher","A stranger","A friend"], answerIndex: 3 },
     ],
   },
   {
@@ -79,10 +79,10 @@ export const READING_A2_STORY: RawPassage[] = [
     title_ja: "バスを乗り間違えました", title_zh: "坐错了公交车", title_vi: "Tôi đã lên nhầm xe buýt",
     body_kr: "오늘 아침에 급하게 버스를 탔어요. 버스가 반대 방향으로 가는 것을 나중에 알았어요. 저는 다음 정류장에서 급히 내렸어요. 결국 학교에 조금 늦게 도착했어요. 내일부터는 버스 번호를 잘 확인할 거예요.",
     body_en: "This morning I got on a bus in a hurry. I later realized the bus was going in the opposite direction. I quickly got off at the next stop. In the end, I arrived at school a little late. From tomorrow, I will check the bus number carefully.",
-    body_ja: "今朝、急いでバスに乗りました。バスが反対方向に行くことを後で知りました。私は次の停留所で急いで降りました。結局、学校に少し遅れて着きました。明日からはバスの番号をよく確認するつもりです。", body_zh: "今天早上急急忙忙上了公交车。后来才发现车开往反方向。我在下一站赶紧下了车。结果到学校时晚了一点。从明天开始我要仔细确认公交车号码。" body_vi: "Sáng nay tôi vội vàng lên xe buýt. Sau đó tôi mới biết xe đang đi ngược hướng. Tôi vội vàng xuống ở trạm tiếp theo. Cuối cùng tôi đến trường hơi muộn. Từ ngày mai tôi sẽ kiểm tra kỹ số xe buýt.",
+    body_ja: "今朝、急いでバスに乗りました。バスが反対方向に行くことを後で知りました。私は次の停留所で急いで降りました。結局、学校に少し遅れて着きました。明日からはバスの番号をよく確認するつもりです。", body_zh: "今天早上急急忙忙上了公交车。后来才发现车开往反方向。我在下一站赶紧下了车。结果到学校时晚了一点。从明天开始我要仔细确认公交车号码。", body_vi: "Sáng nay tôi vội vàng lên xe buýt. Sau đó tôi mới biết xe đang đi ngược hướng. Tôi vội vàng xuống ở trạm tiếp theo. Cuối cùng tôi đến trường hơi muộn. Từ ngày mai tôi sẽ kiểm tra kỹ số xe buýt.",
     questions: [
-      { question_en: "What did the narrator realize?", question_ja: "語り手は何に気づきましたか。", question_zh: "叙述者意识到了什么？" question_vi: "Người kể chuyện nhận ra điều gì?", options: ["The bus was late","The bus was broken","The bus was full","The bus was going the wrong way"], answerIndex: 3 },
-      { question_en: "What was the result?", question_ja: "結果はどうなりましたか。", question_zh: "结果怎么样？" question_vi: "Kết quả là gì?", options: ["Arrived early","Took a taxi","Missed school","Arrived late"], answerIndex: 3 },
+      { question_en: "What did the narrator realize?", question_ja: "語り手は何に気づきましたか。", question_zh: "叙述者意识到了什么？", question_vi: "Người kể chuyện nhận ra điều gì?", options: ["The bus was late","The bus was broken","The bus was full","The bus was going the wrong way"], answerIndex: 3 },
+      { question_en: "What was the result?", question_ja: "結果はどうなりましたか。", question_zh: "结果怎么样？", question_vi: "Kết quả là gì?", options: ["Arrived early","Took a taxi","Missed school","Arrived late"], answerIndex: 3 },
     ],
   },
   {
@@ -93,10 +93,10 @@ export const READING_A2_STORY: RawPassage[] = [
     title_ja: "手紙を書きました", title_zh: "写了一封信", title_vi: "Tôi đã viết thư",
     body_kr: "어제 오랜만에 할머니께 편지를 썼어요. 손으로 쓰는 것이 어색해서 시간이 오래 걸렸어요. 그래도 마음을 담아 천천히 썼어요. 오늘 우체국에서 편지를 보냈어요. 할머니가 편지를 받으면 기뻐하실 거예요.",
     body_en: "Yesterday, for the first time in a while, I wrote a letter to my grandmother. Writing by hand felt awkward, so it took a long time. Still, I wrote it slowly and put my heart into it. Today I sent the letter at the post office. My grandmother will be happy when she receives the letter.",
-    body_ja: "昨日、久しぶりに祖母に手紙を書きました。手で書くのが不慣れで時間がかかりました。それでも心を込めてゆっくり書きました。今日、郵便局で手紙を送りました。祖母は手紙を受け取ったら喜ぶでしょう。", body_zh: "昨天久违地给奶奶写了封信。用手写信感觉很别扭，花了很长时间。不过我还是用心慢慢地写完了。今天我在邮局把信寄出去了。奶奶收到信一定会很高兴。" body_vi: "Hôm qua sau một thời gian dài tôi đã viết thư cho bà. Viết tay cảm thấy lạ lẫm nên mất nhiều thời gian. Dù vậy tôi vẫn viết chậm rãi với tất cả tấm lòng. Hôm nay tôi đã gửi thư ở bưu điện. Bà sẽ vui khi nhận được thư.",
+    body_ja: "昨日、久しぶりに祖母に手紙を書きました。手で書くのが不慣れで時間がかかりました。それでも心を込めてゆっくり書きました。今日、郵便局で手紙を送りました。祖母は手紙を受け取ったら喜ぶでしょう。", body_zh: "昨天久违地给奶奶写了封信。用手写信感觉很别扭，花了很长时间。不过我还是用心慢慢地写完了。今天我在邮局把信寄出去了。奶奶收到信一定会很高兴。", body_vi: "Hôm qua sau một thời gian dài tôi đã viết thư cho bà. Viết tay cảm thấy lạ lẫm nên mất nhiều thời gian. Dù vậy tôi vẫn viết chậm rãi với tất cả tấm lòng. Hôm nay tôi đã gửi thư ở bưu điện. Bà sẽ vui khi nhận được thư.",
     questions: [
-      { question_en: "Why did it take a long time?", question_ja: "なぜ時間がかかりましたか。", question_zh: "为什么花了很长时间？" question_vi: "Tại sao mất nhiều thời gian?", options: ["The pen was broken","The letter was too long","Writing by hand felt awkward","She was too busy"], answerIndex: 2 },
-      { question_en: "Where did the narrator send the letter?", question_ja: "語り手はどこで手紙を送りましたか。", question_zh: "叙述者在哪里寄的信？" question_vi: "Người kể chuyện gửi thư ở đâu?", options: ["At school","At home","At a cafe","At the post office"], answerIndex: 3 },
+      { question_en: "Why did it take a long time?", question_ja: "なぜ時間がかかりましたか。", question_zh: "为什么花了很长时间？", question_vi: "Tại sao mất nhiều thời gian?", options: ["The pen was broken","The letter was too long","Writing by hand felt awkward","She was too busy"], answerIndex: 2 },
+      { question_en: "Where did the narrator send the letter?", question_ja: "語り手はどこで手紙を送りましたか。", question_zh: "叙述者在哪里寄的信？", question_vi: "Người kể chuyện gửi thư ở đâu?", options: ["At school","At home","At a cafe","At the post office"], answerIndex: 3 },
     ],
   },
   {
@@ -107,10 +107,10 @@ export const READING_A2_STORY: RawPassage[] = [
     title_ja: "公園で出会った猫", title_zh: "在公园遇到的猫", title_vi: "Con mèo gặp ở công viên",
     body_kr: "오늘 공원을 산책하다가 작은 고양이를 만났어요. 고양이가 저를 무서워하지 않고 다가왔어요. 저는 가지고 있던 간식을 조금 줬어요. 고양이는 제 옆에서 한참 동안 놀았어요. 내일도 같은 자리에서 고양이를 만나고 싶어요.",
     body_en: "While walking in the park today, I met a small cat. The cat wasn't afraid of me and came closer. I gave it a bit of the snack I had. The cat played next to me for a while. I want to meet the cat again at the same spot tomorrow.",
-    body_ja: "今日、公園を散歩していて小さな猫に出会いました。猫は私を怖がらずに近づいてきました。私は持っていたおやつを少しあげました。猫は私のそばでしばらく遊びました。明日も同じ場所でその猫に会いたいです。", body_zh: "今天在公园散步时遇到了一只小猫。猫不怕我，主动靠近了过来。我给了它一点带着的零食。猫在我身边玩了好一会儿。明天我也想在同一个地方遇见这只猫。" body_vi: "Hôm nay khi đi dạo trong công viên tôi gặp một con mèo nhỏ. Con mèo không sợ tôi mà lại đến gần. Tôi cho nó một ít đồ ăn vặt mang theo. Con mèo chơi bên cạnh tôi khá lâu. Ngày mai tôi cũng muốn gặp lại con mèo ở chỗ đó.",
+    body_ja: "今日、公園を散歩していて小さな猫に出会いました。猫は私を怖がらずに近づいてきました。私は持っていたおやつを少しあげました。猫は私のそばでしばらく遊びました。明日も同じ場所でその猫に会いたいです。", body_zh: "今天在公园散步时遇到了一只小猫。猫不怕我，主动靠近了过来。我给了它一点带着的零食。猫在我身边玩了好一会儿。明天我也想在同一个地方遇见这只猫。", body_vi: "Hôm nay khi đi dạo trong công viên tôi gặp một con mèo nhỏ. Con mèo không sợ tôi mà lại đến gần. Tôi cho nó một ít đồ ăn vặt mang theo. Con mèo chơi bên cạnh tôi khá lâu. Ngày mai tôi cũng muốn gặp lại con mèo ở chỗ đó.",
     questions: [
-      { question_en: "How did the cat react to the narrator?", question_ja: "猫は語り手にどう反応しましたか。", question_zh: "猫对叙述者的反应是什么？" question_vi: "Con mèo phản ứng thế nào với người kể chuyện?", options: ["It cried","It ran away","It came closer","It hid"], answerIndex: 2 },
-      { question_en: "What did the narrator give the cat?", question_ja: "語り手は猫に何をあげましたか。", question_zh: "叙述者给猫吃了什么？" question_vi: "Người kể chuyện đã cho mèo ăn gì?", options: ["A snack","Water","Nothing","A toy"], answerIndex: 0 },
+      { question_en: "How did the cat react to the narrator?", question_ja: "猫は語り手にどう反応しましたか。", question_zh: "猫对叙述者的反应是什么？", question_vi: "Con mèo phản ứng thế nào với người kể chuyện?", options: ["It cried","It ran away","It came closer","It hid"], answerIndex: 2 },
+      { question_en: "What did the narrator give the cat?", question_ja: "語り手は猫に何をあげましたか。", question_zh: "叙述者给猫吃了什么？", question_vi: "Người kể chuyện đã cho mèo ăn gì?", options: ["A snack","Water","Nothing","A toy"], answerIndex: 0 },
     ],
   },
   {
@@ -121,10 +121,10 @@ export const READING_A2_STORY: RawPassage[] = [
     title_ja: "雪だるまを作りました", title_zh: "堆了雪人", title_vi: "Tôi đã đắp người tuyết",
     body_kr: "어제 눈이 많이 내렸어요. 저는 조카와 함께 마당에서 눈사람을 만들었어요. 눈사람의 눈이 자꾸 떨어져서 다시 만들었어요. 완성된 눈사람을 보고 조카가 활짝 웃었어요. 눈이 녹기 전에 사진을 많이 찍을 거예요.",
     body_en: "It snowed a lot yesterday. I made a snowman in the yard with my niece. The snowman's eyes kept falling off, so we made them again. My niece smiled brightly when she saw the finished snowman. I will take a lot of photos before the snow melts.",
-    body_ja: "昨日、雪がたくさん降りました。私は姪と一緒に庭で雪だるまを作りました。雪だるまの目が何度も落ちて、また作り直しました。完成した雪だるまを見て姪が満面の笑みを浮かべました。雪が溶ける前にたくさん写真を撮るつもりです。", body_zh: "昨天下了很大的雪。我和侄子(侄女)一起在院子里堆雪人。雪人的眼睛总是掉下来，我们又重新做了。看到完成的雪人，侄子(侄女)笑得很灿烂。趁雪还没融化，我要多拍些照片。" body_vi: "Hôm qua tuyết rơi rất nhiều. Tôi cùng cháu đắp người tuyết trong sân. Mắt người tuyết cứ rơi ra nên chúng tôi phải làm lại. Cháu tôi cười tươi khi nhìn thấy người tuyết hoàn thành. Trước khi tuyết tan tôi sẽ chụp thật nhiều ảnh.",
+    body_ja: "昨日、雪がたくさん降りました。私は姪と一緒に庭で雪だるまを作りました。雪だるまの目が何度も落ちて、また作り直しました。完成した雪だるまを見て姪が満面の笑みを浮かべました。雪が溶ける前にたくさん写真を撮るつもりです。", body_zh: "昨天下了很大的雪。我和侄子(侄女)一起在院子里堆雪人。雪人的眼睛总是掉下来，我们又重新做了。看到完成的雪人，侄子(侄女)笑得很灿烂。趁雪还没融化，我要多拍些照片。", body_vi: "Hôm qua tuyết rơi rất nhiều. Tôi cùng cháu đắp người tuyết trong sân. Mắt người tuyết cứ rơi ra nên chúng tôi phải làm lại. Cháu tôi cười tươi khi nhìn thấy người tuyết hoàn thành. Trước khi tuyết tan tôi sẽ chụp thật nhiều ảnh.",
     questions: [
-      { question_en: "Who did the narrator make the snowman with?", question_ja: "語り手は誰と雪だるまを作りましたか。", question_zh: "叙述者和谁一起堆的雪人？" question_vi: "Người kể chuyện đắp người tuyết cùng ai?", options: ["A sister","Alone","A friend","A niece"], answerIndex: 3 },
-      { question_en: "What kept happening?", question_ja: "何が繰り返し起こりましたか。", question_zh: "反复发生了什么事？" question_vi: "Chuyện gì liên tục xảy ra?", options: ["It started raining","The nose broke","The snowman melted","The eyes fell off"], answerIndex: 3 },
+      { question_en: "Who did the narrator make the snowman with?", question_ja: "語り手は誰と雪だるまを作りましたか。", question_zh: "叙述者和谁一起堆的雪人？", question_vi: "Người kể chuyện đắp người tuyết cùng ai?", options: ["A sister","Alone","A friend","A niece"], answerIndex: 3 },
+      { question_en: "What kept happening?", question_ja: "何が繰り返し起こりましたか。", question_zh: "反复发生了什么事？", question_vi: "Chuyện gì liên tục xảy ra?", options: ["It started raining","The nose broke","The snowman melted","The eyes fell off"], answerIndex: 3 },
     ],
   },
   {
@@ -135,10 +135,10 @@ export const READING_A2_STORY: RawPassage[] = [
     title_ja: "鍵をなくしました", title_zh: "弄丢了钥匙", title_vi: "Tôi làm mất chìa khóa",
     body_kr: "오늘 퇴근 후에 집 앞에서 열쇠를 찾을 수 없었어요. 가방을 다 뒤졌지만 열쇠가 없었어요. 결국 관리실에 가서 도움을 받았어요. 나중에 코트 주머니에서 열쇠를 찾았어요. 다음부터는 열쇠를 항상 같은 곳에 둘 거예요.",
     body_en: "After work today, I couldn't find my keys in front of my house. I searched my whole bag, but the keys weren't there. In the end, I went to the management office for help. Later, I found the keys in my coat pocket. From now on, I will always keep my keys in the same place.",
-    body_ja: "今日、退勤後に家の前で鍵が見つかりませんでした。かばんを全部探しましたが、鍵はありませんでした。結局、管理事務所に行って助けてもらいました。後でコートのポケットの中に鍵を見つけました。これからは鍵をいつも同じ場所に置くつもりです。", body_zh: "今天下班后在家门前找不到钥匙。我翻遍了整个包，但钥匙不在。最后去管理室寻求了帮助。后来在大衣口袋里找到了钥匙。以后我要把钥匙一直放在同一个地方。" body_vi: "Hôm nay sau khi tan làm tôi không tìm thấy chìa khóa trước nhà. Tôi lục hết cả túi xách nhưng không có chìa khóa. Cuối cùng tôi đến văn phòng quản lý nhờ giúp đỡ. Sau đó tôi tìm thấy chìa khóa trong túi áo khoác. Từ nay tôi sẽ luôn để chìa khóa ở một chỗ cố định.",
+    body_ja: "今日、退勤後に家の前で鍵が見つかりませんでした。かばんを全部探しましたが、鍵はありませんでした。結局、管理事務所に行って助けてもらいました。後でコートのポケットの中に鍵を見つけました。これからは鍵をいつも同じ場所に置くつもりです。", body_zh: "今天下班后在家门前找不到钥匙。我翻遍了整个包，但钥匙不在。最后去管理室寻求了帮助。后来在大衣口袋里找到了钥匙。以后我要把钥匙一直放在同一个地方。", body_vi: "Hôm nay sau khi tan làm tôi không tìm thấy chìa khóa trước nhà. Tôi lục hết cả túi xách nhưng không có chìa khóa. Cuối cùng tôi đến văn phòng quản lý nhờ giúp đỡ. Sau đó tôi tìm thấy chìa khóa trong túi áo khoác. Từ nay tôi sẽ luôn để chìa khóa ở một chỗ cố định.",
     questions: [
-      { question_en: "Where did the narrator finally find the keys?", question_ja: "語り手は最終的にどこで鍵を見つけましたか。", question_zh: "叙述者最后在哪里找到钥匙的？" question_vi: "Cuối cùng người kể chuyện tìm thấy chìa khóa ở đâu?", options: ["On the street","In the bag","At the office","In the coat pocket"], answerIndex: 3 },
-      { question_en: "Who helped the narrator?", question_ja: "誰が語り手を助けましたか。", question_zh: "谁帮助了叙述者？" question_vi: "Ai đã giúp người kể chuyện?", options: ["A friend","The management office","A police officer","A neighbor"], answerIndex: 1 },
+      { question_en: "Where did the narrator finally find the keys?", question_ja: "語り手は最終的にどこで鍵を見つけましたか。", question_zh: "叙述者最后在哪里找到钥匙的？", question_vi: "Cuối cùng người kể chuyện tìm thấy chìa khóa ở đâu?", options: ["On the street","In the bag","At the office","In the coat pocket"], answerIndex: 3 },
+      { question_en: "Who helped the narrator?", question_ja: "誰が語り手を助けましたか。", question_zh: "谁帮助了叙述者？", question_vi: "Ai đã giúp người kể chuyện?", options: ["A friend","The management office","A police officer","A neighbor"], answerIndex: 1 },
     ],
   },
   {
@@ -149,10 +149,10 @@ export const READING_A2_STORY: RawPassage[] = [
     title_ja: "山に登りました", title_zh: "爬了山", title_vi: "Tôi đã leo núi",
     body_kr: "지난 일요일에 친구들과 뒷산에 올라갔어요. 길이 생각보다 가팔라서 힘들었어요. 정상에서 본 풍경은 정말 아름다웠어요. 우리는 정상에서 사진을 많이 찍었어요. 다음 달에는 더 높은 산에 갈 거예요.",
     body_en: "Last Sunday I climbed the mountain behind my neighborhood with friends. The path was steeper than expected, so it was hard. The view from the top was truly beautiful. We took a lot of photos at the top. Next month we will go to a higher mountain.",
-    body_ja: "先週の日曜日、友達と裏山に登りました。道が思ったより急で大変でした。頂上から見た景色は本当に美しかったです。私たちは頂上でたくさん写真を撮りました。来月はもっと高い山に行くつもりです。", body_zh: "上周日和朋友们爬了后山。山路比想象中陡，很辛苦。山顶看到的风景真的很美。我们在山顶拍了很多照片。下个月要去爬更高的山。" body_vi: "Chủ nhật trước tôi cùng bạn bè leo núi sau nhà. Đường dốc hơn tôi tưởng nên rất mệt. Cảnh nhìn từ đỉnh núi thật sự rất đẹp. Chúng tôi chụp rất nhiều ảnh trên đỉnh núi. Tháng sau chúng tôi sẽ đi một ngọn núi cao hơn.",
+    body_ja: "先週の日曜日、友達と裏山に登りました。道が思ったより急で大変でした。頂上から見た景色は本当に美しかったです。私たちは頂上でたくさん写真を撮りました。来月はもっと高い山に行くつもりです。", body_zh: "上周日和朋友们爬了后山。山路比想象中陡，很辛苦。山顶看到的风景真的很美。我们在山顶拍了很多照片。下个月要去爬更高的山。", body_vi: "Chủ nhật trước tôi cùng bạn bè leo núi sau nhà. Đường dốc hơn tôi tưởng nên rất mệt. Cảnh nhìn từ đỉnh núi thật sự rất đẹp. Chúng tôi chụp rất nhiều ảnh trên đỉnh núi. Tháng sau chúng tôi sẽ đi một ngọn núi cao hơn.",
     questions: [
-      { question_en: "What was harder than expected?", question_ja: "何が思ったより大変でしたか。", question_zh: "什么比想象中更辛苦？" question_vi: "Điều gì khó hơn dự đoán?", options: ["The weather","Finding the trail","The path","Carrying food"], answerIndex: 2 },
-      { question_en: "What will they do next month?", question_ja: "来月何をする予定ですか。", question_zh: "下个月他们要做什么？" question_vi: "Tháng sau họ sẽ làm gì?", options: ["Go to the same mountain","Go to a higher mountain","Stay home","Go to the beach"], answerIndex: 1 },
+      { question_en: "What was harder than expected?", question_ja: "何が思ったより大変でしたか。", question_zh: "什么比想象中更辛苦？", question_vi: "Điều gì khó hơn dự đoán?", options: ["The weather","Finding the trail","The path","Carrying food"], answerIndex: 2 },
+      { question_en: "What will they do next month?", question_ja: "来月何をする予定ですか。", question_zh: "下个月他们要做什么？", question_vi: "Tháng sau họ sẽ làm gì?", options: ["Go to the same mountain","Go to a higher mountain","Stay home","Go to the beach"], answerIndex: 1 },
     ],
   },
   {
@@ -163,10 +163,10 @@ export const READING_A2_STORY: RawPassage[] = [
     title_ja: "初めて釣りをしました", title_zh: "第一次钓鱼", title_vi: "Lần đầu đi câu cá",
     body_kr: "지난 토요일에 아버지와 처음 낚시를 갔어요. 몇 시간 동안 아무것도 잡지 못했어요. 저는 조금 지루하고 실망스러웠어요. 그런데 마지막에 작은 물고기를 한 마리 잡았어요. 다음에는 더 큰 물고기를 잡고 싶어요.",
     body_en: "Last Saturday I went fishing with my father for the first time. I caught nothing for several hours. I felt a bit bored and disappointed. But at the end, I caught one small fish. Next time I want to catch a bigger fish.",
-    body_ja: "先週の土曜日、父と初めて釣りに行きました。数時間何も釣れませんでした。私は少し退屈でがっかりしました。しかし最後に小さな魚を一匹釣りました。次はもっと大きな魚を釣りたいです。", body_zh: "上周六第一次和爸爸去钓鱼。好几个小时什么都没钓到。我有点无聊也有点失望。不过最后钓到了一条小鱼。下次想钓更大的鱼。" body_vi: "Thứ Bảy trước tôi lần đầu đi câu cá cùng bố. Suốt mấy tiếng đồng hồ tôi không câu được gì cả. Tôi hơi chán và thất vọng. Nhưng cuối cùng tôi đã câu được một con cá nhỏ. Lần sau tôi muốn câu được con cá to hơn.",
+    body_ja: "先週の土曜日、父と初めて釣りに行きました。数時間何も釣れませんでした。私は少し退屈でがっかりしました。しかし最後に小さな魚を一匹釣りました。次はもっと大きな魚を釣りたいです。", body_zh: "上周六第一次和爸爸去钓鱼。好几个小时什么都没钓到。我有点无聊也有点失望。不过最后钓到了一条小鱼。下次想钓更大的鱼。", body_vi: "Thứ Bảy trước tôi lần đầu đi câu cá cùng bố. Suốt mấy tiếng đồng hồ tôi không câu được gì cả. Tôi hơi chán và thất vọng. Nhưng cuối cùng tôi đã câu được một con cá nhỏ. Lần sau tôi muốn câu được con cá to hơn.",
     questions: [
-      { question_en: "How did the narrator feel before catching a fish?", question_ja: "魚を釣る前、語り手はどう感じましたか。", question_zh: "钓到鱼之前叙述者感觉怎么样？" question_vi: "Trước khi câu được cá người kể chuyện cảm thấy thế nào?", options: ["Bored and disappointed","Happy","Scared","Excited"], answerIndex: 0 },
-      { question_en: "What did the narrator catch in the end?", question_ja: "結局、語り手は何を釣りましたか。", question_zh: "叙述者最后钓到了什么？" question_vi: "Cuối cùng người kể chuyện câu được gì?", options: ["A small fish","Two fish","Nothing","A big fish"], answerIndex: 0 },
+      { question_en: "How did the narrator feel before catching a fish?", question_ja: "魚を釣る前、語り手はどう感じましたか。", question_zh: "钓到鱼之前叙述者感觉怎么样？", question_vi: "Trước khi câu được cá người kể chuyện cảm thấy thế nào?", options: ["Bored and disappointed","Happy","Scared","Excited"], answerIndex: 0 },
+      { question_en: "What did the narrator catch in the end?", question_ja: "結局、語り手は何を釣りましたか。", question_zh: "叙述者最后钓到了什么？", question_vi: "Cuối cùng người kể chuyện câu được gì?", options: ["A small fish","Two fish","Nothing","A big fish"], answerIndex: 0 },
     ],
   },
   {
@@ -177,10 +177,10 @@ export const READING_A2_STORY: RawPassage[] = [
     title_ja: "隣人との誤解", title_zh: "和邻居的误会", title_vi: "Hiểu lầm với hàng xóm",
     body_kr: "지난주에 이웃 아저씨가 저에게 화를 내셨어요. 저는 이유를 몰라서 당황했어요. 나중에 알고 보니 주차 문제 때문이었어요. 저는 직접 찾아가서 오해를 풀었어요. 지금은 이웃 아저씨와 사이가 좋아요.",
     body_en: "Last week, my neighbor got angry at me. I was confused because I didn't know why. Later I found out it was because of a parking issue. I went to see him directly and resolved the misunderstanding. Now I get along well with my neighbor.",
-    body_ja: "先週、隣のおじさんが私に腹を立てました。私は理由が分からず戸惑いました。後で分かったのは駐車の問題でした。私は直接会いに行って誤解を解きました。今は隣のおじさんと仲良くしています。", body_zh: "上周隔壁大叔对我发火了。我不知道原因，很慌张。后来才知道是因为停车问题。我亲自登门解开了误会。现在我和隔壁大叔关系很好。" body_vi: "Tuần trước chú hàng xóm đã nổi giận với tôi. Tôi không biết lý do nên rất bối rối. Sau đó tôi mới biết là vì vấn đề đỗ xe. Tôi đã trực tiếp đến gặp và giải tỏa hiểu lầm. Bây giờ tôi và chú hàng xóm quan hệ tốt.",
+    body_ja: "先週、隣のおじさんが私に腹を立てました。私は理由が分からず戸惑いました。後で分かったのは駐車の問題でした。私は直接会いに行って誤解を解きました。今は隣のおじさんと仲良くしています。", body_zh: "上周隔壁大叔对我发火了。我不知道原因，很慌张。后来才知道是因为停车问题。我亲自登门解开了误会。现在我和隔壁大叔关系很好。", body_vi: "Tuần trước chú hàng xóm đã nổi giận với tôi. Tôi không biết lý do nên rất bối rối. Sau đó tôi mới biết là vì vấn đề đỗ xe. Tôi đã trực tiếp đến gặp và giải tỏa hiểu lầm. Bây giờ tôi và chú hàng xóm quan hệ tốt.",
     questions: [
-      { question_en: "Why was the neighbor angry?", question_ja: "なぜ隣人は怒りましたか。", question_zh: "邻居为什么生气？" question_vi: "Tại sao hàng xóm nổi giận?", options: ["A parking issue","Noise","A pet","Trash"], answerIndex: 0 },
-      { question_en: "How did the narrator resolve it?", question_ja: "語り手はどうやって解決しましたか。", question_zh: "叙述者是怎么解决的？" question_vi: "Người kể chuyện đã giải quyết thế nào?", options: ["Wrote a letter","Called the police","Ignored it","Went to talk directly"], answerIndex: 3 },
+      { question_en: "Why was the neighbor angry?", question_ja: "なぜ隣人は怒りましたか。", question_zh: "邻居为什么生气？", question_vi: "Tại sao hàng xóm nổi giận?", options: ["A parking issue","Noise","A pet","Trash"], answerIndex: 0 },
+      { question_en: "How did the narrator resolve it?", question_ja: "語り手はどうやって解決しましたか。", question_zh: "叙述者是怎么解决的？", question_vi: "Người kể chuyện đã giải quyết thế nào?", options: ["Wrote a letter","Called the police","Ignored it","Went to talk directly"], answerIndex: 3 },
     ],
   },
   {
@@ -191,10 +191,10 @@ export const READING_A2_STORY: RawPassage[] = [
     title_ja: "地下鉄で眠ってしまいました", title_zh: "在地铁上睡着了", title_vi: "Tôi ngủ quên trên tàu điện ngầm",
     body_kr: "어제 너무 피곤해서 지하철에서 깜빡 잠들었어요. 눈을 떠보니 이미 종점이었어요. 저는 급하게 반대 방향 지하철을 탔어요. 결국 집에 한 시간이나 늦게 도착했어요. 다음부터는 알람을 맞추고 잘 거예요.",
     body_en: "Yesterday I was so tired that I dozed off on the subway. When I opened my eyes, I was already at the last stop. I hurriedly got on a subway going the opposite direction. In the end, I arrived home an hour late. From now on, I will set an alarm before napping.",
-    body_ja: "昨日、とても疲れていて地下鉄でうとうと眠ってしまいました。目を開けるとすでに終点でした。私は急いで反対方向の地下鉄に乗りました。結局、家に一時間も遅れて着きました。これからは仮眠する前にアラームをセットするつもりです。", body_zh: "昨天太累了，在地铁上不小心睡着了。睁开眼睛发现已经到终点站了。我急忙坐上了反方向的地铁。结果到家时晚了整整一个小时。以后小睡前我要设好闹钟。" body_vi: "Hôm qua tôi quá mệt nên ngủ quên trên tàu điện ngầm. Khi mở mắt ra thì đã đến ga cuối. Tôi vội vàng lên chuyến tàu ngược hướng. Cuối cùng tôi về đến nhà muộn một tiếng đồng hồ. Từ nay tôi sẽ đặt báo thức trước khi ngủ.",
+    body_ja: "昨日、とても疲れていて地下鉄でうとうと眠ってしまいました。目を開けるとすでに終点でした。私は急いで反対方向の地下鉄に乗りました。結局、家に一時間も遅れて着きました。これからは仮眠する前にアラームをセットするつもりです。", body_zh: "昨天太累了，在地铁上不小心睡着了。睁开眼睛发现已经到终点站了。我急忙坐上了反方向的地铁。结果到家时晚了整整一个小时。以后小睡前我要设好闹钟。", body_vi: "Hôm qua tôi quá mệt nên ngủ quên trên tàu điện ngầm. Khi mở mắt ra thì đã đến ga cuối. Tôi vội vàng lên chuyến tàu ngược hướng. Cuối cùng tôi về đến nhà muộn một tiếng đồng hồ. Từ nay tôi sẽ đặt báo thức trước khi ngủ.",
     questions: [
-      { question_en: "Where did the narrator wake up?", question_ja: "語り手はどこで目が覚めましたか。", question_zh: "叙述者在哪里醒来的？" question_vi: "Người kể chuyện tỉnh dậy ở đâu?", options: ["At the last stop","At a station near home","At work","At home"], answerIndex: 0 },
-      { question_en: "How late did the narrator arrive home?", question_ja: "家にどれくらい遅れて着きましたか。", question_zh: "叙述者晚到家多久？" question_vi: "Người kể chuyện về nhà muộn bao lâu?", options: ["Not late","Thirty minutes","Two hours","One hour"], answerIndex: 3 },
+      { question_en: "Where did the narrator wake up?", question_ja: "語り手はどこで目が覚めましたか。", question_zh: "叙述者在哪里醒来的？", question_vi: "Người kể chuyện tỉnh dậy ở đâu?", options: ["At the last stop","At a station near home","At work","At home"], answerIndex: 0 },
+      { question_en: "How late did the narrator arrive home?", question_ja: "家にどれくらい遅れて着きましたか。", question_zh: "叙述者晚到家多久？", question_vi: "Người kể chuyện về nhà muộn bao lâu?", options: ["Not late","Thirty minutes","Two hours","One hour"], answerIndex: 3 },
     ],
   },
   {
@@ -205,10 +205,10 @@ export const READING_A2_STORY: RawPassage[] = [
     title_ja: "傘を一緒に使いました", title_zh: "共用了一把伞", title_vi: "Chúng tôi dùng chung một chiếc ô",
     body_kr: "오늘 갑자기 비가 내렸어요. 저는 우산이 없어서 곤란했어요. 모르는 학생이 우산을 같이 쓰자고 했어요. 우리는 이야기를 나누며 같이 걸었어요. 다음에 또 만나면 고맙다고 말할 거예요.",
     body_en: "It suddenly rained today. I was in trouble because I didn't have an umbrella. A student I didn't know offered to share their umbrella. We walked together, chatting. If we meet again, I will say thank you.",
-    body_ja: "今日、突然雨が降りました。私は傘がなくて困っていました。知らない学生が傘を一緒に使おうと言ってくれました。私たちは話をしながら一緒に歩きました。今度また会ったらお礼を言うつもりです。", body_zh: "今天突然下雨了。我没有伞，很为难。一个不认识的学生提出一起打伞。我们一边聊天一边一起走。下次再见面时我要说声谢谢。" body_vi: "Hôm nay trời đột nhiên đổ mưa. Tôi khó xử vì không có ô. Một học sinh không quen biết đề nghị dùng chung ô. Chúng tôi vừa đi vừa trò chuyện. Lần sau gặp lại tôi sẽ nói lời cảm ơn.",
+    body_ja: "今日、突然雨が降りました。私は傘がなくて困っていました。知らない学生が傘を一緒に使おうと言ってくれました。私たちは話をしながら一緒に歩きました。今度また会ったらお礼を言うつもりです。", body_zh: "今天突然下雨了。我没有伞，很为难。一个不认识的学生提出一起打伞。我们一边聊天一边一起走。下次再见面时我要说声谢谢。", body_vi: "Hôm nay trời đột nhiên đổ mưa. Tôi khó xử vì không có ô. Một học sinh không quen biết đề nghị dùng chung ô. Chúng tôi vừa đi vừa trò chuyện. Lần sau gặp lại tôi sẽ nói lời cảm ơn.",
     questions: [
-      { question_en: "Why was the narrator in trouble?", question_ja: "なぜ語り手は困っていましたか。", question_zh: "叙述者为什么为难？" question_vi: "Tại sao người kể chuyện khó xử?", options: ["Late for school","No umbrella","It was cold","Lost"], answerIndex: 1 },
-      { question_en: "Who offered to share an umbrella?", question_ja: "誰が傘を一緒に使おうと言いましたか。", question_zh: "谁提出一起打伞？" question_vi: "Ai đề nghị dùng chung ô?", options: ["A neighbor","A friend","A stranger student","A teacher"], answerIndex: 2 },
+      { question_en: "Why was the narrator in trouble?", question_ja: "なぜ語り手は困っていましたか。", question_zh: "叙述者为什么为难？", question_vi: "Tại sao người kể chuyện khó xử?", options: ["Late for school","No umbrella","It was cold","Lost"], answerIndex: 1 },
+      { question_en: "Who offered to share an umbrella?", question_ja: "誰が傘を一緒に使おうと言いましたか。", question_zh: "谁提出一起打伞？", question_vi: "Ai đề nghị dùng chung ô?", options: ["A neighbor","A friend","A stranger student","A teacher"], answerIndex: 2 },
     ],
   },
   {
@@ -219,10 +219,10 @@ export const READING_A2_STORY: RawPassage[] = [
     title_ja: "陶芸体験", title_zh: "陶艺体验", title_vi: "Trải nghiệm làm gốm",
     body_kr: "지난 주말에 친구와 도자기 만들기 체험을 했어요. 물레를 처음 다뤄서 손이 자꾸 미끄러졌어요. 컵 모양이 조금 삐뚤어졌지만 재미있었어요. 두 주 후에 완성된 컵을 받을 거예요. 다음에는 접시도 만들어 보고 싶어요.",
     body_en: "Last weekend I tried pottery-making with a friend. Since it was my first time using the wheel, my hands kept slipping. The cup shape came out a bit crooked, but it was fun. In two weeks, I will receive the finished cup. Next time I want to try making a plate too.",
-    body_ja: "先週末、友達と陶芸体験をしました。ろくろを初めて使ったので手が何度も滑りました。カップの形が少し歪んでしまいましたが楽しかったです。二週間後に完成したカップを受け取ります。次は皿も作ってみたいです。", body_zh: "上周末和朋友体验了做陶艺。第一次用陶轮，手一直打滑。杯子的形状有点歪，但很有趣。两周后我会拿到做好的杯子。下次我还想试着做盘子。" body_vi: "Cuối tuần trước tôi cùng bạn trải nghiệm làm gốm. Lần đầu dùng bàn xoay nên tay tôi cứ bị trượt. Hình dáng chiếc cốc hơi lệch nhưng rất thú vị. Hai tuần sau tôi sẽ nhận được chiếc cốc đã hoàn thành. Lần sau tôi cũng muốn thử làm đĩa.",
+    body_ja: "先週末、友達と陶芸体験をしました。ろくろを初めて使ったので手が何度も滑りました。カップの形が少し歪んでしまいましたが楽しかったです。二週間後に完成したカップを受け取ります。次は皿も作ってみたいです。", body_zh: "上周末和朋友体验了做陶艺。第一次用陶轮，手一直打滑。杯子的形状有点歪，但很有趣。两周后我会拿到做好的杯子。下次我还想试着做盘子。", body_vi: "Cuối tuần trước tôi cùng bạn trải nghiệm làm gốm. Lần đầu dùng bàn xoay nên tay tôi cứ bị trượt. Hình dáng chiếc cốc hơi lệch nhưng rất thú vị. Hai tuần sau tôi sẽ nhận được chiếc cốc đã hoàn thành. Lần sau tôi cũng muốn thử làm đĩa.",
     questions: [
-      { question_en: "Why did the narrator's hands keep slipping?", question_ja: "なぜ語り手の手は滑り続けましたか。", question_zh: "叙述者的手为什么一直打滑？" question_vi: "Tại sao tay người kể chuyện cứ bị trượt?", options: ["First time using the wheel","Tired hands","The room was hot","The clay was too wet"], answerIndex: 0 },
-      { question_en: "When will the narrator get the finished cup?", question_ja: "語り手はいつ完成したカップをもらいますか。", question_zh: "叙述者什么时候能拿到做好的杯子？" question_vi: "Khi nào người kể chuyện nhận được chiếc cốc?", options: ["Never","In two weeks","Next week","Tomorrow"], answerIndex: 1 },
+      { question_en: "Why did the narrator's hands keep slipping?", question_ja: "なぜ語り手の手は滑り続けましたか。", question_zh: "叙述者的手为什么一直打滑？", question_vi: "Tại sao tay người kể chuyện cứ bị trượt?", options: ["First time using the wheel","Tired hands","The room was hot","The clay was too wet"], answerIndex: 0 },
+      { question_en: "When will the narrator get the finished cup?", question_ja: "語り手はいつ完成したカップをもらいますか。", question_zh: "叙述者什么时候能拿到做好的杯子？", question_vi: "Khi nào người kể chuyện nhận được chiếc cốc?", options: ["Never","In two weeks","Next week","Tomorrow"], answerIndex: 1 },
     ],
   },
   {
@@ -233,10 +233,10 @@ export const READING_A2_STORY: RawPassage[] = [
     title_ja: "初めてキャンプに行きました", title_zh: "第一次去露营", title_vi: "Lần đầu đi cắm trại",
     body_kr: "지난달에 가족과 처음 캠핑을 갔어요. 텐트를 치는 것이 생각보다 오래 걸렸어요. 밤에는 별이 정말 많이 보였어요. 아침에는 이슬 때문에 텐트가 축축했어요. 다음에는 더 좋은 텐트를 준비할 거예요.",
     body_en: "Last month I went camping with my family for the first time. Setting up the tent took longer than expected. At night, we could see so many stars. In the morning, the tent was damp because of the dew. Next time I will prepare a better tent.",
-    body_ja: "先月、家族と初めてキャンプに行きました。テントを張るのに思ったより時間がかかりました。夜には星がたくさん見えました。朝は露のせいでテントが湿っていました。次はもっと良いテントを準備するつもりです。", body_zh: "上个月和家人第一次去露营。搭帐篷比想象中花的时间长。晚上能看到很多很多星星。早上因为露水，帐篷变得湿漉漉的。下次我要准备更好的帐篷。" body_vi: "Tháng trước tôi lần đầu đi cắm trại cùng gia đình. Dựng lều mất nhiều thời gian hơn tôi tưởng. Buổi tối tôi nhìn thấy rất nhiều ngôi sao. Buổi sáng vì sương nên lều bị ẩm ướt. Lần sau tôi sẽ chuẩn bị chiếc lều tốt hơn.",
+    body_ja: "先月、家族と初めてキャンプに行きました。テントを張るのに思ったより時間がかかりました。夜には星がたくさん見えました。朝は露のせいでテントが湿っていました。次はもっと良いテントを準備するつもりです。", body_zh: "上个月和家人第一次去露营。搭帐篷比想象中花的时间长。晚上能看到很多很多星星。早上因为露水，帐篷变得湿漉漉的。下次我要准备更好的帐篷。", body_vi: "Tháng trước tôi lần đầu đi cắm trại cùng gia đình. Dựng lều mất nhiều thời gian hơn tôi tưởng. Buổi tối tôi nhìn thấy rất nhiều ngôi sao. Buổi sáng vì sương nên lều bị ẩm ướt. Lần sau tôi sẽ chuẩn bị chiếc lều tốt hơn.",
     questions: [
-      { question_en: "What took longer than expected?", question_ja: "何に思ったより時間がかかりましたか。", question_zh: "什么比想象中花的时间更长？" question_vi: "Điều gì mất nhiều thời gian hơn dự đoán?", options: ["Setting up the tent","Packing","Driving there","Cooking"], answerIndex: 0 },
-      { question_en: "Why was the tent damp in the morning?", question_ja: "なぜ朝テントが湿っていましたか。", question_zh: "早上帐篷为什么潮湿？" question_vi: "Tại sao lều bị ẩm vào buổi sáng?", options: ["A leak","Rain","A spilled drink","Dew"], answerIndex: 3 },
+      { question_en: "What took longer than expected?", question_ja: "何に思ったより時間がかかりましたか。", question_zh: "什么比想象中花的时间更长？", question_vi: "Điều gì mất nhiều thời gian hơn dự đoán?", options: ["Setting up the tent","Packing","Driving there","Cooking"], answerIndex: 0 },
+      { question_en: "Why was the tent damp in the morning?", question_ja: "なぜ朝テントが湿っていましたか。", question_zh: "早上帐篷为什么潮湿？", question_vi: "Tại sao lều bị ẩm vào buổi sáng?", options: ["A leak","Rain","A spilled drink","Dew"], answerIndex: 3 },
     ],
   },
   {
@@ -247,10 +247,10 @@ export const READING_A2_STORY: RawPassage[] = [
     title_ja: "手をけがしました", title_zh: "手受伤了", title_vi: "Tôi bị thương ở tay",
     body_kr: "오늘 요리를 하다가 칼에 손을 베였어요. 피가 조금 나서 놀랐어요. 룸메이트가 급하게 약을 발라 줬어요. 다행히 상처가 깊지 않았어요. 내일부터는 요리할 때 더 조심할 거예요.",
     body_en: "While cooking today, I cut my hand with a knife. I was startled because it bled a little. My roommate quickly put medicine on it. Fortunately, the wound wasn't deep. From tomorrow, I will be more careful while cooking.",
-    body_ja: "今日、料理をしていて包丁で手を切りました。少し血が出て驚きました。ルームメイトが急いで薬を塗ってくれました。幸い傷は深くありませんでした。明日からは料理をするとき、もっと気をつけるつもりです。", body_zh: "今天做饭时被刀割伤了手。流了点血，把我吓了一跳。室友赶紧给我涂了药。幸好伤口不深。从明天开始我做饭时要更小心。" body_vi: "Hôm nay khi nấu ăn tôi bị dao cắt vào tay. Máu chảy ra một chút khiến tôi giật mình. Bạn cùng phòng vội vàng bôi thuốc cho tôi. May mắn là vết thương không sâu. Từ mai khi nấu ăn tôi sẽ cẩn thận hơn.",
+    body_ja: "今日、料理をしていて包丁で手を切りました。少し血が出て驚きました。ルームメイトが急いで薬を塗ってくれました。幸い傷は深くありませんでした。明日からは料理をするとき、もっと気をつけるつもりです。", body_zh: "今天做饭时被刀割伤了手。流了点血，把我吓了一跳。室友赶紧给我涂了药。幸好伤口不深。从明天开始我做饭时要更小心。", body_vi: "Hôm nay khi nấu ăn tôi bị dao cắt vào tay. Máu chảy ra một chút khiến tôi giật mình. Bạn cùng phòng vội vàng bôi thuốc cho tôi. May mắn là vết thương không sâu. Từ mai khi nấu ăn tôi sẽ cẩn thận hơn.",
     questions: [
-      { question_en: "How did the narrator get hurt?", question_ja: "語り手はどうやってけがをしましたか。", question_zh: "叙述者是怎么受伤的？" question_vi: "Người kể chuyện bị thương như thế nào?", options: ["Fell down","Hit by a door","Burned by fire","Cut with a knife"], answerIndex: 3 },
-      { question_en: "Who helped the narrator?", question_ja: "誰が語り手を助けましたか。", question_zh: "谁帮助了叙述者？" question_vi: "Ai đã giúp người kể chuyện?", options: ["No one","A roommate","A neighbor","A doctor"], answerIndex: 1 },
+      { question_en: "How did the narrator get hurt?", question_ja: "語り手はどうやってけがをしましたか。", question_zh: "叙述者是怎么受伤的？", question_vi: "Người kể chuyện bị thương như thế nào?", options: ["Fell down","Hit by a door","Burned by fire","Cut with a knife"], answerIndex: 3 },
+      { question_en: "Who helped the narrator?", question_ja: "誰が語り手を助けましたか。", question_zh: "谁帮助了叙述者？", question_vi: "Ai đã giúp người kể chuyện?", options: ["No one","A roommate","A neighbor","A doctor"], answerIndex: 1 },
     ],
   },
   {
@@ -261,10 +261,10 @@ export const READING_A2_STORY: RawPassage[] = [
     title_ja: "植木鉢を割りました", title_zh: "打碎了花盆", title_vi: "Tôi làm vỡ chậu hoa",
     body_kr: "오늘 청소를 하다가 실수로 화분을 떨어뜨렸어요. 화분이 깨지고 흙이 바닥에 쏟아졌어요. 저는 깜짝 놀랐지만 천천히 치웠어요. 화분 안의 꽃은 다행히 괜찮았어요. 내일 새 화분을 사러 갈 거예요.",
     body_en: "While cleaning today, I accidentally dropped a flowerpot. The pot broke and soil spilled onto the floor. I was startled but cleaned it up slowly. Fortunately, the flower inside was fine. I will go buy a new pot tomorrow.",
-    body_ja: "今日、掃除をしていてうっかり植木鉢を落としてしまいました。鉢が割れて土が床にこぼれました。私はびっくりしましたが、ゆっくり片付けました。鉢の中の花は幸い無事でした。明日、新しい植木鉢を買いに行くつもりです。", body_zh: "今天打扫时不小心把花盆碰掉了。花盆碎了，土洒了一地。我吓了一跳，慢慢收拾了起来。幸好花盆里的花没事。明天我要去买新花盆。" body_vi: "Hôm nay khi dọn dẹp tôi vô tình làm rơi chậu hoa. Chậu vỡ và đất đổ ra sàn nhà. Tôi giật mình nhưng đã dọn dẹp từ từ. May mắn hoa trong chậu vẫn ổn. Ngày mai tôi sẽ đi mua chậu hoa mới.",
+    body_ja: "今日、掃除をしていてうっかり植木鉢を落としてしまいました。鉢が割れて土が床にこぼれました。私はびっくりしましたが、ゆっくり片付けました。鉢の中の花は幸い無事でした。明日、新しい植木鉢を買いに行くつもりです。", body_zh: "今天打扫时不小心把花盆碰掉了。花盆碎了，土洒了一地。我吓了一跳，慢慢收拾了起来。幸好花盆里的花没事。明天我要去买新花盆。", body_vi: "Hôm nay khi dọn dẹp tôi vô tình làm rơi chậu hoa. Chậu vỡ và đất đổ ra sàn nhà. Tôi giật mình nhưng đã dọn dẹp từ từ. May mắn hoa trong chậu vẫn ổn. Ngày mai tôi sẽ đi mua chậu hoa mới.",
     questions: [
-      { question_en: "What spilled onto the floor?", question_ja: "床に何がこぼれましたか。", question_zh: "什么洒到了地上？" question_vi: "Cái gì đổ ra sàn nhà?", options: ["Paint","Water","Sand","Soil"], answerIndex: 3 },
-      { question_en: "What will the narrator do tomorrow?", question_ja: "語り手は明日何をしますか。", question_zh: "叙述者明天要做什么？" question_vi: "Ngày mai người kể chuyện sẽ làm gì?", options: ["Buy a new pot","Throw away the flower","Clean again","Move houses"], answerIndex: 0 },
+      { question_en: "What spilled onto the floor?", question_ja: "床に何がこぼれましたか。", question_zh: "什么洒到了地上？", question_vi: "Cái gì đổ ra sàn nhà?", options: ["Paint","Water","Sand","Soil"], answerIndex: 3 },
+      { question_en: "What will the narrator do tomorrow?", question_ja: "語り手は明日何をしますか。", question_zh: "叙述者明天要做什么？", question_vi: "Ngày mai người kể chuyện sẽ làm gì?", options: ["Buy a new pot","Throw away the flower","Clean again","Move houses"], answerIndex: 0 },
     ],
   },
   {
@@ -275,10 +275,10 @@ export const READING_A2_STORY: RawPassage[] = [
     title_ja: "足首をくじきました", title_zh: "扭伤了脚", title_vi: "Tôi bị bong gân chân",
     body_kr: "어제 계단을 내려가다가 발을 삐었어요. 발목이 많이 부어서 걷기가 힘들었어요. 친구가 저를 병원까지 데려다줬어요. 의사 선생님이 며칠 쉬어야 한다고 하셨어요. 다음 주까지는 운동을 쉴 거예요.",
     body_en: "Yesterday I sprained my ankle while going down the stairs. My ankle was so swollen that it was hard to walk. A friend took me to the hospital. The doctor said I need to rest for a few days. I will rest from exercise until next week.",
-    body_ja: "昨日、階段を下りていて足首をくじきました。足首がひどく腫れて歩くのが大変でした。友達が病院まで連れて行ってくれました。医者は数日休むべきだと言いました。来週まで運動を休むつもりです。", body_zh: "昨天下楼梯时扭伤了脚。脚踝肿得很厉害，走路很困难。朋友把我送到了医院。医生说要休息几天。到下周为止我要暂停运动。" body_vi: "Hôm qua khi xuống cầu thang tôi bị bong gân chân. Mắt cá chân sưng to nên đi lại rất khó khăn. Bạn tôi đã đưa tôi đến bệnh viện. Bác sĩ nói tôi cần nghỉ ngơi vài ngày. Tôi sẽ ngừng tập thể dục đến tuần sau.",
+    body_ja: "昨日、階段を下りていて足首をくじきました。足首がひどく腫れて歩くのが大変でした。友達が病院まで連れて行ってくれました。医者は数日休むべきだと言いました。来週まで運動を休むつもりです。", body_zh: "昨天下楼梯时扭伤了脚。脚踝肿得很厉害，走路很困难。朋友把我送到了医院。医生说要休息几天。到下周为止我要暂停运动。", body_vi: "Hôm qua khi xuống cầu thang tôi bị bong gân chân. Mắt cá chân sưng to nên đi lại rất khó khăn. Bạn tôi đã đưa tôi đến bệnh viện. Bác sĩ nói tôi cần nghỉ ngơi vài ngày. Tôi sẽ ngừng tập thể dục đến tuần sau.",
     questions: [
-      { question_en: "How badly was the ankle swollen?", question_ja: "足首はどれくらい腫れましたか。", question_zh: "脚踝肿得有多厉害？" question_vi: "Mắt cá chân sưng đến mức nào?", options: ["A lot","A little","Slightly","Not swollen"], answerIndex: 0 },
-      { question_en: "What did the doctor say?", question_ja: "医者は何と言いましたか。", question_zh: "医生说了什么？" question_vi: "Bác sĩ nói gì?", options: ["Keep exercising","Go to school","Nothing serious","Rest for a few days"], answerIndex: 3 },
+      { question_en: "How badly was the ankle swollen?", question_ja: "足首はどれくらい腫れましたか。", question_zh: "脚踝肿得有多厉害？", question_vi: "Mắt cá chân sưng đến mức nào?", options: ["A lot","A little","Slightly","Not swollen"], answerIndex: 0 },
+      { question_en: "What did the doctor say?", question_ja: "医者は何と言いましたか。", question_zh: "医生说了什么？", question_vi: "Bác sĩ nói gì?", options: ["Keep exercising","Go to school","Nothing serious","Rest for a few days"], answerIndex: 3 },
     ],
   },
   {
@@ -289,10 +289,10 @@ export const READING_A2_STORY: RawPassage[] = [
     title_ja: "書店で道に迷いました", title_zh: "在书店迷路了", title_vi: "Tôi bị lạc trong hiệu sách",
     body_kr: "오늘 큰 서점에 처음 갔어요. 서점이 너무 넓어서 출구를 못 찾았어요. 저는 십 분 동안 이리저리 헤맸어요. 결국 직원에게 물어봐서 겨우 나왔어요. 다음에는 지도를 먼저 확인할 거예요.",
     body_en: "I went to a large bookstore for the first time today. The bookstore was so big that I couldn't find the exit. I wandered around for ten minutes. In the end, I asked a staff member and finally got out. Next time I will check the map first.",
-    body_ja: "今日、大きな書店に初めて行きました。書店があまりに広くて出口が見つかりませんでした。私は十分間あちこち迷いました。結局、店員に聞いてようやく出られました。次は先に地図を確認するつもりです。", body_zh: "今天第一次去了一家大书店。书店太大了，找不到出口。我转来转去找了十分钟。最后问了店员才终于出来了。下次我要先确认地图。" body_vi: "Hôm nay lần đầu tôi đến một hiệu sách lớn. Hiệu sách quá rộng nên tôi không tìm được lối ra. Tôi loanh quanh khắp nơi trong mười phút. Cuối cùng tôi hỏi nhân viên mới ra được. Lần sau tôi sẽ xem bản đồ trước.",
+    body_ja: "今日、大きな書店に初めて行きました。書店があまりに広くて出口が見つかりませんでした。私は十分間あちこち迷いました。結局、店員に聞いてようやく出られました。次は先に地図を確認するつもりです。", body_zh: "今天第一次去了一家大书店。书店太大了，找不到出口。我转来转去找了十分钟。最后问了店员才终于出来了。下次我要先确认地图。", body_vi: "Hôm nay lần đầu tôi đến một hiệu sách lớn. Hiệu sách quá rộng nên tôi không tìm được lối ra. Tôi loanh quanh khắp nơi trong mười phút. Cuối cùng tôi hỏi nhân viên mới ra được. Lần sau tôi sẽ xem bản đồ trước.",
     questions: [
-      { question_en: "Why couldn't the narrator find the exit?", question_ja: "なぜ語り手は出口を見つけられませんでしたか。", question_zh: "叙述者为什么找不到出口？" question_vi: "Tại sao người kể chuyện không tìm được lối ra?", options: ["No signs","Too dark","Bookstore was too big","Too crowded"], answerIndex: 2 },
-      { question_en: "How did the narrator finally get out?", question_ja: "語り手はどうやってようやく外に出ましたか。", question_zh: "叙述者最后是怎么出来的？" question_vi: "Cuối cùng người kể chuyện ra ngoài bằng cách nào?", options: ["Found it alone","Asked a staff member","Used a map","Called a friend"], answerIndex: 1 },
+      { question_en: "Why couldn't the narrator find the exit?", question_ja: "なぜ語り手は出口を見つけられませんでしたか。", question_zh: "叙述者为什么找不到出口？", question_vi: "Tại sao người kể chuyện không tìm được lối ra?", options: ["No signs","Too dark","Bookstore was too big","Too crowded"], answerIndex: 2 },
+      { question_en: "How did the narrator finally get out?", question_ja: "語り手はどうやってようやく外に出ましたか。", question_zh: "叙述者最后是怎么出来的？", question_vi: "Cuối cùng người kể chuyện ra ngoài bằng cách nào?", options: ["Found it alone","Asked a staff member","Used a map","Called a friend"], answerIndex: 1 },
     ],
   },
   {
@@ -303,10 +303,10 @@ export const READING_A2_STORY: RawPassage[] = [
     title_ja: "自転車が壊れました", title_zh: "自行车坏了", title_vi: "Xe đạp của tôi bị hỏng",
     body_kr: "오늘 출근길에 자전거 체인이 갑자기 빠졌어요. 저는 길에서 당황해서 어쩔 줄 몰랐어요. 지나가던 아저씨가 고쳐 주셨어요. 저는 감사 인사를 하고 다시 출발했어요. 이번 주말에는 자전거를 정비소에 맡길 거예요.",
     body_en: "On my way to work today, my bicycle chain suddenly came off. I was flustered on the street and didn't know what to do. A passing man fixed it for me. I thanked him and set off again. This weekend I will take the bicycle to a repair shop.",
-    body_ja: "今日、出勤途中に自転車のチェーンが突然外れました。私は道で慌ててどうすればいいか分かりませんでした。通りすがりのおじさんが直してくれました。私はお礼を言ってまた出発しました。今週末、自転車を修理店に持っていくつもりです。", body_zh: "今天上班路上自行车链子突然掉了。我在路上很慌张，不知所措。一位路过的大叔帮我修好了。我道谢后又重新出发了。这个周末我要把自行车送去修理店。" body_vi: "Hôm nay trên đường đi làm xích xe đạp của tôi bỗng nhiên tuột ra. Tôi bối rối trên đường không biết làm sao. Một chú đi ngang qua đã sửa giúp tôi. Tôi cảm ơn rồi tiếp tục lên đường. Cuối tuần này tôi sẽ mang xe đạp đến tiệm sửa.",
+    body_ja: "今日、出勤途中に自転車のチェーンが突然外れました。私は道で慌ててどうすればいいか分かりませんでした。通りすがりのおじさんが直してくれました。私はお礼を言ってまた出発しました。今週末、自転車を修理店に持っていくつもりです。", body_zh: "今天上班路上自行车链子突然掉了。我在路上很慌张，不知所措。一位路过的大叔帮我修好了。我道谢后又重新出发了。这个周末我要把自行车送去修理店。", body_vi: "Hôm nay trên đường đi làm xích xe đạp của tôi bỗng nhiên tuột ra. Tôi bối rối trên đường không biết làm sao. Một chú đi ngang qua đã sửa giúp tôi. Tôi cảm ơn rồi tiếp tục lên đường. Cuối tuần này tôi sẽ mang xe đạp đến tiệm sửa.",
     questions: [
-      { question_en: "What happened to the bicycle?", question_ja: "自転車に何が起こりましたか。", question_zh: "自行车发生了什么？" question_vi: "Chuyện gì đã xảy ra với xe đạp?", options: ["The chain came off","The tire went flat","The seat fell off","The brake broke"], answerIndex: 0 },
-      { question_en: "Who fixed it?", question_ja: "誰が直してくれましたか。", question_zh: "谁修好了自行车？" question_vi: "Ai đã sửa xe giúp?", options: ["A shop owner","A passing man","A friend","The narrator"], answerIndex: 1 },
+      { question_en: "What happened to the bicycle?", question_ja: "自転車に何が起こりましたか。", question_zh: "自行车发生了什么？", question_vi: "Chuyện gì đã xảy ra với xe đạp?", options: ["The chain came off","The tire went flat","The seat fell off","The brake broke"], answerIndex: 0 },
+      { question_en: "Who fixed it?", question_ja: "誰が直してくれましたか。", question_zh: "谁修好了自行车？", question_vi: "Ai đã sửa xe giúp?", options: ["A shop owner","A passing man","A friend","The narrator"], answerIndex: 1 },
     ],
   },
   {
@@ -317,10 +317,10 @@ export const READING_A2_STORY: RawPassage[] = [
     title_ja: "散歩中に雨に遭いました", title_zh: "散步时遇到了雨", title_vi: "Gặp mưa khi đang đi dạo",
     body_kr: "오늘 오후에 산책을 하다가 갑자기 비가 왔어요. 우산이 없어서 근처 가게로 뛰어갔어요. 가게 주인이 친절하게 자리를 내주셨어요. 비가 그칠 때까지 잠시 기다렸어요. 다음부터는 날씨를 미리 확인할 거예요.",
     body_en: "While walking this afternoon, it suddenly started to rain. Since I had no umbrella, I ran to a nearby shop. The shop owner kindly gave me a spot to wait. I waited a while until the rain stopped. From now on, I will check the weather in advance.",
-    body_ja: "今日の午後、散歩をしていて突然雨が降りました。傘がなくて近くの店に駆け込みました。店主が親切に場所を空けてくれました。雨がやむまでしばらく待ちました。これからは前もって天気を確認するつもりです。", body_zh: "今天下午散步时突然下起了雨。因为没有伞，我跑进了附近的商店。店主很热情地给我腾了个地方。我等到雨停才离开。以后我要提前查看天气。" body_vi: "Chiều nay khi đi dạo trời bỗng đổ mưa. Vì không có ô tôi chạy vào một cửa hàng gần đó. Chủ cửa hàng tốt bụng nhường cho tôi một chỗ. Tôi đợi một lúc cho đến khi mưa tạnh. Từ nay tôi sẽ xem trước dự báo thời tiết.",
+    body_ja: "今日の午後、散歩をしていて突然雨が降りました。傘がなくて近くの店に駆け込みました。店主が親切に場所を空けてくれました。雨がやむまでしばらく待ちました。これからは前もって天気を確認するつもりです。", body_zh: "今天下午散步时突然下起了雨。因为没有伞，我跑进了附近的商店。店主很热情地给我腾了个地方。我等到雨停才离开。以后我要提前查看天气。", body_vi: "Chiều nay khi đi dạo trời bỗng đổ mưa. Vì không có ô tôi chạy vào một cửa hàng gần đó. Chủ cửa hàng tốt bụng nhường cho tôi một chỗ. Tôi đợi một lúc cho đến khi mưa tạnh. Từ nay tôi sẽ xem trước dự báo thời tiết.",
     questions: [
-      { question_en: "Where did the narrator go to avoid the rain?", question_ja: "語り手は雨を避けるためどこに行きましたか。", question_zh: "叙述者为躲雨去了哪里？" question_vi: "Người kể chuyện đã đi đâu để tránh mưa?", options: ["Home","A bus stop","A nearby shop","A friend's house"], answerIndex: 2 },
-      { question_en: "What will the narrator do from now on?", question_ja: "これから語り手は何をするつもりですか。", question_zh: "叙述者以后打算做什么？" question_vi: "Từ nay người kể chuyện sẽ làm gì?", options: ["Check the weather in advance","Always carry an umbrella","Wear a raincoat","Not go outside"], answerIndex: 0 },
+      { question_en: "Where did the narrator go to avoid the rain?", question_ja: "語り手は雨を避けるためどこに行きましたか。", question_zh: "叙述者为躲雨去了哪里？", question_vi: "Người kể chuyện đã đi đâu để tránh mưa?", options: ["Home","A bus stop","A nearby shop","A friend's house"], answerIndex: 2 },
+      { question_en: "What will the narrator do from now on?", question_ja: "これから語り手は何をするつもりですか。", question_zh: "叙述者以后打算做什么？", question_vi: "Từ nay người kể chuyện sẽ làm gì?", options: ["Check the weather in advance","Always carry an umbrella","Wear a raincoat","Not go outside"], answerIndex: 0 },
     ],
   },
   {
@@ -331,10 +331,10 @@ export const READING_A2_STORY: RawPassage[] = [
     title_ja: "古い写真を見つけました", title_zh: "找到了一张旧照片", title_vi: "Tôi tìm thấy tấm ảnh cũ",
     body_kr: "오늘 방을 정리하다가 오래된 사진을 발견했어요. 사진 속에는 어릴 때 저와 부모님이 있었어요. 저는 그때 기억이 잘 나지 않아서 부모님께 여쭤봤어요. 부모님이 재미있는 이야기를 많이 해 주셨어요. 이번 주말에 그 사진을 액자에 넣을 거예요.",
     body_en: "While tidying my room today, I found an old photo. In the photo were my parents and me as a child. Since I didn't remember it well, I asked my parents about it. My parents told me many interesting stories. This weekend I will put the photo in a frame.",
-    body_ja: "今日、部屋を片付けていて古い写真を見つけました。写真には幼い頃の私と両親がいました。その時のことをよく覚えていなかったので両親に尋ねました。両親は面白い話をたくさんしてくれました。今週末、その写真を額に入れるつもりです。", body_zh: "今天整理房间时发现了一张旧照片。照片里有小时候的我和父母。因为不太记得那时的事，我问了父母。父母给我讲了很多有趣的故事。这个周末我要把那张照片装进相框。" body_vi: "Hôm nay khi dọn phòng tôi phát hiện một tấm ảnh cũ. Trong ảnh có tôi lúc nhỏ và bố mẹ. Vì không nhớ rõ lúc đó nên tôi đã hỏi bố mẹ. Bố mẹ kể cho tôi nhiều câu chuyện thú vị. Cuối tuần này tôi sẽ cho tấm ảnh đó vào khung.",
+    body_ja: "今日、部屋を片付けていて古い写真を見つけました。写真には幼い頃の私と両親がいました。その時のことをよく覚えていなかったので両親に尋ねました。両親は面白い話をたくさんしてくれました。今週末、その写真を額に入れるつもりです。", body_zh: "今天整理房间时发现了一张旧照片。照片里有小时候的我和父母。因为不太记得那时的事，我问了父母。父母给我讲了很多有趣的故事。这个周末我要把那张照片装进相框。", body_vi: "Hôm nay khi dọn phòng tôi phát hiện một tấm ảnh cũ. Trong ảnh có tôi lúc nhỏ và bố mẹ. Vì không nhớ rõ lúc đó nên tôi đã hỏi bố mẹ. Bố mẹ kể cho tôi nhiều câu chuyện thú vị. Cuối tuần này tôi sẽ cho tấm ảnh đó vào khung.",
     questions: [
-      { question_en: "Who was in the photo?", question_ja: "写真には誰が写っていましたか。", question_zh: "照片里有谁？" question_vi: "Trong ảnh có ai?", options: ["Grandparents","Friends","Only the narrator","The narrator and parents"], answerIndex: 3 },
-      { question_en: "What did the parents do?", question_ja: "両親は何をしましたか。", question_zh: "父母做了什么？" question_vi: "Bố mẹ đã làm gì?", options: ["Said nothing","Got upset","Told interesting stories","Left the room"], answerIndex: 2 },
+      { question_en: "Who was in the photo?", question_ja: "写真には誰が写っていましたか。", question_zh: "照片里有谁？", question_vi: "Trong ảnh có ai?", options: ["Grandparents","Friends","Only the narrator","The narrator and parents"], answerIndex: 3 },
+      { question_en: "What did the parents do?", question_ja: "両親は何をしましたか。", question_zh: "父母做了什么？", question_vi: "Bố mẹ đã làm gì?", options: ["Said nothing","Got upset","Told interesting stories","Left the room"], answerIndex: 2 },
     ],
   },
   {
@@ -345,10 +345,10 @@ export const READING_A2_STORY: RawPassage[] = [
     title_ja: "初めてスケートをしました", title_zh: "第一次滑冰", title_vi: "Lần đầu trượt băng",
     body_kr: "지난 겨울에 처음 스케이트장에 갔어요. 처음에는 계속 넘어져서 힘들었어요. 시간이 지나자 조금씩 균형을 잡을 수 있었어요. 마지막에는 혼자서 천천히 탈 수 있었어요. 다음 겨울에도 스케이트를 타러 갈 거예요.",
     body_en: "Last winter I went to an ice rink for the first time. At first, I kept falling, so it was hard. As time passed, I was gradually able to balance. In the end, I could skate slowly by myself. Next winter, I will go ice skating again.",
-    body_ja: "去年の冬、初めてスケート場に行きました。最初はずっと転んで大変でした。時間が経つと少しずつバランスを取れるようになりました。最後には一人でゆっくり滑れるようになりました。来年の冬もスケートをしに行くつもりです。", body_zh: "去年冬天第一次去了滑冰场。一开始一直摔倒，很辛苦。随着时间过去，渐渐能保持平衡了。最后我能一个人慢慢地滑了。明年冬天我还要去滑冰。" body_vi: "Mùa đông trước tôi lần đầu đến sân trượt băng. Lúc đầu tôi cứ ngã liên tục nên rất vất vả. Theo thời gian tôi dần dần giữ được thăng bằng. Cuối cùng tôi có thể tự trượt chậm rãi một mình. Mùa đông sau tôi cũng sẽ đi trượt băng.",
+    body_ja: "去年の冬、初めてスケート場に行きました。最初はずっと転んで大変でした。時間が経つと少しずつバランスを取れるようになりました。最後には一人でゆっくり滑れるようになりました。来年の冬もスケートをしに行くつもりです。", body_zh: "去年冬天第一次去了滑冰场。一开始一直摔倒，很辛苦。随着时间过去，渐渐能保持平衡了。最后我能一个人慢慢地滑了。明年冬天我还要去滑冰。", body_vi: "Mùa đông trước tôi lần đầu đến sân trượt băng. Lúc đầu tôi cứ ngã liên tục nên rất vất vả. Theo thời gian tôi dần dần giữ được thăng bằng. Cuối cùng tôi có thể tự trượt chậm rãi một mình. Mùa đông sau tôi cũng sẽ đi trượt băng.",
     questions: [
-      { question_en: "What happened at first?", question_ja: "最初に何が起こりましたか。", question_zh: "一开始发生了什么？" question_vi: "Lúc đầu chuyện gì đã xảy ra?", options: ["Left early","Fell asleep","Kept falling","Got dizzy"], answerIndex: 2 },
-      { question_en: "What could the narrator do in the end?", question_ja: "最後に語り手は何ができましたか。", question_zh: "最后叙述者能做到什么？" question_vi: "Cuối cùng người kể chuyện làm được gì?", options: ["Jump","Teach others","Skate fast","Skate alone slowly"], answerIndex: 3 },
+      { question_en: "What happened at first?", question_ja: "最初に何が起こりましたか。", question_zh: "一开始发生了什么？", question_vi: "Lúc đầu chuyện gì đã xảy ra?", options: ["Left early","Fell asleep","Kept falling","Got dizzy"], answerIndex: 2 },
+      { question_en: "What could the narrator do in the end?", question_ja: "最後に語り手は何ができましたか。", question_zh: "最后叙述者能做到什么？", question_vi: "Cuối cùng người kể chuyện làm được gì?", options: ["Jump","Teach others","Skate fast","Skate alone slowly"], answerIndex: 3 },
     ],
   },
   {
@@ -359,10 +359,10 @@ export const READING_A2_STORY: RawPassage[] = [
     title_ja: "マフラーを編みました", title_zh: "织了围巾", title_vi: "Tôi đã đan khăn choàng",
     body_kr: "지난달부터 겨울을 위해 목도리를 뜨기 시작했어요. 처음에는 실이 자꾸 엉켜서 힘들었어요. 유튜브를 보면서 조금씩 방법을 배웠어요. 오늘 드디어 목도리를 완성했어요. 이 목도리는 동생에게 선물할 거예요.",
     body_en: "Since last month, I've been knitting a scarf for winter. At first, it was hard because the yarn kept tangling. I gradually learned how by watching YouTube. Today I finally finished the scarf. I will give this scarf as a gift to my younger sibling.",
-    body_ja: "先月から冬のためにマフラーを編み始めました。最初は毛糸が何度も絡まって大変でした。ユーチューブを見ながら少しずつやり方を学びました。今日、ついにマフラーを完成させました。このマフラーは弟にプレゼントするつもりです。", body_zh: "从上个月开始为了冬天织围巾。一开始毛线总是缠在一起，很辛苦。我一边看YouTube一边慢慢学会了方法。今天终于把围巾织完了。这条围巾我要送给弟弟(妹妹)。" body_vi: "Từ tháng trước tôi bắt đầu đan khăn choàng cho mùa đông. Lúc đầu sợi len cứ bị rối nên rất vất vả. Tôi vừa xem YouTube vừa học dần cách làm. Hôm nay cuối cùng tôi đã hoàn thành chiếc khăn. Chiếc khăn này tôi sẽ tặng cho em.",
+    body_ja: "先月から冬のためにマフラーを編み始めました。最初は毛糸が何度も絡まって大変でした。ユーチューブを見ながら少しずつやり方を学びました。今日、ついにマフラーを完成させました。このマフラーは弟にプレゼントするつもりです。", body_zh: "从上个月开始为了冬天织围巾。一开始毛线总是缠在一起，很辛苦。我一边看YouTube一边慢慢学会了方法。今天终于把围巾织完了。这条围巾我要送给弟弟(妹妹)。", body_vi: "Từ tháng trước tôi bắt đầu đan khăn choàng cho mùa đông. Lúc đầu sợi len cứ bị rối nên rất vất vả. Tôi vừa xem YouTube vừa học dần cách làm. Hôm nay cuối cùng tôi đã hoàn thành chiếc khăn. Chiếc khăn này tôi sẽ tặng cho em.",
     questions: [
-      { question_en: "What was hard at first?", question_ja: "最初何が大変でしたか。", question_zh: "一开始什么很辛苦？" question_vi: "Lúc đầu điều gì khó khăn?", options: ["Finding a pattern","Buying yarn","The yarn kept tangling","Choosing colors"], answerIndex: 2 },
-      { question_en: "Who is the scarf for?", question_ja: "マフラーは誰のためのものですか。", question_zh: "围巾是送给谁的？" question_vi: "Chiếc khăn này dành cho ai?", options: ["A younger sibling","The narrator","A friend","A parent"], answerIndex: 0 },
+      { question_en: "What was hard at first?", question_ja: "最初何が大変でしたか。", question_zh: "一开始什么很辛苦？", question_vi: "Lúc đầu điều gì khó khăn?", options: ["Finding a pattern","Buying yarn","The yarn kept tangling","Choosing colors"], answerIndex: 2 },
+      { question_en: "Who is the scarf for?", question_ja: "マフラーは誰のためのものですか。", question_zh: "围巾是送给谁的？", question_vi: "Chiếc khăn này dành cho ai?", options: ["A younger sibling","The narrator","A friend","A parent"], answerIndex: 0 },
     ],
   },
   {
@@ -373,10 +373,10 @@ export const READING_A2_STORY: RawPassage[] = [
     title_ja: "早朝の市場", title_zh: "清晨的市场", title_vi: "Chợ sáng sớm",
     body_kr: "오늘 새벽에 처음으로 새벽 시장에 가 봤어요. 사람들이 벌써 활기차게 물건을 팔고 있었어요. 저는 신선한 생선과 채소를 샀어요. 상인 아저씨가 덤으로 채소를 더 주셨어요. 다음에도 일찍 일어나서 시장에 갈 거예요.",
     body_en: "Early this morning, I went to a dawn market for the first time. People were already energetically selling their goods. I bought fresh fish and vegetables. The vendor gave me some extra vegetables for free. Next time, I will get up early and go to the market again.",
-    body_ja: "今日の明け方、初めて早朝市場に行ってみました。人々はすでに活気に満ちて品物を売っていました。私は新鮮な魚と野菜を買いました。店のおじさんがおまけで野菜をもっとくれました。次も早起きして市場に行くつもりです。", body_zh: "今天凌晨第一次去了早市。人们已经在热闹地卖东西了。我买了新鲜的鱼和蔬菜。摊主大叔还额外多给了我一些蔬菜。下次我还要早起去市场。" body_vi: "Sáng sớm nay lần đầu tôi đến chợ sớm. Mọi người đã bán hàng rất nhộn nhịp. Tôi mua cá tươi và rau. Chú bán hàng còn cho tôi thêm rau. Lần sau tôi cũng sẽ dậy sớm đi chợ.",
+    body_ja: "今日の明け方、初めて早朝市場に行ってみました。人々はすでに活気に満ちて品物を売っていました。私は新鮮な魚と野菜を買いました。店のおじさんがおまけで野菜をもっとくれました。次も早起きして市場に行くつもりです。", body_zh: "今天凌晨第一次去了早市。人们已经在热闹地卖东西了。我买了新鲜的鱼和蔬菜。摊主大叔还额外多给了我一些蔬菜。下次我还要早起去市场。", body_vi: "Sáng sớm nay lần đầu tôi đến chợ sớm. Mọi người đã bán hàng rất nhộn nhịp. Tôi mua cá tươi và rau. Chú bán hàng còn cho tôi thêm rau. Lần sau tôi cũng sẽ dậy sớm đi chợ.",
     questions: [
-      { question_en: "What did the narrator buy?", question_ja: "語り手は何を買いましたか。", question_zh: "叙述者买了什么？" question_vi: "Người kể chuyện đã mua gì?", options: ["Only vegetables","Only fish","Fish and vegetables","Fruit"], answerIndex: 2 },
-      { question_en: "What did the vendor do?", question_ja: "店主は何をしましたか。", question_zh: "摊主做了什么？" question_vi: "Người bán hàng đã làm gì?", options: ["Gave extra vegetables","Charged more","Closed early","Was rude"], answerIndex: 0 },
+      { question_en: "What did the narrator buy?", question_ja: "語り手は何を買いましたか。", question_zh: "叙述者买了什么？", question_vi: "Người kể chuyện đã mua gì?", options: ["Only vegetables","Only fish","Fish and vegetables","Fruit"], answerIndex: 2 },
+      { question_en: "What did the vendor do?", question_ja: "店主は何をしましたか。", question_zh: "摊主做了什么？", question_vi: "Người bán hàng đã làm gì?", options: ["Gave extra vegetables","Charged more","Closed early","Was rude"], answerIndex: 0 },
     ],
   },
   {
@@ -387,10 +387,10 @@ export const READING_A2_STORY: RawPassage[] = [
     title_ja: "犬を見失いました", title_zh: "弄丢了小狗", title_vi: "Tôi làm mất chú chó",
     body_kr: "오늘 공원에서 목줄이 풀려서 강아지가 뛰어갔어요. 저는 놀라서 강아지 이름을 부르며 뛰어다녔어요. 삼십 분 후에 나무 뒤에서 강아지를 찾았어요. 강아지를 안았을 때 정말 안심이 됐어요. 앞으로는 목줄을 더 단단히 확인할 거예요.",
     body_en: "At the park today, the leash came loose and my dog ran off. I was startled and ran around calling its name. Thirty minutes later, I found the dog behind a tree. I felt truly relieved when I hugged it. From now on, I will check the leash more securely.",
-    body_ja: "今日、公園でリードが外れて犬が走って行ってしまいました。私は驚いて犬の名前を呼びながら走り回りました。三十分後、木の後ろで犬を見つけました。犬を抱きしめたとき、本当にほっとしました。これからはリードをもっとしっかり確認するつもりです。", body_zh: "今天在公园里牵引绳松了，小狗跑掉了。我吓了一跳，一边喊它的名字一边到处跑。三十分钟后在一棵树后面找到了它。抱住小狗的那一刻真的松了一口气。以后我要更牢固地检查牵引绳。" body_vi: "Hôm nay ở công viên dây dắt bị tuột nên chú chó chạy mất. Tôi hoảng hốt vừa chạy vừa gọi tên nó. Ba mươi phút sau tôi tìm thấy nó sau một gốc cây. Khi ôm chú chó tôi thật sự thấy yên lòng. Từ nay tôi sẽ kiểm tra dây dắt chắc chắn hơn.",
+    body_ja: "今日、公園でリードが外れて犬が走って行ってしまいました。私は驚いて犬の名前を呼びながら走り回りました。三十分後、木の後ろで犬を見つけました。犬を抱きしめたとき、本当にほっとしました。これからはリードをもっとしっかり確認するつもりです。", body_zh: "今天在公园里牵引绳松了，小狗跑掉了。我吓了一跳，一边喊它的名字一边到处跑。三十分钟后在一棵树后面找到了它。抱住小狗的那一刻真的松了一口气。以后我要更牢固地检查牵引绳。", body_vi: "Hôm nay ở công viên dây dắt bị tuột nên chú chó chạy mất. Tôi hoảng hốt vừa chạy vừa gọi tên nó. Ba mươi phút sau tôi tìm thấy nó sau một gốc cây. Khi ôm chú chó tôi thật sự thấy yên lòng. Từ nay tôi sẽ kiểm tra dây dắt chắc chắn hơn.",
     questions: [
-      { question_en: "Why did the dog run off?", question_ja: "なぜ犬は走って行ってしまいましたか。", question_zh: "小狗为什么跑掉了？" question_vi: "Tại sao chú chó chạy mất?", options: ["It saw food","It was scared","It chased a bird","The leash came loose"], answerIndex: 3 },
-      { question_en: "Where was the dog found?", question_ja: "犬はどこで見つかりましたか。", question_zh: "小狗是在哪里找到的？" question_vi: "Chú chó được tìm thấy ở đâu?", options: ["Near the entrance","Behind a tree","In the pond","At home"], answerIndex: 1 },
+      { question_en: "Why did the dog run off?", question_ja: "なぜ犬は走って行ってしまいましたか。", question_zh: "小狗为什么跑掉了？", question_vi: "Tại sao chú chó chạy mất?", options: ["It saw food","It was scared","It chased a bird","The leash came loose"], answerIndex: 3 },
+      { question_en: "Where was the dog found?", question_ja: "犬はどこで見つかりましたか。", question_zh: "小狗是在哪里找到的？", question_vi: "Chú chó được tìm thấy ở đâu?", options: ["Near the entrance","Behind a tree","In the pond","At home"], answerIndex: 1 },
     ],
   },
   {
@@ -401,10 +401,10 @@ export const READING_A2_STORY: RawPassage[] = [
     title_ja: "予定になかった旅行", title_zh: "计划外的旅行", title_vi: "Chuyến đi ngoài kế hoạch",
     body_kr: "지난 금요일에 친구가 갑자기 여행을 가자고 했어요. 저는 계획이 없었지만 바로 가방을 쌌어요. 우리는 기차를 타고 바닷가 마을로 갔어요. 예정에 없던 여행이었지만 정말 즐거웠어요. 다음에도 이런 즉흥 여행을 또 하고 싶어요.",
     body_en: "Last Friday, a friend suddenly suggested going on a trip. I had no plans, but I packed my bag right away. We took a train to a seaside village. It was an unplanned trip, but it was really fun. I want to go on another spontaneous trip like this again.",
-    body_ja: "先週の金曜日、友達が突然旅行に行こうと言いました。私は計画がありませんでしたが、すぐにかばんを詰めました。私たちは電車に乗って海辺の村へ行きました。予定になかった旅行でしたが、本当に楽しかったです。今度もこんな即興の旅行をまたしたいです。", body_zh: "上周五朋友突然提议去旅行。我虽然没有计划，但立刻收拾了行李。我们坐火车去了一个海边小镇。虽然是没有计划的旅行，但真的很开心。下次我还想再来一次这样的即兴旅行。" body_vi: "Thứ Sáu trước bạn tôi đột nhiên rủ đi du lịch. Tôi không có kế hoạch nhưng lập tức xếp hành lý. Chúng tôi đi tàu hỏa đến một làng ven biển. Đó là chuyến đi ngoài dự định nhưng thật sự rất vui. Lần sau tôi cũng muốn có một chuyến đi ngẫu hứng như vậy.",
+    body_ja: "先週の金曜日、友達が突然旅行に行こうと言いました。私は計画がありませんでしたが、すぐにかばんを詰めました。私たちは電車に乗って海辺の村へ行きました。予定になかった旅行でしたが、本当に楽しかったです。今度もこんな即興の旅行をまたしたいです。", body_zh: "上周五朋友突然提议去旅行。我虽然没有计划，但立刻收拾了行李。我们坐火车去了一个海边小镇。虽然是没有计划的旅行，但真的很开心。下次我还想再来一次这样的即兴旅行。", body_vi: "Thứ Sáu trước bạn tôi đột nhiên rủ đi du lịch. Tôi không có kế hoạch nhưng lập tức xếp hành lý. Chúng tôi đi tàu hỏa đến một làng ven biển. Đó là chuyến đi ngoài dự định nhưng thật sự rất vui. Lần sau tôi cũng muốn có một chuyến đi ngẫu hứng như vậy.",
     questions: [
-      { question_en: "Who suggested the trip?", question_ja: "誰が旅行を提案しましたか。", question_zh: "是谁提议去旅行的？" question_vi: "Ai đã đề nghị chuyến đi?", options: ["A friend","A parent","A coworker","The narrator"], answerIndex: 0 },
-      { question_en: "How did they travel?", question_ja: "彼らはどうやって移動しましたか。", question_zh: "他们是怎么去的？" question_vi: "Họ đã đi bằng phương tiện gì?", options: ["By bus","By plane","By train","By car"], answerIndex: 2 },
+      { question_en: "Who suggested the trip?", question_ja: "誰が旅行を提案しましたか。", question_zh: "是谁提议去旅行的？", question_vi: "Ai đã đề nghị chuyến đi?", options: ["A friend","A parent","A coworker","The narrator"], answerIndex: 0 },
+      { question_en: "How did they travel?", question_ja: "彼らはどうやって移動しましたか。", question_zh: "他们是怎么去的？", question_vi: "Họ đã đi bằng phương tiện gì?", options: ["By bus","By plane","By train","By car"], answerIndex: 2 },
     ],
   },
   {
@@ -415,10 +415,10 @@ export const READING_A2_STORY: RawPassage[] = [
     title_ja: "偶然出会った友達", title_zh: "偶然遇到的朋友", title_vi: "Người bạn gặp tình cờ",
     body_kr: "오늘 시내에서 우연히 고등학교 친구를 만났어요. 우리는 몇 년 만에 처음 보는 거였어요. 반가운 마음에 근처 카페에서 오래 이야기했어요. 서로 연락처를 다시 교환했어요. 다음 달에 다시 만나기로 약속했어요.",
     body_en: "Today I ran into a high school friend by chance downtown. It was the first time we'd seen each other in years. Happy to see each other, we talked for a long time at a nearby cafe. We exchanged contact information again. We promised to meet again next month.",
-    body_ja: "今日、街で偶然高校の友達に会いました。何年ぶりかで初めて会うのでした。嬉しくて近くのカフェで長い間話しました。お互い連絡先をまた交換しました。来月また会う約束をしました。", body_zh: "今天在市中心偶然遇到了高中同学。这是我们几年来第一次见面。因为很高兴，我们在附近的咖啡馆聊了很久。我们又互相交换了联系方式。约好下个月再见面。" body_vi: "Hôm nay tôi tình cờ gặp bạn cấp ba ở trung tâm thành phố. Đây là lần đầu chúng tôi gặp lại sau nhiều năm. Vì vui mừng nên chúng tôi nói chuyện lâu ở quán cà phê gần đó. Chúng tôi trao đổi lại số liên lạc. Chúng tôi hẹn gặp lại vào tháng sau.",
+    body_ja: "今日、街で偶然高校の友達に会いました。何年ぶりかで初めて会うのでした。嬉しくて近くのカフェで長い間話しました。お互い連絡先をまた交換しました。来月また会う約束をしました。", body_zh: "今天在市中心偶然遇到了高中同学。这是我们几年来第一次见面。因为很高兴，我们在附近的咖啡馆聊了很久。我们又互相交换了联系方式。约好下个月再见面。", body_vi: "Hôm nay tôi tình cờ gặp bạn cấp ba ở trung tâm thành phố. Đây là lần đầu chúng tôi gặp lại sau nhiều năm. Vì vui mừng nên chúng tôi nói chuyện lâu ở quán cà phê gần đó. Chúng tôi trao đổi lại số liên lạc. Chúng tôi hẹn gặp lại vào tháng sau.",
     questions: [
-      { question_en: "Where did they meet?", question_ja: "二人はどこで会いましたか。", question_zh: "他们在哪里见面的？" question_vi: "Họ gặp nhau ở đâu?", options: ["Downtown","At a cafe","At home","At school"], answerIndex: 0 },
-      { question_en: "What did they promise?", question_ja: "何を約束しましたか。", question_zh: "他们约定了什么？" question_vi: "Họ đã hẹn điều gì?", options: ["To meet next month","To call daily","To never meet again","To move away"], answerIndex: 0 },
+      { question_en: "Where did they meet?", question_ja: "二人はどこで会いましたか。", question_zh: "他们在哪里见面的？", question_vi: "Họ gặp nhau ở đâu?", options: ["Downtown","At a cafe","At home","At school"], answerIndex: 0 },
+      { question_en: "What did they promise?", question_ja: "何を約束しましたか。", question_zh: "他们约定了什么？", question_vi: "Họ đã hẹn điều gì?", options: ["To meet next month","To call daily","To never meet again","To move away"], answerIndex: 0 },
     ],
   },
   {
@@ -429,10 +429,10 @@ export const READING_A2_STORY: RawPassage[] = [
     title_ja: "飛行機に乗り遅れました", title_zh: "错过了飞机", title_vi: "Tôi lỡ chuyến bay",
     body_kr: "오늘 공항에 늦게 도착해서 비행기를 놓쳤어요. 저는 너무 당황해서 어떻게 해야 할지 몰랐어요. 항공사 직원이 다음 비행기 표를 도와줬어요. 결국 두 시간 늦게 출발할 수 있었어요. 다음부터는 공항에 더 일찍 도착할 거예요.",
     body_en: "I arrived late at the airport today and missed my flight. I was so flustered that I didn't know what to do. An airline staff member helped me with a ticket for the next flight. In the end, I was able to depart two hours late. From now on, I will arrive at the airport earlier.",
-    body_ja: "今日、空港に遅れて着いて飛行機に乗り遅れました。私はとても慌ててどうすればいいか分かりませんでした。航空会社の職員が次の便のチケットを手伝ってくれました。結局、二時間遅れで出発することができました。これからは空港にもっと早く着くつもりです。", body_zh: "今天到机场晚了，错过了飞机。我太慌张了，不知道该怎么办。航空公司的职员帮我办了下一班飞机的票。最后我晚了两个小时才出发。从今以后我要更早到机场。" body_vi: "Hôm nay tôi đến sân bay muộn nên lỡ chuyến bay. Tôi quá bối rối không biết phải làm gì. Nhân viên hãng bay đã giúp tôi đổi vé chuyến sau. Cuối cùng tôi có thể khởi hành muộn hai tiếng. Từ nay tôi sẽ đến sân bay sớm hơn.",
+    body_ja: "今日、空港に遅れて着いて飛行機に乗り遅れました。私はとても慌ててどうすればいいか分かりませんでした。航空会社の職員が次の便のチケットを手伝ってくれました。結局、二時間遅れで出発することができました。これからは空港にもっと早く着くつもりです。", body_zh: "今天到机场晚了，错过了飞机。我太慌张了，不知道该怎么办。航空公司的职员帮我办了下一班飞机的票。最后我晚了两个小时才出发。从今以后我要更早到机场。", body_vi: "Hôm nay tôi đến sân bay muộn nên lỡ chuyến bay. Tôi quá bối rối không biết phải làm gì. Nhân viên hãng bay đã giúp tôi đổi vé chuyến sau. Cuối cùng tôi có thể khởi hành muộn hai tiếng. Từ nay tôi sẽ đến sân bay sớm hơn.",
     questions: [
-      { question_en: "Why did the narrator miss the flight?", question_ja: "なぜ語り手は飛行機に乗り遅れましたか。", question_zh: "叙述者为什么错过了飞机？" question_vi: "Tại sao người kể chuyện lỡ chuyến bay?", options: ["Lost the ticket","Traffic","Arrived late at the airport","Wrong gate"], answerIndex: 2 },
-      { question_en: "Who helped the narrator?", question_ja: "誰が語り手を助けましたか。", question_zh: "谁帮助了叙述者？" question_vi: "Ai đã giúp người kể chuyện?", options: ["A police officer","A stranger","A friend","Airline staff"], answerIndex: 3 },
+      { question_en: "Why did the narrator miss the flight?", question_ja: "なぜ語り手は飛行機に乗り遅れましたか。", question_zh: "叙述者为什么错过了飞机？", question_vi: "Tại sao người kể chuyện lỡ chuyến bay?", options: ["Lost the ticket","Traffic","Arrived late at the airport","Wrong gate"], answerIndex: 2 },
+      { question_en: "Who helped the narrator?", question_ja: "誰が語り手を助けましたか。", question_zh: "谁帮助了叙述者？", question_vi: "Ai đã giúp người kể chuyện?", options: ["A police officer","A stranger","A friend","Airline staff"], answerIndex: 3 },
     ],
   },
   {
@@ -443,10 +443,10 @@ export const READING_A2_STORY: RawPassage[] = [
     title_ja: "初めて登山をしました", title_zh: "第一次爬山", title_vi: "Lần đầu leo núi",
     body_kr: "지난 주말에 회사 동료들과 처음 등산을 했어요. 초반에는 숨이 차서 많이 힘들었어요. 동료들이 천천히 함께 걸어 줘서 고마웠어요. 정상에 도착했을 때 성취감을 느꼈어요. 다음 달에도 다른 산으로 등산을 갈 거예요.",
     body_en: "Last weekend I went hiking for the first time with coworkers. In the beginning, I was very out of breath, so it was hard. I was thankful that my coworkers walked slowly with me. When I reached the top, I felt a sense of accomplishment. Next month, we will hike a different mountain too.",
-    body_ja: "先週末、会社の同僚たちと初めて登山をしました。最初は息が切れてとても大変でした。同僚たちがゆっくり一緒に歩いてくれて感謝しました。頂上に着いたとき、達成感を感じました。来月も別の山に登山に行くつもりです。", body_zh: "上周末和公司同事第一次爬山。刚开始气喘吁吁，很辛苦。同事们陪我慢慢走，我很感激。到达山顶时感到一种成就感。下个月我们还要去别的山爬山。" body_vi: "Cuối tuần trước tôi lần đầu leo núi cùng đồng nghiệp. Lúc đầu tôi thở dốc rất mệt. Tôi cảm ơn vì đồng nghiệp đã đi chậm cùng tôi. Khi lên đến đỉnh tôi cảm thấy một cảm giác thành tựu. Tháng sau chúng tôi sẽ leo một ngọn núi khác.",
+    body_ja: "先週末、会社の同僚たちと初めて登山をしました。最初は息が切れてとても大変でした。同僚たちがゆっくり一緒に歩いてくれて感謝しました。頂上に着いたとき、達成感を感じました。来月も別の山に登山に行くつもりです。", body_zh: "上周末和公司同事第一次爬山。刚开始气喘吁吁，很辛苦。同事们陪我慢慢走，我很感激。到达山顶时感到一种成就感。下个月我们还要去别的山爬山。", body_vi: "Cuối tuần trước tôi lần đầu leo núi cùng đồng nghiệp. Lúc đầu tôi thở dốc rất mệt. Tôi cảm ơn vì đồng nghiệp đã đi chậm cùng tôi. Khi lên đến đỉnh tôi cảm thấy một cảm giác thành tựu. Tháng sau chúng tôi sẽ leo một ngọn núi khác.",
     questions: [
-      { question_en: "What was hard at the beginning?", question_ja: "最初何が大変でしたか。", question_zh: "一开始什么很辛苦？" question_vi: "Lúc đầu điều gì khó khăn?", options: ["Being out of breath","Carrying bags","The rain","The cold"], answerIndex: 0 },
-      { question_en: "How did the narrator feel at the top?", question_ja: "頂上で語り手はどう感じましたか。", question_zh: "到达山顶时叙述者感觉如何？" question_vi: "Ở trên đỉnh núi người kể chuyện cảm thấy thế nào?", options: ["Bored","Disappointed","Scared","A sense of accomplishment"], answerIndex: 3 },
+      { question_en: "What was hard at the beginning?", question_ja: "最初何が大変でしたか。", question_zh: "一开始什么很辛苦？", question_vi: "Lúc đầu điều gì khó khăn?", options: ["Being out of breath","Carrying bags","The rain","The cold"], answerIndex: 0 },
+      { question_en: "How did the narrator feel at the top?", question_ja: "頂上で語り手はどう感じましたか。", question_zh: "到达山顶时叙述者感觉如何？", question_vi: "Ở trên đỉnh núi người kể chuyện cảm thấy thế nào?", options: ["Bored","Disappointed","Scared","A sense of accomplishment"], answerIndex: 3 },
     ],
   },
   {
@@ -457,10 +457,10 @@ export const READING_A2_STORY: RawPassage[] = [
     title_ja: "荷物を間違えました", title_zh: "不小心拿错了东西", title_vi: "Tôi nhầm lẫn đồ đạc",
     body_kr: "오늘 헬스장에서 다른 사람의 가방을 제 것으로 착각했어요. 집에 와서야 가방이 바뀐 것을 알았어요. 저는 헬스장에 다시 전화해서 상황을 설명했어요. 다행히 주인을 찾아서 가방을 바꿀 수 있었어요. 다음부터는 가방에 이름표를 붙일 거예요.",
     body_en: "At the gym today, I mistook someone else's bag for mine. Only after coming home did I realize the bags were switched. I called the gym again to explain the situation. Fortunately, I was able to find the owner and swap the bags back. From now on, I will put a name tag on my bag.",
-    body_ja: "今日、ジムで他人のかばんを自分のものと勘違いしました。家に帰ってからかばんが違うことに気づきました。私はジムにもう一度電話して状況を説明しました。幸い持ち主を見つけてかばんを交換することができました。これからはかばんに名札をつけるつもりです。", body_zh: "今天在健身房把别人的包错当成自己的了。回到家才发现包拿错了。我又给健身房打电话说明了情况。幸好找到了失主，把包换了回来。以后我要在包上贴上名牌。" body_vi: "Hôm nay ở phòng gym tôi tưởng nhầm túi của người khác là túi của mình. Về đến nhà tôi mới biết là túi bị đổi. Tôi gọi lại cho phòng gym để giải thích tình huống. May mắn tôi tìm được chủ nhân và đổi lại túi. Từ nay tôi sẽ dán nhãn tên lên túi.",
+    body_ja: "今日、ジムで他人のかばんを自分のものと勘違いしました。家に帰ってからかばんが違うことに気づきました。私はジムにもう一度電話して状況を説明しました。幸い持ち主を見つけてかばんを交換することができました。これからはかばんに名札をつけるつもりです。", body_zh: "今天在健身房把别人的包错当成自己的了。回到家才发现包拿错了。我又给健身房打电话说明了情况。幸好找到了失主，把包换了回来。以后我要在包上贴上名牌。", body_vi: "Hôm nay ở phòng gym tôi tưởng nhầm túi của người khác là túi của mình. Về đến nhà tôi mới biết là túi bị đổi. Tôi gọi lại cho phòng gym để giải thích tình huống. May mắn tôi tìm được chủ nhân và đổi lại túi. Từ nay tôi sẽ dán nhãn tên lên túi.",
     questions: [
-      { question_en: "When did the narrator realize the mistake?", question_ja: "語り手はいつ間違いに気づきましたか。", question_zh: "叙述者什么时候意识到拿错了？" question_vi: "Khi nào người kể chuyện nhận ra sự nhầm lẫn?", options: ["Never","The next day","At the gym","After coming home"], answerIndex: 3 },
-      { question_en: "What will the narrator do from now on?", question_ja: "これから語り手は何をするつもりですか。", question_zh: "叙述者以后打算做什么？" question_vi: "Từ nay người kể chuyện sẽ làm gì?", options: ["Stop going to the gym","Put a name tag on the bag","Check bags less","Buy a new bag"], answerIndex: 1 },
+      { question_en: "When did the narrator realize the mistake?", question_ja: "語り手はいつ間違いに気づきましたか。", question_zh: "叙述者什么时候意识到拿错了？", question_vi: "Khi nào người kể chuyện nhận ra sự nhầm lẫn?", options: ["Never","The next day","At the gym","After coming home"], answerIndex: 3 },
+      { question_en: "What will the narrator do from now on?", question_ja: "これから語り手は何をするつもりですか。", question_zh: "叙述者以后打算做什么？", question_vi: "Từ nay người kể chuyện sẽ làm gì?", options: ["Stop going to the gym","Put a name tag on the bag","Check bags less","Buy a new bag"], answerIndex: 1 },
     ],
   },
   {
@@ -471,10 +471,10 @@ export const READING_A2_STORY: RawPassage[] = [
     title_ja: "窓を割りました", title_zh: "打碎了窗户", title_vi: "Tôi làm vỡ cửa sổ",
     body_kr: "오늘 마당에서 공을 차다가 실수로 창문을 깼어요. 저는 너무 놀라서 부모님께 바로 말씀드렸어요. 부모님은 화내지 않고 침착하게 정리해 주셨어요. 저는 죄송한 마음에 방 청소를 도왔어요. 다음부터는 마당에서 공을 조심히 찰 거예요.",
     body_en: "While kicking a ball in the yard today, I accidentally broke a window. I was so startled that I told my parents right away. My parents didn't get angry and calmly cleaned it up. Feeling sorry, I helped clean the room. From now on, I will kick the ball carefully in the yard.",
-    body_ja: "今日、庭でボールを蹴っていてうっかり窓を割ってしまいました。私はとても驚いてすぐ両親に話しました。両親は怒らず落ち着いて片付けてくれました。私は申し訳ない気持ちで部屋の掃除を手伝いました。これからは庭でボールを気をつけて蹴るつもりです。", body_zh: "今天在院子里踢球时不小心打碎了窗户。我吓坏了，马上告诉了父母。父母没有生气，冷静地收拾了。我心里很过意不去，帮忙打扫了房间。以后我在院子里踢球会更小心。" body_vi: "Hôm nay khi đá bóng trong sân tôi vô tình làm vỡ cửa sổ. Tôi quá giật mình nên nói ngay với bố mẹ. Bố mẹ không giận mà bình tĩnh dọn dẹp. Vì cảm thấy có lỗi tôi đã giúp dọn phòng. Từ nay tôi sẽ đá bóng cẩn thận hơn trong sân.",
+    body_ja: "今日、庭でボールを蹴っていてうっかり窓を割ってしまいました。私はとても驚いてすぐ両親に話しました。両親は怒らず落ち着いて片付けてくれました。私は申し訳ない気持ちで部屋の掃除を手伝いました。これからは庭でボールを気をつけて蹴るつもりです。", body_zh: "今天在院子里踢球时不小心打碎了窗户。我吓坏了，马上告诉了父母。父母没有生气，冷静地收拾了。我心里很过意不去，帮忙打扫了房间。以后我在院子里踢球会更小心。", body_vi: "Hôm nay khi đá bóng trong sân tôi vô tình làm vỡ cửa sổ. Tôi quá giật mình nên nói ngay với bố mẹ. Bố mẹ không giận mà bình tĩnh dọn dẹp. Vì cảm thấy có lỗi tôi đã giúp dọn phòng. Từ nay tôi sẽ đá bóng cẩn thận hơn trong sân.",
     questions: [
-      { question_en: "How did the parents react?", question_ja: "両親はどう反応しましたか。", question_zh: "父母是怎么反应的？" question_vi: "Bố mẹ đã phản ứng thế nào?", options: ["Left the house","Ignored it","Got very angry","Calmly cleaned it up"], answerIndex: 3 },
-      { question_en: "What did the narrator do to make up for it?", question_ja: "語り手は償うために何をしましたか。", question_zh: "叙述者做了什么来弥补？" question_vi: "Người kể chuyện đã làm gì để bù đắp?", options: ["Nothing","Left home","Bought a new window","Helped clean the room"], answerIndex: 3 },
+      { question_en: "How did the parents react?", question_ja: "両親はどう反応しましたか。", question_zh: "父母是怎么反应的？", question_vi: "Bố mẹ đã phản ứng thế nào?", options: ["Left the house","Ignored it","Got very angry","Calmly cleaned it up"], answerIndex: 3 },
+      { question_en: "What did the narrator do to make up for it?", question_ja: "語り手は償うために何をしましたか。", question_zh: "叙述者做了什么来弥补？", question_vi: "Người kể chuyện đã làm gì để bù đắp?", options: ["Nothing","Left home","Bought a new window","Helped clean the room"], answerIndex: 3 },
     ],
   },
   {
@@ -485,10 +485,10 @@ export const READING_A2_STORY: RawPassage[] = [
     title_ja: "子猫を見つけました", title_zh: "发现了一只小猫", title_vi: "Tôi phát hiện một chú mèo con",
     body_kr: "오늘 퇴근길에 골목에서 작은 아기 고양이를 발견했어요. 고양이가 혼자 울고 있어서 마음이 아팠어요. 저는 근처 동물병원에 데려갔어요. 수의사 선생님이 고양이가 건강하다고 하셨어요. 앞으로 이 고양이를 제가 키울 거예요.",
     body_en: "On my way home from work today, I found a small kitten in an alley. My heart ached because the cat was crying alone. I took it to a nearby animal hospital. The vet said the cat was healthy. From now on, I will raise this cat.",
-    body_ja: "今日、退勤途中に路地で小さな子猫を見つけました。猫が一人で鳴いていて心が痛みました。私は近くの動物病院に連れて行きました。獣医の先生は猫が健康だと言いました。これからこの猫を私が育てるつもりです。", body_zh: "今天下班路上在小巷里发现了一只小猫。猫独自在哭，我心里很难受。我把它带到了附近的宠物医院。兽医说这只猫很健康。以后我要养这只猫。" body_vi: "Hôm nay trên đường đi làm về tôi phát hiện một chú mèo con trong ngõ. Con mèo khóc một mình khiến tôi thấy đau lòng. Tôi đưa nó đến bệnh viện thú y gần đó. Bác sĩ thú y nói con mèo khỏe mạnh. Từ nay tôi sẽ nuôi con mèo này.",
+    body_ja: "今日、退勤途中に路地で小さな子猫を見つけました。猫が一人で鳴いていて心が痛みました。私は近くの動物病院に連れて行きました。獣医の先生は猫が健康だと言いました。これからこの猫を私が育てるつもりです。", body_zh: "今天下班路上在小巷里发现了一只小猫。猫独自在哭，我心里很难受。我把它带到了附近的宠物医院。兽医说这只猫很健康。以后我要养这只猫。", body_vi: "Hôm nay trên đường đi làm về tôi phát hiện một chú mèo con trong ngõ. Con mèo khóc một mình khiến tôi thấy đau lòng. Tôi đưa nó đến bệnh viện thú y gần đó. Bác sĩ thú y nói con mèo khỏe mạnh. Từ nay tôi sẽ nuôi con mèo này.",
     questions: [
-      { question_en: "Where did the narrator find the kitten?", question_ja: "語り手はどこで子猫を見つけましたか。", question_zh: "叙述者在哪里发现的小猫？" question_vi: "Người kể chuyện tìm thấy mèo con ở đâu?", options: ["In an alley","At a shop","At home","At the park"], answerIndex: 0 },
-      { question_en: "What did the vet say?", question_ja: "獣医は何と言いましたか。", question_zh: "兽医说了什么？" question_vi: "Bác sĩ thú y nói gì?", options: ["The cat was too young","Nothing","The cat was healthy","The cat was sick"], answerIndex: 2 },
+      { question_en: "Where did the narrator find the kitten?", question_ja: "語り手はどこで子猫を見つけましたか。", question_zh: "叙述者在哪里发现的小猫？", question_vi: "Người kể chuyện tìm thấy mèo con ở đâu?", options: ["In an alley","At a shop","At home","At the park"], answerIndex: 0 },
+      { question_en: "What did the vet say?", question_ja: "獣医は何と言いましたか。", question_zh: "兽医说了什么？", question_vi: "Bác sĩ thú y nói gì?", options: ["The cat was too young","Nothing","The cat was healthy","The cat was sick"], answerIndex: 2 },
     ],
   },
   {
@@ -499,10 +499,10 @@ export const READING_A2_STORY: RawPassage[] = [
     title_ja: "ピクニックに行きました", title_zh: "去郊游了", title_vi: "Tôi đi dã ngoại",
     body_kr: "지난 주말에 가족과 근처 공원으로 소풍을 갔어요. 저는 김밥과 과일을 준비했어요. 돗자리를 펴자마자 갑자기 바람이 세게 불었어요. 우리는 나무 아래로 자리를 옮겼어요. 다음 소풍에는 날씨를 미리 확인할 거예요.",
     body_en: "Last weekend my family and I went on a picnic to a nearby park. I prepared gimbap and fruit. As soon as we spread out the mat, the wind suddenly blew hard. We moved our spot under a tree. For the next picnic, I will check the weather in advance.",
-    body_ja: "先週末、家族と近くの公園にピクニックに行きました。私はキンパと果物を用意しました。レジャーシートを敷くとすぐに突然強い風が吹きました。私たちは木の下に場所を移しました。次のピクニックでは前もって天気を確認するつもりです。", body_zh: "上周末和家人去附近的公园郊游。我准备了紫菜包饭和水果。刚铺好野餐垫，突然刮起了大风。我们把地方换到了树下。下次郊游我要提前查看天气。" body_vi: "Cuối tuần trước tôi cùng gia đình đi dã ngoại ở công viên gần nhà. Tôi chuẩn bị cơm cuộn và trái cây. Vừa trải chiếu ra thì gió bỗng thổi mạnh. Chúng tôi chuyển chỗ đến dưới gốc cây. Lần dã ngoại sau tôi sẽ xem trước dự báo thời tiết.",
+    body_ja: "先週末、家族と近くの公園にピクニックに行きました。私はキンパと果物を用意しました。レジャーシートを敷くとすぐに突然強い風が吹きました。私たちは木の下に場所を移しました。次のピクニックでは前もって天気を確認するつもりです。", body_zh: "上周末和家人去附近的公园郊游。我准备了紫菜包饭和水果。刚铺好野餐垫，突然刮起了大风。我们把地方换到了树下。下次郊游我要提前查看天气。", body_vi: "Cuối tuần trước tôi cùng gia đình đi dã ngoại ở công viên gần nhà. Tôi chuẩn bị cơm cuộn và trái cây. Vừa trải chiếu ra thì gió bỗng thổi mạnh. Chúng tôi chuyển chỗ đến dưới gốc cây. Lần dã ngoại sau tôi sẽ xem trước dự báo thời tiết.",
     questions: [
-      { question_en: "What did the narrator prepare?", question_ja: "語り手は何を用意しましたか。", question_zh: "叙述者准备了什么？" question_vi: "Người kể chuyện đã chuẩn bị gì?", options: ["Pizza","Only fruit","Sandwiches","Gimbap and fruit"], answerIndex: 3 },
-      { question_en: "What happened after spreading the mat?", question_ja: "レジャーシートを敷いた後、何が起こりましたか。", question_zh: "铺好野餐垫后发生了什么？" question_vi: "Chuyện gì đã xảy ra sau khi trải chiếu?", options: ["Nothing","It rained","It got dark","The wind blew hard"], answerIndex: 3 },
+      { question_en: "What did the narrator prepare?", question_ja: "語り手は何を用意しましたか。", question_zh: "叙述者准备了什么？", question_vi: "Người kể chuyện đã chuẩn bị gì?", options: ["Pizza","Only fruit","Sandwiches","Gimbap and fruit"], answerIndex: 3 },
+      { question_en: "What happened after spreading the mat?", question_ja: "レジャーシートを敷いた後、何が起こりましたか。", question_zh: "铺好野餐垫后发生了什么？", question_vi: "Chuyện gì đã xảy ra sau khi trải chiếu?", options: ["Nothing","It rained","It got dark","The wind blew hard"], answerIndex: 3 },
     ],
   },
   {
@@ -513,10 +513,10 @@ export const READING_A2_STORY: RawPassage[] = [
     title_ja: "台風が来ました", title_zh: "台风来了", title_vi: "Bão đã đến",
     body_kr: "어제 태풍 때문에 밤새 바람이 세게 불었어요. 저는 걱정이 되어 창문을 단단히 닫았어요. 아침에 일어나 보니 마당의 화분이 넘어져 있었어요. 다행히 큰 피해는 없었어요. 다음 태풍이 오기 전에 미리 준비를 해 둘 거예요.",
     body_en: "Yesterday, because of a typhoon, the wind blew hard all night. Worried, I firmly closed the windows. When I woke up in the morning, the flowerpots in the yard had fallen over. Fortunately, there was no major damage. I will prepare in advance before the next typhoon comes.",
-    body_ja: "昨日、台風のせいで一晩中強い風が吹きました。私は心配になって窓をしっかり閉めました。朝起きてみると庭の植木鉢が倒れていました。幸い大きな被害はありませんでした。次の台風が来る前にあらかじめ準備しておくつもりです。", body_zh: "昨天因为台风，整晚都刮着大风。我很担心，把窗户关得严严实实的。早上起来发现院子里的花盆倒了。幸好没有造成大损失。下次台风来之前我要提前做好准备。" body_vi: "Hôm qua vì bão nên gió thổi mạnh suốt đêm. Tôi lo lắng nên đóng cửa sổ thật chặt. Sáng dậy tôi thấy chậu hoa trong sân bị đổ. May mắn không có thiệt hại lớn. Trước khi bão sau đến tôi sẽ chuẩn bị trước.",
+    body_ja: "昨日、台風のせいで一晩中強い風が吹きました。私は心配になって窓をしっかり閉めました。朝起きてみると庭の植木鉢が倒れていました。幸い大きな被害はありませんでした。次の台風が来る前にあらかじめ準備しておくつもりです。", body_zh: "昨天因为台风，整晚都刮着大风。我很担心，把窗户关得严严实实的。早上起来发现院子里的花盆倒了。幸好没有造成大损失。下次台风来之前我要提前做好准备。", body_vi: "Hôm qua vì bão nên gió thổi mạnh suốt đêm. Tôi lo lắng nên đóng cửa sổ thật chặt. Sáng dậy tôi thấy chậu hoa trong sân bị đổ. May mắn không có thiệt hại lớn. Trước khi bão sau đến tôi sẽ chuẩn bị trước.",
     questions: [
-      { question_en: "What did the narrator do because of worry?", question_ja: "心配で語り手は何をしましたか。", question_zh: "因为担心叙述者做了什么？" question_vi: "Vì lo lắng người kể chuyện đã làm gì?", options: ["Went to sleep early","Left the house","Closed the windows firmly","Called a friend"], answerIndex: 2 },
-      { question_en: "What was found in the morning?", question_ja: "朝、何が見つかりましたか。", question_zh: "早上发现了什么？" question_vi: "Buổi sáng phát hiện điều gì?", options: ["Nothing unusual","A flooded room","A broken window","Fallen flowerpots"], answerIndex: 3 },
+      { question_en: "What did the narrator do because of worry?", question_ja: "心配で語り手は何をしましたか。", question_zh: "因为担心叙述者做了什么？", question_vi: "Vì lo lắng người kể chuyện đã làm gì?", options: ["Went to sleep early","Left the house","Closed the windows firmly","Called a friend"], answerIndex: 2 },
+      { question_en: "What was found in the morning?", question_ja: "朝、何が見つかりましたか。", question_zh: "早上发现了什么？", question_vi: "Buổi sáng phát hiện điều gì?", options: ["Nothing unusual","A flooded room","A broken window","Fallen flowerpots"], answerIndex: 3 },
     ],
   },
   {
@@ -527,10 +527,10 @@ export const READING_A2_STORY: RawPassage[] = [
     title_ja: "火災警報が鳴りました", title_zh: "火警响了", title_vi: "Chuông báo cháy vang lên",
     body_kr: "오늘 새벽에 갑자기 화재 경보가 울렸어요. 저는 깜짝 놀라서 급하게 밖으로 나갔어요. 알고 보니 이웃이 요리하다가 연기를 낸 것이었어요. 다행히 진짜 불은 아니었어요. 다음부터는 요리할 때 더 조심해야겠다고 생각했어요.",
     body_en: "Early this morning, the fire alarm suddenly went off. I was startled and hurried outside. It turned out a neighbor had made smoke while cooking. Fortunately, it wasn't a real fire. I thought I should be more careful while cooking from now on.",
-    body_ja: "今日の明け方、突然火災警報が鳴りました。私はびっくりして急いで外に出ました。実は隣人が料理をしていて煙が出たのでした。幸い本当の火事ではありませんでした。これからは料理をするときもっと気をつけようと思いました。", body_zh: "今天凌晨突然响起了火警。我吓了一跳，急忙跑到了外面。后来才知道是邻居做饭冒了烟。幸好不是真的火灾。我想以后做饭要更小心。" body_vi: "Sáng sớm nay chuông báo cháy đột nhiên vang lên. Tôi giật mình vội vàng chạy ra ngoài. Hóa ra là hàng xóm nấu ăn bị khói. May mắn không phải là hỏa hoạn thật. Tôi nghĩ từ nay khi nấu ăn cần cẩn thận hơn.",
+    body_ja: "今日の明け方、突然火災警報が鳴りました。私はびっくりして急いで外に出ました。実は隣人が料理をしていて煙が出たのでした。幸い本当の火事ではありませんでした。これからは料理をするときもっと気をつけようと思いました。", body_zh: "今天凌晨突然响起了火警。我吓了一跳，急忙跑到了外面。后来才知道是邻居做饭冒了烟。幸好不是真的火灾。我想以后做饭要更小心。", body_vi: "Sáng sớm nay chuông báo cháy đột nhiên vang lên. Tôi giật mình vội vàng chạy ra ngoài. Hóa ra là hàng xóm nấu ăn bị khói. May mắn không phải là hỏa hoạn thật. Tôi nghĩ từ nay khi nấu ăn cần cẩn thận hơn.",
     questions: [
-      { question_en: "What caused the alarm?", question_ja: "何が警報の原因でしたか。", question_zh: "是什么引起了警报？" question_vi: "Điều gì gây ra tiếng chuông báo động?", options: ["Smoke from cooking","A real fire","A malfunction","A prank"], answerIndex: 0 },
-      { question_en: "Was there a real fire?", question_ja: "本当に火事はありましたか。", question_zh: "真的有火灾吗？" question_vi: "Có phải hỏa hoạn thật không?", options: ["Two fires","Yes","No","Unknown"], answerIndex: 2 },
+      { question_en: "What caused the alarm?", question_ja: "何が警報の原因でしたか。", question_zh: "是什么引起了警报？", question_vi: "Điều gì gây ra tiếng chuông báo động?", options: ["Smoke from cooking","A real fire","A malfunction","A prank"], answerIndex: 0 },
+      { question_en: "Was there a real fire?", question_ja: "本当に火事はありましたか。", question_zh: "真的有火灾吗？", question_vi: "Có phải hỏa hoạn thật không?", options: ["Two fires","Yes","No","Unknown"], answerIndex: 2 },
     ],
   },
   {
@@ -541,10 +541,10 @@ export const READING_A2_STORY: RawPassage[] = [
     title_ja: "初めてのマラソン", title_zh: "第一次马拉松", title_vi: "Cuộc chạy marathon đầu tiên",
     body_kr: "지난달에 처음으로 십 킬로미터 마라톤에 참가했어요. 중간에 다리가 아파서 포기하고 싶었어요. 옆에서 뛰던 사람이 저를 응원해 줬어요. 저는 끝까지 완주할 수 있었어요. 다음에는 더 긴 거리에 도전할 거예요.",
     body_en: "Last month I participated in a 10-kilometer marathon for the first time. In the middle, my legs hurt and I wanted to give up. A person running next to me cheered me on. I was able to finish the race to the end. Next time, I will challenge myself with a longer distance.",
-    body_ja: "先月、初めて十キロメートルのマラソンに参加しました。途中で足が痛くて諦めたくなりました。隣を走っていた人が私を応援してくれました。私は最後まで完走することができました。次はもっと長い距離に挑戦するつもりです。", body_zh: "上个月第一次参加了十公里马拉松。中途腿疼，想放弃。旁边跑步的人为我加油。我终于坚持跑完了全程。下次我要挑战更长的距离。" body_vi: "Tháng trước lần đầu tôi tham gia chạy marathon mười ki-lô-mét. Giữa chừng chân đau nên tôi muốn bỏ cuộc. Người chạy bên cạnh đã cổ vũ tôi. Tôi đã có thể hoàn thành đến cuối cùng. Lần sau tôi sẽ thử thách quãng đường dài hơn.",
+    body_ja: "先月、初めて十キロメートルのマラソンに参加しました。途中で足が痛くて諦めたくなりました。隣を走っていた人が私を応援してくれました。私は最後まで完走することができました。次はもっと長い距離に挑戦するつもりです。", body_zh: "上个月第一次参加了十公里马拉松。中途腿疼，想放弃。旁边跑步的人为我加油。我终于坚持跑完了全程。下次我要挑战更长的距离。", body_vi: "Tháng trước lần đầu tôi tham gia chạy marathon mười ki-lô-mét. Giữa chừng chân đau nên tôi muốn bỏ cuộc. Người chạy bên cạnh đã cổ vũ tôi. Tôi đã có thể hoàn thành đến cuối cùng. Lần sau tôi sẽ thử thách quãng đường dài hơn.",
     questions: [
-      { question_en: "What happened in the middle of the race?", question_ja: "レースの途中で何が起こりましたか。", question_zh: "比赛中途发生了什么？" question_vi: "Giữa chừng cuộc đua chuyện gì đã xảy ra?", options: ["Legs hurt and wanted to give up","The narrator got lost","Ran out of water","It started raining"], answerIndex: 0 },
-      { question_en: "Who helped the narrator keep going?", question_ja: "誰が語り手を励まし続けましたか。", question_zh: "谁帮助叙述者坚持了下去？" question_vi: "Ai đã giúp người kể chuyện tiếp tục?", options: ["A coach","A family member","A stranger runner","No one"], answerIndex: 2 },
+      { question_en: "What happened in the middle of the race?", question_ja: "レースの途中で何が起こりましたか。", question_zh: "比赛中途发生了什么？", question_vi: "Giữa chừng cuộc đua chuyện gì đã xảy ra?", options: ["Legs hurt and wanted to give up","The narrator got lost","Ran out of water","It started raining"], answerIndex: 0 },
+      { question_en: "Who helped the narrator keep going?", question_ja: "誰が語り手を励まし続けましたか。", question_zh: "谁帮助叙述者坚持了下去？", question_vi: "Ai đã giúp người kể chuyện tiếp tục?", options: ["A coach","A family member","A stranger runner","No one"], answerIndex: 2 },
     ],
   },
   {
@@ -555,10 +555,10 @@ export const READING_A2_STORY: RawPassage[] = [
     title_ja: "屋根から雨漏りがしました", title_zh: "屋顶漏雨", title_vi: "Mái nhà bị dột",
     body_kr: "어제 밤에 비가 많이 와서 지붕에서 물이 샜어요. 저는 놀라서 양동이를 급하게 가져다 놓았어요. 아침에 관리인 아저씨께 바로 연락드렸어요. 오늘 오후에 아저씨가 오셔서 지붕을 고쳐 주셨어요. 이제는 비가 와도 걱정하지 않아도 돼요.",
     body_en: "Last night it rained a lot, and water leaked from the roof. Startled, I quickly brought a bucket over. In the morning, I contacted the building manager right away. This afternoon, he came and fixed the roof. Now I don't have to worry even if it rains.",
-    body_ja: "昨夜、雨がたくさん降って屋根から水が漏れました。私は驚いて急いでバケツを持ってきました。朝、管理人のおじさんにすぐ連絡しました。今日の午後、おじさんが来て屋根を直してくれました。もう雨が降っても心配しなくて大丈夫です。", body_zh: "昨晚雨下得很大，屋顶漏水了。我吓了一跳，赶紧拿来了水桶。早上我马上联系了管理员大叔。今天下午大叔来把屋顶修好了。现在下雨也不用担心了。" body_vi: "Đêm qua mưa to nên nước dột từ mái nhà. Tôi giật mình vội vàng lấy xô hứng nước. Sáng ra tôi liên lạc ngay với chú quản lý. Chiều nay chú đến sửa mái nhà giúp tôi. Bây giờ dù trời mưa tôi cũng không cần lo lắng nữa.",
+    body_ja: "昨夜、雨がたくさん降って屋根から水が漏れました。私は驚いて急いでバケツを持ってきました。朝、管理人のおじさんにすぐ連絡しました。今日の午後、おじさんが来て屋根を直してくれました。もう雨が降っても心配しなくて大丈夫です。", body_zh: "昨晚雨下得很大，屋顶漏水了。我吓了一跳，赶紧拿来了水桶。早上我马上联系了管理员大叔。今天下午大叔来把屋顶修好了。现在下雨也不用担心了。", body_vi: "Đêm qua mưa to nên nước dột từ mái nhà. Tôi giật mình vội vàng lấy xô hứng nước. Sáng ra tôi liên lạc ngay với chú quản lý. Chiều nay chú đến sửa mái nhà giúp tôi. Bây giờ dù trời mưa tôi cũng không cần lo lắng nữa.",
     questions: [
-      { question_en: "What did the narrator do first?", question_ja: "語り手は最初に何をしましたか。", question_zh: "叙述者最先做了什么？" question_vi: "Đầu tiên người kể chuyện đã làm gì?", options: ["Went back to sleep","Left the house","Called the manager","Brought a bucket"], answerIndex: 3 },
-      { question_en: "When was the roof fixed?", question_ja: "屋根はいつ直りましたか。", question_zh: "屋顶什么时候修好的？" question_vi: "Khi nào mái nhà được sửa xong?", options: ["Never","That night","That afternoon","The next morning"], answerIndex: 2 },
+      { question_en: "What did the narrator do first?", question_ja: "語り手は最初に何をしましたか。", question_zh: "叙述者最先做了什么？", question_vi: "Đầu tiên người kể chuyện đã làm gì?", options: ["Went back to sleep","Left the house","Called the manager","Brought a bucket"], answerIndex: 3 },
+      { question_en: "When was the roof fixed?", question_ja: "屋根はいつ直りましたか。", question_zh: "屋顶什么时候修好的？", question_vi: "Khi nào mái nhà được sửa xong?", options: ["Never","That night","That afternoon","The next morning"], answerIndex: 2 },
     ],
   },
 ];

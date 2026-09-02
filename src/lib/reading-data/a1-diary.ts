@@ -7,10 +7,10 @@ export const READING_A1_DIARY: RawPassage[] = [
     title_kr: "아침 일과",
     title_en: "Morning routine", title_ja: "朝の日課", title_zh: "早晨日常", title_vi: "Thói quen buổi sáng",
     body_kr: "저는 아침 일곱 시에 일어나요. 얼굴을 씻어요. 아침을 먹어요. 그리고 학교에 가요.",
-    body_en: "I wake up at seven in the morning. I wash my face. I eat breakfast. Then I go to school.", body_ja: "私は朝7時に起きます。顔を洗います。朝ごはんを食べます。それから学校に行きます。", body_zh: "我早上七点起床。洗脸。吃早饭。然后去学校。" body_vi: "Tôi thức dậy lúc bảy giờ sáng. Tôi rửa mặt. Tôi ăn sáng. Sau đó tôi đi học.",
+    body_en: "I wake up at seven in the morning. I wash my face. I eat breakfast. Then I go to school.", body_ja: "私は朝7時に起きます。顔を洗います。朝ごはんを食べます。それから学校に行きます。", body_zh: "我早上七点起床。洗脸。吃早饭。然后去学校。", body_vi: "Tôi thức dậy lúc bảy giờ sáng. Tôi rửa mặt. Tôi ăn sáng. Sau đó tôi đi học.",
     questions: [
-      { question_en: "What time do they wake up?", question_ja: "何時に起きますか。", question_zh: "他们几点起床？" question_vi: "Họ thức dậy lúc mấy giờ?", options: ["7 AM", "8 AM", "9 AM", "6 AM"], answerIndex: 0 },
-      { question_en: "What do they do after breakfast?", question_ja: "朝ごはんの後に何をしますか。", question_zh: "吃完早饭后他们做什么？" question_vi: "Sau khi ăn sáng họ làm gì?", options: ["Go to school", "Go to sleep", "Watch TV", "Go to work"], answerIndex: 0 },
+      { question_en: "What time do they wake up?", question_ja: "何時に起きますか。", question_zh: "他们几点起床？", question_vi: "Họ thức dậy lúc mấy giờ?", options: ["7 AM", "8 AM", "9 AM", "6 AM"], answerIndex: 0 },
+      { question_en: "What do they do after breakfast?", question_ja: "朝ごはんの後に何をしますか。", question_zh: "吃完早饭后他们做什么？", question_vi: "Sau khi ăn sáng họ làm gì?", options: ["Go to school", "Go to sleep", "Watch TV", "Go to work"], answerIndex: 0 },
     ],
   },
   {
@@ -19,10 +19,10 @@ export const READING_A1_DIARY: RawPassage[] = [
     title_kr: "우리 가족",
     title_en: "My family", title_ja: "私の家族", title_zh: "我的家人", title_vi: "Gia đình tôi",
     body_kr: "우리 가족은 여섯 명이에요. 아빠, 엄마, 언니, 오빠, 동생 그리고 저예요. 우리는 서울에 살아요. 저는 가족을 사랑해요.",
-    body_en: "There are six people in my family: my dad, mom, older sister, older brother, younger sibling, and me. We live in Seoul. I love my family.", body_ja: "私の家族は6人です。父、母、姉、兄、弟、そして私です。私たちはソウルに住んでいます。私は家族を愛しています。", body_zh: "我们家有六口人。爸爸、妈妈、姐姐、哥哥、弟弟和我。我们住在首尔。我爱我的家人。" body_vi: "Gia đình tôi có sáu người. Bố, mẹ, chị gái, anh trai, em và tôi. Chúng tôi sống ở Seoul. Tôi yêu gia đình mình.",
+    body_en: "There are six people in my family: my dad, mom, older sister, older brother, younger sibling, and me. We live in Seoul. I love my family.", body_ja: "私の家族は6人です。父、母、姉、兄、弟、そして私です。私たちはソウルに住んでいます。私は家族を愛しています。", body_zh: "我们家有六口人。爸爸、妈妈、姐姐、哥哥、弟弟和我。我们住在首尔。我爱我的家人。", body_vi: "Gia đình tôi có sáu người. Bố, mẹ, chị gái, anh trai, em và tôi. Chúng tôi sống ở Seoul. Tôi yêu gia đình mình.",
     questions: [
-      { question_en: "How many people are in the family?", question_ja: "家族は何人ですか。", question_zh: "家里有几口人？" question_vi: "Gia đình có bao nhiêu người?", options: ["Six", "Four", "Five", "Three"], answerIndex: 0 },
-      { question_en: "Where does the family live?", question_ja: "家族はどこに住んでいますか。", question_zh: "这家人住在哪里？" question_vi: "Gia đình sống ở đâu?", options: ["Seoul", "Busan", "Daegu", "Incheon"], answerIndex: 0 },
+      { question_en: "How many people are in the family?", question_ja: "家族は何人ですか。", question_zh: "家里有几口人？", question_vi: "Gia đình có bao nhiêu người?", options: ["Six", "Four", "Five", "Three"], answerIndex: 0 },
+      { question_en: "Where does the family live?", question_ja: "家族はどこに住んでいますか。", question_zh: "这家人住在哪里？", question_vi: "Gia đình sống ở đâu?", options: ["Seoul", "Busan", "Daegu", "Incheon"], answerIndex: 0 },
     ],
   },
   {
@@ -31,10 +31,10 @@ export const READING_A1_DIARY: RawPassage[] = [
     title_kr: "오늘 날씨",
     title_en: "Today's weather", title_ja: "今日の天気", title_zh: "今天的天气", title_vi: "Thời tiết hôm nay",
     body_kr: "오늘은 날씨가 좋아요. 하늘이 파래요. 바람도 시원해요. 저는 공원에 가고 싶어요.",
-    body_en: "The weather is nice today. The sky is blue. The wind is cool too. I want to go to the park.", body_ja: "今日は天気がいいです。空が青いです。風も涼しいです。私は公園に行きたいです。", body_zh: "今天天气很好。天空是蓝色的。风也很凉爽。我想去公园。" body_vi: "Hôm nay thời tiết đẹp. Bầu trời xanh. Gió cũng mát. Tôi muốn đi công viên.",
+    body_en: "The weather is nice today. The sky is blue. The wind is cool too. I want to go to the park.", body_ja: "今日は天気がいいです。空が青いです。風も涼しいです。私は公園に行きたいです。", body_zh: "今天天气很好。天空是蓝色的。风也很凉爽。我想去公园。", body_vi: "Hôm nay thời tiết đẹp. Bầu trời xanh. Gió cũng mát. Tôi muốn đi công viên.",
     questions: [
-      { question_en: "What color is the sky?", question_ja: "空は何色ですか。", question_zh: "天空是什么颜色？" question_vi: "Bầu trời màu gì?", options: ["Blue", "Gray", "White", "Red"], answerIndex: 0 },
-      { question_en: "Where does the person want to go?", question_ja: "この人はどこに行きたいですか。", question_zh: "这个人想去哪里？" question_vi: "Người này muốn đi đâu?", options: ["The park", "The market", "The library", "The beach"], answerIndex: 0 },
+      { question_en: "What color is the sky?", question_ja: "空は何色ですか。", question_zh: "天空是什么颜色？", question_vi: "Bầu trời màu gì?", options: ["Blue", "Gray", "White", "Red"], answerIndex: 0 },
+      { question_en: "Where does the person want to go?", question_ja: "この人はどこに行きたいですか。", question_zh: "这个人想去哪里？", question_vi: "Người này muốn đi đâu?", options: ["The park", "The market", "The library", "The beach"], answerIndex: 0 },
     ],
   },
   {
@@ -43,10 +43,10 @@ export const READING_A1_DIARY: RawPassage[] = [
     title_kr: "저녁 식사",
     title_en: "Dinner", title_ja: "夕食", title_zh: "晚饭", title_vi: "Bữa tối",
     body_kr: "저는 저녁에 밥을 먹어요. 오늘은 김치찌개를 먹어요. 조금 매워요. 하지만 아주 맛있어요.",
-    body_en: "I eat dinner in the evening. Today I'm eating kimchi stew. It's a little spicy. But it's very delicious.", body_ja: "私は夕方にご飯を食べます。今日はキムチチゲを食べます。少し辛いです。でも、とてもおいしいです。", body_zh: "我晚上吃饭。今天吃泡菜汤。有点辣。但是很好吃。" body_vi: "Tôi ăn cơm vào buổi tối. Hôm nay tôi ăn canh kim chi. Hơi cay. Nhưng rất ngon.",
+    body_en: "I eat dinner in the evening. Today I'm eating kimchi stew. It's a little spicy. But it's very delicious.", body_ja: "私は夕方にご飯を食べます。今日はキムチチゲを食べます。少し辛いです。でも、とてもおいしいです。", body_zh: "我晚上吃饭。今天吃泡菜汤。有点辣。但是很好吃。", body_vi: "Tôi ăn cơm vào buổi tối. Hôm nay tôi ăn canh kim chi. Hơi cay. Nhưng rất ngon.",
     questions: [
-      { question_en: "What are they eating?", question_ja: "何を食べていますか。", question_zh: "他们在吃什么？" question_vi: "Họ đang ăn gì?", options: ["Kimchi stew", "Bibimbap", "Noodles", "Fried rice"], answerIndex: 0 },
-      { question_en: "How does the food taste?", question_ja: "料理の味はどうですか。", question_zh: "食物味道怎么样？" question_vi: "Món ăn có vị thế nào?", options: ["A little spicy but delicious", "Very sweet", "Too salty", "Cold and bland"], answerIndex: 0 },
+      { question_en: "What are they eating?", question_ja: "何を食べていますか。", question_zh: "他们在吃什么？", question_vi: "Họ đang ăn gì?", options: ["Kimchi stew", "Bibimbap", "Noodles", "Fried rice"], answerIndex: 0 },
+      { question_en: "How does the food taste?", question_ja: "料理の味はどうですか。", question_zh: "食物味道怎么样？", question_vi: "Món ăn có vị thế nào?", options: ["A little spicy but delicious", "Very sweet", "Too salty", "Cold and bland"], answerIndex: 0 },
     ],
   },
   {
@@ -55,10 +55,10 @@ export const READING_A1_DIARY: RawPassage[] = [
     title_kr: "제 방",
     title_en: "My room", title_ja: "私の部屋", title_zh: "我的房间", title_vi: "Phòng của tôi",
     body_kr: "제 방은 작아요. 방 안에 침대와 책상이 있어요. 창문 옆에 꽃도 있어요. 저는 제 방이 좋아요.",
-    body_en: "My room is small. There is a bed and a desk in the room. There are also flowers next to the window. I like my room.", body_ja: "私の部屋は小さいです。部屋の中にベッドと机があります。窓の横に花もあります。私は自分の部屋が好きです。", body_zh: "我的房间很小。房间里有床和书桌。窗边还有花。我喜欢我的房间。" body_vi: "Phòng tôi nhỏ. Trong phòng có giường và bàn học. Bên cạnh cửa sổ cũng có hoa. Tôi thích phòng của mình.",
+    body_en: "My room is small. There is a bed and a desk in the room. There are also flowers next to the window. I like my room.", body_ja: "私の部屋は小さいです。部屋の中にベッドと机があります。窓の横に花もあります。私は自分の部屋が好きです。", body_zh: "我的房间很小。房间里有床和书桌。窗边还有花。我喜欢我的房间。", body_vi: "Phòng tôi nhỏ. Trong phòng có giường và bàn học. Bên cạnh cửa sổ cũng có hoa. Tôi thích phòng của mình.",
     questions: [
-      { question_en: "What is in the room?", question_ja: "部屋の中には何がありますか。", question_zh: "房间里有什么？" question_vi: "Trong phòng có gì?", options: ["A bed and a desk", "A sofa and a TV", "A piano", "A bookshelf only"], answerIndex: 0 },
-      { question_en: "What is next to the window?", question_ja: "窓の横には何がありますか。", question_zh: "窗边有什么？" question_vi: "Bên cạnh cửa sổ có gì?", options: ["Flowers", "A lamp", "A chair", "A clock"], answerIndex: 0 },
+      { question_en: "What is in the room?", question_ja: "部屋の中には何がありますか。", question_zh: "房间里有什么？", question_vi: "Trong phòng có gì?", options: ["A bed and a desk", "A sofa and a TV", "A piano", "A bookshelf only"], answerIndex: 0 },
+      { question_en: "What is next to the window?", question_ja: "窓の横には何がありますか。", question_zh: "窗边有什么？", question_vi: "Bên cạnh cửa sổ có gì?", options: ["Flowers", "A lamp", "A chair", "A clock"], answerIndex: 0 },
     ],
   },
   {
@@ -67,10 +67,10 @@ export const READING_A1_DIARY: RawPassage[] = [
     title_kr: "편의점에서",
     title_en: "At the convenience store", title_ja: "コンビニで", title_zh: "在便利店", title_vi: "Ở cửa hàng tiện lợi",
     body_kr: "저는 편의점에 자주 가요. 삼각김밥을 사요. 우유도 사요. 값이 비싸지 않아요.",
-    body_en: "I often go to the convenience store. I buy a rice triangle. I buy milk too. It's not expensive.", body_ja: "私はコンビニによく行きます。おにぎりを買います。牛乳も買います。値段は高くありません。", body_zh: "我经常去便利店。买三角饭团。也买牛奶。价格不贵。" body_vi: "Tôi thường đi cửa hàng tiện lợi. Tôi mua cơm nắm tam giác. Cũng mua sữa. Giá không đắt.",
+    body_en: "I often go to the convenience store. I buy a rice triangle. I buy milk too. It's not expensive.", body_ja: "私はコンビニによく行きます。おにぎりを買います。牛乳も買います。値段は高くありません。", body_zh: "我经常去便利店。买三角饭团。也买牛奶。价格不贵。", body_vi: "Tôi thường đi cửa hàng tiện lợi. Tôi mua cơm nắm tam giác. Cũng mua sữa. Giá không đắt.",
     questions: [
-      { question_en: "What do they buy?", question_ja: "何を買いますか。", question_zh: "他们买了什么？" question_vi: "Họ mua gì?", options: ["Fruit and bread", "A rice triangle and milk", "Coffee and cake", "Rice and soup"], answerIndex: 1 },
-      { question_en: "How are the prices?", question_ja: "値段はどうですか。", question_zh: "价格怎么样？" question_vi: "Giá cả thế nào?", options: ["Not expensive", "Very expensive", "Free", "Higher than usual"], answerIndex: 0 },
+      { question_en: "What do they buy?", question_ja: "何を買いますか。", question_zh: "他们买了什么？", question_vi: "Họ mua gì?", options: ["Fruit and bread", "A rice triangle and milk", "Coffee and cake", "Rice and soup"], answerIndex: 1 },
+      { question_en: "How are the prices?", question_ja: "値段はどうですか。", question_zh: "价格怎么样？", question_vi: "Giá cả thế nào?", options: ["Not expensive", "Very expensive", "Free", "Higher than usual"], answerIndex: 0 },
     ],
   },
   {
@@ -79,10 +79,10 @@ export const READING_A1_DIARY: RawPassage[] = [
     title_kr: "버스를 타요",
     title_en: "Taking the bus", title_ja: "バスに乗る", title_zh: "坐公交车", title_vi: "Đi xe buýt",
     body_kr: "저는 매일 버스를 타요. 버스 정류장은 집 앞에 있어요. 아침에는 사람이 많아요. 그래서 저는 서서 가요.",
-    body_en: "I take the bus every day. The bus stop is in front of my house. In the morning there are many people. So I stand.", body_ja: "私は毎日バスに乗ります。バス停は家の前にあります。朝は人が多いです。だから私は立って行きます。", body_zh: "我每天坐公交车。公交车站在家门前。早上人很多。所以我站着去。" body_vi: "Tôi đi xe buýt mỗi ngày. Trạm xe buýt ở trước nhà. Buổi sáng có nhiều người. Vì vậy tôi đứng đi.",
+    body_en: "I take the bus every day. The bus stop is in front of my house. In the morning there are many people. So I stand.", body_ja: "私は毎日バスに乗ります。バス停は家の前にあります。朝は人が多いです。だから私は立って行きます。", body_zh: "我每天坐公交车。公交车站在家门前。早上人很多。所以我站着去。", body_vi: "Tôi đi xe buýt mỗi ngày. Trạm xe buýt ở trước nhà. Buổi sáng có nhiều người. Vì vậy tôi đứng đi.",
     questions: [
-      { question_en: "Where is the bus stop?", question_ja: "バス停はどこにありますか。", question_zh: "公交车站在哪里？" question_vi: "Trạm xe buýt ở đâu?", options: ["Next to the school", "Behind the market", "In front of their house", "Near the station"], answerIndex: 2 },
-      { question_en: "Why do they stand?", question_ja: "なぜ立っていますか。", question_zh: "他们为什么站着？" question_vi: "Tại sao họ đứng?", options: ["The seats are broken", "There are many people", "The ride is short", "They like standing"], answerIndex: 1 },
+      { question_en: "Where is the bus stop?", question_ja: "バス停はどこにありますか。", question_zh: "公交车站在哪里？", question_vi: "Trạm xe buýt ở đâu?", options: ["Next to the school", "Behind the market", "In front of their house", "Near the station"], answerIndex: 2 },
+      { question_en: "Why do they stand?", question_ja: "なぜ立っていますか。", question_zh: "他们为什么站着？", question_vi: "Tại sao họ đứng?", options: ["The seats are broken", "There are many people", "The ride is short", "They like standing"], answerIndex: 1 },
     ],
   },
   {
@@ -91,10 +91,10 @@ export const READING_A1_DIARY: RawPassage[] = [
     title_kr: "주말에",
     title_en: "On the weekend", title_ja: "週末に", title_zh: "周末", title_vi: "Vào cuối tuần",
     body_kr: "주말에 저는 집에서 쉬어요. 음악을 들어요. 오후에는 산책을 해요. 주말이 아주 좋아요.",
-    body_en: "On the weekend I rest at home. I listen to music. In the afternoon I take a walk. I really like weekends.", body_ja: "週末に私は家で休みます。音楽を聞きます。午後には散歩をします。週末がとても好きです。", body_zh: "周末我在家休息。听音乐。下午散步。我很喜欢周末。" body_vi: "Cuối tuần tôi nghỉ ở nhà. Tôi nghe nhạc. Buổi chiều tôi đi dạo. Tôi rất thích cuối tuần.",
+    body_en: "On the weekend I rest at home. I listen to music. In the afternoon I take a walk. I really like weekends.", body_ja: "週末に私は家で休みます。音楽を聞きます。午後には散歩をします。週末がとても好きです。", body_zh: "周末我在家休息。听音乐。下午散步。我很喜欢周末。", body_vi: "Cuối tuần tôi nghỉ ở nhà. Tôi nghe nhạc. Buổi chiều tôi đi dạo. Tôi rất thích cuối tuần.",
     questions: [
-      { question_en: "Where do they rest?", question_ja: "どこで休みますか。", question_zh: "他们在哪里休息？" question_vi: "Họ nghỉ ngơi ở đâu?", options: ["At a cafe", "At home", "At the park", "At school"], answerIndex: 1 },
-      { question_en: "What do they do in the afternoon?", question_ja: "午後には何をしますか。", question_zh: "下午他们做什么？" question_vi: "Buổi chiều họ làm gì?", options: ["Take a walk", "Sleep", "Cook", "Study"], answerIndex: 0 },
+      { question_en: "Where do they rest?", question_ja: "どこで休みますか。", question_zh: "他们在哪里休息？", question_vi: "Họ nghỉ ngơi ở đâu?", options: ["At a cafe", "At home", "At the park", "At school"], answerIndex: 1 },
+      { question_en: "What do they do in the afternoon?", question_ja: "午後には何をしますか。", question_zh: "下午他们做什么？", question_vi: "Buổi chiều họ làm gì?", options: ["Take a walk", "Sleep", "Cook", "Study"], answerIndex: 0 },
     ],
   },
   {
@@ -103,10 +103,10 @@ export const READING_A1_DIARY: RawPassage[] = [
     title_kr: "학교 가는 길",
     title_en: "The way to school", title_ja: "学校へ行く道", title_zh: "上学的路", title_vi: "Đường đến trường",
     body_kr: "저는 아홉 시에 학교에 가요. 학교는 조금 멀어요. 그래서 지하철을 타요. 삼십 분쯤 걸려요.",
-    body_en: "I go to school at nine. The school is a little far. So I take the subway. It takes about thirty minutes.", body_ja: "私は9時に学校に行きます。学校は少し遠いです。だから地下鉄に乗ります。30分くらいかかります。", body_zh: "我九点去学校。学校有点远。所以我坐地铁。大约需要三十分钟。" body_vi: "Tôi đi học lúc chín giờ. Trường hơi xa. Vì vậy tôi đi tàu điện ngầm. Mất khoảng ba mươi phút.",
+    body_en: "I go to school at nine. The school is a little far. So I take the subway. It takes about thirty minutes.", body_ja: "私は9時に学校に行きます。学校は少し遠いです。だから地下鉄に乗ります。30分くらいかかります。", body_zh: "我九点去学校。学校有点远。所以我坐地铁。大约需要三十分钟。", body_vi: "Tôi đi học lúc chín giờ. Trường hơi xa. Vì vậy tôi đi tàu điện ngầm. Mất khoảng ba mươi phút.",
     questions: [
-      { question_en: "How do they get to school?", question_ja: "どうやって学校に行きますか。", question_zh: "他们怎么去学校？" question_vi: "Họ đến trường bằng cách nào?", options: ["By bus", "By bicycle", "By subway", "On foot"], answerIndex: 2 },
-      { question_en: "How long does it take?", question_ja: "どのくらい時間がかかりますか。", question_zh: "需要多长时间？" question_vi: "Mất bao lâu?", options: ["About ten minutes", "About twenty minutes", "About an hour", "About thirty minutes"], answerIndex: 3 },
+      { question_en: "How do they get to school?", question_ja: "どうやって学校に行きますか。", question_zh: "他们怎么去学校？", question_vi: "Họ đến trường bằng cách nào?", options: ["By bus", "By bicycle", "By subway", "On foot"], answerIndex: 2 },
+      { question_en: "How long does it take?", question_ja: "どのくらい時間がかかりますか。", question_zh: "需要多长时间？", question_vi: "Mất bao lâu?", options: ["About ten minutes", "About twenty minutes", "About an hour", "About thirty minutes"], answerIndex: 3 },
     ],
   },
   {
@@ -115,10 +115,10 @@ export const READING_A1_DIARY: RawPassage[] = [
     title_kr: "도서관에서",
     title_en: "At the library", title_ja: "図書館で", title_zh: "在图书馆", title_vi: "Ở thư viện",
     body_kr: "저는 도서관에서 공부해요. 도서관은 조용해요. 책이 아주 많아요. 저는 여기가 좋아요.",
-    body_en: "I study at the library. The library is quiet. There are a lot of books. I like it here.", body_ja: "私は図書館で勉強します。図書館は静かです。本がとても多いです。私はここが好きです。", body_zh: "我在图书馆学习。图书馆很安静。书很多。我喜欢这里。" body_vi: "Tôi học ở thư viện. Thư viện yên tĩnh. Có rất nhiều sách. Tôi thích ở đây.",
+    body_en: "I study at the library. The library is quiet. There are a lot of books. I like it here.", body_ja: "私は図書館で勉強します。図書館は静かです。本がとても多いです。私はここが好きです。", body_zh: "我在图书馆学习。图书馆很安静。书很多。我喜欢这里。", body_vi: "Tôi học ở thư viện. Thư viện yên tĩnh. Có rất nhiều sách. Tôi thích ở đây.",
     questions: [
-      { question_en: "What is the library like?", question_ja: "図書館はどんな様子ですか。", question_zh: "图书馆是什么样的？" question_vi: "Thư viện như thế nào?", options: ["Noisy", "Quiet", "Small", "Cold"], answerIndex: 1 },
-      { question_en: "What do they do there?", question_ja: "そこで何をしますか。", question_zh: "他们在那里做什么？" question_vi: "Họ làm gì ở đó?", options: ["Sleep", "Meet friends", "Study", "Eat"], answerIndex: 2 },
+      { question_en: "What is the library like?", question_ja: "図書館はどんな様子ですか。", question_zh: "图书馆是什么样的？", question_vi: "Thư viện như thế nào?", options: ["Noisy", "Quiet", "Small", "Cold"], answerIndex: 1 },
+      { question_en: "What do they do there?", question_ja: "そこで何をしますか。", question_zh: "他们在那里做什么？", question_vi: "Họ làm gì ở đó?", options: ["Sleep", "Meet friends", "Study", "Eat"], answerIndex: 2 },
     ],
   },
   {
@@ -127,10 +127,10 @@ export const READING_A1_DIARY: RawPassage[] = [
     title_kr: "한국어 공부",
     title_en: "Studying Korean", title_ja: "韓国語の勉強", title_zh: "学习韩语", title_vi: "Học tiếng Hàn",
     body_kr: "저는 한국어를 공부해요. 저는 한국 노래를 좋아해요. 그래서 한국어를 배워요. 한국어는 조금 어려워요.",
-    body_en: "I study Korean. I like Korean songs. That's why I'm learning Korean. Korean is a little difficult.", body_ja: "私は韓国語を勉強しています。私は韓国の歌が好きです。だから韓国語を学びます。韓国語は少し難しいです。", body_zh: "我学习韩语。我喜欢韩国歌曲。所以我学韩语。韩语有点难。" body_vi: "Tôi học tiếng Hàn. Tôi thích các bài hát Hàn Quốc. Vì vậy tôi học tiếng Hàn. Tiếng Hàn hơi khó.",
+    body_en: "I study Korean. I like Korean songs. That's why I'm learning Korean. Korean is a little difficult.", body_ja: "私は韓国語を勉強しています。私は韓国の歌が好きです。だから韓国語を学びます。韓国語は少し難しいです。", body_zh: "我学习韩语。我喜欢韩国歌曲。所以我学韩语。韩语有点难。", body_vi: "Tôi học tiếng Hàn. Tôi thích các bài hát Hàn Quốc. Vì vậy tôi học tiếng Hàn. Tiếng Hàn hơi khó.",
     questions: [
-      { question_en: "Why are they learning Korean?", question_ja: "なぜ韓国語を学んでいますか。", question_zh: "他们为什么学韩语？" question_vi: "Tại sao họ học tiếng Hàn?", options: ["For work", "They like Korean songs", "For a school test", "Their family is Korean"], answerIndex: 1 },
-      { question_en: "Is Korean easy for them?", question_ja: "韓国語は簡単ですか。", question_zh: "对他们来说韩语容易吗？" question_vi: "Tiếng Hàn có dễ với họ không?", options: ["Yes, very easy", "It's a little difficult", "It's too easy", "They don't say"], answerIndex: 1 },
+      { question_en: "Why are they learning Korean?", question_ja: "なぜ韓国語を学んでいますか。", question_zh: "他们为什么学韩语？", question_vi: "Tại sao họ học tiếng Hàn?", options: ["For work", "They like Korean songs", "For a school test", "Their family is Korean"], answerIndex: 1 },
+      { question_en: "Is Korean easy for them?", question_ja: "韓国語は簡単ですか。", question_zh: "对他们来说韩语容易吗？", question_vi: "Tiếng Hàn có dễ với họ không?", options: ["Yes, very easy", "It's a little difficult", "It's too easy", "They don't say"], answerIndex: 1 },
     ],
   },
   {
@@ -139,10 +139,10 @@ export const READING_A1_DIARY: RawPassage[] = [
     title_kr: "지하철에서",
     title_en: "On the subway", title_ja: "地下鉄の中で", title_zh: "在地铁上", title_vi: "Trên tàu điện ngầm",
     body_kr: "지하철은 빠르고 편해요. 저는 지하철에서 책을 읽어요. 가끔 음악도 들어요. 회사까지 이십 분 걸려요.",
-    body_en: "The subway is fast and comfortable. I read books on the subway. Sometimes I listen to music too. It takes twenty minutes to my company.", body_ja: "地下鉄は速くて便利です。私は地下鉄の中で本を読みます。時々音楽も聞きます。会社まで20分かかります。", body_zh: "地铁又快又方便。我在地铁上看书。有时也听音乐。到公司要二十分钟。" body_vi: "Tàu điện ngầm nhanh và tiện lợi. Tôi đọc sách trên tàu điện ngầm. Thỉnh thoảng cũng nghe nhạc. Đến công ty mất hai mươi phút.",
+    body_en: "The subway is fast and comfortable. I read books on the subway. Sometimes I listen to music too. It takes twenty minutes to my company.", body_ja: "地下鉄は速くて便利です。私は地下鉄の中で本を読みます。時々音楽も聞きます。会社まで20分かかります。", body_zh: "地铁又快又方便。我在地铁上看书。有时也听音乐。到公司要二十分钟。", body_vi: "Tàu điện ngầm nhanh và tiện lợi. Tôi đọc sách trên tàu điện ngầm. Thỉnh thoảng cũng nghe nhạc. Đến công ty mất hai mươi phút.",
     questions: [
-      { question_en: "What do they do on the subway?", question_ja: "地下鉄の中で何をしますか。", question_zh: "他们在地铁上做什么？" question_vi: "Họ làm gì trên tàu điện ngầm?", options: ["Sleep", "Read books", "Study Korean", "Talk on the phone"], answerIndex: 1 },
-      { question_en: "How long is the ride to work?", question_ja: "会社までの乗車時間はどのくらいですか。", question_zh: "上班的车程有多长？" question_vi: "Chuyến đi đến công ty mất bao lâu?", options: ["Ten minutes", "Fifteen minutes", "Twenty minutes", "Forty minutes"], answerIndex: 2 },
+      { question_en: "What do they do on the subway?", question_ja: "地下鉄の中で何をしますか。", question_zh: "他们在地铁上做什么？", question_vi: "Họ làm gì trên tàu điện ngầm?", options: ["Sleep", "Read books", "Study Korean", "Talk on the phone"], answerIndex: 1 },
+      { question_en: "How long is the ride to work?", question_ja: "会社までの乗車時間はどのくらいですか。", question_zh: "上班的车程有多长？", question_vi: "Chuyến đi đến công ty mất bao lâu?", options: ["Ten minutes", "Fifteen minutes", "Twenty minutes", "Forty minutes"], answerIndex: 2 },
     ],
   },
   {
@@ -151,10 +151,10 @@ export const READING_A1_DIARY: RawPassage[] = [
     title_kr: "여름",
     title_en: "Summer", title_ja: "夏", title_zh: "夏天", title_vi: "Mùa hè",
     body_kr: "한국의 여름은 아주 더워요. 비도 많이 와요. 저는 여름에 수박을 먹어요. 그리고 바다에 가요.",
-    body_en: "Summer in Korea is very hot. It also rains a lot. In summer I eat watermelon. And I go to the sea.", body_ja: "韓国の夏はとても暑いです。雨もたくさん降ります。私は夏にスイカを食べます。そして海に行きます。", body_zh: "韩国的夏天很热。也经常下雨。夏天我吃西瓜。还会去海边。" body_vi: "Mùa hè ở Hàn Quốc rất nóng. Cũng mưa nhiều. Vào mùa hè tôi ăn dưa hấu. Và tôi đi biển.",
+    body_en: "Summer in Korea is very hot. It also rains a lot. In summer I eat watermelon. And I go to the sea.", body_ja: "韓国の夏はとても暑いです。雨もたくさん降ります。私は夏にスイカを食べます。そして海に行きます。", body_zh: "韩国的夏天很热。也经常下雨。夏天我吃西瓜。还会去海边。", body_vi: "Mùa hè ở Hàn Quốc rất nóng. Cũng mưa nhiều. Vào mùa hè tôi ăn dưa hấu. Và tôi đi biển.",
     questions: [
-      { question_en: "What is summer in Korea like?", question_ja: "韓国の夏はどんな様子ですか。", question_zh: "韩国的夏天是什么样的？" question_vi: "Mùa hè ở Hàn Quốc như thế nào?", options: ["Cool and dry", "Very hot and rainy", "Cold and snowy", "Windy"], answerIndex: 1 },
-      { question_en: "What do they eat in summer?", question_ja: "夏に何を食べますか。", question_zh: "夏天他们吃什么？" question_vi: "Họ ăn gì vào mùa hè?", options: ["Watermelon", "Ice cream", "Noodles", "Soup"], answerIndex: 0 },
+      { question_en: "What is summer in Korea like?", question_ja: "韓国の夏はどんな様子ですか。", question_zh: "韩国的夏天是什么样的？", question_vi: "Mùa hè ở Hàn Quốc như thế nào?", options: ["Cool and dry", "Very hot and rainy", "Cold and snowy", "Windy"], answerIndex: 1 },
+      { question_en: "What do they eat in summer?", question_ja: "夏に何を食べますか。", question_zh: "夏天他们吃什么？", question_vi: "Họ ăn gì vào mùa hè?", options: ["Watermelon", "Ice cream", "Noodles", "Soup"], answerIndex: 0 },
     ],
   },
   {
@@ -163,10 +163,10 @@ export const READING_A1_DIARY: RawPassage[] = [
     title_kr: "제 취미",
     title_en: "My hobby", title_ja: "私の趣味", title_zh: "我的爱好", title_vi: "Sở thích của tôi",
     body_kr: "제 취미는 노래예요. 저는 한국 노래를 좋아해요. 매일 밤에 노래를 들어요. 그리고 따라 불러요.",
-    body_en: "My hobby is music. I like Korean songs. I listen to songs every night. And I sing along.", body_ja: "私の趣味は歌です。私は韓国の歌が好きです。毎晩歌を聞きます。そして一緒に歌います。", body_zh: "我的爱好是唱歌。我喜欢韩国歌曲。每天晚上听歌。还跟着唱。" body_vi: "Sở thích của tôi là ca hát. Tôi thích các bài hát Hàn Quốc. Tôi nghe nhạc mỗi tối. Và tôi hát theo.",
+    body_en: "My hobby is music. I like Korean songs. I listen to songs every night. And I sing along.", body_ja: "私の趣味は歌です。私は韓国の歌が好きです。毎晩歌を聞きます。そして一緒に歌います。", body_zh: "我的爱好是唱歌。我喜欢韩国歌曲。每天晚上听歌。还跟着唱。", body_vi: "Sở thích của tôi là ca hát. Tôi thích các bài hát Hàn Quốc. Tôi nghe nhạc mỗi tối. Và tôi hát theo.",
     questions: [
-      { question_en: "What kind of songs do they like?", question_ja: "どんな歌が好きですか。", question_zh: "他们喜欢什么样的歌？" question_vi: "Họ thích loại bài hát nào?", options: ["Korean songs", "English songs", "Old songs", "Children's songs"], answerIndex: 0 },
-      { question_en: "When do they listen to music?", question_ja: "いつ音楽を聞きますか。", question_zh: "他们什么时候听音乐？" question_vi: "Họ nghe nhạc khi nào?", options: ["In the morning", "At lunch", "Every night", "On weekends"], answerIndex: 2 },
+      { question_en: "What kind of songs do they like?", question_ja: "どんな歌が好きですか。", question_zh: "他们喜欢什么样的歌？", question_vi: "Họ thích loại bài hát nào?", options: ["Korean songs", "English songs", "Old songs", "Children's songs"], answerIndex: 0 },
+      { question_en: "When do they listen to music?", question_ja: "いつ音楽を聞きますか。", question_zh: "他们什么时候听音乐？", question_vi: "Họ nghe nhạc khi nào?", options: ["In the morning", "At lunch", "Every night", "On weekends"], answerIndex: 2 },
     ],
   },
   {
@@ -175,10 +175,10 @@ export const READING_A1_DIARY: RawPassage[] = [
     title_kr: "저녁 산책",
     title_en: "An evening walk", title_ja: "夕方の散歩", title_zh: "傍晚散步", title_vi: "Đi dạo buổi tối",
     body_kr: "저녁에 공원에 가요. 공원은 집에서 가까워요. 바람이 시원해요. 기분이 좋아요.",
-    body_en: "In the evening I go to the park. The park is close to my house. The breeze is cool. I feel good.", body_ja: "夕方に公園に行きます。公園は家から近いです。風が涼しいです。気分がいいです。", body_zh: "傍晚我去公园。公园离家很近。风很凉爽。心情很好。" body_vi: "Buổi tối tôi đi công viên. Công viên gần nhà. Gió mát. Tôi cảm thấy dễ chịu.",
+    body_en: "In the evening I go to the park. The park is close to my house. The breeze is cool. I feel good.", body_ja: "夕方に公園に行きます。公園は家から近いです。風が涼しいです。気分がいいです。", body_zh: "傍晚我去公园。公园离家很近。风很凉爽。心情很好。", body_vi: "Buổi tối tôi đi công viên. Công viên gần nhà. Gió mát. Tôi cảm thấy dễ chịu.",
     questions: [
-      { question_en: "Where do they go?", question_ja: "どこへ行きますか。", question_zh: "他们去哪里？" question_vi: "Họ đi đâu?", options: ["The park", "The gym", "A cafe", "School"], answerIndex: 0 },
-      { question_en: "How is the breeze?", question_ja: "風はどんな感じですか。", question_zh: "风怎么样？" question_vi: "Gió như thế nào?", options: ["Hot", "Cool", "Strong", "Cold"], answerIndex: 1 },
+      { question_en: "Where do they go?", question_ja: "どこへ行きますか。", question_zh: "他们去哪里？", question_vi: "Họ đi đâu?", options: ["The park", "The gym", "A cafe", "School"], answerIndex: 0 },
+      { question_en: "How is the breeze?", question_ja: "風はどんな感じですか。", question_zh: "风怎么样？", question_vi: "Gió như thế nào?", options: ["Hot", "Cool", "Strong", "Cold"], answerIndex: 1 },
     ],
   },
   {
@@ -187,10 +187,10 @@ export const READING_A1_DIARY: RawPassage[] = [
     title_kr: "점심 시간",
     title_en: "Lunchtime", title_ja: "お昼の時間", title_zh: "午餐时间", title_vi: "Giờ ăn trưa",
     body_kr: "열두 시예요. 점심 시간이에요. 저는 김치찌개를 먹어요. 조금 맵지만 맛있어요.",
-    body_en: "It's twelve o'clock. It's lunchtime. I eat kimchi stew. It's a little spicy but delicious.", body_ja: "12時です。お昼の時間です。私はキムチチゲを食べます。少し辛いですが、おいしいです。", body_zh: "十二点了。是午餐时间。我吃泡菜汤。有点辣但很好吃。" body_vi: "Mười hai giờ rồi. Đến giờ ăn trưa. Tôi ăn canh kim chi. Hơi cay nhưng ngon.",
+    body_en: "It's twelve o'clock. It's lunchtime. I eat kimchi stew. It's a little spicy but delicious.", body_ja: "12時です。お昼の時間です。私はキムチチゲを食べます。少し辛いですが、おいしいです。", body_zh: "十二点了。是午餐时间。我吃泡菜汤。有点辣但很好吃。", body_vi: "Mười hai giờ rồi. Đến giờ ăn trưa. Tôi ăn canh kim chi. Hơi cay nhưng ngon.",
     questions: [
-      { question_en: "What do they eat?", question_ja: "何を食べますか。", question_zh: "他们吃什么？" question_vi: "Họ ăn gì?", options: ["Bibimbap", "Kimchi stew", "Ramen", "Gimbap"], answerIndex: 1 },
-      { question_en: "How is the food?", question_ja: "料理の味はどうですか。", question_zh: "食物怎么样？" question_vi: "Món ăn thế nào?", options: ["A little spicy but delicious", "Too salty", "Cold", "Sweet"], answerIndex: 0 },
+      { question_en: "What do they eat?", question_ja: "何を食べますか。", question_zh: "他们吃什么？", question_vi: "Họ ăn gì?", options: ["Bibimbap", "Kimchi stew", "Ramen", "Gimbap"], answerIndex: 1 },
+      { question_en: "How is the food?", question_ja: "料理の味はどうですか。", question_zh: "食物怎么样？", question_vi: "Món ăn thế nào?", options: ["A little spicy but delicious", "Too salty", "Cold", "Sweet"], answerIndex: 0 },
     ],
   },
   {
@@ -199,10 +199,10 @@ export const READING_A1_DIARY: RawPassage[] = [
     title_kr: "아침 커피",
     title_en: "Morning coffee", title_ja: "朝のコーヒー", title_zh: "早晨咖啡", title_vi: "Cà phê buổi sáng",
     body_kr: "저는 아침마다 커피를 마셔요. 커피는 뜨겁고 향이 좋아요. 커피를 마시면 기운이 나요. 오늘도 맛있는 커피를 마셨어요.",
-    body_en: "I drink coffee every morning. The coffee is hot and smells nice. When I drink coffee, I feel energized. Today too, I had delicious coffee.", body_ja: "私は毎朝コーヒーを飲みます。コーヒーは熱くて香りがいいです。コーヒーを飲むと元気が出ます。今日もおいしいコーヒーを飲みました。", body_zh: "我每天早上喝咖啡。咖啡热气腾腾，香气宜人。喝了咖啡就有精神。今天也喝了美味的咖啡。" body_vi: "Tôi uống cà phê mỗi sáng. Cà phê nóng và có hương thơm dễ chịu. Khi uống cà phê tôi cảm thấy tràn đầy năng lượng. Hôm nay tôi cũng đã uống một ly cà phê ngon.",
+    body_en: "I drink coffee every morning. The coffee is hot and smells nice. When I drink coffee, I feel energized. Today too, I had delicious coffee.", body_ja: "私は毎朝コーヒーを飲みます。コーヒーは熱くて香りがいいです。コーヒーを飲むと元気が出ます。今日もおいしいコーヒーを飲みました。", body_zh: "我每天早上喝咖啡。咖啡热气腾腾，香气宜人。喝了咖啡就有精神。今天也喝了美味的咖啡。", body_vi: "Tôi uống cà phê mỗi sáng. Cà phê nóng và có hương thơm dễ chịu. Khi uống cà phê tôi cảm thấy tràn đầy năng lượng. Hôm nay tôi cũng đã uống một ly cà phê ngon.",
     questions: [
-      { question_en: "When does the narrator drink coffee?", question_ja: "語り手はいつコーヒーを飲みますか。", question_zh: "叙述者什么时候喝咖啡？" question_vi: "Người kể chuyện uống cà phê khi nào?", options: ["Every night","Every evening","Every morning","Every weekend"], answerIndex: 2 },
-      { question_en: "How does the coffee make the narrator feel?", question_ja: "コーヒーを飲むと語り手はどんな気分になりますか。", question_zh: "喝咖啡后叙述者感觉怎么样？" question_vi: "Cà phê khiến người kể chuyện cảm thấy thế nào?", options: ["Sad","Energized","Sleepy","Cold"], answerIndex: 1 },
+      { question_en: "When does the narrator drink coffee?", question_ja: "語り手はいつコーヒーを飲みますか。", question_zh: "叙述者什么时候喝咖啡？", question_vi: "Người kể chuyện uống cà phê khi nào?", options: ["Every night","Every evening","Every morning","Every weekend"], answerIndex: 2 },
+      { question_en: "How does the coffee make the narrator feel?", question_ja: "コーヒーを飲むと語り手はどんな気分になりますか。", question_zh: "喝咖啡后叙述者感觉怎么样？", question_vi: "Cà phê khiến người kể chuyện cảm thấy thế nào?", options: ["Sad","Energized","Sleepy","Cold"], answerIndex: 1 },
     ],
   },
   {
@@ -211,10 +211,10 @@ export const READING_A1_DIARY: RawPassage[] = [
     title_kr: "냉장고 정리",
     title_en: "Cleaning the fridge", title_ja: "冷蔵庫の整理", title_zh: "整理冰箱", title_vi: "Dọn tủ lạnh",
     body_kr: "저는 냉장고를 정리해요. 우유와 계란이 있어요. 오래된 채소는 버려요. 냉장고가 깨끗해서 좋아요.",
-    body_en: "I clean the fridge. There is milk and eggs. I throw away old vegetables. I'm happy the fridge is clean.", body_ja: "私は冷蔵庫を整理します。牛乳と卵があります。古い野菜は捨てます。冷蔵庫がきれいになって気分がいいです。", body_zh: "我整理冰箱。里面有牛奶和鸡蛋。把旧蔬菜扔掉。冰箱变干净了，我很高兴。" body_vi: "Tôi dọn tủ lạnh. Có sữa và trứng. Tôi vứt bỏ rau củ đã cũ. Tủ lạnh sạch sẽ nên tôi thấy vui.",
+    body_en: "I clean the fridge. There is milk and eggs. I throw away old vegetables. I'm happy the fridge is clean.", body_ja: "私は冷蔵庫を整理します。牛乳と卵があります。古い野菜は捨てます。冷蔵庫がきれいになって気分がいいです。", body_zh: "我整理冰箱。里面有牛奶和鸡蛋。把旧蔬菜扔掉。冰箱变干净了，我很高兴。", body_vi: "Tôi dọn tủ lạnh. Có sữa và trứng. Tôi vứt bỏ rau củ đã cũ. Tủ lạnh sạch sẽ nên tôi thấy vui.",
     questions: [
-      { question_en: "What does the narrator find in the fridge?", question_ja: "語り手は冷蔵庫の中に何を見つけますか。", question_zh: "叙述者在冰箱里发现了什么？" question_vi: "Người kể chuyện tìm thấy gì trong tủ lạnh?", options: ["Rice and soup","Juice and cheese","Bread and jam","Milk and eggs"], answerIndex: 3 },
-      { question_en: "What does the narrator throw away?", question_ja: "語り手は何を捨てますか。", question_zh: "叙述者扔掉了什么？" question_vi: "Người kể chuyện vứt bỏ gì?", options: ["Old bread","Old fruit","Old vegetables","Old fish"], answerIndex: 2 },
+      { question_en: "What does the narrator find in the fridge?", question_ja: "語り手は冷蔵庫の中に何を見つけますか。", question_zh: "叙述者在冰箱里发现了什么？", question_vi: "Người kể chuyện tìm thấy gì trong tủ lạnh?", options: ["Rice and soup","Juice and cheese","Bread and jam","Milk and eggs"], answerIndex: 3 },
+      { question_en: "What does the narrator throw away?", question_ja: "語り手は何を捨てますか。", question_zh: "叙述者扔掉了什么？", question_vi: "Người kể chuyện vứt bỏ gì?", options: ["Old bread","Old fruit","Old vegetables","Old fish"], answerIndex: 2 },
     ],
   },
   {
@@ -223,10 +223,10 @@ export const READING_A1_DIARY: RawPassage[] = [
     title_kr: "설거지",
     title_en: "Washing dishes", title_ja: "皿洗い", title_zh: "洗碗", title_vi: "Rửa bát",
     body_kr: "저녁을 먹고 설거지를 해요. 그릇이 많아서 시간이 걸려요. 물이 따뜻해요. 다 끝나면 기분이 좋아요.",
-    body_en: "After eating dinner, I wash the dishes. There are many dishes, so it takes time. The water is warm. When I finish, I feel good.", body_ja: "夕食を食べて皿洗いをします。お皿が多いので時間がかかります。お湯は温かいです。全部終わると気分がいいです。", body_zh: "吃完晚饭我洗碗。碗很多，所以花时间。水是温的。全部洗完后心情很好。" body_vi: "Ăn tối xong tôi rửa bát. Vì có nhiều bát đĩa nên mất thời gian. Nước ấm. Xong hết thì tôi thấy dễ chịu.",
+    body_en: "After eating dinner, I wash the dishes. There are many dishes, so it takes time. The water is warm. When I finish, I feel good.", body_ja: "夕食を食べて皿洗いをします。お皿が多いので時間がかかります。お湯は温かいです。全部終わると気分がいいです。", body_zh: "吃完晚饭我洗碗。碗很多，所以花时间。水是温的。全部洗完后心情很好。", body_vi: "Ăn tối xong tôi rửa bát. Vì có nhiều bát đĩa nên mất thời gian. Nước ấm. Xong hết thì tôi thấy dễ chịu.",
     questions: [
-      { question_en: "When does the narrator wash dishes?", question_ja: "語り手はいつ皿洗いをしますか。", question_zh: "叙述者什么时候洗碗？" question_vi: "Khi nào người kể chuyện rửa bát?", options: ["After breakfast","After dinner","After lunch","Before dinner"], answerIndex: 1 },
-      { question_en: "Why does it take time?", question_ja: "なぜ時間がかかりますか。", question_zh: "为什么要花时间？" question_vi: "Tại sao lại mất thời gian?", options: ["There is no soap","The sink is small","The water is cold","There are many dishes"], answerIndex: 3 },
+      { question_en: "When does the narrator wash dishes?", question_ja: "語り手はいつ皿洗いをしますか。", question_zh: "叙述者什么时候洗碗？", question_vi: "Khi nào người kể chuyện rửa bát?", options: ["After breakfast","After dinner","After lunch","Before dinner"], answerIndex: 1 },
+      { question_en: "Why does it take time?", question_ja: "なぜ時間がかかりますか。", question_zh: "为什么要花时间？", question_vi: "Tại sao lại mất thời gian?", options: ["There is no soap","The sink is small","The water is cold","There are many dishes"], answerIndex: 3 },
     ],
   },
   {
@@ -235,10 +235,10 @@ export const READING_A1_DIARY: RawPassage[] = [
     title_kr: "빨래하는 날",
     title_en: "Laundry day", title_ja: "洗濯の日", title_zh: "洗衣日", title_vi: "Ngày giặt đồ",
     body_kr: "일요일에 빨래를 해요. 옷이 정말 많아요. 세탁기에 옷을 넣고 세제를 넣어요. 빨래가 끝나면 옷을 널어요.",
-    body_en: "On Sunday, I do laundry. There are a lot of clothes. I put the clothes and detergent in the washing machine. When the laundry is done, I hang the clothes.", body_ja: "日曜日に洗濯をします。服が本当に多いです。洗濯機に服を入れて洗剤を入れます。洗濯が終わったら服を干します。", body_zh: "星期天我洗衣服。衣服真的很多。把衣服和洗衣液放进洗衣机。洗完后把衣服晾起来。" body_vi: "Chủ nhật tôi giặt đồ. Quần áo thật sự nhiều. Tôi cho quần áo và bột giặt vào máy giặt. Giặt xong tôi phơi quần áo.",
+    body_en: "On Sunday, I do laundry. There are a lot of clothes. I put the clothes and detergent in the washing machine. When the laundry is done, I hang the clothes.", body_ja: "日曜日に洗濯をします。服が本当に多いです。洗濯機に服を入れて洗剤を入れます。洗濯が終わったら服を干します。", body_zh: "星期天我洗衣服。衣服真的很多。把衣服和洗衣液放进洗衣机。洗完后把衣服晾起来。", body_vi: "Chủ nhật tôi giặt đồ. Quần áo thật sự nhiều. Tôi cho quần áo và bột giặt vào máy giặt. Giặt xong tôi phơi quần áo.",
     questions: [
-      { question_en: "What day does the narrator do laundry?", question_ja: "語り手は何曜日に洗濯をしますか。", question_zh: "叙述者星期几洗衣服？" question_vi: "Người kể chuyện giặt đồ vào ngày nào?", options: ["Saturday","Monday","Sunday","Friday"], answerIndex: 2 },
-      { question_en: "What does the narrator do after the laundry is done?", question_ja: "洗濯が終わった後、語り手は何をしますか。", question_zh: "洗完衣服后叙述者做什么？" question_vi: "Sau khi giặt xong, người kể chuyện làm gì?", options: ["Folds towels","Hangs the clothes","Cleans the machine","Buys new clothes"], answerIndex: 1 },
+      { question_en: "What day does the narrator do laundry?", question_ja: "語り手は何曜日に洗濯をしますか。", question_zh: "叙述者星期几洗衣服？", question_vi: "Người kể chuyện giặt đồ vào ngày nào?", options: ["Saturday","Monday","Sunday","Friday"], answerIndex: 2 },
+      { question_en: "What does the narrator do after the laundry is done?", question_ja: "洗濯が終わった後、語り手は何をしますか。", question_zh: "洗完衣服后叙述者做什么？", question_vi: "Sau khi giặt xong, người kể chuyện làm gì?", options: ["Folds towels","Hangs the clothes","Cleans the machine","Buys new clothes"], answerIndex: 1 },
     ],
   },
   {
@@ -247,10 +247,10 @@ export const READING_A1_DIARY: RawPassage[] = [
     title_kr: "언니 방",
     title_en: "My sister's room", title_ja: "姉の部屋", title_zh: "姐姐的房间", title_vi: "Phòng của chị gái",
     body_kr: "언니 방은 작지만 예뻐요. 책상 위에 사진이 많아요. 벽에는 그림이 있어요. 저는 언니 방에서 자주 놀아요.",
-    body_en: "My older sister's room is small but pretty. There are many photos on the desk. There is a picture on the wall. I often play in her room.", body_ja: "姉の部屋は小さいけれどきれいです。机の上に写真がたくさんあります。壁には絵があります。私は姉の部屋でよく遊びます。", body_zh: "姐姐的房间虽小但很漂亮。书桌上有很多照片。墙上挂着画。我常在姐姐房间里玩。" body_vi: "Phòng chị gái nhỏ nhưng đẹp. Trên bàn học có nhiều ảnh. Trên tường có tranh. Tôi thường chơi trong phòng chị.",
+    body_en: "My older sister's room is small but pretty. There are many photos on the desk. There is a picture on the wall. I often play in her room.", body_ja: "姉の部屋は小さいけれどきれいです。机の上に写真がたくさんあります。壁には絵があります。私は姉の部屋でよく遊びます。", body_zh: "姐姐的房间虽小但很漂亮。书桌上有很多照片。墙上挂着画。我常在姐姐房间里玩。", body_vi: "Phòng chị gái nhỏ nhưng đẹp. Trên bàn học có nhiều ảnh. Trên tường có tranh. Tôi thường chơi trong phòng chị.",
     questions: [
-      { question_en: "What is the sister's room like?", question_ja: "姉の部屋はどんな様子ですか。", question_zh: "姐姐的房间是什么样的？" question_vi: "Phòng của chị gái như thế nào?", options: ["Small and pretty","Small and messy","Big and dark","Big and pretty"], answerIndex: 0 },
-      { question_en: "What is on the desk?", question_ja: "机の上には何がありますか。", question_zh: "书桌上有什么？" question_vi: "Trên bàn có gì?", options: ["Clothes","Books","Flowers","Photos"], answerIndex: 3 },
+      { question_en: "What is the sister's room like?", question_ja: "姉の部屋はどんな様子ですか。", question_zh: "姐姐的房间是什么样的？", question_vi: "Phòng của chị gái như thế nào?", options: ["Small and pretty","Small and messy","Big and dark","Big and pretty"], answerIndex: 0 },
+      { question_en: "What is on the desk?", question_ja: "机の上には何がありますか。", question_zh: "书桌上有什么？", question_vi: "Trên bàn có gì?", options: ["Clothes","Books","Flowers","Photos"], answerIndex: 3 },
     ],
   },
   {
@@ -259,10 +259,10 @@ export const READING_A1_DIARY: RawPassage[] = [
     title_kr: "물을 마셔요",
     title_en: "Drinking water", title_ja: "水を飲む", title_zh: "喝水", title_vi: "Uống nước",
     body_kr: "저는 하루에 물을 많이 마셔요. 아침에 일어나서 물 한 잔을 마셔요. 운동 후에도 물을 마셔요. 물을 마시면 몸이 가벼워요.",
-    body_en: "I drink a lot of water in a day. When I wake up in the morning, I drink a glass of water. I also drink water after exercise. When I drink water, my body feels light.", body_ja: "私は一日に水をたくさん飲みます。朝起きて水を一杯飲みます。運動の後にも水を飲みます。水を飲むと体が軽くなります。", body_zh: "我一天喝很多水。早上起床后喝一杯水。运动后也喝水。喝水后身体感觉很轻松。" body_vi: "Tôi uống nhiều nước mỗi ngày. Sáng dậy tôi uống một cốc nước. Sau khi tập thể dục tôi cũng uống nước. Uống nước khiến cơ thể tôi thấy nhẹ nhàng.",
+    body_en: "I drink a lot of water in a day. When I wake up in the morning, I drink a glass of water. I also drink water after exercise. When I drink water, my body feels light.", body_ja: "私は一日に水をたくさん飲みます。朝起きて水を一杯飲みます。運動の後にも水を飲みます。水を飲むと体が軽くなります。", body_zh: "我一天喝很多水。早上起床后喝一杯水。运动后也喝水。喝水后身体感觉很轻松。", body_vi: "Tôi uống nhiều nước mỗi ngày. Sáng dậy tôi uống một cốc nước. Sau khi tập thể dục tôi cũng uống nước. Uống nước khiến cơ thể tôi thấy nhẹ nhàng.",
     questions: [
-      { question_en: "When does the narrator drink water first?", question_ja: "語り手は最初にいつ水を飲みますか。", question_zh: "叙述者第一次喝水是什么时候？" question_vi: "Người kể chuyện uống nước lần đầu khi nào?", options: ["After waking up","During lunch","After dinner","Before sleeping"], answerIndex: 0 },
-      { question_en: "How does drinking water make the narrator feel?", question_ja: "水を飲むと語り手はどんな感じになりますか。", question_zh: "喝水后叙述者感觉怎么样？" question_vi: "Uống nước khiến người kể chuyện cảm thấy thế nào?", options: ["Light","Heavy","Sick","Sleepy"], answerIndex: 0 },
+      { question_en: "When does the narrator drink water first?", question_ja: "語り手は最初にいつ水を飲みますか。", question_zh: "叙述者第一次喝水是什么时候？", question_vi: "Người kể chuyện uống nước lần đầu khi nào?", options: ["After waking up","During lunch","After dinner","Before sleeping"], answerIndex: 0 },
+      { question_en: "How does drinking water make the narrator feel?", question_ja: "水を飲むと語り手はどんな感じになりますか。", question_zh: "喝水后叙述者感觉怎么样？", question_vi: "Uống nước khiến người kể chuyện cảm thấy thế nào?", options: ["Light","Heavy","Sick","Sleepy"], answerIndex: 0 },
     ],
   },
   {
@@ -271,10 +271,10 @@ export const READING_A1_DIARY: RawPassage[] = [
     title_kr: "텔레비전을 봐요",
     title_en: "Watching TV", title_ja: "テレビを見る", title_zh: "看电视", title_vi: "Xem tivi",
     body_kr: "저녁을 먹고 텔레비전을 봐요. 우리 가족은 소파에 같이 앉아요. 오늘은 재미있는 드라마를 봐요. 텔레비전을 보면서 과일을 먹어요.",
-    body_en: "After dinner, I watch TV. My family sits together on the sofa. Today we watch a fun drama. We eat fruit while watching TV.", body_ja: "夕食を食べてテレビを見ます。私たち家族はソファに一緒に座ります。今日は面白いドラマを見ます。テレビを見ながら果物を食べます。", body_zh: "吃完晚饭我们看电视。我们全家一起坐在沙发上。今天看有趣的电视剧。一边看电视一边吃水果。" body_vi: "Ăn tối xong tôi xem tivi. Gia đình tôi cùng ngồi trên ghế sofa. Hôm nay chúng tôi xem một bộ phim truyền hình thú vị. Vừa xem tivi vừa ăn trái cây.",
+    body_en: "After dinner, I watch TV. My family sits together on the sofa. Today we watch a fun drama. We eat fruit while watching TV.", body_ja: "夕食を食べてテレビを見ます。私たち家族はソファに一緒に座ります。今日は面白いドラマを見ます。テレビを見ながら果物を食べます。", body_zh: "吃完晚饭我们看电视。我们全家一起坐在沙发上。今天看有趣的电视剧。一边看电视一边吃水果。", body_vi: "Ăn tối xong tôi xem tivi. Gia đình tôi cùng ngồi trên ghế sofa. Hôm nay chúng tôi xem một bộ phim truyền hình thú vị. Vừa xem tivi vừa ăn trái cây.",
     questions: [
-      { question_en: "Where does the family sit?", question_ja: "家族はどこに座りますか。", question_zh: "全家人坐在哪里？" question_vi: "Gia đình ngồi ở đâu?", options: ["On the floor","On the bed","On chairs","On the sofa"], answerIndex: 3 },
-      { question_en: "What do they eat while watching TV?", question_ja: "テレビを見ながら何を食べますか。", question_zh: "看电视时他们吃什么？" question_vi: "Họ ăn gì khi xem tivi?", options: ["Fruit","Bread","Rice","Chips"], answerIndex: 0 },
+      { question_en: "Where does the family sit?", question_ja: "家族はどこに座りますか。", question_zh: "全家人坐在哪里？", question_vi: "Gia đình ngồi ở đâu?", options: ["On the floor","On the bed","On chairs","On the sofa"], answerIndex: 3 },
+      { question_en: "What do they eat while watching TV?", question_ja: "テレビを見ながら何を食べますか。", question_zh: "看电视时他们吃什么？", question_vi: "Họ ăn gì khi xem tivi?", options: ["Fruit","Bread","Rice","Chips"], answerIndex: 0 },
     ],
   },
   {
@@ -283,10 +283,10 @@ export const READING_A1_DIARY: RawPassage[] = [
     title_kr: "이불을 개요",
     title_en: "Folding the blanket", title_ja: "布団をたたむ", title_zh: "叠被子", title_vi: "Gấp chăn",
     body_kr: "저는 아침에 일어나서 이불을 개요. 이불은 두껍고 따뜻해요. 이불을 개면 방이 깨끗해 보여요. 그다음에 창문을 열어요.",
-    body_en: "In the morning I wake up and fold the blanket. The blanket is thick and warm. When I fold the blanket, the room looks clean. Then I open the window.", body_ja: "私は朝起きて布団をたたみます。布団は厚くて暖かいです。布団をたたむと部屋がきれいに見えます。それから窓を開けます。", body_zh: "我早上起床后叠被子。被子又厚又暖和。叠好被子后房间看起来很干净。然后打开窗户。" body_vi: "Sáng dậy tôi gấp chăn. Chăn dày và ấm. Gấp chăn xong căn phòng trông sạch sẽ hơn. Sau đó tôi mở cửa sổ.",
+    body_en: "In the morning I wake up and fold the blanket. The blanket is thick and warm. When I fold the blanket, the room looks clean. Then I open the window.", body_ja: "私は朝起きて布団をたたみます。布団は厚くて暖かいです。布団をたたむと部屋がきれいに見えます。それから窓を開けます。", body_zh: "我早上起床后叠被子。被子又厚又暖和。叠好被子后房间看起来很干净。然后打开窗户。", body_vi: "Sáng dậy tôi gấp chăn. Chăn dày và ấm. Gấp chăn xong căn phòng trông sạch sẽ hơn. Sau đó tôi mở cửa sổ.",
     questions: [
-      { question_en: "What is the blanket like?", question_ja: "布団はどんな様子ですか。", question_zh: "被子是什么样的？" question_vi: "Chiếc chăn như thế nào?", options: ["Thin and cold","Thick and cold","Thin and warm","Thick and warm"], answerIndex: 3 },
-      { question_en: "What does the narrator do after folding the blanket?", question_ja: "布団をたたんだ後、語り手は何をしますか。", question_zh: "叠完被子后叙述者做什么？" question_vi: "Sau khi gấp chăn, người kể chuyện làm gì?", options: ["Makes the bed","Closes the door","Opens the window","Turns off the light"], answerIndex: 2 },
+      { question_en: "What is the blanket like?", question_ja: "布団はどんな様子ですか。", question_zh: "被子是什么样的？", question_vi: "Chiếc chăn như thế nào?", options: ["Thin and cold","Thick and cold","Thin and warm","Thick and warm"], answerIndex: 3 },
+      { question_en: "What does the narrator do after folding the blanket?", question_ja: "布団をたたんだ後、語り手は何をしますか。", question_zh: "叠完被子后叙述者做什么？", question_vi: "Sau khi gấp chăn, người kể chuyện làm gì?", options: ["Makes the bed","Closes the door","Opens the window","Turns off the light"], answerIndex: 2 },
     ],
   },
   {
@@ -295,10 +295,10 @@ export const READING_A1_DIARY: RawPassage[] = [
     title_kr: "부엌 정리",
     title_en: "Organizing the kitchen", title_ja: "台所の片付け", title_zh: "整理厨房", title_vi: "Dọn bếp",
     body_kr: "오늘은 부엌을 정리해요. 그릇과 냄비를 제자리에 놓아요. 유통기한이 지난 음식을 버려요. 정리가 끝나면 부엌이 넓어 보여요.",
-    body_en: "Today I organize the kitchen. I put the bowls and pots in their place. I throw away food past its expiration date. When I finish organizing, the kitchen looks bigger.", body_ja: "今日は台所を片付けます。お皿と鍋を元の場所に置きます。賞味期限が切れた食べ物は捨てます。片付けが終わると台所が広く見えます。", body_zh: "今天我整理厨房。把碗和锅放回原位。把过期的食物扔掉。整理完后厨房看起来更宽敞。" body_vi: "Hôm nay tôi dọn bếp. Tôi đặt bát đĩa và nồi vào đúng chỗ. Tôi vứt thức ăn đã hết hạn. Dọn xong bếp trông rộng rãi hơn.",
+    body_en: "Today I organize the kitchen. I put the bowls and pots in their place. I throw away food past its expiration date. When I finish organizing, the kitchen looks bigger.", body_ja: "今日は台所を片付けます。お皿と鍋を元の場所に置きます。賞味期限が切れた食べ物は捨てます。片付けが終わると台所が広く見えます。", body_zh: "今天我整理厨房。把碗和锅放回原位。把过期的食物扔掉。整理完后厨房看起来更宽敞。", body_vi: "Hôm nay tôi dọn bếp. Tôi đặt bát đĩa và nồi vào đúng chỗ. Tôi vứt thức ăn đã hết hạn. Dọn xong bếp trông rộng rãi hơn.",
     questions: [
-      { question_en: "What does the narrator throw away?", question_ja: "語り手は何を捨てますか。", question_zh: "叙述者扔掉了什么？" question_vi: "Người kể chuyện vứt bỏ gì?", options: ["Expired food","Old pots","Empty bottles","Broken bowls"], answerIndex: 0 },
-      { question_en: "How does the kitchen look after organizing?", question_ja: "片付けの後、台所はどう見えますか。", question_zh: "整理后厨房看起来怎么样？" question_vi: "Bếp trông thế nào sau khi dọn?", options: ["Messier","Smaller","Darker","Bigger"], answerIndex: 3 },
+      { question_en: "What does the narrator throw away?", question_ja: "語り手は何を捨てますか。", question_zh: "叙述者扔掉了什么？", question_vi: "Người kể chuyện vứt bỏ gì?", options: ["Expired food","Old pots","Empty bottles","Broken bowls"], answerIndex: 0 },
+      { question_en: "How does the kitchen look after organizing?", question_ja: "片付けの後、台所はどう見えますか。", question_zh: "整理后厨房看起来怎么样？", question_vi: "Bếp trông thế nào sau khi dọn?", options: ["Messier","Smaller","Darker","Bigger"], answerIndex: 3 },
     ],
   },
   {
@@ -307,10 +307,10 @@ export const READING_A1_DIARY: RawPassage[] = [
     title_kr: "신문을 읽어요",
     title_en: "Reading the newspaper", title_ja: "新聞を読む", title_zh: "读报纸", title_vi: "Đọc báo",
     body_kr: "우리 할아버지는 매일 신문을 읽어요. 할아버지는 커피와 함께 신문을 봐요. 저도 가끔 할아버지 옆에서 읽어요. 신문에는 재미있는 이야기가 많아요.",
-    body_en: "My grandfather reads the newspaper every day. He reads the newspaper with coffee. Sometimes I also read next to grandfather. There are many interesting stories in the newspaper.", body_ja: "私の祖父は毎日新聞を読みます。祖父はコーヒーと一緒に新聞を見ます。私も時々祖父の隣で読みます。新聞には面白い話がたくさんあります。", body_zh: "我爷爷每天读报纸。爷爷一边喝咖啡一边看报纸。我有时也在爷爷旁边读。报纸上有很多有趣的故事。" body_vi: "Ông tôi đọc báo mỗi ngày. Ông vừa uống cà phê vừa đọc báo. Thỉnh thoảng tôi cũng đọc bên cạnh ông. Trên báo có nhiều câu chuyện thú vị.",
+    body_en: "My grandfather reads the newspaper every day. He reads the newspaper with coffee. Sometimes I also read next to grandfather. There are many interesting stories in the newspaper.", body_ja: "私の祖父は毎日新聞を読みます。祖父はコーヒーと一緒に新聞を見ます。私も時々祖父の隣で読みます。新聞には面白い話がたくさんあります。", body_zh: "我爷爷每天读报纸。爷爷一边喝咖啡一边看报纸。我有时也在爷爷旁边读。报纸上有很多有趣的故事。", body_vi: "Ông tôi đọc báo mỗi ngày. Ông vừa uống cà phê vừa đọc báo. Thỉnh thoảng tôi cũng đọc bên cạnh ông. Trên báo có nhiều câu chuyện thú vị.",
     questions: [
-      { question_en: "Who reads the newspaper every day?", question_ja: "毎日新聞を読むのは誰ですか。", question_zh: "谁每天读报纸？" question_vi: "Ai đọc báo mỗi ngày?", options: ["The dad","The narrator","Grandmother","Grandfather"], answerIndex: 3 },
-      { question_en: "What does grandfather have with the newspaper?", question_ja: "祖父は新聞と一緒に何を飲みますか。", question_zh: "爷爷看报纸时喝什么？" question_vi: "Ông uống gì khi đọc báo?", options: ["Juice","Coffee","Water","Tea"], answerIndex: 1 },
+      { question_en: "Who reads the newspaper every day?", question_ja: "毎日新聞を読むのは誰ですか。", question_zh: "谁每天读报纸？", question_vi: "Ai đọc báo mỗi ngày?", options: ["The dad","The narrator","Grandmother","Grandfather"], answerIndex: 3 },
+      { question_en: "What does grandfather have with the newspaper?", question_ja: "祖父は新聞と一緒に何を飲みますか。", question_zh: "爷爷看报纸时喝什么？", question_vi: "Ông uống gì khi đọc báo?", options: ["Juice","Coffee","Water","Tea"], answerIndex: 1 },
     ],
   },
   {
@@ -319,10 +319,10 @@ export const READING_A1_DIARY: RawPassage[] = [
     title_kr: "접시를 닦아요",
     title_en: "Wiping the plates", title_ja: "皿を拭く", title_zh: "擦盘子", title_vi: "Lau đĩa",
     body_kr: "설거지 후에 저는 접시를 닦아요. 마른 수건으로 접시를 닦아요. 접시가 반짝반짝 빛나요. 깨끗한 접시를 찬장에 넣어요.",
-    body_en: "After washing dishes, I wipe the plates. I wipe the plates with a dry towel. The plates shine brightly. I put the clean plates in the cupboard.", body_ja: "皿洗いの後、私は皿を拭きます。乾いたタオルで皿を拭きます。皿がぴかぴか光ります。きれいな皿を戸棚に入れます。", body_zh: "洗完碗后我擦盘子。用干毛巾擦盘子。盘子闪闪发亮。把干净的盘子放进碗柜。" body_vi: "Sau khi rửa bát tôi lau đĩa. Tôi lau đĩa bằng khăn khô. Đĩa sáng bóng lấp lánh. Tôi để đĩa sạch vào tủ chén.",
+    body_en: "After washing dishes, I wipe the plates. I wipe the plates with a dry towel. The plates shine brightly. I put the clean plates in the cupboard.", body_ja: "皿洗いの後、私は皿を拭きます。乾いたタオルで皿を拭きます。皿がぴかぴか光ります。きれいな皿を戸棚に入れます。", body_zh: "洗完碗后我擦盘子。用干毛巾擦盘子。盘子闪闪发亮。把干净的盘子放进碗柜。", body_vi: "Sau khi rửa bát tôi lau đĩa. Tôi lau đĩa bằng khăn khô. Đĩa sáng bóng lấp lánh. Tôi để đĩa sạch vào tủ chén.",
     questions: [
-      { question_en: "What does the narrator use to wipe the plates?", question_ja: "語り手は皿を拭くのに何を使いますか。", question_zh: "叙述者用什么擦盘子？" question_vi: "Người kể chuyện dùng gì để lau đĩa?", options: ["A dry towel","A wet towel","Paper","A sponge"], answerIndex: 0 },
-      { question_en: "Where does the narrator put the clean plates?", question_ja: "語り手はきれいな皿をどこに入れますか。", question_zh: "叙述者把干净的盘子放在哪里？" question_vi: "Người kể chuyện để đĩa sạch ở đâu?", options: ["On the table","On the floor","In the sink","In the cupboard"], answerIndex: 3 },
+      { question_en: "What does the narrator use to wipe the plates?", question_ja: "語り手は皿を拭くのに何を使いますか。", question_zh: "叙述者用什么擦盘子？", question_vi: "Người kể chuyện dùng gì để lau đĩa?", options: ["A dry towel","A wet towel","Paper","A sponge"], answerIndex: 0 },
+      { question_en: "Where does the narrator put the clean plates?", question_ja: "語り手はきれいな皿をどこに入れますか。", question_zh: "叙述者把干净的盘子放在哪里？", question_vi: "Người kể chuyện để đĩa sạch ở đâu?", options: ["On the table","On the floor","In the sink","In the cupboard"], answerIndex: 3 },
     ],
   },
   {
@@ -331,10 +331,10 @@ export const READING_A1_DIARY: RawPassage[] = [
     title_kr: "목욕 시간",
     title_en: "Bath time", title_ja: "お風呂の時間", title_zh: "洗澡时间", title_vi: "Giờ tắm",
     body_kr: "저녁마다 목욕 시간이 있어요. 따뜻한 물로 목욕을 해요. 목욕 후에는 몸이 가벼워져요. 목욕을 하고 바로 잠자리에 들어요.",
-    body_en: "Every evening there is bath time. I take a bath with warm water. After the bath, my body feels light. I go straight to bed after bathing.", body_ja: "毎晩お風呂の時間があります。温かいお湯でお風呂に入ります。お風呂の後は体が軽くなります。お風呂に入ってすぐ寝ます。", body_zh: "每天晚上都有洗澡时间。用温水洗澡。洗完澡后身体感觉很轻松。洗完澡马上就睡觉。" body_vi: "Mỗi tối đều có giờ tắm. Tôi tắm bằng nước ấm. Sau khi tắm cơ thể tôi thấy nhẹ nhàng. Tắm xong tôi đi ngủ ngay.",
+    body_en: "Every evening there is bath time. I take a bath with warm water. After the bath, my body feels light. I go straight to bed after bathing.", body_ja: "毎晩お風呂の時間があります。温かいお湯でお風呂に入ります。お風呂の後は体が軽くなります。お風呂に入ってすぐ寝ます。", body_zh: "每天晚上都有洗澡时间。用温水洗澡。洗完澡后身体感觉很轻松。洗完澡马上就睡觉。", body_vi: "Mỗi tối đều có giờ tắm. Tôi tắm bằng nước ấm. Sau khi tắm cơ thể tôi thấy nhẹ nhàng. Tắm xong tôi đi ngủ ngay.",
     questions: [
-      { question_en: "What kind of water does the narrator use?", question_ja: "語り手はどんなお湯を使いますか。", question_zh: "叙述者用什么样的水？" question_vi: "Người kể chuyện dùng loại nước nào?", options: ["Cold water","Hot water only","No water","Warm water"], answerIndex: 3 },
-      { question_en: "What does the narrator do right after the bath?", question_ja: "お風呂に入った直後、語り手は何をしますか。", question_zh: "洗完澡后叙述者立刻做什么？" question_vi: "Ngay sau khi tắm, người kể chuyện làm gì?", options: ["Reads a book","Eats dinner","Goes to bed","Watches TV"], answerIndex: 2 },
+      { question_en: "What kind of water does the narrator use?", question_ja: "語り手はどんなお湯を使いますか。", question_zh: "叙述者用什么样的水？", question_vi: "Người kể chuyện dùng loại nước nào?", options: ["Cold water","Hot water only","No water","Warm water"], answerIndex: 3 },
+      { question_en: "What does the narrator do right after the bath?", question_ja: "お風呂に入った直後、語り手は何をしますか。", question_zh: "洗完澡后叙述者立刻做什么？", question_vi: "Ngay sau khi tắm, người kể chuyện làm gì?", options: ["Reads a book","Eats dinner","Goes to bed","Watches TV"], answerIndex: 2 },
     ],
   },
   {
@@ -343,10 +343,10 @@ export const READING_A1_DIARY: RawPassage[] = [
     title_kr: "이를 닦아요",
     title_en: "Brushing teeth", title_ja: "歯を磨く", title_zh: "刷牙", title_vi: "Đánh răng",
     body_kr: "저는 하루에 세 번 이를 닦아요. 아침, 점심, 저녁에 닦아요. 치약과 칫솔을 사용해요. 이를 닦으면 입안이 상쾌해요.",
-    body_en: "I brush my teeth three times a day. I brush in the morning, afternoon, and evening. I use toothpaste and a toothbrush. When I brush, my mouth feels fresh.", body_ja: "私は一日に三回歯を磨きます。朝、昼、夜に磨きます。歯磨き粉と歯ブラシを使います。歯を磨くと口の中がさっぱりします。", body_zh: "我一天刷三次牙。早上、中午、晚上刷。使用牙膏和牙刷。刷完牙口里感觉很清爽。" body_vi: "Tôi đánh răng ba lần một ngày. Tôi đánh vào sáng, trưa, tối. Tôi dùng kem đánh răng và bàn chải. Đánh răng xong miệng tôi thấy sảng khoái.",
+    body_en: "I brush my teeth three times a day. I brush in the morning, afternoon, and evening. I use toothpaste and a toothbrush. When I brush, my mouth feels fresh.", body_ja: "私は一日に三回歯を磨きます。朝、昼、夜に磨きます。歯磨き粉と歯ブラシを使います。歯を磨くと口の中がさっぱりします。", body_zh: "我一天刷三次牙。早上、中午、晚上刷。使用牙膏和牙刷。刷完牙口里感觉很清爽。", body_vi: "Tôi đánh răng ba lần một ngày. Tôi đánh vào sáng, trưa, tối. Tôi dùng kem đánh răng và bàn chải. Đánh răng xong miệng tôi thấy sảng khoái.",
     questions: [
-      { question_en: "How many times a day does the narrator brush teeth?", question_ja: "語り手は一日に何回歯を磨きますか。", question_zh: "叙述者一天刷几次牙？" question_vi: "Người kể chuyện đánh răng mấy lần một ngày?", options: ["Once","Three times","Four times","Twice"], answerIndex: 1 },
-      { question_en: "How does the narrator's mouth feel after brushing?", question_ja: "歯を磨いた後、口の中はどんな感じになりますか。", question_zh: "刷完牙后叙述者的嘴里感觉怎么样？" question_vi: "Miệng người kể chuyện cảm thấy thế nào sau khi đánh răng?", options: ["Dry","Fresh","Hot","Sore"], answerIndex: 1 },
+      { question_en: "How many times a day does the narrator brush teeth?", question_ja: "語り手は一日に何回歯を磨きますか。", question_zh: "叙述者一天刷几次牙？", question_vi: "Người kể chuyện đánh răng mấy lần một ngày?", options: ["Once","Three times","Four times","Twice"], answerIndex: 1 },
+      { question_en: "How does the narrator's mouth feel after brushing?", question_ja: "歯を磨いた後、口の中はどんな感じになりますか。", question_zh: "刷完牙后叙述者的嘴里感觉怎么样？", question_vi: "Miệng người kể chuyện cảm thấy thế nào sau khi đánh răng?", options: ["Dry","Fresh","Hot","Sore"], answerIndex: 1 },
     ],
   },
   {
@@ -355,10 +355,10 @@ export const READING_A1_DIARY: RawPassage[] = [
     title_kr: "라디오를 들어요",
     title_en: "Listening to the radio", title_ja: "ラジオを聞く", title_zh: "听收音机", title_vi: "Nghe đài",
     body_kr: "저는 아침에 라디오를 들어요. 라디오에서 음악과 뉴스가 나와요. 요리하면서 라디오를 자주 들어요. 라디오를 들으면 기분이 좋아져요.",
-    body_en: "I listen to the radio in the morning. Music and news come out on the radio. I often listen while cooking. When I listen to the radio, I feel good.", body_ja: "私は朝ラジオを聞きます。ラジオから音楽とニュースが流れます。料理をしながらよくラジオを聞きます。ラジオを聞くと気分がよくなります。", body_zh: "我早上听收音机。收音机里播放音乐和新闻。做饭时经常听收音机。听收音机心情会变好。" body_vi: "Tôi nghe đài vào buổi sáng. Trên đài phát nhạc và tin tức. Tôi thường nghe đài khi nấu ăn. Nghe đài khiến tâm trạng tôi tốt hơn.",
+    body_en: "I listen to the radio in the morning. Music and news come out on the radio. I often listen while cooking. When I listen to the radio, I feel good.", body_ja: "私は朝ラジオを聞きます。ラジオから音楽とニュースが流れます。料理をしながらよくラジオを聞きます。ラジオを聞くと気分がよくなります。", body_zh: "我早上听收音机。收音机里播放音乐和新闻。做饭时经常听收音机。听收音机心情会变好。", body_vi: "Tôi nghe đài vào buổi sáng. Trên đài phát nhạc và tin tức. Tôi thường nghe đài khi nấu ăn. Nghe đài khiến tâm trạng tôi tốt hơn.",
     questions: [
-      { question_en: "What comes out on the radio?", question_ja: "ラジオから何が流れますか。", question_zh: "收音机里播放什么？" question_vi: "Trên đài phát gì?", options: ["Only music","Sports","Only news","Music and news"], answerIndex: 3 },
-      { question_en: "When does the narrator often listen to the radio?", question_ja: "語り手はよくいつラジオを聞きますか。", question_zh: "叙述者常在什么时候听收音机？" question_vi: "Người kể chuyện thường nghe đài khi nào?", options: ["While driving","While cooking","While studying","While sleeping"], answerIndex: 1 },
+      { question_en: "What comes out on the radio?", question_ja: "ラジオから何が流れますか。", question_zh: "收音机里播放什么？", question_vi: "Trên đài phát gì?", options: ["Only music","Sports","Only news","Music and news"], answerIndex: 3 },
+      { question_en: "When does the narrator often listen to the radio?", question_ja: "語り手はよくいつラジオを聞きますか。", question_zh: "叙述者常在什么时候听收音机？", question_vi: "Người kể chuyện thường nghe đài khi nào?", options: ["While driving","While cooking","While studying","While sleeping"], answerIndex: 1 },
     ],
   },
   {
@@ -367,10 +367,10 @@ export const READING_A1_DIARY: RawPassage[] = [
     title_kr: "식탁을 차려요",
     title_en: "Setting the table", title_ja: "食卓を整える", title_zh: "摆餐桌", title_vi: "Dọn bàn ăn",
     body_kr: "저녁 시간이 되면 식탁을 차려요. 그릇과 젓가락을 놓아요. 물도 컵에 따라요. 다 차리면 가족을 불러요.",
-    body_en: "When dinner time comes, I set the table. I put out the bowls and chopsticks. I also pour water into cups. When everything is set, I call the family.", body_ja: "夕食の時間になると食卓を整えます。お皿と箸を並べます。水もコップに注ぎます。全部準備できたら家族を呼びます。", body_zh: "到了晚饭时间就摆餐桌。摆上碗和筷子。也把水倒进杯子里。都摆好后叫家人来。" body_vi: "Đến giờ ăn tối tôi dọn bàn ăn. Tôi bày bát và đũa. Tôi cũng rót nước vào cốc. Dọn xong tôi gọi cả nhà.",
+    body_en: "When dinner time comes, I set the table. I put out the bowls and chopsticks. I also pour water into cups. When everything is set, I call the family.", body_ja: "夕食の時間になると食卓を整えます。お皿と箸を並べます。水もコップに注ぎます。全部準備できたら家族を呼びます。", body_zh: "到了晚饭时间就摆餐桌。摆上碗和筷子。也把水倒进杯子里。都摆好后叫家人来。", body_vi: "Đến giờ ăn tối tôi dọn bàn ăn. Tôi bày bát và đũa. Tôi cũng rót nước vào cốc. Dọn xong tôi gọi cả nhà.",
     questions: [
-      { question_en: "What does the narrator put on the table besides bowls?", question_ja: "語り手はお皿の他に何をテーブルに置きますか。", question_zh: "除了碗，叙述者还在桌上摆了什么？" question_vi: "Ngoài bát, người kể chuyện còn bày gì lên bàn?", options: ["Forks","Napkins","Chopsticks","Candles"], answerIndex: 2 },
-      { question_en: "What does the narrator do after setting the table?", question_ja: "食卓を整えた後、語り手は何をしますか。", question_zh: "摆好餐桌后叙述者做什么？" question_vi: "Sau khi dọn bàn xong, người kể chuyện làm gì?", options: ["Calls the family","Cleans the floor","Cooks dinner","Washes dishes"], answerIndex: 0 },
+      { question_en: "What does the narrator put on the table besides bowls?", question_ja: "語り手はお皿の他に何をテーブルに置きますか。", question_zh: "除了碗，叙述者还在桌上摆了什么？", question_vi: "Ngoài bát, người kể chuyện còn bày gì lên bàn?", options: ["Forks","Napkins","Chopsticks","Candles"], answerIndex: 2 },
+      { question_en: "What does the narrator do after setting the table?", question_ja: "食卓を整えた後、語り手は何をしますか。", question_zh: "摆好餐桌后叙述者做什么？", question_vi: "Sau khi dọn bàn xong, người kể chuyện làm gì?", options: ["Calls the family","Cleans the floor","Cooks dinner","Washes dishes"], answerIndex: 0 },
     ],
   },
   {
@@ -379,10 +379,10 @@ export const READING_A1_DIARY: RawPassage[] = [
     title_kr: "신발장",
     title_en: "The shoe cabinet", title_ja: "靴箱", title_zh: "鞋柜", title_vi: "Tủ giày",
     body_kr: "우리 집 현관에 신발장이 있어요. 신발장 안에는 신발이 많아요. 저는 오늘 신발장을 정리해요. 신발을 종류별로 놓으니 보기 좋아요.",
-    body_en: "There is a shoe cabinet at our front door. There are many shoes inside the cabinet. Today I organize the shoe cabinet. It looks nice when I arrange the shoes by type.", body_ja: "我が家の玄関に靴箱があります。靴箱の中には靴がたくさんあります。私は今日靴箱を整理します。靴を種類別に並べるときれいに見えます。", body_zh: "我家玄关有个鞋柜。鞋柜里鞋子很多。今天我整理鞋柜。按种类摆放鞋子看起来很整齐。" body_vi: "Ở lối vào nhà tôi có một tủ giày. Trong tủ giày có nhiều giày. Hôm nay tôi dọn tủ giày. Xếp giày theo từng loại trông rất gọn gàng.",
+    body_en: "There is a shoe cabinet at our front door. There are many shoes inside the cabinet. Today I organize the shoe cabinet. It looks nice when I arrange the shoes by type.", body_ja: "我が家の玄関に靴箱があります。靴箱の中には靴がたくさんあります。私は今日靴箱を整理します。靴を種類別に並べるときれいに見えます。", body_zh: "我家玄关有个鞋柜。鞋柜里鞋子很多。今天我整理鞋柜。按种类摆放鞋子看起来很整齐。", body_vi: "Ở lối vào nhà tôi có một tủ giày. Trong tủ giày có nhiều giày. Hôm nay tôi dọn tủ giày. Xếp giày theo từng loại trông rất gọn gàng.",
     questions: [
-      { question_en: "Where is the shoe cabinet located?", question_ja: "靴箱はどこにありますか。", question_zh: "鞋柜在哪里？" question_vi: "Tủ giày đặt ở đâu?", options: ["On the balcony","In the bedroom","At the front door","In the kitchen"], answerIndex: 2 },
-      { question_en: "How does the narrator arrange the shoes?", question_ja: "語り手は靴をどのように並べますか。", question_zh: "叙述者怎样摆放鞋子？" question_vi: "Người kể chuyện xếp giày như thế nào?", options: ["By price","By type","By color","By size only"], answerIndex: 1 },
+      { question_en: "Where is the shoe cabinet located?", question_ja: "靴箱はどこにありますか。", question_zh: "鞋柜在哪里？", question_vi: "Tủ giày đặt ở đâu?", options: ["On the balcony","In the bedroom","At the front door","In the kitchen"], answerIndex: 2 },
+      { question_en: "How does the narrator arrange the shoes?", question_ja: "語り手は靴をどのように並べますか。", question_zh: "叙述者怎样摆放鞋子？", question_vi: "Người kể chuyện xếp giày như thế nào?", options: ["By price","By type","By color","By size only"], answerIndex: 1 },
     ],
   },
   {
@@ -391,10 +391,10 @@ export const READING_A1_DIARY: RawPassage[] = [
     title_kr: "할아버지와 산책",
     title_en: "A walk with grandfather", title_ja: "祖父との散歩", title_zh: "和爷爷散步", title_vi: "Đi dạo cùng ông",
     body_kr: "저는 할아버지와 매일 산책을 해요. 우리는 천천히 공원을 걸어요. 할아버지는 나무 이름을 알려줘요. 산책 후에는 기분이 상쾌해요.",
-    body_en: "I take a walk with grandfather every day. We walk slowly in the park. Grandfather tells me the names of trees. After the walk, I feel refreshed.", body_ja: "私は祖父と毎日散歩をします。私たちはゆっくり公園を歩きます。祖父は木の名前を教えてくれます。散歩の後は気分がさっぱりします。", body_zh: "我每天和爷爷散步。我们在公园里慢慢走。爷爷告诉我树的名字。散步后心情很清爽。" body_vi: "Tôi đi dạo cùng ông mỗi ngày. Chúng tôi đi bộ chậm rãi trong công viên. Ông kể cho tôi tên các loài cây. Sau khi đi dạo tôi cảm thấy sảng khoái.",
+    body_en: "I take a walk with grandfather every day. We walk slowly in the park. Grandfather tells me the names of trees. After the walk, I feel refreshed.", body_ja: "私は祖父と毎日散歩をします。私たちはゆっくり公園を歩きます。祖父は木の名前を教えてくれます。散歩の後は気分がさっぱりします。", body_zh: "我每天和爷爷散步。我们在公园里慢慢走。爷爷告诉我树的名字。散步后心情很清爽。", body_vi: "Tôi đi dạo cùng ông mỗi ngày. Chúng tôi đi bộ chậm rãi trong công viên. Ông kể cho tôi tên các loài cây. Sau khi đi dạo tôi cảm thấy sảng khoái.",
     questions: [
-      { question_en: "Where do they walk?", question_ja: "どこを歩きますか。", question_zh: "他们在哪里散步？" question_vi: "Họ đi dạo ở đâu?", options: ["The park","The library","The market","The school"], answerIndex: 0 },
-      { question_en: "What does grandfather tell the narrator?", question_ja: "祖父は語り手に何を教えてくれますか。", question_zh: "爷爷告诉叙述者什么？" question_vi: "Ông kể cho người kể chuyện điều gì?", options: ["Names of trees","Directions","Names of flowers","Old stories"], answerIndex: 0 },
+      { question_en: "Where do they walk?", question_ja: "どこを歩きますか。", question_zh: "他们在哪里散步？", question_vi: "Họ đi dạo ở đâu?", options: ["The park","The library","The market","The school"], answerIndex: 0 },
+      { question_en: "What does grandfather tell the narrator?", question_ja: "祖父は語り手に何を教えてくれますか。", question_zh: "爷爷告诉叙述者什么？", question_vi: "Ông kể cho người kể chuyện điều gì?", options: ["Names of trees","Directions","Names of flowers","Old stories"], answerIndex: 0 },
     ],
   },
   {
@@ -403,10 +403,10 @@ export const READING_A1_DIARY: RawPassage[] = [
     title_kr: "거실 소파",
     title_en: "The living room sofa", title_ja: "リビングのソファ", title_zh: "客厅沙发", title_vi: "Ghế sofa phòng khách",
     body_kr: "우리 집 거실에 큰 소파가 있어요. 소파는 회색이고 아주 편해요. 저는 소파에서 책을 읽어요. 가족 모두 소파에 앉아 쉬어요.",
-    body_en: "There is a big sofa in our living room. The sofa is gray and very comfortable. I read books on the sofa. The whole family sits and rests on the sofa.", body_ja: "我が家のリビングに大きなソファがあります。ソファは灰色でとても座り心地がいいです。私はソファで本を読みます。家族みんなソファに座って休みます。", body_zh: "我家客厅有张大沙发。沙发是灰色的，非常舒服。我在沙发上看书。全家人都坐在沙发上休息。" body_vi: "Phòng khách nhà tôi có một chiếc ghế sofa lớn. Ghế sofa màu xám và rất thoải mái. Tôi đọc sách trên ghế sofa. Cả nhà đều ngồi nghỉ trên ghế sofa.",
+    body_en: "There is a big sofa in our living room. The sofa is gray and very comfortable. I read books on the sofa. The whole family sits and rests on the sofa.", body_ja: "我が家のリビングに大きなソファがあります。ソファは灰色でとても座り心地がいいです。私はソファで本を読みます。家族みんなソファに座って休みます。", body_zh: "我家客厅有张大沙发。沙发是灰色的，非常舒服。我在沙发上看书。全家人都坐在沙发上休息。", body_vi: "Phòng khách nhà tôi có một chiếc ghế sofa lớn. Ghế sofa màu xám và rất thoải mái. Tôi đọc sách trên ghế sofa. Cả nhà đều ngồi nghỉ trên ghế sofa.",
     questions: [
-      { question_en: "What color is the sofa?", question_ja: "ソファは何色ですか。", question_zh: "沙发是什么颜色？" question_vi: "Ghế sofa màu gì?", options: ["Blue","Gray","Brown","Black"], answerIndex: 1 },
-      { question_en: "What does the narrator do on the sofa?", question_ja: "語り手はソファで何をしますか。", question_zh: "叙述者在沙发上做什么？" question_vi: "Người kể chuyện làm gì trên ghế sofa?", options: ["Eats","Cooks","Sleeps","Reads books"], answerIndex: 3 },
+      { question_en: "What color is the sofa?", question_ja: "ソファは何色ですか。", question_zh: "沙发是什么颜色？", question_vi: "Ghế sofa màu gì?", options: ["Blue","Gray","Brown","Black"], answerIndex: 1 },
+      { question_en: "What does the narrator do on the sofa?", question_ja: "語り手はソファで何をしますか。", question_zh: "叙述者在沙发上做什么？", question_vi: "Người kể chuyện làm gì trên ghế sofa?", options: ["Eats","Cooks","Sleeps","Reads books"], answerIndex: 3 },
     ],
   },
   {
@@ -415,10 +415,10 @@ export const READING_A1_DIARY: RawPassage[] = [
     title_kr: "저녁 뉴스",
     title_en: "The evening news", title_ja: "夜のニュース", title_zh: "晚间新闻", title_vi: "Bản tin tối",
     body_kr: "우리 가족은 저녁마다 뉴스를 봐요. 아빠는 뉴스를 보면서 신문도 읽어요. 날씨 소식이 나오면 다 같이 집중해요. 뉴스가 끝나면 저녁을 먹어요.",
-    body_en: "My family watches the news every evening. Dad reads the newspaper while watching the news. When the weather report comes on, everyone pays attention. After the news, we eat dinner.", body_ja: "私の家族は毎晩ニュースを見ます。父はニュースを見ながら新聞も読みます。天気予報が始まるとみんなで集中します。ニュースが終わると夕食を食べます。", body_zh: "我们家每天晚上看新闻。爸爸一边看新闻一边读报纸。天气预报出来时大家都很专注。新闻结束后吃晚饭。" body_vi: "Gia đình tôi xem tin tức mỗi tối. Bố vừa xem tin tức vừa đọc báo. Khi có bản tin thời tiết cả nhà đều tập trung xem. Xem tin xong chúng tôi ăn tối.",
+    body_en: "My family watches the news every evening. Dad reads the newspaper while watching the news. When the weather report comes on, everyone pays attention. After the news, we eat dinner.", body_ja: "私の家族は毎晩ニュースを見ます。父はニュースを見ながら新聞も読みます。天気予報が始まるとみんなで集中します。ニュースが終わると夕食を食べます。", body_zh: "我们家每天晚上看新闻。爸爸一边看新闻一边读报纸。天气预报出来时大家都很专注。新闻结束后吃晚饭。", body_vi: "Gia đình tôi xem tin tức mỗi tối. Bố vừa xem tin tức vừa đọc báo. Khi có bản tin thời tiết cả nhà đều tập trung xem. Xem tin xong chúng tôi ăn tối.",
     questions: [
-      { question_en: "What does dad do while watching the news?", question_ja: "父はニュースを見ながら何をしますか。", question_zh: "爸爸看新闻时做什么？" question_vi: "Bố làm gì khi xem tin tức?", options: ["Sleeps","Talks on the phone","Cooks dinner","Reads the newspaper"], answerIndex: 3 },
-      { question_en: "What do they do after the news?", question_ja: "ニュースの後、何をしますか。", question_zh: "新闻结束后他们做什么？" question_vi: "Sau bản tin họ làm gì?", options: ["Watch a movie","Eat dinner","Go outside","Go to sleep"], answerIndex: 1 },
+      { question_en: "What does dad do while watching the news?", question_ja: "父はニュースを見ながら何をしますか。", question_zh: "爸爸看新闻时做什么？", question_vi: "Bố làm gì khi xem tin tức?", options: ["Sleeps","Talks on the phone","Cooks dinner","Reads the newspaper"], answerIndex: 3 },
+      { question_en: "What do they do after the news?", question_ja: "ニュースの後、何をしますか。", question_zh: "新闻结束后他们做什么？", question_vi: "Sau bản tin họ làm gì?", options: ["Watch a movie","Eat dinner","Go outside","Go to sleep"], answerIndex: 1 },
     ],
   },
   {
@@ -427,10 +427,10 @@ export const READING_A1_DIARY: RawPassage[] = [
     title_kr: "우리 집 마당",
     title_en: "Our yard", title_ja: "我が家の庭", title_zh: "我家的院子", title_vi: "Sân nhà tôi",
     body_kr: "우리 집에는 작은 마당이 있어요. 마당에는 나무와 꽃이 있어요. 저는 마당에서 강아지와 뛰어놀아요. 마당이 있어서 정말 행복해요.",
-    body_en: "We have a small yard at our house. There are trees and flowers in the yard. I run and play with the puppy in the yard. I'm really happy to have a yard.", body_ja: "我が家には小さな庭があります。庭には木と花があります。私は庭で子犬と走って遊びます。庭があって本当に幸せです。", body_zh: "我家有个小院子。院子里有树和花。我在院子里和小狗一起跑着玩。有院子真让我很幸福。" body_vi: "Nhà tôi có một sân nhỏ. Trong sân có cây và hoa. Tôi chạy chơi cùng chú chó con trong sân. Có sân tôi thấy thật hạnh phúc.",
+    body_en: "We have a small yard at our house. There are trees and flowers in the yard. I run and play with the puppy in the yard. I'm really happy to have a yard.", body_ja: "我が家には小さな庭があります。庭には木と花があります。私は庭で子犬と走って遊びます。庭があって本当に幸せです。", body_zh: "我家有个小院子。院子里有树和花。我在院子里和小狗一起跑着玩。有院子真让我很幸福。", body_vi: "Nhà tôi có một sân nhỏ. Trong sân có cây và hoa. Tôi chạy chơi cùng chú chó con trong sân. Có sân tôi thấy thật hạnh phúc.",
     questions: [
-      { question_en: "What is in the yard?", question_ja: "庭には何がありますか。", question_zh: "院子里有什么？" question_vi: "Trong sân có gì?", options: ["A car and bike","A table and bench","Trees and flowers","A pool and chairs"], answerIndex: 2 },
-      { question_en: "What does the narrator do in the yard?", question_ja: "語り手は庭で何をしますか。", question_zh: "叙述者在院子里做什么？" question_vi: "Người kể chuyện làm gì trong sân?", options: ["Reads books","Studies Korean","Plays with the puppy","Cooks food"], answerIndex: 2 },
+      { question_en: "What is in the yard?", question_ja: "庭には何がありますか。", question_zh: "院子里有什么？", question_vi: "Trong sân có gì?", options: ["A car and bike","A table and bench","Trees and flowers","A pool and chairs"], answerIndex: 2 },
+      { question_en: "What does the narrator do in the yard?", question_ja: "語り手は庭で何をしますか。", question_zh: "叙述者在院子里做什么？", question_vi: "Người kể chuyện làm gì trong sân?", options: ["Reads books","Studies Korean","Plays with the puppy","Cooks food"], answerIndex: 2 },
     ],
   },
   {
@@ -439,10 +439,10 @@ export const READING_A1_DIARY: RawPassage[] = [
     title_kr: "우리 고양이",
     title_en: "My cat", title_ja: "うちの猫", title_zh: "我家的猫", title_vi: "Con mèo nhà tôi",
     body_kr: "우리 집에 고양이가 있어요. 이름은 나비예요. 나비는 아주 작아요. 저는 나비를 사랑해요.",
-    body_en: "There is a cat in my house. Her name is Nabi. Nabi is very small. I love Nabi.", body_ja: "我が家に猫がいます。名前はナビです。ナビはとても小さいです。私はナビを愛しています。", body_zh: "我家有只猫。名字叫纳比。纳比很小。我爱纳比。" body_vi: "Nhà tôi có một con mèo. Tên là Nabi. Nabi rất nhỏ. Tôi yêu Nabi.",
+    body_en: "There is a cat in my house. Her name is Nabi. Nabi is very small. I love Nabi.", body_ja: "我が家に猫がいます。名前はナビです。ナビはとても小さいです。私はナビを愛しています。", body_zh: "我家有只猫。名字叫纳比。纳比很小。我爱纳比。", body_vi: "Nhà tôi có một con mèo. Tên là Nabi. Nabi rất nhỏ. Tôi yêu Nabi.",
     questions: [
-      { question_en: "What is the cat's name?", question_ja: "猫の名前は何ですか。", question_zh: "猫的名字是什么？" question_vi: "Tên con mèo là gì?", options: ["Nabi", "Mimi", "Kongi", "Haru"], answerIndex: 0 },
-      { question_en: "What is Nabi like?", question_ja: "ナビはどんな様子ですか。", question_zh: "纳比是什么样的？" question_vi: "Nabi như thế nào?", options: ["Very big", "Very loud", "Very small", "Very old"], answerIndex: 2 },
+      { question_en: "What is the cat's name?", question_ja: "猫の名前は何ですか。", question_zh: "猫的名字是什么？", question_vi: "Tên con mèo là gì?", options: ["Nabi", "Mimi", "Kongi", "Haru"], answerIndex: 0 },
+      { question_en: "What is Nabi like?", question_ja: "ナビはどんな様子ですか。", question_zh: "纳比是什么样的？", question_vi: "Nabi như thế nào?", options: ["Very big", "Very loud", "Very small", "Very old"], answerIndex: 2 },
     ],
   },
   {
@@ -451,10 +451,10 @@ export const READING_A1_DIARY: RawPassage[] = [
     title_kr: "우리 강아지",
     title_en: "My puppy", title_ja: "うちの子犬", title_zh: "我家的小狗", title_vi: "Chú chó nhà tôi",
     body_kr: "우리 집에 강아지가 있어요. 이름은 콩이예요. 콩이는 작고 귀여워요. 저는 콩이하고 매일 산책해요.",
-    body_en: "We have a puppy at home. Her name is Kong. Kong is small and cute. I take a walk with Kong every day.", body_ja: "我が家に子犬がいます。名前はコンイです。コンイは小さくてかわいいです。私はコンイと毎日散歩します。", body_zh: "我家有只小狗。名字叫空伊。空伊又小又可爱。我每天和空伊一起散步。" body_vi: "Nhà tôi có một chú chó con. Tên là Kongi. Kongi nhỏ và dễ thương. Tôi đi dạo cùng Kongi mỗi ngày.",
+    body_en: "We have a puppy at home. Her name is Kong. Kong is small and cute. I take a walk with Kong every day.", body_ja: "我が家に子犬がいます。名前はコンイです。コンイは小さくてかわいいです。私はコンイと毎日散歩します。", body_zh: "我家有只小狗。名字叫空伊。空伊又小又可爱。我每天和空伊一起散步。", body_vi: "Nhà tôi có một chú chó con. Tên là Kongi. Kongi nhỏ và dễ thương. Tôi đi dạo cùng Kongi mỗi ngày.",
     questions: [
-      { question_en: "What is the puppy's name?", question_ja: "子犬の名前は何ですか。", question_zh: "小狗的名字是什么？" question_vi: "Tên chú chó con là gì?", options: ["Bori", "Kong", "Choco", "Mongi"], answerIndex: 1 },
-      { question_en: "What do they do every day?", question_ja: "二人は毎日何をしますか。", question_zh: "他们每天做什么？" question_vi: "Họ làm gì mỗi ngày?", options: ["Watch TV", "Take a walk", "Go swimming", "Cook"], answerIndex: 1 },
+      { question_en: "What is the puppy's name?", question_ja: "子犬の名前は何ですか。", question_zh: "小狗的名字是什么？", question_vi: "Tên chú chó con là gì?", options: ["Bori", "Kong", "Choco", "Mongi"], answerIndex: 1 },
+      { question_en: "What do they do every day?", question_ja: "二人は毎日何をしますか。", question_zh: "他们每天做什么？", question_vi: "Họ làm gì mỗi ngày?", options: ["Watch TV", "Take a walk", "Go swimming", "Cook"], answerIndex: 1 },
     ],
   },
   {
@@ -463,10 +463,10 @@ export const READING_A1_DIARY: RawPassage[] = [
     title_kr: "제 친구",
     title_en: "My friend", title_ja: "私の友達", title_zh: "我的朋友", title_vi: "Bạn của tôi",
     body_kr: "제 친구 이름은 지민이에요. 지민 씨는 학생이에요. 우리는 같이 점심을 먹어요. 지민 씨는 아주 친절해요.",
-    body_en: "My friend's name is Jimin. Jimin is a student. We eat lunch together. Jimin is very kind.", body_ja: "私の友達の名前はジミンです。ジミンさんは学生です。私たちは一緒にお昼ご飯を食べます。ジミンさんはとても親切です。", body_zh: "我朋友的名字叫智敏。智敏是学生。我们一起吃午饭。智敏非常亲切。" body_vi: "Bạn tôi tên là Jimin. Jimin là học sinh. Chúng tôi cùng ăn trưa. Jimin rất tốt bụng.",
+    body_en: "My friend's name is Jimin. Jimin is a student. We eat lunch together. Jimin is very kind.", body_ja: "私の友達の名前はジミンです。ジミンさんは学生です。私たちは一緒にお昼ご飯を食べます。ジミンさんはとても親切です。", body_zh: "我朋友的名字叫智敏。智敏是学生。我们一起吃午饭。智敏非常亲切。", body_vi: "Bạn tôi tên là Jimin. Jimin là học sinh. Chúng tôi cùng ăn trưa. Jimin rất tốt bụng.",
     questions: [
-      { question_en: "What is the friend's name?", question_ja: "友達の名前は何ですか。", question_zh: "朋友的名字是什么？" question_vi: "Tên của bạn là gì?", options: ["Jimin", "Minsu", "Jiwon", "Sujin"], answerIndex: 0 },
-      { question_en: "What do they do together?", question_ja: "二人は一緒に何をしますか。", question_zh: "他们一起做什么？" question_vi: "Họ cùng nhau làm gì?", options: ["Study", "Eat lunch", "Play soccer", "Watch movies"], answerIndex: 1 },
+      { question_en: "What is the friend's name?", question_ja: "友達の名前は何ですか。", question_zh: "朋友的名字是什么？", question_vi: "Tên của bạn là gì?", options: ["Jimin", "Minsu", "Jiwon", "Sujin"], answerIndex: 0 },
+      { question_en: "What do they do together?", question_ja: "二人は一緒に何をしますか。", question_zh: "他们一起做什么？", question_vi: "Họ cùng nhau làm gì?", options: ["Study", "Eat lunch", "Play soccer", "Watch movies"], answerIndex: 1 },
     ],
   },
   {
@@ -475,10 +475,10 @@ export const READING_A1_DIARY: RawPassage[] = [
     title_kr: "카페에서",
     title_en: "At the cafe", title_ja: "カフェで", title_zh: "在咖啡馆", title_vi: "Ở quán cà phê",
     body_kr: "저는 카페에 가요. 커피를 마셔요. 친구 지민이도 같이 있어요. 우리는 이야기를 해요.",
-    body_en: "I go to a cafe. I drink coffee. My friend Jimin is there too. We talk.", body_ja: "私はカフェに行きます。コーヒーを飲みます。友達のジミンも一緒にいます。私たちは話をします。", body_zh: "我去咖啡馆。喝咖啡。朋友智敏也在。我们聊天。" body_vi: "Tôi đi quán cà phê. Tôi uống cà phê. Bạn tôi là Jimin cũng ở đó. Chúng tôi trò chuyện.",
+    body_en: "I go to a cafe. I drink coffee. My friend Jimin is there too. We talk.", body_ja: "私はカフェに行きます。コーヒーを飲みます。友達のジミンも一緒にいます。私たちは話をします。", body_zh: "我去咖啡馆。喝咖啡。朋友智敏也在。我们聊天。", body_vi: "Tôi đi quán cà phê. Tôi uống cà phê. Bạn tôi là Jimin cũng ở đó. Chúng tôi trò chuyện.",
     questions: [
-      { question_en: "Where does the person go?", question_ja: "この人はどこに行きますか。", question_zh: "这个人去哪里？" question_vi: "Người này đi đâu?", options: ["A cafe", "A school", "A hospital", "Home"], answerIndex: 0 },
-      { question_en: "Who is with them?", question_ja: "誰が一緒にいますか。", question_zh: "谁和他们在一起？" question_vi: "Ai ở cùng họ?", options: ["A friend", "A teacher", "A sister", "No one"], answerIndex: 0 },
+      { question_en: "Where does the person go?", question_ja: "この人はどこに行きますか。", question_zh: "这个人去哪里？", question_vi: "Người này đi đâu?", options: ["A cafe", "A school", "A hospital", "Home"], answerIndex: 0 },
+      { question_en: "Who is with them?", question_ja: "誰が一緒にいますか。", question_zh: "谁和他们在一起？", question_vi: "Ai ở cùng họ?", options: ["A friend", "A teacher", "A sister", "No one"], answerIndex: 0 },
     ],
   },
 ];
