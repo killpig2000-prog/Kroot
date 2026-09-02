@@ -44,7 +44,6 @@ export default function WordBankList({
   const t = useTranslations("vocabulary");
   const supabase = useMemo(() => createClient(), []);
   const [items, setItems] = useState(initialItems);
-  const [query, setQuery] = useState("");
   const [hideMeanings, setHideMeanings] = useState(false);
   const [pending, setPending] = useState<Pending | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -88,15 +87,7 @@ export default function WordBankList({
     }
   }
 
-  const q = query.trim().toLowerCase();
-  const shown = q
-    ? items.filter(
-        (i) =>
-          i.korean.includes(query.trim()) ||
-          i.romanization.toLowerCase().includes(q) ||
-          i.meaning.toLowerCase().includes(q)
-      )
-    : items;
+  const shown = items;
 
   const open = Math.max(0, slots - items.length);
   const full = open === 0;
@@ -163,17 +154,7 @@ export default function WordBankList({
 
   return (
     <div className="max-w-[680px]">
-      <div className="flex items-center gap-2 mb-3 flex-wrap">
-        <label className="min-w-0 flex-1 basis-[180px]">
-          <span className="sr-only">{t("bank.searchPlaceholder")}</span>
-          <input
-            type="search"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder={t("bank.searchPlaceholder")}
-            className="w-full min-w-0 h-[42px] rounded-[10px] border border-line bg-cream px-3.5 text-[14px] text-charcoal placeholder:text-faint focus:outline-none focus:border-success"
-          />
-        </label>
+      <div className="flex items-center gap-2 mb-3 flex-wrap justify-end">
         <button
           type="button"
           onClick={() => setHideMeanings((v) => !v)}
@@ -194,10 +175,7 @@ export default function WordBankList({
         </p>
       )}
 
-      {shown.length === 0 ? (
-        <p className="text-sm text-muted">{t("bank.noMatches", { query: query.trim() })}</p>
-      ) : (
-        <div className={grid}>
+      <div className={grid}>
           {shown.map((item) => {
             const index = items.indexOf(item);
             const inner = (
@@ -254,13 +232,12 @@ export default function WordBankList({
             );
           })}
 
-          {/* Open slots trail the filled ones — but only on the full list, so
-              a search result isn't padded with cells that aren't matches. */}
-          {!q && !full && addTile(t("bank.addWord"))}
-          {!q && !full && ghostTiles(Math.min(open - 1, MAX_GHOST_SLOTS))}
+          {/* Open slots trail the filled ones. */}
+          {!full && addTile(t("bank.addWord"))}
+          {!full && ghostTiles(Math.min(open - 1, MAX_GHOST_SLOTS))}
 
           {/* At capacity the last cell becomes the way to get more. */}
-          {!q && full && canBuyMore && (
+          {full && canBuyMore && (
             <Link
               href="/shop"
               className={`${SLOT_BASE} items-center justify-center gap-[3px] text-center border-[1.5px] border-dashed border-amber-line bg-[var(--tint-amber)] text-amber transition-colors hover:border-amber`}
@@ -277,7 +254,6 @@ export default function WordBankList({
             </Link>
           )}
         </div>
-      )}
 
       {pending && (
         <div
