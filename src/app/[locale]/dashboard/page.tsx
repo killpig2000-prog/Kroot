@@ -9,7 +9,6 @@ import WordOfDayCard from "@/components/dashboard/WordOfDayCard";
 import FeedbackWidget from "@/components/dashboard/FeedbackWidget";
 import Greeting from "@/components/dashboard/Greeting";
 import TodaysQuestCard from "@/components/dashboard/TodaysQuestCard";
-import LevelMap from "@/components/dashboard/LevelMap";
 import { FirstVisitPlan, LockedWidgets, type FirstVisitStep } from "@/components/dashboard/FirstVisitPlan";
 import InstallBanner from "@/components/pwa/InstallBanner";
 import OnboardingTour from "@/components/onboarding/OnboardingTour";
@@ -17,8 +16,7 @@ import { GRAMMAR_LESSONS } from "@/lib/grammar";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { levelProgress } from "@/lib/level";
 import MonthlyGrass from "@/components/profile/MonthlyGrass";
-import { computeEligibility } from "@/lib/promotion-server";
-import { ELIGIBILITY, testForGrade } from "@/lib/promotion-test";
+import { ELIGIBILITY } from "@/lib/promotion-test";
 import { DIALOGUES } from "@/lib/listening-dialogues";
 import { getPassagesForLevel } from "@/lib/reading";
 import { getPromptsForLevel } from "@/lib/writing";
@@ -181,11 +179,11 @@ export default async function DashboardPage() {
   const accountAgeDays = profile?.created_at ? (now.getTime() - Date.parse(profile.created_at)) / 86_400_000 : Infinity;
   const maybeNew = !showAll && accountAgeDays < NEW_ACCOUNT_DAYS;
 
-  // Promotion eligibility runs after the main batch (it needs the grade);
-  // internally it fans out its own queries in parallel.
+  // "Your path" (promotion eligibility + LevelMap) moved to My progress
+  // (/profile) 2026-09-03 — the Garden is a "what do I do today" page, and a
+  // once-eligible learner had no way to stop it nagging them here every visit.
   const todayStartIso = `${today}T00:00:00.000Z`;
-  const [elig, analyticsSessions, coinsRes, { count: reviewedTodayCount }] = await Promise.all([
-    computeEligibility(supabase, user.id, cefr),
+  const [analyticsSessions, coinsRes, { count: reviewedTodayCount }] = await Promise.all([
     maybeNew ? countCompletedSessions(user.id) : Promise.resolve(null),
     // coins isn't in the snapshot RPC's profile row; a parallel read here
     // beats a function migration for one integer (see 0041's rationale).
@@ -200,11 +198,6 @@ export default async function DashboardPage() {
   ]);
   const coins = coinsRes.error ? 0 : coinsRes.data?.coins ?? 0;
   const reviewCapacityBonus = coinsRes.error ? 0 : coinsRes.data?.review_capacity_bonus ?? 0;
-  const promo = testForGrade(cefr);
-  const promoChecks = [
-    { label: t("levelMap.checkWordsHeld"), ok: elig.wordsMastered >= elig.wordsRequired, value: `${elig.wordsMastered}/${elig.wordsRequired}` },
-    { label: t("levelMap.checkReading"), ok: elig.readingDone >= elig.readingRequired, value: `${elig.readingDone}/${elig.readingRequired}` },
-  ];
   // Errors (e.g. migration 0022 not applied yet) just hide the review card.
   // User feedback: an uncapped backlog badge (once past a hundred+ words)
   // read as a scary, un-clearable number rather than something to act on.
@@ -293,10 +286,6 @@ export default async function DashboardPage() {
 
   // "Continue" target: the last unit the learner opened (resume_points), or
   // today's quest when nothing is in progress. A finished unit clears itself.
-  const overallPct = Math.round(
-    Object.values(skillProgress).reduce((sum, p) => sum + p.percent, 0) / Object.keys(skillProgress).length
-  );
-
 
   // Finished sessions: the activity_completed events, backed up by the
   // progress tables in case a beacon never landed (or the service key is
@@ -372,10 +361,6 @@ export default async function DashboardPage() {
             {firstVisit.unlocked.quest && <TodaysQuestCard quest={quest} />}
 
             {firstVisit.unlocked.wotd && wotd && <WordOfDayCard wotd={wotd} />}
-
-            {firstVisit.unlocked.levelMap && promo && (
-              <LevelMap current={cefr} checks={promoChecks} eligible={elig.eligible} overallPct={overallPct} />
-            )}
 
             {firstVisit.unlocked.heatmap && (
               <div className="mb-[30px]">
@@ -569,14 +554,9 @@ export default async function DashboardPage() {
           </Link>
           )}
 
-          {/* curriculum map: A1 → C2 stepper + level-up checks */}
-          {promo && (
-            <LevelMap current={cefr} checks={promoChecks} eligible={elig.eligible} overallPct={overallPct} />
-          )}
-
           {/* Learning progress moved to My account (/profile) 2026-08-30 — the
               Garden answers "what do I do today", the account page "how am I
-              doing". skillProgress below stays: LevelMap needs overallPct. */}
+              doing". skillProgress below stays: it feeds progressSessions. */}
 
           {/* study garden — the year grass, moved in from My growth; its
               pills absorb the old This week / month challenge widgets */}

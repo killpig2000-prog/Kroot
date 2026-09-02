@@ -2,6 +2,9 @@ import { getFormatter, getTranslations } from "next-intl/server";
 import { redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
+import LevelMap from "@/components/dashboard/LevelMap";
+import { computeEligibility } from "@/lib/promotion-server";
+import { testForGrade } from "@/lib/promotion-test";
 import ReminderSettings from "@/components/profile/ReminderSettings";
 import HeadlineKpis, { type Headline } from "@/components/profile/HeadlineKpis";
 import SkillAccuracy, { type SkillScore, type SkillPending } from "@/components/profile/SkillAccuracy";
@@ -53,6 +56,7 @@ function isoDay(d: Date): string {
 export default async function ProfilePage() {
   const t = await getTranslations("ui.account");
   const tn = await getTranslations("nav");
+  const tDash = await getTranslations("dashboard");
   const format = await getFormatter();
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
@@ -154,6 +158,26 @@ export default async function ProfilePage() {
     writingKeys: writingRows.map((r) => r.prompt_key),
     speakingKeys: speakingRows.map((r) => r.prompt_key),
   });
+
+  // "Your path" — moved here from the Garden 2026-09-03 so a learner who's
+  // eligible but not testing yet isn't nagged by it every dashboard visit.
+  const promo = testForGrade(level);
+  const elig = await computeEligibility(supabase, user.id, level);
+  const promoChecks = [
+    {
+      label: tDash("levelMap.checkWordsHeld"),
+      ok: elig.wordsMastered >= elig.wordsRequired,
+      value: `${elig.wordsMastered}/${elig.wordsRequired}`,
+    },
+    {
+      label: tDash("levelMap.checkReading"),
+      ok: elig.readingDone >= elig.readingRequired,
+      value: `${elig.readingDone}/${elig.readingRequired}`,
+    },
+  ];
+  const overallPct = Math.round(
+    Object.values(skillProgress).reduce((sum, p) => sum + p.percent, 0) / Object.keys(skillProgress).length
+  );
 
   const UNITS: Record<string, string> = {
     grammar: t("unitLessons"),
@@ -371,6 +395,11 @@ export default async function ProfilePage() {
                 wordCount={vocabRows.length}
                 activeDays={activeDays}
               />
+            )}
+
+            {/* 1b. curriculum map: A1 → C2 stepper + level-up checks */}
+            {promo && (
+              <LevelMap current={level} checks={promoChecks} eligible={elig.eligible} overallPct={overallPct} />
             )}
 
             {/* 2. accuracy per skill — the point of the page */}
