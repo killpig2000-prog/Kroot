@@ -1,0 +1,14 @@
+{
+  "nav": "Grammar Guide",
+  "startLearningShort": "Start learning",
+  "startLearning": "Start learning — free",
+  "hubTitle": "Korean Grammar Guide",
+  "hubIntro": "65 grammar points explained with real example sentences, ordered by how essential each one is — not by difficulty tier — so you always know what to learn next.",
+  "lessonCount": "{count, plural, =1 {1 lesson} other {# lessons}}",
+  "chapterN": "Chapter {n}",
+  "backToGuide": "Grammar Guide",
+  "moreInChapter": "More in this chapter",
+  "learnForReal": "Practice {title} for real — not just read about it",
+  "learnDescription": "Kroot teaches this with interactive practice and a quiz — free, at your own pace.",
+  "quizLocked": "Take the quiz — free"
+}

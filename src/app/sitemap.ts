@@ -4,6 +4,7 @@ import { LEVEL_ORDER } from "@/lib/tree";
 import { languageAlternates, localeUrl } from "@/lib/seo";
 import { PUBLIC_VOCAB_WORDS } from "@/lib/vocab-slugs";
 import { PUBLIC_SLANG } from "@/lib/slang-slugs";
+import { GRAMMAR_LESSONS } from "@/lib/grammar";
 
 // Every public page, plus the hreflang cluster for the ones that are really
 // translated.
@@ -32,6 +33,12 @@ const PUBLIC_PAGES: PublicPage[] = [
   { path: "/", changeFrequency: "weekly", priority: 1, localized: true },
   { path: "/words", changeFrequency: "weekly", priority: 0.9 },
   { path: "/slang", changeFrequency: "weekly", priority: 0.8 },
+  { path: "/korean-grammar", changeFrequency: "weekly", priority: 0.9 },
+  ...GRAMMAR_LESSONS.map((lesson) => ({
+    path: `/korean-grammar/${lesson.key}`,
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  })),
   ...LEVEL_ORDER.map((level) => ({
     path: `/words/level/${level.toLowerCase()}`,
     changeFrequency: "weekly" as const,

@@ -1,0 +1,14 @@
+{
+  "nav": "Guía de gramática",
+  "startLearningShort": "Empieza a aprender",
+  "startLearning": "Empieza a aprender — gratis",
+  "hubTitle": "Guía de gramática coreana",
+  "hubIntro": "65 puntos de gramática explicados con ejemplos reales, ordenados según lo esencial que es cada uno — no por dificultad — para que siempre sepas qué aprender después.",
+  "lessonCount": "{count, plural, =1 {1 lección} other {# lecciones}}",
+  "chapterN": "Capítulo {n}",
+  "backToGuide": "Guía de gramática",
+  "moreInChapter": "Más en este capítulo",
+  "learnForReal": "Practica {title} de verdad — no solo lo leas",
+  "learnDescription": "Kroot enseña esto con práctica interactiva y un quiz — gratis, a tu ritmo.",
+  "quizLocked": "Haz el quiz — gratis"
+}

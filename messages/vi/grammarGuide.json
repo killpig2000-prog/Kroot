@@ -1,0 +1,14 @@
+{
+  "nav": "Hướng dẫn ngữ pháp",
+  "startLearningShort": "Bắt đầu học",
+  "startLearning": "Bắt đầu học — miễn phí",
+  "hubTitle": "Hướng dẫn ngữ pháp tiếng Hàn",
+  "hubIntro": "65 điểm ngữ pháp được giải thích kèm câu ví dụ thực tế, sắp xếp theo mức độ cần thiết chứ không theo độ khó — để bạn luôn biết nên học gì tiếp theo.",
+  "lessonCount": "{count, plural, =1 {1 bài học} other {# bài học}}",
+  "chapterN": "Chương {n}",
+  "backToGuide": "Hướng dẫn ngữ pháp",
+  "moreInChapter": "Thêm trong chương này",
+  "learnForReal": "Luyện tập {title} thật sự — không chỉ đọc",
+  "learnDescription": "Kroot dạy điều này qua luyện tập tương tác và một bài kiểm tra — miễn phí, theo nhịp độ của bạn.",
+  "quizLocked": "Làm bài kiểm tra — miễn phí"
+}
