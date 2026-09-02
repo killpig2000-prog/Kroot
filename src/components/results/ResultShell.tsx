@@ -1,4 +1,6 @@
-import type { ReactNode } from "react";
+"use client";
+
+import { useEffect, useState, type ReactNode } from "react";
 import { useTranslations } from "next-intl";
 import type { ProgressResult } from "@/lib/activity";
 
@@ -22,9 +24,25 @@ export function ResultRing({
   label: string;
   color: string;
 }) {
-  const offset = CIRC - (Math.max(0, Math.min(100, pct)) / 100) * CIRC;
+  const clamped = Math.max(0, Math.min(100, pct));
+  // Committing 0% on the first paint, then the real value a frame later, is
+  // what makes the CSS transition below actually animate on mount — setting
+  // the final offset straight away leaves the browser no "before" value to
+  // interpolate from, so the ring used to just appear already full.
+  const [display, setDisplay] = useState(0);
+  useEffect(() => {
+    let raf2 = 0;
+    const raf1 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(() => setDisplay(clamped));
+    });
+    return () => {
+      cancelAnimationFrame(raf1);
+      cancelAnimationFrame(raf2);
+    };
+  }, [clamped]);
+  const offset = CIRC - (display / 100) * CIRC;
   return (
-    <div className="relative w-[104px] h-[104px] flex-none mx-auto sm:mx-0">
+    <div className="relative w-[136px] h-[136px] flex-none mx-auto sm:mx-0">
       <svg viewBox="0 0 120 120" className="w-full h-full -rotate-90" aria-hidden="true">
         <circle cx="60" cy="60" r="52" fill="none" stroke="var(--color-line)" strokeWidth="10" />
         <circle
@@ -37,15 +55,15 @@ export function ResultRing({
           strokeLinecap="round"
           strokeDasharray={CIRC}
           strokeDashoffset={offset}
-          style={{ transition: "stroke-dashoffset 1s cubic-bezier(.2,.7,.2,1)" }}
+          style={{ transition: "stroke-dashoffset 1.1s cubic-bezier(.2,.7,.2,1)" }}
         />
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-        <div className="font-bold text-[25px] leading-none tracking-[-0.02em] tabular-nums">
+        <div className="font-bold text-[32px] leading-none tracking-[-0.02em] tabular-nums">
           {center}
-          {unit && <small className="text-[11px] text-faint font-semibold">{unit}</small>}
+          {unit && <small className="text-[13px] text-faint font-semibold">{unit}</small>}
         </div>
-        <div className="text-[10px] font-bold uppercase tracking-[.08em] text-faint mt-1">{label}</div>
+        <div className="text-[11px] font-bold uppercase tracking-[.08em] text-faint mt-1.5">{label}</div>
       </div>
     </div>
   );
