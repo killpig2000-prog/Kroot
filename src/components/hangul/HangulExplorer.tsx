@@ -88,7 +88,7 @@ function JamoGrid({ items }: { items: Jamo[] }) {
         >
           <div className="flex items-center gap-3 min-w-0 flex-1">
             <span
-              className="kr flex-none w-12 h-12 rounded-xl bg-cream border flex items-center justify-center text-[26px]"
+              className="kr flex-none w-20 h-20 rounded-xl bg-cream border flex items-center justify-center text-[52px]"
               style={{ borderColor: BRD, color: GREEN }}
             >
               {selected.char}
