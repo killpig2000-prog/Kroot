@@ -1,0 +1,12 @@
+{
+  "startLearningShort": "学習を始める",
+  "startLearning": "無料で学習を始める",
+  "hubTitle": "韓国語リーディング練習",
+  "hubIntro": "英訳付きの本格的な韓国語の文章と理解度チェック問題を、CEFRレベル別に用意。次に何を読めばいいかいつでもわかります。",
+  "levelN": "レベル{level}",
+  "passageCount": "{count}件の文章",
+  "comprehensionQuestions": "理解度チェック問題",
+  "learnForReal": "進捗を記録しながら本格的に読解練習",
+  "learnDescription": "Krootでは読んだ内容を記録し、行ごとに訳を表示し、理解度を採点します — 無料で、自分のペースで。",
+  "moreAtLevel": "レベル{level}の他の文章"
+}

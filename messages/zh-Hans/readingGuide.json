@@ -1,0 +1,12 @@
+{
+  "startLearningShort": "开始学习",
+  "startLearning": "免费开始学习",
+  "hubTitle": "韩语阅读练习",
+  "hubIntro": "真实的韩语文章配英文翻译和理解问题，按 CEFR 等级分类，让你随时知道接下来该读什么。",
+  "levelN": "等级 {level}",
+  "passageCount": "{count} 篇文章",
+  "comprehensionQuestions": "理解问题",
+  "learnForReal": "真正练习阅读 — 并记录进度",
+  "learnDescription": "Kroot 会记录你读过的内容，逐行显示翻译，并为你的理解程度打分 — 免费，按你自己的节奏。",
+  "moreAtLevel": "更多 {level} 等级文章"
+}

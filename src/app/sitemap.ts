@@ -5,6 +5,9 @@ import { languageAlternates, localeUrl } from "@/lib/seo";
 import { PUBLIC_VOCAB_WORDS } from "@/lib/vocab-slugs";
 import { PUBLIC_SLANG } from "@/lib/slang-slugs";
 import { GRAMMAR_LESSONS } from "@/lib/grammar";
+import { PUBLIC_READING_PASSAGES } from "@/lib/reading-slugs";
+import { SITUATIONS } from "@/lib/listening";
+import { DIALOGUES } from "@/lib/listening-dialogues";
 
 // Every public page, plus the hreflang cluster for the ones that are really
 // translated.
@@ -39,6 +42,29 @@ const PUBLIC_PAGES: PublicPage[] = [
     changeFrequency: "monthly" as const,
     priority: 0.7,
   })),
+  { path: "/korean-reading", changeFrequency: "weekly", priority: 0.9 },
+  ...LEVEL_ORDER.map((level) => ({
+    path: `/korean-reading/level/${level.toLowerCase()}`,
+    changeFrequency: "weekly" as const,
+    priority: 0.8,
+  })),
+  ...PUBLIC_READING_PASSAGES.map((passage) => ({
+    path: `/korean-reading/${passage.slug}`,
+    changeFrequency: "monthly" as const,
+    priority: 0.6,
+  })),
+  { path: "/korean-listening", changeFrequency: "weekly", priority: 0.9 },
+  ...SITUATIONS.map((situation) => ({
+    path: `/korean-listening/${situation.key}`,
+    changeFrequency: "weekly" as const,
+    priority: 0.8,
+  })),
+  ...DIALOGUES.map((dialogue) => ({
+    path: `/korean-listening/${dialogue.situationKey}/${dialogue.id}`,
+    changeFrequency: "monthly" as const,
+    priority: 0.6,
+  })),
+  { path: "/korean-hangul", changeFrequency: "monthly", priority: 0.8 },
   ...LEVEL_ORDER.map((level) => ({
     path: `/words/level/${level.toLowerCase()}`,
     changeFrequency: "weekly" as const,

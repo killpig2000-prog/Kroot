@@ -1,0 +1,11 @@
+{
+  "startLearningShort": "Empieza a aprender",
+  "startLearning": "Empieza a aprender — gratis",
+  "hubTitle": "Práctica de comprensión auditiva en coreano",
+  "hubIntro": "Diálogos reales en coreano con transcripción y traducción al inglés, organizados por situación cotidiana para que siempre sepas qué escuchar después.",
+  "dialogueCount": "{count, plural, =1 {1 diálogo} other {# diálogos}}",
+  "levelN": "Nivel {level}",
+  "learnForReal": "Practica escucha de verdad — con audio y un quiz",
+  "learnDescriptionListening": "Kroot reproduce este diálogo en voz alta y evalúa tu comprensión con un quiz — gratis, a tu ritmo.",
+  "moreInSituation": "Más diálogos de {situation}"
+}

@@ -1,0 +1,11 @@
+{
+  "startLearningShort": "Bắt đầu học",
+  "startLearning": "Bắt đầu học — miễn phí",
+  "hubTitle": "Luyện nghe tiếng Hàn",
+  "hubIntro": "Các đoạn hội thoại tiếng Hàn thực tế kèm lời thoại và bản dịch tiếng Anh, sắp xếp theo tình huống hàng ngày để bạn luôn biết nên nghe gì tiếp theo.",
+  "dialogueCount": "{count, plural, =1 {1 hội thoại} other {# hội thoại}}",
+  "levelN": "Trình độ {level}",
+  "learnForReal": "Luyện nghe thật sự — với âm thanh và bài kiểm tra",
+  "learnDescriptionListening": "Kroot phát đoạn hội thoại này bằng âm thanh và chấm điểm khả năng nghe hiểu của bạn — miễn phí, theo nhịp độ của bạn.",
+  "moreInSituation": "Thêm hội thoại {situation}"
+}

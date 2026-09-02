@@ -1,0 +1,12 @@
+{
+  "startLearningShort": "Empieza a aprender",
+  "startLearning": "Empieza a aprender — gratis",
+  "hubTitle": "Práctica de lectura en coreano",
+  "hubIntro": "Textos reales en coreano con traducción al inglés y preguntas de comprensión, organizados por nivel CEFR para que siempre sepas qué leer después.",
+  "levelN": "Nivel {level}",
+  "passageCount": "{count, plural, =1 {1 texto} other {# textos}}",
+  "comprehensionQuestions": "Preguntas de comprensión",
+  "learnForReal": "Practica lectura de verdad — con progreso guardado",
+  "learnDescription": "Kroot guarda lo que has leído, revela traducciones línea por línea y evalúa tu comprensión — gratis, a tu ritmo.",
+  "moreAtLevel": "Más en el nivel {level}"
+}

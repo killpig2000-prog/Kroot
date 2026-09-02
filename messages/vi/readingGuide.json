@@ -1,0 +1,12 @@
+{
+  "startLearningShort": "Bắt đầu học",
+  "startLearning": "Bắt đầu học — miễn phí",
+  "hubTitle": "Luyện đọc tiếng Hàn",
+  "hubIntro": "Các đoạn văn tiếng Hàn thực tế kèm bản dịch tiếng Anh và câu hỏi hiểu bài, sắp xếp theo trình độ CEFR để bạn luôn biết nên đọc gì tiếp theo.",
+  "levelN": "Trình độ {level}",
+  "passageCount": "{count, plural, =1 {1 đoạn văn} other {# đoạn văn}}",
+  "comprehensionQuestions": "Câu hỏi hiểu bài",
+  "learnForReal": "Luyện đọc thật sự — với tiến trình được lưu lại",
+  "learnDescription": "Kroot lưu lại những gì bạn đã đọc, hiện bản dịch từng dòng và chấm điểm khả năng hiểu bài — miễn phí, theo nhịp độ của bạn.",
+  "moreAtLevel": "Thêm bài ở trình độ {level}"
+}
