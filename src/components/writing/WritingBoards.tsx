@@ -10,7 +10,9 @@ import { wrongTilePositions, type Board, type Tile } from "@/lib/writing-builder
 
 const TILE =
   "kr text-[15.5px] font-medium px-3.5 py-2 rounded-[12px] border bg-cream text-charcoal border-line shadow-[0_1px_0_var(--c-line),0_3px_6px_rgba(0,0,0,.06)] transition-[transform,border-color,opacity] hover:border-success hover:-translate-y-px active:scale-95 focus-visible:outline-2 focus-visible:outline-success focus-visible:outline-offset-2 select-none leading-[1.3]";
-const TILE_USED = "opacity-20 pointer-events-none shadow-none";
+const TILE_USED = "opacity-35 border-dashed";
+/** Legacy (checked-per-question) mode only — see the TileBoard doc comment. */
+const TILE_USED_LOCKED = "opacity-20 pointer-events-none shadow-none";
 const ZONE =
   "min-h-[78px] rounded-[16px] p-2.5 flex flex-wrap gap-2 content-start mb-3 bg-warm border-[1.5px] border-dashed border-dash transition-colors";
 const BTN_CHECK =
@@ -50,12 +52,14 @@ function useHoldToSpeak() {
 function TileButton({
   tile,
   used,
+  usedClass,
   wrong,
   onTap,
   hold,
 }: {
   tile: Tile;
   used?: boolean;
+  usedClass?: string;
   wrong?: boolean;
   onTap: () => void;
   hold: ReturnType<typeof useHoldToSpeak>;
@@ -63,7 +67,7 @@ function TileButton({
   return (
     <button
       type="button"
-      className={`${TILE} ${used ? TILE_USED : ""} ${
+      className={`${TILE} ${used ? (usedClass ?? TILE_USED) : ""} ${
         wrong ? "border-danger bg-danger-bg shadow-[0_2px_0_var(--c-danger)]" : ""
       }`}
       onPointerDown={() => hold.start(tile.text)}
@@ -91,23 +95,40 @@ export function TileBoard({
 }: {
   board: Board;
   picked: string[];
-  /** null = not checked yet; true/false = last check result. */
-  checked: boolean | null;
   onChange: (picked: string[]) => void;
-  onCheck: () => void;
   onShuffle: () => void;
+  /**
+   * Omit both `checked` and `onCheck` for the normal Writing flow: every tile
+   * is a plain switch (tap either copy to add or take it back) and checking
+   * happens once, for the whole chapter, after it's submitted.
+   *
+   * The level-test placement quiz is the one caller that still checks per
+   * question (an adaptive test needs the right/wrong verdict immediately) —
+   * passing both props opts back into that legacy locked/highlighted mode.
+   */
+  checked?: boolean | null;
+  onCheck?: () => void;
 }) {
   const t = useTranslations("writing.board");
   const hold = useHoldToSpeak();
   const byId = new Map(board.tiles.map((t) => [t.id, t]));
+  const legacyCheck = onCheck !== undefined;
 
-  // Warm the audio cache for every tile plus the full answer, so a hold-to-
-  // speak or the post-check "hear it" plays without a synthesis pause.
+  // Warm the audio cache for every tile plus the full answer, so hold-to-
+  // speak plays without a synthesis pause.
   useEffect(() => {
     prefetchKorean([...board.tiles.map((tile) => tile.text), board.answer.join(" ")]);
   }, [board]);
-  const wrong = checked === false ? new Set(wrongTilePositions(board, picked)) : new Set<number>();
-  const zoneState = checked === true ? "border-solid border-success-line bg-success-bg" : checked === false ? "border-solid border-danger bg-danger-bg" : "";
+
+  const wrong = legacyCheck && checked === false ? new Set(wrongTilePositions(board, picked)) : new Set<number>();
+  const zoneState = !legacyCheck
+    ? ""
+    : checked === true
+      ? "border-solid border-success-line bg-success-bg"
+      : checked === false
+        ? "border-solid border-danger bg-danger-bg"
+        : "";
+  const locked = legacyCheck && checked === true;
 
   return (
     <div>
@@ -123,51 +144,60 @@ export function TileBoard({
               wrong={wrong.has(i)}
               hold={hold}
               onTap={() => {
-                if (checked === true) return;
+                if (locked) return;
                 onChange(picked.filter((x) => x !== id));
               }}
             />
           );
         })}
       </div>
+      {/* Outside legacy mode, every word is a switch: tap to place it, tap its
+          dimmed twin here (or tap it again in the zone above) to take it back
+          — checking happens once the whole chapter is turned in. */}
       <div className="flex flex-wrap gap-2 mb-3.5">
-        {board.tiles.map((tile) => (
-          <TileButton
-            key={tile.id}
-            tile={tile}
-            used={picked.includes(tile.id)}
-            hold={hold}
-            onTap={() => {
-              if (checked === true) return;
-              onChange([...picked, tile.id]);
-            }}
-          />
-        ))}
+        {board.tiles.map((tile) => {
+          const used = picked.includes(tile.id);
+          return (
+            <TileButton
+              key={tile.id}
+              tile={tile}
+              used={used}
+              usedClass={legacyCheck ? TILE_USED_LOCKED : TILE_USED}
+              hold={hold}
+              onTap={() => {
+                if (legacyCheck) {
+                  if (locked || used) return;
+                  onChange([...picked, tile.id]);
+                  return;
+                }
+                onChange(used ? picked.filter((x) => x !== tile.id) : [...picked, tile.id]);
+              }}
+            />
+          );
+        })}
       </div>
       <div className="flex items-center justify-between gap-3 flex-wrap">
-        {checked === true ? (
-          <span className="text-[13.5px] font-bold text-success flex items-center gap-2">
-            {t("correct")}
-            <button type="button" className={BTN_GHOST} onClick={() => speakKorean(board.answer.join(" "), { rate: 0.9 })}>
-              {t("hearIt")}
+        {legacyCheck ? (
+          checked === true ? (
+            <span className="text-[13.5px] font-bold text-success flex items-center gap-2">
+              {t("correct")}
+              <button type="button" className={BTN_GHOST} onClick={() => speakKorean(board.answer.join(" "), { rate: 0.9 })}>
+                {t("hearIt")}
+              </button>
+            </span>
+          ) : (
+            <button type="button" className={BTN_CHECK} onClick={onCheck} disabled={picked.length === 0}>
+              {checked === false ? t("tryAgain") : t("check")}
             </button>
-          </span>
+          )
         ) : (
-          <button type="button" className={BTN_CHECK} onClick={onCheck} disabled={picked.length === 0}>
-            {checked === false ? t("tryAgain") : t("check")}
+          <span className="text-[12px] text-faint">{t("holdWord")}</span>
+        )}
+        {(!legacyCheck || checked !== true) && (
+          <button type="button" className={BTN_GHOST} onClick={onShuffle}>
+            {t("shuffle")}
           </button>
         )}
-        <span className="text-[12px] text-faint">
-          {t("holdWord")}
-          {checked !== true && (
-            <>
-              {" · "}
-              <button type="button" className={BTN_GHOST} onClick={onShuffle}>
-                {t("shuffle")}
-              </button>
-            </>
-          )}
-        </span>
       </div>
     </div>
   );

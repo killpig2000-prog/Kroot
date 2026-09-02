@@ -11,22 +11,22 @@ const BTN_INK =
   "rounded-[10px] px-5 py-[11px] text-sm font-bold text-white bg-success hover:bg-success-deep transition-colors disabled:bg-line disabled:text-faint";
 const EYEBROW = "text-[11px] font-extrabold tracking-[.1em] uppercase text-success mb-1.5";
 
-/** Per-question interaction state, owned by WritingSession. */
+/** Per-question interaction state, owned by WritingSession. Checking now
+ * happens once, for every question, after the chapter is submitted — not
+ * per question — so there is nothing here to record but the picks. */
 export type Entry = {
-  /** Reseed counter — bumps on "shuffle" so a retry gets a fresh board. */
+  /** Reseed counter — bumps on "shuffle" so a fresh attempt gets a fresh board. */
   attempt: number;
   picked: string[];
-  checked: boolean | null;
-  /** How many times Check was pressed. */
-  checks: number;
 };
 
 export function emptyEntry(): Entry {
-  return { attempt: 0, picked: [], checked: null, checks: 0 };
+  return { attempt: 0, picked: [] };
 }
 
-export function entryDone(entry: Entry): boolean {
-  return entry.checked === true;
+/** Every slot filled — not whether it's right, only whether there's an answer to check. */
+export function entryDone(entry: Entry, board: Board): boolean {
+  return entry.picked.length === board.answer.length;
 }
 
 export default function WritePhase({
@@ -35,7 +35,6 @@ export default function WritePhase({
   entries,
   boards,
   update,
-  onCheck,
   onShuffle,
   submitting,
   ready,
@@ -47,7 +46,6 @@ export default function WritePhase({
   entries: Entry[];
   boards: Board[];
   update: (index: number, patch: Partial<Entry>) => void;
-  onCheck: (index: number) => void;
   onShuffle: (index: number) => void;
   submitting: boolean;
   ready: boolean;
@@ -126,9 +124,7 @@ export default function WritePhase({
                 <TileBoard
                   board={board}
                   picked={entry.picked}
-                  checked={entry.checked}
-                  onChange={(picked) => update(i, { picked, checked: null })}
-                  onCheck={() => onCheck(i)}
+                  onChange={(picked) => update(i, { picked })}
                   onShuffle={() => onShuffle(i)}
                 />
               </div>
@@ -142,7 +138,7 @@ export default function WritePhase({
         <div className="flex items-center gap-2.5 text-[13px] text-muted">
           <span className="flex gap-1.5">
             {prompts.map((p, i) => (
-              <i key={p.key} className={`w-2.5 h-2.5 rounded-full ${entryDone(entries[i]) ? "bg-success" : "bg-line"}`} />
+              <i key={p.key} className={`w-2.5 h-2.5 rounded-full ${entryDone(entries[i], boards[i]) ? "bg-success" : "bg-line"}`} />
             ))}
           </span>
           {t("phase.doneCount", { done: answeredCount, total: prompts.length })}

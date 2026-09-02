@@ -9,7 +9,15 @@ import { createClient } from "@/lib/supabase/client";
 import { recordCompletion, type ProgressResult } from "@/lib/activity";
 import { track } from "@/lib/analytics";
 import { MINUTES_PER_CHAPTER, type Prompt } from "@/lib/writing";
-import { buildBoard, checkTiles, hashString, localScore, tilesText, type Board } from "@/lib/writing-builder";
+import {
+  buildBoard,
+  checkTiles,
+  hashString,
+  tileMatchScore,
+  tilesText,
+  wrongTilePositions,
+  type Board,
+} from "@/lib/writing-builder";
 import type { CefrLevel } from "@/lib/tree";
 import WritePhase, { emptyEntry, entryDone, type Entry } from "@/components/writing/WritePhase";
 import CompareResult, { type Answer } from "@/components/writing/CompareResult";
@@ -68,38 +76,32 @@ export default function WritingSession({
     setEntries((prev) => prev.map((e, i) => (i === index ? { ...e, ...patch } : e)));
   }
 
-  function check(index: number) {
-    const board = boards[index];
-    const entry = entries[index];
-    const ok = checkTiles(board, entry.picked);
-    const checks = entry.checks + 1;
-    update(index, { checked: ok, checks });
-    track("activity_completed", { kind: "writing_check", right: ok, checks });
-  }
-
   function shuffle(index: number) {
-    update(index, { attempt: entries[index].attempt + 1, picked: [], checked: null });
+    update(index, { attempt: entries[index].attempt + 1, picked: [] });
   }
 
-  const answeredCount = entries.filter((e) => entryDone(e)).length;
+  const answeredCount = entries.filter((e, i) => entryDone(e, boards[i])).length;
   const ready = answeredCount === prompts.length;
 
   async function submit() {
     if (!ready) return;
     setSubmitting(true);
 
+    // Checking happens once, here, for every question at once — not per
+    // question while writing.
     const answers: Answer[] = prompts.map((_, i) => ({
       index: i,
-      score: localScore(entries[i].checks),
+      correct: checkTiles(boards[i], entries[i].picked),
+      score: tileMatchScore(boards[i], entries[i].picked),
       text: tilesText(boards[i], entries[i].picked),
-      checks: entries[i].checks,
+      offCount: wrongTilePositions(boards[i], entries[i].picked).length,
     }));
     const score = Math.round(answers.reduce((s, a) => s + a.score, 0) / answers.length);
 
     track("writing_chapter_submitted", {
       level,
       questions: prompts.length,
-      retries: entries.reduce((s, e) => s + Math.max(0, e.checks - 1), 0),
+      correct: answers.filter((a) => a.correct).length,
     });
 
     const completedAt = new Date().toISOString();
@@ -164,7 +166,6 @@ export default function WritingSession({
         entries={entries}
         boards={boards}
         update={update}
-        onCheck={check}
         onShuffle={shuffle}
         submitting={submitting}
         ready={ready}

@@ -121,3 +121,11 @@ export function tilesText(board: Board, pickedIds: string[]): string {
 export function localScore(attempts: number): number {
   return Math.max(60, 100 - (Math.max(1, attempts) - 1) * 15);
 }
+
+/** Share of tile positions that match the answer, 0-100 — checking now
+ * happens once, after the whole chapter is submitted, not per question. */
+export function tileMatchScore(board: Board, pickedIds: string[]): number {
+  if (pickedIds.length === 0) return 0;
+  const wrong = wrongTilePositions(board, pickedIds).length;
+  return Math.round(((pickedIds.length - wrong) / board.answer.length) * 100);
+}

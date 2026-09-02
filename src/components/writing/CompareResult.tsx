@@ -13,9 +13,8 @@ const BTN_LINE =
   "rounded-[10px] px-5 py-[11px] text-sm font-bold text-charcoal bg-cream border border-line hover:bg-warm transition-colors disabled:opacity-60";
 const COLOR = "#C47A25";
 
-/** One built sentence's result — always exact (tiles only check order), so
- * there's nothing to "correct"; only how many tries it took. */
-export type Answer = { index: number; score: number; text: string; checks: number };
+/** One built sentence's result, checked once here on the result page. */
+export type Answer = { index: number; score: number; text: string; correct: boolean; offCount: number };
 
 export default function CompareResult({
   prompts,
@@ -41,8 +40,8 @@ export default function CompareResult({
   const t = useTranslations("writing.result");
   const tn = useTranslations("nav");
   const tu = useTranslations("ui");
-  const firstTryCount = answers.filter((a) => a.checks <= 1).length;
-  const practicedCount = answers.length - firstTryCount;
+  const correctCount = answers.filter((a) => a.correct).length;
+  const missedCount = answers.length - correctCount;
   const headline = score >= 90 ? t("headline90") : score >= 75 ? t("headline80") : t("headline60");
 
   return (
@@ -54,8 +53,8 @@ export default function CompareResult({
       headline={headline}
       tags={
         <>
-          {firstTryCount > 0 && <ResultTag tone="good">{t("natural", { n: firstTryCount })}</ResultTag>}
-          {practicedCount > 0 && <ResultTag tone="warn">{t("smallFixes", { n: practicedCount })}</ResultTag>}
+          {correctCount > 0 && <ResultTag tone="good">{t("natural", { n: correctCount })}</ResultTag>}
+          {missedCount > 0 && <ResultTag tone="warn">{t("smallFixes", { n: missedCount })}</ResultTag>}
           <ResultTag>{level}</ResultTag>
         </>
       }
@@ -85,7 +84,7 @@ export default function CompareResult({
       <div className="flex flex-col gap-3">
         {answers.map((a) => {
           const prompt = prompts[a.index];
-          const firstTry = a.checks <= 1;
+          const firstTry = a.correct;
           return (
             <div
               key={a.index}
@@ -101,7 +100,7 @@ export default function CompareResult({
                   <span className="flex-none w-5 h-5 rounded-[6px] bg-[var(--tint-amber)] text-amber text-[11px] font-extrabold flex items-center justify-center">
                     i
                   </span>
-                  <span>{firstTry ? t("builtFirstTry") : t("builtAfterTries", { n: a.checks })}</span>
+                  <span>{firstTry ? t("builtFirstTry") : t("builtAfterTries", { n: a.offCount })}</span>
                 </div>
               </div>
 
@@ -129,7 +128,7 @@ export default function CompareResult({
       <div className="rounded-[14px] p-4 border bg-success-bg border-success-line">
         <h3 className={`${LABEL} text-success-deep mb-2.5`}>{t("focusTitle")}</h3>
         <p className="text-[17px] font-extrabold tracking-[-0.02em] leading-[1.35] text-success-deep" style={{ textWrap: "balance" }}>
-          {practicedCount === 0 ? t("fallbackFocusPerfect") : t("fallbackFocusRetries")}
+          {missedCount === 0 ? t("fallbackFocusPerfect") : t("fallbackFocusRetries")}
         </p>
         {prompts[0]?.example_kr && (
           <div className="mt-3 px-3.5 py-3 bg-cream border border-success-line rounded-[10px]">
