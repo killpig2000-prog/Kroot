@@ -3,6 +3,7 @@ import type { CefrLevel } from "@/lib/tree";
 export type ReadingQuestion = {
   question_en: string;
   question_es?: string;
+  question_ja?: string;
   options: string[];
   answerIndex: number;
 };
@@ -16,8 +17,10 @@ export type RawPassage = {
   title_kr: string;
   title_en: string;
   title_es?: string;
+  title_ja?: string;
   body_kr: string;
   body_en: string;
   body_es?: string;
+  body_ja?: string;
   questions: ReadingQuestion[];
 };
