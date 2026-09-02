@@ -1,19 +1,16 @@
 import { getTranslations } from "next-intl/server";
-import LevelTabs from "@/components/ui/LevelTabs";
 import { Link, redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
-import { GRAMMAR_GROUPS, GRAMMAR_LESSONS, lessonsByLevel, getLocalizedLesson, getLocalizedGrammarGroup } from "@/lib/grammar";
-import { isDifficultyUnlocked } from "@/lib/level";
-import { LEVEL_ORDER, isCefrLevel, type CefrLevel } from "@/lib/tree";
+import { GRAMMAR_LESSONS, GRAMMAR_CHAPTERS, lessonsByChapter, getLocalizedLesson } from "@/lib/grammar";
 
 export default async function GrammarPage({
   params,
   searchParams,
 }: {
   params: Promise<{ locale: string }>;
-  searchParams: Promise<{ level?: string; group?: string }>;
+  searchParams: Promise<{ chapter?: string }>;
 }) {
   const tn = await getTranslations("nav");
   const t = await getTranslations("grammarUi");
@@ -29,29 +26,27 @@ export default async function GrammarPage({
     .single();
 
   const { locale } = await params;
-  const myLevel = (profile?.current_level ?? "A1") as CefrLevel;
   const sp = await searchParams;
-  const requested = isCefrLevel(sp.level) ? sp.level : myLevel;
-  const level = isDifficultyUnlocked(requested, myLevel) ? requested : myLevel;
 
-  // "Start here" / "Next steps" sit as pills in the same row as the CEFR
-  // levels — a ?group= param picks one instead of a level, so there's one
-  // lesson list on screen at a time rather than three stacked sections.
-  const groups = await Promise.all(
-    GRAMMAR_GROUPS.map(async (g) => (await getLocalizedGrammarGroup(g.key, locale)) ?? g)
+  const { data: progress } = await supabase
+    .from("grammar_progress")
+    .select("lesson_key")
+    .eq("user_id", user.id)
+    .not("completed_at", "is", null);
+  const completedKeys = new Set((progress ?? []).map((p) => p.lesson_key));
+
+  const chapterDone = new Map(
+    GRAMMAR_CHAPTERS.map((c) => {
+      const keys = lessonsByChapter(c.number).map((l) => l.key);
+      return [c.number, { done: keys.filter((k) => completedKeys.has(k)).length, total: keys.length }];
+    })
   );
-  const selectedGroup = sp.group ? groups.find((g) => g.key === sp.group) ?? null : null;
-  const groupLessons = selectedGroup
-    ? (
-        await Promise.all(
-          selectedGroup.lessonKeys.map((k) => getLocalizedLesson(k, locale))
-        )
-      ).filter((l): l is NonNullable<typeof l> => Boolean(l))
-    : [];
-  const levelLessons = (
-    await Promise.all(lessonsByLevel(level).map((l) => getLocalizedLesson(l.key, locale)))
+  const requested = Number(sp.chapter);
+  const chapter = GRAMMAR_CHAPTERS.some((c) => c.number === requested) ? requested : 1;
+
+  const shownLessons = (
+    await Promise.all(lessonsByChapter(chapter).map((l) => getLocalizedLesson(l.key, locale)))
   ).filter((l): l is NonNullable<typeof l> => Boolean(l));
-  const shownLessons = selectedGroup ? groupLessons : levelLessons;
 
   return (
     <div className="min-h-screen bg-warm text-charcoal">
@@ -78,69 +73,73 @@ export default async function GrammarPage({
             </span>
           </div>
 
-          {/* one tab row: curated groups, then every CEFR level — one lesson
-              list on screen at a time instead of three stacked sections. */}
+          {/* chapters, ordered by how essential the grammar is — not CEFR
+              grade. Every lesson lives in exactly one chapter. */}
           <section className="max-w-[820px] mb-8">
-            <div className="flex gap-2 mb-4 flex-wrap">
-              {groups.map((group) => (
-                <Link
-                  key={group.key}
-                  href={`/grammar?group=${group.key}`}
-                  className={`rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold transition-all border ${
-                    selectedGroup?.key === group.key
-                      ? "bg-[#423AC5] border-[#423AC5] text-white"
-                      : "bg-cream border-line text-muted hover:border-faint"
-                  }`}
-                >
-                  {group.title}
-                </Link>
-              ))}
-            </div>
-            <LevelTabs
-              className="mb-4"
-              levels={LEVEL_ORDER}
-              current={selectedGroup ? myLevel : level}
-              mine={myLevel}
-              unlocked={(lv) => isDifficultyUnlocked(lv, myLevel)}
-              href={(lv) => `/grammar?level=${lv}`}
-              accent="bg-[#423AC5] border-[#423AC5] text-white"
-            />
+            <nav aria-label={t("lessonCount", { n: GRAMMAR_LESSONS.length })} className="mb-4 -mx-1 px-1">
+              <div className="flex gap-2 overflow-x-auto pb-1.5">
+                {GRAMMAR_CHAPTERS.map((c) => {
+                  const current = c.number === chapter;
+                  const stat = chapterDone.get(c.number)!;
+                  return (
+                    <Link
+                      key={c.number}
+                      href={`/grammar?chapter=${c.number}`}
+                      aria-current={current ? "true" : undefined}
+                      className={`flex-none inline-flex items-center gap-1.5 rounded-full border px-3.5 py-[7px] text-[12.5px] font-bold whitespace-nowrap transition-colors ${
+                        current
+                          ? "bg-[#423AC5] border-[#423AC5] text-white"
+                          : "bg-cream border-line text-charcoal hover:border-faint"
+                      }`}
+                    >
+                      {stat.done === stat.total && !current && <span className="text-success text-[11px]">✓</span>}
+                      {c.number}. {c.title}
+                      <span className={`text-[10.5px] tabular-nums font-semibold ${current ? "text-white/80" : "text-faint"}`}>
+                        {stat.done}/{stat.total}
+                      </span>
+                    </Link>
+                  );
+                })}
+              </div>
+            </nav>
 
             <div className="flex items-center gap-2.5 mb-3">
-              {selectedGroup && (
-                <span className="text-[11.5px] font-semibold tracking-[.06em] uppercase text-faint">
-                  <span className="kr normal-case">{selectedGroup.titleKr}</span> · {selectedGroup.title}
-                </span>
-              )}
+              <span className="text-[11.5px] font-semibold tracking-[.06em] uppercase text-faint">
+                <span className="kr normal-case">{GRAMMAR_CHAPTERS[chapter - 1].krTitle}</span>
+              </span>
               <span className="h-px flex-1 bg-line" />
               <span className="text-[12px] text-faint">{t("lessonCount", { n: shownLessons.length })}</span>
             </div>
 
             <div className="border border-line rounded-[14px] overflow-hidden">
-              {shownLessons.map((lesson, i) => (
-                <Link
-                  key={lesson.key}
-                  href={`/grammar/${lesson.key}`}
-                  className={`flex items-center gap-3.5 px-[18px] py-[15px] bg-cream transition-all duration-150 hover:bg-[var(--tint-indigo)] group ${
-                    i > 0 ? "border-t border-line" : ""
-                  }`}
-                >
-                  <span className="flex-none w-8 h-8 rounded-[10px] bg-warm border border-line flex items-center justify-center text-[12.5px] font-bold text-muted transition-all group-hover:bg-[#423AC5] group-hover:border-[#423AC5] group-hover:text-white">
-                    {i + 1}
-                  </span>
-                  <span className="min-w-0 flex-1">
-                    <b className="block font-semibold text-[15px] leading-[1.35]">
-                      {lesson.title}
-                    </b>
-                  </span>
-                  <span className="hidden sm:inline-block flex-none text-[11.5px] font-semibold text-[var(--tint-indigo-ink)] bg-[var(--tint-indigo)] border border-[var(--tint-indigo-line)] rounded-full px-2.5 py-[3px]">
-                    {lesson.level}
-                  </span>
-                  <span className="flex-none text-[#D6D3CC] text-sm transition-all group-hover:text-[var(--tint-indigo-ink)] group-hover:translate-x-0.5">
-                    →
-                  </span>
-                </Link>
-              ))}
+              {shownLessons.map((lesson, i) => {
+                const done = completedKeys.has(lesson.key);
+                return (
+                  <Link
+                    key={lesson.key}
+                    href={`/grammar/${lesson.key}`}
+                    className={`flex items-center gap-3.5 px-[18px] py-[15px] bg-cream transition-all duration-150 hover:bg-[var(--tint-indigo)] group ${
+                      i > 0 ? "border-t border-line" : ""
+                    }`}
+                  >
+                    <span
+                      className={`flex-none w-8 h-8 rounded-[10px] border flex items-center justify-center text-[12.5px] font-bold transition-all group-hover:bg-[#423AC5] group-hover:border-[#423AC5] group-hover:text-white ${
+                        done ? "bg-success-bg border-success-line text-success" : "bg-warm border-line text-muted"
+                      }`}
+                    >
+                      {done ? "✓" : i + 1}
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <b className="block font-semibold text-[15px] leading-[1.35]">
+                        {lesson.title}
+                      </b>
+                    </span>
+                    <span className="flex-none text-[#D6D3CC] text-sm transition-all group-hover:text-[var(--tint-indigo-ink)] group-hover:translate-x-0.5">
+                      →
+                    </span>
+                  </Link>
+                );
+              })}
             </div>
           </section>
         </main>

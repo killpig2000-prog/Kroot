@@ -146,7 +146,7 @@ export async function getGuideProgress(
       : `${grammarDone.length} / ${startHere.length} lessons · Start here`,
     doneAt: grammarMet ? maxIso(grammarDone.map((k) => grammarDoneAt.get(k)!)) : undefined,
     percent: pct(grammarDone.length, startHere.length),
-    ctaHref: nextLessonKey ? `/grammar/${nextLessonKey}` : "/grammar?group=start-here",
+    ctaHref: nextLessonKey ? `/grammar/${nextLessonKey}` : "/grammar",
     // Short on purpose — lesson titles ("Korean word order (SOV)") wrap to three
     // lines inside a roadmap column.
     ctaLabel: nextLesson

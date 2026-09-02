@@ -16,10 +16,28 @@ export type GrammarLesson = {
   title: string;
   krTitle: string;
   level: CefrLevel;
+  /** 1-8, ordered by how essential the pattern is to learn — not CEFR grade. */
+  chapter: number;
   summary: string;
   sections: GrammarSection[];
   quiz: GrammarQuiz[];
 };
+
+export type GrammarChapter = { number: number; title: string; krTitle: string };
+
+/** Ordered by necessity, not difficulty — connectives (13 lessons) come
+ * before honorific register (9), and idioms/한자어 sit last since they're the
+ * least load-bearing for basic communication. */
+export const GRAMMAR_CHAPTERS: GrammarChapter[] = [
+  { number: 1, title: "Sentence basics & particles", krTitle: "문장 기본 구조 & 조사" },
+  { number: 2, title: "Tense & degree", krTitle: "시제 & 정도 표현" },
+  { number: 3, title: "Ability, obligation, desire, purpose", krTitle: "능력·의무·희망·목적" },
+  { number: 4, title: "Connecting clauses", krTitle: "연결어미 & 접속" },
+  { number: 5, title: "Sentence endings & speech level", krTitle: "종결어미 & 문체·화계" },
+  { number: 6, title: "Modifiers, passive/causative, quotation", krTitle: "수식·명사화·피동사동·인용" },
+  { number: 7, title: "Formal & academic register", krTitle: "격식체·전문 문체" },
+  { number: 8, title: "한자어 & idioms", krTitle: "한자어·관용구" },
+];
 
 const RAW_LESSONS: GrammarLesson[] = [
   {
@@ -27,6 +45,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "Korean word order (SOV)",
     krTitle: "어순",
     level: "A1",
+    chapter: 1,
     summary: "The verb always comes last. Everything else is flexible because particles carry the meaning.",
     sections: [
       {
@@ -69,6 +88,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "은/는 vs 이/가",
     krTitle: "은/는 · 이/가",
     level: "A1",
+    chapter: 1,
     summary: "은/는 sets the topic and invites contrast. 이/가 points at who exactly is doing something.",
     sections: [
       {
@@ -111,6 +131,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "The object marker 을/를",
     krTitle: "을/를",
     level: "A1",
+    chapter: 1,
     summary: "Mark the thing being acted on with 을 after a consonant, 를 after a vowel.",
     sections: [
       {
@@ -154,6 +175,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "이에요 / 예요 — to be",
     krTitle: "이에요 · 예요",
     level: "A1",
+    chapter: 1,
     summary: "Attach 이에요 or 예요 to a noun to say 'is / am / are'.",
     sections: [
       {
@@ -197,6 +219,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "Present tense 아요 / 어요",
     krTitle: "아요 · 어요",
     level: "A1",
+    chapter: 2,
     summary: "Drop 다 from the dictionary form, then add 아요 or 어요 depending on the last vowel.",
     sections: [
       {
@@ -241,6 +264,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "Saying no: 안 and 지 않다",
     krTitle: "안 · 지 않다",
     level: "A1",
+    chapter: 5,
     summary: "Put 안 in front of the verb for quick negation, or attach 지 않아요 to the stem for a more formal one.",
     sections: [
       {
@@ -284,6 +308,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "Past tense 았어요 / 었어요",
     krTitle: "았어요 · 었어요",
     level: "A1",
+    chapter: 2,
     summary: "Conjugate as if for the present, then swap 요 for ㅆ어요.",
     sections: [
       {
@@ -325,6 +350,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "에 and 에서",
     krTitle: "에 · 에서",
     level: "A1",
+    chapter: 1,
     summary: "에 marks a destination or a point in time; 에서 marks where an action happens.",
     sections: [
       {
@@ -368,6 +394,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "존댓말 basics",
     krTitle: "존댓말",
     level: "A2",
+    chapter: 5,
     summary: "Korean picks a politeness level for every sentence. Start with 요, and know when to reach for 습니다.",
     sections: [
       {
@@ -411,6 +438,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "Numbers & counters",
     krTitle: "숫자와 단위 명사",
     level: "A2",
+    chapter: 1,
     summary: "Korean has two number systems, and counting things needs a counter word.",
     sections: [
       {
@@ -455,6 +483,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "Saying 'and' and 'with'",
     krTitle: "하고 · 와/과 · (이)랑",
     level: "A1",
+    chapter: 1,
     summary: "Three ways to link two nouns. The same words also mean 'with someone'.",
     sections: [
       {
@@ -498,6 +527,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "이 / 그 / 저 — this, that, that over there",
     krTitle: "이 · 그 · 저",
     level: "A1",
+    chapter: 1,
     summary: "Korean splits 'that' in two: 그 for near the listener or already mentioned, 저 for far from you both.",
     sections: [
       {
@@ -542,6 +572,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "Future with ~(으)ㄹ 거예요",
     krTitle: "~(으)ㄹ 거예요",
     level: "A2",
+    chapter: 2,
     summary: "The everyday future: plans, predictions and 'I'm going to'. Add ㄹ 거예요 after a vowel, 을 거예요 after a consonant.",
     sections: [
       {
@@ -595,6 +626,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "Wanting things: ~고 싶다",
     krTitle: "~고 싶다",
     level: "A2",
+    chapter: 3,
     summary: "Attach 고 싶어요 to a verb stem for 'I want to…'. For other people you need 고 싶어하다.",
     sections: [
       {
@@ -637,6 +669,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "Ability: ~(으)ㄹ 수 있다 and 못",
     krTitle: "~(으)ㄹ 수 있다 · 못",
     level: "A2",
+    chapter: 3,
     summary: "~(으)ㄹ 수 있어요 is 'can', ~(으)ㄹ 수 없어요 is 'cannot', and 못 is the quick spoken 'can't'.",
     sections: [
       {
@@ -680,6 +713,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "Going somewhere to do something: ~(으)러",
     krTitle: "~(으)러 · ~는 것",
     level: "A2",
+    chapter: 3,
     summary: "~(으)러 attaches to a verb stem before a movement verb (가다/오다) to say 'in order to'. There's a fuller set of purpose forms later — this is the one you'll use every day.",
     sections: [
       {
@@ -713,6 +747,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "Verbs before nouns: ~는",
     krTitle: "~는 (동사 → 형용사)",
     level: "A2",
+    chapter: 6,
     summary: "Korean has no word for 'who'/'which' — instead the verb itself moves in front of the noun. This covers just the present-tense form; there's a full past/future set later.",
     sections: [
       {
@@ -745,6 +780,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "Wondering if: ~(으)ㄹ지",
     krTitle: "~(으)ㄹ지",
     level: "A2",
+    chapter: 3,
     summary: "Attach (으)ㄹ지 to a stem to turn a yes/no question into 'whether/if' — useful with 모르다 (don't know) or 궁금하다 (wonder).",
     sections: [
       {
@@ -769,6 +805,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "If / when: ~(으)면",
     krTitle: "~(으)면",
     level: "A2",
+    chapter: 4,
     summary: "The everyday 'if' or 'when' clause. This is the basic pattern only — there's a lesson later on the fixed phrases built on top of it.",
     sections: [
       {
@@ -801,6 +838,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "Because: ~아/어서",
     krTitle: "~아/어서",
     level: "A2",
+    chapter: 4,
     summary: "Join a reason to a result with 아/어서. It also means 'and then' for actions that follow on from each other.",
     sections: [
       {
@@ -844,6 +882,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "Asking politely: ~(으)세요 and ~아/어 주세요",
     krTitle: "~(으)세요 · ~아/어 주세요",
     level: "A2",
+    chapter: 3,
     summary: "(으)세요 tells someone to do something politely; 아/어 주세요 asks them to do it for you.",
     sections: [
       {
@@ -888,6 +927,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "In progress: ~고 있다",
     krTitle: "~고 있다",
     level: "A2",
+    chapter: 2,
     summary: "Stem + 고 있어요 is the -ing form: an action happening right now or ongoing in your life.",
     sections: [
       {
@@ -931,6 +971,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "Linking clauses: ~고 and ~지만",
     krTitle: "~고 · ~지만",
     level: "A2",
+    chapter: 4,
     summary: "~고 strings clauses together as 'and'; ~지만 turns the sentence with 'but'.",
     sections: [
       {
@@ -974,6 +1015,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "Have to and must not",
     krTitle: "~아/어야 되다 · ~(으)면 안 되다",
     level: "A2",
+    chapter: 3,
     summary: "아/어야 되다 is 'have to'; (으)면 안 되다 is 'must not'; 아/어도 되다 is 'may'.",
     sections: [
       {
@@ -1017,6 +1059,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "The formal ~(스)ㅂ니다 style",
     krTitle: "~(스)ㅂ니다",
     level: "A2",
+    chapter: 5,
     summary: "The register of news, presentations, service work and the workplace. Same meaning as 요, different distance.",
     sections: [
       {
@@ -1061,6 +1104,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "~(으)니까 vs ~아/어서",
     krTitle: "~(으)니까",
     level: "B1",
+    chapter: 4,
     summary: "Both mean 'because', but only 니까 can be followed by a command or a suggestion.",
     sections: [
       {
@@ -1103,6 +1147,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "The all-purpose ~는데 / ~(으)ㄴ데",
     krTitle: "~는데 · ~(으)ㄴ데",
     level: "B1",
+    chapter: 4,
     summary: "The most-used connector in spoken Korean: background, contrast, and softening all at once.",
     sections: [
       {
@@ -1146,6 +1191,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "Conditionals: ~(으)면",
     krTitle: "~(으)면",
     level: "B1",
+    chapter: 4,
     summary: "The general 'if / when' clause, plus the fixed patterns built on top of it.",
     sections: [
       {
@@ -1190,6 +1236,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "Trying things: ~아/어 보다",
     krTitle: "~아/어 보다",
     level: "B1",
+    chapter: 3,
     summary: "보다 after the 아/어 form means 'give it a try' — and in the past, 'have done it before'.",
     sections: [
       {
@@ -1233,6 +1280,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "Turning verbs into adjectives",
     krTitle: "~는 · ~(으)ㄴ · ~(으)ㄹ",
     level: "B1",
+    chapter: 6,
     summary: "Korean has no relative pronouns. Instead the whole clause is reshaped and placed in front of the noun.",
     sections: [
       {
@@ -1277,6 +1325,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "Reporting what people said",
     krTitle: "~다고 · ~냐고 · ~자고 · ~(으)라고 하다",
     level: "B1",
+    chapter: 6,
     summary: "Four quoting endings, one for each sentence type: statement, question, suggestion and command.",
     sections: [
       {
@@ -1320,6 +1369,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "Talking about frequency and degree",
     krTitle: "~(으)ㄴ 편이다 · ~는 편이다",
     level: "B1",
+    chapter: 2,
     summary: "Korean prefers hedged claims. These patterns say 'rather', 'tend to' and 'about as much as'.",
     sections: [
       {
@@ -1364,6 +1414,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "The irregular verb families",
     krTitle: "불규칙 활용",
     level: "B1",
+    chapter: 6,
     summary: "Six patterns cover nearly every irregular verb in Korean. Learn the family, not the word.",
     sections: [
       {
@@ -1417,6 +1468,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "Passive and causative basics",
     krTitle: "피동 · 사동",
     level: "B1",
+    chapter: 6,
     summary: "The infixes 이/히/리/기 make a verb passive; adding 우/구/추 to the set makes it causative.",
     sections: [
       {
@@ -1461,6 +1513,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "Making verbs into nouns",
     krTitle: "~기 · ~(으)ㅁ · ~는 것",
     level: "B1",
+    chapter: 6,
     summary: "Three ways to say 'the act of doing' — and they are not interchangeable.",
     sections: [
       {
@@ -1505,6 +1558,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "~더니 and ~았/었더니",
     krTitle: "~더니 · ~았/었더니",
     level: "B2",
+    chapter: 4,
     summary: "Two cousins with a strict subject rule: 더니 reports what someone else did, 았/었더니 what you did.",
     sections: [
       {
@@ -1548,6 +1602,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "~길래 — since it was like that, I…",
     krTitle: "~길래",
     level: "B2",
+    chapter: 4,
     summary: "A reason you noticed from outside, prompting your own spontaneous action.",
     sections: [
       {
@@ -1590,6 +1645,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "Blaming and crediting a cause",
     krTitle: "~는 바람에 · ~탓에 · ~덕분에",
     level: "B2",
+    chapter: 4,
     summary: "Three cause markers coloured by outcome: unintended, blamed, and thanked.",
     sections: [
       {
@@ -1633,6 +1689,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "The written plain style ~ㄴ/는다",
     krTitle: "문어체 (~ㄴ/는다)",
     level: "B2",
+    chapter: 5,
     summary: "Books, essays, newspapers and diaries drop the 요 entirely and use the neutral 한다 form.",
     sections: [
       {
@@ -1675,6 +1732,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "Contracted quotations: ~대요, ~냬요, ~재요, ~래요",
     krTitle: "~대요 · ~냬요 · ~재요 · ~래요",
     level: "B2",
+    chapter: 6,
     summary: "Spoken Korean squeezes 다고 해요 down to 대요. Four endings, one for each sentence type.",
     sections: [
       {
@@ -1718,6 +1776,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "As soon as: ~자마자 and ~는 대로",
     krTitle: "~자마자 · ~는 대로",
     level: "B2",
+    chapter: 4,
     summary: "Both mean 'the moment X happens', but only one of them can point at the future.",
     sections: [
       {
@@ -1760,6 +1819,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "Recalling with ~더라고요 and ~던",
     krTitle: "~더라고요 · ~던",
     level: "B2",
+    chapter: 4,
     summary: "The 더 marker replays something you personally experienced and are now reporting back.",
     sections: [
       {
@@ -1803,6 +1863,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "Purpose: ~(으)려고, ~기 위해, ~고자",
     krTitle: "~(으)려고 · ~기 위해 · ~고자",
     level: "B2",
+    chapter: 3,
     summary: "Three ways to say 'in order to', separated by formality and by what kind of goal is involved.",
     sections: [
       {
@@ -1847,6 +1908,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "Even if: ~아/어도 and ~더라도",
     krTitle: "~아/어도 · ~더라도 · ~(으)ㄹ지라도",
     level: "B2",
+    chapter: 4,
     summary: "Concessive clauses that grant the point and then push past it, ordered from everyday to literary.",
     sections: [
       {
@@ -1889,6 +1951,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "Degree and proportion",
     krTitle: "~(으)ㄹ 정도로 · ~(으)ㄹ 만큼 · ~(으)면 ~(으)ㄹ수록",
     level: "B2",
+    chapter: 2,
     summary: "Patterns for saying how much, to what extent, and the more X the more Y.",
     sections: [
       {
@@ -1932,6 +1995,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "Stating general truths",
     krTitle: "~기 마련이다 · ~는 법이다",
     level: "C1",
+    chapter: 7,
     summary: "Endings that frame something as inevitable, natural, or the way of the world.",
     sections: [
       {
@@ -1975,6 +2039,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "Not only that: ~(으)ㄹ 뿐만 아니라",
     krTitle: "~(으)ㄹ 뿐만 아니라 · ~(으)ㄹ 뿐이다",
     level: "C1",
+    chapter: 1,
     summary: "뿐 means 'only'. Negate it and you get 'not only' — the workhorse of formal addition.",
     sections: [
       {
@@ -2017,6 +2082,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "한자어 word-building",
     krTitle: "한자어 조어법",
     level: "C1",
+    chapter: 8,
     summary: "A handful of Sino-Korean suffixes unlock thousands of advanced words at once.",
     sections: [
       {
@@ -2071,6 +2137,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "Sentence endings that carry attitude",
     krTitle: "~잖아요 · ~거든요 · ~네요 · ~지요",
     level: "C1",
+    chapter: 5,
     summary: "These endings add nothing to the facts and everything to the relationship between speaker and listener.",
     sections: [
       {
@@ -2122,6 +2189,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "Conjecture: ~(으)ㄹ 텐데, ~(으)ㄹ 테니까, ~(으)ㄹ 걸",
     krTitle: "~(으)ㄹ 텐데 · ~(으)ㄹ 테니까 · ~(으)ㄹ 걸",
     level: "C1",
+    chapter: 6,
     summary: "Speculation with consequences — guessing, and then acting on the guess.",
     sections: [
       {
@@ -2164,6 +2232,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "Connectives for formal prose",
     krTitle: "~(으)ㄴ/는 반면 · ~(으)ㅁ에도 불구하고 · ~(으)로 인해",
     level: "C1",
+    chapter: 4,
     summary: "The connectors that make writing read as an argument rather than a conversation.",
     sections: [
       {
@@ -2206,6 +2275,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "Regret, hindsight and no choice",
     krTitle: "~았/었어야 했다 · ~(으)ㄹ 수밖에 없다",
     level: "C1",
+    chapter: 7,
     summary: "Looking back at what should have happened, and forward at what cannot be avoided.",
     sections: [
       {
@@ -2247,6 +2317,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "Bound nouns that shape a clause",
     krTitle: "~는 김에 · ~는 통에 · ~(으)ㄴ 나머지",
     level: "C1",
+    chapter: 6,
     summary: "Small nouns with no independent meaning that completely change what a clause does.",
     sections: [
       {
@@ -2288,6 +2359,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "Framing a claim carefully",
     krTitle: "~(으)ㄴ 셈이다 · ~는 것이다 · ~(으)ㄴ 듯하다",
     level: "C1",
+    chapter: 7,
     summary: "Advanced Korean rarely asserts flatly. These patterns restate, qualify and estimate.",
     sections: [
       {
@@ -2330,6 +2402,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "Emphatic particles: 조차, 마저, 커녕, 이야말로",
     krTitle: "조차 · 마저 · 커녕 · 이야말로",
     level: "C1",
+    chapter: 1,
     summary: "Particles that do not change who does what — only how strongly the speaker feels about it.",
     sections: [
       {
@@ -2372,6 +2445,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "Reading the news",
     krTitle: "신문 문체",
     level: "C2",
+    chapter: 7,
     summary: "Headlines drop particles and tense; body text runs on a small set of reporting verbs.",
     sections: [
       {
@@ -2415,6 +2489,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "Academic and analytical writing",
     krTitle: "학술 문체",
     level: "C2",
+    chapter: 7,
     summary: "Nominal density, impersonal framing, and the connectors that hold an argument together.",
     sections: [
       {
@@ -2458,6 +2533,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "The full range of speech levels",
     krTitle: "말단계 · 화계",
     level: "C2",
+    chapter: 5,
     summary: "Beyond 반말 and 존댓말: six traditional levels, and where you still meet each one.",
     sections: [
       {
@@ -2501,6 +2577,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "The full honorific system",
     krTitle: "높임법 · 겸양어",
     level: "C2",
+    chapter: 5,
     summary: "Three axes — subject, object and listener — plus a vocabulary of humble and elevated words.",
     sections: [
       {
@@ -2553,6 +2630,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "Body-part and everyday idioms",
     krTitle: "관용 표현",
     level: "C2",
+    chapter: 8,
     summary: "Fixed phrases whose meaning you cannot assemble from their parts.",
     sections: [
       {
@@ -2598,6 +2676,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "사자성어 — four-character idioms",
     krTitle: "사자성어",
     level: "C2",
+    chapter: 8,
     summary: "Compressed Sino-Korean proverbs used in speeches, editorials and everyday advice.",
     sections: [
       {
@@ -2641,6 +2720,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "Distinguishing the cause markers",
     krTitle: "~에 따라 · ~에 의해 · ~(으)로 인해",
     level: "C2",
+    chapter: 1,
     summary: "Three formal markers English collapses into 'by' or 'due to', but Korean keeps apart.",
     sections: [
       {
@@ -2683,6 +2763,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "Fine distinctions in causatives",
     krTitle: "~게 하다 · ~시키다 · 사동 접미사",
     level: "C2",
+    chapter: 6,
     summary: "Three ways to make someone do something, differing in directness and in who does the work.",
     sections: [
       {
@@ -2725,6 +2806,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "Literary and archaic forms",
     krTitle: "문학적 · 고어체 표현",
     level: "C2",
+    chapter: 5,
     summary: "Endings you will read in poetry, scripture and historical drama but should not produce in conversation.",
     sections: [
       {
@@ -2767,6 +2849,7 @@ const RAW_LESSONS: GrammarLesson[] = [
     title: "구어체 vs 문어체",
     krTitle: "구어체 · 문어체",
     level: "C2",
+    chapter: 5,
     summary: "The systematic differences that make writing sound like writing and speech sound like speech.",
     sections: [
       {
@@ -2820,9 +2903,10 @@ function withExtraExamples(lesson: GrammarLesson): GrammarLesson {
   };
 }
 
-// Presented in CEFR order so lesson numbering and the Next button run A1 to C2.
-export const GRAMMAR_LESSONS: GrammarLesson[] = LEVEL_ORDER.flatMap((lv) =>
-  RAW_LESSONS.filter((l) => l.level === lv)
+// Presented in chapter order (essential first) so lesson numbering and the
+// Next button on the lesson page follow the same sequence as the index.
+export const GRAMMAR_LESSONS: GrammarLesson[] = GRAMMAR_CHAPTERS.flatMap((c) =>
+  RAW_LESSONS.filter((l) => l.chapter === c.number)
 ).map(withExtraExamples);
 
 export function lessonByKey(key: string): GrammarLesson | undefined {
@@ -2842,6 +2926,10 @@ export const GRAMMAR_LEVELS = LEVEL_ORDER;
 
 export function lessonsByLevel(level: CefrLevel): GrammarLesson[] {
   return GRAMMAR_LESSONS.filter((l) => l.level === level);
+}
+
+export function lessonsByChapter(chapter: number): GrammarLesson[] {
+  return GRAMMAR_LESSONS.filter((l) => l.chapter === chapter);
 }
 
 // Curated groups shown above the full level-by-level list — a suggested

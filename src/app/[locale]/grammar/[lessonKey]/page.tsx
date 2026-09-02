@@ -67,8 +67,7 @@ export default async function GrammarLessonPage({
               {lesson.title}
             </h1>
             <span className="text-[13px] text-muted">
-              {t("lessonNumber", { n: no })} · <b className="text-[var(--tint-indigo-ink)]">{lesson.level}</b> ·{" "}
-              <span className="kr">{lesson.krTitle}</span>
+              {t("lessonNumber", { n: no })} · <span className="kr">{lesson.krTitle}</span>
             </span>
           </div>
 
