@@ -4,23 +4,41 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 
 const SEEN_KEY = "kroot-onboarding-tour-seen";
-const MIN_WIDTH = 768; // md breakpoint — sidebar isn't visible below this
+const MOBILE_BREAKPOINT = 768; // md — below this the sidebar is replaced by BottomNav
 
 const STEPS = ["sidebar", "basics", "practice", "relax", "tree", "quest", "garden"] as const;
 type StepKey = (typeof STEPS)[number];
 
 // STEPS are i18n/copy keys; TARGETS are the data-tour attribute values the
-// matching DOM element actually carries (Sidebar's section wrappers use
-// "section-<name>" so they don't collide with anything else in the nav).
-const TARGETS: Record<StepKey, string> = {
-  sidebar: "sidebar",
-  basics: "section-basics",
-  practice: "section-practice",
-  relax: "section-relax",
-  tree: "tree",
-  quest: "quest",
-  garden: "garden",
-};
+// matching DOM element actually carries. Desktop points at the Sidebar's
+// section wrappers ("section-<name>"); below md the sidebar isn't in the
+// layout at all, so the same steps point at BottomNav's own tabs instead —
+// Relax lives inside its "More" sheet on mobile, so that step points there.
+function targetsFor(mobile: boolean): Record<StepKey, string> {
+  return mobile
+    ? {
+        sidebar: "mobile-nav",
+        basics: "tab-basics",
+        practice: "tab-practice",
+        relax: "tab-more",
+        tree: "tree",
+        quest: "quest",
+        garden: "garden",
+      }
+    : {
+        sidebar: "sidebar",
+        basics: "section-basics",
+        practice: "section-practice",
+        relax: "section-relax",
+        tree: "tree",
+        quest: "quest",
+        garden: "garden",
+      };
+}
+
+function isMobileViewport(): boolean {
+  return typeof window !== "undefined" && window.innerWidth < MOBILE_BREAKPOINT;
+}
 
 function seen(): boolean {
   try {
@@ -41,8 +59,8 @@ type Rect = { top: number; left: number; width: number; height: number };
 
 // First-visit walkthrough: a dark scrim with a cut-out spotlight over one
 // data-tour target at a time, plus a tooltip card. Runs once per browser
-// (localStorage-gated), only at md+ where the sidebar it points at is
-// actually visible — on mobile the nav is a different shape entirely.
+// (localStorage-gated), at every width — the sidebar/basics/practice/relax
+// steps just point at BottomNav's tabs instead of the Sidebar below md.
 export default function OnboardingTour() {
   const t = useTranslations("tour");
   const [stepIndex, setStepIndex] = useState(0);
@@ -52,14 +70,15 @@ export default function OnboardingTour() {
 
   useEffect(() => {
     if (seen()) return;
-    if (typeof window === "undefined" || window.innerWidth < MIN_WIDTH) return;
+    if (typeof window === "undefined") return;
     const id = requestAnimationFrame(() => setActive(true));
     return () => cancelAnimationFrame(id);
   }, []);
 
   const measure = useCallback(() => {
     const key: StepKey = STEPS[stepIndex];
-    const el = document.querySelector<HTMLElement>(`[data-tour="${TARGETS[key]}"]`);
+    const target = targetsFor(isMobileViewport())[key];
+    const el = document.querySelector<HTMLElement>(`[data-tour="${target}"]`);
     if (!el) {
       setRect(null);
       return;
@@ -71,7 +90,8 @@ export default function OnboardingTour() {
   useEffect(() => {
     if (!active) return;
     const key: StepKey = STEPS[stepIndex];
-    const el = document.querySelector<HTMLElement>(`[data-tour="${TARGETS[key]}"]`);
+    const target = targetsFor(isMobileViewport())[key];
+    const el = document.querySelector<HTMLElement>(`[data-tour="${target}"]`);
     el?.scrollIntoView({ block: "center", behavior: "smooth" });
 
     const loop = () => {

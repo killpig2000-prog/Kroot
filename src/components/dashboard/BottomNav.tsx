@@ -30,17 +30,16 @@ const MORE_SECTIONS = [
 const BASICS_PATHS = BASICS_SECTIONS.flatMap((s) => s.items.map((i) => i.href));
 const PRACTICE_PATHS = PRACTICE_SECTIONS.flatMap((s) => s.items.map((i) => i.href));
 
+// Text-only, same idiom as the desktop Sidebar's NavItem — no icon, no color
+// tile, just the label with a bold/tinted active state.
 function Tile({
-  icon,
   label,
   href,
   on,
   onNavigate,
-  color,
   popular,
   isNew,
 }: {
-  icon: string;
   label: string;
   href: string;
   on: boolean;
@@ -50,66 +49,52 @@ function Tile({
   isNew?: boolean;
 }) {
   const tn = useTranslations("nav");
-  const tile = (
+  return (
     <Link
       href={href}
       onClick={onNavigate}
-      className={`relative flex flex-col items-center gap-1 rounded-[12px] border bg-cream px-1 py-2.5 text-center text-[11px] font-bold transition-colors ${
-        on ? "border-success text-success-deep" : "border-warm-3 text-charcoal hover:border-dash"
+      className={`flex items-center gap-2 px-2.5 py-[7px] rounded-[9px] text-[13.5px] transition-colors ${
+        on ? "bg-cream text-success-deep font-bold" : "text-charcoal font-medium hover:bg-cream hover:text-success-deep"
       }`}
     >
+      <span className="flex-1 min-w-0 truncate">{tn(navKey(label))}</span>
       {popular && (
-        <span className="absolute -top-1.5 -right-1.5 text-[8.5px] font-extrabold text-[#B14F27] bg-[#FDE9D0] rounded-full px-[6px] py-px">
+        <span className="flex-none text-[8.5px] font-extrabold text-[#B14F27] bg-[#FDE9D0] rounded-full px-[6px] py-px">
           Popular
         </span>
       )}
       {isNew && (
-        <span className="absolute -top-1.5 -right-1.5 text-[8.5px] font-extrabold text-white bg-[#9333EA] rounded-full px-[6px] py-px">
+        <span className="flex-none text-[8.5px] font-extrabold text-white bg-[#9333EA] rounded-full px-[6px] py-px">
           NEW
         </span>
       )}
-      {color ? (
-        <span
-          className="w-6 h-6 rounded-[7px] border flex items-center justify-center text-[13px]"
-          style={{ background: color.bg, borderColor: color.border, color: color.text }}
-        >
-          {icon}
-        </span>
-      ) : (
-        <span className="text-[17px]">{icon}</span>
-      )}
-      <span className="leading-tight">{tn(navKey(label))}</span>
     </Link>
   );
-
-  return tile;
 }
 
 function TabButton({
-  icon,
   label,
   on,
   onClick,
   expanded,
+  tourId,
 }: {
-  icon: string;
   label: string;
   on: boolean;
   onClick: () => void;
   expanded?: boolean;
+  tourId?: string;
 }) {
   return (
     <button
       type="button"
+      data-tour={tourId}
       onClick={onClick}
       aria-expanded={expanded}
-      className={`relative flex flex-col items-center justify-center gap-0.5 min-h-[56px] py-1 text-[11.5px] transition-colors ${
+      className={`flex items-center justify-center min-h-[56px] py-1 text-[13px] transition-colors ${
         on ? "text-success-deep font-bold" : "text-faint font-medium hover:text-muted"
       }`}
     >
-      <span className="text-[21px] leading-none" style={on ? {} : { filter: "grayscale(1)", opacity: 0.55 }}>
-        {icon}
-      </span>
       {label}
     </button>
   );
@@ -208,7 +193,7 @@ export default function BottomNav({ streakDays: streakDaysProp }: { streakDays?:
                 <p className="text-[13px] font-black tracking-[.08em] uppercase text-success-deep px-0.5 pt-3 pb-1.5">
                   {tn(navKey(section.title))}
                 </p>
-                <div className="grid grid-cols-3 gap-2">
+                <div className="flex flex-col gap-0.5">
                   {section.items.map((item) => (
                     <Tile
                       key={item.href}
@@ -233,24 +218,22 @@ export default function BottomNav({ streakDays: streakDaysProp }: { streakDays?:
         )}
 
         <nav
+          data-tour="mobile-nav"
           className="bg-cream/90 backdrop-blur-[10px] border-t border-line grid grid-cols-4 pt-1 pb-[max(4px,env(safe-area-inset-bottom))]"
           aria-label="main"
         >
           <Link
             href="/dashboard"
             onClick={close}
-            className={`flex flex-col items-center justify-center gap-0.5 min-h-[56px] py-1 text-[11.5px] transition-colors ${
+            className={`flex items-center justify-center min-h-[56px] py-1 text-[13px] transition-colors ${
               onGarden ? "text-success-deep font-bold" : "text-faint font-medium hover:text-muted"
             }`}
           >
-            <span className="text-[21px] leading-none" style={onGarden ? {} : { filter: "grayscale(1)", opacity: 0.55 }}>
-              🏡
-            </span>
             {tn("garden")}
           </Link>
-          <TabButton icon="📚" label={tn("basics")} on={onBasics} expanded={sheet === "basics"} onClick={() => toggle("basics")} />
-          <TabButton icon="🎧" label={tn("practice")} on={onPractice} expanded={sheet === "practice"} onClick={() => toggle("practice")} />
-          <TabButton icon="🌿" label={tn("more")} on={onMore} expanded={sheet === "more"} onClick={() => toggle("more")} />
+          <TabButton tourId="tab-basics" label={tn("basics")} on={onBasics} expanded={sheet === "basics"} onClick={() => toggle("basics")} />
+          <TabButton tourId="tab-practice" label={tn("practice")} on={onPractice} expanded={sheet === "practice"} onClick={() => toggle("practice")} />
+          <TabButton tourId="tab-more" label={tn("more")} on={onMore} expanded={sheet === "more"} onClick={() => toggle("more")} />
         </nav>
       </div>
     </>
