@@ -8,7 +8,7 @@ import { createClient } from "@/lib/supabase/client";
 import { nextBox, nextReviewAt } from "@/lib/srs";
 import { saveToBank } from "@/lib/word-bank";
 import { speakKorean, prefetchKorean } from "@/lib/tts";
-import { WORD_STATUSES, getWordNote, wordStatus, hanjaOf } from "@/lib/word-notes";
+import { getWordNote, hanjaOf } from "@/lib/word-notes";
 import { getLocalizedMeaning, getLocalizedExampleEn } from "@/lib/vocabulary-i18n";
 
 const BTN_INK = buttonClassName("ink");
@@ -83,7 +83,6 @@ export default function WordDetailCard({
   const [savedCount, setSavedCount] = useState(initialSavedCount);
   const [adding, setAdding] = useState(false);
   const [addError, setAddError] = useState<"full" | "error" | null>(null);
-  const status = WORD_STATUSES[wordStatus(correctCount + incorrectCount)];
   const note = getWordNote(word.korean);
   const hanja = hanjaOf(word.korean);
   // Which button is mid-save, so it can say so instead of just greying out.
@@ -92,7 +91,17 @@ export default function WordDetailCard({
   // Got it is a toggle now, separate from moving on — tap it to check the
   // word off, tap again to undo. Navigating to the next word is its own
   // button, so a learner can check off several words before moving on.
-  const [marked, setMarked] = useState(status.key === "known");
+  //
+  // Seeded from `box`, not the 3-bucket new/learning/known review-count
+  // status: box only rises above 1 on a "got it" and resets to 1 the moment
+  // a word is marked still-learning, so box > 1 means the last review was a
+  // hit — exactly what the checkmark badge claims. The review-count status
+  // needed 4+ reviews to reach "known", so a word gotten right once or
+  // twice looked marked right after tapping (setMarked runs directly) but
+  // reverted to unmarked on the next visit — the tap "didn't stick" from
+  // the learner's point of view. There's no "new"/"learning" label shown
+  // any more either way — just the checkmark, or nothing.
+  const [marked, setMarked] = useState(box > 1);
 
   // Warm the audio cache for every 🔊 on this page as soon as it loads, so
   // the first tap plays instantly instead of waiting on a cold TTS synthesis.
@@ -184,7 +193,7 @@ export default function WordDetailCard({
           className="absolute top-0 bottom-0 left-[clamp(28px,6vw,52px)] w-px bg-[var(--tint-rose-line)] opacity-70 pointer-events-none"
           aria-hidden="true"
         />
-        {marked ? (
+        {marked && (
           <span
             aria-label={t("gotIt")}
             className="absolute top-3.5 right-4 w-9 h-9 rounded-full bg-success flex items-center justify-center shadow-[0_4px_0_var(--color-success-deep)] rotate-[-6deg] select-none"
@@ -199,10 +208,6 @@ export default function WordDetailCard({
                 strokeLinejoin="round"
               />
             </svg>
-          </span>
-        ) : (
-          <span className="absolute top-4 right-5 text-[10.5px] font-black tracking-[.06em] uppercase text-amber border-2 border-amber rounded-[6px] px-2 py-[3px] rotate-[-6deg] opacity-80 select-none">
-            {t(status.key)}
           </span>
         )}
 
