@@ -1,5 +1,41 @@
 {
   "lessons": {
+    "pronouns-subjects": {
+      "title": "Đại từ nhân xưng & chủ ngữ",
+      "summary": "Tiếng Hàn có 'tôi', 'bạn', 'anh ấy/cô ấy' — nhưng dùng ít hơn tiếng Việt nhiều, và chọn sai từ thì bất lịch sự trước khi kịp sai ngữ pháp.",
+      "sections": [
+        {
+          "heading": "나 và 저 — 'tôi'",
+          "explanation": "나 là suồng sã, 저 là lịch sự và khiêm nhường. Khi mới gặp ai đó, hãy mặc định dùng 저 (và dạng sở hữu 제, 'của tôi') cho đến khi biết chắc có thể nói suồng sã với họ."
+        },
+        {
+          "heading": "너 và 당신 — vì sao 'bạn' lại rủi ro",
+          "explanation": "Tiếng Hàn hầu như tránh nói 'bạn' trực tiếp. 너 chỉ dùng với bạn thân, trẻ em, hoặc người rõ ràng nhỏ tuổi hơn mình. 당신 cũng không phải là cách nói 'bạn' lịch sự chung chung — nghe có vẻ gây hấn hoặc thân mật kỳ lạ (đó là cách vợ chồng gọi nhau). Hãy dùng tên người đó cộng với 씨, chức danh của họ, hoặc đơn giản là bỏ luôn chủ ngữ — cả ba cách đều tự nhiên hơn bất kỳ đại từ nào."
+        },
+        {
+          "heading": "그 / 그녀 — 'anh ấy' / 'cô ấy'",
+          "explanation": "그 (anh ấy) và 그녀 (cô ấy) xuất hiện trong văn viết, phụ đề và tiểu thuyết, nhưng hiếm khi dùng trong hội thoại thực tế. Người nói thường lặp lại tên người đó hoặc dùng từ chỉ quan hệ (형, 언니, 친구) thay thế."
+        },
+        {
+          "heading": "우리 — 'chúng tôi', nhưng cũng là 'của tôi'",
+          "explanation": "우리 (chúng tôi/của chúng tôi) được dùng rộng hơn nhiều so với 'của chúng tôi' trong tiếng Việt. Người Hàn nói 우리 엄마 ('mẹ tôi'), 우리 학교 ('trường tôi') — ngay cả với thứ chỉ thuộc về một người. Nó thể hiện sự thuộc về nhiều hơn là số nhiều theo nghĩa đen."
+        }
+      ],
+      "quiz": [
+        {
+          "q": "Khi gặp người mới, từ nào cho 'tôi' là lựa chọn an toàn hơn?",
+          "opts": ["나", "저", "너", "우리"]
+        },
+        {
+          "q": "Điều nào đúng về 당신 ('bạn')?",
+          "opts": ["Là cách an toàn nhất để gọi người lạ", "Là cách vợ chồng gọi nhau, hoặc nghe có vẻ gây hấn — tránh dùng với người lạ", "Có nghĩa là 'chúng tôi'", "Chỉ dùng cho trẻ em"]
+        },
+        {
+          "q": "'우리 엄마' tự nhiên nhất nghĩa là:",
+          "opts": ["Người mẹ chung của nhiều người", "Mẹ tôi", "Mọi người mẹ", "Bà"]
+        }
+      ]
+    },
     "word-order": {
       "title": "Trật tự từ trong tiếng Hàn (SOV)",
       "summary": "Động từ luôn đứng cuối. Mọi thành phần khác có thể xê dịch, vì tiểu từ mới là thứ mang nghĩa.",

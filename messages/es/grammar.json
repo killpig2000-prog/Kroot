@@ -1,5 +1,41 @@
 {
   "lessons": {
+    "pronouns-subjects": {
+      "title": "Pronombres personales y sujetos",
+      "summary": "El coreano tiene 'yo', 'tú', 'él/ella' — pero los usa mucho menos que el español, y elegir el incorrecto es de mala educación antes de ser incorrecto.",
+      "sections": [
+        {
+          "heading": "나 vs 저 — 'yo'",
+          "explanation": "나 es informal, 저 es cortés y humilde. Como principiante que conoce a alguien nuevo, usa 저 por defecto (y su forma posesiva 제, 'mi') hasta que sepas que puedes hablar en tono informal con esa persona."
+        },
+        {
+          "heading": "너 y 당신 — por qué 'tú' es arriesgado",
+          "explanation": "El coreano evita decir 'tú' casi siempre. 너 es solo para amigos cercanos, niños o personas claramente más jóvenes que tú. 당신 tampoco funciona como un 'usted' genérico y educado — suena confrontacional o extrañamente íntimo (es como se llaman los cónyuges entre sí). Usa el nombre de la persona más 씨, su título, o simplemente omite el sujeto — las tres opciones son más naturales que cualquier pronombre."
+        },
+        {
+          "heading": "그 / 그녀 — 'él' / 'ella'",
+          "explanation": "그 (él) y 그녀 (ella) aparecen en textos escritos, subtítulos y novelas, pero rara vez en una conversación real. Los hablantes repiten el nombre de la persona o usan una palabra de relación (형, 언니, 친구) en su lugar."
+        },
+        {
+          "heading": "우리 — 'nosotros', pero también 'mi'",
+          "explanation": "우리 (nosotros/nuestro) cubre mucho más terreno que 'nuestro' en español. Los coreanos dicen 우리 엄마 ('mi mamá'), 우리 학교 ('mi escuela') — incluso para algo que le pertenece a una sola persona. Indica pertenencia más que pluralidad literal."
+        }
+      ],
+      "quiz": [
+        {
+          "q": "Al conocer a alguien nuevo, ¿qué palabra para 'yo' es la opción más segura?",
+          "opts": ["나", "저", "너", "우리"]
+        },
+        {
+          "q": "¿Qué es cierto sobre 당신 ('tú')?",
+          "opts": ["Es la forma más segura de dirigirse a un desconocido", "Es como se llaman los cónyuges entre sí, o suena confrontacional — evítalo con desconocidos", "Significa 'nosotros'", "Solo se usa con niños"]
+        },
+        {
+          "q": "'우리 엄마' significa más naturalmente:",
+          "opts": ["Nuestra madre compartida (varias personas)", "Mi mamá", "Cada mamá", "Abuela"]
+        }
+      ]
+    },
     "word-order": {
       "title": "El orden de palabras en coreano (SOV)",
       "summary": "El verbo siempre va al final. Lo demás es flexible porque el significado lo cargan las partículas.",
