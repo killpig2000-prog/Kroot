@@ -94,8 +94,8 @@
   },
   "pronunciation": {
     "badge": "pronunciation trail",
-    "title": "Say it out loud. The mic keeps score.",
-    "sub": "23 chapters of the sounds English speakers actually trip on — from ㄹ to double consonants. Nail a word at 80+ and it's cleared for good.",
+    "title": "Say it out loud. The mic actually grades you.",
+    "sub": "Most apps skip real pronunciation feedback — even the paid AI tiers on other apps don't score it. Kroot does, free: 23 chapters of the sounds English speakers trip on, no typing around it.",
     "chapterTag": "🌶️ Spicy · ㄹ chapter",
     "best": "best 92",
     "gloss": "ramyeon · instant noodles",
@@ -103,7 +103,7 @@
     "resultLabel": "Result",
     "score": "🔥 Nailed it! · 92",
     "heard": "heard",
-    "footer": "📊 23 chapters across <b>5 tiers</b> — 🌱 Warm-up to 👑 Legendary. Score 80+ to clear one for good."
+    "footer": "📊 23 chapters across <b>5 tiers</b> — scored, not guessed. 🌱 Warm-up to 👑 Legendary."
   },
   "writing": {
     "badge": "AI corrections",
