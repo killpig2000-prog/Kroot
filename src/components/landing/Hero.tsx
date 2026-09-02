@@ -62,7 +62,10 @@ export default function Hero() {
           ))}
         </div>
 
-        <h1 className="font-black text-[clamp(30px,4.6vw,48px)] leading-[1.24] tracking-[-0.02em] text-charcoal mb-3.5 text-balance">
+        <h1
+          className="reveal font-black text-[clamp(30px,4.6vw,48px)] leading-[1.24] tracking-[-0.02em] text-charcoal mb-3.5 text-balance"
+          style={{ "--rd": "0.1s" } as React.CSSProperties}
+        >
           {t("titleLine1")}
           <br />
           <mark
@@ -72,16 +75,23 @@ export default function Hero() {
             {t("titleHighlight")}
           </mark>
         </h1>
-        <p className="text-[14.5px] text-muted max-w-[44ch] mx-auto mb-6">
+        <p
+          className="reveal text-[14.5px] text-muted max-w-[44ch] mx-auto mb-6"
+          style={{ "--rd": "0.22s" } as React.CSSProperties}
+        >
           {t("sub")}
         </p>
         <Link
           href="/onboarding"
-          className="inline-block rounded-[10px] bg-success px-[28px] py-[13px] text-[14.5px] font-bold text-white shadow-[0_6px_0_#2E5B41] hover:translate-y-[2px] hover:shadow-[0_4px_0_#2E5B41] transition-all"
+          className="reveal inline-block rounded-[10px] bg-success px-[28px] py-[13px] text-[14.5px] font-bold text-white shadow-[0_6px_0_#2E5B41] hover:translate-y-[2px] hover:shadow-[0_4px_0_#2E5B41] transition-all"
+          style={{ "--rd": "0.34s" } as React.CSSProperties}
         >
           {t("cta")}
         </Link>
-        <p className="mt-3.5 text-[12.5px] italic text-[#8A8478]">
+        <p
+          className="reveal mt-3.5 text-[12.5px] italic text-[#8A8478]"
+          style={{ "--rd": "0.44s" } as React.CSSProperties}
+        >
           {t("note")}
         </p>
       </div>
