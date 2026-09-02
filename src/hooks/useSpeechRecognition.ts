@@ -36,7 +36,7 @@ function getCtor(): SpeechRecognitionCtor | null {
   return w.SpeechRecognition ?? w.webkitSpeechRecognition ?? null;
 }
 
-export function useSpeechRecognition(lang = "ko-KR", maxDurationMs?: number) {
+export function useSpeechRecognition(lang = "ko-KR", maxDurationMs?: number, continuous = false) {
   const isSupported = useBrowserSupport(() => getCtor() !== null);
   const [isListening, setIsListening] = useState(false);
   const [listenStartedAt, setListenStartedAt] = useState<number | null>(null);
@@ -71,7 +71,14 @@ export function useSpeechRecognition(lang = "ko-KR", maxDurationMs?: number) {
 
       const rec = new Ctor();
       rec.lang = lang;
-      rec.continuous = false;
+      // A learner's natural breath mid-sentence (Challenge mode says a whole
+      // line in one go) used to read as "done speaking" and cut recognition
+      // off there — continuous keeps it listening through pauses until the
+      // caller's maxDurationMs timeout stops it, instead of the browser
+      // guessing when speech has ended. Single-word Practice mode leaves
+      // this off so a quick word still grades right after it's said,
+      // instead of waiting out the full timeout every time.
+      rec.continuous = continuous;
       rec.interimResults = true;
       rec.maxAlternatives = 1;
 
@@ -140,7 +147,7 @@ export function useSpeechRecognition(lang = "ko-KR", maxDurationMs?: number) {
         setError("Couldn't start the microphone. Try again.");
       }
     },
-    [lang, maxDurationMs]
+    [lang, maxDurationMs, continuous]
   );
 
   return { isSupported, isListening, listenStartedAt, interim, error, listen, stop, setError };

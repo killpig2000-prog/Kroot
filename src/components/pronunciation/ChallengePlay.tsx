@@ -58,6 +58,7 @@ export default function ChallengePlay({
   const { isSupported: micOk, isListening, interim, error, listen, setError } = useSpeechRecognition(
     "ko-KR",
     MAX_LISTEN_MS,
+    true,
   );
 
   const runStars = run ? starsFor(challenge, run) : 0;
