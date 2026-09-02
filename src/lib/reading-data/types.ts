@@ -5,6 +5,7 @@ export type ReadingQuestion = {
   question_es?: string;
   question_ja?: string;
   question_zh?: string;
+  question_vi?: string;
   options: string[];
   answerIndex: number;
 };
@@ -20,10 +21,12 @@ export type RawPassage = {
   title_es?: string;
   title_ja?: string;
   title_zh?: string;
+  title_vi?: string;
   body_kr: string;
   body_en: string;
   body_es?: string;
   body_ja?: string;
   body_zh?: string;
+  body_vi?: string;
   questions: ReadingQuestion[];
 };
