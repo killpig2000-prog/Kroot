@@ -43,8 +43,6 @@ export default function PronunciationChallenge({
   const [index, setIndex] = useState(0);
   const [heard, setHeard] = useState<string | null>(null);
   const [score, setScore] = useState(0);
-  const [typed, setTyped] = useState("");
-  const [typedFallback, setTypedFallback] = useState(false);
   const [streak, setStreak] = useState(0);
   const [bestStreak, setBestStreak] = useState(0);
   const [nailed, setNailed] = useState<string[]>(() =>
@@ -79,7 +77,6 @@ export default function PronunciationChallenge({
   } = useSpeechRecognition("ko-KR", MAX_LISTEN_MS);
 
   const word = words[index];
-  const showFallback = typedFallback || !micOk;
 
   // Ticks the mic countdown ring while listening.
   const [micElapsedMs, setMicElapsedMs] = useState(0);
@@ -113,7 +110,6 @@ export default function PronunciationChallenge({
 
   function resetAnswer() {
     setHeard(null);
-    setTyped("");
     setError(null);
   }
 
@@ -299,13 +295,8 @@ export default function PronunciationChallenge({
             micElapsedMs={micElapsedMs}
             interim={interim}
             error={error}
-            typed={typed}
-            setTyped={setTyped}
-            showFallback={showFallback}
-            setTypedFallback={setTypedFallback}
             onListen={() => listen(grade)}
             onSkip={skip}
-            onCheck={() => grade(typed.trim())}
           />
         )}
 
@@ -318,10 +309,7 @@ export default function PronunciationChallenge({
             saveError={saveError}
             ttsOk={ttsOk}
             onReplay={() => speak(word.kr)}
-            onTryAgain={() => {
-              setHeard(null);
-              setTyped("");
-            }}
+            onTryAgain={() => setHeard(null)}
             onNext={next}
             isLastWord={index + 1 === words.length}
           />
