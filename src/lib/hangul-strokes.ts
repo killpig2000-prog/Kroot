@@ -19,11 +19,13 @@ const CONSONANTS: Record<string, HangulStroke[]> = {
   ㄴ: [{ d: "M26,20 L26,76 L80,76" }],
   ㄷ: [{ d: "M20,22 L78,22" }, { d: "M20,22 L20,78 L78,78" }],
   // ㄱ shape, then a horizontal bridge, then an ㄴ shape — three separate
-  // strokes, fully connected end to end.
+  // strokes, fully connected end to end. The ㄱ and ㄴ halves split the
+  // height evenly at the bridge, and the bridge itself is drawn left to
+  // right (matching how the following ㄴ stroke starts), not right to left.
   ㄹ: [
-    { d: "M18,12 L70,12 L70,36" },
-    { d: "M70,36 L18,36" },
-    { d: "M18,36 L18,88 L70,88" },
+    { d: "M18,12 L70,12 L70,50" },
+    { d: "M18,50 L70,50" },
+    { d: "M18,50 L18,88 L70,88" },
   ],
   ㅁ: [{ d: "M20,20 L20,80" }, { d: "M20,20 L80,20 L80,80" }, { d: "M20,80 L80,80" }],
   // Two full-height verticals ("11"), then the middle bar, then the bottom
@@ -31,8 +33,10 @@ const CONSONANTS: Record<string, HangulStroke[]> = {
   ㅂ: [{ d: "M25,15 L25,82" }, { d: "M75,15 L75,82" }, { d: "M25,48 L75,48" }, { d: "M25,82 L75,82" }],
   ㅅ: [{ d: "M50,18 L20,82" }, { d: "M46,46 L80,82" }],
   ㅇ: [{ d: "M50,18 A32,32 0 1 1 49.99,18 Z", transform: MIRROR }],
-  ㅈ: [{ d: "M20,20 L80,20" }, { d: "M55,20 L25,80" }, { d: "M50,45 L80,80" }],
-  ㅊ: [{ d: "M42,10 L50,18" }, { d: "M20,26 L80,26" }, { d: "M55,26 L25,84" }, { d: "M50,50 L80,84" }],
+  // Modern form: the second stroke drops from the right end of the top bar
+  // (not from its middle), and the third stroke branches off partway down it.
+  ㅈ: [{ d: "M20,20 L80,20" }, { d: "M80,20 L25,80" }, { d: "M57,45 L80,80" }],
+  ㅊ: [{ d: "M42,10 L50,18" }, { d: "M20,26 L80,26" }, { d: "M80,26 L25,84" }, { d: "M57,50 L80,84" }],
   ㅋ: [{ d: "M22,26 L74,26 L74,80" }, { d: "M20,50 L74,50" }],
   ㅌ: [{ d: "M20,20 L78,20" }, { d: "M20,50 L78,50" }, { d: "M20,20 L20,80 L78,80" }],
   ㅍ: [{ d: "M20,20 L80,20" }, { d: "M32,20 L32,80" }, { d: "M68,20 L68,80" }, { d: "M20,80 L80,80" }],
@@ -55,14 +59,42 @@ const VOWELS: Record<string, HangulStroke[]> = {
 
 // Compress a jamo's own strokes into one half of a compound letter's box —
 // same idea as writing two small letters side by side instead of one big
-// one. `tx`/`sx` place & scale on the x axis only; y is left full height.
-function fit(strokes: HangulStroke[], sx: number, tx: number): HangulStroke[] {
-  return strokes.map((s) => ({ d: s.d, transform: `translate(${tx} 0) scale(${sx} 1)` }));
+// one. Fits the glyph's *actual* horizontal footprint (not its full 100-wide
+// canvas — e.g. ㅅ only draws between x20 and x80) into the target slot, so
+// two narrow glyphs like ㅅ+ㅅ end up close together instead of each
+// carrying its own unused margin. Y is left full height.
+function footprintX(strokes: HangulStroke[]): [min: number, max: number] {
+  const xs = strokes.flatMap((s) => [...s.d.matchAll(/(-?\d+(?:\.\d+)?),-?\d+(?:\.\d+)?/g)].map((m) => Number(m[1])));
+  return [Math.min(...xs), Math.max(...xs)];
 }
-const LEFT = { sx: 0.42, tx: 4 };
-const RIGHT = { sx: 0.42, tx: 54 };
-const fitLeft = (s: HangulStroke[]) => fit(s, LEFT.sx, LEFT.tx);
-const fitRight = (s: HangulStroke[]) => fit(s, RIGHT.sx, RIGHT.tx);
+function scaleX(sx: number, tx: number) {
+  const round = (n: number) => Math.round(n * 100) / 100;
+  return (d: string) => d.replace(/(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)/g, (_, x, y) => `${round(tx + sx * Number(x))},${y}`);
+}
+function scaleXParams(strokes: HangulStroke[], targetMin: number, targetMax: number): [sx: number, tx: number] {
+  const [min, max] = footprintX(strokes);
+  const sx = (targetMax - targetMin) / (max - min);
+  return [sx, targetMin - min * sx];
+}
+// Bakes the scale/translate into the path's own coordinates rather than an
+// SVG transform, so an anisotropic x-only squeeze never distorts the
+// rendered stroke *width* the way `transform="scale(sx 1)"` would.
+function fitInto(strokes: HangulStroke[], targetMin: number, targetMax: number): HangulStroke[] {
+  const remap = scaleX(...scaleXParams(strokes, targetMin, targetMax));
+  return strokes.map((s) => ({ d: remap(s.d) }));
+}
+// Applies the same x-remap that fitting `reference` into the slot would use,
+// to some other stroke (e.g. the extra bar ㅙ adds beside its fitted ㅏ) so
+// it lines up with it instead of being fitted to its own — degenerate for a
+// single vertical line — footprint.
+function alignTo(reference: HangulStroke[], targetMin: number, targetMax: number, strokes: HangulStroke[]): HangulStroke[] {
+  const remap = scaleX(...scaleXParams(reference, targetMin, targetMax));
+  return strokes.map((s) => ({ d: remap(s.d) }));
+}
+const LEFT_SLOT: [number, number] = [4, 46];
+const RIGHT_SLOT: [number, number] = [54, 96];
+const fitLeft = (s: HangulStroke[]) => fitInto(s, ...LEFT_SLOT);
+const fitRight = (s: HangulStroke[]) => fitInto(s, ...RIGHT_SLOT);
 
 // Double consonants: the base consonant written twice, side by side.
 const DOUBLE_CONSONANTS: Record<string, HangulStroke[]> = {
@@ -84,7 +116,7 @@ const COMPOUND_VOWELS: Record<string, HangulStroke[]> = {
   ㅔ: [...VOWELS.ㅓ, I_LEFT],
   ㅖ: [...VOWELS.ㅕ, I_LEFT],
   ㅘ: [...fitLeft(VOWELS.ㅗ), ...fitRight(VOWELS.ㅏ)],
-  ㅙ: [...fitLeft(VOWELS.ㅗ), ...fitRight(VOWELS.ㅏ), { d: I_RIGHT.d, transform: `translate(${RIGHT.tx} 0) scale(${RIGHT.sx} 1)` }],
+  ㅙ: [...fitLeft(VOWELS.ㅗ), ...fitRight(VOWELS.ㅏ), ...alignTo(VOWELS.ㅏ, ...RIGHT_SLOT, [I_RIGHT])],
   ㅚ: [...fitLeft(VOWELS.ㅗ), { d: "M82,14 L82,86" }],
   ㅝ: [...fitLeft(VOWELS.ㅜ), ...fitRight(VOWELS.ㅓ)],
   ㅞ: [...fitLeft(VOWELS.ㅜ), ...fitRight(VOWELS.ㅓ), { d: "M82,14 L82,86" }],
