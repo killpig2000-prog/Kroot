@@ -41,6 +41,59 @@ export const GRAMMAR_CHAPTERS: GrammarChapter[] = [
 
 const RAW_LESSONS: GrammarLesson[] = [
   {
+    key: "pronouns-subjects",
+    title: "Personal pronouns & subjects",
+    krTitle: "인칭대명사 & 주어",
+    level: "A1",
+    chapter: 1,
+    summary: "Korean has 'I', 'you', 'he/she' — but uses them far less than English does, and picking the wrong one is rude before it's ever wrong.",
+    sections: [
+      {
+        heading: "나 vs 저 — 'I'",
+        explanation:
+          "나 is casual, 저 is polite and humble. As a beginner meeting someone new, default to 저 (and its possessive 제, 'my') until you know they're okay with casual speech.",
+        examples: [
+          { kr: "저는 학생이에요.", romanization: "jeo-neun haksaeng-ieyo.", en: "I'm a student. (polite, safe default)" },
+          { kr: "제 이름은 마이클이에요.", romanization: "je ireum-eun maikeul-ieyo.", en: "My name is Michael. (제 = polite 'my')" },
+          { kr: "나는 배고파.", romanization: "na-neun baegopa.", en: "I'm hungry. (casual — close friends only)" },
+        ],
+      },
+      {
+        heading: "너 and 당신 — why 'you' is risky",
+        explanation:
+          "Korean mostly avoids saying 'you' at all. 너 is only for close friends, children, or people clearly younger than you. 당신 doesn't work as a polite generic 'you' either — it sounds either confrontational or oddly intimate (it's what spouses call each other). Use the person's name plus 씨, their title, or just drop the subject entirely — all three are more natural than any pronoun.",
+        examples: [
+          { kr: "너 어디 가?", romanization: "neo eodi ga?", en: "Where are you going? (casual, close friends only)" },
+          { kr: "민수 씨, 어디 가세요?", romanization: "minsu ssi, eodi gaseyo?", en: "Minsu, where are you going? (name + 씨 — the safe way)" },
+          { kr: "어디 가세요?", romanization: "eodi gaseyo?", en: "Where are you going? (subject just dropped — very common)" },
+        ],
+      },
+      {
+        heading: "그 / 그녀 — 'he' / 'she'",
+        explanation:
+          "그 (he) and 그녀 (she) show up in writing, subtitles, and novels, but rarely in real conversation. Speakers repeat the person's name or use a relationship word (형, 언니, 친구) instead.",
+        examples: [
+          { kr: "그는 선생님이에요.", romanization: "geuneun seonsaengnim-ieyo.", en: "He is a teacher. (written/formal — sounds stiff if spoken)" },
+          { kr: "민수는 선생님이에요.", romanization: "minsu-neun seonsaengnim-ieyo.", en: "Minsu is a teacher. (how you'd actually say it)" },
+        ],
+      },
+      {
+        heading: "우리 — 'we', but also 'my'",
+        explanation:
+          "우리 (we/our) covers far more ground than English 'our'. Koreans say 우리 엄마 ('my mom'), 우리 학교 ('my school') — even for something that belongs to just one person. It signals belonging more than literal plurality.",
+        examples: [
+          { kr: "우리 엄마는 요리를 잘해요.", romanization: "uri eomma-neun yorireul jalhaeyo.", en: "My mom cooks well. (우리 엄마, not 내 엄마)" },
+          { kr: "우리 학교는 커요.", romanization: "uri hakgyo-neun keoyo.", en: "My school is big." },
+        ],
+      },
+    ],
+    quiz: [
+      { q: "Meeting someone new, which word for 'I' is the safer default?", opts: ["나", "저", "너", "우리"], ans: 1 },
+      { q: "Which is true about 당신 ('you')?", opts: ["It's the safest way to address a stranger", "It's what spouses call each other, or sounds confrontational — avoid it with strangers", "It means 'we'", "It's only used for children"], ans: 1 },
+      { q: "'우리 엄마' most naturally means:", opts: ["Our shared mother (several people)", "My mom", "Every mom", "Grandma"], ans: 1 },
+    ],
+  },
+  {
     key: "word-order",
     title: "Korean word order (SOV)",
     krTitle: "어순",
