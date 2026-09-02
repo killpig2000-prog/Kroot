@@ -302,7 +302,7 @@ export default function WordDetailCard({
           disabled={saving !== null}
           onClick={() => mark(true)}
         >
-          {saving === "got-it" ? tu("saving") : marked ? `✓ ${t("gotIt")}` : t("gotIt")}
+          {saving === "got-it" ? tu("saving") : t("gotIt")}
         </button>
       </div>
 
