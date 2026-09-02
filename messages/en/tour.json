@@ -1,0 +1,36 @@
+{
+  "skip": "Skip",
+  "next": "Next",
+  "done": "Get started",
+  "progress": "{current} / {total}",
+  "steps": {
+    "sidebar": {
+      "title": "Your menu",
+      "body": "Everything you can practice lives here."
+    },
+    "basics": {
+      "title": "Basics",
+      "body": "Hangul, grammar, and vocabulary — the foundation."
+    },
+    "practice": {
+      "title": "Practice",
+      "body": "Listen, speak, and write to make it stick. Review lives here too."
+    },
+    "relax": {
+      "title": "Relax — try Slang",
+      "body": "Real expressions Korean speakers actually use, not in any textbook."
+    },
+    "tree": {
+      "title": "Your tree grows with you",
+      "body": "Your name, level, and streak live here — and so does your tree."
+    },
+    "quest": {
+      "title": "Start with today's quest",
+      "body": "One clear thing to do each day."
+    },
+    "garden": {
+      "title": "Watch your garden fill in",
+      "body": "Every study day adds a tile. Keep the streak alive."
+    }
+  }
+}

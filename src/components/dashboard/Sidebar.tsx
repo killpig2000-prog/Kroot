@@ -170,7 +170,11 @@ function SidebarBody({
       ))}
 
       {SECTIONS.map((section) => (
-        <div key={section.title} className="flex flex-col gap-0.5">
+        <div
+          key={section.title}
+          data-tour={`section-${section.title.toLowerCase()}`}
+          className="flex flex-col gap-0.5"
+        >
           <p className="text-[10.5px] font-bold tracking-[.09em] uppercase text-muted px-3 pt-3 pb-1">
             {tn(section.title.toLowerCase())}
           </p>

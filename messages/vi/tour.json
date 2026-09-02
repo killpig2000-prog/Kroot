@@ -1,0 +1,36 @@
+{
+  "skip": "Bỏ qua",
+  "next": "Tiếp",
+  "done": "Bắt đầu",
+  "progress": "{current} / {total}",
+  "steps": {
+    "sidebar": {
+      "title": "Menu của bạn",
+      "body": "Mọi thứ bạn có thể luyện tập đều ở đây."
+    },
+    "basics": {
+      "title": "Cơ bản",
+      "body": "Hangul, ngữ pháp và từ vựng — nền tảng của bạn."
+    },
+    "practice": {
+      "title": "Thực hành",
+      "body": "Nghe, nói và viết để ghi nhớ. Ôn tập cũng ở đây."
+    },
+    "relax": {
+      "title": "Thư giãn — thử Từ lóng",
+      "body": "Những cách nói người Hàn thực sự dùng, không có trong sách giáo khoa."
+    },
+    "tree": {
+      "title": "Cây của bạn lớn lên cùng bạn",
+      "body": "Tên, cấp độ và chuỗi ngày học đều ở đây — cây của bạn cũng vậy."
+    },
+    "quest": {
+      "title": "Bắt đầu với nhiệm vụ hôm nay",
+      "body": "Một việc rõ ràng để làm mỗi ngày."
+    },
+    "garden": {
+      "title": "Xem khu vườn đầy dần lên",
+      "body": "Mỗi ngày học sẽ thêm một ô. Giữ chuỗi ngày học liên tục."
+    }
+  }
+}

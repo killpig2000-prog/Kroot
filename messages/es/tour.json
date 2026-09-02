@@ -1,0 +1,36 @@
+{
+  "skip": "Saltar",
+  "next": "Siguiente",
+  "done": "Empezar",
+  "progress": "{current} / {total}",
+  "steps": {
+    "sidebar": {
+      "title": "Tu menú",
+      "body": "Aquí está todo lo que puedes practicar."
+    },
+    "basics": {
+      "title": "Básicos",
+      "body": "Hangul, gramática y vocabulario — la base."
+    },
+    "practice": {
+      "title": "Practica",
+      "body": "Escucha, habla y escribe para fijarlo. El repaso también está aquí."
+    },
+    "relax": {
+      "title": "Relax — prueba la Jerga",
+      "body": "Expresiones reales que usan los coreanos, no las vas a encontrar en un libro de texto."
+    },
+    "tree": {
+      "title": "Tu árbol crece contigo",
+      "body": "Tu nombre, nivel y racha están aquí — y también tu árbol."
+    },
+    "quest": {
+      "title": "Empieza con la misión de hoy",
+      "body": "Una sola cosa clara que hacer cada día."
+    },
+    "garden": {
+      "title": "Mira crecer tu jardín",
+      "body": "Cada día de estudio añade una casilla. Mantén viva la racha."
+    }
+  }
+}

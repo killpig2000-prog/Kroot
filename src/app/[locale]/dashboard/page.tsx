@@ -12,6 +12,7 @@ import TodaysQuestCard from "@/components/dashboard/TodaysQuestCard";
 import LevelMap from "@/components/dashboard/LevelMap";
 import { FirstVisitPlan, LockedWidgets, type FirstVisitStep } from "@/components/dashboard/FirstVisitPlan";
 import InstallBanner from "@/components/pwa/InstallBanner";
+import OnboardingTour from "@/components/onboarding/OnboardingTour";
 import { GRAMMAR_LESSONS } from "@/lib/grammar";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { levelProgress } from "@/lib/level";
@@ -401,15 +402,18 @@ export default async function DashboardPage() {
   return (
     <div className="min-h-screen bg-warm text-charcoal">
       <div className="grid grid-cols-1 md:grid-cols-[clamp(216px,18%,280px)_minmax(0,1fr)] xl:grid-cols-[clamp(216px,17%,280px)_minmax(0,1fr)_clamp(260px,22%,340px)] w-full min-h-screen">
-        <Sidebar
-          displayName={displayName}
-          email={user.email ?? ""}
-          streakDays={streakDays}
-          avatarUrl={profile?.avatar_url}
-          streakFreezes={extras?.streak_freezes ?? 0}
-        />
+        <div data-tour="sidebar">
+          <Sidebar
+            displayName={displayName}
+            email={user.email ?? ""}
+            streakDays={streakDays}
+            avatarUrl={profile?.avatar_url}
+            streakFreezes={extras?.streak_freezes ?? 0}
+          />
+        </div>
 
         <main className="min-w-0 px-[clamp(18px,3vw,36px)] pt-[26px] pb-[100px] md:pb-[60px]">
+          <OnboardingTour />
           <Greeting name={displayName} />
 
           {/* The snapshot RPC failed, so everything below is the empty
@@ -424,20 +428,22 @@ export default async function DashboardPage() {
             </div>
           )}
 
-          <TreeCard
-            level={level}
-            progressPct={pct}
-            xpInto={into}
-            xpNeeded={needed}
-            costumeIds={equippedIds}
-            species={cefr}
-            userId={user.id}
-            displayName={displayName}
-            avatarUrl={profile?.avatar_url ?? null}
-            coins={coins}
-            streakDays={streakDays}
-            streakFreezes={extras?.streak_freezes ?? 0}
-          />
+          <div data-tour="tree">
+            <TreeCard
+              level={level}
+              progressPct={pct}
+              xpInto={into}
+              xpNeeded={needed}
+              costumeIds={equippedIds}
+              species={cefr}
+              userId={user.id}
+              displayName={displayName}
+              avatarUrl={profile?.avatar_url ?? null}
+              coins={coins}
+              streakDays={streakDays}
+              streakFreezes={extras?.streak_freezes ?? 0}
+            />
+          </div>
 
           {/* today's quest — the one always-visible recommendation. Resuming
               a specific in-progress session was removed (product decision:
@@ -460,7 +466,7 @@ export default async function DashboardPage() {
               </Link>
             </div>
           )}
-          <div className={quest && dueCount > 0 ? "hidden sm:block" : undefined}>
+          <div data-tour="quest" className={quest && dueCount > 0 ? "hidden sm:block" : undefined}>
             <TodaysQuestCard quest={quest} />
           </div>
 
@@ -574,15 +580,17 @@ export default async function DashboardPage() {
 
           {/* study garden — the year grass, moved in from My growth; its
               pills absorb the old This week / month challenge widgets */}
-          <MonthlyGrass
-            minutesByDate={minutesByDate}
-            headline={[
-              { label: t("garden.thisWeek"), value: `${weekTotal}m` },
-              { label: t("garden.total"), value: totalMinutes >= 90 ? `${Math.round(totalMinutes / 6) / 10}h` : `${totalMinutes}m` },
-              { label: t("garden.bestStreak"), value: `${longestStreak}d` },
-              { label: t("garden.monthGoal", { month: monthShort }), value: `${monthDone}/${MONTH_GOAL}` },
-            ]}
-          />
+          <div data-tour="garden">
+            <MonthlyGrass
+              minutesByDate={minutesByDate}
+              headline={[
+                { label: t("garden.thisWeek"), value: `${weekTotal}m` },
+                { label: t("garden.total"), value: totalMinutes >= 90 ? `${Math.round(totalMinutes / 6) / 10}h` : `${totalMinutes}m` },
+                { label: t("garden.bestStreak"), value: `${longestStreak}d` },
+                { label: t("garden.monthGoal", { month: monthShort }), value: `${monthDone}/${MONTH_GOAL}` },
+              ]}
+            />
+          </div>
         </main>
 
         <Widgets
