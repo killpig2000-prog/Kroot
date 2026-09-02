@@ -6,28 +6,6 @@
       "title": "Rutas",
       "note": "Elige una: hacer las dos a la vez es lo que hace que la gente se atasque. Cada parada es un enlace, así que entra por donde ya estés."
     },
-    "practice": {
-      "title": "Zona de práctica",
-      "note": "Básicos enseña las piezas. Aquí es donde realmente las usas — cada día, mientras sigas estudiando coreano.",
-      "stops": {
-        "listen": {
-          "body": "Entrena el oído con diálogos a velocidad real hasta que dejen de sonar rápidos.",
-          "freq": "3 veces por semana"
-        },
-        "pron": {
-          "body": "Dilo en voz alta hasta que un nativo te entienda a la primera.",
-          "freq": "5 min al día"
-        },
-        "write": {
-          "body": "Construye oraciones reales con lo que has aprendido — nada de opción múltiple.",
-          "freq": "2 veces por semana"
-        },
-        "read": {
-          "body": "Lee textos cortos lo bastante rápido como para dejar de traducir en tu cabeza.",
-          "freq": "3 veces por semana"
-        }
-      }
-    },
     "extras": {
       "title": "Dos cosas que la ruta no muestra",
       "note": "Ninguna es una parada del camino: una lo sostiene por debajo y la otra lo cierra."

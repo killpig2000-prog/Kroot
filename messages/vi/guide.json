@@ -6,28 +6,6 @@
       "title": "Lộ trình",
       "note": "Chỉ chọn một — chạy cả hai cùng lúc là lý do người ta bỏ dở. Mỗi chặng đều là một liên kết, nên bạn đang ở đâu thì vào từ đó."
     },
-    "practice": {
-      "title": "Sân tập luyện",
-      "note": "Cơ bản dạy từng phần. Đây là nơi bạn thực sự dùng chúng — mỗi ngày, chừng nào bạn còn học tiếng Hàn.",
-      "stops": {
-        "listen": {
-          "body": "Luyện tai với hội thoại tốc độ thật cho đến khi nó không còn nhanh nữa.",
-          "freq": "3 lần/tuần"
-        },
-        "pron": {
-          "body": "Nói to lên cho đến khi người bản xứ hiểu bạn ngay lần đầu.",
-          "freq": "5 phút mỗi ngày"
-        },
-        "write": {
-          "body": "Xây câu thật từ những gì bạn đã học — không phải trắc nghiệm.",
-          "freq": "2 lần/tuần"
-        },
-        "read": {
-          "body": "Đọc đoạn văn ngắn đủ nhanh để không còn dịch trong đầu nữa.",
-          "freq": "3 lần/tuần"
-        }
-      }
-    },
     "extras": {
       "title": "Hai thứ lộ trình không hiển thị",
       "note": "Cả hai đều không phải một chặng — một cái chạy bên dưới, cái kia khép lại lộ trình."
