@@ -5719,5 +5719,115 @@
       ]
     }
   },
-  "es": {}
+  "es": {},
+  "pronouns-subjects": {
+    "ja": {
+      "title": "人称代名詞と主語",
+      "summary": "韓国語にも「私」「あなた」「彼・彼女」はあるが、英語よりずっと使用頻度が低く、間違った言葉を選ぶと文法的に誤る前に失礼になる。",
+      "sections": [
+        {
+          "heading": "나 と 저 —「私」",
+          "explanation": "나はカジュアルで、저は丁寧でへりくだった言い方。初心者が初対面の人と会うときは、相手がカジュアルな話し方でも大丈夫だと分かるまで저（そしてその所有格の제「私の」）をデフォルトにしよう。"
+        },
+        {
+          "heading": "너 と 당신 —「あなた」がなぜ危険か",
+          "explanation": "韓国語では「あなた」という言葉自体をほとんど使わない。너は親しい友人、子供、明らかに年下の人にしか使えない。당신も丁寧な汎用の「あなた」としては機能しない——喧嘩腰に聞こえるか、逆に妙に親密（夫婦が互いを呼ぶ言葉）に聞こえる。相手の名前に씨を付けるか、肩書きを使うか、単に主語を省略するのが、どの代名詞よりも自然。"
+        },
+        {
+          "heading": "그 / 그녀 —「彼」「彼女」",
+          "explanation": "그（彼）と그녀（彼女）は文章、字幕、小説には出てくるが、実際の会話ではほとんど使われない。話者は相手の名前を繰り返すか、関係を表す言葉（형、언니、친구など）を代わりに使う。"
+        },
+        {
+          "heading": "우리 —「私たち」だけでなく「私の」も",
+          "explanation": "우리（私たち/私たちの）は英語の「our」よりもずっと広い範囲をカバーする。韓国人は우리 엄마（「私の母」）、우리 학교（「私の学校」）のように、たとえ一人だけのものであっても우리を使う。文字通りの複数性よりも「所属」を表している。"
+        }
+      ],
+      "quiz": [
+        "初対面の人と会うとき、「私」としてより安全なデフォルトはどちらか？",
+        "당신（「あなた」）について正しいのはどれか？",
+        "「우리 엄마」が最も自然に意味するのは："
+      ]
+    },
+    "zh": {
+      "title": "人称代词与主语",
+      "summary": "韩语也有\"我\"\"你\"\"他/她\"，但使用频率远低于英语，选错了称呼往往先显得失礼，而不是先显得语法错误。",
+      "sections": [
+        {
+          "heading": "나 与 저 ——\"我\"",
+          "explanation": "나是随意的说法，저是礼貌谦逊的说法。作为初学者第一次见面时，在确定对方能接受随意语气之前，默认使用저（以及它的所有格제，\"我的\"）。"
+        },
+        {
+          "heading": "너 与 당신 ——为什么\"你\"很危险",
+          "explanation": "韩语基本上会完全避免说\"你\"。너只用于亲密的朋友、孩子，或明显比自己年幼的人。당신作为礼貌的通用\"你\"也不合适——听起来要么带有对抗性，要么显得莫名亲密（是夫妻之间互相称呼的说法）。用对方的名字加씨、用他们的头衔，或者干脆省略主语——这三种方式都比任何代词更自然。"
+        },
+        {
+          "heading": "그 / 그녀 ——\"他\"/\"她\"",
+          "explanation": "그（他）和그녀（她）会出现在书面语、字幕和小说中，但在真实对话中很少使用。说话人会重复对方的名字，或者用表示关系的词（형、언니、친구等）来代替。"
+        },
+        {
+          "heading": "우리 ——不只是\"我们\"，也是\"我的\"",
+          "explanation": "우리（我们/我们的）涵盖的范围比英语的\"our\"要广得多。韩国人会说우리 엄마（\"我妈妈\"）、우리 학교（\"我的学校\"），即使这东西只属于一个人也是如此。它表达的更多是归属感，而不是字面上的复数。"
+        }
+      ],
+      "quiz": [
+        "初次见面时，哪个\"我\"的说法更安全、更适合作为默认选择？",
+        "关于당신（\"你\"），下列哪项是正确的？",
+        "\"우리 엄마\"最自然的意思是："
+      ]
+    },
+    "vi": {
+      "title": "Đại từ nhân xưng & chủ ngữ",
+      "summary": "Tiếng Hàn có \"tôi\", \"bạn\", \"anh ấy/cô ấy\" — nhưng dùng chúng ít hơn nhiều so với tiếng Anh, và chọn sai đại từ sẽ bị coi là bất lịch sự trước khi bị coi là sai ngữ pháp.",
+      "sections": [
+        {
+          "heading": "나 và 저 — \"Tôi\"",
+          "explanation": "나 là cách nói thân mật, 저 là cách nói lịch sự và khiêm nhường. Khi mới gặp ai đó lần đầu, hãy mặc định dùng 저 (và dạng sở hữu của nó là 제, \"của tôi\") cho đến khi bạn biết chắc họ thoải mái với cách nói thân mật."
+        },
+        {
+          "heading": "너 và 당신 — vì sao \"bạn\" lại rủi ro",
+          "explanation": "Tiếng Hàn hầu như tránh nói \"bạn\" hoàn toàn. 너 chỉ dùng cho bạn thân, trẻ em, hoặc người rõ ràng nhỏ tuổi hơn bạn. 당신 cũng không hoạt động như một từ \"bạn\" lịch sự chung chung — nó nghe có vẻ đối đầu hoặc kỳ lạ thân mật (đó là cách vợ chồng gọi nhau). Hãy dùng tên người đó kèm 씨, chức danh của họ, hoặc đơn giản là bỏ hẳn chủ ngữ — cả ba cách đều tự nhiên hơn bất kỳ đại từ nào."
+        },
+        {
+          "heading": "그 / 그녀 — \"Anh ấy\" / \"Cô ấy\"",
+          "explanation": "그 (anh ấy) và 그녀 (cô ấy) xuất hiện trong văn viết, phụ đề và tiểu thuyết, nhưng hiếm khi dùng trong hội thoại thực tế. Người nói thường lặp lại tên của người đó hoặc dùng một từ chỉ quan hệ (형, 언니, 친구) thay thế."
+        },
+        {
+          "heading": "우리 — \"chúng tôi\", nhưng cũng là \"của tôi\"",
+          "explanation": "우리 (chúng tôi/của chúng tôi) bao phủ phạm vi rộng hơn nhiều so với \"our\" trong tiếng Anh. Người Hàn nói 우리 엄마 (\"mẹ tôi\"), 우리 학교 (\"trường tôi\") — ngay cả khi thứ đó chỉ thuộc về một người. Nó thể hiện sự thuộc về nhiều hơn là số nhiều theo nghĩa đen."
+        }
+      ],
+      "quiz": [
+        "Khi gặp ai đó lần đầu, từ nào cho \"tôi\" là lựa chọn mặc định an toàn hơn?",
+        "Điều nào đúng về 당신 (\"bạn\")?",
+        "\"우리 엄마\" tự nhiên nhất có nghĩa là:"
+      ]
+    },
+    "es": {
+      "title": "Pronombres personales y sujetos",
+      "summary": "El coreano tiene \"yo\", \"tú\", \"él/ella\" — pero los usa mucho menos que el inglés, y elegir el equivocado resulta grosero antes de resultar incorrecto.",
+      "sections": [
+        {
+          "heading": "나 vs 저 — \"yo\"",
+          "explanation": "나 es informal, 저 es cortés y humilde. Como principiante conociendo a alguien nuevo, usa 저 por defecto (y su forma posesiva 제, \"mi\") hasta que sepas que la persona está bien con un habla informal."
+        },
+        {
+          "heading": "너 y 당신 — por qué \"tú\" es arriesgado",
+          "explanation": "El coreano en general evita decir \"tú\" por completo. 너 solo se usa con amigos cercanos, niños, o personas claramente más jóvenes que tú. 당신 tampoco funciona como un \"tú\" cortés genérico — suena confrontacional o extrañamente íntimo (es como se llaman los cónyuges entre sí). Usa el nombre de la persona más 씨, su título, o simplemente omite el sujeto — las tres opciones son más naturales que cualquier pronombre."
+        },
+        {
+          "heading": "그 / 그녀 — \"él\" / \"ella\"",
+          "explanation": "그 (él) y 그녀 (ella) aparecen en la escritura, los subtítulos y las novelas, pero rara vez en una conversación real. Los hablantes repiten el nombre de la persona o usan una palabra de relación (형, 언니, 친구) en su lugar."
+        },
+        {
+          "heading": "우리 — \"nosotros\", pero también \"mi\"",
+          "explanation": "우리 (nosotros/nuestro) cubre un terreno mucho más amplio que el \"our\" del inglés. Los coreanos dicen 우리 엄마 (\"mi mamá\"), 우리 학교 (\"mi escuela\") — incluso para algo que pertenece a una sola persona. Señala pertenencia más que pluralidad literal."
+        }
+      ],
+      "quiz": [
+        "Al conocer a alguien nuevo, ¿qué palabra para \"yo\" es la opción por defecto más segura?",
+        "¿Qué es cierto sobre 당신 (\"tú\")?",
+        "\"우리 엄마\" significa más naturalmente:"
+      ]
+    }
+  }
 }
