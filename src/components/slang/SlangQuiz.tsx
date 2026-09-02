@@ -68,6 +68,7 @@ export default function SlangQuiz() {
   const [finished, setFinished] = useState(false);
   const [doneToday, setDoneToday] = useState<number | null>(null);
   const [answers, setAnswers] = useState<boolean[]>([]);
+  const [dismissed, setDismissed] = useState(false);
 
   function start() {
     try {
@@ -118,10 +119,12 @@ export default function SlangQuiz() {
 
   const q = quiz[qIndex];
 
+  if (dismissed) return null;
+
   return (
-    <div className="border-[1.5px] border-[var(--tint-pink-line)] bg-[var(--tint-pink)] rounded-[14px] px-5 py-4 mb-6">
+    <div className="relative border-[1.5px] border-[var(--tint-pink-line)] bg-[var(--tint-pink)] rounded-[14px] px-5 py-4 mb-6">
       {!expanded || doneToday !== null ? (
-        <div className="flex items-center gap-3.5 flex-wrap">
+        <div className="flex items-center gap-3.5 flex-wrap pr-6">
           <span className="text-[22px] flex-none">🎯</span>
           <div className="flex-1 min-w-[180px]">
             <b className="block text-[14px] font-bold text-[#AF3166]">{t("title")}</b>
@@ -137,6 +140,16 @@ export default function SlangQuiz() {
               className="flex-none rounded-[9px] px-[18px] py-2 text-[13px] font-semibold text-white bg-[#C13E78] hover:bg-[#AF3166] transition-colors"
             >
               {t("start")}
+            </button>
+          )}
+          {doneToday !== null && (
+            <button
+              type="button"
+              onClick={() => setDismissed(true)}
+              aria-label={t("close")}
+              className="absolute top-2.5 right-2.5 w-7 h-7 rounded-full flex items-center justify-center text-[13px] text-[#97687D] hover:text-[#AF3166] hover:bg-cream transition-colors"
+            >
+              <span aria-hidden="true">✕</span>
             </button>
           )}
         </div>
