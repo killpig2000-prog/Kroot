@@ -22,6 +22,7 @@
   },
   "grass": {
     "title": "🌿 Study garden · {year}",
+    "hint": "Study a day, its tile gets darker.",
     "minutesShort": "{n}m",
     "dayTitle": "{date} · {n} min",
     "less": "less",

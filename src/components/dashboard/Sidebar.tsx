@@ -165,9 +165,14 @@ function SidebarBody({
         )}
       </div>
 
-      {MAIN_ITEMS.map((item) => (
-        <NavItem key={item.label} {...item} on={pathname === item.href} />
-      ))}
+      {/* Personal destinations (Garden / My progress / My word bank) sit in
+          their own tinted card so they read as "your space", distinct from
+          the learning menu below — no label needed, the container says it. */}
+      <div className="flex flex-col gap-0.5 bg-cream border border-dash rounded-[10px] p-1 mb-2">
+        {MAIN_ITEMS.map((item) => (
+          <NavItem key={item.label} {...item} on={pathname === item.href} />
+        ))}
+      </div>
 
       {SECTIONS.map((section) => (
         <div

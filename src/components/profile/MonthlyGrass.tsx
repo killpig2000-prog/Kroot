@@ -64,7 +64,7 @@ export default async function MonthlyGrass({
 
   return (
     <div className="border border-line rounded-[14px] px-[22px] py-5">
-      <div className="flex items-center justify-between gap-3 mb-3.5 flex-wrap">
+      <div className="flex items-center justify-between gap-3 mb-1 flex-wrap">
         <b className="font-semibold text-[15px]">{t("title", { year: String(year) })}</b>
         <div className="flex gap-2 flex-wrap">
           {headline.map((h) => (
@@ -77,6 +77,7 @@ export default async function MonthlyGrass({
           ))}
         </div>
       </div>
+      <p className="text-[12px] text-faint mb-3.5">{t("hint")}</p>
 
       <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-x-3 gap-y-4">
         {months.map((m) => (

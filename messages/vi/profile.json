@@ -22,6 +22,7 @@
   },
   "grass": {
     "title": "🌿 Khu vườn học tập · {year}",
+    "hint": "Học một ngày, ô của ngày đó sẽ đậm màu hơn.",
     "minutesShort": "{n} phút",
     "dayTitle": "{date} · {n} phút",
     "less": "ít",

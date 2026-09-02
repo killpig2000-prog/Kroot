@@ -22,6 +22,7 @@
   },
   "grass": {
     "title": "🌿 Jardín de estudio · {year}",
+    "hint": "Estudia un día y su casilla se oscurece.",
     "minutesShort": "{n} min",
     "dayTitle": "{date} · {n} min",
     "less": "menos",

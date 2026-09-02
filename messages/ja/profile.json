@@ -22,6 +22,7 @@
   },
   "grass": {
     "title": "🌿 学習の庭 · {year}",
+    "hint": "勉強した日はマスが濃くなります。",
     "minutesShort": "{n}分",
     "dayTitle": "{date} · {n}分",
     "less": "少",
