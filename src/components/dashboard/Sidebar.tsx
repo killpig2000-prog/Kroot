@@ -176,9 +176,9 @@ function SidebarBody({
         <div
           key={section.title}
           data-tour={`section-${section.title.toLowerCase()}`}
-          className="flex flex-col gap-0.5"
+          className="flex flex-col gap-0.5 pt-2.5 mt-1 border-t border-line"
         >
-          <p className="text-[10.5px] font-bold tracking-[.09em] uppercase text-muted px-3 pt-3 pb-1">
+          <p className="text-[12.5px] font-extrabold tracking-[.07em] uppercase text-charcoal px-3 pb-1.5">
             {tn(section.title.toLowerCase())}
           </p>
           <div className="flex flex-col gap-0.5">
