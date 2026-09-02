@@ -68,7 +68,21 @@ function writeStored(p: Placement | null) {
   }
 }
 
-export default function OnboardingFlow({ lessons }: { lessons: FirstLessonsMap }) {
+export default function OnboardingFlow({
+  lessons,
+  hasPlacement = false,
+}: {
+  lessons: FirstLessonsMap;
+  /**
+   * Known server-side from ?p= (see page.tsx): true means this render is a
+   * visitor returning from the auth redirect with a placement already in
+   * hand, about to be saved by the mount effect below almost immediately.
+   * Deciding this client-only (via window.location) instead rendered "gate"
+   * on the server and "saving" on the client's first paint — a hydration
+   * mismatch that also flashed the Hangul-gate card on screen either way.
+   */
+  hasPlacement?: boolean;
+}) {
   const router = useRouter();
   const t = useTranslations("onboarding");
   const supabase = useMemo(() => createClient(), []);
@@ -81,8 +95,8 @@ export default function OnboardingFlow({ lessons }: { lessons: FirstLessonsMap }
   });
   const customNext = params.next !== "/dashboard";
 
-  const [step, setStep] = useState<Step>("gate");
-  const stepRef = useRef<Step>("gate");
+  const [step, setStep] = useState<Step>(hasPlacement ? "saving" : "gate");
+  const stepRef = useRef<Step>(step);
   const [userId, setUserId] = useState<string | null>(null);
   const [canRead, setCanRead] = useState<boolean | null>(null);
   const [goal, setGoal] = useState<Goal | null>(null);
@@ -116,7 +130,7 @@ export default function OnboardingFlow({ lessons }: { lessons: FirstLessonsMap }
   // test they had just sat. The entry carries the quiz run too, so Back works
   // question-by-question inside the test.
   useEffect(() => {
-    window.history.replaceState({ ...window.history.state, kroot: { step: "gate" } }, "");
+    window.history.replaceState({ ...window.history.state, kroot: { step: stepRef.current } }, "");
     function onPop(e: PopStateEvent) {
       // Once we are off /onboarding the browser has left the flow; let it.
       if (!window.location.pathname.endsWith("/onboarding")) return;
@@ -180,10 +194,13 @@ export default function OnboardingFlow({ lessons }: { lessons: FirstLessonsMap }
         goal: p.goal,
       });
       writeStored(null);
-      const first = orderedLessons(p)[0];
-      router.push(customNext ? params.next : (first?.href ?? "/dashboard"));
+      // Always the real dashboard (with its first-visit tour) — not the
+      // learner's first recommended lesson. That recommendation still shows
+      // on the result/signup cards; it was never meant to be where the
+      // account actually lands.
+      router.push(params.next);
     },
-    [supabase, router, customNext, params.next, orderedLessons]
+    [supabase, router, params.next]
   );
 
   useEffect(() => {
