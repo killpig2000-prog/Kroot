@@ -179,6 +179,10 @@ export function TileBoard({
   } | null>(null);
   const tileRefs = useRef(new Map<string, HTMLSpanElement>());
   const ghostRef = useRef<HTMLDivElement>(null);
+  const rafId = useRef<number | null>(null);
+  useEffect(() => () => {
+    if (rafId.current) cancelAnimationFrame(rafId.current);
+  }, []);
   const setTileRef = (id: string, el: HTMLSpanElement | null) => {
     if (el) tileRefs.current.set(id, el);
     else tileRefs.current.delete(id);
@@ -210,25 +214,41 @@ export function TileBoard({
       setDragId(info.id);
     }
     if (ghostRef.current) {
+      // Move the ghost immediately, off the React/rAF cycle, so the tile
+      // tracks the finger 1:1 with no per-frame batching delay.
       ghostRef.current.style.transform = `translate(${e.clientX - info.offsetX}px, ${e.clientY - info.offsetY}px)`;
     }
-    for (const [tid, el] of tileRefs.current) {
-      if (tid === info.id) continue;
-      const r = el.getBoundingClientRect();
-      if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) continue;
-      const from = picked.indexOf(info.id);
-      const to = picked.indexOf(tid);
-      if (from === -1 || to === -1 || from === to) break;
-      const next = [...picked];
-      next.splice(from, 1);
-      next.splice(to, 0, info.id);
-      onChange(next);
-      break;
-    }
+    // The swap hit-test does a getBoundingClientRect() per tile, which is a
+    // layout read — running it on every raw pointermove (far more frequent
+    // than paint) was what made the swap itself feel like it lagged behind
+    // the finger. Coalesce it to at most once per animation frame.
+    const x = e.clientX;
+    const y = e.clientY;
+    if (rafId.current) cancelAnimationFrame(rafId.current);
+    rafId.current = requestAnimationFrame(() => {
+      rafId.current = null;
+      for (const [tid, el] of tileRefs.current) {
+        if (tid === info.id) continue;
+        const r = el.getBoundingClientRect();
+        if (x < r.left || x > r.right || y < r.top || y > r.bottom) continue;
+        const from = picked.indexOf(info.id);
+        const to = picked.indexOf(tid);
+        if (from === -1 || to === -1 || from === to) break;
+        const next = [...picked];
+        next.splice(from, 1);
+        next.splice(to, 0, info.id);
+        onChange(next);
+        break;
+      }
+    });
   }
 
   function handleDragEnd() {
     hold.end();
+    if (rafId.current) {
+      cancelAnimationFrame(rafId.current);
+      rafId.current = null;
+    }
     dragInfo.current = null;
     setDragId(null);
   }

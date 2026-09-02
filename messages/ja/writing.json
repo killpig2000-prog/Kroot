@@ -53,7 +53,8 @@
     "saving": "保存中…",
     "finishChapter": "章を完了する",
     "back": "戻る",
-    "nextQuestion": "次の問題"
+    "nextQuestion": "次の問題",
+    "correctSentence": "正解の文"
   },
   "board": {
     "tapWords": "下の単語を順番にタップしよう",

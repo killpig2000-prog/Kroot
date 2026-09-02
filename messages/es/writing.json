@@ -53,7 +53,8 @@
     "saving": "Guardando…",
     "finishChapter": "Terminar capítulo",
     "back": "Atrás",
-    "nextQuestion": "Siguiente pregunta"
+    "nextQuestion": "Siguiente pregunta",
+    "correctSentence": "Oración correcta"
   },
   "board": {
     "tapWords": "Toca las palabras de abajo, en orden",

@@ -53,7 +53,8 @@
     "saving": "Đang lưu…",
     "finishChapter": "Hoàn thành chương",
     "back": "Quay lại",
-    "nextQuestion": "Câu tiếp theo"
+    "nextQuestion": "Câu tiếp theo",
+    "correctSentence": "Câu đúng"
   },
   "board": {
     "tapWords": "Chạm vào các từ bên dưới, theo đúng thứ tự",

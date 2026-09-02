@@ -37,7 +37,8 @@
     "saving": "Saving…",
     "finishChapter": "Finish chapter",
     "back": "Back",
-    "nextQuestion": "Next question"
+    "nextQuestion": "Next question",
+    "correctSentence": "Correct sentence"
   },
   "board": {
     "tapWords": "Tap the words below, in order",

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { WRITING_GENRE_META, type Prompt } from "@/lib/writing";
 import { getLocalizedExample, getLocalizedPrompt, getLocalizedStimulus } from "@/lib/writing-i18n";
-import type { Board } from "@/lib/writing-builder";
+import { checkTiles, type Board } from "@/lib/writing-builder";
 import { TileBoard } from "@/components/writing/WritingBoards";
 
 const CARD = "border border-line rounded-[16px] bg-cream max-w-[900px] overflow-hidden";
@@ -14,9 +14,10 @@ const BTN_LINE =
   "rounded-[10px] px-5 py-[11px] text-sm font-bold text-charcoal bg-cream border border-line hover:bg-warm transition-colors disabled:opacity-40";
 const EYEBROW = "text-[11px] font-extrabold tracking-[.1em] uppercase text-success mb-1.5";
 
-/** Per-question interaction state, owned by WritingSession. Checking now
- * happens once, for every question, after the chapter is submitted — not
- * per question — so there is nothing here to record but the picks. */
+/** Per-question interaction state, owned by WritingSession. Each question is
+ * checked here as it's answered (see WritePhase's own `checked` state for
+ * the per-question right/wrong), so there is nothing to record but the picks —
+ * `WritingSession.submit` re-derives the final scored answers from these. */
 export type Entry = {
   /** Reseed counter — bumps on "shuffle" so a fresh attempt gets a fresh board. */
   attempt: number;
@@ -68,6 +69,13 @@ export default function WritePhase({
   const prompt = prompts[step];
   const entry = entries[step];
   const board = boards[step];
+
+  // Checked per question now, not once at the end of the chapter: tap
+  // Check, see the correct sentence right away, then move on. `checked[i]`
+  // is absent until that question has been checked once.
+  const [checked, setChecked] = useState<Record<number, boolean>>({});
+  const stepChecked = checked[step];
+  const isChecked = step in checked;
 
   return (
     <div className={CARD}>
@@ -137,9 +145,43 @@ export default function WritePhase({
         <TileBoard
           board={board}
           picked={entry.picked}
-          onChange={(picked) => update(step, { picked })}
-          onReset={() => onReset(step)}
+          onChange={(picked) => {
+            if (isChecked) return; // locked once checked — Reset (or Next/Back) starts a fresh attempt
+            update(step, { picked });
+          }}
+          onReset={() => {
+            onReset(step);
+            setChecked((prev) => {
+              const next = { ...prev };
+              delete next[step];
+              return next;
+            });
+          }}
         />
+
+        {!isChecked ? (
+          <div className="flex justify-end -mt-1">
+            <button
+              type="button"
+              className={BTN_INK}
+              onClick={() => setChecked((prev) => ({ ...prev, [step]: checkTiles(board, entry.picked) }))}
+              disabled={!entryDone(entry, board)}
+            >
+              {t("board.check")}
+            </button>
+          </div>
+        ) : (
+          <div
+            className={`rounded-[12px] border px-3.5 py-3 ${
+              stepChecked ? "bg-success-bg border-success-line text-success-deep" : "bg-[var(--tint-amber)] border-amber-line text-amber"
+            }`}
+          >
+            <div className="text-[11px] font-extrabold tracking-[.08em] uppercase mb-1 opacity-80">
+              {stepChecked ? t("board.correct") : t("phase.correctSentence")}
+            </div>
+            <p className="kr text-[15px] leading-[1.6]">{board.answer.join(" ")}</p>
+          </div>
+        )}
       </div>
 
       {/* footer */}
@@ -151,11 +193,11 @@ export default function WritePhase({
           <span className="text-[13px] text-muted">{t("phase.doneCount", { done: answeredCount, total: prompts.length })}</span>
         </div>
         {step < last ? (
-          <button type="button" className={BTN_INK} onClick={() => setStep((s) => s + 1)}>
+          <button type="button" className={BTN_INK} onClick={() => setStep((s) => s + 1)} disabled={!isChecked}>
             {t("phase.nextQuestion")}
           </button>
         ) : (
-          <button type="button" className={BTN_INK} onClick={onSubmit} disabled={submitting || !ready}>
+          <button type="button" className={BTN_INK} onClick={onSubmit} disabled={submitting || !ready || !isChecked}>
             {submitting ? t("phase.saving") : t("phase.finishChapter")}
           </button>
         )}

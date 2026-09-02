@@ -53,7 +53,8 @@
     "saving": "保存中…",
     "finishChapter": "完成本章",
     "back": "返回",
-    "nextQuestion": "下一题"
+    "nextQuestion": "下一题",
+    "correctSentence": "正确句子"
   },
   "board": {
     "tapWords": "按顺序点击下面的单词",
