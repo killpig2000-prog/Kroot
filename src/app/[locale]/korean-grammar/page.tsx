@@ -28,14 +28,14 @@ export default async function GrammarGuideHub({ params }: Props) {
   const t = await getTranslations({ locale, namespace: "grammarGuide" });
 
   return (
-    <div className="min-h-screen bg-[var(--sky)] text-[var(--ink)]">
+    <div className="min-h-screen bg-warm text-charcoal">
       <header className="mx-auto flex max-w-3xl items-center justify-between px-6 py-5">
-        <Link href="/" className="font-bold text-[var(--deep)] text-xl">
+        <Link href="/" className="font-bold text-[#3E7C59] text-xl">
           Kroot
         </Link>
         <Link
           href="/onboarding"
-          className="rounded-full bg-[var(--leaf)] px-4 py-2 text-sm font-semibold text-white shadow-[0_3px_0_var(--leaf-shadow)]"
+          className="rounded-full bg-success px-4 py-2 text-sm font-semibold text-white shadow-[0_3px_0_var(--color-success-deep)]"
         >
           {t("startLearningShort")}
         </Link>
@@ -43,16 +43,16 @@ export default async function GrammarGuideHub({ params }: Props) {
 
       <main className="mx-auto max-w-3xl px-6 pb-16">
         <h1 className="text-4xl font-bold">{t("hubTitle")}</h1>
-        <p className="mt-3 text-[var(--soft)]">{t("hubIntro")}</p>
+        <p className="mt-3 text-muted">{t("hubIntro")}</p>
 
         {GRAMMAR_CHAPTERS.map((chapter) => {
           const lessons = lessonsByChapter(chapter.number);
           return (
             <section key={chapter.number} className="mt-8">
               <h2 className="text-lg font-bold">
-                <span className="text-[var(--deep)]">{t("chapterN", { n: chapter.number })}</span>
-                <span className="ml-2 font-medium text-[var(--soft)]">{chapter.title}</span>
-                <span className="ml-2 text-xs font-medium text-[var(--soft)] tabular-nums">
+                <span className="text-success">{t("chapterN", { n: chapter.number })}</span>
+                <span className="ml-2 font-medium text-muted">{chapter.title}</span>
+                <span className="ml-2 text-xs font-medium text-faint tabular-nums">
                   {t("lessonCount", { count: lessons.length })}
                 </span>
               </h2>
@@ -61,10 +61,10 @@ export default async function GrammarGuideHub({ params }: Props) {
                   <li key={lesson.key}>
                     <Link
                       href={`/korean-grammar/${lesson.key}`}
-                      className="flex items-baseline gap-2 rounded-xl bg-[var(--cream)] px-3.5 py-2 shadow-[0_2px_0_var(--card-shadow)] hover:-translate-y-0.5 transition"
+                      className="flex items-baseline gap-2 rounded-xl bg-cream px-3.5 py-2 border border-line hover:-translate-y-0.5 transition"
                     >
                       <span className="font-bold flex-none">{lesson.title}</span>
-                      <span className="min-w-0 truncate text-sm text-[var(--soft)] kr">{lesson.krTitle}</span>
+                      <span className="min-w-0 truncate text-sm text-muted kr">{lesson.krTitle}</span>
                     </Link>
                   </li>
                 ))}

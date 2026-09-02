@@ -64,22 +64,22 @@ export default async function WritingGuidePromptPage({ params }: Props) {
   };
 
   return (
-    <div className="min-h-screen bg-[var(--sky)] text-[var(--ink)]">
+    <div className="min-h-screen bg-warm text-charcoal">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdScript(jsonLd) }} />
       <header className="mx-auto flex max-w-3xl items-center justify-between px-6 py-5">
-        <Link href="/" className="font-bold text-[var(--deep)] text-xl">
+        <Link href="/" className="font-bold text-[#3E7C59] text-xl">
           Kroot
         </Link>
         <Link
           href="/onboarding"
-          className="rounded-full bg-[var(--leaf)] px-4 py-2 font-semibold text-white shadow-[0_3px_0_var(--leaf-shadow)]"
+          className="rounded-full bg-success px-4 py-2 font-semibold text-white shadow-[0_3px_0_var(--color-success-deep)]"
         >
           {t("startLearningShort")}
         </Link>
       </header>
 
       <main className="mx-auto max-w-3xl px-6 pb-16">
-        <p className="mb-2 text-sm text-[var(--soft)]">
+        <p className="mb-2 text-sm text-muted">
           <Link href="/korean-writing" className="hover:underline">
             {t("hubTitle")}
           </Link>{" "}
@@ -90,35 +90,35 @@ export default async function WritingGuidePromptPage({ params }: Props) {
           · {meta.icon} {meta.label}
         </p>
 
-        <article className="rounded-3xl bg-[var(--cream)] p-8 shadow-[0_6px_0_var(--card-shadow)]">
-          <span className="inline-block rounded-full bg-[var(--mint)] px-3 py-1 text-sm font-semibold text-[var(--deep)]">
+        <article className="rounded-3xl bg-cream p-8 border border-line">
+          <span className="inline-block rounded-full bg-success-bg px-3 py-1 text-sm font-semibold text-success-deep">
             {t("levelN", { level: prompt.level })}
           </span>
 
           {prompt.stimulus_kr && (
-            <div className="mt-4 rounded-xl bg-[var(--sky)] px-4 py-3">
-              <p className="text-xs font-semibold uppercase tracking-wide text-[var(--soft)]">{t("theyWrote")}</p>
+            <div className="mt-4 rounded-xl bg-warm-2 px-4 py-3">
+              <p className="text-xs font-semibold uppercase tracking-wide text-muted">{t("theyWrote")}</p>
               <p className="kr mt-1">{prompt.stimulus_kr}</p>
-              <p className="text-sm text-[var(--soft)] mt-1">{getLocalizedStimulus(prompt, locale)}</p>
+              <p className="text-sm text-muted mt-1">{getLocalizedStimulus(prompt, locale)}</p>
             </div>
           )}
 
           <h1 className="mt-4 text-2xl font-bold kr">{prompt.prompt_kr}</h1>
-          <p className="mt-1 text-[var(--soft)]">{getLocalizedPrompt(prompt, locale)}</p>
+          <p className="mt-1 text-muted">{getLocalizedPrompt(prompt, locale)}</p>
 
-          <div className="mt-6 rounded-xl bg-[var(--sky)] px-4 py-3.5">
-            <p className="text-xs font-semibold uppercase tracking-wide text-[var(--soft)]">{t("modelAnswer")}</p>
+          <div className="mt-6 rounded-xl bg-warm-2 px-4 py-3.5">
+            <p className="text-xs font-semibold uppercase tracking-wide text-muted">{t("modelAnswer")}</p>
             <p className="kr text-xl mt-1">{prompt.example_kr}</p>
-            <p className="text-sm text-[var(--soft)] mt-1">{getLocalizedExample(prompt, locale)}</p>
+            <p className="text-sm text-muted mt-1">{getLocalizedExample(prompt, locale)}</p>
           </div>
         </article>
 
-        <section className="mt-12 rounded-3xl bg-[var(--mint)] p-8 text-center shadow-[0_6px_0_var(--mint-shadow)]">
-          <h2 className="text-2xl font-bold text-[var(--deep)]">{t("learnForReal")}</h2>
-          <p className="mt-2 text-[var(--ink)]">{t("learnDescription")}</p>
+        <section className="mt-12 rounded-3xl bg-success-bg p-8 text-center border border-success-line">
+          <h2 className="text-2xl font-bold text-success-deep">{t("learnForReal")}</h2>
+          <p className="mt-2 text-charcoal">{t("learnDescription")}</p>
           <Link
             href="/onboarding"
-            className="mt-5 inline-block rounded-full bg-[var(--leaf)] px-6 py-3 font-semibold text-white shadow-[0_3px_0_var(--leaf-shadow)]"
+            className="mt-5 inline-block rounded-full bg-success px-6 py-3 font-semibold text-white shadow-[0_3px_0_var(--color-success-deep)]"
           >
             {t("startLearning")}
           </Link>
@@ -132,7 +132,7 @@ export default async function WritingGuidePromptPage({ params }: Props) {
                 <li key={p.slug}>
                   <Link
                     href={`/korean-writing/${p.slug}`}
-                    className="block rounded-2xl bg-[var(--cream)] px-4 py-3 shadow-[0_3px_0_var(--card-shadow)] hover:-translate-y-0.5 transition kr"
+                    className="block rounded-2xl bg-cream px-4 py-3 border border-line hover:-translate-y-0.5 transition kr"
                   >
                     {p.example_kr}
                   </Link>

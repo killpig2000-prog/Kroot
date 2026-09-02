@@ -53,21 +53,21 @@ export default async function WritingLevelIndexPage({ params }: Props) {
   const t = await getTranslations({ locale, namespace: "writingGuide" });
 
   return (
-    <div className="min-h-screen bg-[var(--sky)] text-[var(--ink)]">
+    <div className="min-h-screen bg-warm text-charcoal">
       <header className="mx-auto flex max-w-3xl items-center justify-between px-6 py-5">
-        <Link href="/" className="font-bold text-[var(--deep)] text-xl">
+        <Link href="/" className="font-bold text-[#3E7C59] text-xl">
           Kroot
         </Link>
         <Link
           href="/onboarding"
-          className="rounded-full bg-[var(--leaf)] px-4 py-2 text-sm font-semibold text-white shadow-[0_3px_0_var(--leaf-shadow)]"
+          className="rounded-full bg-success px-4 py-2 text-sm font-semibold text-white shadow-[0_3px_0_var(--color-success-deep)]"
         >
           {t("startLearningShort")}
         </Link>
       </header>
 
       <main className="mx-auto max-w-3xl px-6 pb-16">
-        <p className="mb-2 text-sm text-[var(--soft)]">
+        <p className="mb-2 text-sm text-muted">
           <Link href="/korean-writing" className="hover:underline">
             {t("hubTitle")}
           </Link>{" "}
@@ -82,8 +82,8 @@ export default async function WritingLevelIndexPage({ params }: Props) {
               href={`/korean-writing/level/${l.toLowerCase()}`}
               className={
                 l === level
-                  ? "rounded-full bg-[var(--deep)] px-3 py-1 font-semibold text-white"
-                  : "rounded-full bg-[var(--cream)] px-3 py-1 shadow-[0_2px_0_var(--card-shadow)] hover:text-[var(--deep)]"
+                  ? "rounded-full bg-success px-3 py-1 font-semibold text-white"
+                  : "rounded-full bg-cream border border-line px-3 py-1 hover:text-success"
               }
             >
               {l}
@@ -97,7 +97,7 @@ export default async function WritingLevelIndexPage({ params }: Props) {
           const meta = WRITING_GENRE_META[genre];
           return (
             <section key={genre} className="mt-8">
-              <h2 className="text-lg font-bold text-[var(--deep)]">
+              <h2 className="text-lg font-bold text-success">
                 {meta.icon} {meta.label}
               </h2>
               <ul className="mt-3 grid gap-2 sm:grid-cols-2">
@@ -105,7 +105,7 @@ export default async function WritingLevelIndexPage({ params }: Props) {
                   <li key={p.slug}>
                     <Link
                       href={`/korean-writing/${p.slug}`}
-                      className="block rounded-xl bg-[var(--cream)] px-3.5 py-2.5 shadow-[0_2px_0_var(--card-shadow)] hover:-translate-y-0.5 transition kr"
+                      className="block rounded-xl bg-cream px-3.5 py-2.5 border border-line hover:-translate-y-0.5 transition kr"
                     >
                       {p.example_kr}
                     </Link>

@@ -58,36 +58,36 @@ export default async function PronunciationGuideGroupPage({ params }: Props) {
   };
 
   return (
-    <div className="min-h-screen bg-[var(--sky)] text-[var(--ink)]">
+    <div className="min-h-screen bg-warm text-charcoal">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdScript(jsonLd) }} />
       <header className="mx-auto flex max-w-3xl items-center justify-between px-6 py-5">
-        <Link href="/" className="font-bold text-[var(--deep)] text-xl">
+        <Link href="/" className="font-bold text-[#3E7C59] text-xl">
           Kroot
         </Link>
         <Link
           href="/onboarding"
-          className="rounded-full bg-[var(--leaf)] px-4 py-2 font-semibold text-white shadow-[0_3px_0_var(--leaf-shadow)]"
+          className="rounded-full bg-success px-4 py-2 font-semibold text-white shadow-[0_3px_0_var(--color-success-deep)]"
         >
           {t("startLearningShort")}
         </Link>
       </header>
 
       <main className="mx-auto max-w-3xl px-6 pb-16">
-        <p className="mb-2 text-sm text-[var(--soft)]">
+        <p className="mb-2 text-sm text-muted">
           <Link href="/korean-pronunciation" className="hover:underline">
             {t("hubTitle")}
           </Link>
         </p>
 
-        <article className="rounded-3xl bg-[var(--cream)] p-8 shadow-[0_6px_0_var(--card-shadow)]">
+        <article className="rounded-3xl bg-cream p-8 border border-line">
           <h1 className="text-3xl font-bold kr">{group.title}</h1>
-          <p className="mt-4 text-[var(--ink)]">{group.tip}</p>
+          <p className="mt-4 text-charcoal">{group.tip}</p>
 
           <ul className="mt-6 grid gap-2 sm:grid-cols-2">
             {group.items.map((w, i) => (
-              <li key={i} className="rounded-xl bg-[var(--sky)] px-3.5 py-2.5">
+              <li key={i} className="rounded-xl bg-warm-2 px-3.5 py-2.5">
                 <p className="kr text-lg font-bold">{w.kr}</p>
-                <p className="text-sm text-[var(--soft)]">
+                <p className="text-sm text-muted">
                   {w.romanization} — {w.en}
                 </p>
               </li>
@@ -95,12 +95,12 @@ export default async function PronunciationGuideGroupPage({ params }: Props) {
           </ul>
         </article>
 
-        <section className="mt-12 rounded-3xl bg-[var(--mint)] p-8 text-center shadow-[0_6px_0_var(--mint-shadow)]">
-          <h2 className="text-2xl font-bold text-[var(--deep)]">{t("practiceForReal")}</h2>
-          <p className="mt-2 text-[var(--ink)]">{t("learnDescription")}</p>
+        <section className="mt-12 rounded-3xl bg-success-bg p-8 text-center border border-success-line">
+          <h2 className="text-2xl font-bold text-success-deep">{t("practiceForReal")}</h2>
+          <p className="mt-2 text-charcoal">{t("learnDescription")}</p>
           <Link
             href="/onboarding"
-            className="mt-5 inline-block rounded-full bg-[var(--leaf)] px-6 py-3 font-semibold text-white shadow-[0_3px_0_var(--leaf-shadow)]"
+            className="mt-5 inline-block rounded-full bg-success px-6 py-3 font-semibold text-white shadow-[0_3px_0_var(--color-success-deep)]"
           >
             {t("startLearning")}
           </Link>

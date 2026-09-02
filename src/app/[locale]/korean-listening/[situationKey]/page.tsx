@@ -51,21 +51,21 @@ export default async function ListeningSituationIndexPage({ params }: Props) {
   })).filter((g) => g.dialogues.length > 0);
 
   return (
-    <div className="min-h-screen bg-[var(--sky)] text-[var(--ink)]">
+    <div className="min-h-screen bg-warm text-charcoal">
       <header className="mx-auto flex max-w-3xl items-center justify-between px-6 py-5">
-        <Link href="/" className="font-bold text-[var(--deep)] text-xl">
+        <Link href="/" className="font-bold text-[#3E7C59] text-xl">
           Kroot
         </Link>
         <Link
           href="/onboarding"
-          className="rounded-full bg-[var(--leaf)] px-4 py-2 text-sm font-semibold text-white shadow-[0_3px_0_var(--leaf-shadow)]"
+          className="rounded-full bg-success px-4 py-2 text-sm font-semibold text-white shadow-[0_3px_0_var(--color-success-deep)]"
         >
           {t("startLearningShort")}
         </Link>
       </header>
 
       <main className="mx-auto max-w-3xl px-6 pb-16">
-        <p className="mb-2 text-sm text-[var(--soft)]">
+        <p className="mb-2 text-sm text-muted">
           <Link href="/korean-listening" className="hover:underline">
             {t("hubTitle")}
           </Link>
@@ -73,17 +73,17 @@ export default async function ListeningSituationIndexPage({ params }: Props) {
         <h1 className="text-4xl font-bold">
           {situation.icon} {situation.label}
         </h1>
-        <p className="mt-3 text-[var(--soft)]">{situation.sub}</p>
+        <p className="mt-3 text-muted">{situation.sub}</p>
 
         {byLevel.map(({ level, dialogues }) => (
           <section key={level} className="mt-8">
-            <h2 className="text-lg font-bold text-[var(--deep)]">{t("levelN", { level })}</h2>
+            <h2 className="text-lg font-bold text-success">{t("levelN", { level })}</h2>
             <ul className="mt-3 grid gap-2 sm:grid-cols-2">
               {dialogues.map((d) => (
                 <li key={d.id}>
                   <Link
                     href={`/korean-listening/${situation.key}/${d.id}`}
-                    className="flex items-baseline gap-2 rounded-xl bg-[var(--cream)] px-3.5 py-2 shadow-[0_2px_0_var(--card-shadow)] hover:-translate-y-0.5 transition"
+                    className="flex items-baseline gap-2 rounded-xl bg-cream px-3.5 py-2 border border-line hover:-translate-y-0.5 transition"
                   >
                     <span className="font-bold">{getLocalizedDialogueTitle(d.title, locale)}</span>
                   </Link>

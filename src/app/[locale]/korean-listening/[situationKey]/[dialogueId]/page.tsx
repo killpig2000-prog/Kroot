@@ -71,22 +71,22 @@ export default async function ListeningGuideDialoguePage({ params }: Props) {
   };
 
   return (
-    <div className="min-h-screen bg-[var(--sky)] text-[var(--ink)]">
+    <div className="min-h-screen bg-warm text-charcoal">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdScript(jsonLd) }} />
       <header className="mx-auto flex max-w-3xl items-center justify-between px-6 py-5">
-        <Link href="/" className="font-bold text-[var(--deep)] text-xl">
+        <Link href="/" className="font-bold text-[#3E7C59] text-xl">
           Kroot
         </Link>
         <Link
           href="/onboarding"
-          className="rounded-full bg-[var(--leaf)] px-4 py-2 font-semibold text-white shadow-[0_3px_0_var(--leaf-shadow)]"
+          className="rounded-full bg-success px-4 py-2 font-semibold text-white shadow-[0_3px_0_var(--color-success-deep)]"
         >
           {t("startLearningShort")}
         </Link>
       </header>
 
       <main className="mx-auto max-w-3xl px-6 pb-16">
-        <p className="mb-2 text-sm text-[var(--soft)]">
+        <p className="mb-2 text-sm text-muted">
           <Link href="/korean-listening" className="hover:underline">
             {t("hubTitle")}
           </Link>{" "}
@@ -96,29 +96,29 @@ export default async function ListeningGuideDialoguePage({ params }: Props) {
           </Link>
         </p>
 
-        <article className="rounded-3xl bg-[var(--cream)] p-8 shadow-[0_6px_0_var(--card-shadow)]">
+        <article className="rounded-3xl bg-cream p-8 border border-line">
           <h1 className="text-3xl font-bold">{title}</h1>
-          <span className="mt-4 inline-block rounded-full bg-[var(--mint)] px-3 py-1 text-sm font-semibold text-[var(--deep)]">
+          <span className="mt-4 inline-block rounded-full bg-success-bg px-3 py-1 text-sm font-semibold text-success-deep">
             {t("levelN", { level: dialogue.level })}
           </span>
 
           <ul className="mt-6 flex flex-col gap-3">
             {dialogue.lines.map((line, i) => (
-              <li key={i} className="rounded-xl bg-[var(--sky)] px-4 py-3">
-                <p className="text-xs font-semibold uppercase tracking-wide text-[var(--soft)]">{line.speaker}</p>
+              <li key={i} className="rounded-xl bg-warm-2 px-4 py-3">
+                <p className="text-xs font-semibold uppercase tracking-wide text-muted">{line.speaker}</p>
                 <p className="kr text-lg mt-1">{line.kr}</p>
-                <p className="text-sm text-[var(--soft)] mt-0.5">{getLocalizedDialogueLine(line, locale)}</p>
+                <p className="text-sm text-muted mt-0.5">{getLocalizedDialogueLine(line, locale)}</p>
               </li>
             ))}
           </ul>
         </article>
 
-        <section className="mt-12 rounded-3xl bg-[var(--mint)] p-8 text-center shadow-[0_6px_0_var(--mint-shadow)]">
-          <h2 className="text-2xl font-bold text-[var(--deep)]">{t("learnForReal")}</h2>
-          <p className="mt-2 text-[var(--ink)]">{t("learnDescriptionListening")}</p>
+        <section className="mt-12 rounded-3xl bg-success-bg p-8 text-center border border-success-line">
+          <h2 className="text-2xl font-bold text-success-deep">{t("learnForReal")}</h2>
+          <p className="mt-2 text-charcoal">{t("learnDescriptionListening")}</p>
           <Link
             href="/onboarding"
-            className="mt-5 inline-block rounded-full bg-[var(--leaf)] px-6 py-3 font-semibold text-white shadow-[0_3px_0_var(--leaf-shadow)]"
+            className="mt-5 inline-block rounded-full bg-success px-6 py-3 font-semibold text-white shadow-[0_3px_0_var(--color-success-deep)]"
           >
             {t("startLearning")}
           </Link>
@@ -132,7 +132,7 @@ export default async function ListeningGuideDialoguePage({ params }: Props) {
                 <li key={d.id}>
                   <Link
                     href={`/korean-listening/${d.situationKey}/${d.id}`}
-                    className="block rounded-2xl bg-[var(--cream)] px-4 py-3 shadow-[0_3px_0_var(--card-shadow)] hover:-translate-y-0.5 transition"
+                    className="block rounded-2xl bg-cream px-4 py-3 border border-line hover:-translate-y-0.5 transition"
                   >
                     <span className="font-bold">{getLocalizedDialogueTitle(d.title, locale)}</span>
                   </Link>

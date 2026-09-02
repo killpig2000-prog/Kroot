@@ -28,14 +28,14 @@ export default async function ListeningGuideHub({ params }: Props) {
   const t = await getTranslations({ locale, namespace: "listeningGuide" });
 
   return (
-    <div className="min-h-screen bg-[var(--sky)] text-[var(--ink)]">
+    <div className="min-h-screen bg-warm text-charcoal">
       <header className="mx-auto flex max-w-3xl items-center justify-between px-6 py-5">
-        <Link href="/" className="font-bold text-[var(--deep)] text-xl">
+        <Link href="/" className="font-bold text-[#3E7C59] text-xl">
           Kroot
         </Link>
         <Link
           href="/onboarding"
-          className="rounded-full bg-[var(--leaf)] px-4 py-2 text-sm font-semibold text-white shadow-[0_3px_0_var(--leaf-shadow)]"
+          className="rounded-full bg-success px-4 py-2 text-sm font-semibold text-white shadow-[0_3px_0_var(--color-success-deep)]"
         >
           {t("startLearningShort")}
         </Link>
@@ -43,7 +43,7 @@ export default async function ListeningGuideHub({ params }: Props) {
 
       <main className="mx-auto max-w-3xl px-6 pb-16">
         <h1 className="text-4xl font-bold">{t("hubTitle")}</h1>
-        <p className="mt-3 text-[var(--soft)]">{t("hubIntro")}</p>
+        <p className="mt-3 text-muted">{t("hubIntro")}</p>
 
         <ul className="mt-8 grid gap-4 sm:grid-cols-2">
           {SITUATIONS.map((situation) => {
@@ -52,12 +52,12 @@ export default async function ListeningGuideHub({ params }: Props) {
               <li key={situation.key}>
                 <Link
                   href={`/korean-listening/${situation.key}`}
-                  className="block h-full rounded-3xl bg-[var(--cream)] p-6 shadow-[0_5px_0_var(--card-shadow)] hover:-translate-y-0.5 transition"
+                  className="block h-full rounded-3xl bg-cream p-6 border border-line hover:-translate-y-0.5 transition"
                 >
-                  <h2 className="text-2xl font-bold text-[var(--deep)]">
+                  <h2 className="text-2xl font-bold text-success">
                     {situation.icon} {situation.label}
                   </h2>
-                  <p className="mt-1 text-sm text-[var(--soft)]">{t("dialogueCount", { count })}</p>
+                  <p className="mt-1 text-sm text-muted">{t("dialogueCount", { count })}</p>
                   <p className="mt-3 text-sm">{situation.sub}</p>
                 </Link>
               </li>

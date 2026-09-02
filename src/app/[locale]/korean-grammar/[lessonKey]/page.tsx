@@ -60,19 +60,19 @@ export default async function GrammarGuideLessonPage({ params }: Props) {
   };
 
   return (
-    <div className="min-h-screen bg-[var(--sky)] text-[var(--ink)]">
+    <div className="min-h-screen bg-warm text-charcoal">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdScript(jsonLd) }} />
       <header className="mx-auto flex max-w-3xl items-center justify-between px-6 py-5">
-        <Link href="/" className="font-bold text-[var(--deep)] text-xl">
+        <Link href="/" className="font-bold text-[#3E7C59] text-xl">
           Kroot
         </Link>
         <nav className="flex items-center gap-4 text-sm">
-          <Link href="/korean-grammar" className="hover:text-[var(--deep)]">
+          <Link href="/korean-grammar" className="hover:text-success">
             {t("backToGuide")}
           </Link>
           <Link
             href="/onboarding"
-            className="rounded-full bg-[var(--leaf)] px-4 py-2 font-semibold text-white shadow-[0_3px_0_var(--leaf-shadow)]"
+            className="rounded-full bg-success px-4 py-2 font-semibold text-white shadow-[0_3px_0_var(--color-success-deep)]"
           >
             {t("startLearningShort")}
           </Link>
@@ -80,28 +80,28 @@ export default async function GrammarGuideLessonPage({ params }: Props) {
       </header>
 
       <main className="mx-auto max-w-3xl px-6 pb-16">
-        <p className="mb-2 text-sm text-[var(--soft)]">
+        <p className="mb-2 text-sm text-muted">
           <Link href="/korean-grammar" className="hover:underline">
             {t("backToGuide")}
           </Link>{" "}
           · {t("chapterN", { n: chapter.number })} · {chapter.title}
         </p>
 
-        <article className="rounded-3xl bg-[var(--cream)] p-8 shadow-[0_6px_0_var(--card-shadow)]">
+        <article className="rounded-3xl bg-cream p-8 border border-line">
           <h1 className="text-4xl font-bold">{lesson.title}</h1>
-          <p className="mt-1 text-lg text-[var(--soft)] kr">{lesson.krTitle}</p>
-          <p className="mt-4 text-[var(--ink)]">{lesson.summary}</p>
+          <p className="mt-1 text-lg text-muted kr">{lesson.krTitle}</p>
+          <p className="mt-4 text-charcoal">{lesson.summary}</p>
         </article>
 
         {lesson.sections.map((section, i) => (
           <section key={i} className="mt-8">
             <h2 className="text-lg font-bold">{section.heading}</h2>
-            <p className="mt-2 text-[var(--ink)]">{section.explanation}</p>
+            <p className="mt-2 text-charcoal">{section.explanation}</p>
             <ul className="mt-4 flex flex-col gap-2">
               {section.examples.map((ex, j) => (
-                <li key={j} className="rounded-xl bg-[var(--cream)] px-4 py-3 shadow-[0_2px_0_var(--card-shadow)]">
+                <li key={j} className="rounded-xl bg-cream px-4 py-3 border border-line">
                   <p className="kr text-lg">{ex.kr}</p>
-                  <p className="text-sm text-[var(--soft)]">
+                  <p className="text-sm text-muted">
                     {ex.romanization} — {ex.en}
                   </p>
                 </li>
@@ -110,12 +110,12 @@ export default async function GrammarGuideLessonPage({ params }: Props) {
           </section>
         ))}
 
-        <section className="mt-12 rounded-3xl bg-[var(--mint)] p-8 text-center shadow-[0_6px_0_var(--mint-shadow)]">
-          <h2 className="text-2xl font-bold text-[var(--deep)]">{t("learnForReal", { title: lesson.title })}</h2>
-          <p className="mt-2 text-[var(--ink)]">{t("learnDescription")}</p>
+        <section className="mt-12 rounded-3xl bg-success-bg p-8 text-center border border-success-line">
+          <h2 className="text-2xl font-bold text-success-deep">{t("learnForReal", { title: lesson.title })}</h2>
+          <p className="mt-2 text-charcoal">{t("learnDescription")}</p>
           <Link
             href="/onboarding"
-            className="mt-5 inline-block rounded-full bg-[var(--leaf)] px-6 py-3 font-semibold text-white shadow-[0_3px_0_var(--leaf-shadow)]"
+            className="mt-5 inline-block rounded-full bg-success px-6 py-3 font-semibold text-white shadow-[0_3px_0_var(--color-success-deep)]"
           >
             {t("quizLocked")}
           </Link>
@@ -129,10 +129,10 @@ export default async function GrammarGuideLessonPage({ params }: Props) {
                 <li key={l.key}>
                   <Link
                     href={`/korean-grammar/${l.key}`}
-                    className="block rounded-2xl bg-[var(--cream)] px-4 py-3 shadow-[0_3px_0_var(--card-shadow)] hover:-translate-y-0.5 transition"
+                    className="block rounded-2xl bg-cream px-4 py-3 border border-line hover:-translate-y-0.5 transition"
                   >
                     <span className="font-bold">{l.title}</span>{" "}
-                    <span className="text-sm text-[var(--soft)] kr">{l.krTitle}</span>
+                    <span className="text-sm text-muted kr">{l.krTitle}</span>
                   </Link>
                 </li>
               ))}
