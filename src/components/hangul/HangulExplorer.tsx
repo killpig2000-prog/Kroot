@@ -97,12 +97,15 @@ function JamoGrid({ items, firstItemTourId }: { items: Jamo[]; firstItemTourId?:
       {selected ? (
         <div
           key={selected.char}
-          data-tour={firstItemTourId ? "guided-hangul-stroke" : undefined}
           className="mt-3 border border-success-line bg-success-bg rounded-[14px] px-4 py-3.5 flex flex-col gap-3 sm:flex-row sm:items-center"
           style={{ animation: "fadeUp .3s ease" }}
         >
           <div className="flex items-center gap-3 min-w-0 flex-1">
+            {/* The guided tour spotlights the stroke box itself (not the whole
+                panel): tapping it replays the strokes and speaks the letter,
+                which is the action that step waits for. */}
             <span
+              data-tour={firstItemTourId ? "guided-hangul-stroke" : undefined}
               className="kr flex-none w-24 h-24 rounded-xl bg-cream border flex items-center justify-center text-[52px] p-2.5"
               style={{ borderColor: BRD, color: GREEN }}
             >

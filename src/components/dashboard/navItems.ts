@@ -34,7 +34,7 @@ export const SECTIONS: { title: string; items: NavItem[] }[] = [
     title: "Basics",
     items: [
       { icon: "🧭", label: "Guide", href: "/guide", color: { text: "#1F81B4", bg: "#F0F9FF", border: "#BAE6FD" } },
-      { icon: "🔤", label: "Hangul", href: "/hangul", color: { text: "#C63958", bg: "#FFF1F2", border: "#FECDD3" } },
+      { icon: "🔤", label: "Hangul", href: "/hangul", color: { text: "#C63958", bg: "#FFF1F2", border: "#FECDD3" }, tourId: "guided-nav-hangul" },
       { icon: "📖", label: "Grammar", href: "/grammar", color: { text: "#423AC5", bg: "#EEF2FF", border: "#C7D2FE" } },
       { icon: "🃏", label: "Vocabulary", href: "/vocabulary", color: { text: "#6B33CC", bg: "#F5F3FF", border: "#DDD6FE" }, popular: true, tourId: "guided-nav-vocabulary" },
     ],

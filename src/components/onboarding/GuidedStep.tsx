@@ -1,14 +1,19 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "@/i18n/navigation";
-import SpotlightOverlay, { type SpotlightRect } from "@/components/onboarding/SpotlightOverlay";
+import { usePathname, useRouter } from "@/i18n/navigation";
+import SpotlightOverlay, {
+  GHOST_BTN,
+  PRIMARY_BTN,
+  WaitHint,
+  type SpotlightRect,
+} from "@/components/onboarding/SpotlightOverlay";
 import {
-  GUIDED_AUTO_ADVANCE_MS,
   GUIDED_FORCE_HREF,
   GUIDED_KEY,
   GUIDED_MOBILE_REVEAL,
+  GUIDED_MODE,
   GUIDED_STEP_EVENT,
   GUIDED_TARGET,
   guidedNext,
@@ -34,19 +39,28 @@ function findVisible(selector: string): HTMLElement | null {
 
 // One step of the post-tour guided walkthrough. Mount one of these per real
 // step-target on a page (a page can host more than one, e.g. the word-detail
-// page hosts both "word-goti" and "word-bank"); each checks localStorage
-// itself and renders nothing unless it's the active step. Advancing isn't a
-// "Next" button — it's the real click on the real spotlighted element, so
-// clicking through the tour and actually using the feature are the same
-// action.
+// page hosts "word-box", "word-bank" and "shop-nav"); each checks
+// localStorage itself and renders nothing unless it's the active step.
+//
+// Three shapes (see GUIDED_MODE): a click-gated step advances on the real
+// click on the real spotlit element, so clicking through the tour and
+// actually using the feature are the same action; an info step just points
+// and offers Next; an ask step asks first ("shall we go on to X?") and only
+// then waits for the click.
 export default function GuidedStep({ step }: { step: GuidedStepKey }) {
   const t = useTranslations("tour");
   const router = useRouter();
+  const pathname = usePathname();
   const [active, setActive] = useState(false);
   const [rect, setRect] = useState<SpotlightRect | null>(null);
   const [isReveal, setIsReveal] = useState(false);
+  const [asking, setAsking] = useState(false);
   const frame = useRef<number | null>(null);
   const advancedRef = useRef(false);
+
+  const mode = GUIDED_MODE[step] ?? "click";
+  const target = GUIDED_TARGET[step];
+  const isLast = guidedNext(step) === null;
 
   const checkActive = useCallback(() => {
     let cur: string | null = null;
@@ -55,17 +69,24 @@ export default function GuidedStep({ step }: { step: GuidedStepKey }) {
     } catch {
       // localStorage unavailable — the guided tour just won't run, no crash
     }
-    setActive(cur === step);
-  }, [step]);
+    const on = cur === step;
+    setActive(on);
+    if (on) setAsking(mode === "ask");
+  }, [step, mode]);
 
   useEffect(() => {
-    checkActive();
+    // Initial check is deferred a frame: localStorage isn't there during
+    // SSR, so this can't be a lazy initializer without a hydration mismatch.
+    const id = requestAnimationFrame(checkActive);
     // A step transition that doesn't navigate (e.g. hangul-pick ->
-    // hangul-nav-vocab, both on /hangul) needs every mounted GuidedStep to
+    // hangul-stroke, both on /hangul) needs every mounted GuidedStep to
     // re-check — a mount-only check would leave the next step's instance
     // never noticing it's now the active one.
     window.addEventListener(GUIDED_STEP_EVENT, checkActive);
-    return () => window.removeEventListener(GUIDED_STEP_EVENT, checkActive);
+    return () => {
+      cancelAnimationFrame(id);
+      window.removeEventListener(GUIDED_STEP_EVENT, checkActive);
+    };
   }, [checkActive]);
 
   const advance = useCallback(() => {
@@ -91,17 +112,17 @@ export default function GuidedStep({ step }: { step: GuidedStepKey }) {
     }
     setActive(false);
     window.dispatchEvent(new Event(GUIDED_STEP_EVENT));
-    router.push("/dashboard");
-  }, [router]);
+    if (pathname !== "/dashboard") router.push("/dashboard");
+  }, [router, pathname]);
 
   useEffect(() => {
     if (!active) return;
     advancedRef.current = false;
-    const target = GUIDED_TARGET[step];
+    // No target = centred card, nothing to measure or bind (the render
+    // below ignores `rect` in that case).
+    if (!target) return;
     const revealTarget = GUIDED_MOBILE_REVEAL[step];
-    const autoMs = GUIDED_AUTO_ADVANCE_MS[step];
     const forceHref = GUIDED_FORCE_HREF[step];
-    let autoTimer: ReturnType<typeof setTimeout> | null = null;
 
     // A step whose real target's natural href would land somewhere other
     // than what the tour needs (e.g. "/vocabulary" resolving to whatever
@@ -122,39 +143,32 @@ export default function GuidedStep({ step }: { step: GuidedStepKey }) {
     // the real element itself (click advances). Re-evaluated every frame so
     // the moment the sheet opens and the real target appears, the spotlight
     // hands off to it without the learner needing to do anything else.
-    let mode: "target" | "reveal" | null = null;
+    let bound: "target" | "reveal" | null = null;
     let boundEl: HTMLElement | null = null;
 
     const bind = (el: HTMLElement, reveal: boolean) => {
       boundEl = el;
-      mode = reveal ? "reveal" : "target";
+      bound = reveal ? "reveal" : "target";
       setIsReveal(reveal);
       el.scrollIntoView({ block: "center", behavior: "smooth" });
-      if (!reveal) {
-        el.addEventListener("click", onClick);
-        if (autoMs) autoTimer = setTimeout(advance, autoMs);
-      }
+      if (!reveal) el.addEventListener("click", onClick);
     };
     const unbind = () => {
-      if (boundEl && mode === "target") boundEl.removeEventListener("click", onClick);
-      if (autoTimer) {
-        clearTimeout(autoTimer);
-        autoTimer = null;
-      }
+      if (boundEl && bound === "target") boundEl.removeEventListener("click", onClick);
       boundEl = null;
-      mode = null;
+      bound = null;
     };
 
     const measure = () => {
       const finalEl = findVisible(`[data-tour="${target}"]`);
       if (finalEl) {
-        if (mode !== "target") {
+        if (bound !== "target" || boundEl !== finalEl) {
           unbind();
           bind(finalEl, false);
         }
       } else if (revealTarget && window.innerWidth < MOBILE_BREAKPOINT) {
         const revealEl = findVisible(`[data-tour="${revealTarget}"]`);
-        if (revealEl && mode !== "reveal") {
+        if (revealEl && bound !== "reveal") {
           unbind();
           bind(revealEl, true);
         } else if (!revealEl) {
@@ -181,20 +195,56 @@ export default function GuidedStep({ step }: { step: GuidedStepKey }) {
       if (frame.current) cancelAnimationFrame(frame.current);
       window.removeEventListener("resize", measure);
     };
-  }, [active, step, advance, router]);
+  }, [active, step, target, advance, router]);
 
   if (!active) return null;
 
+  const skipBtn = (
+    <button type="button" onClick={skip} className={GHOST_BTN}>
+      {t("skip")}
+    </button>
+  );
+
+  let title = t(`guided.${step}.title`);
+  let body = t(`guided.${step}.body`);
+  let footerLeft: ReactNode = null;
+  let actions: ReactNode;
+
+  if (mode === "ask" && asking) {
+    // "Shall we go on to X?" — Keep going turns this into the click step.
+    title = t(`guided.${step}.askTitle`);
+    body = t(`guided.${step}.askBody`);
+    actions = (
+      <>
+        {skipBtn}
+        <button type="button" onClick={() => setAsking(false)} className={PRIMARY_BTN}>
+          {t("keepGoing")}
+        </button>
+      </>
+    );
+  } else if (mode === "info") {
+    actions = (
+      <>
+        {!isLast && skipBtn}
+        <button type="button" onClick={advance} className={PRIMARY_BTN}>
+          {isLast ? t("finish") : t("next")}
+        </button>
+      </>
+    );
+  } else {
+    footerLeft = <WaitHint label={t("guided.waitLabel")} />;
+    actions = skipBtn;
+  }
+
   return (
     <SpotlightOverlay
-      rect={rect}
+      rect={target ? rect : null}
       pad={isReveal ? 4 : 8}
       progress={guidedProgress(step)}
-      title={t(`guided.${step}.title`)}
-      body={t(`guided.${step}.body`)}
-      waitLabel={t("guided.waitLabel")}
-      skipLabel={t("skip")}
-      onSkip={skip}
+      title={title}
+      body={body}
+      footerLeft={footerLeft}
+      actions={actions}
     />
   );
 }

@@ -137,6 +137,8 @@ export default async function VocabularyPage({
         />
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[170px] md:pb-[60px] max-w-[980px]">
+          <GuidedStep step="vocab-chapter" />
+          <GuidedStep step="vocab-days" />
           <GuidedStep step="vocab-word" />
 
           {/* head */}
@@ -172,7 +174,7 @@ export default async function VocabularyPage({
             aria-label={t("allChapters")}
             className="mb-4 sticky top-[52px] md:top-0 z-20 -mx-1 px-1 pt-1 bg-warm/95 backdrop-blur-sm"
           >
-            <div className="flex gap-2 overflow-x-auto pb-1.5">
+            <div data-tour="guided-vocab-chapters" className="flex gap-2 overflow-x-auto pb-1.5">
               {chapters.map((c) => {
                 const current = c.index === selected?.index;
                 return (

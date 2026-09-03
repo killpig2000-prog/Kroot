@@ -11,44 +11,82 @@
   },
   "guided": {
     "waitLabel": "Chạm vào điểm được tô sáng",
+    "hangul-nav": {
+      "askTitle": "Thử Hangul trước nhé?",
+      "askBody": "Hangul là bảng chữ cái tiếng Hàn — thứ đầu tiên cần học. Muốn xem thử không?",
+      "title": "Chạm vào Hangul",
+      "body": "Nó ở ngay đây trong menu — chạm để mở bảng chữ cái."
+    },
     "hangul-pick": {
-      "title": "Bắt đầu với ㄱ",
-      "body": "Chạm vào chữ cái đầu tiên để nghe cách đọc."
+      "title": "Chạm vào ㄱ",
+      "body": "Chạm chữ cái đầu tiên — bạn sẽ nghe cách phát âm."
     },
     "hangul-stroke": {
-      "title": "Xem thứ tự nét viết",
-      "body": "Mỗi chữ cái đều có hoạt ảnh cho thấy cách viết, từng nét một."
+      "title": "Xem thứ tự nét",
+      "body": "Ô này vẽ chữ cái từng nét một. Chạm để xem lại và nghe thêm lần nữa."
     },
     "hangul-nav-vocab": {
-      "title": "Tiếp theo là Từ vựng",
-      "body": "Chạm vào Từ vựng trong menu để tiếp tục."
+      "askTitle": "Giờ xem Từ vựng nhé?",
+      "askBody": "Đó là nơi bạn học từ thật, theo từng chương.",
+      "title": "Chạm vào Từ vựng",
+      "body": "Nó ở trong menu — chạm để đi tới."
+    },
+    "vocab-chapter": {
+      "title": "Chương",
+      "body": "Từ vựng chia thành các chương 50 từ. Chọn bất kỳ chương nào ở đây."
+    },
+    "vocab-days": {
+      "title": "Mỗi chương năm ngày",
+      "body": "Mỗi chương chia thành Day 1–5, mười từ mỗi ngày — lượng vừa phải mỗi ngày."
     },
     "vocab-word": {
       "title": "Mở từ đầu tiên",
-      "body": "Chạm vào để xem nghĩa đầy đủ và một câu ví dụ."
+      "body": "Chạm vào từ đầu tiên của Day 1 để xem kỹ."
     },
-    "word-goti": {
-      "title": "Đánh dấu đã học",
-      "body": "Sau khi đọc xong, chạm vào Đã hiểu."
+    "word-box": {
+      "title": "Thẻ từ",
+      "body": "Đây là từ, nghĩa và câu ví dụ. Chạm 🔊 để nghe."
     },
     "word-bank": {
-      "title": "Lưu lại để xem sau",
-      "body": "Chạm để thêm từ này vào ngân hàng từ vựng của bạn."
+      "title": "Lưu lại để sau",
+      "body": "Thêm vào Từ của tôi sẽ lưu từ vào kho từ cá nhân để bạn ôn bất cứ lúc nào."
     },
     "shop-nav": {
-      "title": "Ghé thêm một chỗ nữa — Cửa hàng",
-      "body": "Chạm vào Cửa hàng trong menu."
+      "askTitle": "Điểm dừng cuối — xem Cửa hàng nhé?",
+      "askBody": "Dùng xu kiếm được để sắm đồ cho cây của bạn.",
+      "title": "Chạm vào Cửa hàng",
+      "body": "Nó ở trong menu — chạm để mở cửa hàng."
+    },
+    "shop-coins": {
+      "title": "Xu của bạn",
+      "body": "Đây là số dư. Nhiệm vụ hằng ngày và lên cấp sẽ cho thêm xu."
+    },
+    "shop-tabs": {
+      "title": "Danh mục",
+      "body": "Mũ, mặt, hào quang, bầu trời, mặt đất, bạn bè — mỗi loại có tab riêng."
     },
     "shop-pick": {
-      "title": "Chọn một món",
-      "body": "Chạm vào một món đồ để thử trên cây của bạn."
+      "title": "Thử một món",
+      "body": "Chạm một món để xem trước trên cây của bạn."
+    },
+    "shop-tryon": {
+      "title": "Xem trước",
+      "body": "Cây của bạn hiện món bạn chọn trước khi mua."
     },
     "shop-cta": {
-      "title": "Biến nó thành của bạn",
-      "body": "Chạm Mua để dùng một phần số xu ban đầu và đeo nó lên."
+      "title": "Mua & mặc",
+      "body": "Thích rồi thì nút này sẽ mua và mặc lên cây."
+    },
+    "finish": {
+      "title": "Bạn đã hoàn thành hướng dẫn! 🎉",
+      "body": "Mục Luyện tập còn nhiều thứ đang chờ — nghe, nói, viết và đọc. Hãy nâng cao kỹ năng rồi thử sức nhé.\n\nChúng mình cổ vũ hành trình tiếng Hàn của bạn. 화이팅!"
     }
   },
   "steps": {
+    "welcome": {
+      "title": "Chào mừng đến Kroot! 👋",
+      "body": "Vì đây là lần đầu, mình sẽ hướng dẫn từng thứ một nhé."
+    },
     "sidebar": {
       "title": "Menu của bạn",
       "body": "Mọi thứ bạn có thể luyện tập đều ở đây."
@@ -77,5 +115,8 @@
       "title": "Xem khu vườn đầy dần lên",
       "body": "Mỗi ngày học sẽ thêm một ô. Giữ chuỗi ngày học liên tục."
     }
-  }
+  },
+  "keepGoing": "Tiếp tục",
+  "letsGo": "Bắt đầu",
+  "finish": "Hoàn thành"
 }

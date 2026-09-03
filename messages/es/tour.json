@@ -11,44 +11,82 @@
   },
   "guided": {
     "waitLabel": "Toca el punto resaltado",
+    "hangul-nav": {
+      "askTitle": "¿Empezamos por el Hangul?",
+      "askBody": "El Hangul es el alfabeto coreano: lo primero que se aprende. ¿Le echamos un vistazo?",
+      "title": "Toca Hangul",
+      "body": "Está aquí en el menú: tócalo para abrir el alfabeto."
+    },
     "hangul-pick": {
-      "title": "Empieza por ㄱ",
-      "body": "Toca la primera letra para escucharla."
+      "title": "Toca ㄱ",
+      "body": "Toca la primera letra y escucharás cómo suena."
     },
     "hangul-stroke": {
-      "title": "Mira el orden de los trazos",
-      "body": "Cada letra anima cómo se escribe, trazo a trazo."
+      "title": "Mira los trazos",
+      "body": "Este recuadro dibuja la letra trazo a trazo. Tócalo para verlo otra vez y escucharla de nuevo."
     },
     "hangul-nav-vocab": {
-      "title": "Ahora, Vocabulario",
-      "body": "Toca Vocabulario en el menú para seguir."
+      "askTitle": "¿Vemos ahora el Vocabulario?",
+      "askBody": "Ahí aprenderás palabras reales, capítulo a capítulo.",
+      "title": "Toca Vocabulario",
+      "body": "Está en el menú: tócalo para ir."
+    },
+    "vocab-chapter": {
+      "title": "Capítulos",
+      "body": "El vocabulario se divide en capítulos de 50 palabras. Elige el que quieras aquí arriba."
+    },
+    "vocab-days": {
+      "title": "Cinco días por capítulo",
+      "body": "Cada capítulo se reparte en Día 1–5, diez palabras al día: una ración cómoda."
     },
     "vocab-word": {
-      "title": "Abre tu primera palabra",
-      "body": "Tócala para ver el significado completo y un ejemplo."
+      "title": "Abre la primera palabra",
+      "body": "Toca la primera palabra del Día 1 para verla de cerca."
     },
-    "word-goti": {
-      "title": "Márcala",
-      "body": "Cuando ya la hayas leído, toca Entendido."
+    "word-box": {
+      "title": "La tarjeta de la palabra",
+      "body": "Aquí tienes la palabra, su significado y una frase de ejemplo. Toca 🔊 para escucharlo."
     },
     "word-bank": {
       "title": "Guárdala para después",
-      "body": "Tócala para añadirla a tu banco de palabras."
+      "body": "Añadir a Mis palabras la guarda en tu banco personal para repasarla cuando quieras."
     },
     "shop-nav": {
-      "title": "Una última parada — la Tienda",
-      "body": "Toca Tienda en el menú."
+      "askTitle": "Última parada: ¿vemos la Tienda?",
+      "askBody": "Gasta las monedas que ganes en ropa para tu árbol.",
+      "title": "Toca Tienda",
+      "body": "Está en el menú: tócala para abrir la tienda."
+    },
+    "shop-coins": {
+      "title": "Tus monedas",
+      "body": "Este es tu saldo. Las misiones diarias y subir de nivel te dan más."
+    },
+    "shop-tabs": {
+      "title": "Categorías",
+      "body": "Sombreros, caras, auras, cielo, suelo, amigos: cada tipo tiene su pestaña."
     },
     "shop-pick": {
-      "title": "Elige algo",
-      "body": "Toca un artículo para probártelo en tu árbol."
+      "title": "Pruébate uno",
+      "body": "Toca un artículo para verlo en tu árbol."
+    },
+    "shop-tryon": {
+      "title": "Vista previa",
+      "body": "Tu árbol muestra lo que has elegido antes de comprar nada."
     },
     "shop-cta": {
-      "title": "Hazlo tuyo",
-      "body": "Toca Comprar para usar parte de tus monedas iniciales y ponértelo."
+      "title": "Comprar y ponerse",
+      "body": "Cuando te guste, este botón lo compra y se lo pone a tu árbol."
+    },
+    "finish": {
+      "title": "¡Has terminado el tutorial! 🎉",
+      "body": "En Práctica te espera mucho más: escuchar, hablar, escribir y leer. Sube de nivel y atrévete.\n\nTe animamos en tu camino con el coreano. ¡화이팅!"
     }
   },
   "steps": {
+    "welcome": {
+      "title": "¡Bienvenido a Kroot! 👋",
+      "body": "Como es tu primera vez, te lo voy a enseñar todo paso a paso."
+    },
     "sidebar": {
       "title": "Tu menú",
       "body": "Aquí está todo lo que puedes practicar."
@@ -77,5 +115,8 @@
       "title": "Mira crecer tu jardín",
       "body": "Cada día de estudio añade una casilla. Mantén viva la racha."
     }
-  }
+  },
+  "keepGoing": "Continuar",
+  "letsGo": "Vamos",
+  "finish": "Terminar"
 }

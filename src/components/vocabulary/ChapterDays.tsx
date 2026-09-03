@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "@/i18n/navigation";
 import WordStatusIcon from "@/components/vocabulary/WordStatusIcon";
+import { currentGuidedStep } from "@/components/onboarding/guidedSteps";
 
 export type ChapterDayWord = {
   key: string;
@@ -41,8 +42,19 @@ export default function ChapterDays({
 }) {
   const [open, setOpen] = useState(defaultOpen);
 
+  // The guided tour introduces Day 1 and then asks for its first word
+  // (data-tour on n === 1 below) — on an account with prior progress the
+  // server would open a later day instead and that word wouldn't be in the
+  // DOM. After mount only: localStorage isn't there during SSR.
+  useEffect(() => {
+    const id = requestAnimationFrame(() => {
+      if (currentGuidedStep()?.startsWith("vocab-")) setOpen(0);
+    });
+    return () => cancelAnimationFrame(id);
+  }, []);
+
   return (
-    <div>
+    <div data-tour="guided-vocab-days">
       {days.map((day, i) => {
         const isOpen = open === i;
         return (

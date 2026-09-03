@@ -13,6 +13,7 @@ import { FirstVisitPlan, LockedWidgets, type FirstVisitStep } from "@/components
 import InstallBanner from "@/components/pwa/InstallBanner";
 import OnboardingTour from "@/components/onboarding/OnboardingTour";
 import TutorialFinishBanner from "@/components/onboarding/TutorialFinishBanner";
+import GuidedStep from "@/components/onboarding/GuidedStep";
 import { GRAMMAR_LESSONS } from "@/lib/grammar";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { levelProgress } from "@/lib/level";
@@ -343,7 +344,8 @@ export default async function DashboardPage() {
             {/* First lesson right after the tour, for every level — Hangul's
                 page itself hands off to Writing once the learner is ready,
                 see the tutorial banner on each of those pages. */}
-            <OnboardingTour afterTourHref="/hangul" startsGuidedTour isAdmin={isAdmin} />
+            <OnboardingTour startsGuidedTour isAdmin={isAdmin} />
+            <GuidedStep step="hangul-nav" />
             <TutorialFinishBanner />
             <h1 className="font-semibold text-[clamp(20px,2.4vw,24px)] tracking-[-0.02em] mb-0.5">
               {t("welcome", { name: displayName })}
@@ -418,7 +420,8 @@ export default async function DashboardPage() {
         </div>
 
         <main className="min-w-0 px-[clamp(18px,3vw,36px)] pt-[26px] pb-[100px] md:pb-[60px]">
-          <OnboardingTour afterTourHref="/hangul" startsGuidedTour isAdmin={isAdmin} />
+          <OnboardingTour startsGuidedTour isAdmin={isAdmin} />
+          <GuidedStep step="hangul-nav" />
           <TutorialFinishBanner />
           <Greeting name={displayName} />
 

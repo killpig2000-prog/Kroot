@@ -2,14 +2,20 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "@/i18n/navigation";
+import SpotlightOverlay, {
+  GHOST_BTN,
+  PRIMARY_BTN,
+  type SpotlightRect,
+} from "@/components/onboarding/SpotlightOverlay";
 import { startGuidedTour } from "@/components/onboarding/guidedSteps";
 
 export const SEEN_KEY = "kroot-onboarding-tour-seen";
 export const TOUR_DONE_EVENT = "kroot:tour-done";
 const MOBILE_BREAKPOINT = 768; // md — below this the sidebar is replaced by BottomNav
 
-const STEPS = ["sidebar", "basics", "practice", "relax", "tree", "quest", "garden"] as const;
+// "welcome" has no target: a centred card on a solid scrim, the first thing a
+// brand-new learner sees. Everything after it spotlights one real element.
+const STEPS = ["welcome", "sidebar", "basics", "practice", "relax", "tree", "quest", "garden"] as const;
 type StepKey = (typeof STEPS)[number];
 
 // STEPS are i18n/copy keys; TARGETS are the data-tour attribute values the
@@ -17,9 +23,10 @@ type StepKey = (typeof STEPS)[number];
 // section wrappers ("section-<name>"); below md the sidebar isn't in the
 // layout at all, so the same steps point at BottomNav's own tabs instead —
 // Relax lives inside its "More" sheet on mobile, so that step points there.
-function targetsFor(mobile: boolean): Record<StepKey, string> {
+function targetsFor(mobile: boolean): Record<StepKey, string | null> {
   return mobile
     ? {
+        welcome: null,
         sidebar: "mobile-nav",
         basics: "tab-basics",
         practice: "tab-practice",
@@ -29,6 +36,7 @@ function targetsFor(mobile: boolean): Record<StepKey, string> {
         garden: "garden",
       }
     : {
+        welcome: null,
         sidebar: "sidebar",
         basics: "section-basics",
         practice: "section-practice",
@@ -37,6 +45,16 @@ function targetsFor(mobile: boolean): Record<StepKey, string> {
         quest: "quest",
         garden: "garden",
       };
+}
+
+// Ring padding per target. BottomNav is flush with the screen edges and its
+// tabs are only 56px tall — the default 8px ring spills off the bottom of
+// the viewport on the bar and swallows the neighbouring tabs on a single
+// tab, so those get a tight ring that matches the element.
+function padFor(target: string | null): number {
+  if (target === "mobile-nav") return 0;
+  if (target?.startsWith("tab-")) return 3;
+  return 8;
 }
 
 function isMobileViewport(): boolean {
@@ -58,28 +76,25 @@ function markSeen() {
   }
 }
 
-type Rect = { top: number; left: number; width: number; height: number };
-
 // First-visit walkthrough: a dark scrim with a cut-out spotlight over one
 // data-tour target at a time, plus a tooltip card. Runs once per browser
 // (localStorage-gated), at every width — the sidebar/basics/practice/relax
 // steps just point at BottomNav's tabs instead of the Sidebar below md.
+// Finishing it hands off to the click-gated guided tour (guidedSteps.ts),
+// whose first step — "shall we try Hangul?" — lives on this same page.
 export default function OnboardingTour({
-  afterTourHref,
   startsGuidedTour = false,
   isAdmin = false,
 }: {
-  afterTourHref?: string;
-  /** Arms the click-gated Hangul→Vocabulary→Shop continuation right before navigating to afterTourHref. */
+  /** Arms the click-gated Hangul→Vocabulary→Shop continuation when the tour finishes naturally. */
   startsGuidedTour?: boolean;
   /** Admin testing bypass: ignores SEEN_KEY so the tour re-runs on every dashboard load. */
   isAdmin?: boolean;
 } = {}) {
   const t = useTranslations("tour");
-  const router = useRouter();
   const [stepIndex, setStepIndex] = useState(0);
   const [active, setActive] = useState(false);
-  const [rect, setRect] = useState<Rect | null>(null);
+  const [rect, setRect] = useState<SpotlightRect | null>(null);
   const frame = useRef<number | null>(null);
 
   useEffect(() => {
@@ -89,9 +104,14 @@ export default function OnboardingTour({
     return () => cancelAnimationFrame(id);
   }, [isAdmin]);
 
+  const key: StepKey = STEPS[stepIndex];
+  const target = targetsFor(isMobileViewport())[key];
+
   const measure = useCallback(() => {
-    const key: StepKey = STEPS[stepIndex];
-    const target = targetsFor(isMobileViewport())[key];
+    if (!target) {
+      setRect(null);
+      return;
+    }
     const el = document.querySelector<HTMLElement>(`[data-tour="${target}"]`);
     if (!el) {
       setRect(null);
@@ -99,36 +119,39 @@ export default function OnboardingTour({
     }
     const r = el.getBoundingClientRect();
     setRect({ top: r.top, left: r.left, width: r.width, height: r.height });
-  }, [stepIndex]);
+  }, [target]);
 
   // navigate=false is for a learner explicitly bailing out via "Skip" — only
   // a natural finish (reaching the last step, or running out of targets)
-  // carries them on into afterTourHref.
+  // carries them on into the guided tour.
   const end = useCallback(
-    (navigate = true) => {
+    (continueOn = true) => {
       markSeen();
       setActive(false);
+      // Arm the guided tour BEFORE announcing the tour is done: FeedbackWidget
+      // reacts to TOUR_DONE_EVENT by checking whether a guided step is active,
+      // and would pop its own notice over the first step otherwise.
+      if (continueOn && startsGuidedTour) startGuidedTour();
       window.dispatchEvent(new Event(TOUR_DONE_EVENT));
-      if (navigate && afterTourHref) {
-        if (startsGuidedTour) startGuidedTour();
-        router.push(afterTourHref);
-      }
     },
-    [afterTourHref, startsGuidedTour, router]
+    [startsGuidedTour]
   );
 
   useEffect(() => {
-    if (!active) return;
-    const key: StepKey = STEPS[stepIndex];
-    const target = targetsFor(isMobileViewport())[key];
+    if (!active || !target) return; // no target = centred card, nothing to track
     const el = document.querySelector<HTMLElement>(`[data-tour="${target}"]`);
-    if (!el) {
+    // offsetParent null = display:none (e.g. the quest card is `hidden
+    // sm:block` on a phone when reviews are due) — a zero-size ring in the
+    // corner is worse than no step at all.
+    if (!el || el.offsetParent === null) {
       // Target isn't on the page — e.g. a brand-new first-visit dashboard
       // hasn't unlocked the quest/garden widgets yet. Skip past it instead
       // of dimming the whole screen with no spotlight to show for it.
-      if (stepIndex === STEPS.length - 1) end();
-      else setStepIndex((i) => i + 1);
-      return;
+      const id = requestAnimationFrame(() => {
+        if (stepIndex === STEPS.length - 1) end();
+        else setStepIndex((i) => i + 1);
+      });
+      return () => cancelAnimationFrame(id);
     }
     el.scrollIntoView({ block: "center", behavior: "smooth" });
 
@@ -142,87 +165,43 @@ export default function OnboardingTour({
       if (frame.current) cancelAnimationFrame(frame.current);
       window.removeEventListener("resize", measure);
     };
-  }, [active, stepIndex, measure, end]);
+  }, [active, stepIndex, target, measure, end]);
 
   if (!active) return null;
 
-  const key: StepKey = STEPS[stepIndex];
   const isLast = stepIndex === STEPS.length - 1;
-  const pad = 8;
-  const box = rect
-    ? { top: rect.top - pad, left: rect.left - pad, width: rect.width + pad * 2, height: rect.height + pad * 2 }
-    : null;
-
-  const vw = typeof window !== "undefined" ? window.innerWidth : 1280;
-  const vh = typeof window !== "undefined" ? window.innerHeight : 800;
-  const tipWidth = 300;
-  let tipTop = box ? box.top + box.height + 14 : vh / 2;
-  let tipLeft = box ? box.left : vw / 2 - tipWidth / 2;
-  if (box && tipTop + 190 > vh) tipTop = Math.max(12, box.top - 190);
-  if (tipLeft + tipWidth > vw - 12) tipLeft = vw - tipWidth - 12;
-  if (tipLeft < 12) tipLeft = 12;
 
   return (
-    <div className="fixed inset-0 z-[200]" role="dialog" aria-modal="true" aria-label={t(`steps.${key}.title`)}>
-      <div
-        className="absolute inset-0 bg-black/70 transition-[clip-path] duration-300 ease-out"
-        style={
-          box
-            ? {
-                clipPath: `polygon(evenodd, 0 0, 0 ${vh}px, ${vw}px ${vh}px, ${vw}px 0, 0 0, 0 0, ${box.left}px ${box.top}px, ${box.left}px ${box.top + box.height}px, ${box.left + box.width}px ${box.top + box.height}px, ${box.left + box.width}px ${box.top}px, ${box.left}px ${box.top}px)`,
-              }
-            : undefined
-        }
-      />
-      {box && (
-        <div
-          className="absolute rounded-[12px] pointer-events-none transition-all duration-300 ease-out"
-          style={{
-            top: box.top,
-            left: box.left,
-            width: box.width,
-            height: box.height,
-            boxShadow: "0 0 0 3px #F4C94F",
-          }}
-        />
-      )}
-
-      <div
-        className="absolute w-[300px] rounded-[14px] border border-line bg-cream p-4 shadow-2xl transition-all duration-300 ease-out"
-        style={{ top: tipTop, left: tipLeft }}
-      >
-        <span className="block text-[11px] font-bold uppercase tracking-wide text-success-deep mb-1.5">
-          {t("progress", { current: stepIndex + 1, total: STEPS.length })}
-        </span>
-        <h3 className="text-[17px] font-semibold text-charcoal mb-1.5">{t(`steps.${key}.title`)}</h3>
-        <p className="text-[13px] leading-relaxed text-muted mb-3.5">{t(`steps.${key}.body`)}</p>
-        <div className="flex items-center justify-between gap-2.5">
-          <div className="flex gap-1.5">
-            {STEPS.map((s, i) => (
-              <span
-                key={s}
-                className={`h-1.5 rounded-full transition-all ${i === stepIndex ? "w-4 bg-success" : "w-1.5 bg-line"}`}
-              />
-            ))}
-          </div>
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={() => end(false)}
-              className="text-[13px] font-semibold text-muted hover:text-charcoal px-1"
-            >
-              {t("skip")}
-            </button>
-            <button
-              type="button"
-              onClick={() => (isLast ? end() : setStepIndex((i) => i + 1))}
-              className="rounded-[9px] bg-success px-3.5 py-2 text-[13px] font-bold text-white hover:bg-success-deep transition-colors"
-            >
-              {isLast ? t("done") : t("next")}
-            </button>
-          </div>
+    <SpotlightOverlay
+      rect={target ? rect : null}
+      pad={padFor(target)}
+      progress={t("progress", { current: stepIndex + 1, total: STEPS.length })}
+      title={t(`steps.${key}.title`)}
+      body={t(`steps.${key}.body`)}
+      footerLeft={
+        <div className="flex gap-1.5">
+          {STEPS.map((s, i) => (
+            <span
+              key={s}
+              className={`h-1.5 rounded-full transition-all ${i === stepIndex ? "w-4 bg-success" : "w-1.5 bg-line"}`}
+            />
+          ))}
         </div>
-      </div>
-    </div>
+      }
+      actions={
+        <>
+          <button type="button" onClick={() => end(false)} className={GHOST_BTN}>
+            {t("skip")}
+          </button>
+          <button
+            type="button"
+            onClick={() => (isLast ? end() : setStepIndex((i) => i + 1))}
+            className={PRIMARY_BTN}
+          >
+            {key === "welcome" ? t("letsGo") : isLast ? t("done") : t("next")}
+          </button>
+        </>
+      }
+    />
   );
 }

@@ -185,7 +185,10 @@ export default function WordDetailCard({
         </span>
       </div>
 
-      <div className="relative bg-cream border border-line rounded-[6px] shadow-[0_20px_40px_-28px_rgba(60,50,30,.6)] overflow-hidden">
+      <div
+        data-tour="guided-word-box"
+        className="relative bg-cream border border-line rounded-[6px] shadow-[0_20px_40px_-28px_rgba(60,50,30,.6)] overflow-hidden"
+      >
         <div className="absolute inset-0 pointer-events-none" style={{ background: RULED }} aria-hidden="true" />
         <span
           className="absolute top-0 bottom-0 left-[clamp(28px,6vw,52px)] w-px bg-[var(--tint-rose-line)] opacity-70 pointer-events-none"
@@ -301,7 +304,6 @@ export default function WordDetailCard({
         </button>
         <button
           type="button"
-          data-tour="guided-word-goti"
           className={`${marked ? BTN_INK : BTN_LINE} w-full justify-center`}
           disabled={saving !== null}
           onClick={() => mark(true)}
@@ -341,13 +343,17 @@ export default function WordDetailCard({
         {inBank ? (
           <button
             type="button"
+            data-tour="guided-word-bank"
             onClick={() => router.push("/review/words")}
             className="min-w-0 inline-flex items-center gap-1.5 rounded-[10px] border border-success-line bg-success-bg px-3 py-2 font-semibold text-success-deep hover:bg-success-line transition-colors"
           >
             <span className="truncate">{t("bank.savedWithCount", { used: savedCount, slots })}</span>
           </button>
         ) : addError === "full" ? (
-          <span className="min-w-0 inline-flex items-center gap-1.5 rounded-[10px] border border-amber-line bg-[var(--tint-amber)] px-3 py-2 font-semibold text-[#B7791F]">
+          <span
+            data-tour="guided-word-bank"
+            className="min-w-0 inline-flex items-center gap-1.5 rounded-[10px] border border-amber-line bg-[var(--tint-amber)] px-3 py-2 font-semibold text-[#B7791F]"
+          >
             <span className="truncate">{t("bank.fullShort", { used: savedCount, slots })}</span>
           </span>
         ) : (

@@ -11,44 +11,82 @@
   },
   "guided": {
     "waitLabel": "Tap the highlighted spot",
+    "hangul-nav": {
+      "askTitle": "Shall we try Hangul first?",
+      "askBody": "Hangul is the Korean alphabet — the very first thing to learn. Want to have a look?",
+      "title": "Tap Hangul",
+      "body": "It's right here in the menu — tap it to open the alphabet."
+    },
     "hangul-pick": {
-      "title": "Start with ㄱ",
-      "body": "Tap the first letter to hear it."
+      "title": "Tap ㄱ",
+      "body": "Tap the first letter — you'll hear how it sounds."
     },
     "hangul-stroke": {
-      "title": "Watch the stroke order",
-      "body": "Every letter animates how it's written, stroke by stroke."
+      "title": "Watch the strokes",
+      "body": "This box draws the letter stroke by stroke. Tap it to watch again and hear it once more."
     },
     "hangul-nav-vocab": {
-      "title": "On to Vocabulary",
-      "body": "Tap Vocabulary in the menu to keep going."
+      "askTitle": "Now, shall we look at Vocabulary?",
+      "askBody": "That's where you'll learn real words, chapter by chapter.",
+      "title": "Tap Vocabulary",
+      "body": "It's in the menu — tap it to go there."
+    },
+    "vocab-chapter": {
+      "title": "Chapters",
+      "body": "Vocabulary is split into chapters of 50 words. Pick any one up here."
+    },
+    "vocab-days": {
+      "title": "Five days per chapter",
+      "body": "Each chapter is broken into Day 1–5, ten words a day — a comfortable daily bite."
     },
     "vocab-word": {
-      "title": "Open your first word",
-      "body": "Tap it to see the full meaning and an example."
+      "title": "Open the first word",
+      "body": "Tap the first word of Day 1 to see it up close."
     },
-    "word-goti": {
-      "title": "Check it off",
-      "body": "Once you've read it, tap Got it."
+    "word-box": {
+      "title": "The word card",
+      "body": "Here's the word, its meaning, and an example sentence. Tap the 🔊 to hear any of it."
     },
     "word-bank": {
       "title": "Save it for later",
-      "body": "Tap to add this word to your word bank."
+      "body": "Add to My Words keeps a word in your personal word bank so you can review it any time."
     },
     "shop-nav": {
-      "title": "One more stop — the Shop",
-      "body": "Tap Shop in the menu."
+      "askTitle": "One last stop — want to see the Shop?",
+      "askBody": "Spend the coins you earn on outfits for your tree.",
+      "title": "Tap Shop",
+      "body": "It's in the menu — tap it to open the shop."
+    },
+    "shop-coins": {
+      "title": "Your coins",
+      "body": "This is your balance. Daily quests and level-ups earn you more."
+    },
+    "shop-tabs": {
+      "title": "Categories",
+      "body": "Hats, faces, auras, sky, ground, friends — every kind of item has its own tab."
     },
     "shop-pick": {
-      "title": "Pick something",
-      "body": "Tap an item to try it on your tree."
+      "title": "Try one on",
+      "body": "Tap an item to preview it on your tree."
+    },
+    "shop-tryon": {
+      "title": "Try-on preview",
+      "body": "Your tree shows what you've picked before you buy anything."
     },
     "shop-cta": {
-      "title": "Make it yours",
-      "body": "Tap Buy to spend some of your starting coins and wear it."
+      "title": "Buy & wear",
+      "body": "When you like the look, this button buys it and puts it on your tree."
+    },
+    "finish": {
+      "title": "You made it through the tutorial! 🎉",
+      "body": "Practice has a lot more waiting for you — listening, speaking, writing and reading. Build up your skills and take them on.\n\nWe're cheering for your Korean journey. 화이팅!"
     }
   },
   "steps": {
+    "welcome": {
+      "title": "Welcome to Kroot! 👋",
+      "body": "Since it's your first time here, let me show you around one thing at a time."
+    },
     "sidebar": {
       "title": "Your menu",
       "body": "Everything you can practice lives here."
@@ -77,5 +115,8 @@
       "title": "Watch your garden fill in",
       "body": "Every study day adds a tile. Keep the streak alive."
     }
-  }
+  },
+  "keepGoing": "Keep going",
+  "letsGo": "Let's go",
+  "finish": "Finish"
 }

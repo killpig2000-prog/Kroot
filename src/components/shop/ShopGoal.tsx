@@ -85,7 +85,7 @@ export default function ShopGoal({
   if (!goal || isAdmin) {
     return (
       <div className="flex items-center justify-between gap-3 flex-wrap px-4 sm:px-5 py-3.5 border-b border-line bg-warm">
-        <p className="text-[14px] font-extrabold tabular-nums">
+        <p data-tour="guided-shop-coins" className="w-fit text-[14px] font-extrabold tabular-nums">
           {t("coins", { coins: shown })}
           <span className="text-[12.5px] font-semibold text-muted ml-2">
             {t("goal.earnNote", { quest: QUEST_COINS, bonus: LEVEL_BONUS_COINS })}
@@ -113,7 +113,7 @@ export default function ShopGoal({
           {preview}
         </span>
         <div className="min-w-0">
-          <p className="text-[22px] leading-none font-extrabold tabular-nums tracking-[-0.02em]">
+          <p data-tour="guided-shop-coins" className="w-fit text-[22px] leading-none font-extrabold tabular-nums tracking-[-0.02em]">
             {balance} <span className="text-faint font-bold">/ {goal.price}</span> 🪙
           </p>
           <div className="flex items-center gap-2 flex-wrap mt-1.5 text-[13px] text-muted">

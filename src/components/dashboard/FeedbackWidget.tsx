@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { usePathname } from "@/i18n/navigation";
 import { SEEN_KEY as TOUR_SEEN_KEY, TOUR_DONE_EVENT } from "@/components/onboarding/OnboardingTour";
+import { GUIDED_STEP_EVENT, currentGuidedStep } from "@/components/onboarding/guidedSteps";
 
 // Early-launch notice: shows on every dashboard load while we're actively
 // soliciting feedback. "Close" is per-load only; "Don't show today" hides it
@@ -37,10 +38,19 @@ export default function FeedbackWidget() {
 
     // The first-visit tour spotlights parts of this same page — don't stack
     // this notice on top of it. Wait for the tour to finish first.
+    // The tour's natural finish hands straight into the guided tour, whose
+    // first step ("shall we try Hangul?") is on this same page too — hold
+    // until that has either moved off the page or been skipped.
     if (tourPending) {
-      const onTourDone = () => setView("announce");
-      window.addEventListener(TOUR_DONE_EVENT, onTourDone, { once: true });
-      return () => window.removeEventListener(TOUR_DONE_EVENT, onTourDone);
+      const maybeShow = () => {
+        if (currentGuidedStep() === null) setView("announce");
+      };
+      window.addEventListener(TOUR_DONE_EVENT, maybeShow);
+      window.addEventListener(GUIDED_STEP_EVENT, maybeShow);
+      return () => {
+        window.removeEventListener(TOUR_DONE_EVENT, maybeShow);
+        window.removeEventListener(GUIDED_STEP_EVENT, maybeShow);
+      };
     }
 
     const timer = setTimeout(() => setView("announce"), 600);
