@@ -1,147 +1,157 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
+import { useRouter } from "@/i18n/navigation";
 import { useKoreanSpeaker, useSpeechRecognition } from "@/hooks/useSpeechRecognition";
-import { bestSimilarity, verdictFor, type Verdict } from "@/lib/speech-match";
+import { bestSimilarity, verdictFor } from "@/lib/speech-match";
+import { wordsForChapter } from "@/lib/pronunciation";
 import { checkTiles, type Board } from "@/lib/writing-builder";
 import { TileBoard } from "@/components/writing/WritingBoards";
+import AnswerCapture from "@/components/pronunciation/AnswerCapture";
+import ScoreResult, { VERDICTS } from "@/components/pronunciation/ScoreResult";
 import { speakKorean } from "@/lib/tts";
-import { wordsForChapter } from "@/lib/pronunciation";
 
-// The hero's "try it right now" pair — one pronunciation word and one
-// easy tile sentence, both graded entirely in the browser. No account, no
-// API call: the mic goes through Web Speech recognition and is scored with
-// the same jamo-similarity the real Pronunciation Trail uses; the sentence
-// is checked with the same checkTiles the Writing session uses. The word
-// and the board are fixed constants so the server render and the first
-// client render agree (no hydration mismatch from a shuffle).
+// The hero's "try it right now" pair — one pronunciation word and one easy
+// tile sentence, both graded entirely in the browser. No account, no API
+// call. The pronunciation card is the real practice card, piece for piece:
+// the same AnswerCapture mic + countdown ring and the same ScoreResult
+// gauge the Pronunciation Trail uses, fed by the same hooks — not a
+// look-alike. The word and the board are fixed constants so the server
+// render and the first client render agree.
 
 // The very first word of the real trail (chapter 1, ㄹ), with its actual
 // chapter tip — so what you try here is literally what lesson one asks.
 const WORD = wordsForChapter("rieul")[0];
-const MAX_LISTEN_MS = 5000;
+// Must match AnswerCapture's own MAX_LISTEN_MS so the ring runs out exactly
+// when the mic stops.
+const MAX_LISTEN_MS = 6000;
 
-// 저는 한국어를 사랑해요 (I love Korean). No distractor on purpose — the
-// user wanted the landing sample to be only the words that belong.
+// 나는 한국을 사랑해요 (I love Korea). No distractor on purpose — the user
+// wanted the landing sample to be only the words that belong.
 const BOARD: Board = {
-  answer: ["저는", "한국어를", "사랑해요"],
+  answer: ["나는", "한국을", "사랑해요"],
   tiles: [
-    { id: "t1", text: "한국어를" },
+    { id: "t1", text: "한국을" },
     { id: "t2", text: "사랑해요" },
-    { id: "t0", text: "저는" },
+    { id: "t0", text: "나는" },
   ],
 };
 
 const CARD =
   "text-left bg-cream border border-line rounded-[16px] p-5 shadow-[0_14px_30px_-16px_rgba(60,50,30,.3)] flex flex-col";
+const LABEL = "text-[11.5px] font-semibold tracking-[.06em] uppercase text-faint mb-2";
 const EYEBROW = "text-[10.5px] font-extrabold tracking-[.08em] uppercase mb-2";
 
-const VERDICT_STYLE: Record<Verdict, string> = {
-  great: "text-success-deep",
-  close: "text-amber",
-  again: "text-danger",
-};
-
-function ScoreRing({ pct }: { pct: number }) {
-  return (
-    <div
-      className="w-[72px] h-[72px] rounded-full flex items-center justify-center flex-none"
-      style={{ background: `conic-gradient(var(--c-success) ${pct * 3.6}deg, var(--c-line) 0)` }}
-    >
-      <div className="w-[58px] h-[58px] rounded-full bg-cream flex items-center justify-center">
-        <span className="font-extrabold text-[20px] leading-none text-success-deep tabular-nums">{pct}</span>
-      </div>
-    </div>
-  );
-}
-
 function PronunciationCard({ onDone }: { onDone: () => void }) {
-  const t = useTranslations("landing.tryIt");
-  const tp = useTranslations("pronunciation.practice");
-  const { speak, isSpeaking } = useKoreanSpeaker();
-  const { isSupported, isListening, interim, error, listen } = useSpeechRecognition("ko-KR", MAX_LISTEN_MS);
+  const t = useTranslations("pronunciation.practice");
+  const router = useRouter();
+  const { speak, isSpeaking, isSupported: ttsOk } = useKoreanSpeaker();
+  const { isSupported: micOk, isListening, listenStartedAt, interim, error, listen } = useSpeechRecognition(
+    "ko-KR",
+    MAX_LISTEN_MS
+  );
   const [heard, setHeard] = useState<string | null>(null);
   const [score, setScore] = useState(0);
 
-  function start() {
-    setHeard(null);
-    listen((text) => {
-      // Same grading as PronunciationChallenge: the chapter word, nothing looser.
-      const s = bestSimilarity(text, [WORD.kr]);
-      setHeard(text);
-      setScore(s);
-      onDone();
-    });
+  // Ticks the mic countdown ring while listening — same as the real card.
+  const [micElapsedMs, setMicElapsedMs] = useState(0);
+  useEffect(() => {
+    if (!isListening || listenStartedAt === null) return;
+    let raf: number;
+    const tick = () => {
+      setMicElapsedMs(performance.now() - listenStartedAt);
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [isListening, listenStartedAt]);
+
+  // Animates the score gauge counting up whenever a fresh grade comes in.
+  const [animScore, setAnimScore] = useState(0);
+  useEffect(() => {
+    if (heard === null) return;
+    const target = Math.round(score * 100);
+    const start = performance.now();
+    const DURATION = 550;
+    let raf: number;
+    const tick = (now: number) => {
+      const p = Math.min(1, (now - start) / DURATION);
+      setAnimScore(Math.round(target * p));
+      if (p < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [heard, score]);
+
+  function grade(text: string) {
+    // Same grading as PronunciationChallenge: the chapter word, nothing looser.
+    const s = bestSimilarity(text, [WORD.kr]);
+    setHeard(text);
+    setScore(s);
+    onDone();
   }
 
-  const pct = Math.round(score * 100);
-  const verdict = heard !== null ? verdictFor(score) : null;
+  const verdict = heard !== null ? VERDICTS[verdictFor(score)] : null;
 
   return (
     <div className={`${CARD} border-teal/40`}>
-      <p className={`${EYEBROW} text-teal`}>🎤 {t("pronTitle")} · {WORD.groupTitle}</p>
-      <p className="kr font-bold text-[36px] leading-[1.15] mb-0.5">{WORD.kr}</p>
-      <p className="text-[12.5px] text-muted mb-3">
+      <div className="flex items-center justify-between mb-4 gap-2.5 flex-wrap">
+        <span className="inline-flex items-center gap-1.5 text-[11.5px] font-semibold text-teal bg-[var(--tint-teal)] border border-[var(--tint-teal-line)] rounded-full px-2.5 py-[3px]">
+          {WORD.groupTitle}
+        </span>
+        <span className="text-[12.5px] text-faint font-medium">{t("wordOf", { n: 1, total: 6 })}</span>
+      </div>
+
+      <p className={LABEL}>{t("sayThis")}</p>
+      <p className="kr font-bold text-[34px] tracking-[-0.01em] leading-[1.2] mb-1">{WORD.kr}</p>
+      <p className="text-[13.5px] text-muted mb-4">
         <span className="italic">{WORD.romanization}</span> · {WORD.en}
       </p>
 
-      {/* the chapter's real "how to make it" tip, same as the practice card */}
-      <div className="flex items-start gap-2.5 bg-[var(--tint-teal)] border border-[var(--tint-teal-line)] rounded-xl px-3.5 py-2.5 mb-4">
-        <span className="w-7 h-7 rounded-full flex-none bg-teal text-white text-[12px] grid place-items-center">💡</span>
-        <div className="min-w-0">
-          <b className="block text-[10px] font-bold tracking-[.06em] text-faint mb-0.5">{tp("howToMakeIt")}</b>
-          <p className="text-[11.5px] text-charcoal leading-[1.55]">{WORD.tip}</p>
-        </div>
-      </div>
-
-      <div className="flex items-center gap-2.5 mb-4">
+      <div className="flex items-start gap-3 bg-warm border border-line rounded-xl px-[18px] py-3.5 mb-4">
         <button
-          type="button"
+          aria-label={t("hearIt")}
+          className="w-11 h-11 rounded-full flex-none bg-teal text-white text-[17px] flex items-center justify-center transition-transform hover:scale-105 disabled:opacity-50"
           onClick={() => speak(WORD.kr)}
-          disabled={isSpeaking}
-          className="inline-flex items-center gap-1.5 rounded-[10px] border border-line bg-warm px-3.5 py-2 text-[12.5px] font-bold text-charcoal hover:bg-cream transition-colors disabled:opacity-60"
+          disabled={!ttsOk}
         >
-          🔊 {t("listen")}
+          🔊
         </button>
-        {isSupported ? (
-          <button
-            type="button"
-            onClick={start}
-            disabled={isListening}
-            aria-busy={isListening}
-            className={`inline-flex items-center gap-1.5 rounded-[10px] px-3.5 py-2 text-[12.5px] font-bold text-white shadow-[0_3px_0_#0f766e] transition-all ${
-              isListening ? "bg-teal/70 animate-pulse" : "bg-teal hover:translate-y-px hover:shadow-[0_2px_0_#0f766e]"
-            }`}
-          >
-            🎤 {isListening ? t("listening") : heard !== null ? t("tryAgain") : t("speak")}
-          </button>
-        ) : (
-          <span className="text-[11.5px] text-faint leading-snug">{t("noMic")}</span>
-        )}
+        <div className="min-w-0">
+          <b className="block text-[11px] font-bold tracking-[.06em] text-faint mb-0.5">{t("howToMakeIt")}</b>
+          <p className="text-[13px] text-muted leading-[1.5]">{WORD.tip}</p>
+        </div>
+        {isSpeaking && <span className="ml-auto flex-none text-[12px] font-semibold text-teal wave-on">{t("speaking")}</span>}
       </div>
 
-      {isListening && interim && (
-        <p className="kr text-[13px] text-muted mb-2" aria-live="polite">
-          {interim}
-        </p>
-      )}
-      {error && !isListening && heard === null && (
-        <p className="text-[11.5px] text-danger leading-snug" aria-live="polite">
-          {error}
-        </p>
+      {heard === null && (
+        <AnswerCapture
+          bestScore={0}
+          micOk={micOk}
+          isListening={isListening}
+          micElapsedMs={micElapsedMs}
+          interim={interim}
+          error={error}
+          onListen={() => listen(grade)}
+          onSkip={() => {}}
+        />
       )}
 
       {heard !== null && verdict && (
-        <div className="flex items-center gap-3.5 border-t border-dashed border-line pt-3.5 mt-auto" aria-live="polite">
-          <ScoreRing pct={pct} />
-          <div className="min-w-0">
-            <p className={`text-[14px] font-extrabold ${VERDICT_STYLE[verdict]}`}>{t(`verdict.${verdict}`)}</p>
-            <p className="text-[11px] text-faint mt-0.5">
-              {t("heard")} <span className="kr text-charcoal font-semibold">{heard}</span>
-            </p>
-          </div>
-        </div>
+        <ScoreResult
+          heard={heard}
+          targetKr={WORD.kr}
+          verdict={verdict}
+          animScore={animScore}
+          saveError={null}
+          ttsOk={ttsOk}
+          onReplay={() => speak(WORD.kr)}
+          onTryAgain={() => setHeard(null)}
+          // "Finish →" on the landing sample hands over to the real thing.
+          onNext={() => router.push("/onboarding")}
+          isLastWord
+        />
       )}
     </div>
   );
@@ -190,16 +200,13 @@ export default function TryIt() {
   const finished = done.pron || done.write;
 
   return (
-    <div className="mt-8 mb-7 text-left">
-      <p className="text-center text-[11.5px] font-extrabold tracking-[.1em] uppercase text-success mb-3.5">
-        {t("eyebrow")}
-      </p>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-[760px] mx-auto">
+    <div className="mb-8 text-left">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-[760px] mx-auto items-start">
         <PronunciationCard onDone={() => setDone((d) => ({ ...d, pron: true }))} />
         <WritingCard onDone={() => setDone((d) => ({ ...d, write: true }))} />
       </div>
-      {/* the real CTA button sits right under this block in Hero, so this
-          is just the bridge line — no second link competing with it */}
+      {/* the real CTA button sits under the headline below, so this is just
+          the bridge line — no second link competing with it */}
       {finished && (
         <p className="text-center mt-4 text-[13.5px] font-semibold text-success-deep" aria-live="polite">
           {t("afterTry")} ↓

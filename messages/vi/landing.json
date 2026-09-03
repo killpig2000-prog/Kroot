@@ -9,7 +9,6 @@
   "hero": {
     "titleLine1": "Xây tiếng Hàn từ gốc rễ,",
     "titleHighlight": "từng bài học một.",
-    "sub": "Không đường tắt, không học lộn xộn — mỗi bài học nối tiếp bài trước, từ 한글 đến hội thoại thật.",
     "cta": "Tìm trình độ của tôi (3 phút)",
     "note": "— mọi bài học đều miễn phí, không cần thẻ, từ 한글 đến trôi chảy",
     "photos": {
@@ -20,21 +19,8 @@
     }
   },
   "tryIt": {
-    "eyebrow": "Thử ngay — không cần đăng ký",
-    "pronTitle": "Nói từ này",
-    "listen": "Nghe",
-    "speak": "Nói",
-    "listening": "Đang nghe…",
-    "tryAgain": "Thử lại",
-    "noMic": "Chấm điểm bằng mic cần Chrome hoặc Edge — bấm Nghe để nghe mẫu.",
-    "heard": "Bạn nói",
-    "verdict": {
-      "great": "🔥 Chuẩn luôn!",
-      "close": "Gần đúng — thử lại nhé",
-      "again": "Thử thêm lần nữa"
-    },
     "writeTitle": "Ghép câu này",
-    "writePrompt": "“Tôi yêu tiếng Hàn.”",
+    "writePrompt": "“Tôi yêu Hàn Quốc.”",
     "writeHint": "Bấm các từ theo thứ tự.",
     "afterTry": "Mọi bài học đều diễn ra đúng như vậy."
   },

@@ -82,12 +82,8 @@ export default function Hero() {
             {t("titleHighlight")}
           </mark>
         </h1>
-        <p
-          className="reveal text-[14.5px] text-muted max-w-[44ch] mx-auto mb-6"
-          style={{ "--rd": "0.22s" } as React.CSSProperties}
-        >
-          {t("sub")}
-        </p>
+        {/* no subtitle under the headline — the try-it cards above already
+            do the explaining (user request 2026-09-04) */}
         <Link
           href="/onboarding"
           className="reveal inline-block rounded-[10px] bg-success px-[28px] py-[13px] text-[14.5px] font-bold text-white shadow-[0_6px_0_#2E5B41] hover:translate-y-[2px] hover:shadow-[0_4px_0_#2E5B41] transition-all"

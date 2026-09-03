@@ -9,7 +9,6 @@
   "hero": {
     "titleLine1": "从根基开始学韩语，",
     "titleHighlight": "一课一课积累。",
-    "sub": "没有捷径，也不是东拼西凑的课程——每一课都建立在前一课之上，从한글到真正的对话。",
     "cta": "3 分钟测出我的水平",
     "note": "— 所有课程免费，无需信用卡，从 한글 到流利",
     "photos": {
@@ -20,21 +19,8 @@
     }
   },
   "tryIt": {
-    "eyebrow": "现在就试试 — 无需注册",
-    "pronTitle": "说出这个词",
-    "listen": "听",
-    "speak": "说",
-    "listening": "正在听…",
-    "tryAgain": "再来",
-    "noMic": "麦克风评分需要 Chrome 或 Edge — 点“听”可先听发音。",
-    "heard": "你说的是",
-    "verdict": {
-      "great": "🔥 完美！",
-      "close": "很接近 — 再试一次",
-      "again": "再试试看"
-    },
     "writeTitle": "拼出这句话",
-    "writePrompt": "“我爱韩语。”",
+    "writePrompt": "“我爱韩国。”",
     "writeHint": "按顺序点选单词。",
     "afterTry": "每一课都是这样进行的。"
   },

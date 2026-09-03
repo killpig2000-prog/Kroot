@@ -9,7 +9,6 @@
   "hero": {
     "titleLine1": "Build Korean from the roots,",
     "titleHighlight": "one lesson at a time.",
-    "sub": "No shortcuts, no random grab-bag lessons — every lesson builds on the last, from 한글 to real conversations.",
     "cta": "Find my level (3 min)",
     "note": "— every lesson free, no credit card, from 한글 to fluency",
     "photos": {
@@ -20,21 +19,8 @@
     }
   },
   "tryIt": {
-    "eyebrow": "Try it right now — no sign-up",
-    "pronTitle": "Say this word",
-    "listen": "Listen",
-    "speak": "Speak",
-    "listening": "Listening…",
-    "tryAgain": "Again",
-    "noMic": "Mic scoring needs Chrome or Edge — tap Listen to hear it.",
-    "heard": "You said",
-    "verdict": {
-      "great": "🔥 Nailed it!",
-      "close": "Close — once more",
-      "again": "Give it another go"
-    },
     "writeTitle": "Build this sentence",
-    "writePrompt": "“I love Korean.”",
+    "writePrompt": "“I love Korea.”",
     "writeHint": "Tap the words in order.",
     "afterTry": "That's exactly how every lesson works."
   },
