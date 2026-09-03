@@ -13,6 +13,7 @@ export const GUIDED_STEP_EVENT = "kroot:guided-step-changed";
 
 export type GuidedStepKey =
   | "hangul-pick"
+  | "hangul-stroke"
   | "hangul-nav-vocab"
   | "vocab-word"
   | "word-goti"
@@ -27,6 +28,7 @@ export type GuidedStepKey =
 // *reaching* it differs (see GUIDED_MOBILE_REVEAL below).
 export const GUIDED_TARGET: Record<GuidedStepKey, string> = {
   "hangul-pick": "guided-hangul-first-jamo",
+  "hangul-stroke": "guided-hangul-stroke",
   "hangul-nav-vocab": "guided-nav-vocabulary",
   "vocab-word": "guided-vocab-first-word",
   "word-goti": "guided-word-goti",
@@ -34,6 +36,28 @@ export const GUIDED_TARGET: Record<GuidedStepKey, string> = {
   "shop-nav": "guided-nav-shop",
   "shop-pick": "guided-shop-first-item",
   "shop-cta": "guided-shop-cta",
+};
+
+// Steps that advance themselves once their target has been visible for this
+// long, instead of waiting for a click — "hangul-stroke" spotlights the
+// stroke-order animation that already started playing the instant
+// "hangul-pick" was clicked (same element reveal, no second click to make),
+// so it just needs to sit on screen long enough to watch it (ㄱ's single
+// stroke finishes well under 1s; padded for multi-stroke letters too).
+export const GUIDED_AUTO_ADVANCE_MS: Partial<Record<GuidedStepKey, number>> = {
+  "hangul-stroke": 1800,
+};
+
+// The real Vocabulary nav link just goes to "/vocabulary", which lands on
+// whatever chapter is next-up for THAT account — for an account with real
+// prior progress (any returning learner, including the test account this
+// gets verified against), that's very likely not chapter 1, so
+// "guided-vocab-first-word" would spotlight the first word of whatever
+// chapter happens to be in progress instead of the actual first word a
+// brand-new learner would expect. Force the deep link during this one step
+// so the tour always lands on chapter 1 regardless of account history.
+export const GUIDED_FORCE_HREF: Partial<Record<GuidedStepKey, string>> = {
+  "hangul-nav-vocab": "/vocabulary?chapter=0",
 };
 
 // Below md, a nav-hop step's real target lives inside a BottomNav sheet
@@ -50,6 +74,7 @@ export const GUIDED_MOBILE_REVEAL: Partial<Record<GuidedStepKey, string>> = {
 // i18n keys under tour.guided.<step>.{title,body}
 export const GUIDED_ORDER: GuidedStepKey[] = [
   "hangul-pick",
+  "hangul-stroke",
   "hangul-nav-vocab",
   "vocab-word",
   "word-goti",

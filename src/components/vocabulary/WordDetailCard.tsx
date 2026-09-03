@@ -178,9 +178,7 @@ export default function WordDetailCard({
             ← {t("bank.backToMyBank")}
           </Link>
         ) : (
-          <Link href={unitHref} className="text-[12.5px] text-muted hover:text-charcoal transition-colors">
-            ← {unitLabel}
-          </Link>
+          <span />
         )}
         <span className="text-[12.5px] text-muted flex-none">
           {topicLabel} · {level}
@@ -332,9 +330,7 @@ export default function WordDetailCard({
             ← {t("detail.prev")}
           </Link>
         ) : (
-          <Link href={unitHref} className="font-semibold text-muted hover:text-charcoal transition-colors whitespace-nowrap">
-            ← {t("detail.backToUnit")}
-          </Link>
+          <span />
         )}
         {/* The add button swaps into this saved state in place — a fast tap's
             trailing click used to land after that swap and fire whatever was
@@ -368,12 +364,6 @@ export default function WordDetailCard({
             </span>
           </button>
         )}
-      </div>
-
-      <div className="mt-2 text-[12.5px]">
-        <Link href="/vocabulary" className="font-semibold text-faint hover:text-charcoal transition-colors whitespace-nowrap">
-          ← {t("detail.backToVocab")}
-        </Link>
       </div>
 
       {!nextHref && (

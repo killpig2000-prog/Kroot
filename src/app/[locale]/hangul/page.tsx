@@ -42,6 +42,7 @@ export default async function HangulPage() {
           </div>
 
           <GuidedStep step="hangul-pick" />
+          <GuidedStep step="hangul-stroke" />
           <GuidedStep step="hangul-nav-vocab" />
 
           <HangulExplorer />

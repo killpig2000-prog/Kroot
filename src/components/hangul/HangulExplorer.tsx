@@ -97,6 +97,7 @@ function JamoGrid({ items, firstItemTourId }: { items: Jamo[]; firstItemTourId?:
       {selected ? (
         <div
           key={selected.char}
+          data-tour={firstItemTourId ? "guided-hangul-stroke" : undefined}
           className="mt-3 border border-success-line bg-success-bg rounded-[14px] px-4 py-3.5 flex flex-col gap-3 sm:flex-row sm:items-center"
           style={{ animation: "fadeUp .3s ease" }}
         >

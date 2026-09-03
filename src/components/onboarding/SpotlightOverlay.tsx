@@ -8,6 +8,7 @@ export type SpotlightRect = { top: number; left: number; width: number; height: 
 
 export default function SpotlightOverlay({
   rect,
+  pad = 8,
   progress,
   title,
   body,
@@ -16,6 +17,8 @@ export default function SpotlightOverlay({
   onSkip,
 }: {
   rect: SpotlightRect | null;
+  /** Ring padding around the measured rect — smaller for compact targets like a BottomNav tab, where the default 8px overshoots the real element. */
+  pad?: number;
   progress: string;
   title: string;
   body: string;
@@ -23,7 +26,6 @@ export default function SpotlightOverlay({
   skipLabel: string;
   onSkip: () => void;
 }) {
-  const pad = 8;
   const box = rect
     ? { top: rect.top - pad, left: rect.left - pad, width: rect.width + pad * 2, height: rect.height + pad * 2 }
     : null;

@@ -13,7 +13,11 @@
     "waitLabel": "点一下高亮的地方",
     "hangul-pick": {
       "title": "从ㄱ开始",
-      "body": "点一下第一个字母——听听发音，看看笔顺。"
+      "body": "点一下第一个字母，听听发音。"
+    },
+    "hangul-stroke": {
+      "title": "看看笔顺",
+      "body": "每个字母都会用动画演示怎么一笔一笔写出来。"
     },
     "hangul-nav-vocab": {
       "title": "接下来去词汇",

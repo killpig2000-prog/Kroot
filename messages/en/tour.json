@@ -13,7 +13,11 @@
     "waitLabel": "Tap the highlighted spot",
     "hangul-pick": {
       "title": "Start with ㄱ",
-      "body": "Tap the first letter — hear it, and watch the stroke order."
+      "body": "Tap the first letter to hear it."
+    },
+    "hangul-stroke": {
+      "title": "Watch the stroke order",
+      "body": "Every letter animates how it's written, stroke by stroke."
     },
     "hangul-nav-vocab": {
       "title": "On to Vocabulary",

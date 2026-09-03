@@ -13,7 +13,11 @@
     "waitLabel": "Chạm vào điểm được tô sáng",
     "hangul-pick": {
       "title": "Bắt đầu với ㄱ",
-      "body": "Chạm vào chữ cái đầu tiên — nghe cách đọc và xem thứ tự nét viết."
+      "body": "Chạm vào chữ cái đầu tiên để nghe cách đọc."
+    },
+    "hangul-stroke": {
+      "title": "Xem thứ tự nét viết",
+      "body": "Mỗi chữ cái đều có hoạt ảnh cho thấy cách viết, từng nét một."
     },
     "hangul-nav-vocab": {
       "title": "Tiếp theo là Từ vựng",

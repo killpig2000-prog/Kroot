@@ -13,7 +13,11 @@
     "waitLabel": "Toca el punto resaltado",
     "hangul-pick": {
       "title": "Empieza por ㄱ",
-      "body": "Toca la primera letra — escúchala y mira el orden de los trazos."
+      "body": "Toca la primera letra para escucharla."
+    },
+    "hangul-stroke": {
+      "title": "Mira el orden de los trazos",
+      "body": "Cada letra anima cómo se escribe, trazo a trazo."
     },
     "hangul-nav-vocab": {
       "title": "Ahora, Vocabulario",

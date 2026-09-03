@@ -5,6 +5,8 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import SpotlightOverlay, { type SpotlightRect } from "@/components/onboarding/SpotlightOverlay";
 import {
+  GUIDED_AUTO_ADVANCE_MS,
+  GUIDED_FORCE_HREF,
   GUIDED_KEY,
   GUIDED_MOBILE_REVEAL,
   GUIDED_STEP_EVENT,
@@ -42,7 +44,9 @@ export default function GuidedStep({ step }: { step: GuidedStepKey }) {
   const router = useRouter();
   const [active, setActive] = useState(false);
   const [rect, setRect] = useState<SpotlightRect | null>(null);
+  const [isReveal, setIsReveal] = useState(false);
   const frame = useRef<number | null>(null);
+  const advancedRef = useRef(false);
 
   const checkActive = useCallback(() => {
     let cur: string | null = null;
@@ -65,6 +69,8 @@ export default function GuidedStep({ step }: { step: GuidedStepKey }) {
   }, [checkActive]);
 
   const advance = useCallback(() => {
+    if (advancedRef.current) return;
+    advancedRef.current = true;
     const next = guidedNext(step);
     try {
       if (next) localStorage.setItem(GUIDED_KEY, next);
@@ -90,8 +96,26 @@ export default function GuidedStep({ step }: { step: GuidedStepKey }) {
 
   useEffect(() => {
     if (!active) return;
+    advancedRef.current = false;
     const target = GUIDED_TARGET[step];
     const revealTarget = GUIDED_MOBILE_REVEAL[step];
+    const autoMs = GUIDED_AUTO_ADVANCE_MS[step];
+    const forceHref = GUIDED_FORCE_HREF[step];
+    let autoTimer: ReturnType<typeof setTimeout> | null = null;
+
+    // A step whose real target's natural href would land somewhere other
+    // than what the tour needs (e.g. "/vocabulary" resolving to whatever
+    // chapter is next-up for THIS account, not chapter 1) overrides the
+    // click's default navigation and sends the learner to forceHref instead.
+    const onClick = (e: MouseEvent) => {
+      if (forceHref) {
+        e.preventDefault();
+        advance();
+        router.push(forceHref);
+      } else {
+        advance();
+      }
+    };
 
     // "reveal" = spotlighting the BottomNav tab that opens the sheet the real
     // target lives in (a plain tap, doesn't advance); "target" = spotlighting
@@ -101,14 +125,22 @@ export default function GuidedStep({ step }: { step: GuidedStepKey }) {
     let mode: "target" | "reveal" | null = null;
     let boundEl: HTMLElement | null = null;
 
-    const bind = (el: HTMLElement, isReveal: boolean) => {
+    const bind = (el: HTMLElement, reveal: boolean) => {
       boundEl = el;
-      mode = isReveal ? "reveal" : "target";
+      mode = reveal ? "reveal" : "target";
+      setIsReveal(reveal);
       el.scrollIntoView({ block: "center", behavior: "smooth" });
-      if (!isReveal) el.addEventListener("click", advance);
+      if (!reveal) {
+        el.addEventListener("click", onClick);
+        if (autoMs) autoTimer = setTimeout(advance, autoMs);
+      }
     };
     const unbind = () => {
-      if (boundEl && mode === "target") boundEl.removeEventListener("click", advance);
+      if (boundEl && mode === "target") boundEl.removeEventListener("click", onClick);
+      if (autoTimer) {
+        clearTimeout(autoTimer);
+        autoTimer = null;
+      }
       boundEl = null;
       mode = null;
     };
@@ -149,13 +181,14 @@ export default function GuidedStep({ step }: { step: GuidedStepKey }) {
       if (frame.current) cancelAnimationFrame(frame.current);
       window.removeEventListener("resize", measure);
     };
-  }, [active, step, advance]);
+  }, [active, step, advance, router]);
 
   if (!active) return null;
 
   return (
     <SpotlightOverlay
       rect={rect}
+      pad={isReveal ? 4 : 8}
       progress={guidedProgress(step)}
       title={t(`guided.${step}.title`)}
       body={t(`guided.${step}.body`)}
