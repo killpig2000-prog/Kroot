@@ -635,6 +635,48 @@ html.js-reveal .tree-garden.in .tree {
   .wave-on i { animation: none; }
 }
 
+/* landing try-it: "this is live, touch it" cues on the real practice widgets */
+@keyframes tryitDot {
+  50% { opacity: 0.25; }
+}
+.tryit-live::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: tryitDot 1.2s ease-in-out infinite;
+}
+@keyframes tryitPulse {
+  0% { box-shadow: 0 0 0 0 rgba(34, 137, 128, 0.45); }
+  100% { box-shadow: 0 0 0 16px rgba(34, 137, 128, 0); }
+}
+.tryit-mic button:not(:disabled) {
+  animation: tryitPulse 1.8s ease-out infinite;
+}
+@keyframes tryitTap {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+.tryit-hint [data-tiles] > :first-child {
+  position: relative;
+}
+.tryit-hint [data-tiles] > :first-child::after {
+  content: "👇";
+  position: absolute;
+  right: -10px;
+  top: -22px;
+  font-size: 18px;
+  line-height: 1;
+  pointer-events: none;
+  animation: tryitTap 1.4s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .tryit-live::before,
+  .tryit-mic button:not(:disabled),
+  .tryit-hint [data-tiles] > :first-child::after { animation: none; }
+}
+
 .speech-pop {
   animation: speechPop 6s ease-in-out infinite;
 }

@@ -19,6 +19,13 @@
     }
   },
   "tryIt": {
+    "banner": "在这里试一节真正的课",
+    "bannerSub": "无需注册 · 只要 20 秒",
+    "livePron": "可以试 · 🎤 说一说",
+    "liveWrite": "可以试 · ✍️ 拼一拼",
+    "lessonWord": "第 1 课 · 单词 1/6",
+    "lessonSentence": "第 1 课 · 句子 1",
+    "tryMe": "↙ 试试看 ↘",
     "writeTitle": "拼出这句话",
     "writePrompt": "“我爱韩国。”",
     "writeHint": "按顺序点选单词。",

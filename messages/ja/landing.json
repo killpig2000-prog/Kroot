@@ -19,6 +19,13 @@
     }
   },
   "tryIt": {
+    "banner": "ここで本物のレッスンを体験",
+    "bannerSub": "登録不要 · 20秒",
+    "livePron": "体験できます · 🎤 言ってみる",
+    "liveWrite": "体験できます · ✍️ 並べてみる",
+    "lessonWord": "レッスン1 · 単語 1/6",
+    "lessonSentence": "レッスン1 · 文 1",
+    "tryMe": "↙ さわってみて ↘",
     "writeTitle": "この文を組み立てよう",
     "writePrompt": "「私は韓国を愛しています。」",
     "writeHint": "単語を順番にタップしてください。",

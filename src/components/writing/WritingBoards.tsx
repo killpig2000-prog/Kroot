@@ -321,7 +321,7 @@ export function TileBoard({
       {/* Outside legacy mode, every word is a switch: tap to place it, tap its
           dimmed twin here (or tap it again in the zone above) to take it back
           — checking happens once the whole chapter is turned in. */}
-      <div className="flex flex-wrap gap-2 mb-3.5">
+      <div className="flex flex-wrap gap-2 mb-3.5" data-tiles>
         {board.tiles.map((tile) => {
           const used = picked.includes(tile.id);
           return (

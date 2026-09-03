@@ -20,8 +20,8 @@ import { speakKorean } from "@/lib/tts";
 // look-alike. The word and the board are fixed constants so the server
 // render and the first client render agree.
 
-// The very first word of the real trail (chapter 1, ㄹ), with its actual
-// chapter tip — so what you try here is literally what lesson one asks.
+// The very first word of the real trail (chapter 1, ㄹ) — what you try here
+// is literally what lesson one asks.
 const WORD = wordsForChapter("rieul")[0];
 // Must match AnswerCapture's own MAX_LISTEN_MS so the ring runs out exactly
 // when the mic stops.
@@ -38,13 +38,18 @@ const BOARD: Board = {
   ],
 };
 
+// Both cards share one skeleton (header row → label → content → flex spacer
+// → the interactive bit) so they come out the same height with the mic and
+// the tile buttons sitting on the same baseline.
 const CARD =
-  "text-left bg-cream border border-line rounded-[16px] p-5 shadow-[0_14px_30px_-16px_rgba(60,50,30,.3)] flex flex-col";
+  "relative h-full text-left bg-cream border border-line rounded-[16px] p-5 shadow-[0_14px_30px_-16px_rgba(60,50,30,.3)] flex flex-col";
 const LABEL = "text-[11.5px] font-semibold tracking-[.06em] uppercase text-faint mb-2";
-const EYEBROW = "text-[10.5px] font-extrabold tracking-[.08em] uppercase mb-2";
+const LIVE =
+  "tryit-live inline-flex items-center gap-1.5 text-[10.5px] font-extrabold tracking-[.08em] uppercase rounded-full px-2.5 py-[3px]";
 
 function PronunciationCard({ onDone }: { onDone: () => void }) {
   const t = useTranslations("pronunciation.practice");
+  const tl = useTranslations("landing.tryIt");
   const router = useRouter();
   const { speak, isSpeaking, isSupported: ttsOk } = useKoreanSpeaker();
   const { isSupported: micOk, isListening, listenStartedAt, interim, error, listen } = useSpeechRecognition(
@@ -97,49 +102,43 @@ function PronunciationCard({ onDone }: { onDone: () => void }) {
   return (
     <div className={`${CARD} border-teal/40`}>
       <div className="flex items-center justify-between mb-4 gap-2.5 flex-wrap">
-        <span className="inline-flex items-center gap-1.5 text-[11.5px] font-semibold text-teal bg-[var(--tint-teal)] border border-[var(--tint-teal-line)] rounded-full px-2.5 py-[3px]">
-          {WORD.groupTitle}
-        </span>
-        <span className="text-[12.5px] text-faint font-medium">{t("wordOf", { n: 1, total: 6 })}</span>
+        <span className={`${LIVE} text-teal bg-[var(--tint-teal)]`}>{tl("livePron")}</span>
+        <span className="text-[12px] text-faint font-medium">{tl("lessonWord")}</span>
       </div>
 
       <p className={LABEL}>{t("sayThis")}</p>
-      <p className="kr font-bold text-[34px] tracking-[-0.01em] leading-[1.2] mb-1">{WORD.kr}</p>
+      <p className="flex items-center gap-3 flex-wrap mb-1">
+        <span className="kr font-bold text-[34px] tracking-[-0.01em] leading-[1.2]">{WORD.kr}</span>
+        <button
+          type="button"
+          onClick={() => speak(WORD.kr)}
+          disabled={!ttsOk}
+          className={`inline-flex items-center gap-1.5 text-[12px] font-bold text-teal bg-[var(--tint-teal)] border border-[var(--tint-teal-line)] rounded-full px-2.5 py-[3px] transition-transform hover:scale-105 disabled:opacity-50 ${
+            isSpeaking ? "wave-on" : ""
+          }`}
+        >
+          🔊 {t("hearIt")}
+        </button>
+      </p>
       <p className="text-[13.5px] text-muted mb-4">
         <span className="italic">{WORD.romanization}</span> · {WORD.en}
       </p>
 
-      {/* one-line version of the practice card's tip box (user request):
-          the full tip is on the real page; here it's a single truncated
-          line with the whole text on hover */}
-      <div className="flex items-center gap-3 bg-warm border border-line rounded-xl px-3.5 py-2.5 mb-4 min-w-0">
-        <button
-          aria-label={t("hearIt")}
-          className="w-9 h-9 rounded-full flex-none bg-teal text-white text-[15px] flex items-center justify-center transition-transform hover:scale-105 disabled:opacity-50"
-          onClick={() => speak(WORD.kr)}
-          disabled={!ttsOk}
-        >
-          🔊
-        </button>
-        <p className="min-w-0 flex-1 text-[12.5px] text-muted truncate" title={WORD.tip}>
-          <b className="text-[10.5px] font-bold tracking-[.06em] text-faint">{t("howToMakeIt")}</b>
-          <span className="mx-1.5 text-faint">·</span>
-          {WORD.tip}
-        </p>
-        {isSpeaking && <span className="flex-none text-[12px] font-semibold text-teal wave-on">{t("speaking")}</span>}
-      </div>
+      <div className="flex-1" />
 
       {heard === null && (
-        <AnswerCapture
-          bestScore={0}
-          micOk={micOk}
-          isListening={isListening}
-          micElapsedMs={micElapsedMs}
-          interim={interim}
-          error={error}
-          onListen={() => listen(grade)}
-          onSkip={() => {}}
-        />
+        <div className="tryit-mic">
+          <AnswerCapture
+            bestScore={0}
+            micOk={micOk}
+            isListening={isListening}
+            micElapsedMs={micElapsedMs}
+            interim={interim}
+            error={error}
+            onListen={() => listen(grade)}
+            onSkip={() => {}}
+          />
+        </div>
       )}
 
       {heard !== null && verdict && (
@@ -177,23 +176,34 @@ function WritingCard({ onDone }: { onDone: () => void }) {
 
   return (
     <div className={`${CARD} border-amber-line`}>
-      <p className={`${EYEBROW} text-amber`}>✍️ {t("writeTitle")}</p>
+      <div className="flex items-center justify-between mb-4 gap-2.5 flex-wrap">
+        <span className={`${LIVE} text-amber bg-[var(--tint-amber)]`}>{t("liveWrite")}</span>
+        <span className="text-[12px] text-faint font-medium">{t("lessonSentence")}</span>
+      </div>
+
+      <p className={LABEL}>{t("writeTitle")}</p>
       <p className="text-[15px] font-bold text-charcoal leading-snug mb-0.5">{t("writePrompt")}</p>
       <p className="text-[12.5px] text-muted mb-4">{t("writeHint")}</p>
-      <TileBoard
-        board={BOARD}
-        picked={picked}
-        checked={checked}
-        onChange={(next) => {
-          setPicked(next);
-          if (checked === false) setChecked(null);
-        }}
-        onCheck={check}
-        onReset={() => {
-          setPicked([]);
-          setChecked(null);
-        }}
-      />
+
+      <div className="flex-1" />
+
+      {/* the 👆 sits on the first tile only until the learner touches one */}
+      <div className={picked.length === 0 && checked === null ? "tryit-hint" : undefined}>
+        <TileBoard
+          board={BOARD}
+          picked={picked}
+          checked={checked}
+          onChange={(next) => {
+            setPicked(next);
+            if (checked === false) setChecked(null);
+          }}
+          onCheck={check}
+          onReset={() => {
+            setPicked([]);
+            setChecked(null);
+          }}
+        />
+      </div>
     </div>
   );
 }
@@ -205,7 +215,22 @@ export default function TryIt() {
 
   return (
     <div className="mb-8 text-left">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-[760px] mx-auto items-start">
+      {/* says out loud that the two cards below are live, not screenshots */}
+      <div className="flex items-center justify-center gap-x-3 gap-y-1.5 flex-wrap mb-5 md:mb-10">
+        <span className="inline-flex items-center gap-2 bg-charcoal text-cream rounded-full px-4 py-[7px] text-[14px] font-extrabold">
+          <span aria-hidden="true" className="w-2 h-2 rounded-full bg-[#F4C94F] tryit-live" />
+          {t("banner")}
+        </span>
+        <span className="text-[13px] text-muted">{t("bannerSub")}</span>
+      </div>
+
+      <div className="relative grid grid-cols-1 md:grid-cols-2 gap-4 max-w-[760px] mx-auto items-stretch">
+        <span
+          aria-hidden="true"
+          className="hand hidden md:block absolute z-10 left-1/2 -top-[30px] -translate-x-1/2 -rotate-[3deg] text-[20px] font-semibold text-success whitespace-nowrap select-none"
+        >
+          {t("tryMe")}
+        </span>
         <PronunciationCard onDone={() => setDone((d) => ({ ...d, pron: true }))} />
         <WritingCard onDone={() => setDone((d) => ({ ...d, write: true }))} />
       </div>

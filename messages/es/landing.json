@@ -19,6 +19,13 @@
     }
   },
   "tryIt": {
+    "banner": "Prueba una lección real aquí mismo",
+    "bannerSub": "Sin registro · 20 segundos",
+    "livePron": "En vivo · 🎤 Dilo",
+    "liveWrite": "En vivo · ✍️ Ármala",
+    "lessonWord": "Lección 1 · palabra 1 de 6",
+    "lessonSentence": "Lección 1 · frase 1",
+    "tryMe": "↙ pruébalo ↘",
     "writeTitle": "Arma esta frase",
     "writePrompt": "“Amo Corea.”",
     "writeHint": "Toca las palabras en orden.",

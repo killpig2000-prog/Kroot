@@ -19,6 +19,13 @@
     }
   },
   "tryIt": {
+    "banner": "Thử một bài học thật ngay tại đây",
+    "bannerSub": "Không cần đăng ký · 20 giây",
+    "livePron": "Thử ngay · 🎤 Nói thử",
+    "liveWrite": "Thử ngay · ✍️ Ghép thử",
+    "lessonWord": "Bài 1 · từ 1/6",
+    "lessonSentence": "Bài 1 · câu 1",
+    "tryMe": "↙ thử đi ↘",
     "writeTitle": "Ghép câu này",
     "writePrompt": "“Tôi yêu Hàn Quốc.”",
     "writeHint": "Bấm các từ theo thứ tự.",

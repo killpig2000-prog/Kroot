@@ -19,6 +19,13 @@
     }
   },
   "tryIt": {
+    "banner": "Try a real lesson right here",
+    "bannerSub": "No sign-up · takes 20 seconds",
+    "livePron": "Try it live · 🎤 Say it",
+    "liveWrite": "Try it live · ✍️ Build it",
+    "lessonWord": "Lesson 1 · word 1 of 6",
+    "lessonSentence": "Lesson 1 · sentence 1",
+    "tryMe": "↙ try me ↘",
     "writeTitle": "Build this sentence",
     "writePrompt": "“I love Korea.”",
     "writeHint": "Tap the words in order.",
