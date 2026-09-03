@@ -298,7 +298,7 @@ export default async function VocabularyPage({
                     <ChapterDays
                       days={days}
                       defaultOpen={defaultOpen === -1 ? days.length - 1 : defaultOpen}
-                      dayLabel={(n) => t("dayN", { n })}
+                      dayLabels={days.map((_, i) => t("dayN", { n: i + 1 }))}
                       doneLabel={t("known")}
                     />
                   );

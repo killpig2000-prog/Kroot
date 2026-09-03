@@ -31,12 +31,12 @@ export type ChapterDay = {
 export default function ChapterDays({
   days,
   defaultOpen,
-  dayLabel,
+  dayLabels,
   doneLabel,
 }: {
   days: ChapterDay[];
   defaultOpen: number;
-  dayLabel: (n: number) => string;
+  dayLabels: string[];
   doneLabel: string;
 }) {
   const [open, setOpen] = useState(defaultOpen);
@@ -55,7 +55,7 @@ export default function ChapterDays({
             >
               <span className="flex items-baseline gap-2.5">
                 <b className={`text-[14px] font-extrabold ${isOpen ? "text-[#6B33CC]" : "text-charcoal"}`}>
-                  {dayLabel(i + 1)}
+                  {dayLabels[i]}
                 </b>
                 <span className="text-[11.5px] text-faint tabular-nums">
                   {day.start}–{day.end}
