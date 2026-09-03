@@ -8,7 +8,7 @@ import { getTranslations } from "next-intl/server";
 export type StudyDay = { date: string; minutes: number };
 
 const DAYS = 30;
-const SLOT = 10; // 6 unit bar + 4 unit gutter
+const SLOT = 10; // 8 unit bar + 2 unit gutter
 const H = 64;
 const STUB = 3;
 
@@ -29,16 +29,25 @@ export default async function StudyDays({
         <small className="text-[12.5px] text-faint font-medium tabular-nums">{t("last30Days")}</small>
       </div>
 
-      {/* the SVG scales to the card; the wrapper only ever scrolls if the
-          card is narrower than the chart's own minimum */}
-      <div className="overflow-x-auto">
+      {/* the SVG always scales to the card width via viewBox — no min-width,
+          so narrow phones shrink the bars instead of clipping them behind
+          an unhinted horizontal scroll */}
+      <div>
         <svg
           viewBox={`0 0 ${DAYS * SLOT} ${H}`}
           preserveAspectRatio="none"
-          className="w-full h-[64px] min-w-[260px] block"
+          className="w-full h-[64px] block"
           role="img"
           aria-label={t("whenYouStudy")}
         >
+          {/* same blue→teal gradient as the admin funnel bars, applied
+              top-to-bottom instead of left-to-right */}
+          <defs>
+            <linearGradient id="studyDaysBar" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="var(--c-sky-deep)" />
+              <stop offset="100%" stopColor="var(--c-teal)" />
+            </linearGradient>
+          </defs>
           {days.map((d, i) => {
             const h = d.minutes > 0 ? Math.max(STUB, Math.round((d.minutes / max) * H)) : STUB;
             return (
@@ -46,10 +55,10 @@ export default async function StudyDays({
                 key={d.date}
                 x={i * SLOT}
                 y={H - h}
-                width={SLOT - 4}
+                width={SLOT - 2}
                 height={h}
-                rx={2}
-                fill={d.minutes > 0 ? "var(--c-chart)" : "var(--c-chart-dim)"}
+                rx={3}
+                fill={d.minutes > 0 ? "url(#studyDaysBar)" : "var(--c-chart-dim)"}
               >
                 <title>{t("tooltipMinutes", { date: d.date, count: d.minutes })}</title>
               </rect>

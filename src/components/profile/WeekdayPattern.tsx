@@ -9,7 +9,7 @@ import { getFormatter, getTranslations } from "next-intl/server";
 export type WeekdayMinutes = { dow: number; minutes: number }; // 7 entries, Mon..Sun order, dow = JS getUTCDay()
 
 const SLOT = 40;
-const BAR_W = 18;
+const BAR_W = 24;
 const H = 72;
 const STUB = 3;
 
@@ -38,14 +38,22 @@ export default async function WeekdayPattern({ days }: { days: WeekdayMinutes[] 
         )}
       </div>
 
-      <div className="overflow-x-auto">
+      <div>
         <svg
           viewBox={`0 0 ${days.length * SLOT} ${H}`}
           preserveAspectRatio="none"
-          className="w-full h-[72px] min-w-[240px] block"
+          className="w-full h-[72px] block"
           role="img"
           aria-label={t("weekdayPattern")}
         >
+          {/* same blue→teal gradient as the admin funnel bars, applied
+              top-to-bottom instead of left-to-right */}
+          <defs>
+            <linearGradient id="weekdayBar" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="var(--c-sky-deep)" />
+              <stop offset="100%" stopColor="var(--c-teal)" />
+            </linearGradient>
+          </defs>
           {days.map((d, i) => {
             const h = d.minutes > 0 ? Math.max(STUB, Math.round((d.minutes / max) * H)) : STUB;
             const isPeak = hasData && d.dow === peak.dow;
@@ -56,8 +64,8 @@ export default async function WeekdayPattern({ days }: { days: WeekdayMinutes[] 
                 y={H - h}
                 width={BAR_W}
                 height={h}
-                rx={5}
-                fill={d.minutes > 0 ? "var(--c-chart)" : "var(--c-chart-dim)"}
+                rx={7}
+                fill={d.minutes > 0 ? "url(#weekdayBar)" : "var(--c-chart-dim)"}
                 opacity={d.minutes > 0 && !isPeak ? 0.5 : 1}
               >
                 <title>{t("tooltipMinutes", { date: weekdayLabel(d.dow, format), count: d.minutes })}</title>
