@@ -414,7 +414,7 @@ export default async function DashboardPage() {
         </div>
 
         <main className="min-w-0 px-[clamp(18px,3vw,36px)] pt-[26px] pb-[100px] md:pb-[60px]">
-          <OnboardingTour />
+          <OnboardingTour afterTourHref={cefr === "A1" ? "/hangul?tutorial=writing" : undefined} />
           <Greeting name={displayName} />
 
           {/* The snapshot RPC failed, so everything below is the empty

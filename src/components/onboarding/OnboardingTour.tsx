@@ -4,7 +4,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 
-const SEEN_KEY = "kroot-onboarding-tour-seen";
+export const SEEN_KEY = "kroot-onboarding-tour-seen";
+export const TOUR_DONE_EVENT = "kroot:tour-done";
 const MOBILE_BREAKPOINT = 768; // md — below this the sidebar is replaced by BottomNav
 
 const STEPS = ["sidebar", "basics", "practice", "relax", "tree", "quest", "garden"] as const;
@@ -96,6 +97,7 @@ export default function OnboardingTour({ afterTourHref }: { afterTourHref?: stri
     (navigate = true) => {
       markSeen();
       setActive(false);
+      window.dispatchEvent(new Event(TOUR_DONE_EVENT));
       if (navigate && afterTourHref) router.push(afterTourHref);
     },
     [afterTourHref, router]

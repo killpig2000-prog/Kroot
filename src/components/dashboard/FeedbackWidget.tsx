@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { usePathname } from "@/i18n/navigation";
+import { SEEN_KEY as TOUR_SEEN_KEY, TOUR_DONE_EVENT } from "@/components/onboarding/OnboardingTour";
 
 // Early-launch notice: shows on every dashboard load while we're actively
 // soliciting feedback. "Close" is per-load only; "Don't show today" hides it
@@ -27,10 +28,21 @@ export default function FeedbackWidget() {
 
   useEffect(() => {
     let hiddenToday = false;
+    let tourPending = false;
     try {
       hiddenToday = localStorage.getItem(HIDE_KEY) === localDateKey();
+      tourPending = localStorage.getItem(TOUR_SEEN_KEY) !== "1";
     } catch {}
     if (hiddenToday) return;
+
+    // The first-visit tour spotlights parts of this same page — don't stack
+    // this notice on top of it. Wait for the tour to finish first.
+    if (tourPending) {
+      const onTourDone = () => setView("announce");
+      window.addEventListener(TOUR_DONE_EVENT, onTourDone, { once: true });
+      return () => window.removeEventListener(TOUR_DONE_EVENT, onTourDone);
+    }
+
     const timer = setTimeout(() => setView("announce"), 600);
     return () => clearTimeout(timer);
   }, []);
