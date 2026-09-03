@@ -326,44 +326,56 @@ export default async function DashboardPage() {
     return (
       <div className="min-h-screen bg-warm text-charcoal">
         <div className="grid grid-cols-1 md:grid-cols-[clamp(216px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
-          <Sidebar
-            displayName={displayName}
-            email={user.email ?? ""}
-            streakDays={streakDays}
-            avatarUrl={profile?.avatar_url}
-            streakFreezes={extras?.streak_freezes ?? 0}
-          />
+          <div data-tour="sidebar">
+            <Sidebar
+              displayName={displayName}
+              email={user.email ?? ""}
+              streakDays={streakDays}
+              avatarUrl={profile?.avatar_url}
+              streakFreezes={extras?.streak_freezes ?? 0}
+            />
+          </div>
 
           <main className="min-w-0 max-w-[820px] px-[clamp(18px,3vw,36px)] pt-[26px] pb-[100px] md:pb-[60px]">
+            <OnboardingTour />
             <h1 className="font-semibold text-[clamp(20px,2.4vw,24px)] tracking-[-0.02em] mb-0.5">
               {t("welcome", { name: displayName })}
             </h1>
             <p className="text-muted text-sm mb-6">{t("day", { n: firstVisit.day })}</p>
 
-            <TreeCard
-              level={level}
-              progressPct={pct}
-              xpInto={into}
-              xpNeeded={needed}
-              costumeIds={equippedIds}
-              species={cefr}
-              userId={user.id}
-              displayName={displayName}
-              avatarUrl={profile?.avatar_url ?? null}
-              coins={coins}
-              streakDays={streakDays}
-              streakFreezes={extras?.streak_freezes ?? 0}
-            />
+            <div data-tour="tree">
+              <TreeCard
+                level={level}
+                progressPct={pct}
+                xpInto={into}
+                xpNeeded={needed}
+                costumeIds={equippedIds}
+                species={cefr}
+                userId={user.id}
+                displayName={displayName}
+                avatarUrl={profile?.avatar_url ?? null}
+                coins={coins}
+                streakDays={streakDays}
+                streakFreezes={extras?.streak_freezes ?? 0}
+              />
+            </div>
 
             <FirstVisitPlan steps={steps} />
 
-            {/* unlocked so far, in unlock order */}
-            {firstVisit.unlocked.quest && <TodaysQuestCard quest={quest} />}
+            {/* unlocked so far, in unlock order. The quest/garden tour steps
+                still need a target even before these unlock (day 1), so the
+                wrapper stays put and OnboardingTour itself skips a step
+                whose target isn't in the DOM yet rather than getting stuck. */}
+            {firstVisit.unlocked.quest && (
+              <div data-tour="quest">
+                <TodaysQuestCard quest={quest} />
+              </div>
+            )}
 
             {firstVisit.unlocked.wotd && wotd && <WordOfDayCard wotd={wotd} />}
 
             {firstVisit.unlocked.heatmap && (
-              <div className="mb-[30px]">
+              <div className="mb-[30px]" data-tour="garden">
                 <MonthlyGrass
                   minutesByDate={minutesByDate}
                   headline={[

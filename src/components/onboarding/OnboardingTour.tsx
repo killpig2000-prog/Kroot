@@ -87,12 +87,25 @@ export default function OnboardingTour() {
     setRect({ top: r.top, left: r.left, width: r.width, height: r.height });
   }, [stepIndex]);
 
+  const end = useCallback(() => {
+    markSeen();
+    setActive(false);
+  }, []);
+
   useEffect(() => {
     if (!active) return;
     const key: StepKey = STEPS[stepIndex];
     const target = targetsFor(isMobileViewport())[key];
     const el = document.querySelector<HTMLElement>(`[data-tour="${target}"]`);
-    el?.scrollIntoView({ block: "center", behavior: "smooth" });
+    if (!el) {
+      // Target isn't on the page — e.g. a brand-new first-visit dashboard
+      // hasn't unlocked the quest/garden widgets yet. Skip past it instead
+      // of dimming the whole screen with no spotlight to show for it.
+      if (stepIndex === STEPS.length - 1) end();
+      else setStepIndex((i) => i + 1);
+      return;
+    }
+    el.scrollIntoView({ block: "center", behavior: "smooth" });
 
     const loop = () => {
       measure();
@@ -104,12 +117,7 @@ export default function OnboardingTour() {
       if (frame.current) cancelAnimationFrame(frame.current);
       window.removeEventListener("resize", measure);
     };
-  }, [active, stepIndex, measure]);
-
-  const end = useCallback(() => {
-    markSeen();
-    setActive(false);
-  }, []);
+  }, [active, stepIndex, measure, end]);
 
   if (!active) return null;
 
