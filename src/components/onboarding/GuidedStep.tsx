@@ -11,6 +11,7 @@ import SpotlightOverlay, {
 } from "@/components/onboarding/SpotlightOverlay";
 import {
   GUIDED_ADVANCE_DELAY_MS,
+  GUIDED_ADVANCE_WHEN,
   GUIDED_FORCE_HREF,
   GUIDED_KEY,
   GUIDED_MOBILE_REVEAL,
@@ -56,6 +57,8 @@ export default function GuidedStep({ step }: { step: GuidedStepKey }) {
   const [rect, setRect] = useState<SpotlightRect | null>(null);
   const [isReveal, setIsReveal] = useState(false);
   const [asking, setAsking] = useState(false);
+  // Copy variables read off the spotlit element (data-tour-level → {level}).
+  const [vars, setVars] = useState<Record<string, string>>({});
   const frame = useRef<number | null>(null);
   const advancedRef = useRef(false);
 
@@ -72,8 +75,15 @@ export default function GuidedStep({ step }: { step: GuidedStepKey }) {
     }
     const on = cur === step;
     setActive(on);
-    if (on) setAsking(mode === "ask");
-  }, [step, mode]);
+    if (on) {
+      setAsking(mode === "ask");
+      // Read copy variables now, in the same batch as activation, so the
+      // first render already has them — the bind in the measure loop runs
+      // a frame later, which is one frame of an unformatted "{level}".
+      const el = target ? document.querySelector<HTMLElement>(`[data-tour="${target}"]`) : null;
+      if (el?.dataset.tourLevel) setVars({ level: el.dataset.tourLevel });
+    }
+  }, [step, mode, target]);
 
   useEffect(() => {
     // Initial check is deferred a frame: localStorage isn't there during
@@ -125,6 +135,7 @@ export default function GuidedStep({ step }: { step: GuidedStepKey }) {
     const revealTarget = GUIDED_MOBILE_REVEAL[step];
     const forceHref = GUIDED_FORCE_HREF[step];
     const delayMs = GUIDED_ADVANCE_DELAY_MS[step] ?? 0;
+    const advanceWhen = mode === "watch" ? GUIDED_ADVANCE_WHEN[step] : undefined;
     let delayTimer: ReturnType<typeof setTimeout> | null = null;
 
     // A step whose real target's natural href would land somewhere other
@@ -158,8 +169,11 @@ export default function GuidedStep({ step }: { step: GuidedStepKey }) {
       boundEl = el;
       bound = reveal ? "reveal" : "target";
       setIsReveal(reveal);
+      if (el.dataset.tourLevel) setVars({ level: el.dataset.tourLevel });
       el.scrollIntoView({ block: "center", behavior: "smooth" });
-      if (!reveal) el.addEventListener("click", onClick);
+      // A "watch" step's ring wraps an area the learner taps around in —
+      // those taps must not count as "the" click.
+      if (!reveal && mode !== "watch") el.addEventListener("click", onClick);
     };
     const unbind = () => {
       if (boundEl && bound === "target") boundEl.removeEventListener("click", onClick);
@@ -168,7 +182,20 @@ export default function GuidedStep({ step }: { step: GuidedStepKey }) {
     };
 
     const measure = () => {
+      if (advanceWhen && document.querySelector(advanceWhen)) {
+        advance();
+        return;
+      }
       const finalEl = findVisible(`[data-tour="${target}"]`);
+      if (!finalEl) {
+        // The target is on the page but folded away inside a collapsed
+        // <details> (e.g. chapter 1's genre group on the Writing/Reading
+        // maps when the learner's current chapter sits in another group) —
+        // open it rather than spotlighting nothing.
+        const hidden = document.querySelector<HTMLElement>(`[data-tour="${target}"]`);
+        const folded = hidden?.closest<HTMLDetailsElement>("details:not([open])");
+        if (folded) folded.open = true;
+      }
       if (finalEl) {
         if (bound !== "target" || boundEl !== finalEl) {
           unbind();
@@ -204,7 +231,7 @@ export default function GuidedStep({ step }: { step: GuidedStepKey }) {
       if (frame.current) cancelAnimationFrame(frame.current);
       window.removeEventListener("resize", measure);
     };
-  }, [active, step, target, advance, router]);
+  }, [active, step, target, mode, advance, router]);
 
   if (!active) return null;
 
@@ -214,8 +241,8 @@ export default function GuidedStep({ step }: { step: GuidedStepKey }) {
     </button>
   );
 
-  let title = t(`guided.${step}.title`);
-  let body = t(`guided.${step}.body`);
+  let title = t(`guided.${step}.title`, vars);
+  let body = t(`guided.${step}.body`, vars);
   let footerLeft: ReactNode = null;
   let actions: ReactNode = null;
 

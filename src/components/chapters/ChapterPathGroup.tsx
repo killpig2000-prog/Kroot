@@ -12,6 +12,8 @@ export type ChapterPathNode = {
   badgeClassName: string;
   badgeLabel: string;
   dim?: boolean;
+  /** data-tour id — the guided walkthrough spotlights this row. */
+  tourId?: string;
 };
 
 /**
@@ -54,7 +56,7 @@ export default function ChapterPathGroup({
       isLast ? "" : "border-b border-dashed border-dash"
     } ${node.dim ? "opacity-60" : ""}`;
     return node.href ? (
-      <Link key={node.key} href={node.href} className={`group ${hoverClassName} ${rowClass}`}>
+      <Link key={node.key} href={node.href} data-tour={node.tourId} className={`group ${hoverClassName} ${rowClass}`}>
         {children}
       </Link>
     ) : (

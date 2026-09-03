@@ -253,7 +253,10 @@ export default function ReadPhase({
   }
 
   const toolbar = (
-    <div className="flex items-center gap-2 flex-wrap bg-cream border border-line rounded-[12px] px-2.5 py-2 mb-3.5">
+    <div
+      data-tour="guided-reading-tools"
+      className="flex items-center gap-2 flex-wrap bg-cream border border-line rounded-[12px] px-2.5 py-2 mb-3.5"
+    >
       <span className={`${CHIP} bg-[var(--tint-sky)] border-sky-line text-sky-deep`}>
         {t("chapterN", { n: chapterIndex + 1 })}
       </span>
@@ -466,7 +469,10 @@ export default function ReadPhase({
     <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_236px] items-start max-w-[1040px]">
       <div className="min-w-0">
         {toolbar}
-        <article className="bg-cream border border-line rounded-[14px] px-[clamp(16px,3.4vw,34px)] py-[clamp(18px,3.4vw,30px)]">
+        <article
+          data-tour="guided-reading-text"
+          className="bg-cream border border-line rounded-[14px] px-[clamp(16px,3.4vw,34px)] py-[clamp(18px,3.4vw,30px)]"
+        >
           {body}
           {hint}
         </article>
@@ -495,7 +501,7 @@ export default function ReadPhase({
           </div>
         )}
 
-        <button className={BTN_BLUE} onClick={onContinue}>
+        <button data-tour="guided-reading-quiz" className={BTN_BLUE} onClick={onContinue}>
           {t("answerQuestions", { n: passage.questions.length })}
         </button>
       </aside>

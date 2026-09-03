@@ -44,8 +44,8 @@ export const SECTIONS: { title: string; items: NavItem[] }[] = [
     items: [
       { icon: "🎧", label: "Listening", href: "/listening", color: { text: "#2C9754", bg: "#F0FDF4", border: "#BBF7D0" } },
       { icon: "🌶️", label: "Pronunciation", href: "/speaking", color: { text: "#228980", bg: "#F0FDFA", border: "#99F6E4" }, popular: true },
-      { icon: "✏️", label: "Writing", href: "/writing", color: { text: "#C47A25", bg: "#FFFBEB", border: "#FDE68A" } },
-      { icon: "📰", label: "Reading", href: "/reading", color: { text: "#3363CC", bg: "#EFF6FF", border: "#BFDBFE" } },
+      { icon: "✏️", label: "Writing", href: "/writing", color: { text: "#C47A25", bg: "#FFFBEB", border: "#FDE68A" }, tourId: "guided-nav-writing" },
+      { icon: "📰", label: "Reading", href: "/reading", color: { text: "#3363CC", bg: "#EFF6FF", border: "#BFDBFE" }, tourId: "guided-nav-reading" },
     ],
   },
   {

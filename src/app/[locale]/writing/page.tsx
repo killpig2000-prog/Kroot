@@ -4,6 +4,7 @@ import { getLocale, getTranslations } from "next-intl/server";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import ChapterPathGroup from "@/components/chapters/ChapterPathGroup";
+import GuidedStep from "@/components/onboarding/GuidedStep";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import {
   getChapterStatuses,
@@ -100,8 +101,13 @@ export default async function WritingMapPage({
           </div>
 
 
+          <GuidedStep step="writing-level" />
+          <GuidedStep step="writing-groups" />
+          <GuidedStep step="writing-chapter" />
+
           <LevelTabs
             className="mb-6"
+            tourId="guided-writing-level"
             levels={LEVEL_ORDER}
             current={level}
             mine={myLevel}
@@ -160,7 +166,11 @@ export default async function WritingMapPage({
                   open={gi === openGroupIndex}
                   className="border border-line rounded-[14px] bg-cream overflow-hidden"
                 >
-                  <summary className="flex items-center gap-3 px-5 py-3.5 cursor-pointer select-none list-none [&::-webkit-details-marker]:hidden hover:bg-warm transition-colors">
+                  {/* The walkthrough rings the header row, not the whole
+                      box — open, the first group runs off the screen. */}
+                  <summary
+                    data-tour={gi === 0 ? "guided-writing-groups" : undefined}
+                    className="flex items-center gap-3 px-5 py-3.5 cursor-pointer select-none list-none [&::-webkit-details-marker]:hidden hover:bg-warm transition-colors">
                     <span className="flex-1 min-w-0">
                       <b className="font-bold text-[14.5px]">
                         {meta.icon} {t(`genres.${genre}.label`)}
@@ -212,6 +222,7 @@ export default async function WritingMapPage({
                                 ? t("map.statusWrite")
                                 : t("map.statusLocked"),
                           dim,
+                          tourId: i === 0 ? "guided-writing-chapter" : undefined,
                         };
                       })}
                     />

@@ -7,7 +7,7 @@ import SpotlightOverlay, {
   PRIMARY_BTN,
   type SpotlightRect,
 } from "@/components/onboarding/SpotlightOverlay";
-import { startGuidedTour } from "@/components/onboarding/guidedSteps";
+import { startGuidedTour, type GuidedTrack } from "@/components/onboarding/guidedSteps";
 
 export const SEEN_KEY = "kroot-onboarding-tour-seen";
 export const TOUR_DONE_EVENT = "kroot:tour-done";
@@ -84,10 +84,13 @@ function markSeen() {
 // whose first step — "shall we try Hangul?" — lives on this same page.
 export default function OnboardingTour({
   startsGuidedTour = false,
+  guidedTrack = "basics",
   isAdmin = false,
 }: {
-  /** Arms the click-gated Hangul→Vocabulary→Shop continuation when the tour finishes naturally. */
+  /** Arms the click-gated continuation when the tour finishes naturally. */
   startsGuidedTour?: boolean;
+  /** "basics" = Hangul→Vocabulary→Shop (A1); "practice" = Writing→Reading→Shop (B1+). */
+  guidedTrack?: GuidedTrack;
   /** Admin testing bypass: ignores SEEN_KEY so the tour re-runs on every dashboard load. */
   isAdmin?: boolean;
 } = {}) {
@@ -131,10 +134,10 @@ export default function OnboardingTour({
       // Arm the guided tour BEFORE announcing the tour is done: FeedbackWidget
       // reacts to TOUR_DONE_EVENT by checking whether a guided step is active,
       // and would pop its own notice over the first step otherwise.
-      if (continueOn && startsGuidedTour) startGuidedTour();
+      if (continueOn && startsGuidedTour) startGuidedTour(guidedTrack);
       window.dispatchEvent(new Event(TOUR_DONE_EVENT));
     },
-    [startsGuidedTour]
+    [startsGuidedTour, guidedTrack]
   );
 
   useEffect(() => {

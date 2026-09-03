@@ -55,6 +55,62 @@
       "title": "Guárdala para después",
       "body": "Añadir a Mis palabras la guarda en tu banco personal para repasarla cuando quieras."
     },
+    "writing-nav": {
+      "askTitle": "¿Empezamos con Escritura?",
+      "askBody": "Ya conoces el Hangul, así que vamos directo a formar frases reales. ¿Quieres verlo?",
+      "title": "Toca Escritura",
+      "body": "Está aquí en el menú — tócalo para abrir Escritura."
+    },
+    "writing-level": {
+      "title": "¡Estás en el nivel {level}!",
+      "body": "La escritura está ordenada por nivel, y el tuyo aparece marcado aquí. Los niveles superiores se desbloquean a medida que avanzas — empieza donde estás."
+    },
+    "writing-groups": {
+      "title": "Capítulos por género",
+      "body": "Cada caja es un género: diario, opinión, descripción, respuestas. Abre una caja para ver sus capítulos."
+    },
+    "writing-chapter": {
+      "title": "¿Probamos el capítulo 1?",
+      "body": "Toca el capítulo 1 para abrirlo."
+    },
+    "writing-board": {
+      "title": "Construye la frase",
+      "body": "Toca las fichas de palabras para armar la frase en coreano dentro de la caja. Toca una ficha colocada para quitarla."
+    },
+    "writing-check": {
+      "title": "Luego toca Comprobar",
+      "body": "Cuando todos los huecos estén llenos, toca Comprobar para ver cómo te fue."
+    },
+    "writing-result": {
+      "title": "Aquí está tu resultado",
+      "body": "Verás enseguida si coincide y la frase correcta para comparar. Esa es una pregunta — el capítulo tiene algunas más."
+    },
+    "reading-nav": {
+      "askTitle": "¿Quieres probar Lectura también?",
+      "askBody": "Textos cortos de tu nivel, con cada palabra explicada al tocarla.",
+      "title": "Toca Lectura",
+      "body": "Está en el menú — tócalo para ir allí."
+    },
+    "reading-chapter": {
+      "title": "Abre el capítulo 1",
+      "body": "Lo mismo — toca el capítulo 1 para empezar a leer."
+    },
+    "reading-tools": {
+      "title": "Controles de lectura",
+      "body": "Escucha el texto, agranda la letra y elige cuánta traducción mostrar: ninguna, al tocar una línea, o toda."
+    },
+    "reading-text": {
+      "title": "El texto",
+      "body": "Lee el coreano en esta caja. En modo tocar, toca cualquier línea para ver su traducción justo debajo."
+    },
+    "reading-word": {
+      "title": "Toca una palabra subrayada",
+      "body": "Las palabras con subrayado punteado están en tu vocabulario — toca una para ver su significado ahí mismo, sin salir de la página."
+    },
+    "reading-quiz": {
+      "title": "Responde las preguntas",
+      "body": "Cuando lo hayas leído, toca aquí para responder un par de preguntas sobre el texto."
+    },
     "shop-nav": {
       "askTitle": "Última parada: ¿vemos la Tienda?",
       "askBody": "Gasta las monedas que ganes en ropa para tu árbol.",

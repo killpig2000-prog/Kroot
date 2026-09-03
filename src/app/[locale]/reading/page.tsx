@@ -4,6 +4,7 @@ import { Link, redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import ChapterPathGroup from "@/components/chapters/ChapterPathGroup";
+import GuidedStep from "@/components/onboarding/GuidedStep";
 import { createClient, getClaimsUser, getDashboardProfile } from "@/lib/supabase/server";
 import { getChapterStatuses, getChaptersForLevel } from "@/lib/reading";
 import { getLocalizedTitle } from "@/lib/reading-i18n";
@@ -128,6 +129,8 @@ export default async function ReadingMapPage({
             </span>
           </div>
 
+          <GuidedStep step="reading-chapter" />
+
           <LevelTabs
             className="mb-6"
             levels={LEVEL_ORDER}
@@ -227,6 +230,7 @@ export default async function ReadingMapPage({
                                 ? t("map.statusRead")
                                 : t("map.statusLocked"),
                           dim: status === "locked",
+                          tourId: i === 0 ? "guided-reading-chapter" : undefined,
                         };
                       })}
                     />

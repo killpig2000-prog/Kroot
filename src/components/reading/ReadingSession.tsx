@@ -12,6 +12,7 @@ import { findEvidenceLine, MINUTES_PER_PASSAGE, splitPassageLines, type Passage 
 import ReadPhase from "@/components/reading/ReadPhase";
 import QuizPhase from "@/components/reading/QuizPhase";
 import SummaryPhase from "@/components/reading/SummaryPhase";
+import GuidedStep from "@/components/onboarding/GuidedStep";
 import type { Gloss } from "@/lib/word-links";
 
 type Phase = "read" | "quiz" | "summary";
@@ -142,8 +143,24 @@ export default function ReadingSession({
     router.refresh();
   }
 
+  // Guided walkthrough (B1+ track): toolbar → passage → a glossed word →
+  // the quiz button, then the "want to see the Shop?" ask on the nav link.
+  // Hosted here, outside the phases, so the shop-nav step still shows once
+  // the quiz button has switched the page over to QuizPhase.
+  const guided = (
+    <>
+      <GuidedStep step="reading-tools" />
+      <GuidedStep step="reading-text" />
+      <GuidedStep step="reading-word" />
+      <GuidedStep step="reading-quiz" />
+      <GuidedStep step="shop-nav" />
+    </>
+  );
+
   if (phase === "read") {
     return (
+      <>
+      {guided}
       <ReadPhase
         passage={passage}
         chapterIndex={chapterIndex}
@@ -155,11 +172,14 @@ export default function ReadingSession({
         // into a quiz that's already been answered.
         onContinue={() => setPhase(answers.every((a) => a !== null) ? "summary" : "quiz")}
       />
+      </>
     );
   }
 
   if (phase === "quiz") {
     return (
+      <>
+      {guided}
       <QuizPhase
         passage={passage}
         lines={lines}
@@ -171,6 +191,7 @@ export default function ReadingSession({
         onAnswer={answer}
         onNext={nextQuestion}
       />
+      </>
     );
   }
 

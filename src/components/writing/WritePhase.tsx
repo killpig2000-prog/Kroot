@@ -142,6 +142,7 @@ export default function WritePhase({
           </p>
         </div>
 
+        <div data-tour="guided-writing-board">
         <TileBoard
           board={board}
           picked={entry.picked}
@@ -158,11 +159,13 @@ export default function WritePhase({
             });
           }}
         />
+        </div>
 
         {!isChecked ? (
           <div className="flex justify-end -mt-1">
             <button
               type="button"
+              data-tour="guided-writing-check"
               className={BTN_INK}
               onClick={() => setChecked((prev) => ({ ...prev, [step]: checkTiles(board, entry.picked) }))}
               disabled={!entryDone(entry, board)}
@@ -172,6 +175,7 @@ export default function WritePhase({
           </div>
         ) : (
           <div
+            data-tour="guided-writing-result"
             className={`rounded-[12px] border px-3.5 py-3 ${
               stepChecked ? "bg-success-bg border-success-line text-success-deep" : "bg-[var(--tint-amber)] border-amber-line text-amber"
             }`}

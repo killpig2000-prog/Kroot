@@ -21,6 +21,7 @@ import {
 import type { CefrLevel } from "@/lib/tree";
 import WritePhase, { emptyEntry, entryDone, type Entry } from "@/components/writing/WritePhase";
 import CompareResult, { type Answer } from "@/components/writing/CompareResult";
+import GuidedStep from "@/components/onboarding/GuidedStep";
 
 type Phase = "write" | "compare";
 
@@ -158,8 +159,22 @@ export default function WritingSession({
     router.refresh();
   }
 
+  // Guided walkthrough (B1+ track): board → Check → result, then the
+  // "shall we try Reading?" ask on the nav link — hosted here so the steps
+  // outlive WritePhase's own per-question re-renders.
+  const guided = (
+    <>
+      <GuidedStep step="writing-board" />
+      <GuidedStep step="writing-check" />
+      <GuidedStep step="writing-result" />
+      <GuidedStep step="reading-nav" />
+    </>
+  );
+
   if (phase === "write") {
     return (
+      <>
+      {guided}
       <WritePhase
         prompts={prompts}
         chapterIndex={chapterIndex}
@@ -172,10 +187,13 @@ export default function WritingSession({
         answeredCount={answeredCount}
         onSubmit={submit}
       />
+      </>
     );
   }
 
   return (
+    <>
+    {guided}
     <CompareResult
       prompts={prompts}
       answers={result!.answers}
@@ -187,6 +205,7 @@ export default function WritingSession({
       navigating={navigating}
       onGoTo={goTo}
     />
+    </>
   );
 }
 

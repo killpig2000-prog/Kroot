@@ -55,6 +55,62 @@
       "title": "Save it for later",
       "body": "Add to My Words keeps a word in your personal word bank so you can review it any time."
     },
+    "writing-nav": {
+      "askTitle": "Shall we start with Writing?",
+      "askBody": "You already know Hangul, so let's jump straight into building real sentences. Want to have a look?",
+      "title": "Tap Writing",
+      "body": "It's right here in the menu — tap it to open Writing."
+    },
+    "writing-level": {
+      "title": "You're at level {level}!",
+      "body": "Writing is sorted by level, and yours is marked here. Higher levels unlock as you climb — start where you are."
+    },
+    "writing-groups": {
+      "title": "Chapters, by genre",
+      "body": "Each box is one genre — journal, opinion, description, replies. Open a box to see its chapters."
+    },
+    "writing-chapter": {
+      "title": "Shall we try Chapter 1?",
+      "body": "Tap Chapter 1 to open it."
+    },
+    "writing-board": {
+      "title": "Build the sentence",
+      "body": "Tap the word tiles to put the Korean sentence together in the box. Tap a placed tile to take it back."
+    },
+    "writing-check": {
+      "title": "Then tap Check",
+      "body": "Once every slot is filled, tap Check to see how you did."
+    },
+    "writing-result": {
+      "title": "Here's your result",
+      "body": "You'll see right away whether it matched, and the correct sentence to compare against. That's one question — the chapter has a few more."
+    },
+    "reading-nav": {
+      "askTitle": "Want to try Reading too?",
+      "askBody": "Short passages at your level, with every word explained on tap.",
+      "title": "Tap Reading",
+      "body": "It's in the menu — tap it to go there."
+    },
+    "reading-chapter": {
+      "title": "Open Chapter 1",
+      "body": "Same idea — tap Chapter 1 to start reading."
+    },
+    "reading-tools": {
+      "title": "Reading controls",
+      "body": "Listen to the passage, make the text bigger, and choose how much translation to show — off, tap a line, or all."
+    },
+    "reading-text": {
+      "title": "The passage",
+      "body": "Read the Korean in this box. In tap mode, tap any line to see its translation right underneath."
+    },
+    "reading-word": {
+      "title": "Tap an underlined word",
+      "body": "Dotted-underlined words are in your vocabulary — tap one to see its meaning right there, without leaving the page."
+    },
+    "reading-quiz": {
+      "title": "Answer the questions",
+      "body": "When you've read it, tap here to answer a couple of questions about the passage."
+    },
     "shop-nav": {
       "askTitle": "One last stop — want to see the Shop?",
       "askBody": "Spend the coins you earn on outfits for your tree.",

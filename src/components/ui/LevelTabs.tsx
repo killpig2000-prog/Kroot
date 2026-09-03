@@ -18,6 +18,7 @@ export default function LevelTabs({
   href,
   accent,
   className = "",
+  tourId,
 }: {
   levels: readonly CefrLevel[];
   /** Level whose content is shown right now. */
@@ -29,11 +30,13 @@ export default function LevelTabs({
   /** Tailwind classes for the active chip, e.g. "bg-teal border-teal text-white". */
   accent: string;
   className?: string;
+  /** data-tour id for the guided walkthrough; the row also carries the learner's own level for the copy. */
+  tourId?: string;
 }) {
   const t = useTranslations("ui");
   const anyLocked = levels.some((lv) => !unlocked(lv));
   return (
-    <div className={className}>
+    <div className={className} data-tour={tourId} data-tour-level={tourId ? mine : undefined}>
       <div
         role="tablist"
         aria-label={t("levelTabs.ariaLabel")}

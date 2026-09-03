@@ -172,6 +172,9 @@ export default async function DashboardPage() {
 
   // Real per-skill progress: completed items at the user's difficulty tier.
   const cefr = (profile?.current_level ?? "A1") as CefrLevel;
+  // A1 placements tour Hangul + Vocabulary; anyone who placed higher already
+  // reads Hangul, so their walkthrough goes Writing + Reading instead.
+  const guidedTrack = cefr === "A1" ? "basics" : "practice";
 
   // First-visit dashboard: accounts under a week old with fewer than three
   // finished sessions see one plan card instead of the full Garden. Only they
@@ -344,8 +347,9 @@ export default async function DashboardPage() {
             {/* First lesson right after the tour, for every level — Hangul's
                 page itself hands off to Writing once the learner is ready,
                 see the tutorial banner on each of those pages. */}
-            <OnboardingTour startsGuidedTour isAdmin={isAdmin} />
+            <OnboardingTour startsGuidedTour guidedTrack={guidedTrack} isAdmin={isAdmin} />
             <GuidedStep step="hangul-nav" />
+            <GuidedStep step="writing-nav" />
             <TutorialFinishBanner />
             <h1 className="font-semibold text-[clamp(20px,2.4vw,24px)] tracking-[-0.02em] mb-0.5">
               {t("welcome", { name: displayName })}
@@ -420,8 +424,9 @@ export default async function DashboardPage() {
         </div>
 
         <main className="min-w-0 px-[clamp(18px,3vw,36px)] pt-[26px] pb-[100px] md:pb-[60px]">
-          <OnboardingTour startsGuidedTour isAdmin={isAdmin} />
+          <OnboardingTour startsGuidedTour guidedTrack={guidedTrack} isAdmin={isAdmin} />
           <GuidedStep step="hangul-nav" />
+          <GuidedStep step="writing-nav" />
           <TutorialFinishBanner />
           <Greeting name={displayName} />
 

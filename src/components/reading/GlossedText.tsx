@@ -115,6 +115,9 @@ export default function GlossedText({
             }`}
             aria-label={`${gloss.korean} — ${gloss.meaning}`}
             data-gloss=""
+            // Every glossed word carries the id; the walkthrough spotlights
+            // the first one that's on screen.
+            data-tour="guided-reading-word"
             onClick={(e) => {
               // The line around this word toggles its translation on click.
               e.stopPropagation();
