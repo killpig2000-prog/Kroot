@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
@@ -81,6 +81,20 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
   const [claiming, setClaiming] = useState(false);
   const [unavailable, setUnavailable] = useState(false);
   const [joinedThisWeek, setJoinedThisWeek] = useState(false);
+  const meRef = useRef<HTMLDivElement>(null);
+
+  // Once the board is in, bring the learner's own row on screen if it sits
+  // below the fold (the RPC's top-10 + ±3 window can put it well down the
+  // list). Centre it so the zone header above and a neighbour below both
+  // show; the podium stays where it was for anyone who scrolls back up.
+  useEffect(() => {
+    if (!rows || !meRef.current) return;
+    const el = meRef.current;
+    const rect = el.getBoundingClientRect();
+    if (rect.bottom <= window.innerHeight - 90) return; // already visible above the sticky nudge
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    el.scrollIntoView({ block: "center", behavior: reduce ? "auto" : "smooth" });
+  }, [rows]);
 
   useEffect(() => {
     let cancelled = false;
@@ -284,7 +298,8 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
                     </p>
                   )}
                   <div
-                    className={`grid grid-cols-[22px_46px_minmax(0,1fr)_auto] items-center gap-2.5 px-2.5 py-1.5 rounded-[11px] border text-[13.5px] ${
+                    ref={r.is_me ? meRef : undefined}
+                    className={`grid grid-cols-[22px_46px_minmax(0,1fr)_auto] items-center gap-2.5 px-2.5 py-1.5 rounded-[11px] border text-[13.5px] scroll-mt-24 ${
                       r.is_me
                         ? "bg-[#FEF9C3] border-[#ECD98A] -rotate-[0.4deg] shadow-[0_8px_18px_-12px_rgba(120,100,30,.4)] text-[#2A2622]"
                         : "bg-cream border-line"
