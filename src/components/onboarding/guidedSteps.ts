@@ -14,7 +14,6 @@ export const GUIDED_STEP_EVENT = "kroot:guided-step-changed";
 export type GuidedStepKey =
   | "hangul-pick"
   | "hangul-nav-vocab"
-  | "vocab-chapter"
   | "vocab-word"
   | "word-goti"
   | "word-bank"
@@ -22,11 +21,13 @@ export type GuidedStepKey =
   | "shop-pick"
   | "shop-cta";
 
-// data-tour attribute values the real DOM elements carry.
+// data-tour attribute values the real DOM elements carry. navItems.ts feeds
+// this same tourId to both the desktop Sidebar and BottomNav's sheet Tiles,
+// so the nav-hop steps' target is identical across breakpoints — only
+// *reaching* it differs (see GUIDED_MOBILE_REVEAL below).
 export const GUIDED_TARGET: Record<GuidedStepKey, string> = {
   "hangul-pick": "guided-hangul-first-jamo",
   "hangul-nav-vocab": "guided-nav-vocabulary",
-  "vocab-chapter": "guided-vocab-chapter-0",
   "vocab-word": "guided-vocab-first-word",
   "word-goti": "guided-word-goti",
   "word-bank": "guided-word-bank",
@@ -35,11 +36,21 @@ export const GUIDED_TARGET: Record<GuidedStepKey, string> = {
   "shop-cta": "guided-shop-cta",
 };
 
+// Below md, a nav-hop step's real target lives inside a BottomNav sheet
+// that isn't in the DOM until its tab is tapped. GuidedStep spotlights this
+// reveal target first (a plain tap, doesn't advance the step) and switches
+// to the real target the instant it appears — so the tour still ends on the
+// exact element a click-through completes with, it just takes one more real
+// tap to get there than the desktop single click does.
+export const GUIDED_MOBILE_REVEAL: Partial<Record<GuidedStepKey, string>> = {
+  "hangul-nav-vocab": "tab-basics",
+  "shop-nav": "tab-more",
+};
+
 // i18n keys under tour.guided.<step>.{title,body}
 export const GUIDED_ORDER: GuidedStepKey[] = [
   "hangul-pick",
   "hangul-nav-vocab",
-  "vocab-chapter",
   "vocab-word",
   "word-goti",
   "word-bank",

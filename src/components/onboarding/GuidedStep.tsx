@@ -6,12 +6,29 @@ import { useRouter } from "@/i18n/navigation";
 import SpotlightOverlay, { type SpotlightRect } from "@/components/onboarding/SpotlightOverlay";
 import {
   GUIDED_KEY,
+  GUIDED_MOBILE_REVEAL,
   GUIDED_STEP_EVENT,
   GUIDED_TARGET,
   guidedNext,
   guidedProgress,
   type GuidedStepKey,
 } from "@/components/onboarding/guidedSteps";
+
+const MOBILE_BREAKPOINT = 768; // matches OnboardingTour's own breakpoint
+
+// The desktop Sidebar and BottomNav's sheets both render nav links from the
+// same navItems.ts data, so a nav-hop step's data-tour id exists TWICE in
+// the DOM at once (the desktop one just sits under `hidden md:flex`, real
+// display:none below md). Plain querySelector would grab whichever comes
+// first in source order regardless of which one a person can actually see
+// or click — this picks the one that's actually rendered.
+function findVisible(selector: string): HTMLElement | null {
+  const matches = document.querySelectorAll<HTMLElement>(selector);
+  for (const el of matches) {
+    if (el.offsetParent !== null) return el;
+  }
+  return null;
+}
 
 // One step of the post-tour guided walkthrough. Mount one of these per real
 // step-target on a page (a page can host more than one, e.g. the word-detail
@@ -74,14 +91,52 @@ export default function GuidedStep({ step }: { step: GuidedStepKey }) {
   useEffect(() => {
     if (!active) return;
     const target = GUIDED_TARGET[step];
-    const el = document.querySelector<HTMLElement>(`[data-tour="${target}"]`);
-    if (!el) return; // target should always be a real, permanent element for these steps
-    el.scrollIntoView({ block: "center", behavior: "smooth" });
-    el.addEventListener("click", advance);
+    const revealTarget = GUIDED_MOBILE_REVEAL[step];
+
+    // "reveal" = spotlighting the BottomNav tab that opens the sheet the real
+    // target lives in (a plain tap, doesn't advance); "target" = spotlighting
+    // the real element itself (click advances). Re-evaluated every frame so
+    // the moment the sheet opens and the real target appears, the spotlight
+    // hands off to it without the learner needing to do anything else.
+    let mode: "target" | "reveal" | null = null;
+    let boundEl: HTMLElement | null = null;
+
+    const bind = (el: HTMLElement, isReveal: boolean) => {
+      boundEl = el;
+      mode = isReveal ? "reveal" : "target";
+      el.scrollIntoView({ block: "center", behavior: "smooth" });
+      if (!isReveal) el.addEventListener("click", advance);
+    };
+    const unbind = () => {
+      if (boundEl && mode === "target") boundEl.removeEventListener("click", advance);
+      boundEl = null;
+      mode = null;
+    };
 
     const measure = () => {
-      const r = el.getBoundingClientRect();
-      setRect({ top: r.top, left: r.left, width: r.width, height: r.height });
+      const finalEl = findVisible(`[data-tour="${target}"]`);
+      if (finalEl) {
+        if (mode !== "target") {
+          unbind();
+          bind(finalEl, false);
+        }
+      } else if (revealTarget && window.innerWidth < MOBILE_BREAKPOINT) {
+        const revealEl = findVisible(`[data-tour="${revealTarget}"]`);
+        if (revealEl && mode !== "reveal") {
+          unbind();
+          bind(revealEl, true);
+        } else if (!revealEl) {
+          unbind();
+        }
+      } else {
+        unbind();
+      }
+      if (boundEl) {
+        const r = boundEl.getBoundingClientRect();
+        setRect({ top: r.top, left: r.left, width: r.width, height: r.height });
+      } else {
+        setRect(null);
+      }
     };
     const loop = () => {
       measure();
@@ -90,7 +145,7 @@ export default function GuidedStep({ step }: { step: GuidedStepKey }) {
     frame.current = requestAnimationFrame(loop);
     window.addEventListener("resize", measure);
     return () => {
-      el.removeEventListener("click", advance);
+      unbind();
       if (frame.current) cancelAnimationFrame(frame.current);
       window.removeEventListener("resize", measure);
     };

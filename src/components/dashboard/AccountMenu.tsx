@@ -12,10 +12,14 @@ export default function AccountMenu({
   displayName,
   email,
   avatarUrl,
+  compact = false,
 }: {
   displayName: string;
   email: string;
   avatarUrl?: string | null;
+  /** Avatar-only trigger, menu opens downward — for the mobile top header,
+   * which (unlike the sidebar column this was built for) has no room above it. */
+  compact?: boolean;
 }) {
   const t = useTranslations("dashboard.account");
   const supabase = useMemo(() => createClient(), []);
@@ -67,7 +71,11 @@ export default function AccountMenu({
   return (
     <div className="relative" ref={ref}>
       {open && (
-        <div className="absolute bottom-full left-0 right-0 mb-2 bg-cream border border-line rounded-[14px] shadow-[0_8px_24px_rgba(0,0,0,.10)] p-2 z-50">
+        <div
+          className={`absolute ${
+            compact ? "top-full right-0 mt-2 w-[240px]" : "bottom-full left-0 right-0 mb-2"
+          } bg-cream border border-line rounded-[14px] shadow-[0_8px_24px_rgba(0,0,0,.10)] p-2 z-50`}
+        >
           <button
             onClick={toggleMode}
             className="w-full flex items-center justify-between rounded-[9px] px-3 py-2 text-[13px] font-medium text-charcoal hover:bg-warm"
@@ -123,23 +131,39 @@ export default function AccountMenu({
       <button
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
-        className={`w-full flex items-center gap-2.5 rounded-[9px] px-3 py-[9px] text-left transition-colors ${
-          open ? "bg-warm" : "hover:bg-warm"
-        }`}
+        aria-label={compact ? `${displayName} — account` : undefined}
+        className={
+          compact
+            ? "w-9 h-9 rounded-full bg-warm border border-line flex items-center justify-center text-base overflow-hidden flex-none"
+            : `w-full flex items-center gap-2.5 rounded-[9px] px-3 py-[9px] text-left transition-colors ${
+                open ? "bg-warm" : "hover:bg-warm"
+              }`
+        }
       >
-        <span className="w-[30px] h-[30px] rounded-lg bg-warm border border-line flex items-center justify-center text-sm overflow-hidden flex-none">
-          {avatarUrl ? (
+        {compact ? (
+          avatarUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img src={avatarUrl} alt="" className="w-full h-full object-cover" />
           ) : (
             "🦊"
-          )}
-        </span>
-        <span className="min-w-0 flex-1">
-          <b className="block text-[13.5px] font-semibold leading-tight truncate">{displayName}</b>
-          <small className="block text-[11.5px] text-muted truncate">{email}</small>
-        </span>
-        <span className="flex-none text-[11px] text-faint">⚙️</span>
+          )
+        ) : (
+          <>
+            <span className="w-[30px] h-[30px] rounded-lg bg-warm border border-line flex items-center justify-center text-sm overflow-hidden flex-none">
+              {avatarUrl ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={avatarUrl} alt="" className="w-full h-full object-cover" />
+              ) : (
+                "🦊"
+              )}
+            </span>
+            <span className="min-w-0 flex-1">
+              <b className="block text-[13.5px] font-semibold leading-tight truncate">{displayName}</b>
+              <small className="block text-[11.5px] text-muted truncate">{email}</small>
+            </span>
+            <span className="flex-none text-[11px] text-faint">⚙️</span>
+          </>
+        )}
       </button>
     </div>
   );

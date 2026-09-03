@@ -137,7 +137,6 @@ export default async function VocabularyPage({
         />
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[170px] md:pb-[60px] max-w-[980px]">
-          <GuidedStep step="vocab-chapter" />
           <GuidedStep step="vocab-word" />
 
           {/* head */}
@@ -180,7 +179,6 @@ export default async function VocabularyPage({
                   <Link
                     key={c.index}
                     href={chapterHref(c.index)}
-                    data-tour={c.index === 0 ? "guided-vocab-chapter-0" : undefined}
                     aria-current={current ? "true" : undefined}
                     className={`flex-none inline-flex items-center gap-1.5 rounded-full border px-3.5 py-[7px] text-[12.5px] font-bold whitespace-nowrap transition-colors ${
                       current

@@ -1,10 +1,9 @@
 "use client";
 
-import { useCallback, useEffect, useState, useTransition } from "react";
+import { useState, useTransition } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter, usePathname } from "@/i18n/navigation";
 import { rememberLocale } from "@/i18n/locale";
-import { useBackToClose } from "@/hooks/useBackToClose";
 import AccountMenu from "@/components/dashboard/AccountMenu";
 import { Link } from "@/i18n/navigation";
 import { MAIN_ITEMS, SECTIONS, type NavColor } from "@/components/dashboard/navItems";
@@ -87,7 +86,7 @@ function Brand() {
   );
 }
 
-function LanguageSwitcher({ pathname, locale }: { pathname: string; locale: string }) {
+export function LanguageSwitcher({ pathname, locale }: { pathname: string; locale: string }) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   // The locale re-render is a full RSC round-trip, so it can take a beat —
@@ -231,101 +230,29 @@ function SidebarBody({
 export default function Sidebar(props: Props) {
   const pathname = usePathname();
   const locale = useLocale();
-  const tn = useTranslations("nav");
-  const [open, setOpen] = useState(false);
-
-  // Close the drawer when the route changes (tap on a nav item, browser
-  // back) — computed during render so it doesn't cost an extra paint.
-  const [openForPathname, setOpenForPathname] = useState(pathname);
-  if (pathname !== openForPathname) {
-    setOpenForPathname(pathname);
-    setOpen(false);
-  }
-
-  // Back closes the drawer instead of leaving the page.
-  const closeDrawer = useCallback(() => setOpen(false), []);
-  const dismissDrawer = useBackToClose(open, closeDrawer);
-
-  useEffect(() => {
-    if (!open) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") dismissDrawer();
-    };
-    document.addEventListener("keydown", onKey);
-    return () => {
-      document.body.style.overflow = prev;
-      document.removeEventListener("keydown", onKey);
-    };
-  }, [open, dismissDrawer]);
-
-  const avatar = props.avatarUrl ? (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img src={props.avatarUrl} alt="" className="w-full h-full object-cover" />
-  ) : (
-    "🦊"
-  );
 
   return (
     <>
-      {/* Desktop: the notebook-index column. */}
+      {/* Desktop (md+, tablets included): the notebook-index column. */}
       <aside className="hidden md:flex flex-col gap-1 border-r border-dashed border-dash bg-warm px-3.5 py-5 sticky top-0 h-screen overflow-y-auto">
         <SidebarBody {...props} pathname={pathname} locale={locale} />
       </aside>
 
-      {/* Phone: the same column folded into a 52px header — menu button,
-          logo, streak, avatar — so the app carries its identity on every
-          screen instead of starting at the breadcrumb. */}
-      <header className="md:hidden sticky top-0 z-30 h-[52px] flex items-center gap-2 pl-1.5 pr-3 bg-warm/90 backdrop-blur-[10px] border-b-[1.5px] border-dashed border-dash">
-        <button
-          type="button"
-          onClick={() => setOpen(true)}
-          aria-label={tn("openMenu")}
-          aria-expanded={open}
-          className="w-10 h-10 rounded-[10px] flex flex-col items-center justify-center gap-[5px] hover:bg-cream active:bg-cream"
-        >
-          <span className="block w-[18px] h-0.5 rounded-full bg-charcoal" />
-          <span className="block w-[18px] h-0.5 rounded-full bg-charcoal" />
-          <span className="block w-[18px] h-0.5 rounded-full bg-charcoal" />
-        </button>
+      {/* Phone (below md): a slim identity bar only — BottomNav is the sole
+          nav surface down here, no slide-in drawer duplicating it. Account
+          settings and the language switcher live in AccountMenu (avatar
+          below) and BottomNav's "More" sheet respectively. */}
+      <header className="md:hidden sticky top-0 z-30 h-[52px] flex items-center gap-2 pl-3 pr-3 bg-warm/90 backdrop-blur-[10px] border-b-[1.5px] border-dashed border-dash">
         <Brand />
         <span className="flex-1" />
         <span
-          aria-label={tn("dayStreak", { n: props.streakDays })}
+          aria-label={`${props.streakDays} day streak`}
           className="flex items-center gap-1 h-8 px-2.5 rounded-full border border-[#ECD98A] bg-[#FEF9C3] text-[#5C4A0E] text-[12.5px] font-bold tabular-nums"
         >
           🔥 {props.streakDays}
         </span>
-        <button
-          type="button"
-          onClick={() => setOpen(true)}
-          aria-label={tn("account")}
-          className="w-9 h-9 rounded-full bg-warm border border-line flex items-center justify-center text-base overflow-hidden"
-        >
-          {avatar}
-        </button>
+        <AccountMenu displayName={props.displayName} email={props.email} avatarUrl={props.avatarUrl} compact />
       </header>
-
-      {/* Drawer — the desktop sidebar verbatim, sliding in from the left. */}
-      <div
-        className={`md:hidden fixed inset-0 z-[60] bg-[#282319]/35 transition-opacity duration-200 ${
-          open ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
-        onClick={dismissDrawer}
-        aria-hidden="true"
-      />
-      <aside
-        role="dialog"
-        aria-modal="true"
-        aria-label={tn("menu")}
-        aria-hidden={!open}
-        className={`md:hidden fixed inset-y-0 left-0 z-[70] w-[280px] max-w-[85vw] flex flex-col gap-1 border-r border-dashed border-dash bg-warm px-3.5 py-5 overflow-y-auto shadow-[12px_0_40px_-24px_rgba(40,35,25,.5)] transition-transform duration-250 ease-[cubic-bezier(.2,.8,.2,1)] motion-reduce:transition-none ${
-          open ? "translate-x-0" : "-translate-x-full"
-        }`}
-      >
-        <SidebarBody {...props} pathname={pathname} locale={locale} onClose={dismissDrawer} />
-      </aside>
     </>
   );
 }

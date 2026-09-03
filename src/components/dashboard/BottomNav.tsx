@@ -2,9 +2,11 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { MAIN_ITEMS, SECTIONS, type NavColor } from "@/components/dashboard/navItems";
 import { useBackToClose } from "@/hooks/useBackToClose";
+import { LanguageSwitcher } from "@/components/dashboard/Sidebar";
 
 // Four tabs: Garden · Basics · Practice · More — equal-width cells that fill
 // the bar edge to edge. Basics (guide/hangul/grammar/vocab) and Practice
@@ -39,6 +41,7 @@ function Tile({
   onNavigate,
   popular,
   isNew,
+  tourId,
 }: {
   label: string;
   href: string;
@@ -47,11 +50,13 @@ function Tile({
   color?: NavColor;
   popular?: boolean;
   isNew?: boolean;
+  tourId?: string;
 }) {
   const tn = useTranslations("nav");
   return (
     <Link
       href={href}
+      data-tour={tourId}
       onClick={onNavigate}
       className={`flex items-center gap-2 px-2.5 py-[7px] rounded-[9px] text-[13.5px] transition-colors ${
         on ? "bg-cream text-success-deep font-bold" : "text-charcoal font-medium hover:bg-cream hover:text-success-deep"
@@ -105,6 +110,7 @@ function TabButton({
 // self-fetching behaviour for pages that don't have it to hand.
 export default function BottomNav({ streakDays: streakDaysProp }: { streakDays?: number | null } = {}) {
   const pathname = usePathname();
+  const locale = useLocale();
   const [sheet, setSheet] = useState<Sheet>(null);
   const [fetchedStreak, setFetchedStreak] = useState<number | null>(null);
   const streakDays = streakDaysProp ?? fetchedStreak;
@@ -205,6 +211,12 @@ export default function BottomNav({ streakDays: streakDaysProp }: { streakDays?:
                 </div>
               </div>
             ))}
+
+            {sheet === "more" && (
+              <div className="mt-4 pt-3 border-t border-line">
+                <LanguageSwitcher pathname={pathname} locale={locale} />
+              </div>
+            )}
 
             {sheet === "more" && streakDays !== null && (
               <div className="flex items-center gap-2.5 border border-[#ECD98A] bg-[#FEF9C3] px-[13px] py-[10px] mt-4 rotate-[-1deg] shadow-[0_8px_18px_-12px_rgba(120,100,30,.4)]">
