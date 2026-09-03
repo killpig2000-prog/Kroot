@@ -1,6 +1,6 @@
 import type { CefrLevel } from "@/lib/tree";
 import { SPECIES, type TreeSpecies } from "@/lib/tree";
-import { CostumeLayer } from "@/lib/costumes";
+import { CostumeLayer, skinFor } from "@/lib/costumes";
 
 /** Shift a #rrggbb color toward black (f<0) or white (f>0). */
 function shade(hex: string, f: number): string {
@@ -274,6 +274,12 @@ export default function LevelCreature({
   /** VeteranTree draws its own ground further down; skip the stage's soil mound. */
   hideGround?: boolean;
 }) {
+  // An equipped skin replaces the tree outright (and its wearables — hats
+  // are anchored to canopy positions that no longer exist). Garden items are
+  // drawn by the caller around whatever this returns, so they still apply.
+  const skin = skinFor(costumeIds);
+  if (skin?.creature) return <>{skin.creature()}</>;
+
   const theme = SPECIES[species ?? level];
   const conifer = theme.shape === "conifer";
   const outfit = <CostumeLayer level={level} costumeIds={costumeIds} />;

@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import type { CefrLevel } from "@/lib/tree";
+import { AdmiralSkin, KingSkin, ScholarSkin } from "@/lib/costume-skins";
 
 
 // Wearables sit on the tree at a per-stage anchor; garden slots dress the
@@ -7,9 +8,14 @@ import type { CefrLevel } from "@/lib/tree";
 // `ribbon` is the weekly fair's prize (see RIBBONS below): a scene item
 // pinned to a fixed frame position rather than a per-level anchor, and
 // never sold, so it's in neither list below and gets no shop tab.
-export type CostumeSlot = "hat" | "face" | "neck" | "ribbon" | "aura" | "sky" | "ground" | "friend";
+// `skin` is an event costume that replaces the whole tree while worn: the
+// growing tree is hidden (not lost) and comes back at its real stage when the
+// skin is taken off. Wearables are skipped while a skin is on; garden items
+// still dress the scene around it.
+export type CostumeSlot = "hat" | "face" | "neck" | "ribbon" | "aura" | "sky" | "ground" | "friend" | "skin";
 export const WEARABLE_SLOTS: CostumeSlot[] = ["hat", "face", "neck"];
 export const GARDEN_SLOTS: CostumeSlot[] = ["aura", "sky", "ground", "friend"];
+export const SKIN_SLOTS: CostumeSlot[] = ["skin"];
 export const SLOT_LABELS: Record<CostumeSlot, { en: string; icon: string }> = {
   hat: { en: "Hats", icon: "🎩" },
   face: { en: "Face", icon: "👓" },
@@ -19,6 +25,7 @@ export const SLOT_LABELS: Record<CostumeSlot, { en: string; icon: string }> = {
   sky: { en: "Sky", icon: "🌤" },
   ground: { en: "Ground", icon: "🌼" },
   friend: { en: "Friend", icon: "🐦" },
+  skin: { en: "Skins", icon: "🎭" },
 };
 
 export type Rarity = "common" | "rare" | "epic" | "legendary";
@@ -46,6 +53,9 @@ export type Costume = {
   scene?: { layer: "behind" | "front"; draw: () => ReactNode };
   // Sky items also swap the frame's background gradient (CSS value).
   sky?: string;
+  // Skins: the full-body character drawn into the 220x230 frame *instead of*
+  // the tree (LevelCreature returns this when a skin is equipped).
+  creature?: () => ReactNode;
 };
 
 // Precomputed so server and client render byte-identical path strings.
@@ -1438,11 +1448,61 @@ export const COSTUMES: Costume[] = [
       ),
     },
   },
+  // ── Event skins: replace the tree while worn. Legendary, 2000 coins,
+  // four-week windows (long enough to save up from zero at 15 coins per
+  // activity). Historical-figure homages drawn as originals: court dress,
+  // armour and a scholar's dopo are not copyrightable, and the third is a
+  // deliberate two-person mashup, so none portrays a specific artwork.
+  {
+    id: "skin-hangul-king",
+    name: "King of the Alphabet",
+    krName: "한글대왕",
+    slot: "skin",
+    price: 2000,
+    rarity: "legendary",
+    icon: "\ud83d\udc51",
+    availableFrom: "2026-09-25",
+    availableUntil: "2026-10-22",
+    creature: () => <KingSkin />,
+  },
+  {
+    id: "skin-turtle-ship-admiral",
+    name: "Turtle-Ship Admiral",
+    krName: "거북선 장군",
+    slot: "skin",
+    price: 2000,
+    rarity: "legendary",
+    icon: "\u2694\ufe0f",
+    availableFrom: "2027-04-14",
+    availableUntil: "2027-05-11",
+    creature: () => <AdmiralSkin />,
+  },
+  {
+    id: "skin-scholar-painter",
+    name: "Scholar-Painter",
+    krName: "다산의 붓, 겸재의 옷",
+    slot: "skin",
+    price: 2000,
+    rarity: "legendary",
+    icon: "\ud83d\udd8c\ufe0f",
+    availableFrom: "2027-06-02",
+    availableUntil: "2027-06-29",
+    creature: () => <ScholarSkin />,
+  },
   ...RIBBON_COSTUMES,
 ];
 
 export function costumeById(id: string) {
   return COSTUMES.find((c) => c.id === id);
+}
+
+/** The equipped skin among these costume ids, if any (one per slot). */
+export function skinFor(costumeIds: string[]): Costume | null {
+  for (const id of costumeIds) {
+    const c = costumeById(id);
+    if (c?.slot === "skin" && c.creature) return c;
+  }
+  return null;
 }
 
 /** The fair medal among these costume ids, if any (a learner wears at most one). */

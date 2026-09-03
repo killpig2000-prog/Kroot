@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { SceneLayer, skyFor } from "@/lib/costumes";
+import { SceneLayer, skinFor, skyFor } from "@/lib/costumes";
 import { LEVEL_ORDER, LEVEL_PATH, SPECIES, type CefrLevel } from "@/lib/tree";
 import { FULLY_GROWN_LEVEL, MAX_LEVEL, treeHeightMetres, treeStageForLevel } from "@/lib/level";
 import VeteranTree, { VETERAN_MILESTONES, veteranFrameHeight } from "@/components/dashboard/VeteranTree";
@@ -73,7 +73,8 @@ export default function TreeCard({
   const stageIdx = LEVEL_ORDER.indexOf(stage);
   const maxed = level >= MAX_LEVEL;
   // Lv.50+: same card width, taller frame — the trunk keeps growing.
-  const veteran = level >= FULLY_GROWN_LEVEL;
+  // A skin hides the tree, trunk included, so the frame stays 230 tall.
+  const veteran = level >= FULLY_GROWN_LEVEL && !skinFor(equipped);
   const frameH = veteran ? veteranFrameHeight(level) : 230;
   const metres = treeHeightMetres(level);
   const nextKeepsake = VETERAN_MILESTONES.find((m) => m.level > level);

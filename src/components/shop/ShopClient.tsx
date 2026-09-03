@@ -8,6 +8,7 @@ import LevelCreature from "@/components/dashboard/LevelCreature";
 import {
   COSTUMES,
   GARDEN_SLOTS,
+  SKIN_SLOTS,
   SLOT_LABELS,
   SceneLayer,
   WEARABLE_SLOTS,
@@ -32,7 +33,7 @@ const RARITY_STYLE: Record<Rarity, { chip: string }> = {
   epic: { chip: "bg-[var(--tint-violet)] text-[#57279E]" },
   legendary: { chip: "bg-[var(--tint-amber)] text-[#8F3D1B]" },
 };
-const TABS: CostumeSlot[] = [...WEARABLE_SLOTS, ...GARDEN_SLOTS];
+const TABS: CostumeSlot[] = [...WEARABLE_SLOTS, ...GARDEN_SLOTS, ...SKIN_SLOTS];
 
 /** Maps a buy_costume() error onto a key under shop.errors. */
 function errorKey(raw: string): string {

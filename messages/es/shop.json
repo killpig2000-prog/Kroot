@@ -14,7 +14,8 @@
     "aura": "Aura",
     "sky": "Cielo",
     "ground": "Suelo",
-    "friend": "Amigo"
+    "friend": "Amigo",
+    "skin": "Skins"
   },
   "rarity": {
     "common": "Común",
