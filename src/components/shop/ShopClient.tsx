@@ -22,6 +22,7 @@ import {
 import type { CefrLevel } from "@/lib/tree";
 import { SPECIES } from "@/lib/tree";
 import ShopGoal, { useStoredGoal, writeStoredGoal } from "@/components/shop/ShopGoal";
+import GuidedStep from "@/components/onboarding/GuidedStep";
 
 const DEFAULT_SKY = "linear-gradient(180deg,#DFF1FF 0%,#F0FBF1 62%,#E4F3DA 100%)";
 const RARITY_STYLE: Record<Rarity, { stripe: string; chip: string }> = {
@@ -240,6 +241,8 @@ export default function ShopClient({
 
   return (
     <div className="border border-line rounded-[14px] bg-cream overflow-hidden max-w-[1040px]">
+      <GuidedStep step="shop-pick" />
+      <GuidedStep step="shop-cta" />
       {tutorial && !tutorialBought && (
         <div className="mx-4 mt-4 flex items-center justify-between gap-3 px-4 py-3 rounded-xl bg-[var(--tint-violet)] border border-line text-[#6B33CC] font-semibold text-[14px]">
           {t("tutorial.pick")}
@@ -426,7 +429,13 @@ export default function ShopClient({
                   }`}
                 >
                   <span className="absolute left-0 top-0 bottom-0 w-[3px] z-10" style={{ background: rs.stripe }} aria-hidden="true" />
-                  <button type="button" onClick={() => toggle(c)} aria-pressed={on} className="block w-full text-left">
+                  <button
+                    type="button"
+                    data-tour={c === visible[0] ? "guided-shop-first-item" : undefined}
+                    onClick={() => toggle(c)}
+                    aria-pressed={on}
+                    className="block w-full text-left"
+                  >
                     <Scene ids={ids} stage={stage} species={species} className="h-[96px]" />
                     <span className="block px-2.5 pt-2 pb-2.5">
                       <b className="block text-[13px] leading-tight">{c.name}</b>
@@ -501,6 +510,7 @@ export default function ShopClient({
             ) : (
               <button
                 type="button"
+                data-tour="guided-shop-cta"
                 onClick={act}
                 disabled={busy || cta.disabled}
                 className="flex-1 rounded-[10px] px-3 py-2.5 text-[13px] font-extrabold text-white bg-success hover:bg-success-deep transition-colors disabled:opacity-50"

@@ -13,6 +13,8 @@ export type NavItem = {
   popular?: boolean;
   /** Small "New" pill next to the label. */
   isNew?: boolean;
+  /** data-tour id — spotlit by the post-tour guided walkthrough. */
+  tourId?: string;
 };
 
 // The Garden is "what do I do today"; My account is "how far have I come" —
@@ -34,7 +36,7 @@ export const SECTIONS: { title: string; items: NavItem[] }[] = [
       { icon: "🧭", label: "Guide", href: "/guide", color: { text: "#1F81B4", bg: "#F0F9FF", border: "#BAE6FD" } },
       { icon: "🔤", label: "Hangul", href: "/hangul", color: { text: "#C63958", bg: "#FFF1F2", border: "#FECDD3" } },
       { icon: "📖", label: "Grammar", href: "/grammar", color: { text: "#423AC5", bg: "#EEF2FF", border: "#C7D2FE" } },
-      { icon: "🃏", label: "Vocabulary", href: "/vocabulary", color: { text: "#6B33CC", bg: "#F5F3FF", border: "#DDD6FE" }, popular: true },
+      { icon: "🃏", label: "Vocabulary", href: "/vocabulary", color: { text: "#6B33CC", bg: "#F5F3FF", border: "#DDD6FE" }, popular: true, tourId: "guided-nav-vocabulary" },
     ],
   },
   {
@@ -50,7 +52,7 @@ export const SECTIONS: { title: string; items: NavItem[] }[] = [
     title: "Relax",
     items: [
       { icon: "💬", label: "Slang", href: "/slang", color: { text: "#C13E78", bg: "#FDF2F8", border: "#FBCFE8" } },
-      { icon: "🛍️", label: "Shop", href: "/shop", color: { text: "#B14F27", bg: "#FFF7ED", border: "#FED7AA" } },
+      { icon: "🛍️", label: "Shop", href: "/shop", color: { text: "#B14F27", bg: "#FFF7ED", border: "#FED7AA" }, tourId: "guided-nav-shop" },
     ],
   },
 ];

@@ -7,7 +7,46 @@
     "hangulCta": "Next: try writing",
     "writingBanner": "Tutorial: give a writing prompt a try",
     "writingCta": "Next: visit the shop",
-    "finishBanner": "Your Korean journey starts here — we're cheering you on!"
+    "finishBanner": "Well done! Your Korean journey starts here — we're cheering you on!"
+  },
+  "guided": {
+    "waitLabel": "Tap the highlighted spot",
+    "hangul-pick": {
+      "title": "Start with ㄱ",
+      "body": "Tap the first letter — hear it, and watch the stroke order."
+    },
+    "hangul-nav-vocab": {
+      "title": "On to Vocabulary",
+      "body": "Tap Vocabulary in the menu to keep going."
+    },
+    "vocab-chapter": {
+      "title": "Open Chapter 1",
+      "body": "Tap it to see today's words."
+    },
+    "vocab-word": {
+      "title": "Open your first word",
+      "body": "Tap it to see the full meaning and an example."
+    },
+    "word-goti": {
+      "title": "Check it off",
+      "body": "Once you've read it, tap Got it."
+    },
+    "word-bank": {
+      "title": "Save it for later",
+      "body": "Tap to add this word to your word bank."
+    },
+    "shop-nav": {
+      "title": "One more stop — the Shop",
+      "body": "Tap Shop in the menu."
+    },
+    "shop-pick": {
+      "title": "Pick something",
+      "body": "Tap an item to try it on your tree."
+    },
+    "shop-cta": {
+      "title": "Make it yours",
+      "body": "Tap Buy to spend some of your starting coins and wear it."
+    }
   },
   "steps": {
     "sidebar": {

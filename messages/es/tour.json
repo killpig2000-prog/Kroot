@@ -7,7 +7,46 @@
     "hangulCta": "Siguiente: prueba a escribir",
     "writingBanner": "Tutorial: prueba una consigna de escritura",
     "writingCta": "Siguiente: visita la tienda",
-    "finishBanner": "Tu viaje con el coreano empieza aquí — ¡te apoyamos!"
+    "finishBanner": "¡Muy bien! Tu viaje con el coreano empieza aquí — ¡te apoyamos!"
+  },
+  "guided": {
+    "waitLabel": "Toca el punto resaltado",
+    "hangul-pick": {
+      "title": "Empieza por ㄱ",
+      "body": "Toca la primera letra — escúchala y mira el orden de los trazos."
+    },
+    "hangul-nav-vocab": {
+      "title": "Ahora, Vocabulario",
+      "body": "Toca Vocabulario en el menú para seguir."
+    },
+    "vocab-chapter": {
+      "title": "Abre el Capítulo 1",
+      "body": "Tócalo para ver las palabras de hoy."
+    },
+    "vocab-word": {
+      "title": "Abre tu primera palabra",
+      "body": "Tócala para ver el significado completo y un ejemplo."
+    },
+    "word-goti": {
+      "title": "Márcala",
+      "body": "Cuando ya la hayas leído, toca Entendido."
+    },
+    "word-bank": {
+      "title": "Guárdala para después",
+      "body": "Tócala para añadirla a tu banco de palabras."
+    },
+    "shop-nav": {
+      "title": "Una última parada — la Tienda",
+      "body": "Toca Tienda en el menú."
+    },
+    "shop-pick": {
+      "title": "Elige algo",
+      "body": "Toca un artículo para probártelo en tu árbol."
+    },
+    "shop-cta": {
+      "title": "Hazlo tuyo",
+      "body": "Toca Comprar para usar parte de tus monedas iniciales y ponértelo."
+    }
   },
   "steps": {
     "sidebar": {

@@ -37,9 +37,20 @@ type TabKey = (typeof TABS)[number]["key"];
 const SECTION_LABEL =
   "text-[11.5px] font-semibold tracking-[.06em] uppercase text-faint mb-2.5";
 
-function JamoTile({ jamo, selected, onSelect }: { jamo: Jamo; selected: boolean; onSelect: () => void }) {
+function JamoTile({
+  jamo,
+  selected,
+  onSelect,
+  tourId,
+}: {
+  jamo: Jamo;
+  selected: boolean;
+  onSelect: () => void;
+  tourId?: string;
+}) {
   return (
     <button
+      data-tour={tourId}
       onClick={() => {
         onSelect();
         speak(jamo.char);
@@ -67,18 +78,19 @@ function JamoTile({ jamo, selected, onSelect }: { jamo: Jamo; selected: boolean;
  * detail panel under the grid for whichever tile is selected, instead of a
  * full-width card per letter.
  */
-function JamoGrid({ items }: { items: Jamo[] }) {
+function JamoGrid({ items, firstItemTourId }: { items: Jamo[]; firstItemTourId?: string }) {
   const [selectedChar, setSelectedChar] = useState<string | null>(null);
   const selected = items.find((j) => j.char === selectedChar) ?? null;
   return (
     <div className="max-w-[980px] mb-8">
       <div className="grid grid-cols-4 sm:grid-cols-[repeat(auto-fill,minmax(104px,1fr))] gap-2 sm:gap-2.5">
-        {items.map((j) => (
+        {items.map((j, i) => (
           <JamoTile
             key={j.char}
             jamo={j}
             selected={j.char === selectedChar}
             onSelect={() => setSelectedChar((c) => (c === j.char ? null : j.char))}
+            tourId={i === 0 ? firstItemTourId : undefined}
           />
         ))}
       </div>
@@ -265,7 +277,7 @@ export default function HangulExplorer() {
       {tab === "consonants" && (
         <div style={{ animation: "fadeUp .35s ease" }}>
           <p className={SECTION_LABEL}>{t("sections.basicConsonants")} · 기본 자음</p>
-          <JamoGrid items={BASIC_CONSONANTS} />
+          <JamoGrid items={BASIC_CONSONANTS} firstItemTourId="guided-hangul-first-jamo" />
           <p className={SECTION_LABEL}>{t("sections.doubleConsonants")} · 쌍자음</p>
           <JamoGrid items={DOUBLE_CONSONANTS} />
         </div>

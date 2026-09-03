@@ -33,6 +33,7 @@ function NavItem({
   href,
   on,
   isNew,
+  tourId,
 }: {
   icon: string;
   label: string;
@@ -41,6 +42,7 @@ function NavItem({
   color?: NavColor;
   popular?: boolean;
   isNew?: boolean;
+  tourId?: string;
 }) {
   const tn = useTranslations("nav");
   // Active item reads like a notebook index tab: white paper, dashed edge,
@@ -48,6 +50,7 @@ function NavItem({
   const link = (
     <Link
       href={href}
+      data-tour={tourId}
       className={`flex items-center gap-2 px-2.5 py-[6px] text-[13.5px] transition-colors ${
         on
           ? "bg-cream border border-dashed border-dash border-r-0 rounded-l-[10px] -mr-3.5 text-success-deep font-bold"

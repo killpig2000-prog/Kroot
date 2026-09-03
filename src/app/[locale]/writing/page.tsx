@@ -23,17 +23,16 @@ const STATUS_BADGE: Record<string, string> = {
 export default async function WritingMapPage({
   searchParams,
 }: {
-  searchParams: Promise<{ level?: string; tutorial?: string }>;
+  searchParams: Promise<{ level?: string }>;
 }) {
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
 
   if (!user) redirect("/onboarding");
 
-  const [t, tn, tTour, locale, { data: profile }, { data: progress }, sp] = await Promise.all([
+  const [t, tn, locale, { data: profile }, { data: progress }, sp] = await Promise.all([
     getTranslations("writing"),
     getTranslations("nav"),
-    getTranslations("tour"),
     getLocale(),
     supabase
       .from("profiles")
@@ -100,23 +99,6 @@ export default async function WritingMapPage({
             <span className="text-[13px] text-muted">{t("map.levelSub", { level })}</span>
           </div>
 
-          {sp.tutorial === "1" && (
-            <div className="flex items-center justify-between gap-3 mb-[18px] px-4 py-3 rounded-xl bg-[var(--tint-amber)] border border-amber-line text-amber font-semibold text-[14px]">
-              <span>{tTour("nextStep.writingBanner")}</span>
-              <div className="flex items-center gap-3 shrink-0">
-                <Link href="/dashboard" className="text-faint font-semibold hover:text-charcoal">
-                  {tTour("skip")}
-                </Link>
-                <Link
-                  href="/shop?tutorial=1"
-                  className="flex items-center gap-1.5 rounded-[9px] bg-amber px-3 py-1.5 text-[13px] font-bold text-white hover:brightness-95 transition-[filter]"
-                >
-                  {tTour("nextStep.writingCta")}
-                  <span aria-hidden="true">→</span>
-                </Link>
-              </div>
-            </div>
-          )}
 
           <LevelTabs
             className="mb-6"

@@ -7,7 +7,46 @@
     "hangulCta": "下一步：试着写一写",
     "writingBanner": "教程：试着完成一个写作题目",
     "writingCta": "下一步：逛逛商店",
-    "finishBanner": "你的韩语学习之旅从这里开始——我们为你加油！"
+    "finishBanner": "做得好！你的韩语学习之旅从这里开始——我们为你加油！"
+  },
+  "guided": {
+    "waitLabel": "点一下高亮的地方",
+    "hangul-pick": {
+      "title": "从ㄱ开始",
+      "body": "点一下第一个字母——听听发音，看看笔顺。"
+    },
+    "hangul-nav-vocab": {
+      "title": "接下来去词汇",
+      "body": "点一下菜单里的词汇，继续下一步。"
+    },
+    "vocab-chapter": {
+      "title": "打开第1章",
+      "body": "点一下就能看到今天要学的词。"
+    },
+    "vocab-word": {
+      "title": "打开第一个单词",
+      "body": "点一下查看完整释义和例句。"
+    },
+    "word-goti": {
+      "title": "标记为已掌握",
+      "body": "读完之后，点一下\"记住了\"。"
+    },
+    "word-bank": {
+      "title": "先存起来，以后再看",
+      "body": "点一下把这个词加进你的单词本。"
+    },
+    "shop-nav": {
+      "title": "最后再逛一站——商店",
+      "body": "点一下菜单里的商店。"
+    },
+    "shop-pick": {
+      "title": "挑一件东西",
+      "body": "点一下某件物品，在你的树上试穿。"
+    },
+    "shop-cta": {
+      "title": "把它变成你的",
+      "body": "点一下购买，花一点初始金币把它穿上。"
+    }
   },
   "steps": {
     "sidebar": {

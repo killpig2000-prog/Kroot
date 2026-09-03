@@ -4,6 +4,7 @@ import { redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import WordDetailCard from "@/components/vocabulary/WordDetailCard";
+import GuidedStep from "@/components/onboarding/GuidedStep";
 import { createClient, getClaimsUser, getDashboardProfile } from "@/lib/supabase/server";
 import { VOCAB_TOPICS } from "@/lib/vocabulary";
 import { getChaptersForTopic } from "@/lib/vocabulary-words";
@@ -118,6 +119,13 @@ export default async function VocabWordPage({
         />
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] md:pb-[60px]">
+          <GuidedStep step="word-goti" />
+          <GuidedStep step="word-bank" />
+          {/* Shop is spotlit in the Sidebar without leaving this page — the
+              next step after "add to bank" only actually navigates once the
+              learner clicks it. */}
+          <GuidedStep step="shop-nav" />
+
           <WordDetailCard
             // Remount per word: without a key the card keeps its "saving"
             // state across the search-param navigation and the next word's

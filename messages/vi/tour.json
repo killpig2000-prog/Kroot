@@ -7,7 +7,46 @@
     "hangulCta": "Tiếp theo: thử luyện viết",
     "writingBanner": "Hướng dẫn: thử một đề bài viết",
     "writingCta": "Tiếp theo: ghé cửa hàng",
-    "finishBanner": "Hành trình tiếng Hàn của bạn bắt đầu từ đây — chúng tôi luôn ủng hộ bạn!"
+    "finishBanner": "Làm tốt lắm! Hành trình tiếng Hàn của bạn bắt đầu từ đây — chúng tôi luôn ủng hộ bạn!"
+  },
+  "guided": {
+    "waitLabel": "Chạm vào điểm được tô sáng",
+    "hangul-pick": {
+      "title": "Bắt đầu với ㄱ",
+      "body": "Chạm vào chữ cái đầu tiên — nghe cách đọc và xem thứ tự nét viết."
+    },
+    "hangul-nav-vocab": {
+      "title": "Tiếp theo là Từ vựng",
+      "body": "Chạm vào Từ vựng trong menu để tiếp tục."
+    },
+    "vocab-chapter": {
+      "title": "Mở Chương 1",
+      "body": "Chạm vào để xem các từ của hôm nay."
+    },
+    "vocab-word": {
+      "title": "Mở từ đầu tiên",
+      "body": "Chạm vào để xem nghĩa đầy đủ và một câu ví dụ."
+    },
+    "word-goti": {
+      "title": "Đánh dấu đã học",
+      "body": "Sau khi đọc xong, chạm vào Đã hiểu."
+    },
+    "word-bank": {
+      "title": "Lưu lại để xem sau",
+      "body": "Chạm để thêm từ này vào ngân hàng từ vựng của bạn."
+    },
+    "shop-nav": {
+      "title": "Ghé thêm một chỗ nữa — Cửa hàng",
+      "body": "Chạm vào Cửa hàng trong menu."
+    },
+    "shop-pick": {
+      "title": "Chọn một món",
+      "body": "Chạm vào một món đồ để thử trên cây của bạn."
+    },
+    "shop-cta": {
+      "title": "Biến nó thành của bạn",
+      "body": "Chạm Mua để dùng một phần số xu ban đầu và đeo nó lên."
+    }
   },
   "steps": {
     "sidebar": {

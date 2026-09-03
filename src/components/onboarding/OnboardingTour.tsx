@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
+import { startGuidedTour } from "@/components/onboarding/guidedSteps";
 
 export const SEEN_KEY = "kroot-onboarding-tour-seen";
 export const TOUR_DONE_EVENT = "kroot:tour-done";
@@ -63,7 +64,17 @@ type Rect = { top: number; left: number; width: number; height: number };
 // data-tour target at a time, plus a tooltip card. Runs once per browser
 // (localStorage-gated), at every width — the sidebar/basics/practice/relax
 // steps just point at BottomNav's tabs instead of the Sidebar below md.
-export default function OnboardingTour({ afterTourHref }: { afterTourHref?: string } = {}) {
+export default function OnboardingTour({
+  afterTourHref,
+  startsGuidedTour = false,
+  isAdmin = false,
+}: {
+  afterTourHref?: string;
+  /** Arms the click-gated Hangul→Vocabulary→Shop continuation right before navigating to afterTourHref. */
+  startsGuidedTour?: boolean;
+  /** Admin testing bypass: ignores SEEN_KEY so the tour re-runs on every dashboard load. */
+  isAdmin?: boolean;
+} = {}) {
   const t = useTranslations("tour");
   const router = useRouter();
   const [stepIndex, setStepIndex] = useState(0);
@@ -72,11 +83,11 @@ export default function OnboardingTour({ afterTourHref }: { afterTourHref?: stri
   const frame = useRef<number | null>(null);
 
   useEffect(() => {
-    if (seen()) return;
+    if (!isAdmin && seen()) return;
     if (typeof window === "undefined") return;
     const id = requestAnimationFrame(() => setActive(true));
     return () => cancelAnimationFrame(id);
-  }, []);
+  }, [isAdmin]);
 
   const measure = useCallback(() => {
     const key: StepKey = STEPS[stepIndex];
@@ -98,9 +109,12 @@ export default function OnboardingTour({ afterTourHref }: { afterTourHref?: stri
       markSeen();
       setActive(false);
       window.dispatchEvent(new Event(TOUR_DONE_EVENT));
-      if (navigate && afterTourHref) router.push(afterTourHref);
+      if (navigate && afterTourHref) {
+        if (startsGuidedTour) startGuidedTour();
+        router.push(afterTourHref);
+      }
     },
-    [afterTourHref, router]
+    [afterTourHref, startsGuidedTour, router]
   );
 
   useEffect(() => {

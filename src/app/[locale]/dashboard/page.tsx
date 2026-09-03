@@ -188,8 +188,9 @@ export default async function DashboardPage() {
     maybeNew ? countCompletedSessions(user.id) : Promise.resolve(null),
     // coins isn't in the snapshot RPC's profile row; a parallel read here
     // beats a function migration for one integer (see 0041's rationale).
-    // review_capacity_bonus rides along for the same reason.
-    supabase.from("profiles").select("coins, review_capacity_bonus").eq("id", user.id).maybeSingle(),
+    // review_capacity_bonus and is_admin ride along for the same reason —
+    // is_admin drives the guided-tour repeat-testing bypass below.
+    supabase.from("profiles").select("coins, review_capacity_bonus, is_admin").eq("id", user.id).maybeSingle(),
     // Same daily cap accounting as /review and BottomNav's badge.
     supabase
       .from("vocabulary_progress")
@@ -199,6 +200,7 @@ export default async function DashboardPage() {
   ]);
   const coins = coinsRes.error ? 0 : coinsRes.data?.coins ?? 0;
   const reviewCapacityBonus = coinsRes.error ? 0 : coinsRes.data?.review_capacity_bonus ?? 0;
+  const isAdmin = coinsRes.error ? false : coinsRes.data?.is_admin ?? false;
   // Errors (e.g. migration 0022 not applied yet) just hide the review card.
   // User feedback: an uncapped backlog badge (once past a hundred+ words)
   // read as a scary, un-clearable number rather than something to act on.
@@ -341,7 +343,7 @@ export default async function DashboardPage() {
             {/* First lesson right after the tour, for every level — Hangul's
                 page itself hands off to Writing once the learner is ready,
                 see the tutorial banner on each of those pages. */}
-            <OnboardingTour afterTourHref="/hangul?tutorial=writing" />
+            <OnboardingTour afterTourHref="/hangul" startsGuidedTour isAdmin={isAdmin} />
             <TutorialFinishBanner />
             <h1 className="font-semibold text-[clamp(20px,2.4vw,24px)] tracking-[-0.02em] mb-0.5">
               {t("welcome", { name: displayName })}
@@ -416,7 +418,7 @@ export default async function DashboardPage() {
         </div>
 
         <main className="min-w-0 px-[clamp(18px,3vw,36px)] pt-[26px] pb-[100px] md:pb-[60px]">
-          <OnboardingTour afterTourHref="/hangul?tutorial=writing" />
+          <OnboardingTour afterTourHref="/hangul" startsGuidedTour isAdmin={isAdmin} />
           <TutorialFinishBanner />
           <Greeting name={displayName} />
 

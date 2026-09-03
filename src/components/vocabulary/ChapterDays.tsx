@@ -80,6 +80,7 @@ export default function ChapterDays({
                   <Link
                     key={w.key}
                     href={w.href}
+                    data-tour={w.n === 1 ? "guided-vocab-first-word" : undefined}
                     className="group grid grid-cols-[26px_22px_minmax(84px,auto)_1fr_16px] sm:grid-cols-[26px_22px_112px_1fr_16px] items-center gap-x-3 gap-y-0.5 py-2.5 border-b border-dashed border-dash hover:bg-warm transition-colors -mx-2 px-2 rounded-[6px]"
                   >
                     <span className="text-[11px] text-faint tabular-nums text-right">{w.n}</span>

@@ -1,20 +1,13 @@
 import { getTranslations } from "next-intl/server";
-import { Link, redirect } from "@/i18n/navigation";
+import { redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import HangulExplorer from "@/components/hangul/HangulExplorer";
+import GuidedStep from "@/components/onboarding/GuidedStep";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 
-export default async function HangulPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ tutorial?: string }>;
-}) {
-  const [tn, t, sp] = await Promise.all([
-    getTranslations("nav"),
-    getTranslations("tour"),
-    searchParams,
-  ]);
+export default async function HangulPage() {
+  const tn = await getTranslations("nav");
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
 
@@ -48,20 +41,8 @@ export default async function HangulPage({
             </h1>
           </div>
 
-          {sp.tutorial === "writing" && (
-            <div className="flex items-center justify-between gap-3 mb-[18px] px-4 py-3 rounded-xl bg-success-bg border border-success-line text-success font-semibold text-[14px]">
-              <Link
-                href="/writing?tutorial=1"
-                className="flex items-center gap-1.5 hover:brightness-95 transition-[filter]"
-              >
-                {t("nextStep.hangulCta")}
-                <span aria-hidden="true">→</span>
-              </Link>
-              <Link href="/dashboard" className="text-faint font-semibold hover:text-charcoal shrink-0">
-                {t("skip")}
-              </Link>
-            </div>
-          )}
+          <GuidedStep step="hangul-pick" />
+          <GuidedStep step="hangul-nav-vocab" />
 
           <HangulExplorer />
         </main>
