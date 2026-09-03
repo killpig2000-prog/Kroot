@@ -12,8 +12,8 @@ export const routing = defineRouting({
   // bookmarked/indexed URLs (/vocabulary, /words/mul-water stay unchanged).
   localePrefix: 'as-needed',
 
-  // Disable automatic redirect based on browser Accept-Language to protect
-  // the English-speaking user base while the Spanish pilot is new.
-  // Spanish is reachable only via explicit /es/... URLs.
-  localeDetection: false,
+  // Auto-redirect based on browser Accept-Language now that es content
+  // (vocab/reading/writing/listening) is fully translated, not a partial
+  // pilot — see es-translation-done-2026-09-04 memory.
+  localeDetection: true,
 });
