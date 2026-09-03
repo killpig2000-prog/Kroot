@@ -29,21 +29,30 @@ export default function FeedbackWidget() {
 
   useEffect(() => {
     let hiddenToday = false;
-    let tourPending = false;
     try {
       hiddenToday = localStorage.getItem(HIDE_KEY) === localDateKey();
-      tourPending = localStorage.getItem(TOUR_SEEN_KEY) !== "1";
     } catch {}
     if (hiddenToday) return;
 
-    // The first-visit tour spotlights parts of this same page — don't stack
-    // this notice on top of it. Wait for the tour to finish first.
-    // The tour's natural finish hands straight into the guided tour, whose
-    // first step ("shall we try Hangul?") is on this same page too — hold
-    // until that has either moved off the page or been skipped.
-    if (tourPending) {
+    // The first-visit tour spotlights parts of this same page, and its
+    // natural finish hands straight into the click-gated guided tour
+    // (Hangul -> Vocabulary -> Shop), which spans several full page loads —
+    // so this can't just check once at mount whether the *initial* tour was
+    // pending: a guided step can still be active on a later page even
+    // though SEEN_KEY was already flipped to "1" back when the initial tour
+    // ended. Re-derive "is a tour still going" from both flags on every
+    // mount, not just the first.
+    const tourActive = () => {
+      let initialTourPending = false;
+      try {
+        initialTourPending = localStorage.getItem(TOUR_SEEN_KEY) !== "1";
+      } catch {}
+      return initialTourPending || currentGuidedStep() !== null;
+    };
+
+    if (tourActive()) {
       const maybeShow = () => {
-        if (currentGuidedStep() === null) setView("announce");
+        if (!tourActive()) setView("announce");
       };
       window.addEventListener(TOUR_DONE_EVENT, maybeShow);
       window.addEventListener(GUIDED_STEP_EVENT, maybeShow);

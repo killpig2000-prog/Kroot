@@ -217,10 +217,12 @@ export default function GuidedStep({ step }: { step: GuidedStepKey }) {
   let title = t(`guided.${step}.title`);
   let body = t(`guided.${step}.body`);
   let footerLeft: ReactNode = null;
-  let actions: ReactNode;
+  let actions: ReactNode = null;
 
   if (mode === "ask" && asking) {
-    // "Shall we go on to X?" — Keep going turns this into the click step.
+    // "Shall we go on to X?" — the only point Skip is offered: once Keep
+    // going commits to a category (Hangul, Shop), the walkthrough runs to
+    // that category's end with no way out but finishing it.
     title = t(`guided.${step}.askTitle`);
     body = t(`guided.${step}.askBody`);
     actions = (
@@ -233,16 +235,12 @@ export default function GuidedStep({ step }: { step: GuidedStepKey }) {
     );
   } else if (mode === "info") {
     actions = (
-      <>
-        {!isLast && skipBtn}
-        <button type="button" onClick={advance} className={PRIMARY_BTN}>
-          {isLast ? t("finish") : t("next")}
-        </button>
-      </>
+      <button type="button" onClick={advance} className={PRIMARY_BTN}>
+        {isLast ? t("finish") : t("next")}
+      </button>
     );
   } else {
     footerLeft = <WaitHint label={t("guided.waitLabel")} />;
-    actions = skipBtn;
   }
 
   return (
