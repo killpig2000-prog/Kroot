@@ -16,13 +16,14 @@ const navKey = (label: string) =>
 
 const LANGUAGES = [
   { code: "en", label: "English" },
+  { code: "es", label: "Español" },
   { code: "ja", label: "日本語" },
   { code: "zh-Hans", label: "中文" },
   { code: "vi", label: "Tiếng Việt" },
 ];
 // Reachable by URL only (pilot, partial translations) — shown as the current
 // language when you're on it, but not offered in the list.
-const HIDDEN_LANGUAGES = [{ code: "es", label: "Español" }];
+const HIDDEN_LANGUAGES: { code: string; label: string }[] = [];
 
 // The sidebar renders every item quiet on purpose — text only, no emoji, no
 // color tiles, no "Popular" badges (those still show in the phone Menu sheet).

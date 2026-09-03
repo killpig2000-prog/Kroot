@@ -8,6 +8,7 @@ import { rememberLocale } from "@/i18n/locale";
 
 const LANGUAGES = [
   { code: "en", label: "🇬🇧 English" },
+  { code: "es", label: "🇪🇸 Español" },
   { code: "ja", label: "🇯🇵 日本語" },
   { code: "zh-Hans", label: "🇨🇳 中文" },
   { code: "vi", label: "🇻🇳 Tiếng Việt" },
@@ -15,7 +16,7 @@ const LANGUAGES = [
 // Reachable by URL only (pilot, partial translations) — shown as the current
 // language when you're on it, but not offered in the list. Mirrors the
 // dashboard sidebar's switcher, see Sidebar.tsx.
-const HIDDEN_LANGUAGES = [{ code: "es", label: "🇪🇸 Español" }];
+const HIDDEN_LANGUAGES: { code: string; label: string }[] = [];
 
 function LanguageSwitcher() {
   const locale = useLocale();

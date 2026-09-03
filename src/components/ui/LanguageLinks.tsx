@@ -7,6 +7,7 @@ import { rememberLocale } from "@/i18n/locale";
 
 const LANGUAGES = [
   { code: "en", label: "English" },
+  { code: "es", label: "Español" },
   { code: "ja", label: "日本語" },
   { code: "zh-Hans", label: "中文" },
   { code: "vi", label: "Tiếng Việt" },
