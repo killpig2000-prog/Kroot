@@ -22,7 +22,6 @@
   "tryIt": {
     "eyebrow": "Thử ngay — không cần đăng ký",
     "pronTitle": "Nói từ này",
-    "pronGloss": "annyeong · xin chào",
     "listen": "Nghe",
     "speak": "Nói",
     "listening": "Đang nghe…",
@@ -36,7 +35,7 @@
     },
     "writeTitle": "Ghép câu này",
     "writePrompt": "“Tôi yêu tiếng Hàn.”",
-    "writeHint": "Bấm các từ theo thứ tự. Có một từ thừa.",
+    "writeHint": "Bấm các từ theo thứ tự.",
     "afterTry": "Mọi bài học đều diễn ra đúng như vậy."
   },
   "levelTest": {

@@ -22,7 +22,6 @@
   "tryIt": {
     "eyebrow": "Try it right now — no sign-up",
     "pronTitle": "Say this word",
-    "pronGloss": "annyeong · hello",
     "listen": "Listen",
     "speak": "Speak",
     "listening": "Listening…",
@@ -36,7 +35,7 @@
     },
     "writeTitle": "Build this sentence",
     "writePrompt": "“I love Korean.”",
-    "writeHint": "Tap the words in order. One of them doesn't belong.",
+    "writeHint": "Tap the words in order.",
     "afterTry": "That's exactly how every lesson works."
   },
   "levelTest": {

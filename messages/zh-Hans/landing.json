@@ -22,7 +22,6 @@
   "tryIt": {
     "eyebrow": "现在就试试 — 无需注册",
     "pronTitle": "说出这个词",
-    "pronGloss": "annyeong · 你好",
     "listen": "听",
     "speak": "说",
     "listening": "正在听…",
@@ -36,7 +35,7 @@
     },
     "writeTitle": "拼出这句话",
     "writePrompt": "“我爱韩语。”",
-    "writeHint": "按顺序点选单词。其中有一个是多余的。",
+    "writeHint": "按顺序点选单词。",
     "afterTry": "每一课都是这样进行的。"
   },
   "levelTest": {

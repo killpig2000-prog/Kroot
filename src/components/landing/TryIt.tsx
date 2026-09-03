@@ -7,6 +7,7 @@ import { bestSimilarity, verdictFor, type Verdict } from "@/lib/speech-match";
 import { checkTiles, type Board } from "@/lib/writing-builder";
 import { TileBoard } from "@/components/writing/WritingBoards";
 import { speakKorean } from "@/lib/tts";
+import { wordsForChapter } from "@/lib/pronunciation";
 
 // The hero's "try it right now" pair — one pronunciation word and one
 // easy tile sentence, both graded entirely in the browser. No account, no
@@ -16,17 +17,19 @@ import { speakKorean } from "@/lib/tts";
 // and the board are fixed constants so the server render and the first
 // client render agree (no hydration mismatch from a shuffle).
 
-const WORD = { kr: "안녕", accept: ["안녕", "안녕하세요"] };
+// The very first word of the real trail (chapter 1, ㄹ), with its actual
+// chapter tip — so what you try here is literally what lesson one asks.
+const WORD = wordsForChapter("rieul")[0];
 const MAX_LISTEN_MS = 5000;
 
-// 저는 한국어를 사랑해요 (I love Korean) + one distractor, pre-shuffled by hand.
+// 저는 한국어를 사랑해요 (I love Korean). No distractor on purpose — the
+// user wanted the landing sample to be only the words that belong.
 const BOARD: Board = {
   answer: ["저는", "한국어를", "사랑해요"],
   tiles: [
     { id: "t1", text: "한국어를" },
-    { id: "t0", text: "저는" },
-    { id: "t3", text: "영어를" },
     { id: "t2", text: "사랑해요" },
+    { id: "t0", text: "저는" },
   ],
 };
 
@@ -55,6 +58,7 @@ function ScoreRing({ pct }: { pct: number }) {
 
 function PronunciationCard({ onDone }: { onDone: () => void }) {
   const t = useTranslations("landing.tryIt");
+  const tp = useTranslations("pronunciation.practice");
   const { speak, isSpeaking } = useKoreanSpeaker();
   const { isSupported, isListening, interim, error, listen } = useSpeechRecognition("ko-KR", MAX_LISTEN_MS);
   const [heard, setHeard] = useState<string | null>(null);
@@ -63,7 +67,8 @@ function PronunciationCard({ onDone }: { onDone: () => void }) {
   function start() {
     setHeard(null);
     listen((text) => {
-      const s = bestSimilarity(text, WORD.accept);
+      // Same grading as PronunciationChallenge: the chapter word, nothing looser.
+      const s = bestSimilarity(text, [WORD.kr]);
       setHeard(text);
       setScore(s);
       onDone();
@@ -75,9 +80,20 @@ function PronunciationCard({ onDone }: { onDone: () => void }) {
 
   return (
     <div className={`${CARD} border-teal/40`}>
-      <p className={`${EYEBROW} text-teal`}>🎤 {t("pronTitle")}</p>
+      <p className={`${EYEBROW} text-teal`}>🎤 {t("pronTitle")} · {WORD.groupTitle}</p>
       <p className="kr font-bold text-[36px] leading-[1.15] mb-0.5">{WORD.kr}</p>
-      <p className="text-[12.5px] text-muted mb-4">{t("pronGloss")}</p>
+      <p className="text-[12.5px] text-muted mb-3">
+        <span className="italic">{WORD.romanization}</span> · {WORD.en}
+      </p>
+
+      {/* the chapter's real "how to make it" tip, same as the practice card */}
+      <div className="flex items-start gap-2.5 bg-[var(--tint-teal)] border border-[var(--tint-teal-line)] rounded-xl px-3.5 py-2.5 mb-4">
+        <span className="w-7 h-7 rounded-full flex-none bg-teal text-white text-[12px] grid place-items-center">💡</span>
+        <div className="min-w-0">
+          <b className="block text-[10px] font-bold tracking-[.06em] text-faint mb-0.5">{tp("howToMakeIt")}</b>
+          <p className="text-[11.5px] text-charcoal leading-[1.55]">{WORD.tip}</p>
+        </div>
+      </div>
 
       <div className="flex items-center gap-2.5 mb-4">
         <button

@@ -22,7 +22,6 @@
   "tryIt": {
     "eyebrow": "今すぐ体験 — 登録不要",
     "pronTitle": "この単語を言ってみよう",
-    "pronGloss": "annyeong · こんにちは",
     "listen": "聞く",
     "speak": "話す",
     "listening": "聞き取り中…",
@@ -36,7 +35,7 @@
     },
     "writeTitle": "この文を組み立てよう",
     "writePrompt": "「私は韓国語が大好きです。」",
-    "writeHint": "単語を順番にタップ。1つだけ余分な単語があります。",
+    "writeHint": "単語を順番にタップしてください。",
     "afterTry": "すべてのレッスンがこの形で進みます。"
   },
   "levelTest": {

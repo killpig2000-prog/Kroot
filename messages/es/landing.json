@@ -22,7 +22,6 @@
   "tryIt": {
     "eyebrow": "Pruébalo ahora — sin registrarte",
     "pronTitle": "Di esta palabra",
-    "pronGloss": "annyeong · hola",
     "listen": "Escuchar",
     "speak": "Hablar",
     "listening": "Escuchando…",
@@ -36,7 +35,7 @@
     },
     "writeTitle": "Arma esta frase",
     "writePrompt": "“Amo el coreano.”",
-    "writeHint": "Toca las palabras en orden. Una de ellas sobra.",
+    "writeHint": "Toca las palabras en orden.",
     "afterTry": "Así funciona cada lección."
   },
   "levelTest": {

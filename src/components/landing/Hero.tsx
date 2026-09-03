@@ -63,6 +63,12 @@ export default function Hero() {
           ))}
         </div>
 
+        {/* try a word and a sentence before reading a single line of pitch —
+            the user wanted this to be the very first thing on the page, above
+            the headline (2026-09-04). The static pronunciation/writing
+            previews that used to sit further down were replaced by it. */}
+        <TryIt />
+
         <h1
           className="reveal font-black text-[clamp(30px,4.6vw,48px)] leading-[1.24] tracking-[-0.02em] text-charcoal mb-3.5 text-balance"
           style={{ "--rd": "0.1s" } as React.CSSProperties}
@@ -77,17 +83,11 @@ export default function Hero() {
           </mark>
         </h1>
         <p
-          className="reveal text-[14.5px] text-muted max-w-[44ch] mx-auto"
+          className="reveal text-[14.5px] text-muted max-w-[44ch] mx-auto mb-6"
           style={{ "--rd": "0.22s" } as React.CSSProperties}
         >
           {t("sub")}
         </p>
-
-        {/* try a word and a sentence before signing up for anything — the
-            static pronunciation/writing previews that used to sit further
-            down the page were replaced by this live pair (2026-09-04) */}
-        <TryIt />
-
         <Link
           href="/onboarding"
           className="reveal inline-block rounded-[10px] bg-success px-[28px] py-[13px] text-[14.5px] font-bold text-white shadow-[0_6px_0_#2E5B41] hover:translate-y-[2px] hover:shadow-[0_4px_0_#2E5B41] transition-all"
