@@ -19,14 +19,14 @@ import { speakKorean } from "@/lib/tts";
 const WORD = { kr: "안녕", accept: ["안녕", "안녕하세요"] };
 const MAX_LISTEN_MS = 5000;
 
-// 저는 물을 마셔요 (I drink water) + one distractor, pre-shuffled by hand.
+// 저는 한국어를 사랑해요 (I love Korean) + one distractor, pre-shuffled by hand.
 const BOARD: Board = {
-  answer: ["저는", "물을", "마셔요"],
+  answer: ["저는", "한국어를", "사랑해요"],
   tiles: [
-    { id: "t1", text: "물을" },
+    { id: "t1", text: "한국어를" },
     { id: "t0", text: "저는" },
-    { id: "t3", text: "빵을" },
-    { id: "t2", text: "마셔요" },
+    { id: "t3", text: "영어를" },
+    { id: "t2", text: "사랑해요" },
   ],
 };
 

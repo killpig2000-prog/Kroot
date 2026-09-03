@@ -353,7 +353,10 @@ export function TileBoard({
               </button>
             </span>
           ) : (
-            <button type="button" className={BTN_CHECK} onClick={onCheck} disabled={picked.length === 0}>
+            // Only a full answer can be checked — a partial one always grades
+            // wrong, which read as the app marking a half-built sentence
+            // "incorrect" out of nowhere.
+            <button type="button" className={BTN_CHECK} onClick={onCheck} disabled={picked.length !== board.answer.length}>
               {checked === false ? t("tryAgain") : t("check")}
             </button>
           ))}
