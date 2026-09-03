@@ -26,11 +26,11 @@ import GuidedStep from "@/components/onboarding/GuidedStep";
 import { currentGuidedStep } from "@/components/onboarding/guidedSteps";
 
 const DEFAULT_SKY = "linear-gradient(180deg,#DFF1FF 0%,#F0FBF1 62%,#E4F3DA 100%)";
-const RARITY_STYLE: Record<Rarity, { stripe: string; chip: string }> = {
-  common: { stripe: "#B7AE9C", chip: "bg-warm text-muted" },
-  rare: { stripe: "#3363CC", chip: "bg-[var(--tint-sky)] text-sky-deep" },
-  epic: { stripe: "#6B33CC", chip: "bg-[var(--tint-violet)] text-[#6B33CC]" },
-  legendary: { stripe: "#B14F27", chip: "bg-[var(--tint-amber)] text-[#B14F27]" },
+const RARITY_STYLE: Record<Rarity, { chip: string }> = {
+  common: { chip: "bg-warm text-muted" },
+  rare: { chip: "bg-[var(--tint-sky)] text-[#1E4FB0]" },
+  epic: { chip: "bg-[var(--tint-violet)] text-[#57279E]" },
+  legendary: { chip: "bg-[var(--tint-amber)] text-[#8F3D1B]" },
 };
 const TABS: CostumeSlot[] = [...WEARABLE_SLOTS, ...GARDEN_SLOTS];
 
@@ -438,7 +438,6 @@ export default function ShopClient({
                     on ? "border-success shadow-[0_0_0_2px_#BBF7D0]" : "border-line hover:border-faint"
                   }`}
                 >
-                  <span className="absolute left-0 top-0 bottom-0 w-[3px] z-10" style={{ background: rs.stripe }} aria-hidden="true" />
                   <button
                     type="button"
                     data-tour={c === visible[0] ? "guided-shop-first-item" : undefined}
