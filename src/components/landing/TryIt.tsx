@@ -109,20 +109,24 @@ function PronunciationCard({ onDone }: { onDone: () => void }) {
         <span className="italic">{WORD.romanization}</span> · {WORD.en}
       </p>
 
-      <div className="flex items-start gap-3 bg-warm border border-line rounded-xl px-[18px] py-3.5 mb-4">
+      {/* one-line version of the practice card's tip box (user request):
+          the full tip is on the real page; here it's a single truncated
+          line with the whole text on hover */}
+      <div className="flex items-center gap-3 bg-warm border border-line rounded-xl px-3.5 py-2.5 mb-4 min-w-0">
         <button
           aria-label={t("hearIt")}
-          className="w-11 h-11 rounded-full flex-none bg-teal text-white text-[17px] flex items-center justify-center transition-transform hover:scale-105 disabled:opacity-50"
+          className="w-9 h-9 rounded-full flex-none bg-teal text-white text-[15px] flex items-center justify-center transition-transform hover:scale-105 disabled:opacity-50"
           onClick={() => speak(WORD.kr)}
           disabled={!ttsOk}
         >
           🔊
         </button>
-        <div className="min-w-0">
-          <b className="block text-[11px] font-bold tracking-[.06em] text-faint mb-0.5">{t("howToMakeIt")}</b>
-          <p className="text-[13px] text-muted leading-[1.5]">{WORD.tip}</p>
-        </div>
-        {isSpeaking && <span className="ml-auto flex-none text-[12px] font-semibold text-teal wave-on">{t("speaking")}</span>}
+        <p className="min-w-0 flex-1 text-[12.5px] text-muted truncate" title={WORD.tip}>
+          <b className="text-[10.5px] font-bold tracking-[.06em] text-faint">{t("howToMakeIt")}</b>
+          <span className="mx-1.5 text-faint">·</span>
+          {WORD.tip}
+        </p>
+        {isSpeaking && <span className="flex-none text-[12px] font-semibold text-teal wave-on">{t("speaking")}</span>}
       </div>
 
       {heard === null && (
