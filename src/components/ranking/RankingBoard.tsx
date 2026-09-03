@@ -87,13 +87,14 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
   // below the fold (the RPC's top-10 + ±3 window can put it well down the
   // list). Centre it so the zone header above and a neighbour below both
   // show; the podium stays where it was for anyone who scrolls back up.
+  // One-shot and instant: an animated scroll would fight a drag that starts
+  // mid-animation, and the user asked that nothing hold focus after load.
   useEffect(() => {
     if (!rows || !meRef.current) return;
     const el = meRef.current;
     const rect = el.getBoundingClientRect();
     if (rect.bottom <= window.innerHeight - 90) return; // already visible above the sticky nudge
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    el.scrollIntoView({ block: "center", behavior: reduce ? "auto" : "smooth" });
+    el.scrollIntoView({ block: "center", behavior: "auto" });
   }, [rows]);
 
   useEffect(() => {
