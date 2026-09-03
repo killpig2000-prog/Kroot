@@ -63,12 +63,6 @@ export default function Hero() {
           ))}
         </div>
 
-        {/* try a word and a sentence before reading a single line of pitch —
-            the user wanted this to be the very first thing on the page, above
-            the headline (2026-09-04). The static pronunciation/writing
-            previews that used to sit further down were replaced by it. */}
-        <TryIt />
-
         <h1
           className="reveal font-black text-[clamp(30px,4.6vw,48px)] leading-[1.24] tracking-[-0.02em] text-charcoal mb-3.5 text-balance"
           style={{ "--rd": "0.1s" } as React.CSSProperties}
@@ -82,8 +76,10 @@ export default function Hero() {
             {t("titleHighlight")}
           </mark>
         </h1>
-        {/* no subtitle under the headline — the try-it cards above already
-            do the explaining (user request 2026-09-04) */}
+
+        {/* try a word and a sentence right under the headline, before the CTA */}
+        <TryIt />
+
         <Link
           href="/onboarding"
           className="reveal inline-block rounded-[10px] bg-success px-[28px] py-[13px] text-[14.5px] font-bold text-white shadow-[0_6px_0_#2E5B41] hover:translate-y-[2px] hover:shadow-[0_4px_0_#2E5B41] transition-all"
