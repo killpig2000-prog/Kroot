@@ -63,7 +63,7 @@
     },
     "writing-level": {
       "title": "¡Estás en el nivel {level}!",
-      "body": "La escritura está ordenada por nivel, y el tuyo aparece marcado aquí. Los niveles superiores se desbloquean a medida que avanzas — empieza donde estás."
+      "body": "Escritura está ordenada por nivel y el tuyo aparece marcado aquí. Para este recorrido haremos un capítulo fácil de A1, solo para ver cómo funciona."
     },
     "writing-groups": {
       "title": "Capítulos por género",
@@ -85,35 +85,13 @@
       "title": "Aquí está tu resultado",
       "body": "Verás enseguida si coincide y la frase correcta para comparar. Esa es una pregunta — el capítulo tiene algunas más."
     },
-    "reading-nav": {
-      "askTitle": "¿Quieres probar Lectura también?",
-      "askBody": "Textos cortos de tu nivel, con cada palabra explicada al tocarla.",
-      "title": "Toca Lectura",
-      "body": "Está en el menú — tócalo para ir allí."
-    },
-    "reading-chapter": {
-      "title": "Abre el capítulo 1",
-      "body": "Lo mismo — toca el capítulo 1 para empezar a leer."
-    },
-    "reading-tools": {
-      "title": "Controles de lectura",
-      "body": "Escucha el texto, agranda la letra y elige cuánta traducción mostrar: ninguna, al tocar una línea, o toda."
-    },
-    "reading-text": {
-      "title": "El texto",
-      "body": "Lee el coreano en esta caja. En modo tocar, toca cualquier línea para ver su traducción justo debajo."
-    },
-    "reading-word": {
-      "title": "Toca una palabra subrayada",
-      "body": "Las palabras con subrayado punteado están en tu vocabulario — toca una para ver su significado ahí mismo, sin salir de la página."
-    },
-    "reading-quiz": {
-      "title": "Responde las preguntas",
-      "body": "Cuando lo hayas leído, toca aquí para responder un par de preguntas sobre el texto."
+    "practice-more": {
+      "title": "Y eso es solo un rincón de Práctica",
+      "body": "Escucha, Pronunciación, Lectura: aquí hay mucho más para probar cuando quieras."
     },
     "shop-nav": {
-      "askTitle": "Última parada: ¿vemos la Tienda?",
-      "askBody": "Gasta las monedas que ganes en ropa para tu árbol.",
+      "askTitle": "Ah, una cosa más: ¿echamos un vistazo a la Tienda?",
+      "askBody": "Gasta las monedas que ganes en atuendos para tu árbol.",
       "title": "Toca Tienda",
       "body": "Está en el menú: tócala para abrir la tienda."
     },

@@ -62,8 +62,8 @@
       "body": "Nó ở ngay đây trong menu — chạm để mở phần Viết."
     },
     "writing-level": {
-      "title": "Bạn đang ở trình độ {level}!",
-      "body": "Phần Viết được sắp theo trình độ, và trình độ của bạn được đánh dấu ở đây. Các cấp cao hơn sẽ mở khi bạn tiến lên — hãy bắt đầu từ chỗ của mình."
+      "title": "Bạn đang ở cấp {level}!",
+      "body": "Phần Viết được xếp theo cấp độ, và cấp của bạn được đánh dấu ở đây. Trong phần hướng dẫn này ta sẽ làm một chương A1 dễ, chỉ để biết cách hoạt động."
     },
     "writing-groups": {
       "title": "Chương theo thể loại",
@@ -85,35 +85,13 @@
       "title": "Kết quả của bạn đây",
       "body": "Bạn sẽ thấy ngay câu có khớp không, cùng câu đúng để so sánh. Đó là một câu hỏi — chương này còn vài câu nữa."
     },
-    "reading-nav": {
-      "askTitle": "Muốn thử phần Đọc luôn không?",
-      "askBody": "Các đoạn văn ngắn đúng trình độ của bạn, chạm vào từ nào cũng có giải nghĩa.",
-      "title": "Chạm vào Đọc",
-      "body": "Nó ở trong menu — chạm để đi tới đó."
-    },
-    "reading-chapter": {
-      "title": "Mở Chương 1",
-      "body": "Tương tự — chạm vào Chương 1 để bắt đầu đọc."
-    },
-    "reading-tools": {
-      "title": "Bảng điều khiển đọc",
-      "body": "Nghe đoạn văn, phóng to chữ, và chọn mức hiện bản dịch — tắt, chạm từng dòng, hoặc hiện tất cả."
-    },
-    "reading-text": {
-      "title": "Đoạn văn",
-      "body": "Đọc tiếng Hàn trong ô này. Ở chế độ chạm, chạm vào dòng bất kỳ để thấy bản dịch ngay bên dưới."
-    },
-    "reading-word": {
-      "title": "Chạm vào từ có gạch chân",
-      "body": "Từ có gạch chân chấm là từ trong vốn từ của bạn — chạm để xem nghĩa ngay tại chỗ, không cần rời trang."
-    },
-    "reading-quiz": {
-      "title": "Trả lời câu hỏi",
-      "body": "Đọc xong rồi thì chạm vào đây để trả lời vài câu hỏi về đoạn văn."
+    "practice-more": {
+      "title": "Và đó mới chỉ là một góc của Luyện tập",
+      "body": "Nghe, Phát âm, Đọc — trong này còn nhiều thứ để thử bất cứ khi nào bạn muốn."
     },
     "shop-nav": {
-      "askTitle": "Điểm dừng cuối — xem Cửa hàng nhé?",
-      "askBody": "Dùng xu kiếm được để sắm đồ cho cây của bạn.",
+      "askTitle": "À, còn một điều nữa — ghé xem Cửa hàng chứ?",
+      "askBody": "Dùng xu bạn kiếm được để mua trang phục cho cây của mình.",
       "title": "Chạm vào Cửa hàng",
       "body": "Nó ở trong menu — chạm để mở cửa hàng."
     },

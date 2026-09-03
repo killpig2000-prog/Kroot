@@ -2,7 +2,8 @@
 // Two tracks, picked by the learner's placement level: A1 gets
 // Dashboard -> Hangul -> Vocabulary -> Shop -> farewell; anyone who placed
 // B1 or above already knows the alphabet, so they get
-// Dashboard -> Writing -> Reading -> Shop -> farewell instead. Both span real
+// Dashboard -> Writing (A1 chapter 1, the mechanics not the level) -> "there's
+// more in Practice" -> Shop -> farewell instead. Both span real
 // page loads. State lives in localStorage (not a query-param chain) because it has
 // to survive full navigations to pages that don't share React state, the same
 // reasoning OnboardingTour's own SEEN_KEY already relies on.
@@ -36,12 +37,7 @@ export type GuidedStepKey =
   | "writing-board"
   | "writing-check"
   | "writing-result"
-  | "reading-nav"
-  | "reading-chapter"
-  | "reading-tools"
-  | "reading-text"
-  | "reading-word"
-  | "reading-quiz"
+  | "practice-more"
   | "shop-nav"
   | "shop-coins"
   | "shop-tabs"
@@ -76,12 +72,7 @@ export const GUIDED_MODE: Partial<Record<GuidedStepKey, GuidedMode>> = {
   "writing-groups": "info",
   "writing-board": "watch",
   "writing-result": "info",
-  "reading-nav": "ask",
-  "reading-tools": "info",
-  "reading-text": "info",
-  // Info, not click: a passage with no glossed word at all would otherwise
-  // strand a click-gated step with nothing to tap.
-  "reading-word": "info",
+  "practice-more": "info",
   "shop-nav": "ask",
   "shop-coins": "info",
   "shop-tabs": "info",
@@ -113,12 +104,7 @@ export const GUIDED_TARGET: Record<GuidedStepKey, string | null> = {
   "writing-board": "guided-writing-board",
   "writing-check": "guided-writing-check",
   "writing-result": "guided-writing-result",
-  "reading-nav": "guided-nav-reading",
-  "reading-chapter": "guided-reading-chapter",
-  "reading-tools": "guided-reading-tools",
-  "reading-text": "guided-reading-text",
-  "reading-word": "guided-reading-word",
-  "reading-quiz": "guided-reading-quiz",
+  "practice-more": "section-practice",
   "shop-nav": "guided-nav-shop",
   "shop-coins": "guided-shop-coins",
   "shop-tabs": "guided-shop-tabs",
@@ -133,8 +119,6 @@ export const GUIDED_TARGET: Record<GuidedStepKey, string | null> = {
 // and speaks the letter, and the learner should get to watch that finish
 // (ㄱ's stroke + the audio is well under 2s) instead of the next card
 // snapping in over it.
-// "reading-word": tapping a glossed word opens its card in place — give the
-// learner a moment to actually read it before the spotlight moves on.
 // "watch" steps: advance once this selector matches anything in the DOM.
 // writing-board is done when the Check button under it stops being disabled,
 // i.e. every slot is filled — then the next step rings Check itself.
@@ -144,7 +128,6 @@ export const GUIDED_ADVANCE_WHEN: Partial<Record<GuidedStepKey, string>> = {
 
 export const GUIDED_ADVANCE_DELAY_MS: Partial<Record<GuidedStepKey, number>> = {
   "hangul-stroke": 2000,
-  "reading-word": 2500,
 };
 
 // The real Vocabulary nav link just goes to "/vocabulary", which lands on
@@ -156,6 +139,9 @@ export const GUIDED_ADVANCE_DELAY_MS: Partial<Record<GuidedStepKey, number>> = {
 // brand-new learner would expect. Force the deep link during this one step
 // so the tour always lands on chapter 1 regardless of account history.
 export const GUIDED_FORCE_HREF: Partial<Record<GuidedStepKey, string>> = {
+  // B1+ learners walk through an A1 chapter: the point is the mechanics
+  // (tiles, Check, result), not a sentence at their level.
+  "writing-nav": "/writing?level=A1",
   "hangul-nav-vocab": "/vocabulary?chapter=0",
 };
 
@@ -169,7 +155,8 @@ export const GUIDED_MOBILE_REVEAL: Partial<Record<GuidedStepKey, string>> = {
   "hangul-nav": "tab-basics",
   "hangul-nav-vocab": "tab-basics",
   "writing-nav": "tab-practice",
-  "reading-nav": "tab-practice",
+  // Info step with no sheet to open: the ring just lands on the Practice tab.
+  "practice-more": "tab-practice",
   "shop-nav": "tab-more",
 };
 
@@ -205,12 +192,7 @@ export const GUIDED_ORDERS: Record<GuidedTrack, GuidedStepKey[]> = {
     "writing-board",
     "writing-check",
     "writing-result",
-    "reading-nav",
-    "reading-chapter",
-    "reading-tools",
-    "reading-text",
-    "reading-word",
-    "reading-quiz",
+    "practice-more",
     ...SHOP_TAIL,
   ],
 };

@@ -89,7 +89,7 @@ export default function OnboardingTour({
 }: {
   /** Arms the click-gated continuation when the tour finishes naturally. */
   startsGuidedTour?: boolean;
-  /** "basics" = Hangul→Vocabulary→Shop (A1); "practice" = Writing→Reading→Shop (B1+). */
+  /** "basics" = Hangul→Vocabulary→Shop (A1); "practice" = Writing→Shop (B1+). */
   guidedTrack?: GuidedTrack;
   /** Admin testing bypass: ignores SEEN_KEY so the tour re-runs on every dashboard load. */
   isAdmin?: boolean;

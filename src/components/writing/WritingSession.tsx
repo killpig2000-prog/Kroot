@@ -159,15 +159,17 @@ export default function WritingSession({
     router.refresh();
   }
 
-  // Guided walkthrough (B1+ track): board → Check → result, then the
-  // "shall we try Reading?" ask on the nav link — hosted here so the steps
-  // outlive WritePhase's own per-question re-renders.
+  // Guided walkthrough (B1+ track): board → Check → result, then "there's
+  // more in Practice" on the nav section and the "want to see the Shop?"
+  // ask — hosted here so the steps outlive WritePhase's per-question
+  // re-renders.
   const guided = (
     <>
       <GuidedStep step="writing-board" />
       <GuidedStep step="writing-check" />
       <GuidedStep step="writing-result" />
-      <GuidedStep step="reading-nav" />
+      <GuidedStep step="practice-more" />
+      <GuidedStep step="shop-nav" />
     </>
   );
 

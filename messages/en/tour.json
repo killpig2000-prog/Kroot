@@ -63,7 +63,7 @@
     },
     "writing-level": {
       "title": "You're at level {level}!",
-      "body": "Writing is sorted by level, and yours is marked here. Higher levels unlock as you climb — start where you are."
+      "body": "Writing is sorted by level, and yours is marked here. For this walkthrough we'll do an easy A1 chapter, just to learn how it works."
     },
     "writing-groups": {
       "title": "Chapters, by genre",
@@ -85,34 +85,12 @@
       "title": "Here's your result",
       "body": "You'll see right away whether it matched, and the correct sentence to compare against. That's one question — the chapter has a few more."
     },
-    "reading-nav": {
-      "askTitle": "Want to try Reading too?",
-      "askBody": "Short passages at your level, with every word explained on tap.",
-      "title": "Tap Reading",
-      "body": "It's in the menu — tap it to go there."
-    },
-    "reading-chapter": {
-      "title": "Open Chapter 1",
-      "body": "Same idea — tap Chapter 1 to start reading."
-    },
-    "reading-tools": {
-      "title": "Reading controls",
-      "body": "Listen to the passage, make the text bigger, and choose how much translation to show — off, tap a line, or all."
-    },
-    "reading-text": {
-      "title": "The passage",
-      "body": "Read the Korean in this box. In tap mode, tap any line to see its translation right underneath."
-    },
-    "reading-word": {
-      "title": "Tap an underlined word",
-      "body": "Dotted-underlined words are in your vocabulary — tap one to see its meaning right there, without leaving the page."
-    },
-    "reading-quiz": {
-      "title": "Answer the questions",
-      "body": "When you've read it, tap here to answer a couple of questions about the passage."
+    "practice-more": {
+      "title": "And that's just one corner of Practice",
+      "body": "Listening, Pronunciation, Reading — there's plenty more in here to try whenever you like."
     },
     "shop-nav": {
-      "askTitle": "One last stop — want to see the Shop?",
+      "askTitle": "Oh, one more thing — want a peek at the Shop?",
       "askBody": "Spend the coins you earn on outfits for your tree.",
       "title": "Tap Shop",
       "body": "It's in the menu — tap it to open the shop."
