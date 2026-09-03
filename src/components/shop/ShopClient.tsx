@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
@@ -23,6 +23,7 @@ import type { CefrLevel } from "@/lib/tree";
 import { SPECIES } from "@/lib/tree";
 import ShopGoal, { useStoredGoal, writeStoredGoal } from "@/components/shop/ShopGoal";
 import GuidedStep from "@/components/onboarding/GuidedStep";
+import { currentGuidedStep } from "@/components/onboarding/guidedSteps";
 
 const DEFAULT_SKY = "linear-gradient(180deg,#DFF1FF 0%,#F0FBF1 62%,#E4F3DA 100%)";
 const RARITY_STYLE: Record<Rarity, { stripe: string; chip: string }> = {
@@ -105,7 +106,16 @@ export default function ShopClient({
   const supabase = useMemo(() => createClient(), []);
   const now = useMemo(() => new Date(today), [today]);
 
-  const [tab, setTab] = useState<CostumeSlot>("aura");
+  const [tab, setTab] = useState<CostumeSlot>(tutorial ? "hat" : "aura");
+  // The guided tour spotlights visible[0] on whatever tab is open — steer it
+  // onto Hats, where the cheapest common items live (78-82 coins, affordable
+  // on the 100-coin signup balance), instead of Aura's 145-coin opener. Runs
+  // after mount (not in the initializer above) so server and client agree on
+  // the first paint — localStorage isn't available during SSR.
+  useEffect(() => {
+    const step = currentGuidedStep();
+    if (step === "shop-pick" || step === "shop-cta") setTab("hat");
+  }, []);
   const [balance, setBalance] = useState(coins);
   const [ownedSet, setOwnedSet] = useState(() => new Set(owned));
   const toMap = (ids: string[]) => {
