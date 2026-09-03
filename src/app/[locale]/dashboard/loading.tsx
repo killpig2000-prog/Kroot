@@ -1,8 +1,9 @@
 // Mirrors the real /dashboard page: sidebar rail, main column (greeting,
 // tree/streak card, course/quest/slang callout strips, learning-progress
-// card with a 2x2 skill grid, promotion strip, study-garden grass), and the
-// xl+ right rail of quest/slang/word-of-day cards — so the swap from
-// skeleton to real content doesn't jump.
+// card with a 2x2 skill grid, study-garden grass), and the xl+ right rail
+// of quest/slang/word-of-day cards — so the swap from skeleton to real
+// content doesn't jump. (The promotion strip moved to /profile — see
+// levelmap-move-to-profile-2026-09-03 — so it's no longer mirrored here.)
 export default function Loading() {
   return (
     <div className="min-h-screen bg-warm">
@@ -70,19 +71,6 @@ export default function Loading() {
                     </div>
                   </div>
                 ))}
-              </div>
-            </div>
-
-            {/* promotion status strip */}
-            <div className="rounded-[14px] px-[22px] py-4 mb-[14px] border-[1.5px] border-line bg-cream flex items-center gap-4">
-              <div className="w-6 h-6 rounded-full bg-warm-2 flex-none" />
-              <div className="flex-1 min-w-[200px]">
-                <div className="h-3.5 w-56 rounded-full bg-warm-2 mb-2" />
-                <div className="flex gap-2.5 flex-wrap">
-                  {Array.from({ length: 3 }).map((_, i) => (
-                    <div key={i} className="h-3 w-20 rounded-full bg-warm-4" />
-                  ))}
-                </div>
               </div>
             </div>
 
