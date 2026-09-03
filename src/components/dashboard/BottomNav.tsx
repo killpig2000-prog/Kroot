@@ -33,7 +33,11 @@ const BASICS_PATHS = BASICS_SECTIONS.flatMap((s) => s.items.map((i) => i.href));
 const PRACTICE_PATHS = PRACTICE_SECTIONS.flatMap((s) => s.items.map((i) => i.href));
 
 // Text-only, same idiom as the desktop Sidebar's NavItem — no icon, no color
-// tile, just the label with a bold/tinted active state.
+// tile, just the label with a bold/tinted active state, laid out as a grid of
+// thumb-sized cells with a centred label (2026-09-03, per mockup 590fe47e).
+// Basics/Practice hold exactly four items → 2×2; More holds two sections of
+// three (My page, Relax) → one 3-wide row each, with a slightly smaller label
+// because a 3-column cell on a 390px phone is only ~105px wide.
 function Tile({
   label,
   href,
@@ -42,6 +46,7 @@ function Tile({
   popular,
   isNew,
   tourId,
+  cols,
 }: {
   label: string;
   href: string;
@@ -51,28 +56,33 @@ function Tile({
   popular?: boolean;
   isNew?: boolean;
   tourId?: string;
+  cols: 2 | 3;
 }) {
   const tn = useTranslations("nav");
+  const sticker = popular ? (
+    <span className="absolute -top-[7px] right-2.5 text-[8.5px] font-extrabold text-[#B14F27] bg-[#FDE9D0] rounded-full px-[6px] py-px">
+      Popular
+    </span>
+  ) : isNew ? (
+    <span className="absolute -top-[7px] right-2.5 text-[8.5px] font-extrabold text-white bg-[#9333EA] rounded-full px-[6px] py-px">
+      NEW
+    </span>
+  ) : null;
   return (
     <Link
       href={href}
       data-tour={tourId}
       onClick={onNavigate}
-      className={`flex items-center gap-2 px-2.5 py-[7px] rounded-[9px] text-[13.5px] transition-colors ${
-        on ? "bg-cream text-success-deep font-bold" : "text-charcoal font-medium hover:bg-cream hover:text-success-deep"
+      className={`relative flex items-center justify-center min-h-[72px] rounded-[14px] border-[1.5px] text-center font-extrabold leading-tight text-balance transition-colors ${
+        cols === 3 ? "px-1.5 py-3 text-[14.5px]" : "px-2.5 py-4 text-[16.5px]"
+      } ${
+        on
+          ? "border-success bg-success-bg text-success-deep"
+          : "border-line bg-cream text-charcoal hover:border-success hover:text-success-deep"
       }`}
     >
-      <span className="flex-1 min-w-0 truncate">{tn(navKey(label))}</span>
-      {popular && (
-        <span className="flex-none text-[8.5px] font-extrabold text-[#B14F27] bg-[#FDE9D0] rounded-full px-[6px] py-px">
-          Popular
-        </span>
-      )}
-      {isNew && (
-        <span className="flex-none text-[8.5px] font-extrabold text-white bg-[#9333EA] rounded-full px-[6px] py-px">
-          NEW
-        </span>
-      )}
+      {tn(navKey(label))}
+      {sticker}
     </Link>
   );
 }
@@ -199,11 +209,12 @@ export default function BottomNav({ streakDays: streakDaysProp }: { streakDays?:
                 <p className="text-[13px] font-black tracking-[.08em] uppercase text-success-deep px-0.5 pt-3 pb-1.5">
                   {tn(navKey(section.title))}
                 </p>
-                <div className="flex flex-col gap-0.5">
+                <div className={sheet === "more" ? "grid grid-cols-3 gap-2" : "grid grid-cols-2 gap-2.5"}>
                   {section.items.map((item) => (
                     <Tile
                       key={item.href}
                       {...item}
+                      cols={sheet === "more" ? 3 : 2}
                       on={item.href === "/dashboard" ? pathname === item.href : pathname.startsWith(item.href)}
                       onNavigate={close}
                     />
