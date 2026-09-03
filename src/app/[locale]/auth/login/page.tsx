@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
-import { Link, useRouter } from "@/i18n/navigation";
+import { Link } from "@/i18n/navigation";
 import { stripLocale } from "@/i18n/locale";
 import Mascot from "@/components/onboarding/Mascot";
 import CuteError from "@/components/ui/CuteError";
@@ -48,7 +48,6 @@ function safeNext(raw: string | null): string {
 
 export default function LoginPage() {
   const t = useTranslations("auth");
-  const router = useRouter();
   const supabase = useMemo(() => createClient(), []);
   const [error, setError] = useState<string | null>(() => {
     if (typeof window === "undefined") return null;
@@ -67,11 +66,13 @@ export default function LoginPage() {
   const busy = submitting || !hydrated;
 
   useEffect(() => {
-    // Already signed in? Straight to the app.
+    // Already signed in? Straight to the app. Hard navigation for the same
+    // reason as handleEmailLogin below: a soft router.replace() can serve a
+    // stale signed-out router-cache entry for `next`.
     supabase.auth.getUser().then(({ data: { user } }) => {
-      if (user) router.replace(next);
+      if (user) window.location.assign(next);
     });
-  }, [supabase, router, next]);
+  }, [supabase, next]);
 
   async function handleGoogleLogin() {
     setError(null);
@@ -110,8 +111,13 @@ export default function LoginPage() {
         return;
       }
 
-      router.replace(next);
-      router.refresh();
+      // A soft router.replace() can serve a stale, signed-out router-cache
+      // entry for `next` (e.g. prefetched while logged out, which renders
+      // as a redirect into /onboarding's Hangul gate) before router.refresh()
+      // catches up a beat later — seen as the onboarding screen flashing
+      // before the real destination. A hard navigation always re-requests
+      // the page from the server with the just-set session cookie attached.
+      window.location.assign(next);
     } catch {
       setError(t("errors.network"));
     } finally {
