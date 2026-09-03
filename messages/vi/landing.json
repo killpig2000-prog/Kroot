@@ -19,6 +19,26 @@
       "cafe": "học ở quán cà phê ☕"
     }
   },
+  "tryIt": {
+    "eyebrow": "Thử ngay — không cần đăng ký",
+    "pronTitle": "Nói từ này",
+    "pronGloss": "annyeong · xin chào",
+    "listen": "Nghe",
+    "speak": "Nói",
+    "listening": "Đang nghe…",
+    "tryAgain": "Thử lại",
+    "noMic": "Chấm điểm bằng mic cần Chrome hoặc Edge — bấm Nghe để nghe mẫu.",
+    "heard": "Bạn nói",
+    "verdict": {
+      "great": "🔥 Chuẩn luôn!",
+      "close": "Gần đúng — thử lại nhé",
+      "again": "Thử thêm lần nữa"
+    },
+    "writeTitle": "Ghép câu này",
+    "writePrompt": "“Tôi uống nước.”",
+    "writeHint": "Bấm các từ theo thứ tự. Có một từ thừa.",
+    "afterTry": "Mọi bài học đều diễn ra đúng như vậy."
+  },
   "levelTest": {
     "badge": "kiểm tra nhanh",
     "title": "Tìm trình độ của bạn trong 3 phút",
@@ -91,32 +111,6 @@
       "C1": "Nở rộ 🌸",
       "C2": "Bạn người Hàn: 대박! 😲👑"
     }
-  },
-  "pronunciation": {
-    "badge": "hành trình phát âm",
-    "title": "Nói to lên. Micro chấm điểm thật sự.",
-    "sub": "Hầu hết các app bỏ qua phản hồi phát âm thật sự — ngay cả gói AI trả phí của app khác cũng không chấm điểm. Kroot làm điều đó, miễn phí: 23 chương những âm người nói tiếng Anh hay vấp, không thể gõ chữ để lách qua.",
-    "chapterTag": "🌶️ Cay · chương ㄹ",
-    "best": "cao nhất 92",
-    "gloss": "ramyeon · mì gói",
-    "tip": "💡 Chạm nhẹ đầu lưỡi một cái vào lợi phía sau răng cửa trên — gần với âm 'tt' trong 'butter' hơn là R hay L của tiếng Anh.",
-    "resultLabel": "Kết quả",
-    "score": "🔥 Chuẩn luôn! · 92",
-    "heard": "nghe được",
-    "footer": "📊 23 chương chia thành <b>5 bậc</b> — chấm điểm thật, không đoán mò. 🌱 Khởi động đến 👑 Huyền thoại."
-  },
-  "writing": {
-    "badge": "AI sửa bài",
-    "title": "Viết một câu. Biết ngay phải sửa gì.",
-    "sub": "Không chỉ đúng hay sai — mỗi lần viết bạn đều nhận được câu viết lại tự nhiên, điểm ngữ pháp và một dòng lý do.",
-    "promptTag": "✍️ Viết · đề bài trả lời",
-    "promptGloss": "Hôm qua bạn làm gì? Mình đã gặp bạn!",
-    "yourAnswer": "Câu trả lời của bạn",
-    "resultLabel": "Kết quả",
-    "naturalLabel": "Cách nói tự nhiên",
-    "grammarLabel": "Ngữ pháp",
-    "feedback": "Câu tốt! Khi hành động thứ hai xảy ra vì hành động thứ nhất, hãy dùng <k>-아서/어서</k> thay cho <g>-고</g> — ở đây nghe tự nhiên hơn.",
-    "footer": "📊 4 thể loại mỗi cấp độ — <b>nhật ký, trả lời, miêu tả, ý kiến</b> — từ A1 đến C2."
   },
   "final": {
     "title": "Gieo trồng ngay hôm nay",

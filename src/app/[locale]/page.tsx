@@ -4,8 +4,6 @@ import Hero from "@/components/landing/Hero";
 import LevelTest from "@/components/landing/LevelTest";
 import TodayQuest from "@/components/landing/TodayQuest";
 import Categories from "@/components/landing/Categories";
-import PronunciationDemo from "@/components/landing/PronunciationDemo";
-import WritingFeedbackDemo from "@/components/landing/WritingFeedbackDemo";
 import Growth from "@/components/landing/Growth";
 import Final from "@/components/landing/Final";
 import { setRequestLocale } from "next-intl/server";
@@ -30,8 +28,6 @@ export default async function LandingPage({ params }: Props) {
       <LevelTest />
       <TodayQuest />
       <Categories />
-      <PronunciationDemo />
-      <WritingFeedbackDemo />
       <Growth />
       <Final />
     </div>

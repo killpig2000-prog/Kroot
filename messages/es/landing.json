@@ -19,6 +19,26 @@
       "cafe": "estudiar en el café ☕"
     }
   },
+  "tryIt": {
+    "eyebrow": "Pruébalo ahora — sin registrarte",
+    "pronTitle": "Di esta palabra",
+    "pronGloss": "annyeong · hola",
+    "listen": "Escuchar",
+    "speak": "Hablar",
+    "listening": "Escuchando…",
+    "tryAgain": "Otra vez",
+    "noMic": "La puntuación por micro necesita Chrome o Edge — toca Escuchar para oírla.",
+    "heard": "Dijiste",
+    "verdict": {
+      "great": "🔥 ¡Perfecto!",
+      "close": "Casi — una vez más",
+      "again": "Inténtalo de nuevo"
+    },
+    "writeTitle": "Arma esta frase",
+    "writePrompt": "“Yo bebo agua.”",
+    "writeHint": "Toca las palabras en orden. Una de ellas sobra.",
+    "afterTry": "Así funciona cada lección."
+  },
   "levelTest": {
     "badge": "test rápido",
     "title": "Descubre tu nivel en 3 minutos",
@@ -91,32 +111,6 @@
       "C1": "En plena floración 🌸",
       "C2": "Amigos coreanos: ¡대박! 😲👑"
     }
-  },
-  "pronunciation": {
-    "badge": "ruta de pronunciación",
-    "title": "Dilo en voz alta. El micrófono te evalúa de verdad.",
-    "sub": "La mayoría de las apps no dan feedback real de pronunciación — ni siquiera los planes de pago con IA de otras apps lo puntúan. Kroot sí, gratis: 23 capítulos con los sonidos que de verdad se le atragantan a quien habla inglés, sin poder hacer trampa escribiendo.",
-    "chapterTag": "🌶️ Picante · capítulo ㄹ",
-    "best": "mejor 92",
-    "gloss": "ramyeon · fideos instantáneos",
-    "tip": "💡 Toca una sola vez con la punta de la lengua la encía detrás de los dientes de arriba: se parece más a la 'tt' de 'butter' que a una R o una L inglesas.",
-    "resultLabel": "Resultado",
-    "score": "🔥 ¡Clavado! · 92",
-    "heard": "se oyó",
-    "footer": "📊 23 capítulos en <b>5 rangos</b> — puntuado de verdad, no adivinado. 🌱 Calentamiento a 👑 Legendario."
-  },
-  "writing": {
-    "badge": "correcciones con IA",
-    "title": "Escribe una frase. Te decimos justo qué corregir.",
-    "sub": "No solo bien o mal: cada vez que escribes recibes una reescritura natural, una nota de gramática y una razón en una línea.",
-    "promptTag": "✍️ Escritura · consigna de respuesta",
-    "promptGloss": "¿Qué hiciste ayer? ¡Yo quedé con un amigo!",
-    "yourAnswer": "Tu respuesta",
-    "resultLabel": "Resultado",
-    "naturalLabel": "Cómo se diría de forma natural",
-    "grammarLabel": "Gramática",
-    "feedback": "¡Buena frase! Cuando la segunda acción ocurre a causa de la primera, usa <k>-아서/어서</k> en lugar de <g>-고</g>: aquí suena mucho más natural.",
-    "footer": "📊 4 géneros por nivel — <b>diario, respuestas, descripción, opinión</b> — de A1 a C2."
   },
   "final": {
     "title": "Plántalo hoy",

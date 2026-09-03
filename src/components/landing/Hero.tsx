@@ -2,6 +2,7 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import Polaroid from "@/components/landing/Polaroid";
 import LevelCreature from "@/components/dashboard/LevelCreature";
+import TryIt from "@/components/landing/TryIt";
 import type { CefrLevel } from "@/lib/tree";
 
 // A loose, playful cluster rather than the A1→C2 growth ladder Growth.tsx
@@ -37,7 +38,7 @@ export default function Hero() {
       <Polaroid scene="food" caption={t("photos.food")} tape="pink" className="hidden sm:block absolute right-[2%] top-[46px] w-[170px] h-[158px] rotate-6" />
       <Polaroid scene="cafe" caption={t("photos.cafe")} tape="blue" className="hidden sm:block absolute right-[6%] bottom-[38px] w-[148px] h-[140px] -rotate-3" />
 
-      <div className="relative z-10 max-w-[540px] mx-auto">
+      <div className="relative z-10 max-w-[760px] mx-auto">
         {/* a preview of the garden every lesson grows — full story in Growth */}
         <div
           aria-hidden="true"
@@ -76,11 +77,17 @@ export default function Hero() {
           </mark>
         </h1>
         <p
-          className="reveal text-[14.5px] text-muted max-w-[44ch] mx-auto mb-6"
+          className="reveal text-[14.5px] text-muted max-w-[44ch] mx-auto"
           style={{ "--rd": "0.22s" } as React.CSSProperties}
         >
           {t("sub")}
         </p>
+
+        {/* try a word and a sentence before signing up for anything — the
+            static pronunciation/writing previews that used to sit further
+            down the page were replaced by this live pair (2026-09-04) */}
+        <TryIt />
+
         <Link
           href="/onboarding"
           className="reveal inline-block rounded-[10px] bg-success px-[28px] py-[13px] text-[14.5px] font-bold text-white shadow-[0_6px_0_#2E5B41] hover:translate-y-[2px] hover:shadow-[0_4px_0_#2E5B41] transition-all"

@@ -19,6 +19,26 @@
       "cafe": "café study ☕"
     }
   },
+  "tryIt": {
+    "eyebrow": "Try it right now — no sign-up",
+    "pronTitle": "Say this word",
+    "pronGloss": "annyeong · hello",
+    "listen": "Listen",
+    "speak": "Speak",
+    "listening": "Listening…",
+    "tryAgain": "Again",
+    "noMic": "Mic scoring needs Chrome or Edge — tap Listen to hear it.",
+    "heard": "You said",
+    "verdict": {
+      "great": "🔥 Nailed it!",
+      "close": "Close — once more",
+      "again": "Give it another go"
+    },
+    "writeTitle": "Build this sentence",
+    "writePrompt": "“I drink water.”",
+    "writeHint": "Tap the words in order. One of them doesn't belong.",
+    "afterTry": "That's exactly how every lesson works."
+  },
   "levelTest": {
     "badge": "pop quiz",
     "title": "Find your level in 3 minutes",
@@ -91,32 +111,6 @@
       "C1": "In full bloom 🌸",
       "C2": "Korean friends: 대박! 😲👑"
     }
-  },
-  "pronunciation": {
-    "badge": "pronunciation trail",
-    "title": "Say it out loud. The mic actually grades you.",
-    "sub": "Most apps skip real pronunciation feedback — even the paid AI tiers on other apps don't score it. Kroot does, free: 23 chapters of the sounds English speakers trip on, no typing around it.",
-    "chapterTag": "🌶️ Spicy · ㄹ chapter",
-    "best": "best 92",
-    "gloss": "ramyeon · instant noodles",
-    "tip": "💡 Tap the tip of your tongue once against the ridge behind your top teeth — closer to the 'tt' in 'butter' than an English R or L.",
-    "resultLabel": "Result",
-    "score": "🔥 Nailed it! · 92",
-    "heard": "heard",
-    "footer": "📊 23 chapters across <b>5 tiers</b> — scored, not guessed. 🌱 Warm-up to 👑 Legendary."
-  },
-  "writing": {
-    "badge": "AI corrections",
-    "title": "Write a sentence. Get told exactly what to fix.",
-    "sub": "Not just right or wrong — a natural rewrite, a grammar score, and a one-line reason, every single time you write.",
-    "promptTag": "✍️ Writing · reply prompt",
-    "promptGloss": "What did you do yesterday? I met a friend!",
-    "yourAnswer": "Your answer",
-    "resultLabel": "Result",
-    "naturalLabel": "Natural way to say it",
-    "grammarLabel": "Grammar",
-    "feedback": "Good sentence! Use <k>-아서/어서</k> instead of <g>-고</g> when the second action happens because of the first — it reads more natural here.",
-    "footer": "📊 4 genres per level — <b>journal, replies, description, opinion</b> — A1 through C2."
   },
   "final": {
     "title": "Plant it today",

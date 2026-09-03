@@ -2,8 +2,7 @@ import { useTranslations } from "next-intl";
 
 // A static preview of the dashboard's daily quest + review + streak —
 // mirrors TodaysQuestCard.tsx's real copy and shape, but this isn't
-// live/interactive. Same "snapshot of the flow" pattern as
-// PronunciationDemo.tsx and WritingFeedbackDemo.tsx.
+// live/interactive (unlike the hero's TryIt pair, which really grades).
 export default function TodayQuest() {
   const t = useTranslations("landing.today");
   return (

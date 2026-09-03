@@ -19,6 +19,26 @@
       "cafe": "咖啡馆自习 ☕"
     }
   },
+  "tryIt": {
+    "eyebrow": "现在就试试 — 无需注册",
+    "pronTitle": "说出这个词",
+    "pronGloss": "annyeong · 你好",
+    "listen": "听",
+    "speak": "说",
+    "listening": "正在听…",
+    "tryAgain": "再来",
+    "noMic": "麦克风评分需要 Chrome 或 Edge — 点“听”可先听发音。",
+    "heard": "你说的是",
+    "verdict": {
+      "great": "🔥 完美！",
+      "close": "很接近 — 再试一次",
+      "again": "再试试看"
+    },
+    "writeTitle": "拼出这句话",
+    "writePrompt": "“我喝水。”",
+    "writeHint": "按顺序点选单词。其中有一个是多余的。",
+    "afterTry": "每一课都是这样进行的。"
+  },
   "levelTest": {
     "badge": "小测验",
     "title": "3 分钟找到你的水平",
@@ -91,32 +111,6 @@
       "C1": "开满花 🌸",
       "C2": "韩国朋友：대박！😲👑"
     }
-  },
-  "pronunciation": {
-    "badge": "发音闯关",
-    "title": "大声说出来，麦克风真的会给你打分。",
-    "sub": "大多数应用根本没有真正的发音反馈——就连其他应用的付费 AI 套餐都不打分。Kroot 免费做到了：23 个章节专攻英语母语者容易卡住的音，没法靠打字蒙混过关。",
-    "chapterTag": "🌶️ 辛辣 · ㄹ 章",
-    "best": "最佳 92",
-    "gloss": "ramyeon · 方便面",
-    "tip": "💡 舌尖在上齿龈后方轻轻一弹——比英语的 R 或 L 更接近 'butter' 里的 'tt'。",
-    "resultLabel": "结果",
-    "score": "🔥 完美！· 92",
-    "heard": "听到",
-    "footer": "📊 23 个章节，分为 <b>5 个段位</b>——真打分，不是瞎猜。🌱 热身到 👑 传说。"
-  },
-  "writing": {
-    "badge": "AI 批改",
-    "title": "写一句话，就知道该改哪里。",
-    "sub": "不只是对或错——每次写完都会给你自然的改写、语法评分，还有一句话的理由。",
-    "promptTag": "✍️ 写作 · 回复题",
-    "promptGloss": "你昨天做了什么？我见了朋友！",
-    "yourAnswer": "你的回答",
-    "resultLabel": "结果",
-    "naturalLabel": "更自然的说法",
-    "grammarLabel": "语法",
-    "feedback": "句子不错！当第二个动作是因为第一个动作才发生时，用 <k>-아서/어서</k> 而不是 <g>-고</g>，读起来更自然。",
-    "footer": "📊 每个等级 4 种体裁——<b>日记、回复、描写、观点</b>——从 A1 到 C2。"
   },
   "final": {
     "title": "今天就种下它",
