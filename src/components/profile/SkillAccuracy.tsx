@@ -58,14 +58,13 @@ export default async function SkillAccuracy({
                 <b className="font-semibold text-[13px] block truncate">{tn(s.key)}</b>
               </span>
 
-              {/* same blue→teal gradient as the "when you study" bars, left
-                  to right instead of bottom to top */}
+              {/* Kroot's own chart green, same token the study garden/admin
+                  funnel charts use elsewhere */}
               <span className="hidden sm:block flex-1 min-w-[40px] h-[6px] rounded-full bg-chart-dim overflow-hidden">
                 <i
-                  className="not-italic block h-full rounded-full"
+                  className="not-italic block h-full rounded-full bg-chart"
                   style={{
                     width: `${Math.max(s.percent, 2)}%`,
-                    background: "linear-gradient(90deg, var(--c-sky-deep), var(--c-teal))",
                   }}
                 />
               </span>
