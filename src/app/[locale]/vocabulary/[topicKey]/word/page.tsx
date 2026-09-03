@@ -120,6 +120,7 @@ export default async function VocabWordPage({
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] md:pb-[60px]">
           <GuidedStep step="word-box" />
+          <GuidedStep step="word-goti" />
           <GuidedStep step="word-bank" />
           {/* Shop is spotlit in the Sidebar without leaving this page — the
               next step after "add to bank" only actually navigates once the

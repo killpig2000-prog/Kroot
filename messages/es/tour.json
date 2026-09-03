@@ -47,6 +47,10 @@
       "title": "La tarjeta de la palabra",
       "body": "Aquí tienes la palabra, su significado y una frase de ejemplo. Toca 🔊 para escucharlo."
     },
+    "word-goti": {
+      "title": "Léela y toca Got it",
+      "body": "Tómate un segundo con la palabra y luego toca Got it: así empieza a subir por tus cajas de repaso."
+    },
     "word-bank": {
       "title": "Guárdala para después",
       "body": "Añadir a Mis palabras la guarda en tu banco personal para repasarla cuando quieras."

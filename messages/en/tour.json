@@ -23,7 +23,7 @@
     },
     "hangul-stroke": {
       "title": "Watch the strokes",
-      "body": "This box draws the letter stroke by stroke. Tap it to watch again and hear it once more."
+      "body": "This box draws the letter stroke by stroke. Tap it to watch again and hear it — then we'll move on."
     },
     "hangul-nav-vocab": {
       "askTitle": "Now, shall we look at Vocabulary?",
@@ -46,6 +46,10 @@
     "word-box": {
       "title": "The word card",
       "body": "Here's the word, its meaning, and an example sentence. Tap the 🔊 to hear any of it."
+    },
+    "word-goti": {
+      "title": "Read it, then tap Got it",
+      "body": "Take a second with the word, then tap Got it — that's how a word starts moving up your review boxes."
     },
     "word-bank": {
       "title": "Save it for later",

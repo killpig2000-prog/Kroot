@@ -20,6 +20,7 @@ export type GuidedStepKey =
   | "vocab-days"
   | "vocab-word"
   | "word-box"
+  | "word-goti"
   | "word-bank"
   | "shop-nav"
   | "shop-coins"
@@ -67,6 +68,7 @@ export const GUIDED_TARGET: Record<GuidedStepKey, string | null> = {
   "vocab-days": "guided-vocab-days",
   "vocab-word": "guided-vocab-first-word",
   "word-box": "guided-word-box",
+  "word-goti": "guided-word-goti",
   "word-bank": "guided-word-bank",
   "shop-nav": "guided-nav-shop",
   "shop-coins": "guided-shop-coins",
@@ -75,6 +77,15 @@ export const GUIDED_TARGET: Record<GuidedStepKey, string | null> = {
   "shop-tryon": "guided-shop-tryon",
   "shop-cta": "guided-shop-cta",
   finish: null,
+};
+
+// Click steps that hold the spotlight for a moment AFTER the click before
+// moving on — "hangul-stroke": tapping the stroke box replays the strokes
+// and speaks the letter, and the learner should get to watch that finish
+// (ㄱ's stroke + the audio is well under 2s) instead of the next card
+// snapping in over it.
+export const GUIDED_ADVANCE_DELAY_MS: Partial<Record<GuidedStepKey, number>> = {
+  "hangul-stroke": 2000,
 };
 
 // The real Vocabulary nav link just goes to "/vocabulary", which lands on
@@ -111,6 +122,7 @@ export const GUIDED_ORDER: GuidedStepKey[] = [
   "vocab-days",
   "vocab-word",
   "word-box",
+  "word-goti",
   "word-bank",
   "shop-nav",
   "shop-coins",

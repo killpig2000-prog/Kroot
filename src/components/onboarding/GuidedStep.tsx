@@ -10,6 +10,7 @@ import SpotlightOverlay, {
   type SpotlightRect,
 } from "@/components/onboarding/SpotlightOverlay";
 import {
+  GUIDED_ADVANCE_DELAY_MS,
   GUIDED_FORCE_HREF,
   GUIDED_KEY,
   GUIDED_MOBILE_REVEAL,
@@ -123,6 +124,8 @@ export default function GuidedStep({ step }: { step: GuidedStepKey }) {
     if (!target) return;
     const revealTarget = GUIDED_MOBILE_REVEAL[step];
     const forceHref = GUIDED_FORCE_HREF[step];
+    const delayMs = GUIDED_ADVANCE_DELAY_MS[step] ?? 0;
+    let delayTimer: ReturnType<typeof setTimeout> | null = null;
 
     // A step whose real target's natural href would land somewhere other
     // than what the tour needs (e.g. "/vocabulary" resolving to whatever
@@ -133,6 +136,11 @@ export default function GuidedStep({ step }: { step: GuidedStepKey }) {
         e.preventDefault();
         advance();
         router.push(forceHref);
+      } else if (delayMs > 0) {
+        // Let the click's own effect (stroke replay + audio) play out with
+        // the spotlight still on it; a second tap inside the window is
+        // harmless — the timer's already armed.
+        if (!delayTimer) delayTimer = setTimeout(advance, delayMs);
       } else {
         advance();
       }
@@ -192,6 +200,7 @@ export default function GuidedStep({ step }: { step: GuidedStepKey }) {
     window.addEventListener("resize", measure);
     return () => {
       unbind();
+      if (delayTimer) clearTimeout(delayTimer);
       if (frame.current) cancelAnimationFrame(frame.current);
       window.removeEventListener("resize", measure);
     };
