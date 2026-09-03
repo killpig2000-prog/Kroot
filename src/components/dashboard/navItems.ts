@@ -53,6 +53,9 @@ export const SECTIONS: { title: string; items: NavItem[] }[] = [
     items: [
       { icon: "💬", label: "Slang", href: "/slang", color: { text: "#C13E78", bg: "#FDF2F8", border: "#FBCFE8" } },
       { icon: "🛍️", label: "Shop", href: "/shop", color: { text: "#B14F27", bg: "#FFF7ED", border: "#FED7AA" }, tourId: "guided-nav-shop" },
+      // Weekly "garden fair" — re-enabled 2026-09-03 on top of the migration
+      // 0026 league objects (see league-paused → ranking-garden-fair memory).
+      { icon: "🏅", label: "Ranking", href: "/ranking", color: { text: "#C47A25", bg: "#FFFBEB", border: "#FDE68A" }, isNew: true },
     ],
   },
 ];

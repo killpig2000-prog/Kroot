@@ -1,10 +1,7 @@
 import { redirect } from "@/i18n/navigation";
 
-// The weekly league is switched off (2026-08-28). The route stays so old links
-// and the PWA don't 404 — it just sends people back to the Garden. The tier
-// tables, settle_league_weeks() and the ranking RPCs from migration 0026 are
-// still in the database; nothing in the app calls them any more, so no week
-// settles and no rewards are paid until the feature is re-enabled.
+// The weekly league came back as the Ranking ("garden fair") page on
+// 2026-09-03. Old /league links and the PWA shortcut land there.
 export default function LeaguePage() {
-  redirect("/dashboard");
+  redirect("/ranking");
 }

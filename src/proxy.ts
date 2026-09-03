@@ -31,6 +31,7 @@ const PROTECTED_PREFIXES = [
   "/reading",
   "/writing",
   "/shop",
+  "/ranking",
   "/speaking",
   "/grammar",
   "/hangul",

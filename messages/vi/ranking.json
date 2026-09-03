@@ -1,0 +1,74 @@
+{
+  "title": "Bảng xếp hạng",
+  "bed": "Luống {tier}",
+  "tierName": {
+    "Sprout": "Mầm",
+    "Bronze": "Đồng",
+    "Silver": "Bạc",
+    "Gold": "Vàng",
+    "Diamond": "Kim cương"
+  },
+  "head": {
+    "gardeners": "{n} người làm vườn",
+    "endsSunday": "hội chợ kết thúc Chủ nhật"
+  },
+  "fair": {
+    "eyebrow": "Hội chợ tuần này",
+    "title": "Ai lớn nhanh nhất?",
+    "sub": "☀️ Ánh nắng = XP kiếm được tuần này. Cây to nhỏ theo mức tăng trưởng, không theo cấp độ.",
+    "fresh": "Tuần mới — mọi người bắt đầu từ ☀️ 0. Buổi học đầu tiên giành dải ruy băng xanh.",
+    "sun": "☀️ {n}"
+  },
+  "zone": {
+    "up": "Lên luống {tier} · top {n}",
+    "stay": "Ở lại luống {tier}",
+    "down": "Chuyển sang luống {tier}",
+    "loading": "Đang tải hội chợ…",
+    "empty": "Tuần này chưa ai có ánh nắng — dải ruy băng xanh đang chờ."
+  },
+  "row": {
+    "you": "bạn",
+    "level": "Cấp {n}"
+  },
+  "nudge": {
+    "noXp": "Một buổi học là cây của bạn lên bảng.",
+    "pass": "+{n} ☀️ là vượt {name}.",
+    "oneSession": "Một buổi học là đủ.",
+    "fewSessions": "Vài buổi học là đủ.",
+    "lead": "Bạn đang giữ ruy băng xanh — hơn {name} {n} ☀️.",
+    "leadAlone": "Bạn đang giữ ruy băng xanh. Giữ vững vị trí nhé.",
+    "learn": "Học ngay →"
+  },
+  "cards": {
+    "place": "Vị trí của bạn",
+    "placeValue": "Hạng {rank}/{total}",
+    "noPlace": "—",
+    "toMoveUp": "Để vượt {name}",
+    "toMoveUpTop": "Khoảng cách dẫn trước",
+    "daysLeft": "Ngày còn lại",
+    "daysValue": "{n}",
+    "endsSunday": "kết thúc Chủ nhật"
+  },
+  "reward": {
+    "title": "Hội chợ tuần trước",
+    "claim": "Nhận xu 🪙",
+    "checking": "Đang kiểm tra…",
+    "claimed": "Đã nhận {coins} 🪙 của tuần trước",
+    "earned": "+{coins} 🪙!",
+    "none": "Tuần trước không có ánh nắng",
+    "firstWeek": "Tuần đầu — xu mở khóa vào thứ Hai 🌱",
+    "tiers": "Top 10% → 100 🪙 · top 30% → 50 · top 60% → 20 · tham gia → 5"
+  },
+  "movement": {
+    "up": "Bạn đã lên luống {tier} — chỗ nhiều nắng hơn! {emoji}",
+    "down": "Tạm về luống {tier} — một tuần chăm chỉ là lên lại ngay {emoji}"
+  },
+  "rules": {
+    "title": "Hội chợ hoạt động thế nào",
+    "l1": "Mỗi thứ Hai, tuần mới bắt đầu từ ☀️ 0",
+    "l2": "Top 3 nhận ruy băng xanh, đỏ và vàng",
+    "l3": "Top 20% lên luống nhiều nắng hơn, 20% cuối chuyển sang luống râm",
+    "l4": "Không mất gì cả — vườn, xu và chuỗi ngày của bạn vẫn giữ nguyên"
+  },
+  "unavailable": "Hội chợ sẽ mở sau khi cập nhật cơ sở dữ liệu. Vui lòng quay lại sau."
+}
