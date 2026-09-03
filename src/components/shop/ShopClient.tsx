@@ -152,20 +152,17 @@ export default function ShopClient({
   const previewCostumes = previewIds.map((id) => costumeById(id)).filter((c): c is Costume => !!c);
   const unownedPreview = previewCostumes.filter((c) => !ownedSet.has(c.id));
   const previewTotal = unownedPreview.reduce((sum, c) => sum + c.price, 0);
-  // Skins are announced ahead of their window so people can save the 2000
-  // coins: upcoming ones are listed (try-on works, buying waits for the date).
-  const visible = COSTUMES.filter(
-    (c) => c.slot === tab && (isAvailable(c, now) || ownedSet.has(c.id) || (c.slot === "skin" && isUpcoming(c, now))),
-  );
+  // Limited items are announced ahead of their window so people can save up:
+  // upcoming ones are listed as "Limited edition" (try-on works, buying waits
+  // for the date — buy_costume() enforces it server-side too).
+  const visible = COSTUMES.filter((c) => c.slot === tab && (isAvailable(c, now) || ownedSet.has(c.id) || isUpcoming(c, now)));
   const featured = COSTUMES.find(
     (c) => c.availableUntil && isAvailable(c, now) && daysLeft(c.availableUntil, today) <= 14 && !ownedSet.has(c.id),
   );
   const selected = preview[tab] ? costumeById(preview[tab]!) : undefined;
 
-  // Anything you could save coins for: on sale, unowned, has a price.
-  const goalCandidates = COSTUMES.filter(
-    (c) => !ownedSet.has(c.id) && c.price > 0 && (isAvailable(c, now) || (c.slot === "skin" && isUpcoming(c, now))),
-  ).sort(
+  // Anything you could save coins for: on sale or announced, unowned, has a price.
+  const goalCandidates = COSTUMES.filter((c) => !ownedSet.has(c.id) && c.price > 0 && (isAvailable(c, now) || isUpcoming(c, now))).sort(
     (a, b) => a.price - b.price,
   );
   const defaultGoal = goalCandidates.find((c) => !isLevelLocked(c, playerLevel) && c.price > balance);
