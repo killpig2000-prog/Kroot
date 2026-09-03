@@ -57,9 +57,9 @@ export default async function HeadlineKpis({
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-4 gap-y-3">
         {tiles.map((tile) => (
           <div key={tile.label} className="min-w-0">
-            <b className="block font-bold text-[21px] leading-tight tracking-[-0.02em] tabular-nums">
+            <b className="block font-bold text-[28px] leading-tight tracking-[-0.02em] tabular-nums">
               {tile.value}
-              {tile.unit && <span className="text-[14px] font-semibold text-muted ml-[1px]">{tile.unit}</span>}
+              {tile.unit && <span className="text-[17px] font-semibold text-muted ml-[1px]">{tile.unit}</span>}
             </b>
             <small className="block text-[11.5px] text-faint truncate">{tile.label}</small>
           </div>

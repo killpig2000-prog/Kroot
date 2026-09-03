@@ -8,10 +8,7 @@ import { testForGrade } from "@/lib/promotion-test";
 import ReminderSettings from "@/components/profile/ReminderSettings";
 import HeadlineKpis, { type Headline } from "@/components/profile/HeadlineKpis";
 import SkillAccuracy, { type SkillScore, type SkillPending } from "@/components/profile/SkillAccuracy";
-import StudyDays, { type StudyDay } from "@/components/profile/StudyDays";
-import BestHours from "@/components/profile/BestHours";
 import WordsToReview, { type DueWord } from "@/components/profile/WordsToReview";
-import WeekdayPattern, { type WeekdayMinutes } from "@/components/profile/WeekdayPattern";
 import SkillMix, { type SkillShare } from "@/components/profile/SkillMix";
 import { computeSkillProgress, PRACTICE_SKILLS } from "@/components/profile/skill-progress";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
@@ -44,14 +41,7 @@ function koreanFromWordKey(key: string): string {
 
 const WORD_BY_KOREAN = new Map(PUBLIC_VOCAB_WORDS.map((w) => [w.korean, w]));
 
-const DAY_MS = 86_400_000;
-const CHART_DAYS = 30;
-const MIN_HOUR_EVENTS = 10;
 const DUE_LIST_MAX = 8;
-
-function isoDay(d: Date): string {
-  return d.toISOString().slice(0, 10);
-}
 
 export default async function ProfilePage() {
   const t = await getTranslations("ui.account");
@@ -275,29 +265,8 @@ export default async function ProfilePage() {
         : null;
 
   // ── study time ───────────────────────────────────────────────────────────
-  const minutesByDate = new Map<string, number>(
-    activityRows.map((r) => [r.activity_date as string, r.minutes ?? 0])
-  );
   const totalMinutes = activityRows.reduce((a, r) => a + (r.minutes ?? 0), 0);
   const activeDays = activityRows.filter((r) => (r.minutes ?? 0) > 0).length;
-
-  const chartDays: StudyDay[] = Array.from({ length: CHART_DAYS }, (_, i) => {
-    const date = isoDay(new Date(now.getTime() - (CHART_DAYS - 1 - i) * DAY_MS));
-    return { date, minutes: minutesByDate.get(date) ?? 0 };
-  });
-
-  const hourTimestamps = xpRows.map((r) => r.created_at).filter(Boolean);
-
-  // ── weekly rhythm: total minutes per day of week, across every day on record ──
-  const weekdayTotals = Array.from({ length: 7 }, () => 0); // index = JS getUTCDay()
-  for (const r of activityRows) {
-    const d = new Date(`${r.activity_date}T00:00:00Z`);
-    if (!Number.isNaN(d.getTime())) weekdayTotals[d.getUTCDay()] += r.minutes ?? 0;
-  }
-  const weekdayMinutes: WeekdayMinutes[] = [1, 2, 3, 4, 5, 6, 0].map((dow) => ({
-    dow,
-    minutes: weekdayTotals[dow],
-  }));
 
   // ── practice mix: share of XP earned per skill (migration 0024 column, ─────
   // unused elsewhere on this page). Rows from before that migration, or from
@@ -397,22 +366,8 @@ export default async function ProfilePage() {
               />
             )}
 
-            {/* 1b. curriculum map: A1 → C2 stepper + level-up checks */}
-            {promo && (
-              <LevelMap current={level} checks={promoChecks} eligible={elig.eligible} overallPct={overallPct} />
-            )}
-
             {/* 2. accuracy per skill — the point of the page */}
             {scores.length > 0 && <SkillAccuracy scores={scores} pending={pending} />}
-
-            {/* 3. when you study */}
-            {totalMinutes > 0 && <StudyDays days={chartDays} streakDays={streakDays} />}
-
-            {/* 3b. which weekday you actually show up on, across all-time */}
-            {totalMinutes > 0 && <WeekdayPattern days={weekdayMinutes} />}
-
-            {/* 4. your best hours — client-side, the reader's own timezone */}
-            {hourTimestamps.length >= MIN_HOUR_EVENTS && <BestHours timestamps={hourTimestamps} />}
 
             {/* 4b. where the practice time actually goes, by skill */}
             {skillShares.length >= 2 && <SkillMix shares={skillShares} />}
@@ -432,6 +387,13 @@ export default async function ProfilePage() {
               <div className="border border-dashed border-dash rounded-[14px] bg-cream px-[22px] py-5 text-[13px] text-muted">
                 {t("noStatsYet")}
               </div>
+            )}
+
+            {/* 1b. curriculum map: A1 → C2 stepper + level-up checks, right
+                above settings so it reads as "where you're headed next"
+                rather than competing with the analysis cards above */}
+            {promo && (
+              <LevelMap current={level} checks={promoChecks} eligible={elig.eligible} overallPct={overallPct} />
             )}
 
             {/* 6. settings */}
