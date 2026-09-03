@@ -40,7 +40,7 @@
     "needMore": "Need {n} more 🪙",
     "claim": "Claim & wear",
     "buy": "Buy & wear · 🪙 {price}",
-    "opensOn": "Opens {date}"
+    "opensOn": "Limited edition · {date}"
   },
   "bought": "{name} is yours — and on your tree.",
   "featured": {
@@ -58,7 +58,7 @@
     "free": "Free",
     "goal": "· your goal · {ready, select, yes {ready to buy} other {{n} to go}}{hasLevel, select, yes { · Lv.{level}} other {}}",
     "setGoal": "Set as goal",
-    "opens": "Opens {date}"
+    "opens": "✦ Limited edition"
   },
   "empty": "Nothing on sale here right now — check back next season.",
   "tryOn": {

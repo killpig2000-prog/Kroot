@@ -439,7 +439,7 @@ export default function ShopClient({
               else if (isUpcoming(c, now) && c.availableFrom)
                 price = (
                   <span className="text-[11.5px] font-extrabold text-[#B7791F] whitespace-nowrap">
-                    {t("card.opens", { date: fmtDay(c.availableFrom) })}
+                    {t("card.opens")}
                   </span>
                 );
               else if (locked)
