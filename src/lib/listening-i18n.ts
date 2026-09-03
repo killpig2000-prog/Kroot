@@ -8,6 +8,7 @@ export function getLocalizedDialogueTitle(title: LocalizedString | string, local
     ja: title.ja,
     "zh-Hans": title.zh,
     vi: title.vi,
+    es: title.es,
     en: title.en,
   };
 
@@ -23,6 +24,7 @@ export function getLocalizedDialogueLine(line: DialogueLine, locale: string): st
     ja: line.ja,
     "zh-Hans": line.zh,
     vi: line.vi,
+    es: line.es,
     en: line.en,
   };
 
