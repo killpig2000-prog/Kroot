@@ -738,6 +738,25 @@ export const COSTUMES: Costume[] = [
     ),
   },
   {
+    id: "hahoe-mask",
+    name: "Hahoe Mask",
+    krName: "하회탈",
+    slot: "face",
+    price: 750,
+    rarity: "epic",
+    render: () => (
+      <>
+        <path d="M-20 -4 C-21 -16 -8 -23 0 -23 C8 -23 21 -16 20 -4 C20 5 13 12 0 12 C-13 12 -20 5 -20 -4Z" fill="#F6DDAA" stroke="#B9863A" strokeWidth="1.5" />
+        <path d="M-14 -8 Q-8 -13 -2 -8" stroke="#7A3B1E" strokeWidth="2.2" fill="none" strokeLinecap="round" />
+        <path d="M2 -8 Q8 -13 14 -8" stroke="#7A3B1E" strokeWidth="2.2" fill="none" strokeLinecap="round" />
+        <path d="M-12 -3 Q-8 0 -4 -3" stroke="#2B2521" strokeWidth="1.5" fill="none" />
+        <path d="M4 -3 Q8 0 12 -3" stroke="#2B2521" strokeWidth="1.5" fill="none" />
+        <path d="M-12 6 Q0 16 12 6 Q0 3 -12 6Z" fill="#C0392B" />
+        <path d="M-7 5 L-5 10 M-2 4 L-1.5 10 M2 4 L1.5 10 M7 5 L5 10" stroke="#FFF" strokeWidth="1.4" />
+      </>
+    ),
+  },
+  {
     id: "cherry-blush",
     name: "Cherry Blush",
     krName: "앵두 볼터치",
@@ -1221,6 +1240,34 @@ export const COSTUMES: Costume[] = [
     },
   },
   {
+    id: "jar-terrace",
+    name: "Jar Terrace",
+    krName: "장독대",
+    slot: "ground",
+    price: 395,
+    rarity: "rare",
+    icon: "🏺",
+    scene: {
+      layer: "front",
+      draw: () => (
+        <>
+          <g transform="translate(56 208)">
+            <path d="M-13 0 C-15 -18 -8 -26 0 -26 C8 -26 15 -18 13 0 C11 6 -11 6 -13 0Z" fill="#6B4A34" />
+            <ellipse cx="0" cy="-18" rx="12" ry="4" fill="#8A6144" />
+          </g>
+          <g transform="translate(90 216) scale(0.8)">
+            <path d="M-13 0 C-15 -18 -8 -26 0 -26 C8 -26 15 -18 13 0 C11 6 -11 6 -13 0Z" fill="#7A5640" />
+            <ellipse cx="0" cy="-18" rx="12" ry="4" fill="#96694A" />
+          </g>
+          <g transform="translate(130 212) scale(0.92)">
+            <path d="M-13 0 C-15 -18 -8 -26 0 -26 C8 -26 15 -18 13 0 C11 6 -11 6 -13 0Z" fill="#63432E" />
+            <ellipse cx="0" cy="-18" rx="12" ry="4" fill="#82593E" />
+          </g>
+        </>
+      ),
+    },
+  },
+  {
     id: "little-pond",
     name: "Little Pond",
     krName: "작은 연못",
@@ -1286,6 +1333,28 @@ export const COSTUMES: Costume[] = [
   },
 
   // ── Friend · a companion by the tree ─────────────────────────────────
+  {
+    id: "butterfly",
+    name: "Yellow Butterfly",
+    krName: "노랑나비",
+    slot: "friend",
+    price: 150,
+    rarity: "common",
+    icon: "🦋",
+    scene: {
+      layer: "front",
+      draw: () => (
+        <g transform="translate(150 186) scale(1.6)">
+          <path d="M0 0 C-10 -14 -22 -12 -22 -2 C-22 6 -12 8 0 4Z" fill="#F2789A" />
+          <path d="M0 0 C10 -14 22 -12 22 -2 C22 6 12 8 0 4Z" fill="#FFB25E" />
+          <path d="M0 4 C-9 12 -18 10 -17 3 C-16 -2 -8 -1 0 4Z" fill="#F2789A" opacity=".85" />
+          <path d="M0 4 C9 12 18 10 17 3 C16 -2 8 -1 0 4Z" fill="#FFB25E" opacity=".85" />
+          <ellipse cx="0" cy="0" rx="2" ry="6" fill="#2B2521" />
+          <path d="M-1 -5 C-4 -9 -7 -9 -8 -7 M1 -5 C4 -9 7 -9 8 -7" stroke="#2B2521" strokeWidth="1" fill="none" />
+        </g>
+      ),
+    },
+  },
   {
     id: "sparrow",
     name: "Sparrow",
