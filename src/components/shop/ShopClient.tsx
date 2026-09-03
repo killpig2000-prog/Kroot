@@ -84,6 +84,7 @@ export default function ShopClient({
   equipped,
   today,
   questDone = false,
+  tutorial = false,
 }: {
   userId: string;
   coins: number;
@@ -95,9 +96,11 @@ export default function ShopClient({
   equipped: string[];
   today: string;
   questDone?: boolean;
+  tutorial?: boolean;
 }) {
   const t = useTranslations("shop");
   const router = useRouter();
+  const [tutorialBought, setTutorialBought] = useState(false);
   const supabase = useMemo(() => createClient(), []);
   const now = useMemo(() => new Date(today), [today]);
 
@@ -129,6 +132,9 @@ export default function ShopClient({
   }
 
   const previewIds = Object.values(preview).filter((v): v is string => !!v);
+  const previewCostumes = previewIds.map((id) => costumeById(id)).filter((c): c is Costume => !!c);
+  const unownedPreview = previewCostumes.filter((c) => !ownedSet.has(c.id));
+  const previewTotal = unownedPreview.reduce((sum, c) => sum + c.price, 0);
   const visible = COSTUMES.filter((c) => c.slot === tab && (isAvailable(c, now) || ownedSet.has(c.id)));
   const featured = COSTUMES.find(
     (c) => c.availableUntil && isAvailable(c, now) && daysLeft(c.availableUntil, today) <= 14 && !ownedSet.has(c.id),
@@ -147,7 +153,15 @@ export default function ShopClient({
 
   function toggle(c: Costume) {
     setMessage(null);
-    setPreview((p) => (p[c.slot] === c.id ? { ...p, [c.slot]: undefined } : { ...p, [c.slot]: c.id }));
+    setPreview((p) => {
+      if (p[c.slot] === c.id) {
+        // Tapping the item you're already wearing shouldn't silently pull it
+        // off the preview — that's what the dedicated Take off button is for.
+        if (worn[c.slot] === c.id) return p;
+        return { ...p, [c.slot]: undefined };
+      }
+      return { ...p, [c.slot]: c.id };
+    });
   }
 
   // These used to update `worn` whatever the database said, so a failed write
@@ -203,6 +217,7 @@ export default function ShopClient({
         if (goalOverride === selected.id) writeStoredGoal(null);
         await equip(selected);
         setMessage({ text: t("bought", { name: selected.name }), good: true });
+        if (tutorial) setTutorialBought(true);
       }
       router.refresh();
     } finally {
@@ -225,6 +240,22 @@ export default function ShopClient({
 
   return (
     <div className="border border-line rounded-[14px] bg-cream overflow-hidden max-w-[1040px]">
+      {tutorial && !tutorialBought && (
+        <div className="mx-4 mt-4 flex items-center justify-between gap-3 px-4 py-3 rounded-xl bg-[var(--tint-violet)] border border-line text-[#6B33CC] font-semibold text-[14px]">
+          {t("tutorial.pick")}
+          <Link href="/dashboard" className="text-faint font-semibold hover:text-charcoal shrink-0">
+            {t("tutorial.skip")}
+          </Link>
+        </div>
+      )}
+      {tutorial && tutorialBought && (
+        <div className="mx-4 mt-4 flex items-center justify-between gap-3 px-4 py-3 rounded-xl bg-success-bg border border-success-line text-success font-semibold text-[14px]">
+          {t("tutorial.done")}
+          <Link href="/dashboard?tutorial=done" className="rounded-[9px] bg-success px-3.5 py-2 text-[13px] font-bold text-white hover:bg-success-deep transition-colors shrink-0">
+            {t("tutorial.finish")}
+          </Link>
+        </div>
+      )}
       <ShopGoal
         goal={goal}
         balance={balance}
@@ -322,9 +353,13 @@ export default function ShopClient({
             </button>
           )}
 
-          {/* right-edge fade hints that the category row scrolls sideways */}
+          {/* right-edge fade plus a visible scrollbar hint that the row scrolls sideways when it's cut off */}
           <div className="relative mb-3 after:content-[''] after:pointer-events-none after:absolute after:top-0 after:bottom-1.5 after:right-0 after:w-12 after:bg-gradient-to-l after:from-white after:to-transparent">
-          <div className="flex gap-1.5 overflow-x-auto pb-1.5 -mx-1 px-1 pr-12 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" role="tablist" aria-label={t("categories")}>
+          <div
+            className="flex gap-1.5 overflow-x-auto pb-1.5 -mx-1 px-1 pr-12 [scrollbar-width:thin] [scrollbar-color:var(--color-line)_transparent] [&::-webkit-scrollbar]:h-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-line [&::-webkit-scrollbar-thumb]:rounded-full"
+            role="tablist"
+            aria-label={t("categories")}
+          >
             {TABS.map((slot) => {
               const on = slot === tab;
               const isNew = GARDEN_SLOTS.includes(slot);
@@ -488,6 +523,11 @@ export default function ShopClient({
             {message?.text ??
               (selected ? t("tryOn.selected", { name: selected.name, krName: selected.krName }) : t("tryOn.hint"))}
           </p>
+          {unownedPreview.length > 1 && (
+            <p className="text-[12px] mt-2 text-center font-bold text-[#B7791F]">
+              {t("tryOn.outfitTotal", { n: unownedPreview.length, price: previewTotal })}
+            </p>
+          )}
         </aside>
       </div>
     </div>

@@ -1,6 +1,12 @@
 {
   "coins": "🪙 {coins} monedas",
   "intro": "Viste tu árbol y el jardín que lo rodea. Toca una tarjeta para probártela en tu propio árbol y cómprala y póntela aquí mismo.",
+  "tutorial": {
+    "pick": "Tutorial: elige algo y pruébatelo — va por cuenta nuestra.",
+    "skip": "Saltar",
+    "done": "¡Genial! Compraste y te pusiste tu primer artículo.",
+    "finish": "Terminar"
+  },
   "slots": {
     "hat": "Sombreros",
     "face": "Cara",
@@ -57,7 +63,8 @@
     "none": "—",
     "reset": "Restablecer",
     "hint": "Toca una tarjeta para probártela",
-    "selected": "{name} · {krName}"
+    "selected": "{name} · {krName}",
+    "outfitTotal": "{n, plural, one {# artículo sin comprar} other {# artículos sin comprar}} para completar este look · 🪙 {price} en total"
   },
   "picker": {
     "change": "Cambiar ▾",

@@ -7,9 +7,16 @@ import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import type { CefrLevel } from "@/lib/tree";
 import { levelFromXp, treeStageForLevel } from "@/lib/level";
 
-export default async function ShopPage() {
-  const tn = await getTranslations("nav");
-  const t = await getTranslations("shop");
+export default async function ShopPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ tutorial?: string }>;
+}) {
+  const [tn, t, sp] = await Promise.all([
+    getTranslations("nav"),
+    getTranslations("shop"),
+    searchParams,
+  ]);
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
 
@@ -87,6 +94,7 @@ export default async function ShopPage() {
             equipped={equipped}
             today={today}
             questDone={questDone}
+            tutorial={sp.tutorial === "1"}
           />
         </main>
       </div>

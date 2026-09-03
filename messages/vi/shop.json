@@ -1,6 +1,12 @@
 {
   "coins": "🪙 {coins} xu",
   "intro": "Trang điểm cho cây của bạn và khu vườn quanh nó. Chạm vào một thẻ để thử ngay trên cây của mình, rồi mua và đeo luôn tại đây.",
+  "tutorial": {
+    "pick": "Hướng dẫn: chọn một món và thử đeo lên — món này miễn phí cho bạn.",
+    "skip": "Bỏ qua",
+    "done": "Tuyệt! Bạn đã mua và đeo món đồ đầu tiên.",
+    "finish": "Hoàn tất"
+  },
   "slots": {
     "hat": "Mũ",
     "face": "Mặt",
@@ -57,7 +63,8 @@
     "none": "—",
     "reset": "Đặt lại",
     "hint": "Chạm vào một thẻ để thử",
-    "selected": "{name} · {krName}"
+    "selected": "{name} · {krName}",
+    "outfitTotal": "{n} món chưa sở hữu để hoàn thiện trang phục này · tổng cộng 🪙 {price}"
   },
   "picker": {
     "change": "Đổi ▾",

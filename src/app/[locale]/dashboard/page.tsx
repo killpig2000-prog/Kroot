@@ -12,6 +12,7 @@ import TodaysQuestCard from "@/components/dashboard/TodaysQuestCard";
 import { FirstVisitPlan, LockedWidgets, type FirstVisitStep } from "@/components/dashboard/FirstVisitPlan";
 import InstallBanner from "@/components/pwa/InstallBanner";
 import OnboardingTour from "@/components/onboarding/OnboardingTour";
+import TutorialFinishBanner from "@/components/onboarding/TutorialFinishBanner";
 import { GRAMMAR_LESSONS } from "@/lib/grammar";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { levelProgress } from "@/lib/level";
@@ -337,11 +338,11 @@ export default async function DashboardPage() {
           </div>
 
           <main className="min-w-0 max-w-[820px] px-[clamp(18px,3vw,36px)] pt-[26px] pb-[100px] md:pb-[60px]">
-            {/* First lesson right after the tour: Hangul for a true beginner
-                (the vocab/listening track otherwise), which itself hands off
-                to Writing once the learner is ready — see the tutorial
-                banner on each of those pages. */}
-            <OnboardingTour afterTourHref={cefr === "A1" ? "/hangul?tutorial=writing" : undefined} />
+            {/* First lesson right after the tour, for every level — Hangul's
+                page itself hands off to Writing once the learner is ready,
+                see the tutorial banner on each of those pages. */}
+            <OnboardingTour afterTourHref="/hangul?tutorial=writing" />
+            <TutorialFinishBanner />
             <h1 className="font-semibold text-[clamp(20px,2.4vw,24px)] tracking-[-0.02em] mb-0.5">
               {t("welcome", { name: displayName })}
             </h1>
@@ -361,6 +362,7 @@ export default async function DashboardPage() {
                 coins={coins}
                 streakDays={streakDays}
                 streakFreezes={extras?.streak_freezes ?? 0}
+                linkToShop
               />
             </div>
 
@@ -414,7 +416,8 @@ export default async function DashboardPage() {
         </div>
 
         <main className="min-w-0 px-[clamp(18px,3vw,36px)] pt-[26px] pb-[100px] md:pb-[60px]">
-          <OnboardingTour afterTourHref={cefr === "A1" ? "/hangul?tutorial=writing" : undefined} />
+          <OnboardingTour afterTourHref="/hangul?tutorial=writing" />
+          <TutorialFinishBanner />
           <Greeting name={displayName} />
 
           {/* The snapshot RPC failed, so everything below is the empty
@@ -443,6 +446,7 @@ export default async function DashboardPage() {
               coins={coins}
               streakDays={streakDays}
               streakFreezes={extras?.streak_freezes ?? 0}
+              linkToShop
             />
           </div>
 

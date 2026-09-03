@@ -49,13 +49,18 @@ export default async function HangulPage({
           </div>
 
           {sp.tutorial === "writing" && (
-            <Link
-              href="/writing?tutorial=1"
-              className="flex items-center justify-between gap-3 mb-[18px] px-4 py-3 rounded-xl bg-success-bg border border-success-line text-success font-semibold text-[14px] hover:brightness-95 transition-[filter]"
-            >
-              {t("nextStep.hangulCta")}
-              <span aria-hidden="true">→</span>
-            </Link>
+            <div className="flex items-center justify-between gap-3 mb-[18px] px-4 py-3 rounded-xl bg-success-bg border border-success-line text-success font-semibold text-[14px]">
+              <Link
+                href="/writing?tutorial=1"
+                className="flex items-center gap-1.5 hover:brightness-95 transition-[filter]"
+              >
+                {t("nextStep.hangulCta")}
+                <span aria-hidden="true">→</span>
+              </Link>
+              <Link href="/dashboard" className="text-faint font-semibold hover:text-charcoal shrink-0">
+                {t("skip")}
+              </Link>
+            </div>
           )}
 
           <HangulExplorer />

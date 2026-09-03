@@ -1,6 +1,12 @@
 {
   "coins": "🪙 {coins} 枚金币",
   "intro": "给你的树和它周围的花园换装。点一下卡片就能在自己的树上试穿，然后直接在这里购买并穿上。",
+  "tutorial": {
+    "pick": "教程：挑一件东西试着穿上——这件算我们送的。",
+    "skip": "跳过",
+    "done": "太棒了！你购买并穿上了第一件物品。",
+    "finish": "完成"
+  },
   "slots": {
     "hat": "帽子",
     "face": "脸部",
@@ -57,7 +63,8 @@
     "none": "—",
     "reset": "重置",
     "hint": "点一下卡片就能试穿",
-    "selected": "{name} · {krName}"
+    "selected": "{name} · {krName}",
+    "outfitTotal": "还差 {n} 件未拥有的物品即可搭配完整 · 共需 🪙 {price}"
   },
   "picker": {
     "change": "更换 ▾",

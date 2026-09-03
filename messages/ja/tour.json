@@ -5,7 +5,9 @@
   "progress": "{current} / {total}",
   "nextStep": {
     "hangulCta": "次へ: 書く練習をしてみよう",
-    "writingBanner": "チュートリアル: 書く練習を試してみよう"
+    "writingBanner": "チュートリアル: 書く練習を試してみよう",
+    "writingCta": "次へ: ショップを見てみよう",
+    "finishBanner": "あなたの韓国語の旅はここから — 応援しています！"
   },
   "steps": {
     "sidebar": {

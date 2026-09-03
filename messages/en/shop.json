@@ -1,6 +1,12 @@
 {
   "coins": "🪙 {coins} coins",
   "intro": "Dress your tree and the garden around it. Tap a card to try it on your own tree, then buy and wear it right here.",
+  "tutorial": {
+    "pick": "Tutorial: pick something and try it on — it's on us.",
+    "skip": "Skip",
+    "done": "Nice! You bought and wore your first item.",
+    "finish": "Finish"
+  },
   "slots": {
     "hat": "Hats",
     "face": "Face",
@@ -57,7 +63,8 @@
     "none": "—",
     "reset": "Reset",
     "hint": "Tap a card to try it on",
-    "selected": "{name} · {krName}"
+    "selected": "{name} · {krName}",
+    "outfitTotal": "{n, plural, one {# unowned item} other {# unowned items}} to complete this look · 🪙 {price} total"
   },
   "picker": {
     "change": "Change ▾",
