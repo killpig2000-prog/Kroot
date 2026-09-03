@@ -582,30 +582,6 @@ html.js-reveal .reveal:not(.in) {
   }
 }
 
-/* hero tree garden: each tree pops up off the ground on its own beat
-   (--d, set inline per tree) instead of the whole row fading in as one
-   flat block. Ambient .sway/.char-* keep running once a tree is up. */
-.tree-garden .tree {
-  transform-box: fill-box;
-  transform-origin: 50% 100%;
-  transition: opacity 0.5s ease var(--d, 0s), transform 0.8s cubic-bezier(0.18, 1.4, 0.36, 1) var(--d, 0s);
-}
-html.js-reveal .tree-garden .tree {
-  opacity: 0;
-  transform: translateY(14px) scale(0.55);
-}
-html.js-reveal .tree-garden.in .tree {
-  opacity: 1;
-  transform: none;
-}
-@media (prefers-reduced-motion: reduce) {
-  .tree-garden .tree {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-}
-
 /* mobile menu bottom sheet */
 .sheet-up {
   animation: sheetUp 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);

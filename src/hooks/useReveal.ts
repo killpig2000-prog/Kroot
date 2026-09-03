@@ -29,7 +29,7 @@ export function useReveal() {
       { threshold: 0.2 }
     );
 
-    document.querySelectorAll(".reveal, #stalk, .tree-garden").forEach((el) => io.observe(el));
+    document.querySelectorAll(".reveal, #stalk").forEach((el) => io.observe(el));
 
     return () => {
       io.disconnect();
