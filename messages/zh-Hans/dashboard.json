@@ -75,7 +75,8 @@
       "120": "树顶星"
     },
     "growthTab": "成长阶段",
-    "keepsakesTab": "纪念品"
+    "keepsakesTab": "纪念品",
+    "openShop": "打开商店与衣柜"
   },
   "growth": {
     "closeAria": "关闭",

@@ -75,7 +75,8 @@
       "120": "てっぺんの星"
     },
     "growthTab": "成長ステージ",
-    "keepsakesTab": "記念品"
+    "keepsakesTab": "記念品",
+    "openShop": "ショップ・衣装部屋を開く"
   },
   "growth": {
     "closeAria": "閉じる",

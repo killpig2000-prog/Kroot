@@ -75,7 +75,8 @@
       "120": "Estrella en la copa"
     },
     "growthTab": "Etapas de crecimiento",
-    "keepsakesTab": "Recuerdos"
+    "keepsakesTab": "Recuerdos",
+    "openShop": "Abrir tu tienda y armario"
   },
   "growth": {
     "closeAria": "Cerrar",

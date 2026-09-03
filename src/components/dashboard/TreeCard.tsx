@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import { SceneLayer, skyFor } from "@/lib/costumes";
 import { LEVEL_ORDER, LEVEL_PATH, SPECIES, type CefrLevel } from "@/lib/tree";
 import { FULLY_GROWN_LEVEL, MAX_LEVEL, treeHeightMetres, treeStageForLevel } from "@/lib/level";
@@ -35,6 +36,7 @@ export default function TreeCard({
   avatarUrl,
   coins,
   streakDays,
+  linkToShop = false,
 }: {
   level: number;
   progressPct: number;
@@ -49,6 +51,8 @@ export default function TreeCard({
   coins: number;
   streakDays: number;
   streakFreezes: number;
+  /** Dashboard only: tapping the tree image opens the shop/wardrobe. */
+  linkToShop?: boolean;
 }) {
   const t = useTranslations("dashboard.tree");
   // Identity chips reuse the /profile strings — the card absorbed that page's
@@ -91,50 +95,61 @@ export default function TreeCard({
         <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
           <SpeechBubble phrases={phrases} />
         </div>
-        <div
-          className="flex justify-center px-3 pt-3"
-          style={{ background: sky ?? "linear-gradient(180deg,#DFF1FF 0%,#F0FBF1 62%,#E4F3DA 100%)" }}
-        >
-          <svg viewBox={`0 0 220 ${frameH}`} className="w-[clamp(140px,20vw,190px)] h-auto transition-[height] duration-500" aria-hidden="true">
-            {/* garden backdrop: sun, clouds, and a grass hill under the soil */}
-            <defs>
-              <radialGradient id="tc-sun" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stopColor="#FFE9A8" />
-                <stop offset="55%" stopColor="#FFE9A8" stopOpacity=".55" />
-                <stop offset="100%" stopColor="#FFE9A8" stopOpacity="0" />
-              </radialGradient>
-              <linearGradient id="tc-hill" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#CDE8C2" />
-                <stop offset="100%" stopColor="#BBDCAE" />
-              </linearGradient>
-            </defs>
-            <ellipse cx="110" cy={frameH + 4} rx="150" ry="34" fill="url(#tc-hill)" />
-            <SceneLayer costumeIds={equipped} layer="behind" />
-            {!sky && (
-              <>
-                <circle cx="182" cy="34" r="30" fill="url(#tc-sun)" />
-                <circle cx="182" cy="34" r="12" fill="#FFDE7A" />
-                <g fill="#FFFFFF" opacity=".85">
-                  <ellipse cx="46" cy="36" rx="16" ry="6" />
-                  <ellipse cx="60" cy="32" rx="11" ry="5" />
-                  <ellipse cx="140" cy="60" rx="12" ry="4.6" opacity=".7" />
+        {(() => {
+          const treeImage = (
+            <div
+              className="flex justify-center px-3 pt-3"
+              style={{ background: sky ?? "linear-gradient(180deg,#DFF1FF 0%,#F0FBF1 62%,#E4F3DA 100%)" }}
+            >
+              <svg viewBox={`0 0 220 ${frameH}`} className="w-[clamp(140px,20vw,190px)] h-auto transition-[height] duration-500" aria-hidden="true">
+                {/* garden backdrop: sun, clouds, and a grass hill under the soil */}
+                <defs>
+                  <radialGradient id="tc-sun" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stopColor="#FFE9A8" />
+                    <stop offset="55%" stopColor="#FFE9A8" stopOpacity=".55" />
+                    <stop offset="100%" stopColor="#FFE9A8" stopOpacity="0" />
+                  </radialGradient>
+                  <linearGradient id="tc-hill" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#CDE8C2" />
+                    <stop offset="100%" stopColor="#BBDCAE" />
+                  </linearGradient>
+                </defs>
+                <ellipse cx="110" cy={frameH + 4} rx="150" ry="34" fill="url(#tc-hill)" />
+                <SceneLayer costumeIds={equipped} layer="behind" />
+                {!sky && (
+                  <>
+                    <circle cx="182" cy="34" r="30" fill="url(#tc-sun)" />
+                    <circle cx="182" cy="34" r="12" fill="#FFDE7A" />
+                    <g fill="#FFFFFF" opacity=".85">
+                      <ellipse cx="46" cy="36" rx="16" ry="6" />
+                      <ellipse cx="60" cy="32" rx="11" ry="5" />
+                      <ellipse cx="140" cy="60" rx="12" ry="4.6" opacity=".7" />
+                    </g>
+                  </>
+                )}
+                {veteran && species ? (
+                  <VeteranTree level={level} species={species} costumeIds={equipped} />
+                ) : (
+                  <LevelCreature level={stage} costumeIds={equipped} species={species} />
+                )}
+                <SceneLayer costumeIds={equipped} layer="front" groundShift={groundShift} />
+                <g className="bob">
+                  <circle cx="60" cy="78" r="6" fill="#FACC15" />
                 </g>
-              </>
-            )}
-            {veteran && species ? (
-              <VeteranTree level={level} species={species} costumeIds={equipped} />
-            ) : (
-              <LevelCreature level={stage} costumeIds={equipped} species={species} />
-            )}
-            <SceneLayer costumeIds={equipped} layer="front" groundShift={groundShift} />
-            <g className="bob">
-              <circle cx="60" cy="78" r="6" fill="#FACC15" />
-            </g>
-            <g className="bob2">
-              <circle cx="164" cy="72" r="6" fill="#FB7185" />
-            </g>
-          </svg>
-        </div>
+                <g className="bob2">
+                  <circle cx="164" cy="72" r="6" fill="#FB7185" />
+                </g>
+              </svg>
+            </div>
+          );
+          return linkToShop ? (
+            <Link href="/shop" aria-label={t("openShop")} className="block transition-transform hover:-translate-y-0.5">
+              {treeImage}
+            </Link>
+          ) : (
+            treeImage
+          );
+        })()}
         {/* species lives on the polaroid, not in the identity block */}
         <figcaption className="text-center text-[11.5px] font-bold text-muted pt-1.5">
           {sp.name} <span className="kr font-semibold text-faint ml-1">{sp.krName}</span>
