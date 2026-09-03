@@ -1609,6 +1609,11 @@ export function isAvailable(c: Costume, now: Date = new Date()): boolean {
   return true;
 }
 
+/** Announced but not yet on sale (window starts after today, UTC). */
+export function isUpcoming(c: Costume, now: Date = new Date()): boolean {
+  return !!c.availableFrom && now.toISOString().slice(0, 10) < c.availableFrom;
+}
+
 // Level gates are absolute now. They used to be waived for Kroot Plus
 // subscribers; that tier was removed, so there is no longer any way past
 // "Unlocks at Lv.X" other than growing the tree.

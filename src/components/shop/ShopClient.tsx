@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
 import LevelCreature from "@/components/dashboard/LevelCreature";
@@ -14,6 +14,7 @@ import {
   WEARABLE_SLOTS,
   costumeById,
   isAvailable,
+  isUpcoming,
   isLevelLocked,
   skyFor,
   type Costume,
@@ -108,6 +109,8 @@ export default function ShopClient({
   const supabase = useMemo(() => createClient(), []);
   const now = useMemo(() => new Date(today), [today]);
 
+  const locale = useLocale();
+  const fmtDay = (iso: string) => new Intl.DateTimeFormat(locale, { month: "short", day: "numeric", timeZone: "UTC" }).format(new Date(`${iso}T00:00:00Z`));
   const [tab, setTab] = useState<CostumeSlot>(tutorial ? "hat" : "aura");
   // The guided tour spotlights the welcome gift, which lives in Hats — steer
   // the tab there so the target exists whatever tab was open last. Runs
@@ -149,14 +152,20 @@ export default function ShopClient({
   const previewCostumes = previewIds.map((id) => costumeById(id)).filter((c): c is Costume => !!c);
   const unownedPreview = previewCostumes.filter((c) => !ownedSet.has(c.id));
   const previewTotal = unownedPreview.reduce((sum, c) => sum + c.price, 0);
-  const visible = COSTUMES.filter((c) => c.slot === tab && (isAvailable(c, now) || ownedSet.has(c.id)));
+  // Skins are announced ahead of their window so people can save the 2000
+  // coins: upcoming ones are listed (try-on works, buying waits for the date).
+  const visible = COSTUMES.filter(
+    (c) => c.slot === tab && (isAvailable(c, now) || ownedSet.has(c.id) || (c.slot === "skin" && isUpcoming(c, now))),
+  );
   const featured = COSTUMES.find(
     (c) => c.availableUntil && isAvailable(c, now) && daysLeft(c.availableUntil, today) <= 14 && !ownedSet.has(c.id),
   );
   const selected = preview[tab] ? costumeById(preview[tab]!) : undefined;
 
   // Anything you could save coins for: on sale, unowned, has a price.
-  const goalCandidates = COSTUMES.filter((c) => !ownedSet.has(c.id) && c.price > 0 && isAvailable(c, now)).sort(
+  const goalCandidates = COSTUMES.filter(
+    (c) => !ownedSet.has(c.id) && c.price > 0 && (isAvailable(c, now) || (c.slot === "skin" && isUpcoming(c, now))),
+  ).sort(
     (a, b) => a.price - b.price,
   );
   const defaultGoal = goalCandidates.find((c) => !isLevelLocked(c, playerLevel) && c.price > balance);
@@ -247,6 +256,8 @@ export default function ShopClient({
     else if (isAdmin) cta = { label: t("cta.claimAdmin") };
     else if (isLevelLocked(selected, playerLevel))
       cta = { label: t("cta.unlocksAt", { level: selected.minPlayerLevel ?? 0 }), disabled: true };
+    else if (isUpcoming(selected, now) && selected.availableFrom)
+      cta = { label: t("cta.opensOn", { date: fmtDay(selected.availableFrom) }), disabled: true };
     else if (balance < selected.price)
       cta = { label: t("cta.needMore", { n: selected.price - balance }), disabled: true };
     else cta = { label: selected.price === 0 ? t("cta.claim") : t("cta.buy", { price: selected.price }) };
@@ -423,6 +434,12 @@ export default function ShopClient({
                 price = (
                   <span className="text-[12.5px] font-extrabold text-success">
                     {worn[c.slot] === c.id ? t("card.wearing") : t("card.owned")}
+                  </span>
+                );
+              else if (isUpcoming(c, now) && c.availableFrom)
+                price = (
+                  <span className="text-[11.5px] font-extrabold text-[#B7791F] whitespace-nowrap">
+                    {t("card.opens", { date: fmtDay(c.availableFrom) })}
                   </span>
                 );
               else if (locked)

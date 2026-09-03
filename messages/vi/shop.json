@@ -39,7 +39,8 @@
     "unlocksAt": "Mở khoá ở Lv.{level}",
     "needMore": "Cần thêm {n} 🪙",
     "claim": "Nhận và đeo",
-    "buy": "Mua và đeo · 🪙 {price}"
+    "buy": "Mua và đeo · 🪙 {price}",
+    "opensOn": "Mở bán {date}"
   },
   "bought": "{name} là của bạn rồi — và đã lên cây.",
   "featured": {
@@ -56,7 +57,8 @@
     "price": "🪙 {price}",
     "free": "Miễn phí",
     "goal": "· mục tiêu của bạn · {ready, select, yes {mua được rồi} other {còn thiếu {n}}}{hasLevel, select, yes { · Lv.{level}} other {}}",
-    "setGoal": "Đặt làm mục tiêu"
+    "setGoal": "Đặt làm mục tiêu",
+    "opens": "Mở bán {date}"
   },
   "empty": "Ở đây chưa có gì được bán — hãy ghé lại vào mùa sau.",
   "tryOn": {

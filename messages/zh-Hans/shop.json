@@ -39,7 +39,8 @@
     "unlocksAt": "Lv.{level} 解锁",
     "needMore": "还差 {n} 🪙",
     "claim": "领取并穿上",
-    "buy": "购买并穿上 · 🪙 {price}"
+    "buy": "购买并穿上 · 🪙 {price}",
+    "opensOn": "{date} 开售"
   },
   "bought": "{name} 归你了 — 已经戴到树上啦。",
   "featured": {
@@ -56,7 +57,8 @@
     "price": "🪙 {price}",
     "free": "免费",
     "goal": "· 你的目标 · {ready, select, yes {可以买了} other {还差 {n}}}{hasLevel, select, yes { · Lv.{level}} other {}}",
-    "setGoal": "设为目标"
+    "setGoal": "设为目标",
+    "opens": "{date} 开售"
   },
   "empty": "这里暂时没有在售的物品 — 下个季节再来看看吧。",
   "tryOn": {

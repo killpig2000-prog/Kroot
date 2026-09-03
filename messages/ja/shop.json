@@ -39,7 +39,8 @@
     "unlocksAt": "Lv.{level} で解放",
     "needMore": "あと {n} 🪙 必要",
     "claim": "受け取って装備",
-    "buy": "購入して装備 · 🪙 {price}"
+    "buy": "購入して装備 · 🪙 {price}",
+    "opensOn": "{date} 発売"
   },
   "bought": "{name} を手に入れました — 木にも飾りました。",
   "featured": {
@@ -56,7 +57,8 @@
     "price": "🪙 {price}",
     "free": "無料",
     "goal": "· 目標 · {ready, select, yes {購入できます} other {あと {n}}}{hasLevel, select, yes { · Lv.{level}} other {}}",
-    "setGoal": "目標にする"
+    "setGoal": "目標にする",
+    "opens": "{date} 発売"
   },
   "empty": "ここは今、販売中のアイテムがありません — 次の季節にまた覗いてみてください。",
   "tryOn": {

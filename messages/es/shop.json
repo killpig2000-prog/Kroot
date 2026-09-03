@@ -39,7 +39,8 @@
     "unlocksAt": "Se desbloquea en el Nv.{level}",
     "needMore": "Te faltan {n} 🪙",
     "claim": "Conseguir y poner",
-    "buy": "Comprar y poner · 🪙 {price}"
+    "buy": "Comprar y poner · 🪙 {price}",
+    "opensOn": "Abre el {date}"
   },
   "bought": "{name} ya es tuyo — y está en tu árbol.",
   "featured": {
@@ -56,7 +57,8 @@
     "price": "🪙 {price}",
     "free": "Gratis",
     "goal": "· tu meta · {ready, select, yes {ya puedes comprarlo} other {te faltan {n}}}{hasLevel, select, yes { · Nv.{level}} other {}}",
-    "setGoal": "Fijar como meta"
+    "setGoal": "Fijar como meta",
+    "opens": "Abre el {date}"
   },
   "empty": "Aquí no hay nada a la venta ahora mismo — vuelve la próxima temporada.",
   "tryOn": {
