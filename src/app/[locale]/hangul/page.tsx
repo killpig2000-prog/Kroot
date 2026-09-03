@@ -1,12 +1,20 @@
 import { getTranslations } from "next-intl/server";
-import { redirect } from "@/i18n/navigation";
+import { Link, redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import HangulExplorer from "@/components/hangul/HangulExplorer";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 
-export default async function HangulPage() {
-  const tn = await getTranslations("nav");
+export default async function HangulPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ tutorial?: string }>;
+}) {
+  const [tn, t, sp] = await Promise.all([
+    getTranslations("nav"),
+    getTranslations("tour"),
+    searchParams,
+  ]);
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
 
@@ -39,6 +47,16 @@ export default async function HangulPage() {
               {tn("hangul")}
             </h1>
           </div>
+
+          {sp.tutorial === "writing" && (
+            <Link
+              href="/writing?tutorial=1"
+              className="flex items-center justify-between gap-3 mb-[18px] px-4 py-3 rounded-xl bg-success-bg border border-success-line text-success font-semibold text-[14px] hover:brightness-95 transition-[filter]"
+            >
+              {t("nextStep.hangulCta")}
+              <span aria-hidden="true">→</span>
+            </Link>
+          )}
 
           <HangulExplorer />
         </main>

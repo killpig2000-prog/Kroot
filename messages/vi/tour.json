@@ -3,6 +3,10 @@
   "next": "Tiếp",
   "done": "Bắt đầu",
   "progress": "{current} / {total}",
+  "nextStep": {
+    "hangulCta": "Tiếp theo: thử luyện viết",
+    "writingBanner": "Hướng dẫn: thử một đề bài viết"
+  },
   "steps": {
     "sidebar": {
       "title": "Menu của bạn",

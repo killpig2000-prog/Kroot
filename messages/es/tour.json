@@ -3,6 +3,10 @@
   "next": "Siguiente",
   "done": "Empezar",
   "progress": "{current} / {total}",
+  "nextStep": {
+    "hangulCta": "Siguiente: prueba a escribir",
+    "writingBanner": "Tutorial: prueba una consigna de escritura"
+  },
   "steps": {
     "sidebar": {
       "title": "Tu menú",

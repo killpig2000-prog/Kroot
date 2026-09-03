@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
+import { useRouter } from "@/i18n/navigation";
 
 const SEEN_KEY = "kroot-onboarding-tour-seen";
 const MOBILE_BREAKPOINT = 768; // md — below this the sidebar is replaced by BottomNav
@@ -61,8 +62,9 @@ type Rect = { top: number; left: number; width: number; height: number };
 // data-tour target at a time, plus a tooltip card. Runs once per browser
 // (localStorage-gated), at every width — the sidebar/basics/practice/relax
 // steps just point at BottomNav's tabs instead of the Sidebar below md.
-export default function OnboardingTour() {
+export default function OnboardingTour({ afterTourHref }: { afterTourHref?: string } = {}) {
   const t = useTranslations("tour");
+  const router = useRouter();
   const [stepIndex, setStepIndex] = useState(0);
   const [active, setActive] = useState(false);
   const [rect, setRect] = useState<Rect | null>(null);
@@ -87,10 +89,17 @@ export default function OnboardingTour() {
     setRect({ top: r.top, left: r.left, width: r.width, height: r.height });
   }, [stepIndex]);
 
-  const end = useCallback(() => {
-    markSeen();
-    setActive(false);
-  }, []);
+  // navigate=false is for a learner explicitly bailing out via "Skip" — only
+  // a natural finish (reaching the last step, or running out of targets)
+  // carries them on into afterTourHref.
+  const end = useCallback(
+    (navigate = true) => {
+      markSeen();
+      setActive(false);
+      if (navigate && afterTourHref) router.push(afterTourHref);
+    },
+    [afterTourHref, router]
+  );
 
   useEffect(() => {
     if (!active) return;
@@ -183,7 +192,7 @@ export default function OnboardingTour() {
           <div className="flex items-center gap-2">
             <button
               type="button"
-              onClick={end}
+              onClick={() => end(false)}
               className="text-[13px] font-semibold text-muted hover:text-charcoal px-1"
             >
               {t("skip")}

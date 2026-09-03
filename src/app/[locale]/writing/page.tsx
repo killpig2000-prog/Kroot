@@ -23,16 +23,17 @@ const STATUS_BADGE: Record<string, string> = {
 export default async function WritingMapPage({
   searchParams,
 }: {
-  searchParams: Promise<{ level?: string }>;
+  searchParams: Promise<{ level?: string; tutorial?: string }>;
 }) {
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
 
   if (!user) redirect("/onboarding");
 
-  const [t, tn, locale, { data: profile }, { data: progress }, sp] = await Promise.all([
+  const [t, tn, tTour, locale, { data: profile }, { data: progress }, sp] = await Promise.all([
     getTranslations("writing"),
     getTranslations("nav"),
+    getTranslations("tour"),
     getLocale(),
     supabase
       .from("profiles")
@@ -98,6 +99,12 @@ export default async function WritingMapPage({
             </h1>
             <span className="text-[13px] text-muted">{t("map.levelSub", { level })}</span>
           </div>
+
+          {sp.tutorial === "1" && (
+            <div className="mb-[18px] px-4 py-3 rounded-xl bg-[var(--tint-amber)] border border-amber-line text-amber font-semibold text-[14px]">
+              {tTour("nextStep.writingBanner")}
+            </div>
+          )}
 
           <LevelTabs
             className="mb-6"

@@ -3,6 +3,10 @@
   "next": "次へ",
   "done": "始める",
   "progress": "{current} / {total}",
+  "nextStep": {
+    "hangulCta": "次へ: 書く練習をしてみよう",
+    "writingBanner": "チュートリアル: 書く練習を試してみよう"
+  },
   "steps": {
     "sidebar": {
       "title": "メニューはここ",

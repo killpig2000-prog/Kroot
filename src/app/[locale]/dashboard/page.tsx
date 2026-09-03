@@ -337,7 +337,11 @@ export default async function DashboardPage() {
           </div>
 
           <main className="min-w-0 max-w-[820px] px-[clamp(18px,3vw,36px)] pt-[26px] pb-[100px] md:pb-[60px]">
-            <OnboardingTour />
+            {/* First lesson right after the tour: Hangul for a true beginner
+                (the vocab/listening track otherwise), which itself hands off
+                to Writing once the learner is ready — see the tutorial
+                banner on each of those pages. */}
+            <OnboardingTour afterTourHref={cefr === "A1" ? "/hangul?tutorial=writing" : undefined} />
             <h1 className="font-semibold text-[clamp(20px,2.4vw,24px)] tracking-[-0.02em] mb-0.5">
               {t("welcome", { name: displayName })}
             </h1>
