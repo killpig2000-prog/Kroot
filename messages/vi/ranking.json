@@ -57,7 +57,12 @@
     "earned": "+{coins} 🪙!",
     "none": "Tuần trước không có ánh nắng",
     "firstWeek": "Tuần đầu — xu mở khóa vào thứ Hai 🌱",
-    "tiers": "Top 10% → 100 🪙 · top 30% → 50 · top 60% → 20 · tham gia → 5"
+    "tiers": "Top 10% → 100 🪙 · top 30% → 50 · top 60% → 20 · tham gia → 5",
+    "wearing": {
+      "blue": "Đang đeo huy chương hạng 1 của hội chợ tuần trước",
+      "red": "Đang đeo huy chương hạng 2 của hội chợ tuần trước",
+      "yellow": "Đang đeo huy chương hạng 3 của hội chợ tuần trước"
+    }
   },
   "movement": {
     "up": "Bạn đã lên luống {tier} — chỗ nhiều nắng hơn! {emoji}",

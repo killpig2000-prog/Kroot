@@ -57,7 +57,12 @@
     "earned": "¡+{coins} 🪙 ganadas!",
     "none": "Sin luz solar la semana pasada",
     "firstWeek": "Primera semana: las monedas se desbloquean el lunes 🌱",
-    "tiers": "Top 10 % → 100 🪙 · top 30 % → 50 · top 60 % → 20 · participar → 5"
+    "tiers": "Top 10 % → 100 🪙 · top 30 % → 50 · top 60 % → 20 · participar → 5",
+    "wearing": {
+      "blue": "Llevas la medalla del 1.º puesto de la feria de la semana pasada",
+      "red": "Llevas la medalla del 2.º puesto de la feria de la semana pasada",
+      "yellow": "Llevas la medalla del 3.º puesto de la feria de la semana pasada"
+    }
   },
   "movement": {
     "up": "Subiste a la parcela {tier}: ¡más sol! {emoji}",

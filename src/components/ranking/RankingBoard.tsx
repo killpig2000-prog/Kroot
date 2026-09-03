@@ -6,7 +6,7 @@ import { Link } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
 import LevelCreature from "@/components/dashboard/LevelCreature";
 import { treeStageForLevel } from "@/lib/level";
-import { SceneLayer, skyFor } from "@/lib/costumes";
+import { ribbonFor, SceneLayer, skyFor } from "@/lib/costumes";
 import { daysUntilWeekEnd, leagueTier, LEAGUE_TIERS } from "@/lib/league";
 import type { CefrLevel } from "@/lib/tree";
 
@@ -172,6 +172,9 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
   const gapUp = above && meRow ? Math.max(1, above.xp_week - meRow.xp_week + 1) : null;
   const gapDown = below && meRow ? Math.max(0, meRow.xp_week - below.xp_week) : null;
   const daysLeft = daysUntilWeekEnd();
+  // Last week's prize, pinned on the tree by settle_league_weeks(): the
+  // medal rides in the same costume_ids the row's tree is drawn with.
+  const myRibbon = meRow ? ribbonFor(meRow.costume_ids ?? []) : null;
 
   // The nudge: the smallest thing that changes your place.
   let nudge: string;
@@ -387,6 +390,18 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
               >
                 {claiming ? t("reward.checking") : t("reward.claim")}
               </button>
+            )}
+            {myRibbon && (
+              <p className="mt-2 flex items-center gap-1.5 text-[12px] font-bold" style={{ color: myRibbon.fg === "#F0DAC5" ? myRibbon.ring : myRibbon.bg }}>
+                <span
+                  className="inline-grid place-items-center w-[18px] h-[18px] rounded-full text-[9.5px] font-black shadow-[0_1.5px_0_rgba(0,0,0,.15)]"
+                  style={{ background: myRibbon.bg, color: myRibbon.fg }}
+                  aria-hidden="true"
+                >
+                  {myRibbon.place}
+                </span>
+                {t(`reward.wearing.${myRibbon.color}`)}
+              </p>
             )}
             <p className="text-[10.5px] text-faint mt-1.5 leading-snug">{t("reward.tiers")}</p>
           </div>

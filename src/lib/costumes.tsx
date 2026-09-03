@@ -4,13 +4,17 @@ import type { CefrLevel } from "@/lib/tree";
 
 // Wearables sit on the tree at a per-stage anchor; garden slots dress the
 // scene around it (aura/sky behind the tree, ground/friend in front).
-export type CostumeSlot = "hat" | "face" | "neck" | "aura" | "sky" | "ground" | "friend";
+// `ribbon` is the weekly fair's prize (see RIBBONS below): a scene item
+// pinned to a fixed frame position rather than a per-level anchor, and
+// never sold, so it's in neither list below and gets no shop tab.
+export type CostumeSlot = "hat" | "face" | "neck" | "ribbon" | "aura" | "sky" | "ground" | "friend";
 export const WEARABLE_SLOTS: CostumeSlot[] = ["hat", "face", "neck"];
 export const GARDEN_SLOTS: CostumeSlot[] = ["aura", "sky", "ground", "friend"];
 export const SLOT_LABELS: Record<CostumeSlot, { en: string; icon: string }> = {
   hat: { en: "Hats", icon: "🎩" },
   face: { en: "Face", icon: "👓" },
   neck: { en: "Neck", icon: "🧣" },
+  ribbon: { en: "Ribbon", icon: "🎀" },
   aura: { en: "Aura", icon: "✨" },
   sky: { en: "Sky", icon: "🌤" },
   ground: { en: "Ground", icon: "🌼" },
@@ -411,6 +415,78 @@ function SpiritDeer() {
     </g>
   );
 }
+
+// ── Ribbon · the weekly fair's prize ─────────────────────────────────────
+// County-fair medals for last week's top 3 in your bed. Not for sale:
+// settle_league_weeks() (migration 0059) pins one into user_costumes each
+// Monday and takes last week's off, so a medal is worn for exactly one
+// week. Drawn as a `front` scene item pinned to a fixed spot in the
+// 220x230 frame's top-right corner — same (x, y) at every CEFR stage and
+// every VeteranTree height, since those frames only grow *downward* past
+// level 50. Each place gets its own silhouette, not just a color, so 1st
+// vs. 2nd vs. 3rd reads at a glance: 1st is the only one with laurel
+// sprigs, 3rd drops the pleats and tails for a plain pendant disc.
+const RIBBON_X = 188;
+const RIBBON_Y = 30;
+function FairMedal({ bg, fg, ring, place }: { bg: string; fg: string; ring: string; place: 1 | 2 | 3 }) {
+  return (
+    <g transform={`translate(${RIBBON_X} ${RIBBON_Y})`}>
+      {place === 1 && (
+        <g fill="#4C7A3F" stroke="#3A5F30" strokeWidth=".6">
+          <path d="M-8 -16 Q2 -22 -2 -32 Q-10 -26 -12 -18Z" />
+          <path d="M0 -6 Q12 -9 10 -20 Q0 -16 -4 -8Z" />
+          <path d="M2 6 Q15 6 16 -6 Q4 -4 -2 4Z" />
+          <path d="M-8 16 Q4 20 8 9 Q-3 8 -10 12Z" />
+        </g>
+      )}
+      {place <= 2 ? (
+        <g transform={`scale(${place === 1 ? 1.35 : 1.2})`}>
+          <circle r="19" fill={bg} />
+          <g stroke={ring} strokeWidth="1.2" opacity=".55">
+            <line x1="0" y1="-19" x2="0" y2="19" />
+            <line x1="-16.5" y1="-9.5" x2="16.5" y2="9.5" />
+            <line x1="-16.5" y1="9.5" x2="16.5" y2="-9.5" />
+            <line x1="-19" y1="0" x2="19" y2="0" />
+          </g>
+          <circle r="12" fill={ring} />
+          <circle cx="-4" cy="-5" r="3.2" fill="#FFFFFF" opacity=".85" />
+          <text y="6" textAnchor="middle" fontFamily="Georgia, 'Noto Serif KR', serif" fontSize="14" fontWeight="700" fill={fg}>
+            {place}
+          </text>
+          <path d="M-9 15 L-15 41 L-3 33 Z" fill={bg} stroke={ring} strokeWidth="1" />
+          <path d="M9 15 L15 41 L3 33 Z" fill={bg} stroke={ring} strokeWidth="1" />
+        </g>
+      ) : (
+        <g transform="scale(1.1)">
+          <path d="M-6 -20 L6 -20 L4 -4 L-4 -4 Z" fill={bg} stroke={ring} strokeWidth="1" />
+          <circle r="15" fill={bg} stroke={ring} strokeWidth="1.2" />
+          <circle r="15" fill="none" stroke={ring === "#8F5C36" ? "#F0DAC5" : "#FFF"} strokeWidth="1" strokeDasharray="2 2.4" opacity=".7" />
+          <text y="6" textAnchor="middle" fontFamily="Georgia, 'Noto Serif KR', serif" fontSize="16" fontWeight="700" fill={fg}>
+            {place}
+          </text>
+        </g>
+      )}
+    </g>
+  );
+}
+
+export const RIBBONS = [
+  { id: "ribbon-blue", place: 1, bg: "#D9A93A", ring: "#B8862A", fg: "#5C4A0E", color: "blue" },
+  { id: "ribbon-red", place: 2, bg: "#AEB9C4", ring: "#8B96A1", fg: "#3A4048", color: "red" },
+  { id: "ribbon-yellow", place: 3, bg: "#B4784A", ring: "#8F5C36", fg: "#F0DAC5", color: "yellow" },
+] as const;
+export type RibbonColor = (typeof RIBBONS)[number]["color"];
+
+const RIBBON_COSTUMES: Costume[] = RIBBONS.map((r) => ({
+  id: r.id,
+  name: `${r.color[0].toUpperCase()}${r.color.slice(1)} Ribbon`,
+  krName: r.color === "blue" ? "1등 메달" : r.color === "red" ? "2등 메달" : "3등 메달",
+  slot: "ribbon",
+  price: 0,
+  rarity: "rare",
+  icon: "🎀",
+  scene: { layer: "front", draw: () => <FairMedal bg={r.bg} ring={r.ring} fg={r.fg} place={r.place} /> },
+}));
 
 export const COSTUMES: Costume[] = [
   {
@@ -1362,10 +1438,16 @@ export const COSTUMES: Costume[] = [
       ),
     },
   },
+  ...RIBBON_COSTUMES,
 ];
 
 export function costumeById(id: string) {
   return COSTUMES.find((c) => c.id === id);
+}
+
+/** The fair medal among these costume ids, if any (a learner wears at most one). */
+export function ribbonFor(costumeIds: string[]) {
+  return RIBBONS.find((r) => costumeIds.includes(r.id)) ?? null;
 }
 
 // Where each slot sits on the level creature (TreeCard's 220x230 viewBox).

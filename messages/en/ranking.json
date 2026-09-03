@@ -57,7 +57,12 @@
     "earned": "+{coins} 🪙 earned!",
     "none": "No sunlight last week",
     "firstWeek": "First week — coins unlock Monday 🌱",
-    "tiers": "Top 10% → 100 🪙 · top 30% → 50 · top 60% → 20 · joined → 5"
+    "tiers": "Top 10% → 100 🪙 · top 30% → 50 · top 60% → 20 · joined → 5",
+    "wearing": {
+      "blue": "Wearing 1st place's medal from last week's fair",
+      "red": "Wearing 2nd place's medal from last week's fair",
+      "yellow": "Wearing 3rd place's medal from last week's fair"
+    }
   },
   "movement": {
     "up": "You moved up to the {tier} bed — sunnier spot! {emoji}",
