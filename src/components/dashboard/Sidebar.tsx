@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useTransition } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter, usePathname } from "@/i18n/navigation";
 import { rememberLocale } from "@/i18n/locale";
@@ -87,16 +87,27 @@ function Brand() {
 function LanguageSwitcher({ pathname, locale }: { pathname: string; locale: string }) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
+  // The locale re-render is a full RSC round-trip, so it can take a beat —
+  // without this, a click on a slow connection looks like nothing happened.
+  const [isPending, startTransition] = useTransition();
+  const [pendingLabel, setPendingLabel] = useState<string | null>(null);
 
   // next-intl's router keeps the current locale unless told otherwise, so
   // pushing a hand-built "/ja/..." path either doubled the prefix or, for
   // English, silently stayed on the old locale. `pathname` from
   // @/i18n/navigation is already locale-less; let the router add the prefix.
-  const handleLanguageChange = (code: string) => {
+  const handleLanguageChange = (code: string, label: string) => {
+    if (code === locale) {
+      setOpen(false);
+      return;
+    }
     rememberLocale(code);
-    // Keep ?level=&unit= and #anchors — the switch shouldn't lose your place.
-    router.replace(`${pathname}${window.location.search}${window.location.hash}`, { locale: code });
+    setPendingLabel(label);
     setOpen(false);
+    startTransition(() => {
+      // Keep ?level=&unit= and #anchors — the switch shouldn't lose your place.
+      router.replace(`${pathname}${window.location.search}${window.location.hash}`, { locale: code });
+    });
   };
 
   const currentLang = [...LANGUAGES, ...HIDDEN_LANGUAGES].find((l) => l.code === locale) || LANGUAGES[0];
@@ -104,10 +115,20 @@ function LanguageSwitcher({ pathname, locale }: { pathname: string; locale: stri
   return (
     <div className="relative">
       <button
-        onClick={() => setOpen(!open)}
-        className="w-full flex items-center justify-between gap-2 px-2.5 py-2 text-[13.5px] rounded-[9px] text-charcoal font-medium hover:bg-cream transition-colors text-left"
+        onClick={() => !isPending && setOpen(!open)}
+        disabled={isPending}
+        aria-busy={isPending}
+        className="w-full flex items-center justify-between gap-2 px-2.5 py-2 text-[13.5px] rounded-[9px] text-charcoal font-medium hover:bg-cream transition-colors text-left disabled:opacity-70"
       >
-        <span className="truncate">Language</span>
+        <span className="truncate flex items-center gap-1.5">
+          {isPending && (
+            <span
+              className="inline-block w-3 h-3 rounded-full border-2 border-line border-t-success-deep animate-spin flex-none"
+              aria-hidden="true"
+            />
+          )}
+          {isPending ? `${pendingLabel}…` : "Language"}
+        </span>
         <span className="text-xs">▼</span>
       </button>
 
@@ -119,7 +140,7 @@ function LanguageSwitcher({ pathname, locale }: { pathname: string; locale: stri
           {LANGUAGES.map((lang) => (
             <button
               key={lang.code}
-              onClick={() => handleLanguageChange(lang.code)}
+              onClick={() => handleLanguageChange(lang.code, lang.label)}
               className={`w-full text-left px-2.5 py-2 text-[13px] rounded-[9px] transition-colors ${
                 locale === lang.code
                   ? "bg-success-deep/10 text-success-deep font-bold"
