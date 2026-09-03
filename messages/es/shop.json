@@ -54,6 +54,7 @@
     "owned": "En propiedad",
     "locked": "🔒 Nv.{level}",
     "price": "🪙 {price}",
+    "free": "Gratis",
     "goal": "· tu meta · {ready, select, yes {ya puedes comprarlo} other {te faltan {n}}}{hasLevel, select, yes { · Nv.{level}} other {}}",
     "setGoal": "Fijar como meta"
   },

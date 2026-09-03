@@ -12,10 +12,8 @@
   "guided": {
     "waitLabel": "Chạm vào điểm được tô sáng",
     "hangul-nav": {
-      "askTitle": "Thử Hangul trước nhé?",
-      "askBody": "Hangul là bảng chữ cái tiếng Hàn — thứ đầu tiên cần học. Muốn xem thử không?",
-      "title": "Chạm vào Hangul",
-      "body": "Nó ở ngay đây trong menu — chạm để mở bảng chữ cái."
+      "title": "Thử Hangul trước nhé?",
+      "body": "Hangul là bảng chữ cái tiếng Hàn — thứ đầu tiên cần học. Chạm Hangul trong menu để xem."
     },
     "hangul-pick": {
       "title": "Chạm vào ㄱ",
@@ -26,10 +24,8 @@
       "body": "Ô này vẽ chữ cái từng nét một. Chạm để xem lại và nghe thêm lần nữa."
     },
     "hangul-nav-vocab": {
-      "askTitle": "Giờ xem Từ vựng nhé?",
-      "askBody": "Đó là nơi bạn học từ thật, theo từng chương.",
-      "title": "Chạm vào Từ vựng",
-      "body": "Nó ở trong menu — chạm để đi tới."
+      "title": "Giờ xem Từ vựng nhé?",
+      "body": "Đây là nơi bạn học từ thật, theo từng chương. Chạm Từ vựng trong menu."
     },
     "vocab-chapter": {
       "title": "Chương",
@@ -56,10 +52,8 @@
       "body": "Thêm vào Từ của tôi sẽ lưu từ vào kho từ cá nhân để bạn ôn bất cứ lúc nào."
     },
     "writing-nav": {
-      "askTitle": "Bắt đầu với phần Viết nhé?",
-      "askBody": "Bạn đã biết Hangul rồi, nên hãy vào thẳng phần ghép câu thật. Muốn xem thử không?",
-      "title": "Chạm vào Viết",
-      "body": "Nó ở ngay đây trong menu — chạm để mở phần Viết."
+      "title": "Bắt đầu với Viết nhé?",
+      "body": "Bạn đã biết Hangul rồi, nên ta ghép câu thật luôn. Chạm Viết trong menu."
     },
     "writing-level": {
       "title": "Bạn đang ở cấp {level}!",
@@ -90,30 +84,28 @@
       "body": "Nghe, Phát âm, Đọc — trong này còn nhiều thứ để thử bất cứ khi nào bạn muốn."
     },
     "shop-nav": {
-      "askTitle": "À, còn một điều nữa — ghé xem Cửa hàng chứ?",
-      "askBody": "Dùng xu bạn kiếm được để mua trang phục cho cây của mình.",
-      "title": "Chạm vào Cửa hàng",
-      "body": "Nó ở trong menu — chạm để mở cửa hàng."
+      "title": "À, còn một điều nữa — ghé xem Cửa hàng chứ?",
+      "body": "Có một món quà chào mừng đang đợi bạn ở đó. Chạm Cửa hàng trong menu."
     },
     "shop-coins": {
       "title": "Xu của bạn",
-      "body": "Đây là số dư. Nhiệm vụ hằng ngày và lên cấp sẽ cho thêm xu."
+      "body": "Bạn bắt đầu với 100 xu chào mừng. Nhiệm vụ hằng ngày và lên cấp sẽ cho thêm."
     },
     "shop-tabs": {
       "title": "Danh mục",
       "body": "Mũ, mặt, hào quang, bầu trời, mặt đất, bạn bè — mỗi loại có tab riêng."
     },
     "shop-pick": {
-      "title": "Thử một món",
-      "body": "Chạm một món để xem trước trên cây của bạn."
+      "title": "Quà chào mừng 🎁",
+      "body": "Món này chúng tôi tặng — miễn phí. Chạm để thử lên cây của bạn."
     },
     "shop-tryon": {
       "title": "Xem trước",
       "body": "Cây của bạn hiện món bạn chọn trước khi mua."
     },
     "shop-cta": {
-      "title": "Mua & mặc",
-      "body": "Thích rồi thì nút này sẽ mua và mặc lên cây."
+      "title": "Nhận lấy nào",
+      "body": "Chạm Nhận và mặc, chiếc nơ là của bạn — miễn phí, lên thẳng cây của bạn."
     },
     "finish": {
       "title": "Bạn đã hoàn thành hướng dẫn! 🎉",
@@ -154,7 +146,6 @@
       "body": "Mỗi ngày học sẽ thêm một ô. Giữ chuỗi ngày học liên tục."
     }
   },
-  "keepGoing": "Tiếp tục",
   "letsGo": "Bắt đầu",
   "finish": "Hoàn thành"
 }

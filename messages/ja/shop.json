@@ -54,6 +54,7 @@
     "owned": "所持済み",
     "locked": "🔒 Lv.{level}",
     "price": "🪙 {price}",
+    "free": "無料",
     "goal": "· 目標 · {ready, select, yes {購入できます} other {あと {n}}}{hasLevel, select, yes { · Lv.{level}} other {}}",
     "setGoal": "目標にする"
   },

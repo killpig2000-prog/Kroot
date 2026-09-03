@@ -54,6 +54,7 @@
     "owned": "Đã có",
     "locked": "🔒 Lv.{level}",
     "price": "🪙 {price}",
+    "free": "Miễn phí",
     "goal": "· mục tiêu của bạn · {ready, select, yes {mua được rồi} other {còn thiếu {n}}}{hasLevel, select, yes { · Lv.{level}} other {}}",
     "setGoal": "Đặt làm mục tiêu"
   },

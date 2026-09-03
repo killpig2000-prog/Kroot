@@ -54,6 +54,7 @@
     "owned": "已拥有",
     "locked": "🔒 Lv.{level}",
     "price": "🪙 {price}",
+    "free": "免费",
     "goal": "· 你的目标 · {ready, select, yes {可以买了} other {还差 {n}}}{hasLevel, select, yes { · Lv.{level}} other {}}",
     "setGoal": "设为目标"
   },

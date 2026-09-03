@@ -54,6 +54,7 @@
     "owned": "Owned",
     "locked": "🔒 Lv.{level}",
     "price": "🪙 {price}",
+    "free": "Free",
     "goal": "· your goal · {ready, select, yes {ready to buy} other {{n} to go}}{hasLevel, select, yes { · Lv.{level}} other {}}",
     "setGoal": "Set as goal"
   },

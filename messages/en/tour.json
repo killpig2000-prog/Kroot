@@ -12,10 +12,8 @@
   "guided": {
     "waitLabel": "Tap the highlighted spot",
     "hangul-nav": {
-      "askTitle": "Shall we try Hangul first?",
-      "askBody": "Hangul is the Korean alphabet — the very first thing to learn. Want to have a look?",
-      "title": "Tap Hangul",
-      "body": "It's right here in the menu — tap it to open the alphabet."
+      "title": "Shall we try Hangul first?",
+      "body": "Hangul is the Korean alphabet — the very first thing to learn. Tap Hangul in the menu to have a look."
     },
     "hangul-pick": {
       "title": "Tap ㄱ",
@@ -26,10 +24,8 @@
       "body": "This box draws the letter stroke by stroke. Tap it to watch again and hear it — then we'll move on."
     },
     "hangul-nav-vocab": {
-      "askTitle": "Now, shall we look at Vocabulary?",
-      "askBody": "That's where you'll learn real words, chapter by chapter.",
-      "title": "Tap Vocabulary",
-      "body": "It's in the menu — tap it to go there."
+      "title": "Now, shall we look at Vocabulary?",
+      "body": "That's where you'll learn real words, chapter by chapter. Tap Vocabulary in the menu."
     },
     "vocab-chapter": {
       "title": "Chapters",
@@ -56,10 +52,8 @@
       "body": "Add to My Words keeps a word in your personal word bank so you can review it any time."
     },
     "writing-nav": {
-      "askTitle": "Shall we start with Writing?",
-      "askBody": "You already know Hangul, so let's jump straight into building real sentences. Want to have a look?",
-      "title": "Tap Writing",
-      "body": "It's right here in the menu — tap it to open Writing."
+      "title": "Shall we start with Writing?",
+      "body": "You already know Hangul, so let's build real sentences. Tap Writing in the menu."
     },
     "writing-level": {
       "title": "You're at level {level}!",
@@ -90,30 +84,28 @@
       "body": "Listening, Pronunciation, Reading — there's plenty more in here to try whenever you like."
     },
     "shop-nav": {
-      "askTitle": "Oh, one more thing — want a peek at the Shop?",
-      "askBody": "Spend the coins you earn on outfits for your tree.",
-      "title": "Tap Shop",
-      "body": "It's in the menu — tap it to open the shop."
+      "title": "Oh, one more thing — want a peek at the Shop?",
+      "body": "There's a welcome gift waiting for you there. Tap Shop in the menu."
     },
     "shop-coins": {
       "title": "Your coins",
-      "body": "This is your balance. Daily quests and level-ups earn you more."
+      "body": "You start with 100 welcome coins. Daily quests and level-ups earn you more."
     },
     "shop-tabs": {
       "title": "Categories",
       "body": "Hats, faces, auras, sky, ground, friends — every kind of item has its own tab."
     },
     "shop-pick": {
-      "title": "Try one on",
-      "body": "Tap an item to preview it on your tree."
+      "title": "A welcome gift 🎁",
+      "body": "This one's on us — it's free. Tap it to try it on your tree."
     },
     "shop-tryon": {
       "title": "Try-on preview",
       "body": "Your tree shows what you've picked before you buy anything."
     },
     "shop-cta": {
-      "title": "Buy & wear",
-      "body": "When you like the look, this button buys it and puts it on your tree."
+      "title": "Make it yours",
+      "body": "Tap Claim & wear and the bow is yours — free, and straight onto your tree."
     },
     "finish": {
       "title": "You made it through the tutorial! 🎉",
@@ -154,7 +146,6 @@
       "body": "Every study day adds a tile. Keep the streak alive."
     }
   },
-  "keepGoing": "Keep going",
   "letsGo": "Let's go",
   "finish": "Finish"
 }

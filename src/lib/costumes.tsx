@@ -499,6 +499,26 @@ const RIBBON_COSTUMES: Costume[] = RIBBONS.map((r) => ({
 }));
 
 export const COSTUMES: Costume[] = [
+  // The welcome gift: free, first in Hats, and what the guided tour has a
+  // brand-new learner claim so the shop's buy-and-wear loop has been done
+  // once for real. Stays in the catalog for anyone who skipped the tour.
+  {
+    id: "welcome-bow",
+    name: "Welcome Bow",
+    krName: "선물 리본",
+    slot: "hat",
+    price: 0,
+    rarity: "common",
+    render: () => (
+      <>
+        <path d="M-3 0 C-13 -13 -27 -7 -18 3 C-27 12 -13 17 -3 3 Z" fill="#F0668A" />
+        <path d="M3 0 C13 -13 27 -7 18 3 C27 12 13 17 3 3 Z" fill="#F0668A" />
+        <path d="M-9 6 L-14 18 L-6 14 Z" fill="#E04F73" />
+        <path d="M9 6 L14 18 L6 14 Z" fill="#E04F73" />
+        <circle cx="0" cy="2" r="5" fill="#C93A5E" />
+      </>
+    ),
+  },
   {
     id: "straw-hat",
     name: "Straw Hat",

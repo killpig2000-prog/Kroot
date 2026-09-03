@@ -12,10 +12,8 @@
   "guided": {
     "waitLabel": "Toca el punto resaltado",
     "hangul-nav": {
-      "askTitle": "¿Empezamos por el Hangul?",
-      "askBody": "El Hangul es el alfabeto coreano: lo primero que se aprende. ¿Le echamos un vistazo?",
-      "title": "Toca Hangul",
-      "body": "Está aquí en el menú: tócalo para abrir el alfabeto."
+      "title": "¿Empezamos por el Hangul?",
+      "body": "El Hangul es el alfabeto coreano, lo primero que se aprende. Toca Hangul en el menú para verlo."
     },
     "hangul-pick": {
       "title": "Toca ㄱ",
@@ -26,10 +24,8 @@
       "body": "Este recuadro dibuja la letra trazo a trazo. Tócalo para verlo otra vez y escucharla de nuevo."
     },
     "hangul-nav-vocab": {
-      "askTitle": "¿Vemos ahora el Vocabulario?",
-      "askBody": "Ahí aprenderás palabras reales, capítulo a capítulo.",
-      "title": "Toca Vocabulario",
-      "body": "Está en el menú: tócalo para ir."
+      "title": "¿Ahora vemos el Vocabulario?",
+      "body": "Ahí aprenderás palabras reales, capítulo a capítulo. Toca Vocabulario en el menú."
     },
     "vocab-chapter": {
       "title": "Capítulos",
@@ -56,10 +52,8 @@
       "body": "Añadir a Mis palabras la guarda en tu banco personal para repasarla cuando quieras."
     },
     "writing-nav": {
-      "askTitle": "¿Empezamos con Escritura?",
-      "askBody": "Ya conoces el Hangul, así que vamos directo a formar frases reales. ¿Quieres verlo?",
-      "title": "Toca Escritura",
-      "body": "Está aquí en el menú — tócalo para abrir Escritura."
+      "title": "¿Empezamos con Escritura?",
+      "body": "Ya conoces el Hangul, así que vamos a construir frases de verdad. Toca Escritura en el menú."
     },
     "writing-level": {
       "title": "¡Estás en el nivel {level}!",
@@ -90,30 +84,28 @@
       "body": "Escucha, Pronunciación, Lectura: aquí hay mucho más para probar cuando quieras."
     },
     "shop-nav": {
-      "askTitle": "Ah, una cosa más: ¿echamos un vistazo a la Tienda?",
-      "askBody": "Gasta las monedas que ganes en atuendos para tu árbol.",
-      "title": "Toca Tienda",
-      "body": "Está en el menú: tócala para abrir la tienda."
+      "title": "Ah, una cosa más: ¿echamos un vistazo a la Tienda?",
+      "body": "Allí te espera un regalo de bienvenida. Toca Tienda en el menú."
     },
     "shop-coins": {
       "title": "Tus monedas",
-      "body": "Este es tu saldo. Las misiones diarias y subir de nivel te dan más."
+      "body": "Empiezas con 100 monedas de bienvenida. Las misiones diarias y subir de nivel te dan más."
     },
     "shop-tabs": {
       "title": "Categorías",
       "body": "Sombreros, caras, auras, cielo, suelo, amigos: cada tipo tiene su pestaña."
     },
     "shop-pick": {
-      "title": "Pruébate uno",
-      "body": "Toca un artículo para verlo en tu árbol."
+      "title": "Un regalo de bienvenida 🎁",
+      "body": "Este corre por nuestra cuenta: es gratis. Tócalo para probárselo a tu árbol."
     },
     "shop-tryon": {
       "title": "Vista previa",
       "body": "Tu árbol muestra lo que has elegido antes de comprar nada."
     },
     "shop-cta": {
-      "title": "Comprar y ponerse",
-      "body": "Cuando te guste, este botón lo compra y se lo pone a tu árbol."
+      "title": "Hazlo tuyo",
+      "body": "Toca Reclamar y usar y el lazo es tuyo: gratis y directo a tu árbol."
     },
     "finish": {
       "title": "¡Has terminado el tutorial! 🎉",
@@ -154,7 +146,6 @@
       "body": "Cada día de estudio añade una casilla. Mantén viva la racha."
     }
   },
-  "keepGoing": "Continuar",
   "letsGo": "Vamos",
   "finish": "Terminar"
 }

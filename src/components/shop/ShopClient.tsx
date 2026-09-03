@@ -26,6 +26,7 @@ import ShopGoal, { useStoredGoal, writeStoredGoal } from "@/components/shop/Shop
 import GuidedStep from "@/components/onboarding/GuidedStep";
 import { currentGuidedStep } from "@/components/onboarding/guidedSteps";
 
+const WELCOME_GIFT_ID = "welcome-bow";
 const DEFAULT_SKY = "linear-gradient(180deg,#DFF1FF 0%,#F0FBF1 62%,#E4F3DA 100%)";
 const RARITY_STYLE: Record<Rarity, { chip: string }> = {
   common: { chip: "bg-warm text-muted" },
@@ -108,9 +109,8 @@ export default function ShopClient({
   const now = useMemo(() => new Date(today), [today]);
 
   const [tab, setTab] = useState<CostumeSlot>(tutorial ? "hat" : "aura");
-  // The guided tour spotlights visible[0] on whatever tab is open — steer it
-  // onto Hats, where the cheapest common items live (78-82 coins, affordable
-  // on the 100-coin signup balance), instead of Aura's 145-coin opener. Runs
+  // The guided tour spotlights the welcome gift, which lives in Hats — steer
+  // the tab there so the target exists whatever tab was open last. Runs
   // after mount (not in the initializer above) so server and client agree on
   // the first paint — localStorage isn't available during SSR.
   useEffect(() => {
@@ -433,7 +433,9 @@ export default function ShopClient({
                 );
               else
                 price = (
-                  <span className="text-[12.5px] font-extrabold tabular-nums">{t("card.price", { price: c.price })}</span>
+                  <span className="text-[12.5px] font-extrabold tabular-nums">
+                    {c.price === 0 ? t("card.free") : t("card.price", { price: c.price })}
+                  </span>
                 );
               // Only items you could save for get the goal control.
               const goalable = !isOwned && !isAdmin && c.price > 0;
@@ -448,7 +450,7 @@ export default function ShopClient({
                 >
                   <button
                     type="button"
-                    data-tour={c === visible[0] ? "guided-shop-first-item" : undefined}
+                    data-tour={c.id === WELCOME_GIFT_ID ? "guided-shop-gift" : undefined}
                     onClick={() => toggle(c)}
                     aria-pressed={on}
                     className="block w-full text-left"

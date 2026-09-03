@@ -56,7 +56,6 @@ export default function GuidedStep({ step }: { step: GuidedStepKey }) {
   const [active, setActive] = useState(false);
   const [rect, setRect] = useState<SpotlightRect | null>(null);
   const [isReveal, setIsReveal] = useState(false);
-  const [asking, setAsking] = useState(false);
   // Copy variables read off the spotlit element (data-tour-level → {level}).
   const [vars, setVars] = useState<Record<string, string>>({});
   const frame = useRef<number | null>(null);
@@ -76,7 +75,6 @@ export default function GuidedStep({ step }: { step: GuidedStepKey }) {
     const on = cur === step;
     setActive(on);
     if (on) {
-      setAsking(mode === "ask");
       // Read copy variables now, in the same batch as activation, so the
       // first render already has them — the bind in the measure loop runs
       // a frame later, which is one frame of an unformatted "{level}".
@@ -241,25 +239,17 @@ export default function GuidedStep({ step }: { step: GuidedStepKey }) {
     </button>
   );
 
-  let title = t(`guided.${step}.title`, vars);
-  let body = t(`guided.${step}.body`, vars);
+  const title = t(`guided.${step}.title`, vars);
+  const body = t(`guided.${step}.body`, vars);
   let footerLeft: ReactNode = null;
   let actions: ReactNode = null;
 
-  if (mode === "ask" && asking) {
-    // "Shall we go on to X?" — the only point Skip is offered: once Keep
-    // going commits to a category (Hangul, Shop), the walkthrough runs to
-    // that category's end with no way out but finishing it.
-    title = t(`guided.${step}.askTitle`);
-    body = t(`guided.${step}.askBody`);
-    actions = (
-      <>
-        {skipBtn}
-        <button type="button" onClick={() => setAsking(false)} className={PRIMARY_BTN}>
-          {t("keepGoing")}
-        </button>
-      </>
-    );
+  if (mode === "ask") {
+    // "Shall we go on to X? Tap it" — the only point Skip is offered: once
+    // they tap into a category (Hangul, Writing, Shop), the walkthrough runs
+    // to that category's end with no way out but finishing it.
+    footerLeft = <WaitHint label={t("guided.waitLabel")} />;
+    actions = skipBtn;
   } else if (mode === "info") {
     actions = (
       <button type="button" onClick={advance} className={PRIMARY_BTN}>

@@ -50,10 +50,9 @@ export type GuidedStepKey =
 //  - "click": waits for a real click on the spotlit element (the default).
 //  - "info":  a "Next" button — the element is only pointed at, though a real
 //             click on it advances too so nobody gets stuck.
-//  - "ask":   first "Skip / Keep going" (do you want to go on to X?), and
-//             once they keep going it turns into a "click" step on the same
-//             element ("now tap X"). A click during the ask phase also
-//             counts.
+//  - "ask":   a "click" step that also offers Skip — "shall we go on to X?
+//             tap it in the menu" — the only place the walkthrough can be
+//             left. (Used to be two cards, ask then tap; merged.)
 //  - "watch": no button and no click gate — the step advances by itself the
 //             moment GUIDED_ADVANCE_WHEN's selector matches (e.g. the
 //             sentence board is full). Used where the learner has to do
@@ -77,7 +76,6 @@ export const GUIDED_MODE: Partial<Record<GuidedStepKey, GuidedMode>> = {
   "shop-coins": "info",
   "shop-tabs": "info",
   "shop-tryon": "info",
-  "shop-cta": "info",
   finish: "info",
 };
 
@@ -108,7 +106,7 @@ export const GUIDED_TARGET: Record<GuidedStepKey, string | null> = {
   "shop-nav": "guided-nav-shop",
   "shop-coins": "guided-shop-coins",
   "shop-tabs": "guided-shop-tabs",
-  "shop-pick": "guided-shop-first-item",
+  "shop-pick": "guided-shop-gift",
   "shop-tryon": "guided-shop-tryon",
   "shop-cta": "guided-shop-cta",
   finish: null,
@@ -128,6 +126,9 @@ export const GUIDED_ADVANCE_WHEN: Partial<Record<GuidedStepKey, string>> = {
 
 export const GUIDED_ADVANCE_DELAY_MS: Partial<Record<GuidedStepKey, number>> = {
   "hangul-stroke": 2000,
+  // "shop-cta": the tap claims the welcome gift — let the tree put it on and
+  // the "yours!" message land before the farewell card covers everything.
+  "shop-cta": 1800,
 };
 
 // The real Vocabulary nav link just goes to "/vocabulary", which lands on
@@ -160,7 +161,7 @@ export const GUIDED_MOBILE_REVEAL: Partial<Record<GuidedStepKey, string>> = {
   "shop-nav": "tab-more",
 };
 
-// i18n keys under tour.guided.<step>.{title,body} (+ .ask for "ask" steps)
+// i18n keys under tour.guided.<step>.{title,body}
 const SHOP_TAIL: GuidedStepKey[] = [
   "shop-nav",
   "shop-coins",
