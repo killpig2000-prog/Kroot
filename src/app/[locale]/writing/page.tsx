@@ -102,7 +102,6 @@ export default async function WritingMapPage({
 
 
           <GuidedStep step="writing-level" />
-          <GuidedStep step="writing-groups" />
           <GuidedStep step="writing-chapter" />
 
           <LevelTabs

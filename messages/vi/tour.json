@@ -28,24 +28,16 @@
       "body": "Đây là nơi bạn học từ thật, theo từng chương. Chạm Từ vựng trong menu."
     },
     "vocab-chapter": {
-      "title": "Chương",
-      "body": "Từ vựng chia thành các chương 50 từ. Chọn bất kỳ chương nào ở đây."
-    },
-    "vocab-days": {
-      "title": "Mỗi chương năm ngày",
-      "body": "Mỗi chương chia thành Day 1–5, mười từ mỗi ngày — lượng vừa phải mỗi ngày."
+      "title": "Chương, mỗi chương năm ngày",
+      "body": "Từ vựng chia thành các chương 50 từ, mỗi chương chia thành Day 1–5, mười từ mỗi ngày — lượng vừa phải. Chọn bất kỳ chương nào ở đây."
     },
     "vocab-word": {
       "title": "Mở từ đầu tiên",
       "body": "Chạm vào từ đầu tiên của Day 1 để xem kỹ."
     },
-    "word-box": {
-      "title": "Thẻ từ",
-      "body": "Đây là từ, nghĩa và câu ví dụ. Chạm 🔊 để nghe."
-    },
     "word-goti": {
       "title": "Đọc xong rồi chạm Got it",
-      "body": "Dành một giây với từ này, rồi chạm Got it — từ sẽ bắt đầu tiến lên các hộp ôn tập của bạn."
+      "body": "Đây là từ, nghĩa và câu ví dụ — chạm 🔊 để nghe. Dành một giây với từ này, rồi chạm Got it — từ sẽ bắt đầu tiến lên các hộp ôn tập của bạn."
     },
     "word-bank": {
       "title": "Lưu lại để sau",
@@ -57,11 +49,7 @@
     },
     "writing-level": {
       "title": "Bạn đang ở cấp {level}!",
-      "body": "Phần Viết được xếp theo cấp độ, và cấp của bạn được đánh dấu ở đây. Trong phần hướng dẫn này ta sẽ làm một chương A1 dễ, chỉ để biết cách hoạt động."
-    },
-    "writing-groups": {
-      "title": "Chương theo thể loại",
-      "body": "Mỗi hộp là một thể loại — nhật ký, ý kiến, miêu tả, trả lời. Mở một hộp để xem các chương bên trong."
+      "body": "Phần Viết được xếp theo cấp độ và thể loại — nhật ký, ý kiến, miêu tả, trả lời — cấp của bạn được đánh dấu ở đây. Trong phần hướng dẫn này ta sẽ làm một chương A1 dễ, chỉ để biết cách hoạt động."
     },
     "writing-chapter": {
       "title": "Thử Chương 1 nhé?",
@@ -89,23 +77,15 @@
     },
     "shop-coins": {
       "title": "Xu của bạn",
-      "body": "Bạn bắt đầu với 100 xu chào mừng. Nhiệm vụ hằng ngày và lên cấp sẽ cho thêm."
-    },
-    "shop-tabs": {
-      "title": "Danh mục",
-      "body": "Mũ, mặt, hào quang, bầu trời, mặt đất, bạn bè — mỗi loại có tab riêng."
+      "body": "Bạn bắt đầu với 100 xu chào mừng — nhiệm vụ hằng ngày và lên cấp sẽ cho thêm. Mũ, mặt, hào quang, bầu trời, mặt đất, bạn bè — mỗi loại có tab riêng ở trên."
     },
     "shop-pick": {
       "title": "Quà chào mừng 🎁",
       "body": "Món này chúng tôi tặng — miễn phí. Chạm để thử lên cây của bạn."
     },
-    "shop-tryon": {
-      "title": "Xem trước",
-      "body": "Cây của bạn hiện món bạn chọn trước khi mua."
-    },
     "shop-cta": {
       "title": "Nhận lấy nào",
-      "body": "Chạm Nhận và mặc, chiếc nơ là của bạn — miễn phí, lên thẳng cây của bạn."
+      "body": "Cây của bạn đã hiện món bạn chọn, trước cả khi mua. Chạm Nhận và mặc, chiếc nơ là của bạn — miễn phí, lên thẳng cây của bạn."
     },
     "finish": {
       "title": "Bạn đã hoàn thành hướng dẫn! 🎉",

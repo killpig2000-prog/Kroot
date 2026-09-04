@@ -28,24 +28,16 @@
       "body": "Ahí aprenderás palabras reales, capítulo a capítulo. Toca Vocabulario en el menú."
     },
     "vocab-chapter": {
-      "title": "Capítulos",
-      "body": "El vocabulario se divide en capítulos de 50 palabras. Elige el que quieras aquí arriba."
-    },
-    "vocab-days": {
-      "title": "Cinco días por capítulo",
-      "body": "Cada capítulo se reparte en Día 1–5, diez palabras al día: una ración cómoda."
+      "title": "Capítulos de cinco días",
+      "body": "El vocabulario se divide en capítulos de 50 palabras, repartidos en Día 1–5, diez palabras al día: una ración cómoda. Elige el que quieras aquí arriba."
     },
     "vocab-word": {
       "title": "Abre la primera palabra",
       "body": "Toca la primera palabra del Día 1 para verla de cerca."
     },
-    "word-box": {
-      "title": "La tarjeta de la palabra",
-      "body": "Aquí tienes la palabra, su significado y una frase de ejemplo. Toca 🔊 para escucharlo."
-    },
     "word-goti": {
       "title": "Léela y toca Got it",
-      "body": "Tómate un segundo con la palabra y luego toca Got it: así empieza a subir por tus cajas de repaso."
+      "body": "Aquí tienes la palabra, su significado y una frase de ejemplo — toca 🔊 para escucharlo. Tómate un segundo con ella y luego toca Got it: así empieza a subir por tus cajas de repaso."
     },
     "word-bank": {
       "title": "Guárdala para después",
@@ -57,11 +49,7 @@
     },
     "writing-level": {
       "title": "¡Estás en el nivel {level}!",
-      "body": "Escritura está ordenada por nivel y el tuyo aparece marcado aquí. Para este recorrido haremos un capítulo fácil de A1, solo para ver cómo funciona."
-    },
-    "writing-groups": {
-      "title": "Capítulos por género",
-      "body": "Cada caja es un género: diario, opinión, descripción, respuestas. Abre una caja para ver sus capítulos."
+      "body": "Escritura está ordenada por nivel y género — diario, opinión, descripción, respuestas — y el tuyo aparece marcado aquí. Para este recorrido haremos un capítulo fácil de A1, solo para ver cómo funciona."
     },
     "writing-chapter": {
       "title": "¿Probamos el capítulo 1?",
@@ -89,23 +77,15 @@
     },
     "shop-coins": {
       "title": "Tus monedas",
-      "body": "Empiezas con 100 monedas de bienvenida. Las misiones diarias y subir de nivel te dan más."
-    },
-    "shop-tabs": {
-      "title": "Categorías",
-      "body": "Sombreros, caras, auras, cielo, suelo, amigos: cada tipo tiene su pestaña."
+      "body": "Empiezas con 100 monedas de bienvenida; las misiones diarias y subir de nivel te dan más. Sombreros, caras, auras, cielo, suelo, amigos: cada tipo tiene su pestaña arriba."
     },
     "shop-pick": {
       "title": "Un regalo de bienvenida 🎁",
       "body": "Este corre por nuestra cuenta: es gratis. Tócalo para probárselo a tu árbol."
     },
-    "shop-tryon": {
-      "title": "Vista previa",
-      "body": "Tu árbol muestra lo que has elegido antes de comprar nada."
-    },
     "shop-cta": {
       "title": "Hazlo tuyo",
-      "body": "Toca Reclamar y usar y el lazo es tuyo: gratis y directo a tu árbol."
+      "body": "Tu árbol ya muestra lo que has elegido, antes de comprar nada. Toca Reclamar y usar y el lazo es tuyo: gratis y directo a tu árbol."
     },
     "finish": {
       "title": "¡Has terminado el tutorial! 🎉",

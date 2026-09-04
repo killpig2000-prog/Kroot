@@ -41,7 +41,7 @@ function findVisible(selector: string): HTMLElement | null {
 
 // One step of the post-tour guided walkthrough. Mount one of these per real
 // step-target on a page (a page can host more than one, e.g. the word-detail
-// page hosts "word-box", "word-bank" and "shop-nav"); each checks
+// page hosts "word-goti", "word-bank" and "shop-nav"); each checks
 // localStorage itself and renders nothing unless it's the active step.
 //
 // Three shapes (see GUIDED_MODE): a click-gated step advances on the real

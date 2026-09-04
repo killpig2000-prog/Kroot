@@ -263,9 +263,7 @@ export default function ShopClient({
   return (
     <div className="border border-line rounded-[14px] bg-cream overflow-hidden max-w-[1040px]">
       <GuidedStep step="shop-coins" />
-      <GuidedStep step="shop-tabs" />
       <GuidedStep step="shop-pick" />
-      <GuidedStep step="shop-tryon" />
       <GuidedStep step="shop-cta" />
       <GuidedStep step="finish" />
       {tutorial && !tutorialBought && (

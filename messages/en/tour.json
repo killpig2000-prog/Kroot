@@ -28,24 +28,16 @@
       "body": "That's where you'll learn real words, chapter by chapter. Tap Vocabulary in the menu."
     },
     "vocab-chapter": {
-      "title": "Chapters",
-      "body": "Vocabulary is split into chapters of 50 words. Pick any one up here."
-    },
-    "vocab-days": {
-      "title": "Five days per chapter",
-      "body": "Each chapter is broken into Day 1–5, ten words a day — a comfortable daily bite."
+      "title": "Chapters, five days each",
+      "body": "Vocabulary is split into chapters of 50 words — each broken into Day 1–5, ten words a day, a comfortable daily bite. Pick any chapter up here."
     },
     "vocab-word": {
       "title": "Open the first word",
       "body": "Tap the first word of Day 1 to see it up close."
     },
-    "word-box": {
-      "title": "The word card",
-      "body": "Here's the word, its meaning, and an example sentence. Tap the 🔊 to hear any of it."
-    },
     "word-goti": {
       "title": "Read it, then tap Got it",
-      "body": "Take a second with the word, then tap Got it — that's how a word starts moving up your review boxes."
+      "body": "Here's the word, its meaning, and an example sentence — tap the 🔊 to hear any of it. Take a second with it, then tap Got it, that's how a word starts moving up your review boxes."
     },
     "word-bank": {
       "title": "Save it for later",
@@ -57,11 +49,7 @@
     },
     "writing-level": {
       "title": "You're at level {level}!",
-      "body": "Writing is sorted by level, and yours is marked here. For this walkthrough we'll do an easy A1 chapter, just to learn how it works."
-    },
-    "writing-groups": {
-      "title": "Chapters, by genre",
-      "body": "Each box is one genre — journal, opinion, description, replies. Open a box to see its chapters."
+      "body": "Writing is sorted by level and genre — journal, opinion, description, replies. Yours is marked here; for this walkthrough we'll do an easy A1 chapter, just to learn how it works."
     },
     "writing-chapter": {
       "title": "Shall we try Chapter 1?",
@@ -89,23 +77,15 @@
     },
     "shop-coins": {
       "title": "Your coins",
-      "body": "You start with 100 welcome coins. Daily quests and level-ups earn you more."
-    },
-    "shop-tabs": {
-      "title": "Categories",
-      "body": "Hats, faces, auras, sky, ground, friends — every kind of item has its own tab."
+      "body": "You start with 100 welcome coins — daily quests and level-ups earn you more. Hats, faces, auras, sky, ground, friends: every kind of item has its own tab up top."
     },
     "shop-pick": {
       "title": "A welcome gift 🎁",
       "body": "This one's on us — it's free. Tap it to try it on your tree."
     },
-    "shop-tryon": {
-      "title": "Try-on preview",
-      "body": "Your tree shows what you've picked before you buy anything."
-    },
     "shop-cta": {
       "title": "Make it yours",
-      "body": "Tap Claim & wear and the bow is yours — free, and straight onto your tree."
+      "body": "Your tree already shows what you've picked, before you buy anything. Tap Claim & wear and the bow is yours — free, straight onto your tree."
     },
     "finish": {
       "title": "You made it through the tutorial! 🎉",

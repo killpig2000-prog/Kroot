@@ -25,14 +25,11 @@ export type GuidedStepKey =
   | "hangul-stroke"
   | "hangul-nav-vocab"
   | "vocab-chapter"
-  | "vocab-days"
   | "vocab-word"
-  | "word-box"
   | "word-goti"
   | "word-bank"
   | "writing-nav"
   | "writing-level"
-  | "writing-groups"
   | "writing-chapter"
   | "writing-board"
   | "writing-check"
@@ -40,9 +37,7 @@ export type GuidedStepKey =
   | "practice-more"
   | "shop-nav"
   | "shop-coins"
-  | "shop-tabs"
   | "shop-pick"
-  | "shop-tryon"
   | "shop-cta"
   | "finish";
 
@@ -63,19 +58,14 @@ export const GUIDED_MODE: Partial<Record<GuidedStepKey, GuidedMode>> = {
   "hangul-nav": "ask",
   "hangul-nav-vocab": "ask",
   "vocab-chapter": "info",
-  "vocab-days": "info",
-  "word-box": "info",
   "word-bank": "info",
   "writing-nav": "ask",
   "writing-level": "info",
-  "writing-groups": "info",
   "writing-board": "watch",
   "writing-result": "info",
   "practice-more": "info",
   "shop-nav": "ask",
   "shop-coins": "info",
-  "shop-tabs": "info",
-  "shop-tryon": "info",
   finish: "info",
 };
 
@@ -90,14 +80,11 @@ export const GUIDED_TARGET: Record<GuidedStepKey, string | null> = {
   "hangul-stroke": "guided-hangul-stroke",
   "hangul-nav-vocab": "guided-nav-vocabulary",
   "vocab-chapter": "guided-vocab-chapters",
-  "vocab-days": "guided-vocab-days",
   "vocab-word": "guided-vocab-first-word",
-  "word-box": "guided-word-box",
   "word-goti": "guided-word-goti",
   "word-bank": "guided-word-bank",
   "writing-nav": "guided-nav-writing",
   "writing-level": "guided-writing-level",
-  "writing-groups": "guided-writing-groups",
   "writing-chapter": "guided-writing-chapter",
   "writing-board": "guided-writing-board",
   "writing-check": "guided-writing-check",
@@ -105,9 +92,7 @@ export const GUIDED_TARGET: Record<GuidedStepKey, string | null> = {
   "practice-more": "section-practice",
   "shop-nav": "guided-nav-shop",
   "shop-coins": "guided-shop-coins",
-  "shop-tabs": "guided-shop-tabs",
   "shop-pick": "guided-shop-gift",
-  "shop-tryon": "guided-shop-tryon",
   "shop-cta": "guided-shop-cta",
   finish: null,
 };
@@ -162,15 +147,7 @@ export const GUIDED_MOBILE_REVEAL: Partial<Record<GuidedStepKey, string>> = {
 };
 
 // i18n keys under tour.guided.<step>.{title,body}
-const SHOP_TAIL: GuidedStepKey[] = [
-  "shop-nav",
-  "shop-coins",
-  "shop-tabs",
-  "shop-pick",
-  "shop-tryon",
-  "shop-cta",
-  "finish",
-];
+const SHOP_TAIL: GuidedStepKey[] = ["shop-nav", "shop-coins", "shop-pick", "shop-cta", "finish"];
 export const GUIDED_ORDERS: Record<GuidedTrack, GuidedStepKey[]> = {
   basics: [
     "hangul-nav",
@@ -178,9 +155,7 @@ export const GUIDED_ORDERS: Record<GuidedTrack, GuidedStepKey[]> = {
     "hangul-stroke",
     "hangul-nav-vocab",
     "vocab-chapter",
-    "vocab-days",
     "vocab-word",
-    "word-box",
     "word-goti",
     "word-bank",
     ...SHOP_TAIL,
@@ -188,7 +163,6 @@ export const GUIDED_ORDERS: Record<GuidedTrack, GuidedStepKey[]> = {
   practice: [
     "writing-nav",
     "writing-level",
-    "writing-groups",
     "writing-chapter",
     "writing-board",
     "writing-check",

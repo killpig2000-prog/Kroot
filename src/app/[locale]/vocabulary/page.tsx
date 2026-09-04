@@ -138,7 +138,6 @@ export default async function VocabularyPage({
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[170px] md:pb-[60px] max-w-[980px]">
           <GuidedStep step="vocab-chapter" />
-          <GuidedStep step="vocab-days" />
           <GuidedStep step="vocab-word" />
 
           {/* head */}
