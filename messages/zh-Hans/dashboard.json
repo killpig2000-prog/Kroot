@@ -90,44 +90,6 @@
     "note": "Lv. {level}——每天复习一点，看看它能长多高。",
     "ok": "太好了！"
   },
-  "firstVisit": {
-    "todayFiveMinutes": "今天 · 5 分钟",
-    "startHere": "从这里开始",
-    "startStep1": "开始第 1 步 →",
-    "unlocksNext": "接下来解锁",
-    "lockedAria": "已锁定的面板区块",
-    "showEverything": "立即显示全部",
-    "locked": {
-      "quest": {
-        "title": "今日任务",
-        "note": "完成 1 次学习后开启"
-      },
-      "wotd": {
-        "title": "每日一词",
-        "note": "完成 2 次学习后开启"
-      },
-      "levelMap": {
-        "title": "等级地图",
-        "note": "完成 3 次学习后开启"
-      },
-      "heatmap": {
-        "title": "学习花园",
-        "note": "连续学习 3 天后开启"
-      }
-    },
-    "steps": {
-      "hangul": "韩文字母",
-      "hangulDetail": "辅音",
-      "vocab": "词汇",
-      "vocabDetail": "第 1 单元（10 个词）",
-      "vocabDetailLevel": "第 1 单元（10 个词） · {level}",
-      "listening": "听力",
-      "listeningDetail": "一段简短对话",
-      "waterSeedling": "看看你的小苗 💧",
-      "minutes": "{n} 分钟",
-      "seconds": "{n} 秒"
-    }
-  },
   "account": {
     "darkMode": "深色模式",
     "seasonalTheme": "季节主题",

@@ -90,44 +90,6 @@
     "note": "Cấp {level} — ôn một chút mỗi ngày và xem cây lớn tới đâu.",
     "ok": "Tuyệt!"
   },
-  "firstVisit": {
-    "todayFiveMinutes": "Hôm nay · 5 phút",
-    "startHere": "Bắt đầu ở đây",
-    "startStep1": "Bắt đầu bước 1 →",
-    "unlocksNext": "Sắp mở khóa",
-    "lockedAria": "Các mục còn khóa trên trang chính",
-    "showEverything": "Hiện tất cả ngay",
-    "locked": {
-      "quest": {
-        "title": "Nhiệm vụ hôm nay",
-        "note": "mở sau buổi học 1"
-      },
-      "wotd": {
-        "title": "Từ của ngày",
-        "note": "mở sau buổi học 2"
-      },
-      "levelMap": {
-        "title": "Bản đồ trình độ",
-        "note": "mở sau buổi học 3"
-      },
-      "heatmap": {
-        "title": "Khu vườn học tập",
-        "note": "mở khi có chuỗi 3 ngày"
-      }
-    },
-    "steps": {
-      "hangul": "Hangul",
-      "hangulDetail": "Phụ âm",
-      "vocab": "Từ vựng",
-      "vocabDetail": "Bài 1 (10 từ)",
-      "vocabDetailLevel": "Bài 1 (10 từ) · {level}",
-      "listening": "Nghe",
-      "listeningDetail": "một đoạn hội thoại ngắn",
-      "waterSeedling": "Ghé thăm mầm cây của bạn 💧",
-      "minutes": "{n} phút",
-      "seconds": "{n} giây"
-    }
-  },
   "account": {
     "darkMode": "Chế độ tối",
     "seasonalTheme": "Giao diện theo mùa",

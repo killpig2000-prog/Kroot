@@ -1,4 +1,3 @@
-import { cookies } from "next/headers";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Link, redirect } from "@/i18n/navigation";
 import TreeCard from "@/components/dashboard/TreeCard";
@@ -9,7 +8,6 @@ import WordOfDayCard from "@/components/dashboard/WordOfDayCard";
 import FeedbackWidget from "@/components/dashboard/FeedbackWidget";
 import Greeting from "@/components/dashboard/Greeting";
 import TodaysQuestCard from "@/components/dashboard/TodaysQuestCard";
-import { FirstVisitPlan, LockedWidgets, type FirstVisitStep } from "@/components/dashboard/FirstVisitPlan";
 import InstallBanner from "@/components/pwa/InstallBanner";
 import OnboardingTour from "@/components/onboarding/OnboardingTour";
 import TutorialFinishBanner from "@/components/onboarding/TutorialFinishBanner";
@@ -23,11 +21,8 @@ import { DIALOGUES } from "@/lib/listening-dialogues";
 import { getPassagesForLevel } from "@/lib/reading";
 import { getPromptsForLevel } from "@/lib/writing";
 import { chapterClearStats } from "@/lib/pronunciation";
-import { CHAPTER_SIZE } from "@/lib/vocabulary";
 import { dailyReviewCap } from "@/lib/srs";
 import { getWordsForTopic } from "@/lib/vocabulary-words";
-import { firstVisitState, NEW_ACCOUNT_DAYS, SHOW_ALL_COOKIE } from "@/lib/first-visit";
-import { countCompletedSessions } from "@/lib/first-visit-server";
 import { slangOfTheDay } from "@/lib/slang";
 import type { CefrLevel } from "@/lib/tree";
 
@@ -176,20 +171,11 @@ export default async function DashboardPage() {
   // reads Hangul, so their walkthrough goes Writing + Reading instead.
   const guidedTrack = cefr === "A1" ? "basics" : "practice";
 
-  // First-visit dashboard: accounts under a week old with fewer than three
-  // finished sessions see one plan card instead of the full Garden. Only they
-  // pay for the analytics count; everyone else skips it.
-  const cookieStore = await cookies();
-  const showAll = cookieStore.get(SHOW_ALL_COOKIE)?.value === "1";
-  const accountAgeDays = profile?.created_at ? (now.getTime() - Date.parse(profile.created_at)) / 86_400_000 : Infinity;
-  const maybeNew = !showAll && accountAgeDays < NEW_ACCOUNT_DAYS;
-
   // "Your path" (promotion eligibility + LevelMap) moved to My progress
   // (/profile) 2026-09-03 — the Garden is a "what do I do today" page, and a
   // once-eligible learner had no way to stop it nagging them here every visit.
   const todayStartIso = `${today}T00:00:00.000Z`;
-  const [analyticsSessions, coinsRes, { count: reviewedTodayCount }] = await Promise.all([
-    maybeNew ? countCompletedSessions(user.id) : Promise.resolve(null),
+  const [coinsRes, { count: reviewedTodayCount }] = await Promise.all([
     // coins isn't in the snapshot RPC's profile row; a parallel read here
     // beats a function migration for one integer (see 0041's rationale).
     // review_capacity_bonus and is_admin ride along for the same reason —
@@ -293,122 +279,6 @@ export default async function DashboardPage() {
 
   // "Continue" target: the last unit the learner opened (resume_points), or
   // today's quest when nothing is in progress. A finished unit clears itself.
-
-  // Finished sessions: the activity_completed events, backed up by the
-  // progress tables in case a beacon never landed (or the service key is
-  // missing locally). Vocab progress is per word, so ten rows ≈ one unit.
-  const progressSessions =
-    (listeningRows?.length ?? 0) +
-    (readingRows?.length ?? 0) +
-    (writingRows?.length ?? 0) +
-    (grammarRows?.length ?? 0) +
-    skillProgress.pronunciation.done +
-    Math.floor((vocabRows?.length ?? 0) / CHAPTER_SIZE);
-  const firstVisit = firstVisitState({
-    createdAt: profile?.created_at,
-    sessions: Math.max(analyticsSessions ?? 0, progressSessions),
-    streakDays,
-    showAll,
-    now,
-  });
-
-  if (firstVisit.active) {
-    // Learners who placed above A1 in onboarding already read Hangul (the
-    // alphabet page keeps no progress of its own), so their first step is
-    // the vocab unit at their level.
-    const vocabUnit1 = `/vocabulary/daily-life/session?chapter=0&level=${cefr}`;
-    const steps: FirstVisitStep[] =
-      cefr === "A1"
-        ? [
-            { label: t("firstVisit.steps.hangul"), detail: t("firstVisit.steps.hangulDetail"), time: t("firstVisit.steps.minutes", { n: 2 }), href: "/hangul" },
-            { label: t("firstVisit.steps.vocab"), detail: t("firstVisit.steps.vocabDetail"), time: t("firstVisit.steps.minutes", { n: 3 }), href: vocabUnit1 },
-            { label: t("firstVisit.steps.waterSeedling"), time: t("firstVisit.steps.seconds", { n: 10 }) },
-          ]
-        : [
-            { label: t("firstVisit.steps.vocab"), detail: t("firstVisit.steps.vocabDetailLevel", { level: cefr }), time: t("firstVisit.steps.minutes", { n: 3 }), href: vocabUnit1 },
-            { label: t("firstVisit.steps.listening"), detail: t("firstVisit.steps.listeningDetail"), time: t("firstVisit.steps.minutes", { n: 2 }), href: "/listening" },
-            { label: t("firstVisit.steps.waterSeedling"), time: t("firstVisit.steps.seconds", { n: 10 }) },
-          ];
-
-    return (
-      <div className="min-h-screen bg-warm text-charcoal">
-        <div className="grid grid-cols-1 md:grid-cols-[clamp(216px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
-          <div data-tour="sidebar">
-            <Sidebar
-              displayName={displayName}
-              email={user.email ?? ""}
-              streakDays={streakDays}
-              avatarUrl={profile?.avatar_url}
-              streakFreezes={extras?.streak_freezes ?? 0}
-            />
-          </div>
-
-          <main className="min-w-0 max-w-[820px] px-[clamp(18px,3vw,36px)] pt-[26px] pb-[100px] md:pb-[60px]">
-            {/* First lesson right after the tour, for every level — Hangul's
-                page itself hands off to Writing once the learner is ready,
-                see the tutorial banner on each of those pages. */}
-            <OnboardingTour startsGuidedTour guidedTrack={guidedTrack} isAdmin={isAdmin} />
-            <GuidedStep step="hangul-nav" />
-            <GuidedStep step="writing-nav" />
-            <TutorialFinishBanner />
-            <h1 className="font-semibold text-[clamp(20px,2.4vw,24px)] tracking-[-0.02em] mb-0.5">
-              {t("welcome", { name: displayName })}
-            </h1>
-            <p className="text-muted text-sm mb-6">{t("day", { n: firstVisit.day })}</p>
-
-            <div data-tour="tree">
-              <TreeCard
-                level={level}
-                progressPct={pct}
-                xpInto={into}
-                xpNeeded={needed}
-                costumeIds={equippedIds}
-                species={cefr}
-                userId={user.id}
-                displayName={displayName}
-                avatarUrl={profile?.avatar_url ?? null}
-                coins={coins}
-                streakDays={streakDays}
-                streakFreezes={extras?.streak_freezes ?? 0}
-                linkToShop
-              />
-            </div>
-
-            <FirstVisitPlan steps={steps} />
-
-            {/* unlocked so far, in unlock order. The quest/garden tour steps
-                still need a target even before these unlock (day 1), so the
-                wrapper stays put and OnboardingTour itself skips a step
-                whose target isn't in the DOM yet rather than getting stuck. */}
-            {firstVisit.unlocked.quest && (
-              <div data-tour="quest">
-                <TodaysQuestCard quest={quest} />
-              </div>
-            )}
-
-            {firstVisit.unlocked.wotd && wotd && <WordOfDayCard wotd={wotd} />}
-
-            {firstVisit.unlocked.heatmap && (
-              <div className="mb-[30px]" data-tour="garden">
-                <MonthlyGrass
-                  minutesByDate={minutesByDate}
-                  headline={[
-                    { label: t("garden.thisWeek"), value: `${weekTotal}m` },
-                    { label: t("garden.bestStreak"), value: `${longestStreak}d` },
-                  ]}
-                />
-              </div>
-            )}
-
-            <LockedWidgets unlocked={firstVisit.unlocked} />
-          </main>
-        </div>
-
-        <BottomNav />
-        <FeedbackWidget />
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-warm text-charcoal">
@@ -586,7 +456,7 @@ export default async function DashboardPage() {
 
           {/* Learning progress moved to My account (/profile) 2026-08-30 — the
               Garden answers "what do I do today", the account page "how am I
-              doing". skillProgress below stays: it feeds progressSessions. */}
+              doing". */}
 
           {/* study garden — the year grass, moved in from My growth; its
               pills absorb the old This week / month challenge widgets */}

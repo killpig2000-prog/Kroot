@@ -90,44 +90,6 @@
     "note": "Nv. {level}: repasa un poco cada día y verás hasta dónde llega.",
     "ok": "¡Genial!"
   },
-  "firstVisit": {
-    "todayFiveMinutes": "Hoy · 5 minutos",
-    "startHere": "Empieza aquí",
-    "startStep1": "Empezar el paso 1 →",
-    "unlocksNext": "Se desbloquea después",
-    "lockedAria": "Secciones bloqueadas del panel",
-    "showEverything": "Mostrarlo todo ahora",
-    "locked": {
-      "quest": {
-        "title": "Misión de hoy",
-        "note": "se abre tras la sesión 1"
-      },
-      "wotd": {
-        "title": "Palabra del día",
-        "note": "se abre tras la sesión 2"
-      },
-      "levelMap": {
-        "title": "Mapa de niveles",
-        "note": "se abre tras la sesión 3"
-      },
-      "heatmap": {
-        "title": "Jardín de estudio",
-        "note": "se abre con una racha de 3 días"
-      }
-    },
-    "steps": {
-      "hangul": "Hangul",
-      "hangulDetail": "Consonantes",
-      "vocab": "Vocabulario",
-      "vocabDetail": "Unidad 1 (10 palabras)",
-      "vocabDetailLevel": "Unidad 1 (10 palabras) · {level}",
-      "listening": "Escucha",
-      "listeningDetail": "un diálogo corto",
-      "waterSeedling": "Repasa con tu brote 💧",
-      "minutes": "{n} min",
-      "seconds": "{n} s"
-    }
-  },
   "account": {
     "darkMode": "Modo oscuro",
     "seasonalTheme": "Tema de estación",

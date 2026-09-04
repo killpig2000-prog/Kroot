@@ -90,44 +90,6 @@
     "note": "Lv. {level} — 毎日少しずつ復習して、どこまで育つか見てみましょう。",
     "ok": "いいね!"
   },
-  "firstVisit": {
-    "todayFiveMinutes": "今日 · 5分",
-    "startHere": "ここから",
-    "startStep1": "ステップ1を始める →",
-    "unlocksNext": "次に開くもの",
-    "lockedAria": "ロック中のセクション",
-    "showEverything": "すべて表示する",
-    "locked": {
-      "quest": {
-        "title": "今日のクエスト",
-        "note": "1回学習すると開きます"
-      },
-      "wotd": {
-        "title": "今日の単語",
-        "note": "2回学習すると開きます"
-      },
-      "levelMap": {
-        "title": "レベルマップ",
-        "note": "3回学習すると開きます"
-      },
-      "heatmap": {
-        "title": "学習ガーデン",
-        "note": "3日続けると開きます"
-      }
-    },
-    "steps": {
-      "hangul": "ハングル",
-      "hangulDetail": "子音",
-      "vocab": "単語",
-      "vocabDetail": "ユニット1(10語)",
-      "vocabDetailLevel": "ユニット1(10語) · {level}",
-      "listening": "リスニング",
-      "listeningDetail": "短い会話を1つ",
-      "waterSeedling": "芽の様子を見る 💧",
-      "minutes": "{n}分",
-      "seconds": "{n}秒"
-    }
-  },
   "account": {
     "darkMode": "ダークモード",
     "seasonalTheme": "季節のテーマ",

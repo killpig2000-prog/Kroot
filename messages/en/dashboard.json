@@ -90,44 +90,6 @@
     "note": "Lv. {level} — review a little every day and watch how far it grows.",
     "ok": "Nice!"
   },
-  "firstVisit": {
-    "todayFiveMinutes": "Today · 5 minutes",
-    "startHere": "Start here",
-    "startStep1": "Start step 1 →",
-    "unlocksNext": "Unlocks next",
-    "lockedAria": "Locked dashboard sections",
-    "showEverything": "Show everything now",
-    "locked": {
-      "quest": {
-        "title": "Today's quest",
-        "note": "opens after session 1"
-      },
-      "wotd": {
-        "title": "Word of the day",
-        "note": "opens after session 2"
-      },
-      "levelMap": {
-        "title": "Level map",
-        "note": "opens after session 3"
-      },
-      "heatmap": {
-        "title": "Study garden",
-        "note": "opens at a 3-day streak"
-      }
-    },
-    "steps": {
-      "hangul": "Hangul",
-      "hangulDetail": "Consonants",
-      "vocab": "Vocab",
-      "vocabDetail": "Unit 1 (10 words)",
-      "vocabDetailLevel": "Unit 1 (10 words) · {level}",
-      "listening": "Listening",
-      "listeningDetail": "one short dialogue",
-      "waterSeedling": "Review your seedling 💧",
-      "minutes": "{n} min",
-      "seconds": "{n} s"
-    }
-  },
   "account": {
     "darkMode": "Dark mode",
     "seasonalTheme": "Seasonal theme",
