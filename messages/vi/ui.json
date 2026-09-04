@@ -103,5 +103,6 @@
   "coinsEarnedLabel": "Xu kiếm được",
   "levelUp": "Lên cấp! Bạn hiện là cấp độ {level}.",
   "noCoinsThisTime": "Lần này không có xu",
+  "alreadyEarned": "Đã nhận — làm lại không thưởng thêm",
   "xpEarned": "XP {skill}"
 }

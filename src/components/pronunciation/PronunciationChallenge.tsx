@@ -7,6 +7,7 @@ import { Link, useRouter } from "@/i18n/navigation";
 import { useSaveResume } from "@/hooks/useSaveResume";
 import { createClient } from "@/lib/supabase/client";
 import { recordCompletion, type ProgressResult } from "@/lib/activity";
+import { pronunciationChapterKey } from "@/lib/reward-keys";
 import { useKoreanSpeaker, useSpeechRecognition } from "@/hooks/useSpeechRecognition";
 import { bestSimilarity, verdictFor } from "@/lib/speech-match";
 import { wordsForChapter, groupByKey, NAILED_THRESHOLD, PERFECT_SCORE } from "@/lib/pronunciation";
@@ -177,8 +178,21 @@ export default function PronunciationChallenge({
   async function logMinutesOnce() {
     if (logged.current) return;
     logged.current = true;
-    const result = await recordCompletion(supabase, "pronunciation", MINUTES_PER_SESSION);
-    if (result?.leveled_up || result?.coins_earned) setLevelUp(result);
+    // The chapter's score is the average of the best the learner managed on
+    // each of its words — a chapter skipped through scores 0 and earns no
+    // coins, the same as answering a quiz wrong.
+    const chapterScore = words.length
+      ? Math.round(words.reduce((s, w) => s + (bestScores[w.id] ?? 0), 0) / words.length)
+      : null;
+    const result = await recordCompletion(
+      supabase,
+      "pronunciation",
+      MINUTES_PER_SESSION,
+      0,
+      pronunciationChapterKey(chapterKey),
+      chapterScore,
+    );
+    if (result) setLevelUp(result);
     router.refresh();
   }
 

@@ -103,5 +103,6 @@
   "coinsEarnedLabel": "獲得コイン",
   "levelUp": "レベルアップ！レベル{level}になりました。",
   "noCoinsThisTime": "今回はコインなし",
+  "alreadyEarned": "獲得済み — やり直しでは加算されません",
   "xpEarned": "{skill}のXP"
 }

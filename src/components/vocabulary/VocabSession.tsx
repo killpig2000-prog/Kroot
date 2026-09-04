@@ -6,6 +6,7 @@ import { buttonClassName } from "@/components/ui/Button";
 import { Link, useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { recordCompletion, type ProgressResult } from "@/lib/activity";
+import { vocabChapterKey } from "@/lib/reward-keys";
 import { nextBox, nextReviewAt } from "@/lib/srs";
 import { prefetchKorean } from "@/lib/tts";
 import {
@@ -215,8 +216,19 @@ export default function VocabSession({
     clearResume();
 
     const minutes = MINUTES_PER_SESSION + (tookQuiz ? QUIZ_BONUS_MINUTES : 0);
-    const result = await recordCompletion(supabase, "vocabulary", minutes);
-    if (result?.leveled_up || result?.coins_earned) setLevelUp(result);
+    // Vocabulary pays once a day per chapter, not once ever (see migration
+    // 0063) — re-studying a chapter tomorrow is how vocabulary is learned.
+    // A flip-through with no quiz has no score, and null never fails the
+    // accuracy gate: there was nothing to get wrong.
+    const result = await recordCompletion(
+      supabase,
+      "vocabulary",
+      minutes,
+      0,
+      vocabChapterKey(topicKey, chapterIndex),
+      tookQuiz && quizQuestions.length ? Math.round((quizKnown / quizQuestions.length) * 100) : null,
+    );
+    if (result) setLevelUp(result);
   }
 
   async function goTo(href: string) {

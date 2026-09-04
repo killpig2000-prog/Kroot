@@ -7,6 +7,7 @@ import { clearResume, isColumnMissing } from "@/lib/resume";
 import { Link, useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { recordCompletion, type ProgressResult } from "@/lib/activity";
+import { writingChapterKey } from "@/lib/reward-keys";
 import { track } from "@/lib/analytics";
 import { MINUTES_PER_CHAPTER, type Prompt } from "@/lib/writing";
 import {
@@ -124,7 +125,7 @@ export default function WritingSession({
           { onConflict: "user_id,prompt_key" }
         );
       }
-      await logMinutesOnce();
+      await logMinutesOnce(score);
     } catch {
       // best effort
     } finally {
@@ -135,13 +136,25 @@ export default function WritingSession({
     setPhase("compare");
   }
 
-  async function logMinutesOnce() {
+  async function logMinutesOnce(score?: number) {
     if (loggedMinutes.current) return;
     loggedMinutes.current = true;
     void clearResume(supabase, userId);
 
-    const res = await recordCompletion(supabase, "writing", MINUTES_PER_CHAPTER);
-    if (res?.leveled_up || res?.coins_earned) setLevelUp(res);
+    const res = await recordCompletion(
+      supabase,
+      "writing",
+      MINUTES_PER_CHAPTER,
+      0,
+      writingChapterKey(level, chapterIndex),
+      // goTo() calls this without a score as a safety net for a submit whose
+      // logging failed; by then the chapter's score is on `result`.
+      score ?? result?.score ?? null,
+    );
+    // Always kept now, not just on a level-up: the result strip reads the
+    // real XP/coins off it, and "this chapter was already paid for" is a
+    // number the learner should see rather than a silent zero.
+    if (res) setLevelUp(res);
   }
 
   async function goTo(href: string) {

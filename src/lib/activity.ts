@@ -22,7 +22,24 @@ export type ProgressResult = {
   leveled_up: boolean;
   /** Coins this call actually granted — 0 when the activity bonus's proof-of-progress check didn't pass. */
   coins_earned: number;
+  /**
+   * XP this call actually added. Differs from XP_POINTS[skill] on a repeat of
+   * an already-paid item (0) — result screens should show this, not the
+   * static per-skill value. Absent when an older award_xp is still deployed.
+   */
+  points_awarded?: number;
+  /** True when this completion paid nothing because it was already rewarded. */
+  already_earned?: boolean;
 };
+
+/**
+ * Identifies the thing being rewarded, so the server can pay for it exactly
+ * once (see migration 0063). Chapter/lesson keys are stable strings; the
+ * word-bank SRS review passes `REVIEW_ITEM_KEY`, which the server turns into
+ * a per-day key — repetition is the point of SRS, so it pays once a day
+ * rather than once ever.
+ */
+export const REVIEW_ITEM_KEY = "review";
 
 /** Add study minutes to today's daily_activity row (server-side, atomic). */
 export async function logActivity(supabase: SupabaseClient, minutes: number): Promise<void> {
@@ -40,9 +57,22 @@ export async function awardPoints(
   supabase: SupabaseClient,
   points: number,
   skill: keyof typeof XP_POINTS,
+  /** Chapter/lesson identity, so the server pays for it once. See ProgressResult. */
+  itemKey?: string | null,
+  /** 0-100 accuracy for this attempt; omit when the activity has no score. */
+  score?: number | null,
 ): Promise<ProgressResult | null> {
   if (points <= 0) return null;
-  let { data, error } = await supabase.rpc("award_xp", { p_points: points, p_skill: skill });
+  let { data, error } = await supabase.rpc("award_xp", {
+    p_points: points,
+    p_skill: skill,
+    p_item_key: itemKey ?? null,
+    p_score: score == null ? null : Math.max(0, Math.min(100, Math.round(score))),
+  });
+  if (error?.code === "PGRST202") {
+    // Migration 0063 not applied yet — the deployed function has no item key.
+    ({ data, error } = await supabase.rpc("award_xp", { p_points: points, p_skill: skill }));
+  }
   if (error?.code === "PGRST202") {
     // Migration 0024 not applied yet — the deployed function has no p_skill.
     ({ data, error } = await supabase.rpc("award_xp", { p_points: points }));
@@ -63,8 +93,10 @@ export async function awardPoints(
 export async function awardProgress(
   supabase: SupabaseClient,
   skill: keyof typeof XP_POINTS,
+  itemKey?: string | null,
+  score?: number | null,
 ): Promise<ProgressResult | null> {
-  return awardPoints(supabase, XP_POINTS[skill] ?? 5, skill);
+  return awardPoints(supabase, XP_POINTS[skill] ?? 5, skill, itemKey, score);
 }
 
 /**
@@ -80,12 +112,14 @@ export async function awardPartialCredit(
   skill: keyof typeof XP_POINTS,
   ratio: number,
   alreadyAwardedRatio: number,
+  itemKey?: string | null,
+  score?: number | null,
 ): Promise<{ newAwardedRatio: number; result: ProgressResult | null }> {
   const clamped = Math.max(0, Math.min(1, ratio));
   if (clamped <= alreadyAwardedRatio) return { newAwardedRatio: alreadyAwardedRatio, result: null };
   const full = XP_POINTS[skill] ?? 5;
   const delta = Math.round(full * clamped) - Math.round(full * alreadyAwardedRatio);
-  const result = delta > 0 ? await awardPoints(supabase, delta, skill) : null;
+  const result = delta > 0 ? await awardPoints(supabase, delta, skill, itemKey, score) : null;
   return { newAwardedRatio: clamped, result };
 }
 
@@ -121,11 +155,15 @@ export async function recordCompletion(
   skill: keyof typeof XP_POINTS,
   minutes: number,
   alreadyAwardedRatio = 0,
+  /** Chapter/lesson identity — without it the server pays no coins, since it has nothing to record the payment against. */
+  itemKey?: string | null,
+  /** 0-100 accuracy for this attempt; below 60 the server pays XP but no coins. */
+  score?: number | null,
 ): Promise<ProgressResult | null> {
   await logActivity(supabase, minutes);
   const full = XP_POINTS[skill] ?? 5;
   const remaining = Math.max(0, full - Math.round(full * Math.max(0, Math.min(1, alreadyAwardedRatio))));
-  const result = await awardPoints(supabase, remaining, skill);
+  const result = await awardPoints(supabase, remaining, skill, itemKey, score);
   await completeMatchingQuest(supabase, skill);
   track("activity_completed", { skill, minutes, leveled_up: !!result?.leveled_up });
   return result;

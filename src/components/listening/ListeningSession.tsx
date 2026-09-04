@@ -3,6 +3,7 @@
 import { useMemo, useState, type ReactNode } from "react";
 import { createClient, getClientUserId } from "@/lib/supabase/client";
 import { recordCompletion, awardPartialCredit, XP_POINTS } from "@/lib/activity";
+import { listeningDialogueKey } from "@/lib/reward-keys";
 import { type Dialogue } from "@/lib/listening-dialogues";
 import type { Situation } from "@/lib/listening";
 import type { CefrLevel } from "@/lib/tree";
@@ -88,7 +89,14 @@ export default function ListeningSession({
           return back;
         });
       }
-      const res = await recordCompletion(supabase, "listening", 3, awardedRatio);
+      const res = await recordCompletion(
+        supabase,
+        "listening",
+        3,
+        awardedRatio,
+        listeningDialogueKey(dialogue.id),
+        correct == null ? null : correct ? 100 : 0,
+      );
       if (res?.leveled_up) setNewLevel(res.new_level);
       if (res?.coins_earned) setCoinsEarned((c) => c + res.coins_earned);
       // The screen already rendered with the local xp estimate above; merge
@@ -115,7 +123,11 @@ export default function ListeningSession({
       supabase,
       "listening",
       ratio,
-      awardedRatio
+      awardedRatio,
+      listeningDialogueKey(dialogue.id),
+      // Listening partway through has no quiz answer to score, and null
+      // never fails the accuracy gate — there was nothing to get wrong.
+      null,
     );
     saveAwardedRatio(dialogue.id, newAwardedRatio);
     if (result?.leveled_up) setNewLevel(result.new_level);

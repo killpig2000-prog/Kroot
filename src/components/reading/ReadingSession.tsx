@@ -8,6 +8,7 @@ import { buttonClassName } from "@/components/ui/Button";
 import { Link, useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { recordCompletion, type ProgressResult } from "@/lib/activity";
+import { readingPassageKey } from "@/lib/reward-keys";
 import { findEvidenceLine, MINUTES_PER_PASSAGE, splitPassageLines, type Passage } from "@/lib/reading";
 import ReadPhase from "@/components/reading/ReadPhase";
 import QuizPhase from "@/components/reading/QuizPhase";
@@ -123,8 +124,18 @@ export default function ReadingSession({
       return;
     }
 
-    const result = await recordCompletion(supabase, "reading", MINUTES_PER_PASSAGE);
-    if (result?.leveled_up || result?.coins_earned) setLevelUp(result);
+    const correct = final.filter((a) => a === true).length;
+    const result = await recordCompletion(
+      supabase,
+      "reading",
+      MINUTES_PER_PASSAGE,
+      0,
+      readingPassageKey(passage.key),
+      final.length ? Math.round((correct / final.length) * 100) : null,
+    );
+    // Kept even when nothing was earned — the result strip reads the real
+    // XP/coins off it, including the zero of an already-rewarded passage.
+    if (result) setLevelUp(result);
   }
 
   async function goTo(href: string) {

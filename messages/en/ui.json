@@ -103,5 +103,6 @@
   "coinsEarnedLabel": "Coins earned",
   "levelUp": "Level up! You're now level {level}.",
   "noCoinsThisTime": "No coins this time",
+  "alreadyEarned": "Already earned — replays don’t pay again",
   "xpEarned": "{skill} XP"
 }

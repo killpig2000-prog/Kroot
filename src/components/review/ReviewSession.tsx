@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { awardPartialCredit, recordCompletion, XP_POINTS, type ProgressResult } from "@/lib/activity";
+import { reviewSessionKey } from "@/lib/reward-keys";
 import { nextBox, nextReviewAt, SRS_INTERVALS_DAYS } from "@/lib/srs";
 import ResultShell, { ResultRing, ResultTag } from "@/components/results/ResultShell";
 import {
@@ -43,6 +44,10 @@ export default function ReviewSession({
   const [index, setIndex] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);
   const [correct, setCorrect] = useState(0);
+  // logOnce() runs from a setTimeout scheduled in the same render that
+  // answered the last question, so it would read `correct` one behind —
+  // enough to score a perfect review 90% and cost it the coins.
+  const correctRef = useRef(0);
   const [missed, setMissed] = useState<VocabWordWithProgress[]>([]);
   const [done, setDone] = useState(false);
   const [levelUp, setLevelUp] = useState<ProgressResult | null>(null);
@@ -63,7 +68,10 @@ export default function ReviewSession({
     const box = nextBox(boxes.current[q.word.key] ?? 1, gotIt);
     boxes.current[q.word.key] = box;
 
-    if (gotIt) setCorrect((c) => c + 1);
+    if (gotIt) {
+      correctRef.current += 1;
+      setCorrect((c) => c + 1);
+    }
     else if (word) setMissed((m) => (m.some((w) => w.key === word.key) ? m : [...m, word]));
 
     // Interrupting the quiz over a failed write would be worse than finishing
@@ -101,8 +109,18 @@ export default function ReviewSession({
   async function logOnce() {
     if (logged.current) return;
     logged.current = true;
-    const result = await recordCompletion(supabase, "vocabulary", REVIEW_MINUTES);
-    if (result?.leveled_up || result?.coins_earned) setLevelUp(result);
+    // One paid review per calendar day (the server stamps the date onto this
+    // key) — repetition is the point of SRS, so this can't be "once ever",
+    // but it also can't pay per lap of the same due queue.
+    const result = await recordCompletion(
+      supabase,
+      "vocabulary",
+      REVIEW_MINUTES,
+      0,
+      reviewSessionKey,
+      questions.length ? Math.round((correctRef.current / questions.length) * 100) : null,
+    );
+    if (result) setLevelUp(result);
   }
 
   // Leaving before the last question: each answered word already got its
@@ -116,7 +134,14 @@ export default function ReviewSession({
     logged.current = true;
     try {
       if (index > 0) {
-        await awardPartialCredit(supabase, "vocabulary", index / questions.length, 0);
+        await awardPartialCredit(
+          supabase,
+          "vocabulary",
+          index / questions.length,
+          0,
+          reviewSessionKey,
+          index ? Math.round((correctRef.current / index) * 100) : null,
+        );
       }
     } catch {
       // best effort — leaving must never get stuck on a failed award

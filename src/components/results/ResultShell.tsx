@@ -119,6 +119,9 @@ export default function ResultShell({
   children?: ReactNode;
 }) {
   const tu = useTranslations("ui");
+  // Older deployed award_xp versions don't return points_awarded; fall back
+  // to the skill's rate so the strip still reads correctly against them.
+  const xpAwarded = levelUp?.points_awarded;
   return (
     <div
       className="max-w-[640px] w-full border border-line rounded-[16px] bg-cream overflow-hidden"
@@ -157,8 +160,18 @@ export default function ResultShell({
 
       <div className="grid grid-cols-2 divide-x divide-line border-t border-line bg-warm">
         <div className="px-4 py-3">
-          <b className="block text-[19px] font-bold text-success leading-tight tabular-nums">+{xpValue} XP</b>
-          <small className="text-xs text-muted">{xpLabel}</small>
+          {/* The real number the server paid, when it said — `xpValue` is the
+              skill's full rate, which a replay of an already-rewarded chapter
+              does not earn (migration 0063). Showing the rate there would
+              promise XP that never arrived. */}
+          <b
+            className={`block text-[19px] font-bold leading-tight tabular-nums ${
+              xpAwarded === 0 ? "text-faint" : "text-success"
+            }`}
+          >
+            +{xpAwarded ?? xpValue} XP
+          </b>
+          <small className="text-xs text-muted">{levelUp?.already_earned ? tu("alreadyEarned") : xpLabel}</small>
         </div>
         <div className="px-4 py-3">
           {(levelUp?.coins_earned ?? 0) > 0 ? (

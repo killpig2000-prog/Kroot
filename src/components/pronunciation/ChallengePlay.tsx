@@ -6,6 +6,7 @@ import { buttonClassName } from "@/components/ui/Button";
 import { Link, useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { recordCompletion } from "@/lib/activity";
+import { challengeKey } from "@/lib/reward-keys";
 import { useKoreanSpeaker, useSpeechRecognition } from "@/hooks/useSpeechRecognition";
 import { bestSimilarity } from "@/lib/speech-match";
 import { isTableMissing } from "@/lib/resume";
@@ -110,7 +111,14 @@ export default function ChallengePlay({
       // study minutes on every lap of the same line.
       if (userId && !loggedRef.current) {
         loggedRef.current = true;
-        await recordCompletion(supabase, "pronunciation", MINUTES_PER_RUN);
+        await recordCompletion(
+          supabase,
+          "pronunciation",
+          MINUTES_PER_RUN,
+          0,
+          challengeKey(challenge.key),
+          accuracy,
+        );
         router.refresh();
       }
     } catch {

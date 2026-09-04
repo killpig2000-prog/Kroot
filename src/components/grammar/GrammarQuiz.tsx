@@ -4,6 +4,7 @@ import { useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { createClient, getClientUserId } from "@/lib/supabase/client";
 import { recordCompletion, XP_POINTS, type ProgressResult } from "@/lib/activity";
+import { grammarLessonKey } from "@/lib/reward-keys";
 import { clearResume, isTableMissing } from "@/lib/resume";
 import { useSaveResume } from "@/hooks/useSaveResume";
 import ResultShell, { ResultRing } from "@/components/results/ResultShell";
@@ -163,7 +164,14 @@ export default function GrammarQuizBlock({
       }
       void clearResume(supabase, uid, `/grammar/${lessonKey}`);
     }
-    const res = await recordCompletion(supabase, "grammar", 3);
+    const res = await recordCompletion(
+      supabase,
+      "grammar",
+      3,
+      0,
+      lessonKey ? grammarLessonKey(lessonKey) : null,
+      Math.round((correctCount.current / quiz.length) * 100),
+    );
     setLevelUp(res);
   }
 
