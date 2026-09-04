@@ -408,6 +408,48 @@ async function loadStats() {
   };
 }
 
+// ---------------------------------------------------------------------------
+// Feedback — the dashboard's bottom-right widget writes to `feedback`, whose
+// RLS only lets authors read their own rows, so this goes through the
+// service role. Newest first, with the author's display name and email so
+// a note can be followed up on.
+// ---------------------------------------------------------------------------
+type FeedbackRow = { id: string; name: string; email: string; page: string | null; message: string; at: string };
+
+async function loadFeedback(): Promise<{ rows: FeedbackRow[]; total: number; last7d: number }> {
+  const db = adminClient();
+  const [listRes, countRes, weekRes] = await Promise.all([
+    db.from("feedback").select("id, user_id, message, page, created_at").order("created_at", { ascending: false }).limit(100),
+    db.from("feedback").select("id", { count: "exact", head: true }),
+    db.from("feedback").select("id", { count: "exact", head: true }).gte("created_at", daysAgo(6).toISOString()),
+  ]);
+  const raw = (listRes.data ?? []) as { id: string; user_id: string; message: string; page: string | null; created_at: string }[];
+  const userIds = [...new Set(raw.map((r) => r.user_id))];
+  const nameById = new Map<string, string>();
+  const emailById = new Map<string, string>();
+  if (userIds.length > 0) {
+    const { data: profiles } = await db.from("profiles").select("id, display_name").in("id", userIds);
+    for (const p of profiles ?? []) nameById.set(p.id, p.display_name);
+    // Emails live in auth.users, one admin lookup each — bounded by the 100-row page above.
+    const users = await Promise.all(userIds.map((id) => db.auth.admin.getUserById(id)));
+    users.forEach((u, i) => {
+      if (u.data.user?.email) emailById.set(userIds[i], u.data.user.email);
+    });
+  }
+  return {
+    rows: raw.map((r) => ({
+      id: r.id,
+      name: nameById.get(r.user_id) ?? "?",
+      email: emailById.get(r.user_id) ?? "",
+      page: r.page,
+      message: r.message,
+      at: r.created_at,
+    })),
+    total: countRes.count ?? 0,
+    last7d: weekRes.count ?? 0,
+  };
+}
+
 const RAIL: RailGroup[] = [
   { items: [{ id: "overview", label: "개요", icon: "📊" }] },
   { items: [{ id: "onboarding", label: "온보딩", icon: "🚪" }] },
@@ -421,7 +463,13 @@ const RAIL: RailGroup[] = [
     ],
   },
   { label: "운영", items: [{ id: "ops", label: "시스템 상태", icon: "⚙️" }] },
-  { label: "유저", items: [{ id: "users", label: "유저", icon: "👤" }] },
+  {
+    label: "유저",
+    items: [
+      { id: "feedback", label: "피드백", icon: "💬" },
+      { id: "users", label: "유저", icon: "👤" },
+    ],
+  },
 ];
 
 export default async function AdminPage() {
@@ -441,7 +489,7 @@ export default async function AdminPage() {
     );
   }
 
-  const s = await loadStats();
+  const [s, fb] = await Promise.all([loadStats(), loadFeedback()]);
 
   return (
     <div className="flex min-h-screen bg-warm">
@@ -662,6 +710,34 @@ export default async function AdminPage() {
             </div>
             <div className="text-[22px] font-extrabold tabular-nums">{s.reminderSentToday}</div>
             <p className="text-[11px] text-faint">오늘 발송된 리마인더 수</p>
+          </Panel>
+        </section>
+
+        {/* ===================== 피드백 ===================== */}
+        <section id="feedback" className="mb-[34px] scroll-mt-[18px]">
+          <h2 className="font-bold text-[16.5px] mb-0.5">피드백</h2>
+          <p className="text-[12px] text-faint mb-3.5">대시보드 우측하단 위젯으로 들어온 메시지 · 최신순 100건</p>
+          <div className="grid grid-cols-2 gap-3 mb-3.5 max-w-[420px]">
+            <StatTile label="전체" value={fb.total.toLocaleString()} />
+            <StatTile label="최근 7일" value={fb.last7d} />
+          </div>
+          <Panel>
+            <ul className="divide-y divide-line">
+              {fb.rows.map((r) => (
+                <li key={r.id} className="py-3 first:pt-1 last:pb-1">
+                  <div className="flex items-baseline justify-between gap-3 flex-wrap mb-1">
+                    <span className="text-[12.5px] min-w-0 truncate">
+                      <b>{r.name}</b>
+                      {r.email && <span className="text-muted"> · {r.email}</span>}
+                      {r.page && <span className="font-mono text-[11px] text-faint"> · {r.page}</span>}
+                    </span>
+                    <span className="text-[11px] text-faint whitespace-nowrap font-mono">{kst(r.at)}</span>
+                  </div>
+                  <p className="text-[13.5px] leading-[1.55] whitespace-pre-wrap break-words">{r.message}</p>
+                </li>
+              ))}
+              {fb.rows.length === 0 && <li className="py-6 text-center text-faint">아직 받은 피드백 없음</li>}
+            </ul>
           </Panel>
         </section>
 
