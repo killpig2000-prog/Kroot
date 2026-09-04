@@ -79,10 +79,10 @@ export default function WritingSession({
   }
 
   function reset(index: number) {
-    update(index, { attempt: entries[index].attempt + 1, picked: [] });
+    update(index, { attempt: entries[index].attempt + 1, picked: [], checked: undefined });
   }
 
-  const answeredCount = entries.filter((e, i) => entryDone(e, boards[i])).length;
+  const answeredCount = entries.filter((e) => entryDone(e)).length;
   const ready = answeredCount === prompts.length;
 
   async function submit() {

@@ -286,7 +286,7 @@ export function TileBoard({
     if (ghostRef.current) {
       // Move the ghost immediately, off the React/rAF cycle, so the tile
       // tracks the finger 1:1 with no per-frame batching delay.
-      ghostRef.current.style.transform = `translate(${e.clientX - info.offsetX}px, ${e.clientY - info.offsetY}px)`;
+      ghostRef.current.style.transform = `translate(${e.clientX - info.offsetX}px, ${e.clientY - info.offsetY}px) scale(1.05)`;
     }
     // The swap hit-test does a getBoundingClientRect() per tile, which is a
     // layout read — running it on every raw pointermove (far more frequent
@@ -405,12 +405,15 @@ export function TileBoard({
             />
           );
         })}
+        {/* `TILE` animates transform, which made the ghost ease toward each
+            new pointer position instead of sitting under the finger — the
+            drag read as rubber-banding. No transition on the ghost. */}
         {dragId && (
           <div
             ref={ghostRef}
             aria-hidden="true"
-            className={`${TILE} fixed top-0 left-0 z-50 pointer-events-none shadow-lg scale-105`}
-            style={{ transform: "translate(-9999px, -9999px)" }}
+            className={`${TILE} fixed top-0 left-0 z-50 pointer-events-none shadow-lg !transition-none will-change-transform`}
+            style={{ transform: "translate(-9999px, -9999px) scale(1.05)" }}
           >
             {byId.get(dragId)?.text}
           </div>

@@ -23,15 +23,19 @@ export type Entry = {
   /** Reseed counter — bumps on "shuffle" so a fresh attempt gets a fresh board. */
   attempt: number;
   picked: string[];
+  /** Set once Check is pressed for this attempt — the per-question verdict. */
+  checked?: boolean;
 };
 
 export function emptyEntry(): Entry {
   return { attempt: 0, picked: [] };
 }
 
-/** Every slot filled — not whether it's right, only whether there's an answer to check. */
-export function entryDone(entry: Entry, board: Board): boolean {
-  return entry.picked.length === board.answer.length;
+/** Checked — not whether it's right, nor whether every slot is filled. A
+ * learner may check with any number of tiles placed and take partial credit
+ * (see `tileMatchScore`), so "done" is "pressed Check", never "filled". */
+export function entryDone(entry: Entry): boolean {
+  return entry.checked !== undefined;
 }
 
 export default function WritePhase({
@@ -72,11 +76,10 @@ export default function WritePhase({
   const board = boards[step];
 
   // Checked per question now, not once at the end of the chapter: tap
-  // Check, see the correct sentence right away, then move on. `checked[i]`
-  // is absent until that question has been checked once.
-  const [checked, setChecked] = useState<Record<number, boolean>>({});
-  const stepChecked = checked[step];
-  const isChecked = step in checked;
+  // Check, see the correct sentence right away, then move on. The verdict
+  // lives on the entry so the session's "answered" count agrees with it.
+  const stepChecked = entry.checked;
+  const isChecked = entryDone(entry);
 
   // The guided tour's "build the sentence" step: highlight the example
   // sentence and badge the tiles with their tap order, same 👆1/2/3 cue the
@@ -119,7 +122,7 @@ export default function WritePhase({
               aria-current={i === step}
               onClick={() => setStep(i)}
               className={`w-2.5 h-2.5 rounded-full transition-colors ${
-                i === step ? "bg-amber" : entryDone(entries[i], boards[i]) ? "bg-success" : "bg-line"
+                i === step ? "bg-amber" : entryDone(entries[i]) ? "bg-success" : "bg-line"
               }`}
             />
           ))}
@@ -168,14 +171,7 @@ export default function WritePhase({
             if (isChecked) return; // locked once checked — Reset (or Next/Back) starts a fresh attempt
             update(step, { picked });
           }}
-          onReset={() => {
-            onReset(step);
-            setChecked((prev) => {
-              const next = { ...prev };
-              delete next[step];
-              return next;
-            });
-          }}
+          onReset={() => onReset(step)}
         />
         </div>
 
@@ -185,8 +181,10 @@ export default function WritePhase({
               type="button"
               data-tour="guided-writing-check"
               className={BTN_INK}
-              onClick={() => setChecked((prev) => ({ ...prev, [step]: checkTiles(board, entry.picked) }))}
-              disabled={!entryDone(entry, board)}
+              // Any number of placed tiles can be checked — one word, two,
+              // the whole sentence. A partial answer takes partial credit.
+              onClick={() => update(step, { checked: checkTiles(board, entry.picked) })}
+              disabled={entry.picked.length === 0}
             >
               {t("board.check")}
             </button>
