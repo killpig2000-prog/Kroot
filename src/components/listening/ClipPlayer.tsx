@@ -57,8 +57,10 @@ export default function ClipPlayer({
   const [heard, setHeard] = useState(0);
   const [picked, setPicked] = useState<number | null>(null);
   const [saving, setSaving] = useState(false);
+  // Neural clips are already conversational pace — 1.0× means 1.0×. (The old
+  // 0.9 multiplier was a browser-voice habit that dragged every line.)
   const { currentIndex, isPlaying, isSupported, playFrom, speakOne, stop } =
-    useSpeechSynthesis(lines, 0.9 * rate);
+    useSpeechSynthesis(lines, rate);
 
   const speakers = useMemo(() => Array.from(new Set(lines.map((l) => l.speaker))), [lines]);
   const quiz = QUIZZES[dialogue.id];

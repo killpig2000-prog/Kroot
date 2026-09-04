@@ -14,6 +14,14 @@ export function useSpeechSynthesis(lines: DialogueLine[], rate = 0.9) {
   const [hasFinished, setHasFinished] = useState(false);
   const indexRef = useRef(-1);
   const rateRef = useRef(rate);
+  // Identifies the running chain so a turn-gap timer from a stopped or
+  // replaced chain can't start the next line over newer audio.
+  const chainRef = useRef(0);
+
+  // A real conversation has a beat between speakers. Playing the next line
+  // the instant the previous one ends reads like a single voice rattling off
+  // a script — this pause gives the turn-taking its rhythm.
+  const TURN_GAP_MS = 350;
 
   useEffect(() => {
     rateRef.current = rate;
@@ -21,6 +29,9 @@ export function useSpeechSynthesis(lines: DialogueLine[], rate = 0.9) {
 
   useEffect(() => {
     return () => {
+      // Also retire the chain, or a turn-gap timer that was mid-pause when
+      // the player unmounted would start the next line on the next page.
+      chainRef.current++;
       if (typeof window !== "undefined") stopSpeaking();
     };
   }, []);
@@ -46,6 +57,7 @@ export function useSpeechSynthesis(lines: DialogueLine[], rate = 0.9) {
     (start: number, { trackCompletion = false }: { trackCompletion?: boolean } = {}) => {
       if (!isSupported) return;
       stopSpeaking();
+      const chain = ++chainRef.current;
 
       const speakNext = (i: number) => {
         if (i >= lines.length) {
@@ -61,7 +73,15 @@ export function useSpeechSynthesis(lines: DialogueLine[], rate = 0.9) {
         speakKorean(lines[i].kr, {
           rate: rateRef.current,
           pitch: speakerPitch(lines[i].speaker),
-          onend: () => speakNext(i + 1),
+          onend: () => {
+            if (i + 1 >= lines.length) {
+              speakNext(i + 1);
+              return;
+            }
+            window.setTimeout(() => {
+              if (chainRef.current === chain) speakNext(i + 1);
+            }, TURN_GAP_MS);
+          },
           // Something else took the audio floor (a tapped word's speaker
           // button, most often). The chain is over — say so, instead of
           // leaving the pause button and "playing line N" hint running over
@@ -93,6 +113,7 @@ export function useSpeechSynthesis(lines: DialogueLine[], rate = 0.9) {
     (i: number) => {
       if (!isSupported || !lines[i]) return;
       stopSpeaking();
+      chainRef.current++;
       indexRef.current = i;
       setCurrentIndex(i);
       setIsPlaying(true);
@@ -114,6 +135,7 @@ export function useSpeechSynthesis(lines: DialogueLine[], rate = 0.9) {
   const stop = useCallback(() => {
     if (!isSupported) return;
     stopSpeaking();
+    chainRef.current++;
     indexRef.current = -1;
     setCurrentIndex(-1);
     setIsPlaying(false);

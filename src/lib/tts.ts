@@ -261,10 +261,26 @@ export function speakKorean(text: string, opts: SpeakOptions = {}): boolean {
     clearTimeout(watchdog);
     opts.oncancel?.();
   };
+  // Armed once audio is actually rolling. It's a safety net for a dropped
+  // "ended" event, not a pacing device, so it has to be strictly longer than
+  // the real clip: use the decoded duration when the element knows it,
+  // scaled by the playback rate, plus slack. The old "chars × 180ms" guess
+  // undershot natural Korean speech (and ignored the 0.7× slow mode), so it
+  // fired mid-sentence and the next speaker cut the current one off.
+  const rate = opts.rate ?? 1;
   const armPlaybackWatchdog = () => {
     if (settled) return;
     clearTimeout(watchdog);
-    watchdog = window.setTimeout(finish, Math.max(4000, spoken.length * 180));
+    const known = audioEl && Number.isFinite(audioEl.duration) ? audioEl.duration / rate : null;
+    const ms = known ? known * 1000 + 2500 : Math.max(6000, (spoken.length * 400) / rate);
+    watchdog = window.setTimeout(finish, ms);
+  };
+  // The <audio> element's duration belongs to whatever it last loaded, so the
+  // Web Speech fallback only gets the length-based estimate.
+  const armBrowserWatchdog = () => {
+    if (settled) return;
+    clearTimeout(watchdog);
+    watchdog = window.setTimeout(finish, Math.max(6000, (spoken.length * 400) / rate));
   };
   watchdog = window.setTimeout(finish, 8000);
   cancelCurrent = cancel;
@@ -273,7 +289,7 @@ export function speakKorean(text: string, opts: SpeakOptions = {}): boolean {
     const url = await fetchAudioUrl(spoken, apiVoice);
     if (gen !== generation) return; // a newer speak/stop superseded this one
     if (!url) {
-      armPlaybackWatchdog();
+      armBrowserWatchdog();
       speakWithBrowser(spoken, { ...opts, onend: finish });
       return;
     }
@@ -286,7 +302,7 @@ export function speakKorean(text: string, opts: SpeakOptions = {}): boolean {
     audio.onended = finish;
     audio.onerror = () => {
       if (gen === generation) {
-        armPlaybackWatchdog();
+        armBrowserWatchdog();
         speakWithBrowser(spoken, { ...opts, onend: finish });
       }
     };
@@ -295,7 +311,7 @@ export function speakKorean(text: string, opts: SpeakOptions = {}): boolean {
       .then(() => armPlaybackWatchdog())
       .catch(() => {
         if (gen === generation) {
-          armPlaybackWatchdog();
+          armBrowserWatchdog();
           speakWithBrowser(spoken, { ...opts, onend: finish });
         }
       });
