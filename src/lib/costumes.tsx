@@ -524,7 +524,7 @@ export const COSTUMES: Costume[] = [
     name: "Straw Hat",
     krName: "밀짚모자",
     slot: "hat",
-    price: 82,
+    price: 80,
     rarity: "common",
     render: () => (
       <>
@@ -539,7 +539,7 @@ export const COSTUMES: Costume[] = [
     name: "Cozy Beanie",
     krName: "털모자",
     slot: "hat",
-    price: 78,
+    price: 80,
     rarity: "common",
     render: () => (
       <>
@@ -571,7 +571,7 @@ export const COSTUMES: Costume[] = [
     name: "Sprout Cap",
     krName: "새싹 모자",
     slot: "hat",
-    price: 72,
+    price: 70,
     rarity: "common",
     render: () => (
       <>
@@ -586,7 +586,7 @@ export const COSTUMES: Costume[] = [
     name: "Round Glasses",
     krName: "동글 안경",
     slot: "face",
-    price: 76,
+    price: 80,
     rarity: "common",
     render: () => (
       <>
@@ -619,7 +619,7 @@ export const COSTUMES: Costume[] = [
     name: "Cozy Scarf",
     krName: "목도리",
     slot: "neck",
-    price: 84,
+    price: 80,
     rarity: "common",
     render: () => (
       <>
@@ -761,7 +761,7 @@ export const COSTUMES: Costume[] = [
     name: "Cherry Blush",
     krName: "앵두 볼터치",
     slot: "face",
-    price: 88,
+    price: 90,
     rarity: "common",
     render: () => (
       <>
@@ -794,7 +794,7 @@ export const COSTUMES: Costume[] = [
     name: "Maple Garland",
     krName: "단풍 목걸이",
     slot: "neck",
-    price: 315,
+    price: 320,
     rarity: "rare",
     render: () => (
       <>
@@ -820,7 +820,7 @@ export const COSTUMES: Costume[] = [
     name: "Bow Tie",
     krName: "나비넥타이",
     slot: "neck",
-    price: 68,
+    price: 70,
     rarity: "common",
     render: () => (
       <>
@@ -836,7 +836,7 @@ export const COSTUMES: Costume[] = [
     name: "Tiger Hood",
     krName: "호랑이 모자",
     slot: "hat",
-    price: 295,
+    price: 300,
     rarity: "rare",
     render: () => (
       <>
@@ -856,7 +856,7 @@ export const COSTUMES: Costume[] = [
     name: "Sunbeams",
     krName: "햇살",
     slot: "aura",
-    price: 145,
+    price: 150,
     rarity: "common",
     icon: "🌞",
     scene: {
@@ -1244,7 +1244,7 @@ export const COSTUMES: Costume[] = [
     name: "Jar Terrace",
     krName: "장독대",
     slot: "ground",
-    price: 395,
+    price: 400,
     rarity: "rare",
     icon: "🏺",
     scene: {
@@ -1360,7 +1360,7 @@ export const COSTUMES: Costume[] = [
     name: "Sparrow",
     krName: "참새",
     slot: "friend",
-    price: 165,
+    price: 170,
     rarity: "common",
     icon: "🐦",
     scene: {
@@ -1383,7 +1383,7 @@ export const COSTUMES: Costume[] = [
     name: "Squirrel",
     krName: "다람쥐",
     slot: "friend",
-    price: 385,
+    price: 390,
     rarity: "rare",
     icon: "🐿️",
     scene: {
@@ -1405,7 +1405,7 @@ export const COSTUMES: Costume[] = [
     name: "Garden Cat",
     krName: "고양이",
     slot: "friend",
-    price: 415,
+    price: 420,
     rarity: "rare",
     icon: "🐈",
     scene: {
