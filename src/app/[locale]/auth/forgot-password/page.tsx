@@ -8,6 +8,7 @@ import CuteError from "@/components/ui/CuteError";
 import { createClient } from "@/lib/supabase/client";
 import { useHydrated } from "@/lib/use-hydrated";
 import BrandMark from "@/components/ui/BrandMark";
+import { verifyEmailCode } from "@/lib/verify-email-code";
 
 const CARD = "border border-line rounded-[14px] bg-cream p-[clamp(22px,4vw,32px)]";
 const FIELD =
@@ -20,10 +21,38 @@ export default function ForgotPasswordPage() {
   const t = useTranslations("auth");
   const supabase = useMemo(() => createClient(), []);
   const [error, setError] = useState<string | null>(null);
-  const [sent, setSent] = useState(false);
+  const [sent, setSent] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const [code, setCode] = useState("");
+  const [verifying, setVerifying] = useState(false);
   const hydrated = useHydrated();
   const busy = submitting || !hydrated;
+
+  // The reset mail's link is single-use, and inboxes that scan links for
+  // phishing (Naver, most corporate gateways) open it first — so it reaches
+  // the learner already spent. The emailed code is the way in for them:
+  // verifying it as a recovery OTP opens the same short session the link
+  // would have, and the new-password form takes it from there.
+  async function handleCode(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const clean = code.replace(/\s+/g, "");
+    if (!sent || !clean) return;
+    setError(null);
+    setVerifying(true);
+    try {
+      const res = await verifyEmailCode(supabase, sent, clean, ["recovery"]);
+      if (!res.ok) {
+        setError(/rate limit/i.test(res.message) ? t("errors.rateLimit") : t("errors.badCode"));
+        return;
+      }
+      // Hard navigation so the server sees the session cookies just written.
+      window.location.assign("/auth/update-password");
+    } catch {
+      setError(t("errors.network"));
+    } finally {
+      setVerifying(false);
+    }
+  }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -40,7 +69,7 @@ export default function ForgotPasswordPage() {
         setError(error.message);
         return;
       }
-      setSent(true);
+      setSent(email);
     } catch {
       setError(t("errors.network"));
     } finally {
@@ -74,6 +103,28 @@ export default function ForgotPasswordPage() {
                 <p className="text-muted text-[13.5px] leading-[1.6]">
                   {t("forgot.sentBody")}
                 </p>
+                <form onSubmit={handleCode} className="text-left mt-5 pt-4 border-t border-dashed border-line">
+                  <label htmlFor="reset-code" className={LABEL}>
+                    {t("forgot.codeLabel")}
+                  </label>
+                  <input
+                    id="reset-code"
+                    className={`${FIELD} text-center tracking-[0.3em] font-bold`}
+                    value={code}
+                    onChange={(e) => setCode(e.target.value)}
+                    inputMode="numeric"
+                    autoComplete="one-time-code"
+                    placeholder="••••••••"
+                  />
+                  {error && <CuteError>{error}</CuteError>}
+                  <button
+                    type="submit"
+                    disabled={verifying || !code.replace(/\s+/g, "")}
+                    className={`${BTN_GREEN} w-full mt-2.5 disabled:opacity-60`}
+                  >
+                    {verifying ? t("forgot.verifying") : t("forgot.codeSubmit")}
+                  </button>
+                </form>
               </>
             ) : (
               <>

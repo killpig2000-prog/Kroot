@@ -12,15 +12,19 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 // most cases on its own.
 const TYPES: EmailOtpType[] = ["email", "signup", "magiclink"];
 
-/** Verify an emailed sign-in code, whichever email it came from. */
+/**
+ * Verify an emailed code, whichever email it came from. Pass `types` when the
+ * caller does know — a password reset is always "recovery".
+ */
 export async function verifyEmailCode(
   supabase: SupabaseClient,
   email: string,
-  code: string
+  code: string,
+  types: EmailOtpType[] = TYPES
 ): Promise<{ ok: true } | { ok: false; message: string }> {
   const token = code.replace(/\s+/g, "");
   let last = "";
-  for (const type of TYPES) {
+  for (const type of types) {
     const { error } = await supabase.auth.verifyOtp({ email, token, type });
     if (!error) return { ok: true };
     last = error.message;
