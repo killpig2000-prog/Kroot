@@ -126,13 +126,18 @@ export function SignupCard({
   );
 }
 
-// Step 6 — the inbox moment. Shows where the link went and gets them there.
+// Step 6 — the inbox moment. Shows where the link went and gets them there,
+// with the emailed code as a second way in for the many mail providers whose
+// phishing scanners open (and thereby spend) the single-use link first.
 export function ConfirmCard({
   email,
   firstLesson,
   resent,
   sending,
   cooldown,
+  error,
+  verifying,
+  onVerifyCode,
   onResend,
   onChangeEmail,
 }: {
@@ -142,10 +147,15 @@ export function ConfirmCard({
   sending: boolean;
   /** Seconds left before resend is allowed again; 0 means ready. */
   cooldown: number;
+  error: string | null;
+  verifying: boolean;
+  onVerifyCode: (code: string) => void;
   onResend: () => void;
   onChangeEmail: () => void;
 }) {
   const t = useTranslations("onboarding.confirm");
+  const [code, setCode] = useState("");
+  const clean = code.replace(/\s+/g, "");
   return (
     <section className={FADE}>
       <div className={`${CARD} text-center`}>
@@ -162,6 +172,35 @@ export function ConfirmCard({
             {t("outlook")}
           </a>
         </div>
+
+        <form
+          className="mt-5 pt-4 border-t border-dashed border-line"
+          onSubmit={(e) => {
+            e.preventDefault();
+            if (clean) onVerifyCode(clean);
+          }}
+        >
+          <label className={LABEL} htmlFor="signin-code">
+            {t("codeLabel")}
+          </label>
+          <input
+            id="signin-code"
+            className={`${FIELD} text-center tracking-[0.3em] font-bold`}
+            value={code}
+            onChange={(e) => setCode(e.target.value)}
+            inputMode="numeric"
+            autoComplete="one-time-code"
+            placeholder="••••••••"
+            aria-describedby="signin-code-hint"
+          />
+          <p id="signin-code-hint" className="text-[12px] text-faint mt-1.5">
+            {t("codeHint")}
+          </p>
+          {error && <CuteError>{error}</CuteError>}
+          <button type="submit" className={`${BTN_GREEN} w-full mt-2.5`} disabled={!clean || verifying}>
+            {verifying ? t("verifying") : t("codeSubmit")}
+          </button>
+        </form>
         <p className="text-[12px] text-faint mt-4">
           {resent ? t("sentAgain") : t("nothingYet")}{" "}
           <button type="button" className={`${BTN_GHOST} text-charcoal font-semibold`} onClick={onResend} disabled={sending || cooldown > 0}>

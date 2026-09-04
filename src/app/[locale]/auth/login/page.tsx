@@ -7,6 +7,7 @@ import { stripLocale } from "@/i18n/locale";
 import Mascot from "@/components/onboarding/Mascot";
 import CuteError from "@/components/ui/CuteError";
 import { createClient } from "@/lib/supabase/client";
+import { verifyEmailCode } from "@/lib/verify-email-code";
 import { useHydrated } from "@/lib/use-hydrated";
 import BrandMark from "@/components/ui/BrandMark";
 
@@ -61,6 +62,8 @@ export default function LoginPage() {
   );
   const [submitting, setSubmitting] = useState(false);
   const [linkSentTo, setLinkSentTo] = useState<string | null>(null);
+  const [code, setCode] = useState("");
+  const [verifying, setVerifying] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
   const hydrated = useHydrated();
   const busy = submitting || !hydrated;
@@ -165,6 +168,29 @@ export default function LoginPage() {
     }
   }
 
+  // Sign in with the code from that same email, for inboxes whose link
+  // scanner spends the link before the learner can use it.
+  async function handleCode() {
+    const clean = code.replace(/\s+/g, "");
+    if (!linkSentTo || !clean) return;
+    setError(null);
+    setVerifying(true);
+    try {
+      const res = await verifyEmailCode(supabase, linkSentTo, clean);
+      if (!res.ok) {
+        setError(/rate limit/i.test(res.message) ? t("errors.rateLimit") : t("errors.badCode"));
+        return;
+      }
+      // Full navigation, not router.push: the server needs the session
+      // cookies this call just wrote.
+      window.location.assign(next);
+    } catch {
+      setError(t("errors.network"));
+    } finally {
+      setVerifying(false);
+    }
+  }
+
   return (
     <div className="min-h-screen flex flex-col bg-cream text-charcoal">
       <header className="border-b border-line">
@@ -235,9 +261,35 @@ export default function LoginPage() {
 
                 {error && <CuteError>{error}</CuteError>}
                 {linkSentTo && (
-                  <p className="text-[13px] text-success-deep bg-success-bg border border-success-line rounded-[9px] px-3.5 py-2.5 mb-3.5">
-                    {t.rich("login.linkSent", { email: linkSentTo, b: (chunks) => <b>{chunks}</b> })}
-                  </p>
+                  <div className="mb-3.5">
+                    <p className="text-[13px] text-success-deep bg-success-bg border border-success-line rounded-[9px] px-3.5 py-2.5">
+                      {t.rich("login.linkSent", { email: linkSentTo, b: (chunks) => <b>{chunks}</b> })}
+                    </p>
+                    {/* Mail providers that scan links for phishing open the
+                        single-use link before the learner does, so it arrives
+                        already spent. The emailed code can't be consumed that
+                        way — see the same rescue on the sign-up confirm card. */}
+                    <label className={LABEL} htmlFor="login-code">
+                      {t("login.codeLabel")}
+                    </label>
+                    <input
+                      id="login-code"
+                      className={`${FIELD} text-center tracking-[0.3em] font-bold`}
+                      value={code}
+                      onChange={(e) => setCode(e.target.value)}
+                      inputMode="numeric"
+                      autoComplete="one-time-code"
+                      placeholder="••••••••"
+                    />
+                    <button
+                      type="button"
+                      onClick={handleCode}
+                      disabled={busy || !code.replace(/\s+/g, "")}
+                      className={`${BTN_OUTLINE} w-full mt-2.5 disabled:opacity-60`}
+                    >
+                      {verifying ? t("login.verifying") : t("login.codeSubmit")}
+                    </button>
+                  </div>
                 )}
 
                 <button type="submit" disabled={busy} className={`${BTN_GREEN} w-full disabled:opacity-60`}>

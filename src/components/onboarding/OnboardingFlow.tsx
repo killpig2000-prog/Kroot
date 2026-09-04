@@ -8,6 +8,7 @@ import LanguageLinks from "@/components/ui/LanguageLinks";
 import BrandMark from "@/components/ui/BrandMark";
 import { track } from "@/lib/analytics";
 import { createClient } from "@/lib/supabase/client";
+import { verifyEmailCode } from "@/lib/verify-email-code";
 import {
   answerRun,
   buildTest,
@@ -108,6 +109,7 @@ export default function OnboardingFlow({
   const [resent, setResent] = useState(false);
   const [sending, setSending] = useState(false);
   const [resendCooldown, setResendCooldown] = useState(0);
+  const [verifying, setVerifying] = useState(false);
   const [error, setError] = useState<string | null>(() =>
     params.error === "auth" ? t("errors.authFailed") : params.error ? decodeURIComponent(params.error) : null
   );
@@ -349,6 +351,34 @@ export default function OnboardingFlow({
     }
   }
 
+  // The same sign-in, by the code printed in the email instead of the link.
+  // Mail providers that scan links for phishing (Naver and most corporate
+  // gateways do) open the link themselves before the learner ever sees it,
+  // and the link is single-use — so it arrives already spent and reads as
+  // "expired". A typed code is the one path a scanner cannot consume.
+  async function verifyCode(code: string) {
+    if (!placement) return;
+    setError(null);
+    setVerifying(true);
+    try {
+      const res = await verifyEmailCode(supabase, email, code);
+      if (!res.ok) {
+        setError(/rate limit/i.test(res.message) ? t("errors.rateLimit") : t("errors.badCode"));
+        return;
+      }
+      track("signup", { method: "email_code", goal: placement.goal });
+      // Hand off to the same URL the email link would have landed on, so the
+      // placement is saved by the one path that already does it. A full
+      // navigation, not router.push: the server has to see the new session
+      // cookies this call just wrote.
+      window.location.assign(callbackNext(placement));
+    } catch {
+      setError(t("errors.network"));
+    } finally {
+      setVerifying(false);
+    }
+  }
+
   const active = STEP_INDEX[step];
   const steps = userId ? STEPS.slice(0, 4) : STEPS;
   const loginHref = customNext ? `/auth/login?next=${encodeURIComponent(params.next)}` : "/auth/login";
@@ -412,6 +442,9 @@ export default function OnboardingFlow({
               resent={resent}
               sending={sending}
               cooldown={resendCooldown}
+              error={error}
+              verifying={verifying}
+              onVerifyCode={verifyCode}
               onResend={() => magicLink(email, "")}
               onChangeEmail={() => {
                 setResent(false);

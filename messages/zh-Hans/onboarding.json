@@ -100,7 +100,7 @@
   },
   "confirm": {
     "title": "请查看你的邮箱",
-    "sub": "我们已把链接发送到 <b>{email}</b>。点击它，第 1 课正在等你。",
+    "sub": "我们已向 <b>{email}</b> 发送了登录链接和验证码。点击链接，或在下方输入验证码。",
     "upNext": "接下来",
     "gmail": "打开 Gmail",
     "outlook": "打开 Outlook",
@@ -108,16 +108,21 @@
     "nothingYet": "还没收到？",
     "resend": "重新发送",
     "resendIn": "{n} 秒后可重新发送",
-    "changeEmail": "换一个邮箱"
+    "changeEmail": "换一个邮箱",
+    "codeLabel": "或输入邮件中的验证码",
+    "codeHint": "部分邮箱会自动打开链接，导致链接被占用失效。验证码则始终有效。",
+    "codeSubmit": "用验证码登录",
+    "verifying": "正在登录…"
   },
   "saving": {
     "title": "正在种下你的种子…",
     "sub": "正在保存 {level} 并打开你的第一课。"
   },
   "errors": {
-    "authFailed": "该登录链接无效或已过期。请重试。",
+    "authFailed": "登录链接无效或已过期。请输入邮件中的验证码，或重新获取链接。",
     "rateLimit": "抱歉——由于目前仍在测试阶段，我们今晚已达到每小时邮件发送上限。请大约一小时后再试，或改用 Google 继续。",
-    "network": "无法连接服务器。请检查网络后重试。"
+    "network": "无法连接服务器。请检查网络后重试。",
+    "badCode": "验证码不正确。请检查，或重新发送获取新的验证码。"
   },
   "mascot": {
     "welcome": "欢迎！",

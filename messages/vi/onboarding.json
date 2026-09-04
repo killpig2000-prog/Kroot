@@ -100,7 +100,7 @@
   },
   "confirm": {
     "title": "Kiểm tra hộp thư của bạn",
-    "sub": "Chúng tôi đã gửi liên kết đến <b>{email}</b>. Nhấn vào đó và bài 1 đang chờ bạn.",
+    "sub": "Chúng tôi đã gửi một liên kết và một mã tới <b>{email}</b>. Hãy nhấn vào liên kết, hoặc nhập mã bên dưới.",
     "upNext": "Tiếp theo",
     "gmail": "Mở Gmail",
     "outlook": "Mở Outlook",
@@ -108,16 +108,21 @@
     "nothingYet": "Chưa thấy gì?",
     "resend": "Gửi lại",
     "resendIn": "Gửi lại sau {n} giây",
-    "changeEmail": "Dùng email khác"
+    "changeEmail": "Dùng email khác",
+    "codeLabel": "Hoặc nhập mã trong email",
+    "codeHint": "Một số nhà cung cấp email tự động mở liên kết, khiến liên kết bị dùng mất. Mã thì luôn dùng được.",
+    "codeSubmit": "Đăng nhập bằng mã",
+    "verifying": "Đang đăng nhập…"
   },
   "saving": {
     "title": "Đang gieo hạt giống của bạn…",
     "sub": "Đang lưu {level} và mở bài học đầu tiên."
   },
   "errors": {
-    "authFailed": "Liên kết đăng nhập đó không hợp lệ hoặc đã hết hạn. Vui lòng thử lại.",
+    "authFailed": "Liên kết đăng nhập không hợp lệ hoặc đã hết hạn. Hãy nhập mã trong email, hoặc yêu cầu liên kết mới.",
     "rateLimit": "Xin lỗi — chúng tôi đã đạt giới hạn gửi email mỗi giờ tối nay vì vẫn đang trong giai đoạn thử nghiệm. Vui lòng thử lại sau khoảng một giờ, hoặc tiếp tục với Google.",
-    "network": "Không kết nối được máy chủ. Hãy kiểm tra kết nối và thử lại."
+    "network": "Không kết nối được máy chủ. Hãy kiểm tra kết nối và thử lại.",
+    "badCode": "Mã không đúng. Hãy kiểm tra lại, hoặc gửi lại để nhận mã mới."
   },
   "mascot": {
     "welcome": "chào mừng!",

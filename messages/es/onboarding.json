@@ -100,7 +100,7 @@
   },
   "confirm": {
     "title": "Revisa tu bandeja de entrada",
-    "sub": "Enviamos un enlace a <b>{email}</b>. Tócalo y la lección 1 te estará esperando.",
+    "sub": "Enviamos un enlace y un código a <b>{email}</b>. Toca el enlace o introduce el código abajo.",
     "upNext": "A continuación",
     "gmail": "Abrir Gmail",
     "outlook": "Abrir Outlook",
@@ -108,16 +108,21 @@
     "nothingYet": "¿Nada todavía?",
     "resend": "Reenviar",
     "resendIn": "Reenviar en {n} s",
-    "changeEmail": "Usar otro correo"
+    "changeEmail": "Usar otro correo",
+    "codeLabel": "O introduce el código del correo",
+    "codeHint": "Algunos proveedores de correo abren los enlaces automáticamente y así los consumen. El código siempre funciona.",
+    "codeSubmit": "Entrar con el código",
+    "verifying": "Entrando…"
   },
   "saving": {
     "title": "Plantando tu semilla…",
     "sub": "Guardando {level} y abriendo tu primera lección."
   },
   "errors": {
-    "authFailed": "Ese enlace de acceso falló o caducó. Inténtalo de nuevo.",
+    "authFailed": "Ese enlace falló o caducó. Introduce el código del correo o pide uno nuevo.",
     "rateLimit": "Lo sentimos — hemos alcanzado el límite de correos por hora de esta noche mientras seguimos en pruebas. Inténtalo de nuevo en una hora, o continúa con Google.",
-    "network": "No se pudo conectar con el servidor. Revisa tu conexión e inténtalo de nuevo."
+    "network": "No se pudo conectar con el servidor. Revisa tu conexión e inténtalo de nuevo.",
+    "badCode": "Ese código no funcionó. Revísalo o pide uno nuevo."
   },
   "mascot": {
     "welcome": "¡bienvenido!",
