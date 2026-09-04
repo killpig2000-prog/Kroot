@@ -1,63 +1,61 @@
 export type Jamo = {
   char: string;
   rom: string;
-  /** Korean name of the letter, e.g. 기역 */
-  name: string;
   /** English sound hint, e.g. "g as in go" */
   hint: string;
   example: { kr: string; rom: string; en: string };
 };
 
 export const BASIC_CONSONANTS: Jamo[] = [
-  { char: "ㄱ", rom: "g / k", name: "기역", hint: "g as in go (k at the end of a syllable)", example: { kr: "가방", rom: "gabang", en: "bag" } },
-  { char: "ㄴ", rom: "n", name: "니은", hint: "n as in now", example: { kr: "나무", rom: "namu", en: "tree" } },
-  { char: "ㄷ", rom: "d / t", name: "디귿", hint: "d as in door", example: { kr: "다리", rom: "dari", en: "leg, bridge" } },
-  { char: "ㄹ", rom: "r / l", name: "리을", hint: "between r and l — tap it like Spanish r", example: { kr: "라면", rom: "ramyeon", en: "ramen" } },
-  { char: "ㅁ", rom: "m", name: "미음", hint: "m as in mom", example: { kr: "머리", rom: "meori", en: "head" } },
-  { char: "ㅂ", rom: "b / p", name: "비읍", hint: "b as in bed", example: { kr: "바다", rom: "bada", en: "sea" } },
-  { char: "ㅅ", rom: "s", name: "시옷", hint: "s as in sun (sh before i)", example: { kr: "사과", rom: "sagwa", en: "apple" } },
-  { char: "ㅇ", rom: "– / ng", name: "이응", hint: "silent at the start, ng as in sing at the end", example: { kr: "아기", rom: "agi", en: "baby" } },
-  { char: "ㅈ", rom: "j", name: "지읒", hint: "j as in jam", example: { kr: "자동차", rom: "jadongcha", en: "car" } },
-  { char: "ㅊ", rom: "ch", name: "치읓", hint: "ch as in chair, with a puff of air", example: { kr: "책", rom: "chaek", en: "book" } },
-  { char: "ㅋ", rom: "k", name: "키읔", hint: "k as in kite, strongly aspirated", example: { kr: "커피", rom: "keopi", en: "coffee" } },
-  { char: "ㅌ", rom: "t", name: "티읕", hint: "t as in top, strongly aspirated", example: { kr: "토마토", rom: "tomato", en: "tomato" } },
-  { char: "ㅍ", rom: "p", name: "피읖", hint: "p as in pen, strongly aspirated", example: { kr: "포도", rom: "podo", en: "grape" } },
-  { char: "ㅎ", rom: "h", name: "히읗", hint: "h as in hat", example: { kr: "하늘", rom: "haneul", en: "sky" } },
+  { char: "ㄱ", rom: "g / k", hint: "g as in go (k at the end of a syllable)", example: { kr: "가방", rom: "gabang", en: "bag" } },
+  { char: "ㄴ", rom: "n", hint: "n as in now", example: { kr: "나무", rom: "namu", en: "tree" } },
+  { char: "ㄷ", rom: "d / t", hint: "d as in door", example: { kr: "다리", rom: "dari", en: "leg, bridge" } },
+  { char: "ㄹ", rom: "r / l", hint: "between r and l — tap it like Spanish r", example: { kr: "라면", rom: "ramyeon", en: "ramen" } },
+  { char: "ㅁ", rom: "m", hint: "m as in mom", example: { kr: "머리", rom: "meori", en: "head" } },
+  { char: "ㅂ", rom: "b / p", hint: "b as in bed", example: { kr: "바다", rom: "bada", en: "sea" } },
+  { char: "ㅅ", rom: "s", hint: "s as in sun (sh before i)", example: { kr: "사과", rom: "sagwa", en: "apple" } },
+  { char: "ㅇ", rom: "– / ng", hint: "silent at the start, ng as in sing at the end", example: { kr: "아기", rom: "agi", en: "baby" } },
+  { char: "ㅈ", rom: "j", hint: "j as in jam", example: { kr: "자동차", rom: "jadongcha", en: "car" } },
+  { char: "ㅊ", rom: "ch", hint: "ch as in chair, with a puff of air", example: { kr: "책", rom: "chaek", en: "book" } },
+  { char: "ㅋ", rom: "k", hint: "k as in kite, strongly aspirated", example: { kr: "커피", rom: "keopi", en: "coffee" } },
+  { char: "ㅌ", rom: "t", hint: "t as in top, strongly aspirated", example: { kr: "토마토", rom: "tomato", en: "tomato" } },
+  { char: "ㅍ", rom: "p", hint: "p as in pen, strongly aspirated", example: { kr: "포도", rom: "podo", en: "grape" } },
+  { char: "ㅎ", rom: "h", hint: "h as in hat", example: { kr: "하늘", rom: "haneul", en: "sky" } },
 ];
 
 export const DOUBLE_CONSONANTS: Jamo[] = [
-  { char: "ㄲ", rom: "kk", name: "쌍기역", hint: "tense ㄱ — like the k in sky, no puff of air", example: { kr: "꽃", rom: "kkot", en: "flower" } },
-  { char: "ㄸ", rom: "tt", name: "쌍디귿", hint: "tense ㄷ — like the t in stop", example: { kr: "딸기", rom: "ttalgi", en: "strawberry" } },
-  { char: "ㅃ", rom: "pp", name: "쌍비읍", hint: "tense ㅂ — like the p in spy", example: { kr: "빵", rom: "ppang", en: "bread" } },
-  { char: "ㅆ", rom: "ss", name: "쌍시옷", hint: "tense ㅅ — a sharp, hissed s", example: { kr: "쌀", rom: "ssal", en: "uncooked rice" } },
-  { char: "ㅉ", rom: "jj", name: "쌍지읒", hint: "tense ㅈ — a tight, pinched j", example: { kr: "짜다", rom: "jjada", en: "to be salty" } },
+  { char: "ㄲ", rom: "kk", hint: "tense ㄱ — like the k in sky, no puff of air", example: { kr: "꽃", rom: "kkot", en: "flower" } },
+  { char: "ㄸ", rom: "tt", hint: "tense ㄷ — like the t in stop", example: { kr: "딸기", rom: "ttalgi", en: "strawberry" } },
+  { char: "ㅃ", rom: "pp", hint: "tense ㅂ — like the p in spy", example: { kr: "빵", rom: "ppang", en: "bread" } },
+  { char: "ㅆ", rom: "ss", hint: "tense ㅅ — a sharp, hissed s", example: { kr: "쌀", rom: "ssal", en: "uncooked rice" } },
+  { char: "ㅉ", rom: "jj", hint: "tense ㅈ — a tight, pinched j", example: { kr: "짜다", rom: "jjada", en: "to be salty" } },
 ];
 
 export const BASIC_VOWELS: Jamo[] = [
-  { char: "ㅏ", rom: "a", name: "아", hint: "a as in father", example: { kr: "아빠", rom: "appa", en: "dad" } },
-  { char: "ㅑ", rom: "ya", name: "야", hint: "ya as in yard", example: { kr: "야구", rom: "yagu", en: "baseball" } },
-  { char: "ㅓ", rom: "eo", name: "어", hint: "u as in sun", example: { kr: "어머니", rom: "eomeoni", en: "mother" } },
-  { char: "ㅕ", rom: "yeo", name: "여", hint: "yu as in young", example: { kr: "여름", rom: "yeoreum", en: "summer" } },
-  { char: "ㅗ", rom: "o", name: "오", hint: "o as in more", example: { kr: "오이", rom: "oi", en: "cucumber" } },
-  { char: "ㅛ", rom: "yo", name: "요", hint: "yo as in yoga", example: { kr: "교실", rom: "gyosil", en: "classroom" } },
-  { char: "ㅜ", rom: "u", name: "우", hint: "oo as in moon", example: { kr: "우유", rom: "uyu", en: "milk" } },
-  { char: "ㅠ", rom: "yu", name: "유", hint: "you", example: { kr: "유리", rom: "yuri", en: "glass" } },
-  { char: "ㅡ", rom: "eu", name: "으", hint: "like the oo in good, but with lips spread wide", example: { kr: "그림", rom: "geurim", en: "picture" } },
-  { char: "ㅣ", rom: "i", name: "이", hint: "ee as in see", example: { kr: "기차", rom: "gicha", en: "train" } },
+  { char: "ㅏ", rom: "a", hint: "a as in father", example: { kr: "아빠", rom: "appa", en: "dad" } },
+  { char: "ㅑ", rom: "ya", hint: "ya as in yard", example: { kr: "야구", rom: "yagu", en: "baseball" } },
+  { char: "ㅓ", rom: "eo", hint: "u as in sun", example: { kr: "어머니", rom: "eomeoni", en: "mother" } },
+  { char: "ㅕ", rom: "yeo", hint: "yu as in young", example: { kr: "여름", rom: "yeoreum", en: "summer" } },
+  { char: "ㅗ", rom: "o", hint: "o as in more", example: { kr: "오이", rom: "oi", en: "cucumber" } },
+  { char: "ㅛ", rom: "yo", hint: "yo as in yoga", example: { kr: "교실", rom: "gyosil", en: "classroom" } },
+  { char: "ㅜ", rom: "u", hint: "oo as in moon", example: { kr: "우유", rom: "uyu", en: "milk" } },
+  { char: "ㅠ", rom: "yu", hint: "you", example: { kr: "유리", rom: "yuri", en: "glass" } },
+  { char: "ㅡ", rom: "eu", hint: "like the oo in good, but with lips spread wide", example: { kr: "그림", rom: "geurim", en: "picture" } },
+  { char: "ㅣ", rom: "i", hint: "ee as in see", example: { kr: "기차", rom: "gicha", en: "train" } },
 ];
 
 export const COMPOUND_VOWELS: Jamo[] = [
-  { char: "ㅐ", rom: "ae", name: "애", hint: "e as in bed", example: { kr: "개", rom: "gae", en: "dog" } },
-  { char: "ㅒ", rom: "yae", name: "얘", hint: "ye as in yes", example: { kr: "얘기", rom: "yaegi", en: "story, chat" } },
-  { char: "ㅔ", rom: "e", name: "에", hint: "e as in bed — modern Korean barely separates it from ㅐ", example: { kr: "베개", rom: "begae", en: "pillow" } },
-  { char: "ㅖ", rom: "ye", name: "예", hint: "ye as in yellow", example: { kr: "예수", rom: "yesu", en: "Jesus" } },
-  { char: "ㅘ", rom: "wa", name: "와", hint: "wa as in water — ㅗ + ㅏ", example: { kr: "사과", rom: "sagwa", en: "apple" } },
-  { char: "ㅙ", rom: "wae", name: "왜", hint: "we as in wet — ㅗ + ㅐ", example: { kr: "왜", rom: "wae", en: "why" } },
-  { char: "ㅚ", rom: "oe", name: "외", hint: "we as in wet — ㅗ + ㅣ", example: { kr: "외국", rom: "oeguk", en: "foreign country" } },
-  { char: "ㅝ", rom: "wo", name: "워", hint: "wo as in wonder — ㅜ + ㅓ", example: { kr: "원", rom: "won", en: "won (currency)" } },
-  { char: "ㅞ", rom: "we", name: "웨", hint: "we as in wet — ㅜ + ㅔ", example: { kr: "웨이터", rom: "weiteo", en: "waiter" } },
-  { char: "ㅟ", rom: "wi", name: "위", hint: "wee — ㅜ + ㅣ", example: { kr: "귀", rom: "gwi", en: "ear" } },
-  { char: "ㅢ", rom: "ui", name: "의", hint: "ㅡ then ㅣ, said quickly — often just 'e' in speech", example: { kr: "의자", rom: "uija", en: "chair" } },
+  { char: "ㅐ", rom: "ae", hint: "e as in bed", example: { kr: "개", rom: "gae", en: "dog" } },
+  { char: "ㅒ", rom: "yae", hint: "ye as in yes", example: { kr: "얘기", rom: "yaegi", en: "story, chat" } },
+  { char: "ㅔ", rom: "e", hint: "e as in bed — modern Korean barely separates it from ㅐ", example: { kr: "베개", rom: "begae", en: "pillow" } },
+  { char: "ㅖ", rom: "ye", hint: "ye as in yellow", example: { kr: "예수", rom: "yesu", en: "Jesus" } },
+  { char: "ㅘ", rom: "wa", hint: "wa as in water — ㅗ + ㅏ", example: { kr: "사과", rom: "sagwa", en: "apple" } },
+  { char: "ㅙ", rom: "wae", hint: "we as in wet — ㅗ + ㅐ", example: { kr: "왜", rom: "wae", en: "why" } },
+  { char: "ㅚ", rom: "oe", hint: "we as in wet — ㅗ + ㅣ", example: { kr: "외국", rom: "oeguk", en: "foreign country" } },
+  { char: "ㅝ", rom: "wo", hint: "wo as in wonder — ㅜ + ㅓ", example: { kr: "원", rom: "won", en: "won (currency)" } },
+  { char: "ㅞ", rom: "we", hint: "we as in wet — ㅜ + ㅔ", example: { kr: "웨이터", rom: "weiteo", en: "waiter" } },
+  { char: "ㅟ", rom: "wi", hint: "wee — ㅜ + ㅣ", example: { kr: "귀", rom: "gwi", en: "ear" } },
+  { char: "ㅢ", rom: "ui", hint: "ㅡ then ㅣ, said quickly — often just 'e' in speech", example: { kr: "의자", rom: "uija", en: "chair" } },
 ];
 
 /** Initial consonants (초성) in Unicode order — index feeds Hangul composition. */

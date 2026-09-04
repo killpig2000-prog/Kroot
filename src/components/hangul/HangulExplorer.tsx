@@ -68,7 +68,6 @@ function JamoTile({
         {jamo.char}
       </span>
       <b className="block font-semibold text-[13px] mt-1.5 leading-tight">{jamo.rom}</b>
-      <small className="kr block text-[11px] text-faint leading-tight mt-0.5">{jamo.name}</small>
     </button>
   );
 }
@@ -116,8 +115,7 @@ function JamoGrid({ items, firstItemTourId }: { items: Jamo[]; firstItemTourId?:
               )}
             </span>
             <p className="text-[13px] text-muted leading-[1.55] min-w-0">
-              <b className="text-charcoal">{selected.rom}</b>
-              <span className="kr text-faint"> · {selected.name}</span> — {selected.hint}
+              <b className="text-charcoal">{selected.rom}</b> — {selected.hint}
             </p>
           </div>
           <button
