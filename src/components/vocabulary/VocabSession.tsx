@@ -51,7 +51,6 @@ export default function VocabSession({
 
   const [phase, setPhase] = useState<Phase>("flip");
   const [index, setIndex] = useState(0);
-  const [flipped, setFlipped] = useState(false);
   const [known, setKnown] = useState(0);
   const [tricky, setTricky] = useState(0);
   const [navigating, setNavigating] = useState(false);
@@ -170,7 +169,6 @@ export default function VocabSession({
     if (gotIt) setKnown(nextKnown);
     else setTricky(nextTricky);
 
-    setFlipped(false);
     setRootOpen(false);
     if (index + 1 < words.length) {
       setIndex((i) => i + 1);
@@ -311,9 +309,7 @@ export default function VocabSession({
       word={word}
       wordCounts={counts[word.key] ?? { correct: 0, incorrect: 0 }}
       topicLabel={topicLabel}
-      flipped={flipped}
       rootOpen={rootOpen}
-      onFlip={() => setFlipped(true)}
       onAnswer={answerFlip}
       onOpenRoot={() => setRootOpen(true)}
       onCloseRoot={() => setRootOpen(false)}

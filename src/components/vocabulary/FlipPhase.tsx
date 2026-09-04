@@ -36,7 +36,9 @@ const SPRING_MS = 320;
 // The study card as a dictionary entry on a notebook page: headword, hanja
 // set large in the margin, the word-parts memo written out as etymology,
 // the example as a quoted line, and "seen elsewhere" sentences as margin
-// notes. Flow (reveal → still learning / got it) is unchanged.
+// notes. The meaning is shown straight away — the old reveal tap was a
+// flashcard habit that just put a click in front of every word, and the
+// word detail card (the other way into the same word) never had it.
 export default function FlipPhase({
   words,
   locale,
@@ -44,9 +46,7 @@ export default function FlipPhase({
   word,
   wordCounts,
   topicLabel,
-  flipped,
   rootOpen,
-  onFlip,
   onAnswer,
   onOpenRoot,
   onCloseRoot,
@@ -57,9 +57,7 @@ export default function FlipPhase({
   word: VocabWordWithProgress;
   wordCounts: { correct: number; incorrect: number };
   topicLabel: string;
-  flipped: boolean;
   rootOpen: boolean;
-  onFlip: () => void;
   onAnswer: (gotIt: boolean) => void;
   onOpenRoot: () => void;
   onCloseRoot: () => void;
@@ -96,7 +94,7 @@ export default function FlipPhase({
       </div>
 
       {/* the notebook page — swipe right = Got it, left = Still learning */}
-      <SwipeCard key={word.key} enabled={flipped} nextWord={next} onSwipe={onAnswer}>
+      <SwipeCard key={word.key} nextWord={next} onSwipe={onAnswer}>
         <span className="absolute top-4 right-5 text-[10.5px] font-black tracking-[.06em] uppercase text-amber border-2 border-amber rounded-[6px] px-2 py-[3px] rotate-[-6deg] opacity-80 select-none">
           {t(status.key)}
         </span>
@@ -128,87 +126,71 @@ export default function FlipPhase({
             )}
           </div>
 
-          {flipped ? (
-            <div style={{ animation: "fadeUp .3s ease" }}>
-              <p className="text-[20px] font-extrabold mt-2.5 mb-1.5 flex items-center gap-2">
-                <span className="text-[11px] font-black text-[#6B33CC] border-[1.5px] border-[var(--tint-violet-line)] rounded-full w-[18px] h-[18px] inline-grid place-items-center">
-                  1
-                </span>
-                {getLocalizedMeaning(word, locale)}
+            <p className="text-[20px] font-extrabold mt-2.5 mb-1.5 flex items-center gap-2">
+              <span className="text-[11px] font-black text-[#6B33CC] border-[1.5px] border-[var(--tint-violet-line)] rounded-full w-[18px] h-[18px] inline-grid place-items-center">
+                1
+              </span>
+              {getLocalizedMeaning(word, locale)}
+            </p>
+            {note?.parts && (
+              <p className="text-[12.5px] text-muted leading-[1.65] mb-3">
+                {note.parts.map((p, i) => (
+                  <span key={p.syllable + p.hanja}>
+                    {i > 0 && <span className="mx-1.5 text-faint">+</span>}
+                    <b className="kr text-charcoal">{p.syllable}</b>{" "}
+                    <span className="kr text-[#A08F4E]">{p.hanja}</span> {p.gloss}
+                  </span>
+                ))}
               </p>
-              {note?.parts && (
-                <p className="text-[12.5px] text-muted leading-[1.65] mb-3">
-                  {note.parts.map((p, i) => (
-                    <span key={p.syllable + p.hanja}>
-                      {i > 0 && <span className="mx-1.5 text-faint">+</span>}
-                      <b className="kr text-charcoal">{p.syllable}</b>{" "}
-                      <span className="kr text-[#A08F4E]">{p.hanja}</span> {p.gloss}
-                    </span>
-                  ))}
-                </p>
-              )}
-              {note?.origin && (
-                <p className="text-[12.5px] text-muted leading-[1.65] mb-3">{t("session.origin", { origin: note.origin })}</p>
-              )}
+            )}
+            {note?.origin && (
+              <p className="text-[12.5px] text-muted leading-[1.65] mb-3">{t("session.origin", { origin: note.origin })}</p>
+            )}
 
-              <div className="border-l-[3px] border-[var(--tint-violet-line)] pl-3.5 py-1 my-2 mb-3.5">
-                <p className="kr text-[16px] font-medium">
-                  <button
-                    type="button"
-                    onClick={() => speakKorean(word.example_kr)}
-                    title={t("session.hearSentence")}
-                    className="text-left hover:text-[#6B33CC] transition-colors"
-                  >
-                    {word.example_kr} <span aria-hidden="true" className="text-[11px] opacity-70">🔊</span>
-                  </button>
-                </p>
-                <p className="text-[12.5px] text-muted">{getLocalizedExampleEn(word, locale)}</p>
+            <div className="border-l-[3px] border-[var(--tint-violet-line)] pl-3.5 py-1 my-2 mb-3.5">
+              <p className="kr text-[16px] font-medium">
+                <button
+                  type="button"
+                  onClick={() => speakKorean(word.example_kr)}
+                  title={t("session.hearSentence")}
+                  className="text-left hover:text-[#6B33CC] transition-colors"
+                >
+                  {word.example_kr} <span aria-hidden="true" className="text-[11px] opacity-70">🔊</span>
+                </button>
+              </p>
+              <p className="text-[12.5px] text-muted">{getLocalizedExampleEn(word, locale)}</p>
+            </div>
+
+            {/* seen elsewhere — inline below xl, margin notes on xl */}
+            {more.length > 0 && (
+              <div className="xl:hidden grid gap-2 mb-2">
+                {more.map((ex, i) => (
+                  <MarginNote key={i} ex={ex} />
+                ))}
               </div>
+            )}
 
-              {/* seen elsewhere — inline below xl, margin notes on xl */}
-              {more.length > 0 && (
-                <div className="xl:hidden grid gap-2 mb-2">
-                  {more.map((ex, i) => (
-                    <MarginNote key={i} ex={ex} />
-                  ))}
-                </div>
-              )}
-
-              <div className="flex items-center justify-between gap-3 flex-wrap mt-4 pt-3.5 border-t border-dashed border-dash">
-                <span className="kr text-[12px] text-faint font-semibold">
-                  {prev ? `← ${prev.korean}` : ""}
-                  {prev && " · "}
-                  <b className="text-charcoal">{word.korean}</b>
-                  {next && " · "}
-                  {next ? `${next.korean} →` : ""}
-                </span>
-                <div className="flex gap-2">
-                  <button className={BTN_LINE} onClick={() => onAnswer(false)}>
-                    {t("stillLearning")}
-                  </button>
-                  <button className={BTN_INK} onClick={() => onAnswer(true)}>
-                    {t("gotIt")}
-                  </button>
-                </div>
+            <div className="flex items-center justify-between gap-3 flex-wrap mt-4 pt-3.5 border-t border-dashed border-dash">
+              <span className="kr text-[12px] text-faint font-semibold">
+                {prev ? `← ${prev.korean}` : ""}
+                {prev && " · "}
+                <b className="text-charcoal">{word.korean}</b>
+                {next && " · "}
+                {next ? `${next.korean} →` : ""}
+              </span>
+              <div className="flex gap-2">
+                <button className={BTN_LINE} onClick={() => onAnswer(false)}>
+                  {t("stillLearning")}
+                </button>
+                <button className={BTN_INK} onClick={() => onAnswer(true)}>
+                  {t("gotIt")}
+                </button>
               </div>
             </div>
-          ) : (
-            <div className="mt-5 mb-1">
-              <button
-                className="border-[1.5px] border-dashed border-[var(--tint-violet-line)] rounded-[10px] bg-[var(--tint-violet)] px-[22px] py-3 text-[13.5px] font-semibold text-[#6B33CC] hover:bg-[var(--tint-violet-line)] transition-colors"
-                onClick={onFlip}
-              >
-                👀 {t("session.revealMeaning")}
-              </button>
-              <p className="text-[12px] text-faint mt-3">
-                {hanja ? t("session.hintHanja") : t("session.hintSayIt")}
-              </p>
-            </div>
-          )}
         </div>
 
         {/* margin notes: pinned to the page's right edge on wide screens */}
-        {flipped && more.length > 0 && (
+        {more.length > 0 && (
           <div className="hidden xl:flex flex-col gap-3 absolute left-full top-24 ml-5 w-[190px]">
             {more.map((ex, i) => (
               <MarginNote key={i} ex={ex} rotate={i % 2 === 0 ? 2 : -1.5} />
@@ -287,12 +269,10 @@ function subscribeReducedMotion(onChange: () => void) {
 // fresh at rest. The buttons inside keep working exactly as before; the
 // gesture just calls the same handler.
 function SwipeCard({
-  enabled,
   nextWord,
   onSwipe,
   children,
 }: {
-  enabled: boolean;
   nextWord?: VocabWordWithProgress;
   onSwipe: (gotIt: boolean) => void;
   children: ReactNode;
@@ -319,7 +299,7 @@ function SwipeCard({
   useEffect(() => () => window.clearTimeout(flyTimer.current), []);
 
   function onPointerDown(e: ReactPointerEvent<HTMLDivElement>) {
-    if (!enabled || busy.current || drag.mode === "fly") return;
+    if (busy.current || drag.mode === "fly") return;
     if (e.pointerType === "mouse" && e.button !== 0) return;
     gesture.current = {
       id: e.pointerId,
@@ -454,11 +434,9 @@ function SwipeCard({
         </div>
       </div>
 
-      {enabled && (
-        <p className="hidden [@media(pointer:coarse)]:block text-[11.5px] text-faint text-center mt-2.5">
-          {t("session.swipeHint")}
-        </p>
-      )}
+      <p className="hidden [@media(pointer:coarse)]:block text-[11.5px] text-faint text-center mt-2.5">
+        {t("session.swipeHint")}
+      </p>
     </>
   );
 }
