@@ -9,7 +9,7 @@ import type { ChallengeWord } from "@/lib/pronunciation";
 import { localScore, tileMatchScore, wrongTilePositions, type Board } from "@/lib/writing-builder";
 import { TileBoard } from "@/components/writing/WritingBoards";
 import AnswerCapture from "@/components/pronunciation/AnswerCapture";
-import ScoreResult, { VERDICTS } from "@/components/pronunciation/ScoreResult";
+import { VERDICTS } from "@/components/pronunciation/ScoreResult";
 import { ResultRing } from "@/components/results/ResultShell";
 import { speakKorean } from "@/lib/tts";
 
@@ -55,6 +55,7 @@ const LIVE =
 function PronunciationCard({ onDone }: { onDone: () => void }) {
   const t = useTranslations("pronunciation.practice");
   const tl = useTranslations("landing.tryIt");
+  const ts = useTranslations("pronunciation.score");
   const router = useRouter();
   const { speak, isSpeaking, isSupported: ttsOk } = useKoreanSpeaker();
   const { isSupported: micOk, isListening, listenStartedAt, interim, error, listen } = useSpeechRecognition(
@@ -111,55 +112,80 @@ function PronunciationCard({ onDone }: { onDone: () => void }) {
         <span className="text-[12px] text-faint font-medium">{tl("lessonWord")}</span>
       </div>
 
-      <p className={LABEL}>{t("sayThis")}</p>
-      <p className="flex items-center gap-3 flex-wrap mb-1">
-        <span className="kr font-bold text-[34px] tracking-[-0.01em] leading-[1.2]">{WORD.kr}</span>
-        <button
-          type="button"
-          onClick={() => speak(WORD.kr)}
-          disabled={!ttsOk}
-          className={`inline-flex items-center gap-1.5 text-[12px] font-bold text-teal bg-[var(--tint-teal)] border border-[var(--tint-teal-line)] rounded-full px-2.5 py-[3px] transition-transform hover:scale-105 disabled:opacity-50 ${
-            isSpeaking ? "wave-on" : ""
-          }`}
-        >
-          🔊 {t("hearIt")}
-        </button>
-      </p>
-      <p className="text-[13.5px] text-muted mb-4">
-        <span className="italic">{WORD.romanization}</span> · {WORD.en}
-      </p>
+      {verdict ? (
+        // Compact — a ResultRing (136px) instead of ScoreResult's full-page
+        // 220px ring + "you said"/"target" cards, so the box holds the same
+        // height it had for the mic prompt instead of growing on a result.
+        <>
+          <div className="flex-1" />
+          <div className="flex flex-col items-center text-center gap-2 py-1">
+            <ResultRing pct={animScore} center={animScore} label={ts("match")} color={verdict.fg} />
+            <p className="text-[14px] font-bold" style={{ color: verdict.fg }}>
+              {ts(verdict.key)}
+            </p>
+            <p className="text-[12.5px] text-muted">
+              <span className="kr">{heard}</span>
+              {heard !== WORD.kr && (
+                <>
+                  {" "}
+                  · <span className="kr font-semibold text-charcoal">{WORD.kr}</span>
+                </>
+              )}
+            </p>
+            <div className="flex items-center gap-3 flex-wrap justify-center mt-1">
+              <button
+                type="button"
+                className="text-[12.5px] font-semibold text-muted hover:text-charcoal underline decoration-dotted underline-offset-4"
+                onClick={() => setHeard(null)}
+              >
+                {ts("tryAgain")}
+              </button>
+              <button
+                type="button"
+                className="inline-flex items-center gap-1.5 text-[12.5px] font-bold text-white bg-teal hover:bg-[#0F766E] rounded-full px-3.5 py-[7px] transition-colors"
+                // "Finish →" on the landing sample hands over to the real thing.
+                onClick={() => router.push("/onboarding")}
+              >
+                {ts("finish")}
+              </button>
+            </div>
+          </div>
+        </>
+      ) : (
+        <>
+          <p className={LABEL}>{t("sayThis")}</p>
+          <p className="flex items-center gap-3 flex-wrap mb-1">
+            <span className="kr font-bold text-[34px] tracking-[-0.01em] leading-[1.2]">{WORD.kr}</span>
+            <button
+              type="button"
+              onClick={() => speak(WORD.kr)}
+              disabled={!ttsOk}
+              className={`inline-flex items-center gap-1.5 text-[12px] font-bold text-teal bg-[var(--tint-teal)] border border-[var(--tint-teal-line)] rounded-full px-2.5 py-[3px] transition-transform hover:scale-105 disabled:opacity-50 ${
+                isSpeaking ? "wave-on" : ""
+              }`}
+            >
+              🔊 {t("hearIt")}
+            </button>
+          </p>
+          <p className="text-[13.5px] text-muted mb-4">
+            <span className="italic">{WORD.romanization}</span> · {WORD.en}
+          </p>
 
-      <div className="flex-1" />
+          <div className="flex-1" />
 
-      {heard === null && (
-        <div className="tryit-mic">
-          <AnswerCapture
-            bestScore={0}
-            micOk={micOk}
-            isListening={isListening}
-            micElapsedMs={micElapsedMs}
-            interim={interim}
-            error={error}
-            onListen={() => listen(grade)}
-            onSkip={() => {}}
-          />
-        </div>
-      )}
-
-      {heard !== null && verdict && (
-        <ScoreResult
-          heard={heard}
-          targetKr={WORD.kr}
-          verdict={verdict}
-          animScore={animScore}
-          saveError={null}
-          ttsOk={ttsOk}
-          onReplay={() => speak(WORD.kr)}
-          onTryAgain={() => setHeard(null)}
-          // "Finish →" on the landing sample hands over to the real thing.
-          onNext={() => router.push("/onboarding")}
-          isLastWord
-        />
+          <div className="tryit-mic">
+            <AnswerCapture
+              bestScore={0}
+              micOk={micOk}
+              isListening={isListening}
+              micElapsedMs={micElapsedMs}
+              interim={interim}
+              error={error}
+              onListen={() => listen(grade)}
+              onSkip={() => {}}
+            />
+          </div>
+        </>
       )}
     </div>
   );
@@ -179,23 +205,26 @@ function WritingCard({ onDone }: { onDone: () => void }) {
     // A demo, not a real question: any prefix of the sentence with no
     // mismatched tile counts as a pass — the visitor doesn't have to place
     // all 3 words before Check does something. A full, correct sentence
-    // still gets the nicer attempt-based grading; a partial one gets a
-    // score proportional to how much of it is right.
+    // still gets the nicer attempt-based grading; a partial or wrong one
+    // gets a score proportional to how much of it is right (0 when the
+    // very first tile is wrong) — same "score ring either way" treatment
+    // the real result page uses, not a pass/fail switch.
     const complete = picked.length === BOARD.answer.length;
     const ok = picked.length > 0 && wrongTilePositions(BOARD, picked).length === 0;
     setChecked(ok);
+    setScore(ok && complete ? localScore(n) : tileMatchScore(BOARD, picked));
     if (ok) {
-      setScore(complete ? localScore(n) : tileMatchScore(BOARD, picked));
       speakKorean(BOARD.answer.join(" "), { rate: 0.9 });
       onDone();
     }
   }
 
   // Animates the score ring counting up, same treatment the pronunciation
-  // card's gauge uses.
+  // card's gauge uses. Runs for a wrong check too — the ring shows whatever
+  // was earned, not just a success state.
   const [animScore, setAnimScore] = useState(0);
   useEffect(() => {
-    if (checked !== true) return;
+    if (checked === null) return;
     const start = performance.now();
     const DURATION = 550;
     let raf: number;
@@ -215,22 +244,38 @@ function WritingCard({ onDone }: { onDone: () => void }) {
         <span className="text-[12px] text-faint font-medium">{t("lessonSentence")}</span>
       </div>
 
-      {checked === true ? (
-        // Matches the real Writing result page: a score ring, not just a
-        // "Correct" label — the full page (XP strip, next-chapter actions)
-        // doesn't fit this card, so it's the ring alone.
+      {checked !== null ? (
+        // Matches the real Writing result page either way: a score ring,
+        // not a plain "Correct"/red-border switch — a wrong attempt still
+        // gets a number (0 if the very first tile missed) and a way back in,
+        // the same "score ring, always" treatment CompareResult uses.
         <>
           <div className="flex-1" />
           <div className="flex flex-col items-center text-center gap-2.5 py-1">
             <ResultRing pct={animScore} center={animScore} label={tw("result.grammar")} color={WRITING_RING_COLOR} />
-            <p className="text-[13.5px] font-bold text-success">{tw("board.correct")}</p>
-            <button
-              type="button"
-              className="text-[12.5px] font-semibold text-muted hover:text-charcoal underline decoration-dotted underline-offset-4"
-              onClick={() => speakKorean(BOARD.answer.join(" "), { rate: 0.9 })}
-            >
-              {tw("board.hearIt")}
-            </button>
+            {checked ? (
+              <>
+                <p className="text-[13.5px] font-bold text-success">{tw("board.correct")}</p>
+                <button
+                  type="button"
+                  className="text-[12.5px] font-semibold text-muted hover:text-charcoal underline decoration-dotted underline-offset-4"
+                  onClick={() => speakKorean(BOARD.answer.join(" "), { rate: 0.9 })}
+                >
+                  {tw("board.hearIt")}
+                </button>
+              </>
+            ) : (
+              <button
+                type="button"
+                className="text-[13.5px] font-bold text-amber hover:text-amber/80 transition-colors"
+                onClick={() => {
+                  setPicked([]);
+                  setChecked(null);
+                }}
+              >
+                🔁 {tw("board.tryAgain")}
+              </button>
+            )}
           </div>
         </>
       ) : (
@@ -241,18 +286,15 @@ function WritingCard({ onDone }: { onDone: () => void }) {
 
           <div className="flex-1" />
 
-          {/* 👆1/2/3 badges show the tap order until the learner starts picking */}
+          {/* the 👆 walks tile to tile, one at a time, showing only the next correct tap */}
           <TileBoard
             board={BOARD}
             picked={picked}
             checked={checked}
-            orderHint={picked.length === 0 && checked === null}
+            orderHint={checked === null}
             reorder
             requireFull={false}
-            onChange={(next) => {
-              setPicked(next);
-              if (checked === false) setChecked(null);
-            }}
+            onChange={setPicked}
             onCheck={check}
             onReset={() => {
               setPicked([]);

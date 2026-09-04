@@ -54,7 +54,7 @@ function useHoldToSpeak() {
 }
 
 const ORDER_BADGE =
-  "tryit-order-badge absolute -top-2.5 -left-2.5 h-[22px] min-w-[22px] px-1 rounded-full bg-success text-white text-[11px] font-extrabold leading-none flex items-center justify-center gap-px shadow-[0_1px_2px_rgba(0,0,0,.25)] pointer-events-none";
+  "tryit-order-badge absolute -top-2.5 -left-2.5 w-[22px] h-[22px] rounded-full bg-success text-white text-[11px] font-extrabold leading-none flex items-center justify-center shadow-[0_1px_2px_rgba(0,0,0,.25)] pointer-events-none";
 
 function TileButton({
   tile,
@@ -71,14 +71,14 @@ function TileButton({
   wrong?: boolean;
   onTap: () => void;
   hold: ReturnType<typeof useHoldToSpeak>;
-  /** 1-based tap order to show as a finger badge (landing "try it" demo only). */
-  orderBadge?: number;
+  /** Shows the finger badge on this one tile — the next correct tap, not every tile at once (landing "try it" demo only). */
+  orderBadge?: boolean;
 }) {
   return (
     <span className="relative inline-block">
-      {orderBadge != null && !used && (
+      {orderBadge && !used && (
         <span aria-hidden="true" className={ORDER_BADGE}>
-          👆{orderBadge}
+          👆
         </span>
       )}
       <button
@@ -184,9 +184,10 @@ export function TileBoard({
   checked?: boolean | null;
   onCheck?: () => void;
   /**
-   * Shows a 👆1/2/3 badge on each untapped source tile for the correct tap
-   * order. Never pass this in the real Writing flow — it would hand the
-   * answer straight to the learner. Landing-page "try it" demo only.
+   * Shows a single 👆 badge on whichever untapped source tile is the next
+   * correct tap — it moves as tiles are placed, never all three at once.
+   * Never pass this in the real Writing flow — it would hand the answer
+   * straight to the learner. Landing-page "try it" demo only.
    */
   orderHint?: boolean;
   /**
@@ -210,19 +211,22 @@ export function TileBoard({
   const legacyCheck = onCheck !== undefined;
   const canReorder = !legacyCheck || reorder;
 
-  // Maps each tile id to its 1-based position in board.answer, matching
-  // tiles to answer words in order so a repeated word still gets a distinct
-  // badge per occurrence.
-  const orderById = new Map<string, number>();
-  if (orderHint) {
+  // The one tile id the finger badge sits on: whichever source tile matches
+  // the next unplaced word of the answer, skipping words a duplicate has
+  // already claimed. Recomputes every render, so the badge walks from tile
+  // to tile as `picked` grows instead of marking the whole order up front.
+  let nextHintId: string | undefined;
+  if (orderHint && picked.length < board.answer.length) {
     const claimed = new Set<string>();
-    board.answer.forEach((word, i) => {
-      const match = board.tiles.find((tl) => tl.text === word && !claimed.has(tl.id));
-      if (match) {
-        claimed.add(match.id);
-        orderById.set(match.id, i + 1);
+    for (let i = 0; i < board.answer.length; i++) {
+      const match = board.tiles.find((tl) => tl.text === board.answer[i] && !claimed.has(tl.id));
+      if (!match) break;
+      claimed.add(match.id);
+      if (i === picked.length) {
+        nextHintId = match.id;
+        break;
       }
-    });
+    }
   }
 
   // Press-and-drag reordering for the placed tiles — new mode only. Pointer
@@ -425,7 +429,7 @@ export function TileBoard({
               used={used}
               usedClass={legacyCheck ? TILE_USED_LOCKED : TILE_USED}
               hold={hold}
-              orderBadge={orderHint ? orderById.get(tile.id) : undefined}
+              orderBadge={orderHint && tile.id === nextHintId}
               onTap={() => {
                 if (legacyCheck) {
                   if (locked || used) return;

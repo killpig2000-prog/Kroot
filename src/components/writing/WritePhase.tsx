@@ -163,7 +163,7 @@ export default function WritePhase({
         <TileBoard
           board={board}
           picked={entry.picked}
-          orderHint={tourHint && entry.picked.length === 0}
+          orderHint={tourHint}
           onChange={(picked) => {
             if (isChecked) return; // locked once checked — Reset (or Next/Back) starts a fresh attempt
             update(step, { picked });
