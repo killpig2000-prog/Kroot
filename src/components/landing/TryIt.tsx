@@ -6,11 +6,16 @@ import { useRouter } from "@/i18n/navigation";
 import { useKoreanSpeaker, useSpeechRecognition } from "@/hooks/useSpeechRecognition";
 import { bestSimilarity, verdictFor } from "@/lib/speech-match";
 import { wordsForChapter } from "@/lib/pronunciation";
-import { checkTiles, type Board } from "@/lib/writing-builder";
+import { checkTiles, localScore, type Board } from "@/lib/writing-builder";
 import { TileBoard } from "@/components/writing/WritingBoards";
 import AnswerCapture from "@/components/pronunciation/AnswerCapture";
 import ScoreResult, { VERDICTS } from "@/components/pronunciation/ScoreResult";
+import { ResultRing } from "@/components/results/ResultShell";
 import { speakKorean } from "@/lib/tts";
+
+// Same amber used by the real Writing result page's grammar ring
+// (CompareResult.tsx) — kept in sync on purpose, not redefined per-file.
+const WRITING_RING_COLOR = "#C47A25";
 
 // The hero's "try it right now" pair — one pronunciation word and one easy
 // tile sentence, both graded entirely in the browser. No account, no API
@@ -162,17 +167,43 @@ function PronunciationCard({ onDone }: { onDone: () => void }) {
 
 function WritingCard({ onDone }: { onDone: () => void }) {
   const t = useTranslations("landing.tryIt");
+  const tw = useTranslations("writing");
   const [picked, setPicked] = useState<string[]>([]);
   const [checked, setChecked] = useState<boolean | null>(null);
+  const [attempts, setAttempts] = useState(0);
+  const [score, setScore] = useState(0);
 
   function check() {
+    const n = attempts + 1;
+    setAttempts(n);
     const ok = checkTiles(BOARD, picked);
     setChecked(ok);
     if (ok) {
+      // Same attempt-based grading as the level test's per-question Check —
+      // this card checks on every tap too, unlike the real Writing session
+      // (which only scores once the whole chapter is submitted).
+      setScore(localScore(n));
       speakKorean(BOARD.answer.join(" "), { rate: 0.9 });
       onDone();
     }
   }
+
+  // Animates the score ring counting up, same treatment the pronunciation
+  // card's gauge uses.
+  const [animScore, setAnimScore] = useState(0);
+  useEffect(() => {
+    if (checked !== true) return;
+    const start = performance.now();
+    const DURATION = 550;
+    let raf: number;
+    const tick = (now: number) => {
+      const p = Math.min(1, (now - start) / DURATION);
+      setAnimScore(Math.round(score * p));
+      if (p < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [checked, score]);
 
   return (
     <div className={`${CARD} border-amber-line`}>
@@ -181,29 +212,50 @@ function WritingCard({ onDone }: { onDone: () => void }) {
         <span className="text-[12px] text-faint font-medium">{t("lessonSentence")}</span>
       </div>
 
-      <p className={LABEL}>{t("writeTitle")}</p>
-      <p className="text-[15px] font-bold text-charcoal leading-snug mb-0.5">{t("writePrompt")}</p>
-      <p className="text-[12.5px] text-muted mb-4">{t("writeHint")}</p>
+      {checked === true ? (
+        // Matches the real Writing result page: a score ring, not just a
+        // "Correct" label — the full page (XP strip, next-chapter actions)
+        // doesn't fit this card, so it's the ring alone.
+        <>
+          <div className="flex-1" />
+          <div className="flex flex-col items-center text-center gap-2.5 py-1">
+            <ResultRing pct={animScore} center={animScore} label={tw("result.grammar")} color={WRITING_RING_COLOR} />
+            <p className="text-[13.5px] font-bold text-success">{tw("board.correct")}</p>
+            <button
+              type="button"
+              className="text-[12.5px] font-semibold text-muted hover:text-charcoal underline decoration-dotted underline-offset-4"
+              onClick={() => speakKorean(BOARD.answer.join(" "), { rate: 0.9 })}
+            >
+              {tw("board.hearIt")}
+            </button>
+          </div>
+        </>
+      ) : (
+        <>
+          <p className={LABEL}>{t("writeTitle")}</p>
+          <p className="text-[15px] font-bold text-charcoal leading-snug mb-0.5">{t("writePrompt")}</p>
+          <p className="text-[12.5px] text-muted mb-4">{t("writeHint")}</p>
 
-      <div className="flex-1" />
+          <div className="flex-1" />
 
-      {/* the 👆 sits on the first tile only until the learner touches one */}
-      <div className={picked.length === 0 && checked === null ? "tryit-hint" : undefined}>
-        <TileBoard
-          board={BOARD}
-          picked={picked}
-          checked={checked}
-          onChange={(next) => {
-            setPicked(next);
-            if (checked === false) setChecked(null);
-          }}
-          onCheck={check}
-          onReset={() => {
-            setPicked([]);
-            setChecked(null);
-          }}
-        />
-      </div>
+          {/* 👆1/2/3 badges show the tap order until the learner starts picking */}
+          <TileBoard
+            board={BOARD}
+            picked={picked}
+            checked={checked}
+            orderHint={picked.length === 0 && checked === null}
+            onChange={(next) => {
+              setPicked(next);
+              if (checked === false) setChecked(null);
+            }}
+            onCheck={check}
+            onReset={() => {
+              setPicked([]);
+              setChecked(null);
+            }}
+          />
+        </>
+      )}
     </div>
   );
 }

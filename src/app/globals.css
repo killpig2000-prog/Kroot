@@ -656,25 +656,15 @@ html.js-reveal .tree-garden.in .tree {
 }
 @keyframes tryitTap {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
+  50% { transform: translateY(-3px); }
 }
-.tryit-hint [data-tiles] > :first-child {
-  position: relative;
-}
-.tryit-hint [data-tiles] > :first-child::after {
-  content: "👇";
-  position: absolute;
-  right: -10px;
-  top: -22px;
-  font-size: 18px;
-  line-height: 1;
-  pointer-events: none;
+.tryit-order-badge {
   animation: tryitTap 1.4s ease-in-out infinite;
 }
 @media (prefers-reduced-motion: reduce) {
   .tryit-live::before,
   .tryit-mic button:not(:disabled),
-  .tryit-hint [data-tiles] > :first-child::after { animation: none; }
+  .tryit-order-badge { animation: none; }
 }
 
 .speech-pop {

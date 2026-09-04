@@ -135,6 +135,7 @@ export default function WritePhase({
           <p className="text-[13px] text-muted">{getLocalizedPrompt(prompt, locale)}</p>
         </div>
 
+        <div data-tour="guided-writing-board">
         <div className="mb-3">
           <div className={EYEBROW}>{t("phase.modeTiles")}</div>
           <p className="text-[19px] font-extrabold leading-[1.3] tracking-[-0.01em]" style={{ textWrap: "balance" }}>
@@ -142,7 +143,6 @@ export default function WritePhase({
           </p>
         </div>
 
-        <div data-tour="guided-writing-board">
         <TileBoard
           board={board}
           picked={entry.picked}

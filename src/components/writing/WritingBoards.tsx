@@ -14,7 +14,7 @@ const TILE_USED = "opacity-35 border-dashed";
 /** Legacy (checked-per-question) mode only — see the TileBoard doc comment. */
 const TILE_USED_LOCKED = "opacity-20 pointer-events-none shadow-none";
 /** Movement past this many px turns a press into a drag. */
-const DRAG_THRESHOLD = 6;
+const DRAG_THRESHOLD = 3;
 const ZONE =
   "min-h-[78px] rounded-[16px] p-2.5 flex flex-wrap gap-2 content-start mb-3 bg-warm border-[1.5px] border-dashed border-dash transition-colors";
 const BTN_CHECK =
@@ -53,6 +53,9 @@ function useHoldToSpeak() {
   };
 }
 
+const ORDER_BADGE =
+  "tryit-order-badge absolute -top-2.5 -left-2.5 h-[22px] min-w-[22px] px-1 rounded-full bg-success text-white text-[11px] font-extrabold leading-none flex items-center justify-center gap-px shadow-[0_1px_2px_rgba(0,0,0,.25)] pointer-events-none";
+
 function TileButton({
   tile,
   used,
@@ -60,6 +63,7 @@ function TileButton({
   wrong,
   onTap,
   hold,
+  orderBadge,
 }: {
   tile: Tile;
   used?: boolean;
@@ -67,35 +71,46 @@ function TileButton({
   wrong?: boolean;
   onTap: () => void;
   hold: ReturnType<typeof useHoldToSpeak>;
+  /** 1-based tap order to show as a finger badge (landing "try it" demo only). */
+  orderBadge?: number;
 }) {
   return (
-    <button
-      type="button"
-      className={`${TILE} ${used ? (usedClass ?? TILE_USED) : ""} ${
-        wrong ? "border-danger bg-danger-bg shadow-[0_2px_0_var(--c-danger)]" : ""
-      }`}
-      onPointerDown={() => hold.start(tile.text)}
-      onPointerUp={() => hold.end()}
-      onPointerLeave={() => hold.end()}
-      onPointerCancel={() => hold.end()}
-      onClick={() => {
-        if (!hold.consumed()) onTap();
-      }}
-      onContextMenu={(e) => e.preventDefault()}
-      aria-pressed={used}
-    >
-      {tile.text}
-    </button>
+    <span className="relative inline-block">
+      {orderBadge != null && !used && (
+        <span aria-hidden="true" className={ORDER_BADGE}>
+          👆{orderBadge}
+        </span>
+      )}
+      <button
+        type="button"
+        className={`${TILE} ${used ? (usedClass ?? TILE_USED) : ""} ${
+          wrong ? "border-danger bg-danger-bg shadow-[0_2px_0_var(--c-danger)]" : ""
+        }`}
+        onPointerDown={() => hold.start(tile.text)}
+        onPointerUp={() => hold.end()}
+        onPointerLeave={() => hold.end()}
+        onPointerCancel={() => hold.end()}
+        onClick={() => {
+          if (!hold.consumed()) onTap();
+        }}
+        onContextMenu={(e) => e.preventDefault()}
+        aria-pressed={used}
+      >
+        {tile.text}
+      </button>
+    </span>
   );
 }
 
 /** A placed tile in the new-mode answer zone: press and drag to reorder it,
- * a plain tap does nothing (nothing to toggle — it's already placed), hold
- * still speaks it, and the small badge removes it outright. */
+ * or just tap it then tap another placed tile to swap the two with no drag
+ * at all — either way is a full reorder. Hold still speaks it, and the
+ * small badge removes it outright. */
 function DraggableZoneTile({
   id,
   tile,
   dragging,
+  selected,
   setRef,
   onDragStart,
   onDragMove,
@@ -106,6 +121,7 @@ function DraggableZoneTile({
   id: string;
   tile: Tile;
   dragging: boolean;
+  selected: boolean;
   setRef: (id: string, el: HTMLSpanElement | null) => void;
   onDragStart: (e: React.PointerEvent<HTMLButtonElement>) => void;
   onDragMove: (e: React.PointerEvent<HTMLButtonElement>) => void;
@@ -117,7 +133,10 @@ function DraggableZoneTile({
     <span ref={(el) => setRef(id, el)} className="relative inline-block">
       <button
         type="button"
-        className={`${TILE} ${dragging ? "opacity-0" : ""}`}
+        className={`${TILE} ${dragging ? "opacity-0" : ""} ${
+          selected ? "border-success ring-2 ring-success/40 -translate-y-px" : ""
+        }`}
+        aria-pressed={selected}
         onPointerDown={onDragStart}
         onPointerMove={onDragMove}
         onPointerUp={onDragEnd}
@@ -140,6 +159,7 @@ export function TileBoard({
   onChange,
   onCheck,
   onReset,
+  orderHint,
 }: {
   board: Board;
   picked: string[];
@@ -158,17 +178,42 @@ export function TileBoard({
    */
   checked?: boolean | null;
   onCheck?: () => void;
+  /**
+   * Shows a 👆1/2/3 badge on each untapped source tile for the correct tap
+   * order. Never pass this in the real Writing flow — it would hand the
+   * answer straight to the learner. Landing-page "try it" demo only.
+   */
+  orderHint?: boolean;
 }) {
   const t = useTranslations("writing.board");
   const hold = useHoldToSpeak();
   const byId = new Map(board.tiles.map((t) => [t.id, t]));
   const legacyCheck = onCheck !== undefined;
 
+  // Maps each tile id to its 1-based position in board.answer, matching
+  // tiles to answer words in order so a repeated word still gets a distinct
+  // badge per occurrence.
+  const orderById = new Map<string, number>();
+  if (orderHint) {
+    const claimed = new Set<string>();
+    board.answer.forEach((word, i) => {
+      const match = board.tiles.find((tl) => tl.text === word && !claimed.has(tl.id));
+      if (match) {
+        claimed.add(match.id);
+        orderById.set(match.id, i + 1);
+      }
+    });
+  }
+
   // Press-and-drag reordering for the placed tiles — new mode only. Pointer
   // capture (set on pointerdown) keeps move/up events targeted at the tile
   // that started the drag even once the finger leaves its bounds, so this
-  // needs no document-level listeners.
+  // needs no document-level listeners. A pointerdown/up with no movement in
+  // between is a tap instead: it selects the tile, and tapping a second
+  // placed tile swaps the two — a full reorder with two single clicks, no
+  // press-and-hold required.
   const [dragId, setDragId] = useState<string | null>(null);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
   const dragInfo = useRef<{
     id: string;
     startX: number;
@@ -212,6 +257,7 @@ export function TileBoard({
       info.moved = true;
       hold.end(); // this is a drag, not a hold-to-speak
       setDragId(info.id);
+      setSelectedId(null); // a real drag overrides any pending tap-to-swap
     }
     if (ghostRef.current) {
       // Move the ghost immediately, off the React/rAF cycle, so the tile
@@ -244,6 +290,7 @@ export function TileBoard({
   }
 
   function handleDragEnd() {
+    const info = dragInfo.current;
     hold.end();
     if (rafId.current) {
       cancelAnimationFrame(rafId.current);
@@ -251,6 +298,28 @@ export function TileBoard({
     }
     dragInfo.current = null;
     setDragId(null);
+    if (!info || info.moved || hold.consumed()) return; // a real drag, or the hold-to-speak already fired
+    // A plain tap: first tap on a placed tile selects it, second tap on a
+    // different one swaps them, and tapping the same tile again deselects.
+    // Reads `selectedId` from the closure rather than a functional updater —
+    // the swap calls the parent's onChange, and doing that from inside a
+    // setState updater trips React's "setState while rendering" warning.
+    if (selectedId === null) {
+      setSelectedId(info.id);
+      return;
+    }
+    if (selectedId === info.id) {
+      setSelectedId(null);
+      return;
+    }
+    const from = picked.indexOf(selectedId);
+    const to = picked.indexOf(info.id);
+    setSelectedId(null);
+    if (from !== -1 && to !== -1) {
+      const next = [...picked];
+      [next[from], next[to]] = [next[to], next[from]];
+      onChange(next);
+    }
   }
 
   // Warm the audio cache for every tile plus the full answer, so hold-to-
@@ -298,11 +367,15 @@ export function TileBoard({
               id={id}
               tile={tile}
               dragging={dragId === id}
+              selected={selectedId === id}
               setRef={setTileRef}
               onDragStart={handleDragStart(id, tile.text)}
               onDragMove={handleDragMove}
               onDragEnd={handleDragEnd}
-              onRemove={() => onChange(picked.filter((x) => x !== id))}
+              onRemove={() => {
+                if (selectedId === id) setSelectedId(null);
+                onChange(picked.filter((x) => x !== id));
+              }}
               removeLabel={t("remove", { word: tile.text })}
             />
           );
@@ -331,6 +404,7 @@ export function TileBoard({
               used={used}
               usedClass={legacyCheck ? TILE_USED_LOCKED : TILE_USED}
               hold={hold}
+              orderBadge={orderHint ? orderById.get(tile.id) : undefined}
               onTap={() => {
                 if (legacyCheck) {
                   if (locked || used) return;
