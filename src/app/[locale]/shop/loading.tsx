@@ -1,5 +1,5 @@
 // Mirrors the real /shop page: sidebar + breadcrumb + header (title, coin
-// pill, Plus pill) + description line, then ShopClient's two-column card —
+// pill) + description line, then ShopClient's two-column card —
 // left side tab-pill row + item grid, right side sticky try-on figure with
 // slot buttons and an action row.
 export default function Loading() {
@@ -18,7 +18,6 @@ export default function Loading() {
               <div className="h-7 w-40 rounded-lg bg-warm-3" />
               <div className="flex items-center gap-2">
                 <div className="h-6 w-20 rounded-full bg-warm-2" />
-                <div className="h-6 w-16 rounded-full bg-warm-4" />
               </div>
             </div>
 

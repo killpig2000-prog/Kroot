@@ -35,7 +35,6 @@ const PROTECTED_PREFIXES = [
   "/speaking",
   "/grammar",
   "/hangul",
-  "/pronunciation",
   "/community",
   "/review",
   "/guide",

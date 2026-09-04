@@ -122,27 +122,5 @@
     "linkWriting": "Práctica de escritura",
     "linkPronunciation": "Guía de pronunciación",
     "linkHangul": "Aprende Hangul"
-  },
-  "community": {
-    "badge": "de otros estudiantes",
-    "title": "Postales de todo el mundo",
-    "sub": "Nunca aprendes en soledad: tablón de preguntas, tablón libre e intercambio de idiomas.",
-    "posts": {
-      "maria": {
-        "from": "MARÍA · BRASIL",
-        "text": "«은/는 frente a 이/가 por fin me hizo clic aquí. ¡Tres meses practicando a diario y sigo!»",
-        "meta": "Tablón de preguntas · traducido del portugués"
-      },
-      "kenta": {
-        "from": "KENTA · JAPÓN",
-        "text": "«¡Hoy aprobé el TOPIK nivel 3! Seis meses regando a diario sin fallar fueron la clave.»",
-        "meta": "Tablón libre · traducido del japonés"
-      },
-      "amara": {
-        "from": "AMARA · NIGERIA",
-        "text": "«Busco pareja de conversación 30 min a la semana; ¡encantada de ayudarte con el inglés!»",
-        "meta": "Intercambio de idiomas · original en inglés"
-      }
-    }
   }
 }

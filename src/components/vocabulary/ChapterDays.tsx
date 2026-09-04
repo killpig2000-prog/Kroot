@@ -54,7 +54,7 @@ export default function ChapterDays({
   }, []);
 
   return (
-    <div data-tour="guided-vocab-days">
+    <div>
       {days.map((day, i) => {
         const isOpen = open === i;
         return (

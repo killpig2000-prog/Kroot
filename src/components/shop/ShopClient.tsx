@@ -382,7 +382,6 @@ export default function ShopClient({
           {/* right-edge fade plus a visible scrollbar hint that the row scrolls sideways when it's cut off */}
           <div className="relative mb-3 after:content-[''] after:pointer-events-none after:absolute after:top-0 after:bottom-1.5 after:right-0 after:w-12 after:bg-gradient-to-l after:from-white after:to-transparent">
           <div
-            data-tour="guided-shop-tabs"
             className="flex gap-1.5 overflow-x-auto pb-1.5 -mx-1 px-1 pr-12 [scrollbar-width:thin] [scrollbar-color:var(--color-line)_transparent] [&::-webkit-scrollbar]:h-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-line [&::-webkit-scrollbar-thumb]:rounded-full"
             role="tablist"
             aria-label={t("categories")}
@@ -507,10 +506,7 @@ export default function ShopClient({
         </div>
 
         {/* ── try-on ── */}
-        <aside
-          data-tour="guided-shop-tryon"
-          className="order-first lg:order-none border-b lg:border-b-0 lg:border-l border-line bg-warm p-4 lg:sticky lg:top-4 self-start"
-        >
+        <aside className="order-first lg:order-none border-b lg:border-b-0 lg:border-l border-line bg-warm p-4 lg:sticky lg:top-4 self-start">
           <p className="text-[11.5px] font-extrabold tracking-[.08em] uppercase text-[#B7AE9C] mb-2">{t("tryOn.label")}</p>
           <figure className="relative m-0 mx-auto max-w-[230px] bg-cream border border-line p-1.5 pb-6 rotate-[1deg] shadow-[0_10px_22px_-12px_rgba(60,50,30,.35)] mb-3">
             <Scene ids={previewIds} stage={stage} species={species} className="px-2.5 pt-2.5" />

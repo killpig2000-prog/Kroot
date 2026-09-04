@@ -122,27 +122,5 @@
     "linkWriting": "Luyện viết",
     "linkPronunciation": "Hướng dẫn phát âm",
     "linkHangul": "Học Hangul"
-  },
-  "community": {
-    "badge": "từ người học",
-    "title": "Bưu thiếp từ khắp thế giới",
-    "sub": "Bạn không bao giờ học một mình — bảng hỏi đáp, bảng tự do, trao đổi ngôn ngữ.",
-    "posts": {
-      "maria": {
-        "from": "MARIA · BRAZIL",
-        "text": "“은/는 với 이/가 cuối cùng cũng vỡ ra ở đây. Ba tháng luyện mỗi ngày và vẫn đang tiếp tục!”",
-        "meta": "Bảng hỏi đáp · dịch từ tiếng Bồ Đào Nha"
-      },
-      "kenta": {
-        "from": "KENTA · NHẬT BẢN",
-        "text": "“Hôm nay mình đậu TOPIK cấp 3! Sáu tháng tưới cây liên tục mỗi ngày chính là câu trả lời.”",
-        "meta": "Bảng tự do · dịch từ tiếng Nhật"
-      },
-      "amara": {
-        "from": "AMARA · NIGERIA",
-        "text": "“Mình đang tìm bạn luyện nói 30 phút mỗi tuần — sẵn sàng giúp bạn tiếng Anh!”",
-        "meta": "Trao đổi ngôn ngữ · nguyên văn tiếng Anh"
-      }
-    }
   }
 }

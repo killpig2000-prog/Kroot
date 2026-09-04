@@ -169,11 +169,7 @@ export default async function WritingMapPage({
                   open={gi === openGroupIndex}
                   className="border border-line rounded-[14px] bg-cream overflow-hidden"
                 >
-                  {/* The walkthrough rings the header row, not the whole
-                      box — open, the first group runs off the screen. */}
-                  <summary
-                    data-tour={gi === 0 ? "guided-writing-groups" : undefined}
-                    className="flex items-center gap-3 px-5 py-3.5 cursor-pointer select-none list-none [&::-webkit-details-marker]:hidden hover:bg-warm transition-colors">
+                  <summary className="flex items-center gap-3 px-5 py-3.5 cursor-pointer select-none list-none [&::-webkit-details-marker]:hidden hover:bg-warm transition-colors">
                     <span className="flex-1 min-w-0">
                       <b className="font-bold text-[14.5px]">
                         {meta.icon} {t(`genres.${genre}.label`)}

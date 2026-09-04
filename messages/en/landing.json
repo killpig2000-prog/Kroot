@@ -122,27 +122,5 @@
     "linkWriting": "Writing Practice",
     "linkPronunciation": "Pronunciation Guide",
     "linkHangul": "Learn Hangul"
-  },
-  "community": {
-    "badge": "from learners",
-    "title": "Postcards from around the world",
-    "sub": "You're never learning alone — question board, free board, language exchange.",
-    "posts": {
-      "maria": {
-        "from": "MARIA · BRAZIL",
-        "text": "“은/는 vs 이/가 finally clicked for me here. Three months of daily practice and counting!”",
-        "meta": "Question board · translated from Portuguese"
-      },
-      "kenta": {
-        "from": "KENTA · JAPAN",
-        "text": "“Passed TOPIK Level 3 today! Six months of daily watering streaks was the answer.”",
-        "meta": "Free board · translated from Japanese"
-      },
-      "amara": {
-        "from": "AMARA · NIGERIA",
-        "text": "“Looking for a 30-min-a-week speaking partner — happy to help with your English!”",
-        "meta": "Language exchange · original in English"
-      }
-    }
   }
 }
