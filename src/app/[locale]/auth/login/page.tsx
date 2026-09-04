@@ -149,9 +149,11 @@ export default function LoginPage() {
       });
       if (error) {
         setError(
-          /signups not allowed|not found/i.test(error.message)
-            ? t("errors.noAccount")
-            : error.message
+          /rate limit/i.test(error.message)
+            ? t("errors.rateLimit")
+            : /signups not allowed|not found/i.test(error.message)
+              ? t("errors.noAccount")
+              : error.message
         );
         return;
       }

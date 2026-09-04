@@ -116,7 +116,7 @@
   },
   "errors": {
     "authFailed": "That sign-in link failed or expired. Please try again.",
-    "rateLimit": "We've sent too many emails just now — please wait a few minutes and try again, or continue with Google instead.",
+    "rateLimit": "Sorry — we've hit tonight's hourly email limit while we're still testing. Please try again in about an hour, or continue with Google instead.",
     "network": "Couldn't reach the server. Check your connection and try again."
   },
   "mascot": {
