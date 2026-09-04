@@ -103,10 +103,12 @@ export default async function VocabWordPage({
 
   // Prev/next stay inside the unit: the first word's "Prev" and the last
   // word's "Next" both return to the unit page instead of quietly stepping
-  // into a neighbouring unit under a different title.
+  // into a neighbouring unit under a different title. Looked up from a
+  // reading passage, though, the chapter's word order has nothing to do
+  // with the story the learner just left — so there's nothing to step to.
   const unitHref = `/vocabulary?level=${level}&unit=${chapterIndex}`;
-  const prevHref = wordIndex > 0 ? wordHref(chapterIndex, wordIndex - 1) : null;
-  const nextHref = wordIndex < chapterWords.length - 1 ? wordHref(chapterIndex, wordIndex + 1) : null;
+  const prevHref = !backTo && wordIndex > 0 ? wordHref(chapterIndex, wordIndex - 1) : null;
+  const nextHref = !backTo && wordIndex < chapterWords.length - 1 ? wordHref(chapterIndex, wordIndex + 1) : null;
 
   return (
     <div className="min-h-screen bg-warm text-charcoal">

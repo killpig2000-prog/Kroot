@@ -310,13 +310,19 @@ export default function WordDetailCard({
         </button>
       </div>
 
-      <button
-        type="button"
-        onClick={goNext}
-        className={`${BTN_INK} w-full justify-center mt-2`}
-      >
-        {t("detail.next")}
-      </button>
+      {/* Looked up from a reading passage, there's no next word to page to —
+          nextHref is always null and unitHref would just dump the learner
+          into an unrelated vocab unit. The back-to-story link above already
+          covers "done here". */}
+      {!backHref && (
+        <button
+          type="button"
+          onClick={goNext}
+          className={`${BTN_INK} w-full justify-center mt-2`}
+        >
+          {t("detail.next")}
+        </button>
+      )}
 
       {saveFailed && (
         <p role="status" className="mt-2 text-[12.5px] text-danger text-center">
@@ -370,7 +376,7 @@ export default function WordDetailCard({
         )}
       </div>
 
-      {!nextHref && (
+      {!nextHref && !backHref && (
         <div className="mt-2.5 text-right text-[12.5px]">
           <Link href={unitHref} className="font-semibold text-muted hover:text-charcoal transition-colors">
             {t("detail.backToUnit")} →
