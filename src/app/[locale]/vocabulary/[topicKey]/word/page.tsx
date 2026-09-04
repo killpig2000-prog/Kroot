@@ -81,6 +81,32 @@ export default async function VocabWordPage({
     : ((slotsRes.data as { word_bank_slots?: number | null } | null)?.word_bank_slots ??
       DEFAULT_WORD_BANK_SLOTS);
 
+  // How far this Day already is, so the card can tell when marking *this*
+  // word is what finishes it — that transition is what pays the Day out.
+  // Counted over the other nine words only; the current word's own state is
+  // whatever the learner is about to change it to.
+  const otherKeys = chapterWords.filter((w) => w.key !== word.key).map((w) => w.key);
+  const dayQuery = (cols: string) =>
+    supabase
+      .from("vocabulary_progress")
+      .select(cols)
+      .eq("user_id", user.id)
+      .in("word_key", otherKeys);
+  // `box` needs migration 0022 — a checkout whose DB is behind still counts
+  // marks, it just can't tell "got it" from "still learning" for the score.
+  let dayRows = (await dayQuery("correct_count, incorrect_count, box")) as {
+    data: { correct_count: number | null; incorrect_count: number | null; box?: number | null }[] | null;
+    error: { code?: string } | null;
+  };
+  if (dayRows.error?.code === "42703") {
+    dayRows = (await dayQuery("correct_count, incorrect_count")) as typeof dayRows;
+  }
+  const others = dayRows.data ?? [];
+  const othersMarked = others.filter(
+    (r) => (r.correct_count ?? 0) + (r.incorrect_count ?? 0) > 0
+  ).length;
+  const othersGotIt = others.filter((r) => (r.box ?? 1) > 1).length;
+
   const moreExamples = findMoreExamples(word.korean, word.example_kr);
 
   // "&from=..." survives prev/next, so stepping through words keeps the way
@@ -159,6 +185,12 @@ export default async function VocabWordPage({
             backLabel={tv("detail.backToStory")}
             unitHref={unitHref}
             unitLabel={tv("unitN", { n: chapterIndex + 1 })}
+            topicKey={topicKey}
+            dayIndex={chapterIndex}
+            dayTotal={chapterWords.length}
+            othersMarked={othersMarked}
+            othersGotIt={othersGotIt}
+            hasNextDay={chapterIndex + 1 < chapters.length}
           />
         </main>
       </div>

@@ -126,19 +126,6 @@ export function getChapterStatuses(
   return statuses;
 }
 
-// Words never reviewed, or with more misses than hits, come first — a light
-// "keep the tricky ones" pass rather than a full spaced-repetition scheduler.
-export function sortForReview(words: VocabWordWithProgress[]): VocabWordWithProgress[] {
-  return [...words].sort((a, b) => {
-    const aTricky = a.incorrect_count - a.correct_count;
-    const bTricky = b.incorrect_count - b.correct_count;
-    if (aTricky !== bTricky) return bTricky - aTricky;
-    const aSeen = a.last_reviewed_at ? 1 : 0;
-    const bSeen = b.last_reviewed_at ? 1 : 0;
-    return aSeen - bSeen;
-  });
-}
-
 // Replaces the first occurrence of `word` inside `sentence` with a blank —
 // works fine even when a particle is attached (e.g. "물이에요" -> "_____이에요").
 export function blankOutWord(sentence: string, word: string): string {

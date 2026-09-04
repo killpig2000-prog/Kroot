@@ -80,32 +80,13 @@
     "hearIt": "朗读单词",
     "hearSentence": "朗读句子",
     "hanjaAria": "汉字：{hanja}",
-    "origin": "来自 {origin}",
-    "bonusRoot": "附加词根：{name}",
-    "bonusRootSub": "几个共用这个词根的单词",
-    "explore": "去看看 →",
-    "closeRoot": "关闭词根面板",
-    "swipeHint": "右滑＝明白了 · 左滑＝还在学习",
-    "emptyTitle": "这里还没有单词",
-    "emptyBody": "本章还没有卡片，换一章试试吧。",
-    "backToTopics": "返回主题列表",
-    "levelSet": "级别 {level} · 第 {current} 组，共 {total} 组"
-  },
-  "quiz": {
-    "introTitle": "本章测验",
-    "introSub": "{total} 个词里有 {known} 个觉得简单。要来做填空吗？",
-    "start": "开始测验 →",
-    "skip": "跳过测验",
-    "progress": "测验 · 第 {current} 题，共 {total} 题",
-    "correctCount": "{count, plural, other {答对 # 个}}"
+    "origin": "来自 {origin}"
   },
   "summary": {
     "title": "{count, plural, other {今天学了 # 个单词！}}",
     "sub": "这些词的根扎得更深了一点。",
     "levelUp": "升级啦！你现在是 Lv. {level}",
     "markedKnown": "标记为已掌握",
-    "quizStat": "测验",
-    "chapterDone": "词汇 · 本章完成",
     "moreWords": "{count, plural, other {再学 # 个词}}"
   },
   "search": {

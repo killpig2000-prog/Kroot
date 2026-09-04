@@ -80,32 +80,13 @@
     "hearIt": "Nghe từ",
     "hearSentence": "Nghe câu",
     "hanjaAria": "Hán tự: {hanja}",
-    "origin": "từ {origin}",
-    "bonusRoot": "Gốc từ thêm: {name}",
-    "bonusRootSub": "Vài từ khác cùng gốc này",
-    "explore": "Khám phá →",
-    "closeRoot": "Đóng bảng gốc từ",
-    "swipeHint": "Vuốt phải = Hiểu rồi · vuốt trái = Còn đang học",
-    "emptyTitle": "Chưa có từ nào ở đây",
-    "emptyBody": "Chương này chưa có thẻ — hãy thử chương khác.",
-    "backToTopics": "Quay lại danh sách chủ đề",
-    "levelSet": "Cấp {level} · nhóm {current} trên {total}"
-  },
-  "quiz": {
-    "introTitle": "Bài kiểm tra của chương",
-    "introSub": "{known} trên {total} từ thấy dễ. Sẵn sàng điền vào chỗ trống chưa?",
-    "start": "Bắt đầu kiểm tra →",
-    "skip": "Bỏ qua bài kiểm tra",
-    "progress": "Kiểm tra · Câu {current} trên {total}",
-    "correctCount": "{count, plural, other {# câu đúng}}"
+    "origin": "từ {origin}"
   },
   "summary": {
     "title": "{count, plural, other {Hôm nay đã học # từ!}}",
     "sub": "Những từ đó vừa bén rễ sâu hơn một chút.",
     "levelUp": "Lên cấp! Bạn giờ là Lv. {level}",
     "markedKnown": "Đã đánh dấu là biết",
-    "quizStat": "Kiểm tra",
-    "chapterDone": "Từ vựng · xong chương",
     "moreWords": "{count, plural, other {# từ nữa}}"
   },
   "search": {

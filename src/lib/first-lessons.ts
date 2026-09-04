@@ -28,8 +28,8 @@ function grammarFirst(level: CefrLevel): FirstLesson {
 
 function wordsFirst(level: CefrLevel): FirstLesson {
   return {
-    href: `/vocabulary/daily-life/session?level=${level}&chapter=0`,
-    label: "Daily life words · set 1",
+    href: `/vocabulary/daily-life/word?level=${level}&chapter=0&i=0`,
+    label: "Daily life words · Day 1",
     skill: "words",
     minutes: MINUTES_PER_SESSION,
   };

@@ -80,32 +80,13 @@
     "hearIt": "Hear it",
     "hearSentence": "Hear the sentence",
     "hanjaAria": "Hanja: {hanja}",
-    "origin": "from {origin}",
-    "bonusRoot": "Bonus root: {name}",
-    "bonusRootSub": "A few more words that share this root",
-    "explore": "Explore →",
-    "closeRoot": "Close root panel",
-    "swipeHint": "Swipe right = Got it · left = Still learning",
-    "emptyTitle": "No words here yet",
-    "emptyBody": "This chapter doesn’t have cards yet — try another one.",
-    "backToTopics": "Back to topics",
-    "levelSet": "Level {level} · set {current} of {total}"
-  },
-  "quiz": {
-    "introTitle": "Chapter quiz",
-    "introSub": "{known} of {total} felt easy. Ready to fill in the blanks?",
-    "start": "Start the quiz →",
-    "skip": "Skip the quiz",
-    "progress": "Quiz · Question {current} of {total}",
-    "correctCount": "{count, plural, =1 {1 correct} other {# correct}}"
+    "origin": "from {origin}"
   },
   "summary": {
     "title": "{count, plural, =1 {1 word studied today!} other {# words studied today!}}",
     "sub": "Those words are rooted a little deeper now.",
     "levelUp": "Level up! You’re now Lv. {level}",
     "markedKnown": "Marked known",
-    "quizStat": "Quiz",
-    "chapterDone": "Vocabulary · chapter done",
     "moreWords": "{count, plural, =1 {1 more word} other {# more words}}"
   },
   "search": {

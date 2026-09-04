@@ -109,16 +109,22 @@ export default async function VocabularyPage({
     ? chapters[Math.floor(legacyUnit / CHAPTER_UNITS)]
     : upNext;
 
-  // Sessions still run on the 10-word unit underneath; "continue" resumes at
+  // Study runs on the 10-word unit (a "Day") underneath; "continue" resumes at
   // the chapter's first unfinished one.
   const resumeUnit = (c: NonNullable<typeof upNext>) =>
     c.units.find((u) => u.status !== "done") ?? c.units[0];
 
-  const sessionHref = (c: NonNullable<typeof upNext>) =>
-    `/vocabulary/${TOPIC_KEY}/session?chapter=${resumeUnit(c).index}&level=${level}`;
   const chapterHref = (ci: number) => `/vocabulary?level=${level}&chapter=${ci}`;
   const wordHref = (unit: number, i: number) =>
     `/vocabulary/${TOPIC_KEY}/word?level=${level}&chapter=${unit}&i=${i}`;
+  // Continue opens the word itself — the same card tapping a row opens. It
+  // picks up at the Day's first word the learner hasn't answered yet, so
+  // continuing never re-walks words that are already marked.
+  const continueHref = (c: NonNullable<typeof upNext>) => {
+    const unit = resumeUnit(c);
+    const at = unit.words.findIndex((w) => !reviewsByKey.has(w.key));
+    return wordHref(unit.index, at >= 0 ? at : 0);
+  };
   const ctaLabel = (c: { status: string; known: number; index: number }) =>
     c.status === "done"
       ? `Review Chapter ${c.index + 1} →`
@@ -260,7 +266,7 @@ export default async function VocabularyPage({
                         : t("new")}
                     </span>
                     <Link
-                      href={sessionHref(selected)}
+                      href={continueHref(selected)}
                       className="rounded-[9px] px-4 py-2 text-[13px] font-bold bg-cream border border-line hover:border-charcoal transition-colors whitespace-nowrap"
                     >
                       {selected.status === "done"
@@ -327,7 +333,7 @@ export default async function VocabularyPage({
         <div className="md:hidden fixed left-0 right-0 bottom-[62px] z-30 px-3.5 pt-6 pb-2.5 bg-gradient-to-t from-warm from-70% to-warm/0 pointer-events-none">
           <div className="grid grid-cols-[1fr_auto] gap-2 items-center pointer-events-auto">
             <Link
-              href={sessionHref(upNext)}
+              href={continueHref(upNext)}
               className="inline-flex items-center justify-center rounded-[9px] px-4 py-3 text-sm font-bold text-white bg-success shadow-[0_6px_16px_-8px_rgba(46,91,65,.5)] whitespace-nowrap"
             >
               {ctaLabel(upNext)}

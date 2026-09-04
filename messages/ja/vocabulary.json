@@ -80,32 +80,13 @@
     "hearIt": "音声を聞く",
     "hearSentence": "文を聞く",
     "hanjaAria": "漢字: {hanja}",
-    "origin": "由来: {origin}",
-    "bonusRoot": "おまけの語根: {name}",
-    "bonusRootSub": "この語根を使う単語をもう少し",
-    "explore": "見てみる →",
-    "closeRoot": "語根パネルを閉じる",
-    "swipeHint": "右にスワイプ＝わかった・左＝まだ学習中",
-    "emptyTitle": "ここにはまだ単語がありません",
-    "emptyBody": "この章にはまだカードがありません。別の章を試してみてください。",
-    "backToTopics": "トピック一覧に戻る",
-    "levelSet": "レベル {level} · セット {current}/{total}"
-  },
-  "quiz": {
-    "introTitle": "章のクイズ",
-    "introSub": "{total}語のうち{known}語が簡単でした。穴埋めに挑戦しますか？",
-    "start": "クイズを始める →",
-    "skip": "クイズをスキップ",
-    "progress": "クイズ · 問題 {current}/{total}",
-    "correctCount": "{count, plural, other {正解 #}}"
+    "origin": "由来: {origin}"
   },
   "summary": {
     "title": "{count, plural, other {今日は#語を学習しました！}}",
     "sub": "その単語の根が少し深くなりました。",
     "levelUp": "レベルアップ！ Lv. {level} になりました",
     "markedKnown": "わかった",
-    "quizStat": "クイズ",
-    "chapterDone": "語彙 · 章を完了",
     "moreWords": "{count, plural, other {あと#語}}"
   },
   "search": {

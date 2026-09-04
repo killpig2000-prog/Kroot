@@ -4,8 +4,12 @@ import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
 import { buttonClassName } from "@/components/ui/Button";
+import ResultShell, { ResultRing, ResultTag } from "@/components/results/ResultShell";
 import { createClient } from "@/lib/supabase/client";
+import { recordCompletion, XP_POINTS, type ProgressResult } from "@/lib/activity";
+import { vocabChapterKey } from "@/lib/reward-keys";
 import { nextBox, nextReviewAt } from "@/lib/srs";
+import { MINUTES_PER_SESSION } from "@/lib/vocabulary";
 import { saveToBank } from "@/lib/word-bank";
 import { speakKorean, prefetchKorean } from "@/lib/tts";
 import { getWordNote, hanjaOf } from "@/lib/word-notes";
@@ -13,6 +17,7 @@ import { getLocalizedMeaning, getLocalizedExampleEn } from "@/lib/vocabulary-i18
 
 const BTN_INK = buttonClassName("ink");
 const BTN_LINE = buttonClassName("line");
+const VIOLET = "#6B33CC";
 
 // Ruled notebook paper: a faint line every 32px, plus a red margin rule.
 const RULED = "repeating-linear-gradient(180deg, transparent 0 31px, #EEF0F6 31px 32px)";
@@ -27,10 +32,9 @@ export type DetailWord = {
   moreExamples: { kr: string; en: string; source: "reading" | "listening" }[];
 };
 
-// A read-only dictionary entry for a single word — reached by tapping a row
-// in the unit preview. Unlike the study card (FlipPhase), the meaning is
-// shown right away: this is a lookup. "Got it" / "Still learning" record the
-// same SRS progress the study session does and step to the next word.
+// A dictionary entry for a single word — the one way words are studied.
+// "Got it" / "Still learning" record SRS progress, and marking the last
+// unmarked word of a Day pays that Day out (see `payOutDay`).
 export default function WordDetailCard({
   word,
   locale,
@@ -50,6 +54,12 @@ export default function WordDetailCard({
   backLabel,
   unitHref,
   unitLabel,
+  topicKey,
+  dayIndex,
+  dayTotal,
+  othersMarked,
+  othersGotIt,
+  hasNextDay,
 }: {
   word: DetailWord;
   locale: string;
@@ -74,9 +84,19 @@ export default function WordDetailCard({
   backLabel?: string;
   unitHref: string;
   unitLabel: string;
+  topicKey: string;
+  /** Which Day (10-word unit) this word belongs to. */
+  dayIndex: number;
+  dayTotal: number;
+  /** How many of the Day's *other* words are already marked either way, and
+      how many of those were last answered "got it" (for the accuracy gate). */
+  othersMarked: number;
+  othersGotIt: number;
+  hasNextDay: boolean;
 }) {
   const router = useRouter();
   const t = useTranslations("vocabulary");
+  const tn = useTranslations("nav");
   const tu = useTranslations("ui");
   const tw = useTranslations("words");
   const [inBank, setInBank] = useState(initialInBank);
@@ -102,6 +122,16 @@ export default function WordDetailCard({
   // the learner's point of view. There's no "new"/"learning" label shown
   // any more either way — just the checkmark, or nothing.
   const [marked, setMarked] = useState(box > 1);
+  // Set when marking this word is what completed the Day — the card gives way
+  // to the Day's result screen.
+  const [dayResult, setDayResult] = useState<{ known: number; levelUp: ProgressResult | null } | null>(null);
+
+  // This word counts as studied once it has been answered either way. Only
+  // the *transition* into a full Day pays: a word already marked before this
+  // visit can be re-answered as often as the learner likes without
+  // re-triggering the payout.
+  const alreadyStudied = correctCount + incorrectCount > 0;
+  const finishesDay = !alreadyStudied && othersMarked === dayTotal - 1;
 
   // Warm the audio cache for every 🔊 on this page as soon as it loads, so
   // the first tap plays instantly instead of waiting on a cold TTS synthesis.
@@ -135,6 +165,7 @@ export default function WordDetailCard({
         return;
       }
       setMarked(next);
+      if (finishesDay) await payOutDay(next);
     } catch {
       setSaveFailed(true);
     } finally {
@@ -142,6 +173,30 @@ export default function WordDetailCard({
       // the word with no way forward.
       setSaving(null);
     }
+  }
+
+  // All ten words of the Day are now answered. Pays XP and — through the
+  // reward ledger keyed per Day (migration 0063) — the Day's coins, then
+  // shows the result screen. The accuracy passed here is the share answered
+  // "got it": a Day clicked through entirely as "still learning" is below the
+  // server's 60% gate and earns XP but no coins.
+  async function payOutDay(lastGotIt: boolean) {
+    const known = othersGotIt + (lastGotIt ? 1 : 0);
+    let levelUp: ProgressResult | null = null;
+    try {
+      levelUp = await recordCompletion(
+        createClient(),
+        "vocabulary",
+        MINUTES_PER_SESSION,
+        0,
+        vocabChapterKey(topicKey, dayIndex),
+        Math.round((known / dayTotal) * 100),
+      );
+    } catch {
+      // The word itself is already saved; a failed payout must not take the
+      // learner's progress or the result screen down with it.
+    }
+    setDayResult({ known, levelUp });
   }
 
   function goNext() {
@@ -164,6 +219,59 @@ export default function WordDetailCard({
     }
     setSavedCount((n) => n + 1);
     setInBank(true);
+  }
+
+  if (dayResult) {
+    const tricky = dayTotal - dayResult.known;
+    return (
+      <ResultShell
+        color={VIOLET}
+        categoryLabel={tn("vocabulary")}
+        meta={t("dayN", { n: dayIndex + 1 })}
+        ring={
+          <ResultRing
+            pct={Math.round((dayResult.known / dayTotal) * 100)}
+            center={dayResult.known}
+            unit={`/${dayTotal}`}
+            label={t("summary.markedKnown")}
+            color={VIOLET}
+          />
+        }
+        headline={t("summary.title", { count: dayTotal })}
+        sub={t("summary.sub")}
+        tags={
+          <>
+            {tricky > 0 && (
+              <ResultTag tone="warn">
+                {t("stillLearning")} · {tricky}
+              </ResultTag>
+            )}
+            <ResultTag>{t("dayN", { n: dayIndex + 1 })}</ResultTag>
+          </>
+        }
+        levelUp={dayResult.levelUp}
+        xpValue={XP_POINTS.vocabulary}
+        xpLabel={tu("xpEarned", { skill: tn("vocabulary") })}
+        actions={
+          <>
+            <Link
+              href={`/vocabulary?level=${level}`}
+              className="rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-success hover:bg-success-deep transition-colors"
+            >
+              {tu("chooseAnother")}
+            </Link>
+            {hasNextDay && (
+              <Link
+                href={`/vocabulary/${topicKey}/word?level=${level}&chapter=${dayIndex + 1}&i=0`}
+                className={BTN_LINE}
+              >
+                {t("summary.moreWords", { count: dayTotal })}
+              </Link>
+            )}
+          </>
+        }
+      />
+    );
   }
 
   return (

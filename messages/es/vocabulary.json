@@ -80,32 +80,13 @@
     "hearIt": "Escuchar",
     "hearSentence": "Escuchar la frase",
     "hanjaAria": "Hanja: {hanja}",
-    "origin": "de {origin}",
-    "bonusRoot": "Raíz extra: {name}",
-    "bonusRootSub": "Algunas palabras más que comparten esta raíz",
-    "explore": "Explorar →",
-    "closeRoot": "Cerrar el panel de raíces",
-    "swipeHint": "Desliza a la derecha = Entendido · a la izquierda = Aún aprendiendo",
-    "emptyTitle": "Aquí todavía no hay palabras",
-    "emptyBody": "Este capítulo aún no tiene tarjetas: prueba con otro.",
-    "backToTopics": "Volver a los temas",
-    "levelSet": "Nivel {level} · serie {current} de {total}"
-  },
-  "quiz": {
-    "introTitle": "Prueba del capítulo",
-    "introSub": "{known} de {total} te resultaron fáciles. ¿Listo para rellenar los huecos?",
-    "start": "Empezar la prueba →",
-    "skip": "Saltar la prueba",
-    "progress": "Prueba · Pregunta {current} de {total}",
-    "correctCount": "{count, plural, =1 {1 acierto} other {# aciertos}}"
+    "origin": "de {origin}"
   },
   "summary": {
     "title": "{count, plural, =1 {¡1 palabra estudiada hoy!} other {¡# palabras estudiadas hoy!}}",
     "sub": "Esas palabras han echado raíces un poco más hondas.",
     "levelUp": "¡Subiste de nivel! Ahora eres Nv. {level}",
     "markedKnown": "Marcadas como conocidas",
-    "quizStat": "Prueba",
-    "chapterDone": "Vocabulario · capítulo terminado",
     "moreWords": "{count, plural, =1 {1 palabra más} other {# palabras más}}"
   },
   "search": {
