@@ -10,12 +10,10 @@
   },
   "head": {
     "gardeners": "{n, plural, one {# gardener} other {# gardeners}}",
-    "endsSunday": "fair ends Sunday"
+    "endsSunday": "ends Sunday",
+    "daysLeft": "{n, plural, one {# day left} other {# days left}}"
   },
   "fair": {
-    "eyebrow": "This week's fair",
-    "title": "Who grew the most?",
-    "sub": "☀️ Sunlight = XP earned this week. Trees are sized by growth, not by level.",
     "fresh": "Fresh week — everyone starts at ☀️ 0. The first session takes the blue ribbon.",
     "sun": "☀️ {n}"
   },
@@ -39,41 +37,19 @@
     "leadAlone": "You hold the blue ribbon. Keep the lead.",
     "learn": "Learn →"
   },
-  "cards": {
-    "place": "Your place",
-    "placeValue": "{rank} of {total}",
-    "noPlace": "—",
-    "toMoveUp": "To pass {name}",
-    "toMoveUpTop": "Your lead",
-    "daysLeft": "Days left",
-    "daysValue": "{n}",
-    "endsSunday": "ends Sunday"
+  "bar": {
+    "place": "{rank} of {total}"
   },
   "reward": {
-    "title": "Last week's fair",
     "claim": "Collect your coins 🪙",
     "checking": "Checking…",
     "claimed": "Collected {coins} 🪙 for last week",
     "earned": "+{coins} 🪙 earned!",
-    "none": "No sunlight last week",
-    "firstWeek": "First week — coins unlock Monday 🌱",
-    "tiers": "Top 10% → 100 🪙 · top 30% → 50 · top 60% → 20 · joined → 5",
-    "wearing": {
-      "blue": "Wearing 1st place's medal from last week's fair",
-      "red": "Wearing 2nd place's medal from last week's fair",
-      "yellow": "Wearing 3rd place's medal from last week's fair"
-    }
+    "none": "No sunlight last week"
   },
   "movement": {
-    "up": "You moved up to the {tier} bed — sunnier spot! {emoji}",
-    "down": "Back to the {tier} bed for now — one strong week climbs right back {emoji}"
-  },
-  "rules": {
-    "title": "How the fair works",
-    "l1": "Every Monday a new week starts at ☀️ 0",
-    "l2": "Top 3 take the blue, red and yellow ribbons",
-    "l3": "Top 20% move up to a sunnier bed, bottom 20% move to the shaded one",
-    "l4": "Nothing is lost — your garden, coins and streak stay"
+    "up": "↑ moved up this week",
+    "down": "↓ moved down this week"
   },
   "unavailable": "The fair opens once the database is updated. Check back in a moment."
 }

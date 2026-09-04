@@ -10,12 +10,10 @@
   },
   "head": {
     "gardeners": "{n, plural, one {# jardinero} other {# jardineros}}",
-    "endsSunday": "la feria termina el domingo"
+    "endsSunday": "termina el domingo",
+    "daysLeft": "{n, plural, one {queda # día} other {quedan # días}}"
   },
   "fair": {
-    "eyebrow": "La feria de esta semana",
-    "title": "¿Quién creció más?",
-    "sub": "☀️ Luz solar = XP ganado esta semana. Los árboles se dibujan según su crecimiento, no su nivel.",
     "fresh": "Semana nueva: todos empiezan en ☀️ 0. La primera sesión se lleva la cinta azul.",
     "sun": "☀️ {n}"
   },
@@ -39,41 +37,19 @@
     "leadAlone": "Tienes la cinta azul. Mantén la ventaja.",
     "learn": "Aprender →"
   },
-  "cards": {
-    "place": "Tu puesto",
-    "placeValue": "{rank} de {total}",
-    "noPlace": "—",
-    "toMoveUp": "Para superar a {name}",
-    "toMoveUpTop": "Tu ventaja",
-    "daysLeft": "Días restantes",
-    "daysValue": "{n}",
-    "endsSunday": "termina el domingo"
+  "bar": {
+    "place": "{rank} de {total}"
   },
   "reward": {
-    "title": "La feria de la semana pasada",
     "claim": "Recoger monedas 🪙",
     "checking": "Comprobando…",
     "claimed": "Recogiste {coins} 🪙 de la semana pasada",
     "earned": "¡+{coins} 🪙 ganadas!",
-    "none": "Sin luz solar la semana pasada",
-    "firstWeek": "Primera semana: las monedas se desbloquean el lunes 🌱",
-    "tiers": "Top 10 % → 100 🪙 · top 30 % → 50 · top 60 % → 20 · participar → 5",
-    "wearing": {
-      "blue": "Llevas la medalla del 1.º puesto de la feria de la semana pasada",
-      "red": "Llevas la medalla del 2.º puesto de la feria de la semana pasada",
-      "yellow": "Llevas la medalla del 3.º puesto de la feria de la semana pasada"
-    }
+    "none": "Sin luz solar la semana pasada"
   },
   "movement": {
-    "up": "Subiste a la parcela {tier}: ¡más sol! {emoji}",
-    "down": "De vuelta a la parcela {tier} por ahora; una buena semana te devuelve arriba {emoji}"
-  },
-  "rules": {
-    "title": "Cómo funciona la feria",
-    "l1": "Cada lunes empieza una semana nueva en ☀️ 0",
-    "l2": "Los 3 primeros se llevan las cintas azul, roja y amarilla",
-    "l3": "El 20 % superior sube a una parcela con más sol; el 20 % inferior pasa a la de sombra",
-    "l4": "No se pierde nada: tu jardín, monedas y racha se quedan"
+    "up": "↑ subiste esta semana",
+    "down": "↓ bajaste esta semana"
   },
   "unavailable": "La feria abre cuando se actualice la base de datos. Vuelve en un momento."
 }

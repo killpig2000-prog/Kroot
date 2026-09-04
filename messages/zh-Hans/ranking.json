@@ -10,12 +10,10 @@
   },
   "head": {
     "gardeners": "{n} 位园丁",
-    "endsSunday": "花展周日结束"
+    "endsSunday": "周日结束",
+    "daysLeft": "剩余 {n} 天"
   },
   "fair": {
-    "eyebrow": "本周花展",
-    "title": "谁长得最多？",
-    "sub": "☀️ 阳光 = 本周获得的 XP。树的大小取决于本周的成长，而不是等级。",
     "fresh": "新的一周——所有人从 ☀️ 0 开始。第一个学习的人拿走蓝丝带。",
     "sun": "☀️ {n}"
   },
@@ -39,41 +37,19 @@
     "leadAlone": "蓝丝带在你手中。守住领先。",
     "learn": "去学习 →"
   },
-  "cards": {
-    "place": "你的名次",
-    "placeValue": "第 {rank} / {total}",
-    "noPlace": "—",
-    "toMoveUp": "超过 {name} 还需",
-    "toMoveUpTop": "你的领先",
-    "daysLeft": "剩余天数",
-    "daysValue": "{n}",
-    "endsSunday": "周日结束"
+  "bar": {
+    "place": "第 {rank} / {total}"
   },
   "reward": {
-    "title": "上周花展",
     "claim": "领取金币 🪙",
     "checking": "查询中…",
     "claimed": "已领取上周的 {coins} 🪙",
     "earned": "获得 +{coins} 🪙！",
-    "none": "上周没有阳光",
-    "firstWeek": "第一周——金币将于周一解锁 🌱",
-    "tiers": "前 10% → 100 🪙 · 前 30% → 50 · 前 60% → 20 · 参与 → 5",
-    "wearing": {
-      "blue": "佩戴着上周花展第1名的奖章",
-      "red": "佩戴着上周花展第2名的奖章",
-      "yellow": "佩戴着上周花展第3名的奖章"
-    }
+    "none": "上周没有阳光"
   },
   "movement": {
-    "up": "你升入了{tier}花坛——阳光更充足！{emoji}",
-    "down": "暂时回到{tier}花坛——努力一周就能升回去 {emoji}"
-  },
-  "rules": {
-    "title": "花展规则",
-    "l1": "每周一从 ☀️ 0 开始新的一周",
-    "l2": "前 3 名获得蓝、红、黄丝带",
-    "l3": "前 20% 升入阳光更好的花坛，后 20% 移至阴凉花坛",
-    "l4": "不会失去任何东西——你的花园、金币和连续记录都保留"
+    "up": "↑ 本周升级",
+    "down": "↓ 本周降级"
   },
   "unavailable": "数据库更新后花展即将开放，请稍后再来。"
 }
