@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { WRITING_GENRE_META, type Prompt } from "@/lib/writing";
 import { getLocalizedExample, getLocalizedPrompt, getLocalizedStimulus } from "@/lib/writing-i18n";
 import { checkTiles, type Board } from "@/lib/writing-builder";
 import { TileBoard } from "@/components/writing/WritingBoards";
+import { currentGuidedStep, GUIDED_STEP_EVENT } from "@/components/onboarding/guidedSteps";
 
 const CARD = "border border-line rounded-[16px] bg-cream max-w-[900px] overflow-hidden";
 const BTN_INK =
@@ -77,6 +78,17 @@ export default function WritePhase({
   const stepChecked = checked[step];
   const isChecked = step in checked;
 
+  // The guided tour's "build the sentence" step: highlight the example
+  // sentence and badge the tiles with their tap order, same 👆1/2/3 cue the
+  // landing "try it" demo uses — real practice otherwise never shows these.
+  const [tourHint, setTourHint] = useState(false);
+  useEffect(() => {
+    const check = () => setTourHint(currentGuidedStep() === "writing-board");
+    check();
+    window.addEventListener(GUIDED_STEP_EVENT, check);
+    return () => window.removeEventListener(GUIDED_STEP_EVENT, check);
+  }, []);
+
   return (
     <div className={CARD}>
       {/* head */}
@@ -138,7 +150,12 @@ export default function WritePhase({
         <div data-tour="guided-writing-board">
         <div className="mb-3">
           <div className={EYEBROW}>{t("phase.modeTiles")}</div>
-          <p className="text-[19px] font-extrabold leading-[1.3] tracking-[-0.01em]" style={{ textWrap: "balance" }}>
+          <p
+            className={`text-[19px] font-extrabold leading-[1.3] tracking-[-0.01em] ${
+              tourHint ? "inline-block rounded-[10px] bg-[var(--tint-amber)] border border-amber-line px-3 py-1.5 guided-focus-sentence" : ""
+            }`}
+            style={{ textWrap: "balance" }}
+          >
             {getLocalizedExample(prompt, locale)}
           </p>
         </div>
@@ -146,6 +163,7 @@ export default function WritePhase({
         <TileBoard
           board={board}
           picked={entry.picked}
+          orderHint={tourHint && entry.picked.length === 0}
           onChange={(picked) => {
             if (isChecked) return; // locked once checked — Reset (or Next/Back) starts a fresh attempt
             update(step, { picked });

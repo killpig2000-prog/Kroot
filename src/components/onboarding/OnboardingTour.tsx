@@ -193,9 +193,14 @@ export default function OnboardingTour({
       }
       actions={
         <>
-          <button type="button" onClick={() => end(false)} className={GHOST_BTN}>
-            {t("skip")}
-          </button>
+          {/* Skip only before committing, on "welcome" — once "Let's go" is
+              tapped the walkthrough runs to its own natural end, same rule
+              as the guided tour's "ask" steps. */}
+          {key === "welcome" && (
+            <button type="button" onClick={() => end(false)} className={GHOST_BTN}>
+              {t("skip")}
+            </button>
+          )}
           <button
             type="button"
             onClick={() => (isLast ? end() : setStepIndex((i) => i + 1))}

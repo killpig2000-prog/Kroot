@@ -269,6 +269,10 @@ export default function GuidedStep({ step }: { step: GuidedStepKey }) {
       body={body}
       footerLeft={footerLeft}
       actions={actions}
+      // "info" steps have their own Next button — everything else (click,
+      // ask, watch) is only ever advanced by a real tap on the spotlit
+      // element, so those get the ripple + 👆 telling the learner to tap it.
+      tapHint={mode !== "info"}
     />
   );
 }

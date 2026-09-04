@@ -18,6 +18,7 @@ export default function SpotlightOverlay({
   body,
   footerLeft,
   actions,
+  tapHint = false,
 }: {
   rect: SpotlightRect | null;
   /** Ring padding around the measured rect — smaller for compact targets like a BottomNav tab, where the default 8px overshoots the real element. */
@@ -29,6 +30,9 @@ export default function SpotlightOverlay({
   footerLeft?: ReactNode;
   /** Right side of the footer row — the buttons. */
   actions: ReactNode;
+  /** Ring ripples outward and a 👆 bounces at its corner — steps that need a
+      real tap on the spotlit element rather than a button in the card. */
+  tapHint?: boolean;
 }) {
   const box = rect
     ? { top: rect.top - pad, left: rect.left - pad, width: rect.width + pad * 2, height: rect.height + pad * 2 }
@@ -71,7 +75,9 @@ export default function SpotlightOverlay({
       />
       {box && (
         <div
-          className="absolute rounded-[12px] pointer-events-none transition-all duration-300 ease-out animate-pulse"
+          className={`absolute rounded-[12px] pointer-events-none transition-all duration-300 ease-out ${
+            tapHint ? "guided-tap-ring" : "animate-pulse"
+          }`}
           style={{
             top: box.top,
             left: box.left,
@@ -80,6 +86,15 @@ export default function SpotlightOverlay({
             boxShadow: "0 0 0 3px #F4C94F",
           }}
         />
+      )}
+      {box && tapHint && (
+        <span
+          aria-hidden="true"
+          className="guided-tap-hand absolute pointer-events-none text-[22px] leading-none"
+          style={{ top: box.top + box.height - 6, left: box.left + box.width - 10 }}
+        >
+          👆
+        </span>
       )}
 
       <div

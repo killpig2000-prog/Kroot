@@ -667,6 +667,37 @@ html.js-reveal .tree-garden.in .tree {
   .tryit-order-badge { animation: none; }
 }
 
+/* guided tour: "tap here" cue on steps that need a real click on the
+   spotlit element rather than a button in the card — same ripple/bounce
+   language as the landing try-it demo, just gold to match the ring. */
+@keyframes guidedTapPulse {
+  0% { box-shadow: 0 0 0 3px #F4C94F, 0 0 0 3px #F4C94F; }
+  100% { box-shadow: 0 0 0 3px #F4C94F, 0 0 0 15px rgba(244, 201, 79, 0); }
+}
+.guided-tap-ring {
+  animation: guidedTapPulse 1.6s ease-out infinite;
+}
+.guided-tap-hand {
+  animation: tryitTap 1.4s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .guided-tap-ring,
+  .guided-tap-hand { animation: none; }
+}
+
+/* guided tour: highlight the example sentence while the writing-board step
+   walks the learner through building it from tiles. */
+@keyframes guidedFocusPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(180, 122, 31, 0.3); }
+  50% { box-shadow: 0 0 0 6px rgba(180, 122, 31, 0); }
+}
+.guided-focus-sentence {
+  animation: guidedFocusPulse 1.8s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .guided-focus-sentence { animation: none; }
+}
+
 .speech-pop {
   animation: speechPop 6s ease-in-out infinite;
 }
