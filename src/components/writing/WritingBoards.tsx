@@ -111,6 +111,7 @@ function DraggableZoneTile({
   tile,
   dragging,
   selected,
+  wrong,
   setRef,
   onDragStart,
   onDragMove,
@@ -122,6 +123,7 @@ function DraggableZoneTile({
   tile: Tile;
   dragging: boolean;
   selected: boolean;
+  wrong?: boolean;
   setRef: (id: string, el: HTMLSpanElement | null) => void;
   onDragStart: (e: React.PointerEvent<HTMLButtonElement>) => void;
   onDragMove: (e: React.PointerEvent<HTMLButtonElement>) => void;
@@ -135,7 +137,7 @@ function DraggableZoneTile({
         type="button"
         className={`${TILE} ${dragging ? "opacity-0" : ""} ${
           selected ? "border-success ring-2 ring-success/40 -translate-y-px" : ""
-        }`}
+        } ${wrong ? "border-danger bg-danger-bg shadow-[0_2px_0_var(--c-danger)]" : ""}`}
         aria-pressed={selected}
         onPointerDown={onDragStart}
         onPointerMove={onDragMove}
@@ -160,6 +162,8 @@ export function TileBoard({
   onCheck,
   onReset,
   orderHint,
+  reorder,
+  requireFull = true,
 }: {
   board: Board;
   picked: string[];
@@ -174,7 +178,8 @@ export function TileBoard({
    * The level-test placement quiz is the one caller that still checks per
    * question (an adaptive test needs the right/wrong verdict immediately) —
    * passing both props opts back into that legacy locked/highlighted mode,
-   * where a placed tile can only be removed, never reordered.
+   * where a placed tile can only be removed, never reordered by default (see
+   * `reorder` below).
    */
   checked?: boolean | null;
   onCheck?: () => void;
@@ -184,11 +189,26 @@ export function TileBoard({
    * answer straight to the learner. Landing-page "try it" demo only.
    */
   orderHint?: boolean;
+  /**
+   * Lets placed tiles be press-dragged or tap-swapped even in legacy
+   * (`checked`/`onCheck`) mode — normally that mode only supports tap-to-
+   * remove. The real Writing flow (no `checked`/`onCheck`) always allows
+   * this regardless of this prop. Landing-page "try it" demo only.
+   */
+  reorder?: boolean;
+  /**
+   * Legacy mode's Check button is disabled until every tile is placed by
+   * default. Pass `false` to enable it as soon as one tile is placed — the
+   * landing "try it" demo checks whatever prefix of the sentence is placed
+   * so far instead of requiring the whole thing.
+   */
+  requireFull?: boolean;
 }) {
   const t = useTranslations("writing.board");
   const hold = useHoldToSpeak();
   const byId = new Map(board.tiles.map((t) => [t.id, t]));
   const legacyCheck = onCheck !== undefined;
+  const canReorder = !legacyCheck || reorder;
 
   // Maps each tile id to its 1-based position in board.answer, matching
   // tiles to answer words in order so a repeated word still gets a distinct
@@ -345,7 +365,7 @@ export function TileBoard({
         {picked.map((id, i) => {
           const tile = byId.get(id);
           if (!tile) return null;
-          if (legacyCheck) {
+          if (legacyCheck && (!canReorder || locked)) {
             return (
               <TileButton
                 key={id}
@@ -359,8 +379,8 @@ export function TileBoard({
               />
             );
           }
-          // New mode: press and drag a placed tile to reorder it; the small
-          // badge removes it outright.
+          // Reorderable mode: press and drag a placed tile, or tap two to
+          // swap them; the small badge removes it outright.
           return (
             <DraggableZoneTile
               key={id}
@@ -368,6 +388,7 @@ export function TileBoard({
               tile={tile}
               dragging={dragId === id}
               selected={selectedId === id}
+              wrong={legacyCheck ? wrong.has(i) : undefined}
               setRef={setTileRef}
               onDragStart={handleDragStart(id, tile.text)}
               onDragMove={handleDragMove}
@@ -427,10 +448,17 @@ export function TileBoard({
               </button>
             </span>
           ) : (
-            // Only a full answer can be checked — a partial one always grades
-            // wrong, which read as the app marking a half-built sentence
-            // "incorrect" out of nowhere.
-            <button type="button" className={BTN_CHECK} onClick={onCheck} disabled={picked.length !== board.answer.length}>
+            // By default only a full answer can be checked — a partial one
+            // always grades wrong, which read as the app marking a
+            // half-built sentence "incorrect" out of nowhere. `requireFull`
+            // false (landing demo) instead allows checking any non-empty
+            // prefix.
+            <button
+              type="button"
+              className={BTN_CHECK}
+              onClick={onCheck}
+              disabled={requireFull ? picked.length !== board.answer.length : picked.length === 0}
+            >
               {checked === false ? t("tryAgain") : t("check")}
             </button>
           ))}

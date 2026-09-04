@@ -5,8 +5,8 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { useKoreanSpeaker, useSpeechRecognition } from "@/hooks/useSpeechRecognition";
 import { bestSimilarity, verdictFor } from "@/lib/speech-match";
-import { wordsForChapter } from "@/lib/pronunciation";
-import { checkTiles, localScore, type Board } from "@/lib/writing-builder";
+import type { ChallengeWord } from "@/lib/pronunciation";
+import { localScore, tileMatchScore, wrongTilePositions, type Board } from "@/lib/writing-builder";
 import { TileBoard } from "@/components/writing/WritingBoards";
 import AnswerCapture from "@/components/pronunciation/AnswerCapture";
 import ScoreResult, { VERDICTS } from "@/components/pronunciation/ScoreResult";
@@ -25,9 +25,9 @@ const WRITING_RING_COLOR = "#C47A25";
 // look-alike. The word and the board are fixed constants so the server
 // render and the first client render agree.
 
-// The very first word of the real trail (chapter 1, ㄹ) — what you try here
-// is literally what lesson one asks.
-const WORD = wordsForChapter("rieul")[0];
+// 나무 (tree) — matches the app's own growing-tree metaphor, not tied to a
+// specific pronunciation chapter.
+const WORD: ChallengeWord = { kr: "나무", romanization: "namu", en: "tree", id: "landing:나무", groupTitle: "", tip: "" };
 // Must match AnswerCapture's own MAX_LISTEN_MS so the ring runs out exactly
 // when the mic stops.
 const MAX_LISTEN_MS = 6000;
@@ -176,13 +176,16 @@ function WritingCard({ onDone }: { onDone: () => void }) {
   function check() {
     const n = attempts + 1;
     setAttempts(n);
-    const ok = checkTiles(BOARD, picked);
+    // A demo, not a real question: any prefix of the sentence with no
+    // mismatched tile counts as a pass — the visitor doesn't have to place
+    // all 3 words before Check does something. A full, correct sentence
+    // still gets the nicer attempt-based grading; a partial one gets a
+    // score proportional to how much of it is right.
+    const complete = picked.length === BOARD.answer.length;
+    const ok = picked.length > 0 && wrongTilePositions(BOARD, picked).length === 0;
     setChecked(ok);
     if (ok) {
-      // Same attempt-based grading as the level test's per-question Check —
-      // this card checks on every tap too, unlike the real Writing session
-      // (which only scores once the whole chapter is submitted).
-      setScore(localScore(n));
+      setScore(complete ? localScore(n) : tileMatchScore(BOARD, picked));
       speakKorean(BOARD.answer.join(" "), { rate: 0.9 });
       onDone();
     }
@@ -244,6 +247,8 @@ function WritingCard({ onDone }: { onDone: () => void }) {
             picked={picked}
             checked={checked}
             orderHint={picked.length === 0 && checked === null}
+            reorder
+            requireFull={false}
             onChange={(next) => {
               setPicked(next);
               if (checked === false) setChecked(null);
