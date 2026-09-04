@@ -4,6 +4,8 @@ import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { GRAMMAR_LESSONS, GRAMMAR_CHAPTERS, lessonsByChapter, getLocalizedLesson } from "@/lib/grammar";
+import { getUnpaidRewardKeys } from "@/lib/reward-status";
+import { grammarLessonKey } from "@/lib/reward-keys";
 
 export default async function GrammarPage({
   params,
@@ -14,10 +16,13 @@ export default async function GrammarPage({
 }) {
   const tn = await getTranslations("nav");
   const t = await getTranslations("grammarUi");
+  const tu = await getTranslations("ui");
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
 
   if (!user) redirect("/onboarding");
+
+  const unpaidKeys = await getUnpaidRewardKeys(supabase, user.id, "grammar");
 
   const { data: profile } = await supabase
     .from("profiles")
@@ -114,6 +119,7 @@ export default async function GrammarPage({
             <div className="border border-line rounded-[14px] overflow-hidden">
               {shownLessons.map((lesson, i) => {
                 const done = completedKeys.has(lesson.key);
+                const coinAvailable = unpaidKeys.has(grammarLessonKey(lesson.key));
                 return (
                   <Link
                     key={lesson.key}
@@ -134,6 +140,11 @@ export default async function GrammarPage({
                         {lesson.title}
                       </b>
                     </span>
+                    {coinAvailable && (
+                      <span className="flex-none inline-block text-[10.5px] font-semibold rounded-full border px-2 py-[2px] bg-[var(--tint-amber)] text-amber border-amber-line whitespace-nowrap">
+                        {tu("coinAvailable")}
+                      </span>
+                    )}
                     <span className="flex-none text-[#D6D3CC] text-sm transition-all group-hover:text-[var(--tint-indigo-ink)] group-hover:translate-x-0.5">
                       →
                     </span>

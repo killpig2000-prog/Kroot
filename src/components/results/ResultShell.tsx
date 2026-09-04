@@ -122,6 +122,11 @@ export default function ResultShell({
   // Older deployed award_xp versions don't return points_awarded; fall back
   // to the skill's rate so the strip still reads correctly against them.
   const xpAwarded = levelUp?.points_awarded;
+  // coins_pending (migration 0065) means this item's coins are still there
+  // to earn — scoring 60%+ on some future attempt pays them, once. It stays
+  // true across repeated low scores even after XP itself has been maxed out
+  // (already_earned alone would wrongly read this chapter as fully done).
+  const missedAccuracyGate = !!levelUp?.coins_pending;
   return (
     <div
       className="max-w-[640px] w-full border border-line rounded-[16px] bg-cream overflow-hidden"
@@ -189,6 +194,12 @@ export default function ResultShell({
           )}
         </div>
       </div>
+
+      {missedAccuracyGate && (
+        <p className="px-[18px] py-2.5 text-[12.5px] font-semibold text-amber bg-[var(--tint-amber)] border-t border-amber-line">
+          🪙 {tu("scoreForCoin", { n: 60, coins: 15 })}
+        </p>
+      )}
 
       {children && <div className="p-[clamp(18px,3vw,26px)] flex flex-col gap-3.5 border-t border-line">{children}</div>}
 

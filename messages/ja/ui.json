@@ -104,5 +104,7 @@
   "levelUp": "レベルアップ！レベル{level}になりました。",
   "noCoinsThisTime": "今回はコインなし",
   "alreadyEarned": "獲得済み — やり直しでは加算されません",
-  "xpEarned": "{skill}のXP"
+  "xpEarned": "{skill}のXP",
+  "coinAvailable": "🪙 コイン獲得可能",
+  "scoreForCoin": "{n}%以上でコイン+{coins}枚"
 }

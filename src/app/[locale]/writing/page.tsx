@@ -14,6 +14,8 @@ import {
 import { getLocalizedPrompt } from "@/lib/writing-i18n";
 import { LEVEL_ORDER, isCefrLevel, type CefrLevel } from "@/lib/tree";
 import { isDifficultyUnlocked } from "@/lib/level";
+import { getUnpaidRewardKeys } from "@/lib/reward-status";
+import { writingChapterKey } from "@/lib/reward-keys";
 
 const STATUS_BADGE: Record<string, string> = {
   done: "bg-success-bg text-success border-success-line",
@@ -31,9 +33,10 @@ export default async function WritingMapPage({
 
   if (!user) redirect("/onboarding");
 
-  const [t, tn, locale, { data: profile }, { data: progress }, sp] = await Promise.all([
+  const [t, tn, tu, locale, { data: profile }, { data: progress }, sp, unpaidKeys] = await Promise.all([
     getTranslations("writing"),
     getTranslations("nav"),
+    getTranslations("ui"),
     getLocale(),
     supabase
       .from("profiles")
@@ -42,6 +45,7 @@ export default async function WritingMapPage({
       .single(),
     supabase.from("writing_progress").select("prompt_key, completed_at").eq("user_id", user.id),
     searchParams,
+    getUnpaidRewardKeys(supabase, user.id, "writing"),
   ]);
 
   const myLevel = (profile?.current_level ?? "A1") as CefrLevel;
@@ -220,6 +224,7 @@ export default async function WritingMapPage({
                               : status === "current"
                                 ? t("map.statusWrite")
                                 : t("map.statusLocked"),
+                          coinBadgeLabel: unpaidKeys.has(writingChapterKey(level, i)) ? tu("coinAvailable") : undefined,
                           dim,
                           tourId: i === 0 ? "guided-writing-chapter" : undefined,
                         };

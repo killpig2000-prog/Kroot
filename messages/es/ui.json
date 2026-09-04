@@ -104,5 +104,7 @@
   "levelUp": "¡Subiste de nivel! Ahora eres nivel {level}.",
   "noCoinsThisTime": "Sin monedas esta vez",
   "alreadyEarned": "Ya conseguido: repetir no vuelve a pagar",
-  "xpEarned": "XP de {skill}"
+  "xpEarned": "XP de {skill}",
+  "coinAvailable": "🪙 Moneda disponible",
+  "scoreForCoin": "Consigue {n}%+ para +{coins} 🪙"
 }

@@ -30,6 +30,13 @@ export type ProgressResult = {
   points_awarded?: number;
   /** True when this completion paid nothing because it was already rewarded. */
   already_earned?: boolean;
+  /**
+   * True when this item's coins are still unpaid after this call — scoring
+   * 60%+ on a future attempt still earns them. Independent of
+   * already_earned: XP can be maxed out while coins are still open, on a
+   * second low-scoring try. Absent when an older award_xp is still deployed.
+   */
+  coins_pending?: boolean;
 };
 
 /**

@@ -14,6 +14,8 @@ export type ChallengeState = {
   locked: boolean;
   /** Why it's locked, in one short line. */
   lockNote?: string;
+  /** Completed once already, below the accuracy gate — redoing it pays the coins. */
+  coinAvailable?: boolean;
 };
 
 function Stars({ n, label }: { n: number; label: string }) {
@@ -28,6 +30,7 @@ function Stars({ n, label }: { n: number; label: string }) {
 export default function ChallengeList({ items }: { items: ChallengeState[] }) {
   const t = useTranslations("pronunciation.challenge");
   const tk = useTranslations("pronunciation.challenge.kinds");
+  const tu = useTranslations("ui");
   const earned = items.reduce((n, i) => n + i.stars, 0);
   const cleared = items.filter((i) => i.stars > 0).length;
   const bestAccuracy = items.reduce((n, i) => Math.max(n, i.best?.accuracy ?? 0), 0);
@@ -53,15 +56,22 @@ export default function ChallengeList({ items }: { items: ChallengeState[] }) {
       </div>
 
       <div className="grid sm:grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-3">
-        {items.map(({ challenge: c, best, stars, locked, lockNote }) => {
+        {items.map(({ challenge: c, best, stars, locked, lockNote, coinAvailable }) => {
           const body = (
             <>
               <div className="flex items-center justify-between gap-2">
                 <span className="text-[11px] font-extrabold tracking-[.08em] uppercase text-muted">
                   {tk(c.kind)}
                 </span>
-                <span className="text-[12px] tracking-[1px]" aria-label={t("difficulty", { n: c.heat })}>
-                  {"🔥".repeat(c.heat)}
+                <span className="flex items-center gap-1.5">
+                  {coinAvailable && !locked && (
+                    <span className="text-[10px] font-semibold rounded-full border px-[5px] py-[1px] bg-[var(--tint-amber)] text-amber border-amber-line whitespace-nowrap">
+                      {tu("coinAvailable")}
+                    </span>
+                  )}
+                  <span className="text-[12px] tracking-[1px]" aria-label={t("difficulty", { n: c.heat })}>
+                    {"🔥".repeat(c.heat)}
+                  </span>
                 </span>
               </div>
               <h3 className="font-extrabold text-[15.5px] tracking-[-0.01em]">

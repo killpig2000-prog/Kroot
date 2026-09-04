@@ -11,10 +11,13 @@ export type ChapterProgress = SoundGroup & {
   attempted: number;
   /** Words scored 100 — all six perfect earns the rainbow ring. */
   perfect: number;
+  /** Completed once already, below the accuracy gate — redoing it pays the coins. */
+  coinAvailable?: boolean;
 };
 
 function Stone({ chapter }: { chapter: ChapterProgress }) {
   const t = useTranslations("pronunciation.practice");
+  const tu = useTranslations("ui");
   const allPerfect = chapter.total > 0 && chapter.perfect === chapter.total;
   const done = chapter.total > 0 && chapter.attempted === chapter.total;
   const pct = chapter.total ? chapter.attempted / chapter.total : 0;
@@ -24,9 +27,17 @@ function Stone({ chapter }: { chapter: ChapterProgress }) {
       href={`/speaking?chapter=${chapter.key}`}
       title={chapter.title}
       aria-label={t("openChapter", { title: chapter.title })}
-      className="rounded-[12px] border-[1.5px] bg-cream px-2 pt-2.5 pb-3 text-center transition-transform hover:-translate-y-0.5"
+      className="relative rounded-[12px] border-[1.5px] bg-cream px-2 pt-2.5 pb-3 text-center transition-transform hover:-translate-y-0.5"
       style={{ borderColor: allPerfect ? "#D9A23B" : done ? "var(--c-success-line)" : "var(--c-line)" }}
     >
+      {chapter.coinAvailable && (
+        <span
+          className="absolute -top-1.5 -right-1.5 text-[10px] font-semibold rounded-full border px-[5px] py-[1px] bg-[var(--tint-amber)] text-amber border-amber-line whitespace-nowrap"
+          title={tu("coinAvailable")}
+        >
+          🪙
+        </span>
+      )}
       <span
         className="relative w-9 h-9 mx-auto mb-1.5 rounded-full flex items-center justify-center"
         style={{

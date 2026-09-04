@@ -9,6 +9,8 @@ import { getChapterStatuses, getChaptersForLevel } from "@/lib/reading";
 import { getLocalizedTitle } from "@/lib/reading-i18n";
 import { LEVEL_ORDER, isCefrLevel, type CefrLevel } from "@/lib/tree";
 import { isDifficultyUnlocked } from "@/lib/level";
+import { getUnpaidRewardKeys } from "@/lib/reward-status";
+import { readingPassageKey } from "@/lib/reward-keys";
 
 // Genre keys are unique across all levels (diary/story repeat at every level;
 // the other two slots change per level to match real-world text types that
@@ -54,13 +56,18 @@ export default async function ReadingMapPage({
 }: {
   searchParams: Promise<{ level?: string }>;
 }) {
-  const [t, tn, locale] = await Promise.all([getTranslations("reading"), getTranslations("nav"), getLocale()]);
+  const [t, tn, tu, locale] = await Promise.all([
+    getTranslations("reading"),
+    getTranslations("nav"),
+    getTranslations("ui"),
+    getLocale(),
+  ]);
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
 
   if (!user) redirect("/onboarding");
 
-  const [profile, { data: progress }, sp] = await Promise.all([
+  const [profile, { data: progress }, sp, unpaidKeys] = await Promise.all([
     getDashboardProfile(supabase, user.id),
     supabase
       .from("reading_progress")
@@ -68,6 +75,7 @@ export default async function ReadingMapPage({
       .eq("user_id", user.id)
       .not("last_reviewed_at", "is", null),
     searchParams,
+    getUnpaidRewardKeys(supabase, user.id, "reading"),
   ]);
 
   const myLevel = (profile?.current_level ?? "A1") as CefrLevel;
@@ -226,6 +234,7 @@ export default async function ReadingMapPage({
                               : status === "current"
                                 ? t("map.statusRead")
                                 : t("map.statusLocked"),
+                          coinBadgeLabel: unpaidKeys.has(readingPassageKey(passage.key)) ? tu("coinAvailable") : undefined,
                           dim: status === "locked",
                         };
                       })}

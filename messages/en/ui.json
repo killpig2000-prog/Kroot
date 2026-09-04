@@ -104,5 +104,7 @@
   "levelUp": "Level up! You're now level {level}.",
   "noCoinsThisTime": "No coins this time",
   "alreadyEarned": "Already earned — replays don’t pay again",
-  "xpEarned": "{skill} XP"
+  "xpEarned": "{skill} XP",
+  "coinAvailable": "🪙 Coin available",
+  "scoreForCoin": "Score {n}%+ for +{coins} 🪙"
 }

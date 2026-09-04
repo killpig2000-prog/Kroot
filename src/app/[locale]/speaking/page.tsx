@@ -9,6 +9,8 @@ import ChallengePlay from "@/components/pronunciation/ChallengePlay";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { isAdminEmail } from "@/lib/admin";
 import { isTableMissing } from "@/lib/resume";
+import { getUnpaidRewardKeys } from "@/lib/reward-status";
+import { pronunciationChapterKey, challengeKey } from "@/lib/reward-keys";
 import {
   CHALLENGES,
   GROUP_FAMILY,
@@ -35,7 +37,7 @@ export default async function SpeakingPage({
   const t = await getTranslations("pronunciation");
   const tn = await getTranslations("nav");
 
-  const [{ data: profile }, { data: progressRows }, challengeRes] = await Promise.all([
+  const [{ data: profile }, { data: progressRows }, challengeRes, unpaidKeys] = await Promise.all([
     supabase
       .from("profiles")
       .select("display_name, streak_days, avatar_url")
@@ -46,6 +48,9 @@ export default async function SpeakingPage({
       .from("challenge_progress")
       .select("challenge_key, best_accuracy, best_ms")
       .eq("user_id", user.id),
+    // Practice chapters and challenges are both p_skill 'pronunciation' —
+    // told apart by item_key prefix ("pronunciation:" vs "challenge:").
+    getUnpaidRewardKeys(supabase, user.id, "pronunciation"),
   ]);
 
   const bestScores: Record<string, number> = {};
@@ -65,7 +70,7 @@ export default async function SpeakingPage({
   const chapters: ChapterProgress[] = SOUND_GROUPS.map((g) => {
     const attempted = g.items.filter((w) => `${g.key}:${w.kr}` in bestScores).length;
     const perfect = g.items.filter((w) => (bestScores[`${g.key}:${w.kr}`] ?? 0) >= PERFECT_SCORE).length;
-    return { ...g, total: g.items.length, attempted, perfect };
+    return { ...g, total: g.items.length, attempted, perfect, coinAvailable: unpaidKeys.has(pronunciationChapterKey(g.key)) };
   });
   const chaptersDone = chapters.filter((c) => c.total > 0 && c.attempted === c.total);
   const doneByFamily = (family: string) =>
@@ -78,7 +83,7 @@ export default async function SpeakingPage({
   const challengeStates: ChallengeState[] = CHALLENGES.map((c) => {
     const best = challengeBest.get(c.key) ?? null;
     const stars = starsFor(c, best);
-    return { challenge: c, best, stars };
+    return { challenge: c, best, stars, coinAvailable: unpaidKeys.has(challengeKey(c.key)) };
   }).map((s, _i, all) => {
     const totalStars = all.reduce((n, x) => n + x.stars, 0);
     const req = s.challenge.requires;

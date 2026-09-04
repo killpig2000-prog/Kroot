@@ -11,6 +11,8 @@ export type ChapterPathNode = {
   subtitle?: ReactNode;
   badgeClassName: string;
   badgeLabel: string;
+  /** A second, smaller badge — "coin still earnable here" (see reward-status.ts). Sits before the status badge. */
+  coinBadgeLabel?: string;
   dim?: boolean;
   /** data-tour id — the guided walkthrough spotlights this row. */
   tourId?: string;
@@ -87,6 +89,11 @@ export default function ChapterPathGroup({
                   </small>
                 )}
               </span>
+              {node.coinBadgeLabel && (
+                <span className="flex-none inline-block text-[10.5px] font-semibold rounded-full border px-2 py-[2px] bg-[var(--tint-amber)] text-amber border-amber-line whitespace-nowrap">
+                  {node.coinBadgeLabel}
+                </span>
+              )}
               <span
                 className={`flex-none inline-block text-[10.5px] font-semibold rounded-full border px-2 py-[2px] ${node.badgeClassName}`}
               >
