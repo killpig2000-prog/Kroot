@@ -305,7 +305,7 @@ export default function WordDetailCard({
         <button
           type="button"
           data-tour="guided-word-goti"
-          className={`${marked ? BTN_INK : BTN_LINE} w-full justify-center`}
+          className={`${marked ? BTN_LINE : BTN_INK} w-full justify-center`}
           disabled={saving !== null}
           onClick={() => mark(true)}
         >
