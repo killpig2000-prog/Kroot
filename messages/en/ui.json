@@ -66,8 +66,6 @@
     "noStatsYet": "Finish your first unit and your stats show up here.",
     "wordsToReview": "Words to review",
     "dueCount": "{count, plural, =1 {1 word due} other {# words due}}",
-    "dueToday": "due today",
-    "moreWords": "+{count} more",
     "nothingDue": "Nothing due. Your next word comes back {when}.",
     "nothingDuePlain": "Nothing due right now.",
     "reviewCapacity": {

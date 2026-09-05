@@ -66,8 +66,6 @@
     "noStatsYet": "学完第一个单元后，这里就会显示你的数据。",
     "wordsToReview": "待复习的词",
     "dueCount": "{count} 个待复习",
-    "dueToday": "今天到期",
-    "moreWords": "还有 {count} 个",
     "nothingDue": "暂时没有待复习的词。下一个词{when}回来。",
     "nothingDuePlain": "暂时没有待复习的词。",
     "reviewCapacity": {

@@ -66,8 +66,6 @@
     "noStatsYet": "Học xong bài đầu tiên là số liệu sẽ hiện ở đây.",
     "wordsToReview": "Từ cần ôn",
     "dueCount": "{count} từ cần ôn",
-    "dueToday": "đến hạn hôm nay",
-    "moreWords": "+{count} từ nữa",
     "nothingDue": "Chưa có từ nào cần ôn. Từ tiếp theo quay lại {when}.",
     "nothingDuePlain": "Chưa có từ nào cần ôn.",
     "reviewCapacity": {

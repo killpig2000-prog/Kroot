@@ -66,8 +66,6 @@
     "noStatsYet": "最初のユニットを終えると、ここに記録が出ます。",
     "wordsToReview": "復習する単語",
     "dueCount": "{count} 語が復習待ち",
-    "dueToday": "今日が復習日",
-    "moreWords": "ほか {count} 語",
     "nothingDue": "復習待ちはありません。次の単語は{when}です。",
     "nothingDuePlain": "いま復習待ちの単語はありません。",
     "reviewCapacity": {

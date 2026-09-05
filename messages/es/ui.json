@@ -66,8 +66,6 @@
     "noStatsYet": "Termina tu primera unidad y aquí verás tus datos.",
     "wordsToReview": "Palabras para repasar",
     "dueCount": "{count, plural, =1 {1 palabra pendiente} other {# palabras pendientes}}",
-    "dueToday": "toca hoy",
-    "moreWords": "+{count} más",
     "nothingDue": "Nada pendiente. Tu próxima palabra vuelve {when}.",
     "nothingDuePlain": "Nada pendiente ahora mismo.",
     "reviewCapacity": {

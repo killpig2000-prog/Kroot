@@ -8,13 +8,12 @@ import { testForGrade } from "@/lib/promotion-test";
 import ReminderSettings from "@/components/profile/ReminderSettings";
 import HeadlineKpis, { type Headline } from "@/components/profile/HeadlineKpis";
 import SkillAccuracy, { type SkillScore, type SkillPending } from "@/components/profile/SkillAccuracy";
-import WordsToReview, { type DueWord } from "@/components/profile/WordsToReview";
+import WordsToReview from "@/components/profile/WordsToReview";
 import SkillMix, { type SkillShare } from "@/components/profile/SkillMix";
 import { computeSkillProgress, PRACTICE_SKILLS } from "@/components/profile/skill-progress";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { dailyReviewCap } from "@/lib/srs";
 import { type CefrLevel } from "@/lib/tree";
-import { PUBLIC_VOCAB_WORDS } from "@/lib/vocab-slugs";
 
 // My account (2026-08-30, rebuilt): an ANALYSIS page. A headline that states
 // the conclusion, per-skill accuracy, when the learner actually studies, and
@@ -32,16 +31,6 @@ type VocabRow = {
   incorrect_count: number | null;
   next_review_at: string | null;
 };
-
-/** word_key is `${topic}:${level}:${korean}`; korean may itself contain ":". */
-function koreanFromWordKey(key: string): string {
-  const parts = key.split(":");
-  return parts.length > 2 ? parts.slice(2).join(":") : key;
-}
-
-const WORD_BY_KOREAN = new Map(PUBLIC_VOCAB_WORDS.map((w) => [w.korean, w]));
-
-const DUE_LIST_MAX = 8;
 
 export default async function ProfilePage() {
   const t = await getTranslations("ui.account");
@@ -303,25 +292,6 @@ export default async function ProfilePage() {
   const reviewCap = dailyReviewCap(extras?.review_capacity_bonus ?? 0);
   const dueCount = Math.min(due.length, reviewCap);
 
-  const dueWords: DueWord[] = due
-    // hardest first, then whatever came due earliest
-    .sort(
-      (a, b) =>
-        (b.incorrect_count ?? 0) - (a.incorrect_count ?? 0) ||
-        (a.next_review_at ?? "").localeCompare(b.next_review_at ?? "")
-    )
-    .slice(0, Math.min(DUE_LIST_MAX, dueCount))
-    .map((r) => {
-      const korean = koreanFromWordKey(r.word_key);
-      const entry = WORD_BY_KOREAN.get(korean);
-      return {
-        korean,
-        meaning: entry?.meaning_en ?? null,
-        slug: entry?.slug ?? null,
-        misses: r.incorrect_count ?? 0,
-      };
-    });
-
   // nothing due: the soonest word still to come back, if there is one
   const nextReturnAt = vocabRows
     .map((r) => r.next_review_at)
@@ -380,7 +350,6 @@ export default async function ProfilePage() {
             {/* 5. the due queue — the whole of what this card is for */}
             {hasVocab && (
               <WordsToReview
-                words={dueWords}
                 dueCount={dueCount}
                 nextReturn={nextReturn}
                 capacityBonus={extras?.review_capacity_bonus ?? 0}
