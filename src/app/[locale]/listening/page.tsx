@@ -128,12 +128,12 @@ export default async function ListeningPage({
               const inProgress = done > 0 && done < count;
               const next = inProgress ? (dialogues.find((d) => !completedIds.has(d.id)) ?? null) : null;
               const totalLines = dialogues.reduce((n, d) => n + d.lines.length, 0);
-              // In-progress cards act as a "Continue" button: tap goes straight
-              // to the next unheard clip. Not-started and finished cards open
-              // the clip list.
-              const href = next
-                ? `/listening/${s.key}?level=${level}&clip=${next.id}`
-                : `/listening/${s.key}?level=${level}`;
+              // A card always opens the situation's clip list. It used to
+              // double as "Continue" once a situation was in progress — tap
+              // and you were already inside the next clip, with no way to
+              // pick a different one. The Continue hero above is the one
+              // shortcut into a clip; `next` still drives the card's badge.
+              const href = `/listening/${s.key}?level=${level}`;
               return (
                 <Link
                   key={s.key}
