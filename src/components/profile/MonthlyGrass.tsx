@@ -5,6 +5,7 @@
 // phone included, with no horizontal scroll.
 // Server component: pure markup from daily_activity data.
 
+import type { ReactNode } from "react";
 import { getFormatter, getTranslations } from "next-intl/server";
 
 const CELL_COLORS = ["bg-[#F0EFED]", "bg-[#BBF7D0]", "bg-[#6BBF8A]", "bg-[#3E7C59]", "bg-[#2E5B41]"];
@@ -21,9 +22,12 @@ function level(minutes: number): number {
 export default async function MonthlyGrass({
   minutesByDate,
   headline,
+  footerRight,
 }: {
   minutesByDate: Map<string, number>;
   headline: { label: string; value: string }[];
+  /** Optional control tucked into the bottom-right of the card, beside the legend. */
+  footerRight?: ReactNode;
 }) {
   const t = await getTranslations("profile.grass");
   const format = await getFormatter();
@@ -115,6 +119,10 @@ export default async function MonthlyGrass({
           <span key={c} className="w-[10px] h-[10px] rounded-[3px]" style={{ background: c }} />
         ))}
         {t("more")}
+        {/* The card's one bit of spare corner. The dashboard parks the
+            feedback button here on phones, where a floating one covered the
+            page instead of sitting out of the way. */}
+        {footerRight && <span className="ml-auto">{footerRight}</span>}
       </div>
     </div>
   );

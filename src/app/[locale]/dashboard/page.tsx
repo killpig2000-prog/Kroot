@@ -5,7 +5,7 @@ import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import Widgets from "@/components/dashboard/Widgets";
 import WordOfDayCard from "@/components/dashboard/WordOfDayCard";
-import FeedbackWidget from "@/components/dashboard/FeedbackWidget";
+import FeedbackWidget, { FeedbackButton } from "@/components/dashboard/FeedbackWidget";
 import Greeting from "@/components/dashboard/Greeting";
 import TodaysQuestCard from "@/components/dashboard/TodaysQuestCard";
 import InstallBanner from "@/components/pwa/InstallBanner";
@@ -469,6 +469,7 @@ export default async function DashboardPage() {
                 { label: t("garden.bestStreak"), value: `${longestStreak}d` },
                 { label: t("garden.monthGoal", { month: monthShort }), value: `${monthDone}/${MONTH_GOAL}` },
               ]}
+              footerRight={<FeedbackButton />}
             />
           </div>
         </main>

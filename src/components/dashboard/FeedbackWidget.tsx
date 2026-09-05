@@ -4,10 +4,33 @@ import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { usePathname } from "@/i18n/navigation";
 
-// Feedback lives behind one floating button in the bottom-right corner of the
-// dashboard. It used to open itself as a launch notice on every load; that
-// interrupted the page (and collided with the first-visit tour), so now
-// nothing appears until the learner taps the button.
+// Feedback lives behind one button. It used to open itself as a launch notice
+// on every load; that interrupted the page, so now nothing appears until the
+// learner taps it.
+//
+// Where that button sits depends on the screen. On desktop it floats in the
+// bottom-right corner, which is out of the way. On a phone a floating button
+// covered the page no matter where the learner scrolled, so there it moves
+// into the corner of the study-garden card instead — see FeedbackButton,
+// which the dashboard passes to MonthlyGrass. Both open this same dialog
+// through one event, so the trigger can live anywhere in the tree.
+const OPEN_EVENT = "kroot:feedback-open";
+
+/** The phone-side trigger: sits in the study garden's bottom-right corner. */
+export function FeedbackButton() {
+  const t = useTranslations("dashboard.feedback");
+  return (
+    <button
+      type="button"
+      onClick={() => window.dispatchEvent(new Event(OPEN_EVENT))}
+      className="md:hidden inline-flex items-center gap-1.5 rounded-full border border-line bg-warm px-2.5 py-1 text-[11px] font-semibold text-muted hover:text-charcoal hover:border-dash transition-colors"
+    >
+      <span aria-hidden="true">💬</span>
+      {t("send")}
+    </button>
+  );
+}
+
 type View = "closed" | "form" | "sent";
 
 export default function FeedbackWidget() {
@@ -17,6 +40,12 @@ export default function FeedbackWidget() {
   const [sending, setSending] = useState(false);
   const [error, setError] = useState(false);
   const pathname = usePathname();
+
+  useEffect(() => {
+    const open = () => setView("form");
+    window.addEventListener(OPEN_EVENT, open);
+    return () => window.removeEventListener(OPEN_EVENT, open);
+  }, []);
 
   useEffect(() => {
     if (view === "closed") return;
@@ -55,12 +84,13 @@ export default function FeedbackWidget() {
 
   if (view === "closed") {
     return (
-      // Sits above the mobile BottomNav (which is ~64px tall) and in the
-      // plain corner on desktop, where there is no bottom bar.
+      // Desktop only. On a phone this floated over whatever the learner was
+      // reading; the study garden's corner holds the trigger there instead
+      // (FeedbackButton above).
       <button
         type="button"
         onClick={() => setView("form")}
-        className="fixed z-[50] right-4 bottom-[84px] md:right-6 md:bottom-6 inline-flex items-center gap-2 rounded-full bg-[#221F1B] text-white font-semibold text-[14px] pl-4 pr-[18px] py-3 shadow-[0_10px_30px_-10px_rgba(40,35,25,.5)] hover:bg-[#3A3530] transition-colors"
+        className="hidden md:inline-flex fixed z-[50] md:right-6 md:bottom-6 items-center gap-2 rounded-full bg-[#221F1B] text-white font-semibold text-[14px] pl-4 pr-[18px] py-3 shadow-[0_10px_30px_-10px_rgba(40,35,25,.5)] hover:bg-[#3A3530] transition-colors"
       >
         <span aria-hidden="true" className="text-[17px] leading-none">💬</span>
         {t("send")}
