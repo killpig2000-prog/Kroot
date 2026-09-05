@@ -492,9 +492,9 @@ export default async function AdminPage() {
   const [s, fb] = await Promise.all([loadStats(), loadFeedback()]);
 
   return (
-    <div className="flex min-h-screen bg-warm">
+    <div className="flex flex-col md:flex-row min-h-screen bg-warm">
       <AdminRail groups={RAIL} />
-      <main className="flex-1 min-w-0 px-7 py-[22px] pb-20 max-w-[1180px]">
+      <main className="flex-1 min-w-0 px-4 sm:px-7 py-4 md:py-[22px] pb-20 max-w-[1180px]">
         <div className="flex items-center justify-between gap-4 flex-wrap mb-[22px]">
           <div>
             <h1 className="font-bold text-[23px] tracking-[-0.01em]">관리자</h1>
@@ -506,7 +506,7 @@ export default async function AdminPage() {
         </div>
 
         {/* ===================== 개요 ===================== */}
-        <section id="overview" className="mb-[34px] scroll-mt-[18px]">
+        <section id="overview" className="mb-[34px] scroll-mt-[56px] md:scroll-mt-[18px]">
           <h2 className="font-bold text-[16.5px] mb-0.5">개요</h2>
           <p className="text-[12px] text-faint mb-3.5">서비스가 살아있는지 한눈에 보는 지표</p>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-3.5">
@@ -523,7 +523,7 @@ export default async function AdminPage() {
         </section>
 
         {/* ===================== 온보딩 ===================== */}
-        <section id="onboarding" className="mb-[34px] scroll-mt-[18px]">
+        <section id="onboarding" className="mb-[34px] scroll-mt-[56px] md:scroll-mt-[18px]">
           <h2 className="font-bold text-[16.5px] mb-0.5">온보딩 퍼널</h2>
           <p className="text-[12px] text-faint mb-3.5">레벨테스트 → 가입 → 첫 레슨, 최근 30일</p>
           <div className="grid lg:grid-cols-[1.4fr_1fr] gap-3.5">
@@ -567,7 +567,7 @@ export default async function AdminPage() {
         </section>
 
         {/* ===================== 참여/리텐션 ===================== */}
-        <section id="engagement" className="mb-[34px] scroll-mt-[18px]">
+        <section id="engagement" className="mb-[34px] scroll-mt-[56px] md:scroll-mt-[18px]">
           <h2 className="font-bold text-[16.5px] mb-0.5">참여 &amp; 리텐션</h2>
           <p className="text-[12px] text-faint mb-3.5">누가 돌아오고 있는지, 스트릭·리마인더 루프 상태</p>
           <div className="grid lg:grid-cols-[1.4fr_1fr] gap-3.5 mb-3.5">
@@ -622,7 +622,7 @@ export default async function AdminPage() {
         </section>
 
         {/* ===================== 기능별 사용량 ===================== */}
-        <section id="features" className="mb-[34px] scroll-mt-[18px]">
+        <section id="features" className="mb-[34px] scroll-mt-[56px] md:scroll-mt-[18px]">
           <h2 className="font-bold text-[16.5px] mb-0.5">기능별 사용량</h2>
           <p className="text-[12px] text-faint mb-3.5">스킬별 완료 건수 · 최근 30일</p>
           <Panel>
@@ -631,7 +631,7 @@ export default async function AdminPage() {
         </section>
 
         {/* ===================== 쓰기 모드 ===================== */}
-        <section id="writing" className="mb-[34px] scroll-mt-[18px]">
+        <section id="writing" className="mb-[34px] scroll-mt-[56px] md:scroll-mt-[18px]">
           <h2 className="font-bold text-[16.5px] mb-0.5">쓰기(Writing) 모드</h2>
           <p className="text-[12px] text-faint mb-3.5">8/30 출시한 탭-조립 방식 채택 현황</p>
           <div className="grid lg:grid-cols-[1.4fr_1fr] gap-3.5">
@@ -658,7 +658,7 @@ export default async function AdminPage() {
         </section>
 
         {/* ===================== 번역 커버리지 ===================== */}
-        <section id="locales" className="mb-[34px] scroll-mt-[18px]">
+        <section id="locales" className="mb-[34px] scroll-mt-[56px] md:scroll-mt-[18px]">
           <h2 className="font-bold text-[16.5px] mb-0.5">번역 커버리지</h2>
           <p className="text-[12px] text-faint mb-3.5">영어(en) 키 기준, 네임스페이스별 번역 완성도 — 파일 시스템에서 직접 계산</p>
           <Panel>
@@ -694,7 +694,7 @@ export default async function AdminPage() {
         </section>
 
         {/* ===================== 시스템 상태 ===================== */}
-        <section id="ops" className="mb-[34px] scroll-mt-[18px]">
+        <section id="ops" className="mb-[34px] scroll-mt-[56px] md:scroll-mt-[18px]">
           <h2 className="font-bold text-[16.5px] mb-0.5">시스템 상태</h2>
           <p className="text-[12px] text-faint mb-3.5">
             배포 상태는 Vercel API 토큰이 없어 아직 못 붙였습니다 — 필요하면{" "}
@@ -714,7 +714,7 @@ export default async function AdminPage() {
         </section>
 
         {/* ===================== 피드백 ===================== */}
-        <section id="feedback" className="mb-[34px] scroll-mt-[18px]">
+        <section id="feedback" className="mb-[34px] scroll-mt-[56px] md:scroll-mt-[18px]">
           <h2 className="font-bold text-[16.5px] mb-0.5">피드백</h2>
           <p className="text-[12px] text-faint mb-3.5">대시보드 우측하단 위젯으로 들어온 메시지 · 최신순 100건</p>
           <div className="grid grid-cols-2 gap-3 mb-3.5 max-w-[420px]">
@@ -742,7 +742,7 @@ export default async function AdminPage() {
         </section>
 
         {/* ===================== 유저 ===================== */}
-        <section id="users" className="mb-[34px] scroll-mt-[18px]">
+        <section id="users" className="mb-[34px] scroll-mt-[56px] md:scroll-mt-[18px]">
           <h2 className="font-bold text-[16.5px] mb-0.5">유저</h2>
           <p className="text-[12px] text-faint mb-3.5">최근 가입 &amp; 레벨 분포</p>
           <div className="grid lg:grid-cols-[1.4fr_1fr] gap-3.5">

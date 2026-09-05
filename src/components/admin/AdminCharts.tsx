@@ -145,7 +145,7 @@ export function Funnel({ steps }: { steps: { label: string; hint: string; count:
         const prev = i > 0 ? steps[i - 1].count : s.count;
         const conv = prev ? Math.round((s.count / prev) * 100) : 100;
         return (
-          <div key={s.label} className="grid grid-cols-[118px_1fr_64px_44px] items-center gap-2.5 text-[12px]">
+          <div key={s.label} className="grid grid-cols-[92px_1fr_52px_40px] sm:grid-cols-[118px_1fr_64px_44px] items-center gap-2 sm:gap-2.5 text-[12px]">
             <span>
               <b>{s.label}</b>
               <small className="block text-[10.5px] text-faint">{s.hint}</small>
