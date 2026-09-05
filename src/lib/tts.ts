@@ -72,6 +72,8 @@ let generation = 0;
 // The in-flight utterance's cancel handler, so the next speak/stop can tell
 // it that it lost the floor. Cleared as soon as an utterance settles.
 let cancelCurrent: (() => void) | null = null;
+// Lets a mid-line speed change resize the in-flight utterance's watchdog.
+let rearmCurrent: ((rate: number) => void) | null = null;
 
 /** Retire the in-flight utterance, notifying whoever was waiting on it. */
 function supersede() {
@@ -120,7 +122,12 @@ async function cachedPublicUrl(text: string, apiVoice: "f" | "m"): Promise<strin
   const res = await fetch(url, { method: "HEAD" }).catch(() => null);
   if (!res) return undefined; // network failure — unknown, not absent
   if (res.ok) return url;
-  return res.status === 404 ? null : undefined;
+  // Supabase Storage answers a missing public object with HTTP 400 (body
+  // `{"statusCode":"404","error":"not_found"}`), not a bare 404. Reading only
+  // 404 as "absent" meant every not-yet-synthesized phrase was filed under
+  // "couldn't tell" and went straight to the browser voice — /api/tts was
+  // never asked, so it stayed unsynthesized forever.
+  return res.status === 404 || res.status === 400 ? null : undefined;
 }
 
 async function fetchAudioUrl(text: string, apiVoice: "f" | "m"): Promise<string | null> {
@@ -267,13 +274,21 @@ export function speakKorean(text: string, opts: SpeakOptions = {}): boolean {
   // scaled by the playback rate, plus slack. The old "chars × 180ms" guess
   // undershot natural Korean speech (and ignored the 0.7× slow mode), so it
   // fired mid-sentence and the next speaker cut the current one off.
-  const rate = opts.rate ?? 1;
+  let rate = opts.rate ?? 1;
   const armPlaybackWatchdog = () => {
     if (settled) return;
     clearTimeout(watchdog);
-    const known = audioEl && Number.isFinite(audioEl.duration) ? audioEl.duration / rate : null;
-    const ms = known ? known * 1000 + 2500 : Math.max(6000, (spoken.length * 400) / rate);
+    // Remaining audio, not the full clip — this is also re-armed when the
+    // speed toggle changes mid-line, and a slower rate lengthens what's left.
+    const el = audioEl;
+    const known = el && Number.isFinite(el.duration) ? Math.max(0, el.duration - el.currentTime) / rate : null;
+    const ms = known !== null ? known * 1000 + 2500 : Math.max(6000, (spoken.length * 400) / rate);
     watchdog = window.setTimeout(finish, ms);
+  };
+  rearmCurrent = (next: number) => {
+    if (settled || gen !== generation) return;
+    rate = next;
+    if (audioEl && audioEl.src && !audioEl.paused) armPlaybackWatchdog();
   };
   // The <audio> element's duration belongs to whatever it last loaded, so the
   // Web Speech fallback only gets the length-based estimate.
@@ -318,6 +333,13 @@ export function speakKorean(text: string, opts: SpeakOptions = {}): boolean {
   })();
 
   return true;
+}
+
+/** Apply a new rate to whatever neural clip is playing right now — the
+ * dialogue's speed toggle should take effect mid-line, not on the next one. */
+export function setPlaybackRate(rate: number) {
+  if (audioEl && !audioEl.paused) audioEl.playbackRate = rate;
+  rearmCurrent?.(rate);
 }
 
 export function stopSpeaking() {

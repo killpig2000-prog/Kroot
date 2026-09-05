@@ -55,6 +55,10 @@ export default function ClipPlayer({
   const [showEn, setShowEn] = useState(false);
   // Clips always start at line 1 — no cross-visit resume.
   const [heard, setHeard] = useState(0);
+  // The line that was interrupted by Pause, so Resume replays it from the top
+  // instead of skipping to the next one — `heard` counts a line the moment it
+  // starts, so resuming at `heard` lost the rest of the paused line.
+  const [pausedAt, setPausedAt] = useState<number | null>(null);
   const [picked, setPicked] = useState<number | null>(null);
   const [saving, setSaving] = useState(false);
   // Neural clips are already conversational pace — 1.0× means 1.0×. (The old
@@ -86,22 +90,28 @@ export default function ClipPlayer({
   const stageLine = stageIndex >= 0 ? lines[stageIndex] : null;
   const speakingIdx = isPlaying && stageLine ? speakers.indexOf(stageLine.speaker) : -1;
 
+  // Where Resume picks up: the paused line itself, else the first unheard one.
+  const resumeAt = pausedAt !== null && pausedAt < lines.length ? pausedAt : heard;
+
   function handleMainButton() {
     if (isPlaying) {
+      setPausedAt(currentIndex >= 0 ? currentIndex : null);
       stop();
       return;
     }
-    // Resume at the first unheard line; replay from the top once done.
-    playFrom(allHeard ? 0 : heard);
+    setPausedAt(null);
+    // Replay from the top once every line has been heard.
+    playFrom(allHeard && pausedAt === null ? 0 : resumeAt);
   }
 
-  const mainLabel = isPlaying ? t("pause") : allHeard ? t("playAgain") : heard > 0 ? t("resume") : t("play");
+  const paused = !isPlaying && pausedAt !== null;
+  const mainLabel = isPlaying ? t("pause") : paused ? t("resume") : allHeard ? t("playAgain") : heard > 0 ? t("resume") : t("play");
   const hint = isPlaying
     ? t("hintPlaying", { n: stageIndex + 1, total: lines.length })
-    : allHeard
+    : allHeard && !paused
       ? t("hintAll", { total: lines.length })
       : heard > 0
-        ? t("hintResume", { n: heard + 1, total: lines.length })
+        ? t("hintResume", { n: resumeAt + 1, total: lines.length })
         : t("hintStart", { n: lines.length });
 
   const controls = (

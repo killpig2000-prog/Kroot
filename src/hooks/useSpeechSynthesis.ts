@@ -3,14 +3,18 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useBrowserSupport } from "@/hooks/useBrowserSupport";
 import type { DialogueLine } from "@/lib/listening-dialogues";
-import { prefetchKorean, speakKorean, stopSpeaking } from "@/lib/tts";
+import { prefetchKorean, setPlaybackRate, speakKorean, stopSpeaking } from "@/lib/tts";
 
-// Speaks dialogue lines in order using the browser's Web Speech API. Distinct
-// speakers get a different pitch so two-person dialogues are easier to follow.
+// Speaks dialogue lines in order — neural clips via <audio>, Web Speech only
+// as the fallback. Distinct speakers get a different voice so two-person
+// dialogues are easier to follow.
 export function useSpeechSynthesis(lines: DialogueLine[], rate = 0.9) {
   const [currentIndex, setCurrentIndex] = useState(-1);
   const [isPlaying, setIsPlaying] = useState(false);
-  const isSupported = useBrowserSupport(() => "speechSynthesis" in window);
+  // The primary path is an <audio> element, so a browser without Web Speech
+  // can still play every line — gating on speechSynthesis alone disabled the
+  // whole player where only the fallback was missing.
+  const isSupported = useBrowserSupport(() => typeof Audio !== "undefined" || "speechSynthesis" in window);
   const [hasFinished, setHasFinished] = useState(false);
   const indexRef = useRef(-1);
   const rateRef = useRef(rate);
@@ -25,6 +29,7 @@ export function useSpeechSynthesis(lines: DialogueLine[], rate = 0.9) {
 
   useEffect(() => {
     rateRef.current = rate;
+    setPlaybackRate(rate);
   }, [rate]);
 
   useEffect(() => {
