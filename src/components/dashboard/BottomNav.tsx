@@ -47,7 +47,6 @@ function Tile({
   isNew,
   tourId,
   cols,
-  alert,
 }: {
   label: string;
   href: string;
@@ -58,8 +57,6 @@ function Tile({
   isNew?: boolean;
   tourId?: string;
   cols: 2 | 3;
-  /** Quiet "there's something here" dot — currently the promotion test. */
-  alert?: boolean;
 }) {
   const tn = useTranslations("nav");
   const sticker = popular ? (
@@ -86,12 +83,6 @@ function Tile({
     >
       {tn(navKey(label))}
       {sticker}
-      {alert && (
-        <span
-          className="absolute top-1.5 right-1.5 w-[7px] h-[7px] rounded-full bg-danger"
-          aria-hidden="true"
-        />
-      )}
     </Link>
   );
 }
@@ -102,15 +93,12 @@ function TabButton({
   onClick,
   expanded,
   tourId,
-  alert,
 }: {
   label: string;
   on: boolean;
   onClick: () => void;
   expanded?: boolean;
   tourId?: string;
-  /** Dot the tab itself, so the sheet's own badge is discoverable unopened. */
-  alert?: boolean;
 }) {
   return (
     <button
@@ -118,19 +106,11 @@ function TabButton({
       data-tour={tourId}
       onClick={onClick}
       aria-expanded={expanded}
-      className={`relative flex items-center justify-center min-h-[56px] py-1 text-[13px] transition-colors ${
+      className={`flex items-center justify-center min-h-[56px] py-1 text-[13px] transition-colors ${
         on ? "text-success-deep font-bold" : "text-faint font-medium hover:text-muted"
       }`}
     >
-      <span className="relative">
-        {label}
-        {alert && (
-          <span
-            className="absolute -top-1 -right-2.5 w-[7px] h-[7px] rounded-full bg-danger"
-            aria-hidden="true"
-          />
-        )}
-      </span>
+      {label}
     </button>
   );
 }
@@ -138,19 +118,7 @@ function TabButton({
 // streakDays is something the server page usually already knows. Passing it
 // in skips the client fetch entirely; leaving it out keeps the old
 // self-fetching behaviour for pages that don't have it to hand.
-export default function BottomNav({
-  streakDays: streakDaysProp,
-  progressAlert = false,
-}: {
-  streakDays?: number | null;
-  /**
-   * Dot the More tab and its My progress tile — the learner just became
-   * eligible for the promotion test. Only the dashboard passes it: working it
-   * out costs three queries, so every other page leaves it off rather than
-   * paying for a badge on a page they're already past.
-   */
-  progressAlert?: boolean;
-} = {}) {
+export default function BottomNav({ streakDays: streakDaysProp }: { streakDays?: number | null } = {}) {
   const pathname = usePathname();
   const locale = useLocale();
   const [sheet, setSheet] = useState<Sheet>(null);
@@ -249,7 +217,6 @@ export default function BottomNav({
                       cols={sheet === "more" ? 3 : 2}
                       on={item.href === "/dashboard" ? pathname === item.href : pathname.startsWith(item.href)}
                       onNavigate={close}
-                      alert={progressAlert && item.href === "/profile"}
                     />
                   ))}
                 </div>
@@ -289,14 +256,7 @@ export default function BottomNav({
           </Link>
           <TabButton tourId="tab-basics" label={tn("basics")} on={onBasics} expanded={sheet === "basics"} onClick={() => toggle("basics")} />
           <TabButton tourId="tab-practice" label={tn("practice")} on={onPractice} expanded={sheet === "practice"} onClick={() => toggle("practice")} />
-          <TabButton
-            tourId="tab-more"
-            label={tn("more")}
-            on={onMore}
-            expanded={sheet === "more"}
-            onClick={() => toggle("more")}
-            alert={progressAlert}
-          />
+          <TabButton tourId="tab-more" label={tn("more")} on={onMore} expanded={sheet === "more"} onClick={() => toggle("more")} />
         </nav>
       </div>
     </>

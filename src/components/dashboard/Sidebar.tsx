@@ -34,7 +34,6 @@ function NavItem({
   on,
   isNew,
   tourId,
-  alert,
 }: {
   icon: string;
   label: string;
@@ -44,8 +43,6 @@ function NavItem({
   popular?: boolean;
   isNew?: boolean;
   tourId?: string;
-  /** Quiet "there's something here" dot — currently the promotion test. */
-  alert?: boolean;
 }) {
   const tn = useTranslations("nav");
   // Active item reads like a notebook index tab: white paper, dashed edge,
@@ -61,9 +58,6 @@ function NavItem({
       }`}
     >
       <span className="flex-1 min-w-0 truncate">{tn(navKey(label))}</span>
-      {alert && (
-        <span className="flex-none w-[7px] h-[7px] rounded-full bg-danger" aria-hidden="true" />
-      )}
       {isNew && !on && (
         <span className="flex-none text-[8.5px] font-extrabold tracking-[.04em] text-white bg-[#9333EA] rounded-full px-[5px] py-px">
           {tn("new").toUpperCase()}
@@ -82,13 +76,6 @@ type Props = {
   avatarUrl?: string | null;
   /** Streak freezes held (shop consumable, migration 0035). */
   streakFreezes?: number;
-  /**
-   * Dot the My progress entry — the learner just became eligible for the
-   * promotion test and would otherwise have to go looking. Only the dashboard
-   * passes it: working it out costs three queries, so every other page leaves
-   * it off rather than paying for a badge on a page they're already past.
-   */
-  progressAlert?: boolean;
 };
 
 function Brand() {
@@ -179,7 +166,6 @@ function SidebarBody({
   email,
   streakDays,
   avatarUrl,
-  progressAlert,
   pathname,
   locale,
   onClose,
@@ -206,12 +192,7 @@ function SidebarBody({
           the learning menu below — no label needed, the container says it. */}
       <div className="flex flex-col gap-0.5 bg-cream border border-dash rounded-[10px] p-1 mb-2">
         {MAIN_ITEMS.map((item) => (
-          <NavItem
-            key={item.label}
-            {...item}
-            on={pathname === item.href}
-            alert={progressAlert && item.href === "/profile"}
-          />
+          <NavItem key={item.label} {...item} on={pathname === item.href} />
         ))}
       </div>
 

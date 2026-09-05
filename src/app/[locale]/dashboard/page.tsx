@@ -17,7 +17,6 @@ import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { levelProgress } from "@/lib/level";
 import MonthlyGrass from "@/components/profile/MonthlyGrass";
 import { ELIGIBILITY } from "@/lib/promotion-test";
-import { computeEligibility } from "@/lib/promotion-server";
 import { DIALOGUES } from "@/lib/listening-dialogues";
 import { getPassagesForLevel, getChaptersForLevel as getReadingChapters } from "@/lib/reading";
 import { getPromptsForLevel, getChaptersForLevel as getWritingChapters } from "@/lib/writing";
@@ -25,7 +24,6 @@ import { hashString } from "@/lib/writing-builder";
 import { chapterClearStats } from "@/lib/pronunciation";
 import { dailyReviewCap } from "@/lib/srs";
 import { getWordsForTopic } from "@/lib/vocabulary-words";
-import { VOCAB_TOPICS } from "@/lib/vocabulary";
 import { slangOfTheDay } from "@/lib/slang";
 import type { CefrLevel } from "@/lib/tree";
 
@@ -306,30 +304,6 @@ export default async function DashboardPage() {
   const displayName = profile?.display_name ?? "there";
   const { level, into, needed, pct } = levelProgress(profile?.xp ?? 0);
 
-  // Promotion test: eligibility lives on My progress (moved off this page
-  // 2026-09-03 — see above), which meant a learner who became eligible had to
-  // go looking to find out. A dot on the My progress nav entry says "there's
-  // something here" without the nagging card that got it moved in the first
-  // place.
-  //
-  // computeEligibility costs three queries, one of them a scan of this
-  // learner's whole vocabulary_progress, so it only runs for someone who could
-  // actually pass: mastered words are a subset of words touched at all, and
-  // the snapshot already lists those for free. Everyone below that bar — every
-  // new account — skips the queries entirely.
-  // Mirrors computeEligibility's own key set exactly, so this precondition
-  // can never be stricter than the check it is gating.
-  const gradeWordKeys = new Set(
-    VOCAB_TOPICS.flatMap((t) => getWordsForTopic(t.key, cefr)).map((w) => w.key),
-  );
-  const wordsRequired = Math.max(
-    1,
-    Math.min(ELIGIBILITY.targetMasteredWords, Math.ceil(gradeWordKeys.size * ELIGIBILITY.wordCoverageRatio)),
-  );
-  const gradeWordsTouched = snapshot.vocab_keys.filter((k) => gradeWordKeys.has(k)).length;
-  const promotionReady =
-    gradeWordsTouched >= wordsRequired && (await computeEligibility(supabase, user.id, cefr)).eligible;
-
   // "Continue" target: the last unit the learner opened (resume_points), or
   // today's quest when nothing is in progress. A finished unit clears itself.
 
@@ -343,7 +317,6 @@ export default async function DashboardPage() {
             streakDays={streakDays}
             avatarUrl={profile?.avatar_url}
             streakFreezes={extras?.streak_freezes ?? 0}
-            progressAlert={promotionReady}
           />
         </div>
 
@@ -538,7 +511,7 @@ export default async function DashboardPage() {
         />
       </div>
 
-      <BottomNav progressAlert={promotionReady} />
+      <BottomNav />
       <FeedbackWidget />
     </div>
   );
