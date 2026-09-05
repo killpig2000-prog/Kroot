@@ -189,7 +189,7 @@ export default function WordDetailCard({
         "vocabulary",
         MINUTES_PER_SESSION,
         0,
-        vocabChapterKey(topicKey, dayIndex),
+        vocabChapterKey(topicKey, level, dayIndex),
         Math.round((known / dayTotal) * 100),
       );
     } catch {

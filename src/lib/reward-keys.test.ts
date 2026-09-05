@@ -23,7 +23,7 @@ describe("reward keys", () => {
     expect(grammarLessonKey("a1-topic-marker")).toBe("grammar:a1-topic-marker");
     expect(pronunciationChapterKey("rieul")).toBe("pronunciation:rieul");
     expect(challengeKey("tongue-twister-1")).toBe("challenge:tongue-twister-1");
-    expect(vocabChapterKey("food", 2)).toBe("vocab:food:2");
+    expect(vocabChapterKey("food", "A1", 2)).toBe("vocab:food:A1:2");
     expect(listeningDialogueKey("cafe-order")).toBe("listening:cafe-order");
     expect(reviewSessionKey).toBe("review");
   });
@@ -37,7 +37,7 @@ describe("reward keys", () => {
       grammarLessonKey("A1:1"),
       pronunciationChapterKey("A1:1"),
       challengeKey("A1:1"),
-      vocabChapterKey("A1", 1),
+      vocabChapterKey("food", "A1", 1),
       listeningDialogueKey("A1:1"),
     ];
     expect(new Set(keys).size).toBe(keys.length);
@@ -46,13 +46,21 @@ describe("reward keys", () => {
   it("separates chapters within a skill", () => {
     expect(writingChapterKey("A1", 0)).not.toBe(writingChapterKey("A1", 1));
     expect(writingChapterKey("A1", 0)).not.toBe(writingChapterKey("A2", 0));
-    expect(vocabChapterKey("food", 1)).not.toBe(vocabChapterKey("travel", 1));
+    expect(vocabChapterKey("food", "A1", 1)).not.toBe(vocabChapterKey("travel", "A1", 1));
+  });
+
+  it("separates the same Day number across levels", () => {
+    // The one vocabulary topic ("daily-life") is reused at every CEFR level,
+    // each with its own Day 0..N — without the level segment, Day 2 of A1
+    // and Day 2 of B2 shared a reward_grants row and only one of them ever
+    // paid out.
+    expect(vocabChapterKey("daily-life", "A1", 2)).not.toBe(vocabChapterKey("daily-life", "B2", 2));
   });
 
   it("does not let a chapter index run into the topic name", () => {
     // "vocab:a:11" vs "vocab:a1:1" — a delimiter-less key would make these
     // the same string and pay only one of the two chapters.
-    expect(vocabChapterKey("a", 11)).not.toBe(vocabChapterKey("a1", 1));
+    expect(vocabChapterKey("a", "A1", 11)).not.toBe(vocabChapterKey("a1", "A1", 1));
     expect(writingChapterKey("A1", 11)).not.toBe(writingChapterKey("A11", 1));
   });
 });
