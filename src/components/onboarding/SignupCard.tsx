@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import CuteError from "@/components/ui/CuteError";
+import CodeInput from "@/components/ui/CodeInput";
 import { useHydrated } from "@/lib/use-hydrated";
 import type { FirstLesson, Placement } from "@/lib/level-test";
 import { FirstLessonList } from "./PlacementResult";
@@ -200,16 +201,13 @@ export function ConfirmCard({
           <label className={LABEL} htmlFor="signin-code">
             {t("codeLabel")}
           </label>
-          <input
+          <CodeInput
             id="signin-code"
             className={`${FIELD} text-center text-[22px] tracking-[0.35em] font-bold`}
-            value={clean}
-            onChange={(e) => setCode(cleanCode(e.target.value))}
-            inputMode="numeric"
-            pattern="[0-9]*"
-            autoComplete="one-time-code"
+            value={code}
+            onChange={setCode}
+            clearLabel={t("clearCode")}
             autoFocus
-            placeholder="••••••••"
           />
           {error && <CuteError>{error}</CuteError>}
           <button type="submit" className={`${BTN_GREEN} w-full mt-2.5`} disabled={!complete || verifying}>

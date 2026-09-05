@@ -113,7 +113,8 @@
     "changeEmail": "换一个邮箱",
     "codeLabel": "邮件中的验证码",
     "codeSubmit": "确认并开始",
-    "verifying": "正在确认…"
+    "verifying": "正在确认…",
+    "clearCode": "清除验证码"
   },
   "saving": {
     "title": "正在种下你的种子…",

@@ -113,7 +113,8 @@
     "changeEmail": "Dùng email khác",
     "codeLabel": "Mã trong email",
     "codeSubmit": "Xác nhận và bắt đầu",
-    "verifying": "Đang xác nhận…"
+    "verifying": "Đang xác nhận…",
+    "clearCode": "Xóa mã"
   },
   "saving": {
     "title": "Đang gieo hạt giống của bạn…",

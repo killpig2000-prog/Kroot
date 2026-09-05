@@ -113,7 +113,8 @@
     "changeEmail": "別のメールアドレスを使う",
     "codeLabel": "メールのコード",
     "codeSubmit": "確認して始める",
-    "verifying": "確認しています…"
+    "verifying": "確認しています…",
+    "clearCode": "コードを消去"
   },
   "saving": {
     "title": "種を植えています…",

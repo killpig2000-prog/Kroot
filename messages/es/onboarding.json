@@ -113,7 +113,8 @@
     "changeEmail": "Usar otro correo",
     "codeLabel": "Código del correo",
     "codeSubmit": "Confirmar y empezar",
-    "verifying": "Confirmando…"
+    "verifying": "Confirmando…",
+    "clearCode": "Borrar código"
   },
   "saving": {
     "title": "Plantando tu semilla…",

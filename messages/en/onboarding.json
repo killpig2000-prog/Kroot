@@ -113,7 +113,8 @@
     "changeEmail": "Use a different email",
     "codeLabel": "Code from the email",
     "codeSubmit": "Confirm and start",
-    "verifying": "Confirming…"
+    "verifying": "Confirming…",
+    "clearCode": "Clear code"
   },
   "saving": {
     "title": "Planting your seed…",

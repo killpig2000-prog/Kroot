@@ -6,6 +6,7 @@ import { Link } from "@/i18n/navigation";
 import { stripLocale } from "@/i18n/locale";
 import Mascot from "@/components/onboarding/Mascot";
 import CuteError from "@/components/ui/CuteError";
+import CodeInput from "@/components/ui/CodeInput";
 import { createClient } from "@/lib/supabase/client";
 import { verifyEmailCode } from "@/lib/verify-email-code";
 import { authErrorKey, cleanCode, CODE_LENGTH, MAX_CODE_TRIES, normalizeEmail } from "@/lib/auth-errors";
@@ -273,23 +274,14 @@ export default function LoginPage() {
                     <label className={LABEL} htmlFor="login-code">
                       {t("login.codeLabel")}
                     </label>
-                    <input
+                    <CodeInput
                       id="login-code"
                       className={`${FIELD} text-center tracking-[0.3em] font-bold`}
-                      value={cleanCode(code)}
-                      onChange={(e) => setCode(cleanCode(e.target.value))}
-                      inputMode="numeric"
-                      pattern="[0-9]*"
-                      autoComplete="one-time-code"
-                      placeholder="••••••••"
-                      // This input sits inside the password form: Enter must
-                      // verify the code, not submit an empty password.
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter") {
-                          e.preventDefault();
-                          void handleCode();
-                        }
-                      }}
+                      value={code}
+                      onChange={setCode}
+                      onEnter={() => void handleCode()}
+                      clearLabel={t("login.clearCode")}
+                      autoFocus
                     />
                     <button
                       type="button"

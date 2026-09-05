@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import Mascot from "@/components/onboarding/Mascot";
 import CuteError from "@/components/ui/CuteError";
+import CodeInput from "@/components/ui/CodeInput";
 import { createClient } from "@/lib/supabase/client";
 import { useHydrated } from "@/lib/use-hydrated";
 import BrandMark from "@/components/ui/BrandMark";
@@ -117,16 +118,13 @@ export default function ForgotPasswordPage() {
                   <label htmlFor="reset-code" className={LABEL}>
                     {t("forgot.codeLabel")}
                   </label>
-                  <input
+                  <CodeInput
                     id="reset-code"
                     className={`${FIELD} text-center tracking-[0.3em] font-bold`}
-                    value={cleanCode(code)}
-                    onChange={(e) => setCode(cleanCode(e.target.value))}
-                    inputMode="numeric"
-                    pattern="[0-9]*"
-                    autoComplete="one-time-code"
+                    value={code}
+                    onChange={setCode}
+                    clearLabel={t("forgot.clearCode")}
                     autoFocus
-                    placeholder="••••••••"
                   />
                   {error && <CuteError>{error}</CuteError>}
                   <button
