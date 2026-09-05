@@ -72,7 +72,8 @@ function Tree({
 }: {
   row: Row;
   species: CefrLevel;
-  size: number;
+  /** Box side — a px number, or any CSS length (the podium uses clamp()). */
+  size: number | string;
   className?: string;
   onOpen: (row: Row) => void;
 }) {
@@ -90,7 +91,7 @@ function Tree({
     >
       {/* Full frame (220 × the level's height), fitted by height: the SVG keeps
           its aspect, so a taller tree draws smaller inside the same box. */}
-      <svg viewBox={`0 0 220 ${frameH}`} style={{ height: size - 4, width: "auto", maxWidth: size - 4 }}>
+      <svg viewBox={`0 0 220 ${frameH}`} style={{ height: "calc(100% - 4px)", width: "auto", maxWidth: "calc(100% - 4px)" }}>
         <SceneLayer costumeIds={ids} layer="behind" />
         {veteran ? (
           <VeteranTree level={row.level} species={species} costumeIds={ids} />
@@ -315,7 +316,9 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
             {[podium[1], podium[0], podium[2]].map((r, i) => {
               if (!r) return <div key={`empty-${i}`} />;
               const place = Math.min(r.rank - 1, 2); // 0-based step index
-              const size = i === 1 ? 124 : i === 0 ? 102 : 94;
+              // Scales with the phone: ~30vw for the winner down to a 360px
+              // screen, capped so a tablet doesn't get a billboard.
+              const size = i === 1 ? "clamp(84px, 30vw, 124px)" : i === 0 ? "clamp(70px, 25vw, 102px)" : "clamp(64px, 23vw, 94px)";
               const step = STEP[place];
               return (
                 <div key={r.rank} className="relative flex flex-col items-center gap-0.5">
