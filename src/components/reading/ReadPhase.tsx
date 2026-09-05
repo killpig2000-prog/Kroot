@@ -2,7 +2,6 @@
 
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { Link } from "@/i18n/navigation";
 import { buttonClassName } from "@/components/ui/Button";
 import GlossedText from "@/components/reading/GlossedText";
 import { countKoreanWords, MINUTES_PER_PASSAGE, type Passage, type PassageLine } from "@/lib/reading";
@@ -82,7 +81,6 @@ export default function ReadPhase({
   level,
   lines,
   glossary,
-  words,
   onContinue,
 }: {
   passage: Passage;
@@ -91,8 +89,6 @@ export default function ReadPhase({
   lines: PassageLine[];
   /** Surface form → vocabulary entry, resolved on the server. */
   glossary: Record<string, Gloss>;
-  /** The passage's deck words, for the rail. */
-  words: Gloss[];
   onContinue: () => void;
 }) {
   const t = useTranslations("reading.read");
@@ -473,28 +469,6 @@ export default function ReadPhase({
       </div>
 
       <aside className="grid gap-3 lg:sticky lg:top-4">
-        {words.length > 0 && (
-          <div className="bg-cream border border-line rounded-[12px] px-3.5 py-3">
-            <h3 className="text-[11px] font-semibold tracking-[.08em] uppercase text-faint mb-2">
-              {t("wordsTitle")}
-            </h3>
-            <div className="flex flex-wrap gap-1.5">
-              {words.slice(0, 14).map((w) => (
-                <Link
-                  key={w.korean}
-                  href={w.href}
-                  className="kr text-[13px] font-medium rounded-full px-2.5 py-0.5 bg-warm border border-line text-charcoal hover:border-sky-deep hover:text-sky-deep transition-colors"
-                >
-                  {w.korean}
-                </Link>
-              ))}
-            </div>
-            <p className="text-[11.5px] text-faint mt-2">
-              {words.length > 14 ? t("wordsNoteMore", { n: words.length - 14 }) : t("wordsNote")}
-            </p>
-          </div>
-        )}
-
         <button className={BTN_BLUE} onClick={onContinue}>
           {t("answerQuestions", { n: passage.questions.length })}
         </button>

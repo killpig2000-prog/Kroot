@@ -65,9 +65,6 @@
     "hintFull": "Tap a line for its translation · dotted words open their vocabulary page",
     "hintDotted": "Dotted words open their vocabulary page",
     "subject": "Subject",
-    "wordsTitle": "Words in this story",
-    "wordsNote": "Each one opens its vocabulary page.",
-    "wordsNoteMore": "+{n} more · each one opens its vocabulary page.",
     "answerQuestions": "{n, plural, one {Answer # question} other {Answer # questions}} →"
   },
   "quiz": {

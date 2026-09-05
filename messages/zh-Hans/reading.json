@@ -65,9 +65,6 @@
     "hintFull": "点按一行查看翻译 · 虚线单词可打开词汇页",
     "hintDotted": "虚线单词可打开词汇页",
     "subject": "主题",
-    "wordsTitle": "本篇中的单词",
-    "wordsNote": "点开任意一个即可查看词汇页。",
-    "wordsNoteMore": "还有 {n} 个 · 点开任意一个即可查看词汇页。",
     "answerQuestions": "回答 {n} 道题 →"
   },
   "quiz": {

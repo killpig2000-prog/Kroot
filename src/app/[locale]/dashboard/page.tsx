@@ -174,17 +174,19 @@ export default async function DashboardPage() {
 
   // Today's quest deep-links straight into one specific chapter — a random
   // pull from the learner's whole level pool, not "go pick your own" — so
-  // finishing the quest is exactly one tap plus the activity itself. Same
-  // chapter for everyone at this level today (date + level + skill seeds the
-  // pick), same spirit as the old day-based rotation. Reading's chapters are
-  // already one passage each; writing's are the normal 3-question chapter —
-  // deliberately NOT a single prompt, since the per-chapter coin/XP reward is
-  // keyed by (level, chapterIndex) and a random index reused outside the
-  // learner's real progression would risk double-paying or skipping pay
-  // entirely if that scheme ever changed to key by prompt instead.
+  // finishing the quest is exactly one tap plus the activity itself. Seeded
+  // by date + user + level + skill: stable for this learner all day (a
+  // reload doesn't reshuffle it), but different learners at the same level
+  // get different chapters, not one shared pick for everyone. Reading's
+  // chapters are already one passage each; writing's are the normal
+  // 3-question chapter — deliberately NOT a single prompt, since the
+  // per-chapter coin/XP reward is keyed by (level, chapterIndex) and a
+  // random index reused outside the learner's real progression would risk
+  // double-paying or skipping pay entirely if that scheme ever changed to
+  // key by prompt instead.
   const questChapters = quest?.skill_key === "reading" ? getReadingChapters(cefr) : getWritingChapters(cefr);
   const questChapterIdx = questChapters.length
-    ? hashString(`${today}:${cefr}:${quest?.skill_key}`) % questChapters.length
+    ? hashString(`${today}:${user.id}:${cefr}:${quest?.skill_key}`) % questChapters.length
     : 0;
   const questHref = quest && questChapters.length ? `/${quest.skill_key}/session?level=${cefr}&chapter=${questChapterIdx}` : undefined;
 

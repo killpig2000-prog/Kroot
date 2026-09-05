@@ -65,9 +65,6 @@
     "hintFull": "Toca una línea para ver su traducción · las palabras punteadas abren su página de vocabulario",
     "hintDotted": "Las palabras punteadas abren su página de vocabulario",
     "subject": "Asunto",
-    "wordsTitle": "Palabras de este relato",
-    "wordsNote": "Cada una abre su página de vocabulario.",
-    "wordsNoteMore": "+{n} más · cada una abre su página de vocabulario.",
     "answerQuestions": "{n, plural, one {Responder # pregunta} other {Responder # preguntas}} →"
   },
   "quiz": {

@@ -172,7 +172,6 @@ export default function ReadingSession({
         level={level}
         lines={lines}
         glossary={glossary}
-        words={words}
         // Coming back from the summary for a second read returns there, not
         // into a quiz that's already been answered.
         onContinue={() => setPhase(answers.every((a) => a !== null) ? "summary" : "quiz")}

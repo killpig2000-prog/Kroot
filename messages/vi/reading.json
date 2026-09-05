@@ -65,9 +65,6 @@
     "hintFull": "Chạm vào một dòng để xem bản dịch · từ gạch chấm sẽ mở trang từ vựng",
     "hintDotted": "Từ gạch chấm sẽ mở trang từ vựng",
     "subject": "Tiêu đề",
-    "wordsTitle": "Từ trong truyện này",
-    "wordsNote": "Mỗi từ đều mở trang từ vựng.",
-    "wordsNoteMore": "+{n} từ nữa · mỗi từ đều mở trang từ vựng.",
     "answerQuestions": "Trả lời {n} câu hỏi →"
   },
   "quiz": {
