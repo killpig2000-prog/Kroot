@@ -79,56 +79,17 @@ function seen(userId?: string | null): boolean {
 function markSeen(userId?: string | null) {
   try {
     localStorage.setItem(seenKey(userId), "1");
-    localStorage.removeItem(progressKey(userId));
   } catch {
     // ignore — worst case the tour shows again next visit
   }
 }
 
-const PROGRESS_PREFIX = "kroot-onboarding-tour-step";
-function progressKey(userId?: string | null): string {
-  return userId ? `${PROGRESS_PREFIX}:${userId}` : PROGRESS_PREFIX;
-}
-/** Same policy as the click-gated guided tour that follows this one (whose
- * own step already survives a real page navigation): Skip or finishing both
- * retire the tour for good (see `markSeen`), but getting cut off mid-way — a
- * reload, a crashed tab, the app closed — resumes at the step it was on
- * instead of dropping the learner back at "welcome". */
-function loadProgress(userId?: string | null): number {
-  try {
-    const raw = localStorage.getItem(progressKey(userId));
-    const i = raw ? Number(raw) : 0;
-    return Number.isInteger(i) && i >= 0 && i < STEPS.length ? i : 0;
-  } catch {
-    return 0;
-  }
-}
-function saveProgress(userId: string | null | undefined, index: number) {
-  try {
-    localStorage.setItem(progressKey(userId), String(index));
-  } catch {
-    // ignore — worst case an interruption restarts from the top
-  }
-}
-
 // First-visit walkthrough: a dark scrim with a cut-out spotlight over one
-// data-tour target at a time, plus a tooltip card. Runs once per account
-// (localStorage-gated, keyed by userId — see `seenKey`), at every width — the
-// sidebar/basics/practice/relax steps just point at BottomNav's tabs instead
-// of the Sidebar below md. Finishing it hands off to the click-gated guided
-// tour (guidedSteps.ts), whose first step — "shall we try Hangul?" — lives on
-// this same page.
-//
-// When to show it again — the three ways a run can end:
-//   - Skip (only offered on "welcome")   -> retired for good, never again.
-//   - Finish (reach the last step, or run out of targets and auto-skip to
-//     the end)                           -> retired for good, hands off to
-//                                            the guided tour.
-//   - Cut off mid-way (reload, a crashed tab, the app closed) -> resumes at
-//     the step it was on next time, same policy the guided tour already
-//     uses for its own (longer, multi-page) run.
-// Admin's bypass bucks this: every load restarts at step 0 regardless of
-// how a previous test run ended, since QA wants the whole thing every time.
+// data-tour target at a time, plus a tooltip card. Runs once per browser
+// (localStorage-gated), at every width — the sidebar/basics/practice/relax
+// steps just point at BottomNav's tabs instead of the Sidebar below md.
+// Finishing it hands off to the click-gated guided tour (guidedSteps.ts),
+// whose first step — "shall we try Hangul?" — lives on this same page.
 export default function OnboardingTour({
   startsGuidedTour = false,
   guidedTrack = "basics",
@@ -146,15 +107,7 @@ export default function OnboardingTour({
   userId?: string | null;
 } = {}) {
   const t = useTranslations("tour");
-  // Lazy initializer, not 0 + an effect: reading localStorage here (client-
-  // only render, same as `active` below) means the very first real render
-  // already resumes on the right step instead of flashing "welcome" first.
-  // Admin's every-load bypass is for QA — it always restarts at the top
-  // rather than resuming, or a partial run from an earlier test would hide
-  // the very steps it was meant to re-check.
-  const [stepIndex, setStepIndex] = useState(() =>
-    typeof window === "undefined" || isAdmin ? 0 : loadProgress(userId)
-  );
+  const [stepIndex, setStepIndex] = useState(0);
   const [active, setActive] = useState(false);
   const [rect, setRect] = useState<SpotlightRect | null>(null);
   const frame = useRef<number | null>(null);
@@ -165,13 +118,6 @@ export default function OnboardingTour({
     const id = requestAnimationFrame(() => setActive(true));
     return () => cancelAnimationFrame(id);
   }, [isAdmin, userId]);
-
-  // Every step advance is a checkpoint: a reload, a crashed tab, or the app
-  // getting closed mid-tour resumes here instead of restarting at "welcome".
-  // Admin's runs aren't checkpointed — see the initializer above.
-  useEffect(() => {
-    if (active && !isAdmin) saveProgress(userId, stepIndex);
-  }, [active, isAdmin, stepIndex, userId]);
 
   const key: StepKey = STEPS[stepIndex];
   const target = targetsFor(isMobileViewport())[key];
