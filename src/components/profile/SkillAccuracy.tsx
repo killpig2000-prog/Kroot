@@ -56,6 +56,11 @@ export default async function SkillAccuracy({
 
               <span className="min-w-0 flex-1 sm:flex-none sm:w-[128px]">
                 <b className="font-semibold text-[13px] block truncate">{tn(s.key)}</b>
+                {/* phones: the bar sits under the name, since there's no room
+                    for its own column; from sm it moves into that column */}
+                <span className="sm:hidden block mt-1 h-[4px] rounded-full bg-chart-dim overflow-hidden">
+                  <i className="not-italic block h-full rounded-full bg-chart" style={{ width: `${Math.max(s.percent, 2)}%` }} />
+                </span>
               </span>
 
               {/* Kroot's own chart green, same token the study garden/admin
