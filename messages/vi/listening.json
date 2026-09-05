@@ -124,5 +124,6 @@
     "levelUp": "🎉 Lên cấp! Giờ bạn ở Lv.{level}",
     "another": "Chọn chủ đề khác",
     "back": "Về danh sách đoạn"
-  }
+  },
+  "saveFailed": "Chúng tôi chưa lưu được đoạn này — kết nối bị ngắt. Hãy nghe lại khi có mạng để nhận thưởng."
 }

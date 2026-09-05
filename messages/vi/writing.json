@@ -93,5 +93,6 @@
     "builtAfterTries": "{n} từ sai vị trí — so sánh với đáp án bên dưới.",
     "fallbackFocusPerfect": "Mọi câu đều được ghép đúng ngay lần đầu — trật tự từ của bạn rất vững. Chương sau sẽ khó hơn một chút.",
     "fallbackFocusRetries": "Trước khi chạm, hãy đọc to cả câu bằng tiếng Hàn — rồi xếp các từ cho khớp."
-  }
+  },
+  "saveFailed": "Chúng tôi chưa lưu được chương này — kết nối bị ngắt. Hãy mở lại khi có mạng để nhận thưởng."
 }

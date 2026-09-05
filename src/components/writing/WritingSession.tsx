@@ -72,6 +72,9 @@ export default function WritingSession({
   const [navigating, setNavigating] = useState(false);
   const [levelUp, setLevelUp] = useState<ProgressResult | null>(null);
   const [result, setResult] = useState<{ score: number; answers: Answer[] } | null>(null);
+  // The chapter was answered but nothing reached the server — say so rather
+  // than showing a score the learner will find missing on their next visit.
+  const [saveFailed, setSaveFailed] = useState(false);
   const loggedMinutes = useRef(false);
 
   function update(index: number, patch: Partial<Entry>) {
@@ -120,14 +123,22 @@ export default function WritingSession({
       const { error } = await supabase.from("writing_progress").upsert(rows, { onConflict: "user_id,prompt_key" });
       if (error && isColumnMissing(error)) {
         // Migration 0037 (writing_progress.score) hasn't run here yet — retry without it.
-        await supabase.from("writing_progress").upsert(
+        const retry = await supabase.from("writing_progress").upsert(
           rows.map((r) => ({ user_id: r.user_id, prompt_key: r.prompt_key, response_text: r.response_text, completed_at: r.completed_at })),
           { onConflict: "user_id,prompt_key" }
         );
+        if (retry.error) throw new Error(retry.error.message);
+      } else if (error) {
+        // Every other error (RLS, network, 5xx) used to fall straight through
+        // to the compare screen: the learner saw their score believing the
+        // chapter was saved when nothing had been written.
+        throw new Error(error.message);
       }
       await logMinutesOnce(score);
-    } catch {
-      // best effort
+      setSaveFailed(false);
+    } catch (err) {
+      console.error("writing progress save failed:", err instanceof Error ? err.message : err);
+      setSaveFailed(true);
     } finally {
       setSubmitting(false);
     }
@@ -141,20 +152,30 @@ export default function WritingSession({
     loggedMinutes.current = true;
     void clearResume(supabase, userId);
 
-    const res = await recordCompletion(
-      supabase,
-      "writing",
-      MINUTES_PER_CHAPTER,
-      0,
-      writingChapterKey(level, chapterIndex),
-      // goTo() calls this without a score as a safety net for a submit whose
-      // logging failed; by then the chapter's score is on `result`.
-      score ?? result?.score ?? null,
-    );
-    // Always kept now, not just on a level-up: the result strip reads the
-    // real XP/coins off it, and "this chapter was already paid for" is a
-    // number the learner should see rather than a silent zero.
-    if (res) setLevelUp(res);
+    // Released unless the call actually went through. The latch used to be
+    // set-and-forget, so a *thrown* request left it stuck and goTo()'s
+    // safety-net retry returned early — the chapter was never recorded and
+    // the learner earned nothing, with no sign anything had gone wrong.
+    let logged = false;
+    try {
+      const res = await recordCompletion(
+        supabase,
+        "writing",
+        MINUTES_PER_CHAPTER,
+        0,
+        writingChapterKey(level, chapterIndex),
+        // goTo() calls this without a score as a safety net for a submit whose
+        // logging failed; by then the chapter's score is on `result`.
+        score ?? result?.score ?? null,
+      );
+      logged = true;
+      // Always kept now, not just on a level-up: the result strip reads the
+      // real XP/coins off it, and "this chapter was already paid for" is a
+      // number the learner should see rather than a silent zero.
+      if (res) setLevelUp(res);
+    } finally {
+      if (!logged) loggedMinutes.current = false;
+    }
   }
 
   async function goTo(href: string) {
@@ -209,6 +230,14 @@ export default function WritingSession({
   return (
     <>
     {guided}
+    {saveFailed && (
+      <p
+        role="status"
+        className="max-w-[680px] mb-3 rounded-[10px] border border-amber-line bg-[var(--tint-amber)] px-4 py-2.5 text-[13px] text-charcoal"
+      >
+        {tc("saveFailed")}
+      </p>
+    )}
     <CompareResult
       prompts={prompts}
       answers={result!.answers}

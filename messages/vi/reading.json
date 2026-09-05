@@ -98,5 +98,6 @@
   "gloss": {
     "openWordPage": "Mở trang từ vựng",
     "openSub": "{unit} · ví dụ, ghi chú, lưu lại"
-  }
+  },
+  "saveFailed": "Chúng tôi chưa lưu được bài đọc này — kết nối bị ngắt. Hãy mở lại khi có mạng để nhận thưởng."
 }

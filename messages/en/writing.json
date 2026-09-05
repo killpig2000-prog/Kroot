@@ -1,10 +1,26 @@
 {
   "crumb": "Writing",
   "genres": {
-    "journal": { "icon": "📔", "label": "Journal", "blurb": "Your own day, in your own words" },
-    "reply": { "icon": "💬", "label": "Replies", "blurb": "Someone wrote to you — write back" },
-    "description": { "icon": "🖼️", "label": "Description", "blurb": "Paint a person, a place, a thing, a trend" },
-    "opinion": { "icon": "🗣️", "label": "Opinion", "blurb": "Take a side and say why" }
+    "journal": {
+      "icon": "📔",
+      "label": "Journal",
+      "blurb": "Your own day, in your own words"
+    },
+    "reply": {
+      "icon": "💬",
+      "label": "Replies",
+      "blurb": "Someone wrote to you — write back"
+    },
+    "description": {
+      "icon": "🖼️",
+      "label": "Description",
+      "blurb": "Paint a person, a place, a thing, a trend"
+    },
+    "opinion": {
+      "icon": "🗣️",
+      "label": "Opinion",
+      "blurb": "Take a side and say why"
+    }
   },
   "map": {
     "levelSub": "Level {level} · write a little, see one natural way to say it",
@@ -77,5 +93,6 @@
     "builtAfterTries": "{n, plural, =1 {1 word} other {# words}} out of place — compare it to the answer below.",
     "fallbackFocusPerfect": "Every sentence came together on the first try — your word order is solid. Next chapter tries a little more.",
     "fallbackFocusRetries": "Before you tap, say the whole sentence in Korean out loud — then place the words to match."
-  }
+  },
+  "saveFailed": "We couldn't save this chapter — your connection dropped. Reopen it once you're back online to earn the reward."
 }

@@ -93,5 +93,6 @@
     "builtAfterTries": "有 {n} 个词位置不对 —— 和下面的答案比对一下。",
     "fallbackFocusPerfect": "所有句子都一次拼对了 —— 你的语序很扎实。下一章会稍微难一点。",
     "fallbackFocusRetries": "点击前先用韩语把整句话说一遍,再按顺序排列单词。"
-  }
+  },
+  "saveFailed": "没能保存这一章——连接断开了。恢复联网后重新打开即可获得奖励。"
 }

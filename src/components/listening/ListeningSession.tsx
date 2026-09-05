@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState, type ReactNode } from "react";
+import { useTranslations } from "next-intl";
 import { createClient, getClientUserId } from "@/lib/supabase/client";
 import { recordCompletion, awardPartialCredit, XP_POINTS } from "@/lib/activity";
 import { listeningDialogueKey } from "@/lib/reward-keys";
@@ -52,6 +53,10 @@ export default function ListeningSession({
   const [coinsEarned, setCoinsEarned] = useState(0);
   const [done, setDone] = useState<DoneInfo | null>(null);
   const [justFinishedAll, setJustFinishedAll] = useState(false);
+  // The clip's completion never reached the server; the checkmark has been
+  // rolled back, so say why instead of letting it look like a glitch.
+  const [saveFailed, setSaveFailed] = useState(false);
+  const tSave = useTranslations("listening");
 
   const doneCount = dialogues.filter((d) => completed.has(d.id)).length;
 
@@ -81,14 +86,21 @@ export default function ListeningSession({
       }
       // The clip was marked done in local state before this ran, so the list
       // would keep claiming it until a reload put the truth back. Take the
-      // checkmark off instead of letting the two disagree.
+      // checkmark off instead of letting the two disagree — and say why, since
+      // a checkmark that un-ticks itself with no message reads as a glitch.
       if (error) {
         setCompleted((prev) => {
           const back = new Set(prev);
           back.delete(dialogue.id);
           return back;
         });
+        setSaveFailed(true);
+        // Awarding XP for a clip the list now shows as unfinished is the
+        // inconsistency the rollback above exists to avoid.
+        setDone((prev) => (prev && prev.dialogue.id === dialogue.id ? { ...prev, xp: 0 } : prev));
+        return;
       }
+      setSaveFailed(false);
       const res = await recordCompletion(
         supabase,
         "listening",
@@ -172,6 +184,15 @@ export default function ListeningSession({
     const idx = dialogues.indexOf(done.dialogue);
     const next = dialogues.slice(idx + 1).find((d) => !completed.has(d.id)) ?? dialogues.find((d) => !completed.has(d.id)) ?? null;
     return (
+      <>
+      {saveFailed && (
+        <p
+          role="status"
+          className="max-w-[680px] mb-3 rounded-[10px] border border-amber-line bg-[var(--tint-amber)] px-4 py-2.5 text-[13px] text-charcoal"
+        >
+          {tSave("saveFailed")}
+        </p>
+      )}
       <ClipDone
         dialogue={done.dialogue}
         clipNo={idx + 1}
@@ -196,6 +217,7 @@ export default function ListeningSession({
           else setJustFinishedAll(true);
         }}
       />
+      </>
     );
   }
 

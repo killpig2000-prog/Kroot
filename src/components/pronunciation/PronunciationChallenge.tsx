@@ -154,15 +154,22 @@ export default function PronunciationChallenge({
     // Keep whichever attempt scored highest — replays shouldn't be able to
     // knock a word's saved best back down.
     if (userId) {
-      void supabase
-        .from("speaking_progress")
-        .upsert(
-          { user_id: userId, prompt_key: word.id, best_score: newBest },
-          { onConflict: "user_id,prompt_key" },
-        )
-        .then(({ error }) => {
+      void (async () => {
+        try {
+          const { error } = await supabase
+            .from("speaking_progress")
+            .upsert(
+              { user_id: userId, prompt_key: word.id, best_score: newBest },
+              { onConflict: "user_id,prompt_key" },
+            );
           setSaveError(error ? tf("saveError") : null);
-        });
+        } catch {
+          // The bare .then() had no rejection path: an offline upsert rejected
+          // instead of resolving, saveError stayed null, and the score read as
+          // saved when nothing had been written.
+          setSaveError(tf("saveError"));
+        }
+      })();
     }
   }
 
@@ -184,16 +191,28 @@ export default function PronunciationChallenge({
     const chapterScore = words.length
       ? Math.round(words.reduce((s, w) => s + (bestScores[w.id] ?? 0), 0) / words.length)
       : null;
-    const result = await recordCompletion(
-      supabase,
-      "pronunciation",
-      MINUTES_PER_SESSION,
-      0,
-      pronunciationChapterKey(chapterKey),
-      chapterScore,
-    );
-    if (result) setLevelUp(result);
-    router.refresh();
+    // Released unless it went through: there's no goTo() retry here, so a
+    // latch stuck by a thrown request meant the chapter could never be
+    // recorded, and FinishedCard showed a cleared chapter that earned nothing.
+    let logged_ = false;
+    try {
+      const result = await recordCompletion(
+        supabase,
+        "pronunciation",
+        MINUTES_PER_SESSION,
+        0,
+        pronunciationChapterKey(chapterKey),
+        chapterScore,
+      );
+      logged_ = true;
+      if (result) setLevelUp(result);
+      router.refresh();
+    } catch (err) {
+      console.error("pronunciation progress save failed:", err instanceof Error ? err.message : err);
+      setSaveError(tf("saveError"));
+    } finally {
+      if (!logged_) logged.current = false;
+    }
   }
 
   // A chapter clears once every word has been attempted at least once —

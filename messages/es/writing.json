@@ -93,5 +93,6 @@
     "builtAfterTries": "{n, plural, one {# palabra} other {# palabras}} fuera de lugar — compara con la respuesta de abajo.",
     "fallbackFocusPerfect": "Todas las frases se armaron bien al primer intento — tu orden de palabras es sólido. El próximo capítulo será un poco más difícil.",
     "fallbackFocusRetries": "Antes de tocar, di toda la frase en coreano en voz alta — luego ordena las palabras para que coincida."
-  }
+  },
+  "saveFailed": "No pudimos guardar este capítulo: se cortó la conexión. Vuelve a abrirlo cuando tengas conexión para conseguir la recompensa."
 }

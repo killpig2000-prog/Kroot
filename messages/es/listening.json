@@ -124,5 +124,6 @@
     "levelUp": "🎉 ¡Subiste de nivel! Ahora eres Lv.{level}",
     "another": "Elegir otro tema",
     "back": "Volver a los clips"
-  }
+  },
+  "saveFailed": "No pudimos guardar este clip: se cortó la conexión. Vuelve a reproducirlo cuando tengas conexión para conseguir la recompensa."
 }

@@ -124,5 +124,6 @@
     "levelUp": "🎉 Level up! Now Lv. {level}",
     "another": "Choose another topic",
     "back": "Back to the clips"
-  }
+  },
+  "saveFailed": "We couldn't save this clip — your connection dropped. Play it again once you're back online to earn the reward."
 }

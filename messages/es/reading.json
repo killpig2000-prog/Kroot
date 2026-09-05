@@ -98,5 +98,6 @@
   "gloss": {
     "openWordPage": "Abrir la página de la palabra",
     "openSub": "{unit} · ejemplos, notas, guardar"
-  }
+  },
+  "saveFailed": "No pudimos guardar esta lectura: se cortó la conexión. Vuelve a abrirla cuando tengas conexión para conseguir la recompensa."
 }

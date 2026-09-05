@@ -60,6 +60,9 @@ export default function ReadingSession({
   const answersRef = useRef<(boolean | null)[]>(passage.questions.map(() => null));
   const [navigating, setNavigating] = useState(false);
   const [levelUp, setLevelUp] = useState<ProgressResult | null>(null);
+  // The passage was finished but nothing reached the server — say so rather
+  // than showing a summary that quietly earned nothing.
+  const [saveFailed, setSaveFailed] = useState(false);
   const loggedMinutes = useRef(false);
 
   const correct = answers.filter((a) => a === true).length;
@@ -104,38 +107,45 @@ export default function ReadingSession({
     void clearResume(supabase, userId);
 
     const final = answersRef.current;
+    // Released in `finally` unless the whole write went through. Only the
+    // returned `{ error }` used to un-latch, so a *thrown* request (offline, a
+    // DNS blip) left the latch stuck: goTo()'s retry then returned early and
+    // the passage was never recorded — no XP, no coins, and nothing on screen
+    // to say so. The upsert is keyed on (user, passage), so a retry is safe.
+    let saved = false;
+    try {
+      const { error } = await supabase.from("reading_progress").upsert(
+        {
+          user_id: userId,
+          passage_key: passage.key,
+          correct_count: final.filter((a) => a === true).length,
+          incorrect_count: final.filter((a) => a === false).length,
+          last_reviewed_at: new Date().toISOString(),
+        },
+        { onConflict: "user_id,passage_key" }
+      );
+      if (error) throw new Error(error.message);
 
-    const { error } = await supabase.from("reading_progress").upsert(
-      {
-        user_id: userId,
-        passage_key: passage.key,
-        correct_count: final.filter((a) => a === true).length,
-        incorrect_count: final.filter((a) => a === false).length,
-        last_reviewed_at: new Date().toISOString(),
-      },
-      { onConflict: "user_id,passage_key" }
-    );
-
-    // Don't stay latched on a failed write. goTo() calls this again on the way
-    // out, and that second attempt is the only chance the chapter has of being
-    // recorded — the upsert is keyed on (user, passage), so a retry is safe.
-    if (error) {
-      loggedMinutes.current = false;
-      return;
+      const correct = final.filter((a) => a === true).length;
+      const result = await recordCompletion(
+        supabase,
+        "reading",
+        MINUTES_PER_PASSAGE,
+        0,
+        readingPassageKey(passage.key),
+        final.length ? Math.round((correct / final.length) * 100) : null,
+      );
+      saved = true;
+      setSaveFailed(false);
+      // Kept even when nothing was earned — the result strip reads the real
+      // XP/coins off it, including the zero of an already-rewarded passage.
+      if (result) setLevelUp(result);
+    } catch (err) {
+      console.error("reading progress save failed:", err instanceof Error ? err.message : err);
+      setSaveFailed(true);
+    } finally {
+      if (!saved) loggedMinutes.current = false;
     }
-
-    const correct = final.filter((a) => a === true).length;
-    const result = await recordCompletion(
-      supabase,
-      "reading",
-      MINUTES_PER_PASSAGE,
-      0,
-      readingPassageKey(passage.key),
-      final.length ? Math.round((correct / final.length) * 100) : null,
-    );
-    // Kept even when nothing was earned — the result strip reads the real
-    // XP/coins off it, including the zero of an already-rewarded passage.
-    if (result) setLevelUp(result);
   }
 
   async function goTo(href: string) {
@@ -186,22 +196,32 @@ export default function ReadingSession({
   }
 
   return (
-    <SummaryPhase
-      passage={passage}
-      chapterIndex={chapterIndex}
-      correct={correct}
-      incorrect={incorrect}
-      missed={missed}
-      words={words}
-      levelUp={levelUp}
-      hasNextChapter={hasNextChapter}
-      level={level}
-      navigating={navigating}
-      onGoTo={goTo}
-      // Re-reading keeps the answers — it's a second look at the story, not a
-      // second attempt at the quiz.
-      onReRead={() => setPhase("read")}
-    />
+    <>
+      {saveFailed && (
+        <p
+          role="status"
+          className="max-w-[680px] mb-3 rounded-[10px] border border-amber-line bg-[var(--tint-amber)] px-4 py-2.5 text-[13px] text-charcoal"
+        >
+          {t("saveFailed")}
+        </p>
+      )}
+      <SummaryPhase
+        passage={passage}
+        chapterIndex={chapterIndex}
+        correct={correct}
+        incorrect={incorrect}
+        missed={missed}
+        words={words}
+        levelUp={levelUp}
+        hasNextChapter={hasNextChapter}
+        level={level}
+        navigating={navigating}
+        onGoTo={goTo}
+        // Re-reading keeps the answers — it's a second look at the story, not a
+        // second attempt at the quiz.
+        onReRead={() => setPhase("read")}
+      />
+    </>
   );
 }
 

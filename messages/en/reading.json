@@ -98,5 +98,6 @@
   "gloss": {
     "openWordPage": "Open the word page",
     "openSub": "{unit} · examples, notes, save it"
-  }
+  },
+  "saveFailed": "We couldn't save this passage — your connection dropped. Reopen it once you're back online to earn the reward."
 }
