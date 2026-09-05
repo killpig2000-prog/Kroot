@@ -82,6 +82,12 @@ export default function TreePeek({
               </b>
               <span className="text-[12.5px] text-muted tabular-nums">
                 {t("row.level", { n: level })} · {t("fair.sun", { n: xpWeek })}
+                {veteran && (
+                  <>
+                    {" · "}
+                    <b className="text-[13.5px] font-black text-success-deep">{t("peek.height", { m: treeHeightMetres(level) })}</b>
+                  </>
+                )}
               </span>
               </div>
             </div>
@@ -97,17 +103,9 @@ export default function TreePeek({
 
           {/* fixed-height stage; the SVG keeps its aspect and fits inside */}
           <div
-            className="relative mx-5 rounded-[16px] border border-success-line flex items-end justify-center overflow-hidden"
+            className="mx-5 rounded-[16px] border border-success-line flex items-end justify-center overflow-hidden"
             style={{ height: "min(36vh, 300px)", background: sky ?? "linear-gradient(180deg, #EAF6FF 0%, #EAF3EC 70%)" }}
           >
-            {/* the height, big — it's the one number a tall tree is about */}
-            {veteran && (
-              <div className="absolute top-2 right-2 rounded-[12px] bg-cream/92 border border-line px-2.5 py-1 shadow-[0_4px_12px_-6px_rgba(40,35,25,.4)] text-charcoal leading-none">
-                <b className="text-[24px] font-black tabular-nums tracking-[-0.02em]">{treeHeightMetres(level)}</b>
-                <span className="text-[12px] font-bold ml-0.5">m</span>
-                <span className="block text-[10px] font-bold tracking-[.08em] uppercase text-muted mt-1">{t("peek.tall")}</span>
-              </div>
-            )}
             <svg viewBox={`0 0 220 ${frameH}`} className="h-full w-auto max-w-full" aria-hidden="true">
               <SceneLayer costumeIds={costumeIds} layer="behind" />
               {veteran ? (
