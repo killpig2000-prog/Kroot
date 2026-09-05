@@ -8,7 +8,7 @@ import Waveform from "@/components/listening/Waveform";
 import TapText from "@/components/words/TapText";
 import { QUIZZES, type Dialogue } from "@/lib/listening-dialogues";
 import { estMinutes } from "@/lib/listening-resume";
-import { getLocalizedDialogueLine } from "@/lib/listening-i18n";
+import { getLocalizedDialogueLine, getLocalizedDialogueTitle } from "@/lib/listening-i18n";
 import type { CefrLevel } from "@/lib/tree";
 
 const ABC = ["A", "B", "C", "D"];
@@ -79,7 +79,7 @@ export default function ClipPlayer({
   useSaveResume(userId, {
     skill: "listening",
     href: `/listening/${situationKey}?level=${level}&clip=${dialogue.id}`,
-    label: dialogue.title as string,
+    label: getLocalizedDialogueTitle(dialogue.title, locale),
     detail: `${situationIcon} ${situationLabel} · ${level}`,
     progress: Math.round((Math.min(heard, lines.length) / lines.length) * 100),
   });
@@ -179,7 +179,7 @@ export default function ClipPlayer({
           className="px-[clamp(14px,3vw,24px)] pt-5 pb-4 text-center border-b border-dashed border-dash"
           style={{ background: "radial-gradient(ellipse at 50% 0%, var(--tint-teal) 0%, var(--c-warm) 70%)" }}
         >
-          <h2 className="font-extrabold text-[clamp(17px,2.2vw,20px)] tracking-[-0.02em]">{dialogue.title as string}</h2>
+          <h2 className="font-extrabold text-[clamp(17px,2.2vw,20px)] tracking-[-0.02em]">{getLocalizedDialogueTitle(dialogue.title, locale)}</h2>
           <p className="text-[12.5px] text-muted mt-0.5">
             {t("meta", { n: lines.length, min: estMinutes(lines.length) })} ·{" "}
             {allHeard ? t("allHeard") : t("listenFirst")}
