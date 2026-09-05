@@ -1,21 +1,22 @@
-// Pre-generate the whole Korean content library with Edge TTS and fill the
-// public `tts` cache bucket, so every in-app play is an instant cache hit.
+// Pre-generate the whole Korean content library with Google Cloud Chirp 3 HD
+// and fill the public `tts` cache bucket, so every in-app play is an instant
+// cache hit.
 //
 // Usage: npx tsx --tsconfig tsconfig.json scripts/pregen-tts.mts [path/to/env]
-// Auth: needs SUPABASE_SERVICE_ROLE_KEY — since migration 0049 the service
-// role is the bucket's only writer. Reads it from the env file given as the
-// first argument (default .env.local; the key lives on Vercel, so
-// `vercel env pull <file> --environment=production` gets a usable one).
+// Auth: needs SUPABASE_SERVICE_ROLE_KEY (bucket writer) and GOOGLE_TTS_API_KEY
+// (TTS synthesis). Reads them from the env file given as the first argument
+// (default .env.local; keys live on Vercel, so `vercel env pull <file>
+// --environment=production` gets a usable one — note that GOOGLE_TTS_API_KEY
+// is redacted by Vercel).
 // Re-runnable: clips already in the bucket are skipped.
 import { createHash } from "crypto";
 import { readFileSync, appendFileSync } from "fs";
 import { createClient } from "@supabase/supabase-js";
-import { MsEdgeTTS, OUTPUT_FORMAT } from "msedge-tts";
 import { sanitizeKorean } from "@/lib/tts";
 import { dialogueVoices } from "@/lib/dialogue-voices";
+import { synthesizeGoogle, GOOGLE_VOICES, type GoogleVoiceKey } from "@/lib/tts-google";
 
-const ENGINE = "edge-tts";
-const VOICES = { f: "ko-KR-SunHiNeural", m: "ko-KR-InJoonNeural" } as const;
+const ENGINE = "chirp3-hd";
 const MAX_CHARS = 300;
 const CONCURRENCY = 4;
 
@@ -117,15 +118,8 @@ console.log(`to generate: ${queue.length}`);
 let done = 0;
 let failed = 0;
 
-async function synth(text: string, voice: "f" | "m"): Promise<Buffer> {
-  const tts = new MsEdgeTTS();
-  await tts.setMetadata(VOICES[voice], OUTPUT_FORMAT.AUDIO_24KHZ_48KBITRATE_MONO_MP3);
-  const { audioStream } = tts.toStream(text);
-  const chunks: Buffer[] = [];
-  for await (const c of audioStream) chunks.push(c as Buffer);
-  const buf = Buffer.concat(chunks);
-  if (buf.length === 0) throw new Error("empty audio");
-  return buf;
+async function synth(text: string, voice: GoogleVoiceKey): Promise<Buffer> {
+  return synthesizeGoogle(text, voice);
 }
 
 async function worker() {

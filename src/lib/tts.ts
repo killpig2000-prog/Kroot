@@ -98,10 +98,10 @@ function getAudioEl(): HTMLAudioElement {
 const urlCache = new Map<string, string>();
 const pending = new Map<string, Promise<string | null>>();
 
-// Must mirror the constants in /api/tts — the client rebuilds the same cache
+// Must mirror the constant in /api/tts — the client rebuilds the same cache
 // filename so already-synthesized phrases play straight from storage without
 // a function invocation.
-const ENGINE = "edge-tts";
+const ENGINE = "chirp3-hd";
 
 /**
  * A url means the phrase is already synthesized. `null` means storage

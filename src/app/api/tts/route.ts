@@ -1,37 +1,29 @@
 import { createHash } from "crypto";
 import { NextResponse, after } from "next/server";
 import { createClient as createServiceClient } from "@supabase/supabase-js";
-import { MsEdgeTTS, OUTPUT_FORMAT } from "msedge-tts";
+import { synthesizeGoogle, type GoogleVoiceKey } from "@/lib/tts-google";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { isRateLimited } from "@/lib/rate-limit";
 
-// Natural Korean TTS via Edge neural voices (free, no quota), cached forever
-// in the public `tts` storage bucket under content-hash filenames. The client
-// falls back to Web Speech on any failure. The whole content library is also
+// Natural Korean TTS via Google Cloud Chirp 3 HD, cached forever in the
+// public `tts` storage bucket under content-hash filenames. The client falls
+// back to Web Speech on any failure. The whole content library is also
 // pre-generated into the bucket, so this route mostly serves cache misses for
 // brand-new content.
 
-// Must mirror the constants in src/lib/tts.ts — the client rebuilds the same
+// Must mirror the constant in src/lib/tts.ts — the client rebuilds the same
 // cache filename to play straight from storage.
-const ENGINE = "edge-tts";
-const VOICES = { f: "ko-KR-SunHiNeural", m: "ko-KR-InJoonNeural" } as const;
-type VoiceKey = keyof typeof VOICES;
+const ENGINE = "chirp3-hd";
 
 const MAX_CHARS = 300;
 const RATE_LIMIT = 60;
 const RATE_WINDOW_MS = 60_000;
 
-async function synthesize(text: string, voice: VoiceKey): Promise<Buffer | null> {
+async function synthesize(text: string, voice: GoogleVoiceKey): Promise<Buffer | null> {
   try {
-    const tts = new MsEdgeTTS();
-    await tts.setMetadata(VOICES[voice], OUTPUT_FORMAT.AUDIO_24KHZ_48KBITRATE_MONO_MP3);
-    const { audioStream } = tts.toStream(text);
-    const chunks: Buffer[] = [];
-    for await (const chunk of audioStream) chunks.push(chunk as Buffer);
-    const audio = Buffer.concat(chunks);
-    return audio.length > 0 ? audio : null;
+    return await synthesizeGoogle(text, voice);
   } catch (e) {
-    console.error("edge tts failed:", e instanceof Error ? e.message : e);
+    console.error("google tts failed:", e instanceof Error ? e.message : e);
     return null;
   }
 }
@@ -53,7 +45,7 @@ export async function POST(request: Request) {
   if (!text || text.length > MAX_CHARS || !/[가-힣]/.test(text)) {
     return NextResponse.json({ error: "bad_request" }, { status: 400 });
   }
-  const voice: VoiceKey = body.voice === "m" ? "m" : "f";
+  const voice: GoogleVoiceKey = body.voice === "m" ? "m" : "f";
 
   const hash = createHash("sha256").update(`${ENGINE}|${voice}|${text}`).digest("hex");
   const objectPath = `${hash}.mp3`;
