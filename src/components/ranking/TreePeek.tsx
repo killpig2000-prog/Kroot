@@ -82,13 +82,12 @@ export default function TreePeek({
               </b>
               <span className="text-[12.5px] text-muted tabular-nums">
                 {t("row.level", { n: level })} · {t("fair.sun", { n: xpWeek })}
-                {veteran && (
-                  <>
-                    {" · "}
-                    <b className="text-[13.5px] font-black text-success-deep">{t("peek.height", { m: treeHeightMetres(level) })}</b>
-                  </>
-                )}
               </span>
+              {veteran && (
+                <b className="block text-[14px] font-black text-success-deep tabular-nums mt-0.5">
+                  {t("peek.height", { m: treeHeightMetres(level) })}
+                </b>
+              )}
               </div>
             </div>
             <button
