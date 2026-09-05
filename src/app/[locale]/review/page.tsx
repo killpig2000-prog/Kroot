@@ -7,6 +7,7 @@ import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { MAX_REVIEW_CAPACITY_BONUS, REVIEW_SESSION_SIZE, dailyReviewCap } from "@/lib/srs";
 import { VOCAB_TOPICS, type VocabWordWithProgress } from "@/lib/vocabulary";
 import { getWordsForTopic } from "@/lib/vocabulary-words";
+import { ATTEMPTED_FILTER } from "@/lib/word-bank";
 
 export default async function ReviewPage() {
   const tn = await getTranslations("nav");
@@ -31,11 +32,16 @@ export default async function ReviewPage() {
         .single(),
       // Fetched up to the maximum possible cap (base + max purchasable bonus);
       // sliced down to this user's actual cap once the profile row is in.
+      // The word bank plants a row the moment a word is bookmarked, unrelated
+      // to actually studying it (see plantWord/saveToBank) — the ATTEMPTED
+      // filter keeps a merely-bookmarked word out of the SRS queue until the
+      // learner has really answered it at least once.
       supabase
         .from("vocabulary_progress")
         .select("*")
         .eq("user_id", user.id)
         .lte("next_review_at", nowIso)
+        .or(ATTEMPTED_FILTER)
         .order("next_review_at", { ascending: true })
         .limit(REVIEW_SESSION_SIZE + MAX_REVIEW_CAPACITY_BONUS),
       // Everything learned so far, for the empty state.
@@ -66,6 +72,7 @@ export default async function ReviewPage() {
       .select("next_review_at")
       .eq("user_id", user.id)
       .gt("next_review_at", nowIso)
+      .or(ATTEMPTED_FILTER)
       .order("next_review_at", { ascending: true })
       .limit(1);
     nextDue = upcoming?.[0]?.next_review_at ?? null;

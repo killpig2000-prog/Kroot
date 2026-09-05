@@ -1,6 +1,5 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { VocabWord } from "@/lib/vocabulary";
-import { nextReviewAt } from "@/lib/srs";
 
 // Tap-to-save word bank: maps a Korean surface form found in listening /
 // reading / grammar / slang text back to a word in the daily-life deck, so
@@ -115,10 +114,15 @@ export function wordBankKey(topicKey: string, level: string, korean: string): st
 }
 
 /**
- * Plant a word into vocabulary_progress (box 1, due tomorrow — same floor as
- * every other box-1 word, see nextReviewAt). A word that is already there
- * keeps its box and counts — the upsert ignores duplicates. Resolves to an
- * error message, or null on success.
+ * Plant a word into vocabulary_progress — a bookmark for later, not an SRS
+ * commitment. `next_review_at` is left at "now" but is moot: every due-queue
+ * read (see /review, countDueWords below) also requires at least one real
+ * attempt (correct_count + incorrect_count > 0), and a freshly bookmarked
+ * word has neither. It only enters actual review rotation once the learner
+ * studies it for real (marking it Got it / Still learning), which is the
+ * write that gives it its first real next_review_at. A word that is already
+ * there keeps its box and counts — the upsert ignores duplicates. Resolves
+ * to an error message, or null on success.
  */
 export async function plantWord(
   supabase: SupabaseClient,
@@ -132,11 +136,7 @@ export async function plantWord(
       correct_count: 0,
       incorrect_count: 0,
       box: 1,
-      // Due tomorrow, not immediately — a word saved today must not be able
-      // to show up in today's review queue. Same floor every other box-1
-      // word already gets from nextReviewAt(); this was the one write that
-      // bypassed it with a bare "now".
-      next_review_at: nextReviewAt(1),
+      next_review_at: new Date().toISOString(),
       last_reviewed_at: null,
     },
     { onConflict: "user_id,word_key", ignoreDuplicates: true }
@@ -144,15 +144,29 @@ export async function plantWord(
   return error ? error.message : null;
 }
 
-/** Words whose next_review_at has passed — the Review tab badge number. */
+/**
+ * Words due for review — the Review tab badge number. Requires at least one
+ * real attempt (see ATTEMPTED_FILTER) so a word merely bookmarked into the
+ * word bank, never studied, doesn't inflate this count.
+ */
 export async function countDueWords(supabase: SupabaseClient, userId: string): Promise<number> {
   const { count, error } = await supabase
     .from("vocabulary_progress")
     .select("id", { count: "exact", head: true })
     .eq("user_id", userId)
-    .lte("next_review_at", new Date().toISOString());
+    .lte("next_review_at", new Date().toISOString())
+    .or(ATTEMPTED_FILTER);
   return error ? 0 : (count ?? 0);
 }
+
+/**
+ * Supabase `.or()` filter string for "has been attempted at least once" —
+ * the word bank plants a row at box 1 / correct_count 0 / incorrect_count 0
+ * purely as a personal bookmark (see plantWord/saveToBank); it must not be
+ * eligible for SRS review until the learner actually studies it for real.
+ * Every due-queue read applies this alongside its next_review_at check.
+ */
+export const ATTEMPTED_FILTER = "correct_count.gt.0,incorrect_count.gt.0";
 
 // ---------------------------------------------------------------------------
 // The capped word bank (migration 0039). `vocabulary_progress.saved` is the
@@ -200,8 +214,8 @@ export type SaveResult =
 
 /**
  * Pick a word into the bank, respecting the cap. An existing row is flagged
- * saved (its box and counts survive); a new one starts at box 1, due
- * tomorrow — see plantWord.
+ * saved (its box and counts survive); a new one starts at box 1, unattempted
+ * — see plantWord.
  */
 export async function saveToBank(
   supabase: SupabaseClient,
@@ -230,7 +244,7 @@ export async function saveToBank(
     correct_count: 0,
     incorrect_count: 0,
     box: 1,
-    next_review_at: nextReviewAt(1),
+    next_review_at: new Date().toISOString(),
     last_reviewed_at: null,
     saved: true,
   });

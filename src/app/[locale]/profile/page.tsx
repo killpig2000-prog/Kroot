@@ -294,7 +294,12 @@ export default async function ProfilePage() {
   // The real backlog is never shown — only how many are actually reachable
   // today (this account's daily cap), so this card can't say a bigger number
   // than /review itself will ever hand out. See [[review daily cap]].
-  const due = vocabRows.filter((r) => r.next_review_at != null && r.next_review_at <= nowIso);
+  // A word_bank bookmark (see plantWord/saveToBank) plants next_review_at
+  // but no attempt — this card must agree with /review's own queue, which
+  // never surfaces an unattempted word.
+  const due = vocabRows.filter(
+    (r) => r.next_review_at != null && r.next_review_at <= nowIso && (r.correct_count ?? 0) + (r.incorrect_count ?? 0) > 0
+  );
   const reviewCap = dailyReviewCap(extras?.review_capacity_bonus ?? 0);
   const dueCount = Math.min(due.length, reviewCap);
 

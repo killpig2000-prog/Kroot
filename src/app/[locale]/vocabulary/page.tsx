@@ -48,10 +48,14 @@ export default async function VocabularyPage({
     (progressRows ?? []).map((r) => [r.word_key as string, (r.correct_count ?? 0) + (r.incorrect_count ?? 0)])
   );
   // Words past their review date have "wilted" — chapters containing them show 💧.
+  // A word the word bank merely bookmarked (see plantWord/saveToBank) has
+  // next_review_at set but was never actually attempted — excluded the same
+  // way the SRS queue itself excludes it, via reviewsByKey (already the
+  // correct_count + incorrect_count sum computed above).
   const now = new Date();
   const thirstyKeys = new Set(
     (progressRows ?? [])
-      .filter((r) => r.next_review_at && new Date(r.next_review_at) <= now)
+      .filter((r) => r.next_review_at && new Date(r.next_review_at) <= now && (reviewsByKey.get(r.word_key) ?? 0) > 0)
       .map((r) => r.word_key)
   );
 
