@@ -9,7 +9,15 @@ import SpotlightOverlay, {
 } from "@/components/onboarding/SpotlightOverlay";
 import { startGuidedTour, type GuidedTrack } from "@/components/onboarding/guidedSteps";
 
-export const SEEN_KEY = "kroot-onboarding-tour-seen";
+const SEEN_PREFIX = "kroot-onboarding-tour-seen";
+// Per-account, not just per-browser: a phone that already ran the tour under
+// one login used to never show it again for a second account signing up on
+// the same device. Falls back to the shared key pre-account-id (a signed-out
+// visitor, or the one caller that doesn't pass a userId) so behaviour is
+// unchanged there.
+function seenKey(userId?: string | null): string {
+  return userId ? `${SEEN_PREFIX}:${userId}` : SEEN_PREFIX;
+}
 export const TOUR_DONE_EVENT = "kroot:tour-done";
 const MOBILE_BREAKPOINT = 768; // md — below this the sidebar is replaced by BottomNav
 
@@ -61,16 +69,16 @@ function isMobileViewport(): boolean {
   return typeof window !== "undefined" && window.innerWidth < MOBILE_BREAKPOINT;
 }
 
-function seen(): boolean {
+function seen(userId?: string | null): boolean {
   try {
-    return localStorage.getItem(SEEN_KEY) === "1";
+    return localStorage.getItem(seenKey(userId)) === "1";
   } catch {
     return false;
   }
 }
-function markSeen() {
+function markSeen(userId?: string | null) {
   try {
-    localStorage.setItem(SEEN_KEY, "1");
+    localStorage.setItem(seenKey(userId), "1");
   } catch {
     // ignore — worst case the tour shows again next visit
   }
@@ -86,13 +94,17 @@ export default function OnboardingTour({
   startsGuidedTour = false,
   guidedTrack = "basics",
   isAdmin = false,
+  userId = null,
 }: {
   /** Arms the click-gated continuation when the tour finishes naturally. */
   startsGuidedTour?: boolean;
   /** "basics" = Hangul→Vocabulary→Shop (A1); "practice" = Writing→Shop (B1+). */
   guidedTrack?: GuidedTrack;
-  /** Admin testing bypass: ignores SEEN_KEY so the tour re-runs on every dashboard load. */
+  /** Admin testing bypass: ignores the seen-flag so the tour re-runs on every dashboard load. */
   isAdmin?: boolean;
+  /** Scopes the seen-flag to this account, so a second signup on a phone
+   * that already ran the tour under a different login still gets it. */
+  userId?: string | null;
 } = {}) {
   const t = useTranslations("tour");
   const [stepIndex, setStepIndex] = useState(0);
@@ -101,11 +113,11 @@ export default function OnboardingTour({
   const frame = useRef<number | null>(null);
 
   useEffect(() => {
-    if (!isAdmin && seen()) return;
+    if (!isAdmin && seen(userId)) return;
     if (typeof window === "undefined") return;
     const id = requestAnimationFrame(() => setActive(true));
     return () => cancelAnimationFrame(id);
-  }, [isAdmin]);
+  }, [isAdmin, userId]);
 
   const key: StepKey = STEPS[stepIndex];
   const target = targetsFor(isMobileViewport())[key];
@@ -129,14 +141,14 @@ export default function OnboardingTour({
   // carries them on into the guided tour.
   const end = useCallback(
     (continueOn = true) => {
-      markSeen();
+      markSeen(userId);
       setActive(false);
       // Arm the guided tour BEFORE announcing the tour is done, so anything
       // listening for TOUR_DONE_EVENT already sees a guided step active.
       if (continueOn && startsGuidedTour) startGuidedTour(guidedTrack);
       window.dispatchEvent(new Event(TOUR_DONE_EVENT));
     },
-    [startsGuidedTour, guidedTrack]
+    [startsGuidedTour, guidedTrack, userId]
   );
 
   useEffect(() => {

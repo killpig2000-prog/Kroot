@@ -294,7 +294,7 @@ export default async function DashboardPage() {
         </div>
 
         <main className="min-w-0 px-[clamp(18px,3vw,36px)] pt-[26px] pb-[100px] md:pb-[60px]">
-          <OnboardingTour startsGuidedTour guidedTrack={guidedTrack} isAdmin={isAdmin} />
+          <OnboardingTour startsGuidedTour guidedTrack={guidedTrack} isAdmin={isAdmin} userId={user.id} />
           <GuidedStep step="hangul-nav" />
           <GuidedStep step="writing-nav" />
           <TutorialFinishBanner />
