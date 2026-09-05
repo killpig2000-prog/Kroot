@@ -20,6 +20,23 @@ describe("nextBox", () => {
     expect(nextBox(0, true)).toBe(2);
     expect(nextBox(99, true)).toBe(MAX_BOX);
   });
+
+  // A never-answered word carries the schema's default box of 1, which is a
+  // placeholder rather than a 1-day interval it has served. Promoting it on
+  // the first correct answer sent a word seen once, seconds ago, away for
+  // three days; it earns the 1-day check-in first now.
+  it("gives a first-ever correct answer box 1, not box 2", () => {
+    expect(nextBox(1, true, false)).toBe(1);
+  });
+
+  it("still promotes normally once the word has been answered before", () => {
+    expect(nextBox(1, true, true)).toBe(2);
+    expect(nextBox(2, true, true)).toBe(3);
+  });
+
+  it("drops an unattempted word to box 1 on a miss, like any other", () => {
+    expect(nextBox(1, false, false)).toBe(1);
+  });
 });
 
 describe("nextReviewAt", () => {

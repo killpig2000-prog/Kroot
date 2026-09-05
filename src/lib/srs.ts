@@ -5,9 +5,18 @@
 export const SRS_INTERVALS_DAYS = [1, 3, 7, 16, 35];
 export const MAX_BOX = SRS_INTERVALS_DAYS.length;
 
-export function nextBox(box: number, gotIt: boolean): number {
+export function nextBox(box: number, gotIt: boolean, attempted = true): number {
   const current = Math.min(Math.max(box, 1), MAX_BOX);
-  return gotIt ? Math.min(current + 1, MAX_BOX) : 1;
+  if (!gotIt) return 1;
+  // A word answered for the very first time has no box yet — the schema
+  // defaults the column to 1, but that's a placeholder, not a 1-day interval
+  // the learner has actually served. Promoting it to box 2 on that first
+  // "Got it" skipped the 1-day check-in entirely and sent a word seen once,
+  // seconds ago, away for three days. It now earns box 1 first: back
+  // tomorrow, and only then does a second correct answer start stretching
+  // the intervals.
+  if (!attempted) return 1;
+  return Math.min(current + 1, MAX_BOX);
 }
 
 export function nextReviewAt(box: number, from: Date = new Date()): string {

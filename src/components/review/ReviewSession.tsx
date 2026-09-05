@@ -65,7 +65,11 @@ export default function ReviewSession({
     const q = questions[index];
     const gotIt = option === (q.mode === "meaning" ? q.word.meaning_en : q.word.korean);
     const word = words.find((w) => w.key === q.word.key);
-    const box = nextBox(boxes.current[q.word.key] ?? 1, gotIt);
+    // Everything in a review session has been studied already (the due queue
+    // requires a real attempt — see ATTEMPTED_FILTER), so promotion applies
+    // normally; passed explicitly rather than relying on that invariant.
+    const attempted = (word?.correct_count ?? 0) + (word?.incorrect_count ?? 0) > 0;
+    const box = nextBox(boxes.current[q.word.key] ?? 1, gotIt, attempted);
     boxes.current[q.word.key] = box;
 
     if (gotIt) {

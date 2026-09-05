@@ -154,7 +154,9 @@ export default function WordDetailCard({
     setSaving(gotIt ? "got-it" : "next");
     setSaveFailed(false);
     const supabase = createClient();
-    const nb = nextBox(box, next);
+    // `alreadyStudied` is what tells box 1 apart from "no box yet": a first
+    // ever "Got it" earns box 1 (back tomorrow), not box 2's three days.
+    const nb = nextBox(box, next, alreadyStudied);
     try {
       const { error } = await supabase.from("vocabulary_progress").upsert(
         {
