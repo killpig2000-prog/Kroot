@@ -441,8 +441,12 @@ export default async function DashboardPage() {
               phones and tablets get the same daily word a desktop does. */}
           {wotd && <WordOfDayCard wotd={wotd} className="hidden sm:block xl:hidden" />}
 
-          {/* new to Korean? — only for true beginners */}
-          {cefr === "A1" && (
+          {/* new to Korean? — A1 alone isn't "just starting": a long-time A1
+              learner (or the admin account, parked at A1 on purpose) placed
+              there too, and hangul practice itself earns no XP either way —
+              so the real signal is "hasn't earned any XP yet", not the CEFR
+              tier by itself. */}
+          {cefr === "A1" && (profile?.xp ?? 0) === 0 && (
           <Link
             href="/hangul"
             className="flex flex-wrap sm:flex-nowrap items-center gap-x-3.5 gap-y-2 border border-success-line bg-success-bg rounded-[14px] px-5 py-4 mb-[30px] transition-all hover:-translate-y-0.5 group"
