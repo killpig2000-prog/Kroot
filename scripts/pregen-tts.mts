@@ -1,15 +1,18 @@
 // Pre-generate the whole Korean content library with Edge TTS and fill the
 // public `tts` cache bucket, so every in-app play is an instant cache hit.
 //
-// Usage: npx tsx --tsconfig tsconfig.json scripts/pregen-tts.mts
-// Auth: reads scripts/.pregen-auth (two lines: email, password) for a normal
-// app account — the bucket policy allows authenticated inserts. Re-runnable:
-// clips already in the bucket are skipped.
+// Usage: npx tsx --tsconfig tsconfig.json scripts/pregen-tts.mts [path/to/env]
+// Auth: needs SUPABASE_SERVICE_ROLE_KEY — since migration 0049 the service
+// role is the bucket's only writer. Reads it from the env file given as the
+// first argument (default .env.local; the key lives on Vercel, so
+// `vercel env pull <file> --environment=production` gets a usable one).
+// Re-runnable: clips already in the bucket are skipped.
 import { createHash } from "crypto";
 import { readFileSync, appendFileSync } from "fs";
 import { createClient } from "@supabase/supabase-js";
 import { MsEdgeTTS, OUTPUT_FORMAT } from "msedge-tts";
 import { sanitizeKorean } from "@/lib/tts";
+import { dialogueVoices } from "@/lib/dialogue-voices";
 
 const ENGINE = "edge-tts";
 const VOICES = { f: "ko-KR-SunHiNeural", m: "ko-KR-InJoonNeural" } as const;
@@ -29,10 +32,10 @@ const JAMO: Record<string, string> = {
 };
 
 const MODULES = [
-  "@/lib/community", "@/lib/course", "@/lib/grammar", "@/lib/hangul",
+  "@/lib/community", "@/lib/grammar", "@/lib/hangul",
   "@/lib/level-test", "@/lib/listening-dialogues", "@/lib/listening",
   "@/lib/promotion-test", "@/lib/pronunciation", "@/lib/reading-data/daily-life",
-  "@/lib/slang", "@/lib/speaking", "@/lib/themes", "@/lib/tree",
+  "@/lib/slang", "@/lib/themes", "@/lib/tree",
   "@/lib/vocabulary", "@/lib/writing-data/daily-life",
 ];
 
@@ -65,8 +68,8 @@ function walk(v: unknown, seen: Set<unknown>) {
   if (Array.isArray(v)) {
     if (isDialogue(v)) {
       // Same speaker→voice mapping as useSpeechSynthesis.
-      const speakers = Array.from(new Set(v.map((l) => l.speaker)));
-      for (const line of v) add(line.kr, speakers.indexOf(line.speaker) % 2 === 0 ? "f" : "m");
+      const voices = dialogueVoices(v);
+      for (const line of v) add(line.kr, voices.get(line.speaker) ?? "f");
     }
     for (const item of v) walk(item, seen);
     return;
@@ -87,17 +90,13 @@ for (const syl of Object.values(JAMO)) add(syl, "f");
 
 console.log(`collected ${jobs.size} unique clips`);
 
-const env = readFileSync(new URL("../.env.local", import.meta.url), "utf8");
-const url = env.match(/NEXT_PUBLIC_SUPABASE_URL=(.+)/)![1].trim();
-const anon = env.match(/NEXT_PUBLIC_SUPABASE_ANON_KEY=(.+)/)![1].trim();
-const [email, password] = readFileSync(new URL(".pregen-auth", import.meta.url), "utf8")
-  .trim()
-  .split("\n")
-  .map((s) => s.trim());
+const env = readFileSync(process.argv[2] ?? new URL("../.env.local", import.meta.url), "utf8");
+const unquote = (s: string) => s.trim().replace(/^"|"$/g, "");
+const url = unquote(env.match(/NEXT_PUBLIC_SUPABASE_URL=(.+)/)![1]);
+const serviceKey = env.match(/SUPABASE_SERVICE_ROLE_KEY=(.+)/)?.[1];
+if (!serviceKey) throw new Error("SUPABASE_SERVICE_ROLE_KEY not in the env file — see the usage note at the top");
 
-const supabase = createClient(url, anon);
-const { error: authError } = await supabase.auth.signInWithPassword({ email, password });
-if (authError) throw new Error(`sign-in failed: ${authError.message}`);
+const supabase = createClient(url, unquote(serviceKey), { auth: { persistSession: false } });
 
 // Skip clips already in the bucket (resumable across runs).
 const existing = new Set<string>();

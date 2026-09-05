@@ -51,7 +51,6 @@ export default function ClipPlayer({
   const th = useTranslations("listening.home");
   const locale = useLocale();
   const lines = dialogue.lines;
-  const [rate, setRate] = useState(1.0);
   const [showEn, setShowEn] = useState(false);
   // Clips always start at line 1 — no cross-visit resume.
   const [heard, setHeard] = useState(0);
@@ -61,10 +60,10 @@ export default function ClipPlayer({
   const [pausedAt, setPausedAt] = useState<number | null>(null);
   const [picked, setPicked] = useState<number | null>(null);
   const [saving, setSaving] = useState(false);
-  // Neural clips are already conversational pace — 1.0× means 1.0×. (The old
-  // 0.9 multiplier was a browser-voice habit that dragged every line.)
+  // Neural clips play at their natural pace — no slow mode. (A 0.7× toggle
+  // used to stretch the clip, which sounded smeared rather than clearer.)
   const { currentIndex, isPlaying, isSupported, playFrom, speakOne, stop } =
-    useSpeechSynthesis(lines, rate);
+    useSpeechSynthesis(lines, 1);
 
   const speakers = useMemo(() => Array.from(new Set(lines.map((l) => l.speaker))), [lines]);
   const quiz = QUIZZES[dialogue.id];
@@ -145,7 +144,7 @@ export default function ClipPlayer({
 
   return (
     <div className="max-w-[720px] pb-[76px] md:pb-0">
-      {/* top bar: back · where · rate */}
+      {/* top bar: back · where */}
       <div className="flex items-center justify-between gap-3 mb-3">
         <button
           className="text-[13px] font-bold text-muted hover:text-charcoal transition-colors flex-none"
@@ -166,13 +165,6 @@ export default function ClipPlayer({
             level,
           })}
         </span>
-        <button
-          className="flex-none border border-line bg-cream rounded-lg px-2.5 py-[5px] text-[12px] font-bold text-muted hover:border-faint transition-colors tabular-nums"
-          onClick={() => setRate((r) => (r === 1.0 ? 0.7 : 1.0))}
-          aria-label={t("speed", { rate: rate.toFixed(1) })}
-        >
-          {rate.toFixed(1)}×
-        </button>
       </div>
 
       {!isSupported && (

@@ -1,7 +1,8 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useBrowserSupport } from "@/hooks/useBrowserSupport";
+import { dialogueVoices } from "@/lib/dialogue-voices";
 import type { DialogueLine } from "@/lib/listening-dialogues";
 import { prefetchKorean, setPlaybackRate, speakKorean, stopSpeaking } from "@/lib/tts";
 
@@ -41,22 +42,17 @@ export function useSpeechSynthesis(lines: DialogueLine[], rate = 0.9) {
     };
   }, []);
 
+  // Voice per speaker — by name where the name is gendered, else alternating.
+  const voices = useMemo(() => dialogueVoices(lines), [lines]);
+
   // Warm every line's audio (per-speaker voice) so playback has no gaps.
   useEffect(() => {
-    const speakers = Array.from(new Set(lines.map((l) => l.speaker)));
-    for (const line of lines) {
-      prefetchKorean([line.kr], speakers.indexOf(line.speaker) % 2 === 0 ? "f" : "m");
-    }
-  }, [lines]);
+    for (const line of lines) prefetchKorean([line.kr], voices.get(line.speaker) ?? "f");
+  }, [lines, voices]);
 
-  const speakerPitch = useCallback(
-    (speaker: string) => {
-      const speakers = Array.from(new Set(lines.map((l) => l.speaker)));
-      const i = speakers.indexOf(speaker);
-      return i % 2 === 0 ? 1 : 0.75;
-    },
-    [lines]
-  );
+  // speakKorean maps a low pitch to the male neural voice (and keeps the two
+  // speakers apart on the Web Speech fallback, which has no voice choice).
+  const speakerPitch = useCallback((speaker: string) => (voices.get(speaker) === "m" ? 0.75 : 1), [voices]);
 
   const speakFrom = useCallback(
     (start: number, { trackCompletion = false }: { trackCompletion?: boolean } = {}) => {

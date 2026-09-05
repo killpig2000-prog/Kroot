@@ -95,7 +95,6 @@
     "saving": "保存中…",
     "finish": "終了 →",
     "doneNext": "完了 — 次のクリップへ →",
-    "speed": "再生速度 {rate}×",
     "prevLine": "前の行を再生",
     "replayLine": "この行を再生",
     "pause": "一時停止",
