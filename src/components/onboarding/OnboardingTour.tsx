@@ -10,7 +10,14 @@ import SpotlightOverlay, {
 import { startGuidedTour, type GuidedTrack } from "@/components/onboarding/guidedSteps";
 import { createClient } from "@/lib/supabase/client";
 
-const SEEN_PREFIX = "kroot-onboarding-tour-seen";
+// Bumped to -v2 when profiles.onboarding_tour_seen (migration 0069) became the
+// source of truth. Every browser carrying the old key had it from a tour that
+// was dismissed rather than watched — and the server had no record either way,
+// so those accounts would never have been offered it again. Renaming the key
+// retires all of them at once: the decision falls to the server flag, which is
+// false for everyone, so each account gets the tour exactly once and the
+// server remembers it from then on (across devices and private windows).
+const SEEN_PREFIX = "kroot-onboarding-tour-seen-v2";
 // Per-account, not just per-browser: a phone that already ran the tour under
 // one login used to never show it again for a second account signing up on
 // the same device. Falls back to the shared key pre-account-id (a signed-out
