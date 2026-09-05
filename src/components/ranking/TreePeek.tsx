@@ -11,7 +11,9 @@ import type { CefrLevel } from "@/lib/tree";
 // Tapping a tree on the ranking opens the whole thing: a Lv.50+ tree grows
 // past any thumbnail, so the row shows the crown and this shows the tree.
 // The frame is fixed and the SVG scales to fit — a taller tree draws smaller,
-// which is what makes "look how tall theirs is" readable at a glance.
+// which is what makes "look how tall theirs is" readable at a glance. Kept
+// to about a third of the phone's height: at two thirds it read as a whole
+// screen, not a card.
 export default function TreePeek({
   name,
   rank,
@@ -61,7 +63,7 @@ export default function TreePeek({
           role="dialog"
           aria-modal="true"
           aria-label={name}
-          className="pointer-events-auto w-full max-w-[360px] bg-cream rounded-[22px] shadow-[0_30px_70px_-20px_rgba(40,35,25,.4)] overflow-hidden"
+          className="pointer-events-auto w-full max-w-[300px] bg-cream rounded-[20px] shadow-[0_30px_70px_-20px_rgba(40,35,25,.4)] overflow-hidden"
         >
           <div className="flex items-start justify-between gap-3 px-5 pt-4 pb-3">
             <div className="min-w-0 flex items-center gap-3">
@@ -100,7 +102,7 @@ export default function TreePeek({
           {/* fixed-height stage; the SVG keeps its aspect and fits inside */}
           <div
             className="mx-5 rounded-[16px] border border-success-line flex items-end justify-center overflow-hidden"
-            style={{ height: "min(62vh, 520px)", background: sky ?? "linear-gradient(180deg, #EAF6FF 0%, #EAF3EC 70%)" }}
+            style={{ height: "min(36vh, 300px)", background: sky ?? "linear-gradient(180deg, #EAF6FF 0%, #EAF3EC 70%)" }}
           >
             <svg viewBox={`0 0 220 ${frameH}`} className="h-full w-auto max-w-full" aria-hidden="true">
               <SceneLayer costumeIds={costumeIds} layer="behind" />
