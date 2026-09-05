@@ -341,6 +341,35 @@ export default function WordDetailCard({
             </svg>
           </span>
         )}
+        {/* The checkmark badge only ever covered "got it" — a still-learning
+            rating left the same corner blank, so the card gave no sign it had
+            recorded anything at all. This mirrors it in amber with a "coming
+            back around" arrow instead of a check, matching the amber
+            still-learning button below. */}
+        {answered && !marked && (
+          <span
+            aria-label={t("stillLearning")}
+            className="absolute top-3.5 right-4 w-9 h-9 rounded-full bg-amber flex items-center justify-center shadow-[0_4px_0_#B45309] rotate-[-6deg] select-none"
+          >
+            <svg viewBox="0 0 16 16" className="w-[18px] h-[18px]" aria-hidden="true">
+              <path
+                d="M2.8 8A5.2 5.2 0 1 1 4.4 11.8"
+                fill="none"
+                stroke="white"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+              />
+              <path
+                d="M2.8 4.6v3.6h3.6"
+                fill="none"
+                stroke="white"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </span>
+        )}
 
         <div className="relative pt-6 pb-5 pr-[clamp(18px,4vw,26px)] pl-[clamp(40px,8vw,70px)]">
           <div className="grid grid-cols-[1fr_auto] gap-4 items-start mb-1 pr-16">
