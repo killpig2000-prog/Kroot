@@ -119,6 +119,8 @@ export default function ReviewSession({
       0,
       reviewSessionKey,
       questions.length ? Math.round((correctRef.current / questions.length) * 100) : null,
+      null,
+      questions.length,
     );
     if (result) setLevelUp(result);
   }
@@ -141,6 +143,8 @@ export default function ReviewSession({
           0,
           reviewSessionKey,
           index ? Math.round((correctRef.current / index) * 100) : null,
+          null,
+          index,
         );
       }
     } catch {
