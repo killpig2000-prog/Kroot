@@ -180,7 +180,11 @@ export default async function DashboardPage() {
     // beats a function migration for one integer (see 0041's rationale).
     // review_capacity_bonus and is_admin ride along for the same reason —
     // is_admin drives the guided-tour repeat-testing bypass below.
-    supabase.from("profiles").select("coins, review_capacity_bonus, is_admin").eq("id", user.id).maybeSingle(),
+    supabase
+      .from("profiles")
+      .select("coins, review_capacity_bonus, is_admin, onboarding_tour_seen")
+      .eq("id", user.id)
+      .maybeSingle(),
     // Same daily cap accounting as /review and BottomNav's badge.
     supabase
       .from("vocabulary_progress")
@@ -191,6 +195,10 @@ export default async function DashboardPage() {
   const coins = coinsRes.error ? 0 : coinsRes.data?.coins ?? 0;
   const reviewCapacityBonus = coinsRes.error ? 0 : coinsRes.data?.review_capacity_bonus ?? 0;
   const isAdmin = coinsRes.error ? false : coinsRes.data?.is_admin ?? false;
+  // Server fact, not just a browser one — see OnboardingTour's own comment
+  // for why a localStorage-only flag wasn't enough (private browsing, a
+  // second device, cleared site data all used to bring the tour back).
+  const tourSeen = coinsRes.error ? false : coinsRes.data?.onboarding_tour_seen ?? false;
   // Errors (e.g. migration 0022 not applied yet) just hide the review card.
   // User feedback: an uncapped backlog badge (once past a hundred+ words)
   // read as a scary, un-clearable number rather than something to act on.
@@ -294,7 +302,7 @@ export default async function DashboardPage() {
         </div>
 
         <main className="min-w-0 px-[clamp(18px,3vw,36px)] pt-[26px] pb-[100px] md:pb-[60px]">
-          <OnboardingTour startsGuidedTour guidedTrack={guidedTrack} isAdmin={isAdmin} userId={user.id} />
+          <OnboardingTour startsGuidedTour guidedTrack={guidedTrack} isAdmin={isAdmin} userId={user.id} serverSeen={tourSeen} />
           <GuidedStep step="hangul-nav" />
           <GuidedStep step="writing-nav" />
           <TutorialFinishBanner />

@@ -8,6 +8,7 @@ import SpotlightOverlay, {
   type SpotlightRect,
 } from "@/components/onboarding/SpotlightOverlay";
 import { startGuidedTour, type GuidedTrack } from "@/components/onboarding/guidedSteps";
+import { createClient } from "@/lib/supabase/client";
 
 const SEEN_PREFIX = "kroot-onboarding-tour-seen";
 // Per-account, not just per-browser: a phone that already ran the tour under
@@ -82,19 +83,32 @@ function markSeen(userId?: string | null) {
   } catch {
     // ignore — worst case the tour shows again next visit
   }
+  // The real record: private browsing wipes localStorage the moment the
+  // window closes, and a second device never had it in the first place —
+  // either used to bring the tour back for someone who'd already finished
+  // it. Best effort; a failed write just means one more re-run, not a
+  // stuck flow, so it isn't awaited or retried.
+  if (userId) void createClient().from("profiles").update({ onboarding_tour_seen: true }).eq("id", userId);
 }
 
 // First-visit walkthrough: a dark scrim with a cut-out spotlight over one
-// data-tour target at a time, plus a tooltip card. Runs once per browser
-// (localStorage-gated), at every width — the sidebar/basics/practice/relax
-// steps just point at BottomNav's tabs instead of the Sidebar below md.
-// Finishing it hands off to the click-gated guided tour (guidedSteps.ts),
-// whose first step — "shall we try Hangul?" — lives on this same page.
+// data-tour target at a time, plus a tooltip card. Runs once per account —
+// `serverSeen` (profiles.onboarding_tour_seen, set by the dashboard page's
+// server-side read) is the real record; localStorage is only a same-session
+// fast path so a re-render before the server round trip lands doesn't flash
+// the tour back on. Server wins: private browsing, a second device, or
+// cleared site data all used to bring the tour back for someone who'd
+// already finished it, since a plain localStorage flag has no memory of
+// any of those. At every width — the sidebar/basics/practice/relax steps
+// just point at BottomNav's tabs instead of the Sidebar below md. Finishing
+// it hands off to the click-gated guided tour (guidedSteps.ts), whose first
+// step — "shall we try Hangul?" — lives on this same page.
 export default function OnboardingTour({
   startsGuidedTour = false,
   guidedTrack = "basics",
   isAdmin = false,
   userId = null,
+  serverSeen = false,
 }: {
   /** Arms the click-gated continuation when the tour finishes naturally. */
   startsGuidedTour?: boolean;
@@ -105,6 +119,8 @@ export default function OnboardingTour({
   /** Scopes the seen-flag to this account, so a second signup on a phone
    * that already ran the tour under a different login still gets it. */
   userId?: string | null;
+  /** profiles.onboarding_tour_seen for this account — the source of truth. */
+  serverSeen?: boolean;
 } = {}) {
   const t = useTranslations("tour");
   const [stepIndex, setStepIndex] = useState(0);
@@ -113,11 +129,11 @@ export default function OnboardingTour({
   const frame = useRef<number | null>(null);
 
   useEffect(() => {
-    if (!isAdmin && seen(userId)) return;
+    if (!isAdmin && (serverSeen || seen(userId))) return;
     if (typeof window === "undefined") return;
     const id = requestAnimationFrame(() => setActive(true));
     return () => cancelAnimationFrame(id);
-  }, [isAdmin, userId]);
+  }, [isAdmin, userId, serverSeen]);
 
   const key: StepKey = STEPS[stepIndex];
   const target = targetsFor(isMobileViewport())[key];
