@@ -54,6 +54,6 @@
   "unavailable": "Hội chợ sẽ mở sau khi cập nhật cơ sở dữ liệu. Vui lòng quay lại sau.",
   "peek": {
     "close": "Đóng",
-    "height": "cao {m} m"
+    "tall": "chiều cao"
   }
 }
