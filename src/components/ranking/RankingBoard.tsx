@@ -5,7 +5,8 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
 import LevelCreature from "@/components/dashboard/LevelCreature";
-import { treeStageForLevel } from "@/lib/level";
+import VeteranTree, { BASE_HEIGHT, veteranFrameHeight } from "@/components/dashboard/VeteranTree";
+import { FULLY_GROWN_LEVEL, treeStageForLevel } from "@/lib/level";
 import { SceneLayer, skyFor } from "@/lib/costumes";
 import { daysUntilWeekEnd, leagueTier, LEAGUE_TIERS } from "@/lib/league";
 import TreePeek from "@/components/ranking/TreePeek";
@@ -40,8 +41,10 @@ const RIBBON = [
 // used only to phrase the nudge as "one session" vs "a couple of sessions".
 const SESSION_XP = 30;
 
-// A thumbnail shows the crown only — a Lv.50+ tree is taller than any box
-// here — so every one is a button that opens TreePeek with the whole tree.
+// A thumbnail draws the whole tree to scale — a Lv.120 tree is more than
+// twice the height of a Lv.50 one, so it comes out narrow and small in the
+// same box, which is exactly what says "that one is tall" at a glance.
+// Every thumbnail is a button that opens TreePeek with the tree at full size.
 function Tree({
   row,
   species,
@@ -57,6 +60,8 @@ function Tree({
 }) {
   const ids = row.costume_ids ?? [];
   const sky = skyFor(ids);
+  const veteran = row.level >= FULLY_GROWN_LEVEL;
+  const frameH = veteran ? veteranFrameHeight(row.level) : BASE_HEIGHT;
   return (
     <button
       type="button"
@@ -65,12 +70,15 @@ function Tree({
       className={`flex-none rounded-[12px] bg-success-bg border border-success-line overflow-hidden flex items-end justify-center cursor-zoom-in hover:brightness-105 active:scale-95 transition ${className}`}
       style={{ width: size, height: size, ...(sky ? { background: sky } : {}) }}
     >
-      {/* The whole 220x230 scene (same frame as the dashboard and shop): the
-          old 160x160 crop cut the canopy and sky off every tree and lost the
-          top of skins and tall veterans entirely. */}
-      <svg viewBox="0 0 220 230" style={{ width: size - 4, height: size - 4 }}>
+      {/* Full frame (220 × the level's height), fitted by height: the SVG keeps
+          its aspect, so a taller tree draws smaller inside the same box. */}
+      <svg viewBox={`0 0 220 ${frameH}`} style={{ height: size - 4, width: "auto", maxWidth: size - 4 }}>
         <SceneLayer costumeIds={ids} layer="behind" />
-        <LevelCreature level={treeStageForLevel(row.level)} costumeIds={ids} species={species} />
+        {veteran ? (
+          <VeteranTree level={row.level} species={species} costumeIds={ids} />
+        ) : (
+          <LevelCreature level={treeStageForLevel(row.level)} costumeIds={ids} species={species} />
+        )}
         <SceneLayer costumeIds={ids} layer="front" />
       </svg>
     </button>
