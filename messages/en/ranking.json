@@ -55,6 +55,7 @@
   "peek": {
     "close": "Close",
     "height": "{m} m tall",
-    "noKeepsakes": "Keepsakes start at Lv.{level} — the first is a bird's nest."
+    "garden": "Last 5 weeks",
+    "daysStudied": "{n} of {total} days studied"
   }
 }

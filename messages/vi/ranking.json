@@ -55,6 +55,7 @@
   "peek": {
     "close": "Đóng",
     "height": "cao {m} m",
-    "noKeepsakes": "Kỷ vật bắt đầu từ Lv.{level} — đầu tiên là một tổ chim."
+    "garden": "5 tuần gần đây",
+    "daysStudied": "Đã học {n}/{total} ngày"
   }
 }

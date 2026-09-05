@@ -55,6 +55,7 @@
   "peek": {
     "close": "关闭",
     "height": "高 {m} 米",
-    "noKeepsakes": "纪念品从 Lv.{level} 开始——第一个是鸟巢。"
+    "garden": "最近 5 周",
+    "daysStudied": "{total} 天中学习了 {n} 天"
   }
 }

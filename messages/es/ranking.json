@@ -55,6 +55,7 @@
   "peek": {
     "close": "Cerrar",
     "height": "{m} m de altura",
-    "noKeepsakes": "Los recuerdos empiezan en Nv.{level} — el primero es un nido."
+    "garden": "Últimas 5 semanas",
+    "daysStudied": "{n} de {total} días de estudio"
   }
 }

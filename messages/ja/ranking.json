@@ -55,6 +55,7 @@
   "peek": {
     "close": "閉じる",
     "height": "高さ {m} m",
-    "noKeepsakes": "記念品は Lv.{level} から。最初は鳥の巣です。"
+    "garden": "直近5週間",
+    "daysStudied": "{total}日中{n}日 学習"
   }
 }
