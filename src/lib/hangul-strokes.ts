@@ -117,12 +117,13 @@ const COMPOUND_VOWELS: Record<string, HangulStroke[]> = {
   // The w-shaped pairs are hand-set rather than two base vowels squeezed
   // together: squeezing kept ㅏ/ㅓ's full-length bar, which read as an H
   // (ㅙ) or just too long (ㅘ ㅝ ㅞ). Here the second vowel's bar is short,
-  // and ㅗ/ㅜ sit in the letter's lower half, not up where a consonant goes.
-  ㅘ: [{ d: "M28,20 L28,56" }, { d: "M8,56 L48,56" }, { d: "M70,14 L70,86" }, { d: "M70,50 L86,50" }],
-  ㅙ: [{ d: "M24,20 L24,56" }, { d: "M6,56 L42,56" }, { d: "M60,14 L60,86" }, { d: "M60,50 L74,50" }, { d: "M78,14 L78,86" }],
-  ㅚ: [{ d: "M32,42 L32,74" }, { d: "M10,74 L54,74" }, { d: "M74,14 L74,86" }],
-  ㅝ: [{ d: "M6,42 L48,42" }, { d: "M27,42 L27,80" }, { d: "M62,50 L80,50" }, { d: "M80,14 L80,86" }],
-  ㅞ: [{ d: "M6,42 L46,42" }, { d: "M26,42 L26,80" }, { d: "M52,50 L64,50" }, { d: "M64,14 L64,86" }, { d: "M80,14 L80,86" }],
+  // and ㅗ/ㅜ sit low, with a short stem, leaving the upper-left free for the
+  // consonant that shares the syllable block with them.
+  ㅘ: [{ d: "M28,44 L28,70" }, { d: "M8,70 L48,70" }, { d: "M70,14 L70,86" }, { d: "M70,50 L86,50" }],
+  ㅙ: [{ d: "M24,44 L24,70" }, { d: "M6,70 L42,70" }, { d: "M60,14 L60,86" }, { d: "M60,50 L74,50" }, { d: "M78,14 L78,86" }],
+  ㅚ: [{ d: "M32,46 L32,72" }, { d: "M10,72 L54,72" }, { d: "M74,14 L74,86" }],
+  ㅝ: [{ d: "M6,56 L48,56" }, { d: "M27,56 L27,80" }, { d: "M62,50 L80,50" }, { d: "M80,14 L80,86" }],
+  ㅞ: [{ d: "M6,56 L46,56" }, { d: "M26,56 L26,80" }, { d: "M52,50 L64,50" }, { d: "M64,14 L64,86" }, { d: "M80,14 L80,86" }],
   ㅟ: [{ d: "M8,56 L56,56" }, { d: "M32,56 L32,82" }, { d: "M74,14 L74,86" }],
   ㅢ: [{ d: "M10,60 L60,60" }, { d: "M74,14 L74,86" }],
 };
