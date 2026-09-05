@@ -1,5 +1,6 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { VocabWord } from "@/lib/vocabulary";
+import { nextReviewAt } from "@/lib/srs";
 
 // Tap-to-save word bank: maps a Korean surface form found in listening /
 // reading / grammar / slang text back to a word in the daily-life deck, so
@@ -114,9 +115,10 @@ export function wordBankKey(topicKey: string, level: string, korean: string): st
 }
 
 /**
- * Plant a word into vocabulary_progress (box 1, due now). A word that is
- * already there keeps its box and counts — the upsert ignores duplicates.
- * Resolves to an error message, or null on success.
+ * Plant a word into vocabulary_progress (box 1, due tomorrow — same floor as
+ * every other box-1 word, see nextReviewAt). A word that is already there
+ * keeps its box and counts — the upsert ignores duplicates. Resolves to an
+ * error message, or null on success.
  */
 export async function plantWord(
   supabase: SupabaseClient,
@@ -130,7 +132,11 @@ export async function plantWord(
       correct_count: 0,
       incorrect_count: 0,
       box: 1,
-      next_review_at: new Date().toISOString(),
+      // Due tomorrow, not immediately — a word saved today must not be able
+      // to show up in today's review queue. Same floor every other box-1
+      // word already gets from nextReviewAt(); this was the one write that
+      // bypassed it with a bare "now".
+      next_review_at: nextReviewAt(1),
       last_reviewed_at: null,
     },
     { onConflict: "user_id,word_key", ignoreDuplicates: true }
@@ -194,7 +200,8 @@ export type SaveResult =
 
 /**
  * Pick a word into the bank, respecting the cap. An existing row is flagged
- * saved (its box and counts survive); a new one starts at box 1, due now.
+ * saved (its box and counts survive); a new one starts at box 1, due
+ * tomorrow — see plantWord.
  */
 export async function saveToBank(
   supabase: SupabaseClient,
@@ -223,7 +230,7 @@ export async function saveToBank(
     correct_count: 0,
     incorrect_count: 0,
     box: 1,
-    next_review_at: new Date().toISOString(),
+    next_review_at: nextReviewAt(1),
     last_reviewed_at: null,
     saved: true,
   });
