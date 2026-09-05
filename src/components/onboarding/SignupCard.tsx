@@ -207,7 +207,6 @@ export function ConfirmCard({
             onChange={(e) => setCode(cleanCode(e.target.value))}
             inputMode="numeric"
             pattern="[0-9]*"
-            maxLength={CODE_LENGTH}
             autoComplete="one-time-code"
             autoFocus
             placeholder="••••••••"

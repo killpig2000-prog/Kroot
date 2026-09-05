@@ -280,7 +280,6 @@ export default function LoginPage() {
                       onChange={(e) => setCode(cleanCode(e.target.value))}
                       inputMode="numeric"
                       pattern="[0-9]*"
-                      maxLength={CODE_LENGTH}
                       autoComplete="one-time-code"
                       placeholder="••••••••"
                       // This input sits inside the password form: Enter must
