@@ -2,17 +2,33 @@
    Deliberately minimal — pages are server-rendered per user, so we don't
    cache HTML; only the offline page and static icons. */
 
-const CACHE = "kroot-static-v1";
+const CACHE = "kroot-static-v2";
 const OFFLINE_URL = "/offline";
 const PRECACHE = [OFFLINE_URL, "/icon-192.png", "/icon-512.png", "/icon.svg"];
 
-self.addEventListener("install", (event) => {
-  event.waitUntil(
-    caches
-      .open(CACHE)
-      .then((cache) => cache.addAll(PRECACHE))
-      .then(() => self.skipWaiting())
+// cache.addAll() was fatal here for anyone not on the default locale. The
+// proxy redirects a bare "/offline" to "/<locale>/offline" (see src/proxy.ts),
+// Cache.put refuses a redirected response, and addAll is all-or-nothing — so
+// install rejected, the worker never activated, and those learners got no
+// offline page *and* no push at all. Each entry is fetched and re-wrapped as a
+// plain response on its own now, so one bad URL can't take the install down.
+async function precache() {
+  const cache = await caches.open(CACHE);
+  await Promise.all(
+    PRECACHE.map(async (url) => {
+      try {
+        const res = await fetch(url, { credentials: "same-origin" });
+        if (!res.ok) return;
+        await cache.put(url, new Response(await res.blob(), { status: 200, headers: res.headers }));
+      } catch {
+        // A single missing asset must not stop the worker from installing.
+      }
+    })
   );
+}
+
+self.addEventListener("install", (event) => {
+  event.waitUntil(precache().then(() => self.skipWaiting()));
 });
 
 self.addEventListener("activate", (event) => {

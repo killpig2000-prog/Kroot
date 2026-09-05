@@ -56,7 +56,17 @@ export default function SeasonalEffects() {
   );
   const enabled = useSyncExternalStore(
     subscribeToggle,
-    () => SEASON_ON.test(document.cookie),
+    // This snapshot runs during render, so a throw here takes the whole page
+    // down to the error boundary — and document.cookie can throw outright when
+    // site data is blocked (private windows, sandboxed frames, strict
+    // enterprise policies). A decorative layer must never be able to do that.
+    () => {
+      try {
+        return SEASON_ON.test(document.cookie);
+      } catch {
+        return false;
+      }
+    },
     () => false,
   );
 

@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import LevelTabs from "@/components/ui/LevelTabs";
 import { Link, redirect } from "@/i18n/navigation";
@@ -38,6 +39,9 @@ export default async function SituationPage({
   const myLevel = (profile?.current_level ?? "A1") as CefrLevel;
   const level = isCefrLevel(sp.level) ? sp.level : myLevel;
   const situation = situationByKey(situationKey);
+  // /listening/anything-at-all used to render, echoing the raw URL segment as
+  // the page heading over a "no clips" card. There is no such situation.
+  if (!situation) notFound();
   const dialogues = dialoguesFor(level, situationKey);
   // `?clip=` opens the player straight away (Continue hero, dashboard resume).
   const initialOpenId = sp.clip && dialogues.some((d) => d.id === sp.clip) ? sp.clip : null;
@@ -55,9 +59,7 @@ export default async function SituationPage({
     completedIds = (progressRows ?? []).filter((p) => p.completed_at).map((p) => p.dialogue_id);
   }
 
-  const meta = situation
-    ? { ...situation, label: ts(`${situation.key}.label`), sub: "" }
-    : { key: situationKey, label: situationKey, krLabel: "", icon: "🎧", sub: "", tint: "#EFE9DC" };
+  const meta = { ...situation, label: ts(`${situation.key}.label`), sub: "" };
 
   const levelTabs = (
     <LevelTabs

@@ -18,8 +18,15 @@ export default function SplashScreen() {
 
   useEffect(() => {
     if (!isStandalone()) return;
-    if (sessionStorage.getItem(SHOWN_KEY)) return;
-    sessionStorage.setItem(SHOWN_KEY, "1");
+    // Storage throws outright when site data is blocked, and a throw in an
+    // effect reaches the error boundary — a splash screen must not be able to
+    // take the app down. Worst case it replays within the session.
+    try {
+      if (sessionStorage.getItem(SHOWN_KEY)) return;
+      sessionStorage.setItem(SHOWN_KEY, "1");
+    } catch {
+      // no once-per-session memory available; show it and move on
+    }
     // Syncing from an external, mount-time-only signal (display-mode + a
     // one-shot sessionStorage flag) — there's no way to know this before an
     // effect runs, so this isn't the render-derivable state the rule expects.

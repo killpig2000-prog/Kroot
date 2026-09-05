@@ -8,8 +8,15 @@ function awardedKey(dialogueId: string) {
 
 export function loadAwardedRatio(dialogueId: string): number {
   if (typeof window === "undefined") return 0;
-  const n = Number(window.localStorage.getItem(awardedKey(dialogueId)) ?? 0);
-  return Number.isFinite(n) ? Math.max(0, Math.min(1, n)) : 0;
+  // The writers below are guarded; this reader wasn't, and it runs inside the
+  // clip-completion handler — where a private-window throw would reject the
+  // whole save rather than just losing a resume hint.
+  try {
+    const n = Number(window.localStorage.getItem(awardedKey(dialogueId)) ?? 0);
+    return Number.isFinite(n) ? Math.max(0, Math.min(1, n)) : 0;
+  } catch {
+    return 0;
+  }
 }
 
 export function saveAwardedRatio(dialogueId: string, ratio: number) {

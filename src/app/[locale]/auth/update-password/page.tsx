@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
 import Mascot from "@/components/onboarding/Mascot";
@@ -25,6 +25,25 @@ export default function UpdatePasswordPage() {
   const [submitting, setSubmitting] = useState(false);
   const hydrated = useHydrated();
   const busy = submitting || !hydrated;
+  // A recovery link opens a session; landing here without one (typed URL, an
+  // old bookmark, a second click on a spent link) used to render a fully
+  // working form that only revealed it was dead *after* both fields were
+  // filled in and submitted. Check up front instead.
+  const [linkDead, setLinkDead] = useState(false);
+  useEffect(() => {
+    let cancelled = false;
+    supabase.auth
+      .getUser()
+      .then(({ data: { user } }) => {
+        if (!cancelled && !user) setLinkDead(true);
+      })
+      .catch(() => {
+        // Offline: let them try — updateUser() reports the real reason.
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [supabase]);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -91,6 +110,15 @@ export default function UpdatePasswordPage() {
             <p className="text-center text-muted text-[13.5px] mb-6">
               {t("update.sub")}
             </p>
+
+            {linkDead && (
+              <p role="status" className="mb-4 rounded-[10px] border border-amber-line bg-[var(--tint-amber)] px-4 py-2.5 text-[13px]">
+                {t("errors.resetLinkExpired")}{" "}
+                <Link href="/auth/forgot-password" className="font-semibold underline">
+                  {t("update.requestNewLink")}
+                </Link>
+              </p>
+            )}
 
             <form method="post" onSubmit={handleSubmit}>
               <div className="mb-3.5">

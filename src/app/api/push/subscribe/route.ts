@@ -39,7 +39,11 @@ export async function POST(request: Request) {
   }
 
   // Subscribing implies the push reminder is wanted.
-  await supabase.from("profiles").update({ reminder_push: true }).eq("id", user.id);
+  const { error: flagErr } = await supabase.from("profiles").update({ reminder_push: true }).eq("id", user.id);
+  if (flagErr) {
+    console.error("push subscribe flag failed:", flagErr.message);
+    return NextResponse.json({ error: "store_failed" }, { status: 500 });
+  }
   await trackServer(supabase, user.id, "push_subscribed");
   return NextResponse.json({ ok: true });
 }
@@ -59,11 +63,32 @@ export async function DELETE(request: Request) {
   }
   if (!body.endpoint) return NextResponse.json({ error: "bad_endpoint" }, { status: 400 });
 
-  await supabase.from("push_subscriptions").delete().eq("user_id", user.id).eq("endpoint", body.endpoint);
-  const { count } = await supabase
+  // These errors used to be dropped on the floor and the route answered
+  // { ok: true } regardless — so a failed delete told the learner they'd
+  // unsubscribed while the reminders kept arriving.
+  const { error: delErr } = await supabase
+    .from("push_subscriptions")
+    .delete()
+    .eq("user_id", user.id)
+    .eq("endpoint", body.endpoint);
+  if (delErr) {
+    console.error("push unsubscribe failed:", delErr.message);
+    return NextResponse.json({ error: "store_failed" }, { status: 500 });
+  }
+  const { count, error: countErr } = await supabase
     .from("push_subscriptions")
     .select("id", { count: "exact", head: true })
     .eq("user_id", user.id);
-  if ((count ?? 0) === 0) await supabase.from("profiles").update({ reminder_push: false }).eq("id", user.id);
+  if (countErr) {
+    console.error("push subscription count failed:", countErr.message);
+    return NextResponse.json({ error: "store_failed" }, { status: 500 });
+  }
+  if ((count ?? 0) === 0) {
+    const { error: flagErr } = await supabase.from("profiles").update({ reminder_push: false }).eq("id", user.id);
+    if (flagErr) {
+      console.error("push unsubscribe flag failed:", flagErr.message);
+      return NextResponse.json({ error: "store_failed" }, { status: 500 });
+    }
+  }
   return NextResponse.json({ ok: true });
 }

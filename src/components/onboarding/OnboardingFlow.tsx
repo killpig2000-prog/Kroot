@@ -350,18 +350,27 @@ export default function OnboardingFlow({
   }
 
   async function google() {
-    if (!placement) return;
+    if (!placement || sending) return;
     setError(null);
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(callbackNext(placement))}`,
-        // Always show Google's account chooser instead of silently reusing
-        // the last session — many learners share devices or test accounts.
-        queryParams: { prompt: "select_account" },
-      },
-    });
-    if (error) setError(t(`errors.${authErrorKey(error)}`));
+    setSending(true);
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(callbackNext(placement))}`,
+          // Always show Google's account chooser instead of silently reusing
+          // the last session — many learners share devices or test accounts.
+          queryParams: { prompt: "select_account" },
+        },
+      });
+      if (error) setError(t(`errors.${authErrorKey(error)}`));
+    } catch {
+      // Offline, this rejected unhandled: the tap did nothing and said
+      // nothing, and the button stayed live as if it hadn't been pressed.
+      setError(t("errors.network"));
+    } finally {
+      setSending(false);
+    }
   }
 
   // Email + password. The password is what every later login uses; the

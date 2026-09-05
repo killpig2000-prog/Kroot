@@ -83,17 +83,29 @@ export default function LoginPage() {
   }, [supabase, next]);
 
   async function handleGoogleLogin() {
+    if (submitting) return;
     setError(null);
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}`,
-        // Always show Google's account chooser instead of silently reusing
-        // the last session — many learners share devices or test accounts.
-        queryParams: { prompt: "select_account" },
-      },
-    });
-    if (error) setError(error.message);
+    setSubmitting(true);
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}`,
+          // Always show Google's account chooser instead of silently reusing
+          // the last session — many learners share devices or test accounts.
+          queryParams: { prompt: "select_account" },
+        },
+      });
+      if (error) setError(t(`errors.${authErrorKey(error)}`));
+    } catch {
+      // Offline, this rejected unhandled: the tap did nothing, said nothing,
+      // and the button stayed live as if it had never been pressed.
+      setError(t("errors.network"));
+    } finally {
+      // On success the browser is already navigating to Google; releasing the
+      // flag costs nothing and keeps a cancelled redirect from freezing it.
+      setSubmitting(false);
+    }
   }
 
   async function handleEmailLogin(e: React.FormEvent<HTMLFormElement>) {

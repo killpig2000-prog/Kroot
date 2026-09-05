@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { LEVEL_ORDER } from "@/lib/tree";
 import { speakKorean, prefetchKorean } from "@/lib/tts";
@@ -28,6 +28,7 @@ export default function PlacementQuiz({
   const [picked, setPicked] = useState<number | null>(null);
   const [showText, setShowText] = useState(false);
   const [audioFailed, setAudioFailed] = useState(false);
+  const advanceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const t = useTranslations("onboarding.quiz");
   const tt = useTranslations("onboarding.types");
   const locale = useLocale();
@@ -39,13 +40,23 @@ export default function PlacementQuiz({
     if (q?.audio) prefetchKorean([q.audio]);
   }, [q?.audio]);
 
+  // Pressing Back during the answer-feedback beat used to leave this timer
+  // running: it fired onAnswer() against a run the learner had already
+  // rewound, jumping the flow forward or recording an answer for a question
+  // that was no longer on screen.
+  useEffect(() => () => {
+    if (advanceTimer.current) clearTimeout(advanceTimer.current);
+  }, []);
+
   if (!q) return null;
 
   function pick(i: number) {
     if (picked !== null) return;
     setPicked(i);
     const right = i === q!.ans;
-    setTimeout(() => {
+    if (advanceTimer.current) clearTimeout(advanceTimer.current);
+    advanceTimer.current = setTimeout(() => {
+      advanceTimer.current = null;
       setPicked(null);
       setShowText(false);
       setAudioFailed(false);

@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import { Link, redirect } from "@/i18n/navigation";
 import { getTranslations } from "next-intl/server";
 import BottomNav from "@/components/dashboard/BottomNav";
@@ -33,6 +34,10 @@ export default async function WritingChapterSessionPage({
   const myLevel = (profile?.current_level ?? "A1") as CefrLevel;
   const level = isCefrLevel(sp.level) ? sp.level : myLevel;
   const chapters = getChaptersForLevel(level);
+  // A hand-edited ?chapter= used to render its own number back at the learner
+  // — "Chapter 1000 of 12", with an empty body underneath. There is no such
+  // chapter, so say so properly.
+  if (!Number.isInteger(chapterIndex) || chapterIndex < 0 || chapterIndex >= chapters.length) notFound();
   const prompts = chapters[chapterIndex];
   const hasNextChapter = chapterIndex + 1 < chapters.length;
 

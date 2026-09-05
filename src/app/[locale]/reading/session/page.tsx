@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import { Link, redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
@@ -32,6 +33,9 @@ export default async function ReadingChapterSessionPage({
   const myLevel = (profile?.current_level ?? "A1") as CefrLevel;
   const level = isCefrLevel(sp.level) ? sp.level : myLevel;
   const chapters = getChaptersForLevel(level);
+  // A hand-edited ?chapter= used to echo its own number back — "Chapter 0",
+  // "Chapter 1000" — above an empty body. There is no such chapter.
+  if (!Number.isInteger(chapterIndex) || chapterIndex < 0 || chapterIndex >= chapters.length) notFound();
   const passage = chapters[chapterIndex]?.[0];
   const hasNextChapter = chapterIndex + 1 < chapters.length;
 

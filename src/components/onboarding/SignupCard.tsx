@@ -97,7 +97,9 @@ export function SignupCard({
             email path is the one thing that can actually turn people away at
             the door. Pointing the eye at the button that always works is
             free. */}
-        <button type="button" className={`${BTN_GREEN} w-full`} onClick={onGoogle} disabled={!agreed}>
+        {/* `sending` too, not just `agreed`: a second tap while the OAuth
+            redirect is being prepared started a second sign-in. */}
+        <button type="button" className={`${BTN_GREEN} w-full`} onClick={onGoogle} disabled={!agreed || sending}>
           <GoogleMark />
           {t("google")}
         </button>
