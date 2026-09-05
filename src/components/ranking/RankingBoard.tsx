@@ -354,7 +354,7 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
                 )}
                 <div
                   ref={r.is_me ? meRef : undefined}
-                  className={`grid grid-cols-[22px_46px_minmax(0,1fr)_auto] items-center gap-2.5 px-2.5 py-1.5 rounded-[11px] border text-[13.5px] scroll-mt-24 ${
+                  className={`grid grid-cols-[22px_66px_minmax(0,1fr)_auto] items-center gap-2.5 px-2.5 py-1.5 rounded-[11px] border text-[13.5px] scroll-mt-24 ${
                     r.is_me
                       ? "bg-[#FEF9C3] border-[#ECD98A] -rotate-[0.4deg] shadow-[0_8px_18px_-12px_rgba(120,100,30,.4)] text-[#2A2622]"
                       : "bg-cream border-line"
