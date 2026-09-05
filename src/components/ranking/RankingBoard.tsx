@@ -8,6 +8,7 @@ import LevelCreature from "@/components/dashboard/LevelCreature";
 import { treeStageForLevel } from "@/lib/level";
 import { SceneLayer, skyFor } from "@/lib/costumes";
 import { daysUntilWeekEnd, leagueTier, LEAGUE_TIERS } from "@/lib/league";
+import TreePeek from "@/components/ranking/TreePeek";
 import type { CefrLevel } from "@/lib/tree";
 
 type Row = {
@@ -39,24 +40,30 @@ const RIBBON = [
 // used only to phrase the nudge as "one session" vs "a couple of sessions".
 const SESSION_XP = 30;
 
+// A thumbnail shows the crown only — a Lv.50+ tree is taller than any box
+// here — so every one is a button that opens TreePeek with the whole tree.
 function Tree({
   row,
   species,
   size,
   className = "",
+  onOpen,
 }: {
   row: Row;
   species: CefrLevel;
   size: number;
   className?: string;
+  onOpen: (row: Row) => void;
 }) {
   const ids = row.costume_ids ?? [];
   const sky = skyFor(ids);
   return (
-    <span
-      className={`flex-none rounded-[12px] bg-success-bg border border-success-line overflow-hidden flex items-end justify-center ${className}`}
+    <button
+      type="button"
+      onClick={() => onOpen(row)}
+      aria-label={row.display_name}
+      className={`flex-none rounded-[12px] bg-success-bg border border-success-line overflow-hidden flex items-end justify-center cursor-zoom-in hover:brightness-105 active:scale-95 transition ${className}`}
       style={{ width: size, height: size, ...(sky ? { background: sky } : {}) }}
-      aria-hidden="true"
     >
       {/* The whole 220x230 scene (same frame as the dashboard and shop): the
           old 160x160 crop cut the canopy and sky off every tree and lost the
@@ -66,7 +73,7 @@ function Tree({
         <LevelCreature level={treeStageForLevel(row.level)} costumeIds={ids} species={species} />
         <SceneLayer costumeIds={ids} layer="front" />
       </svg>
-    </span>
+    </button>
   );
 }
 
@@ -93,6 +100,7 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
   // lives in league_settings (migration 0069); true is assumed until read so
   // an environment without the table behaves as before.
   const [bedsEnabled, setBedsEnabled] = useState(true);
+  const [peek, setPeek] = useState<Row | null>(null);
   const [unavailable, setUnavailable] = useState(false);
   const meRef = useRef<HTMLDivElement>(null);
 
@@ -214,6 +222,17 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
 
   return (
     <div className="grid gap-3.5 max-w-[560px] min-w-0">
+      {peek && (
+        <TreePeek
+          name={peek.display_name}
+          level={peek.level}
+          xpWeek={peek.xp_week}
+          species={species}
+          costumeIds={peek.costume_ids ?? []}
+          isMe={peek.is_me}
+          onClose={() => setPeek(null)}
+        />
+      )}
       {/* head: title · bed chip (with last week's move) · gardeners · days left */}
       <div className="grid gap-2">
         <h1 className="font-bold text-[22px] tracking-[-0.02em] flex items-center">
@@ -277,7 +296,7 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
                   >
                     {r.rank}
                   </span>
-                  <Tree row={r} species={species} size={size} className={r.is_me ? "ring-2 ring-[#ECD98A]" : ""} />
+                  <Tree row={r} species={species} size={size} className={r.is_me ? "ring-2 ring-[#ECD98A]" : ""} onOpen={setPeek} />
                   <b className="text-[12px] leading-none truncate max-w-full mt-1">
                     {r.display_name}
                     {r.is_me && <span className="text-success text-[10.5px] font-bold ml-1">{t("row.you")}</span>}
@@ -337,7 +356,7 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
                   }`}
                 >
                   <span className={`font-black tabular-nums text-[12.5px] ${r.is_me ? "" : "text-faint"}`}>{r.rank}</span>
-                  <Tree row={r} species={species} size={66} />
+                  <Tree row={r} species={species} size={66} onOpen={setPeek} />
                   <span className="min-w-0">
                     <b className="block truncate">
                       {r.display_name}

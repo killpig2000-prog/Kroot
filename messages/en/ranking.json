@@ -51,5 +51,10 @@
     "up": "↑ moved up this week",
     "down": "↓ moved down this week"
   },
-  "unavailable": "The fair opens once the database is updated. Check back in a moment."
+  "unavailable": "The fair opens once the database is updated. Check back in a moment.",
+  "peek": {
+    "close": "Close",
+    "height": "{m} m tall",
+    "noKeepsakes": "Keepsakes start at Lv.{level} — the first is a bird's nest."
+  }
 }

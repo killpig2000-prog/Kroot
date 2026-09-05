@@ -51,5 +51,10 @@
     "up": "↑ subiste esta semana",
     "down": "↓ bajaste esta semana"
   },
-  "unavailable": "La feria abre cuando se actualice la base de datos. Vuelve en un momento."
+  "unavailable": "La feria abre cuando se actualice la base de datos. Vuelve en un momento.",
+  "peek": {
+    "close": "Cerrar",
+    "height": "{m} m de altura",
+    "noKeepsakes": "Los recuerdos empiezan en Nv.{level} — el primero es un nido."
+  }
 }

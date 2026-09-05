@@ -51,5 +51,10 @@
     "up": "↑ lên luống tuần này",
     "down": "↓ xuống luống tuần này"
   },
-  "unavailable": "Hội chợ sẽ mở sau khi cập nhật cơ sở dữ liệu. Vui lòng quay lại sau."
+  "unavailable": "Hội chợ sẽ mở sau khi cập nhật cơ sở dữ liệu. Vui lòng quay lại sau.",
+  "peek": {
+    "close": "Đóng",
+    "height": "cao {m} m",
+    "noKeepsakes": "Kỷ vật bắt đầu từ Lv.{level} — đầu tiên là một tổ chim."
+  }
 }

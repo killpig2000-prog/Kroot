@@ -51,5 +51,10 @@
     "up": "↑ 本周升级",
     "down": "↓ 本周降级"
   },
-  "unavailable": "数据库更新后花展即将开放，请稍后再来。"
+  "unavailable": "数据库更新后花展即将开放，请稍后再来。",
+  "peek": {
+    "close": "关闭",
+    "height": "高 {m} 米",
+    "noKeepsakes": "纪念品从 Lv.{level} 开始——第一个是鸟巢。"
+  }
 }
