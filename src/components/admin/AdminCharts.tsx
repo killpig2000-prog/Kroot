@@ -53,9 +53,10 @@ export function DayBarChart({ data, color = "var(--c-teal)" }: { data: { day: st
         const x = pad + i * bw;
         return (
           <rect key={d.day} x={x + 1} y={H - 22 - h} width={Math.max(1, bw - 2)} height={h} rx={2.5} fill={color}>
-            <title>
-              {d.day} · {d.value}
-            </title>
+            {/* One string, not text+value nodes: React needs a single child
+                in <title>, and the array form was a hydration mismatch that
+                re-rendered the whole admin tree on the client. */}
+            <title>{`${d.day} · ${d.value}`}</title>
           </rect>
         );
       })}
