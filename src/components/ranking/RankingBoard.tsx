@@ -226,6 +226,9 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
 
   const active = (rows ?? []).filter((r) => r.xp_week > 0);
   const podium = active.slice(0, 3);
+  // The board below starts where the podium ends — a top-3 gardener is on
+  // the podium, not repeated as a row.
+  const listRows = rows ? rows.filter((r) => !podium.some((p) => p.rank === r.rank)) : null;
   const freshWeek = rows !== null && active.length === 0;
   const meRow = rows?.find((r) => r.is_me) ?? null;
   const meIdx = rows?.findIndex((r) => r.is_me) ?? -1;
@@ -312,7 +315,7 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
             {[podium[1], podium[0], podium[2]].map((r, i) => {
               if (!r) return <div key={`empty-${i}`} />;
               const place = Math.min(r.rank - 1, 2); // 0-based step index
-              const size = i === 1 ? 104 : i === 0 ? 86 : 78;
+              const size = i === 1 ? 124 : i === 0 ? 102 : 94;
               const step = STEP[place];
               return (
                 <div key={r.rank} className="relative flex flex-col items-center gap-0.5">
@@ -341,15 +344,15 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
 
       {/* the board */}
       <div className="grid gap-1">
-        {rows === null ? (
+        {listRows === null ? (
           <p className="px-2 py-5 text-[13.5px] text-faint">{t("zone.loading")}</p>
-        ) : rows.length === 0 ? (
+        ) : rows && rows.length === 0 ? (
           <p className="px-2 py-5 text-[13.5px] text-faint">{t("zone.empty")}</p>
         ) : (
-          rows.map((r, i) => {
+          listRows.map((r, i) => {
             const zone = zoneOf(r);
-            const prevZone = i > 0 ? zoneOf(rows[i - 1]) : null;
-            const gap = i > 0 && r.rank - rows[i - 1].rank > 1;
+            const prevZone = i > 0 ? zoneOf(listRows[i - 1]) : null;
+            const gap = i > 0 && r.rank - listRows[i - 1].rank > 1;
             const showZone = bedsEnabled && !freshWeek && (i === 0 || zone !== prevZone);
             return (
               <div key={`${r.rank}-${r.display_name}`} className="grid gap-1">
