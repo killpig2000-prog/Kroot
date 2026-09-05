@@ -31,11 +31,12 @@ type MyRank = {
 };
 type Reward = { coins: number; rank: number; total_players: number; already_claimed: boolean };
 
-// County-fair rosettes for the podium: blue · red · yellow, in that order.
-const RIBBON = [
-  { bg: "#3363CC", fg: "#FFFFFF" },
-  { bg: "#C13E4A", fg: "#FFFFFF" },
-  { bg: "#F4C94F", fg: "#5C4A0E" },
+// Podium steps: gold · silver · bronze, tallest first. The number sits on
+// the step itself, like a real medal ceremony.
+const STEP = [
+  { bg: "linear-gradient(180deg, #FFE68A 0%, #E9B93A 55%, #C8951F 100%)", edge: "#B7861A", fg: "#5C4A0E", h: 30 },
+  { bg: "linear-gradient(180deg, #F3F4F6 0%, #C9CED6 55%, #A6ADB8 100%)", edge: "#8E96A3", fg: "#374151", h: 20 },
+  { bg: "linear-gradient(180deg, #E9B98F 0%, #C98552 55%, #A66A3C 100%)", edge: "#8F5A32", fg: "#4A2E14", h: 14 },
 ] as const;
 
 // XP a single practice session typically pays (award_xp is capped at 100);
@@ -294,26 +295,25 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
             {/* 2nd · 1st · 3rd — the podium order */}
             {[podium[1], podium[0], podium[2]].map((r, i) => {
               if (!r) return <div key={`empty-${i}`} />;
-              const place = r.rank - 1; // 0-based ribbon index
+              const place = Math.min(r.rank - 1, 2); // 0-based step index
               const size = i === 1 ? 104 : i === 0 ? 86 : 78;
-              const lift = i === 1 ? 18 : i === 0 ? 7 : 0;
-              const ribbon = RIBBON[Math.min(place, 2)];
+              const step = STEP[place];
               return (
-                <div key={r.rank} className="relative flex flex-col items-center gap-0.5" style={{ paddingBottom: lift }}>
-                  <span
-                    className="absolute -top-1 right-[16%] w-5 h-5 rounded-full grid place-items-center text-[10px] font-black shadow-[0_2px_0_rgba(0,0,0,.15)] z-10"
-                    style={{ background: ribbon.bg, color: ribbon.fg }}
-                    aria-label={`#${r.rank}`}
-                  >
-                    {r.rank}
-                  </span>
+                <div key={r.rank} className="relative flex flex-col items-center gap-0.5">
                   <Tree row={r} species={species} size={size} className={r.is_me ? "ring-2 ring-[#ECD98A]" : ""} onOpen={setPeek} />
                   <b className="text-[12px] leading-none truncate max-w-full mt-1">
                     {r.display_name}
                     {r.is_me && <span className="text-success text-[10.5px] font-bold ml-1">{t("row.you")}</span>}
                   </b>
                   <span className="text-[11px] text-muted tabular-nums">{t("fair.sun", { n: r.xp_week })}</span>
-                  <span className="w-full h-1.5 rounded-t-full bg-[#C9AC7E]/80 mt-0.5" aria-hidden="true" />
+                  {/* the step: gold / silver / bronze, 1st the tallest, rank on its face */}
+                  <span
+                    className="w-full rounded-t-[8px] mt-1 grid place-items-center font-black tabular-nums leading-none shadow-[inset_0_2px_0_rgba(255,255,255,.55)]"
+                    style={{ height: step.h, background: step.bg, color: step.fg, borderTop: `1.5px solid ${step.edge}`, fontSize: place === 0 ? 15 : 12 }}
+                    aria-label={`#${r.rank}`}
+                  >
+                    {r.rank}
+                  </span>
                 </div>
               );
             })}
