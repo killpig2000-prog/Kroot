@@ -57,8 +57,6 @@
     "locked": "🔒 Nv.{level}",
     "price": "🪙 {price}",
     "free": "Gratis",
-    "goal": "· tu meta · {ready, select, yes {ya puedes comprarlo} other {te faltan {n}}}{hasLevel, select, yes { · Nv.{level}} other {}}",
-    "setGoal": "Fijar como meta",
     "opens": "✦ Edición limitada"
   },
   "empty": "Aquí no hay nada a la venta ahora mismo — vuelve la próxima temporada.",
@@ -71,23 +69,9 @@
     "selected": "{name} · {krName}",
     "outfitTotal": "{n, plural, one {# artículo sin comprar} other {# artículos sin comprar}} para completar este look · 🪙 {price} en total"
   },
-  "picker": {
-    "change": "Cambiar ▾",
-    "auto": "El siguiente objeto más barato (automático)",
-    "price": "🪙 {price}{hasLevel, select, yes { · Nv.{level}} other {}}"
-  },
   "goal": {
     "earnNote": "· ganas {quest} por misión diaria y {bonus} cada diez niveles",
-    "doQuest": "Hacer la misión de hoy →",
-    "savingFor": "Ahorrando para <b>{name}</b>",
-    "needsLevel": " · requiere Nv.{level}",
-    "progressLabel": "Monedas ahorradas para {name}",
-    "savedLocked": "Ya ahorrado · se desbloquea en el Nv.{level}",
-    "buyNow": "Ya puedes comprarlo →",
-    "questsToGo": "{n, plural, one {# misión más} other {# misiones más}}",
-    "orBonus": " · o el bonus del Nv.{level} (+{coins})",
-    "questDone": "Misión de hoy hecha ✓",
-    "questReady": "La misión de hoy te espera ✏️"
+    "doQuest": "Hacer la misión de hoy →"
   },
   "freeze": {
     "title": "Congelar racha",

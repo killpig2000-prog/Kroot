@@ -57,8 +57,6 @@
     "locked": "🔒 Lv.{level}",
     "price": "🪙 {price}",
     "free": "Miễn phí",
-    "goal": "· mục tiêu của bạn · {ready, select, yes {mua được rồi} other {còn thiếu {n}}}{hasLevel, select, yes { · Lv.{level}} other {}}",
-    "setGoal": "Đặt làm mục tiêu",
     "opens": "✦ Phiên bản giới hạn"
   },
   "empty": "Ở đây chưa có gì được bán — hãy ghé lại vào mùa sau.",
@@ -71,23 +69,9 @@
     "selected": "{name} · {krName}",
     "outfitTotal": "{n} món chưa sở hữu để hoàn thiện trang phục này · tổng cộng 🪙 {price}"
   },
-  "picker": {
-    "change": "Đổi ▾",
-    "auto": "Món rẻ nhất tiếp theo (tự động)",
-    "price": "🪙 {price}{hasLevel, select, yes { · Lv.{level}} other {}}"
-  },
   "goal": {
     "earnNote": "· mỗi nhiệm vụ hằng ngày được {quest}, mỗi 10 cấp được {bonus}",
-    "doQuest": "Làm nhiệm vụ hôm nay →",
-    "savingFor": "Đang để dành cho <b>{name}</b>",
-    "needsLevel": " · cần Lv.{level}",
-    "progressLabel": "Số xu đã dành cho {name}",
-    "savedLocked": "Đã đủ xu · mở khoá ở Lv.{level}",
-    "buyNow": "Bạn mua được ngay rồi →",
-    "questsToGo": "còn {n} nhiệm vụ nữa",
-    "orBonus": " · hoặc thưởng Lv.{level} (+{coins})",
-    "questDone": "Đã xong nhiệm vụ hôm nay ✓",
-    "questReady": "Nhiệm vụ hôm nay đang chờ ✏️"
+    "doQuest": "Làm nhiệm vụ hôm nay →"
   },
   "freeze": {
     "title": "Thẻ giữ chuỗi",

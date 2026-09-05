@@ -57,8 +57,6 @@
     "locked": "🔒 Lv.{level}",
     "price": "🪙 {price}",
     "free": "無料",
-    "goal": "· 目標 · {ready, select, yes {購入できます} other {あと {n}}}{hasLevel, select, yes { · Lv.{level}} other {}}",
-    "setGoal": "目標にする",
     "opens": "✦ 限定版"
   },
   "empty": "ここは今、販売中のアイテムがありません — 次の季節にまた覗いてみてください。",
@@ -71,23 +69,9 @@
     "selected": "{name} · {krName}",
     "outfitTotal": "この見た目を完成させるには未所持アイテムが{n}個 · 合計 🪙 {price}"
   },
-  "picker": {
-    "change": "変更 ▾",
-    "auto": "いちばん安い次のアイテム（自動）",
-    "price": "🪙 {price}{hasLevel, select, yes { · Lv.{level}} other {}}"
-  },
   "goal": {
     "earnNote": "· デイリークエストで {quest}、10レベルごとに {bonus} もらえます",
-    "doQuest": "今日のクエストをやる →",
-    "savingFor": "<b>{name}</b> のために貯金中",
-    "needsLevel": " · Lv.{level} が必要",
-    "progressLabel": "{name} のために貯めたコイン",
-    "savedLocked": "貯まりました · Lv.{level} で解放",
-    "buyNow": "もう購入できます →",
-    "questsToGo": "あとクエスト {n}回",
-    "orBonus": " · または Lv.{level} のボーナス（+{coins}）",
-    "questDone": "今日のクエスト完了 ✓",
-    "questReady": "今日のクエストが待っています ✏️"
+    "doQuest": "今日のクエストをやる →"
   },
   "freeze": {
     "title": "ストリークフリーズ",

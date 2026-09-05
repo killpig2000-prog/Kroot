@@ -57,8 +57,6 @@
     "locked": "🔒 Lv.{level}",
     "price": "🪙 {price}",
     "free": "Free",
-    "goal": "· your goal · {ready, select, yes {ready to buy} other {{n} to go}}{hasLevel, select, yes { · Lv.{level}} other {}}",
-    "setGoal": "Set as goal",
     "opens": "✦ Limited edition"
   },
   "empty": "Nothing on sale here right now — check back next season.",
@@ -71,23 +69,9 @@
     "selected": "{name} · {krName}",
     "outfitTotal": "{n, plural, one {# unowned item} other {# unowned items}} to complete this look · 🪙 {price} total"
   },
-  "picker": {
-    "change": "Change ▾",
-    "auto": "Cheapest next item (auto)",
-    "price": "🪙 {price}{hasLevel, select, yes { · Lv.{level}} other {}}"
-  },
   "goal": {
     "earnNote": "· earn {quest} per daily quest, {bonus} at every 10th level",
-    "doQuest": "Do today's quest →",
-    "savingFor": "Saving for <b>{name}</b>",
-    "needsLevel": " · needs Lv.{level}",
-    "progressLabel": "Coins saved toward {name}",
-    "savedLocked": "Saved up · unlocks at Lv.{level}",
-    "buyNow": "You can buy this now →",
-    "questsToGo": "{n, plural, one {# more quest} other {# more quests}}",
-    "orBonus": " · or Lv.{level} bonus (+{coins})",
-    "questDone": "Today's quest done ✓",
-    "questReady": "Today's quest ready ✏️"
+    "doQuest": "Do today's quest →"
   },
   "freeze": {
     "title": "Streak freeze",

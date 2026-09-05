@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
@@ -23,7 +23,7 @@ import {
 } from "@/lib/costumes";
 import type { CefrLevel } from "@/lib/tree";
 import { SPECIES } from "@/lib/tree";
-import ShopGoal, { useStoredGoal, writeStoredGoal } from "@/components/shop/ShopGoal";
+import ShopCoins from "@/components/shop/ShopCoins";
 import GuidedStep from "@/components/onboarding/GuidedStep";
 import { currentGuidedStep } from "@/components/onboarding/guidedSteps";
 
@@ -137,17 +137,6 @@ export default function ShopClient({
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState<{ text: string; good: boolean } | null>(null);
 
-  // ── coin goal ──
-  // A user-picked goal lives in localStorage only (null until hydrated, so
-  // server and client agree). Without one, the goal defaults to the cheapest
-  // unlocked, unowned item the balance doesn't yet cover.
-  const goalOverride = useStoredGoal();
-  const pickerRef = useRef<HTMLDetailsElement>(null);
-  function setGoal(id: string | null) {
-    writeStoredGoal(id);
-    pickerRef.current?.removeAttribute("open");
-  }
-
   const previewIds = Object.values(preview).filter((v): v is string => !!v);
   const previewCostumes = previewIds.map((id) => costumeById(id)).filter((c): c is Costume => !!c);
   const unownedPreview = previewCostumes.filter((c) => !ownedSet.has(c.id));
@@ -160,16 +149,6 @@ export default function ShopClient({
     (c) => c.availableUntil && isAvailable(c, now) && daysLeft(c.availableUntil, today) <= 14 && !ownedSet.has(c.id),
   );
   const selected = preview[tab] ? costumeById(preview[tab]!) : undefined;
-
-  // Anything you could save coins for: on sale or announced, unowned, has a price.
-  const goalCandidates = COSTUMES.filter((c) => !ownedSet.has(c.id) && c.price > 0 && (isAvailable(c, now) || isUpcoming(c, now))).sort(
-    (a, b) => a.price - b.price,
-  );
-  const defaultGoal = goalCandidates.find((c) => !isLevelLocked(c, playerLevel) && c.price > balance);
-  const overrideGoal = goalOverride ? goalCandidates.find((c) => c.id === goalOverride) : undefined;
-  // A stored goal that was since bought (or left the catalog) is ignored and
-  // the default takes over; buying the goal item clears the stored id below.
-  const goal = overrideGoal ?? defaultGoal ?? null;
 
   function toggle(c: Costume) {
     setMessage(null);
@@ -247,7 +226,6 @@ export default function ShopClient({
         }
         if (typeof data === "number") setBalance(data);
         setOwnedSet((s) => new Set(s).add(selected.id));
-        if (goalOverride === selected.id) writeStoredGoal(null);
         // The purchase itself succeeded whatever happens here — say so, but
         // don't claim it's being worn if the equip write didn't land.
         const wearing = await equip(selected);
@@ -306,63 +284,7 @@ export default function ShopClient({
           </Link>
         </div>
       )}
-      <ShopGoal
-        goal={goal}
-        balance={balance}
-        isAdmin={isAdmin}
-        playerLevel={playerLevel}
-        locked={goal ? isLevelLocked(goal, playerLevel) : false}
-        questDone={questDone}
-        preview={goal ? <Scene ids={[goal.id]} stage={stage} species={species} className="w-full h-full" /> : null}
-        picker={
-          goalCandidates.length > 0 ? (
-            <details ref={pickerRef} className="relative inline-block">
-              <summary className="list-none cursor-pointer select-none text-[12px] font-bold text-faint hover:text-charcoal [&::-webkit-details-marker]:hidden">
-                {t("picker.change")}
-              </summary>
-              <div className="absolute left-0 top-full mt-1 z-20 w-[250px] max-h-[264px] overflow-y-auto bg-cream border border-line rounded-[10px] shadow-[0_10px_22px_-12px_rgba(60,50,30,.35)] p-1">
-                {goalOverride && (
-                  <button
-                    type="button"
-                    onClick={() => setGoal(null)}
-                    className="w-full text-left rounded-lg px-2.5 py-1.5 text-[12px] font-semibold text-muted hover:bg-warm"
-                  >
-                    {t("picker.auto")}
-                  </button>
-                )}
-                {goalCandidates.map((c) => {
-                  const isGoal = goal?.id === c.id;
-                  return (
-                    <button
-                      key={c.id}
-                      type="button"
-                      onClick={() => setGoal(c.id)}
-                      className={`w-full text-left flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-[12.5px] hover:bg-warm ${isGoal ? "bg-success-bg" : ""}`}
-                    >
-                      <span aria-hidden="true">{c.icon ?? SLOT_LABELS[c.slot].icon}</span>
-                      <span className="flex-1 min-w-0 truncate font-semibold">{c.name}</span>
-                      <span className="text-muted tabular-nums whitespace-nowrap">
-                        {t("picker.price", {
-                          price: c.price,
-                          hasLevel: isLevelLocked(c, playerLevel) ? "yes" : "no",
-                          level: c.minPlayerLevel ?? 0,
-                        })}
-                      </span>
-                      {isGoal && <span className="text-success font-extrabold">✓</span>}
-                    </button>
-                  );
-                })}
-              </div>
-            </details>
-          ) : null
-        }
-        onBuyNow={() => {
-          if (!goal) return;
-          setTab(goal.slot);
-          setPreview((p) => ({ ...p, [goal.slot]: goal.id }));
-          setMessage(null);
-        }}
-      />
+      <ShopCoins balance={balance} isAdmin={isAdmin} questDone={questDone} />
       <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_300px]">
         {/* ── catalog ── */}
         <div className="p-4 sm:p-5 min-w-0">
@@ -472,10 +394,6 @@ export default function ShopClient({
                     {c.price === 0 ? t("card.free") : t("card.price", { price: c.price })}
                   </span>
                 );
-              // Only items you could save for get the goal control.
-              const goalable = !isOwned && !isAdmin && c.price > 0;
-              const isGoal = goalable && goal?.id === c.id;
-              const toGo = Math.max(0, c.price - balance);
               return (
                 <div
                   key={c.id}
@@ -502,24 +420,6 @@ export default function ShopClient({
                       </span>
                     </span>
                   </button>
-                  {goalable && (
-                    <span className="block px-2.5 pb-2 -mt-1 text-[11px] leading-tight">
-                      {isGoal ? (
-                        <span className="font-bold text-[#B7791F]">
-                          {t("card.goal", {
-                            ready: toGo > 0 ? "no" : "yes",
-                            n: toGo,
-                            hasLevel: locked ? "yes" : "no",
-                            level: c.minPlayerLevel ?? 0,
-                          })}
-                        </span>
-                      ) : (
-                        <button type="button" onClick={() => setGoal(c.id)} className="font-bold text-faint hover:text-charcoal transition-colors">
-                          {t("card.setGoal")}
-                        </button>
-                      )}
-                    </span>
-                  )}
                 </div>
               );
             })}
