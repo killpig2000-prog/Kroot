@@ -101,8 +101,8 @@
     "create": "Create my account"
   },
   "confirm": {
-    "title": "Check your inbox",
-    "sub": "We sent a confirmation link and a code to <b>{email}</b>. Tap the link, or enter the code below — just this once. After that, your password is all you need.",
+    "title": "Enter your code",
+    "sub": "We emailed an 8-digit code to <b>{email}</b>. Type it below — just this once. After that, your password is all you need.",
     "upNext": "Up next",
     "gmail": "Open Gmail",
     "outlook": "Open Outlook",
@@ -111,17 +111,16 @@
     "resend": "Resend",
     "resendIn": "Resend in {n}s",
     "changeEmail": "Use a different email",
-    "codeLabel": "Or enter the code from the email",
-    "codeHint": "Some email providers open links automatically, which uses the link up. The code always works.",
-    "codeSubmit": "Sign in with code",
-    "verifying": "Signing in…"
+    "codeLabel": "Code from the email",
+    "codeSubmit": "Confirm and start",
+    "verifying": "Confirming…"
   },
   "saving": {
     "title": "Planting your seed…",
     "sub": "Saving {level} and opening your first lesson."
   },
   "errors": {
-    "authFailed": "That sign-in link failed or expired. Enter the code from the email instead, or request a new one.",
+    "authFailed": "That didn't work. Request a new code and try again.",
     "rateLimit": "Sorry — we've hit tonight's hourly email limit while we're still testing. Please try again in about an hour, or continue with Google instead.",
     "network": "Couldn't reach the server. Check your connection and try again.",
     "badCode": "That code didn't work. Check it, or resend to get a new one.",

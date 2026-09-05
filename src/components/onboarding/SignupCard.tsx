@@ -182,18 +182,11 @@ export function ConfirmCard({
         <p className={SUB}>
           {t.rich("sub", { email, b: (chunks) => <b className="text-charcoal">{chunks}</b> })}
         </p>
-        {firstLesson && <FirstLessonList lessons={[firstLesson]} title={t("upNext")} />}
-        <div className="flex gap-2 justify-center flex-wrap mt-2">
-          <a href="https://mail.google.com" target="_blank" rel="noreferrer" className={BTN_OUTLINE}>
-            {t("gmail")}
-          </a>
-          <a href="https://outlook.live.com/mail/" target="_blank" rel="noreferrer" className={BTN_OUTLINE}>
-            {t("outlook")}
-          </a>
-        </div>
-
+        {/* The code is the whole step: no link to tap, so the same
+            confirmation works in every inbox, including the ones whose
+            phishing scanners open (and spend) one-shot links. */}
         <form
-          className="mt-5 pt-4 border-t border-dashed border-line"
+          className="text-left mt-4"
           onSubmit={(e) => {
             e.preventDefault();
             if (clean) onVerifyCode(clean);
@@ -204,22 +197,29 @@ export function ConfirmCard({
           </label>
           <input
             id="signin-code"
-            className={`${FIELD} text-center tracking-[0.3em] font-bold`}
+            className={`${FIELD} text-center text-[22px] tracking-[0.35em] font-bold`}
             value={code}
             onChange={(e) => setCode(e.target.value)}
             inputMode="numeric"
             autoComplete="one-time-code"
+            autoFocus
             placeholder="••••••••"
-            aria-describedby="signin-code-hint"
           />
-          <p id="signin-code-hint" className="text-[12px] text-faint mt-1.5">
-            {t("codeHint")}
-          </p>
           {error && <CuteError>{error}</CuteError>}
           <button type="submit" className={`${BTN_GREEN} w-full mt-2.5`} disabled={!clean || verifying}>
             {verifying ? t("verifying") : t("codeSubmit")}
           </button>
         </form>
+
+        {firstLesson && <FirstLessonList lessons={[firstLesson]} title={t("upNext")} />}
+        <div className="flex gap-2 justify-center flex-wrap mt-2">
+          <a href="https://mail.google.com" target="_blank" rel="noreferrer" className={BTN_OUTLINE}>
+            {t("gmail")}
+          </a>
+          <a href="https://outlook.live.com/mail/" target="_blank" rel="noreferrer" className={BTN_OUTLINE}>
+            {t("outlook")}
+          </a>
+        </div>
         <p className="text-[12px] text-faint mt-4">
           {resent ? t("sentAgain") : t("nothingYet")}{" "}
           <button type="button" className={`${BTN_GHOST} text-charcoal font-semibold`} onClick={onResend} disabled={sending || cooldown > 0}>

@@ -101,8 +101,8 @@
     "create": "Tạo tài khoản"
   },
   "confirm": {
-    "title": "Kiểm tra hộp thư của bạn",
-    "sub": "Chúng tôi đã gửi liên kết xác nhận và mã tới <b>{email}</b>. Hãy nhấn vào liên kết, hoặc nhập mã bên dưới — chỉ lần này thôi. Sau đó bạn chỉ cần mật khẩu.",
+    "title": "Nhập mã của bạn",
+    "sub": "Chúng tôi đã gửi mã 8 chữ số tới <b>{email}</b>. Nhập mã bên dưới — chỉ lần này thôi. Sau đó bạn chỉ cần mật khẩu.",
     "upNext": "Tiếp theo",
     "gmail": "Mở Gmail",
     "outlook": "Mở Outlook",
@@ -111,17 +111,16 @@
     "resend": "Gửi lại",
     "resendIn": "Gửi lại sau {n} giây",
     "changeEmail": "Dùng email khác",
-    "codeLabel": "Hoặc nhập mã trong email",
-    "codeHint": "Một số nhà cung cấp email tự động mở liên kết, khiến liên kết bị dùng mất. Mã thì luôn dùng được.",
-    "codeSubmit": "Đăng nhập bằng mã",
-    "verifying": "Đang đăng nhập…"
+    "codeLabel": "Mã trong email",
+    "codeSubmit": "Xác nhận và bắt đầu",
+    "verifying": "Đang xác nhận…"
   },
   "saving": {
     "title": "Đang gieo hạt giống của bạn…",
     "sub": "Đang lưu {level} và mở bài học đầu tiên."
   },
   "errors": {
-    "authFailed": "Liên kết đăng nhập không hợp lệ hoặc đã hết hạn. Hãy nhập mã trong email, hoặc yêu cầu liên kết mới.",
+    "authFailed": "Không thành công. Hãy yêu cầu mã mới và thử lại.",
     "rateLimit": "Xin lỗi — chúng tôi đã đạt giới hạn gửi email mỗi giờ tối nay vì vẫn đang trong giai đoạn thử nghiệm. Vui lòng thử lại sau khoảng một giờ, hoặc tiếp tục với Google.",
     "network": "Không kết nối được máy chủ. Hãy kiểm tra kết nối và thử lại.",
     "badCode": "Mã không đúng. Hãy kiểm tra lại, hoặc gửi lại để nhận mã mới.",

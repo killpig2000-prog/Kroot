@@ -101,8 +101,8 @@
     "create": "Crear mi cuenta"
   },
   "confirm": {
-    "title": "Revisa tu bandeja de entrada",
-    "sub": "Enviamos un enlace de confirmación y un código a <b>{email}</b>. Toca el enlace o introduce el código abajo — solo esta vez. Después, solo necesitas tu contraseña.",
+    "title": "Introduce tu código",
+    "sub": "Enviamos un código de 8 dígitos a <b>{email}</b>. Escríbelo abajo — solo esta vez. Después, solo necesitas tu contraseña.",
     "upNext": "A continuación",
     "gmail": "Abrir Gmail",
     "outlook": "Abrir Outlook",
@@ -111,17 +111,16 @@
     "resend": "Reenviar",
     "resendIn": "Reenviar en {n} s",
     "changeEmail": "Usar otro correo",
-    "codeLabel": "O introduce el código del correo",
-    "codeHint": "Algunos proveedores de correo abren los enlaces automáticamente y así los consumen. El código siempre funciona.",
-    "codeSubmit": "Entrar con el código",
-    "verifying": "Entrando…"
+    "codeLabel": "Código del correo",
+    "codeSubmit": "Confirmar y empezar",
+    "verifying": "Confirmando…"
   },
   "saving": {
     "title": "Plantando tu semilla…",
     "sub": "Guardando {level} y abriendo tu primera lección."
   },
   "errors": {
-    "authFailed": "Ese enlace falló o caducó. Introduce el código del correo o pide uno nuevo.",
+    "authFailed": "No funcionó. Pide un código nuevo e inténtalo de nuevo.",
     "rateLimit": "Lo sentimos — hemos alcanzado el límite de correos por hora de esta noche mientras seguimos en pruebas. Inténtalo de nuevo en una hora, o continúa con Google.",
     "network": "No se pudo conectar con el servidor. Revisa tu conexión e inténtalo de nuevo.",
     "badCode": "Ese código no funcionó. Revísalo o pide uno nuevo.",
