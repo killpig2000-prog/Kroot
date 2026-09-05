@@ -17,6 +17,7 @@ import { getLocalizedMeaning, getLocalizedExampleEn } from "@/lib/vocabulary-i18
 
 const BTN_INK = buttonClassName("ink");
 const BTN_LINE = buttonClassName("line");
+const BTN_AMBER = buttonClassName("amber");
 const VIOLET = "#6B33CC";
 
 // Ruled notebook paper: a faint line every 32px, plus a red margin rule.
@@ -122,6 +123,13 @@ export default function WordDetailCard({
   // the learner's point of view. There's no "new"/"learning" label shown
   // any more either way — just the checkmark, or nothing.
   const [marked, setMarked] = useState(box > 1);
+  // Whether this word has been rated at all (either way) — `marked` alone
+  // can't tell "never touched" from "rated still-learning", since both are
+  // `false`. Without this, tapping Still learning on a fresh word gave zero
+  // visible feedback: Got it's button visibly toggles ink/line on `marked`,
+  // but Still learning's button never changed at all. Now it swaps to an
+  // amber "recorded" style whenever the last rating was still-learning.
+  const [answered, setAnswered] = useState(correctCount + incorrectCount > 0);
   // Set when marking this word is what completed the Day — the card gives way
   // to the Day's result screen.
   const [dayResult, setDayResult] = useState<{ known: number; levelUp: ProgressResult | null } | null>(null);
@@ -165,6 +173,7 @@ export default function WordDetailCard({
         return;
       }
       setMarked(next);
+      setAnswered(true);
       if (finishesDay) await payOutDay(next);
     } catch {
       setSaveFailed(true);
@@ -420,7 +429,12 @@ export default function WordDetailCard({
       {/* actions — a bar under the page, full card width, so the thumb
           doesn't have to reach into the card and the screen isn't half empty */}
       <div className="grid grid-cols-2 gap-2 mt-3.5">
-        <button type="button" className={`${BTN_LINE} w-full justify-center`} disabled={saving !== null} onClick={() => mark(false)}>
+        <button
+          type="button"
+          className={`${answered && !marked ? BTN_AMBER : BTN_LINE} w-full justify-center`}
+          disabled={saving !== null}
+          onClick={() => mark(false)}
+        >
           {saving === "next" ? tu("saving") : t("stillLearning")}
         </button>
         <button
