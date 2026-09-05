@@ -167,6 +167,7 @@ export default function WritingSession({
         // goTo() calls this without a score as a safety net for a submit whose
         // logging failed; by then the chapter's score is on `result`.
         score ?? result?.score ?? null,
+        level,
       );
       logged = true;
       // Always kept now, not just on a level-up: the result strip reads the

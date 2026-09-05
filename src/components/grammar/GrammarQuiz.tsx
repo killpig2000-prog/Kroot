@@ -171,6 +171,7 @@ export default function GrammarQuizBlock({
       0,
       lessonKey ? grammarLessonKey(lessonKey) : null,
       Math.round((correctCount.current / quiz.length) * 100),
+      level,
     );
     setLevelUp(res);
   }

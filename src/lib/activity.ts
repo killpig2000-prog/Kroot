@@ -68,6 +68,13 @@ export async function awardPoints(
   itemKey?: string | null,
   /** 0-100 accuracy for this attempt; omit when the activity has no score. */
   score?: number | null,
+  /**
+   * CEFR level of the content, for skills where that means something
+   * (vocabulary/writing/reading/listening/grammar). Below the learner's
+   * current level, the server pays no coins and a fifth of the XP — see
+   * migration 0070. Omit for skills without a level (pronunciation, slang).
+   */
+  level?: string | null,
 ): Promise<ProgressResult | null> {
   if (points <= 0) return null;
   let { data, error } = await supabase.rpc("award_xp", {
@@ -75,7 +82,17 @@ export async function awardPoints(
     p_skill: skill,
     p_item_key: itemKey ?? null,
     p_score: score == null ? null : Math.max(0, Math.min(100, Math.round(score))),
+    p_level: level ?? null,
   });
+  if (error?.code === "PGRST202") {
+    // Migration 0070 not applied yet — the deployed function has no p_level.
+    ({ data, error } = await supabase.rpc("award_xp", {
+      p_points: points,
+      p_skill: skill,
+      p_item_key: itemKey ?? null,
+      p_score: score == null ? null : Math.max(0, Math.min(100, Math.round(score))),
+    }));
+  }
   if (error?.code === "PGRST202") {
     // Migration 0063 not applied yet — the deployed function has no item key.
     ({ data, error } = await supabase.rpc("award_xp", { p_points: points, p_skill: skill }));
@@ -102,8 +119,9 @@ export async function awardProgress(
   skill: keyof typeof XP_POINTS,
   itemKey?: string | null,
   score?: number | null,
+  level?: string | null,
 ): Promise<ProgressResult | null> {
-  return awardPoints(supabase, XP_POINTS[skill] ?? 5, skill, itemKey, score);
+  return awardPoints(supabase, XP_POINTS[skill] ?? 5, skill, itemKey, score, level);
 }
 
 /**
@@ -121,12 +139,13 @@ export async function awardPartialCredit(
   alreadyAwardedRatio: number,
   itemKey?: string | null,
   score?: number | null,
+  level?: string | null,
 ): Promise<{ newAwardedRatio: number; result: ProgressResult | null }> {
   const clamped = Math.max(0, Math.min(1, ratio));
   if (clamped <= alreadyAwardedRatio) return { newAwardedRatio: alreadyAwardedRatio, result: null };
   const full = XP_POINTS[skill] ?? 5;
   const delta = Math.round(full * clamped) - Math.round(full * alreadyAwardedRatio);
-  const result = delta > 0 ? await awardPoints(supabase, delta, skill, itemKey, score) : null;
+  const result = delta > 0 ? await awardPoints(supabase, delta, skill, itemKey, score, level) : null;
   return { newAwardedRatio: clamped, result };
 }
 
@@ -166,11 +185,13 @@ export async function recordCompletion(
   itemKey?: string | null,
   /** 0-100 accuracy for this attempt; below 60 the server pays XP but no coins. */
   score?: number | null,
+  /** CEFR level of the content — see awardPoints. */
+  level?: string | null,
 ): Promise<ProgressResult | null> {
   await logActivity(supabase, minutes);
   const full = XP_POINTS[skill] ?? 5;
   const remaining = Math.max(0, full - Math.round(full * Math.max(0, Math.min(1, alreadyAwardedRatio))));
-  const result = await awardPoints(supabase, remaining, skill, itemKey, score);
+  const result = await awardPoints(supabase, remaining, skill, itemKey, score, level);
   await completeMatchingQuest(supabase, skill);
   track("activity_completed", { skill, minutes, leveled_up: !!result?.leveled_up });
   return result;

@@ -191,6 +191,7 @@ export default function WordDetailCard({
         0,
         vocabChapterKey(topicKey, level, dayIndex),
         Math.round((known / dayTotal) * 100),
+        level,
       );
     } catch {
       // The word itself is already saved; a failed payout must not take the

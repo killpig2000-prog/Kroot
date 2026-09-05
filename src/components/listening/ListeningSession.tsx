@@ -108,6 +108,7 @@ export default function ListeningSession({
         awardedRatio,
         listeningDialogueKey(dialogue.id),
         correct == null ? null : correct ? 100 : 0,
+        level,
       );
       if (res?.leveled_up) setNewLevel(res.new_level);
       if (res?.coins_earned) setCoinsEarned((c) => c + res.coins_earned);
@@ -140,6 +141,7 @@ export default function ListeningSession({
       // Listening partway through has no quiz answer to score, and null
       // never fails the accuracy gate — there was nothing to get wrong.
       null,
+      level,
     );
     saveAwardedRatio(dialogue.id, newAwardedRatio);
     if (result?.leveled_up) setNewLevel(result.new_level);

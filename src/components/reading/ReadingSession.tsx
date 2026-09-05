@@ -134,6 +134,7 @@ export default function ReadingSession({
         0,
         readingPassageKey(passage.key),
         final.length ? Math.round((correct / final.length) * 100) : null,
+        level,
       );
       saved = true;
       setSaveFailed(false);
