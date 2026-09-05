@@ -79,7 +79,7 @@ export default async function ListeningPage({
 
   return (
     <div className="min-h-screen bg-warm text-charcoal">
-      <div className="grid grid-cols-1 md:grid-cols-[clamp(216px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
+      <div className="grid grid-cols-1 md:grid-cols-[clamp(216px,18%,280px)_minmax(0,1fr)] w-full min-h-screen content-start md:content-stretch">
         <Sidebar
           displayName={profile?.display_name ?? "there"}
           email={user.email ?? ""}
@@ -120,7 +120,7 @@ export default async function ListeningPage({
 
           {/* situation grid — two-up on phones so all eight fit in a couple
               of screens; the wider auto-fill grid from `sm` up. */}
-          <div className="grid grid-cols-2 sm:grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-2.5 sm:gap-3.5 max-w-[980px]">
+          <div className="grid grid-cols-2 sm:grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-2.5 sm:gap-3.5 max-w-[980px]">
             {bySituation.map(({ s, dialogues }) => {
               const count = dialogues.length;
               const done = dialogues.filter((d) => completedIds.has(d.id)).length;

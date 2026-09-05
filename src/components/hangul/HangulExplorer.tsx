@@ -82,7 +82,7 @@ function JamoGrid({ items, firstItemTourId }: { items: Jamo[]; firstItemTourId?:
   const selected = items.find((j) => j.char === selectedChar) ?? null;
   return (
     <div className="max-w-[980px] mb-8">
-      <div className="grid grid-cols-4 sm:grid-cols-[repeat(auto-fill,minmax(104px,1fr))] gap-2 sm:gap-2.5">
+      <div className="grid grid-cols-4 sm:grid-cols-[repeat(auto-fill,minmax(88px,1fr))] gap-2 sm:gap-2.5">
         {items.map((j, i) => (
           <JamoTile
             key={j.char}

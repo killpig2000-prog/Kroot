@@ -440,7 +440,7 @@ export default function ShopClient({
         {/* ── try-on ── */}
         <aside className="order-first lg:order-none border-b lg:border-b-0 lg:border-l border-line bg-warm p-4 lg:sticky lg:top-4 self-start">
           <p className="text-[11.5px] font-extrabold tracking-[.08em] uppercase text-[#B7AE9C] mb-2">{t("tryOn.label")}</p>
-          <figure className="relative m-0 mx-auto max-w-[230px] bg-cream border border-line p-1.5 pb-6 rotate-[1deg] shadow-[0_10px_22px_-12px_rgba(60,50,30,.35)] mb-3">
+          <figure className="relative m-0 mx-auto max-w-[clamp(170px,48vw,230px)] bg-cream border border-line p-1.5 pb-6 rotate-[1deg] shadow-[0_10px_22px_-12px_rgba(60,50,30,.35)] mb-3">
             <Scene ids={previewIds} stage={stage} species={species} className="px-2.5 pt-2.5" />
             <figcaption className="absolute bottom-1 left-0 right-0 text-center text-[10px] font-bold text-[#8A8478]">
               <span className="kr">{SPECIES[species].krName}</span> · {t("tryOn.caption", { level: playerLevel })}

@@ -40,7 +40,7 @@ export default function LevelTabs({
       <div
         role="tablist"
         aria-label={t("levelTabs.ariaLabel")}
-        className="flex gap-1.5 overflow-x-auto -mx-1 px-1 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className="flex gap-1.5 overflow-x-auto -mx-1 px-1 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden [mask-image:linear-gradient(90deg,#000_calc(100%-32px),transparent)] sm:[mask-image:none]"
       >
         {levels.map((lv) => {
           const on = lv === current;

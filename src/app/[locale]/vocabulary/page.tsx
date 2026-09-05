@@ -138,7 +138,7 @@ export default async function VocabularyPage({
 
   return (
     <div className="min-h-screen bg-warm text-charcoal">
-      <div className="grid grid-cols-1 md:grid-cols-[clamp(216px,18%,280px)_minmax(0,1fr)] w-full min-h-screen">
+      <div className="grid grid-cols-1 md:grid-cols-[clamp(216px,18%,280px)_minmax(0,1fr)] w-full min-h-screen content-start md:content-stretch">
         <Sidebar
           displayName={profile?.display_name ?? "there"}
           email={user.email ?? ""}
@@ -183,7 +183,7 @@ export default async function VocabularyPage({
             aria-label={t("allChapters")}
             className="mb-4 sticky top-[52px] md:top-0 z-20 -mx-1 px-1 pt-1 bg-warm/95 backdrop-blur-sm"
           >
-            <div data-tour="guided-vocab-chapters" className="flex gap-2 overflow-x-auto pb-1.5">
+            <div data-tour="guided-vocab-chapters" className="flex gap-2 overflow-x-auto pb-1.5 [mask-image:linear-gradient(90deg,#000_calc(100%-32px),transparent)] sm:[mask-image:none]">
               {chapters.map((c) => {
                 const current = c.index === selected?.index;
                 return (
