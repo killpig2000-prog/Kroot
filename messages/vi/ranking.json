@@ -54,8 +54,6 @@
   "unavailable": "Hội chợ sẽ mở sau khi cập nhật cơ sở dữ liệu. Vui lòng quay lại sau.",
   "peek": {
     "close": "Đóng",
-    "height": "cao {m} m",
-    "garden": "5 tuần gần đây",
-    "daysStudied": "Đã học {n}/{total} ngày"
+    "height": "cao {m} m"
   }
 }

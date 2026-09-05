@@ -1,49 +1,12 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import { createClient } from "@/lib/supabase/client";
+import { useEffect } from "react";
 import { useTranslations } from "next-intl";
 import LevelCreature from "@/components/dashboard/LevelCreature";
-import VeteranTree, { BASE_HEIGHT, VETERAN_MILESTONES, veteranFrameHeight } from "@/components/dashboard/VeteranTree";
+import VeteranTree, { BASE_HEIGHT, veteranFrameHeight } from "@/components/dashboard/VeteranTree";
 import { FULLY_GROWN_LEVEL, treeHeightMetres, treeStageForLevel } from "@/lib/level";
 import { SceneLayer, skyFor } from "@/lib/costumes";
 import type { CefrLevel } from "@/lib/tree";
-
-// Same five steps as the dashboard's MonthlyGrass.
-const GRASS = ["bg-[#F0EFED]", "bg-[#BBF7D0]", "bg-[#6BBF8A]", "bg-[#3E7C59]", "bg-[#2E5B41]"];
-function grassLevel(minutes: number): number {
-  if (minutes <= 0) return 0;
-  if (minutes < 10) return 1;
-  if (minutes < 20) return 2;
-  if (minutes < 40) return 3;
-  return 4;
-}
-const GARDEN_WEEKS = 5;
-function buildGarden(minutesByDate: Map<string, number>) {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  // End the grid on this week's Sunday so today is on the last row.
-  const end = new Date(today);
-  end.setDate(end.getDate() + ((7 - end.getDay()) % 7));
-  const start = new Date(end);
-  start.setDate(start.getDate() - GARDEN_WEEKS * 7 + 1);
-  const cells: { date: string; minutes: number; lvl: number; future: boolean; today: boolean }[] = [];
-  let studied = 0;
-  let past = 0;
-  for (let i = 0; i < GARDEN_WEEKS * 7; i++) {
-    const d = new Date(start);
-    d.setDate(start.getDate() + i);
-    const iso = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
-    const minutes = minutesByDate.get(iso) ?? 0;
-    const future = d > today;
-    if (!future) {
-      past++;
-      if (minutes > 0) studied++;
-    }
-    cells.push({ date: iso, minutes, lvl: grassLevel(minutes), future, today: d.getTime() === today.getTime() });
-  }
-  return { cells, studied, past };
-}
 
 // Tapping a tree on the ranking opens the whole thing: a Lv.50+ tree grows
 // past any thumbnail, so the row shows the crown and this shows the tree.
@@ -52,7 +15,6 @@ function buildGarden(minutesByDate: Map<string, number>) {
 // to about a third of the phone's height: at two thirds it read as a whole
 // screen, not a card.
 export default function TreePeek({
-  userId,
   name,
   rank,
   avatarUrl,
@@ -63,7 +25,6 @@ export default function TreePeek({
   isMe,
   onClose,
 }: {
-  userId: string;
   name: string;
   rank: number;
   avatarUrl: string | null;
@@ -75,34 +36,9 @@ export default function TreePeek({
   onClose: () => void;
 }) {
   const t = useTranslations("ranking");
-  const tk = useTranslations("dashboard.tree.keepsakes");
   const veteran = level >= FULLY_GROWN_LEVEL;
   const frameH = veteran ? veteranFrameHeight(level) : BASE_HEIGHT;
   const sky = skyFor(costumeIds);
-  const earned = VETERAN_MILESTONES.filter((m) => m.level <= level);
-
-  // The person's study garden for the last five weeks — the same cells and
-  // colours as the dashboard's, read through get_public_activity (migration
-  // 0076): dates and minutes only, nothing about what was studied.
-  const supabase = useMemo(() => createClient(), []);
-  const [activity, setActivity] = useState<Map<string, number> | null>(null);
-  useEffect(() => {
-    let cancelled = false;
-    void supabase.rpc("get_public_activity", { p_user: userId }).then(({ data, error }) => {
-      if (cancelled) return;
-      if (error) {
-        console.error("get_public_activity failed:", error.message);
-        setActivity(new Map());
-        return;
-      }
-      setActivity(new Map((data ?? []).map((r: { activity_date: string; minutes: number | null }) => [r.activity_date, r.minutes ?? 0])));
-    });
-    return () => {
-      cancelled = true;
-    };
-  }, [supabase, userId]);
-  const garden = useMemo(() => buildGarden(activity ?? new Map()), [activity]);
-
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -176,40 +112,7 @@ export default function TreePeek({
             </svg>
           </div>
 
-          <div className="px-5 pt-3 pb-4 grid gap-3">
-            {earned.length > 0 && (
-              <div className="flex flex-wrap gap-1.5">
-                {earned.map((m) => (
-                  <span
-                    key={m.level}
-                    className="inline-flex items-center gap-1 rounded-full border border-amber-line bg-[var(--tint-amber)] px-2.5 py-1 text-[11.5px] font-bold text-[#B7791F]"
-                  >
-                    <span className="kr">{m.kr}</span>
-                    <span className="opacity-70">{tk(String(m.level))}</span>
-                  </span>
-                ))}
-              </div>
-            )}
-
-            {/* study garden: 5 rows of 7, Monday first, today at the end */}
-            <div>
-              <div className="flex items-baseline justify-between gap-2 mb-1.5">
-                <span className="text-[11px] font-extrabold tracking-[.08em] uppercase text-faint">{t("peek.garden")}</span>
-                <span className="text-[12px] font-semibold text-muted tabular-nums">
-                  {activity ? t("peek.daysStudied", { n: garden.studied, total: garden.past }) : "…"}
-                </span>
-              </div>
-              <div className="grid grid-cols-7 gap-[3px]" aria-hidden="true">
-                {garden.cells.map((c) => (
-                  <span
-                    key={c.date}
-                    title={`${c.date} · ${c.minutes}m`}
-                    className={`h-[14px] rounded-[3px] ${c.future ? "bg-transparent border border-dashed border-line" : GRASS[c.lvl]} ${c.today ? "ring-1 ring-[#2E5B41]" : ""}`}
-                  />
-                ))}
-              </div>
-            </div>
-          </div>
+          <div className="pb-5" />
         </div>
       </div>
     </>

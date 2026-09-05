@@ -54,8 +54,6 @@
   "unavailable": "The fair opens once the database is updated. Check back in a moment.",
   "peek": {
     "close": "Close",
-    "height": "{m} m tall",
-    "garden": "Last 5 weeks",
-    "daysStudied": "{n} of {total} days studied"
+    "height": "{m} m tall"
   }
 }

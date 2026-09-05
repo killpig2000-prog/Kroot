@@ -54,8 +54,6 @@
   "unavailable": "La feria abre cuando se actualice la base de datos. Vuelve en un momento.",
   "peek": {
     "close": "Cerrar",
-    "height": "{m} m de altura",
-    "garden": "Últimas 5 semanas",
-    "daysStudied": "{n} de {total} días de estudio"
+    "height": "{m} m de altura"
   }
 }

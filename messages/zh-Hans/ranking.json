@@ -54,8 +54,6 @@
   "unavailable": "数据库更新后花展即将开放，请稍后再来。",
   "peek": {
     "close": "关闭",
-    "height": "高 {m} 米",
-    "garden": "最近 5 周",
-    "daysStudied": "{total} 天中学习了 {n} 天"
+    "height": "高 {m} 米"
   }
 }

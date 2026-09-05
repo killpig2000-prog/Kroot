@@ -233,7 +233,6 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
     <div className="grid gap-3.5 max-w-[560px] min-w-0">
       {peek && (
         <TreePeek
-          userId={peek.user_id}
           name={peek.display_name}
           rank={peek.rank}
           avatarUrl={peek.avatar_url}
