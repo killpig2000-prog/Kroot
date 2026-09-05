@@ -225,6 +225,8 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
       {peek && (
         <TreePeek
           name={peek.display_name}
+          rank={peek.rank}
+          avatarUrl={peek.avatar_url}
           level={peek.level}
           xpWeek={peek.xp_week}
           species={species}

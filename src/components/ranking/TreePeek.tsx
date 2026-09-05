@@ -14,6 +14,8 @@ import type { CefrLevel } from "@/lib/tree";
 // which is what makes "look how tall theirs is" readable at a glance.
 export default function TreePeek({
   name,
+  rank,
+  avatarUrl,
   level,
   xpWeek,
   species,
@@ -22,6 +24,8 @@ export default function TreePeek({
   onClose,
 }: {
   name: string;
+  rank: number;
+  avatarUrl: string | null;
   level: number;
   xpWeek: number;
   species: CefrLevel;
@@ -60,8 +64,20 @@ export default function TreePeek({
           className="pointer-events-auto w-full max-w-[360px] bg-cream rounded-[22px] shadow-[0_30px_70px_-20px_rgba(40,35,25,.4)] overflow-hidden"
         >
           <div className="flex items-start justify-between gap-3 px-5 pt-4 pb-3">
-            <div className="min-w-0">
+            <div className="min-w-0 flex items-center gap-3">
+              {avatarUrl ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={avatarUrl} alt="" className="w-10 h-10 rounded-full border border-line object-cover flex-none" />
+              ) : (
+                <span className="w-10 h-10 rounded-full bg-success-bg border border-success-line grid place-items-center text-[15px] font-black text-success-deep flex-none">
+                  {name.slice(0, 1).toUpperCase()}
+                </span>
+              )}
+              <div className="min-w-0">
               <b className="block text-[16px] truncate">
+                <span className="inline-grid place-items-center min-w-[24px] h-[22px] px-1.5 mr-1.5 rounded-full bg-[#FFFBEB] border border-amber-line text-[11.5px] font-black text-[#B7791F] tabular-nums align-[-3px]">
+                  #{rank}
+                </span>
                 {name}
                 {isMe && <span className="text-success text-[11.5px] font-bold ml-1.5">{t("row.you")}</span>}
               </b>
@@ -69,6 +85,7 @@ export default function TreePeek({
                 {t("row.level", { n: level })} · {t("fair.sun", { n: xpWeek })}
                 {veteran && <> · {t("peek.height", { m: treeHeightMetres(level) })}</>}
               </span>
+              </div>
             </div>
             <button
               type="button"
