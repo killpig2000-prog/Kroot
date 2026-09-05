@@ -58,7 +58,10 @@ function Tree({
       style={{ width: size, height: size, ...(sky ? { background: sky } : {}) }}
       aria-hidden="true"
     >
-      <svg viewBox="30 60 160 160" style={{ width: size - 6, height: size - 6 }}>
+      {/* The whole 220x230 scene (same frame as the dashboard and shop): the
+          old 160x160 crop cut the canopy and sky off every tree and lost the
+          top of skins and tall veterans entirely. */}
+      <svg viewBox="0 0 220 230" style={{ width: size - 4, height: size - 4 }}>
         <SceneLayer costumeIds={ids} layer="behind" />
         <LevelCreature level={treeStageForLevel(row.level)} costumeIds={ids} species={species} />
         <SceneLayer costumeIds={ids} layer="front" />
@@ -277,7 +280,7 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
             {[podium[1], podium[0], podium[2]].map((r, i) => {
               if (!r) return <div key={`empty-${i}`} />;
               const place = r.rank - 1; // 0-based ribbon index
-              const size = i === 1 ? 72 : i === 0 ? 58 : 52;
+              const size = i === 1 ? 104 : i === 0 ? 86 : 78;
               const lift = i === 1 ? 18 : i === 0 ? 7 : 0;
               const ribbon = RIBBON[Math.min(place, 2)];
               return (
@@ -349,7 +352,7 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
                   }`}
                 >
                   <span className={`font-black tabular-nums text-[12.5px] ${r.is_me ? "" : "text-faint"}`}>{r.rank}</span>
-                  <Tree row={r} species={species} size={46} />
+                  <Tree row={r} species={species} size={66} />
                   <span className="min-w-0">
                     <b className="block truncate">
                       {r.display_name}
