@@ -309,7 +309,23 @@ export default function WordDetailCard({
             ← {t("bank.backToMyBank")}
           </Link>
         ) : (
-          <span />
+          // The browser Back button used to be the only way out of a word
+          // mid-unit (the "back to unit" link at the bottom only appears on
+          // the unit's last word) — and Back serves the vocab page straight
+          // from the Router Cache, so a just-recorded Got it/Still learning
+          // didn't show there until a manual reload. router.refresh() right
+          // after the push forces that page to refetch instead of trusting
+          // the cache.
+          <button
+            type="button"
+            onClick={() => {
+              router.push(unitHref);
+              router.refresh();
+            }}
+            className="text-[12.5px] text-muted hover:text-charcoal transition-colors"
+          >
+            ← {t("detail.backToUnit")}
+          </button>
         )}
         <span className="text-[12.5px] text-muted flex-none">
           {topicLabel} · {level}
@@ -473,7 +489,7 @@ export default function WordDetailCard({
         <button
           type="button"
           data-tour="guided-word-goti"
-          className={`${marked ? BTN_LINE : BTN_INK} w-full justify-center`}
+          className={`${answered ? BTN_LINE : BTN_INK} w-full justify-center`}
           disabled={saving !== null}
           onClick={() => mark(true)}
         >
@@ -549,9 +565,16 @@ export default function WordDetailCard({
 
       {!nextHref && !backHref && (
         <div className="mt-2.5 text-right text-[12.5px]">
-          <Link href={unitHref} className="font-semibold text-muted hover:text-charcoal transition-colors">
+          <button
+            type="button"
+            onClick={() => {
+              router.push(unitHref);
+              router.refresh();
+            }}
+            className="font-semibold text-muted hover:text-charcoal transition-colors"
+          >
             {t("detail.backToUnit")} →
-          </Link>
+          </button>
         </div>
       )}
     </div>
