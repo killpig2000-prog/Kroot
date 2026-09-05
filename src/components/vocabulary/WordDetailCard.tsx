@@ -302,7 +302,13 @@ export default function WordDetailCard({
         </span>
       </div>
 
-      <div className="relative bg-cream border border-line rounded-[6px] shadow-[0_20px_40px_-28px_rgba(60,50,30,.6)] overflow-hidden">
+      {/* The guided tour spotlights this whole card for the "read it" step —
+          the copy talks about the word, its meaning and the example, so the
+          ring has to cover them rather than just the Got it button. */}
+      <div
+        data-tour="guided-word-card"
+        className="relative bg-cream border border-line rounded-[6px] shadow-[0_20px_40px_-28px_rgba(60,50,30,.6)] overflow-hidden"
+      >
         <div className="absolute inset-0 pointer-events-none" style={{ background: RULED }} aria-hidden="true" />
         <span
           className="absolute top-0 bottom-0 left-[clamp(28px,6vw,52px)] w-px bg-[var(--tint-rose-line)] opacity-70 pointer-events-none"

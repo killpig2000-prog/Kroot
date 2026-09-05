@@ -26,6 +26,7 @@ export type GuidedStepKey =
   | "hangul-nav-vocab"
   | "vocab-chapter"
   | "vocab-word"
+  | "word-read"
   | "word-goti"
   | "word-bank"
   | "writing-nav"
@@ -58,6 +59,7 @@ export const GUIDED_MODE: Partial<Record<GuidedStepKey, GuidedMode>> = {
   "hangul-nav": "ask",
   "hangul-nav-vocab": "ask",
   "vocab-chapter": "info",
+  "word-read": "info",
   "word-bank": "info",
   "writing-nav": "ask",
   "writing-level": "info",
@@ -81,6 +83,7 @@ export const GUIDED_TARGET: Record<GuidedStepKey, string | null> = {
   "hangul-nav-vocab": "guided-nav-vocabulary",
   "vocab-chapter": "guided-vocab-chapters",
   "vocab-word": "guided-vocab-first-word",
+  "word-read": "guided-word-card",
   "word-goti": "guided-word-goti",
   "word-bank": "guided-word-bank",
   "writing-nav": "guided-nav-writing",
@@ -156,6 +159,7 @@ export const GUIDED_ORDERS: Record<GuidedTrack, GuidedStepKey[]> = {
     "hangul-nav-vocab",
     "vocab-chapter",
     "vocab-word",
+    "word-read",
     "word-goti",
     "word-bank",
     ...SHOP_TAIL,

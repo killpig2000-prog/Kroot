@@ -35,9 +35,13 @@
       "title": "Mở từ đầu tiên",
       "body": "Chạm vào từ đầu tiên của Day 1 để xem kỹ."
     },
+    "word-read": {
+      "title": "Đọc thẻ từ",
+      "body": "Đây là từ, nghĩa của nó và một câu ví dụ — chạm vào 🔊 bất kỳ để nghe. Hãy dành một chút thời gian với nó."
+    },
     "word-goti": {
-      "title": "Đọc xong rồi chạm Got it",
-      "body": "Đây là từ, nghĩa và câu ví dụ — chạm 🔊 để nghe. Dành một giây với từ này, rồi chạm Got it — từ sẽ bắt đầu tiến lên các hộp ôn tập của bạn."
+      "title": "Giờ hãy chạm Got it",
+      "body": "Đó là cách một từ bắt đầu đi lên trong các hộp ôn tập. Still learning sẽ cho từ quay lại sớm hơn."
     },
     "word-bank": {
       "title": "Lưu lại để sau",

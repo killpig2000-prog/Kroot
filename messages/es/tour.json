@@ -35,9 +35,13 @@
       "title": "Abre la primera palabra",
       "body": "Toca la primera palabra del Día 1 para verla de cerca."
     },
+    "word-read": {
+      "title": "Lee la ficha",
+      "body": "Aquí tienes la palabra, su significado y una frase de ejemplo — toca cualquier 🔊 para escucharla. Tómate un momento."
+    },
     "word-goti": {
-      "title": "Léela y toca Got it",
-      "body": "Aquí tienes la palabra, su significado y una frase de ejemplo — toca 🔊 para escucharlo. Tómate un segundo con ella y luego toca Got it: así empieza a subir por tus cajas de repaso."
+      "title": "Ahora toca Got it",
+      "body": "Así es como una palabra empieza a subir por tus cajas de repaso. Still learning hace que vuelva antes."
     },
     "word-bank": {
       "title": "Guárdala para después",

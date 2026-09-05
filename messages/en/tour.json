@@ -35,9 +35,13 @@
       "title": "Open the first word",
       "body": "Tap the first word of Day 1 to see it up close."
     },
+    "word-read": {
+      "title": "Read the card",
+      "body": "Here's the word, its meaning, and an example sentence — tap any 🔊 to hear it out loud. Take a second with it."
+    },
     "word-goti": {
-      "title": "Read it, then tap Got it",
-      "body": "Here's the word, its meaning, and an example sentence — tap the 🔊 to hear any of it. Take a second with it, then tap Got it, that's how a word starts moving up your review boxes."
+      "title": "Now tap Got it",
+      "body": "That's how a word starts moving up your review boxes. Still learning keeps it coming back sooner."
     },
     "word-bank": {
       "title": "Save it for later",
