@@ -12,5 +12,13 @@ where min_player_level is null
   and id in (
     'blossom-crown', 'seonbi-gat', 'hahoe-mask', 'hanbok-ribbon', 'rainbow-arc',
     'golden-halo-ring', 'dawn-mist', 'hanji-sky', 'little-pond', 'stone-lantern',
-    'dokkaebi', 'skin-hangul-king', 'skin-turtle-ship-admiral', 'skin-scholar-painter'
+    'dokkaebi'
   );
+
+-- The three tree skins get their own, higher floors instead of the blanket
+-- 30 above — 2000 coins is already a late-game price, and the user wants
+-- these specifically staggered: Scholar-Painter 50, Turtle-Ship Admiral 60,
+-- King of the Alphabet 80.
+update public.costume_catalog set min_player_level = 50 where id = 'skin-scholar-painter';
+update public.costume_catalog set min_player_level = 60 where id = 'skin-turtle-ship-admiral';
+update public.costume_catalog set min_player_level = 80 where id = 'skin-hangul-king';
