@@ -127,8 +127,10 @@ export default function WordDetailCard({
   // can't tell "never touched" from "rated still-learning", since both are
   // `false`. Without this, tapping Still learning on a fresh word gave zero
   // visible feedback: Got it's button visibly toggles ink/line on `marked`,
-  // but Still learning's button never changed at all. Now it swaps to an
-  // amber "recorded" style whenever the last rating was still-learning.
+  // but Still learning's button never changed at all. Now it starts amber
+  // (an unanswered word still needs a rating) and fades to the plain line
+  // style the instant either button has been tapped, same "answered, no
+  // longer asking for attention" language Got it's own ink→line fade uses.
   const [answered, setAnswered] = useState(correctCount + incorrectCount > 0);
   // Set when marking this word is what completed the Day — the card gives way
   // to the Day's result screen.
@@ -462,7 +464,7 @@ export default function WordDetailCard({
       <div className="grid grid-cols-2 gap-2 mt-3.5">
         <button
           type="button"
-          className={`${answered && !marked ? BTN_AMBER : BTN_LINE} w-full justify-center`}
+          className={`${answered ? BTN_LINE : BTN_AMBER} w-full justify-center`}
           disabled={saving !== null}
           onClick={() => mark(false)}
         >
