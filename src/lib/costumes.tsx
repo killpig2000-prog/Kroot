@@ -1556,7 +1556,7 @@ export const COSTUMES: Costume[] = [
   {
     id: "skin-hangul-king",
     name: "King of the Alphabet",
-    krName: "한글대왕",
+    krName: "세종대왕",
     slot: "skin",
     price: 2000,
     rarity: "legendary",
@@ -1569,7 +1569,7 @@ export const COSTUMES: Costume[] = [
   {
     id: "skin-turtle-ship-admiral",
     name: "Turtle-Ship Admiral",
-    krName: "거북선 장군",
+    krName: "이순신 장군",
     slot: "skin",
     price: 2000,
     rarity: "legendary",
@@ -1582,7 +1582,7 @@ export const COSTUMES: Costume[] = [
   {
     id: "skin-scholar-painter",
     name: "Scholar-Painter",
-    krName: "다산의 붓, 겸재의 옷",
+    krName: "겸재 정선",
     slot: "skin",
     price: 2000,
     rarity: "legendary",
