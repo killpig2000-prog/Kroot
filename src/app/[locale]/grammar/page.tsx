@@ -82,7 +82,7 @@ export default async function GrammarPage({
               grade. Every lesson lives in exactly one chapter. */}
           <section className="max-w-[820px] mb-8">
             <nav aria-label={t("lessonCount", { n: GRAMMAR_LESSONS.length })} className="mb-4 -mx-1 px-1">
-              <div className="flex gap-2 overflow-x-auto pb-1.5">
+              <div className="flex gap-2 overflow-x-auto pb-1.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden [mask-image:linear-gradient(90deg,#000_calc(100%-32px),transparent)] sm:[mask-image:none]">
                 {GRAMMAR_CHAPTERS.map((c) => {
                   const current = c.number === chapter;
                   const stat = chapterDone.get(c.number)!;

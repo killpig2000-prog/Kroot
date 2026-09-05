@@ -18,7 +18,10 @@ const PASSWORD = process.env.KROOT_PASSWORD ?? "KrootReview2026!";
 const EXE = process.env.CHROME ?? `${process.env.HOME}/.cache/ms-playwright/chromium-1234/chrome-linux64/chrome`;
 
 const WIDTHS = [360, 390, 430, 768, 1280];
-const PAGES = [
+// PAGES="landing=/en,review=/en/review" overrides the default list.
+const PAGES = process.env.PAGES
+  ? process.env.PAGES.split(",").map((kv) => kv.split("=").map((x) => x.trim()))
+  : [
   ["dashboard", "/en/dashboard"],
   ["ranking", "/en/ranking"],
   ["shop", "/en/shop"],

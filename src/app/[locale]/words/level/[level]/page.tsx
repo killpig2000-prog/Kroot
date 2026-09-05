@@ -106,7 +106,7 @@ export default async function LevelIndexPage({ params }: Props) {
           aria-label={t("jumpToUnit")}
           className="sticky top-0 z-10 -mx-6 mt-6 px-6 py-2 bg-[var(--sky)]/95 backdrop-blur-sm border-b border-black/5"
         >
-          <div className="flex gap-1.5 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden text-xs">
+          <div className="flex gap-1.5 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden text-xs [mask-image:linear-gradient(90deg,#000_calc(100%-32px),transparent)] sm:[mask-image:none]">
             {units.map((u) => (
               <a
                 key={u.index}
