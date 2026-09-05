@@ -9,6 +9,42 @@ import { VOCAB_TOPICS, type VocabWordWithProgress } from "@/lib/vocabulary";
 import { getWordsForTopic } from "@/lib/vocabulary-words";
 import { ATTEMPTED_FILTER } from "@/lib/word-bank";
 
+type DueRow = {
+  word_key: string;
+  correct_count: number | null;
+  incorrect_count: number | null;
+  last_reviewed_at: string | null;
+  box: number | null;
+};
+
+/**
+ * One session's worth of due words, drawn from both ends of the queue.
+ *
+ * Strict oldest-first meant a backlog larger than the daily cap never reached
+ * the recently-due words — which, since a word's first correct answer now
+ * lands it in box 1, are yesterday's brand-new words with the shortest memory
+ * of all. Alternating between the longest-overdue and the most-recently-due
+ * gives the debt priority without ever starving the fresh end, and the result
+ * is shuffled so the session doesn't read as two sorted halves.
+ *
+ * Runs on the server, once per request: the picked words are serialised into
+ * the client component's props, so the shuffle can't desync hydration.
+ */
+function mixDue(oldest: DueRow[], newest: DueRow[], cap: number): DueRow[] {
+  const picked = new Map<string, DueRow>();
+  for (let i = 0; i < Math.max(oldest.length, newest.length) && picked.size < cap; i++) {
+    for (const row of [oldest[i], newest[i]]) {
+      if (row && !picked.has(row.word_key) && picked.size < cap) picked.set(row.word_key, row);
+    }
+  }
+  const rows = [...picked.values()];
+  for (let i = rows.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [rows[i], rows[j]] = [rows[j], rows[i]];
+  }
+  return rows;
+}
+
 export default async function ReviewPage() {
   const tn = await getTranslations("nav");
   const t = await getTranslations("vocabulary.practice");
@@ -23,15 +59,25 @@ export default async function ReviewPage() {
   // /profile; dailyReviewCap folds that bonus in.
   const nowIso = new Date().toISOString();
   const todayStartIso = `${nowIso.slice(0, 10)}T00:00:00.000Z`;
-  const [{ data: profile }, { data: dueRows, error }, { count: learnedCount }, { count: reviewedTodayCount }] =
-    await Promise.all([
+  const [
+    { data: profile },
+    { data: oldestDue, error },
+    { data: newestDue },
+    { count: learnedCount },
+    { count: reviewedTodayCount },
+  ] = await Promise.all([
       supabase
         .from("profiles")
         .select("display_name, streak_days, avatar_url, review_capacity_bonus")
         .eq("id", user.id)
         .single(),
-      // Fetched up to the maximum possible cap (base + max purchasable bonus);
-      // sliced down to this user's actual cap once the profile row is in.
+      // Two windows over the due queue, mixed below. Ordering by next_review_at
+      // alone meant a backlog bigger than the daily cap buried every recently
+      // due word behind older debt — and the newest ones are exactly yesterday's
+      // first-time words, whose 1-day check-in is the point of box 1. Each
+      // window is fetched up to the maximum possible cap (base + max
+      // purchasable bonus) and sliced to this account's real cap once the
+      // profile row is in.
       // The word bank plants a row the moment a word is bookmarked, unrelated
       // to actually studying it (see plantWord/saveToBank) — the ATTEMPTED
       // filter keeps a merely-bookmarked word out of the SRS queue until the
@@ -43,6 +89,14 @@ export default async function ReviewPage() {
         .lte("next_review_at", nowIso)
         .or(ATTEMPTED_FILTER)
         .order("next_review_at", { ascending: true })
+        .limit(REVIEW_SESSION_SIZE + MAX_REVIEW_CAPACITY_BONUS),
+      supabase
+        .from("vocabulary_progress")
+        .select("*")
+        .eq("user_id", user.id)
+        .lte("next_review_at", nowIso)
+        .or(ATTEMPTED_FILTER)
+        .order("next_review_at", { ascending: false })
         .limit(REVIEW_SESSION_SIZE + MAX_REVIEW_CAPACITY_BONUS),
       // Everything learned so far, for the empty state — attempted only, so a
       // learner who has merely bookmarked words isn't told they've "learned"
@@ -72,7 +126,7 @@ export default async function ReviewPage() {
   // telling a learner with a real backlog that they were all caught up.
   const loadFailed = !!error && !migrationMissing;
   let nextDue: string | null = null;
-  if (!migrationMissing && (dueRows ?? []).length === 0) {
+  if (!migrationMissing && (oldestDue ?? []).length === 0) {
     const { data: upcoming } = await supabase
       .from("vocabulary_progress")
       .select("next_review_at")
@@ -98,7 +152,7 @@ export default async function ReviewPage() {
   // 채워져야하는데 지금 8개로 채워지고있어".
   const dueWords: VocabWordWithProgress[] = doneForToday
     ? []
-    : (dueRows ?? []).slice(0, cap).flatMap((row) => {
+    : mixDue(oldestDue ?? [], newestDue ?? [], cap).flatMap((row) => {
         const word = wordByKey.get(row.word_key);
         if (!word) return [];
         return [
