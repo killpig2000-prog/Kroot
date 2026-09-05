@@ -117,7 +117,11 @@
   },
   "saving": {
     "title": "Plantando tu semilla…",
-    "sub": "Guardando {level} y abriendo tu primera lección."
+    "sub": "Guardando {level} y abriendo tu primera lección.",
+    "failedTitle": "No pudimos guardar tu nivel",
+    "failedSub": "Se cortó la conexión justo cuando plantábamos. Tus respuestas están a salvo: inténtalo de nuevo.",
+    "retry": "Intentar de nuevo",
+    "continueAnyway": "Ir a mi jardín"
   },
   "errors": {
     "authFailed": "No funcionó. Pide un código nuevo e inténtalo de nuevo.",

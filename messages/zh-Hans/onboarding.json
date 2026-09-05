@@ -117,7 +117,11 @@
   },
   "saving": {
     "title": "正在种下你的种子…",
-    "sub": "正在保存 {level} 并打开你的第一课。"
+    "sub": "正在保存 {level} 并打开你的第一课。",
+    "failedTitle": "没能保存你的等级",
+    "failedSub": "正在种下种子时连接断开了。你的测试答案还在——请再试一次。",
+    "retry": "再试一次",
+    "continueAnyway": "先进入我的花园"
   },
   "errors": {
     "authFailed": "未能完成。请重新获取验证码后再试。",

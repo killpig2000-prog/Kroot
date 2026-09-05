@@ -117,7 +117,11 @@
   },
   "saving": {
     "title": "Đang gieo hạt giống của bạn…",
-    "sub": "Đang lưu {level} và mở bài học đầu tiên."
+    "sub": "Đang lưu {level} và mở bài học đầu tiên.",
+    "failedTitle": "Chúng tôi chưa lưu được trình độ của bạn",
+    "failedSub": "Kết nối bị ngắt ngay lúc đang gieo hạt. Câu trả lời của bạn vẫn còn — hãy thử lại.",
+    "retry": "Thử lại",
+    "continueAnyway": "Vào khu vườn của tôi"
   },
   "errors": {
     "authFailed": "Không thành công. Hãy yêu cầu mã mới và thử lại.",

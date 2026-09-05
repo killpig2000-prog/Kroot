@@ -29,7 +29,7 @@ import { GateCard, GoalCard } from "./PlacementIntro";
 import PlacementQuiz from "./PlacementQuiz";
 import PlacementResult from "./PlacementResult";
 import { ConfirmCard, SignupCard } from "./SignupCard";
-import { CARD, FADE } from "./styles";
+import { BTN_GREEN, BTN_OUTLINE, CARD, FADE } from "./styles";
 
 // Onboarding, test first and account last:
 //   gate (can you read Hangul?) → goal → adaptive test → result → sign-up → inbox
@@ -122,6 +122,9 @@ export default function OnboardingFlow({
   // malformed value also throws, which took the whole page down.
   const [error, setError] = useState<string | null>(() => (params.error ? t("errors.authFailed") : null));
   const saving = useRef(false);
+  // The save step failed and the learner is holding a placement we couldn't
+  // apply — show a way forward instead of an endless 🌱.
+  const [saveFailed, setSaveFailed] = useState(false);
   // When the currently-shown question first appeared — lets placement_question
   // report how long each question took, without needing extra state/rerenders.
   const questionShownAt = useRef(Date.now());
@@ -173,19 +176,25 @@ export default function OnboardingFlow({
     async (p: Placement, uid: string) => {
       if (saving.current) return;
       saving.current = true;
+      setSaveFailed(false);
       stepRef.current = "saving";
       setStep("saving");
-      await supabase.from("level_test_results").insert({
+      try {
+      // The learner's whole test lives in this row: without it apply_level_test
+      // has nothing recent to trust and silently places them at A1. A failure
+      // here has to stop the flow, not fall through to a wrong level.
+      const { error: insertErr } = await supabase.from("level_test_results").insert({
         user_id: uid,
         result_level: p.level,
         score: p.score,
         total_questions: p.total,
         skipped: p.skipped,
       });
+      if (insertErr) throw new Error(`level_test_results insert failed: ${insertErr.message}`);
       // Must run after the insert — the RPC requires a recent test row for
       // anything above A1.
       const { error: applyErr } = await supabase.rpc("apply_level_test", { p_level: p.level });
-      if (applyErr) console.error("apply_level_test failed:", applyErr.message);
+      if (applyErr) throw new Error(`apply_level_test failed: ${applyErr.message}`);
       if (p.goal) {
         // Only reached when the learner was already signed in (Google OAuth,
         // or a repeat run) — a magic-link sign-up carries the goal in its
@@ -204,34 +213,66 @@ export default function OnboardingFlow({
         goal: p.goal,
       });
       writeStored(null);
-      // Always the real dashboard (with its first-visit tour) — not the
-      // learner's first recommended lesson. That recommendation still shows
-      // on the result/signup cards; it was never meant to be where the
-      // account actually lands.
+      // Always the real dashboard — not the learner's first recommended
+      // lesson. That recommendation still shows on the result/signup cards;
+      // it was never meant to be where the account actually lands.
       router.push(params.next);
+      } catch (err) {
+        // Every new account passes through here. A dropped connection used to
+        // leave `saving.current` latched and the step stuck on "saving", so the
+        // 🌱 card rendered forever with no button and no error — and reloading
+        // re-entered the same trap through the mount effect below. The
+        // placement stays in sessionStorage so Retry can replay it.
+        console.error("onboarding save failed:", err instanceof Error ? err.message : err);
+        writeStored(p);
+        setSaveFailed(true);
+      } finally {
+        saving.current = false;
+      }
     },
     [supabase, router, params.next]
   );
 
   useEffect(() => {
-    supabase.auth.getUser().then(async ({ data: { user } }) => {
-      if (!user) return;
-      setUserId(user.id);
-      // A signed-in learner who already picked a starting level has finished
-      // onboarding — never send them through it again: re-applying it would
-      // reset their level and progress.
-      const { data } = await supabase.from("level_test_results").select("id").eq("user_id", user.id).limit(1);
-      if (data && data.length > 0) {
-        router.replace(params.next);
-        return;
-      }
-      // Back from sign-up with a placement in hand: save it and go.
-      const stored = decodePlacement(params.p) ?? readStored();
-      if (stored) {
-        setPlacement(stored);
-        void save(stored, user.id);
-      }
-    });
+    supabase.auth
+      .getUser()
+      .then(async ({ data: { user } }) => {
+        if (!user) return;
+        setUserId(user.id);
+        // A signed-in learner who already picked a starting level has finished
+        // onboarding — never send them through it again: re-applying it would
+        // reset their level and progress.
+        //
+        // The error has to be checked, not just the rows: a failed select
+        // returns no data, which reads as "never placed". Paired with a stale
+        // ?p= (an old bookmark, a shared link, Back after sign-up) that used to
+        // re-run save() on an established account and reset it to the level in
+        // the URL. When we can't tell, assume they're placed and bail out.
+        const { data, error } = await supabase
+          .from("level_test_results")
+          .select("id")
+          .eq("user_id", user.id)
+          .limit(1);
+        if (error) {
+          console.error("level_test_results lookup failed:", error.message);
+          router.replace(params.next);
+          return;
+        }
+        if (data && data.length > 0) {
+          router.replace(params.next);
+          return;
+        }
+        // Back from sign-up with a placement in hand: save it and go.
+        const stored = decodePlacement(params.p) ?? readStored();
+        if (stored) {
+          setPlacement(stored);
+          void save(stored, user.id);
+        }
+      })
+      .catch((err) => {
+        // Offline on arrival: stay on the gate rather than rejecting unhandled.
+        console.error("onboarding session lookup failed:", err instanceof Error ? err.message : err);
+      });
   }, [supabase, router, params.next, params.p, save]);
 
   // ---- steps ----
@@ -516,9 +557,42 @@ export default function OnboardingFlow({
           {step === "saving" && (
             <section className={FADE}>
               <div className={`${CARD} text-center`}>
-                <p className="text-[34px] mb-1">🌱</p>
-                <b className="block text-[17px]">{t("saving.title")}</b>
-                {placement && <p className="text-muted text-[13.5px] mt-1">{t("saving.sub", { level: placement.level })}</p>}
+                {saveFailed ? (
+                  <>
+                    <p className="text-[34px] mb-1">🌧️</p>
+                    <b className="block text-[17px]">{t("saving.failedTitle")}</b>
+                    <p className="text-muted text-[13.5px] mt-1">{t("saving.failedSub")}</p>
+                    <div className="grid gap-2 mt-4">
+                      <button
+                        type="button"
+                        className={`${BTN_GREEN} w-full`}
+                        onClick={() => {
+                          if (placement && userId) void save(placement, userId);
+                        }}
+                      >
+                        {t("saving.retry")}
+                      </button>
+                      {/* Never a dead end: the account exists either way, and
+                          the dashboard's own onboarding redirect will ask for a
+                          level again if this never landed. */}
+                      <button
+                        type="button"
+                        className={`${BTN_OUTLINE} w-full`}
+                        onClick={() => router.push(params.next)}
+                      >
+                        {t("saving.continueAnyway")}
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <p className="text-[34px] mb-1">🌱</p>
+                    <b className="block text-[17px]">{t("saving.title")}</b>
+                    {placement && (
+                      <p className="text-muted text-[13.5px] mt-1">{t("saving.sub", { level: placement.level })}</p>
+                    )}
+                  </>
+                )}
               </div>
             </section>
           )}

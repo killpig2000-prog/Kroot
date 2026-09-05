@@ -117,7 +117,11 @@
   },
   "saving": {
     "title": "Planting your seed…",
-    "sub": "Saving {level} and opening your first lesson."
+    "sub": "Saving {level} and opening your first lesson.",
+    "failedTitle": "We couldn't save your level",
+    "failedSub": "Your connection dropped just as we were planting. Your test answers are safe — try again.",
+    "retry": "Try again",
+    "continueAnyway": "Continue to my garden"
   },
   "errors": {
     "authFailed": "That didn't work. Request a new code and try again.",
