@@ -36,6 +36,7 @@ const RARITY_STYLE: Record<Rarity, { chip: string }> = {
   legendary: { chip: "bg-[var(--tint-amber)] text-[#8F3D1B]" },
 };
 const TABS: CostumeSlot[] = [...WEARABLE_SLOTS, ...GARDEN_SLOTS, ...SKIN_SLOTS];
+const RARITY_ORDER: Record<Rarity, number> = { common: 0, rare: 1, epic: 2, legendary: 3 };
 
 /** Maps a buy_costume() error onto a key under shop.errors. */
 function errorKey(raw: string): string {
@@ -144,7 +145,14 @@ export default function ShopClient({
   // Limited items are announced ahead of their window so people can save up:
   // upcoming ones are listed as "Limited edition" (try-on works, buying waits
   // for the date — buy_costume() enforces it server-side too).
-  const visible = COSTUMES.filter((c) => c.slot === tab && (isAvailable(c, now) || ownedSet.has(c.id) || isUpcoming(c, now)));
+  // Cheapest first, by tier: the tab used to list items in whatever order
+  // costumes.tsx happened to declare them, so an 850-coin Epic could sit above
+  // a 70-coin Common and a new learner had no way to see what was actually
+  // within reach. Rarity leads (price tiers don't overlap, so this also reads
+  // as ascending price) and the free welcome gift lands first in Hats.
+  const visible = COSTUMES.filter(
+    (c) => c.slot === tab && (isAvailable(c, now) || ownedSet.has(c.id) || isUpcoming(c, now)),
+  ).sort((a, b) => RARITY_ORDER[a.rarity] - RARITY_ORDER[b.rarity] || a.price - b.price);
   const featured = COSTUMES.find(
     (c) => c.availableUntil && isAvailable(c, now) && daysLeft(c.availableUntil, today) <= 14 && !ownedSet.has(c.id),
   );
