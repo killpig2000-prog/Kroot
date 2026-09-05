@@ -105,6 +105,6 @@
   "noCoinsThisTime": "本次没有金币",
   "alreadyEarned": "已获得 — 重玩不会再次奖励",
   "xpEarned": "{skill} XP",
-  "coinAvailable": "🪙 可获得金币",
+  "coinAvailable": "🪙 重做可得金币",
   "scoreForCoin": "得分{n}%以上可得{coins}金币"
 }
