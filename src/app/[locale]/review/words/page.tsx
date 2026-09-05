@@ -104,7 +104,14 @@ export default async function MyWordsPage({ params }: { params: Promise<{ locale
       romanization: w?.romanization ?? "",
       meaning: w ? getLocalizedMeaning(w, locale) : "",
       href: vocabHref(r.word_key),
-      isDue: r.next_review_at != null && r.next_review_at <= nowIso,
+      // Bookmarking a word plants next_review_at at "now" (see plantWord), so
+      // next_review_at alone marks every unstudied bookmark as due — a 💧 the
+      // learner could never act on, since /review's own queue requires a real
+      // attempt (ATTEMPTED_FILTER) and would never hand that word out.
+      isDue:
+        r.next_review_at != null &&
+        r.next_review_at <= nowIso &&
+        (r.correct_count ?? 0) + (r.incorrect_count ?? 0) > 0,
     };
   });
 

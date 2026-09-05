@@ -44,8 +44,14 @@ export default async function ReviewPage() {
         .or(ATTEMPTED_FILTER)
         .order("next_review_at", { ascending: true })
         .limit(REVIEW_SESSION_SIZE + MAX_REVIEW_CAPACITY_BONUS),
-      // Everything learned so far, for the empty state.
-      supabase.from("vocabulary_progress").select("id", { count: "exact", head: true }).eq("user_id", user.id),
+      // Everything learned so far, for the empty state — attempted only, so a
+      // learner who has merely bookmarked words isn't told they've "learned"
+      // them and are all caught up. They haven't studied any yet.
+      supabase
+        .from("vocabulary_progress")
+        .select("id", { count: "exact", head: true })
+        .eq("user_id", user.id)
+        .or(ATTEMPTED_FILTER),
       // Words already reviewed today — once this hits REVIEW_SESSION_SIZE,
       // review is done for the day even if the backlog isn't empty. User:
       // clearing one 10-word batch shouldn't immediately surface the next
