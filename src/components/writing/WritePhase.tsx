@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { WRITING_GENRE_META, type Prompt } from "@/lib/writing";
 import { getLocalizedExample, getLocalizedPrompt, getLocalizedStimulus } from "@/lib/writing-i18n";
-import { checkTiles, type Board } from "@/lib/writing-builder";
+import { checkTiles, tileMatchScore, tilesText, wrongTilePositions, type Board } from "@/lib/writing-builder";
 import { TileBoard } from "@/components/writing/WritingBoards";
 import { currentGuidedStep, GUIDED_STEP_EVENT } from "@/components/onboarding/guidedSteps";
 
@@ -190,16 +190,53 @@ export default function WritePhase({
             </button>
           </div>
         ) : (
+          // The whole verdict for this question, right here: score, what was
+          // built, and the correct sentence. The chapter result page repeats
+          // none of this — three sentences re-reviewed at the end read as a
+          // second, confusing round of feedback.
           <div
             data-tour="guided-writing-result"
             className={`rounded-[12px] border px-3.5 py-3 ${
               stepChecked ? "bg-success-bg border-success-line text-success-deep" : "bg-[var(--tint-amber)] border-amber-line text-amber"
             }`}
           >
-            <div className="text-[11px] font-extrabold tracking-[.08em] uppercase mb-1 opacity-80">
-              {stepChecked ? t("board.correct") : t("phase.correctSentence")}
-            </div>
-            <p className="kr text-[15px] leading-[1.6]">{board.answer.join(" ")}</p>
+            {(() => {
+              const score = tileMatchScore(board, entry.picked);
+              const off = wrongTilePositions(board, entry.picked).length;
+              return (
+                <>
+                  <div className="flex items-center justify-between gap-3 mb-2">
+                    <span className="text-[11px] font-extrabold tracking-[.08em] uppercase opacity-80">
+                      {stepChecked ? t("board.correct") : t("phase.offBy", { n: off })}
+                    </span>
+                    <span className="text-[24px] font-extrabold tracking-[-0.03em] leading-none tabular-nums">
+                      {score}
+                      <small className="text-[11px] font-semibold opacity-70">/100</small>
+                    </span>
+                  </div>
+                  <div className="h-1.5 rounded-full bg-cream/70 overflow-hidden mb-3">
+                    <div
+                      className={`h-full rounded-full ${stepChecked ? "bg-success" : "bg-amber"}`}
+                      style={{ width: `${score}%` }}
+                    />
+                  </div>
+                  {!stepChecked && (
+                    <div className="mb-2.5">
+                      <div className="text-[10.5px] font-bold tracking-[.06em] uppercase opacity-70 mb-0.5">
+                        {t("phase.yourSentence")}
+                      </div>
+                      <p className="kr text-[14px] leading-[1.6] line-through decoration-amber/60">
+                        {tilesText(board, entry.picked)}
+                      </p>
+                    </div>
+                  )}
+                  <div className="text-[10.5px] font-bold tracking-[.06em] uppercase opacity-70 mb-0.5">
+                    {t("phase.correctSentence")}
+                  </div>
+                  <p className="kr text-[15px] leading-[1.6] font-semibold">{board.answer.join(" ")}</p>
+                </>
+              );
+            })()}
           </div>
         )}
       </div>

@@ -54,7 +54,9 @@
     "finishChapter": "完成本章",
     "back": "返回",
     "nextQuestion": "下一题",
-    "correctSentence": "正确句子"
+    "correctSentence": "正确句子",
+    "offBy": "{n, plural, other {# 个词位置不对}}",
+    "yourSentence": "你的句子"
   },
   "board": {
     "tapWords": "按顺序点击下面的单词",
@@ -80,19 +82,10 @@
     "complete": "已完成",
     "yourLevel": "你的等级",
     "alreadyNatural": "✓ 拼对了",
-    "naturalBadge": "完全匹配",
-    "needsFix": "有偏差",
-    "focusTitle": "🎯 今日重点",
-    "tryIt": "试一试",
-    "nextChapterChecks": "下一章也会考察这个知识点。💪",
     "backToGarden": "返回花园",
     "allChapters": "全部章节",
     "saving": "保存中…",
-    "turnPage": "翻到下一页 →",
-    "builtFirstTry": "每个词都放对了位置。",
-    "builtAfterTries": "有 {n} 个词位置不对 —— 和下面的答案比对一下。",
-    "fallbackFocusPerfect": "所有句子都一次拼对了 —— 你的语序很扎实。下一章会稍微难一点。",
-    "fallbackFocusRetries": "点击前先用韩语把整句话说一遍,再按顺序排列单词。"
+    "turnPage": "翻到下一页 →"
   },
   "saveFailed": "没能保存这一章——连接断开了。恢复联网后重新打开即可获得奖励。"
 }

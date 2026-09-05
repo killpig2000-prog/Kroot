@@ -54,7 +54,9 @@
     "finishChapter": "Finish chapter",
     "back": "Back",
     "nextQuestion": "Next question",
-    "correctSentence": "Correct sentence"
+    "correctSentence": "Correct sentence",
+    "offBy": "{n, plural, =1 {1 word out of place} other {# words out of place}}",
+    "yourSentence": "Your sentence"
   },
   "board": {
     "tapWords": "Tap the words below, in order",
@@ -80,19 +82,10 @@
     "complete": "Complete",
     "yourLevel": "Your level",
     "alreadyNatural": "✓ Built correctly",
-    "naturalBadge": "Matched",
-    "needsFix": "Off by a word",
-    "focusTitle": "🎯 Today's focus",
-    "tryIt": "Try it",
-    "nextChapterChecks": "Next chapter checks for this pattern too. 💪",
     "backToGarden": "Back to Garden",
     "allChapters": "All chapters",
     "saving": "Saving…",
-    "turnPage": "Turn the page →",
-    "builtFirstTry": "Every word landed in the right spot.",
-    "builtAfterTries": "{n, plural, =1 {1 word} other {# words}} out of place — compare it to the answer below.",
-    "fallbackFocusPerfect": "Every sentence came together on the first try — your word order is solid. Next chapter tries a little more.",
-    "fallbackFocusRetries": "Before you tap, say the whole sentence in Korean out loud — then place the words to match."
+    "turnPage": "Turn the page →"
   },
   "saveFailed": "We couldn't save this chapter — your connection dropped. Reopen it once you're back online to earn the reward."
 }

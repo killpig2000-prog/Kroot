@@ -54,7 +54,9 @@
     "finishChapter": "章を完了する",
     "back": "戻る",
     "nextQuestion": "次の問題",
-    "correctSentence": "正解の文"
+    "correctSentence": "正解の文",
+    "offBy": "{n, plural, other {#語の位置が違います}}",
+    "yourSentence": "あなたの文"
   },
   "board": {
     "tapWords": "下の単語を順番にタップしよう",
@@ -80,19 +82,10 @@
     "complete": "完了",
     "yourLevel": "あなたのレベル",
     "alreadyNatural": "✓ 正しく組み立てました",
-    "naturalBadge": "一致",
-    "needsFix": "ずれあり",
-    "focusTitle": "🎯 今日のフォーカス",
-    "tryIt": "やってみよう",
-    "nextChapterChecks": "次の章でもこのパターンを確認します。💪",
     "backToGarden": "ガーデンに戻る",
     "allChapters": "全ての章",
     "saving": "保存中…",
-    "turnPage": "次のページへ →",
-    "builtFirstTry": "すべての単語が正しい位置に入りました。",
-    "builtAfterTries": "{n}語の位置がずれています — 下の正解と見比べましょう。",
-    "fallbackFocusPerfect": "全ての文が一発で組み立てられました — 語順はばっちりです。次の章はもう少し難しくなります。",
-    "fallbackFocusRetries": "タップする前に、韓国語で文全体を声に出してから、それに合わせて単語を並べてみよう。"
+    "turnPage": "次のページへ →"
   },
   "saveFailed": "このチャプターを保存できませんでした（接続が切れました）。オンラインに戻ってからもう一度開くと報酬を獲得できます。"
 }

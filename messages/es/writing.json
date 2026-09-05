@@ -54,7 +54,9 @@
     "finishChapter": "Terminar capítulo",
     "back": "Atrás",
     "nextQuestion": "Siguiente pregunta",
-    "correctSentence": "Oración correcta"
+    "correctSentence": "Oración correcta",
+    "offBy": "{n, plural, =1 {1 palabra fuera de lugar} other {# palabras fuera de lugar}}",
+    "yourSentence": "Tu frase"
   },
   "board": {
     "tapWords": "Toca las palabras de abajo, en orden",
@@ -80,19 +82,10 @@
     "complete": "Completo",
     "yourLevel": "Tu nivel",
     "alreadyNatural": "✓ Armado correctamente",
-    "naturalBadge": "Coincide",
-    "needsFix": "Palabra fuera de lugar",
-    "focusTitle": "🎯 Enfoque de hoy",
-    "tryIt": "Pruébalo",
-    "nextChapterChecks": "El próximo capítulo también repasa este patrón. 💪",
     "backToGarden": "Volver al Jardín",
     "allChapters": "Todos los capítulos",
     "saving": "Guardando…",
-    "turnPage": "Pasar la página →",
-    "builtFirstTry": "Cada palabra quedó en su lugar.",
-    "builtAfterTries": "{n, plural, one {# palabra} other {# palabras}} fuera de lugar — compara con la respuesta de abajo.",
-    "fallbackFocusPerfect": "Todas las frases se armaron bien al primer intento — tu orden de palabras es sólido. El próximo capítulo será un poco más difícil.",
-    "fallbackFocusRetries": "Antes de tocar, di toda la frase en coreano en voz alta — luego ordena las palabras para que coincida."
+    "turnPage": "Pasar la página →"
   },
   "saveFailed": "No pudimos guardar este capítulo: se cortó la conexión. Vuelve a abrirlo cuando tengas conexión para conseguir la recompensa."
 }
