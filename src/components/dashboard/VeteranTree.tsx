@@ -166,7 +166,8 @@ export default function VeteranTree({
     const fromGround = tiers - 1 - i;
     const side: 1 | -1 = fromGround % 2 ? 1 : -1;
     const w = 40 + fromGround * 4.5;
-    const reach = 36 + fromGround * 5;
+    // Capped so the lowest, widest branch still clears the ruler on the left.
+    const reach = Math.min(56, 36 + fromGround * 5);
     return {
       level: FULLY_GROWN_LEVEL + (fromGround + 1) * VETERAN_TIER_SPAN,
       w,
@@ -183,15 +184,15 @@ export default function VeteranTree({
 
   return (
     <>
-      {/* height ruler along the left edge */}
+      {/* height ruler, tight to the left edge so the widest branches clear it */}
       <g opacity=".55">
-        <line x1="22" x2="22" y1={groundY + 8} y2={topY} stroke={theme.ink} strokeWidth="1.5" />
+        <line x1="8" x2="8" y1={groundY + 8} y2={topY} stroke={theme.ink} strokeWidth="1.5" />
         {Array.from({ length: Math.floor(metres) + 1 }, (_, m) => {
           const y = groundY + 8 - (m / metres) * (groundY + 8 - topY);
           return (
             <g key={m}>
-              <line x1="16" x2="28" y1={y} y2={y} stroke={theme.ink} strokeWidth="1.5" />
-              <text x="32" y={y + 3} fontSize="8" fontWeight="800" fill={theme.ink}>
+              <line x1="4" x2="12" y1={y} y2={y} stroke={theme.ink} strokeWidth="1.5" />
+              <text x="14" y={y + 2.5} fontSize="7" fontWeight="800" fill={theme.ink}>
                 {m}m
               </text>
             </g>
