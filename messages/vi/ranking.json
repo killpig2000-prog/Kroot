@@ -41,12 +41,11 @@
     "place": "Hạng {rank}/{total}"
   },
   "reward": {
-    "claim": "Nhận xu 🪙",
-    "checking": "Đang kiểm tra…",
-    "claimed": "Đã nhận {coins} 🪙 của tuần trước",
+    "popupEyebrow": "Xu của tuần trước",
     "earned": "+{coins} 🪙!",
-    "none": "Tuần trước không có ánh nắng",
-    "failed": "Không kết nối được máy chủ — hãy kiểm tra kết nối và chạm lại."
+    "ok": "Tuyệt!",
+    "closeAria": "Đóng",
+    "dialogAria": "Phần thưởng xu của tuần trước"
   },
   "movement": {
     "up": "↑ lên luống tuần này",

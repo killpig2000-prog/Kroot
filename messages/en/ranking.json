@@ -41,12 +41,11 @@
     "place": "{rank} of {total}"
   },
   "reward": {
-    "claim": "Collect your coins 🪙",
-    "checking": "Checking…",
-    "claimed": "Collected {coins} 🪙 for last week",
+    "popupEyebrow": "Last week's coins",
     "earned": "+{coins} 🪙 earned!",
-    "none": "No sunlight last week",
-    "failed": "Couldn't reach the server — check your connection and tap again."
+    "ok": "Nice!",
+    "closeAria": "Close",
+    "dialogAria": "Last week's coin reward"
   },
   "movement": {
     "up": "↑ moved up this week",

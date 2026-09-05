@@ -41,12 +41,11 @@
     "place": "第 {rank} / {total}"
   },
   "reward": {
-    "claim": "领取金币 🪙",
-    "checking": "查询中…",
-    "claimed": "已领取上周的 {coins} 🪙",
+    "popupEyebrow": "上周的金币",
     "earned": "获得 +{coins} 🪙！",
-    "none": "上周没有阳光",
-    "failed": "无法连接服务器——请检查网络后再点一次。"
+    "ok": "太棒了!",
+    "closeAria": "关闭",
+    "dialogAria": "上周的金币奖励"
   },
   "movement": {
     "up": "↑ 本周升级",

@@ -41,12 +41,11 @@
     "place": "{total}人中 {rank}位"
   },
   "reward": {
-    "claim": "コインを受け取る 🪙",
-    "checking": "確認中…",
-    "claimed": "先週分 {coins} 🪙 を受け取りました",
+    "popupEyebrow": "先週分のコイン",
     "earned": "+{coins} 🪙 獲得！",
-    "none": "先週は日光なし",
-    "failed": "サーバーに接続できませんでした。通信状況を確認して、もう一度タップしてください。"
+    "ok": "やった!",
+    "closeAria": "閉じる",
+    "dialogAria": "先週分のコイン報酬"
   },
   "movement": {
     "up": "↑ 今週昇格",

@@ -82,15 +82,18 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
   const [rows, setRows] = useState<Row[] | null>(null);
   const [my, setMy] = useState<MyRank | null>(null);
   const [reward, setReward] = useState<Reward | null>(null);
-  const [claiming, setClaiming] = useState(false);
-  const [claimFailed, setClaimFailed] = useState(false);
+  // Shown once, the moment claim_weekly_reward() actually pays something out
+  // for the first time — never again for the same week (already_claimed
+  // flips true server-side the instant that call returns), and never on a
+  // plain page reload, which used to bring back a "Collect" button that
+  // looked unclaimed even though the RPC had already paid it.
+  const [showRewardPopup, setShowRewardPopup] = useState(false);
   // Garden beds (tiers) are switched off while the player base is small —
   // one board for everyone, no bed chip, no move-up/down zones. The switch
   // lives in league_settings (migration 0069); true is assumed until read so
   // an environment without the table behaves as before.
   const [bedsEnabled, setBedsEnabled] = useState(true);
   const [unavailable, setUnavailable] = useState(false);
-  const [joinedThisWeek, setJoinedThisWeek] = useState(false);
   const meRef = useRef<HTMLDivElement>(null);
 
   // Once the board is in, bring the learner's own row on screen if it sits
@@ -135,37 +138,39 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
 
       // Accounts younger than the week have no "last week" to collect.
       const createdAt = auth.data.user?.created_at;
+      let justJoined = false;
       if (createdAt) {
         const monday = new Date();
         monday.setUTCHours(0, 0, 0, 0);
         monday.setUTCDate(monday.getUTCDate() - ((monday.getUTCDay() + 6) % 7));
-        if (new Date(createdAt) >= monday) setJoinedThisWeek(true);
+        justJoined = new Date(createdAt) >= monday;
+      }
+
+      // claim_weekly_reward() is idempotent — the first call for a week pays
+      // out and returns already_claimed: false; every call after that just
+      // reports the same row with already_claimed: true and pays nothing
+      // twice. Calling it here, on every board load, replaces the old
+      // "Collect" button: there's nothing left to press, and nothing that
+      // can go stale across a refresh.
+      if (!justJoined) {
+        const { data, error } = await supabase.rpc("claim_weekly_reward");
+        if (cancelled) return;
+        if (!error) {
+          const r = Array.isArray(data) ? data[0] : data;
+          setReward(r as Reward);
+          if (r && !r.already_claimed && r.coins > 0) setShowRewardPopup(true);
+        } else {
+          // Best effort: a failed call here just means next load tries
+          // again, not a stuck flow — there's no button whose state would
+          // otherwise get stranded.
+          console.error("claim_weekly_reward failed:", error.message);
+        }
       }
     })();
     return () => {
       cancelled = true;
     };
   }, [supabase]);
-
-  async function claim() {
-    if (claiming) return;
-    setClaiming(true);
-    setClaimFailed(false);
-    try {
-      const { data, error } = await supabase.rpc("claim_weekly_reward");
-      // A swallowed error here read as "nothing happened": the spinner
-      // stopped, the button came back, and the learner never learned their
-      // coins hadn't landed.
-      if (error) throw new Error(error.message);
-      const r = Array.isArray(data) ? data[0] : data;
-      setReward(r as Reward);
-    } catch (err) {
-      console.error("claim_weekly_reward failed:", err instanceof Error ? err.message : err);
-      setClaimFailed(true);
-    } finally {
-      setClaiming(false);
-    }
-  }
 
   if (unavailable) {
     return (
@@ -242,35 +247,6 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
           </span>
         </div>
       </div>
-
-      {/* last week's coins — one button while they're due, one line once collected */}
-      {rows !== null && !joinedThisWeek && (
-        reward ? (
-          <p className="text-[13px] font-bold text-success-deep px-1">
-            {reward.already_claimed
-              ? t("reward.claimed", { coins: reward.coins })
-              : reward.coins > 0
-                ? t("reward.earned", { coins: reward.coins })
-                : t("reward.none")}
-          </p>
-        ) : (
-          <div>
-            <button
-              type="button"
-              onClick={claim}
-              disabled={claiming}
-              className="w-full rounded-[11px] px-3 py-2.5 text-[13px] font-bold text-white bg-success shadow-[0_3px_0_#2E5B41] hover:translate-y-px hover:shadow-[0_2px_0_#2E5B41] transition-all disabled:opacity-60"
-            >
-              {claiming ? t("reward.checking") : t("reward.claim")}
-            </button>
-            {claimFailed && (
-              <p role="status" className="mt-1.5 text-[12.5px] text-danger text-center">
-                {t("reward.failed")}
-              </p>
-            )}
-          </div>
-        )
-      )}
 
       {/* podium-lite: the top 3 trees, nothing else */}
       <section
@@ -398,6 +374,42 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
             {t("nudge.learn")}
           </Link>
         </div>
+      )}
+
+      {/* One-time popup: last week's board just paid out, right now. Same
+          full-screen dialog treatment as TreeGrowthPopup. */}
+      {showRewardPopup && reward && (
+        <>
+          <button
+            aria-label={t("reward.closeAria")}
+            onClick={() => setShowRewardPopup(false)}
+            className="fixed inset-0 z-[60] bg-[#282319]/45 cursor-default"
+          />
+          <div className="fixed inset-0 z-[70] flex items-center justify-center px-4 pointer-events-none">
+            <div
+              role="dialog"
+              aria-modal="true"
+              aria-label={t("reward.dialogAria")}
+              className="pointer-events-auto w-full max-w-[380px] bg-cream rounded-[24px] shadow-[0_30px_70px_-20px_rgba(40,35,25,.35)] px-8 pt-9 pb-8 text-center"
+            >
+              <span aria-hidden="true" className="block text-[44px] mb-2">
+                🪙
+              </span>
+              <b className="block text-[13px] font-extrabold tracking-[.08em] uppercase text-success mb-1">
+                {t("reward.popupEyebrow")}
+              </b>
+              <p className="text-[21px] font-extrabold text-charcoal mb-5 tracking-tight">
+                {t("reward.earned", { coins: reward.coins })}
+              </p>
+              <button
+                onClick={() => setShowRewardPopup(false)}
+                className="w-full rounded-[13px] bg-success text-white font-bold text-[14.5px] py-3.5 hover:bg-success-deep transition-colors"
+              >
+                {t("reward.ok")}
+              </button>
+            </div>
+          </div>
+        </>
       )}
     </div>
   );
