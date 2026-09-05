@@ -44,13 +44,17 @@ const CONSONANTS: Record<string, HangulStroke[]> = {
 };
 
 // -- the 10 basic vowels (중성) --
+// Stroke order follows the hand, not the shape: a short bar that *reaches*
+// a stem is drawn before that stem (ㅓ ㅕ: bar left-to-right, then the
+// stem; ㅗ ㅛ: stem(s) down, then the long bar), while a bar the stem hangs
+// *from* comes first (ㅜ ㅠ). ㅏ ㅑ: stem, then the bar(s) off it.
 const VOWELS: Record<string, HangulStroke[]> = {
   ㅏ: [{ d: "M32,14 L32,86" }, { d: "M32,50 L68,50" }],
   ㅑ: [{ d: "M28,14 L28,86" }, { d: "M28,40 L60,40" }, { d: "M28,60 L60,60" }],
-  ㅓ: [{ d: "M68,14 L68,86" }, { d: "M32,50 L68,50" }],
-  ㅕ: [{ d: "M72,14 L72,86" }, { d: "M40,40 L72,40" }, { d: "M40,60 L72,60" }],
-  ㅗ: [{ d: "M14,58 L86,58" }, { d: "M50,20 L50,58" }],
-  ㅛ: [{ d: "M14,62 L86,62" }, { d: "M36,24 L36,62" }, { d: "M64,24 L64,62" }],
+  ㅓ: [{ d: "M32,50 L68,50" }, { d: "M68,14 L68,86" }],
+  ㅕ: [{ d: "M40,40 L72,40" }, { d: "M40,60 L72,60" }, { d: "M72,14 L72,86" }],
+  ㅗ: [{ d: "M50,20 L50,58" }, { d: "M14,58 L86,58" }],
+  ㅛ: [{ d: "M36,24 L36,62" }, { d: "M64,24 L64,62" }, { d: "M14,62 L86,62" }],
   ㅜ: [{ d: "M14,42 L86,42" }, { d: "M50,42 L50,80" }],
   ㅠ: [{ d: "M14,38 L86,38" }, { d: "M36,38 L36,76" }, { d: "M64,38 L64,76" }],
   ㅡ: [{ d: "M16,50 L84,50" }],
@@ -83,14 +87,6 @@ function fitInto(strokes: HangulStroke[], targetMin: number, targetMax: number):
   const remap = scaleX(...scaleXParams(strokes, targetMin, targetMax));
   return strokes.map((s) => ({ d: remap(s.d) }));
 }
-// Applies the same x-remap that fitting `reference` into the slot would use,
-// to some other stroke (e.g. the extra bar ㅙ adds beside its fitted ㅏ) so
-// it lines up with it instead of being fitted to its own — degenerate for a
-// single vertical line — footprint.
-function alignTo(reference: HangulStroke[], targetMin: number, targetMax: number, strokes: HangulStroke[]): HangulStroke[] {
-  const remap = scaleX(...scaleXParams(reference, targetMin, targetMax));
-  return strokes.map((s) => ({ d: remap(s.d) }));
-}
 const LEFT_SLOT: [number, number] = [4, 46];
 const RIGHT_SLOT: [number, number] = [54, 96];
 const fitLeft = (s: HangulStroke[]) => fitInto(s, ...LEFT_SLOT);
@@ -105,24 +101,28 @@ const DOUBLE_CONSONANTS: Record<string, HangulStroke[]> = {
   ㅉ: [...fitLeft(CONSONANTS.ㅈ), ...fitRight(CONSONANTS.ㅈ)],
 };
 
-// Compound vowels: either a vertical bar added next to a base vowel (ㅐㅒㅔㅖ,
-// ㅚㅟ), or two base vowels compressed side by side (ㅘㅙㅝㅞ), or ㅡ+ㅣ (ㅢ).
-const I_RIGHT: HangulStroke = { d: "M82,14 L82,86" };
-const I_LEFT: HangulStroke = { d: "M18,14 L18,86" };
-
+// Compound vowels. ㅐ ㅒ ㅔ ㅖ are a base vowel with a second stem drawn last,
+// set close enough that the bar visibly reaches it (ㅐ ㅒ) or the two stems
+// read as a pair (ㅔ ㅖ) — the old 14-unit gap made them look like two
+// letters. The w-shaped ones are two base vowels compressed side by side,
+// so they inherit the base vowels' stroke order automatically.
 const COMPOUND_VOWELS: Record<string, HangulStroke[]> = {
-  ㅐ: [...VOWELS.ㅏ, I_RIGHT],
-  ㅒ: [...VOWELS.ㅑ, I_RIGHT],
-  ㅔ: [...VOWELS.ㅓ, I_LEFT],
-  ㅖ: [...VOWELS.ㅕ, I_LEFT],
+  // stem · bar to the second stem · second stem
+  ㅐ: [{ d: "M34,14 L34,86" }, { d: "M34,50 L64,50" }, { d: "M66,14 L66,86" }],
+  ㅒ: [{ d: "M30,14 L30,86" }, { d: "M30,40 L60,40" }, { d: "M30,60 L60,60" }, { d: "M62,14 L62,86" }],
+  // bar · the stem it reaches · the far stem
+  ㅔ: [{ d: "M16,50 L44,50" }, { d: "M44,14 L44,86" }, { d: "M66,14 L66,86" }],
+  // both bars, top then bottom · near stem · far stem
+  ㅖ: [{ d: "M16,40 L44,40" }, { d: "M16,60 L44,60" }, { d: "M44,14 L44,86" }, { d: "M66,14 L66,86" }],
   ㅘ: [...fitLeft(VOWELS.ㅗ), ...fitRight(VOWELS.ㅏ)],
-  ㅙ: [...fitLeft(VOWELS.ㅗ), ...fitRight(VOWELS.ㅏ), ...alignTo(VOWELS.ㅏ, ...RIGHT_SLOT, [I_RIGHT])],
-  ㅚ: [...fitLeft(VOWELS.ㅗ), { d: "M82,14 L82,86" }],
   ㅝ: [...fitLeft(VOWELS.ㅜ), ...fitRight(VOWELS.ㅓ)],
-  ㅞ: [...fitLeft(VOWELS.ㅜ), ...fitRight(VOWELS.ㅓ), { d: "M82,14 L82,86" }],
-  ㅟ: [...fitLeft(VOWELS.ㅜ), { d: "M82,14 L82,86" }],
-  ㅢ: [{ d: "M10,50 L66,50" }, { d: "M84,14 L84,86" }],
+  // ㅗ/ㅜ on the left, then the ㅐ/ㅔ pair (with its own tight second stem)
+  ㅚ: [...fitInto(VOWELS.ㅗ, 6, 58), { d: "M74,14 L74,86" }],
+  ㅟ: [...fitInto(VOWELS.ㅜ, 6, 58), { d: "M74,14 L74,86" }],
+  ㅢ: [{ d: "M12,50 L62,50" }, { d: "M74,14 L74,86" }],
 };
+COMPOUND_VOWELS.ㅙ = [...fitLeft(VOWELS.ㅗ), ...fitRight(COMPOUND_VOWELS.ㅐ)];
+COMPOUND_VOWELS.ㅞ = [...fitLeft(VOWELS.ㅜ), ...fitRight(COMPOUND_VOWELS.ㅔ)];
 
 export const HANGUL_STROKES: Record<string, HangulStroke[]> = {
   ...CONSONANTS,
