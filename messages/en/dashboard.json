@@ -99,13 +99,8 @@
   "feedback": {
     "closeAria": "Close",
     "dialogAria": "Feedback",
-    "notice": "Notice",
-    "launchedTitle": "Kroot has recently launched",
-    "launchedBody1": "The app is still early and has many shortcomings. We are continuing to improve it.",
-    "launchedBody2": "If you have any opinions or suggestions, we would appreciate hearing them.",
     "send": "Send feedback",
     "close": "Close",
-    "hideToday": "Don't show again today",
     "formSub": "A bug, a rough edge, a feature you wish we had — all welcome.",
     "placeholder": "What's on your mind?",
     "error": "Couldn't send that — mind trying again?",
@@ -113,7 +108,6 @@
     "submit": "Send",
     "cancel": "Cancel",
     "thanksTitle": "Thank you",
-    "thanksBody": "Your feedback has been received. We read every message and use it to decide what to improve next.",
-    "railLink": "Send feedback →"
+    "thanksBody": "Your feedback has been received. We read every message and use it to decide what to improve next."
   }
 }

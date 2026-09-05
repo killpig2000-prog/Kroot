@@ -3,21 +3,12 @@
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { usePathname } from "@/i18n/navigation";
-import { SEEN_KEY as TOUR_SEEN_KEY, TOUR_DONE_EVENT } from "@/components/onboarding/OnboardingTour";
-import { GUIDED_STEP_EVENT, currentGuidedStep } from "@/components/onboarding/guidedSteps";
 
-// Early-launch notice: shows on every dashboard load while we're actively
-// soliciting feedback. "Close" is per-load only; "Don't show today" hides it
-// until the next local calendar day.
-export const OPEN_FEEDBACK_EVENT = "kroot:open-feedback";
-const HIDE_KEY = "kroot:feedback-notice-hidden-on";
-
-type View = "closed" | "announce" | "form" | "sent";
-
-function localDateKey() {
-  const d = new Date();
-  return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
-}
+// Feedback lives behind one floating button in the bottom-right corner of the
+// dashboard. It used to open itself as a launch notice on every load; that
+// interrupted the page (and collided with the first-visit tour), so now
+// nothing appears until the learner taps the button.
+type View = "closed" | "form" | "sent";
 
 export default function FeedbackWidget() {
   const t = useTranslations("dashboard.feedback");
@@ -28,51 +19,6 @@ export default function FeedbackWidget() {
   const pathname = usePathname();
 
   useEffect(() => {
-    let hiddenToday = false;
-    try {
-      hiddenToday = localStorage.getItem(HIDE_KEY) === localDateKey();
-    } catch {}
-    if (hiddenToday) return;
-
-    // The first-visit tour spotlights parts of this same page, and its
-    // natural finish hands straight into the click-gated guided tour
-    // (Hangul -> Vocabulary -> Shop), which spans several full page loads —
-    // so this can't just check once at mount whether the *initial* tour was
-    // pending: a guided step can still be active on a later page even
-    // though SEEN_KEY was already flipped to "1" back when the initial tour
-    // ended. Re-derive "is a tour still going" from both flags on every
-    // mount, not just the first.
-    const tourActive = () => {
-      let initialTourPending = false;
-      try {
-        initialTourPending = localStorage.getItem(TOUR_SEEN_KEY) !== "1";
-      } catch {}
-      return initialTourPending || currentGuidedStep() !== null;
-    };
-
-    if (tourActive()) {
-      const maybeShow = () => {
-        if (!tourActive()) setView("announce");
-      };
-      window.addEventListener(TOUR_DONE_EVENT, maybeShow);
-      window.addEventListener(GUIDED_STEP_EVENT, maybeShow);
-      return () => {
-        window.removeEventListener(TOUR_DONE_EVENT, maybeShow);
-        window.removeEventListener(GUIDED_STEP_EVENT, maybeShow);
-      };
-    }
-
-    const timer = setTimeout(() => setView("announce"), 600);
-    return () => clearTimeout(timer);
-  }, []);
-
-  useEffect(() => {
-    const openForm = () => setView("form");
-    window.addEventListener(OPEN_FEEDBACK_EVENT, openForm);
-    return () => window.removeEventListener(OPEN_FEEDBACK_EVENT, openForm);
-  }, []);
-
-  useEffect(() => {
     if (view === "closed") return;
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -80,15 +26,6 @@ export default function FeedbackWidget() {
       document.body.style.overflow = prev;
     };
   }, [view]);
-
-  const dismissAnnouncement = () => setView("closed");
-
-  const hideForToday = () => {
-    try {
-      localStorage.setItem(HIDE_KEY, localDateKey());
-    } catch {}
-    setView("closed");
-  };
 
   const close = () => {
     setView("closed");
@@ -116,7 +53,20 @@ export default function FeedbackWidget() {
     }
   };
 
-  if (view === "closed") return null;
+  if (view === "closed") {
+    return (
+      // Sits above the mobile BottomNav (which is ~64px tall) and in the
+      // plain corner on desktop, where there is no bottom bar.
+      <button
+        type="button"
+        onClick={() => setView("form")}
+        className="fixed z-[50] right-4 bottom-[84px] md:right-6 md:bottom-6 inline-flex items-center gap-2 rounded-full bg-[#221F1B] text-white font-semibold text-[14px] pl-4 pr-[18px] py-3 shadow-[0_10px_30px_-10px_rgba(40,35,25,.5)] hover:bg-[#3A3530] transition-colors"
+      >
+        <span aria-hidden="true" className="text-[17px] leading-none">💬</span>
+        {t("send")}
+      </button>
+    );
+  }
 
   return (
     <>
@@ -130,47 +80,8 @@ export default function FeedbackWidget() {
           role="dialog"
           aria-modal="true"
           aria-label={t("dialogAria")}
-          className={`pointer-events-auto w-full bg-cream rounded-[24px] shadow-[0_30px_70px_-20px_rgba(40,35,25,.35)] ${
-            view === "announce" ? "max-w-[420px] px-7 pt-7 pb-6" : "max-w-[380px] px-6 py-6"
-          }`}
+          className="pointer-events-auto w-full max-w-[380px] bg-cream rounded-[24px] shadow-[0_30px_70px_-20px_rgba(40,35,25,.35)] px-6 py-6"
         >
-          {view === "announce" && (
-            <>
-              <span className="block text-[11px] font-bold uppercase tracking-[0.12em] text-faint mb-2">
-                {t("notice")}
-              </span>
-              <b className="block text-[18px] font-extrabold text-charcoal mb-3 tracking-tight">
-                {t("launchedTitle")}
-              </b>
-              <p className="text-[14px] text-muted leading-relaxed mb-2">
-                {t("launchedBody1")}
-              </p>
-              <p className="text-[14px] text-muted leading-relaxed mb-6">
-                {t("launchedBody2")}
-              </p>
-              <button
-                onClick={() => setView("form")}
-                className="w-full rounded-[12px] bg-[#221F1B] text-white font-semibold text-[14px] py-3 hover:bg-[#3A3530] transition-colors"
-              >
-                {t("send")}
-              </button>
-              <div className="flex items-center justify-between mt-3 pt-3 border-t border-line">
-                <button
-                  onClick={dismissAnnouncement}
-                  className="text-[13px] font-semibold text-muted hover:text-charcoal transition-colors py-1"
-                >
-                  {t("close")}
-                </button>
-                <button
-                  onClick={hideForToday}
-                  className="text-[13px] font-semibold text-faint hover:text-muted transition-colors py-1"
-                >
-                  {t("hideToday")}
-                </button>
-              </div>
-            </>
-          )}
-
           {view === "form" && (
             <>
               <b className="block text-[15px] font-extrabold text-charcoal mb-1.5">

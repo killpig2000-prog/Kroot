@@ -99,13 +99,8 @@
   "feedback": {
     "closeAria": "Đóng",
     "dialogAria": "Góp ý",
-    "notice": "Thông báo",
-    "launchedTitle": "Kroot vừa mới ra mắt",
-    "launchedBody1": "Ứng dụng vẫn còn rất mới và còn nhiều thiếu sót. Chúng tôi đang tiếp tục cải thiện.",
-    "launchedBody2": "Nếu bạn có ý kiến hay đề xuất nào, chúng tôi rất mong được nghe.",
     "send": "Gửi góp ý",
     "close": "Đóng",
-    "hideToday": "Hôm nay đừng hiện nữa",
     "formSub": "Một lỗi, một chỗ chưa mượt, một tính năng bạn mong có — đều được cả.",
     "placeholder": "Bạn đang nghĩ gì?",
     "error": "Chưa gửi được — bạn thử lại nhé?",
@@ -113,7 +108,6 @@
     "submit": "Gửi",
     "cancel": "Hủy",
     "thanksTitle": "Cảm ơn bạn",
-    "thanksBody": "Chúng tôi đã nhận được góp ý của bạn. Mỗi tin nhắn đều được đọc và dùng để quyết định cải thiện điều gì tiếp theo.",
-    "railLink": "Gửi góp ý →"
+    "thanksBody": "Chúng tôi đã nhận được góp ý của bạn. Mỗi tin nhắn đều được đọc và dùng để quyết định cải thiện điều gì tiếp theo."
   }
 }

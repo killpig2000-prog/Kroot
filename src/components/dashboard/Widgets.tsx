@@ -2,7 +2,6 @@
 
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { OPEN_FEEDBACK_EVENT } from "@/components/dashboard/FeedbackWidget";
 
 export type WordOfTheDay = {
   word: string;
@@ -90,15 +89,6 @@ export default function Widgets({
         </WCard>
       )}
 
-      {/* The launch notice already asks for feedback once per day; a second
-          card here made the same request twice on one screen. One quiet link. */}
-      <button
-        type="button"
-        onClick={() => window.dispatchEvent(new CustomEvent(OPEN_FEEDBACK_EVENT))}
-        className="mt-auto self-start text-[12px] font-semibold text-faint hover:text-muted transition-colors"
-      >
-        {t("feedback.railLink")}
-      </button>
     </aside>
   );
 }

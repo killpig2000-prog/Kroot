@@ -99,13 +99,8 @@
   "feedback": {
     "closeAria": "关闭",
     "dialogAria": "反馈",
-    "notice": "公告",
-    "launchedTitle": "Kroot 刚刚上线",
-    "launchedBody1": "这个应用还很早期，有不少不足。我们会继续改进。",
-    "launchedBody2": "如果你有任何想法或建议，我们非常愿意听。",
     "send": "发送反馈",
     "close": "关闭",
-    "hideToday": "今天不再显示",
     "formSub": "一个 bug、一处别扭的地方、一个你希望有的功能——都欢迎。",
     "placeholder": "你在想什么？",
     "error": "没能发送出去，再试一次好吗？",
@@ -113,7 +108,6 @@
     "submit": "发送",
     "cancel": "取消",
     "thanksTitle": "谢谢你",
-    "thanksBody": "我们已经收到你的反馈。每一条我们都会读，并用它来决定接下来改进什么。",
-    "railLink": "发送反馈 →"
+    "thanksBody": "我们已经收到你的反馈。每一条我们都会读，并用它来决定接下来改进什么。"
   }
 }

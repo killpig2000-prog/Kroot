@@ -99,13 +99,8 @@
   "feedback": {
     "closeAria": "Cerrar",
     "dialogAria": "Comentarios",
-    "notice": "Aviso",
-    "launchedTitle": "Kroot acaba de lanzarse",
-    "launchedBody1": "La app todavía está empezando y tiene muchas carencias. Seguimos mejorándola.",
-    "launchedBody2": "Si tienes alguna opinión o sugerencia, nos encantaría escucharla.",
     "send": "Enviar comentarios",
     "close": "Cerrar",
-    "hideToday": "No volver a mostrar hoy",
     "formSub": "Un fallo, algo que chirría, una función que echas de menos: todo es bienvenido.",
     "placeholder": "¿Qué tienes en mente?",
     "error": "No hemos podido enviarlo. ¿Lo intentas otra vez?",
@@ -113,7 +108,6 @@
     "submit": "Enviar",
     "cancel": "Cancelar",
     "thanksTitle": "Gracias",
-    "thanksBody": "Hemos recibido tus comentarios. Leemos cada mensaje y nos ayudan a decidir qué mejorar a continuación.",
-    "railLink": "Enviar comentarios →"
+    "thanksBody": "Hemos recibido tus comentarios. Leemos cada mensaje y nos ayudan a decidir qué mejorar a continuación."
   }
 }

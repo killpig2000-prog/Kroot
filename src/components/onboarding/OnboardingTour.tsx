@@ -131,9 +131,8 @@ export default function OnboardingTour({
     (continueOn = true) => {
       markSeen();
       setActive(false);
-      // Arm the guided tour BEFORE announcing the tour is done: FeedbackWidget
-      // reacts to TOUR_DONE_EVENT by checking whether a guided step is active,
-      // and would pop its own notice over the first step otherwise.
+      // Arm the guided tour BEFORE announcing the tour is done, so anything
+      // listening for TOUR_DONE_EVENT already sees a guided step active.
       if (continueOn && startsGuidedTour) startGuidedTour(guidedTrack);
       window.dispatchEvent(new Event(TOUR_DONE_EVENT));
     },
