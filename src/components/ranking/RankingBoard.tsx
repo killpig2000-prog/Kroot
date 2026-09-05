@@ -84,6 +84,11 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
   const [reward, setReward] = useState<Reward | null>(null);
   const [claiming, setClaiming] = useState(false);
   const [claimFailed, setClaimFailed] = useState(false);
+  // Garden beds (tiers) are switched off while the player base is small —
+  // one board for everyone, no bed chip, no move-up/down zones. The switch
+  // lives in league_settings (migration 0069); true is assumed until read so
+  // an environment without the table behaves as before.
+  const [bedsEnabled, setBedsEnabled] = useState(true);
   const [unavailable, setUnavailable] = useState(false);
   const [joinedThisWeek, setJoinedThisWeek] = useState(false);
   const meRef = useRef<HTMLDivElement>(null);
@@ -112,16 +117,18 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
         setUnavailable(true);
         return;
       }
-      const [league, mine, auth] = await Promise.all([
+      const [league, mine, auth, settings] = await Promise.all([
         supabase.rpc("get_weekly_league"),
         supabase.rpc("get_my_weekly_rank"),
         supabase.auth.getUser(),
+        supabase.from("league_settings").select("beds_enabled").maybeSingle(),
       ]);
       if (cancelled) return;
       if (league.error || mine.error) {
         setUnavailable(true);
         return;
       }
+      if (!settings.error && settings.data) setBedsEnabled(!!settings.data.beds_enabled);
       setRows((league.data ?? []) as Row[]);
       const m = Array.isArray(mine.data) ? mine.data[0] : mine.data;
       setMy(m as MyRank);
@@ -211,14 +218,16 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
           {t("title")}
         </h1>
         <div className="flex items-center gap-x-2 gap-y-1.5 flex-wrap text-[12.5px] font-semibold text-faint">
-          <span
-            className="inline-flex items-center gap-1.5 rounded-full border-[1.5px] px-2.5 py-0.5 text-[12.5px] font-bold"
-            style={{ borderColor: tier.border, background: tier.bg, color: tier.accent }}
-          >
-            <span aria-hidden="true">{tier.emoji}</span>
-            {t("bed", { tier: tierLabel(tierIdx) })}
-          </span>
-          {my && my.movement !== 0 && (
+          {bedsEnabled && (
+            <span
+              className="inline-flex items-center gap-1.5 rounded-full border-[1.5px] px-2.5 py-0.5 text-[12.5px] font-bold"
+              style={{ borderColor: tier.border, background: tier.bg, color: tier.accent }}
+            >
+              <span aria-hidden="true">{tier.emoji}</span>
+              {t("bed", { tier: tierLabel(tierIdx) })}
+            </span>
+          )}
+          {bedsEnabled && my && my.movement !== 0 && (
             <span
               className={`inline-flex items-center rounded-full border px-2 py-0.5 text-[11px] font-black ${
                 my.movement > 0 ? "bg-success-bg border-success-line text-success-deep" : "bg-warm border-line text-danger"
@@ -317,7 +326,7 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
             const zone = zoneOf(r);
             const prevZone = i > 0 ? zoneOf(rows[i - 1]) : null;
             const gap = i > 0 && r.rank - rows[i - 1].rank > 1;
-            const showZone = !freshWeek && (i === 0 || zone !== prevZone);
+            const showZone = bedsEnabled && !freshWeek && (i === 0 || zone !== prevZone);
             return (
               <div key={`${r.rank}-${r.display_name}`} className="grid gap-1">
                 {gap && (
