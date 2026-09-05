@@ -80,6 +80,7 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
   const [my, setMy] = useState<MyRank | null>(null);
   const [reward, setReward] = useState<Reward | null>(null);
   const [claiming, setClaiming] = useState(false);
+  const [claimFailed, setClaimFailed] = useState(false);
   const [unavailable, setUnavailable] = useState(false);
   const [joinedThisWeek, setJoinedThisWeek] = useState(false);
   const meRef = useRef<HTMLDivElement>(null);
@@ -137,12 +138,23 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
   }, [supabase]);
 
   async function claim() {
+    if (claiming) return;
     setClaiming(true);
-    const { data, error } = await supabase.rpc("claim_weekly_reward");
-    setClaiming(false);
-    if (error) return;
-    const r = Array.isArray(data) ? data[0] : data;
-    setReward(r as Reward);
+    setClaimFailed(false);
+    try {
+      const { data, error } = await supabase.rpc("claim_weekly_reward");
+      // A swallowed error here read as "nothing happened": the spinner
+      // stopped, the button came back, and the learner never learned their
+      // coins hadn't landed.
+      if (error) throw new Error(error.message);
+      const r = Array.isArray(data) ? data[0] : data;
+      setReward(r as Reward);
+    } catch (err) {
+      console.error("claim_weekly_reward failed:", err instanceof Error ? err.message : err);
+      setClaimFailed(true);
+    } finally {
+      setClaiming(false);
+    }
   }
 
   if (unavailable) {
@@ -230,14 +242,21 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
                 : t("reward.none")}
           </p>
         ) : (
-          <button
-            type="button"
-            onClick={claim}
-            disabled={claiming}
-            className="w-full rounded-[11px] px-3 py-2.5 text-[13px] font-bold text-white bg-success shadow-[0_3px_0_#2E5B41] hover:translate-y-px hover:shadow-[0_2px_0_#2E5B41] transition-all disabled:opacity-60"
-          >
-            {claiming ? t("reward.checking") : t("reward.claim")}
-          </button>
+          <div>
+            <button
+              type="button"
+              onClick={claim}
+              disabled={claiming}
+              className="w-full rounded-[11px] px-3 py-2.5 text-[13px] font-bold text-white bg-success shadow-[0_3px_0_#2E5B41] hover:translate-y-px hover:shadow-[0_2px_0_#2E5B41] transition-all disabled:opacity-60"
+            >
+              {claiming ? t("reward.checking") : t("reward.claim")}
+            </button>
+            {claimFailed && (
+              <p role="status" className="mt-1.5 text-[12.5px] text-danger text-center">
+                {t("reward.failed")}
+              </p>
+            )}
+          </div>
         )
       )}
 

@@ -45,7 +45,8 @@
     "checking": "Đang kiểm tra…",
     "claimed": "Đã nhận {coins} 🪙 của tuần trước",
     "earned": "+{coins} 🪙!",
-    "none": "Tuần trước không có ánh nắng"
+    "none": "Tuần trước không có ánh nắng",
+    "failed": "Không kết nối được máy chủ — hãy kiểm tra kết nối và chạm lại."
   },
   "movement": {
     "up": "↑ lên luống tuần này",

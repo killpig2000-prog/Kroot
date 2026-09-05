@@ -45,7 +45,8 @@
     "checking": "Checking…",
     "claimed": "Collected {coins} 🪙 for last week",
     "earned": "+{coins} 🪙 earned!",
-    "none": "No sunlight last week"
+    "none": "No sunlight last week",
+    "failed": "Couldn't reach the server — check your connection and tap again."
   },
   "movement": {
     "up": "↑ moved up this week",

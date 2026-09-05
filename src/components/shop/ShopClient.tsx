@@ -187,6 +187,7 @@ export default function ShopClient({
   // These used to update `worn` whatever the database said, so a failed write
   // showed the costume on and quietly took it off again at the next reload.
   async function equip(c: Costume) {
+    const previous = worn[c.slot];
     const cleared = await supabase
       .from("user_costumes")
       .update({ equipped: false })
@@ -198,7 +199,19 @@ export default function ShopClient({
       .update({ equipped: true })
       .eq("user_id", userId)
       .eq("costume_id", c.id);
-    if (error) return false;
+    if (error) {
+      // The two writes aren't atomic, so a failure here leaves the slot
+      // wearing nothing at all — worse than the state we started in. Put the
+      // old item back before reporting the failure.
+      if (previous) {
+        await supabase
+          .from("user_costumes")
+          .update({ equipped: true })
+          .eq("user_id", userId)
+          .eq("costume_id", previous);
+      }
+      return false;
+    }
     setWorn((w) => ({ ...w, [c.slot]: c.id }));
     return true;
   }
@@ -235,11 +248,22 @@ export default function ShopClient({
         if (typeof data === "number") setBalance(data);
         setOwnedSet((s) => new Set(s).add(selected.id));
         if (goalOverride === selected.id) writeStoredGoal(null);
-        await equip(selected);
-        setMessage({ text: t("bought", { name: selected.name }), good: true });
+        // The purchase itself succeeded whatever happens here — say so, but
+        // don't claim it's being worn if the equip write didn't land.
+        const wearing = await equip(selected);
+        setMessage({
+          text: wearing ? t("bought", { name: selected.name }) : t("boughtNotWorn", { name: selected.name }),
+          good: wearing,
+        });
         if (tutorial) setTutorialBought(true);
       }
       router.refresh();
+    } catch (err) {
+      // A rejected request (offline mid-tap) used to escape act() entirely:
+      // `finally` freed the button, but nothing ever told the learner why the
+      // tap did nothing.
+      console.error("shop action failed:", err instanceof Error ? err.message : err);
+      setMessage({ text: t("errors.generic"), good: false });
     } finally {
       setBusy(false);
     }

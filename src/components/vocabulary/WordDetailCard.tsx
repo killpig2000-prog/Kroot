@@ -210,15 +210,24 @@ export default function WordDetailCard({
     if (adding || inBank) return;
     setAdding(true);
     setAddError(null);
-    const res = await saveToBank(createClient(), userId, word.key);
-    setAdding(false);
-    if (!res.ok) {
-      if (res.reason === "full") setSavedCount(res.used);
-      setAddError(res.reason);
-      return;
+    try {
+      const res = await saveToBank(createClient(), userId, word.key);
+      if (!res.ok) {
+        if (res.reason === "full") setSavedCount(res.used);
+        setAddError(res.reason);
+        return;
+      }
+      setSavedCount((n) => n + 1);
+      setInBank(true);
+    } catch {
+      setAddError("error");
+    } finally {
+      // Has to be released here: saveToBank *rejecting* (offline, dropped
+      // connection) used to skip setAdding(false) entirely, leaving the
+      // button disabled for good with no message — a reload was the only way
+      // out. Same shape as AddToMyWords, which already got this right.
+      setAdding(false);
     }
-    setSavedCount((n) => n + 1);
-    setInBank(true);
   }
 
   if (dayResult) {

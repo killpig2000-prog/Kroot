@@ -43,6 +43,7 @@
     "opensOn": "限定款 · {date}"
   },
   "bought": "{name} 归你了 — 已经戴到树上啦。",
+  "boughtNotWorn": "{name} 已经是你的了！刚才没能穿上——请再试一次穿戴。",
   "featured": {
     "badge": "仅限本周",
     "meta": "{rarity}{slot} · 🪙 {price}{hasLevel, select, yes { · 需要 Lv.{level}} other {}} · {date} 后下架",

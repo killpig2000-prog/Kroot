@@ -43,6 +43,7 @@
     "opensOn": "限定版 · {date}"
   },
   "bought": "{name} を手に入れました — 木にも飾りました。",
+  "boughtNotWorn": "{name} を購入しました！ただ今すぐには着せられませんでした。もう一度着せてみてください。",
   "featured": {
     "badge": "今週限定",
     "meta": "{rarity}の{slot} · 🪙 {price}{hasLevel, select, yes { · Lv.{level} が必要} other {}} · {date} で終了",

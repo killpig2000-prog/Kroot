@@ -43,6 +43,7 @@
     "opensOn": "Edición limitada · {date}"
   },
   "bought": "{name} ya es tuyo — y está en tu árbol.",
+  "boughtNotWorn": "¡{name} ya es tuyo! No pudimos ponértelo ahora mismo: inténtalo de nuevo.",
   "featured": {
     "badge": "Solo esta semana",
     "meta": "{rarity} · {slot} · 🪙 {price}{hasLevel, select, yes { · requiere Nv.{level}} other {}} · desaparece después del {date}",

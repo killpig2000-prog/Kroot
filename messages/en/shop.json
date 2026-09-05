@@ -43,6 +43,7 @@
     "opensOn": "Limited edition · {date}"
   },
   "bought": "{name} is yours — and on your tree.",
+  "boughtNotWorn": "{name} is yours! We couldn't put it on just now — try wearing it again.",
   "featured": {
     "badge": "This week only",
     "meta": "{rarity} {slot} · 🪙 {price}{hasLevel, select, yes { · needs Lv.{level}} other {}} · gone after {date}",

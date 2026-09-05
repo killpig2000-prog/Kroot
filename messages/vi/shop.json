@@ -43,6 +43,7 @@
     "opensOn": "Phiên bản giới hạn · {date}"
   },
   "bought": "{name} là của bạn rồi — và đã lên cây.",
+  "boughtNotWorn": "{name} đã là của bạn! Chúng tôi chưa mặc được ngay — hãy thử mặc lại.",
   "featured": {
     "badge": "Chỉ trong tuần này",
     "meta": "{slot} {rarity} · 🪙 {price}{hasLevel, select, yes { · cần Lv.{level}} other {}} · hết hạn sau {date}",

@@ -45,7 +45,8 @@
     "checking": "Comprobando…",
     "claimed": "Recogiste {coins} 🪙 de la semana pasada",
     "earned": "¡+{coins} 🪙 ganadas!",
-    "none": "Sin luz solar la semana pasada"
+    "none": "Sin luz solar la semana pasada",
+    "failed": "No se pudo conectar con el servidor: revisa tu conexión y vuelve a tocar."
   },
   "movement": {
     "up": "↑ subiste esta semana",
