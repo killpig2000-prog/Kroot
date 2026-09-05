@@ -94,13 +94,15 @@
     "namePlaceholder": "Maria",
     "agree": "I agree to the <link>Terms and Privacy Policy</link>.",
     "sending": "Sending…",
-    "sendLink": "Send me a sign-in link",
     "login": "Log in",
-    "alreadyHere": "Already growing here?"
+    "alreadyHere": "Already growing here?",
+    "password": "Password",
+    "passwordPlaceholder": "At least 8 characters",
+    "create": "Create my account"
   },
   "confirm": {
     "title": "Check your inbox",
-    "sub": "We sent a sign-in link and a code to <b>{email}</b>. Tap the link, or enter the code below.",
+    "sub": "We sent a confirmation link and a code to <b>{email}</b>. Tap the link, or enter the code below — just this once. After that, your password is all you need.",
     "upNext": "Up next",
     "gmail": "Open Gmail",
     "outlook": "Open Outlook",
@@ -122,7 +124,8 @@
     "authFailed": "That sign-in link failed or expired. Enter the code from the email instead, or request a new one.",
     "rateLimit": "Sorry — we've hit tonight's hourly email limit while we're still testing. Please try again in about an hour, or continue with Google instead.",
     "network": "Couldn't reach the server. Check your connection and try again.",
-    "badCode": "That code didn't work. Check it, or resend to get a new one."
+    "badCode": "That code didn't work. Check it, or resend to get a new one.",
+    "exists": "That email already has an account — log in instead."
   },
   "mascot": {
     "welcome": "welcome!",

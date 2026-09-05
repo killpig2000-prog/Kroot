@@ -315,31 +315,47 @@ export default function OnboardingFlow({
     if (error) setError(error.message);
   }
 
-  async function magicLink(addr: string, name: string) {
+  // Email + password. The password is what every later login uses; the
+  // inbox is visited exactly once, to confirm the address (link or code).
+  async function signUp(addr: string, name: string, password: string) {
     if (!placement) return;
     setError(null);
     setSending(true);
     try {
-      const { error } = await supabase.auth.signInWithOtp({
+      const redirect = `${window.location.origin}/auth/callback?next=${encodeURIComponent(callbackNext(placement))}`;
+      const { data, error } = await supabase.auth.signUp({
         email: addr,
+        password,
         options: {
-          shouldCreateUser: true,
-          emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(callbackNext(placement))}`,
+          emailRedirectTo: redirect,
           data: { display_name: name || undefined, goal: placement.goal ?? undefined },
         },
       });
       if (error) {
-        // The mailer allows only a handful of emails per hour; make that actionable.
         setError(
           /rate limit/i.test(error.message)
             ? t("errors.rateLimit")
-            : error.message
+            : /already registered|already exists/i.test(error.message)
+              ? t("errors.exists")
+              : error.message
         );
         return;
       }
-      track("signup", { method: "magic_link", goal: placement.goal });
-      if (step === "confirm") setResent(true);
+      // With confirmations on, Supabase answers a sign-up for an address that
+      // already has an account with a placeholder user that carries no
+      // identities (so the response can't be used to probe for accounts).
+      // That learner needs the login page, not another confirmation mail.
+      if (data.user && data.user.identities?.length === 0) {
+        setError(t("errors.exists"));
+        return;
+      }
+      track("signup", { method: "password", goal: placement.goal });
       setEmail(addr);
+      // Already confirmed (autoconfirm on) — nothing to wait for.
+      if (data.session) {
+        window.location.assign(callbackNext(placement));
+        return;
+      }
       goToStep("confirm");
       setResendCooldown(30);
     } catch {
@@ -347,6 +363,32 @@ export default function OnboardingFlow({
     } finally {
       // Sign-up is the one button that must never die on a dropped request:
       // the learner has just finished the placement test to get here.
+      setSending(false);
+    }
+  }
+
+  // Another copy of the confirmation mail (link + code) to the same address.
+  async function resend() {
+    if (!placement || !email) return;
+    setError(null);
+    setSending(true);
+    try {
+      const { error } = await supabase.auth.resend({
+        type: "signup",
+        email,
+        options: {
+          emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(callbackNext(placement))}`,
+        },
+      });
+      if (error) {
+        setError(/rate limit/i.test(error.message) ? t("errors.rateLimit") : error.message);
+        return;
+      }
+      setResent(true);
+      setResendCooldown(30);
+    } catch {
+      setError(t("errors.network"));
+    } finally {
       setSending(false);
     }
   }
@@ -432,7 +474,7 @@ export default function OnboardingFlow({
               error={error}
               sending={sending}
               onGoogle={google}
-              onMagicLink={magicLink}
+              onSignUp={signUp}
             />
           )}
           {step === "confirm" && (
@@ -445,7 +487,7 @@ export default function OnboardingFlow({
               error={error}
               verifying={verifying}
               onVerifyCode={verifyCode}
-              onResend={() => magicLink(email, "")}
+              onResend={resend}
               onChangeEmail={() => {
                 setResent(false);
                 window.history.back();

@@ -94,13 +94,15 @@
     "namePlaceholder": "María",
     "agree": "Acepto los <link>Términos y la Política de privacidad</link>.",
     "sending": "Enviando…",
-    "sendLink": "Enviarme un enlace de acceso",
     "login": "Iniciar sesión",
-    "alreadyHere": "¿Ya tienes cuenta?"
+    "alreadyHere": "¿Ya tienes cuenta?",
+    "password": "Contraseña",
+    "passwordPlaceholder": "Al menos 8 caracteres",
+    "create": "Crear mi cuenta"
   },
   "confirm": {
     "title": "Revisa tu bandeja de entrada",
-    "sub": "Enviamos un enlace y un código a <b>{email}</b>. Toca el enlace o introduce el código abajo.",
+    "sub": "Enviamos un enlace de confirmación y un código a <b>{email}</b>. Toca el enlace o introduce el código abajo — solo esta vez. Después, solo necesitas tu contraseña.",
     "upNext": "A continuación",
     "gmail": "Abrir Gmail",
     "outlook": "Abrir Outlook",
@@ -122,7 +124,8 @@
     "authFailed": "Ese enlace falló o caducó. Introduce el código del correo o pide uno nuevo.",
     "rateLimit": "Lo sentimos — hemos alcanzado el límite de correos por hora de esta noche mientras seguimos en pruebas. Inténtalo de nuevo en una hora, o continúa con Google.",
     "network": "No se pudo conectar con el servidor. Revisa tu conexión e inténtalo de nuevo.",
-    "badCode": "Ese código no funcionó. Revísalo o pide uno nuevo."
+    "badCode": "Ese código no funcionó. Revísalo o pide uno nuevo.",
+    "exists": "Ese correo ya tiene una cuenta — inicia sesión."
   },
   "mascot": {
     "welcome": "¡bienvenido!",

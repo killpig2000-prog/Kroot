@@ -20,8 +20,10 @@ function GoogleMark() {
   );
 }
 
-// Step 5 — the account, after the level. Google, or a passwordless email
-// link; either way the placement rides along in the callback URL.
+// Step 5 — the account, after the level. Google, or email + password (the
+// password is what later logins use; the inbox is only visited once, to
+// confirm the address). Either way the placement rides along in the
+// callback URL.
 export function SignupCard({
   placement,
   firstLesson,
@@ -29,7 +31,7 @@ export function SignupCard({
   error,
   sending,
   onGoogle,
-  onMagicLink,
+  onSignUp,
 }: {
   placement: Placement;
   firstLesson: FirstLesson | undefined;
@@ -37,7 +39,7 @@ export function SignupCard({
   error: string | null;
   sending: boolean;
   onGoogle: () => void;
-  onMagicLink: (email: string, name: string) => void;
+  onSignUp: (email: string, name: string, password: string) => void;
 }) {
   const [agreed, setAgreed] = useState(false);
   const hydrated = useHydrated();
@@ -46,7 +48,11 @@ export function SignupCard({
   function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = new FormData(e.currentTarget);
-    onMagicLink(String(form.get("email") || "").trim(), String(form.get("name") || "").trim());
+    onSignUp(
+      String(form.get("email") || "").trim(),
+      String(form.get("name") || "").trim(),
+      String(form.get("password") || "")
+    );
   }
 
   return (
@@ -109,10 +115,23 @@ export function SignupCard({
             {t("nameLabel")}
           </label>
           <input id="name" name="name" type="text" required autoComplete="given-name" placeholder={t("namePlaceholder")} className={`${FIELD} mb-3`} />
+          <label htmlFor="password" className={LABEL}>
+            {t("password")}
+          </label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            required
+            minLength={8}
+            autoComplete="new-password"
+            placeholder={t("passwordPlaceholder")}
+            className={`${FIELD} mb-3`}
+          />
           {error && <CuteError>{error}</CuteError>}
 
           <button type="submit" className={`${BTN_OUTLINE} w-full`} disabled={!agreed || sending || !hydrated}>
-            {sending ? t("sending") : t("sendLink")}
+            {sending ? t("sending") : t("create")}
           </button>
         </form>
         <p className="text-center text-[12px] text-faint mt-3.5">

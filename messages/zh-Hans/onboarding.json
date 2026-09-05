@@ -94,13 +94,15 @@
     "namePlaceholder": "小明",
     "agree": "我同意<link>服务条款和隐私政策</link>。",
     "sending": "发送中…",
-    "sendLink": "给我发送登录链接",
     "login": "登录",
-    "alreadyHere": "已经有账号了？"
+    "alreadyHere": "已经有账号了？",
+    "password": "密码",
+    "passwordPlaceholder": "至少 8 个字符",
+    "create": "创建账户"
   },
   "confirm": {
     "title": "请查看你的邮箱",
-    "sub": "我们已向 <b>{email}</b> 发送了登录链接和验证码。点击链接，或在下方输入验证码。",
+    "sub": "我们已向 <b>{email}</b> 发送了确认链接和验证码。点击链接，或在下方输入验证码——仅此一次，之后只需密码即可登录。",
     "upNext": "接下来",
     "gmail": "打开 Gmail",
     "outlook": "打开 Outlook",
@@ -122,7 +124,8 @@
     "authFailed": "登录链接无效或已过期。请输入邮件中的验证码，或重新获取链接。",
     "rateLimit": "抱歉——由于目前仍在测试阶段，我们今晚已达到每小时邮件发送上限。请大约一小时后再试，或改用 Google 继续。",
     "network": "无法连接服务器。请检查网络后重试。",
-    "badCode": "验证码不正确。请检查，或重新发送获取新的验证码。"
+    "badCode": "验证码不正确。请检查，或重新发送获取新的验证码。",
+    "exists": "该邮箱已有账户，请直接登录。"
   },
   "mascot": {
     "welcome": "欢迎！",

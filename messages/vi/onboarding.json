@@ -94,13 +94,15 @@
     "namePlaceholder": "Linh",
     "agree": "Tôi đồng ý với <link>Điều khoản và Chính sách bảo mật</link>.",
     "sending": "Đang gửi…",
-    "sendLink": "Gửi cho tôi liên kết đăng nhập",
     "login": "Đăng nhập",
-    "alreadyHere": "Đã có tài khoản rồi?"
+    "alreadyHere": "Đã có tài khoản rồi?",
+    "password": "Mật khẩu",
+    "passwordPlaceholder": "Ít nhất 8 ký tự",
+    "create": "Tạo tài khoản"
   },
   "confirm": {
     "title": "Kiểm tra hộp thư của bạn",
-    "sub": "Chúng tôi đã gửi một liên kết và một mã tới <b>{email}</b>. Hãy nhấn vào liên kết, hoặc nhập mã bên dưới.",
+    "sub": "Chúng tôi đã gửi liên kết xác nhận và mã tới <b>{email}</b>. Hãy nhấn vào liên kết, hoặc nhập mã bên dưới — chỉ lần này thôi. Sau đó bạn chỉ cần mật khẩu.",
     "upNext": "Tiếp theo",
     "gmail": "Mở Gmail",
     "outlook": "Mở Outlook",
@@ -122,7 +124,8 @@
     "authFailed": "Liên kết đăng nhập không hợp lệ hoặc đã hết hạn. Hãy nhập mã trong email, hoặc yêu cầu liên kết mới.",
     "rateLimit": "Xin lỗi — chúng tôi đã đạt giới hạn gửi email mỗi giờ tối nay vì vẫn đang trong giai đoạn thử nghiệm. Vui lòng thử lại sau khoảng một giờ, hoặc tiếp tục với Google.",
     "network": "Không kết nối được máy chủ. Hãy kiểm tra kết nối và thử lại.",
-    "badCode": "Mã không đúng. Hãy kiểm tra lại, hoặc gửi lại để nhận mã mới."
+    "badCode": "Mã không đúng. Hãy kiểm tra lại, hoặc gửi lại để nhận mã mới.",
+    "exists": "Email này đã có tài khoản — hãy đăng nhập."
   },
   "mascot": {
     "welcome": "chào mừng!",
