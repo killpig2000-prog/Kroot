@@ -33,10 +33,11 @@ const CONSONANTS: Record<string, HangulStroke[]> = {
   ㅂ: [{ d: "M25,15 L25,82" }, { d: "M75,15 L75,82" }, { d: "M25,48 L75,48" }, { d: "M25,82 L75,82" }],
   ㅅ: [{ d: "M50,18 L20,82" }, { d: "M46,46 L80,82" }],
   ㅇ: [{ d: "M50,18 A32,32 0 1 1 49.99,18 Z", transform: MIRROR }],
-  // Modern form: the second stroke drops from the right end of the top bar
-  // (not from its middle), and the third stroke branches off partway down it.
-  ㅈ: [{ d: "M20,20 L80,20" }, { d: "M80,20 L25,80" }, { d: "M57,45 L80,80" }],
-  ㅊ: [{ d: "M42,10 L50,18" }, { d: "M20,26 L80,26" }, { d: "M80,26 L25,84" }, { d: "M57,50 L80,84" }],
+  // The ㅅ hangs from the middle of the top bar (the printed form): the
+  // left leg drops from the bar's centre, the right leg branches off partway
+  // down it — same two strokes as ㅅ itself.
+  ㅈ: [{ d: "M20,20 L80,20" }, { d: "M50,20 L22,82" }, { d: "M46,48 L78,82" }],
+  ㅊ: [{ d: "M42,10 L50,18" }, { d: "M20,26 L80,26" }, { d: "M50,26 L22,84" }, { d: "M46,52 L78,84" }],
   ㅋ: [{ d: "M22,26 L74,26 L74,80" }, { d: "M20,50 L74,50" }],
   ㅌ: [{ d: "M20,20 L78,20" }, { d: "M20,50 L78,50" }, { d: "M20,20 L20,80 L78,80" }],
   ㅍ: [{ d: "M20,28 L80,28" }, { d: "M38,28 L38,72" }, { d: "M62,28 L62,72" }, { d: "M20,72 L80,72" }],
