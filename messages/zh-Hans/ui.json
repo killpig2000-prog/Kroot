@@ -104,5 +104,7 @@
   "alreadyEarned": "已获得 — 重玩不会再次奖励",
   "xpEarned": "{skill} XP",
   "coinAvailable": "🪙 重做可得金币",
-  "scoreForCoin": "得分{n}%以上可得{coins}金币"
+  "scoreForCoin": "得分{n}%以上可得{coins}金币",
+  "coinsCappedToday": "今天的词汇金币已全部获得——明天再来。",
+  "coinsBelowLevel": "这低于你的等级，算作练习——没有金币。"
 }

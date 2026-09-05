@@ -104,5 +104,7 @@
   "alreadyEarned": "獲得済み — やり直しでは加算されません",
   "xpEarned": "{skill}のXP",
   "coinAvailable": "🪙 再挑戦でコイン",
-  "scoreForCoin": "{n}%以上でコイン+{coins}枚"
+  "scoreForCoin": "{n}%以上でコイン+{coins}枚",
+  "coinsCappedToday": "今日の単語コインはすべて獲得済みです。続きは明日に。",
+  "coinsBelowLevel": "自分のレベルより下の内容なので、練習扱いでコインはつきません。"
 }

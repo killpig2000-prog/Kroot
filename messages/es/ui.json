@@ -104,5 +104,7 @@
   "alreadyEarned": "Ya conseguido: repetir no vuelve a pagar",
   "xpEarned": "XP de {skill}",
   "coinAvailable": "🪙 Repite por la moneda",
-  "scoreForCoin": "Consigue {n}%+ para +{coins} 🪙"
+  "scoreForCoin": "Consigue {n}%+ para +{coins} 🪙",
+  "coinsCappedToday": "Ya has ganado todas las monedas de vocabulario de hoy: mañana habrá más.",
+  "coinsBelowLevel": "Esto está por debajo de tu nivel, así que cuenta como práctica: sin monedas."
 }

@@ -37,6 +37,15 @@ export type ProgressResult = {
    * second low-scoring try. Absent when an older award_xp is still deployed.
    */
   coins_pending?: boolean;
+  /**
+   * Why no coins were paid, when they were claimable and none landed
+   * (migration 0074). "score" is the only one the learner fixes by trying
+   * again — the other two say the attempt was fine and the coins were never
+   * on offer. Absent when an older award_xp is still deployed.
+   */
+  coins_blocked?: "score" | "daily_cap" | "below_level" | null;
+  /** What this item pays when nothing blocks it — 15 flat, 2/word for review. */
+  coins_possible?: number;
 };
 
 /**

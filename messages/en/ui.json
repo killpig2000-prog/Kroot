@@ -104,5 +104,7 @@
   "alreadyEarned": "Already earned — replays don’t pay again",
   "xpEarned": "{skill} XP",
   "coinAvailable": "🪙 Retry for coin",
-  "scoreForCoin": "Score {n}%+ for +{coins} 🪙"
+  "scoreForCoin": "Score {n}%+ for +{coins} 🪙",
+  "coinsCappedToday": "Today's word coins are all earned — more tomorrow.",
+  "coinsBelowLevel": "This is below your level, so it counts as practice — no coins."
 }

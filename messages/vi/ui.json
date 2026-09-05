@@ -104,5 +104,7 @@
   "alreadyEarned": "Đã nhận — làm lại không thưởng thêm",
   "xpEarned": "XP {skill}",
   "coinAvailable": "🪙 Làm lại để nhận xu",
-  "scoreForCoin": "Đạt {n}%+ để nhận +{coins} 🪙"
+  "scoreForCoin": "Đạt {n}%+ để nhận +{coins} 🪙",
+  "coinsCappedToday": "Bạn đã nhận hết xu từ vựng hôm nay — mai có thêm nhé.",
+  "coinsBelowLevel": "Nội dung này dưới trình độ của bạn nên tính là luyện tập — không có xu."
 }

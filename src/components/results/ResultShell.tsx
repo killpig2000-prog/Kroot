@@ -122,11 +122,14 @@ export default function ResultShell({
   // Older deployed award_xp versions don't return points_awarded; fall back
   // to the skill's rate so the strip still reads correctly against them.
   const xpAwarded = levelUp?.points_awarded;
-  // coins_pending (migration 0065) means this item's coins are still there
-  // to earn — scoring 60%+ on some future attempt pays them, once. It stays
-  // true across repeated low scores even after XP itself has been maxed out
-  // (already_earned alone would wrongly read this chapter as fully done).
-  const missedAccuracyGate = !!levelUp?.coins_pending;
+  // Why no coins landed. coins_blocked (migration 0074) names the actual
+  // reason; before it existed the screen could only guess "score too low",
+  // which was wrong advice for the two cases a better score can't fix — a
+  // capped day, or content below the learner's level. coins_pending is the
+  // pre-0074 fallback: still correct that coins are unpaid, just unable to
+  // say why, so it keeps showing the score hint as it always did.
+  const blocked = levelUp?.coins_blocked ?? (levelUp?.coins_pending ? "score" : null);
+  const coinsPossible = levelUp?.coins_possible ?? 15;
   return (
     <div
       className="max-w-[640px] w-full border border-line rounded-[16px] bg-cream overflow-hidden"
@@ -195,9 +198,13 @@ export default function ResultShell({
         </div>
       </div>
 
-      {missedAccuracyGate && (
+      {blocked && (
         <p className="px-[18px] py-2.5 text-[12.5px] font-semibold text-amber bg-[var(--tint-amber)] border-t border-amber-line">
-          🪙 {tu("scoreForCoin", { n: 60, coins: 15 })}
+          {blocked === "score"
+            ? `🪙 ${tu("scoreForCoin", { n: 60, coins: coinsPossible })}`
+            : blocked === "daily_cap"
+              ? `✅ ${tu("coinsCappedToday")}`
+              : `📘 ${tu("coinsBelowLevel")}`}
         </p>
       )}
 
