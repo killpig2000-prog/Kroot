@@ -1,36 +1,22 @@
-import type { EmailOtpType } from "@supabase/supabase-js";
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { EmailOtpType, SupabaseClient } from "@supabase/supabase-js";
+import { authErrorKey, cleanCode, CODE_LENGTH, type AuthErrorKey } from "@/lib/auth-errors";
 
-// Which OTP type a code belongs to depends on what the mailer sent, and the
-// caller can't know: signInWithOtp({ shouldCreateUser: true }) sends the
-// "signup" confirmation to an address with no account yet and the "magiclink"
-// mail to one that already has one. Supabase verifies a code only against the
-// type it was issued for, so a single guess rejects half of all valid codes.
-// Try the plausible types in turn and report the first that takes.
+// GoTrue's "email" OTP type verifies a code from either the sign-up
+// confirmation or the sign-in mail (auth-js marks "signup"/"magiclink" as
+// deprecated in its favour), so one request covers both. Trying more types on
+// a wrong code only burns the per-IP verification limit faster.
 //
-// Order matters only for speed: "email" is the generic email OTP and covers
-// most cases on its own.
-const TYPES: EmailOtpType[] = ["email", "signup", "magiclink"];
-
-/**
- * Verify an emailed code, whichever email it came from. Pass `types` when the
- * caller does know — a password reset is always "recovery".
- */
+// Result is a message key, never GoTrue's text: the screens map it to their
+// own copy.
 export async function verifyEmailCode(
   supabase: SupabaseClient,
   email: string,
   code: string,
-  types: EmailOtpType[] = TYPES
-): Promise<{ ok: true } | { ok: false; message: string }> {
-  const token = code.replace(/\s+/g, "");
-  let last = "";
-  for (const type of types) {
-    const { error } = await supabase.auth.verifyOtp({ email, token, type });
-    if (!error) return { ok: true };
-    last = error.message;
-    // A rate-limited or otherwise non-token failure won't get better by
-    // retrying under a different type — stop and report it.
-    if (!/invalid|expired|not found/i.test(error.message)) break;
-  }
-  return { ok: false, message: last };
+  type: EmailOtpType = "email"
+): Promise<{ ok: true } | { ok: false; key: AuthErrorKey }> {
+  const token = cleanCode(code);
+  if (token.length !== CODE_LENGTH) return { ok: false, key: "badCode" };
+  const { error } = await supabase.auth.verifyOtp({ email, token, type });
+  if (!error) return { ok: true };
+  return { ok: false, key: authErrorKey(error) };
 }

@@ -9,6 +9,7 @@ import BrandMark from "@/components/ui/BrandMark";
 import { track } from "@/lib/analytics";
 import { createClient } from "@/lib/supabase/client";
 import { verifyEmailCode } from "@/lib/verify-email-code";
+import { authErrorKey, MAX_CODE_TRIES, MIN_PASSWORD, normalizeEmail } from "@/lib/auth-errors";
 import {
   answerRun,
   buildTest,
@@ -48,8 +49,11 @@ const STEPS: { id: Step; label: "hangul" | "goal" | "test" | "level" | "account"
 ];
 const STEP_INDEX: Record<Step, number> = { gate: 0, goal: 1, quiz: 2, result: 3, signup: 4, confirm: 4, saving: 4 };
 
+// Same-site paths only. "//host" is protocol-relative and "/\host" parses
+// the same way in browsers (a backslash is a slash to the URL parser), so
+// both would carry a freshly signed-in visitor off the site.
 function safeNext(raw: string | null): string {
-  if (raw && raw.startsWith("/") && !raw.startsWith("//")) return stripLocale(raw);
+  if (raw && raw.startsWith("/") && !/^\/[/\\]/.test(raw)) return stripLocale(raw);
   return "/dashboard";
 }
 
@@ -110,9 +114,13 @@ export default function OnboardingFlow({
   const [sending, setSending] = useState(false);
   const [resendCooldown, setResendCooldown] = useState(0);
   const [verifying, setVerifying] = useState(false);
-  const [error, setError] = useState<string | null>(() =>
-    params.error === "auth" ? t("errors.authFailed") : params.error ? decodeURIComponent(params.error) : null
-  );
+  // Wrong codes in a row on the confirm card; past MAX_CODE_TRIES the advice
+  // switches from "check it" to "get a new one".
+  const [codeTries, setCodeTries] = useState(0);
+  // ?error= is attacker-controllable (any link can set it), so only a known
+  // value renders — never the parameter's own text. decodeURIComponent on a
+  // malformed value also throws, which took the whole page down.
+  const [error, setError] = useState<string | null>(() => (params.error ? t("errors.authFailed") : null));
   const saving = useRef(false);
   // When the currently-shown question first appeared — lets placement_question
   // report how long each question took, without needing extra state/rerenders.
@@ -312,14 +320,25 @@ export default function OnboardingFlow({
         queryParams: { prompt: "select_account" },
       },
     });
-    if (error) setError(error.message);
+    if (error) setError(t(`errors.${authErrorKey(error)}`));
   }
 
   // Email + password. The password is what every later login uses; the
-  // inbox is visited exactly once, to confirm the address (link or code).
-  async function signUp(addr: string, name: string, password: string) {
+  // inbox is visited exactly once, to confirm the address (by code).
+  async function signUp(rawEmail: string, name: string, password: string) {
     if (!placement) return;
     setError(null);
+    // The form's required/minLength attributes are advisory — anyone can
+    // strip them in devtools — so the same rules hold here.
+    const addr = normalizeEmail(rawEmail);
+    if (!addr) {
+      setError(t("errors.badEmail"));
+      return;
+    }
+    if (password.length < MIN_PASSWORD) {
+      setError(t("errors.weakPassword"));
+      return;
+    }
     setSending(true);
     try {
       const redirect = `${window.location.origin}/auth/callback?next=${encodeURIComponent(callbackNext(placement))}`;
@@ -328,17 +347,11 @@ export default function OnboardingFlow({
         password,
         options: {
           emailRedirectTo: redirect,
-          data: { display_name: name || undefined, goal: placement.goal ?? undefined },
+          data: { display_name: name.trim().slice(0, 40) || undefined, goal: placement.goal ?? undefined },
         },
       });
       if (error) {
-        setError(
-          /rate limit/i.test(error.message)
-            ? t("errors.rateLimit")
-            : /already registered|already exists/i.test(error.message)
-              ? t("errors.exists")
-              : error.message
-        );
+        setError(t(`errors.${authErrorKey(error)}`));
         return;
       }
       // With confirmations on, Supabase answers a sign-up for an address that
@@ -351,13 +364,17 @@ export default function OnboardingFlow({
       }
       track("signup", { method: "password", goal: placement.goal });
       setEmail(addr);
+      setCodeTries(0);
       // Already confirmed (autoconfirm on) — nothing to wait for.
       if (data.session) {
         window.location.assign(callbackNext(placement));
         return;
       }
       goToStep("confirm");
-      setResendCooldown(30);
+      // Matches the mailer's minimum gap between two mails to one address
+      // (smtp_max_frequency = 60s); a shorter cooldown just surfaced its
+      // "for security purposes" refusal.
+      setResendCooldown(60);
     } catch {
       setError(t("errors.network"));
     } finally {
@@ -367,7 +384,7 @@ export default function OnboardingFlow({
     }
   }
 
-  // Another copy of the confirmation mail (link + code) to the same address.
+  // Another copy of the confirmation code to the same address.
   async function resend() {
     if (!placement || !email) return;
     setError(null);
@@ -381,11 +398,12 @@ export default function OnboardingFlow({
         },
       });
       if (error) {
-        setError(/rate limit/i.test(error.message) ? t("errors.rateLimit") : error.message);
+        setError(t(`errors.${authErrorKey(error)}`));
         return;
       }
       setResent(true);
-      setResendCooldown(30);
+      setCodeTries(0);
+      setResendCooldown(60);
     } catch {
       setError(t("errors.network"));
     } finally {
@@ -393,22 +411,23 @@ export default function OnboardingFlow({
     }
   }
 
-  // The same sign-in, by the code printed in the email instead of the link.
-  // Mail providers that scan links for phishing (Naver and most corporate
-  // gateways do) open the link themselves before the learner ever sees it,
-  // and the link is single-use — so it arrives already spent and reads as
-  // "expired". A typed code is the one path a scanner cannot consume.
+  // Confirm the address with the emailed code. A typed code (rather than a
+  // link) is the one path that works in every inbox: mail providers that
+  // scan links for phishing (Naver, most corporate gateways) open a link
+  // themselves first, and a one-shot link arrives already spent.
   async function verifyCode(code: string) {
-    if (!placement) return;
+    if (!placement || verifying) return;
     setError(null);
     setVerifying(true);
     try {
       const res = await verifyEmailCode(supabase, email, code);
       if (!res.ok) {
-        setError(/rate limit/i.test(res.message) ? t("errors.rateLimit") : t("errors.badCode"));
+        const tries = res.key === "badCode" ? codeTries + 1 : codeTries;
+        setCodeTries(tries);
+        setError(t(`errors.${res.key === "badCode" && tries >= MAX_CODE_TRIES ? "tooManyTries" : res.key}`));
         return;
       }
-      track("signup", { method: "email_code", goal: placement.goal });
+      track("signup_confirmed", { goal: placement.goal });
       // Hand off to the same URL the email link would have landed on, so the
       // placement is saved by the one path that already does it. A full
       // navigation, not router.push: the server has to see the new session

@@ -8,6 +8,7 @@ import CuteError from "@/components/ui/CuteError";
 import { createClient } from "@/lib/supabase/client";
 import { useHydrated } from "@/lib/use-hydrated";
 import BrandMark from "@/components/ui/BrandMark";
+import { authErrorKey, MIN_PASSWORD } from "@/lib/auth-errors";
 
 const CARD = "border border-line rounded-[14px] bg-cream p-[clamp(22px,4vw,32px)]";
 const FIELD =
@@ -36,6 +37,11 @@ export default function UpdatePasswordPage() {
       setError(t("errors.passwordsDiffer"));
       return;
     }
+    // The minLength attribute below is advisory; the rule holds here too.
+    if (password.length < MIN_PASSWORD) {
+      setError(t("errors.weakPassword"));
+      return;
+    }
 
     setSubmitting(true);
     try {
@@ -43,9 +49,9 @@ export default function UpdatePasswordPage() {
 
       if (error) {
         setError(
-          error.message.includes("Auth session missing")
+          /auth session missing|not logged in/i.test(error.message)
             ? t("errors.resetLinkExpired")
-            : error.message
+            : t(`errors.${authErrorKey(error)}`)
         );
         return;
       }

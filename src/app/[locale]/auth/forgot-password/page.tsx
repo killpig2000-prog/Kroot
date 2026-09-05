@@ -9,6 +9,7 @@ import { createClient } from "@/lib/supabase/client";
 import { useHydrated } from "@/lib/use-hydrated";
 import BrandMark from "@/components/ui/BrandMark";
 import { verifyEmailCode } from "@/lib/verify-email-code";
+import { authErrorKey, cleanCode, CODE_LENGTH, MAX_CODE_TRIES, normalizeEmail } from "@/lib/auth-errors";
 
 const CARD = "border border-line rounded-[14px] bg-cream p-[clamp(22px,4vw,32px)]";
 const FIELD =
@@ -25,6 +26,7 @@ export default function ForgotPasswordPage() {
   const [submitting, setSubmitting] = useState(false);
   const [code, setCode] = useState("");
   const [verifying, setVerifying] = useState(false);
+  const [codeTries, setCodeTries] = useState(0);
   const hydrated = useHydrated();
   const busy = submitting || !hydrated;
 
@@ -35,14 +37,16 @@ export default function ForgotPasswordPage() {
   // would have, and the new-password form takes it from there.
   async function handleCode(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const clean = code.replace(/\s+/g, "");
-    if (!sent || !clean) return;
+    const clean = cleanCode(code);
+    if (!sent || clean.length !== CODE_LENGTH || verifying) return;
     setError(null);
     setVerifying(true);
     try {
-      const res = await verifyEmailCode(supabase, sent, clean, ["recovery"]);
+      const res = await verifyEmailCode(supabase, sent, clean, "recovery");
       if (!res.ok) {
-        setError(/rate limit/i.test(res.message) ? t("errors.rateLimit") : t("errors.badCode"));
+        const tries = res.key === "badCode" ? codeTries + 1 : codeTries;
+        setCodeTries(tries);
+        setError(t(`errors.${res.key === "badCode" && tries >= MAX_CODE_TRIES ? "tooManyTries" : res.key}`));
         return;
       }
       // Hard navigation so the server sees the session cookies just written.
@@ -59,16 +63,22 @@ export default function ForgotPasswordPage() {
     setError(null);
     setSubmitting(true);
 
-    const email = String(new FormData(e.currentTarget).get("email") || "").trim();
+    const email = normalizeEmail(String(new FormData(e.currentTarget).get("email") || ""));
+    if (!email) {
+      setError(t("errors.badEmail"));
+      setSubmitting(false);
+      return;
+    }
     try {
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
         redirectTo: `${window.location.origin}/auth/callback?next=/auth/update-password`,
       });
 
       if (error) {
-        setError(error.message);
+        setError(t(`errors.${authErrorKey(error)}`));
         return;
       }
+      setCodeTries(0);
       setSent(email);
     } catch {
       setError(t("errors.network"));
@@ -110,16 +120,19 @@ export default function ForgotPasswordPage() {
                   <input
                     id="reset-code"
                     className={`${FIELD} text-center tracking-[0.3em] font-bold`}
-                    value={code}
-                    onChange={(e) => setCode(e.target.value)}
+                    value={cleanCode(code)}
+                    onChange={(e) => setCode(cleanCode(e.target.value))}
                     inputMode="numeric"
+                    pattern="[0-9]*"
+                    maxLength={CODE_LENGTH}
                     autoComplete="one-time-code"
+                    autoFocus
                     placeholder="••••••••"
                   />
                   {error && <CuteError>{error}</CuteError>}
                   <button
                     type="submit"
-                    disabled={verifying || !code.replace(/\s+/g, "")}
+                    disabled={verifying || cleanCode(code).length !== CODE_LENGTH}
                     className={`${BTN_GREEN} w-full mt-2.5 disabled:opacity-60`}
                   >
                     {verifying ? t("forgot.verifying") : t("forgot.codeSubmit")}

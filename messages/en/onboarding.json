@@ -123,8 +123,16 @@
     "authFailed": "That didn't work. Request a new code and try again.",
     "rateLimit": "Sorry — we've hit tonight's hourly email limit while we're still testing. Please try again in about an hour, or continue with Google instead.",
     "network": "Couldn't reach the server. Check your connection and try again.",
-    "badCode": "That code didn't work. Check it, or resend to get a new one.",
-    "exists": "That email already has an account — log in instead."
+    "badCode": "That code didn't work. Check it, or tap Resend for a new one.",
+    "exists": "That email already has an account — log in instead.",
+    "badEmail": "That doesn't look like an email address. Check it and try again.",
+    "tooSoon": "A code was just sent to that address. Wait a minute before asking for another.",
+    "tooManyTries": "Too many wrong codes. Tap Resend to get a fresh one and try again.",
+    "weakPassword": "Passwords need at least 8 characters.",
+    "generic": "Something went wrong on our side. Please try again in a moment.",
+    "notConfirmed": "This email isn't confirmed yet. Enter the code we sent, or tap Resend.",
+    "badCredentials": "That email and password don't match. One more try, or reset your password from the login page.",
+    "noAccount": "We couldn't find an account for that email."
   },
   "mascot": {
     "welcome": "welcome!",

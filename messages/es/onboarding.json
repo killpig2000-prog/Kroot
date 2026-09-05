@@ -123,8 +123,16 @@
     "authFailed": "No funcionó. Pide un código nuevo e inténtalo de nuevo.",
     "rateLimit": "Lo sentimos — hemos alcanzado el límite de correos por hora de esta noche mientras seguimos en pruebas. Inténtalo de nuevo en una hora, o continúa con Google.",
     "network": "No se pudo conectar con el servidor. Revisa tu conexión e inténtalo de nuevo.",
-    "badCode": "Ese código no funcionó. Revísalo o pide uno nuevo.",
-    "exists": "Ese correo ya tiene una cuenta — inicia sesión."
+    "badCode": "Ese código no funcionó. Revísalo o pulsa Reenviar para recibir uno nuevo.",
+    "exists": "Ese correo ya tiene una cuenta — inicia sesión.",
+    "badEmail": "Eso no parece un correo electrónico. Revísalo e inténtalo de nuevo.",
+    "tooSoon": "Acabamos de enviar un código a esa dirección. Espera un minuto antes de pedir otro.",
+    "tooManyTries": "Demasiados códigos incorrectos. Pulsa Reenviar para recibir uno nuevo e inténtalo de nuevo.",
+    "weakPassword": "La contraseña debe tener al menos 8 caracteres.",
+    "generic": "Algo salió mal por nuestra parte. Inténtalo de nuevo en un momento.",
+    "notConfirmed": "Este correo aún no está confirmado. Introduce el código que enviamos o pulsa Reenviar.",
+    "badCredentials": "Ese correo y esa contraseña no coinciden. Inténtalo de nuevo o restablece la contraseña desde la página de inicio de sesión.",
+    "noAccount": "No encontramos una cuenta con ese correo."
   },
   "mascot": {
     "welcome": "¡bienvenido!",

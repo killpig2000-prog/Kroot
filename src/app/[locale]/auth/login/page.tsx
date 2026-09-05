@@ -8,6 +8,7 @@ import Mascot from "@/components/onboarding/Mascot";
 import CuteError from "@/components/ui/CuteError";
 import { createClient } from "@/lib/supabase/client";
 import { verifyEmailCode } from "@/lib/verify-email-code";
+import { authErrorKey, cleanCode, CODE_LENGTH, MAX_CODE_TRIES, normalizeEmail } from "@/lib/auth-errors";
 import { useHydrated } from "@/lib/use-hydrated";
 import BrandMark from "@/components/ui/BrandMark";
 
@@ -42,8 +43,10 @@ function messageKeyFor(code: string | null): (typeof ERROR_CODES)[number] | null
 // the full pathname (e.g. /ja/vocabulary); the locale prefix is dropped
 // because next-intl's router re-adds the active one, and the auth callback
 // lands on the bare path, which the proxy then re-prefixes from the cookie.
+// "/\host" parses like "//host" in browsers (backslash is a slash to the URL
+// parser), so both are rejected.
 function safeNext(raw: string | null): string {
-  if (raw && raw.startsWith("/") && !raw.startsWith("//")) return stripLocale(raw);
+  if (raw && raw.startsWith("/") && !/^\/[/\\]/.test(raw)) return stripLocale(raw);
   return "/dashboard";
 }
 
@@ -64,6 +67,7 @@ export default function LoginPage() {
   const [linkSentTo, setLinkSentTo] = useState<string | null>(null);
   const [code, setCode] = useState("");
   const [verifying, setVerifying] = useState(false);
+  const [codeTries, setCodeTries] = useState(0);
   const formRef = useRef<HTMLFormElement>(null);
   const hydrated = useHydrated();
   const busy = submitting || !hydrated;
@@ -97,20 +101,19 @@ export default function LoginPage() {
     setSubmitting(true);
 
     const form = new FormData(e.currentTarget);
-    const email = String(form.get("email") || "").trim();
+    const email = normalizeEmail(String(form.get("email") || ""));
     const password = String(form.get("pw") || "");
+    if (!email || !password) {
+      setError(t(email ? "errors.badCredentials" : "errors.badEmail"));
+      setSubmitting(false);
+      return;
+    }
 
     try {
       const { error } = await supabase.auth.signInWithPassword({ email, password });
 
       if (error) {
-        setError(
-          error.message === "Invalid login credentials"
-            ? t("errors.badCredentials")
-            : error.message === "Email not confirmed"
-              ? t("errors.notConfirmed")
-              : error.message
-        );
+        setError(t(`errors.${authErrorKey(error)}`));
         return;
       }
 
@@ -134,10 +137,10 @@ export default function LoginPage() {
   // same link here rather than sending them through "forgot password".
   async function handleMagicLink() {
     const form = formRef.current;
-    const email = String(new FormData(form ?? undefined).get("email") || "").trim();
+    const raw = String(new FormData(form ?? undefined).get("email") || "");
+    const email = normalizeEmail(raw);
     if (!email) {
-      form?.reportValidity();
-      setError(t("errors.emailFirst"));
+      setError(t(raw.trim() ? "errors.badEmail" : "errors.emailFirst"));
       return;
     }
     setError(null);
@@ -151,15 +154,11 @@ export default function LoginPage() {
         },
       });
       if (error) {
-        setError(
-          /rate limit/i.test(error.message)
-            ? t("errors.rateLimit")
-            : /signups not allowed|not found/i.test(error.message)
-              ? t("errors.noAccount")
-              : error.message
-        );
+        setError(t(`errors.${authErrorKey(error)}`));
         return;
       }
+      setCode("");
+      setCodeTries(0);
       setLinkSentTo(email);
     } catch {
       setError(t("errors.network"));
@@ -171,14 +170,16 @@ export default function LoginPage() {
   // Sign in with the code from that same email, for inboxes whose link
   // scanner spends the link before the learner can use it.
   async function handleCode() {
-    const clean = code.replace(/\s+/g, "");
-    if (!linkSentTo || !clean) return;
+    const clean = cleanCode(code);
+    if (!linkSentTo || clean.length !== CODE_LENGTH || verifying) return;
     setError(null);
     setVerifying(true);
     try {
       const res = await verifyEmailCode(supabase, linkSentTo, clean);
       if (!res.ok) {
-        setError(/rate limit/i.test(res.message) ? t("errors.rateLimit") : t("errors.badCode"));
+        const tries = res.key === "badCode" ? codeTries + 1 : codeTries;
+        setCodeTries(tries);
+        setError(t(`errors.${res.key === "badCode" && tries >= MAX_CODE_TRIES ? "tooManyTries" : res.key}`));
         return;
       }
       // Full navigation, not router.push: the server needs the session
@@ -275,16 +276,26 @@ export default function LoginPage() {
                     <input
                       id="login-code"
                       className={`${FIELD} text-center tracking-[0.3em] font-bold`}
-                      value={code}
-                      onChange={(e) => setCode(e.target.value)}
+                      value={cleanCode(code)}
+                      onChange={(e) => setCode(cleanCode(e.target.value))}
                       inputMode="numeric"
+                      pattern="[0-9]*"
+                      maxLength={CODE_LENGTH}
                       autoComplete="one-time-code"
                       placeholder="••••••••"
+                      // This input sits inside the password form: Enter must
+                      // verify the code, not submit an empty password.
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          e.preventDefault();
+                          void handleCode();
+                        }
+                      }}
                     />
                     <button
                       type="button"
                       onClick={handleCode}
-                      disabled={busy || !code.replace(/\s+/g, "")}
+                      disabled={busy || verifying || cleanCode(code).length !== CODE_LENGTH}
                       className={`${BTN_OUTLINE} w-full mt-2.5 disabled:opacity-60`}
                     >
                       {verifying ? t("login.verifying") : t("login.codeSubmit")}

@@ -8,6 +8,7 @@ import { useHydrated } from "@/lib/use-hydrated";
 import type { FirstLesson, Placement } from "@/lib/level-test";
 import { FirstLessonList } from "./PlacementResult";
 import { BTN_GHOST, BTN_GREEN, BTN_OUTLINE, CARD, FADE, FIELD, H1, LABEL, SUB } from "./styles";
+import { cleanCode, CODE_LENGTH, MIN_PASSWORD } from "@/lib/auth-errors";
 
 function GoogleMark() {
   return (
@@ -123,7 +124,8 @@ export function SignupCard({
             name="password"
             type="password"
             required
-            minLength={8}
+            minLength={MIN_PASSWORD}
+            maxLength={72}
             autoComplete="new-password"
             placeholder={t("passwordPlaceholder")}
             className={`${FIELD} mb-3`}
@@ -173,8 +175,11 @@ export function ConfirmCard({
   onChangeEmail: () => void;
 }) {
   const t = useTranslations("onboarding.confirm");
+  // Digits only, capped at the code length, so a pasted "1234 5678" or a
+  // stray letter can't produce a request that is wrong before it is sent.
   const [code, setCode] = useState("");
-  const clean = code.replace(/\s+/g, "");
+  const clean = cleanCode(code);
+  const complete = clean.length === CODE_LENGTH;
   return (
     <section className={FADE}>
       <div className={`${CARD} text-center`}>
@@ -189,7 +194,7 @@ export function ConfirmCard({
           className="text-left mt-4"
           onSubmit={(e) => {
             e.preventDefault();
-            if (clean) onVerifyCode(clean);
+            if (complete && !verifying) onVerifyCode(clean);
           }}
         >
           <label className={LABEL} htmlFor="signin-code">
@@ -198,15 +203,17 @@ export function ConfirmCard({
           <input
             id="signin-code"
             className={`${FIELD} text-center text-[22px] tracking-[0.35em] font-bold`}
-            value={code}
-            onChange={(e) => setCode(e.target.value)}
+            value={clean}
+            onChange={(e) => setCode(cleanCode(e.target.value))}
             inputMode="numeric"
+            pattern="[0-9]*"
+            maxLength={CODE_LENGTH}
             autoComplete="one-time-code"
             autoFocus
             placeholder="••••••••"
           />
           {error && <CuteError>{error}</CuteError>}
-          <button type="submit" className={`${BTN_GREEN} w-full mt-2.5`} disabled={!clean || verifying}>
+          <button type="submit" className={`${BTN_GREEN} w-full mt-2.5`} disabled={!complete || verifying}>
             {verifying ? t("verifying") : t("codeSubmit")}
           </button>
         </form>

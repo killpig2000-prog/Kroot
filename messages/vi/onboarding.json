@@ -123,8 +123,16 @@
     "authFailed": "Không thành công. Hãy yêu cầu mã mới và thử lại.",
     "rateLimit": "Xin lỗi — chúng tôi đã đạt giới hạn gửi email mỗi giờ tối nay vì vẫn đang trong giai đoạn thử nghiệm. Vui lòng thử lại sau khoảng một giờ, hoặc tiếp tục với Google.",
     "network": "Không kết nối được máy chủ. Hãy kiểm tra kết nối và thử lại.",
-    "badCode": "Mã không đúng. Hãy kiểm tra lại, hoặc gửi lại để nhận mã mới.",
-    "exists": "Email này đã có tài khoản — hãy đăng nhập."
+    "badCode": "Mã không đúng. Hãy kiểm tra lại, hoặc nhấn Gửi lại để nhận mã mới.",
+    "exists": "Email này đã có tài khoản — hãy đăng nhập.",
+    "badEmail": "Đây có vẻ không phải là địa chỉ email. Hãy kiểm tra lại.",
+    "tooSoon": "Mã vừa được gửi tới địa chỉ đó. Hãy đợi một phút trước khi yêu cầu mã mới.",
+    "tooManyTries": "Nhập sai mã quá nhiều lần. Nhấn Gửi lại để nhận mã mới rồi thử lại.",
+    "weakPassword": "Mật khẩu cần ít nhất 8 ký tự.",
+    "generic": "Đã có lỗi ở phía chúng tôi. Vui lòng thử lại sau giây lát.",
+    "notConfirmed": "Email này chưa được xác nhận. Hãy nhập mã chúng tôi đã gửi, hoặc nhấn Gửi lại.",
+    "badCredentials": "Email và mật khẩu không khớp. Hãy thử lại, hoặc đặt lại mật khẩu từ trang đăng nhập.",
+    "noAccount": "Không tìm thấy tài khoản với email này."
   },
   "mascot": {
     "welcome": "chào mừng!",
