@@ -9,9 +9,15 @@ import { SKILL_HREF } from "@/components/dashboard/QuestButton";
 // arrow pill on the right.
 export default function TodaysQuestCard({
   quest,
+  href,
   compact = false,
 }: {
   quest?: { skill_key: string; description: string; completed_at: string | null } | null;
+  /** The specific chapter picked for today, e.g. "/reading/session?level=A1&chapter=3" —
+   * falls back to the skill's generic hub page when it isn't available (a
+   * level with no chapter pool, or a skill outside the reading/writing
+   * rotation that some earlier `quest` row still carries). */
+  href?: string;
   /** Half-width paired layout — used when this card sits side-by-side with
    * the review card on mobile. */
   compact?: boolean;
@@ -19,6 +25,7 @@ export default function TodaysQuestCard({
   const t = useTranslations("dashboard.quest");
   if (!quest) return null;
   const completed = !!quest.completed_at;
+  const target = href ?? SKILL_HREF[quest.skill_key] ?? "/dashboard";
 
   if (compact) {
     // Short label only — no description sentence. It used to line-clamp the
@@ -49,7 +56,7 @@ export default function TodaysQuestCard({
     // compact boxes (Review, Slang, Word of the day) never had one either.
     return (
       <Link
-        href={SKILL_HREF[quest.skill_key] ?? "/dashboard"}
+        href={target}
         className="group flex flex-col items-center text-center gap-1.5 rounded-[16px] border-[1.5px] border-success bg-success-bg px-3 py-3.5 h-full transition-all hover:-translate-y-0.5 hover:bg-[var(--tint-green)]"
       >
         {compactInner}
@@ -82,7 +89,7 @@ export default function TodaysQuestCard({
   return (
     <div className="mb-4">
       <Link
-        href={SKILL_HREF[quest.skill_key] ?? "/dashboard"}
+        href={target}
         className="group flex items-center gap-4 rounded-[16px] border-[1.5px] border-success bg-success-bg px-5 py-4 transition-all hover:-translate-y-0.5 hover:bg-[var(--tint-green)]"
       >
         {inner}

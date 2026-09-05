@@ -18,8 +18,9 @@ import { levelProgress } from "@/lib/level";
 import MonthlyGrass from "@/components/profile/MonthlyGrass";
 import { ELIGIBILITY } from "@/lib/promotion-test";
 import { DIALOGUES } from "@/lib/listening-dialogues";
-import { getPassagesForLevel } from "@/lib/reading";
-import { getPromptsForLevel } from "@/lib/writing";
+import { getPassagesForLevel, getChaptersForLevel as getReadingChapters } from "@/lib/reading";
+import { getPromptsForLevel, getChaptersForLevel as getWritingChapters } from "@/lib/writing";
+import { hashString } from "@/lib/writing-builder";
 import { chapterClearStats } from "@/lib/pronunciation";
 import { dailyReviewCap } from "@/lib/srs";
 import { getWordsForTopic } from "@/lib/vocabulary-words";
@@ -28,15 +29,15 @@ import type { CefrLevel } from "@/lib/tree";
 
 const MONTH_GOAL = 20;
 
-// One quest per day, rotating through the four practice skills. `description`
-// is what gets stored on the daily_quests row (a locale-free fallback);
-// TodaysQuestCard renders the localized copy from skill_key.
+// One quest per day, alternating Reading and Writing only — the two skills
+// with a real chapter pool per level to pull a specific one from (vocabulary
+// review, a listening dialogue, and a pronunciation chapter don't have that
+// same "whole level's pool, one random item" shape). `description` is what
+// gets stored on the daily_quests row (a locale-free fallback); TodaysQuestCard
+// renders the localized copy from skill_key.
 const QUEST_ROTATION = [
   { skill_key: "writing", title: "Today's quest", description: "Writing · one chapter, a few questions · ~8 min" },
-  { skill_key: "vocabulary", title: "Today's quest", description: "Review · your due words · ~5 min" },
-  { skill_key: "listening", title: "Today's quest", description: "Listening · one dialogue at your level · ~5 min" },
   { skill_key: "reading", title: "Today's quest", description: "Reading · one short passage · ~4 min" },
-  { skill_key: "pronunciation", title: "Today's quest", description: "Pronunciation · clear one chapter · ~4 min" },
 ];
 
 function iso(d: Date) {
@@ -170,6 +171,22 @@ export default async function DashboardPage() {
   // A1 placements tour Hangul + Vocabulary; anyone who placed higher already
   // reads Hangul, so their walkthrough goes Writing + Reading instead.
   const guidedTrack = cefr === "A1" ? "basics" : "practice";
+
+  // Today's quest deep-links straight into one specific chapter — a random
+  // pull from the learner's whole level pool, not "go pick your own" — so
+  // finishing the quest is exactly one tap plus the activity itself. Same
+  // chapter for everyone at this level today (date + level + skill seeds the
+  // pick), same spirit as the old day-based rotation. Reading's chapters are
+  // already one passage each; writing's are the normal 3-question chapter —
+  // deliberately NOT a single prompt, since the per-chapter coin/XP reward is
+  // keyed by (level, chapterIndex) and a random index reused outside the
+  // learner's real progression would risk double-paying or skipping pay
+  // entirely if that scheme ever changed to key by prompt instead.
+  const questChapters = quest?.skill_key === "reading" ? getReadingChapters(cefr) : getWritingChapters(cefr);
+  const questChapterIdx = questChapters.length
+    ? hashString(`${today}:${cefr}:${quest?.skill_key}`) % questChapters.length
+    : 0;
+  const questHref = quest && questChapters.length ? `/${quest.skill_key}/session?level=${cefr}&chapter=${questChapterIdx}` : undefined;
 
   // "Your path" (promotion eligibility + LevelMap) moved to My progress
   // (/profile) 2026-09-03 — the Garden is a "what do I do today" page, and a
@@ -345,7 +362,7 @@ export default async function DashboardPage() {
               two full-width rows; sm+ keeps the original stacked cards. */}
           {quest && dueCount > 0 && (
             <div className="grid grid-cols-2 gap-3 mb-4 sm:hidden">
-              <TodaysQuestCard quest={quest} compact />
+              <TodaysQuestCard quest={quest} href={questHref} compact />
               <Link
                 href="/review"
                 className="group flex flex-col items-center text-center gap-1.5 rounded-[16px] border border-sky-line bg-[var(--tint-sky)] px-3 py-3.5 h-full transition-all hover:-translate-y-0.5"
@@ -360,7 +377,7 @@ export default async function DashboardPage() {
             </div>
           )}
           <div data-tour="quest" className={quest && dueCount > 0 ? "hidden sm:block" : undefined}>
-            <TodaysQuestCard quest={quest} />
+            <TodaysQuestCard quest={quest} href={questHref} />
           </div>
 
           <InstallBanner streakDays={streakDays} />
