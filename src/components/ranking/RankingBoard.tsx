@@ -31,13 +31,45 @@ type MyRank = {
 };
 type Reward = { coins: number; rank: number; total_players: number; already_claimed: boolean };
 
-// Podium steps: gold · silver · bronze, tallest first. The number sits on
-// the step itself, like a real medal ceremony.
+// Podium steps: gold · silver · bronze, tallest first, with a medal on a
+// ribbon pinned to the front of each — the number is engraved on the medal.
 const STEP = [
-  { bg: "linear-gradient(180deg, #FFE68A 0%, #E9B93A 55%, #C8951F 100%)", edge: "#B7861A", fg: "#5C4A0E", h: 30 },
-  { bg: "linear-gradient(180deg, #F3F4F6 0%, #C9CED6 55%, #A6ADB8 100%)", edge: "#8E96A3", fg: "#374151", h: 20 },
-  { bg: "linear-gradient(180deg, #E9B98F 0%, #C98552 55%, #A66A3C 100%)", edge: "#8F5A32", fg: "#4A2E14", h: 14 },
+  { bg: "linear-gradient(180deg, #FFE68A 0%, #E9B93A 55%, #C8951F 100%)", edge: "#B7861A", h: 30,
+    medal: ["#FFF1B8", "#F2C94C", "#B7861A"], ink: "#6B4E0A", ribbon: ["#D9342B", "#2F5FBF"] },
+  { bg: "linear-gradient(180deg, #F3F4F6 0%, #C9CED6 55%, #A6ADB8 100%)", edge: "#8E96A3", h: 20,
+    medal: ["#FFFFFF", "#D3D8E0", "#8E96A3"], ink: "#374151", ribbon: ["#D9342B", "#2F5FBF"] },
+  { bg: "linear-gradient(180deg, #E9B98F 0%, #C98552 55%, #A66A3C 100%)", edge: "#8F5A32", h: 14,
+    medal: ["#F6D2B0", "#D08A55", "#8F5A32"], ink: "#4A2E14", ribbon: ["#D9342B", "#2F5FBF"] },
 ] as const;
+
+// A medal on a two-tone ribbon: rim, dished face, the rank engraved.
+function Medal({ place, rank }: { place: 0 | 1 | 2; rank: number }) {
+  const m = STEP[place];
+  const size = place === 0 ? 40 : 34;
+  return (
+    <svg viewBox="0 0 40 52" width={size} height={size * 1.3} aria-hidden="true" className="drop-shadow-[0_2px_2px_rgba(0,0,0,.25)]">
+      <defs>
+        <linearGradient id={`medal-${place}`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor={m.medal[0]} />
+          <stop offset="0.55" stopColor={m.medal[1]} />
+          <stop offset="1" stopColor={m.medal[2]} />
+        </linearGradient>
+      </defs>
+      {/* ribbon tails */}
+      <path d="M12 0 L20 14 L8 20 L4 2 Z" fill={m.ribbon[0]} />
+      <path d="M28 0 L20 14 L32 20 L36 2 Z" fill={m.ribbon[1]} />
+      <path d="M16 0 L20 12 L24 0 Z" fill="#FFFFFF" opacity=".25" />
+      {/* disc */}
+      <circle cx="20" cy="32" r="18" fill={m.medal[2]} />
+      <circle cx="20" cy="32" r="16" fill={`url(#medal-${place})`} />
+      <circle cx="20" cy="32" r="11.5" fill="none" stroke={m.medal[2]} strokeWidth="1.2" opacity=".7" />
+      <ellipse cx="15" cy="25" rx="6" ry="3" fill="#FFFFFF" opacity=".45" />
+      <text x="20" y="37.5" textAnchor="middle" fontSize="15" fontWeight="900" fill={m.ink} fontFamily="ui-rounded, system-ui, sans-serif">
+        {rank}
+      </text>
+    </svg>
+  );
+}
 
 // XP a single practice session typically pays (award_xp is capped at 100);
 // used only to phrase the nudge as "one session" vs "a couple of sessions".
@@ -306,14 +338,16 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
                     {r.is_me && <span className="text-success text-[10.5px] font-bold ml-1">{t("row.you")}</span>}
                   </b>
                   <span className="text-[11px] text-muted tabular-nums">{t("fair.sun", { n: r.xp_week })}</span>
-                  {/* the step: gold / silver / bronze, 1st the tallest, rank on its face */}
-                  <span
-                    className="w-full rounded-t-[8px] mt-1 grid place-items-center font-black tabular-nums leading-none shadow-[inset_0_2px_0_rgba(255,255,255,.55)]"
-                    style={{ height: step.h, background: step.bg, color: step.fg, borderTop: `1.5px solid ${step.edge}`, fontSize: place === 0 ? 15 : 12 }}
-                    aria-label={`#${r.rank}`}
-                  >
-                    {r.rank}
+                  {/* medal in the flow (never over the score), hanging down onto the step */}
+                  <span className="relative z-10 mt-1 -mb-[22px] leading-none">
+                    <Medal place={place as 0 | 1 | 2} rank={r.rank} />
                   </span>
+                  {/* the step: gold / silver / bronze, 1st the tallest */}
+                  <span
+                    className="w-full rounded-t-[8px] shadow-[inset_0_2px_0_rgba(255,255,255,.55)]"
+                    style={{ height: step.h, background: step.bg, borderTop: `1.5px solid ${step.edge}` }}
+                    aria-label={`#${r.rank}`}
+                  />
                 </div>
               );
             })}
