@@ -7,9 +7,9 @@ Keep this file in sync when the app's data handling changes (privacy page: `src/
 
 ## Store listing (default language: English – US)
 
-**App name** (≤30 chars)
+**App name** (≤30 chars) — chosen by user 2026-09-06
 ```
-Kroot — Learn Korean
+Kroot: Korean from the Roots
 ```
 
 **Short description** (≤80 chars)
