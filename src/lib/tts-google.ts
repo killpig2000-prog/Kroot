@@ -15,10 +15,7 @@ export async function synthesizeGoogle(text: string, voice: GoogleVoiceKey): Pro
     headers: { "Content-Type": "application/json", "X-goog-api-key": apiKey },
     body: JSON.stringify({
       input: { text },
-      voice: {
-        languageCode: "ko-KR",
-        name: `projects/texttospeech/locations/global/voices/${VOICE_NAMES[voice]}`,
-      },
+      voice: { languageCode: "ko-KR", name: VOICE_NAMES[voice] },
       audioConfig: { audioEncoding: "MP3", sampleRateHertz: 48000 },
     }),
   });
