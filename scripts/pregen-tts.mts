@@ -96,6 +96,9 @@ const unquote = (s: string) => s.trim().replace(/^"|"$/g, "");
 const url = unquote(env.match(/NEXT_PUBLIC_SUPABASE_URL=(.+)/)![1]);
 const serviceKey = env.match(/SUPABASE_SERVICE_ROLE_KEY=(.+)/)?.[1];
 if (!serviceKey) throw new Error("SUPABASE_SERVICE_ROLE_KEY not in the env file — see the usage note at the top");
+const googleKey = env.match(/GOOGLE_TTS_API_KEY=(.+)/)?.[1];
+if (!googleKey) throw new Error("GOOGLE_TTS_API_KEY not in the env file — see the usage note at the top");
+process.env.GOOGLE_TTS_API_KEY = unquote(googleKey);
 
 const supabase = createClient(url, unquote(serviceKey), { auth: { persistSession: false } });
 
