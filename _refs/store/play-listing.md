@@ -68,13 +68,13 @@ Questions or ideas? Tap the 💬 button in the app — a real person reads every
 | Phone screenshots | 2–8, 16:9 or 9:16, 320–3840 px | 🟡 `screenshots/` (raw captures, see below) |
 | 7" tablet screenshots | optional | skip for v1 |
 
-Captured 2026-09-06 v4 (1080×1922, 390×694 CSS px ×2.77, review account on dev server; set per user):
+Captured 2026-09-06 v5 (1080×1922, 390×694 CSS px ×2.77, review account on dev server; set per user):
 1. `01-dashboard` — tree card; name/avatar swapped in the DOM to "Ronnie" + the owner's photo (DB untouched)
 2. `02-listening` — Cafe A1 clip, two characters + waveform
 3. `03-vocabulary` — Japanese UI (/ja) with the More-sheet language menu open (shows all 5 languages)
-4. `04-reading` — Chapter 1 passage with a tapped word popup (시 · o'clock)
+4. `04-reading` — Chapter 1 scrolled to the "Morning routine" title, tapped word popup (시 · o'clock)
 5. `05-writing` — Chapter 1 Q1 with one tile placed (저는) and a 👆 hand on the next (빵을) — hand is a DOM overlay
-6. `06-vocabulary` — English Chapter 1 Day 1 word list (pronunciation shot dropped by user)
+6. `06-vocabulary` — English Chapter 1 Day 1 word list; sticky "Continue Chapter 1 →" bar hidden for the shot (pronunciation shot dropped by user)
 7. `07-shop` — try-on tree + category tabs + first item cards ("This week only" banner and slot chips moved off-screen for the shot — banner must stay in the DOM, its SVG holds the trunk gradient defs)
 8. `08-ranking` — Garden Fair podium (shows other users' display names — user OK'd)
 
