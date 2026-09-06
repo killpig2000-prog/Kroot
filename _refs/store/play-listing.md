@@ -150,3 +150,23 @@ Expected rating: **Everyone / PEGI 3**.
 ## Localized listings (later)
 
 App UI ships in en / es / ja / zh / vi. Add localized short + full descriptions for those five once the English listing is approved; Korean (ko-KR) listing optional since the target audience is English-speaking.
+
+---
+
+## Status 2026-09-06 & what's next
+
+**Mockup (store preview + all 8 screenshots + feature-graphic draft + copy + data-safety table):**
+https://claude.ai/code/artifact/c09d5f56-2ed5-47b3-9e9b-ed8aea672c91
+
+**Done (all committed locally, NOT pushed):** privacy page fixed (TTS → Google Cloud), listing copy, data-safety + content-rating answers, 8 phone screenshots v6 (`screenshots/`), feature-graphic HTML draft (direction A, no Free/No-ads/A1→C2 chips).
+
+**User's own to-dos (needs their Google account / browser):**
+1. Google Play developer account — $25 one-time. Choose **Individual**, not Organization (Organization needs a D-U-N-S number → weeks). Payment failed on 2026-09-01; retry.
+2. Pick the **feature graphic direction**: A (current draft: headline + 2 tilted phones) / B (tree only, big) / C (6 tool icons). → Claude exports 1024×500 PNG.
+3. Confirm screenshots v6 are final (or ask for a slightly-scrolled dashboard so streak/coins chips show).
+4. Generate the TWA package at pwabuilder.com → enter https://www.koreanunboxed.com → **decide the package name (permanent, e.g. com.koreanunboxed.kroot)** → download the .aab + signing-key SHA-256 fingerprint.
+5. Hand the SHA-256 fingerprint to Claude → Claude adds `public/.well-known/assetlinks.json` and deploys.
+6. `adb install` the test APK on a real phone: no URL bar, splash shows, status bar color right.
+7. Play Console: create app → upload .aab → paste copy from this file → upload icon (`play-store-icon-512.png`), feature graphic, 8 screenshots → fill Data safety / Content rating / App access (review account) / Target audience 13+ → submit for review.
+
+**Claude's remaining pieces:** feature graphic PNG export (after step 2), assetlinks.json (after step 5), optional screenshot captions, localized listings (es/ja/zh/vi) after EN is approved.
