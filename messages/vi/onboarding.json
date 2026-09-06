@@ -142,5 +142,21 @@
   "mascot": {
     "welcome": "chào mừng!",
     "together": "cùng học nào"
+  },
+  "intro": {
+    "tapToWake": "Chạm để đánh thức hạt giống",
+    "greeting": "Chào bạn! Mình là hạt giống. Cùng viết một chữ Hangul với mình nhé?",
+    "letsWrite": "Được, viết thôi",
+    "haveAccount": "Mình đã có tài khoản",
+    "login": "Đăng nhập",
+    "traceTitle": "Dùng ngón tay tô chữ ㅅ",
+    "stroke1": "Nét 1 · từ trên xuống bên trái",
+    "stroke2": "Nét 2 · từ giữa xuống bên phải",
+    "traceDone": "Tuyệt! Hạt giống đang thức dậy…",
+    "skipTrace": "Bỏ qua phần vẽ",
+    "cheer": "ㅅ · siot · chữ Hangul đầu tiên của bạn",
+    "findLevel": "Tìm trình độ của mình →",
+    "cantRead": "Mình chưa đọc được Hangul — bắt đầu từ Hangul",
+    "sproutNote": "Đăng ký ở bước cuối · mầm 🌱 xuất hiện ở Lv.10"
   }
 }

@@ -9,7 +9,10 @@ export default function manifest(): MetadataRoute.Manifest {
     description:
       "A cozy garden where your Korean grows every day — tiny lessons, an AI tutor, and a tree that grows with you.",
     id: "/dashboard",
-    start_url: "/dashboard?source=pwa",
+    // Opens on the garden intro, not a login form: /onboarding sends a
+    // signed-in, placed learner straight to /dashboard on the server, and
+    // greets everyone else with the sleeping seed (SeedIntro).
+    start_url: "/onboarding?source=pwa",
     scope: "/",
     display: "standalone",
     orientation: "portrait",

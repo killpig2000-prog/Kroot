@@ -142,5 +142,21 @@
   "mascot": {
     "welcome": "¡bienvenido!",
     "together": "vamos allá"
+  },
+  "intro": {
+    "tapToWake": "Toca para despertar la semilla",
+    "greeting": "¡Hola! Soy una semilla. ¿Escribimos juntos una letra de Hangul?",
+    "letsWrite": "Vale, vamos a escribir",
+    "haveAccount": "Ya tengo una cuenta",
+    "login": "Iniciar sesión",
+    "traceTitle": "Traza ㅅ con el dedo",
+    "stroke1": "Trazo 1 · desde arriba hacia abajo a la izquierda",
+    "stroke2": "Trazo 2 · desde el centro hacia abajo a la derecha",
+    "traceDone": "¡Bien! La semilla se está despertando…",
+    "skipTrace": "Saltar el dibujo por ahora",
+    "cheer": "ㅅ · siot · tu primer Hangul",
+    "findLevel": "Descubrir mi nivel →",
+    "cantRead": "Aún no sé leer Hangul — empezar por el Hangul",
+    "sproutNote": "El registro va al final · el brote 🌱 llega en el Nv.10"
   }
 }

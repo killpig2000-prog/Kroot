@@ -142,5 +142,21 @@
   "mascot": {
     "welcome": "欢迎！",
     "together": "一起来吧"
+  },
+  "intro": {
+    "tapToWake": "点一下，唤醒种子",
+    "greeting": "你好！我是一颗种子。要不要和我一起写一个韩文字母？",
+    "letsWrite": "好，我来写",
+    "haveAccount": "我已有账号",
+    "login": "登录",
+    "traceTitle": "用手指描一描 ㅅ",
+    "stroke1": "第 1 笔 · 从上往左下",
+    "stroke2": "第 2 笔 · 从中间往右下",
+    "traceDone": "真棒！种子正在醒来…",
+    "skipTrace": "先跳过描写",
+    "cheer": "ㅅ · siot · 你的第一个韩文字母",
+    "findLevel": "测测我的水平 →",
+    "cantRead": "我还不会读韩文字母 — 从字母开始",
+    "sproutNote": "注册放在最后 · 嫩芽 🌱 在 Lv.10 出现"
   }
 }

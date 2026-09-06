@@ -25,7 +25,8 @@ import {
   type Placement,
   type Run,
 } from "@/lib/level-test";
-import { GateCard, GoalCard } from "./PlacementIntro";
+import { GoalCard } from "./PlacementIntro";
+import SeedIntro from "./SeedIntro";
 import PlacementQuiz from "./PlacementQuiz";
 import PlacementResult from "./PlacementResult";
 import { ConfirmCard, SignupCard } from "./SignupCard";
@@ -495,6 +496,11 @@ export default function OnboardingFlow({
   const loginHref = customNext ? `/auth/login?next=${encodeURIComponent(params.next)}` : "/auth/login";
   const firstLesson = placement ? orderedLessons(placement)[0] : undefined;
 
+  // The first screen is a garden, not a card: the seed intro owns the whole
+  // viewport and hands back the same "can you read Hangul?" answer the old
+  // gate card did, so everything after it is unchanged.
+  if (step === "gate") return <SeedIntro onDone={gate} loginHref={loginHref} />;
+
   return (
     <div className="min-h-screen flex flex-col bg-cream text-charcoal">
       <header className="border-b border-line">
@@ -521,7 +527,6 @@ export default function OnboardingFlow({
 
       <main className="flex-1 flex items-center justify-center px-[18px] py-[clamp(24px,4vw,48px)]">
         <div className="w-[min(520px,100%)]">
-          {step === "gate" && <GateCard onAnswer={gate} />}
           {step === "goal" && <GoalCard canRead={!!canRead} goal={goal} onPick={setGoal} onContinue={afterGoal} />}
           {step === "quiz" && (
             <PlacementQuiz run={run} onAnswer={answer} onReplace={replaceQuestion} onSkipAll={skipToA1} />

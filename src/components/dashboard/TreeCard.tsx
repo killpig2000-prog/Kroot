@@ -24,6 +24,15 @@ const TREE_PHRASES = [
 // One label per 10-level tree stage; from 50 the tree only grows taller.
 const STAGE_RANGES = ["1-9", "10-19", "20-29", "30-39", "40-49", "50+"];
 
+// The same dawn sky the first-open intro (SeedIntro) uses, so the seed the
+// learner just woke up is standing in the same garden on the dashboard.
+const SCENE_SKY = "linear-gradient(180deg,#FFF9EC 0%,#EAF4F3 40%,#BEE3F0 62%,#DFF3E4 100%)";
+
+// The tree stands in a garden, not in a card. Three layers: the scene (sky,
+// hills, the creature, a speech bubble, two pills and one XP line), then a
+// slim identity row (avatar, name, grade), then the growth/keepsakes panels
+// that open from that row. Everything the old card showed is still here —
+// the polaroid frame, dashed border and rotated paper are what went.
 export default function TreeCard({
   level,
   progressPct,
@@ -72,148 +81,159 @@ export default function TreeCard({
   const sp = SPECIES[species ?? stage];
   const stageIdx = LEVEL_ORDER.indexOf(stage);
   const maxed = level >= MAX_LEVEL;
-  // Lv.50+: same card width, taller frame — the trunk keeps growing.
-  // A skin hides the tree, trunk included, so the frame stays 230 tall.
+  // Lv.50+: the trunk keeps growing, so the drawing gets taller. A skin
+  // hides the tree, trunk included, so the frame stays 230 tall.
   const veteran = level >= FULLY_GROWN_LEVEL && !skinFor(equipped);
   const frameH = veteran ? veteranFrameHeight(level) : 230;
   const metres = treeHeightMetres(level);
   const nextKeepsake = VETERAN_MILESTONES.find((m) => m.level > level);
-  // Garden items: a sky costume swaps the frame's gradient (and hides the
-  // default sun); ground/friends ride down with the taller veteran frame.
+  // Garden items: a sky costume swaps the scene's gradient (and hides the
+  // default clouds); ground/friends ride down with the taller veteran frame.
   const sky = skyFor(equipped);
   const groundShift = frameH - 230;
+  // The creature's drawn width; its height follows the frame. The scene is
+  // at least tall enough for the tallest veteran plus the XP line under it.
+  const treeWidth = "clamp(170px, 44vw, 230px)";
+  const treeHeightMax = Math.round((230 * frameH) / 220);
+  const sceneMin = Math.max(320, treeHeightMax + 96);
+
+  const treeImage = (
+    <svg
+      viewBox={`0 0 220 ${frameH}`}
+      className="block h-auto transition-[height] duration-500"
+      style={{ width: treeWidth }}
+      aria-hidden="true"
+    >
+      <defs>
+        <linearGradient id="tc-hill" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#CDE8C2" />
+          <stop offset="100%" stopColor="#BBDCAE" />
+        </linearGradient>
+      </defs>
+      {/* a soft mound under the soil so costume ground items still sit on grass */}
+      <ellipse cx="110" cy={frameH + 4} rx="150" ry="34" fill="url(#tc-hill)" />
+      <SceneLayer costumeIds={equipped} layer="behind" />
+      {veteran && species ? (
+        <VeteranTree level={level} species={species} costumeIds={equipped} />
+      ) : (
+        <LevelCreature level={stage} costumeIds={equipped} species={species} />
+      )}
+      <SceneLayer costumeIds={equipped} layer="front" groundShift={groundShift} />
+      <g className="bob">
+        <circle cx="60" cy="78" r="6" fill="#FACC15" />
+      </g>
+      <g className="bob2">
+        <circle cx="164" cy="72" r="6" fill="#FB7185" />
+      </g>
+    </svg>
+  );
 
   return (
-    <div className={`relative border border-line p-[clamp(18px,3.6vw,26px)] mb-3.5 grid grid-cols-1 sm:grid-cols-[auto_1fr] gap-[clamp(18px,4vw,32px)] ${veteran ? "items-start" : "items-center"} bg-cream rotate-[-0.4deg] shadow-[0_14px_30px_-18px_rgba(60,50,30,.35)]`}>
+    <section className="relative mb-3.5">
       <TreeGrowthPopup level={level} species={species} />
-      <span
-        aria-hidden="true"
-        className="absolute -top-2 left-9 -rotate-3 w-[56px] h-[17px] border z-10"
-        style={{ background: "rgba(190,227,248,.65)", borderColor: "rgba(150,200,230,.45)" }}
-      />
-      {/* the tree, as a polaroid in the album */}
-      <figure className="relative m-0 bg-cream border border-line p-1.5 pb-1.5 rotate-[1.2deg] shadow-[0_10px_22px_-12px_rgba(60,50,30,.35)]">
-        <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
-          <SpeechBubble phrases={phrases} />
-        </div>
-        {(() => {
-          const treeImage = (
-            <div
-              className="flex justify-center px-3 pt-3"
-              style={{ background: sky ?? "linear-gradient(180deg,#DFF1FF 0%,#F0FBF1 62%,#E4F3DA 100%)" }}
-            >
-              <svg viewBox={`0 0 220 ${frameH}`} className="w-[clamp(140px,20vw,190px)] h-auto transition-[height] duration-500" aria-hidden="true">
-                {/* garden backdrop: sun, clouds, and a grass hill under the soil */}
-                <defs>
-                  <radialGradient id="tc-sun" cx="50%" cy="50%" r="50%">
-                    <stop offset="0%" stopColor="#FFE9A8" />
-                    <stop offset="55%" stopColor="#FFE9A8" stopOpacity=".55" />
-                    <stop offset="100%" stopColor="#FFE9A8" stopOpacity="0" />
-                  </radialGradient>
-                  <linearGradient id="tc-hill" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#CDE8C2" />
-                    <stop offset="100%" stopColor="#BBDCAE" />
-                  </linearGradient>
-                </defs>
-                <ellipse cx="110" cy={frameH + 4} rx="150" ry="34" fill="url(#tc-hill)" />
-                <SceneLayer costumeIds={equipped} layer="behind" />
-                {!sky && (
-                  <>
-                    <circle cx="182" cy="34" r="30" fill="url(#tc-sun)" />
-                    <circle cx="182" cy="34" r="12" fill="#FFDE7A" />
-                    <g fill="#FFFFFF" opacity=".85">
-                      <ellipse cx="46" cy="36" rx="16" ry="6" />
-                      <ellipse cx="60" cy="32" rx="11" ry="5" />
-                      <ellipse cx="140" cy="60" rx="12" ry="4.6" opacity=".7" />
-                    </g>
-                  </>
-                )}
-                {veteran && species ? (
-                  <VeteranTree level={level} species={species} costumeIds={equipped} />
-                ) : (
-                  <LevelCreature level={stage} costumeIds={equipped} species={species} />
-                )}
-                <SceneLayer costumeIds={equipped} layer="front" groundShift={groundShift} />
-                <g className="bob">
-                  <circle cx="60" cy="78" r="6" fill="#FACC15" />
-                </g>
-                <g className="bob2">
-                  <circle cx="164" cy="72" r="6" fill="#FB7185" />
-                </g>
-              </svg>
-            </div>
-          );
-          return linkToShop ? (
+
+      {/* ── the garden ─────────────────────────────────────────────── */}
+      <div
+        className="relative overflow-hidden rounded-[18px] border border-line"
+        style={{ background: sky ?? SCENE_SKY, minHeight: `${sceneMin}px` }}
+      >
+        <svg
+          className="absolute left-[-4%] right-[-4%] bottom-0 w-[108%] h-[44%]"
+          viewBox="0 0 800 200"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+        >
+          <path d="M0 110 C140 60 260 90 400 96 C540 102 660 50 800 92 L800 200 L0 200Z" fill="#CFE9D6" />
+          <path d="M0 150 C160 120 300 140 440 132 C600 122 700 140 800 128 L800 200 L0 200Z" fill="#B9DDC3" />
+          <path d="M0 176 C200 160 400 172 800 164 L800 200 L0 200Z" fill="#DFF3E4" />
+        </svg>
+        {!sky && (
+          <svg className="absolute top-[14%] left-0 w-full h-[18%]" viewBox="0 0 400 60" preserveAspectRatio="none" aria-hidden="true">
+            <g fill="#FFFFFF" opacity=".8">
+              <ellipse cx="62" cy="30" rx="26" ry="9" />
+              <ellipse cx="84" cy="24" rx="17" ry="7" />
+              <ellipse cx="318" cy="38" rx="22" ry="7.5" opacity=".7" />
+            </g>
+          </svg>
+        )}
+
+        {/* level + stage, streak + coins — two pills, nothing else up top */}
+        <span
+          className={`absolute top-3 left-3 z-[4] inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[12px] font-extrabold backdrop-blur-[6px] ${
+            veteran ? "border-amber-line text-[#B7791F]" : "border-success-line text-success-deep"
+          }`}
+          style={{ background: "rgba(255,253,246,.8)" }}
+        >
+          {t("levelBadge", { level })}
+          <span className="font-bold text-charcoal tabular-nums">
+            · {veteran ? `${metres} ${t("metresTall")}` : LEVEL_PATH[stage].treeName}
+          </span>
+        </span>
+        <span
+          className="absolute top-3 right-3 z-[4] inline-flex items-center gap-1.5 rounded-full border border-success-line px-2.5 py-1 text-[12px] font-extrabold text-success-deep backdrop-blur-[6px]"
+          style={{ background: "rgba(255,253,246,.8)" }}
+        >
+          {/* phones get the numbers only — the full "15 day streak · 550 coins"
+              ran into the level pill at 360–390px */}
+          <span className="sm:hidden tabular-nums" aria-label={`${ti("streak", { n: streakDays })} · ${ti("coins", { n: coins })}`}>
+            🔥 {streakDays} <span className="text-faint">·</span> 🪙 {coins}
+          </span>
+          <span className="hidden sm:inline">
+            {ti("streak", { n: streakDays })} <span className="text-faint">·</span> {ti("coins", { n: coins })}
+          </span>
+        </span>
+
+        {/* the creature — centred on phones, left of centre once the scene is wide */}
+        <div className="absolute bottom-[58px] left-1/2 sm:left-[36%] -translate-x-1/2 z-[3]">
+          {linkToShop ? (
             <Link href="/shop" aria-label={t("openShop")} className="block transition-transform hover:-translate-y-0.5">
               {treeImage}
             </Link>
           ) : (
             treeImage
-          );
-        })()}
-        {/* species lives on the polaroid, not in the identity block */}
-        <figcaption className="text-center text-[11.5px] font-bold text-muted pt-1.5">
-          {sp.name} <span className="kr font-semibold text-faint ml-1">{sp.krName}</span>
-        </figcaption>
-      </figure>
-
-      <div>
-        {/* streak / coins — top-right on wide cards, a leading row when the
-            card stacks on mobile (absolute children leave the grid) */}
-        <div className="flex flex-wrap gap-1.5 mb-3 sm:mb-0 sm:absolute sm:top-3 sm:right-3.5 sm:justify-end sm:z-10">
-          <span className="text-[12px] font-semibold text-success bg-success-bg border border-success-line rounded-full px-2.5 py-0.5">
-            {ti("streak", { n: streakDays })}
-          </span>
-          <span className="text-[12px] font-semibold text-muted bg-warm border border-line rounded-full px-2.5 py-0.5">
-            {ti("coins", { n: coins })}
-          </span>
+          )}
         </div>
 
-        <div className="flex items-center gap-3 mb-1">
-          <AvatarUploader userId={userId} avatarUrl={avatarUrl} />
-          <h2 className="font-semibold text-lg tracking-[-0.01em] flex items-center gap-2 min-w-0">
-            <NameEditor userId={userId} name={displayName} />
-            {species && (
-              <span className="flex-none text-[11.5px] font-extrabold tracking-[.03em] text-success bg-success-bg border border-success-line rounded-md px-1.5 py-px">
-                {species}
-              </span>
-            )}
-          </h2>
+        {/* what the tree says: above it on phones, beside it on wide screens */}
+        <div className="absolute z-[4] left-1/2 -translate-x-1/2 top-[15%] sm:left-[58%] sm:translate-x-0 sm:top-[30%]">
+          <SpeechBubble phrases={phrases} />
         </div>
-        {veteran && (
-          <p className="font-semibold text-[22px] text-[#B7791F] tracking-[-0.01em] tabular-nums mb-0.5">
-            {metres}
-            <span className="text-[12px] text-muted font-bold ml-1">{t("metresTall")}</span>
-          </p>
-        )}
 
-        <div className="flex items-center gap-3 mb-3.5 mt-2.5">
-          <span
-            className={`flex-none text-[12.5px] font-semibold border rounded-md px-2 py-px ${
-              veteran ? "bg-[var(--tint-amber)] text-[#B7791F] border-amber-line" : "bg-success-bg text-success border-success-line"
-            }`}
-          >
-            {t("levelBadge", { level })}
-          </span>
-          <div className="flex-1 h-1.5 bg-warm-3 rounded-full overflow-hidden">
+        {/* one XP line on the grass */}
+        <div className="absolute left-4 right-4 bottom-3 z-[4]">
+          <div className="flex items-center justify-between text-[11.5px] font-extrabold text-success-deep">
+            <span>
+              {sp.name} <span className="kr font-semibold text-muted">{sp.krName}</span>
+            </span>
+            <span className="tabular-nums">{maxed ? t("maxed") : t("xpToNext", { into: xpInto, needed: xpNeeded, next: level + 1 })}</span>
+          </div>
+          <div className="mt-1 h-[7px] rounded-full overflow-hidden" style={{ background: "rgba(255,253,246,.7)" }}>
             <i
               className={`not-italic block h-full rounded-full transition-[width] duration-1000 ${veteran ? "bg-[#B7791F]" : "bg-success"}`}
               style={{ width: `${fill}%` }}
             />
           </div>
-          <span className="text-[12.5px] text-muted font-medium whitespace-nowrap">
-            {maxed ? t("maxed") : t("xpToNext", { into: xpInto, needed: xpNeeded, next: level + 1 })}
-          </span>
         </div>
+      </div>
 
-        {/* growth stages + veteran keepsakes fold behind tabs — the strip ate
-            most of the card's height while answering an occasional question */}
-        <div className="flex gap-2 border-t border-dashed border-line pt-3">
+      {/* ── who this garden belongs to ─────────────────────────────── */}
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-2 mt-3 px-1">
+        <AvatarUploader userId={userId} avatarUrl={avatarUrl} />
+        <h2 className="font-semibold text-lg tracking-[-0.01em] flex items-center gap-2 min-w-0 flex-1 basis-[160px]">
+          <NameEditor userId={userId} name={displayName} />
+          {species && (
+            <span className="flex-none text-[11.5px] font-extrabold tracking-[.03em] text-success bg-success-bg border border-success-line rounded-md px-1.5 py-px">
+              {species}
+            </span>
+          )}
+        </h2>
+        {/* growth stages + veteran keepsakes fold behind small toggles */}
+        <div className="flex gap-1.5 flex-none">
           <button
             type="button"
             aria-expanded={openTab === "growth"}
             onClick={() => setOpenTab(openTab === "growth" ? null : "growth")}
-            className={`text-[12.5px] font-semibold rounded-full px-3 py-1 border transition-colors ${
+            className={`text-[12px] font-semibold rounded-full px-2.5 py-1 border transition-colors ${
               openTab === "growth"
                 ? "bg-success-bg border-success-line text-success"
                 : "bg-warm border-line text-muted hover:text-success hover:border-success-line"
@@ -227,7 +247,7 @@ export default function TreeCard({
               type="button"
               aria-expanded={openTab === "keepsakes"}
               onClick={() => setOpenTab(openTab === "keepsakes" ? null : "keepsakes")}
-              className={`text-[12.5px] font-semibold rounded-full px-3 py-1 border transition-colors ${
+              className={`text-[12px] font-semibold rounded-full px-2.5 py-1 border transition-colors ${
                 openTab === "keepsakes"
                   ? "bg-[var(--tint-amber)] border-amber-line text-[#B7791F]"
                   : "bg-warm border-line text-muted hover:text-[#B7791F] hover:border-amber-line"
@@ -238,63 +258,60 @@ export default function TreeCard({
             </button>
           )}
         </div>
-
-        {openTab === "growth" && (
-          <div className="flex gap-2 mt-3">
-            {LEVEL_ORDER.map((lv, idx) => {
-              const state = idx < stageIdx ? "done" : idx === stageIdx ? "now" : "todo";
-              return (
-                <div
-                  key={lv}
-                  className={`flex-1 rounded-lg py-[7px] px-1 text-center text-sm border transition-all ${
-                    state === "now"
-                      ? "bg-success-bg border-success-line"
-                      : state === "done"
-                      ? "bg-cream border-line"
-                      : "bg-cream border-line grayscale opacity-45"
-                  }`}
-                >
-                  <span className={state === "now" ? "inline-block bob" : undefined}>
-                    {LEVEL_PATH[lv].icon}
-                  </span>
-                  <small
-                    className={`block text-[10.5px] font-semibold mt-px ${
-                      state === "now" ? "text-success" : state === "done" ? "text-muted" : "text-faint"
-                    }`}
-                  >
-                    {STAGE_RANGES[idx]}
-                  </small>
-                </div>
-              );
-            })}
-          </div>
-        )}
-
-        {openTab === "keepsakes" && veteran && (
-          <div className="flex flex-wrap gap-1.5 mt-3">
-            {VETERAN_MILESTONES.map((m) => {
-              const on = level >= m.level;
-              const next = nextKeepsake?.level === m.level;
-              return (
-                <span
-                  key={m.level}
-                  className={`text-[12px] font-semibold rounded-full px-2.5 py-1 border ${
-                    on
-                      ? "bg-[var(--tint-amber)] border-amber-line text-[#B7791F]"
-                      : next
-                      ? "bg-cream border-line text-muted"
-                      : "bg-cream border-line text-faint opacity-50"
-                  }`}
-                >
-                  <span className="tabular-nums">Lv.{m.level}</span> · {t(`keepsakes.${m.level}`)}
-                  {on && " ✓"}
-                </span>
-              );
-            })}
-          </div>
-        )}
-
       </div>
-    </div>
+
+      {openTab === "growth" && (
+        <div className="flex gap-2 mt-3">
+          {LEVEL_ORDER.map((lv, idx) => {
+            const state = idx < stageIdx ? "done" : idx === stageIdx ? "now" : "todo";
+            return (
+              <div
+                key={lv}
+                className={`flex-1 rounded-lg py-[7px] px-1 text-center text-sm border transition-all ${
+                  state === "now"
+                    ? "bg-success-bg border-success-line"
+                    : state === "done"
+                    ? "bg-cream border-line"
+                    : "bg-cream border-line grayscale opacity-45"
+                }`}
+              >
+                <span className={state === "now" ? "inline-block bob" : undefined}>{LEVEL_PATH[lv].icon}</span>
+                <small
+                  className={`block text-[10.5px] font-semibold mt-px ${
+                    state === "now" ? "text-success" : state === "done" ? "text-muted" : "text-faint"
+                  }`}
+                >
+                  {STAGE_RANGES[idx]}
+                </small>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {openTab === "keepsakes" && veteran && (
+        <div className="flex flex-wrap gap-1.5 mt-3">
+          {VETERAN_MILESTONES.map((m) => {
+            const on = level >= m.level;
+            const next = nextKeepsake?.level === m.level;
+            return (
+              <span
+                key={m.level}
+                className={`text-[12px] font-semibold rounded-full px-2.5 py-1 border ${
+                  on
+                    ? "bg-[var(--tint-amber)] border-amber-line text-[#B7791F]"
+                    : next
+                    ? "bg-cream border-line text-muted"
+                    : "bg-cream border-line text-faint opacity-50"
+                }`}
+              >
+                <span className="tabular-nums">Lv.{m.level}</span> · {t(`keepsakes.${m.level}`)}
+                {on && " ✓"}
+              </span>
+            );
+          })}
+        </div>
+      )}
+    </section>
   );
 }

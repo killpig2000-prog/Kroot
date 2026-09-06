@@ -530,6 +530,21 @@ html.js-reveal .reveal:not(.in) {
   transform: scale(1);
 }
 
+/* first-open intro (SeedIntro): the seed hops out of the soil, the tap hint breathes */
+@keyframes seedHop {
+  0% { transform: translateY(0); }
+  45% { transform: translateY(-30px) scale(1.05); }
+  100% { transform: translateY(-10px); }
+}
+@keyframes nudge {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+@keyframes ripple {
+  0% { transform: scale(.6); opacity: .5; }
+  100% { transform: scale(1.4); opacity: 0; }
+}
+
 /* lively characters: gentle sway + occasional blink */
 .sway {
   animation: sway 5s ease-in-out infinite;
