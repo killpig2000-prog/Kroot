@@ -178,10 +178,10 @@ https://claude.ai/code/artifact/c09d5f56-2ed5-47b3-9e9b-ed8aea672c91
 Built with the PWABuilder packaging API (same backend as pwabuilder.com) from the live manifest.
 
 - **Package name (permanent once uploaded):** `com.koreanunboxed.kroot`
-- Version 1.0.0 (code 1), host `www.koreanunboxed.com`, start `/dashboard?source=pwa`, portrait, standalone, fallback = Chrome Custom Tabs, notifications on, minSdk 21
+- Android app label + launcher name = "Kroot" (regenerated 2026-09-06 with the same keystore, fingerprint unchanged). Version 1.0.0 (code 1), host `www.koreanunboxed.com`, start `/dashboard?source=pwa`, portrait, standalone, fallback = Chrome Custom Tabs, notifications on, minSdk 21
 - Files in `_refs/store/twa/` (**gitignored — contains the upload keystore; back it up somewhere safe, losing it = can't update the app**):
-  - `Kroot — Grow your Korean.aab` → upload to Play Console
-  - `Kroot — Grow your Korean.apk` → `adb install` on a phone for testing
+  - `Kroot.aab` → upload to Play Console
+  - `Kroot.apk` → `adb install` on a phone for testing
   - `signing.keystore` + `signing-key-info.txt` (passwords inside) → keep private, needed for every future upload
   - `assetlinks.json`, `Readme.html`
 - Upload-key SHA-256: `FA:97:FB:84:C6:C8:CF:A7:A7:3E:EA:13:38:C7:22:82:DE:C4:3B:F5:54:78:83:D7:7C:D8:FA:12:B2:7C:2C:37`
