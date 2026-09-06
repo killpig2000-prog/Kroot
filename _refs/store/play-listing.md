@@ -64,7 +64,7 @@ Questions or ideas? Tap the 💬 button in the app — a real person reads every
 | Asset | Spec | Status |
 |---|---|---|
 | App icon | 512×512 PNG, 32-bit, ≤1 MB | ✅ `play-store-icon-512.png` |
-| Feature graphic | 1024×500 PNG/JPG | ✅ `feature-graphic.png` — direction A, dashboard (real admin account, Lv.62/C2) + Hangul ㅅ trace popup (replaces listening), no Free/No-ads/A1→C2 chips |
+| Feature graphic | 1024×500 PNG/JPG | 🟡 v3 redesign, 3 boards awaiting pick — see "Feature graphic v3" below. `feature-graphic.png` currently holds the rejected phone-mockup version |
 | Phone screenshots | 2–8, 16:9 or 9:16, 320–3840 px | 🟡 `screenshots/` (raw captures, see below) |
 | 7" tablet screenshots | optional | skip for v1 |
 
@@ -193,7 +193,26 @@ Built with the PWABuilder packaging API (same backend as pwabuilder.com) from th
 
 ---
 
-## Feature graphic — DONE 2026-09-06
+## Feature graphic v3 — 3 boards, AWAITING PICK (2026-09-06 evening)
+
+User rejected the phone-mockup graphic below ("너무 못생겼다") and asked for a benchmark-based, Kroot-only design. Resume here tomorrow.
+
+**Mockup (3 boards + benchmark notes):** https://claude.ai/code/artifact/1336b300-d143-4ed8-9516-be7eab8d0171
+**Rendered 1024×500 PNGs:** `feature-graphic-v3/A-night-garden.png` (recommended) · `B-sunny-meadow.png` · `C-paper-card.png`
+
+Rules applied (from Headspace/Duolingo-style top feature graphics + Google's guide — sources in the mockup):
+1. One anchor element, not a collage → the **tree** (the admin's real Lv.62 tree, pulled from the dashboard as vector SVG: `feature-graphic-source/tree-clean.svg`, ruler stripped)
+2. 4–8-word benefit headline (A "Learn Korean. Grow your tree." · B "Your Korean grows here." · C "Grow your Korean, one lesson a day.")
+3. No cream/white background (blends into Play's white surfaces) → deep green / saturated green
+4. Text inside a ~60px safe area; centre left empty for the ▶ overlay if a promo video is added
+5. No big logo (duplicates the app icon in listings) → small "Kroot" wordmark only
+6. Kroot-only motif: Hangul jamo as fireflies/leaves; C adds the ㅅ stroke-guide
+
+**To export the picked board:** `feature-graphic-source/fg-v3.tpl.html` has `__TREE__` placeholders — inject `tree-clean.svg` (rename gradient ids `tc-`→`tcA-` etc. per copy), open in Playwright at 1200px, set `--s:1` on `.fg<X>` and screenshot it → `feature-graphic.png`. `feature-graphic-v3/render.mjs` does exactly this for all three (paths point at the session scratchpad — repoint to `feature-graphic-v3/mockup.html`).
+
+---
+
+## Feature graphic (phone mockup) — SUPERSEDED by v3 above
 
 `feature-graphic.png` (1024×500) is final: direction A layout — headline "Grow your Korean, one lesson a day.", two tilted phones.
 - Phone 1: the real dashboard, logged in as the **live admin account** (magic-link login, not a faked DB override) showing its actual current state — Pine tree, Lv.62, C2, streak. The oversized admin coin-balance pill was cropped out (canvas stitch, not a UI change).

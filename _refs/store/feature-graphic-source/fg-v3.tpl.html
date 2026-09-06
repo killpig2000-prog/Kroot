@@ -1,0 +1,162 @@
+<title>Kroot Feature Graphic v3</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Noto+Sans+KR:wght@700;900&display=swap">
+<style>
+:root{--bg:#FFF9EC;--paper:#fff;--ink:#2F2A22;--muted:#7A7264;--line:#E8E0CC;--green:#3E7C59;--amber-soft:#FFF3D6;--amber:#C98B2C}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#1D1A14;--paper:#26221B;--ink:#F3EDE0;--muted:#B6AD9A;--line:#3A3529;--green:#7BC49A;--amber-soft:#3A2F17;--amber:#E0A94F}}
+:root[data-theme="dark"]{--bg:#1D1A14;--paper:#26221B;--ink:#F3EDE0;--muted:#B6AD9A;--line:#3A3529;--green:#7BC49A;--amber-soft:#3A2F17;--amber:#E0A94F}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Nunito,"Noto Sans KR",system-ui,sans-serif;font-size:15px;line-height:1.6}
+.wrap{max-width:1120px;margin:0 auto;padding:clamp(20px,4vw,44px) clamp(16px,4vw,32px)}
+h1{font-size:clamp(24px,4vw,34px);font-weight:900;letter-spacing:-.02em;margin:0 0 6px;line-height:1.15}
+h2{font-size:clamp(18px,2.4vw,22px);font-weight:900;margin:0 0 2px}
+.eyebrow{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.lead{color:var(--muted);margin:0;max-width:70ch}
+.ko{font-family:"Noto Sans KR",Nunito,sans-serif}
+section{margin-top:clamp(30px,5vw,52px)}
+.sec-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px;margin-bottom:12px}
+.sec-head p{margin:0;color:var(--muted)}
+.tag{display:inline-block;font-size:11px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;padding:2px 9px;border-radius:999px;background:var(--green);color:#fff;vertical-align:middle;margin-left:6px}
+.bench{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.bench div{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:14px 16px;font-size:14px}
+.bench b{display:block;font-weight:900;margin-bottom:4px}
+.bench small{display:block;color:var(--muted);margin-top:6px;font-size:12px}
+.note{background:var(--amber-soft);border-left:3px solid var(--amber);padding:10px 14px;border-radius:0 10px 10px 0;font-size:14px;margin:12px 0 0}
+.src{font-size:12px;color:var(--muted);margin-top:10px}
+.src a{color:inherit}
+
+/* board scaler */
+.board{width:100%;max-width:1024px;aspect-ratio:1024/500;position:relative;overflow:hidden;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.12);background:#000}
+.fg{position:absolute;left:0;top:0;width:1024px;height:500px;overflow:hidden;transform-origin:0 0;transform:scale(var(--s,1));font-family:Nunito,"Noto Sans KR",system-ui,sans-serif}
+.fg .tree{position:absolute}
+.fg .tree svg{display:block;height:100%;width:auto}
+.fg .jamo{position:absolute;font-family:"Noto Sans KR",sans-serif;font-weight:900;line-height:1;user-select:none}
+
+/* ---------- A · Night garden ---------- */
+.fgA{background:radial-gradient(900px 600px at 78% 60%,#3A7A55 0%,#27573D 45%,#1B4030 100%)}
+.fgA::before{content:"";position:absolute;inset:0;background:radial-gradient(260px 260px at 74% 38%,rgba(255,236,170,.30) 0%,rgba(255,236,170,0) 70%)}
+.fgA .ground{position:absolute;left:0;right:0;bottom:0;height:64px;background:linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(10,30,20,.35) 100%)}
+.fgA .tree{right:112px;bottom:-22px;height:462px}
+.fgA .brand{position:absolute;left:72px;top:64px;display:flex;align-items:center;gap:10px;color:#F7EFD9;font-weight:900;font-size:24px;letter-spacing:-.01em}
+.fgA .brand i{width:14px;height:14px;border-radius:50%;background:#9BD3AE;box-shadow:0 0 0 5px rgba(155,211,174,.25)}
+.fgA h3{position:absolute;left:72px;top:150px;margin:0;color:#FFF7E4;font-size:58px;line-height:1.02;font-weight:900;letter-spacing:-.025em;text-wrap:balance;max-width:470px}
+.fgA h3 em{font-style:normal;color:#FFD66B}
+.fgA p{position:absolute;left:74px;top:302px;margin:0;color:#CFE3D5;font-size:21px;font-weight:700;max-width:430px;line-height:1.35}
+.fgA .cta{position:absolute;left:74px;top:376px;display:inline-flex;align-items:center;gap:8px;background:#F7EFD9;color:#1B4030;font-weight:900;font-size:16px;padding:10px 18px;border-radius:999px}
+.fgA .jamo{color:#FFD66B}
+.fgA .fly{position:absolute;width:8px;height:8px;border-radius:50%;background:#FFE08A;box-shadow:0 0 14px 4px rgba(255,224,138,.55)}
+
+/* ---------- B · Sunny meadow ---------- */
+.fgB{background:linear-gradient(160deg,#9BD68F 0%,#6CBB77 45%,#4F9E62 100%)}
+.fgB .sun{position:absolute;left:-60px;top:-140px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,#FFF0B3 0%,#FFE08A 45%,rgba(255,224,138,0) 72%)}
+.fgB .hill{position:absolute;left:-10%;right:-10%;bottom:-120px;height:220px;border-radius:50%;background:#3F8A54}
+.fgB .tree{left:150px;bottom:-30px;height:470px}
+.fgB .brand{position:absolute;right:76px;top:60px;color:#14301F;font-weight:900;font-size:22px;opacity:.85}
+.fgB h3{position:absolute;right:72px;top:130px;margin:0;text-align:right;color:#14301F;font-size:56px;line-height:1.02;font-weight:900;letter-spacing:-.025em;max-width:450px}
+.fgB h3 em{font-style:normal;color:#FFFFFF;text-shadow:0 2px 0 rgba(20,48,31,.18)}
+.fgB p{position:absolute;right:74px;top:300px;margin:0;text-align:right;color:#1D4A31;font-size:21px;font-weight:800;max-width:420px;line-height:1.35}
+.fgB .pill{position:absolute;right:74px;top:380px;background:#14301F;color:#FFF3C4;font-weight:900;font-size:15px;padding:9px 16px;border-radius:999px}
+.fgB .jamo{color:rgba(255,255,255,.85)}
+
+/* ---------- C · Paper card ---------- */
+.fgC{background:#3E7C59}
+.fgC::after{content:"";position:absolute;inset:0;background:radial-gradient(700px 400px at 20% 50%,rgba(255,255,255,.10),rgba(255,255,255,0) 70%)}
+.fgC .card{position:absolute;left:96px;top:44px;width:300px;height:412px;background:#FFF9EC;border-radius:18px;box-shadow:0 24px 50px rgba(0,0,0,.28);transform:rotate(-4deg);overflow:hidden;z-index:2}
+.fgC .card .sky{position:absolute;inset:12px 12px 62px;border-radius:12px;background:linear-gradient(180deg,#F7F1E3 0%,#F3EBD8 60%,#E9E3CF 100%);overflow:hidden}
+.fgC .card .tree{left:50%;bottom:-10px;height:330px;transform:translateX(-50%)}
+.fgC .card .cap{position:absolute;left:0;right:0;bottom:16px;text-align:center;font-weight:900;color:#2F2A22;font-size:17px}
+.fgC .card .cap span{color:#7A7264;font-weight:700;margin-left:6px}
+.fgC .tape{position:absolute;left:180px;top:30px;width:110px;height:26px;background:rgba(160,200,255,.55);transform:rotate(-8deg);z-index:3;border-radius:2px}
+.fgC .brand{position:absolute;left:470px;top:66px;color:#E8F3EA;font-weight:900;font-size:22px;opacity:.9}
+.fgC h3{position:absolute;left:468px;top:126px;margin:0;color:#FFF7E4;font-size:54px;line-height:1.02;font-weight:900;letter-spacing:-.025em;max-width:480px}
+.fgC h3 em{font-style:normal;color:#FFD66B}
+.fgC p{position:absolute;left:470px;top:300px;margin:0;color:#D7EADC;font-size:20px;font-weight:700;max-width:330px;line-height:1.35}
+.fgC .siot{position:absolute;right:56px;bottom:26px;width:170px;height:170px;opacity:.95}
+</style>
+
+<div class="wrap">
+  <p class="eyebrow">Google Play · Feature graphic v3</p>
+  <h1>Kroot 피처 그래픽 — 벤치마크 기반 재설계</h1>
+  <p class="lead ko">폰 목업 대신 <b>나무 하나</b>를 주인공으로. 상위 앱들이 실제로 쓰는 패턴(단일 앵커 · 4–8단어 헤드라인 · 진한 배경)을 그대로 적용한 3안입니다. 마음에 드는 걸 고르면 1024×500 PNG로 내보낼게요.</p>
+
+  <section>
+    <div class="sec-head"><h2 class="ko">벤치마크에서 가져온 규칙</h2><p class="ko">Headspace · Duolingo · Forest 류 피처 그래픽의 공통점</p></div>
+    <div class="bench">
+      <div><b>① 앵커는 하나</b><span class="ko">Headspace처럼 캐릭터 하나가 크게. 콜라주(폰 여러 대)는 눈이 못 잡음 — 우리 앵커는 <b>나무</b>.</span><small>Headspace 스타일 단일 캐릭터가 busy collage보다 성과 좋음 (SEOASOORM)</small></div>
+      <div><b>② 4–8단어 혜택형 헤드라인</b><span class="ko">Duolingo "Learn a language for free"처럼 짧고 이득이 보이게. 3안 모두 5–7단어.</span><small>혜택형 4–8단어 헤드라인이 문구 없음/일반 태그라인 대비 ~22% 높은 설치율</small></div>
+      <div><b>③ 진한/채도 높은 배경</b><span class="ko">Play 스토어 바탕이 흰색이라 크림·흰 배경은 묻힘. 진초록/채도 높은 초록으로.</span><small>Google 가이드: 흰·검·짙은 회색 배경 피하기</small></div>
+      <div><b>④ 안전 영역 + 재생 버튼</b><span class="ko">가장자리 ~60px 안엔 글자 없음. 영상 붙이면 가운데에 ▶가 얹히므로 정중앙은 비움.</span><small>Google 가이드: 텍스트는 앱 이름 + 짧은 태그라인까지만</small></div>
+      <div><b>⑤ 아이콘 중복 금지</b><span class="ko">스토어에서 아이콘 옆에 같이 뜨므로 로고를 크게 반복하지 않음 — 워드마크만 작게.</span><small>Google 가이드: 앱 아이콘과 비슷한 큰 브랜딩 금지</small></div>
+      <div><b>⑥ 크룻만의 것</b><span class="ko">"Korean + root" — 나무가 곧 학습 진도라는 메커니즘을 그대로 보여주고, 한글 자모를 잎/반딧불처럼 띄움. 다른 언어앱엔 없는 장면.</span></div>
+    </div>
+    <p class="src">Sources: <a href="https://splitmetrics.com/glossary/google-play-store-feature-graphic-best-practices/">SplitMetrics</a> · <a href="https://appradar.com/academy/google-play-app-store-optimization/feature-graphic">AppRadar</a> · <a href="https://seoasoorm.com/feature-graphic/">SEOASOORM (Duolingo/Headspace 수치)</a> · <a href="https://www.apptamin.com/blog/feature-graphic-play-store/">Apptamin</a> · <a href="https://incipia.co/post/app-marketing/google-play-feature-graphic-examples/">Incipia</a></p>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>A · Night garden <span class="tag">추천</span></h2><p class="ko">진초록 밤 정원, 달빛 아래 관리자 나무. 자모가 반딧불처럼. 스토어 흰 배경에서 제일 튐.</p></div>
+    <div class="board"><div class="fg fgA">
+      <div class="ground"></div>
+      <div class="brand"><i></i>Kroot</div>
+      <h3>Learn Korean.<br>Grow <em>your</em> tree.</h3>
+      <p>One lesson a day, from Hangul to fluent. Every quiz waters it.</p>
+      <div class="cta">🌱 Start with a 3‑minute level test</div>
+      <div class="tree">__TREE__</div>
+      <span class="jamo" style="left:552px;top:70px;font-size:34px;opacity:.55;transform:rotate(-12deg)">ㄱ</span>
+      <span class="jamo" style="left:640px;top:40px;font-size:26px;opacity:.40;transform:rotate(8deg)">ㅎ</span>
+      <span class="jamo" style="left:930px;top:78px;font-size:38px;opacity:.55;transform:rotate(14deg)">ㅅ</span>
+      <span class="jamo" style="left:905px;top:180px;font-size:24px;opacity:.40;transform:rotate(-6deg)">ㅇ</span>
+      <span class="jamo" style="left:560px;top:230px;font-size:28px;opacity:.45;transform:rotate(10deg)">한</span>
+      <span class="jamo" style="left:960px;top:300px;font-size:30px;opacity:.35;transform:rotate(-14deg)">ㄴ</span>
+      <span class="fly" style="left:600px;top:150px"></span>
+      <span class="fly" style="left:880px;top:130px;width:6px;height:6px"></span>
+      <span class="fly" style="left:700px;top:330px;width:5px;height:5px"></span>
+      <span class="fly" style="left:960px;top:400px"></span>
+      <span class="fly" style="left:540px;top:330px;width:5px;height:5px"></span>
+    </div></div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>B · Sunny meadow</h2><p class="ko">Duolingo식 채도 높은 초록 + 큰 해. 밝고 친근, 나무는 왼쪽 앵커.</p></div>
+    <div class="board"><div class="fg fgB">
+      <div class="sun"></div>
+      <div class="hill"></div>
+      <div class="tree">__TREE__</div>
+      <div class="brand">Kroot</div>
+      <h3>Your Korean<br><em>grows</em> here.</h3>
+      <p>A 3‑minute level test, one quest a day, and a tree that grows with every lesson.</p>
+      <div class="pill">🌱 Start with a 3‑minute level test</div>
+      <span class="jamo" style="left:70px;top:290px;font-size:36px;opacity:.9;transform:rotate(-16deg)">ㄱ</span>
+      <span class="jamo" style="left:520px;top:96px;font-size:32px;opacity:.85;transform:rotate(12deg)">ㅅ</span>
+      <span class="jamo" style="left:500px;top:250px;font-size:26px;opacity:.8;transform:rotate(-8deg)">ㅇ</span>
+      <span class="jamo" style="left:96px;top:196px;font-size:26px;opacity:.75;transform:rotate(6deg)">ㄴ</span>
+      <span class="jamo" style="left:560px;top:400px;font-size:28px;opacity:.7;transform:rotate(-10deg)">한</span>
+    </div></div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>C · Paper card</h2><p class="ko">앱 대시보드의 폴라로이드 카드를 그대로 가져와 브랜드 초록 위에. 오른쪽 아래 ㅅ 획긋기 가이드로 한글 기능 암시.</p></div>
+    <div class="board"><div class="fg fgC">
+      <div class="card">
+        <div class="sky"><div class="tree">__TREE__</div></div>
+        <div class="cap">Pine <span>소나무 · Lv.62</span></div>
+      </div>
+      <div class="tape"></div>
+      <div class="brand">Kroot</div>
+      <h3>Grow your <em>Korean</em>,<br>one lesson a day.</h3>
+      <p>Hangul strokes, real dialogues, and a tree that remembers every word you learn.</p>
+      <svg class="siot" viewBox="0 0 100 100" aria-hidden="true">
+        <path d="M50 14 C46 40 36 62 18 84" stroke="rgba(255,249,236,.35)" stroke-width="11" stroke-linecap="round" fill="none"/>
+        <path d="M50 44 C58 60 70 74 84 84" stroke="rgba(255,249,236,.35)" stroke-width="11" stroke-linecap="round" fill="none"/>
+        <path d="M50 14 C46 40 36 62 18 84" stroke="#FFF7E4" stroke-width="11" stroke-linecap="round" fill="none" stroke-dasharray="120" stroke-dashoffset="34"/>
+        <circle cx="50" cy="14" r="9" fill="#D9536F"/><text x="50" y="17.5" font-size="10" font-weight="900" fill="#fff" text-anchor="middle" font-family="Nunito">1</text>
+        <circle cx="50" cy="44" r="8" fill="rgba(255,249,236,.5)"/><text x="50" y="47.5" font-size="9" font-weight="900" fill="#3E7C59" text-anchor="middle" font-family="Nunito">2</text>
+      </svg>
+    </div></div>
+  </section>
+
+  <p class="note ko">셋 다 텍스트는 가장자리 60px 안쪽, 정중앙(▶ 오버레이 자리)은 비워뒀습니다. 나무는 앱에서 뽑은 실제 관리자 나무 SVG(자 눈금만 제거)라 어떤 크기로도 선명합니다.</p>
+</div>
+
+<script>
+function fit(){document.querySelectorAll('.board').forEach(b=>{const s=b.clientWidth/1024;b.querySelector('.fg').style.setProperty('--s',s)})}
+addEventListener('resize',fit);fit();
+</script>
