@@ -62,6 +62,8 @@
     "legendStars": "最高スター",
     "sheetClose": "閉じる",
     "pickPrompt": "文字をタップして書き始めよう",
-    "pickPromptSub": "まずガイドに沿ってなぞり、次にチャレンジで力試し。"
+    "pickPromptSub": "まずガイドに沿ってなぞり、次にチャレンジで力試し。",
+    "syllable": "音節ブロック",
+    "writeIt": "書いてみよう"
   }
 }

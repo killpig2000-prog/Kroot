@@ -62,6 +62,8 @@
     "legendStars": "mejores estrellas",
     "sheetClose": "Cerrar",
     "pickPrompt": "Toca una letra para empezar a escribir",
-    "pickPromptSub": "Primero trázala con la guía y luego ponte a prueba en Reto."
+    "pickPromptSub": "Primero trázala con la guía y luego ponte a prueba en Reto.",
+    "syllable": "bloque silábico",
+    "writeIt": "Ahora escríbelo"
   }
 }

@@ -144,15 +144,20 @@ function JamoGrid({
   );
 }
 
+const NO_PROGRESS: JamoProgress = { practiced: false, bestScore: 0, bestStars: 0 };
+const noXp = async (): Promise<GradedInfo> => ({ xp: null, improved: false });
+
 function SyllableBuilder() {
   const t = useTranslations("hangul");
   const [cho, setCho] = useState(0);
   const [jung, setJung] = useState(0);
+  const [mode, setMode] = useState<TraceMode>("practice");
   const syllable = composeSyllable(cho, jung);
   const rom = `${ROM_BY_JAMO[CHO[cho]] ?? ""}${ROM_BY_JAMO[JUNG[jung]] ?? ""}`;
 
   return (
-    <div className="max-w-[820px] border border-line rounded-[14px] p-[clamp(20px,3vw,28px)] mb-8">
+    <div className="max-w-[820px] border border-line rounded-[14px] p-[clamp(20px,3vw,28px)] mb-8 lg:grid lg:grid-cols-[minmax(0,1fr)_clamp(280px,40%,340px)] lg:gap-7">
+      <div>
       <p className={SECTION_LABEL}>{t("sections.buildABlock")}</p>
 
       <div className="flex items-center justify-center gap-3 flex-wrap mb-6">
@@ -215,6 +220,23 @@ function SyllableBuilder() {
             {v}
           </button>
         ))}
+      </div>
+      </div>
+
+      {/* write the block you just built — same paper as the jamo, no progress/XP */}
+      <div className="mt-7 lg:mt-0 lg:border-l lg:border-line lg:pl-7">
+        <p className={SECTION_LABEL}>{t("trace.writeIt")}</p>
+        <TracePanel
+          key={`${syllable}-${mode}`}
+          jamo={{ char: syllable, rom, hint: `${CHO[cho]} + ${JUNG[jung]}` }}
+          kind="syllable"
+          progress={NO_PROGRESS}
+          mode={mode}
+          onModeChange={setMode}
+          signedIn={false}
+          onPracticed={() => {}}
+          onGraded={noXp}
+        />
       </div>
     </div>
   );

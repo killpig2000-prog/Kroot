@@ -121,21 +121,23 @@ const VOWELS: Record<string, StrokeAnchors[]> = {
 };
 
 // Compound vowels: component vowels in writing order (the ㅗ/ㅜ part first,
-// then the ㅏ/ㅓ/ㅣ part). The ㅗ/ㅜ/ㅡ part sits LOW — the block's upper-left
-// belongs to the consonant — and every bottom landing (ㅜ's descender,
-// ㅗ/ㅡ's bar, the side ㅣ) meets at the same y so the letter sits on one line.
+// then the ㅏ/ㅓ/ㅣ part). The ㅗ/ㅜ/ㅡ part sits in the lower half — the
+// block's upper-left belongs to the consonant. Only a ㅜ-type part, whose
+// stem hangs DOWN, lands on the same baseline as the side ㅣ (ㅝ ㅞ ㅟ);
+// a ㅗ bar or a lone ㅡ (ㅘ ㅙ ㅚ ㅢ) sits a little higher, as it does in
+// print — flush with the bottom it read as a floor line.
 const COMPOUND_VOWELS: Record<string, StrokeAnchors[]> = {
   ㅐ: [[C(118, 52), C(118, 268)], [C(118, 160), C(190, 160)], [C(204, 52), C(204, 268)]],
   ㅒ: [[C(112, 52), C(112, 268)], [C(112, 124), C(186, 124)], [C(112, 196), C(186, 196)], [C(204, 52), C(204, 268)]],
   ㅔ: [[C(82, 160), C(130, 160)], [C(130, 52), C(130, 268)], [C(210, 52), C(210, 268)]],
   ㅖ: [[C(78, 124), C(132, 124)], [C(78, 196), C(132, 196)], [C(132, 52), C(132, 268)], [C(212, 52), C(212, 268)]],
-  ㅘ: [[C(106, 214), C(106, 268)], [C(52, 268), C(160, 268)], [C(200, 52), C(200, 268)], [C(200, 150), C(254, 150)]],
-  ㅙ: [[C(94, 214), C(94, 268)], [C(46, 268), C(142, 268)], [C(178, 52), C(178, 268)], [C(178, 150), C(252, 150)], [C(252, 52), C(252, 268)]],
-  ㅚ: [[C(110, 214), C(110, 268)], [C(52, 268), C(170, 268)], [C(222, 52), C(222, 268)]],
+  ㅘ: [[C(106, 180), C(106, 232)], [C(52, 232), C(160, 232)], [C(200, 52), C(200, 268)], [C(200, 150), C(254, 150)]],
+  ㅙ: [[C(94, 180), C(94, 232)], [C(46, 232), C(142, 232)], [C(178, 52), C(178, 268)], [C(178, 150), C(252, 150)], [C(252, 52), C(252, 268)]],
+  ㅚ: [[C(110, 180), C(110, 232)], [C(52, 232), C(170, 232)], [C(222, 52), C(222, 268)]],
   ㅝ: [[C(48, 196), C(160, 196)], [C(104, 196), C(104, 268)], [C(170, 150), C(214, 150)], [C(214, 52), C(214, 268)]],
   ㅞ: [[C(42, 196), C(146, 196)], [C(94, 196), C(94, 268)], [C(156, 150), C(194, 150)], [C(194, 52), C(194, 268)], [C(254, 52), C(254, 268)]],
   ㅟ: [[C(48, 196), C(170, 196)], [C(108, 196), C(108, 268)], [C(222, 52), C(222, 268)]],
-  ㅢ: [[C(48, 268), C(186, 268)], [C(222, 52), C(222, 268)]],
+  ㅢ: [[C(48, 200), C(186, 200)], [C(222, 52), C(222, 268)]],
 };
 
 export const TRACE_ANCHORS: Record<string, StrokeAnchors[]> = {
@@ -144,6 +146,90 @@ export const TRACE_ANCHORS: Record<string, StrokeAnchors[]> = {
   ...VOWELS,
   ...COMPOUND_VOWELS,
 };
+
+// ---------------------------------------------------------------------------
+// Syllable blocks — a composed 가…힣 is its jamo, each squeezed into the
+// part of the block it owns, written 초성 → 중성 → 종성.
+// ---------------------------------------------------------------------------
+
+const CHO_LIST = ["ㄱ","ㄲ","ㄴ","ㄷ","ㄸ","ㄹ","ㅁ","ㅂ","ㅃ","ㅅ","ㅆ","ㅇ","ㅈ","ㅉ","ㅊ","ㅋ","ㅌ","ㅍ","ㅎ"];
+const JUNG_LIST = ["ㅏ","ㅐ","ㅑ","ㅒ","ㅓ","ㅔ","ㅕ","ㅖ","ㅗ","ㅘ","ㅙ","ㅚ","ㅛ","ㅜ","ㅝ","ㅞ","ㅟ","ㅠ","ㅡ","ㅢ","ㅣ"];
+const JONG_LIST = ["","ㄱ","ㄲ","ㄳ","ㄴ","ㄵ","ㄶ","ㄷ","ㄹ","ㄺ","ㄻ","ㄼ","ㄽ","ㄾ","ㄿ","ㅀ","ㅁ","ㅂ","ㅄ","ㅅ","ㅆ","ㅇ","ㅈ","ㅊ","ㅋ","ㅌ","ㅍ","ㅎ"];
+const JONG_CLUSTERS: Record<string, [string, string]> = {
+  ㄳ: ["ㄱ","ㅅ"], ㄵ: ["ㄴ","ㅈ"], ㄶ: ["ㄴ","ㅎ"], ㄺ: ["ㄹ","ㄱ"], ㄻ: ["ㄹ","ㅁ"], ㄼ: ["ㄹ","ㅂ"],
+  ㄽ: ["ㄹ","ㅅ"], ㄾ: ["ㄹ","ㅌ"], ㄿ: ["ㄹ","ㅍ"], ㅀ: ["ㄹ","ㅎ"], ㅄ: ["ㅂ","ㅅ"],
+};
+const VERTICAL_VOWELS = new Set(["ㅏ","ㅐ","ㅑ","ㅒ","ㅓ","ㅔ","ㅕ","ㅖ","ㅣ"]);
+const HORIZONTAL_VOWELS = new Set(["ㅗ","ㅛ","ㅜ","ㅠ","ㅡ"]);
+
+type Box = [x0: number, x1: number, y0: number, y1: number];
+
+/** Map a jamo's anchors linearly from their own bounding box into `box`. */
+function fitBox(strokes: StrokeAnchors[], [x0, x1, y0, y1]: Box): StrokeAnchors[] {
+  let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+  for (const s of strokes) for (const [x, y] of s) { minX = Math.min(minX, x); maxX = Math.max(maxX, x); minY = Math.min(minY, y); maxY = Math.max(maxY, y); }
+  const sx = (x1 - x0) / Math.max(1, maxX - minX);
+  const sy = (y1 - y0) / Math.max(1, maxY - minY);
+  return strokes.map((s) => {
+    const out: StrokeAnchors = s.map(([x, y]) => [x0 + (x - minX) * sx, y0 + (y - minY) * sy] as Pt);
+    out.circle = s.circle;
+    return out;
+  });
+}
+
+function jongAnchors(jong: string): StrokeAnchors[] {
+  const pair = JONG_CLUSTERS[jong];
+  if (!pair) return TRACE_ANCHORS[jong] ?? [];
+  return [...halfWidth(TRACE_ANCHORS[pair[0]], 112), ...halfWidth(TRACE_ANCHORS[pair[1]], 208)];
+}
+
+export function isSyllable(char: string): boolean {
+  const c = char.charCodeAt(0);
+  return char.length === 1 && c >= 0xac00 && c <= 0xd7a3;
+}
+
+export function decompose(char: string): { cho: string; jung: string; jong: string } {
+  const code = char.charCodeAt(0) - 0xac00;
+  return { cho: CHO_LIST[Math.floor(code / 588)], jung: JUNG_LIST[Math.floor((code % 588) / 28)], jong: JONG_LIST[code % 28] };
+}
+
+const SYLLABLE_CACHE = new Map<string, StrokeAnchors[]>();
+function syllableAnchors(char: string): StrokeAnchors[] {
+  const hit = SYLLABLE_CACHE.get(char);
+  if (hit) return hit;
+  const { cho, jung, jong } = decompose(char);
+  const hasJong = jong !== "";
+  let choBox: Box, jungBox: Box;
+  if (VERTICAL_VOWELS.has(jung)) {
+    choBox = hasJong ? [52, 150, 44, 158] : [46, 150, 64, 256];
+    jungBox = hasJong ? [150, 270, 40, 170] : [150, 276, 52, 268];
+  } else if (HORIZONTAL_VOWELS.has(jung)) {
+    choBox = hasJong ? [84, 236, 36, 116] : [76, 244, 46, 148];
+    jungBox = hasJong ? [50, 270, 124, 184] : [46, 274, 162, 270];
+  } else {
+    // w-shaped compound: the vowel's own shape already leaves the upper-left free
+    choBox = hasJong ? [50, 138, 40, 118] : [48, 150, 52, 148];
+    jungBox = hasJong ? [44, 276, 40, 176] : [42, 278, 52, 268];
+  }
+  const jongBox: Box = VERTICAL_VOWELS.has(jung) ? [70, 250, 188, 278] : [76, 244, 198, 282];
+  const out = [
+    ...fitBox(TRACE_ANCHORS[cho], choBox),
+    ...fitBox(TRACE_ANCHORS[jung], jungBox),
+    ...(hasJong ? fitBox(jongAnchors(jong), jongBox) : []),
+  ];
+  SYLLABLE_CACHE.set(char, out);
+  return out;
+}
+
+/** Anchors for a jamo or a composed syllable block; empty for anything else. */
+export function anchorsFor(char: string): StrokeAnchors[] {
+  return TRACE_ANCHORS[char] ?? (isSyllable(char) ? syllableAnchors(char) : []);
+}
+
+/** A block packs three letters into the box a single jamo has, so it takes a thinner pen. */
+export function strokeWidthFor(char: string): number {
+  return isSyllable(char) ? 15 : STROKE_WIDTH;
+}
 
 // ---------------------------------------------------------------------------
 // Sampling
@@ -188,7 +274,7 @@ const SAMPLED_CACHE = new Map<string, SampledStroke[]>();
 export function sampledStrokes(char: string): SampledStroke[] {
   let s = SAMPLED_CACHE.get(char);
   if (!s) {
-    s = (TRACE_ANCHORS[char] ?? []).map((a) => sampleStroke(a));
+    s = anchorsFor(char).map((a) => sampleStroke(a));
     SAMPLED_CACHE.set(char, s);
   }
   return s;

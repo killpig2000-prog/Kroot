@@ -7,7 +7,7 @@ import {
   pointAt,
   sampleStroke,
   sampledStrokes,
-  STROKE_WIDTH,
+  strokeWidthFor,
   TRACE_BOX,
   type Pt,
   type SampledStroke,
@@ -58,6 +58,7 @@ const TraceCanvas = forwardRef<TraceCanvasHandle, Props>(function TraceCanvas(
 ) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const strokes = sampledStrokes(char);
+  const penWidth = strokeWidthFor(char);
 
   // Mutable session state lives in refs (pointer events fire far faster than
   // React can re-render); React state only mirrors what the UI needs.
@@ -84,7 +85,7 @@ const TraceCanvas = forwardRef<TraceCanvasHandle, Props>(function TraceCanvas(
     return getComputedStyle(el).getPropertyValue(name).trim() || fallback;
   }, []);
 
-  const drawStroke = useCallback((ctx: CanvasRenderingContext2D, s: SampledStroke, uMax: number, color: string, width = STROKE_WIDTH) => {
+  const drawStroke = useCallback((ctx: CanvasRenderingContext2D, s: SampledStroke, uMax: number, color: string, width = penWidth) => {
     ctx.strokeStyle = color;
     ctx.lineWidth = width;
     ctx.lineCap = "round";
@@ -98,7 +99,7 @@ const TraceCanvas = forwardRef<TraceCanvasHandle, Props>(function TraceCanvas(
     }
     if (uMax > 0 && uMax < 1) { const p = pointAt(s, uMax); ctx.lineTo(p[0], p[1]); }
     if (started) ctx.stroke();
-  }, []);
+  }, [penWidth]);
 
   const draw = useCallback((travelU: number | null = null) => {
     const canvas = canvasRef.current;

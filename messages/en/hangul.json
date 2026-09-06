@@ -62,6 +62,8 @@
     "legendStars": "best stars",
     "sheetClose": "Close",
     "pickPrompt": "Tap a letter to start writing",
-    "pickPromptSub": "Trace it along the guide first, then test yourself in Challenge."
+    "pickPromptSub": "Trace it along the guide first, then test yourself in Challenge.",
+    "syllable": "syllable block",
+    "writeIt": "Now write it"
   }
 }

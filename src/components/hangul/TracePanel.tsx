@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { speakKorean } from "@/lib/tts";
 import { XP_POINTS, type ProgressResult } from "@/lib/activity";
-import { scoreAttempt, TRACE_ANCHORS, type TraceScore } from "@/lib/hangul-trace";
+import { anchorsFor, scoreAttempt, type TraceScore } from "@/lib/hangul-trace";
 import type { Jamo } from "@/lib/hangul";
 import TraceCanvas, { type TraceCanvasHandle, type TraceMode } from "@/components/hangul/TraceCanvas";
 import type { JamoProgress } from "@/components/hangul/useHangulProgress";
@@ -14,9 +14,12 @@ const STAR = "#E2A93B";
 
 export type GradedInfo = { xp: ProgressResult | null; improved: boolean };
 
+/** A jamo from lib/hangul, or a composed block from the syllable builder (no example word). */
+export type TraceTarget = Pick<Jamo, "char" | "rom" | "hint"> & { example?: Jamo["example"] };
+
 type Props = {
-  jamo: Jamo;
-  kind: "consonant" | "vowel";
+  jamo: TraceTarget;
+  kind: "consonant" | "vowel" | "syllable";
   progress: JamoProgress;
   mode: TraceMode;
   onModeChange?: (m: TraceMode) => void;
@@ -57,7 +60,7 @@ export default function TracePanel({
   const [grading, setGrading] = useState(false);
   const [strokeIdx, setStrokeIdx] = useState(0);
   const [celebrate, setCelebrate] = useState(false);
-  const strokeCount = TRACE_ANCHORS[jamo.char]?.length ?? 0;
+  const strokeCount = anchorsFor(jamo.char).length;
 
   // A new letter or mode remounts this panel (the parent keys it on both), so
   // every piece of attempt state above starts fresh without an effect.
@@ -250,11 +253,11 @@ export default function TracePanel({
         </>
       )}
 
-      {!compact ? (
+      {!compact && jamo.example ? (
         <>
           <button
             type="button"
-            onClick={() => speakKorean(jamo.example.kr)}
+            onClick={() => speakKorean(jamo.example!.kr)}
             className="flex items-center justify-between gap-3 rounded-[12px] bg-warm-2 px-3.5 py-2.5 text-left hover:bg-warm-3 transition-colors"
           >
             <span className="min-w-0">
