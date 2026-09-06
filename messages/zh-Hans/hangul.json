@@ -64,6 +64,8 @@
     "pickPrompt": "点一个字母开始书写",
     "pickPromptSub": "先沿引导线描一遍，再到挑战里检验自己。",
     "syllable": "音节块",
-    "writeIt": "现在写写看"
+    "writeIt": "现在写写看",
+    "openPopup": "描写 {text}",
+    "tapToTrace": "点击方块开始描写"
   }
 }

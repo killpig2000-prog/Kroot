@@ -64,6 +64,8 @@
     "pickPrompt": "Tap a letter to start writing",
     "pickPromptSub": "Trace it along the guide first, then test yourself in Challenge.",
     "syllable": "syllable block",
-    "writeIt": "Now write it"
+    "writeIt": "Now write it",
+    "openPopup": "Trace {text}",
+    "tapToTrace": "Tap the block to trace it"
   }
 }

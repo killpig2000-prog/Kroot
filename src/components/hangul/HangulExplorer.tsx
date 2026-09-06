@@ -19,7 +19,7 @@ import { XP_POINTS } from "@/lib/activity";
 import type { TraceScore } from "@/lib/hangul-trace";
 import { useBackToClose } from "@/hooks/useBackToClose";
 import JamoGlyph from "@/components/hangul/JamoGlyph";
-import TracePanel, { Stars, type GradedInfo } from "@/components/hangul/TracePanel";
+import TracePanel, { Stars, type GradedInfo, type TraceTarget } from "@/components/hangul/TracePanel";
 import type { TraceMode } from "@/components/hangul/TraceCanvas";
 import { useHangulProgress, type JamoProgress } from "@/components/hangul/useHangulProgress";
 
@@ -147,17 +147,20 @@ function JamoGrid({
 const NO_PROGRESS: JamoProgress = { practiced: false, bestScore: 0, bestStars: 0 };
 const noXp = async (): Promise<GradedInfo> => ({ xp: null, improved: false });
 
-function SyllableBuilder() {
+function SyllableBuilder({ onPick, active }: { onPick: (target: TraceTarget) => void; active: string | null }) {
   const t = useTranslations("hangul");
   const [cho, setCho] = useState(0);
   const [jung, setJung] = useState(0);
-  const [mode, setMode] = useState<TraceMode>("practice");
   const syllable = composeSyllable(cho, jung);
   const rom = `${ROM_BY_JAMO[CHO[cho]] ?? ""}${ROM_BY_JAMO[JUNG[jung]] ?? ""}`;
 
+  const pick = () => {
+    speak(syllable);
+    onPick({ char: syllable, rom, hint: `${CHO[cho]} + ${JUNG[jung]}` });
+  };
+
   return (
-    <div className="max-w-[860px] border border-line rounded-[14px] p-[clamp(20px,3vw,28px)] mb-8 lg:grid lg:grid-cols-[clamp(280px,40%,340px)_minmax(0,1fr)] lg:gap-7">
-      <div className="lg:order-2">
+    <div className="max-w-[560px]">
       <p className={SECTION_LABEL}>{t("sections.buildABlock")}</p>
 
       <div className="flex items-center justify-center gap-3 flex-wrap mb-6">
@@ -176,17 +179,21 @@ function SyllableBuilder() {
         </span>
         <span className="text-[22px] text-faint font-light">=</span>
         <button
-          onClick={() => speak(syllable)}
-          className="kr w-[96px] h-[96px] rounded-[18px] border-[1.5px] flex flex-col items-center justify-center text-[42px] leading-none transition-transform duration-150 hover:scale-105"
+          onClick={pick}
+          aria-pressed={active === syllable}
+          className={`kr w-[96px] h-[96px] rounded-[18px] border-[1.5px] flex flex-col items-center justify-center text-[42px] leading-none transition-transform duration-150 hover:scale-105 ${
+            active === syllable ? "shadow-[0_0_0_3px_#DCFCE7]" : ""
+          }`}
           style={{ background: SOFT, borderColor: BRD, color: GREEN }}
-          aria-label={t("hear", { text: syllable })}
+          aria-label={t("trace.openPopup", { text: syllable })}
         >
           {syllable}
         </button>
       </div>
-      <p className="text-center text-[13px] text-muted mb-6">
+      <p className="text-center text-[13px] text-muted mb-1">
         <b className="text-success">{rom}</b>
       </p>
+      <p className="text-center text-[11.5px] text-faint mb-6">{t("trace.tapToTrace")}</p>
 
       <p className={SECTION_LABEL}>{t("builder.consonant")} (초성)</p>
       <div className="flex flex-wrap gap-1.5 mb-5">
@@ -220,23 +227,6 @@ function SyllableBuilder() {
             {v}
           </button>
         ))}
-      </div>
-      </div>
-
-      {/* write the block you just built — same paper as the jamo, no progress/XP */}
-      <div className="mt-7 lg:mt-0 lg:order-1 lg:border-r lg:border-line lg:pr-7">
-        <p className={SECTION_LABEL}>{t("trace.writeIt")}</p>
-        <TracePanel
-          key={`${syllable}-${mode}`}
-          jamo={{ char: syllable, rom, hint: `${CHO[cho]} + ${JUNG[jung]}` }}
-          kind="syllable"
-          progress={NO_PROGRESS}
-          mode={mode}
-          onModeChange={setMode}
-          signedIn={false}
-          onPracticed={() => {}}
-          onGraded={noXp}
-        />
       </div>
     </div>
   );
@@ -329,6 +319,7 @@ export default function HangulExplorer({ userId }: { userId?: string | null }) {
   const t = useTranslations("hangul");
   const [tab, setTab] = useState<TabKey>("consonants");
   const [selected, setSelected] = useState<string | null>(null);
+  const [syllableTarget, setSyllableTarget] = useState<TraceTarget | null>(null);
   const [mode, setMode] = useState<TraceMode>("practice");
   const [run, setRun] = useState<Run | null>(null);
   const { get, loaded, markPracticed, recordChallenge, signedIn } = useHangulProgress(userId);
@@ -341,7 +332,7 @@ export default function HangulExplorer({ userId }: { userId?: string | null }) {
   const practicedCount = practicedChars.length;
   const starsTotal = useMemo(() => ALL_JAMO.reduce((s, j) => s + get(j.char).bestStars, 0), [get]);
 
-  const closeSheet = useCallback(() => setSelected(null), []);
+  const closeSheet = useCallback(() => { setSelected(null); setSyllableTarget(null); }, []);
   // Only the mobile sheet uses Back-to-close; on desktop the panel just sits there.
   const [isSheet, setIsSheet] = useState(false);
   useEffect(() => {
@@ -351,7 +342,19 @@ export default function HangulExplorer({ userId }: { userId?: string | null }) {
     mq.addEventListener("change", sync);
     return () => mq.removeEventListener("change", sync);
   }, []);
-  const sheetOpen = isSheet && selected !== null && run === null;
+
+  // Desktop has the paper on screen all the time, so it never sits empty:
+  // with nothing picked it shows the tab's first letter. Below lg a pick
+  // opens the sheet, so there it stays null until the learner taps. A built
+  // syllable block never auto-shows — it opens the same popup only once tapped.
+  const effectiveSelected =
+    selected ?? (!isSheet && tab !== "syllables" ? (tab === "consonants" ? CONSONANT_LIST : VOWEL_LIST)[0].char : null);
+  const selectedJamo = effectiveSelected ? JAMO_BY_CHAR.get(effectiveSelected) ?? null : null;
+  const activeTarget: TraceTarget | null = tab === "syllables" ? syllableTarget : selectedJamo;
+  const activeKind: "consonant" | "vowel" | "syllable" | null =
+    tab === "syllables" ? (syllableTarget ? "syllable" : null) : selectedJamo ? kindOf(selectedJamo.char) : null;
+
+  const sheetOpen = isSheet && activeTarget !== null && run === null;
   const dismissSheet = useBackToClose(sheetOpen, closeSheet);
   useEffect(() => {
     if (!sheetOpen) return;
@@ -359,13 +362,6 @@ export default function HangulExplorer({ userId }: { userId?: string | null }) {
     document.body.style.overflow = "hidden";
     return () => { document.body.style.overflow = prev; };
   }, [sheetOpen]);
-
-  // Desktop has the paper on screen all the time, so it never sits empty:
-  // with nothing picked it shows the tab's first letter. Below lg a pick
-  // opens the sheet, so there it stays null until the learner taps.
-  const effectiveSelected =
-    selected ?? (!isSheet && tab !== "syllables" ? (tab === "consonants" ? CONSONANT_LIST : VOWEL_LIST)[0].char : null);
-  const selectedJamo = effectiveSelected ? JAMO_BY_CHAR.get(effectiveSelected) ?? null : null;
 
   const nextInList = useCallback(() => {
     if (!effectiveSelected) return;
@@ -405,13 +401,17 @@ export default function HangulExplorer({ userId }: { userId?: string | null }) {
     setSelected(char);
     setMode("practice");
   };
+  const pickSyllable = (target: TraceTarget) => {
+    setSyllableTarget(target);
+    setMode("practice");
+  };
 
   const tabs = (
     <div className="flex gap-2 mb-6 flex-wrap">
       {TABS.map((tab_) => (
         <button
           key={tab_.key}
-          onClick={() => { setTab(tab_.key); setSelected(null); }}
+          onClick={() => { setTab(tab_.key); setSelected(null); setSyllableTarget(null); }}
           className={`rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold transition-all border ${
             tab_.key === tab
               ? "bg-success border-success text-white"
@@ -480,18 +480,18 @@ export default function HangulExplorer({ userId }: { userId?: string | null }) {
     );
   }
 
-  const panel = selectedJamo ? (
+  const panel = activeTarget ? (
     <TracePanel
-      key={`${selectedJamo.char}-${mode}`}
-      jamo={selectedJamo}
-      kind={kindOf(selectedJamo.char)}
-      progress={get(selectedJamo.char)}
+      key={`${activeTarget.char}-${mode}`}
+      jamo={activeTarget}
+      kind={activeKind ?? "consonant"}
+      progress={activeKind === "syllable" ? NO_PROGRESS : get(activeTarget.char)}
       mode={mode}
       onModeChange={setMode}
-      signedIn={signedIn}
-      onPracticed={markPracticed}
-      onGraded={onGraded}
-      onNext={nextInList}
+      signedIn={activeKind === "syllable" ? false : signedIn}
+      onPracticed={activeKind === "syllable" ? () => {} : markPracticed}
+      onGraded={activeKind === "syllable" ? noXp : onGraded}
+      onNext={activeKind === "syllable" ? undefined : nextInList}
       tourStrokeId="guided-hangul-stroke"
     />
   ) : null;
@@ -501,49 +501,61 @@ export default function HangulExplorer({ userId }: { userId?: string | null }) {
       <ProgressHeader practiced={practicedCount} stars={starsTotal} canRun={loaded && practicedCount >= RUN_MIN} onRun={startRun} />
       {tabs}
 
-      {tab !== "syllables" && (
-        <div
-          key={tab}
-          className="lg:grid lg:grid-cols-[clamp(320px,34%,400px)_minmax(0,1fr)] lg:gap-7 lg:items-start"
-          style={{ animation: "fadeUp .35s ease" }}
-        >
-          {/* desktop: the paper first, sticky, with the letters as a picker beside it */}
-          <aside className="hidden lg:block sticky top-5">
-            <div className="rounded-[20px] border border-line bg-cream p-4">
-              {panel ?? (
-                <div className="flex flex-col items-center justify-center gap-2 py-14 text-center">
-                  <span className="text-[30px]" aria-hidden="true">✍️</span>
-                  <p className="text-[13px] font-bold">{t("trace.pickPrompt")}</p>
-                  <p className="text-[11.5px] text-muted max-w-[24ch]">{t("trace.pickPromptSub")}</p>
-                </div>
-              )}
-            </div>
-          </aside>
-          <div className="max-w-[980px]">
-            {tab === "consonants" ? (
-              <>
-                <p className={SECTION_LABEL}>{t("sections.basicConsonants")} · 기본 자음</p>
-                <div className="mb-7"><JamoGrid items={BASIC_CONSONANTS} selected={effectiveSelected} onSelect={selectTile} get={get} firstItemTourId="guided-hangul-first-jamo" /></div>
-                <p className={SECTION_LABEL}>{t("sections.doubleConsonants")} · 쌍자음</p>
-                <div className="mb-4"><JamoGrid items={DOUBLE_CONSONANTS} selected={effectiveSelected} onSelect={selectTile} get={get} /></div>
-              </>
-            ) : (
-              <>
-                <p className={SECTION_LABEL}>{t("sections.basicVowels")} · 기본 모음</p>
-                <div className="mb-7"><JamoGrid items={BASIC_VOWELS} selected={effectiveSelected} onSelect={selectTile} get={get} /></div>
-                <p className={SECTION_LABEL}>{t("sections.compoundVowels")} · 복합 모음</p>
-                <div className="mb-4"><JamoGrid items={COMPOUND_VOWELS} selected={effectiveSelected} onSelect={selectTile} get={get} /></div>
-              </>
+      <div
+        key={tab}
+        className="lg:grid lg:grid-cols-[clamp(320px,34%,400px)_minmax(0,1fr)] lg:gap-7 lg:items-start"
+        style={{ animation: "fadeUp .35s ease" }}
+      >
+        {/* desktop: the paper first, sticky, with the letters (or the block builder) as a picker beside it */}
+        <aside className="hidden lg:block sticky top-5">
+          <div className="rounded-[20px] border border-line bg-cream p-4">
+            {panel ?? (
+              <div className="flex flex-col items-center justify-center gap-2 py-14 text-center">
+                <span className="text-[30px]" aria-hidden="true">✍️</span>
+                <p className="text-[13px] font-bold">{t("trace.pickPrompt")}</p>
+                <p className="text-[11.5px] text-muted max-w-[24ch]">{t("trace.pickPromptSub")}</p>
+              </div>
             )}
-            <div className="flex gap-4 flex-wrap text-[11px] text-muted mt-1 mb-8">
-              <span className="flex items-center gap-1.5"><i className="w-[7px] h-[7px] rounded-full bg-line" /> {t("trace.legendNew")}</span>
-              <span className="flex items-center gap-1.5"><b className="text-success-deep">✓</b> {t("trace.legendPracticed")}</span>
-              <span className="flex items-center gap-1.5"><Stars n={2} size={11} /> {t("trace.legendStars")}</span>
-            </div>
           </div>
-
+        </aside>
+        <div className="max-w-[980px]">
+          {tab === "consonants" ? (
+            <>
+              <p className={SECTION_LABEL}>{t("sections.basicConsonants")} · 기본 자음</p>
+              <div className="mb-7"><JamoGrid items={BASIC_CONSONANTS} selected={effectiveSelected} onSelect={selectTile} get={get} firstItemTourId="guided-hangul-first-jamo" /></div>
+              <p className={SECTION_LABEL}>{t("sections.doubleConsonants")} · 쌍자음</p>
+              <div className="mb-4"><JamoGrid items={DOUBLE_CONSONANTS} selected={effectiveSelected} onSelect={selectTile} get={get} /></div>
+              <div className="flex gap-4 flex-wrap text-[11px] text-muted mt-1 mb-8">
+                <span className="flex items-center gap-1.5"><i className="w-[7px] h-[7px] rounded-full bg-line" /> {t("trace.legendNew")}</span>
+                <span className="flex items-center gap-1.5"><b className="text-success-deep">✓</b> {t("trace.legendPracticed")}</span>
+                <span className="flex items-center gap-1.5"><Stars n={2} size={11} /> {t("trace.legendStars")}</span>
+              </div>
+            </>
+          ) : tab === "vowels" ? (
+            <>
+              <p className={SECTION_LABEL}>{t("sections.basicVowels")} · 기본 모음</p>
+              <div className="mb-7"><JamoGrid items={BASIC_VOWELS} selected={effectiveSelected} onSelect={selectTile} get={get} /></div>
+              <p className={SECTION_LABEL}>{t("sections.compoundVowels")} · 복합 모음</p>
+              <div className="mb-4"><JamoGrid items={COMPOUND_VOWELS} selected={effectiveSelected} onSelect={selectTile} get={get} /></div>
+              <div className="flex gap-4 flex-wrap text-[11px] text-muted mt-1 mb-8">
+                <span className="flex items-center gap-1.5"><i className="w-[7px] h-[7px] rounded-full bg-line" /> {t("trace.legendNew")}</span>
+                <span className="flex items-center gap-1.5"><b className="text-success-deep">✓</b> {t("trace.legendPracticed")}</span>
+                <span className="flex items-center gap-1.5"><Stars n={2} size={11} /> {t("trace.legendStars")}</span>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="mb-8"><SyllableBuilder onPick={pickSyllable} active={syllableTarget?.char ?? null} /></div>
+              <p className={SECTION_LABEL}>{t("sections.readingPractice")} · 읽기 연습</p>
+              <div className="grid grid-cols-[repeat(auto-fill,minmax(140px,1fr))] gap-3 max-w-[820px]">
+                {PRACTICE_WORDS.map((w) => (
+                  <PracticeWordCard key={w.kr} {...w} />
+                ))}
+              </div>
+            </>
+          )}
         </div>
-      )}
+      </div>
 
       {/* mobile / tablet: bottom sheet */}
       {sheetOpen && panel ? (
@@ -551,7 +563,7 @@ export default function HangulExplorer({ userId }: { userId?: string | null }) {
           <button aria-label={t("trace.sheetClose")} onClick={dismissSheet} className="fixed inset-0 z-[60] bg-[#282319]/35 cursor-default" />
           <div
             role="dialog"
-            aria-label={selectedJamo?.char}
+            aria-label={activeTarget?.char}
             className="sheet-up fixed left-0 right-0 bottom-0 z-[70] bg-warm border-t-[1.5px] border-dashed border-dash rounded-t-[22px] px-4 pt-2.5 pb-[max(20px,env(safe-area-inset-bottom))] max-h-[92dvh] overflow-y-auto"
           >
             <div className="w-10 h-1 rounded-full bg-dash mx-auto mb-3" aria-hidden="true" />
@@ -559,19 +571,6 @@ export default function HangulExplorer({ userId }: { userId?: string | null }) {
           </div>
         </div>
       ) : null}
-
-      {tab === "syllables" && (
-        <div style={{ animation: "fadeUp .35s ease" }}>
-          <SyllableBuilder />
-
-          <p className={SECTION_LABEL}>{t("sections.readingPractice")} · 읽기 연습</p>
-          <div className="grid grid-cols-[repeat(auto-fill,minmax(140px,1fr))] gap-3 max-w-[820px]">
-            {PRACTICE_WORDS.map((w) => (
-              <PracticeWordCard key={w.kr} {...w} />
-            ))}
-          </div>
-        </div>
-      )}
     </div>
   );
 }

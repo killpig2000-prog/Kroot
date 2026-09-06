@@ -36,7 +36,7 @@ function circle(cx: number, cy: number, r: number): StrokeAnchors {
 // the corner-cutting smoother below would otherwise round a bare corner
 // across a quarter of the run.
 const CONSONANTS: Record<string, StrokeAnchors[]> = {
-  ㄱ: [[C(78, 92), C(214, 92), C(228, 92), C(228, 106), C(228, 170), C(220, 222), C(196, 254)]],
+  ㄱ: [[C(78, 92), C(214, 92), C(228, 92), C(228, 106), C(228, 254)]],
   ㄴ: [[C(92, 66), C(92, 232), C(92, 246), C(106, 246), C(236, 246)]],
   ㄷ: [
     [C(92, 84), C(236, 84)],
@@ -109,7 +109,7 @@ const DOUBLE_CONSONANTS: Record<string, StrokeAnchors[]> = {
 
 const VOWELS: Record<string, StrokeAnchors[]> = {
   ㅏ: [[C(150, 52), C(150, 268)], [C(150, 160), C(236, 160)]],
-  ㅑ: [[C(144, 52), C(144, 268)], [C(144, 124), C(232, 124)], [C(144, 196), C(232, 196)]],
+  ㅑ: [[C(144, 52), C(144, 268)], [C(144, 124), C(204, 124)], [C(144, 196), C(204, 196)]],
   ㅓ: [[C(84, 160), C(170, 160)], [C(170, 52), C(170, 268)]],
   ㅕ: [[C(88, 124), C(176, 124)], [C(88, 196), C(176, 196)], [C(176, 52), C(176, 268)]],
   ㅗ: [[C(160, 90), C(160, 190)], [C(60, 190), C(260, 190)]],
@@ -128,18 +128,18 @@ const VOWELS: Record<string, StrokeAnchors[]> = {
 // print — flush with the bottom it read as a floor line.
 const COMPOUND_VOWELS: Record<string, StrokeAnchors[]> = {
   // ㅐ ㅒ ㅔ ㅖ (and ㅙ): the two stems sit a touch closer than a full letter apart.
-  ㅐ: [[C(126, 52), C(126, 268)], [C(126, 160), C(190, 160)], [C(196, 52), C(196, 268)]],
-  ㅒ: [[C(120, 52), C(120, 268)], [C(120, 124), C(186, 124)], [C(120, 196), C(186, 196)], [C(196, 52), C(196, 268)]],
-  ㅔ: [[C(90, 160), C(136, 160)], [C(136, 52), C(136, 268)], [C(204, 52), C(204, 268)]],
-  ㅖ: [[C(86, 124), C(138, 124)], [C(86, 196), C(138, 196)], [C(138, 52), C(138, 268)], [C(206, 52), C(206, 268)]],
-  ㅘ: [[C(106, 180), C(106, 232)], [C(52, 232), C(160, 232)], [C(200, 52), C(200, 268)], [C(200, 150), C(254, 150)]],
-  ㅙ: [[C(94, 180), C(94, 232)], [C(46, 232), C(142, 232)], [C(184, 52), C(184, 268)], [C(184, 150), C(246, 150)], [C(250, 52), C(250, 268)]],
-  ㅚ: [[C(110, 180), C(110, 232)], [C(52, 232), C(170, 232)], [C(222, 52), C(222, 268)]],
+  ㅐ: [[C(126, 52), C(126, 268)], [C(126, 160), C(155, 160)], [C(165, 52), C(165, 268)]],
+  ㅒ: [[C(120, 52), C(120, 268)], [C(120, 124), C(165, 124)], [C(120, 196), C(165, 196)], [C(172, 52), C(172, 268)]],
+  ㅔ: [[C(90, 160), C(136, 160)], [C(136, 52), C(136, 268)], [C(166, 52), C(166, 268)]],
+  ㅖ: [[C(86, 124), C(138, 124)], [C(86, 196), C(138, 196)], [C(138, 52), C(138, 268)], [C(170, 52), C(170, 268)]],
+  ㅘ: [[C(106, 180), C(106, 232)], [C(52, 232), C(160, 232)], [C(182, 52), C(182, 268)], [C(182, 150), C(236, 150)]],
+  ㅙ: [[C(94, 180), C(94, 232)], [C(46, 232), C(142, 232)], [C(166, 52), C(166, 268)], [C(166, 150), C(228, 150)], [C(232, 52), C(232, 268)]],
+  ㅚ: [[C(110, 180), C(110, 232)], [C(52, 232), C(170, 232)], [C(204, 52), C(204, 268)]],
   // ㅝ ㅞ: the ㅓ/ㅔ tick sits BELOW ㅜ's bar, as in print (워, 웨).
-  ㅝ: [[C(48, 184), C(160, 184)], [C(104, 184), C(104, 268)], [C(170, 226), C(214, 226)], [C(214, 52), C(214, 268)]],
-  ㅞ: [[C(42, 184), C(146, 184)], [C(94, 184), C(94, 268)], [C(156, 226), C(194, 226)], [C(194, 52), C(194, 268)], [C(254, 52), C(254, 268)]],
-  ㅟ: [[C(48, 196), C(170, 196)], [C(108, 196), C(108, 268)], [C(222, 52), C(222, 268)]],
-  ㅢ: [[C(48, 200), C(186, 200)], [C(222, 52), C(222, 268)]],
+  ㅝ: [[C(48, 184), C(160, 184)], [C(104, 184), C(104, 268)], [C(170, 226), C(196, 226)], [C(196, 52), C(196, 268)]],
+  ㅞ: [[C(42, 184), C(146, 184)], [C(94, 184), C(94, 268)], [C(156, 226), C(176, 226)], [C(176, 52), C(176, 268)], [C(222, 52), C(222, 268)]],
+  ㅟ: [[C(48, 196), C(170, 196)], [C(108, 196), C(108, 268)], [C(204, 52), C(204, 268)]],
+  ㅢ: [[C(48, 200), C(186, 200)], [C(208, 52), C(208, 268)]],
 };
 
 export const TRACE_ANCHORS: Record<string, StrokeAnchors[]> = {
@@ -163,8 +163,30 @@ const JONG_CLUSTERS: Record<string, [string, string]> = {
 };
 /** y where a w-vowel's ㅗ/ㅜ/ㅡ part begins — the consonant above must stop short of it. */
 const W_VOWEL_BAR_TOP: Record<string, number> = { ㅘ: 180, ㅙ: 180, ㅚ: 180, ㅝ: 184, ㅞ: 184, ㅟ: 196, ㅢ: 200 };
+/** x of that part's own vertical stroke — the consonant above centres on this, not the block. */
+const W_VOWEL_BAR_MID: Record<string, number> = { ㅘ: 106, ㅙ: 94, ㅚ: 110, ㅝ: 104, ㅞ: 94, ㅟ: 108, ㅢ: 117 };
 const VERTICAL_VOWELS = new Set(["ㅏ","ㅐ","ㅑ","ㅒ","ㅓ","ㅔ","ㅕ","ㅖ","ㅣ"]);
 const HORIZONTAL_VOWELS = new Set(["ㅗ","ㅛ","ㅜ","ㅠ","ㅡ"]);
+const DOUBLE_SET = new Set(Object.keys(DOUBLE_CONSONANTS));
+/** y where the horizontal bar of a 고-type vowel sits — its ㅣ leg gets squashed toward this line. */
+const BAR_Y: Record<string, number> = { ㅗ: 190, ㅛ: 190, ㅜ: 130, ㅠ: 130 };
+/** How hard that leg gets squashed — ㅜ/ㅠ's leg hangs below the bar and reads longer, so it needs more. */
+const BAR_SQUASH: Record<string, number> = { ㅗ: 0.55, ㅛ: 0.55, ㅜ: 0.45, ㅠ: 0.45 };
+
+function boundsY(strokes: StrokeAnchors[]): [number, number] {
+  let minY = Infinity, maxY = -Infinity;
+  for (const s of strokes) for (const [, y] of s) { minY = Math.min(minY, y); maxY = Math.max(maxY, y); }
+  return [minY, maxY];
+}
+
+/** Shrink a glyph's height by `factor`, keeping the point at `anchorY` fixed. */
+function squashToward(strokes: StrokeAnchors[], anchorY: number, factor: number): StrokeAnchors[] {
+  return strokes.map((s) => {
+    const out: StrokeAnchors = s.map(([x, y]) => [x, anchorY + (y - anchorY) * factor] as Pt);
+    out.circle = s.circle;
+    return out;
+  });
+}
 
 type Box = [x0: number, x1: number, y0: number, y1: number];
 
@@ -217,12 +239,17 @@ function syllableAnchors(char: string): StrokeAnchors[] {
     // 가: consonant fills the left of the centre line, vowel the right —
     // both span the same height so the block reads as one symmetric letter.
     const top = hasJong ? 36 : 52, bottom = hasJong ? 166 : 268;
-    choPart = fitBox(TRACE_ANCHORS[cho], [36, CENTER - 12, top, bottom]);
-    jungPart = fitBox(TRACE_ANCHORS[jung], [CENTER + 8, 284, top, bottom]);
+    choPart = fitBox(TRACE_ANCHORS[cho], [36, CENTER - 24, top, bottom]);
+    jungPart = fitBox(TRACE_ANCHORS[jung], [CENTER + 26, 284, top, bottom]);
   } else if (HORIZONTAL_VOWELS.has(jung)) {
-    // 고: consonant above the centre line, vowel below it.
-    choPart = fitBox(TRACE_ANCHORS[cho], hasJong ? [76, 244, 30, 106] : [60, 260, 40, CENTER - 12]);
-    jungPart = fitBox(TRACE_ANCHORS[jung], hasJong ? [44, 276, 116, 182] : [40, 280, CENTER + 6, 274]);
+    // 고: consonant above the centre line, vowel below it. A double consonant
+    // reads shorter (top edge lower); ㅗ/ㅛ/ㅜ/ㅠ's ㅣ leg is squashed toward
+    // the bar so the vowel doesn't look taller than the consonant above it.
+    const choSrc = DOUBLE_SET.has(cho) ? squashToward(TRACE_ANCHORS[cho], boundsY(TRACE_ANCHORS[cho])[1], 0.72) : TRACE_ANCHORS[cho];
+    const barY = BAR_Y[jung];
+    const jungSrc = barY !== undefined ? squashToward(TRACE_ANCHORS[jung], barY, BAR_SQUASH[jung]) : TRACE_ANCHORS[jung];
+    choPart = fitBox(choSrc, hasJong ? [76, 244, 30, 106] : [60, 260, 40, CENTER - 12]);
+    jungPart = fitBox(jungSrc, hasJong ? [44, 276, 128, 190] : [40, 280, CENTER + 26, 274]);
   } else if (hasJong) {
     choPart = fitBox(TRACE_ANCHORS[cho], [44, 134, 34, 112]);
     jungPart = fitBox(TRACE_ANCHORS[jung], [40, 280, 34, 178]);
@@ -231,7 +258,8 @@ function syllableAnchors(char: string): StrokeAnchors[] {
     // on purpose), and the consonant fills the space above that bar, its top
     // on the same line as the ㅣ's top so all three parts line up.
     const barTop = W_VOWEL_BAR_TOP[jung] ?? 184;
-    choPart = fitBox(TRACE_ANCHORS[cho], [40, 150, 52, barTop - 16]);
+    const cx = W_VOWEL_BAR_MID[jung] ?? 88;
+    choPart = fitBox(TRACE_ANCHORS[cho], [cx - 32, cx + 32, 68, barTop - 28]);
     jungPart = TRACE_ANCHORS[jung];
   }
   const jongBox: Box = [74, 246, 190, 282];

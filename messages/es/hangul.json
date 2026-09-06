@@ -64,6 +64,8 @@
     "pickPrompt": "Toca una letra para empezar a escribir",
     "pickPromptSub": "Primero trázala con la guía y luego ponte a prueba en Reto.",
     "syllable": "bloque silábico",
-    "writeIt": "Ahora escríbelo"
+    "writeIt": "Ahora escríbelo",
+    "openPopup": "Trazar {text}",
+    "tapToTrace": "Toca el bloque para trazarlo"
   }
 }

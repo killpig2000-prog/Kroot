@@ -64,6 +64,8 @@
     "pickPrompt": "Chạm vào một chữ để bắt đầu viết",
     "pickPromptSub": "Tô theo hướng dẫn trước, rồi tự kiểm tra trong Thử thách.",
     "syllable": "khối âm tiết",
-    "writeIt": "Giờ hãy viết nó"
+    "writeIt": "Giờ hãy viết nó",
+    "openPopup": "Đồ {text}",
+    "tapToTrace": "Chạm vào khối để đồ nó"
   }
 }
