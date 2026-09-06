@@ -68,17 +68,18 @@ Questions or ideas? Tap the 💬 button in the app — a real person reads every
 | Phone screenshots | 2–8, 16:9 or 9:16, 320–3840 px | 🟡 `screenshots/` (raw captures, see below) |
 | 7" tablet screenshots | optional | skip for v1 |
 
-Captured 2026-09-06 (1080×1922, 390×694 CSS px ×2.77, review account, dev server):
-1. `01-dashboard` — tree card + streak/coins/level
-2. `02-level-test` — onboarding "What brought you to Korean?" (logged-out)
-3. `03-listening` — Cafe A1 clip, two characters + waveform
-4. `04-speaking` — Pronunciation chapter grid (Practice/Challenge)
-5. `05-writing` — Writing index with level chips + Continue card
-6. `06-vocabulary` — Chapter 1 Day 1 word list
-7. `07-hangul` — consonant grid
-8. ~~ranking~~ — dropped (real user names)
+Captured 2026-09-06 v2 (1080×1922, 390×694 CSS px ×2.77, review account on dev server; set per user):
+1. `01-dashboard` — tree card; name/avatar swapped in the DOM to "Ronnie" + the owner's photo (DB untouched)
+2. `02-listening` — Cafe A1 clip, two characters + waveform
+3. `03-vocabulary` — Chapter 1 Day 1 word list
+4. `04-reading` — Chapter 1 passage with a tapped word popup (시 · o'clock)
+5. `05-writing` — Chapter 1 Q1 mid-composition (3 tiles placed, Check enabled)
+6. `06-pronunciation` — 라면 result ring 100% (mic faked via injected SpeechRecognition; 나무 isn't a practice word)
+   `06b-namu-landing` — alternate: landing try-it 나무 100% (spare, only if 나무 is a must)
+7. `07-shop` — Garden Shop with try-on tree
+8. `08-ranking` — Garden Fair podium (shows other users' display names — user OK'd)
 
-Nice-to-have re-shots: a mid-test placement question, the pronunciation mic + score ring, the writing tile builder mid-sentence. Then add caption text over each (Figma / Canva), e.g. "One quest a day", "Say it, get scored".
+Add caption text over each (Figma / Canva), e.g. "One quest a day", "Say it, get scored".
 
 ---
 
