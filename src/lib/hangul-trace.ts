@@ -166,14 +166,22 @@ const HORIZONTAL_VOWELS = new Set(["ㅗ","ㅛ","ㅜ","ㅠ","ㅡ"]);
 
 type Box = [x0: number, x1: number, y0: number, y1: number];
 
-/** Map a jamo's anchors linearly from their own bounding box into `box`. */
+/**
+ * Fit a jamo's anchors inside `box`: uniform scale (never squashed — an
+ * ㅓ tick stretched to the box width used to run into the consonant),
+ * then centred. A zero-width ㅣ or zero-height ㅡ simply lands on the
+ * box's centre line.
+ */
 function fitBox(strokes: StrokeAnchors[], [x0, x1, y0, y1]: Box): StrokeAnchors[] {
   let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
   for (const s of strokes) for (const [x, y] of s) { minX = Math.min(minX, x); maxX = Math.max(maxX, x); minY = Math.min(minY, y); maxY = Math.max(maxY, y); }
-  const sx = (x1 - x0) / Math.max(1, maxX - minX);
-  const sy = (y1 - y0) / Math.max(1, maxY - minY);
+  const w = maxX - minX, h = maxY - minY;
+  const scale = Math.min(w > 1 ? (x1 - x0) / w : Infinity, h > 1 ? (y1 - y0) / h : Infinity, 1.4);
+  const k = Number.isFinite(scale) ? scale : 1;
+  const cx = (x0 + x1) / 2, cy = (y0 + y1) / 2;
+  const mx = (minX + maxX) / 2, my = (minY + maxY) / 2;
   return strokes.map((s) => {
-    const out: StrokeAnchors = s.map(([x, y]) => [x0 + (x - minX) * sx, y0 + (y - minY) * sy] as Pt);
+    const out: StrokeAnchors = s.map(([x, y]) => [cx + (x - mx) * k, cy + (y - my) * k] as Pt);
     out.circle = s.circle;
     return out;
   });
@@ -203,17 +211,19 @@ function syllableAnchors(char: string): StrokeAnchors[] {
   const hasJong = jong !== "";
   let choBox: Box, jungBox: Box;
   if (VERTICAL_VOWELS.has(jung)) {
-    choBox = hasJong ? [52, 150, 44, 158] : [46, 150, 64, 256];
-    jungBox = hasJong ? [150, 270, 40, 170] : [150, 276, 52, 268];
+    // consonant left, vowel right, a clear gutter between the two
+    choBox = hasJong ? [48, 140, 40, 150] : [44, 144, 66, 226];
+    jungBox = hasJong ? [162, 274, 34, 166] : [166, 278, 44, 276];
   } else if (HORIZONTAL_VOWELS.has(jung)) {
-    choBox = hasJong ? [84, 236, 36, 116] : [76, 244, 46, 148];
-    jungBox = hasJong ? [50, 270, 124, 184] : [46, 274, 162, 270];
+    // consonant on top, vowel underneath
+    choBox = hasJong ? [80, 240, 32, 108] : [72, 248, 40, 150];
+    jungBox = hasJong ? [46, 274, 118, 184] : [40, 280, 166, 276];
   } else {
     // w-shaped compound: the vowel's own shape already leaves the upper-left free
-    choBox = hasJong ? [50, 138, 40, 118] : [48, 150, 52, 148];
-    jungBox = hasJong ? [44, 276, 40, 176] : [42, 278, 52, 268];
+    choBox = hasJong ? [46, 132, 36, 112] : [44, 140, 48, 140];
+    jungBox = hasJong ? [40, 280, 34, 178] : [40, 280, 48, 276];
   }
-  const jongBox: Box = VERTICAL_VOWELS.has(jung) ? [70, 250, 188, 278] : [76, 244, 198, 282];
+  const jongBox: Box = [74, 246, 190, 282];
   const out = [
     ...fitBox(TRACE_ANCHORS[cho], choBox),
     ...fitBox(TRACE_ANCHORS[jung], jungBox),
