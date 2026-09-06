@@ -1,6 +1,9 @@
+"use client";
+
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { LEVEL_ORDER, SPECIES, type CefrLevel } from "@/lib/tree";
+import { playTap } from "@/lib/sfx";
 
 // A1 → C2 stepper: where the learner is on the curriculum and how far the
 // next level-up test is. Sits above the per-skill bars so "why am I doing
@@ -68,6 +71,7 @@ export default function LevelMap({
       {next ? (
         <Link
           href="/level-test"
+          onClick={playTap}
           className={`flex items-center gap-3 rounded-[12px] px-4 py-3 border transition-colors ${
             eligible ? "border-success bg-success-bg hover:bg-[var(--tint-green)]" : "border-line bg-warm hover:border-success"
           }`}

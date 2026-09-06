@@ -7,6 +7,7 @@ import { Link, usePathname } from "@/i18n/navigation";
 import { MAIN_ITEMS, SECTIONS, type NavColor } from "@/components/dashboard/navItems";
 import { useBackToClose } from "@/hooks/useBackToClose";
 import { LanguageSwitcher } from "@/components/dashboard/Sidebar";
+import { playTap } from "@/lib/sfx";
 
 // Four tabs: Garden · Basics · Practice · More — equal-width cells that fill
 // the bar edge to edge. Basics (guide/hangul/grammar/vocab) and Practice
@@ -72,7 +73,10 @@ function Tile({
     <Link
       href={href}
       data-tour={tourId}
-      onClick={onNavigate}
+      onClick={() => {
+        playTap();
+        onNavigate();
+      }}
       className={`relative flex items-center justify-center min-h-[72px] rounded-[14px] border-[1.5px] text-center font-extrabold leading-tight text-balance transition-colors ${
         cols === 3 ? "px-1.5 py-3 text-[14.5px]" : "px-2.5 py-4 text-[16.5px]"
       } ${
@@ -104,7 +108,10 @@ function TabButton({
     <button
       type="button"
       data-tour={tourId}
-      onClick={onClick}
+      onClick={() => {
+        playTap();
+        onClick();
+      }}
       aria-expanded={expanded}
       className={`flex items-center justify-center min-h-[56px] py-1 text-[13px] transition-colors ${
         on ? "text-success-deep font-bold" : "text-faint font-medium hover:text-muted"
@@ -247,7 +254,10 @@ export default function BottomNav({ streakDays: streakDaysProp }: { streakDays?:
         >
           <Link
             href="/dashboard"
-            onClick={close}
+            onClick={() => {
+              playTap();
+              close();
+            }}
             className={`flex items-center justify-center min-h-[56px] py-1 text-[13px] transition-colors ${
               onGarden ? "text-success-deep font-bold" : "text-faint font-medium hover:text-muted"
             }`}

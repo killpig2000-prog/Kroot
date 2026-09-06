@@ -1,6 +1,9 @@
+"use client";
+
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { SKILL_HREF } from "@/components/dashboard/QuestButton";
+import { playTap } from "@/lib/sfx";
 
 // The one always-visible "what to do today" card in the main column —
 // replaces the old resume-or-quest-fallback Continue card entirely (no more
@@ -57,6 +60,7 @@ export default function TodaysQuestCard({
     return (
       <Link
         href={target}
+        onClick={playTap}
         className="group flex flex-col items-center text-center gap-1.5 rounded-[16px] border-[1.5px] border-success bg-success-bg px-3 py-3.5 h-full transition-all hover:-translate-y-0.5 hover:bg-[var(--tint-green)]"
       >
         {compactInner}
@@ -90,6 +94,7 @@ export default function TodaysQuestCard({
     <div className="mb-4">
       <Link
         href={target}
+        onClick={playTap}
         className="group flex items-center gap-4 rounded-[16px] border-[1.5px] border-success bg-success-bg px-5 py-4 transition-all hover:-translate-y-0.5 hover:bg-[var(--tint-green)]"
       >
         {inner}

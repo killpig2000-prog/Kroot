@@ -1,5 +1,8 @@
+"use client";
+
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import { playTap } from "@/lib/sfx";
 
 // Where each quest skill sends the learner. Completion is NOT done here —
 // finishing the actual activity marks the quest via recordCompletion().
@@ -32,6 +35,7 @@ export default function QuestButton({
   return (
     <Link
       href={SKILL_HREF[skillKey] ?? "/dashboard"}
+      onClick={playTap}
       className="rounded-[9px] px-[18px] py-[9px] text-[13.5px] font-semibold text-white bg-success transition-colors hover:bg-success-deep"
     >
       {t("start")}
