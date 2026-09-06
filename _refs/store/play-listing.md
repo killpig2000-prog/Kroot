@@ -64,7 +64,7 @@ Questions or ideas? Tap the 💬 button in the app — a real person reads every
 | Asset | Spec | Status |
 |---|---|---|
 | App icon | 512×512 PNG, 32-bit, ≤1 MB | ✅ `play-store-icon-512.png` |
-| Feature graphic | 1024×500 PNG/JPG | 🟡 HTML draft in mockup (direction A, no Free/No-ads/A1→C2 chips per user) — export pending |
+| Feature graphic | 1024×500 PNG/JPG | ✅ `feature-graphic.png` — direction A, dashboard (real admin account, Lv.62/C2) + Hangul ㅅ trace popup (replaces listening), no Free/No-ads/A1→C2 chips |
 | Phone screenshots | 2–8, 16:9 or 9:16, 320–3840 px | 🟡 `screenshots/` (raw captures, see below) |
 | 7" tablet screenshots | optional | skip for v1 |
 
@@ -162,8 +162,8 @@ https://claude.ai/code/artifact/c09d5f56-2ed5-47b3-9e9b-ed8aea672c91
 
 **User's own to-dos (needs their Google account / browser):**
 1. Google Play developer account — $25 one-time. Choose **Individual**, not Organization (Organization needs a D-U-N-S number → weeks). Payment failed on 2026-09-01; retry.
-2. Pick the **feature graphic direction**: A (current draft: headline + 2 tilted phones) / B (tree only, big) / C (6 tool icons). → Claude exports 1024×500 PNG.
-3. Confirm screenshots v6 are final (or ask for a slightly-scrolled dashboard so streak/coins chips show).
+2. ~~Pick the feature graphic direction~~ — done, see below.
+3. Confirm screenshots v6 are final (or ask for a slightly-scrolled dashboard so streak/coins chips show). Screenshots v7 (swap in the Hangul ㅅ trace shot) still pending — see roadmap memory.
 4. Generate the TWA package at pwabuilder.com → enter https://www.koreanunboxed.com → **decide the package name (permanent, e.g. com.koreanunboxed.kroot)** → download the .aab + signing-key SHA-256 fingerprint.
 5. Hand the SHA-256 fingerprint to Claude → Claude adds `public/.well-known/assetlinks.json` and deploys.
 6. `adb install` the test APK on a real phone: no URL bar, splash shows, status bar color right.
@@ -190,3 +190,13 @@ Built with the PWABuilder packaging API (same backend as pwabuilder.com) from th
 **After the first Play upload:** with Google Play App Signing on, Google re-signs the app with *its* key. Copy the "App signing key certificate" SHA-256 from Play Console → App integrity and add it as a second entry in `sha256_cert_fingerprints`, then deploy — otherwise the Play-installed app shows a URL bar.
 
 **Regenerate when:** manifest name/icons/colors/start_url change, or Google raises the target SDK. Re-run the API with `signingMode: "mine"` + the existing keystore so the fingerprint stays the same.
+
+---
+
+## Feature graphic — DONE 2026-09-06
+
+`feature-graphic.png` (1024×500) is final: direction A layout — headline "Grow your Korean, one lesson a day.", two tilted phones.
+- Phone 1: the real dashboard, logged in as the **live admin account** (magic-link login, not a faked DB override) showing its actual current state — Pine tree, Lv.62, C2, streak. The oversized admin coin-balance pill was cropped out (canvas stitch, not a UI change).
+- Phone 2: the Hangul ㅅ trace popup (Practice tab, first stroke highlighted) — replaces the listening screenshot used in earlier drafts.
+
+Source screenshots kept at `_refs/store/feature-graphic-source/` (dashboard-admin-lv62.png, hangul-trace-s.png) in case the graphic needs a re-crop later. No source code was changed to produce these — captured via a throwaway Playwright script against a local dev server, admin login via a Supabase-generated magic link, script deleted after use.
