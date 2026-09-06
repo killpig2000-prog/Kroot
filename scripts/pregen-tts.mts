@@ -18,7 +18,7 @@ import { synthesizeGoogle, GOOGLE_VOICES, type GoogleVoiceKey } from "@/lib/tts-
 
 const ENGINE = "chirp3-hd";
 const MAX_CHARS = 300;
-const CONCURRENCY = 4;
+const CONCURRENCY = 8;
 
 // Mirrors JAMO_SOUND in src/lib/tts.ts (not exported there).
 const JAMO: Record<string, string> = {
