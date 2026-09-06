@@ -139,10 +139,14 @@ async function worker() {
           .upload(`${hash}.mp3`, buf, { contentType: "audio/mpeg", cacheControl: "31536000", upsert: true });
         if (error) throw new Error(error.message);
         ok = true;
-      } catch {
+      } catch (e) {
         if (attempt === 2) {
           failed++;
-          appendFileSync("pregen-failed.txt", `${job.voice}|${job.spoken}\n`);
+          // Record why, not just what: a silent failure list can't distinguish
+          // a bad API key from a flaky socket, which cost a whole debug cycle.
+          const why = e instanceof Error ? e.message : String(e);
+          const cause = e instanceof Error && e.cause && typeof e.cause === "object" && "code" in e.cause ? ` (${(e.cause as { code: unknown }).code})` : "";
+          appendFileSync("pregen-failed.txt", `${job.voice}|${job.spoken}\t${why}${cause}\n`);
         } else {
           await new Promise((r) => setTimeout(r, 2000 * (attempt + 1)));
         }
