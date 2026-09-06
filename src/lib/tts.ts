@@ -119,8 +119,11 @@ async function cachedPublicUrl(text: string, apiVoice: "f" | "m"): Promise<strin
     .map((b) => b.toString(16).padStart(2, "0"))
     .join("");
   const url = `${base}/storage/v1/object/public/tts/${hash}.mp3`;
-  const res = await fetch(url, { method: "HEAD" }).catch(() => null);
-  if (!res) return undefined; // network failure — unknown, not absent
+  // Bounded like the /api/tts call below: a HEAD that never resolves would
+  // otherwise stall the whole lookup, and a stalled lookup is worse than
+  // falling back to the browser voice for one tap.
+  const res = await fetch(url, { method: "HEAD", signal: AbortSignal.timeout(6_000) }).catch(() => null);
+  if (!res) return undefined; // network failure or timeout — unknown, not absent
   if (res.ok) return url;
   // Supabase Storage answers a missing public object with HTTP 400 (body
   // `{"statusCode":"404","error":"not_found"}`), not a bare 404. Reading only

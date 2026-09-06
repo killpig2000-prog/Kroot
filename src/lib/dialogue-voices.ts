@@ -1,4 +1,4 @@
-// Which neural voice (f = SunHi, m = InJoon) reads each speaker of a
+// Which neural voice (f = Chirp3-HD-Kore, m = Chirp3-HD-Charon) reads each speaker of a
 // listening dialogue. Shared by the player and scripts/pregen-tts.mts so the
 // pre-generated cache and live playback always pick the same clip.
 

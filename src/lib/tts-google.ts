@@ -16,7 +16,10 @@ export async function synthesizeGoogle(text: string, voice: GoogleVoiceKey): Pro
     body: JSON.stringify({
       input: { text },
       voice: { languageCode: "ko-KR", name: VOICE_NAMES[voice] },
-      audioConfig: { audioEncoding: "MP3", sampleRateHertz: 48000 },
+      // Chirp 3 HD synthesizes at 24 kHz (naturalSampleRateHertz). Asking for
+      // 48 kHz doesn't add fidelity — the MP3 encoder still spends the same
+      // ~32 kbps, just spread over twice the samples — so match the source.
+      audioConfig: { audioEncoding: "MP3", sampleRateHertz: 24000 },
     }),
   });
   if (!res.ok) throw new Error(`google tts ${res.status}: ${await res.text()}`);
