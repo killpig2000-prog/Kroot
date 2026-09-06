@@ -170,3 +170,23 @@ https://claude.ai/code/artifact/c09d5f56-2ed5-47b3-9e9b-ed8aea672c91
 7. Play Console: create app → upload .aab → paste copy from this file → upload icon (`play-store-icon-512.png`), feature graphic, 8 screenshots → fill Data safety / Content rating / App access (review account) / Target audience 13+ → submit for review.
 
 **Claude's remaining pieces:** feature graphic PNG export (after step 2), assetlinks.json (after step 5), optional screenshot captions, localized listings (es/ja/zh/vi) after EN is approved.
+
+---
+
+## TWA package — generated 2026-09-06
+
+Built with the PWABuilder packaging API (same backend as pwabuilder.com) from the live manifest.
+
+- **Package name (permanent once uploaded):** `com.koreanunboxed.kroot`
+- Version 1.0.0 (code 1), host `www.koreanunboxed.com`, start `/dashboard?source=pwa`, portrait, standalone, fallback = Chrome Custom Tabs, notifications on, minSdk 21
+- Files in `_refs/store/twa/` (**gitignored — contains the upload keystore; back it up somewhere safe, losing it = can't update the app**):
+  - `Kroot — Grow your Korean.aab` → upload to Play Console
+  - `Kroot — Grow your Korean.apk` → `adb install` on a phone for testing
+  - `signing.keystore` + `signing-key-info.txt` (passwords inside) → keep private, needed for every future upload
+  - `assetlinks.json`, `Readme.html`
+- Upload-key SHA-256: `FA:97:FB:84:C6:C8:CF:A7:A7:3E:EA:13:38:C7:22:82:DE:C4:3B:F5:54:78:83:D7:7C:D8:FA:12:B2:7C:2C:37`
+- `public/.well-known/assetlinks.json` added with that fingerprint (proxy matcher skips dotted paths, verified served on dev).
+
+**After the first Play upload:** with Google Play App Signing on, Google re-signs the app with *its* key. Copy the "App signing key certificate" SHA-256 from Play Console → App integrity and add it as a second entry in `sha256_cert_fingerprints`, then deploy — otherwise the Play-installed app shows a URL bar.
+
+**Regenerate when:** manifest name/icons/colors/start_url change, or Google raises the target SDK. Re-run the API with `signingMode: "mine"` + the existing keystore so the fingerprint stays the same.

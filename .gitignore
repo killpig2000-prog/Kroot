@@ -52,3 +52,6 @@ pregen-failed.txt
 build.log
 *.pid
 *.json.tmp
+
+# TWA package + signing keystore — never commit (Play upload key lives here)
+_refs/store/twa/

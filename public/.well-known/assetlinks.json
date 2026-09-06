@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.koreanunboxed.kroot",
+      "sha256_cert_fingerprints": [
+        "FA:97:FB:84:C6:C8:CF:A7:A7:3E:EA:13:38:C7:22:82:DE:C4:3B:F5:54:78:83:D7:7C:D8:FA:12:B2:7C:2C:37"
+      ]
+    }
+  }
+]
