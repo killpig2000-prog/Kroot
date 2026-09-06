@@ -156,8 +156,8 @@ function SyllableBuilder() {
   const rom = `${ROM_BY_JAMO[CHO[cho]] ?? ""}${ROM_BY_JAMO[JUNG[jung]] ?? ""}`;
 
   return (
-    <div className="max-w-[820px] border border-line rounded-[14px] p-[clamp(20px,3vw,28px)] mb-8 lg:grid lg:grid-cols-[minmax(0,1fr)_clamp(280px,40%,340px)] lg:gap-7">
-      <div>
+    <div className="max-w-[860px] border border-line rounded-[14px] p-[clamp(20px,3vw,28px)] mb-8 lg:grid lg:grid-cols-[clamp(280px,40%,340px)_minmax(0,1fr)] lg:gap-7">
+      <div className="lg:order-2">
       <p className={SECTION_LABEL}>{t("sections.buildABlock")}</p>
 
       <div className="flex items-center justify-center gap-3 flex-wrap mb-6">
@@ -224,7 +224,7 @@ function SyllableBuilder() {
       </div>
 
       {/* write the block you just built — same paper as the jamo, no progress/XP */}
-      <div className="mt-7 lg:mt-0 lg:border-l lg:border-line lg:pl-7">
+      <div className="mt-7 lg:mt-0 lg:order-1 lg:border-r lg:border-line lg:pr-7">
         <p className={SECTION_LABEL}>{t("trace.writeIt")}</p>
         <TracePanel
           key={`${syllable}-${mode}`}
@@ -360,16 +360,21 @@ export default function HangulExplorer({ userId }: { userId?: string | null }) {
     return () => { document.body.style.overflow = prev; };
   }, [sheetOpen]);
 
-  const selectedJamo = selected ? JAMO_BY_CHAR.get(selected) ?? null : null;
+  // Desktop has the paper on screen all the time, so it never sits empty:
+  // with nothing picked it shows the tab's first letter. Below lg a pick
+  // opens the sheet, so there it stays null until the learner taps.
+  const effectiveSelected =
+    selected ?? (!isSheet && tab !== "syllables" ? (tab === "consonants" ? CONSONANT_LIST : VOWEL_LIST)[0].char : null);
+  const selectedJamo = effectiveSelected ? JAMO_BY_CHAR.get(effectiveSelected) ?? null : null;
 
   const nextInList = useCallback(() => {
-    if (!selected) return;
-    const list = kindOf(selected) === "consonant" ? CONSONANT_LIST : VOWEL_LIST;
-    const i = list.findIndex((j) => j.char === selected);
+    if (!effectiveSelected) return;
+    const list = kindOf(effectiveSelected) === "consonant" ? CONSONANT_LIST : VOWEL_LIST;
+    const i = list.findIndex((j) => j.char === effectiveSelected);
     const next = list[(i + 1) % list.length];
     setSelected(next.char);
     speak(next.char);
-  }, [selected]);
+  }, [effectiveSelected]);
 
   const onGraded = useCallback(async (char: string, score: TraceScore): Promise<GradedInfo> => {
     return recordChallenge(char, score.score, score.stars);
@@ -499,33 +504,10 @@ export default function HangulExplorer({ userId }: { userId?: string | null }) {
       {tab !== "syllables" && (
         <div
           key={tab}
-          className="lg:grid lg:grid-cols-[minmax(0,1fr)_clamp(300px,32%,372px)] lg:gap-6 lg:items-start"
+          className="lg:grid lg:grid-cols-[clamp(320px,34%,400px)_minmax(0,1fr)] lg:gap-7 lg:items-start"
           style={{ animation: "fadeUp .35s ease" }}
         >
-          <div className="max-w-[980px]">
-            {tab === "consonants" ? (
-              <>
-                <p className={SECTION_LABEL}>{t("sections.basicConsonants")} · 기본 자음</p>
-                <div className="mb-7"><JamoGrid items={BASIC_CONSONANTS} selected={selected} onSelect={selectTile} get={get} firstItemTourId="guided-hangul-first-jamo" /></div>
-                <p className={SECTION_LABEL}>{t("sections.doubleConsonants")} · 쌍자음</p>
-                <div className="mb-4"><JamoGrid items={DOUBLE_CONSONANTS} selected={selected} onSelect={selectTile} get={get} /></div>
-              </>
-            ) : (
-              <>
-                <p className={SECTION_LABEL}>{t("sections.basicVowels")} · 기본 모음</p>
-                <div className="mb-7"><JamoGrid items={BASIC_VOWELS} selected={selected} onSelect={selectTile} get={get} /></div>
-                <p className={SECTION_LABEL}>{t("sections.compoundVowels")} · 복합 모음</p>
-                <div className="mb-4"><JamoGrid items={COMPOUND_VOWELS} selected={selected} onSelect={selectTile} get={get} /></div>
-              </>
-            )}
-            <div className="flex gap-4 flex-wrap text-[11px] text-muted mt-1 mb-8">
-              <span className="flex items-center gap-1.5"><i className="w-[7px] h-[7px] rounded-full bg-line" /> {t("trace.legendNew")}</span>
-              <span className="flex items-center gap-1.5"><b className="text-success-deep">✓</b> {t("trace.legendPracticed")}</span>
-              <span className="flex items-center gap-1.5"><Stars n={2} size={11} /> {t("trace.legendStars")}</span>
-            </div>
-          </div>
-
-          {/* desktop: sticky panel beside the grid */}
+          {/* desktop: the paper first, sticky, with the letters as a picker beside it */}
           <aside className="hidden lg:block sticky top-5">
             <div className="rounded-[20px] border border-line bg-cream p-4">
               {panel ?? (
@@ -537,6 +519,29 @@ export default function HangulExplorer({ userId }: { userId?: string | null }) {
               )}
             </div>
           </aside>
+          <div className="max-w-[980px]">
+            {tab === "consonants" ? (
+              <>
+                <p className={SECTION_LABEL}>{t("sections.basicConsonants")} · 기본 자음</p>
+                <div className="mb-7"><JamoGrid items={BASIC_CONSONANTS} selected={effectiveSelected} onSelect={selectTile} get={get} firstItemTourId="guided-hangul-first-jamo" /></div>
+                <p className={SECTION_LABEL}>{t("sections.doubleConsonants")} · 쌍자음</p>
+                <div className="mb-4"><JamoGrid items={DOUBLE_CONSONANTS} selected={effectiveSelected} onSelect={selectTile} get={get} /></div>
+              </>
+            ) : (
+              <>
+                <p className={SECTION_LABEL}>{t("sections.basicVowels")} · 기본 모음</p>
+                <div className="mb-7"><JamoGrid items={BASIC_VOWELS} selected={effectiveSelected} onSelect={selectTile} get={get} /></div>
+                <p className={SECTION_LABEL}>{t("sections.compoundVowels")} · 복합 모음</p>
+                <div className="mb-4"><JamoGrid items={COMPOUND_VOWELS} selected={effectiveSelected} onSelect={selectTile} get={get} /></div>
+              </>
+            )}
+            <div className="flex gap-4 flex-wrap text-[11px] text-muted mt-1 mb-8">
+              <span className="flex items-center gap-1.5"><i className="w-[7px] h-[7px] rounded-full bg-line" /> {t("trace.legendNew")}</span>
+              <span className="flex items-center gap-1.5"><b className="text-success-deep">✓</b> {t("trace.legendPracticed")}</span>
+              <span className="flex items-center gap-1.5"><Stars n={2} size={11} /> {t("trace.legendStars")}</span>
+            </div>
+          </div>
+
         </div>
       )}
 
