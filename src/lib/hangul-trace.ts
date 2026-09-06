@@ -161,6 +161,8 @@ const JONG_CLUSTERS: Record<string, [string, string]> = {
   ㄳ: ["ㄱ","ㅅ"], ㄵ: ["ㄴ","ㅈ"], ㄶ: ["ㄴ","ㅎ"], ㄺ: ["ㄹ","ㄱ"], ㄻ: ["ㄹ","ㅁ"], ㄼ: ["ㄹ","ㅂ"],
   ㄽ: ["ㄹ","ㅅ"], ㄾ: ["ㄹ","ㅌ"], ㄿ: ["ㄹ","ㅍ"], ㅀ: ["ㄹ","ㅎ"], ㅄ: ["ㅂ","ㅅ"],
 };
+/** y where a w-vowel's ㅗ/ㅜ/ㅡ part begins — the consonant above must stop short of it. */
+const W_VOWEL_BAR_TOP: Record<string, number> = { ㅘ: 180, ㅙ: 180, ㅚ: 180, ㅝ: 184, ㅞ: 184, ㅟ: 196, ㅢ: 200 };
 const VERTICAL_VOWELS = new Set(["ㅏ","ㅐ","ㅑ","ㅒ","ㅓ","ㅔ","ㅕ","ㅖ","ㅣ"]);
 const HORIZONTAL_VOWELS = new Set(["ㅗ","ㅛ","ㅜ","ㅠ","ㅡ"]);
 
@@ -209,26 +211,31 @@ function syllableAnchors(char: string): StrokeAnchors[] {
   if (hit) return hit;
   const { cho, jung, jong } = decompose(char);
   const hasJong = jong !== "";
-  let choBox: Box, jungBox: Box;
+  const CENTER = TRACE_BOX / 2;
+  let choPart: StrokeAnchors[], jungPart: StrokeAnchors[];
   if (VERTICAL_VOWELS.has(jung)) {
-    // consonant left, vowel right, a clear gutter between the two
-    choBox = hasJong ? [48, 140, 40, 150] : [44, 144, 66, 226];
-    jungBox = hasJong ? [162, 274, 34, 166] : [166, 278, 44, 276];
+    // 가: consonant fills the left of the centre line, vowel the right —
+    // both span the same height so the block reads as one symmetric letter.
+    const top = hasJong ? 36 : 52, bottom = hasJong ? 166 : 268;
+    choPart = fitBox(TRACE_ANCHORS[cho], [36, CENTER - 12, top, bottom]);
+    jungPart = fitBox(TRACE_ANCHORS[jung], [CENTER + 8, 284, top, bottom]);
   } else if (HORIZONTAL_VOWELS.has(jung)) {
-    // consonant on top, vowel underneath
-    choBox = hasJong ? [80, 240, 32, 108] : [72, 248, 40, 150];
-    jungBox = hasJong ? [46, 274, 118, 184] : [40, 280, 166, 276];
+    // 고: consonant above the centre line, vowel below it.
+    choPart = fitBox(TRACE_ANCHORS[cho], hasJong ? [76, 244, 30, 106] : [60, 260, 40, CENTER - 12]);
+    jungPart = fitBox(TRACE_ANCHORS[jung], hasJong ? [44, 276, 116, 182] : [40, 280, CENTER + 6, 274]);
+  } else if (hasJong) {
+    choPart = fitBox(TRACE_ANCHORS[cho], [44, 134, 34, 112]);
+    jungPart = fitBox(TRACE_ANCHORS[jung], [40, 280, 34, 178]);
   } else {
-    // w-shaped compound: the vowel's own shape already leaves the upper-left free
-    choBox = hasJong ? [46, 132, 36, 112] : [44, 140, 48, 140];
-    jungBox = hasJong ? [40, 280, 34, 178] : [40, 280, 48, 276];
+    // 뒤: the w-vowel keeps its own coordinates (its ㅗ/ㅜ part is drawn low
+    // on purpose), and the consonant fills the space above that bar, its top
+    // on the same line as the ㅣ's top so all three parts line up.
+    const barTop = W_VOWEL_BAR_TOP[jung] ?? 184;
+    choPart = fitBox(TRACE_ANCHORS[cho], [40, 150, 52, barTop - 16]);
+    jungPart = TRACE_ANCHORS[jung];
   }
   const jongBox: Box = [74, 246, 190, 282];
-  const out = [
-    ...fitBox(TRACE_ANCHORS[cho], choBox),
-    ...fitBox(TRACE_ANCHORS[jung], jungBox),
-    ...(hasJong ? fitBox(jongAnchors(jong), jongBox) : []),
-  ];
+  const out = [...choPart, ...jungPart, ...(hasJong ? fitBox(jongAnchors(jong), jongBox) : [])];
   SYLLABLE_CACHE.set(char, out);
   return out;
 }
