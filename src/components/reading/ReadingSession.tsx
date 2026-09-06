@@ -4,6 +4,7 @@ import { useMemo, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { useSaveResume } from "@/hooks/useSaveResume";
 import { clearResume } from "@/lib/resume";
+import { playCorrect, playWrong } from "@/lib/sfx";
 import { buttonClassName } from "@/components/ui/Button";
 import { Link, useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
@@ -82,6 +83,8 @@ export default function ReadingSession({
     if (selected !== null) return;
     setSelected(optionIndex);
     const gotIt = optionIndex === passage.questions[qIndex].answerIndex;
+    if (gotIt) playCorrect();
+    else playWrong();
     const next = [...answersRef.current];
     next[qIndex] = gotIt;
     answersRef.current = next;

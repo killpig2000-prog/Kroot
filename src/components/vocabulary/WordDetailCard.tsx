@@ -6,6 +6,7 @@ import { Link, useRouter } from "@/i18n/navigation";
 import { buttonClassName } from "@/components/ui/Button";
 import ResultShell, { ResultRing, ResultTag } from "@/components/results/ResultShell";
 import { createClient } from "@/lib/supabase/client";
+import { playCorrect, playWrong } from "@/lib/sfx";
 import { recordCompletion, XP_POINTS, type ProgressResult } from "@/lib/activity";
 import { vocabChapterKey } from "@/lib/reward-keys";
 import { nextBox, nextReviewAt } from "@/lib/srs";
@@ -178,6 +179,8 @@ export default function WordDetailCard({
       }
       setMarked(next);
       setAnswered(true);
+      if (next) playCorrect();
+      else playWrong();
       if (finishesDay) await payOutDay(next);
     } catch {
       setSaveFailed(true);
@@ -248,6 +251,7 @@ export default function WordDetailCard({
     const tricky = dayTotal - dayResult.known;
     return (
       <ResultShell
+        sound="day"
         color={VIOLET}
         categoryLabel={tn("vocabulary")}
         meta={t("dayN", { n: dayIndex + 1 })}

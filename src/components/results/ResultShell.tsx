@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { useTranslations } from "next-intl";
 import type { ProgressResult } from "@/lib/activity";
+import { playChapterClear, playCoin, playDayComplete, playLevelUp, playWater } from "@/lib/sfx";
 
 // Shared shell for every "session finished" screen: category ribbon, hero
 // (ring/creature + headline + tags), level-up banner, XP/coins reward strip,
@@ -104,6 +105,7 @@ export default function ResultShell({
   xpLabel,
   actions,
   children,
+  sound = "chapter",
 }: {
   color: string;
   categoryLabel: string;
@@ -117,8 +119,31 @@ export default function ResultShell({
   xpLabel: string;
   actions?: ReactNode;
   children?: ReactNode;
+  /**
+   * Which finish sound this screen makes. "chapter" (default) is the cleared
+   * arpeggio, "water" the review drop, "day" the vocabulary Day chime,
+   * "none" for callers that play their own. A level-up always overrides;
+   * coins landing add a short jingle after. Plays once, when the server's
+   * reward result arrives (it lands async, after first paint).
+   */
+  sound?: "chapter" | "water" | "day" | "none";
 }) {
   const tu = useTranslations("ui");
+  const played = useRef(false);
+  useEffect(() => {
+    if (played.current || sound === "none" || !levelUp) return;
+    played.current = true;
+    if (levelUp.leveled_up) {
+      playLevelUp();
+      return;
+    }
+    // A score too low to pay is not a cleared chapter — stay quiet.
+    if (levelUp.coins_blocked === "score" || (!levelUp.coins_blocked && levelUp.coins_pending)) return;
+    if (sound === "water") playWater();
+    else if (sound === "day") playDayComplete();
+    else playChapterClear();
+    if ((levelUp.coins_earned ?? 0) > 0) setTimeout(playCoin, 550);
+  }, [sound, levelUp]);
   // Older deployed award_xp versions don't return points_awarded; fall back
   // to the skill's rate so the strip still reads correctly against them.
   const xpAwarded = levelUp?.points_awarded;

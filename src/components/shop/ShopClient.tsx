@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { playBuy } from "@/lib/sfx";
 import LevelCreature from "@/components/dashboard/LevelCreature";
 import {
   COSTUMES,
@@ -233,6 +234,7 @@ export default function ShopClient({
           return;
         }
         if (typeof data === "number") setBalance(data);
+        playBuy();
         setOwnedSet((s) => new Set(s).add(selected.id));
         // The purchase itself succeeded whatever happens here — say so, but
         // don't claim it's being worn if the equip write didn't land.

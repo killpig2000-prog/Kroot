@@ -6,6 +6,7 @@ import LevelMap from "@/components/dashboard/LevelMap";
 import { computeEligibility } from "@/lib/promotion-server";
 import { testForGrade } from "@/lib/promotion-test";
 import ReminderSettings from "@/components/profile/ReminderSettings";
+import SoundSettings from "@/components/profile/SoundSettings";
 import HeadlineKpis, { type Headline } from "@/components/profile/HeadlineKpis";
 import SkillAccuracy, { type SkillScore, type SkillPending } from "@/components/profile/SkillAccuracy";
 import WordsToReview from "@/components/profile/WordsToReview";
@@ -379,6 +380,8 @@ export default async function ProfilePage() {
               initialEmail={extras?.reminder_email ?? false}
               hasEmail={!!user.email}
             />
+
+            <SoundSettings />
           </div>
         </main>
       </div>

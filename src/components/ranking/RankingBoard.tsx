@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { playPromote } from "@/lib/sfx";
 import LevelCreature from "@/components/dashboard/LevelCreature";
 import VeteranTree, { BASE_HEIGHT, veteranFrameHeight } from "@/components/dashboard/VeteranTree";
 import { FULLY_GROWN_LEVEL, treeStageForLevel } from "@/lib/level";
@@ -193,7 +194,10 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
         if (!error) {
           const r = Array.isArray(data) ? data[0] : data;
           setReward(r as Reward);
-          if (r && !r.already_claimed && r.coins > 0) setShowRewardPopup(true);
+          if (r && !r.already_claimed && r.coins > 0) {
+            setShowRewardPopup(true);
+            playPromote();
+          }
         } else {
           // Best effort: a failed call here just means next load tries
           // again, not a stuck flow — there's no button whose state would

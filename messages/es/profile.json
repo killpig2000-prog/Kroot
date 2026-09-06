@@ -84,5 +84,10 @@
     "weakestLink": "Repasarlas →",
     "weakestEmpty": "Nada marchito — todas las palabras que has repasado van bien. 🌱",
     "footnote": "El XP por destreza se cuenta desde el día en que se estrenó Análisis: el XP anterior aparece en la línea de tiempo, pero sin desglosar por destreza."
+  },
+  "sound": {
+    "title": "Sonido",
+    "sfxTitle": "Efectos de sonido",
+    "sfxDesc": "Tonos al acertar, regar, ganar monedas y subir de nivel. La voz coreana siempre suena."
   }
 }

@@ -1,10 +1,11 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
 import { buttonClassName } from "@/components/ui/Button";
 import { createClient } from "@/lib/supabase/client";
+import { playPromote } from "@/lib/sfx";
 import TreeEvolution from "@/components/level-test/TreeEvolution";
 import {
   COOLDOWN_HOURS,
@@ -57,6 +58,10 @@ export default function ResultStage({
       setBusy(false);
     }
   }
+  const passed = verdict?.passed ?? false;
+  useEffect(() => {
+    if (passed) playPromote();
+  }, [passed]);
   return (
     <div className="border border-line rounded-[14px] p-6">
       {verdict?.passed ? (

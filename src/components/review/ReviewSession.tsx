@@ -4,6 +4,7 @@ import { useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { playCorrect, playWrong } from "@/lib/sfx";
 import { awardPartialCredit, recordCompletion, XP_POINTS, type ProgressResult } from "@/lib/activity";
 import { reviewSessionKey } from "@/lib/reward-keys";
 import { nextBox, nextReviewAt, SRS_INTERVALS_DAYS } from "@/lib/srs";
@@ -73,10 +74,12 @@ export default function ReviewSession({
     boxes.current[q.word.key] = box;
 
     if (gotIt) {
+      playCorrect();
       correctRef.current += 1;
       setCorrect((c) => c + 1);
     }
     else if (word) setMissed((m) => (m.some((w) => w.key === word.key) ? m : [...m, word]));
+    if (!gotIt) playWrong();
 
     // Interrupting the quiz over a failed write would be worse than finishing
     // it, but the learner still has to be told at the end — otherwise the
@@ -185,6 +188,7 @@ export default function ReviewSession({
 
     return (
       <ResultShell
+        sound="water"
         color={COLOR}
         categoryLabel="Review"
         ring={

@@ -3,6 +3,7 @@
 import { useMemo, useState, type ReactNode } from "react";
 import { useTranslations } from "next-intl";
 import { createClient, getClientUserId } from "@/lib/supabase/client";
+import { playChapterClear, playCoin, playLevelUp } from "@/lib/sfx";
 import { recordCompletion, awardPartialCredit, XP_POINTS } from "@/lib/activity";
 import { listeningDialogueKey } from "@/lib/reward-keys";
 import { type Dialogue } from "@/lib/listening-dialogues";
@@ -112,6 +113,11 @@ export default function ListeningSession({
       );
       if (res?.leveled_up) setNewLevel(res.new_level);
       if (res?.coins_earned) setCoinsEarned((c) => c + res.coins_earned);
+      if (res?.leveled_up) playLevelUp();
+      else {
+        playChapterClear();
+        if (res?.coins_earned) setTimeout(playCoin, 550);
+      }
       // The screen already rendered with the local xp estimate above; merge
       // in the server-confirmed coins (and level-up, for this exact card —
       // `newLevel` state only reaches FinishedAllCard/ClipList) once the RPC

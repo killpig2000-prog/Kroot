@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { speakKorean, prefetchKorean } from "@/lib/tts";
+import { playTap } from "@/lib/sfx";
 import { wrongTilePositions, type Board, type Tile } from "@/lib/writing-builder";
 
 // The single tile-assembly board. A controlled component: the session owns
@@ -91,7 +92,10 @@ function TileButton({
         onPointerLeave={() => hold.end()}
         onPointerCancel={() => hold.end()}
         onClick={() => {
-          if (!hold.consumed()) onTap();
+          if (!hold.consumed()) {
+            playTap();
+            onTap();
+          }
         }}
         onContextMenu={(e) => e.preventDefault()}
         aria-pressed={used}

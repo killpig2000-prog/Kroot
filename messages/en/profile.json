@@ -84,5 +84,10 @@
     "weakestLink": "Review them →",
     "weakestEmpty": "Nothing wilting — every word you've reviewed is doing fine. 🌱",
     "footnote": "Per-skill XP starts counting from the day Insights launched — older XP shows in the timeline but isn't broken down by skill."
+  },
+  "sound": {
+    "title": "Sound",
+    "sfxTitle": "Sound effects",
+    "sfxDesc": "Chimes for right answers, watering, coins and level-ups. The Korean voice always plays."
   }
 }

@@ -84,5 +84,10 @@
     "weakestLink": "Ôn lại →",
     "weakestEmpty": "Không có từ nào héo — mọi từ bạn đã ôn đều ổn cả. 🌱",
     "footnote": "XP theo từng kỹ năng chỉ được tính từ ngày Phân tích ra mắt — XP cũ hơn vẫn hiện trong biểu đồ nhưng không tách theo kỹ năng."
+  },
+  "sound": {
+    "title": "Âm thanh",
+    "sfxTitle": "Hiệu ứng âm thanh",
+    "sfxDesc": "Âm báo khi trả lời đúng, tưới cây, nhận xu và lên cấp. Giọng tiếng Hàn luôn phát."
   }
 }

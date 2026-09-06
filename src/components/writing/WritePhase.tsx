@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { WRITING_GENRE_META, type Prompt } from "@/lib/writing";
+import { playCorrect, playWrong } from "@/lib/sfx";
 import { getLocalizedExample, getLocalizedPrompt, getLocalizedStimulus } from "@/lib/writing-i18n";
 import { checkTiles, tileMatchScore, tilesText, wrongTilePositions, type Board } from "@/lib/writing-builder";
 import { TileBoard } from "@/components/writing/WritingBoards";
@@ -183,7 +184,12 @@ export default function WritePhase({
               className={BTN_INK}
               // Any number of placed tiles can be checked — one word, two,
               // the whole sentence. A partial answer takes partial credit.
-              onClick={() => update(step, { checked: checkTiles(board, entry.picked) })}
+              onClick={() => {
+                const checked = checkTiles(board, entry.picked);
+                if (checked) playCorrect();
+                else playWrong();
+                update(step, { checked });
+              }}
               disabled={entry.picked.length === 0}
             >
               {t("board.check")}
