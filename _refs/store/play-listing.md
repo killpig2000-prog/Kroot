@@ -76,7 +76,7 @@ Captured 2026-09-06 (1080×1922, 390×694 CSS px ×2.77, review account, dev ser
 5. `05-writing` — Writing index with level chips + Continue card
 6. `06-vocabulary` — Chapter 1 Day 1 word list
 7. `07-hangul` — consonant grid
-8. `08-ranking` — Garden Fair podium ⚠️ shows REAL user display names — swap for seeded/test accounts or blur before upload
+8. ~~ranking~~ — dropped (real user names)
 
 Nice-to-have re-shots: a mid-test placement question, the pronunciation mic + score ring, the writing tile builder mid-sentence. Then add caption text over each (Figma / Canva), e.g. "One quest a day", "Say it, get scored".
 
