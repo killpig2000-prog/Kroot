@@ -18,7 +18,10 @@ import { synthesizeGoogle, GOOGLE_VOICES, type GoogleVoiceKey } from "@/lib/tts-
 
 const ENGINE = "chirp3-hd";
 const MAX_CHARS = 300;
-const CONCURRENCY = 8;
+// Throughput is capped by the Google TTS per-minute quota, not by how wide we
+// fan out — past ~6 workers the extra requests just come back 429.
+const CONCURRENCY = 6;
+const MAX_ATTEMPTS = 6;
 
 // Mirrors JAMO_SOUND in src/lib/tts.ts (not exported there).
 const JAMO: Record<string, string> = {
@@ -131,7 +134,7 @@ async function worker() {
     if (!job) return;
     const hash = createHash("sha256").update(`${ENGINE}|${job.voice}|${job.spoken}`).digest("hex");
     let ok = false;
-    for (let attempt = 0; attempt < 3 && !ok; attempt++) {
+    for (let attempt = 0; attempt < MAX_ATTEMPTS && !ok; attempt++) {
       try {
         const buf = await synth(job.spoken, job.voice);
         const { error } = await supabase.storage
@@ -140,15 +143,19 @@ async function worker() {
         if (error) throw new Error(error.message);
         ok = true;
       } catch (e) {
-        if (attempt === 2) {
+        if (attempt === MAX_ATTEMPTS - 1) {
           failed++;
           // Record why, not just what: a silent failure list can't distinguish
           // a bad API key from a flaky socket, which cost a whole debug cycle.
-          const why = e instanceof Error ? e.message : String(e);
+          // Collapsed to one line — the API returns a multi-line JSON body.
+          const why = (e instanceof Error ? e.message : String(e)).replace(/\s+/g, " ").trim();
           const cause = e instanceof Error && e.cause && typeof e.cause === "object" && "code" in e.cause ? ` (${(e.cause as { code: unknown }).code})` : "";
           appendFileSync("pregen-failed.txt", `${job.voice}|${job.spoken}\t${why}${cause}\n`);
         } else {
-          await new Promise((r) => setTimeout(r, 2000 * (attempt + 1)));
+          // Every observed failure so far is a 429 from the per-minute TTS
+          // quota, so back off exponentially (with jitter, or eight workers
+          // retry in lockstep and hit the same wall together).
+          await new Promise((r) => setTimeout(r, 2000 * 2 ** attempt + Math.random() * 1000));
         }
       }
     }
