@@ -18,7 +18,7 @@ export async function generateMetadata({
   };
 }
 
-const EFFECTIVE_DATE = "August 31, 2026";
+const EFFECTIVE_DATE = "September 6, 2026";
 const CONTACT_EMAIL = "killpig2000@gmail.com";
 
 function Section({ id, title, children }: { id: string; title: string; children: React.ReactNode }) {
@@ -81,7 +81,7 @@ export default function PrivacyPage() {
             <li><b>Supabase</b> — hosts the database and handles login (stores your account, progress, and password securely).</li>
             <li><b>Vercel</b> — hosts the app and provides privacy-focused, cookie-free traffic analytics.</li>
             <li><b>Brevo</b> — sends transactional emails (sign-up confirmation, password reset, reminders).</li>
-            <li><b>Microsoft</b> — converts Korean text to speech audio for pronunciation playback. Only the text being read is sent, not your identity.</li>
+            <li><b>Google Cloud</b> — converts Korean text to speech audio for pronunciation playback. Only the text being read is sent, not your identity.</li>
           </ul>
           <p>Each of these providers is contractually restricted to using your data only to provide their service to Kroot — not for their own purposes.</p>
         </Section>
