@@ -64,19 +64,18 @@ Questions or ideas? Tap the 💬 button in the app — a real person reads every
 | Asset | Spec | Status |
 |---|---|---|
 | App icon | 512×512 PNG, 32-bit, ≤1 MB | ✅ `play-store-icon-512.png` |
-| Feature graphic | 1024×500 PNG/JPG | ⬜ TODO (needs design) |
+| Feature graphic | 1024×500 PNG/JPG | 🟡 HTML draft in mockup (direction A, no Free/No-ads/A1→C2 chips per user) — export pending |
 | Phone screenshots | 2–8, 16:9 or 9:16, 320–3840 px | 🟡 `screenshots/` (raw captures, see below) |
 | 7" tablet screenshots | optional | skip for v1 |
 
-Captured 2026-09-06 v2 (1080×1922, 390×694 CSS px ×2.77, review account on dev server; set per user):
+Captured 2026-09-06 v3 (1080×1922, 390×694 CSS px ×2.77, review account on dev server; set per user):
 1. `01-dashboard` — tree card; name/avatar swapped in the DOM to "Ronnie" + the owner's photo (DB untouched)
 2. `02-listening` — Cafe A1 clip, two characters + waveform
-3. `03-vocabulary` — Chapter 1 Day 1 word list
+3. `03-vocabulary` — Japanese UI (/ja) with the More-sheet language menu open (shows all 5 languages)
 4. `04-reading` — Chapter 1 passage with a tapped word popup (시 · o'clock)
-5. `05-writing` — Chapter 1 Q1 mid-composition (3 tiles placed, Check enabled)
-6. `06-pronunciation` — 라면 result ring 100% (mic faked via injected SpeechRecognition; 나무 isn't a practice word)
-   `06b-namu-landing` — alternate: landing try-it 나무 100% (spare, only if 나무 is a must)
-7. `07-shop` — Garden Shop with try-on tree
+5. `05-writing` — Chapter 1 Q1 with one tile placed (저는) and a 👆 hand on the next (빵을) — hand is a DOM overlay
+6. `06-pronunciation` — landing try-it 나무 100% ring (mic faked via injected SpeechRecognition); user chose 나무 over an in-app chapter word
+7. `07-shop` — try-on tree + "This week only" item + category tabs (slot chips hidden for the shot)
 8. `08-ranking` — Garden Fair podium (shows other users' display names — user OK'd)
 
 Add caption text over each (Figma / Canva), e.g. "One quest a day", "Say it, get scored".
