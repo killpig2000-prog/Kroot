@@ -135,7 +135,7 @@ const COMPOUND_VOWELS: Record<string, StrokeAnchors[]> = {
   // ㅗ's own vertical trimmed short so the consonant above can sit lower, closer to the bar.
   // ㅘ's ㅗ part is shorter than ㅙ/ㅚ's on purpose: stem trimmed and the bar
   // lifted with it, so the ㅗ reads as a small mark under the consonant.
-  ㅘ: [[C(122, 180), C(122, 214)], [C(63, 214), C(181, 214)], [C(198, 52), C(198, 268)], [C(198, 150), C(252, 150)]],
+  ㅘ: [[C(122, 174), C(122, 214)], [C(63, 214), C(181, 214)], [C(198, 52), C(198, 268)], [C(198, 150), C(252, 150)]],
   ㅙ: [[C(110, 180), C(110, 232)], [C(51, 232), C(169, 232)], [C(182, 52), C(182, 268)], [C(182, 150), C(222, 150)], [C(228, 52), C(228, 268)]],
   ㅚ: [[C(126, 180), C(126, 232)], [C(68, 232), C(186, 232)], [C(220, 52), C(220, 268)]],
   // ㅝ ㅞ: the ㅓ/ㅔ tick sits BELOW ㅜ's bar, as in print (워, 웨).
@@ -165,7 +165,7 @@ const JONG_CLUSTERS: Record<string, [string, string]> = {
   ㄽ: ["ㄹ","ㅅ"], ㄾ: ["ㄹ","ㅌ"], ㄿ: ["ㄹ","ㅍ"], ㅀ: ["ㄹ","ㅎ"], ㅄ: ["ㅂ","ㅅ"],
 };
 /** y where a w-vowel's ㅗ/ㅜ/ㅡ part begins — the consonant above must stop short of it. */
-const W_VOWEL_BAR_TOP: Record<string, number> = { ㅘ: 180, ㅙ: 180, ㅚ: 180, ㅝ: 184, ㅞ: 184, ㅟ: 196, ㅢ: 200 };
+const W_VOWEL_BAR_TOP: Record<string, number> = { ㅘ: 174, ㅙ: 180, ㅚ: 180, ㅝ: 184, ㅞ: 184, ㅟ: 196, ㅢ: 200 };
 /** x of that part's own vertical stroke — the consonant above centres on this, not the block. */
 const W_VOWEL_BAR_MID: Record<string, number> = { ㅘ: 122, ㅙ: 110, ㅚ: 126, ㅝ: 114, ㅞ: 110, ㅟ: 138, ㅢ: 133 };
 const VERTICAL_VOWELS = new Set(["ㅏ","ㅐ","ㅑ","ㅒ","ㅓ","ㅔ","ㅕ","ㅖ","ㅣ"]);
