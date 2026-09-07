@@ -198,7 +198,7 @@ function shrinkAt(strokes: StrokeAnchors[], anchorX: number, anchorY: number, fa
   });
 }
 /** The consonant in a block reads noticeably smaller than the vowel beside it. */
-const CHO_SHRINK = 0.7;
+const CHO_SHRINK = 0.74;
 
 type Box = [x0: number, x1: number, y0: number, y1: number];
 
@@ -252,7 +252,7 @@ function syllableAnchors(char: string): StrokeAnchors[] {
     // both span the same height so the block reads as one symmetric letter.
     const top = hasJong ? 36 : 52, bottom = hasJong ? 166 : 268;
     choPart = shrinkAt(fitBox(TRACE_ANCHORS[cho], [44, CENTER, top, bottom]), CENTER, (top + bottom) / 2, CHO_SHRINK);
-    jungPart = fitBox(TRACE_ANCHORS[jung], [CENTER + 6, CENTER + 86, top, bottom]);
+    jungPart = fitBox(TRACE_ANCHORS[jung], [CENTER + 10, CENTER + 98, top, bottom]);
   } else if (HORIZONTAL_VOWELS.has(jung)) {
     // 고: consonant above the centre line, vowel below it. A double consonant
     // reads shorter (top edge lower); ㅗ/ㅛ/ㅜ/ㅠ's ㅣ leg is squashed toward
@@ -263,10 +263,10 @@ function syllableAnchors(char: string): StrokeAnchors[] {
     const jungSrc = barY !== undefined ? squashToward(TRACE_ANCHORS[jung], barY, BAR_SQUASH[jung]) : TRACE_ANCHORS[jung];
     const choBox: Box = hasJong ? [92, 228, 40, 92] : [86, 234, 56, 120];
     choPart = shrinkAt(fitBox(choSrc, choBox), (choBox[0] + choBox[1]) / 2, (choBox[2] + choBox[3]) / 2, CHO_SHRINK);
-    jungPart = fitBox(jungSrc, hasJong ? [64, 256, 136, 182] : [64, 256, 196, 262]);
+    jungPart = fitBox(jungSrc, hasJong ? [76, 268, 136, 182] : [76, 268, 196, 262]);
   } else if (hasJong) {
     choPart = shrinkAt(fitBox(TRACE_ANCHORS[cho], [44, 134, 34, 112]), 89, 73, CHO_SHRINK);
-    jungPart = fitBox(TRACE_ANCHORS[jung], [40, 280, 34, 178]);
+    jungPart = fitBox(TRACE_ANCHORS[jung], [52, 292, 34, 178]);
   } else {
     // 뒤: the w-vowel keeps its own coordinates (its ㅗ/ㅜ part is drawn low
     // on purpose), and the consonant fills the space above that bar, its top
