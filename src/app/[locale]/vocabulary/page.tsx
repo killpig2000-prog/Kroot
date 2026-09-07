@@ -150,22 +150,6 @@ export default async function VocabularyPage({
           <GuidedStep step="vocab-chapter" />
           <GuidedStep step="vocab-word" />
 
-          {/* Slang sits here rather than in the Garden grid — it's vocabulary
-              of a register, and the grid stays 2×3 with Hangul back in it. */}
-          <Link
-            href="/slang"
-            className="flex items-center gap-[13px] border border-line bg-cream rounded-[19px] px-[16px] py-[13px] mb-4 transition-all hover:-translate-y-0.5 hover:border-success group"
-          >
-            <span className="flex-none w-10 h-10 rounded-[10px] bg-success-bg border border-success-line flex items-center justify-center text-lg transition-transform group-hover:scale-110" aria-hidden="true">
-              💬
-            </span>
-            <span className="flex-1 min-w-0 truncate text-[17px]">
-              <b className="font-bold text-charcoal">{tn("slang")}</b>
-              <span className="text-[15px] text-muted"> · {t("slangRowSub")}</span>
-            </span>
-            <span className="flex-none text-[15px] text-muted" aria-hidden="true">›</span>
-          </Link>
-
           {/* head */}
           <div className="flex items-end justify-between gap-4 mb-5 flex-wrap">
             <div>

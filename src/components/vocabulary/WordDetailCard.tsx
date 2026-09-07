@@ -23,6 +23,10 @@ const BTN_LINE = buttonClassName("line");
 const BTN_AMBER = buttonClassName("amber");
 const VIOLET = "var(--tint-violet-ink)";
 
+// Ruled notebook paper: a faint line every 32px, plus a red margin rule.
+// Brought back 2026-09-08 (user call: the memo-pad card read better than
+// the plain one the fidelity pass replaced it with).
+const RULED = "repeating-linear-gradient(180deg, transparent 0 31px, #EEF0F6 31px 32px)";
 
 export type DetailWord = {
   key: string;
@@ -350,11 +354,13 @@ export default function WordDetailCard({
           ring has to cover them rather than just the Got it button. */}
       <div
         data-tour="guided-word-card"
-        // A plain card, as in the restructure mockup (user call 2026-09-07:
-        // "완전히 똑같이") — the ruled notebook paper and its red margin rule
-        // are gone; radius/padding are the mockup's 16/12px × 1.45.
-        className="relative bg-cream border border-line rounded-[23px] shadow-[0_20px_40px_-28px_rgba(60,50,30,.6)] overflow-hidden"
+        className="relative bg-cream border border-line rounded-[6px] shadow-[0_20px_40px_-28px_rgba(60,50,30,.6)] overflow-hidden"
       >
+        <div className="absolute inset-0 pointer-events-none" style={{ background: RULED }} aria-hidden="true" />
+        <span
+          className="absolute top-0 bottom-0 left-[clamp(28px,6vw,52px)] w-px bg-[var(--tint-rose-line)] opacity-70 pointer-events-none"
+          aria-hidden="true"
+        />
         {marked && (
           <span
             aria-label={t("gotIt")}
@@ -402,7 +408,7 @@ export default function WordDetailCard({
           </span>
         )}
 
-        <div className="relative pt-[17px] pb-[17px] px-[17px]">
+        <div className="relative pt-6 pb-5 pr-[clamp(18px,4vw,26px)] pl-[clamp(40px,8vw,70px)]">
           {/* The word's hero, laid out like the restructure mockup's card:
               picture, word, romanization, meaning, then the listen pill —
               centred, one under the other. Its px are the mockup's scaled
@@ -411,7 +417,7 @@ export default function WordDetailCard({
               instead, so both cards are the same height. */}
           {hanja && (
             <span
-              className="kr absolute top-[17px] right-[17px] font-black text-[clamp(36px,6vw,52px)] leading-none text-[#A08F4E] opacity-55 tracking-[.04em] select-none"
+              className="kr absolute top-6 right-[clamp(18px,4vw,26px)] font-black text-[clamp(36px,6vw,52px)] leading-none text-[#A08F4E] opacity-55 tracking-[.04em] select-none"
               aria-label={t("session.hanjaAria", { hanja })}
             >
               {hanja}

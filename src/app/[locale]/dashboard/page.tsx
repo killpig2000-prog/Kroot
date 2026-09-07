@@ -366,6 +366,27 @@ export default async function DashboardPage() {
             </Link>
           )}
 
+          {/* today's slang — one line here below xl, a rail note at xl+.
+              Moved back out of /vocabulary 2026-09-08 (user call): the
+              Garden is where the day's one-bite Korean belongs. Garden
+              tokens, not the old pink literals the palette pass retired. */}
+          <Link
+            href="/slang"
+            className="xl:hidden flex items-center gap-3 border border-line bg-cream rounded-[14px] px-4 py-2.5 mb-3 transition-all hover:-translate-y-0.5 hover:border-success group"
+          >
+            <span className="flex-none text-[18px] transition-transform group-hover:scale-110">💬</span>
+            <span className="flex-1 min-w-0 truncate text-[14px]">
+              <b className="font-bold text-charcoal">
+                <span className="kr">{slang.kr}</span>{" "}
+                <span className="font-medium text-muted">({slang.romanization})</span>
+              </b>
+              <span className="text-[13px] text-muted"> · {slang.meaning}</span>
+            </span>
+            <span className="flex-none text-[13px] font-semibold text-success transition-transform group-hover:translate-x-0.5">
+              {t("slang.short")}
+            </span>
+          </Link>
+
           {/* Learning progress moved to My account (/profile) 2026-08-30 — the
               Garden answers "what do I do today", the account page "how am I
               doing". */}
