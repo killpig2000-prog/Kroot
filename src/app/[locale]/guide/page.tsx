@@ -31,14 +31,14 @@ const SUN_EDGE = "#E2A600";
 const SUN_PAPER = "#FFFBEA";
 
 const S = {
-  hangul: { icon: "🔤", navKey: "hangul", href: "/hangul", color: "#C63958" },
-  grammar: { icon: "📖", navKey: "grammar", href: "/grammar", color: "#423AC5" },
-  vocab: { icon: "🃏", navKey: "vocabulary", href: "/vocabulary", color: "#6B33CC" },
+  hangul: { icon: "🔤", navKey: "hangul", href: "/hangul", color: "#B04A5E" },
+  grammar: { icon: "📖", navKey: "grammar", href: "/grammar", color: "#4B4E9A" },
+  vocab: { icon: "🃏", navKey: "vocabulary", href: "/vocabulary", color: "#6A4FA8" },
   listen: { icon: "🎧", navKey: "listening", href: "/listening", color: "#3E7C59" },
-  pron: { icon: "🌶️", navKey: "pronunciation", href: "/speaking", color: "#228980" },
-  write: { icon: "✏️", navKey: "writing", href: "/writing", color: "#C47A25" },
-  read: { icon: "📰", navKey: "reading", href: "/reading", color: "#3363CC" },
-  slang: { icon: "💬", navKey: "slang", href: "/slang", color: "#C13E78" },
+  pron: { icon: "🌶️", navKey: "pronunciation", href: "/speaking", color: "#2A7F72" },
+  write: { icon: "✏️", navKey: "writing", href: "/writing", color: "#B07A2A" },
+  read: { icon: "📰", navKey: "reading", href: "/reading", color: "#2F6F8F" },
+  slang: { icon: "💬", navKey: "slang", href: "/slang", color: "#A9485F" },
 } as const;
 
 const stop = (k: keyof typeof S): Stop => ({ key: k, ...S[k] });
@@ -52,13 +52,13 @@ const ROUTES: {
   {
     key: "people",
     icon: "🗣️",
-    color: "#228980",
+    color: "#2A7F72",
     stops: [stop("hangul"), stop("vocab"), stop("listen"), stop("pron"), stop("slang")],
   },
   {
     key: "exam",
     icon: "🎓",
-    color: "#423AC5",
+    color: "#4B4E9A",
     stops: [stop("hangul"), stop("grammar"), stop("vocab"), stop("read"), stop("write")],
   },
 ];

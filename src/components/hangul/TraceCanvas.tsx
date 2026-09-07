@@ -38,7 +38,7 @@ type Props = {
   className?: string;
 };
 
-const HANGUL_ACCENT = "#C63958";
+const HANGUL_ACCENT = "#B04A5E";
 /** How close (box units) a press has to be to the stroke start / current ink tip to count. */
 const GRAB_RADIUS = 44;
 /** A press further along the stroke than this can't jump the ink forward — no skipping the middle. */

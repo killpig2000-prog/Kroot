@@ -158,7 +158,7 @@ export default async function CommunityPostPage({
               <span
                 className={`text-[12.5px] ${
                   "author_plus" in post && post.author_plus
-                    ? "font-semibold text-[#B45309]"
+                    ? "font-semibold text-[var(--c-amber-deep)]"
                     : "text-muted"
                 }`}
               >

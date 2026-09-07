@@ -41,12 +41,12 @@ export default function Widgets({ slang }: { slang?: SlangTeaser | null }) {
     <aside className="hidden xl:flex flex-col gap-5 border-l border-dashed border-dash bg-warm px-5 py-[26px] sticky top-0 h-screen overflow-y-auto">
       <WCard title={t("slang.title")} tag="💬">
         <Link href="/slang" className="block group">
-          <p className="kr text-[21px] font-bold text-[#AF3166] mb-0.5">
+          <p className="kr text-[21px] font-bold text-[var(--tint-pink-ink-deep)] mb-0.5">
             {slang.kr}{" "}
-            <span className="text-[12px] font-medium text-[#C13E78]">({slang.romanization})</span>
+            <span className="text-[12px] font-medium text-[var(--tint-pink-ink)]">({slang.romanization})</span>
           </p>
           <p className="text-[12.5px] text-muted mb-2">{slang.meaning}</p>
-          <span className="text-[12.5px] font-semibold text-[#C13E78] transition-transform inline-block group-hover:translate-x-0.5">
+          <span className="text-[12.5px] font-semibold text-[var(--tint-pink-ink)] transition-transform inline-block group-hover:translate-x-0.5">
             {t("slang.flip")}
           </span>
         </Link>

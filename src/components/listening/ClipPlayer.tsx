@@ -18,7 +18,7 @@ const CTL =
 // Tappable words get the dotted underline from the mockup.
 const TAP = "[&_[role=button]]:underline [&_[role=button]]:decoration-dotted [&_[role=button]]:underline-offset-4";
 const MAIN =
-  "rounded-full bg-teal text-white grid place-items-center pl-[3px] transition-all hover:scale-105 hover:bg-[#0F766E] disabled:opacity-50";
+  "rounded-full bg-teal text-white grid place-items-center pl-[3px] transition-all hover:scale-105 hover:bg-[#256E63] disabled:opacity-50";
 
 // Player: one clip at a time. Two characters on a stage (the speaking one
 // lights up with a bubble), a waveform, and the script as messenger bubbles

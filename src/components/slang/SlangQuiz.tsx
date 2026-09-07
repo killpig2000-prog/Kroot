@@ -127,8 +127,8 @@ export default function SlangQuiz() {
         <div className="flex items-center gap-3.5 flex-wrap pr-6">
           <span className="text-[22px] flex-none">🎯</span>
           <div className="flex-1 min-w-[180px]">
-            <b className="block text-[14px] font-bold text-[#AF3166]">{t("title")}</b>
-            <span className="text-[12.5px] text-[#97687D]">
+            <b className="block text-[14px] font-bold text-[var(--tint-pink-ink-deep)]">{t("title")}</b>
+            <span className="text-[12.5px] text-[var(--tint-pink-ink-soft)]">
               {doneToday !== null
                 ? t("doneToday", { score: doneToday, total: QUESTIONS })
                 : t("intro", { n: QUESTIONS, xp: QUIZ_XP })}
@@ -137,7 +137,7 @@ export default function SlangQuiz() {
           {doneToday === null && (
             <button
               onClick={start}
-              className="flex-none rounded-[9px] px-[18px] py-2 text-[13px] font-semibold text-white bg-[#C13E78] hover:bg-[#AF3166] transition-colors"
+              className="flex-none rounded-[9px] px-[18px] py-2 text-[13px] font-semibold text-white bg-[var(--tint-pink-ink)] hover:bg-[var(--tint-pink-ink-deep)] transition-colors"
             >
               {t("start")}
             </button>
@@ -147,7 +147,7 @@ export default function SlangQuiz() {
               type="button"
               onClick={() => setDismissed(true)}
               aria-label={t("close")}
-              className="absolute top-2.5 right-2.5 w-7 h-7 rounded-full flex items-center justify-center text-[13px] text-[#97687D] hover:text-[#AF3166] hover:bg-cream transition-colors"
+              className="absolute top-2.5 right-2.5 w-7 h-7 rounded-full flex items-center justify-center text-[13px] text-[var(--tint-pink-ink-soft)] hover:text-[var(--tint-pink-ink-deep)] hover:bg-cream transition-colors"
             >
               <span aria-hidden="true">✕</span>
             </button>
@@ -159,17 +159,17 @@ export default function SlangQuiz() {
             type="button"
             onClick={() => setDoneToday(score)}
             aria-label={t("close")}
-            className="absolute -top-1 -right-1 w-7 h-7 rounded-full flex items-center justify-center text-[13px] text-[#97687D] hover:text-[#AF3166] hover:bg-cream transition-colors"
+            className="absolute -top-1 -right-1 w-7 h-7 rounded-full flex items-center justify-center text-[13px] text-[var(--tint-pink-ink-soft)] hover:text-[var(--tint-pink-ink-deep)] hover:bg-cream transition-colors"
           >
             <span aria-hidden="true">✕</span>
           </button>
           <div className="flex items-center gap-3.5 flex-wrap mb-3 pr-7">
             <span className="text-[22px] flex-none">{score >= 4 ? "🏆" : score >= 2 ? "🌱" : "💧"}</span>
             <div className="flex-1">
-              <b className="block text-[14px] font-bold text-[#AF3166]">
+              <b className="block text-[14px] font-bold text-[var(--tint-pink-ink-deep)]">
                 {t("result", { score, total: quiz.length, xp: QUIZ_XP })}
               </b>
-              <span className="text-[12.5px] text-[#97687D]">
+              <span className="text-[12.5px] text-[var(--tint-pink-ink-soft)]">
                 {score >= 4 ? t("praise") : t("encourage")}
               </span>
             </div>
@@ -184,7 +184,7 @@ export default function SlangQuiz() {
                   {answers[i] ? "✓" : "✕"}
                 </span>
                 <span className="kr font-semibold truncate">{qq.entry.kr}</span>
-                <span className="text-[11.5px] text-[#97687D]">{qq.entry.meaning}</span>
+                <span className="text-[11.5px] text-[var(--tint-pink-ink-soft)]">{qq.entry.meaning}</span>
               </div>
             ))}
           </div>
@@ -192,16 +192,16 @@ export default function SlangQuiz() {
       ) : (
         <div>
           <div className="flex items-center justify-between mb-2.5">
-            <b className="text-[12px] font-bold tracking-[.06em] uppercase text-[#C13E78]">
+            <b className="text-[12px] font-bold tracking-[.06em] uppercase text-[var(--tint-pink-ink)]">
               {t("prompt", { n: qIndex + 1, total: quiz.length })}
             </b>
-            <span className="text-[12px] font-semibold text-[#97687D] tabular-nums">
+            <span className="text-[12px] font-semibold text-[var(--tint-pink-ink-soft)] tabular-nums">
               {t("score", { n: score })}
             </span>
           </div>
           <p className="kr text-[22px] font-bold mb-3">
             {q.entry.kr}{" "}
-            <span className="text-[13px] font-medium text-[#97687D]">({q.entry.romanization})</span>
+            <span className="text-[13px] font-medium text-[var(--tint-pink-ink-soft)]">({q.entry.romanization})</span>
           </p>
           <div className="grid gap-2 sm:grid-cols-2">
             {q.options.map((opt, i) => {
@@ -219,7 +219,7 @@ export default function SlangQuiz() {
                         ? "border-danger bg-danger-bg"
                         : state === "dim"
                           ? "border-[var(--tint-pink-line)] bg-cream opacity-60"
-                          : "border-[var(--tint-pink-line)] bg-cream hover:border-[#C13E78]"
+                          : "border-[var(--tint-pink-line)] bg-cream hover:border-[var(--tint-pink-ink)]"
                   }`}
                 >
                   {opt}

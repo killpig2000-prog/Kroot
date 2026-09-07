@@ -84,18 +84,18 @@ export default async function SlangSharePage({ params }: Props) {
         </Link>
         <ShareCta
           slug={entry.slug}
-          className="rounded-full bg-[#C13E78] px-4 py-2 text-sm font-semibold text-white shadow-[0_3px_0_#9D174D] hover:bg-[#C2185F] transition-colors"
+          className="rounded-full bg-[var(--tint-pink-ink)] px-4 py-2 text-sm font-semibold text-white shadow-[0_3px_0_#9D174D] hover:bg-[#C2185F] transition-colors"
         >
           {t("share.startLearning")}
         </ShareCta>
       </header>
 
       <main className="mx-auto max-w-3xl px-6 pb-16">
-        <p className="mb-2 text-sm text-[#C13E78] font-semibold">{t("share.eyebrow")}</p>
+        <p className="mb-2 text-sm text-[var(--tint-pink-ink)] font-semibold">{t("share.eyebrow")}</p>
 
         <article className="relative border border-[var(--tint-pink-line)] rounded-[22px] bg-cream p-8 sm:p-10 shadow-[0_14px_34px_-20px_rgba(219,39,119,.35)] text-center">
           {vibe && (
-            <span className="inline-block text-[12px] font-semibold text-[#C13E78] bg-[var(--tint-pink)] border border-[var(--tint-pink-line)] rounded-full px-3 py-1 mb-5">
+            <span className="inline-block text-[12px] font-semibold text-[var(--tint-pink-ink)] bg-[var(--tint-pink)] border border-[var(--tint-pink-line)] rounded-full px-3 py-1 mb-5">
               {vibe.emoji} {tv(entry.vibe)}
             </span>
           )}
@@ -147,7 +147,7 @@ export default async function SlangSharePage({ params }: Props) {
           <p className="mt-2 text-muted">{t("share.ctaBody")}</p>
           <ShareCta
             slug={entry.slug}
-            className="mt-5 inline-block rounded-full bg-[#C13E78] px-6 py-3 font-semibold text-white shadow-[0_3px_0_#9D174D] hover:bg-[#C2185F] transition-colors"
+            className="mt-5 inline-block rounded-full bg-[var(--tint-pink-ink)] px-6 py-3 font-semibold text-white shadow-[0_3px_0_#9D174D] hover:bg-[#C2185F] transition-colors"
           >
             {t("startFreeArrow")}
           </ShareCta>

@@ -61,11 +61,11 @@ function Tile({
 }) {
   const tn = useTranslations("nav");
   const sticker = popular ? (
-    <span className="absolute -top-[7px] right-2.5 text-[8.5px] font-extrabold text-[#B14F27] bg-[#FDE9D0] rounded-full px-[6px] py-px">
+    <span className="absolute -top-[7px] right-2.5 text-[8.5px] font-extrabold text-[var(--c-amber-deep)] bg-[var(--tint-amber)] rounded-full px-[6px] py-px">
       Popular
     </span>
   ) : isNew ? (
-    <span className="absolute -top-[7px] right-2.5 text-[8.5px] font-extrabold text-white bg-[#9333EA] rounded-full px-[6px] py-px">
+    <span className="absolute -top-[7px] right-2.5 text-[8.5px] font-extrabold text-white bg-[var(--c-success)] rounded-full px-[6px] py-px">
       NEW
     </span>
   ) : null;

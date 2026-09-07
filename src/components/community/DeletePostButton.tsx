@@ -44,11 +44,11 @@ export default function DeletePostButton({ postId }: { postId: string }) {
         type="button"
         onClick={remove}
         disabled={busy}
-        className="rounded-[9px] border border-line px-3 py-1.5 text-[12.5px] font-semibold text-[#C13E78] transition-colors hover:border-[#C13E78] disabled:opacity-40"
+        className="rounded-[9px] border border-line px-3 py-1.5 text-[12.5px] font-semibold text-danger transition-colors hover:border-danger disabled:opacity-40"
       >
         {busy ? t("deleting") : t("delete")}
       </button>
-      {error && <small className="text-[12px] text-[#C13E78]">{t("failed")}</small>}
+      {error && <small className="text-[12px] text-danger">{t("failed")}</small>}
     </span>
   );
 }

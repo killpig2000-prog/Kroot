@@ -46,7 +46,7 @@ export default async function PostList({
             </b>
             <span
               className={`text-[12.5px] flex-none hidden sm:inline truncate max-w-[140px] ${
-                p.author_plus ? "font-semibold text-[#B45309]" : "text-muted"
+                p.author_plus ? "font-semibold text-[var(--c-amber-deep)]" : "text-muted"
               }`}
             >
               {p.author_emoji ?? "🦊"} {p.author_name}

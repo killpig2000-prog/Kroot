@@ -59,7 +59,7 @@ function NavItem({
     >
       <span className="flex-1 min-w-0 truncate">{tn(navKey(label))}</span>
       {isNew && !on && (
-        <span className="flex-none text-[8.5px] font-extrabold tracking-[.04em] text-white bg-[#9333EA] rounded-full px-[5px] py-px">
+        <span className="flex-none text-[8.5px] font-extrabold tracking-[.04em] text-white bg-[var(--c-success)] rounded-full px-[5px] py-px">
           {tn("new").toUpperCase()}
         </span>
       )}

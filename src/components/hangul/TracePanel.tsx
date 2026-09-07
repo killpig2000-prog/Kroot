@@ -9,7 +9,7 @@ import type { Jamo } from "@/lib/hangul";
 import TraceCanvas, { type TraceCanvasHandle, type TraceMode } from "@/components/hangul/TraceCanvas";
 import type { JamoProgress } from "@/components/hangul/useHangulProgress";
 
-const HANGUL_ACCENT = "#C63958";
+const HANGUL_ACCENT = "#B04A5E";
 const STAR = "#E2A93B";
 
 export type GradedInfo = { xp: ProgressResult | null; improved: boolean };

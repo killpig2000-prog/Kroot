@@ -312,11 +312,11 @@ export default async function DashboardPage() {
           {dueCount > 0 && (
             <Link
               href="/review"
-              className="flex items-center gap-3 border border-sky-line bg-[var(--tint-sky)] rounded-[14px] px-4 py-2.5 mb-3 transition-all hover:-translate-y-0.5 group"
+              className="flex items-center gap-3 border border-line bg-cream rounded-[14px] px-4 py-2.5 mb-3 transition-all hover:-translate-y-0.5 hover:border-success group"
             >
               <span className="flex-none text-[18px] transition-transform group-hover:scale-110">💧</span>
-              <b className="flex-1 min-w-0 truncate text-[14px] font-bold text-sky-deep">{t("review.due", { count: dueCount })}</b>
-              <span className="flex-none text-[13px] font-semibold text-sky-deep transition-transform group-hover:translate-x-0.5">
+              <b className="flex-1 min-w-0 truncate text-[14px] font-bold text-charcoal">{t("review.due", { count: dueCount })}</b>
+              <span className="flex-none text-[13px] font-semibold text-success transition-transform group-hover:translate-x-0.5">
                 {t("review.short")}
               </span>
             </Link>
@@ -325,17 +325,19 @@ export default async function DashboardPage() {
           {/* today's slang — one line here below xl, a rail note at xl+ */}
           <Link
             href="/slang"
-            className="xl:hidden flex items-center gap-3 border border-[var(--tint-pink-line)] bg-[var(--tint-pink)] rounded-[14px] px-4 py-2.5 mb-3 transition-all hover:-translate-y-0.5 group"
+            className="xl:hidden flex items-center gap-3 border border-line bg-cream rounded-[14px] px-4 py-2.5 mb-3 transition-all hover:-translate-y-0.5 hover:border-success group"
           >
             <span className="flex-none text-[18px] transition-transform group-hover:scale-110">💬</span>
             <span className="flex-1 min-w-0 truncate text-[14px]">
-              <b className="font-bold text-[#AF3166]">
+              {/* the Korean word is the only coloured thing on this row — one
+                  rose accent on a cream card, same weight as the green Go */}
+              <b className="font-bold text-[var(--tint-pink-ink)]">
                 <span className="kr">{slang.kr}</span>{" "}
-                <span className="font-medium text-[#C13E78]">({slang.romanization})</span>
+                <span className="font-medium text-muted">({slang.romanization})</span>
               </b>
-              <span className="text-[13px] text-[#97687D]"> · {slang.meaning}</span>
+              <span className="text-[13px] text-muted"> · {slang.meaning}</span>
             </span>
-            <span className="flex-none text-[13px] font-semibold text-[#C13E78] transition-transform group-hover:translate-x-0.5">
+            <span className="flex-none text-[13px] font-semibold text-success transition-transform group-hover:translate-x-0.5">
               {t("slang.short")}
             </span>
           </Link>

@@ -99,7 +99,7 @@ export default async function SlangPage() {
           {/* head */}
           <div className="flex items-center justify-between gap-4 mb-[18px] flex-wrap">
             <h1 className="font-bold text-[22px] tracking-[-0.02em] flex items-center">
-              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[var(--tint-pink)] text-[#C13E78] border border-[var(--tint-pink-line)] items-center justify-center kr text-[15px] mr-[9px]">
+              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[var(--tint-pink)] text-[var(--tint-pink-ink)] border border-[var(--tint-pink-line)] items-center justify-center kr text-[15px] mr-[9px]">
                 슬
               </span>
               {tn("slang")}

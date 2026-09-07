@@ -15,11 +15,11 @@ const BASE = "rounded-[9px] px-[22px] py-2.5 text-sm font-semibold transition-co
 const TONE_CLASSES: Record<ButtonTone, string> = {
   line: "text-charcoal bg-cream border border-line hover:bg-warm",
   ink: "text-white bg-success hover:bg-success-deep",
-  teal: "text-white bg-teal hover:bg-[#0F766E]",
+  teal: "text-white bg-teal hover:bg-[#256E63]",
   sky: "text-white bg-sky-deep hover:bg-[#1D4ED8]",
   success: "text-white bg-success hover:bg-success-deep",
-  amber: "text-white bg-amber hover:bg-[#B45309]",
-  violet: "text-white bg-[#6B33CC] hover:bg-[#713FC0]",
+  amber: "text-white bg-amber hover:bg-[var(--c-amber-deep)]",
+  violet: "text-white bg-[var(--tint-violet-ink)] hover:bg-[var(--tint-violet-ink)]",
 };
 
 export function buttonClassName(tone: ButtonTone = "line", className = "") {

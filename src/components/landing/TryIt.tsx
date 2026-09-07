@@ -15,7 +15,7 @@ import { speakKorean } from "@/lib/tts";
 
 // Same amber used by the real Writing result page's grammar ring
 // (CompareResult.tsx) — kept in sync on purpose, not redefined per-file.
-const WRITING_RING_COLOR = "#C47A25";
+const WRITING_RING_COLOR = "#B07A2A";
 
 // The hero's "try it right now" pair — one pronunciation word and one easy
 // tile sentence, both graded entirely in the browser. No account, no API
@@ -142,7 +142,7 @@ function PronunciationCard({ onDone }: { onDone: () => void }) {
               </button>
               <button
                 type="button"
-                className="inline-flex items-center gap-1.5 text-[12.5px] font-bold text-white bg-teal hover:bg-[#0F766E] rounded-full px-3.5 py-[7px] transition-colors"
+                className="inline-flex items-center gap-1.5 text-[12.5px] font-bold text-white bg-teal hover:bg-[#256E63] rounded-full px-3.5 py-[7px] transition-colors"
                 // "Finish →" on the landing sample hands over to the real thing.
                 onClick={() => router.push("/onboarding")}
               >

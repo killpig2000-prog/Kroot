@@ -10,7 +10,7 @@ import { useSaveResume } from "@/hooks/useSaveResume";
 import ResultShell, { ResultRing } from "@/components/results/ResultShell";
 import type { GrammarQuiz as Quiz } from "@/lib/grammar";
 
-const GRAMMAR_COLOR = "#423AC5";
+const GRAMMAR_COLOR = "var(--tint-indigo-ink)";
 
 const ABC = ["A", "B", "C", "D"];
 const Q_LABEL = "text-[11.5px] font-semibold tracking-[.06em] uppercase text-faint mb-2";
@@ -63,7 +63,7 @@ function QuestionCard({
                   ? "border-danger bg-danger-bg"
                   : answered
                   ? "border-line bg-cream opacity-90"
-                  : "border-line bg-cream hover:border-[#423AC5] hover:bg-[var(--tint-indigo)]"
+                  : "border-line bg-cream hover:border-[var(--tint-indigo-ink)] hover:bg-[var(--tint-indigo)]"
               }`}
             >
               <span

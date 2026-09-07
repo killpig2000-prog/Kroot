@@ -5,7 +5,7 @@ import ResultShell, { ResultRing, ResultTag } from "@/components/results/ResultS
 import { XP_POINTS, type ProgressResult } from "@/lib/activity";
 import { type ChallengeWord } from "@/lib/pronunciation";
 
-const COLOR = "#228980";
+const COLOR = "#2A7F72";
 const BTN_TEAL = buttonClassName("teal");
 const BTN_LINE = buttonClassName("line");
 
@@ -81,7 +81,7 @@ export default function FinishedCard({
     >
       {weak.length > 0 && (
         <div className="text-left bg-[var(--tint-amber)] border border-amber-line rounded-[10px] px-4 py-3">
-          <b className="block text-[11px] font-bold tracking-[.06em] text-[#B45309] mb-2">{t("tookTries")}</b>
+          <b className="block text-[11px] font-bold tracking-[.06em] text-[var(--c-amber-deep)] mb-2">{t("tookTries")}</b>
           <div className="flex flex-wrap gap-2">
             {weak.slice(0, 4).map((w) => (
               <span
@@ -97,7 +97,7 @@ export default function FinishedCard({
       )}
 
       {saveError && (
-        <p className="text-[12px] text-[#C63958] bg-[var(--tint-rose)] border border-[var(--tint-rose-line)] rounded-[8px] px-3 py-2">
+        <p className="text-[12px] text-[#B04A5E] bg-[var(--tint-rose)] border border-[var(--tint-rose-line)] rounded-[8px] px-3 py-2">
           ⚠️ {saveError}
         </p>
       )}

@@ -74,7 +74,7 @@ export default function TreePeek({
               )}
               <div className="min-w-0">
               <b className="block text-[16px] truncate">
-                <span className="inline-grid place-items-center min-w-[24px] h-[22px] px-1.5 mr-1.5 rounded-full bg-[#FFFBEB] border border-amber-line text-[11.5px] font-black text-[#B7791F] tabular-nums align-[-3px]">
+                <span className="inline-grid place-items-center min-w-[24px] h-[22px] px-1.5 mr-1.5 rounded-full bg-[var(--tint-amber)] border border-amber-line text-[11.5px] font-black text-[#B7791F] tabular-nums align-[-3px]">
                   #{rank}
                 </span>
                 {name}

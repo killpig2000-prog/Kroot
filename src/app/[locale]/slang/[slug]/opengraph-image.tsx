@@ -34,7 +34,7 @@ export default async function SlangOpengraphImage({ params }: { params: Promise<
             <div style={{ fontSize: 130, fontWeight: 800, color: "#4A4237", lineHeight: 1 }}>
               {entry.kr}
             </div>
-            <div style={{ fontSize: 34, color: "#C13E78", fontWeight: 600, marginTop: 18 }}>
+            <div style={{ fontSize: 34, color: "#A9485F", fontWeight: 600, marginTop: 18 }}>
               {entry.romanization}
             </div>
             <div style={{ fontSize: 40, color: "#4A4237", fontWeight: 700, marginTop: 22, maxWidth: 900, textAlign: "center" }}>

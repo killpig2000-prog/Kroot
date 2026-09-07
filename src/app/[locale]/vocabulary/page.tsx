@@ -154,7 +154,7 @@ export default async function VocabularyPage({
           <div className="flex items-end justify-between gap-4 mb-5 flex-wrap">
             <div>
               <h1 className="font-bold text-[22px] tracking-[-0.02em] flex items-center">
-                <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[var(--tint-violet)] text-[#6B33CC] border border-[var(--tint-violet-line)] items-center justify-center kr text-[15px] mr-[9px]">
+                <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[var(--tint-violet)] text-[var(--tint-violet-ink)] border border-[var(--tint-violet-line)] items-center justify-center kr text-[15px] mr-[9px]">
                   단
                 </span>
                 {tn("vocabulary")} · {level}
@@ -193,7 +193,7 @@ export default async function VocabularyPage({
                     aria-current={current ? "true" : undefined}
                     className={`flex-none inline-flex items-center gap-1.5 rounded-full border px-3.5 py-[7px] text-[12.5px] font-bold whitespace-nowrap transition-colors ${
                       current
-                        ? "bg-[#6B33CC] border-[#6B33CC] text-white"
+                        ? "bg-[var(--tint-violet-ink)] border-[var(--tint-violet-ink)] text-white"
                         : c.status === "done"
                         ? "bg-cream border-line text-muted hover:border-charcoal"
                         : "bg-cream border-line hover:border-charcoal"
@@ -238,7 +238,7 @@ export default async function VocabularyPage({
                       aria-label={`${selected.known} of ${selected.words.length} words rooted`}
                     >
                       <span
-                        className="absolute inset-y-0 left-0 rounded-full bg-[#6B33CC]"
+                        className="absolute inset-y-0 left-0 rounded-full bg-[var(--tint-violet-ink)]"
                         style={{
                           width: `${
                             selected.words.length

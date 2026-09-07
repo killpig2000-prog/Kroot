@@ -10,7 +10,7 @@ import type { Gloss } from "@/lib/word-links";
 const BTN_BLUE = buttonClassName("sky");
 const BTN_INK = buttonClassName("ink");
 const BTN_LINE = buttonClassName("line");
-const COLOR = "#3363CC";
+const COLOR = "#2F6F8F";
 
 // The end of a chapter reports the session back: what was missed, what the
 // story is worth looking up, and one obvious way onward.

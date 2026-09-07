@@ -26,7 +26,7 @@ import { useHangulProgress, type JamoProgress } from "@/components/hangul/useHan
 const GREEN = "#3E7C59";
 const SOFT = "#F0FDF4";
 const BRD = "#BBF7D0";
-const HANGUL_ACCENT = "#C63958";
+const HANGUL_ACCENT = "#B04A5E";
 
 function speak(text: string) {
   speakKorean(text);
@@ -147,7 +147,15 @@ function JamoGrid({
 const NO_PROGRESS: JamoProgress = { practiced: false, bestScore: 0, bestStars: 0 };
 const noXp = async (): Promise<GradedInfo> => ({ xp: null, improved: false });
 
-function SyllableBuilder({ onPick, active }: { onPick: (target: TraceTarget) => void; active: string | null }) {
+function SyllableBuilder({
+  onPick,
+  active,
+  onChange,
+}: {
+  onPick: (target: TraceTarget) => void;
+  active: string | null;
+  onChange?: (target: TraceTarget) => void;
+}) {
   const t = useTranslations("hangul");
   const [cho, setCho] = useState(0);
   const [jung, setJung] = useState(0);
@@ -158,6 +166,13 @@ function SyllableBuilder({ onPick, active }: { onPick: (target: TraceTarget) => 
     speak(syllable);
     onPick({ char: syllable, rom, hint: `${CHO[cho]} + ${JUNG[jung]}` });
   };
+
+  // Desktop keeps the trace panel on screen at all times, so a letter
+  // combination should show up there as soon as it's picked — no extra tap.
+  useEffect(() => {
+    onChange?.({ char: syllable, rom, hint: `${CHO[cho]} + ${JUNG[jung]}` });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cho, jung]);
 
   return (
     <div className="max-w-[560px]">
@@ -320,6 +335,7 @@ export default function HangulExplorer({ userId }: { userId?: string | null }) {
   const [tab, setTab] = useState<TabKey>("consonants");
   const [selected, setSelected] = useState<string | null>(null);
   const [syllableTarget, setSyllableTarget] = useState<TraceTarget | null>(null);
+  const [syllablePreview, setSyllablePreview] = useState<TraceTarget | null>(null);
   const [mode, setMode] = useState<TraceMode>("practice");
   const [run, setRun] = useState<Run | null>(null);
   const { get, loaded, markPracticed, recordChallenge, signedIn } = useHangulProgress(userId);
@@ -344,15 +360,17 @@ export default function HangulExplorer({ userId }: { userId?: string | null }) {
   }, []);
 
   // Desktop has the paper on screen all the time, so it never sits empty:
-  // with nothing picked it shows the tab's first letter. Below lg a pick
-  // opens the sheet, so there it stays null until the learner taps. A built
-  // syllable block never auto-shows — it opens the same popup only once tapped.
+  // with nothing picked it shows the tab's first letter, and on the syllables
+  // tab it follows the block builder live as the learner changes cho/jung —
+  // no tap needed. Below lg the paper lives in a sheet, so a syllable only
+  // shows there once tapped (same popup as before).
   const effectiveSelected =
     selected ?? (!isSheet && tab !== "syllables" ? (tab === "consonants" ? CONSONANT_LIST : VOWEL_LIST)[0].char : null);
   const selectedJamo = effectiveSelected ? JAMO_BY_CHAR.get(effectiveSelected) ?? null : null;
-  const activeTarget: TraceTarget | null = tab === "syllables" ? syllableTarget : selectedJamo;
+  const syllableActive = isSheet ? syllableTarget : syllablePreview;
+  const activeTarget: TraceTarget | null = tab === "syllables" ? syllableActive : selectedJamo;
   const activeKind: "consonant" | "vowel" | "syllable" | null =
-    tab === "syllables" ? (syllableTarget ? "syllable" : null) : selectedJamo ? kindOf(selectedJamo.char) : null;
+    tab === "syllables" ? (syllableActive ? "syllable" : null) : selectedJamo ? kindOf(selectedJamo.char) : null;
 
   const sheetOpen = isSheet && activeTarget !== null && run === null;
   const dismissSheet = useBackToClose(sheetOpen, closeSheet);
@@ -545,7 +563,7 @@ export default function HangulExplorer({ userId }: { userId?: string | null }) {
             </>
           ) : (
             <>
-              <div className="mb-8"><SyllableBuilder onPick={pickSyllable} active={syllableTarget?.char ?? null} /></div>
+              <div className="mb-8"><SyllableBuilder onPick={pickSyllable} onChange={setSyllablePreview} active={syllableActive?.char ?? null} /></div>
               <p className={SECTION_LABEL}>{t("sections.readingPractice")} · 읽기 연습</p>
               <div className="grid grid-cols-[repeat(auto-fill,minmax(140px,1fr))] gap-3 max-w-[820px]">
                 {PRACTICE_WORDS.map((w) => (

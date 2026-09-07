@@ -112,7 +112,7 @@ export default function Comments({
                 >
                   <div className="flex items-center gap-2 mb-1">
                     <span
-                      className={`text-[12.5px] font-semibold ${c.author_plus ? "text-[#B45309]" : ""}`}
+                      className={`text-[12.5px] font-semibold ${c.author_plus ? "text-[var(--c-amber-deep)]" : ""}`}
                     >
                       {c.author_emoji ?? "🦊"} {c.author_name}
                       {c.author_plus && " 🌟"}
@@ -123,7 +123,7 @@ export default function Comments({
                         type="button"
                         onClick={() => remove(c.id)}
                         disabled={deletingId === c.id}
-                        className="ml-auto text-[11.5px] font-semibold text-[#C13E78] hover:underline disabled:opacity-40"
+                        className="ml-auto text-[11.5px] font-semibold text-danger hover:underline disabled:opacity-40"
                       >
                         {deletingId === c.id ? t("deleting") : t("delete")}
                       </button>
@@ -161,7 +161,7 @@ export default function Comments({
         </>
       )}
 
-      {error && <p className="text-[12.5px] text-[#C13E78] mt-2.5">{error}</p>}
+      {error && <p className="text-[12.5px] text-danger mt-2.5">{error}</p>}
     </section>
   );
 }

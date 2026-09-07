@@ -93,7 +93,7 @@ export default async function GrammarPage({
                       aria-current={current ? "true" : undefined}
                       className={`flex-none inline-flex items-center gap-1.5 rounded-full border px-3.5 py-[7px] text-[12.5px] font-bold whitespace-nowrap transition-colors ${
                         current
-                          ? "bg-[#423AC5] border-[#423AC5] text-white"
+                          ? "bg-[var(--tint-indigo-ink)] border-[var(--tint-indigo-ink)] text-white"
                           : "bg-cream border-line text-charcoal hover:border-faint"
                       }`}
                     >
@@ -129,7 +129,7 @@ export default async function GrammarPage({
                     }`}
                   >
                     <span
-                      className={`flex-none w-8 h-8 rounded-[10px] border flex items-center justify-center text-[12.5px] font-bold transition-all group-hover:bg-[#423AC5] group-hover:border-[#423AC5] group-hover:text-white ${
+                      className={`flex-none w-8 h-8 rounded-[10px] border flex items-center justify-center text-[12.5px] font-bold transition-all group-hover:bg-[var(--tint-indigo-ink)] group-hover:border-[var(--tint-indigo-ink)] group-hover:text-white ${
                         done ? "bg-success-bg border-success-line text-success" : "bg-warm border-line text-muted"
                       }`}
                     >

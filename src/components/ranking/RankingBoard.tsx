@@ -219,7 +219,7 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
 
   if (unavailable) {
     return (
-      <div className="border border-amber-line bg-[#FFFBEB] rounded-[14px] px-5 py-4 text-[13.5px] max-w-[560px]">
+      <div className="border border-amber-line bg-[var(--tint-amber)] rounded-[14px] px-5 py-4 text-[13.5px] max-w-[560px]">
         {t("unavailable")}
       </div>
     );
@@ -278,7 +278,7 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
       {/* head: title · bed chip (with last week's move) · gardeners · days left */}
       <div className="grid gap-2">
         <h1 className="font-bold text-[22px] tracking-[-0.02em] flex items-center">
-          <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[#FFFBEB] border border-amber-line items-center justify-center text-[15px] mr-[9px]">
+          <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[var(--tint-amber)] border border-amber-line items-center justify-center text-[15px] mr-[9px]">
             🏅
           </span>
           {t("title")}
@@ -315,7 +315,7 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
           sky as the dashboard and the first screen; no boxes, no steps. */}
       <GardenScene className="rounded-[18px] border border-line h-[clamp(236px,62vw,290px)]" hillsHeight="48%">
         {rows !== null && podium.length === 0 && (
-          <div className="absolute left-3 right-3 top-3 flex items-center gap-2.5 border border-amber-line bg-[#FFFBEB]/95 rounded-[12px] px-4 py-2.5 text-[12.5px] font-semibold text-[#B45309] z-[4]">
+          <div className="absolute left-3 right-3 top-3 flex items-center gap-2.5 border border-amber-line bg-[var(--tint-amber)]/95 rounded-[12px] px-4 py-2.5 text-[12.5px] font-semibold text-[var(--c-amber-deep)] z-[4]">
             🌅 {t("fair.fresh")}
           </div>
         )}

@@ -61,8 +61,8 @@ export default function AnswerCapture({
                     micElapsedMs / MAX_LISTEN_MS < 0.55
                       ? "#3E7C59"
                       : micElapsedMs / MAX_LISTEN_MS < 0.8
-                        ? "#B45309"
-                        : "#C63958"
+                        ? "var(--c-amber-deep)"
+                        : "#B04A5E"
                   }
                   strokeDasharray={RING_C}
                   strokeDashoffset={RING_C * Math.min(1, micElapsedMs / MAX_LISTEN_MS)}
@@ -98,7 +98,7 @@ export default function AnswerCapture({
         </>
       )}
 
-      {error && <p className="text-[12.5px] text-[#C63958] text-center max-w-[420px]">{error}</p>}
+      {error && <p className="text-[12.5px] text-[#B04A5E] text-center max-w-[420px]">{error}</p>}
 
       {!micOk && (
         <p className="text-[12.5px] text-muted text-center max-w-[420px]">{t("noMic")}</p>

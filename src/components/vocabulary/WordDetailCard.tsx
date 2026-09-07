@@ -19,7 +19,7 @@ import { getLocalizedMeaning, getLocalizedExampleEn } from "@/lib/vocabulary-i18
 const BTN_INK = buttonClassName("ink");
 const BTN_LINE = buttonClassName("line");
 const BTN_AMBER = buttonClassName("amber");
-const VIOLET = "#6B33CC";
+const VIOLET = "var(--tint-violet-ink)";
 
 // Ruled notebook paper: a faint line every 32px, plus a red margin rule.
 const RULED = "repeating-linear-gradient(180deg, transparent 0 31px, #EEF0F6 31px 32px)";
@@ -373,7 +373,7 @@ export default function WordDetailCard({
         {answered && !marked && (
           <span
             aria-label={t("stillLearning")}
-            className="absolute top-3.5 right-4 w-9 h-9 rounded-full bg-amber flex items-center justify-center shadow-[0_4px_0_#B45309] rotate-[-6deg] select-none"
+            className="absolute top-3.5 right-4 w-9 h-9 rounded-full bg-amber flex items-center justify-center shadow-[0_4px_0_var(--c-amber-deep)] rotate-[-6deg] select-none"
           >
             <svg viewBox="0 0 16 16" className="w-[18px] h-[18px]" aria-hidden="true">
               <path
@@ -403,7 +403,7 @@ export default function WordDetailCard({
                   type="button"
                   onClick={() => speakKorean(word.korean)}
                   title={t("session.hearIt")}
-                  className="inline-flex items-baseline gap-2 hover:text-[#6B33CC] transition-colors text-left"
+                  className="inline-flex items-baseline gap-2 hover:text-[var(--tint-violet-ink)] transition-colors text-left"
                 >
                   {word.korean}
                   <span aria-hidden="true" className="text-[16px] translate-y-[-6px] opacity-70">🔊</span>
@@ -442,7 +442,7 @@ export default function WordDetailCard({
                 type="button"
                 onClick={() => speakKorean(word.example_kr)}
                 title={t("session.hearSentence")}
-                className="text-left hover:text-[#6B33CC] transition-colors"
+                className="text-left hover:text-[var(--tint-violet-ink)] transition-colors"
               >
                 {word.example_kr} <span aria-hidden="true" className="text-[11px] opacity-70">🔊</span>
               </button>
@@ -465,7 +465,7 @@ export default function WordDetailCard({
                       type="button"
                       onClick={() => speakKorean(ex.kr)}
                       title={t("session.hearSentence")}
-                      className="text-left hover:text-[#6B33CC] transition-colors"
+                      className="text-left hover:text-[var(--tint-violet-ink)] transition-colors"
                     >
                       {ex.kr}
                     </button>

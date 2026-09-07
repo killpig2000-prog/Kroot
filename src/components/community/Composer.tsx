@@ -118,7 +118,7 @@ export default function Composer({
         </button>
       </div>
 
-      {error && <p className="text-[12.5px] text-[#C13E78] mt-2.5">{error}</p>}
+      {error && <p className="text-[12.5px] text-danger mt-2.5">{error}</p>}
     </div>
   );
 }

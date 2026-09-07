@@ -2,7 +2,7 @@ import { useTranslations } from "next-intl";
 import { buttonClassName } from "@/components/ui/Button";
 import type { Verdict } from "@/lib/speech-match";
 
-const TEAL = "#228980";
+const TEAL = "#2A7F72";
 const BTN_TEAL = buttonClassName("teal");
 const BTN_LINE = buttonClassName("line");
 
@@ -10,8 +10,8 @@ const BTN_LINE = buttonClassName("line");
 // three outcomes translate with the rest of the page.
 export const VERDICTS: Record<Verdict, { key: Verdict; fg: string }> = {
   great: { key: "great", fg: "#3E7C59" },
-  close: { key: "close", fg: "#B45309" },
-  again: { key: "again", fg: "#C63958" },
+  close: { key: "close", fg: "var(--c-amber-deep)" },
+  again: { key: "again", fg: "#B04A5E" },
 };
 
 export default function ScoreResult({
@@ -86,7 +86,7 @@ export default function ScoreResult({
         </div>
       </div>
 
-      {saveError && <p className="text-[11.5px] text-[#C63958] mb-2.5">⚠️ {saveError}</p>}
+      {saveError && <p className="text-[11.5px] text-[#B04A5E] mb-2.5">⚠️ {saveError}</p>}
       <div className="flex gap-2.5">
         <button className={BTN_LINE} onClick={onTryAgain}>
           {t("tryAgain")}

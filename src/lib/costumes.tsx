@@ -282,7 +282,7 @@ function SpiritDokkaebi() {
         />
         <path d="M-16 8 l-9 8" stroke="url(#sp-body)" strokeWidth="4" strokeLinecap="round" />
         <g transform="translate(-27 14) rotate(-30)">
-          <path d="M-3 -14 h6 v18 h-6z" fill="#B45309" />
+          <path d="M-3 -14 h6 v18 h-6z" fill="#9A5F18" />
           <circle cx="0" cy="-16" r="5" fill="#92400E" />
           <circle cx="-3" cy="-18" r="1.6" fill="#D97706" />
           <circle cx="3" cy="-14" r="1.6" fill="#D97706" />

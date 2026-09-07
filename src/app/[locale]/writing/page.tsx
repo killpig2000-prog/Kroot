@@ -143,7 +143,7 @@ export default async function WritingMapPage({
                 ✏️
               </span>
               <span className="flex-1 min-w-[170px]">
-                <b className="block font-semibold text-sm text-[#B45309]">
+                <b className="block font-semibold text-sm text-[var(--c-amber-deep)]">
                   {t("map.continueChapter", { n: continueIndex + 1 })}
                 </b>
                 <span className="text-[13px] text-[#92702B] truncate block">

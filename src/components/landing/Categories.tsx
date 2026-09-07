@@ -2,11 +2,11 @@ import { useTranslations } from "next-intl";
 
 const CATEGORIES = [
   { id: "listening", kr: "듣", sticker: "🎧", bg: "#3E7C59" },
-  { id: "pronunciation", kr: "발", sticker: "🎤", bg: "#228980" },
-  { id: "writing", kr: "쓰", sticker: "✍️", bg: "#C47A25" },
-  { id: "reading", kr: "읽", sticker: "📖", bg: "#3363CC" },
-  { id: "vocabulary", kr: "단", sticker: "🃏", bg: "#6B33CC" },
-  { id: "slang", kr: "슬", sticker: "💬", bg: "#C13E78" },
+  { id: "pronunciation", kr: "발", sticker: "🎤", bg: "#2A7F72" },
+  { id: "writing", kr: "쓰", sticker: "✍️", bg: "#B07A2A" },
+  { id: "reading", kr: "읽", sticker: "📖", bg: "#2F6F8F" },
+  { id: "vocabulary", kr: "단", sticker: "🃏", bg: "#6A4FA8" },
+  { id: "slang", kr: "슬", sticker: "💬", bg: "#A9485F" },
 ] as const;
 
 export default function Categories() {

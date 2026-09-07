@@ -257,7 +257,7 @@ export default async function InsightsSection({ userId }: { userId: string }) {
                 <span className="flex-none text-[11.5px] font-semibold text-faint">{w.level}</span>
                 <span className="flex-none text-[12px] tabular-nums">
                   <span className="text-success font-semibold">{w.correct}✓</span>{" "}
-                  <span className="text-[#C13E78] font-semibold">{w.wrong}✗</span>
+                  <span className="text-[var(--tint-pink-ink)] font-semibold">{w.wrong}✗</span>
                 </span>
               </div>
             ))}

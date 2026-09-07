@@ -279,7 +279,7 @@ export default function ShopClient({
       <GuidedStep step="shop-cta" />
       <GuidedStep step="finish" />
       {tutorial && !tutorialBought && (
-        <div className="mx-4 mt-4 flex items-center justify-between gap-3 px-4 py-3 rounded-xl bg-[var(--tint-violet)] border border-line text-[#6B33CC] font-semibold text-[14px]">
+        <div className="mx-4 mt-4 flex items-center justify-between gap-3 px-4 py-3 rounded-xl bg-[var(--tint-violet)] border border-line text-[var(--tint-violet-ink)] font-semibold text-[14px]">
           {t("tutorial.pick")}
           <Link href="/dashboard" className="text-faint font-semibold hover:text-charcoal shrink-0">
             {t("tutorial.skip")}
@@ -312,7 +312,7 @@ export default function ShopClient({
                 <Scene ids={[featured.id]} stage={stage} species={species} className="w-full h-full" />
               </span>
               <span className="min-w-0">
-                <span className="block text-[10.5px] font-extrabold tracking-[.06em] uppercase text-[#B14F27]">
+                <span className="block text-[10.5px] font-extrabold tracking-[.06em] uppercase text-[var(--c-amber-deep)]">
                   {t("featured.badge")}
                 </span>
                 <b className="block text-[14px] truncate">
@@ -329,7 +329,7 @@ export default function ShopClient({
                   })}
                 </small>
               </span>
-              <span className="text-[11.5px] font-extrabold tracking-[.04em] uppercase text-[#B14F27] whitespace-nowrap">
+              <span className="text-[11.5px] font-extrabold tracking-[.04em] uppercase text-[var(--c-amber-deep)] whitespace-nowrap">
                 {t("featured.daysLeft", { n: daysLeft(featured.availableUntil, today) })}
               </span>
             </button>
@@ -362,7 +362,7 @@ export default function ShopClient({
                   <span aria-hidden="true">{SLOT_LABELS[slot].icon}</span>
                   {t(`slots.${slot}`)}
                   {isNew && (
-                    <span className={`text-[9.5px] font-extrabold tracking-[.06em] rounded-full px-1.5 py-px ${on ? "bg-[#B7791F] text-white" : "bg-[#B14F27] text-white"}`}>
+                    <span className={`text-[9.5px] font-extrabold tracking-[.06em] rounded-full px-1.5 py-px ${on ? "bg-[#B7791F] text-white" : "bg-[var(--c-amber-deep)] text-white"}`}>
                       {t("new")}
                     </span>
                   )}

@@ -10,7 +10,7 @@ const BTN_INK =
   "rounded-[10px] px-5 py-[11px] text-sm font-bold text-white bg-success hover:bg-success-deep transition-colors disabled:opacity-60";
 const BTN_LINE =
   "rounded-[10px] px-5 py-[11px] text-sm font-bold text-charcoal bg-cream border border-line hover:bg-warm transition-colors disabled:opacity-60";
-const COLOR = "#C47A25";
+const COLOR = "#B07A2A";
 
 /** One built sentence's result — scored on the question itself; totalled here. */
 export type Answer = { index: number; score: number; text: string; correct: boolean; offCount: number };

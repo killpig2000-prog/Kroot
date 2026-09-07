@@ -116,7 +116,7 @@ export default async function GrammarLessonPage({
               {next && (
                 <Link
                   href={`/grammar/${next.key}`}
-                  className="rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-[#423AC5] hover:bg-[#4338CA] transition-colors"
+                  className="rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-[var(--tint-indigo-ink)] hover:bg-[#4338CA] transition-colors"
                 >
                   {t("nextLesson", { title: next.title })}
                 </Link>

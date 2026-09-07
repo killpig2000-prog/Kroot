@@ -13,7 +13,7 @@ export function VibeChip({ vibe }: { vibe: SlangEntry["vibe"] }) {
   const tv = useTranslations("slang.vibes");
   const meta = VIBES.find((v) => v.key === vibe);
   return (
-    <span className="inline-block text-[11.5px] font-semibold text-[#C13E78] bg-[var(--tint-pink)] border border-[var(--tint-pink-line)] rounded-full px-2.5 py-[3px]">
+    <span className="inline-block text-[11.5px] font-semibold text-[var(--tint-pink-ink)] bg-[var(--tint-pink)] border border-[var(--tint-pink-line)] rounded-full px-2.5 py-[3px]">
       {meta?.emoji} {tv(vibe)}
     </span>
   );
@@ -60,7 +60,7 @@ export default function SlangCard({
         <div className={`${FACE} border border-line bg-warm transition-colors hover:bg-[var(--tint-pink)]`}>
           {collected && (
             <span
-              className="absolute top-2.5 right-2.5 w-6 h-6 rounded-full bg-[var(--tint-pink)] border border-[var(--tint-pink-line)] text-[#C13E78] text-[12px] font-bold flex items-center justify-center"
+              className="absolute top-2.5 right-2.5 w-6 h-6 rounded-full bg-[var(--tint-pink)] border border-[var(--tint-pink-line)] text-[var(--tint-pink-ink)] text-[12px] font-bold flex items-center justify-center"
               title={t("collected")}
             >
               ✓
@@ -81,7 +81,7 @@ export default function SlangCard({
           className={`${FACE} border border-[var(--tint-pink-line)] bg-[var(--tint-pink)] [transform:rotateY(180deg)] justify-start pt-4 pb-4 overflow-hidden`}
         >
           <div className="flex items-center gap-2 w-full justify-center">
-            <b className="kr text-[19px] text-[#C13E78]">{entry.kr}</b>
+            <b className="kr text-[19px] text-[var(--tint-pink-ink)]">{entry.kr}</b>
             <SpeakButton text={entry.kr} />
           </div>
           <span className="mt-1 text-[11.5px] text-faint italic">

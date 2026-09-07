@@ -66,7 +66,7 @@ export default function ChapterDays({
               className="w-full flex items-center justify-between gap-2.5 py-3.5 px-0.5 text-left"
             >
               <span className="flex items-baseline gap-2.5">
-                <b className={`text-[14px] font-extrabold ${isOpen ? "text-[#6B33CC]" : "text-charcoal"}`}>
+                <b className={`text-[14px] font-extrabold ${isOpen ? "text-[var(--tint-violet-ink)]" : "text-charcoal"}`}>
                   {dayLabels[i]}
                 </b>
                 <span className="text-[11.5px] text-faint tabular-nums">
@@ -78,7 +78,7 @@ export default function ChapterDays({
                   {day.done ? doneLabel : `${day.known}/${day.total}`}
                 </span>
                 <span
-                  className={`text-[11px] text-faint transition-transform ${isOpen ? "rotate-90 text-[#6B33CC]" : ""}`}
+                  className={`text-[11px] text-faint transition-transform ${isOpen ? "rotate-90 text-[var(--tint-violet-ink)]" : ""}`}
                   aria-hidden="true"
                 >
                   ›
