@@ -104,6 +104,8 @@
     "bySkill": "按技能",
     "weakest": "最弱：{skill}",
     "behind": "{skill} 落后最多",
-    "fillIn": "补一补"
+    "fillIn": "补一补",
+    "radarTitle": "技能轮廓",
+    "radarAria": "技能得分雷达图"
   }
 }

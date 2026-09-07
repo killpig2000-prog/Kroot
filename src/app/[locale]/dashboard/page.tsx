@@ -150,6 +150,10 @@ export default async function DashboardPage() {
     ? hashString(`${today}:${user.id}:${cefr}:${quest?.skill_key}`) % questChapters.length
     : 0;
   const questHref = quest && questChapters.length ? `/${quest.skill_key}/session?level=${cefr}&chapter=${questChapterIdx}` : undefined;
+  // The card is the page's one big button, so it never disappears: if the
+  // daily row couldn't be created (RPC/insert failure) it points at the
+  // vocabulary review instead of leaving a hole (user: "없으면 밋밋하려나").
+  const questForCard = quest ?? { skill_key: "vocabulary", description: "Review · your due words · ~5 min", completed_at: null };
 
   // "Your path" (promotion eligibility + LevelMap) moved to My progress
   // (/profile) 2026-09-03 — the Garden is a "what do I do today" page, and a
@@ -290,7 +294,7 @@ export default async function DashboardPage() {
               in-progress session was removed (product decision: one clear
               "what to do today" beats a resume shortcut). */}
           <div data-tour="quest">
-            <TodaysQuestCard quest={quest} href={questHref} />
+            <TodaysQuestCard quest={questForCard} href={quest ? questHref : "/vocabulary"} />
           </div>
 
           {/* the six doors. Two columns × three rows on phones (portrait —
@@ -301,24 +305,17 @@ export default async function DashboardPage() {
             {MODULES.map((m) => {
               const key = m.href === "/speaking" ? "pronunciation" : m.href.slice(1);
               const p = skillProgress[key];
-              const caption =
-                key === "vocabulary" || key === "writing" || key === "slang"
-                  ? t(`modules.${key}`)
-                  : p && p.total > 0
-                    ? t("modules.levelDone", { level: cefr, done: p.done, total: p.total })
-                    : null;
               return (
                 <Link
                   key={m.href}
                   href={m.href}
                   data-tour={m.tourId}
-                  className="relative flex flex-col items-center justify-center gap-[4px] min-h-[92px] rounded-[17px] border border-line bg-cream px-[6px] py-[13px] text-center transition-all hover:-translate-y-0.5 hover:border-success"
+                  className="relative flex flex-col items-center justify-center gap-[6px] min-h-[84px] rounded-[17px] border border-line bg-cream px-[6px] py-[13px] text-center transition-all hover:-translate-y-0.5 hover:border-success"
                 >
                   <span className="text-[25px] leading-none" aria-hidden="true">
                     {m.icon}
                   </span>
                   <span className="text-[14.5px] font-bold text-charcoal leading-tight">{tn(m.label.toLowerCase())}</span>
-                  {caption && <span className="w-full truncate text-[12px] font-semibold text-muted tabular-nums leading-tight">{caption}</span>}
                 </Link>
               );
             })}

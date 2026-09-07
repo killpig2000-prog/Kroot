@@ -104,6 +104,8 @@
     "bySkill": "スキル別",
     "weakest": "最も弱い: {skill}",
     "behind": "{skill} が一番遅れています",
-    "fillIn": "補強する"
+    "fillIn": "補強する",
+    "radarTitle": "スキルの形",
+    "radarAria": "スキル別スコアのレーダー"
   }
 }

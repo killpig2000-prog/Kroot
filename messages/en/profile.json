@@ -104,6 +104,8 @@
     "bySkill": "By skill",
     "weakest": "weakest: {skill}",
     "behind": "{skill} is furthest behind",
-    "fillIn": "Fill it in"
+    "fillIn": "Fill it in",
+    "radarTitle": "Skill shape",
+    "radarAria": "Radar of your skill scores"
   }
 }

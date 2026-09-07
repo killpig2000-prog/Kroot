@@ -10,6 +10,7 @@ import { type SkillScore, type SkillPending } from "@/components/profile/SkillAc
 import WordsToReview from "@/components/profile/WordsToReview";
 import WeekChart, { type WeekDay } from "@/components/profile/WeekChart";
 import SkillBars, { type SkillBar } from "@/components/profile/SkillBars";
+import SkillRadar from "@/components/profile/SkillRadar";
 import { computeSkillProgress, PRACTICE_SKILLS } from "@/components/profile/skill-progress";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { dailyReviewCap } from "@/lib/srs";
@@ -332,6 +333,7 @@ export default async function ProfilePage() {
 
             {hasAnything && <WeekChart days={weekDays} avgPerDay={avgPerDay} />}
 
+            {skillBars.length > 0 && <SkillRadar rows={skillBars} />}
             {skillBars.length > 0 && <SkillBars rows={skillBars} weakestLabel={weakest ? tn(weakest.key) : null} />}
 
             {weakest && (

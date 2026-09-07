@@ -104,6 +104,8 @@
     "bySkill": "Por habilidad",
     "weakest": "más floja: {skill}",
     "behind": "{skill} es lo que más se queda atrás",
-    "fillIn": "Reforzar"
+    "fillIn": "Reforzar",
+    "radarTitle": "Forma de habilidades",
+    "radarAria": "Radar de tus puntuaciones por habilidad"
   }
 }

@@ -104,6 +104,8 @@
     "bySkill": "Theo kỹ năng",
     "weakest": "yếu nhất: {skill}",
     "behind": "{skill} đang tụt lại nhiều nhất",
-    "fillIn": "Bù vào"
+    "fillIn": "Bù vào",
+    "radarTitle": "Hình dạng kỹ năng",
+    "radarAria": "Biểu đồ radar điểm kỹ năng"
   }
 }
