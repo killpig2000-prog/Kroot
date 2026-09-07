@@ -115,7 +115,7 @@ const VOWELS: Record<string, StrokeAnchors[]> = {
   ㅗ: [[C(160, 90), C(160, 190)], [C(60, 190), C(260, 190)]],
   ㅛ: [[C(118, 90), C(118, 190)], [C(173, 90), C(173, 190)], [C(60, 190), C(260, 190)]],
   ㅜ: [[C(90, 130), C(230, 130)], [C(160, 130), C(160, 240)]],
-  ㅠ: [[C(60, 130), C(260, 130)], [C(118, 130), C(118, 240)], [C(202, 130), C(202, 240)]],
+  ㅠ: [[C(60, 130), C(260, 130)], [C(128, 130), C(128, 240)], [C(192, 130), C(192, 240)]],
   ㅡ: [[C(60, 160), C(260, 160)]],
   ㅣ: [[C(160, 52), C(160, 268)]],
 };
@@ -286,7 +286,7 @@ function syllableAnchors(char: string): StrokeAnchors[] {
     const jungSrc = barY !== undefined ? squashToward(TRACE_ANCHORS[jung], barY, BAR_SQUASH[jung]) : TRACE_ANCHORS[jung];
     const choBox: Box = hasJong ? [92, 228, 40, 92] : [86, 234, 56, 120];
     choPart = shrinkAt(fitBox(choSrc, choBox), (choBox[0] + choBox[1]) / 2, (choBox[2] + choBox[3]) / 2, CHO_SHRINK);
-    jungPart = fitBox(jungSrc, hasJong ? [76, 268, 136, 182] : [76, 268, 196, 262]);
+    jungPart = fitBox(jungSrc, hasJong ? [76, 244, 136, 182] : [76, 244, 196, 262]);
   } else if (hasJong) {
     choPart = shrinkAt(fitBox(TRACE_ANCHORS[cho], [44, 134, 34, 112]), 89, 73, CHO_SHRINK);
     jungPart = fitBox(TRACE_ANCHORS[jung], [52, 292, 34, 178]);
