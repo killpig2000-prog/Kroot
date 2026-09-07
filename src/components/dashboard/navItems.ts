@@ -38,15 +38,20 @@ export const MAIN_ITEMS: NavItem[] = [
 
 // The six lesson modules — rendered as a 2×3 grid on the Garden page
 // itself (no category sheet hides them). Content 8→6 per the restructure
-// ledger: Guide is gone; Hangul lives inside the vocabulary card (trace-to-
-// write); Grammar lives inside writing (particle blanks with a "why").
+// ledger: Guide is gone; Grammar lives inside writing (particle blanks with
+// a "why"); Slang moved to a row at the top of /vocabulary.
+//
+// Hangul leads the grid: it was folded into the vocabulary card for one
+// pass and the user couldn't find it, so it's a door of its own again —
+// and first, since the letters come before the words. Its in-card
+// trace-to-write (WordTrace) stays where it is.
 export const MODULES: NavItem[] = [
+  { icon: "🔤", label: "Hangul", href: "/hangul", tourId: "guided-nav-hangul" },
   { icon: "🃏", label: "Vocabulary", href: "/vocabulary", popular: true, tourId: "guided-nav-vocabulary" },
   { icon: "✏️", label: "Writing", href: "/writing", tourId: "guided-nav-writing" },
   { icon: "📰", label: "Reading", href: "/reading" },
   { icon: "🎧", label: "Listening", href: "/listening" },
   { icon: "🌶️", label: "Pronunciation", href: "/speaking" },
-  { icon: "💬", label: "Slang", href: "/slang" },
 ];
 
 // My room's own list — the learner's things, not lessons. Shop carries
