@@ -11,6 +11,7 @@ import { FULLY_GROWN_LEVEL, treeStageForLevel } from "@/lib/level";
 import { SceneLayer, skyFor } from "@/lib/costumes";
 import { daysUntilWeekEnd, leagueTier, LEAGUE_TIERS } from "@/lib/league";
 import TreePeek from "@/components/ranking/TreePeek";
+import GardenScene from "@/components/ui/GardenScene";
 import type { CefrLevel } from "@/lib/tree";
 
 type Row = {
@@ -69,6 +70,7 @@ function Tree({
   species,
   size,
   className = "",
+  bare = false,
   onOpen,
 }: {
   row: Row;
@@ -76,6 +78,8 @@ function Tree({
   /** Box side — a px number, or any CSS length (the podium uses clamp()). */
   size: number | string;
   className?: string;
+  /** No box at all — the tree stands in the podium garden, which paints the sky. */
+  bare?: boolean;
   onOpen: (row: Row) => void;
 }) {
   const ids = row.costume_ids ?? [];
@@ -87,8 +91,10 @@ function Tree({
       type="button"
       onClick={() => onOpen(row)}
       aria-label={row.display_name}
-      className={`flex-none rounded-[12px] bg-success-bg border border-success-line overflow-hidden flex items-end justify-center cursor-zoom-in hover:brightness-105 active:scale-95 transition ${className}`}
-      style={{ width: size, height: size, ...(sky ? { background: sky } : {}) }}
+      className={`flex-none overflow-hidden flex items-end justify-center cursor-zoom-in hover:brightness-105 active:scale-95 transition ${
+        bare ? "" : "rounded-[12px] bg-success-bg border border-success-line"
+      } ${className}`}
+      style={{ width: size, height: size, ...(sky && !bare ? { background: sky } : {}) }}
     >
       {/* Full frame (220 × the level's height), fitted by height: the SVG keeps
           its aspect, so a taller tree draws smaller inside the same box. */}
@@ -303,51 +309,50 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
         </div>
       </div>
 
-      {/* podium-lite: the top 3 trees, nothing else */}
-      <section
-        className="relative rounded-[18px] border-[1.5px] border-dashed border-dash px-4 pt-3 pb-0 overflow-hidden"
-        style={{ background: "linear-gradient(180deg, #EAF6FF 0%, var(--c-warm, #F6F2E8) 72%)" }}
-      >
-        {rows === null ? (
-          <div className="h-[118px]" />
-        ) : podium.length === 0 ? (
-          <div className="my-3 flex items-center gap-2.5 border border-amber-line bg-[#FFFBEB] rounded-[12px] px-4 py-2.5 text-[12.5px] font-semibold text-[#B45309]">
+      {/* the podium is a garden: the week's top three trees stand on the
+          hills — 1st centre and tallest, 2nd left, 3rd right — each with its
+          medal pinned to the canopy and a name · ☀️ pill at its feet. Same
+          sky as the dashboard and the first screen; no boxes, no steps. */}
+      <GardenScene className="rounded-[18px] border border-line h-[clamp(236px,62vw,290px)]" hillsHeight="48%">
+        {rows !== null && podium.length === 0 && (
+          <div className="absolute left-3 right-3 top-3 flex items-center gap-2.5 border border-amber-line bg-[#FFFBEB]/95 rounded-[12px] px-4 py-2.5 text-[12.5px] font-semibold text-[#B45309] z-[4]">
             🌅 {t("fair.fresh")}
           </div>
-        ) : (
-          <div className="grid grid-cols-3 items-end gap-2 md:gap-4 max-w-[420px] mx-auto">
-            {/* 2nd · 1st · 3rd — the podium order */}
-            {[podium[1], podium[0], podium[2]].map((r, i) => {
-              if (!r) return <div key={`empty-${i}`} />;
-              const place = Math.min(r.rank - 1, 2); // 0-based step index
-              // Scales with the phone: ~30vw for the winner down to a 360px
-              // screen, capped so a tablet doesn't get a billboard.
-              const size = i === 1 ? "clamp(84px, 30vw, 124px)" : i === 0 ? "clamp(70px, 25vw, 102px)" : "clamp(64px, 23vw, 94px)";
-              const step = STEP[place];
-              return (
-                <div key={r.rank} className="relative flex flex-col items-center gap-0.5">
-                  {/* medal pinned to the box's top-right corner */}
-                  <span className="absolute -top-2 right-[10%] z-10 leading-none drop-shadow-[0_1px_1px_rgba(0,0,0,.2)]" aria-label={`#${r.rank}`}>
-                    <Medal place={place as 0 | 1 | 2} rank={r.rank} />
-                  </span>
-                  <Tree row={r} species={species} size={size} className={r.is_me ? "ring-2 ring-[#ECD98A]" : ""} onOpen={setPeek} />
-                  <b className="text-[12px] leading-none truncate max-w-full mt-1">
-                    {r.display_name}
-                    {r.is_me && <span className="text-success text-[10.5px] font-bold ml-1">{t("row.you")}</span>}
-                  </b>
-                  <span className="text-[11px] text-muted tabular-nums">{t("fair.sun", { n: r.xp_week })}</span>
-                  {/* the step: gold / silver / bronze, 1st the tallest */}
-                  <span
-                    className="w-full rounded-t-[8px] mt-1"
-                    style={{ height: step.h, background: step.fill, borderTop: `1.5px solid ${step.edge}` }}
-                    aria-hidden="true"
-                  />
-                </div>
-              );
-            })}
-          </div>
         )}
-      </section>
+        {[podium[0], podium[1], podium[2]].map((r, place) => {
+          if (!r) return null;
+          // Where each place stands and how big it draws; the winner is the
+          // one tree that scales with the phone, the others follow it.
+          const spot =
+            place === 0
+              ? { left: "50%", bottom: "26%", size: "clamp(104px, 30vw, 136px)", z: 3 }
+              : place === 1
+              ? { left: "22%", bottom: "19%", size: "clamp(80px, 23vw, 106px)", z: 2 }
+              : { left: "78%", bottom: "15%", size: "clamp(72px, 21vw, 96px)", z: 2 };
+          return (
+            <div
+              key={r.rank}
+              className="absolute -translate-x-1/2 flex flex-col items-center"
+              style={{ left: spot.left, bottom: spot.bottom, zIndex: spot.z, width: spot.size }}
+            >
+              <span className="absolute -top-1 right-[4%] z-10 leading-none drop-shadow-[0_1px_1px_rgba(0,0,0,.2)]" aria-label={`#${r.rank}`}>
+                <Medal place={place as 0 | 1 | 2} rank={r.rank} />
+              </span>
+              <Tree row={r} species={species} size={spot.size} bare className={r.is_me ? "rounded-[14px] ring-2 ring-[#ECD98A]" : ""} onOpen={setPeek} />
+              <span
+                className="mt-1 max-w-[calc(100%+24px)] inline-flex items-center gap-1 rounded-full border px-2 py-[3px] text-[11px] font-bold leading-none whitespace-nowrap"
+                style={{ background: "rgba(255,253,246,.9)", borderColor: "#E3DDD0", color: "#4A4237" }}
+              >
+                <span className="truncate max-w-[9ch]">{r.display_name}</span>
+                {r.is_me && <span className="text-success">{t("row.you")}</span>}
+                <span className="tabular-nums" style={{ color: "#6B6560" }}>
+                  · {t("fair.sun", { n: r.xp_week })}
+                </span>
+              </span>
+            </div>
+          );
+        })}
+      </GardenScene>
 
       {/* the board */}
       <div className="grid gap-1">
