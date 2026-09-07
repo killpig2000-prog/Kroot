@@ -8,6 +8,8 @@ import { testForGrade } from "@/lib/promotion-test";
 import ReminderSettings from "@/components/profile/ReminderSettings";
 import SoundSettings from "@/components/profile/SoundSettings";
 import HeadlineKpis, { type Headline } from "@/components/profile/HeadlineKpis";
+import MonthlyGrass from "@/components/profile/MonthlyGrass";
+import { gardenHeadline, MONTH_GOAL } from "@/lib/study-garden";
 import SkillAccuracy, { type SkillScore, type SkillPending } from "@/components/profile/SkillAccuracy";
 import WordsToReview from "@/components/profile/WordsToReview";
 import SkillMix, { type SkillShare } from "@/components/profile/SkillMix";
@@ -257,6 +259,10 @@ export default async function ProfilePage() {
   // ── study time ───────────────────────────────────────────────────────────
   const totalMinutes = activityRows.reduce((a, r) => a + (r.minutes ?? 0), 0);
   const activeDays = activityRows.filter((r) => (r.minutes ?? 0) > 0).length;
+  // The year grass moved here from the dashboard (2026-09-07): its four
+  // headline pills are the old This week / total / best streak / month goal.
+  const garden = gardenHeadline(activityRows, streakDays);
+  const monthShort = format.dateTime(new Date(), { month: "short" });
 
   // ── practice mix: share of XP earned per skill (migration 0024 column, ─────
   // unused elsewhere on this page). Rows from before that migration, or from
@@ -339,6 +345,23 @@ export default async function ProfilePage() {
                 totalMinutes={totalMinutes}
                 wordCount={vocabRows.length}
                 activeDays={activeDays}
+              />
+            )}
+
+            {/* 1c. the year grass — every day studied, one tile; lived on the
+                dashboard until the phone home was trimmed to one screen */}
+            {hasAnything && (
+              <MonthlyGrass
+                minutesByDate={garden.minutesByDate}
+                headline={[
+                  { label: tDash("garden.thisWeek"), value: `${garden.weekTotal}m` },
+                  {
+                    label: tDash("garden.total"),
+                    value: garden.totalMinutes >= 90 ? `${Math.round(garden.totalMinutes / 6) / 10}h` : `${garden.totalMinutes}m`,
+                  },
+                  { label: tDash("garden.bestStreak"), value: `${garden.longestStreak}d` },
+                  { label: tDash("garden.monthGoal", { month: monthShort }), value: `${garden.monthDone}/${MONTH_GOAL}` },
+                ]}
               />
             )}
 

@@ -31,7 +31,9 @@ const MOBILE_BREAKPOINT = 768; // md — below this the sidebar is replaced by B
 
 // "welcome" has no target: a centred card on a solid scrim, the first thing a
 // brand-new learner sees. Everything after it spotlights one real element.
-const STEPS = ["welcome", "sidebar", "basics", "practice", "relax", "tree", "quest", "garden"] as const;
+// "garden" (the year grass) left the dashboard for My progress on 2026-09-07,
+// so the tour ends on the quest — the last thing on the phone's one screen.
+const STEPS = ["welcome", "sidebar", "basics", "practice", "relax", "tree", "quest"] as const;
 type StepKey = (typeof STEPS)[number];
 
 // STEPS are i18n/copy keys; TARGETS are the data-tour attribute values the
@@ -49,7 +51,6 @@ function targetsFor(mobile: boolean): Record<StepKey, string | null> {
         relax: "tab-more",
         tree: "tree",
         quest: "quest",
-        garden: "garden",
       }
     : {
         welcome: null,
@@ -59,7 +60,6 @@ function targetsFor(mobile: boolean): Record<StepKey, string | null> {
         relax: "section-relax",
         tree: "tree",
         quest: "quest",
-        garden: "garden",
       };
 }
 

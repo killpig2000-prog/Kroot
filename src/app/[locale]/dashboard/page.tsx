@@ -1,10 +1,9 @@
-import { getLocale, getTranslations } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 import { Link, redirect } from "@/i18n/navigation";
 import TreeCard from "@/components/dashboard/TreeCard";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import Widgets from "@/components/dashboard/Widgets";
-import WordOfDayCard from "@/components/dashboard/WordOfDayCard";
 import FeedbackWidget, { FeedbackButton } from "@/components/dashboard/FeedbackWidget";
 import TodaysQuestCard from "@/components/dashboard/TodaysQuestCard";
 import InstallBanner from "@/components/pwa/InstallBanner";
@@ -14,7 +13,7 @@ import GuidedStep from "@/components/onboarding/GuidedStep";
 import { GRAMMAR_LESSONS } from "@/lib/grammar";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { levelProgress } from "@/lib/level";
-import MonthlyGrass from "@/components/profile/MonthlyGrass";
+import { iso } from "@/lib/study-garden";
 import { ELIGIBILITY } from "@/lib/promotion-test";
 import { DIALOGUES } from "@/lib/listening-dialogues";
 import { getPassagesForLevel, getChaptersForLevel as getReadingChapters } from "@/lib/reading";
@@ -25,8 +24,6 @@ import { dailyReviewCap } from "@/lib/srs";
 import { getWordsForTopic } from "@/lib/vocabulary-words";
 import { slangOfTheDay } from "@/lib/slang";
 import type { CefrLevel } from "@/lib/tree";
-
-const MONTH_GOAL = 20;
 
 // One quest per day, alternating Reading and Writing only — the two skills
 // with a real chapter pool per level to pull a specific one from (vocabulary
@@ -39,38 +36,8 @@ const QUEST_ROTATION = [
   { skill_key: "reading", title: "Today's quest", description: "Reading · one short passage · ~4 min" },
 ];
 
-function iso(d: Date) {
-  return d.toISOString().slice(0, 10);
-}
-
 function todayISO() {
   return iso(new Date());
-}
-
-/** Longest run of consecutive study days across the whole history. */
-function bestStreak(dates: string[]): number {
-  const sorted = [...new Set(dates)].sort();
-  let best = 0;
-  let run = 0;
-  let prev: Date | null = null;
-  for (const isoDay of sorted) {
-    const d = new Date(isoDay);
-    run = prev && d.getTime() - prev.getTime() === 86_400_000 ? run + 1 : 1;
-    best = Math.max(best, run);
-    prev = d;
-  }
-  return best;
-}
-
-/* Monday-start week of `now`, as 7 ISO dates */
-function weekDates(now: Date) {
-  const monday = new Date(now);
-  monday.setDate(now.getDate() - ((now.getDay() + 6) % 7));
-  return Array.from({ length: 7 }, (_, i) => {
-    const d = new Date(monday);
-    d.setDate(monday.getDate() + i);
-    return d;
-  });
 }
 
 type Snapshot = {
@@ -100,17 +67,12 @@ type Snapshot = {
 
 export default async function DashboardPage() {
   const supabase = await createClient();
-  const [t, locale] = await Promise.all([getTranslations("dashboard"), getLocale()]);
+  const t = await getTranslations("dashboard");
   const user = await getClaimsUser(supabase);
 
   if (!user) redirect("/onboarding");
 
   const today = todayISO();
-
-  // Date windows computed up front so downstream math runs in one pass.
-  const now = new Date();
-  const week = weekDates(now);
-  const monthStart = iso(new Date(now.getFullYear(), now.getMonth(), 1));
 
   // Every read this page needs (profile, quest, five progress tables, due
   // count, activity, level-test count) plus touch_streak, in one round trip.
@@ -142,7 +104,7 @@ export default async function DashboardPage() {
   const readingRows = snapshot.reading.map((passage_key) => ({ passage_key }));
   const writingRows = snapshot.writing.map((prompt_key) => ({ prompt_key }));
   const speakingRows = snapshot.speaking;
-  const activity = snapshot.activity;
+  // snapshot.activity is still returned by the RPC; My progress reads its own copy now
   const grammarRows = snapshot.grammar.map((lesson_key) => ({ lesson_key }));
   const vocabRows = snapshot.vocab_keys.map((word_key) => ({ word_key }));
 
@@ -273,32 +235,10 @@ export default async function DashboardPage() {
     })(),
   };
 
-  // Word of the day from the real vocabulary deck, rotating daily.
-  const allWords = getWordsForTopic("daily-life");
-  const wotdRaw = allWords.length
-    ? allWords[Math.floor(Date.parse(today) / 86_400_000) % allWords.length]
-    : null;
-  const wotd = wotdRaw
-    ? {
-        word: wotdRaw.korean,
-        roman: wotdRaw.romanization,
-        mean: wotdRaw.meaning_en,
-        exKr: wotdRaw.example_kr,
-        exEn: wotdRaw.example_en,
-      }
-    : null;
-
+  // The word of the day is gone from the dashboard (2026-09-07) and the year
+  // grass moved to My progress — the phone home is one screen: the garden,
+  // today's quest, the review when words are due, and one slang line.
   const slang = slangOfTheDay();
-
-  // Study-garden numbers (lived on My growth before the merge): the year
-  // grass plus lifetime pills, with the old week/month widgets folded in.
-  const minutesByDate = new Map((activity ?? []).map((a) => [a.activity_date, a.minutes ?? 0]));
-  const weekTotal = week.reduce((sum, d) => sum + (minutesByDate.get(iso(d)) ?? 0), 0);
-  const totalMinutes = (activity ?? []).reduce((sum, a) => sum + (a.minutes ?? 0), 0);
-  const activeDates = (activity ?? []).filter((a) => (a.minutes ?? 0) > 0).map((a) => a.activity_date);
-  const longestStreak = Math.max(bestStreak(activeDates), streakDays);
-  const monthDone = (activity ?? []).filter((a) => a.activity_date >= monthStart && (a.minutes ?? 0) > 0).length;
-  const monthShort = now.toLocaleDateString(locale, { month: "short" });
 
   const displayName = profile?.display_name ?? "there";
   const { level, into, needed, pct } = levelProgress(profile?.xp ?? 0);
@@ -319,7 +259,9 @@ export default async function DashboardPage() {
           />
         </div>
 
-        <main className="min-w-0 px-[clamp(18px,3vw,36px)] pt-[26px] pb-[100px] md:pb-[60px]">
+        {/* phone bottom padding = BottomNav (64px) + a little; the page is
+            meant to fit one screen there, so no more slack than that */}
+        <main className="min-w-0 px-[clamp(18px,3vw,36px)] pt-[26px] pb-[76px] md:pb-[60px]">
           <OnboardingTour startsGuidedTour guidedTrack={guidedTrack} isAdmin={isAdmin} userId={user.id} serverSeen={tourSeen} />
           <GuidedStep step="hangul-nav" />
           <GuidedStep step="writing-nav" />
@@ -356,108 +298,47 @@ export default async function DashboardPage() {
             />
           </div>
 
-          {/* today's quest — the one always-visible recommendation. Resuming
-              a specific in-progress session was removed (product decision:
-              one clear "what to do today" beats a resume shortcut). Paired
-              side-by-side with the review card on mobile so they don't eat
-              two full-width rows; sm+ keeps the original stacked cards. */}
-          {quest && dueCount > 0 && (
-            <div className="grid grid-cols-2 gap-3 mb-4 sm:hidden">
-              <TodaysQuestCard quest={quest} href={questHref} compact />
-              <Link
-                href="/review"
-                className="group flex flex-col items-center text-center gap-1.5 rounded-[16px] border border-sky-line bg-[var(--tint-sky)] px-3 py-3.5 h-full transition-all hover:-translate-y-0.5"
-              >
-                <span className="flex-none w-9 h-9 rounded-[10px] bg-cream border border-sky-line flex items-center justify-center text-[17px]">
-                  💧
-                </span>
-                <b className="block text-[15px] font-bold text-sky-deep leading-tight group-hover:translate-x-0.5 transition-transform">
-                  {t("review.short")}
-                </b>
-              </Link>
-            </div>
-          )}
-          <div data-tour="quest" className={quest && dueCount > 0 ? "hidden sm:block" : undefined}>
+          {/* today's quest — the one big button. Resuming a specific
+              in-progress session was removed (product decision: one clear
+              "what to do today" beats a resume shortcut). */}
+          <div data-tour="quest">
             <TodaysQuestCard quest={quest} href={questHref} />
           </div>
 
           <InstallBanner streakDays={streakDays} />
 
-          {/* spaced-repetition review */}
+          {/* spaced-repetition review — one slim row, only when words are
+              due, so a new learner's home has nothing to scroll past */}
           {dueCount > 0 && (
             <Link
               href="/review"
-              className={`flex flex-wrap sm:flex-nowrap items-center gap-x-3.5 gap-y-2 border border-sky-line bg-[var(--tint-sky)] rounded-[14px] px-5 py-4 mb-4 transition-all hover:-translate-y-0.5 group ${
-                quest ? "hidden sm:flex" : ""
-              }`}
+              className="flex items-center gap-3 border border-sky-line bg-[var(--tint-sky)] rounded-[14px] px-4 py-2.5 mb-3 transition-all hover:-translate-y-0.5 group"
             >
-              <span className="flex-none w-12 h-12 rounded-[12px] bg-cream border border-sky-line flex items-center justify-center text-[22px] transition-transform group-hover:scale-110">
-                💧
-              </span>
-              <span className="flex-1 min-w-0">
-                <b className="block font-bold text-[18px] text-sky-deep truncate">{t("review.title")}</b>
-              </span>
-              <span className="w-full sm:w-auto pl-[54px] sm:pl-0 text-[13px] font-semibold text-sky-deep transition-transform group-hover:translate-x-0.5">
-                {t("review.now")}
+              <span className="flex-none text-[18px] transition-transform group-hover:scale-110">💧</span>
+              <b className="flex-1 min-w-0 truncate text-[14px] font-bold text-sky-deep">{t("review.due", { count: dueCount })}</b>
+              <span className="flex-none text-[13px] font-semibold text-sky-deep transition-transform group-hover:translate-x-0.5">
+                {t("review.short")}
               </span>
             </Link>
           )}
 
-          {/* The daily quest used to be a third card here ("Start today" on the
-              Continue card, this slip, and the rail widget all pointed at the
-              same skill). It now lives inside the Continue card. */}
-
-          {/* today's slang + word of the day — both live on the rail at xl+.
-              Below that they're inlined into the main column; on mobile
-              specifically they're paired side-by-side (like the quest/review
-              pair above) instead of stacking as two more full-width rows. */}
-          {wotd && (
-            <div className="grid grid-cols-2 gap-3 mb-[30px] sm:hidden">
-              <Link
-                href="/slang"
-                className="group flex flex-col items-center text-center gap-1.5 rounded-[16px] border border-[var(--tint-pink-line)] bg-[var(--tint-pink)] px-3 py-3.5 h-full transition-all hover:-translate-y-0.5"
-              >
-                <span className="flex-none w-9 h-9 rounded-[10px] bg-cream border border-[var(--tint-pink-line)] flex items-center justify-center text-[17px]">
-                  💬
-                </span>
-                <b className="block text-[15px] font-bold text-[#AF3166] leading-tight">{t("slang.title")}</b>
-              </Link>
-              <Link
-                href="/vocabulary"
-                className="group flex flex-col items-center text-center gap-1.5 rounded-[16px] border border-line bg-cream px-3 py-3.5 h-full transition-all hover:-translate-y-0.5"
-              >
-                <span className="flex-none w-9 h-9 rounded-[10px] bg-warm border border-line flex items-center justify-center text-[15px] font-semibold text-success-deep uppercase">
-                  W
-                </span>
-                <b className="block text-[15px] font-bold text-charcoal leading-tight">{t("wotd.title")}</b>
-              </Link>
-            </div>
-          )}
-
+          {/* today's slang — one line here below xl, a rail note at xl+ */}
           <Link
             href="/slang"
-            className={`xl:hidden flex flex-wrap sm:flex-nowrap items-center gap-x-3.5 gap-y-2 border border-[var(--tint-pink-line)] bg-[var(--tint-pink)] rounded-[14px] px-5 py-4 mb-[30px] transition-all hover:-translate-y-0.5 group ${
-              wotd ? "hidden sm:flex" : ""
-            }`}
+            className="xl:hidden flex items-center gap-3 border border-[var(--tint-pink-line)] bg-[var(--tint-pink)] rounded-[14px] px-4 py-2.5 mb-3 transition-all hover:-translate-y-0.5 group"
           >
-            <span className="flex-none w-10 h-10 rounded-[10px] bg-cream border border-[var(--tint-pink-line)] flex items-center justify-center text-lg transition-transform group-hover:scale-110">
-              💬
-            </span>
-            <span className="flex-1 min-w-0">
-              <b className="block font-semibold text-sm text-[#AF3166]">
-                {t("slang.title")} · <span className="kr">{slang.kr}</span>{" "}
-                <span className="font-medium text-[#C13E78] whitespace-nowrap">({slang.romanization})</span>
+            <span className="flex-none text-[18px] transition-transform group-hover:scale-110">💬</span>
+            <span className="flex-1 min-w-0 truncate text-[14px]">
+              <b className="font-bold text-[#AF3166]">
+                <span className="kr">{slang.kr}</span>{" "}
+                <span className="font-medium text-[#C13E78]">({slang.romanization})</span>
               </b>
-              <span className="text-[13px] text-[#97687D]">{slang.meaning}</span>
+              <span className="text-[13px] text-[#97687D]"> · {slang.meaning}</span>
             </span>
-            <span className="w-full sm:w-auto pl-[54px] sm:pl-0 text-[13px] font-semibold text-[#C13E78] transition-transform group-hover:translate-x-0.5">
-              {t("slang.hear")}
+            <span className="flex-none text-[13px] font-semibold text-[#C13E78] transition-transform group-hover:translate-x-0.5">
+              {t("slang.short")}
             </span>
           </Link>
-
-          {/* word of the day — rail card on xl+, inline here below that so
-              phones and tablets get the same daily word a desktop does. */}
-          {wotd && <WordOfDayCard wotd={wotd} className="hidden sm:block xl:hidden" />}
 
           {/* new to Korean? — A1 alone isn't "just starting": a long-time A1
               learner (or the admin account, parked at A1 on purpose) placed
@@ -488,26 +369,15 @@ export default async function DashboardPage() {
               Garden answers "what do I do today", the account page "how am I
               doing". */}
 
-          {/* study garden — the year grass, moved in from My growth; its
-              pills absorb the old This week / month challenge widgets */}
-          <div data-tour="garden">
-            <MonthlyGrass
-              minutesByDate={minutesByDate}
-              headline={[
-                { label: t("garden.thisWeek"), value: `${weekTotal}m` },
-                { label: t("garden.total"), value: totalMinutes >= 90 ? `${Math.round(totalMinutes / 6) / 10}h` : `${totalMinutes}m` },
-                { label: t("garden.bestStreak"), value: `${longestStreak}d` },
-                { label: t("garden.monthGoal", { month: monthShort }), value: `${monthDone}/${MONTH_GOAL}` },
-              ]}
-              footerRight={<FeedbackButton />}
-            />
+          {/* The year grass (Study garden) moved to My progress 2026-09-07 —
+              the phone home is one screen now. Its footer used to park the
+              phone-only feedback button; that button sits here instead. */}
+          <div className="flex justify-end pt-1 md:hidden">
+            <FeedbackButton />
           </div>
         </main>
 
-        <Widgets
-          wotd={wotd}
-          slang={{ kr: slang.kr, romanization: slang.romanization, meaning: slang.meaning }}
-        />
+        <Widgets slang={{ kr: slang.kr, romanization: slang.romanization, meaning: slang.meaning }} />
       </div>
 
       <BottomNav />

@@ -197,10 +197,10 @@ export default function TreeCard({
           className="absolute top-3 right-3 z-[4] inline-flex items-center gap-1.5 rounded-full border border-success-line px-2.5 py-1 text-[12px] font-extrabold text-success-deep backdrop-blur-[6px]"
           style={{ background: "rgba(255,253,246,.8)" }}
         >
-          {/* phones get the numbers only — the full "15 day streak · 550 coins"
-              ran into the level pill at 360–390px */}
-          <span className="sm:hidden tabular-nums" aria-label={`${ti("streak", { n: streakDays })} · ${ti("coins", { n: coins })}`}>
-            🔥 {streakDays} <span className="text-faint">·</span> 🪙 {coins}
+          {/* phones: coins only — the header already shows the 🔥 streak
+              two rows up, and the pair ran into the level pill at 360px */}
+          <span className="sm:hidden tabular-nums" aria-label={ti("coins", { n: coins })}>
+            🪙 {coins}
           </span>
           <span className="hidden sm:inline">
             {ti("streak", { n: streakDays })} <span className="text-faint">·</span> {ti("coins", { n: coins })}
@@ -245,9 +245,11 @@ export default function TreeCard({
       </GardenScene>
 
       {/* ── who this garden belongs to ─────────────────────────────── */}
-      <div className="flex flex-wrap items-center gap-x-3 gap-y-2 mt-3 px-1">
+      {/* one slim line: the phone dashboard fits one screen, so this row
+          carries the name and the two toggles and nothing taller */}
+      <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1.5 mt-2.5 px-1">
         <AvatarUploader userId={userId} avatarUrl={avatarUrl} />
-        <h2 className="font-semibold text-lg tracking-[-0.01em] flex items-center gap-2 min-w-0 flex-1 basis-[160px]">
+        <h2 className="font-semibold text-[16px] tracking-[-0.01em] flex items-center gap-2 min-w-0 flex-1 basis-[140px]">
           <NameEditor userId={userId} name={displayName} />
           {species && (
             <span className="flex-none text-[11.5px] font-extrabold tracking-[.03em] text-success bg-success-bg border border-success-line rounded-md px-1.5 py-px">
@@ -260,6 +262,7 @@ export default function TreeCard({
           <button
             type="button"
             aria-expanded={openTab === "growth"}
+            aria-label={t("growthTab")}
             onClick={() => setOpenTab(openTab === "growth" ? null : "growth")}
             className={`text-[12px] font-semibold rounded-full px-2.5 py-1 border transition-colors ${
               openTab === "growth"
@@ -267,13 +270,15 @@ export default function TreeCard({
                 : "bg-warm border-line text-muted hover:text-success hover:border-success-line"
             }`}
           >
-            🌱 {t("growthTab")}{" "}
+            {/* phones show the icon only so the name row stays one line */}
+            🌱 <span className="hidden sm:inline">{t("growthTab")}</span>{" "}
             <span className={`inline-block text-[10px] transition-transform ${openTab === "growth" ? "rotate-180" : ""}`}>▾</span>
           </button>
           {veteran && (
             <button
               type="button"
               aria-expanded={openTab === "keepsakes"}
+              aria-label={t("keepsakesTab")}
               onClick={() => setOpenTab(openTab === "keepsakes" ? null : "keepsakes")}
               className={`text-[12px] font-semibold rounded-full px-2.5 py-1 border transition-colors ${
                 openTab === "keepsakes"
@@ -281,7 +286,7 @@ export default function TreeCard({
                   : "bg-warm border-line text-muted hover:text-[#B7791F] hover:border-amber-line"
               }`}
             >
-              🏅 {t("keepsakesTab")}{" "}
+              🏅 <span className="hidden sm:inline">{t("keepsakesTab")}</span>{" "}
               <span className={`inline-block text-[10px] transition-transform ${openTab === "keepsakes" ? "rotate-180" : ""}`}>▾</span>
             </button>
           )}
