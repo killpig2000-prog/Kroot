@@ -69,8 +69,13 @@ export default function SeedIntro({
   const sub = traced ? t("traceDone") : t(STROKE_KEYS[Math.min(stroke, 1)]);
 
   return (
+    // Phones: the garden is the whole screen. From md up a monitor of sky
+    // around one seed reads as empty, so the same scene becomes a centred
+    // 520px card on the cream page — the shape the result screen and the
+    // sign-up card already take on desktop.
+    <div className="min-h-[100dvh] bg-cream md:flex md:items-center md:justify-center md:px-6 md:py-8">
     <div
-      className="relative min-h-[100dvh] overflow-hidden select-none"
+      className="relative min-h-[100dvh] overflow-hidden select-none md:min-h-0 md:h-[min(760px,88dvh)] md:w-full md:max-w-[520px] md:rounded-[26px] md:border md:border-line md:shadow-[0_24px_48px_-26px_rgba(74,66,55,.45)]"
       style={{ background: "linear-gradient(180deg,#FFF9EC 0%,#EAF4F3 42%,#BEE3F0 62%,#DFF3E4 100%)", color: "#4A4237" }}
       onClick={wake}
       onKeyDown={(e) => {
@@ -83,7 +88,7 @@ export default function SeedIntro({
       tabIndex={beat === 0 ? 0 : -1}
       aria-label={beat === 0 ? t("tapToWake") : undefined}
     >
-      {/* hills — page-wide so the desktop viewport reads as one garden */}
+      {/* hills — the width of the scene: the phone screen, or the desktop card */}
       <svg className="absolute left-[-4%] right-[-4%] bottom-0 w-[108%] h-[42%]" viewBox="0 0 800 200" preserveAspectRatio="none" aria-hidden="true">
         <path d="M0 110 C140 60 260 90 400 96 C540 102 660 50 800 92 L800 200 L0 200Z" fill="#CFE9D6" />
         <path d="M0 150 C160 120 300 140 440 132 C600 122 700 140 800 128 L800 200 L0 200Z" fill="#B9DDC3" />
@@ -91,7 +96,7 @@ export default function SeedIntro({
       </svg>
 
       {/* everything the learner reads or taps sits in one phone-width column */}
-      <div className="relative mx-auto w-full max-w-[420px] min-h-[100dvh]">
+      <div className="relative mx-auto w-full max-w-[420px] min-h-[100dvh] md:min-h-0 md:h-full">
         <div className="absolute top-0 left-0 right-0 flex items-center justify-between px-5 pt-[max(14px,env(safe-area-inset-top))] z-20">
           <Link href="/" className="flex items-center gap-2 font-semibold text-[16px] tracking-[-0.01em]" style={{ color: "#2E5B41" }} onClick={(e) => e.stopPropagation()}>
             <BrandMark size={26} />
@@ -227,6 +232,7 @@ export default function SeedIntro({
           )}
         </div>
       </div>
+    </div>
     </div>
   );
 }
