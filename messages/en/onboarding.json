@@ -98,7 +98,9 @@
     "alreadyHere": "Already growing here?",
     "password": "Password",
     "passwordPlaceholder": "At least 8 characters",
-    "create": "Create my account"
+    "create": "Create my account",
+    "saveSeed": "Save your seed",
+    "seedBubble": "I'll wait right here — keep me?"
   },
   "confirm": {
     "title": "Enter your code",

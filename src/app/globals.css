@@ -530,6 +530,17 @@ html.js-reveal .reveal:not(.in) {
   transform: scale(1);
 }
 
+/* result scene: water falls from the can onto the tree while the XP bar fills */
+@keyframes waterDrop {
+  0% { transform: translateY(0); opacity: 0; }
+  15% { opacity: 1; }
+  100% { transform: translateY(64px); opacity: 0; }
+}
+@keyframes canTilt {
+  0%, 100% { transform: rotate(-22deg); }
+  50% { transform: rotate(-32deg); }
+}
+
 /* first-open intro (SeedIntro): the seed hops out of the soil, the tap hint breathes */
 @keyframes seedHop {
   0% { transform: translateY(0); }

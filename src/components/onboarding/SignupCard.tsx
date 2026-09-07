@@ -6,6 +6,8 @@ import { Link } from "@/i18n/navigation";
 import CuteError from "@/components/ui/CuteError";
 import CodeInput from "@/components/ui/CodeInput";
 import { useHydrated } from "@/lib/use-hydrated";
+import GardenScene from "@/components/ui/GardenScene";
+import LevelCreature from "@/components/dashboard/LevelCreature";
 import type { FirstLesson, Placement } from "@/lib/level-test";
 import { FirstLessonList } from "./PlacementResult";
 import { BTN_GHOST, BTN_GREEN, BTN_OUTLINE, CARD, FADE, FIELD, H1, LABEL, SUB } from "./styles";
@@ -59,8 +61,34 @@ export function SignupCard({
 
   return (
     <section className={FADE}>
+      {/* The seed the learner woke up on the first screen waits above the
+          form — the account is how you keep it, not a gate in front of it. */}
+      <GardenScene className="rounded-[14px] border border-line h-[clamp(168px,42vw,200px)] mb-3" hillsHeight="46%">
+        <div
+          className="absolute left-1/2 -translate-x-1/2 top-[14px] z-[4] rounded-[14px] px-3.5 py-2 text-center whitespace-nowrap"
+          style={{ background: "#FFFDF6", border: "1.5px solid #E3DDD0", boxShadow: "0 8px 20px -14px rgba(74,66,55,.5)" }}
+        >
+          <span className="kr block text-[12.5px] font-bold" style={{ color: "#4A4237" }}>
+            나 여기서 기다릴게. 저장해 줄래?
+          </span>
+          <span className="block text-[10.5px] font-bold" style={{ color: "#8C8272" }}>
+            {t("seedBubble")}
+          </span>
+          <span
+            className="absolute left-1/2 -translate-x-1/2 -bottom-[7px] w-[12px] h-[12px] rotate-45"
+            style={{ background: "#FFFDF6", borderRight: "1.5px solid #E3DDD0", borderBottom: "1.5px solid #E3DDD0" }}
+          />
+        </div>
+        <svg
+          viewBox="0 0 220 230"
+          className="absolute left-1/2 -translate-x-1/2 bottom-[-6px] z-[3] w-[clamp(150px,40vw,186px)] h-auto"
+          aria-hidden="true"
+        >
+          <LevelCreature level="A1" />
+        </svg>
+      </GardenScene>
       <div className={CARD}>
-        <h1 className={`${H1} mb-4`}>{t("title")}</h1>
+        <h1 className={`${H1} mb-4`}>{t("saveSeed")}</h1>
 
         <div className="flex items-center gap-3 border border-success-line bg-success-bg rounded-[12px] px-3 py-2.5 mb-4 text-[13px]">
           <span className="hand font-bold text-[22px] text-success-deep">{placement.level}</span>

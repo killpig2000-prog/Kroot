@@ -59,6 +59,9 @@ export default function TreeEvolution({
           </>
         )}
       </svg>
+      {/* Only a promotion changes the species; a stage-only growth would read
+          "진달래 → 진달래", so the caption stays out of that case. */}
+      {from !== to && (
       <p
         className="text-[13.5px] text-muted mt-1"
         style={{ visibility: phase === "new" ? "visible" : "hidden" }}
@@ -68,6 +71,7 @@ export default function TreeEvolution({
         <span className="kr font-bold text-success">{SPECIES[to].krName}</span>{" "}
         <span aria-hidden="true">{SPECIES[to].emoji}</span>
       </p>
+      )}
     </div>
   );
 }

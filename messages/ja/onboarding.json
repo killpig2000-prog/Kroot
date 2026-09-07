@@ -98,7 +98,9 @@
     "alreadyHere": "すでにアカウントをお持ちですか？",
     "password": "パスワード",
     "passwordPlaceholder": "8文字以上",
-    "create": "アカウントを作成"
+    "create": "アカウントを作成",
+    "saveSeed": "種を保存しよう",
+    "seedBubble": "ここで待ってるよ。保存してくれる？"
   },
   "confirm": {
     "title": "コードを入力",

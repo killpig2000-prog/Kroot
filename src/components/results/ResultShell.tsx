@@ -1,6 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import GardenScene from "@/components/ui/GardenScene";
+import LevelCreature from "@/components/dashboard/LevelCreature";
+import { levelProgress, treeStageForLevel } from "@/lib/level";
 import { useTranslations } from "next-intl";
 import type { ProgressResult } from "@/lib/activity";
 import { playChapterClear, playCoin, playDayComplete, playLevelUp, playWater } from "@/lib/sfx";
@@ -155,33 +158,120 @@ export default function ResultShell({
   // say why, so it keeps showing the score hint as it always did.
   const blocked = levelUp?.coins_blocked ?? (levelUp?.coins_pending ? "score" : null);
   const coinsPossible = levelUp?.coins_possible ?? 15;
+
+  // The garden: the learner's own tree (stage from the level the server just
+  // reported), a watering can tipping over it while the XP line on the grass
+  // fills from where it was to where it is now. Species isn't known here, so
+  // the creature wears its stage's default species.
+  const stage = levelUp ? treeStageForLevel(levelUp.new_level) : null;
+  const after = levelUp ? levelProgress(levelUp.new_xp) : null;
+  const gained = xpAwarded ?? (levelUp ? xpValue : 0);
+  const before = levelUp ? levelProgress(Math.max(0, levelUp.new_xp - gained)) : null;
+  // The bar first paints where it was (derived, no state), then a beat later
+  // grows to where it is now; water falls only while XP actually landed.
+  const startPct = before && after ? (before.level === after.level ? before.pct : 0) : 0;
+  const [fill, setFill] = useState<number | null>(null);
+  const [watering, setWatering] = useState(false);
+  useEffect(() => {
+    if (!levelUp || !after) return;
+    const grow = setTimeout(() => setFill(after.pct), 350);
+    const start = gained > 0 ? setTimeout(() => setWatering(true), 0) : null;
+    const stop = setTimeout(() => setWatering(false), 2000);
+    return () => {
+      clearTimeout(grow);
+      if (start) clearTimeout(start);
+      clearTimeout(stop);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [levelUp]);
+
   return (
     <div
       className="max-w-[640px] w-full border border-line rounded-[16px] bg-cream overflow-hidden"
       style={{ animation: "fadeUp .4s ease" }}
     >
-      <div className="flex items-center gap-2 px-[18px] py-3 border-b border-dashed border-line text-[12.5px] font-bold text-muted flex-wrap">
-        <span className="inline-flex items-center gap-1.5" style={{ color }}>
-          <span className="w-[9px] h-[9px] rounded-full flex-none" style={{ background: color }} />
-          {categoryLabel}
-        </span>
-        {meta && (
-          <>
-            <span className="text-faint">·</span>
-            <span>{meta}</span>
-          </>
-        )}
-      </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-[auto_1fr] gap-4 sm:gap-5 items-center p-[clamp(18px,3vw,26px)] text-center sm:text-left">
-        {ring}
-        <div>
-          <h2 className="font-bold text-[20px] sm:text-[21px] tracking-[-0.02em]" style={{ textWrap: "balance" }}>
+      <GardenScene className="h-[clamp(300px,80vw,350px)]" hillsHeight="40%">
+        {/* what happened, in one breath */}
+        <div className="absolute left-0 right-0 top-4 px-4 text-center z-[4]">
+          <span className="inline-flex items-center gap-1.5 text-[11px] font-extrabold tracking-[.08em] uppercase" style={{ color }}>
+            <span className="w-[8px] h-[8px] rounded-full flex-none" style={{ background: color }} />
+            {categoryLabel}
+            {meta && <span className="normal-case tracking-normal font-bold" style={{ color: "#8C8272" }}>· {meta}</span>}
+          </span>
+          <h2 className="font-bold text-[clamp(18px,5vw,21px)] tracking-[-0.02em] mt-1.5" style={{ color: "#2E5B41", textWrap: "balance" }}>
             {headline}
           </h2>
-          {sub && <p className="text-sm text-muted mt-1.5">{sub}</p>}
-          {tags && <div className="flex flex-wrap gap-1.5 mt-3 justify-center sm:justify-start">{tags}</div>}
+          {sub && (
+            <p className="text-[12.5px] font-semibold mt-1" style={{ color: "#6B6560" }}>
+              {sub}
+            </p>
+          )}
         </div>
+
+        {/* the score ring, shrunk to a corner badge */}
+        {ring && (
+          <div className="absolute top-3 right-3 z-[5] w-[82px] h-[82px] pointer-events-none" aria-hidden="true">
+            <div className="origin-top-left scale-[.6]">{ring}</div>
+          </div>
+        )}
+
+        {/* the tree, and the water it just earned */}
+        <div className="absolute left-1/2 -translate-x-1/2 bottom-[54px] z-[3] w-[clamp(140px,36vw,190px)]">
+          {stage ? (
+            <svg viewBox="0 0 220 230" className="w-full h-auto" aria-hidden="true">
+              <LevelCreature level={stage} />
+            </svg>
+          ) : (
+            <div className="aspect-[220/230]" />
+          )}
+        </div>
+        {watering && (
+          <div className="absolute z-[4] left-[calc(50%-96px)] top-[38%] pointer-events-none" aria-hidden="true">
+            <svg viewBox="0 0 80 60" className="w-[64px] h-auto motion-safe:animate-[canTilt_1.2s_ease-in-out_infinite]" style={{ transformOrigin: "70% 30%" }}>
+              <path d="M18 22h34a6 6 0 0 1 6 6v20a6 6 0 0 1-6 6H18a6 6 0 0 1-6-6V28a6 6 0 0 1 6-6z" fill="#7BA8C9" />
+              <path d="M58 30l16-14" stroke="#7BA8C9" strokeWidth="6" strokeLinecap="round" />
+              <circle cx="76" cy="14" r="6" fill="#9CC3DD" />
+              <path d="M12 30q-10 8 0 16" stroke="#7BA8C9" strokeWidth="5" fill="none" strokeLinecap="round" />
+            </svg>
+            <div className="absolute left-[64px] top-[6px]">
+              {[0, 8, -6, 14].map((x, i) => (
+                <i
+                  key={i}
+                  className="absolute w-[6px] h-[9px] rounded-[50%_50%_50%_50%/60%_60%_40%_40%] bg-[#7CC4E8] motion-safe:animate-[waterDrop_1.3s_linear_infinite]"
+                  style={{ left: x, animationDelay: `${i * 0.33}s` }}
+                />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* one XP line on the grass */}
+        <div className="absolute left-4 right-4 bottom-3 z-[4]">
+          <div className="flex items-center justify-between gap-3 text-[11.5px] font-extrabold tabular-nums" style={{ color: "#2E5B41" }}>
+            <span className={xpAwarded === 0 ? "opacity-60" : ""}>
+              +{xpAwarded ?? xpValue} XP <span className="font-bold" style={{ color: "#6B6560" }}>· {levelUp?.already_earned ? tu("alreadyEarned") : xpLabel}</span>
+            </span>
+            {after && (
+              <span>
+                {after.into}/{after.needed} · Lv.{after.level}
+              </span>
+            )}
+          </div>
+          <div className="mt-1 h-[7px] rounded-full overflow-hidden" style={{ background: "rgba(255,253,246,.7)" }}>
+            <i
+              className="not-italic block h-full rounded-full bg-success transition-[width] duration-[1400ms] ease-[cubic-bezier(.2,.8,.2,1)]"
+              style={{ width: `${fill ?? startPct}%` }}
+            />
+          </div>
+        </div>
+      </GardenScene>
+
+      {/* tags + coins, one quiet row under the scene */}
+      <div className="flex flex-wrap items-center gap-1.5 px-[18px] py-3">
+        {tags}
+        <span className="ml-auto inline-flex items-center gap-1.5 text-[12px] font-bold px-2.5 py-1 rounded-full border whitespace-nowrap bg-[var(--tint-amber)] border-amber-line text-[#B7791F]">
+          {(levelUp?.coins_earned ?? 0) > 0 ? tu("coinsEarned", { n: levelUp!.coins_earned }) : <span className="text-faint">{tu("noCoinsThisTime")}</span>}
+        </span>
       </div>
 
       {levelUp?.leveled_up && (
@@ -190,38 +280,6 @@ export default function ResultShell({
           <p className="text-[13.5px] font-bold text-success-deep">{tu("levelUp", { level: levelUp.new_level })}</p>
         </div>
       )}
-
-      <div className="grid grid-cols-2 divide-x divide-line border-t border-line bg-warm">
-        <div className="px-4 py-3">
-          {/* The real number the server paid, when it said — `xpValue` is the
-              skill's full rate, which a replay of an already-rewarded chapter
-              does not earn (migration 0063). Showing the rate there would
-              promise XP that never arrived. */}
-          <b
-            className={`block text-[19px] font-bold leading-tight tabular-nums ${
-              xpAwarded === 0 ? "text-faint" : "text-success"
-            }`}
-          >
-            +{xpAwarded ?? xpValue} XP
-          </b>
-          <small className="text-xs text-muted">{levelUp?.already_earned ? tu("alreadyEarned") : xpLabel}</small>
-        </div>
-        <div className="px-4 py-3">
-          {(levelUp?.coins_earned ?? 0) > 0 ? (
-            <>
-              <b className="block text-[19px] font-bold text-[#B7791F] leading-tight tabular-nums">
-                {tu("coinsEarned", { n: levelUp!.coins_earned })}
-              </b>
-              <small className="text-xs text-muted">{tu("coinsEarnedLabel")}</small>
-            </>
-          ) : (
-            <>
-              <b className="block text-[19px] font-bold text-faint leading-tight">—</b>
-              <small className="text-xs text-muted">{tu("noCoinsThisTime")}</small>
-            </>
-          )}
-        </div>
-      </div>
 
       {blocked && (
         <p className="px-[18px] py-2.5 text-[12.5px] font-semibold text-amber bg-[var(--tint-amber)] border-t border-amber-line">

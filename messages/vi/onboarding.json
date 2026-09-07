@@ -98,7 +98,9 @@
     "alreadyHere": "Đã có tài khoản rồi?",
     "password": "Mật khẩu",
     "passwordPlaceholder": "Ít nhất 8 ký tự",
-    "create": "Tạo tài khoản"
+    "create": "Tạo tài khoản",
+    "saveSeed": "Lưu hạt giống của bạn",
+    "seedBubble": "Mình đợi ở đây — giữ mình lại nhé?"
   },
   "confirm": {
     "title": "Nhập mã của bạn",

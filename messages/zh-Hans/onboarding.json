@@ -98,7 +98,9 @@
     "alreadyHere": "已经有账号了？",
     "password": "密码",
     "passwordPlaceholder": "至少 8 个字符",
-    "create": "创建账户"
+    "create": "创建账户",
+    "saveSeed": "保存你的种子",
+    "seedBubble": "我在这里等你，把我保存下来吧？"
   },
   "confirm": {
     "title": "输入验证码",
