@@ -238,9 +238,11 @@ const CHO_BIGGER_VOWELS = new Set(["ㅜ", "ㅘ", "ㅙ", "ㅚ", "ㅝ", "ㅞ", "�
  * ㅋ/ㅍ read heavy. Multiplier on CHO_SHRINK; anything absent (ㄴ ㄹ ㅁ ㅂ
  * ㅇ ㅌ) stays 1. ㅏ only — every other vowel keeps its own tier below. */
 const CHO_SIZE_WITH_A: Record<string, number> = {
-  ㄱ: 1.3, ㄲ: 1.3, ㄷ: 1.3, ㄸ: 1.3, ㅃ: 1.3, ㅅ: 1.3, ㅆ: 1.3,
+  ㄱ: 1.3, ㄲ: 1.3, ㄷ: 1.04, ㄸ: 1.3, ㅃ: 1.3, ㅅ: 1.3, ㅆ: 1.3,
   ㅈ: 1.3, ㅉ: 1.3, ㅊ: 1.3, ㅎ: 1.3, ㅋ: 1.04, ㅍ: 1.04,
 };
+/** ㅏ-only: the whole block slides right by this much. */
+const A_BLOCK_SHIFT = 14;
 const choShrinkFor = (jung: string, cho: string): number => {
   if (jung === "ㅏ" && CHO_SIZE_WITH_A[cho] !== undefined) return CHO_SHRINK * CHO_SIZE_WITH_A[cho];
   if (CHO_NORMAL_VOWELS.has(jung)) return CHO_SHRINK;
@@ -311,6 +313,13 @@ function syllableAnchors(char: string): StrokeAnchors[] {
     if (leftIIdx !== undefined) {
       const refX = fitBox(TRACE_ANCHORS["ㅏ"], jungBox)[0][0][0];
       jungPart = translateX(jungPart, refX - jungPart[leftIIdx][0][0]);
+    }
+    // ㅏ sits further left in its box than its siblings (one short tick,
+    // no second stem), so a ㅏ block hangs left of centre. Nudge the whole
+    // block — consonant and vowel together — right to re-centre it.
+    if (jung === "ㅏ") {
+      choPart = translateX(choPart, A_BLOCK_SHIFT);
+      jungPart = translateX(jungPart, A_BLOCK_SHIFT);
     }
   } else if (HORIZONTAL_VOWELS.has(jung)) {
     // 고: consonant above the centre line, vowel below it. A double consonant
