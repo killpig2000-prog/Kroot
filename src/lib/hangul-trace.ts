@@ -215,6 +215,10 @@ function translateX(strokes: StrokeAnchors[], dx: number): StrokeAnchors[] {
 const LEFT_I_STROKE: Record<string, number> = { ㅐ: 0, ㅒ: 0, ㅓ: 1, ㅔ: 1, ㅕ: 2, ㅖ: 2 };
 /** The consonant in a block reads noticeably smaller than the vowel beside it. */
 const CHO_SHRINK = 0.74;
+/** ㅗ through ㅣ (everything except ㅏㅐㅑㅒㅓㅔㅕㅖ): consonant reads ~30% bigger. */
+const CHO_SHRINK_BIG = CHO_SHRINK * 1.3;
+const CHO_NORMAL_VOWELS = new Set(["ㅏ", "ㅐ", "ㅑ", "ㅒ", "ㅓ", "ㅔ", "ㅕ", "ㅖ"]);
+const choShrinkFor = (jung: string): number => (CHO_NORMAL_VOWELS.has(jung) ? CHO_SHRINK : CHO_SHRINK_BIG);
 
 type Box = [x0: number, x1: number, y0: number, y1: number];
 
@@ -268,7 +272,7 @@ function syllableAnchors(char: string): StrokeAnchors[] {
     // both span the same height so the block reads as one symmetric letter.
     const top = hasJong ? 36 : 52, bottom = hasJong ? 166 : 268;
     const mid = (top + bottom) / 2, jungTop = mid - (mid - top) * 0.82, jungBottom = mid + (bottom - mid) * 0.82;
-    choPart = shrinkAt(fitBox(TRACE_ANCHORS[cho], [44, CENTER - 4, top, bottom]), CENTER - 4, (top + bottom) / 2, CHO_SHRINK);
+    choPart = shrinkAt(fitBox(TRACE_ANCHORS[cho], [44, CENTER - 4, top, bottom]), CENTER - 4, (top + bottom) / 2, choShrinkFor(jung));
     const jungBox: Box = [CENTER + 20, CENTER + 108, jungTop, jungBottom];
     jungPart = fitBox(TRACE_ANCHORS[jung], jungBox);
     const leftIIdx = LEFT_I_STROKE[jung];
@@ -285,10 +289,10 @@ function syllableAnchors(char: string): StrokeAnchors[] {
     const barY = BAR_Y[jung];
     const jungSrc = barY !== undefined ? squashToward(TRACE_ANCHORS[jung], barY, BAR_SQUASH[jung]) : TRACE_ANCHORS[jung];
     const choBox: Box = hasJong ? [92, 228, 40, 92] : [86, 234, 56, 120];
-    choPart = shrinkAt(fitBox(choSrc, choBox), (choBox[0] + choBox[1]) / 2, (choBox[2] + choBox[3]) / 2, CHO_SHRINK);
+    choPart = shrinkAt(fitBox(choSrc, choBox), (choBox[0] + choBox[1]) / 2, (choBox[2] + choBox[3]) / 2, choShrinkFor(jung));
     jungPart = fitBox(jungSrc, hasJong ? [76, 244, 136, 182] : [76, 244, 196, 262]);
   } else if (hasJong) {
-    choPart = shrinkAt(fitBox(TRACE_ANCHORS[cho], [44, 134, 34, 112]), 89, 73, CHO_SHRINK);
+    choPart = shrinkAt(fitBox(TRACE_ANCHORS[cho], [44, 134, 34, 112]), 89, 73, choShrinkFor(jung));
     jungPart = fitBox(TRACE_ANCHORS[jung], [52, 292, 34, 178]);
   } else {
     // 뒤: the w-vowel keeps its own coordinates (its ㅗ/ㅜ part is drawn low
@@ -298,7 +302,7 @@ function syllableAnchors(char: string): StrokeAnchors[] {
     const barTop = W_VOWEL_BAR_TOP[jung] ?? 184;
     const cx = W_VOWEL_BAR_MID[jung] ?? 88;
     const choBox: Box = [cx - 32, cx + 32, 84, barTop - 14];
-    choPart = shrinkAt(fitBox(TRACE_ANCHORS[cho], choBox), cx, (choBox[2] + choBox[3]) / 2, CHO_SHRINK);
+    choPart = shrinkAt(fitBox(TRACE_ANCHORS[cho], choBox), cx, (choBox[2] + choBox[3]) / 2, choShrinkFor(jung));
     jungPart = TRACE_ANCHORS[jung];
   }
   const jongBox: Box = [74, 246, 190, 282];
