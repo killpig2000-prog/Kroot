@@ -436,49 +436,8 @@ function SpiritDeer() {
 // level 50. Each place gets its own silhouette, not just a color, so 1st
 // vs. 2nd vs. 3rd reads at a glance: 1st is the only one with laurel
 // sprigs, 3rd drops the pleats and tails for a plain pendant disc.
-const RIBBON_X = 188;
-const RIBBON_Y = 30;
-function FairMedal({ bg, fg, ring, place }: { bg: string; fg: string; ring: string; place: 1 | 2 | 3 }) {
-  return (
-    <g transform={`translate(${RIBBON_X} ${RIBBON_Y})`}>
-      {place === 1 && (
-        <g fill="#4C7A3F" stroke="#3A5F30" strokeWidth=".6">
-          <path d="M-8 -16 Q2 -22 -2 -32 Q-10 -26 -12 -18Z" />
-          <path d="M0 -6 Q12 -9 10 -20 Q0 -16 -4 -8Z" />
-          <path d="M2 6 Q15 6 16 -6 Q4 -4 -2 4Z" />
-          <path d="M-8 16 Q4 20 8 9 Q-3 8 -10 12Z" />
-        </g>
-      )}
-      {place <= 2 ? (
-        <g transform={`scale(${place === 1 ? 1.35 : 1.2})`}>
-          <circle r="19" fill={bg} />
-          <g stroke={ring} strokeWidth="1.2" opacity=".55">
-            <line x1="0" y1="-19" x2="0" y2="19" />
-            <line x1="-16.5" y1="-9.5" x2="16.5" y2="9.5" />
-            <line x1="-16.5" y1="9.5" x2="16.5" y2="-9.5" />
-            <line x1="-19" y1="0" x2="19" y2="0" />
-          </g>
-          <circle r="12" fill={ring} />
-          <circle cx="-4" cy="-5" r="3.2" fill="#FFFFFF" opacity=".85" />
-          <text y="6" textAnchor="middle" fontFamily="Georgia, 'Noto Serif KR', serif" fontSize="14" fontWeight="700" fill={fg}>
-            {place}
-          </text>
-          <path d="M-9 15 L-15 41 L-3 33 Z" fill={bg} stroke={ring} strokeWidth="1" />
-          <path d="M9 15 L15 41 L3 33 Z" fill={bg} stroke={ring} strokeWidth="1" />
-        </g>
-      ) : (
-        <g transform="scale(1.1)">
-          <path d="M-6 -20 L6 -20 L4 -4 L-4 -4 Z" fill={bg} stroke={ring} strokeWidth="1" />
-          <circle r="15" fill={bg} stroke={ring} strokeWidth="1.2" />
-          <circle r="15" fill="none" stroke={ring === "#8F5C36" ? "#F0DAC5" : "#FFF"} strokeWidth="1" strokeDasharray="2 2.4" opacity=".7" />
-          <text y="6" textAnchor="middle" fontFamily="Georgia, 'Noto Serif KR', serif" fontSize="16" fontWeight="700" fill={fg}>
-            {place}
-          </text>
-        </g>
-      )}
-    </g>
-  );
-}
+// (The FairMedal drawing that used to live here moved out with the change
+// above — /ranking draws its own podium medals.)
 
 export const RIBBONS = [
   { id: "ribbon-blue", place: 1, bg: "#D9A93A", ring: "#B8862A", fg: "#5C4A0E", color: "blue" },
@@ -495,7 +454,13 @@ const RIBBON_COSTUMES: Costume[] = RIBBONS.map((r) => ({
   price: 0,
   rarity: "rare",
   icon: "🎀",
-  scene: { layer: "front", draw: () => <FairMedal bg={r.bg} ring={r.ring} fg={r.fg} place={r.place} /> },
+  // Not drawn on the tree any more (user, 2026-09-07): the medal pinned to
+  // the canopy's top-right corner looked like a stray badge once the garden
+  // went full-bleed, and the /ranking podium already shows the week's top
+  // three with their medals. The weekly grant (settle_league_weeks) still
+  // runs, so a ribbon row is worn invisibly and `ribbonFor` keeps working
+  // for copy — only the picture is gone. FairMedal stays for the podium.
+  scene: { layer: "front", draw: () => null },
 }));
 
 export const COSTUMES: Costume[] = [
