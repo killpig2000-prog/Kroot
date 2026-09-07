@@ -215,15 +215,26 @@ function translateX(strokes: StrokeAnchors[], dx: number): StrokeAnchors[] {
 const LEFT_I_STROKE: Record<string, number> = { ㅐ: 0, ㅒ: 0, ㅓ: 1, ㅔ: 1, ㅕ: 2, ㅖ: 2 };
 /** The consonant in a block reads noticeably smaller than the vowel beside it. */
 const CHO_SHRINK = 0.74;
-/** ㅗㅛㅜㅣ and the w-vowels ㅘㅙㅚㅝㅞㅟㅢ: consonant reads ~30% bigger. */
+/** ㅣ only: consonant reads ~30% bigger. */
 const CHO_SHRINK_BIG = CHO_SHRINK * 1.3;
-/** ㅡ alone: consonant reads bigger still — matches what ㅘ~ㅢ briefly used. */
-const CHO_SHRINK_W = CHO_SHRINK_BIG * 1.4;
-/** ㅠ reads at plain size, same as ㅏ's ㄱ — not grouped with the rest of ㅗ~ㅣ. */
-const CHO_NORMAL_VOWELS = new Set(["ㅏ", "ㅐ", "ㅑ", "ㅒ", "ㅓ", "ㅔ", "ㅕ", "ㅖ", "ㅠ"]);
-const CHO_EXTRA_BIG_VOWELS = new Set(["ㅡ"]);
-const choShrinkFor = (jung: string): number =>
-  CHO_NORMAL_VOWELS.has(jung) ? CHO_SHRINK : CHO_EXTRA_BIG_VOWELS.has(jung) ? CHO_SHRINK_W : CHO_SHRINK_BIG;
+/** ㅗㅛㅜ and the w-vowels ㅘㅙㅚㅝㅞㅟ: another 30% on top of CHO_SHRINK_BIG. */
+const CHO_SHRINK_BIGGER = CHO_SHRINK_BIG * 1.3;
+/** ㅡ: another 30% on top of what ㅘ~ㅢ used before this pass. */
+const CHO_SHRINK_W = CHO_SHRINK_BIG * 1.4 * 1.3;
+/** ㅠ: 50% over plain (it doesn't travel with the rest of ㅗ~ㅢ). */
+const CHO_SHRINK_YU = CHO_SHRINK * 1.5;
+/** ㅢ: 50% over CHO_SHRINK_BIG, bigger than its w-vowel siblings. */
+const CHO_SHRINK_YI = CHO_SHRINK_BIG * 1.5;
+const CHO_NORMAL_VOWELS = new Set(["ㅏ", "ㅐ", "ㅑ", "ㅒ", "ㅓ", "ㅔ", "ㅕ", "ㅖ"]);
+const CHO_BIGGER_VOWELS = new Set(["ㅗ", "ㅛ", "ㅜ", "ㅘ", "ㅙ", "ㅚ", "ㅝ", "ㅞ", "ㅟ"]);
+const choShrinkFor = (jung: string): number => {
+  if (CHO_NORMAL_VOWELS.has(jung)) return CHO_SHRINK;
+  if (jung === "ㅠ") return CHO_SHRINK_YU;
+  if (jung === "ㅢ") return CHO_SHRINK_YI;
+  if (jung === "ㅡ") return CHO_SHRINK_W;
+  if (CHO_BIGGER_VOWELS.has(jung)) return CHO_SHRINK_BIGGER;
+  return CHO_SHRINK_BIG; // ㅣ
+};
 
 type Box = [x0: number, x1: number, y0: number, y1: number];
 
