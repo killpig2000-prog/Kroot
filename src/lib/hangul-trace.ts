@@ -217,8 +217,12 @@ const LEFT_I_STROKE: Record<string, number> = { ㅐ: 0, ㅒ: 0, ㅓ: 1, ㅔ: 1, 
 const CHO_SHRINK = 0.74;
 /** ㅗ through ㅣ (everything except ㅏㅐㅑㅒㅓㅔㅕㅖ): consonant reads ~30% bigger. */
 const CHO_SHRINK_BIG = CHO_SHRINK * 1.3;
+/** ㅘㅙㅚㅝㅞㅟㅢ: another 40% on top of CHO_SHRINK_BIG. */
+const CHO_SHRINK_W = CHO_SHRINK_BIG * 1.4;
 const CHO_NORMAL_VOWELS = new Set(["ㅏ", "ㅐ", "ㅑ", "ㅒ", "ㅓ", "ㅔ", "ㅕ", "ㅖ"]);
-const choShrinkFor = (jung: string): number => (CHO_NORMAL_VOWELS.has(jung) ? CHO_SHRINK : CHO_SHRINK_BIG);
+const W_VOWEL_SET = new Set(["ㅘ", "ㅙ", "ㅚ", "ㅝ", "ㅞ", "ㅟ", "ㅢ"]);
+const choShrinkFor = (jung: string): number =>
+  CHO_NORMAL_VOWELS.has(jung) ? CHO_SHRINK : W_VOWEL_SET.has(jung) ? CHO_SHRINK_W : CHO_SHRINK_BIG;
 
 type Box = [x0: number, x1: number, y0: number, y1: number];
 
