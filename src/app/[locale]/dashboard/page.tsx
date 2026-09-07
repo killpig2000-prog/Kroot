@@ -341,12 +341,12 @@ export default async function DashboardPage() {
                   data-tour={m.tourId}
                   className="group relative overflow-hidden flex flex-col items-center justify-center gap-[7px] min-h-[86px] rounded-[20px] xl:rounded-[17px] border border-line bg-cream px-[6px] py-[13px] text-center transition-all hover:-translate-y-0.5 hover:border-success"
                 >
-                  {/* drawn icons below xl, the sidebar's emoji at xl+ */}
-                  <span className="xl:hidden text-success-deep transition-transform group-hover:scale-110">
+                  {/* the drawn icons everywhere now (2026-09-08 user call):
+                      the emoji fallback the desktop grid kept for one pass is
+                      gone, so a door looks the same on a phone and a laptop.
+                      navItems' `icon` stays for anywhere else that reads it. */}
+                  <span className="text-success-deep transition-transform group-hover:scale-110">
                     <ModuleIcon href={m.href} />
-                  </span>
-                  <span className="hidden xl:block text-[25px] leading-none" aria-hidden="true">
-                    {m.icon}
                   </span>
                   <span className="text-[14.5px] font-bold text-charcoal leading-tight">{tn(m.label.toLowerCase())}</span>
                   {/* the per-module progress the page already computes — it was
