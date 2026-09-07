@@ -5,8 +5,6 @@ import Sidebar from "@/components/dashboard/Sidebar";
 import LevelMap from "@/components/dashboard/LevelMap";
 import { computeEligibility } from "@/lib/promotion-server";
 import { testForGrade } from "@/lib/promotion-test";
-import ReminderSettings from "@/components/profile/ReminderSettings";
-import SoundSettings from "@/components/profile/SoundSettings";
 import HeadlineKpis, { type Headline } from "@/components/profile/HeadlineKpis";
 import MonthlyGrass from "@/components/profile/MonthlyGrass";
 import { gardenHeadline, MONTH_GOAL } from "@/lib/study-garden";
@@ -393,18 +391,6 @@ export default async function ProfilePage() {
             {promo && (
               <LevelMap current={level} checks={promoChecks} eligible={elig.eligible} overallPct={overallPct} />
             )}
-
-            {/* 6. settings */}
-            <h2 className="font-semibold text-[15px] mt-3.5">{t("settings")}</h2>
-
-            <ReminderSettings
-              userId={user.id}
-              initialPush={extras?.reminder_push ?? false}
-              initialEmail={extras?.reminder_email ?? false}
-              hasEmail={!!user.email}
-            />
-
-            <SoundSettings />
           </div>
         </main>
       </div>

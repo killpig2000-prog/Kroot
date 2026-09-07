@@ -26,6 +26,7 @@ const LOCALE_PREFIX = new RegExp(`^/(${routing.locales.join("|")})(?=/|$)`);
 const PROTECTED_PREFIXES = [
   "/dashboard",
   "/profile",
+  "/myroom",
   "/vocabulary",
   "/listening",
   "/reading",

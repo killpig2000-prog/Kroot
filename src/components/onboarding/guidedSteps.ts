@@ -92,7 +92,10 @@ export const GUIDED_TARGET: Record<GuidedStepKey, string | null> = {
   "writing-board": "guided-writing-board",
   "writing-check": "guided-writing-check",
   "writing-result": "guided-writing-result",
-  "practice-more": "section-practice",
+  // "section-practice" (a Sidebar section) retired with the 2026-09-07 My
+  // Room restructure; the always-present Garden tab is the next best thing
+  // to point at for "there's more to explore".
+  "practice-more": "guided-nav-home",
   "shop-nav": "guided-nav-shop",
   "shop-coins": "guided-shop-coins",
   "shop-pick": "guided-shop-gift",

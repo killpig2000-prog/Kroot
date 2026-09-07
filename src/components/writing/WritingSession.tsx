@@ -49,6 +49,7 @@ export default function WritingSession({
   const router = useRouter();
   const supabase = useMemo(() => createClient(), []);
   const tc = useTranslations("writing");
+  const tn = useTranslations("nav");
 
   const [phase, setPhase] = useState<Phase>("write");
   useSaveResume(phase === "write" ? userId : null, {
@@ -250,6 +251,11 @@ export default function WritingSession({
       navigating={navigating}
       onGoTo={goTo}
     />
+    {/* Shop moved off the global nav into My room (2026-09-07 restructure);
+        this is the guided tour's shop-nav target for the B1+ track. */}
+    <Link href="/shop" data-tour="guided-nav-shop" className="inline-flex items-center gap-1.5 text-[13.5px] font-semibold text-success hover:underline mt-3">
+      🛍️ {tn("shop")} →
+    </Link>
     </>
   );
 }

@@ -2,6 +2,7 @@ import { getTranslations } from "next-intl/server";
 import { redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
+import { Link } from "@/i18n/navigation";
 import HangulExplorer from "@/components/hangul/HangulExplorer";
 import GuidedStep from "@/components/onboarding/GuidedStep";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
@@ -39,6 +40,16 @@ export default async function HangulPage() {
               </span>
               {tn("hangul")}
             </h1>
+            {/* Vocabulary moved off the global nav (2026-09-07 My Room
+                restructure) — this is also the guided tour's hangul→vocab
+                hop target, so it has to be reachable from this page itself. */}
+            <Link
+              href="/vocabulary"
+              data-tour="guided-nav-vocabulary"
+              className="text-[13.5px] font-semibold text-success hover:underline"
+            >
+              {tn("vocabulary")} →
+            </Link>
           </div>
 
           <GuidedStep step="hangul-pick" />

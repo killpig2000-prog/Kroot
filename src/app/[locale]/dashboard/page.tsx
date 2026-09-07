@@ -6,6 +6,7 @@ import Sidebar from "@/components/dashboard/Sidebar";
 import Widgets from "@/components/dashboard/Widgets";
 import FeedbackWidget, { FeedbackButton } from "@/components/dashboard/FeedbackWidget";
 import TodaysQuestCard from "@/components/dashboard/TodaysQuestCard";
+import { MODULES } from "@/components/dashboard/navItems";
 import InstallBanner from "@/components/pwa/InstallBanner";
 import OnboardingTour from "@/components/onboarding/OnboardingTour";
 import TutorialFinishBanner from "@/components/onboarding/TutorialFinishBanner";
@@ -68,6 +69,7 @@ type Snapshot = {
 export default async function DashboardPage() {
   const supabase = await createClient();
   const t = await getTranslations("dashboard");
+  const tn = await getTranslations("nav");
   const user = await getClaimsUser(supabase);
 
   if (!user) redirect("/onboarding");
@@ -303,6 +305,42 @@ export default async function DashboardPage() {
               "what to do today" beats a resume shortcut). */}
           <div data-tour="quest">
             <TodaysQuestCard quest={quest} href={questHref} />
+          </div>
+
+          {/* the eight lesson modules — used to live behind BottomNav's
+              Basics/Practice/Relax sheets and the Sidebar's long list; both
+              collapsed to three flat tabs (2026-09-07 restructure), so this
+              grid is now the only way to reach them. Hangul and Grammar are
+              here on borrowed time — steps 3/4 of the plan fold them into
+              Vocabulary/Writing. */}
+          <div className="grid grid-cols-4 gap-2 mb-3">
+            {MODULES.map((m) => {
+              const key = m.href === "/speaking" ? "pronunciation" : m.href.slice(1);
+              const p = skillProgress[key];
+              return (
+                <Link
+                  key={m.href}
+                  href={m.href}
+                  data-tour={m.tourId}
+                  className="relative flex flex-col items-center justify-center gap-1 min-h-[72px] rounded-[14px] border border-line bg-cream px-1.5 py-3 text-center transition-all hover:-translate-y-0.5 hover:border-success"
+                >
+                  {m.popular && (
+                    <span className="absolute -top-[7px] right-2 text-[8.5px] font-extrabold text-[var(--c-amber-deep)] bg-[var(--tint-amber)] rounded-full px-[6px] py-px">
+                      {tn("popular")}
+                    </span>
+                  )}
+                  <span className="text-[19px] leading-none" aria-hidden="true">
+                    {m.icon}
+                  </span>
+                  <span className="text-[12px] font-bold text-charcoal leading-tight">{tn(m.label.toLowerCase())}</span>
+                  {p && p.total > 0 && (
+                    <span className="text-[10px] font-semibold text-muted tabular-nums">
+                      {p.done}/{p.total}
+                    </span>
+                  )}
+                </Link>
+              );
+            })}
           </div>
 
           <InstallBanner streakDays={streakDays} />

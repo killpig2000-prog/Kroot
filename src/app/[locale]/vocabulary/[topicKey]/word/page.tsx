@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { redirect } from "@/i18n/navigation";
+import { Link, redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import WordDetailCard from "@/components/vocabulary/WordDetailCard";
@@ -34,6 +34,7 @@ export default async function VocabWordPage({
   if (!topic) notFound();
 
   const tv = await getTranslations("vocabulary");
+  const tn = await getTranslations("nav");
 
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
@@ -150,10 +151,18 @@ export default async function VocabWordPage({
           <GuidedStep step="word-read" />
           <GuidedStep step="word-goti" />
           <GuidedStep step="word-bank" />
-          {/* Shop is spotlit in the Sidebar without leaving this page — the
-              next step after "add to bank" only actually navigates once the
-              learner clicks it. */}
+          {/* Shop moved off the global nav into My room (2026-09-07
+              restructure); this page's own quick link is now the guided
+              tour's shop-nav target too — the next step after "add to bank"
+              only actually navigates once the learner clicks it. */}
           <GuidedStep step="shop-nav" />
+          <Link
+            href="/shop"
+            data-tour="guided-nav-shop"
+            className="inline-flex items-center gap-1.5 text-[13.5px] font-semibold text-success hover:underline mb-2"
+          >
+            🛍️ {tn("shop")} →
+          </Link>
 
           <WordDetailCard
             // Remount per word: without a key the card keeps its "saving"

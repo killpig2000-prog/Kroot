@@ -6,13 +6,12 @@ import { useRouter, usePathname } from "@/i18n/navigation";
 import { rememberLocale } from "@/i18n/locale";
 import AccountMenu from "@/components/dashboard/AccountMenu";
 import { Link } from "@/i18n/navigation";
-import { MAIN_ITEMS, SECTIONS, type NavColor } from "@/components/dashboard/navItems";
+import { MAIN_ITEMS, type NavColor } from "@/components/dashboard/navItems";
 
 import BrandMark from "@/components/ui/BrandMark";
 
 // Nav labels map 1:1 to nav.json keys, except the two-word ones.
-const navKey = (label: string) =>
-  label === "My progress" ? "myProgress" : label === "My word bank" ? "myWords" : label.toLowerCase();
+const navKey = (label: string) => (label === "Learn" ? "learn" : label === "My room" ? "myRoom" : label.toLowerCase());
 
 const LANGUAGES = [
   { code: "en", label: "English" },
@@ -26,13 +25,13 @@ const LANGUAGES = [
 const HIDDEN_LANGUAGES: { code: string; label: string }[] = [];
 
 // The sidebar renders every item quiet on purpose — text only, no emoji, no
-// color tiles, no "Popular" badges (those still show in the phone Menu sheet).
-// 13 always-visible destinations beat an accordion that hides half of them.
+// color tiles. Three flat destinations (2026-09-07 restructure) instead of
+// 13 always-visible ones — the module list moved to the Garden page's own
+// grid, and My room absorbed Shop/Ranking/word bank.
 function NavItem({
   label,
   href,
   on,
-  isNew,
   tourId,
 }: {
   icon: string;
@@ -51,18 +50,13 @@ function NavItem({
     <Link
       href={href}
       data-tour={tourId}
-      className={`flex items-center gap-2 px-2.5 py-[6px] text-[13.5px] transition-colors ${
+      className={`flex items-center gap-2 px-2.5 py-[7px] text-[14.5px] transition-colors ${
         on
           ? "bg-cream border border-dashed border-dash border-r-0 rounded-l-[10px] -mr-3.5 text-success-deep font-bold"
           : "rounded-[9px] text-charcoal font-medium hover:bg-cream hover:text-success-deep"
       }`}
     >
       <span className="flex-1 min-w-0 truncate">{tn(navKey(label))}</span>
-      {isNew && !on && (
-        <span className="flex-none text-[8.5px] font-extrabold tracking-[.04em] text-white bg-[var(--c-success)] rounded-full px-[5px] py-px">
-          {tn("new").toUpperCase()}
-        </span>
-      )}
     </Link>
   );
 
@@ -187,31 +181,13 @@ function SidebarBody({
         )}
       </div>
 
-      {/* Personal destinations (Garden / My progress / My word bank) sit in
-          their own tinted card so they read as "your space", distinct from
-          the learning menu below — no label needed, the container says it. */}
+      {/* Garden / Learn / My room — the whole nav, same three tabs the phone
+          uses. No label needed, three items read fine unlabelled. */}
       <div className="flex flex-col gap-0.5 bg-cream border border-dash rounded-[10px] p-1 mb-2">
         {MAIN_ITEMS.map((item) => (
-          <NavItem key={item.label} {...item} on={pathname === item.href} />
+          <NavItem key={item.label} {...item} on={item.href === "/dashboard" ? pathname === item.href : pathname.startsWith(item.href)} />
         ))}
       </div>
-
-      {SECTIONS.map((section) => (
-        <div
-          key={section.title}
-          data-tour={`section-${section.title.toLowerCase()}`}
-          className="flex flex-col gap-0.5 pt-2.5 mt-1 border-t border-line"
-        >
-          <p className="text-[12.5px] font-extrabold tracking-[.07em] uppercase text-success-deep px-3 pb-1.5">
-            {tn(section.title.toLowerCase())}
-          </p>
-          <div className="flex flex-col gap-0.5">
-            {section.items.map((item) => (
-              <NavItem key={item.label} {...item} on={pathname.startsWith(item.href)} />
-            ))}
-          </div>
-        </div>
-      ))}
 
       <div className="mt-auto flex flex-col gap-1 pt-4">
         <div className="flex items-center gap-2.5 border border-[#ECD98A] bg-[#FEF9C3] px-[13px] py-[11px] mb-1.5 rotate-[-1deg] shadow-[0_8px_18px_-12px_rgba(120,100,30,.4)]">

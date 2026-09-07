@@ -33,34 +33,21 @@ const MOBILE_BREAKPOINT = 768; // md — below this the sidebar is replaced by B
 // brand-new learner sees. Everything after it spotlights one real element.
 // "garden" (the year grass) left the dashboard for My progress on 2026-09-07,
 // so the tour ends on the quest — the last thing on the phone's one screen.
-const STEPS = ["welcome", "sidebar", "basics", "practice", "relax", "tree", "quest"] as const;
+// The old "basics"/"practice"/"relax" steps (pointing at BottomNav's sheets
+// and the Sidebar's section wrappers) are gone as of the same day's My Room
+// restructure — those eleven destinations moved onto the dashboard's own
+// module grid, which is already in view once the tour reaches "tree"/"quest",
+// so a separate spotlight for them would be redundant.
+const STEPS = ["welcome", "sidebar", "tree", "quest"] as const;
 type StepKey = (typeof STEPS)[number];
 
 // STEPS are i18n/copy keys; TARGETS are the data-tour attribute values the
-// matching DOM element actually carries. Desktop points at the Sidebar's
-// section wrappers ("section-<name>"); below md the sidebar isn't in the
-// layout at all, so the same steps point at BottomNav's own tabs instead —
-// Relax lives inside its "More" sheet on mobile, so that step points there.
+// matching DOM element actually carries. Below md the Sidebar isn't in the
+// layout at all, so "sidebar" points at BottomNav instead.
 function targetsFor(mobile: boolean): Record<StepKey, string | null> {
   return mobile
-    ? {
-        welcome: null,
-        sidebar: "mobile-nav",
-        basics: "tab-basics",
-        practice: "tab-practice",
-        relax: "tab-more",
-        tree: "tree",
-        quest: "quest",
-      }
-    : {
-        welcome: null,
-        sidebar: "sidebar",
-        basics: "section-basics",
-        practice: "section-practice",
-        relax: "section-relax",
-        tree: "tree",
-        quest: "quest",
-      };
+    ? { welcome: null, sidebar: "mobile-nav", tree: "tree", quest: "quest" }
+    : { welcome: null, sidebar: "sidebar", tree: "tree", quest: "quest" };
 }
 
 // Ring padding per target. BottomNav is flush with the screen edges and its

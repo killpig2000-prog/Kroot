@@ -47,7 +47,7 @@ export default async function RankingPage() {
           <RankingBoard species={species} />
         </main>
       </div>
-      <BottomNav streakDays={profile?.streak_days ?? 0} />
+      <BottomNav />
     </div>
   );
 }
