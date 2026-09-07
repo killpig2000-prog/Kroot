@@ -89,5 +89,21 @@
     "title": "声音",
     "sfxTitle": "音效",
     "sfxDesc": "答对、浇水、金币和升级的提示音。韩语语音始终播放。"
+  },
+  "learn": {
+    "heading": "迈向 {level}",
+    "atTop": "已到顶级",
+    "statStreak": "连续天数",
+    "statAccuracy": "正确率",
+    "statWords": "已学单词",
+    "thisWeek": "本周",
+    "avgPerDay": "日均 {n} 分钟",
+    "guideLabel": "{n} 分钟",
+    "minutes": "{n} 分钟",
+    "today": "今天",
+    "bySkill": "按技能",
+    "weakest": "最弱：{skill}",
+    "behind": "{skill} 落后最多",
+    "fillIn": "补一补"
   }
 }

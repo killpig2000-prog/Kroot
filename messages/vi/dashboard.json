@@ -73,7 +73,8 @@
     },
     "growthTab": "Giai đoạn phát triển",
     "keepsakesTab": "Kỷ vật",
-    "openShop": "Mở cửa hàng & tủ đồ"
+    "openShop": "Mở cửa hàng & tủ đồ",
+    "openMyRoom": "Mở Phòng của tôi"
   },
   "growth": {
     "closeAria": "Đóng",
@@ -106,5 +107,11 @@
     "cancel": "Hủy",
     "thanksTitle": "Cảm ơn bạn",
     "thanksBody": "Chúng tôi đã nhận được góp ý của bạn. Mỗi tin nhắn đều được đọc và dùng để quyết định cải thiện điều gì tiếp theo."
+  },
+  "modules": {
+    "vocabulary": "Viết để nhớ",
+    "writing": "Trật tự · tiểu từ",
+    "slang": "Từ hôm nay",
+    "levelDone": "{level} · {done}/{total}"
   }
 }

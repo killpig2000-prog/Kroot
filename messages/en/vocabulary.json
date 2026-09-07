@@ -145,5 +145,18 @@
   "tryTheseTricky": "{n} tricky word(s) from last time come first",
   "studyAgain": "Study again",
   "quizThese": "Quiz these {n}",
-  "wordsCount": "{n} words"
+  "wordsCount": "{n} words",
+  "trace": {
+    "title": "Write it",
+    "modeGuide": "With guide",
+    "modeMemory": "From memory",
+    "hintGuide": "Drag from ① along the grey guide",
+    "hintFree": "Write it from memory — no guide",
+    "caption": "Trace it — stroke order counts",
+    "notYet": "Not scored yet",
+    "reset": "Reset",
+    "check": "Score it",
+    "nextSyllable": "Next block →",
+    "allLetters": "All letters"
+  }
 }

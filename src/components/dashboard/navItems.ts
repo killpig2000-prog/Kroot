@@ -36,21 +36,17 @@ export const MAIN_ITEMS: NavItem[] = [
   { icon: "🌳", label: "My room", href: "/myroom" },
 ];
 
-// The eight lesson modules — rendered as a grid on the Garden page itself
-// (there's no more category sheet to hide them behind). Guide was dropped
-// per the restructure ledger (content 8→6 plan): it had no dependency on
-// the later content-merge steps, so it's gone now rather than staged.
-// Hangul and Grammar are here on borrowed time — steps 3/4 of the plan fold
-// them into Vocabulary/Writing, at which point these two entries retire.
+// The six lesson modules — rendered as a 2×3 grid on the Garden page
+// itself (no category sheet hides them). Content 8→6 per the restructure
+// ledger: Guide is gone; Hangul lives inside the vocabulary card (trace-to-
+// write); Grammar lives inside writing (particle blanks with a "why").
 export const MODULES: NavItem[] = [
-  { icon: "🔤", label: "Hangul", href: "/hangul", color: { text: "#C63958", bg: "#FFF1F2", border: "#FECDD3" }, tourId: "guided-nav-hangul" },
-  { icon: "🃏", label: "Vocabulary", href: "/vocabulary", color: { text: "#6B33CC", bg: "#F5F3FF", border: "#DDD6FE" }, popular: true, tourId: "guided-nav-vocabulary" },
-  { icon: "✏️", label: "Writing", href: "/writing", color: { text: "#C47A25", bg: "#FFFBEB", border: "#FDE68A" }, tourId: "guided-nav-writing" },
-  { icon: "📰", label: "Reading", href: "/reading", color: { text: "#3363CC", bg: "#EFF6FF", border: "#BFDBFE" } },
-  { icon: "🎧", label: "Listening", href: "/listening", color: { text: "#2C9754", bg: "#F0FDF4", border: "#BBF7D0" } },
-  { icon: "🌶️", label: "Pronunciation", href: "/speaking", color: { text: "#228980", bg: "#F0FDFA", border: "#99F6E4" }, popular: true },
-  { icon: "📖", label: "Grammar", href: "/grammar", color: { text: "#423AC5", bg: "#EEF2FF", border: "#C7D2FE" } },
-  { icon: "💬", label: "Slang", href: "/slang", color: { text: "#C13E78", bg: "#FDF2F8", border: "#FBCFE8" } },
+  { icon: "🃏", label: "Vocabulary", href: "/vocabulary", popular: true, tourId: "guided-nav-vocabulary" },
+  { icon: "✏️", label: "Writing", href: "/writing", tourId: "guided-nav-writing" },
+  { icon: "📰", label: "Reading", href: "/reading" },
+  { icon: "🎧", label: "Listening", href: "/listening" },
+  { icon: "🌶️", label: "Pronunciation", href: "/speaking" },
+  { icon: "💬", label: "Slang", href: "/slang" },
 ];
 
 // My room's own list — the learner's things, not lessons. Shop carries

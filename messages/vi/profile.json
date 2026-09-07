@@ -89,5 +89,21 @@
     "title": "Âm thanh",
     "sfxTitle": "Hiệu ứng âm thanh",
     "sfxDesc": "Âm báo khi trả lời đúng, tưới cây, nhận xu và lên cấp. Giọng tiếng Hàn luôn phát."
+  },
+  "learn": {
+    "heading": "Hướng tới {level}",
+    "atTop": "Đã lên đỉnh",
+    "statStreak": "ngày liên tiếp",
+    "statAccuracy": "độ chính xác",
+    "statWords": "từ đã học",
+    "thisWeek": "Tuần này",
+    "avgPerDay": "TB {n} phút/ngày",
+    "guideLabel": "{n} phút",
+    "minutes": "{n} phút",
+    "today": "Hôm nay",
+    "bySkill": "Theo kỹ năng",
+    "weakest": "yếu nhất: {skill}",
+    "behind": "{skill} đang tụt lại nhiều nhất",
+    "fillIn": "Bù vào"
   }
 }

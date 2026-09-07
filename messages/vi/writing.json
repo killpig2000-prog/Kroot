@@ -85,7 +85,20 @@
     "backToGarden": "Về Khu vườn",
     "allChapters": "Tất cả chương",
     "saving": "Đang lưu…",
-    "turnPage": "Sang trang tiếp →"
+    "turnPage": "Sang trang tiếp →",
+    "particles": "Tiểu từ {n}/{total}"
   },
-  "saveFailed": "Chúng tôi chưa lưu được chương này — kết nối bị ngắt. Hãy mở lại khi có mạng để nhận thưởng."
+  "saveFailed": "Chúng tôi chưa lưu được chương này — kết nối bị ngắt. Hãy mở lại khi có mạng để nhận thưởng.",
+  "particles": {
+    "eyebrow": "Tiểu từ",
+    "chapterN": "Chương {n}",
+    "counter": "{n} / {total}",
+    "prompt": "Điền tiểu từ.",
+    "right": "Đúng rồi.",
+    "wrong": "Không phải cái này.",
+    "whyWrong": "Vì sao sai",
+    "whyRight": "Vì sao đúng",
+    "next": "Câu tiếp theo",
+    "finish": "Xem kết quả"
+  }
 }

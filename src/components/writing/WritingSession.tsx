@@ -21,10 +21,17 @@ import {
 } from "@/lib/writing-builder";
 import type { CefrLevel } from "@/lib/tree";
 import WritePhase, { emptyEntry, entryDone, type Entry } from "@/components/writing/WritePhase";
+import ParticlePhase from "@/components/writing/ParticlePhase";
 import CompareResult, { type Answer } from "@/components/writing/CompareResult";
 import GuidedStep from "@/components/onboarding/GuidedStep";
+import { particlesForChapter } from "@/lib/particles";
 
-type Phase = "write" | "compare";
+// write → particles → compare. The particle blanks (은/는/이/가 with the
+// reason on a wrong pick) close the chapter — the grammar page folded into
+// them in the 2026-09-07 restructure. They sit *after* the save so the
+// chapter's score, reward and progress row are exactly what they were; the
+// particle count is a separate number on the result, never part of the score.
+type Phase = "write" | "particles" | "compare";
 
 const CARD = "border border-line rounded-[14px] bg-cream max-w-[900px]";
 const BTN_INK =
@@ -77,6 +84,8 @@ export default function WritingSession({
   // than showing a score the learner will find missing on their next visit.
   const [saveFailed, setSaveFailed] = useState(false);
   const loggedMinutes = useRef(false);
+  const particleItems = useMemo(() => particlesForChapter(level, chapterIndex), [level, chapterIndex]);
+  const [particleScore, setParticleScore] = useState<number | null>(null);
 
   function update(index: number, patch: Partial<Entry>) {
     setEntries((prev) => prev.map((e, i) => (i === index ? { ...e, ...patch } : e)));
@@ -145,7 +154,7 @@ export default function WritingSession({
     }
 
     setResult({ score, answers });
-    setPhase("compare");
+    setPhase(particleItems.length ? "particles" : "compare");
   }
 
   async function logMinutesOnce(score?: number) {
@@ -229,6 +238,22 @@ export default function WritingSession({
     );
   }
 
+  if (phase === "particles") {
+    return (
+      <>
+      {guided}
+      <ParticlePhase
+        items={particleItems}
+        chapterIndex={chapterIndex}
+        onDone={(n) => {
+          setParticleScore(n);
+          setPhase("compare");
+        }}
+      />
+      </>
+    );
+  }
+
   return (
     <>
     {guided}
@@ -250,6 +275,7 @@ export default function WritingSession({
       hasNextChapter={hasNextChapter}
       navigating={navigating}
       onGoTo={goTo}
+      particles={particleScore === null ? null : { correct: particleScore, total: particleItems.length }}
     />
     {/* Shop moved off the global nav into My room (2026-09-07 restructure);
         this is the guided tour's shop-nav target for the B1+ track. */}

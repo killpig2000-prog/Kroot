@@ -144,21 +144,16 @@ export const GUIDED_FORCE_HREF: Partial<Record<GuidedStepKey, string>> = {
 // exact element a click-through completes with, it just takes one more real
 // tap to get there than the desktop single click does.
 export const GUIDED_MOBILE_REVEAL: Partial<Record<GuidedStepKey, string>> = {
-  "hangul-nav": "tab-basics",
-  "hangul-nav-vocab": "tab-basics",
-  "writing-nav": "tab-practice",
-  // Info step with no sheet to open: the ring just lands on the Practice tab.
-  "practice-more": "tab-practice",
-  "shop-nav": "tab-more",
+  // Empty since the 2026-09-07 restructure: BottomNav has no sheets any
+  // more, every nav-hop target is a plain link on the page itself.
 };
 
 // i18n keys under tour.guided.<step>.{title,body}
 const SHOP_TAIL: GuidedStepKey[] = ["shop-nav", "shop-coins", "shop-pick", "shop-cta", "finish"];
 export const GUIDED_ORDERS: Record<GuidedTrack, GuidedStepKey[]> = {
+  // Hangul folded into the vocabulary card (2026-09-07 restructure): the
+  // A1 track starts straight at the Vocabulary door on the dashboard.
   basics: [
-    "hangul-nav",
-    "hangul-pick",
-    "hangul-stroke",
     "hangul-nav-vocab",
     "vocab-chapter",
     "vocab-word",

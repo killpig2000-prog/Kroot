@@ -89,5 +89,21 @@
     "title": "Sonido",
     "sfxTitle": "Efectos de sonido",
     "sfxDesc": "Tonos al acertar, regar, ganar monedas y subir de nivel. La voz coreana siempre suena."
+  },
+  "learn": {
+    "heading": "Rumbo a {level}",
+    "atTop": "En la cima",
+    "statStreak": "días seguidos",
+    "statAccuracy": "precisión",
+    "statWords": "palabras aprendidas",
+    "thisWeek": "Esta semana",
+    "avgPerDay": "media {n} min/día",
+    "guideLabel": "{n} min",
+    "minutes": "{n} min",
+    "today": "Hoy",
+    "bySkill": "Por habilidad",
+    "weakest": "más floja: {skill}",
+    "behind": "{skill} es lo que más se queda atrás",
+    "fillIn": "Reforzar"
   }
 }

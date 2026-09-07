@@ -85,7 +85,20 @@
     "backToGarden": "Back to Garden",
     "allChapters": "All chapters",
     "saving": "Saving…",
-    "turnPage": "Turn the page →"
+    "turnPage": "Turn the page →",
+    "particles": "Particles {n}/{total}"
   },
-  "saveFailed": "We couldn't save this chapter — your connection dropped. Reopen it once you're back online to earn the reward."
+  "saveFailed": "We couldn't save this chapter — your connection dropped. Reopen it once you're back online to earn the reward.",
+  "particles": {
+    "eyebrow": "Particles",
+    "chapterN": "Chapter {n}",
+    "counter": "{n} / {total}",
+    "prompt": "Fill in the particle.",
+    "right": "Right.",
+    "wrong": "Not this one.",
+    "whyWrong": "Why it's wrong",
+    "whyRight": "Why it's right",
+    "next": "Next sentence",
+    "finish": "See result"
+  }
 }

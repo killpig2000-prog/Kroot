@@ -145,5 +145,18 @@
   "tryTheseTricky": "{n} palabra(s) difíciles de la última vez van primero",
   "studyAgain": "Estudiar de nuevo",
   "quizThese": "Repasar estas {n}",
-  "wordsCount": "{n} palabras"
+  "wordsCount": "{n} palabras",
+  "trace": {
+    "title": "Escríbela",
+    "modeGuide": "Con guía",
+    "modeMemory": "De memoria",
+    "hintGuide": "Arrastra desde ① siguiendo la guía gris",
+    "hintFree": "Escríbela de memoria — sin guía",
+    "caption": "Cálcala — el orden de los trazos cuenta",
+    "notYet": "Aún sin puntuar",
+    "reset": "Reiniciar",
+    "check": "Puntuar",
+    "nextSyllable": "Siguiente bloque →",
+    "allLetters": "Todas las letras"
+  }
 }

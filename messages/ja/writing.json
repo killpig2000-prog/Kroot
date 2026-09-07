@@ -85,7 +85,20 @@
     "backToGarden": "ガーデンに戻る",
     "allChapters": "全ての章",
     "saving": "保存中…",
-    "turnPage": "次のページへ →"
+    "turnPage": "次のページへ →",
+    "particles": "助詞 {n}/{total}"
   },
-  "saveFailed": "このチャプターを保存できませんでした（接続が切れました）。オンラインに戻ってからもう一度開くと報酬を獲得できます。"
+  "saveFailed": "このチャプターを保存できませんでした（接続が切れました）。オンラインに戻ってからもう一度開くと報酬を獲得できます。",
+  "particles": {
+    "eyebrow": "助詞",
+    "chapterN": "第{n}章",
+    "counter": "{n} / {total}",
+    "prompt": "助詞を入れましょう。",
+    "right": "正解。",
+    "wrong": "これではありません。",
+    "whyWrong": "なぜ間違い？",
+    "whyRight": "なぜ正しい？",
+    "next": "次の文",
+    "finish": "結果を見る"
+  }
 }

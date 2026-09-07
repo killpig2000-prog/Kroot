@@ -1,0 +1,11 @@
+{
+  "wardrobe": "クローゼット",
+  "fair": "ガーデンフェア",
+  "settings": "設定",
+  "settingsSub": "リマインダー・サウンド・言語",
+  "shopSub": "{n} コイン",
+  "wardrobeSub": "{n} 個",
+  "fairSub": "今週 {rank} 位",
+  "fairNone": "今週はまだ未参加",
+  "bankSub": "{n} / {slots}"
+}

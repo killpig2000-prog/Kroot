@@ -85,7 +85,20 @@
     "backToGarden": "返回花园",
     "allChapters": "全部章节",
     "saving": "保存中…",
-    "turnPage": "翻到下一页 →"
+    "turnPage": "翻到下一页 →",
+    "particles": "助词 {n}/{total}"
   },
-  "saveFailed": "没能保存这一章——连接断开了。恢复联网后重新打开即可获得奖励。"
+  "saveFailed": "没能保存这一章——连接断开了。恢复联网后重新打开即可获得奖励。",
+  "particles": {
+    "eyebrow": "助词",
+    "chapterN": "第 {n} 章",
+    "counter": "{n} / {total}",
+    "prompt": "填入助词。",
+    "right": "正确。",
+    "wrong": "不是这个。",
+    "whyWrong": "为什么错",
+    "whyRight": "为什么对",
+    "next": "下一句",
+    "finish": "查看结果"
+  }
 }

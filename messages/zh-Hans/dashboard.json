@@ -73,7 +73,8 @@
     },
     "growthTab": "成长阶段",
     "keepsakesTab": "纪念品",
-    "openShop": "打开商店与衣柜"
+    "openShop": "打开商店与衣柜",
+    "openMyRoom": "打开我的小屋"
   },
   "growth": {
     "closeAria": "关闭",
@@ -106,5 +107,11 @@
     "cancel": "取消",
     "thanksTitle": "谢谢你",
     "thanksBody": "我们已经收到你的反馈。每一条我们都会读，并用它来决定接下来改进什么。"
+  },
+  "modules": {
+    "vocabulary": "边写边记",
+    "writing": "语序 · 助词",
+    "slang": "今日一词",
+    "levelDone": "{level} · {done}/{total}"
   }
 }

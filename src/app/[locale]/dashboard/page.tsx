@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { Link, redirect } from "@/i18n/navigation";
-import TreeCard from "@/components/dashboard/TreeCard";
+import TreeBand from "@/components/dashboard/TreeBand";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import Widgets from "@/components/dashboard/Widgets";
@@ -11,7 +11,6 @@ import InstallBanner from "@/components/pwa/InstallBanner";
 import OnboardingTour from "@/components/onboarding/OnboardingTour";
 import TutorialFinishBanner from "@/components/onboarding/TutorialFinishBanner";
 import GuidedStep from "@/components/onboarding/GuidedStep";
-import { GRAMMAR_LESSONS } from "@/lib/grammar";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { levelProgress } from "@/lib/level";
 import { iso } from "@/lib/study-garden";
@@ -107,7 +106,6 @@ export default async function DashboardPage() {
   const writingRows = snapshot.writing.map((prompt_key) => ({ prompt_key }));
   const speakingRows = snapshot.speaking;
   // snapshot.activity is still returned by the RPC; My progress reads its own copy now
-  const grammarRows = snapshot.grammar.map((lesson_key) => ({ lesson_key }));
   const vocabRows = snapshot.vocab_keys.map((word_key) => ({ word_key }));
 
   // Confirmed-email signups land here without ever picking a starting level
@@ -131,8 +129,8 @@ export default async function DashboardPage() {
 
   // Real per-skill progress: completed items at the user's difficulty tier.
   const cefr = (profile?.current_level ?? "A1") as CefrLevel;
-  // A1 placements tour Hangul + Vocabulary; anyone who placed higher already
-  // reads Hangul, so their walkthrough goes Writing + Reading instead.
+  // A1 placements tour Vocabulary (the card now carries Hangul); anyone who
+  // placed higher gets the Writing walkthrough instead.
   const guidedTrack = cefr === "A1" ? "basics" : "practice";
 
   // Today's quest deep-links straight into one specific chapter — a random
@@ -203,10 +201,6 @@ export default async function DashboardPage() {
     return { done: Math.min(done, total), total, percent: total ? Math.round((Math.min(done, total) / total) * 100) : 0 };
   };
   const skillProgress: Record<string, { done: number; total: number; percent: number }> = {
-    grammar: tally(
-      new Set((grammarRows ?? []).map((r) => r.lesson_key)),
-      GRAMMAR_LESSONS.filter((l) => l.level === cefr).map((l) => l.key)
-    ),
     vocabulary: tally(
       new Set((vocabRows ?? []).map((r) => r.word_key)),
       getWordsForTopic("daily-life", cefr).map((w) => w.key),
@@ -243,14 +237,14 @@ export default async function DashboardPage() {
   const slang = slangOfTheDay();
 
   const displayName = profile?.display_name ?? "there";
-  const { level, into, needed, pct } = levelProgress(profile?.xp ?? 0);
+  const { level, pct } = levelProgress(profile?.xp ?? 0);
 
   // "Continue" target: the last unit the learner opened (resume_points), or
   // today's quest when nothing is in progress. A finished unit clears itself.
 
   return (
     <div className="min-h-screen bg-warm text-charcoal">
-      <div className="grid grid-cols-1 md:grid-cols-[clamp(216px,18%,280px)_minmax(0,1fr)] xl:grid-cols-[clamp(216px,17%,280px)_minmax(0,1fr)_clamp(260px,22%,340px)] w-full min-h-screen">
+      <div className="grid grid-cols-1 md:grid-cols-[clamp(216px,18%,280px)_minmax(0,1fr)] xl:grid-cols-[clamp(216px,17%,280px)_minmax(0,1fr)_clamp(260px,22%,340px)] w-full min-h-screen content-start md:content-stretch">
         <div data-tour="sidebar">
           <Sidebar
             displayName={displayName}
@@ -265,10 +259,9 @@ export default async function DashboardPage() {
             meant to fit one screen there, so no more slack than that */}
         <main className="min-w-0 px-[clamp(18px,3vw,36px)] pt-[26px] pb-[76px] md:pb-[60px]">
           <OnboardingTour startsGuidedTour guidedTrack={guidedTrack} isAdmin={isAdmin} userId={user.id} serverSeen={tourSeen} />
-          <GuidedStep step="hangul-nav" />
+          <GuidedStep step="hangul-nav-vocab" />
           <GuidedStep step="writing-nav" />
           <TutorialFinishBanner />
-          {/* the greeting moved into the tree's speech bubble (TreeCard) */}
 
           {/* The snapshot RPC failed, so everything below is the empty
               fallback. Say so: an empty garden otherwise reads as "all my
@@ -282,23 +275,16 @@ export default async function DashboardPage() {
             </div>
           )}
 
-          <div data-tour="tree">
-            <TreeCard
-              level={level}
-              progressPct={pct}
-              xpInto={into}
-              xpNeeded={needed}
-              costumeIds={equippedIds}
-              species={cefr}
-              userId={user.id}
-              displayName={displayName}
-              avatarUrl={profile?.avatar_url ?? null}
-              coins={coins}
-              streakDays={streakDays}
-              streakFreezes={extras?.streak_freezes ?? 0}
-              linkToShop
-            />
-          </div>
+          {/* the tree is one line here now — the full garden moved to My
+              room (2026-09-07 restructure); tap the band to get there */}
+          <TreeBand
+            level={level}
+            progressPct={pct}
+            costumeIds={equippedIds}
+            species={cefr}
+            streakDays={streakDays}
+            coins={coins}
+          />
 
           {/* today's quest — the one big button. Resuming a specific
               in-progress session was removed (product decision: one clear
@@ -307,37 +293,31 @@ export default async function DashboardPage() {
             <TodaysQuestCard quest={quest} href={questHref} />
           </div>
 
-          {/* the eight lesson modules — used to live behind BottomNav's
-              Basics/Practice/Relax sheets and the Sidebar's long list; both
-              collapsed to three flat tabs (2026-09-07 restructure), so this
-              grid is now the only way to reach them. Hangul and Grammar are
-              here on borrowed time — steps 3/4 of the plan fold them into
-              Vocabulary/Writing. */}
-          <div className="grid grid-cols-4 gap-2 mb-3">
+          {/* the six doors — 2×3 per the restructure mockup. Vocabulary
+              carries Hangul (trace-to-write on the card), Writing carries
+              Grammar (particle blanks); the rest are the same four rooms. */}
+          <div className="grid grid-cols-3 gap-2 mb-3">
             {MODULES.map((m) => {
               const key = m.href === "/speaking" ? "pronunciation" : m.href.slice(1);
               const p = skillProgress[key];
+              const caption =
+                key === "vocabulary" || key === "writing" || key === "slang"
+                  ? t(`modules.${key}`)
+                  : p && p.total > 0
+                    ? t("modules.levelDone", { level: cefr, done: p.done, total: p.total })
+                    : null;
               return (
                 <Link
                   key={m.href}
                   href={m.href}
                   data-tour={m.tourId}
-                  className="relative flex flex-col items-center justify-center gap-1 min-h-[72px] rounded-[14px] border border-line bg-cream px-1.5 py-3 text-center transition-all hover:-translate-y-0.5 hover:border-success"
+                  className="relative flex flex-col items-center justify-center gap-1 min-h-[76px] rounded-[14px] border border-line bg-cream px-1.5 py-3 text-center transition-all hover:-translate-y-0.5 hover:border-success"
                 >
-                  {m.popular && (
-                    <span className="absolute -top-[7px] right-2 text-[8.5px] font-extrabold text-[var(--c-amber-deep)] bg-[var(--tint-amber)] rounded-full px-[6px] py-px">
-                      {tn("popular")}
-                    </span>
-                  )}
-                  <span className="text-[19px] leading-none" aria-hidden="true">
+                  <span className="text-[20px] leading-none" aria-hidden="true">
                     {m.icon}
                   </span>
-                  <span className="text-[12px] font-bold text-charcoal leading-tight">{tn(m.label.toLowerCase())}</span>
-                  {p && p.total > 0 && (
-                    <span className="text-[10px] font-semibold text-muted tabular-nums">
-                      {p.done}/{p.total}
-                    </span>
-                  )}
+                  <span className="text-[12.5px] font-bold text-charcoal leading-tight">{tn(m.label.toLowerCase())}</span>
+                  {caption && <span className="text-[10.5px] font-semibold text-muted tabular-nums leading-tight">{caption}</span>}
                 </Link>
               );
             })}
@@ -358,51 +338,6 @@ export default async function DashboardPage() {
                 {t("review.short")}
               </span>
             </Link>
-          )}
-
-          {/* today's slang — one line here below xl, a rail note at xl+ */}
-          <Link
-            href="/slang"
-            className="xl:hidden flex items-center gap-3 border border-line bg-cream rounded-[14px] px-4 py-2.5 mb-3 transition-all hover:-translate-y-0.5 hover:border-success group"
-          >
-            <span className="flex-none text-[18px] transition-transform group-hover:scale-110">💬</span>
-            <span className="flex-1 min-w-0 truncate text-[14px]">
-              {/* the Korean word is the only coloured thing on this row — one
-                  rose accent on a cream card, same weight as the green Go */}
-              <b className="font-bold text-[var(--tint-pink-ink)]">
-                <span className="kr">{slang.kr}</span>{" "}
-                <span className="font-medium text-muted">({slang.romanization})</span>
-              </b>
-              <span className="text-[13px] text-muted"> · {slang.meaning}</span>
-            </span>
-            <span className="flex-none text-[13px] font-semibold text-success transition-transform group-hover:translate-x-0.5">
-              {t("slang.short")}
-            </span>
-          </Link>
-
-          {/* new to Korean? — A1 alone isn't "just starting": a long-time A1
-              learner (or the admin account, parked at A1 on purpose) placed
-              there too, and hangul practice itself earns no XP either way —
-              so the real signal is "hasn't earned any XP yet", not the CEFR
-              tier by itself. */}
-          {cefr === "A1" && (profile?.xp ?? 0) === 0 && (
-          <Link
-            href="/hangul"
-            className="flex flex-wrap sm:flex-nowrap items-center gap-x-3.5 gap-y-2 border border-success-line bg-success-bg rounded-[14px] px-5 py-4 mb-[30px] transition-all hover:-translate-y-0.5 group"
-          >
-            <span className="flex-none w-10 h-10 rounded-[10px] bg-cream border border-success-line flex items-center justify-center kr text-lg text-success transition-transform group-hover:scale-110">
-              ㄱ
-            </span>
-            <span className="flex-1 min-w-0">
-              <b className="block font-semibold text-sm text-success-deep">{t("hangul.title")}</b>
-              <span className="text-[13px] text-success-deep">
-                {t("hangul.sub")}
-              </span>
-            </span>
-            <span className="w-full sm:w-auto pl-[54px] sm:pl-0 text-[13px] font-semibold text-success transition-transform group-hover:translate-x-0.5">
-              {t("hangul.cta")}
-            </span>
-          </Link>
           )}
 
           {/* Learning progress moved to My account (/profile) 2026-08-30 — the

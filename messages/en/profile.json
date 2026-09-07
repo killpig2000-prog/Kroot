@@ -89,5 +89,21 @@
     "title": "Sound",
     "sfxTitle": "Sound effects",
     "sfxDesc": "Chimes for right answers, watering, coins and level-ups. The Korean voice always plays."
+  },
+  "learn": {
+    "heading": "Heading to {level}",
+    "atTop": "At the top",
+    "statStreak": "day streak",
+    "statAccuracy": "accuracy",
+    "statWords": "words learned",
+    "thisWeek": "This week",
+    "avgPerDay": "avg {n} min/day",
+    "guideLabel": "{n} min",
+    "minutes": "{n} min",
+    "today": "Today",
+    "bySkill": "By skill",
+    "weakest": "weakest: {skill}",
+    "behind": "{skill} is furthest behind",
+    "fillIn": "Fill it in"
   }
 }

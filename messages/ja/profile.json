@@ -89,5 +89,21 @@
     "title": "サウンド",
     "sfxTitle": "効果音",
     "sfxDesc": "正解・水やり・コイン・レベルアップの音。韓国語の音声は常に再生されます。"
+  },
+  "learn": {
+    "heading": "{level} に向かって",
+    "atTop": "最高レベル到達",
+    "statStreak": "連続日数",
+    "statAccuracy": "正答率",
+    "statWords": "覚えた単語",
+    "thisWeek": "今週",
+    "avgPerDay": "1日平均 {n} 分",
+    "guideLabel": "{n} 分",
+    "minutes": "{n} 分",
+    "today": "今日",
+    "bySkill": "スキル別",
+    "weakest": "最も弱い: {skill}",
+    "behind": "{skill} が一番遅れています",
+    "fillIn": "補強する"
   }
 }

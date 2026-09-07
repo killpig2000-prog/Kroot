@@ -145,5 +145,18 @@
   "tryTheseTricky": "{n} từ khó lần trước sẽ ra trước",
   "studyAgain": "Học lại",
   "quizThese": "Kiểm tra {n} từ này",
-  "wordsCount": "{n} từ"
+  "wordsCount": "{n} từ",
+  "trace": {
+    "title": "Viết thử",
+    "modeGuide": "Có hướng dẫn",
+    "modeMemory": "Viết theo trí nhớ",
+    "hintGuide": "Kéo từ ① theo nét xám",
+    "hintFree": "Viết theo trí nhớ — không có nét mẫu",
+    "caption": "Tô theo — thứ tự nét cũng được chấm",
+    "notYet": "Chưa chấm điểm",
+    "reset": "Làm lại",
+    "check": "Chấm điểm",
+    "nextSyllable": "Chữ tiếp theo →",
+    "allLetters": "Tất cả chữ cái"
+  }
 }

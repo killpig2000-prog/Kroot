@@ -5,23 +5,22 @@ import Sidebar from "@/components/dashboard/Sidebar";
 import LevelMap from "@/components/dashboard/LevelMap";
 import { computeEligibility } from "@/lib/promotion-server";
 import { testForGrade } from "@/lib/promotion-test";
-import HeadlineKpis, { type Headline } from "@/components/profile/HeadlineKpis";
-import MonthlyGrass from "@/components/profile/MonthlyGrass";
-import { gardenHeadline, MONTH_GOAL } from "@/lib/study-garden";
-import SkillAccuracy, { type SkillScore, type SkillPending } from "@/components/profile/SkillAccuracy";
+import { Link } from "@/i18n/navigation";
+import { type SkillScore, type SkillPending } from "@/components/profile/SkillAccuracy";
 import WordsToReview from "@/components/profile/WordsToReview";
-import SkillMix, { type SkillShare } from "@/components/profile/SkillMix";
+import WeekChart, { type WeekDay } from "@/components/profile/WeekChart";
+import SkillBars, { type SkillBar } from "@/components/profile/SkillBars";
 import { computeSkillProgress, PRACTICE_SKILLS } from "@/components/profile/skill-progress";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { dailyReviewCap } from "@/lib/srs";
-import { type CefrLevel } from "@/lib/tree";
+import { iso } from "@/lib/study-garden";
+import { LEVEL_ORDER, type CefrLevel } from "@/lib/tree";
 
-// My account (2026-08-30, rebuilt): an ANALYSIS page. A headline that states
-// the conclusion, per-skill accuracy, when the learner actually studies, and
-// their words. Identity (avatar, name, XP) moved to the dashboard TreeCard
-// 2026-09-01. The old SRS box ladder and the
-// level-test history are gone — the ladder was unreadable ("how to read it,
-// I have no idea") and the history answered a question nobody asked.
+// Learn (2026-09-07, the "학습" tab of the My Room restructure): the
+// analysis page. "Heading to A2", three numbers, this week's minutes, one
+// bar per skill with the weakest called out and a row that sends you there,
+// then the level map (the only promotion nudge) and the review queue.
+// Identity lives on the dashboard TreeCard; settings moved to /myroom.
 //
 // Every query is unwrapped error-tolerantly: a stats page must degrade to a
 // smaller page, never to a 500.
@@ -36,6 +35,7 @@ type VocabRow = {
 export default async function ProfilePage() {
   const t = await getTranslations("ui.account");
   const tn = await getTranslations("nav");
+  const tl = await getTranslations("profile.learn");
   const tDash = await getTranslations("dashboard");
   const format = await getFormatter();
   const supabase = await createClient();
@@ -58,7 +58,6 @@ export default async function ProfilePage() {
     speakingRes,
     grammarRes,
     activityRes,
-    xpRes,
   ] = await Promise.all([
     supabase
       .from("profiles")
@@ -88,12 +87,6 @@ export default async function ProfilePage() {
     supabase.from("speaking_progress").select("prompt_key, best_score").eq("user_id", user.id),
     supabase.from("grammar_progress").select("lesson_key, score").eq("user_id", user.id),
     supabase.from("daily_activity").select("activity_date, minutes").eq("user_id", user.id),
-    supabase
-      .from("xp_events")
-      .select("created_at, points, skill")
-      .eq("user_id", user.id)
-      .order("created_at", { ascending: false })
-      .limit(1000),
   ]);
 
   const extras = extrasRes.error ? null : extrasRes.data;
@@ -102,9 +95,6 @@ export default async function ProfilePage() {
   const speakingRows = speakingRes.error ? [] : speakingRes.data ?? [];
   const grammarRows = grammarRes.error ? [] : grammarRes.data ?? [];
   const activityRows = activityRes.error ? [] : activityRes.data ?? [];
-
-  type XpRow = { created_at: string; points: number | null; skill: string | null };
-  const xpRows = (xpRes.error ? [] : (xpRes.data as XpRow[] | null) ?? []) as XpRow[];
 
   type WritingRow = { prompt_key: string; score: number | null };
   type ListeningRow = { dialogue_id: string; quiz_correct: boolean | null };
@@ -247,39 +237,38 @@ export default async function ProfilePage() {
   );
 
   const ranked = [...scores].sort((a, b) => b.percent - a.percent);
-  const headline: Headline =
-    ranked.length >= 2
-      ? { kind: "compare", bestKey: ranked[0].key, worstKey: ranked[ranked.length - 1].key }
-      : ranked.length === 1
-        ? { kind: "single", skillKey: ranked[0].key }
-        : null;
+  const weakest = ranked.length >= 2 ? ranked[ranked.length - 1] : null;
+  // Overall accuracy: the mean of the per-skill scores — each skill on its own
+  // basis, so averaging the bases together would mix answers with scores.
+  const overallAccuracy = scores.length ? avg(scores.map((s) => s.percent)) : null;
+  // Grammar folds into Writing under the restructure, so its "fill it in"
+  // sends the learner to /writing rather than a page on its way out.
+  const SKILL_HREF: Record<string, string> = Object.fromEntries(PRACTICE_SKILLS.map((s) => [s.key, s.href]));
+  SKILL_HREF.grammar = "/writing";
+  const skillBars: SkillBar[] = ranked.map((s) => ({
+    key: s.key,
+    label: tn(s.key),
+    percent: s.percent,
+    weakest: s.key === weakest?.key,
+  }));
 
   // ── study time ───────────────────────────────────────────────────────────
   const totalMinutes = activityRows.reduce((a, r) => a + (r.minutes ?? 0), 0);
-  const activeDays = activityRows.filter((r) => (r.minutes ?? 0) > 0).length;
-  // The year grass moved here from the dashboard (2026-09-07): its four
-  // headline pills are the old This week / total / best streak / month goal.
-  const garden = gardenHeadline(activityRows, streakDays);
-  const monthShort = format.dateTime(new Date(), { month: "short" });
-
-  // ── practice mix: share of XP earned per skill (migration 0024 column, ─────
-  // unused elsewhere on this page). Rows from before that migration, or from
-  // non-skill sources, carry skill = null and are left out of the split.
-  const pointsBySkill = new Map<string, number>();
-  let totalSkillPoints = 0;
-  for (const r of xpRows) {
-    if (!r.skill) continue;
-    const pts = r.points ?? 0;
-    pointsBySkill.set(r.skill, (pointsBySkill.get(r.skill) ?? 0) + pts);
-    totalSkillPoints += pts;
-  }
-  const skillShares: SkillShare[] = PRACTICE_SKILLS.map((s) => s.key)
-    .filter((key) => pointsBySkill.has(key))
-    .map((key) => ({
-      key,
-      percent: Math.round(((pointsBySkill.get(key) ?? 0) / totalSkillPoints) * 100),
-    }))
-    .filter((s) => s.percent > 0);
+  const minutesByDate = new Map(activityRows.map((r) => [r.activity_date, r.minutes ?? 0]));
+  // Monday..today (locale-independent Monday start — the week mockup shows
+  // 월…오늘). A Monday visit is a single bar.
+  const todayIso = iso(now);
+  const dow = (now.getDay() + 6) % 7; // 0 = Monday
+  const weekDays: WeekDay[] = Array.from({ length: dow + 1 }, (_, i) => {
+    const d = new Date(now);
+    d.setDate(now.getDate() - (dow - i));
+    const key = iso(d);
+    return { iso: key, label: format.dateTime(d, { weekday: "short" }), minutes: minutesByDate.get(key) ?? 0, today: key === todayIso };
+  });
+  const weekTotal = weekDays.reduce((a, d) => a + d.minutes, 0);
+  const avgPerDay = Math.round(weekTotal / weekDays.length);
+  const wordsLearned = vocabRows.filter((r) => (r.correct_count ?? 0) + (r.incorrect_count ?? 0) > 0).length;
+  const nextLevel = LEVEL_ORDER[LEVEL_ORDER.indexOf(level) + 1] ?? null;
 
   // ── words to review ──────────────────────────────────────────────────────
   // Only the due queue. No box distribution, no stage labels, no intervals:
@@ -319,63 +308,45 @@ export default async function ProfilePage() {
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] md:pb-[60px]">
 
-          {/* head */}
-          <div className="flex items-center justify-between gap-4 mb-[18px] flex-wrap">
-            <h1 className="font-bold text-[22px] tracking-[-0.02em] flex items-center">
-              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-success-bg text-success border border-success-line items-center justify-center kr text-[15px] mr-[9px]">
-                나
-              </span>
-              {tn("myProgress")}
-            </h1>
-          </div>
+          <h1 className="font-bold text-[clamp(22px,5vw,26px)] tracking-[-0.02em] mb-[18px]">
+            {nextLevel ? tl("heading", { level: nextLevel }) : tl("atTop")}
+          </h1>
 
           {/* grid-cols-1 pins the track to minmax(0,1fr); a bare auto track
               grows to the widest card's max-content and overflows on mobile */}
-          <div className="max-w-[820px] grid grid-cols-1 gap-3.5">
-            {/* Identity (avatar, name, XP, chips) moved to the dashboard's
-                TreeCard 2026-09-01 — this page is analysis only. */}
-
-            {/* 1. the conclusion, then the headline numbers behind it */}
+          <div className="max-w-[560px] grid grid-cols-1 gap-3">
             {hasAnything && (
-              <HeadlineKpis
-                headline={headline}
-                streakDays={streakDays}
-                totalMinutes={totalMinutes}
-                wordCount={vocabRows.length}
-                activeDays={activeDays}
-              />
+              <div className="grid grid-cols-3 gap-2">
+                {[
+                  { v: String(streakDays), l: tl("statStreak") },
+                  { v: overallAccuracy === null ? "–" : `${overallAccuracy}%`, l: tl("statAccuracy") },
+                  { v: String(wordsLearned), l: tl("statWords") },
+                ].map((s) => (
+                  <div key={s.l} className="border border-line rounded-[14px] bg-cream px-2 py-3 text-center">
+                    <b className="block font-extrabold text-[clamp(18px,4.5vw,22px)] tabular-nums leading-tight">{s.v}</b>
+                    <span className="block text-[11.5px] text-muted mt-0.5">{s.l}</span>
+                  </div>
+                ))}
+              </div>
             )}
 
-            {/* 1c. the year grass — every day studied, one tile; lived on the
-                dashboard until the phone home was trimmed to one screen */}
-            {hasAnything && (
-              <MonthlyGrass
-                minutesByDate={garden.minutesByDate}
-                headline={[
-                  { label: tDash("garden.thisWeek"), value: `${garden.weekTotal}m` },
-                  {
-                    label: tDash("garden.total"),
-                    value: garden.totalMinutes >= 90 ? `${Math.round(garden.totalMinutes / 6) / 10}h` : `${garden.totalMinutes}m`,
-                  },
-                  { label: tDash("garden.bestStreak"), value: `${garden.longestStreak}d` },
-                  { label: tDash("garden.monthGoal", { month: monthShort }), value: `${garden.monthDone}/${MONTH_GOAL}` },
-                ]}
-              />
-            )}
+            {hasAnything && <WeekChart days={weekDays} avgPerDay={avgPerDay} />}
 
-            {/* 2. accuracy per skill — the point of the page */}
-            {scores.length > 0 && <SkillAccuracy scores={scores} pending={pending} />}
+            {skillBars.length > 0 && <SkillBars rows={skillBars} weakestLabel={weakest ? tn(weakest.key) : null} />}
 
-            {/* 4b. where the practice time actually goes, by skill */}
-            {skillShares.length >= 2 && <SkillMix shares={skillShares} />}
-
-            {/* 5. the due queue — the whole of what this card is for */}
-            {hasVocab && (
-              <WordsToReview
-                dueCount={dueCount}
-                nextReturn={nextReturn}
-                capacityBonus={extras?.review_capacity_bonus ?? 0}
-              />
+            {weakest && (
+              <Link
+                href={SKILL_HREF[weakest.key] ?? "/dashboard"}
+                className="flex items-center gap-3 border border-line bg-cream rounded-[14px] px-4 py-2.5 transition-all hover:-translate-y-0.5 hover:border-success group"
+              >
+                <span className="flex-none text-[18px]" aria-hidden="true">
+                  {PRACTICE_SKILLS.find((s) => s.key === weakest.key)?.kr ?? "·"}
+                </span>
+                <b className="flex-1 min-w-0 truncate text-[14px] font-bold">{tl("behind", { skill: tn(weakest.key) })}</b>
+                <span className="flex-none text-[13px] font-semibold text-success transition-transform group-hover:translate-x-0.5">
+                  {tl("fillIn")}
+                </span>
+              </Link>
             )}
 
             {/* nothing studied yet: one line instead of a stack of empty cards */}
@@ -385,11 +356,18 @@ export default async function ProfilePage() {
               </div>
             )}
 
-            {/* 1b. curriculum map: A1 → C2 stepper + level-up checks, right
-                above settings so it reads as "where you're headed next"
-                rather than competing with the analysis cards above */}
+            {/* curriculum map: A1 → C2 stepper + level-up checks — the one
+                promotion nudge the app keeps */}
             {promo && (
               <LevelMap current={level} checks={promoChecks} eligible={elig.eligible} overallPct={overallPct} />
+            )}
+
+            {hasVocab && (
+              <WordsToReview
+                dueCount={dueCount}
+                nextReturn={nextReturn}
+                capacityBonus={extras?.review_capacity_bonus ?? 0}
+              />
             )}
           </div>
         </main>

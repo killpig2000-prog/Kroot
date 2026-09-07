@@ -73,7 +73,8 @@
     },
     "growthTab": "成長ステージ",
     "keepsakesTab": "記念品",
-    "openShop": "ショップ・衣装部屋を開く"
+    "openShop": "ショップ・衣装部屋を開く",
+    "openMyRoom": "マイルームを開く"
   },
   "growth": {
     "closeAria": "閉じる",
@@ -106,5 +107,11 @@
     "cancel": "キャンセル",
     "thanksTitle": "ありがとうございます",
     "thanksBody": "フィードバックを受け取りました。すべてのメッセージに目を通し、次に何を良くするかの参考にしています。"
+  },
+  "modules": {
+    "vocabulary": "書いて覚える",
+    "writing": "語順・助詞",
+    "slang": "今日の一語",
+    "levelDone": "{level} · {done}/{total}"
   }
 }

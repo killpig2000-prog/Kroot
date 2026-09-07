@@ -73,7 +73,8 @@
     },
     "growthTab": "Growth stages",
     "keepsakesTab": "Keepsakes",
-    "openShop": "Open your shop & wardrobe"
+    "openShop": "Open your shop & wardrobe",
+    "openMyRoom": "Open My room"
   },
   "growth": {
     "closeAria": "Close",
@@ -106,5 +107,11 @@
     "cancel": "Cancel",
     "thanksTitle": "Thank you",
     "thanksBody": "Your feedback has been received. We read every message and use it to decide what to improve next."
+  },
+  "modules": {
+    "vocabulary": "Write to remember",
+    "writing": "Order · particles",
+    "slang": "Today's word",
+    "levelDone": "{level} · {done}/{total}"
   }
 }

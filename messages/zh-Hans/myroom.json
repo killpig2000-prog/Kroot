@@ -1,0 +1,11 @@
+{
+  "wardrobe": "衣橱",
+  "fair": "花园集市",
+  "settings": "设置",
+  "settingsSub": "提醒 · 声音 · 语言",
+  "shopSub": "{n} 金币",
+  "wardrobeSub": "{n} 件",
+  "fairSub": "本周第 {rank} 名",
+  "fairNone": "本周尚未参加",
+  "bankSub": "{n} / {slots}"
+}

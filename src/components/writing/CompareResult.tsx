@@ -24,6 +24,7 @@ export default function CompareResult({
   hasNextChapter,
   navigating,
   onGoTo,
+  particles = null,
 }: {
   prompts: Prompt[];
   answers: Answer[];
@@ -34,6 +35,8 @@ export default function CompareResult({
   hasNextChapter: boolean;
   navigating: boolean;
   onGoTo: (href: string) => void;
+  /** The 조사 빈칸 tally that closed the chapter — shown, never scored. */
+  particles?: { correct: number; total: number } | null;
 }) {
   const t = useTranslations("writing.result");
   const tn = useTranslations("nav");
@@ -94,6 +97,17 @@ export default function CompareResult({
             {a.score}
           </span>
         ))}
+        {particles && (
+          <span
+            className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[13px] font-bold tabular-nums ${
+              particles.correct === particles.total
+                ? "bg-success-bg border-success-line text-success-deep"
+                : "bg-[var(--tint-amber)] border-amber-line text-amber"
+            }`}
+          >
+            {t("particles", { n: particles.correct, total: particles.total })}
+          </span>
+        )}
       </div>
     </ResultShell>
   );

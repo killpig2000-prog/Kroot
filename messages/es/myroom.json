@@ -1,0 +1,11 @@
+{
+  "wardrobe": "Armario",
+  "fair": "Feria del jardín",
+  "settings": "Ajustes",
+  "settingsSub": "recordatorios · sonido · idioma",
+  "shopSub": "{n} monedas",
+  "wardrobeSub": "{n, plural, one {# artículo} other {# artículos}}",
+  "fairSub": "N.º {rank} esta semana",
+  "fairNone": "aún no participas esta semana",
+  "bankSub": "{n} / {slots}"
+}

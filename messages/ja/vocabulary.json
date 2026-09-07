@@ -145,5 +145,18 @@
   "tryTheseTricky": "前回の苦手な{n}語が最初に出ます",
   "studyAgain": "もう一度学習",
   "quizThese": "この{n}語をクイズ",
-  "wordsCount": "{n}語"
+  "wordsCount": "{n}語",
+  "trace": {
+    "title": "書いてみる",
+    "modeGuide": "ガイドあり",
+    "modeMemory": "見ないで書く",
+    "hintGuide": "①から灰色のガイドに沿ってなぞる",
+    "hintFree": "ガイドなしで書いてみよう",
+    "caption": "なぞり書き — 書き順も採点します",
+    "notYet": "まだ採点なし",
+    "reset": "やり直す",
+    "check": "採点する",
+    "nextSyllable": "次の文字 →",
+    "allLetters": "すべての文字"
+  }
 }

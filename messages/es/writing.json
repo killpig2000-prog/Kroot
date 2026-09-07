@@ -85,7 +85,20 @@
     "backToGarden": "Volver al Jardín",
     "allChapters": "Todos los capítulos",
     "saving": "Guardando…",
-    "turnPage": "Pasar la página →"
+    "turnPage": "Pasar la página →",
+    "particles": "Partículas {n}/{total}"
   },
-  "saveFailed": "No pudimos guardar este capítulo: se cortó la conexión. Vuelve a abrirlo cuando tengas conexión para conseguir la recompensa."
+  "saveFailed": "No pudimos guardar este capítulo: se cortó la conexión. Vuelve a abrirlo cuando tengas conexión para conseguir la recompensa.",
+  "particles": {
+    "eyebrow": "Partículas",
+    "chapterN": "Capítulo {n}",
+    "counter": "{n} / {total}",
+    "prompt": "Completa la partícula.",
+    "right": "Correcto.",
+    "wrong": "Esta no.",
+    "whyWrong": "Por qué está mal",
+    "whyRight": "Por qué está bien",
+    "next": "Siguiente frase",
+    "finish": "Ver resultado"
+  }
 }

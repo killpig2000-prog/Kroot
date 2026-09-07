@@ -145,5 +145,18 @@
   "tryTheseTricky": "上次的{n}个难词会优先出现",
   "studyAgain": "再学一次",
   "quizThese": "测验这{n}个",
-  "wordsCount": "{n}个单词"
+  "wordsCount": "{n}个单词",
+  "trace": {
+    "title": "写一写",
+    "modeGuide": "有引导",
+    "modeMemory": "凭记忆写",
+    "hintGuide": "从①开始沿灰色引导线拖动",
+    "hintFree": "凭记忆写——没有引导线",
+    "caption": "描一描——笔顺也计分",
+    "notYet": "尚未评分",
+    "reset": "重来",
+    "check": "评分",
+    "nextSyllable": "下一个字 →",
+    "allLetters": "全部字母"
+  }
 }

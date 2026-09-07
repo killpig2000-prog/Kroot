@@ -1,0 +1,11 @@
+{
+  "wardrobe": "Tủ đồ",
+  "fair": "Hội chợ vườn",
+  "settings": "Cài đặt",
+  "settingsSub": "nhắc nhở · âm thanh · ngôn ngữ",
+  "shopSub": "{n} xu",
+  "wardrobeSub": "{n} món",
+  "fairSub": "Hạng {rank} tuần này",
+  "fairNone": "tuần này chưa tham gia",
+  "bankSub": "{n} / {slots}"
+}
