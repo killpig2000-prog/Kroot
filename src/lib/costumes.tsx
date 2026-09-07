@@ -51,6 +51,13 @@ export type Costume = {
   // Garden items: drawn straight into the 220x230 tree frame. `behind` goes
   // under the tree (auras, sky details), `front` over it (ground, friends).
   scene?: { layer: "behind" | "front"; draw: () => ReactNode };
+  // Friends only: on the dashboard garden the friend leaves its spot and
+  // wanders — `dir` is the side it has room on (away from the tree), `air`
+  // marks fliers (they drift a little up and down as well). Everywhere else
+  // (thumbnails, shop preview, TreePeek) the friend stays put.
+  // `x`/`y` is the friend's own anchor in the frame (its translate), so the
+  // turn-around flip happens about the friend, not the frame.
+  roam?: { dir: "left" | "right"; x: number; y: number; air?: boolean };
   // Sky items also swap the frame's background gradient (CSS value).
   sky?: string;
   // Skins: the full-body character drawn into the 220x230 frame *instead of*
@@ -1327,6 +1334,7 @@ export const COSTUMES: Costume[] = [
     name: "Yellow Butterfly",
     krName: "노랑나비",
     slot: "friend",
+    roam: { dir: "left", x: 150, y: 186, air: true },
     price: 150,
     rarity: "common",
     icon: "🦋",
@@ -1349,6 +1357,7 @@ export const COSTUMES: Costume[] = [
     name: "Sparrow",
     krName: "참새",
     slot: "friend",
+    roam: { dir: "right", x: 46, y: 196 },
     price: 170,
     rarity: "common",
     icon: "🐦",
@@ -1372,6 +1381,7 @@ export const COSTUMES: Costume[] = [
     name: "Squirrel",
     krName: "다람쥐",
     slot: "friend",
+    roam: { dir: "left", x: 168, y: 196 },
     price: 390,
     rarity: "rare",
     minPlayerLevel: 20,
@@ -1395,6 +1405,7 @@ export const COSTUMES: Costume[] = [
     name: "Garden Cat",
     krName: "고양이",
     slot: "friend",
+    roam: { dir: "right", x: 40, y: 194 },
     price: 420,
     rarity: "rare",
     minPlayerLevel: 20,
@@ -1418,6 +1429,7 @@ export const COSTUMES: Costume[] = [
     name: "Magpie",
     krName: "까치",
     slot: "friend",
+    roam: { dir: "left", x: 180, y: 190, air: true },
     price: 830,
     rarity: "epic",
     minPlayerLevel: 50,
@@ -1444,6 +1456,7 @@ export const COSTUMES: Costume[] = [
     name: "Baby Owl",
     krName: "아기 부엉이",
     slot: "friend",
+    roam: { dir: "right", x: 40, y: 188 },
     price: 850,
     rarity: "epic",
     minPlayerLevel: 60,
@@ -1471,6 +1484,7 @@ export const COSTUMES: Costume[] = [
     name: "Spirit Dokkaebi",
     krName: "정령 도깨비",
     slot: "friend",
+    roam: { dir: "left", x: 160, y: 200 },
     price: 1050,
     rarity: "legendary",
     minPlayerLevel: 80,
@@ -1492,6 +1506,7 @@ export const COSTUMES: Costume[] = [
     name: "Forest Spirit Deer",
     krName: "정령 사슴",
     slot: "friend",
+    roam: { dir: "right", x: 42, y: 196 },
     price: 840,
     rarity: "epic",
     minPlayerLevel: 50,
@@ -1513,6 +1528,7 @@ export const COSTUMES: Costume[] = [
     name: "Baby Spirit Dragon",
     krName: "아기 드래곤",
     slot: "friend",
+    roam: { dir: "left", x: 180, y: 205, air: true },
     price: 1080,
     rarity: "legendary",
     minPlayerLevel: 100,
@@ -1631,20 +1647,29 @@ export function CostumeLayer({ level, costumeIds }: { level: CefrLevel; costumeI
  *  220x230 tree frame. Render the `behind` layer before the creature and
  *  `front` after it. `groundShift` pushes ground-slot items down when the
  *  frame is taller than 230 (VeteranTree). */
+/** Equipped friends that can wander (the dashboard draws these itself). */
+export function roamingFriends(costumeIds: string[]): Costume[] {
+  return costumeIds.map(costumeById).filter((c): c is Costume => !!c && c.slot === "friend" && !!c.roam && !!c.scene);
+}
+
 export function SceneLayer({
   costumeIds,
   layer,
   groundShift = 0,
+  omitSlots,
 }: {
   costumeIds: string[];
   layer: "behind" | "front";
   groundShift?: number;
+  /** Slots drawn elsewhere — the dashboard takes its roaming friends out of the frame. */
+  omitSlots?: CostumeSlot[];
 }) {
   return (
     <>
       {costumeIds.map((id) => {
         const c = costumeById(id);
         if (!c?.scene || c.scene.layer !== layer) return null;
+        if (omitSlots?.includes(c.slot) && (c.slot !== "friend" || c.roam)) return null;
         const dy = c.slot === "ground" || c.slot === "friend" ? groundShift : 0;
         return (
           <g key={id} transform={dy ? `translate(0 ${dy})` : undefined}>

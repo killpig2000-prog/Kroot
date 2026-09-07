@@ -530,6 +530,22 @@ html.js-reveal .reveal:not(.in) {
   transform: scale(1);
 }
 
+/* dashboard friends wander: out to --span, pause, back, longer pause; the
+   face flips (scaleX) for the way back; fliers drift a little on top */
+@keyframes roamX {
+  0%, 8% { transform: translateX(0); }
+  36%, 50% { transform: translateX(var(--span)); }
+  78%, 100% { transform: translateX(0); }
+}
+@keyframes roamFace {
+  0%, 49% { transform: scaleX(1); }
+  50%, 100% { transform: scaleX(-1); }
+}
+@keyframes friendDrift {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -6px; }
+}
+
 /* result scene: water falls from the can onto the tree while the XP bar fills */
 @keyframes waterDrop {
   0% { transform: translateY(0); opacity: 0; }

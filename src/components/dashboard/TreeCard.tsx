@@ -4,6 +4,7 @@ import { useEffect, useState, useSyncExternalStore } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { SceneLayer, skinFor, skyFor } from "@/lib/costumes";
+import RoamingFriends from "@/components/dashboard/RoamingFriends";
 import { LEVEL_ORDER, LEVEL_PATH, SPECIES, type CefrLevel } from "@/lib/tree";
 import { FULLY_GROWN_LEVEL, MAX_LEVEL, treeHeightMetres, treeStageForLevel } from "@/lib/level";
 import VeteranTree, { VETERAN_MILESTONES, veteranFrameHeight } from "@/components/dashboard/VeteranTree";
@@ -154,7 +155,8 @@ export default function TreeCard({
       ) : (
         <LevelCreature level={stage} costumeIds={equipped} species={species} />
       )}
-      <SceneLayer costumeIds={equipped} layer="front" groundShift={groundShift} />
+      {/* friends wander the garden instead (RoamingFriends), unless a skin hides the tree */}
+      <SceneLayer costumeIds={equipped} layer="front" groundShift={groundShift} omitSlots={skinFor(equipped) ? undefined : ["friend"]} />
       <g className="bob">
         <circle cx="60" cy="78" r="6" fill="#FACC15" />
       </g>
@@ -214,6 +216,9 @@ export default function TreeCard({
           ) : (
             treeImage
           )}
+          {/* the friends, in a box the same size as the tree's so their feet
+              stay on the same ground line while they wander sideways */}
+          {!skinFor(equipped) && <RoamingFriends costumeIds={equipped} frameH={frameH} groundShift={groundShift} width={treeWidth} />}
         </div>
 
         {/* what the tree says — the greeting first, then its usual lines;
