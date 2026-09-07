@@ -73,7 +73,7 @@ const CONSONANTS: Record<string, StrokeAnchors[]> = {
     [C(172, 162), C(212, 210), C(250, 258)],
   ],
   ㅋ: [
-    [C(78, 80), C(214, 80), C(228, 80), C(228, 94), C(228, 170), C(220, 226), C(196, 258)],
+    [C(78, 80), C(214, 80), C(228, 80), C(228, 94), C(228, 258)],
     [C(78, 166), C(226, 166)],
   ],
   ㅌ: [
@@ -251,8 +251,8 @@ function syllableAnchors(char: string): StrokeAnchors[] {
     // 가: consonant fills the left of the centre line, vowel the right —
     // both span the same height so the block reads as one symmetric letter.
     const top = hasJong ? 36 : 52, bottom = hasJong ? 166 : 268;
-    choPart = shrinkAt(fitBox(TRACE_ANCHORS[cho], [44, CENTER, top, bottom]), CENTER, (top + bottom) / 2, CHO_SHRINK);
-    jungPart = fitBox(TRACE_ANCHORS[jung], [CENTER + 10, CENTER + 98, top, bottom]);
+    choPart = shrinkAt(fitBox(TRACE_ANCHORS[cho], [44, CENTER - 4, top, bottom]), CENTER - 4, (top + bottom) / 2, CHO_SHRINK);
+    jungPart = fitBox(TRACE_ANCHORS[jung], [CENTER + 20, CENTER + 108, top, bottom]);
   } else if (HORIZONTAL_VOWELS.has(jung)) {
     // 고: consonant above the centre line, vowel below it. A double consonant
     // reads shorter (top edge lower); ㅗ/ㅛ/ㅜ/ㅠ's ㅣ leg is squashed toward
