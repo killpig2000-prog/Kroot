@@ -232,19 +232,20 @@ const CHO_GO_VOWELS = new Set(["ㅗ", "ㅛ"]);
 /** ㅗㅛㅠㅡ: consonant pushed down until it nearly touches the bar below. */
 const CHO_NEAR_BAR_VOWELS = new Set(["ㅗ", "ㅛ", "ㅠ", "ㅡ"]);
 const CHO_BIGGER_VOWELS = new Set(["ㅜ", "ㅘ", "ㅙ", "ㅚ", "ㅝ", "ㅞ", "ㅟ"]);
-/** Per-consonant size next to ㅏ, tuned by eye letter by letter — fitBox
- * only knows a glyph's bounding box, so letters that don't fill theirs
- * (ㄱ ㅅ ㅈ …) read light beside ㅏ's full-height stem while the boxy
- * ㅋ/ㅍ read heavy. Multiplier on CHO_SHRINK; anything absent (ㄴ ㄹ ㅁ ㅂ
- * ㅇ ㅌ) stays 1. ㅏ only — every other vowel keeps its own tier below. */
-const CHO_SIZE_WITH_A: Record<string, number> = {
+/** Per-consonant size beside a right-hand vowel (ㅏ ㅐ ㅑ ㅒ ㅓ ㅔ ㅕ ㅖ),
+ * tuned by eye letter by letter — fitBox only knows a glyph's bounding
+ * box, so letters that don't fill theirs (ㄱ ㅅ ㅈ …) read light beside a
+ * full-height stem while the boxy ㅋ/ㅍ read heavy. Multiplier on
+ * CHO_SHRINK; anything absent (ㄴ ㄹ ㅁ ㅂ ㅇ ㅌ) stays 1. Tuned on ㅏ and
+ * applied to the whole group, which shares the same block layout. */
+const CHO_SIZE_VERTICAL: Record<string, number> = {
   ㄱ: 1.3, ㄲ: 1.3, ㄷ: 1.04, ㄸ: 1.3, ㅃ: 1.3, ㅅ: 1.3, ㅆ: 1.3,
   ㅈ: 1.3, ㅉ: 1.3, ㅊ: 1.3, ㅎ: 1.3, ㅋ: 1.04, ㅍ: 1.04,
 };
 /** ㅏ-only: the whole block slides right by this much. */
 const A_BLOCK_SHIFT = 14;
 const choShrinkFor = (jung: string, cho: string): number => {
-  if (jung === "ㅏ" && CHO_SIZE_WITH_A[cho] !== undefined) return CHO_SHRINK * CHO_SIZE_WITH_A[cho];
+  if (CHO_NORMAL_VOWELS.has(jung) && CHO_SIZE_VERTICAL[cho] !== undefined) return CHO_SHRINK * CHO_SIZE_VERTICAL[cho];
   if (CHO_NORMAL_VOWELS.has(jung)) return CHO_SHRINK;
   if (jung === "ㅠ") return CHO_SHRINK_YU;
   if (jung === "ㅢ") return CHO_SHRINK_YI;
