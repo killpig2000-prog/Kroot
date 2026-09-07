@@ -21,7 +21,7 @@ export default function BottomNav() {
   return (
     <nav
       data-tour="mobile-nav"
-      className="md:hidden fixed left-0 right-0 bottom-0 z-50 bg-cream/90 backdrop-blur-[10px] border-t border-line grid grid-cols-3 pt-1 pb-[max(4px,env(safe-area-inset-bottom))]"
+      className="xl:hidden fixed left-0 right-0 bottom-0 z-50 bg-cream/90 backdrop-blur-[10px] border-t border-line grid grid-cols-3 pt-1 pb-[max(4px,env(safe-area-inset-bottom))]"
       aria-label="main"
     >
       {MAIN_ITEMS.map((item) => {

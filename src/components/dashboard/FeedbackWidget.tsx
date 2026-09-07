@@ -23,7 +23,7 @@ export function FeedbackButton() {
     <button
       type="button"
       onClick={() => window.dispatchEvent(new Event(OPEN_EVENT))}
-      className="md:hidden inline-flex items-center gap-1.5 rounded-full border border-line bg-warm px-2.5 py-1 text-[11px] font-semibold text-muted hover:text-charcoal hover:border-dash transition-colors"
+      className="xl:hidden inline-flex items-center gap-1.5 rounded-full border border-line bg-warm px-2.5 py-1 text-[11px] font-semibold text-muted hover:text-charcoal hover:border-dash transition-colors"
     >
       <span aria-hidden="true">💬</span>
       {t("send")}
@@ -90,7 +90,7 @@ export default function FeedbackWidget() {
       <button
         type="button"
         onClick={() => setView("form")}
-        className="hidden md:inline-flex fixed z-[50] md:right-6 md:bottom-6 items-center gap-2 rounded-full bg-[#221F1B] text-white font-semibold text-[14px] pl-4 pr-[18px] py-3 shadow-[0_10px_30px_-10px_rgba(40,35,25,.5)] hover:bg-[#3A3530] transition-colors"
+        className="hidden xl:inline-flex fixed z-[50] xl:right-6 xl:bottom-6 items-center gap-2 rounded-full bg-[#221F1B] text-white font-semibold text-[14px] pl-4 pr-[18px] py-3 shadow-[0_10px_30px_-10px_rgba(40,35,25,.5)] hover:bg-[#3A3530] transition-colors"
       >
         <span aria-hidden="true" className="text-[17px] leading-none">💬</span>
         {t("send")}

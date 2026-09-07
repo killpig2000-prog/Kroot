@@ -7,11 +7,11 @@
 export default function Loading() {
   return (
     <div className="min-h-screen bg-warm">
-      <div className="grid grid-cols-1 md:grid-cols-[clamp(216px,18%,280px)_minmax(0,1fr)] xl:grid-cols-[clamp(216px,17%,280px)_minmax(0,1fr)_clamp(260px,22%,340px)] w-full min-h-screen">
+      <div className="grid grid-cols-1 xl:grid-cols-[clamp(216px,17%,280px)_minmax(0,1fr)_clamp(260px,22%,340px)] w-full min-h-screen">
         <div className="hidden md:block border-r border-dashed border-dash bg-warm" />
         <div className="md:hidden h-[52px] border-b-[1.5px] border-dashed border-dash bg-warm" />
 
-        <main className="min-w-0 px-[clamp(18px,3vw,36px)] pt-[26px] pb-[100px] md:pb-[60px]">
+        <main className="min-w-0 px-[clamp(18px,3vw,36px)] pt-[26px] pb-[100px] xl:pb-[60px]">
           <div className="animate-pulse">
             {/* greeting */}
             <div className="h-6 w-52 rounded-lg bg-warm-3 mb-2.5" />

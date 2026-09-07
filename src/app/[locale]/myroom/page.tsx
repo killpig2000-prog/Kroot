@@ -65,12 +65,12 @@ export default async function MyRoomPage({ params }: { params: Promise<{ locale:
 
   return (
     <div className="min-h-screen bg-warm text-charcoal">
-      <div className="grid grid-cols-1 md:grid-cols-[clamp(216px,18%,280px)_minmax(0,1fr)] w-full min-h-screen content-start md:content-stretch">
+      <div className="grid grid-cols-1 xl:grid-cols-[clamp(216px,18%,280px)_minmax(0,1fr)] w-full min-h-screen content-start xl:content-stretch">
         <Sidebar displayName={displayName} email={user.email ?? ""} streakDays={streakDays} avatarUrl={profile?.avatar_url} />
 
         {/* same padding as the dashboard so TreeCard's full-bleed negative
             margins line up with the header edge on phones */}
-        <main className="min-w-0 px-[clamp(18px,3vw,36px)] pt-[26px] pb-[100px] md:pb-[60px]">
+        <main className="min-w-0 px-[clamp(18px,3vw,36px)] pt-[26px] pb-[100px] xl:pb-[60px]">
           <TreeCard
             level={level}
             progressPct={pct}

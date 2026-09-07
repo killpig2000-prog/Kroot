@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { Link, redirect } from "@/i18n/navigation";
 import TreeBand from "@/components/dashboard/TreeBand";
+import TreeCard from "@/components/dashboard/TreeCard";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import Widgets from "@/components/dashboard/Widgets";
@@ -241,14 +242,14 @@ export default async function DashboardPage() {
   const slang = slangOfTheDay();
 
   const displayName = profile?.display_name ?? "there";
-  const { level, pct } = levelProgress(profile?.xp ?? 0);
+  const { level, into, needed, pct } = levelProgress(profile?.xp ?? 0);
 
   // "Continue" target: the last unit the learner opened (resume_points), or
   // today's quest when nothing is in progress. A finished unit clears itself.
 
   return (
     <div className="min-h-screen bg-warm text-charcoal">
-      <div className="grid grid-cols-1 md:grid-cols-[clamp(216px,18%,280px)_minmax(0,1fr)] xl:grid-cols-[clamp(216px,17%,280px)_minmax(0,1fr)_clamp(260px,22%,340px)] w-full min-h-screen content-start md:content-stretch">
+      <div className="grid grid-cols-1 xl:grid-cols-[clamp(216px,17%,280px)_minmax(0,1fr)_clamp(260px,22%,340px)] w-full min-h-screen content-start xl:content-stretch">
         <div data-tour="sidebar">
           <Sidebar
             displayName={displayName}
@@ -261,7 +262,7 @@ export default async function DashboardPage() {
 
         {/* phone bottom padding = BottomNav (64px) + a little; the page is
             meant to fit one screen there, so no more slack than that */}
-        <main className="min-w-0 px-[clamp(18px,3vw,36px)] pt-[26px] pb-[76px] md:pb-[60px]">
+        <main className="min-w-0 px-[clamp(18px,3vw,36px)] pt-[26px] pb-[76px] xl:pb-[60px]">
           <OnboardingTour startsGuidedTour guidedTrack={guidedTrack} isAdmin={isAdmin} userId={user.id} serverSeen={tourSeen} />
           <GuidedStep step="hangul-nav-vocab" />
           <GuidedStep step="writing-nav" />
@@ -279,16 +280,43 @@ export default async function DashboardPage() {
             </div>
           )}
 
-          {/* the tree is one line here now — the full garden moved to My
-              room (2026-09-07 restructure); tap the band to get there */}
-          <TreeBand
-            level={level}
-            progressPct={pct}
-            costumeIds={equippedIds}
-            species={cefr}
-            streakDays={streakDays}
-            coins={coins}
-          />
+          {/* Phone and tablet (below xl): the tree is one line here — the
+              full garden moved to My room (2026-09-07 restructure); tap the
+              band to get there. */}
+          <div className="xl:hidden">
+            <TreeBand
+              level={level}
+              progressPct={pct}
+              costumeIds={equippedIds}
+              species={cefr}
+              streakDays={streakDays}
+              coins={coins}
+            />
+          </div>
+
+          {/* Desktop (xl+): the full garden hero is back on the Garden page
+              itself instead of tucked one tap away in My room — 2026-09-08,
+              user call: a real desktop screen has the room for the tree,
+              greeting bubble and growth stages the sidebar's module list
+              already frees up. Same component My room's hero uses; not
+              wired to the shop tap-through since Shop already has its own
+              sidebar row up here. */}
+          <div className="hidden xl:block mb-3">
+            <TreeCard
+              level={level}
+              progressPct={pct}
+              xpInto={into}
+              xpNeeded={needed}
+              costumeIds={equippedIds}
+              species={cefr}
+              userId={user.id}
+              displayName={displayName}
+              avatarUrl={profile?.avatar_url ?? null}
+              coins={coins}
+              streakDays={streakDays}
+              streakFreezes={extras?.streak_freezes ?? 0}
+            />
+          </div>
 
           {/* today's quest — the one big button. Resuming a specific
               in-progress session was removed (product decision: one clear
@@ -345,7 +373,7 @@ export default async function DashboardPage() {
           {/* The year grass (Study garden) moved to My progress 2026-09-07 —
               the phone home is one screen now. Its footer used to park the
               phone-only feedback button; that button sits here instead. */}
-          <div className="flex justify-end pt-1 md:hidden">
+          <div className="flex justify-end pt-1 xl:hidden">
             <FeedbackButton />
           </div>
         </main>

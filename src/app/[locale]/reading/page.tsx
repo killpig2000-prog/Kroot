@@ -105,7 +105,7 @@ export default async function ReadingMapPage({
 
   return (
     <div className="min-h-screen bg-warm text-charcoal">
-      <div className="grid grid-cols-1 md:grid-cols-[clamp(216px,18%,280px)_minmax(0,1fr)] w-full min-h-screen content-start md:content-stretch">
+      <div className="grid grid-cols-1 xl:grid-cols-[clamp(216px,18%,280px)_minmax(0,1fr)] w-full min-h-screen content-start xl:content-stretch">
         <Sidebar
           displayName={profile?.display_name ?? "there"}
           email={user.email ?? ""}
@@ -113,7 +113,7 @@ export default async function ReadingMapPage({
           avatarUrl={profile?.avatar_url}
         />
 
-        <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] md:pb-[60px]">
+        <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] xl:pb-[60px]">
 
           {/* head */}
           <div className="flex items-center justify-between gap-4 mb-[18px] flex-wrap">

@@ -6,12 +6,19 @@ import { useRouter, usePathname } from "@/i18n/navigation";
 import { rememberLocale } from "@/i18n/locale";
 import AccountMenu from "@/components/dashboard/AccountMenu";
 import { Link } from "@/i18n/navigation";
-import { MAIN_ITEMS, type NavColor } from "@/components/dashboard/navItems";
+import { MAIN_ITEMS, MODULES, MY_ROOM_ITEMS, type NavColor } from "@/components/dashboard/navItems";
 
 import BrandMark from "@/components/ui/BrandMark";
 
 // Nav labels map 1:1 to nav.json keys, except the two-word ones.
-const navKey = (label: string) => (label === "Learn" ? "learn" : label === "My room" ? "myRoom" : label.toLowerCase());
+const navKey = (label: string) =>
+  label === "Learn"
+    ? "learn"
+    : label === "My room"
+      ? "myRoom"
+      : label === "My word bank"
+        ? "myWords"
+        : label.toLowerCase();
 
 const LANGUAGES = [
   { code: "en", label: "English" },
@@ -189,6 +196,30 @@ function SidebarBody({
         ))}
       </div>
 
+      {/* Desktop only (this body is only ever mounted inside the xl+ aside
+          below): the six modules and the three My room rows laid out flat,
+          the way the pre-restructure 13-item sidebar did — a screen wide
+          enough for a column doesn't need the Garden page's own grid or a
+          My room visit to see where everything is. Phones and tablets never
+          render this; the module grid there is their only module list. */}
+      <div className="flex flex-col gap-0.5 pt-2.5 mt-1 border-t border-line">
+        <p className="text-[12.5px] font-extrabold tracking-[.07em] uppercase text-success-deep px-3 pb-1.5">{tn("learn")}</p>
+        <div className="flex flex-col gap-0.5">
+          {MODULES.map((item) => (
+            <NavItem key={item.label} {...item} on={pathname.startsWith(item.href)} />
+          ))}
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-0.5 pt-2.5 mt-1 border-t border-line">
+        <p className="text-[12.5px] font-extrabold tracking-[.07em] uppercase text-success-deep px-3 pb-1.5">{tn("myRoom")}</p>
+        <div className="flex flex-col gap-0.5">
+          {MY_ROOM_ITEMS.map((item) => (
+            <NavItem key={item.label} {...item} on={pathname.startsWith(item.href)} />
+          ))}
+        </div>
+      </div>
+
       <div className="mt-auto flex flex-col gap-1 pt-4">
         <div className="flex items-center gap-2.5 border border-[#ECD98A] bg-[#FEF9C3] px-[13px] py-[11px] mb-1.5 rotate-[-1deg] shadow-[0_8px_18px_-12px_rgba(120,100,30,.4)]">
           <span className="text-lg">🔥</span>
@@ -210,16 +241,20 @@ export default function Sidebar(props: Props) {
 
   return (
     <>
-      {/* Desktop (md+, tablets included): the notebook-index column. */}
-      <aside className="hidden md:flex flex-col gap-1 border-r border-dashed border-dash bg-warm px-3.5 py-5 sticky top-0 h-screen overflow-y-auto">
+      {/* Desktop (xl+ — 1280px, laptop and up): the notebook-index column,
+          full module list included. Phones AND tablets (including iPad
+          landscape at 1024px) get the slim header + BottomNav below instead
+          — 2026-09-08, user call: only a real desktop should feel this
+          different from the phone. */}
+      <aside className="hidden xl:flex flex-col gap-1 border-r border-dashed border-dash bg-warm px-3.5 py-5 sticky top-0 h-screen overflow-y-auto">
         <SidebarBody {...props} pathname={pathname} locale={locale} />
       </aside>
 
-      {/* Phone (below md): a slim identity bar only — BottomNav is the sole
-          nav surface down here, no slide-in drawer duplicating it. Account
-          settings and the language switcher live in AccountMenu (avatar
-          below) and BottomNav's "More" sheet respectively. */}
-      <header className="md:hidden sticky top-0 z-30 h-[52px] flex items-center gap-2 pl-3 pr-3 bg-warm/90 backdrop-blur-[10px] border-b-[1.5px] border-dashed border-dash">
+      {/* Phone and tablet (below xl): a slim identity bar only — BottomNav is
+          the sole nav surface down here, no slide-in drawer duplicating it.
+          Account settings and the language switcher live in AccountMenu
+          (avatar below) and BottomNav's "More" sheet respectively. */}
+      <header className="xl:hidden sticky top-0 z-30 h-[52px] flex items-center gap-2 pl-3 pr-3 bg-warm/90 backdrop-blur-[10px] border-b-[1.5px] border-dashed border-dash">
         <Brand />
         <span className="flex-1" />
         <span
