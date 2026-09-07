@@ -197,6 +197,21 @@ function shrinkAt(strokes: StrokeAnchors[], anchorX: number, anchorY: number, fa
     return out;
   });
 }
+
+function translateX(strokes: StrokeAnchors[], dx: number): StrokeAnchors[] {
+  return strokes.map((s) => {
+    const out: StrokeAnchors = s.map(([x, y]) => [x + dx, y] as Pt);
+    out.circle = s.circle;
+    return out;
+  });
+}
+
+/** For ㅐㅒㅔㅖ, which stroke's first point is the leftmost of the two ㅣ
+ * stems — fitBox centres on the whole glyph's bounding box (including a
+ * ㅓ/ㅕ-style tick that pokes out past that stem), so this stem doesn't
+ * naturally land where a plain ㅏ's single stem would. Index into the
+ * stroke array, not a coordinate — stays correct if the anchors change. */
+const LEFT_I_STROKE: Record<string, number> = { ㅐ: 0, ㅒ: 0, ㅔ: 1, ㅖ: 2 };
 /** The consonant in a block reads noticeably smaller than the vowel beside it. */
 const CHO_SHRINK = 0.74;
 
@@ -253,7 +268,13 @@ function syllableAnchors(char: string): StrokeAnchors[] {
     const top = hasJong ? 36 : 52, bottom = hasJong ? 166 : 268;
     const mid = (top + bottom) / 2, jungTop = mid - (mid - top) * 0.82, jungBottom = mid + (bottom - mid) * 0.82;
     choPart = shrinkAt(fitBox(TRACE_ANCHORS[cho], [44, CENTER - 4, top, bottom]), CENTER - 4, (top + bottom) / 2, CHO_SHRINK);
-    jungPart = fitBox(TRACE_ANCHORS[jung], [CENTER + 20, CENTER + 108, jungTop, jungBottom]);
+    const jungBox: Box = [CENTER + 20, CENTER + 108, jungTop, jungBottom];
+    jungPart = fitBox(TRACE_ANCHORS[jung], jungBox);
+    const leftIIdx = LEFT_I_STROKE[jung];
+    if (leftIIdx !== undefined) {
+      const refX = fitBox(TRACE_ANCHORS["ㅏ"], jungBox)[0][0][0];
+      jungPart = translateX(jungPart, refX - jungPart[leftIIdx][0][0]);
+    }
   } else if (HORIZONTAL_VOWELS.has(jung)) {
     // 고: consonant above the centre line, vowel below it. A double consonant
     // reads shorter (top edge lower); ㅗ/ㅛ/ㅜ/ㅠ's ㅣ leg is squashed toward
