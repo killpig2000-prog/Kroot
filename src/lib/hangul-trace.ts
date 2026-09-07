@@ -136,12 +136,12 @@ const COMPOUND_VOWELS: Record<string, StrokeAnchors[]> = {
   // ㅘ's ㅗ part is shorter than ㅙ/ㅚ's on purpose: stem trimmed and the bar
   // lifted with it, so the ㅗ reads as a small mark under the consonant.
   ㅘ: [[C(122, 174), C(122, 214)], [C(63, 214), C(181, 214)], [C(198, 52), C(198, 268)], [C(198, 150), C(252, 150)]],
-  ㅙ: [[C(110, 188), C(110, 232)], [C(51, 232), C(169, 232)], [C(182, 52), C(182, 268)], [C(182, 150), C(222, 150)], [C(228, 52), C(228, 268)]],
-  ㅚ: [[C(126, 188), C(126, 232)], [C(68, 232), C(186, 232)], [C(220, 52), C(220, 268)]],
+  ㅙ: [[C(110, 178), C(110, 222)], [C(51, 222), C(169, 222)], [C(182, 52), C(182, 268)], [C(182, 150), C(222, 150)], [C(228, 52), C(228, 268)]],
+  ㅚ: [[C(126, 178), C(126, 222)], [C(68, 222), C(186, 222)], [C(220, 52), C(220, 268)]],
   // ㅝ ㅞ: the ㅓ/ㅔ tick sits BELOW ㅜ's bar, as in print (워, 웨).
-  ㅝ: [[C(58, 184), C(170, 184)], [C(114, 184), C(114, 268)], [C(160, 226), C(214, 226)], [C(214, 40), C(214, 280)]],
-  ㅞ: [[C(58, 184), C(162, 184)], [C(110, 184), C(110, 268)], [C(150, 226), C(202, 226)], [C(202, 52), C(202, 268)], [C(238, 52), C(238, 268)]],
-  ㅟ: [[C(78, 196), C(200, 196)], [C(138, 196), C(138, 268)], [C(234, 52), C(234, 268)]],
+  ㅝ: [[C(58, 192), C(170, 192)], [C(114, 192), C(114, 254)], [C(160, 226), C(214, 226)], [C(214, 40), C(214, 280)]],
+  ㅞ: [[C(58, 192), C(162, 192)], [C(110, 192), C(110, 254)], [C(150, 226), C(202, 226)], [C(202, 52), C(202, 268)], [C(238, 52), C(238, 268)]],
+  ㅟ: [[C(78, 204), C(200, 204)], [C(138, 204), C(138, 256)], [C(234, 52), C(234, 268)]],
   ㅢ: [[C(64, 200), C(202, 200)], [C(224, 52), C(224, 268)]],
 };
 
@@ -165,7 +165,7 @@ const JONG_CLUSTERS: Record<string, [string, string]> = {
   ㄽ: ["ㄹ","ㅅ"], ㄾ: ["ㄹ","ㅌ"], ㄿ: ["ㄹ","ㅍ"], ㅀ: ["ㄹ","ㅎ"], ㅄ: ["ㅂ","ㅅ"],
 };
 /** y where a w-vowel's ㅗ/ㅜ/ㅡ part begins — the consonant above must stop short of it. */
-const W_VOWEL_BAR_TOP: Record<string, number> = { ㅘ: 174, ㅙ: 188, ㅚ: 188, ㅝ: 184, ㅞ: 184, ㅟ: 196, ㅢ: 200 };
+const W_VOWEL_BAR_TOP: Record<string, number> = { ㅘ: 174, ㅙ: 178, ㅚ: 178, ㅝ: 192, ㅞ: 192, ㅟ: 204, ㅢ: 200 };
 /** x of that part's own vertical stroke — the consonant above centres on this, not the block. */
 const W_VOWEL_BAR_MID: Record<string, number> = { ㅘ: 122, ㅙ: 110, ㅚ: 126, ㅝ: 114, ㅞ: 110, ㅟ: 138, ㅢ: 133 };
 const VERTICAL_VOWELS = new Set(["ㅏ","ㅐ","ㅑ","ㅒ","ㅓ","ㅔ","ㅕ","ㅖ","ㅣ"]);
@@ -231,11 +231,13 @@ const CHO_SHRINK_YI = CHO_SHRINK_BIG * 1.5;
 const CHO_SHRINK_GO = CHO_SHRINK_BIGGER * 1.3;
 const CHO_NORMAL_VOWELS = new Set(["ㅏ", "ㅐ", "ㅑ", "ㅒ", "ㅓ", "ㅔ", "ㅕ", "ㅖ"]);
 const CHO_GO_VOWELS = new Set(["ㅗ", "ㅛ"]);
-/** ㅗㅛㅠㅡ: consonant pushed down until it nearly touches the bar below. */
-const CHO_NEAR_BAR_VOWELS = new Set(["ㅗ", "ㅛ", "ㅠ", "ㅡ"]);
-/** ㅛ's two stems reach higher than ㅗ's one, so its consonant needs to sit
- * further up than the rest of the near-bar group — a smaller drop. */
-const CHO_DROP_LIFT: Record<string, number> = { ㅛ: 16 };
+/** How far a 고-type block's consonant is pushed down toward the bar under
+ * it, per vowel: [with batchim, without]. Absent = 0. ㅛ's two stems reach
+ * higher than ㅗ's one so it drops less; ㅜ's bar sits high in its own box,
+ * leaving room above it that the consonant should fill. */
+const CHO_DROP: Record<string, [number, number]> = {
+  ㅗ: [26, 58], ㅛ: [10, 42], ㅠ: [26, 58], ㅡ: [26, 58], ㅜ: [12, 26],
+};
 const CHO_BIGGER_VOWELS = new Set(["ㅜ", "ㅘ", "ㅙ", "ㅚ", "ㅝ", "ㅞ", "ㅟ"]);
 /** Per-consonant size beside a right-hand vowel (ㅏ ㅐ ㅑ ㅒ ㅓ ㅔ ㅕ ㅖ),
  * tuned by eye letter by letter — fitBox only knows a glyph's bounding
@@ -335,7 +337,7 @@ function syllableAnchors(char: string): StrokeAnchors[] {
     const choSrc = DOUBLE_SET.has(cho) ? squashToward(TRACE_ANCHORS[cho], boundsY(TRACE_ANCHORS[cho])[1], 0.72) : TRACE_ANCHORS[cho];
     const barY = BAR_Y[jung];
     const jungSrc = barY !== undefined ? squashToward(TRACE_ANCHORS[jung], barY, BAR_SQUASH[jung]) : TRACE_ANCHORS[jung];
-    const goDrop = CHO_NEAR_BAR_VOWELS.has(jung) ? (hasJong ? 26 : 58) - (CHO_DROP_LIFT[jung] ?? 0) : 0;
+    const goDrop = (CHO_DROP[jung] ?? [0, 0])[hasJong ? 0 : 1];
     const choBox: Box = hasJong
       ? [92, 228, 40 + goDrop, 92 + goDrop]
       : [86, 234, 56 + goDrop, 120 + goDrop];
