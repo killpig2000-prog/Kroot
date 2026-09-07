@@ -137,8 +137,8 @@ const COMPOUND_VOWELS: Record<string, StrokeAnchors[]> = {
   ㅙ: [[C(110, 180), C(110, 232)], [C(51, 232), C(169, 232)], [C(182, 52), C(182, 268)], [C(182, 150), C(222, 150)], [C(228, 52), C(228, 268)]],
   ㅚ: [[C(126, 180), C(126, 232)], [C(68, 232), C(186, 232)], [C(220, 52), C(220, 268)]],
   // ㅝ ㅞ: the ㅓ/ㅔ tick sits BELOW ㅜ's bar, as in print (워, 웨).
-  ㅝ: [[C(58, 184), C(170, 184)], [C(114, 184), C(114, 268)], [C(176, 226), C(214, 226)], [C(214, 40), C(214, 280)]],
-  ㅞ: [[C(58, 184), C(162, 184)], [C(110, 184), C(110, 268)], [C(172, 226), C(192, 226)], [C(192, 52), C(192, 268)], [C(238, 52), C(238, 268)]],
+  ㅝ: [[C(58, 184), C(170, 184)], [C(114, 184), C(114, 268)], [C(160, 226), C(214, 226)], [C(214, 40), C(214, 280)]],
+  ㅞ: [[C(58, 184), C(162, 184)], [C(110, 184), C(110, 268)], [C(166, 226), C(202, 226)], [C(202, 30), C(202, 290)], [C(238, 52), C(238, 268)]],
   ㅟ: [[C(78, 196), C(200, 196)], [C(138, 196), C(138, 268)], [C(234, 52), C(234, 268)]],
   ㅢ: [[C(64, 200), C(202, 200)], [C(224, 52), C(224, 268)]],
 };
@@ -225,13 +225,17 @@ const CHO_SHRINK_W = CHO_SHRINK_BIG * 1.4 * 1.3;
 const CHO_SHRINK_YU = CHO_SHRINK * 1.5;
 /** ㅢ: 50% over CHO_SHRINK_BIG, bigger than its w-vowel siblings. */
 const CHO_SHRINK_YI = CHO_SHRINK_BIG * 1.5;
+/** ㅗㅛ: another 30% on top of CHO_SHRINK_BIGGER — bigger than plain ㅜ. */
+const CHO_SHRINK_GO = CHO_SHRINK_BIGGER * 1.3;
 const CHO_NORMAL_VOWELS = new Set(["ㅏ", "ㅐ", "ㅑ", "ㅒ", "ㅓ", "ㅔ", "ㅕ", "ㅖ"]);
-const CHO_BIGGER_VOWELS = new Set(["ㅗ", "ㅛ", "ㅜ", "ㅘ", "ㅙ", "ㅚ", "ㅝ", "ㅞ", "ㅟ"]);
+const CHO_GO_VOWELS = new Set(["ㅗ", "ㅛ"]);
+const CHO_BIGGER_VOWELS = new Set(["ㅜ", "ㅘ", "ㅙ", "ㅚ", "ㅝ", "ㅞ", "ㅟ"]);
 const choShrinkFor = (jung: string): number => {
   if (CHO_NORMAL_VOWELS.has(jung)) return CHO_SHRINK;
   if (jung === "ㅠ") return CHO_SHRINK_YU;
   if (jung === "ㅢ") return CHO_SHRINK_YI;
   if (jung === "ㅡ") return CHO_SHRINK_W;
+  if (CHO_GO_VOWELS.has(jung)) return CHO_SHRINK_GO;
   if (CHO_BIGGER_VOWELS.has(jung)) return CHO_SHRINK_BIGGER;
   return CHO_SHRINK_BIG; // ㅣ
 };
@@ -304,7 +308,10 @@ function syllableAnchors(char: string): StrokeAnchors[] {
     const choSrc = DOUBLE_SET.has(cho) ? squashToward(TRACE_ANCHORS[cho], boundsY(TRACE_ANCHORS[cho])[1], 0.72) : TRACE_ANCHORS[cho];
     const barY = BAR_Y[jung];
     const jungSrc = barY !== undefined ? squashToward(TRACE_ANCHORS[jung], barY, BAR_SQUASH[jung]) : TRACE_ANCHORS[jung];
-    const choBox: Box = hasJong ? [92, 228, 40, 92] : [86, 234, 56, 120];
+    const goDrop = CHO_GO_VOWELS.has(jung) ? 24 : 0;
+    const choBox: Box = hasJong
+      ? [92, 228, 40 + goDrop, 92 + goDrop]
+      : [86, 234, 56 + goDrop, 120 + goDrop];
     choPart = shrinkAt(fitBox(choSrc, choBox), (choBox[0] + choBox[1]) / 2, (choBox[2] + choBox[3]) / 2, choShrinkFor(jung));
     jungPart = fitBox(jungSrc, hasJong ? [76, 244, 122, 168] : [76, 244, 182, 248]);
   } else if (hasJong) {
