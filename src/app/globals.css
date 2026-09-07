@@ -541,9 +541,10 @@ html.js-reveal .reveal:not(.in) {
   0%, 49% { transform: scaleX(1); }
   50%, 100% { transform: scaleX(-1); }
 }
+/* fliers keep a little height so they pass over the walkers, not through them */
 @keyframes friendDrift {
-  0%, 100% { translate: 0 0; }
-  50% { translate: 0 -6px; }
+  0%, 100% { translate: 0 -22px; }
+  50% { translate: 0 -30px; }
 }
 
 /* result scene: water falls from the can onto the tree while the XP bar fills */
