@@ -251,8 +251,9 @@ function syllableAnchors(char: string): StrokeAnchors[] {
     // 가: consonant fills the left of the centre line, vowel the right —
     // both span the same height so the block reads as one symmetric letter.
     const top = hasJong ? 36 : 52, bottom = hasJong ? 166 : 268;
+    const mid = (top + bottom) / 2, jungTop = mid - (mid - top) * 0.82, jungBottom = mid + (bottom - mid) * 0.82;
     choPart = shrinkAt(fitBox(TRACE_ANCHORS[cho], [44, CENTER - 4, top, bottom]), CENTER - 4, (top + bottom) / 2, CHO_SHRINK);
-    jungPart = fitBox(TRACE_ANCHORS[jung], [CENTER + 20, CENTER + 108, top, bottom]);
+    jungPart = fitBox(TRACE_ANCHORS[jung], [CENTER + 20, CENTER + 108, jungTop, jungBottom]);
   } else if (HORIZONTAL_VOWELS.has(jung)) {
     // 고: consonant above the centre line, vowel below it. A double consonant
     // reads shorter (top edge lower); ㅗ/ㅛ/ㅜ/ㅠ's ㅣ leg is squashed toward
