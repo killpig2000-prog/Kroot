@@ -8,6 +8,7 @@ import Widgets from "@/components/dashboard/Widgets";
 import FeedbackWidget, { FeedbackButton } from "@/components/dashboard/FeedbackWidget";
 import TodaysQuestCard from "@/components/dashboard/TodaysQuestCard";
 import { MODULES } from "@/components/dashboard/navItems";
+import ModuleIcon from "@/components/dashboard/ModuleIcon";
 import InstallBanner from "@/components/pwa/InstallBanner";
 import OnboardingTour from "@/components/onboarding/OnboardingTour";
 import TutorialFinishBanner from "@/components/onboarding/TutorialFinishBanner";
@@ -338,12 +339,30 @@ export default async function DashboardPage() {
                   key={m.href}
                   href={m.href}
                   data-tour={m.tourId}
-                  className="relative flex flex-col items-center justify-center gap-[6px] min-h-[84px] rounded-[17px] border border-line bg-cream px-[6px] py-[13px] text-center transition-all hover:-translate-y-0.5 hover:border-success"
+                  className="group relative overflow-hidden flex flex-col items-center justify-center gap-[7px] min-h-[86px] rounded-[20px] xl:rounded-[17px] border border-line bg-cream px-[6px] py-[13px] text-center transition-all hover:-translate-y-0.5 hover:border-success"
                 >
-                  <span className="text-[25px] leading-none" aria-hidden="true">
+                  {/* drawn icons below xl, the sidebar's emoji at xl+ */}
+                  <span className="xl:hidden text-success-deep transition-transform group-hover:scale-110">
+                    <ModuleIcon href={m.href} />
+                  </span>
+                  <span className="hidden xl:block text-[25px] leading-none" aria-hidden="true">
                     {m.icon}
                   </span>
                   <span className="text-[14.5px] font-bold text-charcoal leading-tight">{tn(m.label.toLowerCase())}</span>
+                  {/* the per-module progress the page already computes — it was
+                      being calculated and thrown away. A hairline, not a
+                      number: the tile stays a door, not a report. */}
+                  {p && p.done > 0 && (
+                    <span
+                      className="xl:hidden block h-[3px] w-[34px] rounded-full bg-line overflow-hidden"
+                      aria-hidden="true"
+                    >
+                      <i
+                        className="not-italic block h-full rounded-full bg-success"
+                        style={{ width: `${Math.max(8, p.percent)}%` }}
+                      />
+                    </span>
+                  )}
                 </Link>
               );
             })}
@@ -356,10 +375,10 @@ export default async function DashboardPage() {
           {dueCount > 0 && (
             <Link
               href="/review"
-              className="flex items-center gap-[13px] border border-line bg-cream rounded-[19px] px-[16px] py-[13px] mb-3 transition-all hover:-translate-y-0.5 hover:border-success group"
+              className="group flex items-center gap-3 border-0 border-t border-line bg-transparent px-[4px] py-[13px] mb-0 transition-all xl:mb-3 xl:gap-[13px] xl:border xl:rounded-[19px] xl:bg-cream xl:px-[16px] xl:hover:-translate-y-0.5 xl:hover:border-success"
             >
               <span className="flex-none text-[20px] transition-transform group-hover:scale-110">💧</span>
-              <b className="flex-1 min-w-0 truncate text-[16px] font-bold text-charcoal">{t("review.due", { count: dueCount })}</b>
+              <b className="flex-1 min-w-0 truncate text-[15px] xl:text-[16px] font-bold text-charcoal">{t("review.due", { count: dueCount })}</b>
               <span className="flex-none text-[15px] font-semibold text-success transition-transform group-hover:translate-x-0.5">
                 {t("review.short")}
               </span>
@@ -372,7 +391,7 @@ export default async function DashboardPage() {
               tokens, not the old pink literals the palette pass retired. */}
           <Link
             href="/slang"
-            className="xl:hidden flex items-center gap-3 border border-line bg-cream rounded-[14px] px-4 py-2.5 mb-3 transition-all hover:-translate-y-0.5 hover:border-success group"
+            className="xl:hidden group flex items-center gap-3 border-0 border-t border-line px-[4px] py-[13px] mb-0 transition-all"
           >
             <span className="flex-none text-[18px] transition-transform group-hover:scale-110">💬</span>
             <span className="flex-1 min-w-0 truncate text-[14px]">

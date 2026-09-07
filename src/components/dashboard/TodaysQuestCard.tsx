@@ -66,7 +66,7 @@ export default function TodaysQuestCard({
       <Link
         href={target}
         onClick={playTap}
-        className="group flex flex-col gap-[8px] rounded-[23px] border-[1.5px] border-success bg-success-bg px-[17px] py-[17px] transition-all hover:-translate-y-0.5 hover:bg-[var(--tint-green)]"
+        className="group flex flex-col gap-[8px] rounded-[20px] xl:rounded-[23px] border-[1.5px] border-success bg-success-bg px-[17px] py-[17px] transition-all hover:-translate-y-0.5 hover:bg-[var(--tint-green)]"
       >
         <span className="text-[11px] font-bold uppercase tracking-[.09em] text-success-deep/70">{t("title")}</span>
         <span className="block font-extrabold text-[24px] leading-[1.2] text-charcoal">{head}</span>

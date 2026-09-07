@@ -42,14 +42,16 @@ export default function TreeBand({
       aria-label={t("openMyRoom")}
       // sizes are the restructure mockup's, scaled 1.45× from its 268px
       // phone frame to a real 390px one (2026-09-07 fidelity pass)
-      className="flex items-center gap-[11px] border border-line rounded-[20px] px-[14px] py-[10px] mb-3 transition-all hover:-translate-y-0.5 hover:border-success"
-      style={{ background: "linear-gradient(to right, #DFF0E6, var(--c-card, #FFFDF6) 70%)" }}
+      className="flex items-center gap-[11px] border border-line rounded-[20px] px-[14px] py-[11px] mb-3 transition-all hover:-translate-y-0.5 hover:border-success"
+      // a touch more garden at the left edge, and it holds longer before it
+      // fades — the band was reading as one more cream card (2026-09-08)
+      style={{ background: "linear-gradient(100deg, #D3EBDC, var(--c-card, #FFFDF6) 62%)" }}
     >
       <svg viewBox="0 0 220 230" className="flex-none h-auto" style={{ width: "clamp(40px, 11vw, 48px)" }} aria-hidden="true">
         <LevelCreature level={stage} costumeIds={costumeIds} species={species} />
       </svg>
       <span className="flex-none text-[17px] font-extrabold text-charcoal tabular-nums">{t("levelBadge", { level })}</span>
-      <span className="flex-1 min-w-0 h-[9px] rounded-full overflow-hidden bg-line">
+      <span className="flex-1 min-w-0 h-[7px] rounded-full overflow-hidden bg-success-bg">
         <i
           className="not-italic block h-full rounded-full bg-success transition-[width] duration-1000"
           style={{ width: `${level >= MAX_LEVEL ? 100 : fill}%` }}
