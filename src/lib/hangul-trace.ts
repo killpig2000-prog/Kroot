@@ -206,12 +206,13 @@ function translateX(strokes: StrokeAnchors[], dx: number): StrokeAnchors[] {
   });
 }
 
-/** For ㅐㅒㅔㅖ, which stroke's first point is the leftmost of the two ㅣ
- * stems — fitBox centres on the whole glyph's bounding box (including a
- * ㅓ/ㅕ-style tick that pokes out past that stem), so this stem doesn't
- * naturally land where a plain ㅏ's single stem would. Index into the
+/** Which stroke's first point is the main ㅣ stem to align to ㅏ's stem —
+ * fitBox centres on the whole glyph's bounding box, and ㅓ/ㅕ's tick pokes
+ * out to the LEFT of their stem (unlike ㅏ/ㅑ's, which sits to the right of
+ * the stem), so that stem doesn't naturally land where ㅏ's does. Same
+ * issue carries into ㅔ/ㅖ, which are built the same way. Index into the
  * stroke array, not a coordinate — stays correct if the anchors change. */
-const LEFT_I_STROKE: Record<string, number> = { ㅐ: 0, ㅒ: 0, ㅔ: 1, ㅖ: 2 };
+const LEFT_I_STROKE: Record<string, number> = { ㅐ: 0, ㅒ: 0, ㅓ: 1, ㅔ: 1, ㅕ: 2, ㅖ: 2 };
 /** The consonant in a block reads noticeably smaller than the vowel beside it. */
 const CHO_SHRINK = 0.74;
 
