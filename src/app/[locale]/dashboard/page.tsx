@@ -293,10 +293,11 @@ export default async function DashboardPage() {
             <TodaysQuestCard quest={quest} href={questHref} />
           </div>
 
-          {/* the six doors — 2×3 per the restructure mockup. Vocabulary
+          {/* the six doors. Two columns × three rows on phones (portrait —
+              user call 2026-09-07), three across from sm up. Vocabulary
               carries Hangul (trace-to-write on the card), Writing carries
               Grammar (particle blanks); the rest are the same four rooms. */}
-          <div className="grid grid-cols-3 gap-[9px] mb-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-[9px] mb-3">
             {MODULES.map((m) => {
               const key = m.href === "/speaking" ? "pronunciation" : m.href.slice(1);
               const p = skillProgress[key];
