@@ -6,7 +6,6 @@ import Sidebar from "@/components/dashboard/Sidebar";
 import Widgets from "@/components/dashboard/Widgets";
 import WordOfDayCard from "@/components/dashboard/WordOfDayCard";
 import FeedbackWidget, { FeedbackButton } from "@/components/dashboard/FeedbackWidget";
-import Greeting from "@/components/dashboard/Greeting";
 import TodaysQuestCard from "@/components/dashboard/TodaysQuestCard";
 import InstallBanner from "@/components/pwa/InstallBanner";
 import OnboardingTour from "@/components/onboarding/OnboardingTour";
@@ -325,7 +324,7 @@ export default async function DashboardPage() {
           <GuidedStep step="hangul-nav" />
           <GuidedStep step="writing-nav" />
           <TutorialFinishBanner />
-          <Greeting name={displayName} />
+          {/* the greeting moved into the tree's speech bubble (TreeCard) */}
 
           {/* The snapshot RPC failed, so everything below is the empty
               fallback. Say so: an empty garden otherwise reads as "all my

@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { SceneLayer, skinFor, skyFor } from "@/lib/costumes";
 import { LEVEL_ORDER, LEVEL_PATH, SPECIES, type CefrLevel } from "@/lib/tree";
 import { FULLY_GROWN_LEVEL, MAX_LEVEL, treeHeightMetres, treeStageForLevel } from "@/lib/level";
 import VeteranTree, { VETERAN_MILESTONES, veteranFrameHeight } from "@/components/dashboard/VeteranTree";
+import GardenScene from "@/components/ui/GardenScene";
 import SpeechBubble from "@/components/ui/SpeechBubble";
 import LevelCreature from "@/components/dashboard/LevelCreature";
 import TreeGrowthPopup from "@/components/dashboard/TreeGrowthPopup";
@@ -24,15 +25,36 @@ const TREE_PHRASES = [
 // One label per 10-level tree stage; from 50 the tree only grows taller.
 const STAGE_RANGES = ["1-9", "10-19", "20-29", "30-39", "40-49", "50+"];
 
-// The same dawn sky the first-open intro (SeedIntro) uses, so the seed the
-// learner just woke up is standing in the same garden on the dashboard.
-const SCENE_SKY = "linear-gradient(180deg,#FFF9EC 0%,#EAF4F3 40%,#BEE3F0 62%,#DFF3E4 100%)";
+// The tree greets you by your local clock — the page used to do this in an
+// <h1> above the garden while the tree said something else underneath, two
+// speakers for one moment. Korean stays Korean in every UI language; the
+// gloss comes from the same ui.* strings the old heading used.
+type GreetingKey = "upLate" | "goodMorning" | "goodAfternoon" | "goodEvening" | "welcome";
+const GREETING_KR: Record<GreetingKey, string> = {
+  upLate: "아직 안 자요?",
+  goodMorning: "좋은 아침이에요",
+  goodAfternoon: "좋은 오후예요",
+  goodEvening: "좋은 저녁이에요",
+  welcome: "어서 오세요",
+};
+function greetingKey(hour: number): GreetingKey {
+  if (hour < 0) return "welcome";
+  if (hour < 5) return "upLate";
+  if (hour < 12) return "goodMorning";
+  if (hour < 18) return "goodAfternoon";
+  return "goodEvening";
+}
+const emptySubscribe = () => () => {};
+// How long the greeting stays before the tree moves on to its usual lines.
+const GREETING_HOLD_MS = 5000;
 
 // The tree stands in a garden, not in a card. Three layers: the scene (sky,
 // hills, the creature, a speech bubble, two pills and one XP line), then a
 // slim identity row (avatar, name, grade), then the growth/keepsakes panels
 // that open from that row. Everything the old card showed is still here —
-// the polaroid frame, dashed border and rotated paper are what went.
+// the polaroid frame, dashed border and rotated paper are what went. On
+// phones the scene runs edge to edge under the header (the sky is the
+// page's top, not a picture in it); from md up it is a card in the column.
 export default function TreeCard({
   level,
   progressPct,
@@ -67,10 +89,24 @@ export default function TreeCard({
   // Identity chips reuse the /profile strings — the card absorbed that page's
   // identity header (2026-09-01), so the copy moved with it.
   const ti = useTranslations("profile.identity");
+  const tu = useTranslations("ui");
   const [fill, setFill] = useState(0);
   const [openTab, setOpenTab] = useState<"growth" | "keepsakes" | null>(null);
   const equipped = costumeIds;
-  const phrases = TREE_PHRASES.map((p) => ({ kr: p.kr, en: t(`phrases.${p.key}`) }));
+  // The server can't know the visitor's clock: it renders "어서 오세요" and
+  // the local-time greeting swaps in right after hydration (same trick the
+  // old Greeting heading used; a useState initializer would be discarded).
+  const hour = useSyncExternalStore(emptySubscribe, () => new Date().getHours(), () => -1);
+  const gk = greetingKey(hour);
+  const gloss = tu(gk);
+  const phrases = [
+    {
+      kr: `${GREETING_KR[gk]}, ${displayName}!`,
+      // the tree's glosses are lower-case asides ("looking good today!")
+      en: /^[A-Z]/.test(gloss) ? gloss.charAt(0).toLowerCase() + gloss.slice(1) : gloss,
+    },
+    ...TREE_PHRASES.map((p) => ({ kr: p.kr, en: t(`phrases.${p.key}`) })),
+  ];
 
   useEffect(() => {
     const timer = setTimeout(() => setFill(progressPct), 200);
@@ -133,29 +169,15 @@ export default function TreeCard({
       <TreeGrowthPopup level={level} species={species} />
 
       {/* ── the garden ─────────────────────────────────────────────── */}
-      <div
-        className="relative overflow-hidden rounded-[18px] border border-line"
-        style={{ background: sky ?? SCENE_SKY, minHeight: `${sceneMin}px` }}
+      {/* Phones: full-bleed — the negative margins undo <main>'s horizontal
+          padding and its 26px top padding exactly, so the sky meets the
+          header line and both screen edges; only the bottom corners round.
+          md+: the same scene as a bordered card inside the column. */}
+      <GardenScene
+        clouds={!sky}
+        className="-mx-[clamp(18px,3vw,36px)] -mt-[26px] rounded-b-[22px] border-b border-line md:mx-0 md:mt-0 md:rounded-[18px] md:border"
+        style={{ minHeight: `${sceneMin}px`, ...(sky ? { background: sky } : {}) }}
       >
-        <svg
-          className="absolute left-[-4%] right-[-4%] bottom-0 w-[108%] h-[44%]"
-          viewBox="0 0 800 200"
-          preserveAspectRatio="none"
-          aria-hidden="true"
-        >
-          <path d="M0 110 C140 60 260 90 400 96 C540 102 660 50 800 92 L800 200 L0 200Z" fill="#CFE9D6" />
-          <path d="M0 150 C160 120 300 140 440 132 C600 122 700 140 800 128 L800 200 L0 200Z" fill="#B9DDC3" />
-          <path d="M0 176 C200 160 400 172 800 164 L800 200 L0 200Z" fill="#DFF3E4" />
-        </svg>
-        {!sky && (
-          <svg className="absolute top-[14%] left-0 w-full h-[18%]" viewBox="0 0 400 60" preserveAspectRatio="none" aria-hidden="true">
-            <g fill="#FFFFFF" opacity=".8">
-              <ellipse cx="62" cy="30" rx="26" ry="9" />
-              <ellipse cx="84" cy="24" rx="17" ry="7" />
-              <ellipse cx="318" cy="38" rx="22" ry="7.5" opacity=".7" />
-            </g>
-          </svg>
-        )}
 
         {/* level + stage, streak + coins — two pills, nothing else up top */}
         <span
@@ -194,9 +216,10 @@ export default function TreeCard({
           )}
         </div>
 
-        {/* what the tree says: above it on phones, beside it on wide screens */}
-        <div className="absolute z-[4] left-1/2 -translate-x-1/2 top-[15%] sm:left-[58%] sm:translate-x-0 sm:top-[30%]">
-          <SpeechBubble phrases={phrases} />
+        {/* what the tree says — the greeting first, then its usual lines;
+            above it on phones, beside it on wide screens */}
+        <div className="absolute z-[4] w-max left-1/2 -translate-x-1/2 top-[15%] sm:left-[58%] sm:translate-x-0 sm:top-[30%]">
+          <SpeechBubble phrases={phrases} firstHoldMs={GREETING_HOLD_MS} wrap />
         </div>
 
         {/* one XP line on the grass */}
@@ -214,7 +237,7 @@ export default function TreeCard({
             />
           </div>
         </div>
-      </div>
+      </GardenScene>
 
       {/* ── who this garden belongs to ─────────────────────────────── */}
       <div className="flex flex-wrap items-center gap-x-3 gap-y-2 mt-3 px-1">

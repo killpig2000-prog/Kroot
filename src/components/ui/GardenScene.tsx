@@ -17,6 +17,7 @@ export default function GardenScene({
   className = "",
   style,
   hillsHeight = "44%",
+  clouds = true,
   children,
 }: {
   tone?: "dawn" | "night";
@@ -24,6 +25,8 @@ export default function GardenScene({
   style?: CSSProperties;
   /** How much of the scene the hills take, from the bottom. */
   hillsHeight?: string;
+  /** Dawn only: drop the clouds when the caller paints its own sky (a sky costume). */
+  clouds?: boolean;
   children?: ReactNode;
 }) {
   const night = tone === "night";
@@ -42,7 +45,7 @@ export default function GardenScene({
             aria-hidden="true"
           />
         </>
-      ) : (
+      ) : clouds && (
         <svg className="absolute top-[14%] left-0 w-full h-[16%]" viewBox="0 0 400 60" preserveAspectRatio="none" aria-hidden="true">
           <g fill="#FFFFFF" opacity=".8">
             <ellipse cx="62" cy="30" rx="26" ry="9" />
