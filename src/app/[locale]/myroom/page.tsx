@@ -59,7 +59,9 @@ export default async function MyRoomPage({ params }: { params: Promise<{ locale:
     { icon: "📒", label: tn("myWords"), sub: t("bankSub", { n: savedCount, slots }), href: "/review/words" },
   ];
 
-  const row = "flex items-center gap-3 border border-line bg-cream rounded-[14px] px-4 py-3 transition-all hover:-translate-y-0.5 hover:border-success group";
+  // Row metrics are the restructure mockup's, scaled 1.45× from its 268px
+  // phone frame to a real 390px one (2026-09-07 fidelity pass).
+  const row = "flex items-center gap-[13px] border border-line bg-cream rounded-[19px] px-[16px] py-[13px] transition-all hover:-translate-y-0.5 hover:border-success group";
 
   return (
     <div className="min-h-screen bg-warm text-charcoal">
@@ -85,15 +87,15 @@ export default async function MyRoomPage({ params }: { params: Promise<{ locale:
             linkToShop
           />
 
-          <div className="max-w-[560px] flex flex-col gap-2.5 mt-1">
+          <div className="max-w-[560px] flex flex-col gap-[11px] mt-[11px]">
             {rows.map((r) => (
               <Link key={r.label} href={r.href} className={row}>
-                <span className="flex-none text-[19px] transition-transform group-hover:scale-110" aria-hidden="true">
+                <span className="flex-none text-[20px] transition-transform group-hover:scale-110" aria-hidden="true">
                   {r.icon}
                 </span>
-                <span className="flex-1 min-w-0 truncate text-[14.5px]">
+                <span className="flex-1 min-w-0 truncate text-[17px]">
                   <b className="font-bold text-charcoal">{r.label}</b>
-                  <span className="text-[13px] text-muted"> · {r.sub}</span>
+                  <span className="text-[15px] text-muted"> · {r.sub}</span>
                 </span>
                 <span className="flex-none text-[15px] font-semibold text-success transition-transform group-hover:translate-x-0.5" aria-hidden="true">
                   ›
@@ -101,20 +103,20 @@ export default async function MyRoomPage({ params }: { params: Promise<{ locale:
               </Link>
             ))}
 
-            <div className="border-t border-line mt-1 pt-3" />
+            <div className="border-t border-line mt-[6px] pt-[10px]" />
 
             {/* settings fold open in place — one row on the list, the
                 controls underneath it */}
             <details className="group/set">
               <summary className={`${row} cursor-pointer list-none`}>
-                <span className="flex-none text-[19px]" aria-hidden="true">
+                <span className="flex-none text-[20px]" aria-hidden="true">
                   ⚙️
                 </span>
-                <span className="flex-1 min-w-0 truncate text-[14.5px]">
+                <span className="flex-1 min-w-0 truncate text-[17px]">
                   <b className="font-bold text-charcoal">{t("settings")}</b>
-                  <span className="text-[13px] text-muted"> · {t("settingsSub")}</span>
+                  <span className="text-[15px] text-muted"> · {t("settingsSub")}</span>
                 </span>
-                <span className="flex-none text-[13px] text-muted transition-transform group-open/set:rotate-90" aria-hidden="true">
+                <span className="flex-none text-[15px] text-muted transition-transform group-open/set:rotate-90" aria-hidden="true">
                   ›
                 </span>
               </summary>

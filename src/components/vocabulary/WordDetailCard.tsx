@@ -407,56 +407,68 @@ export default function WordDetailCard({
         )}
 
         <div className="relative pt-6 pb-5 pr-[clamp(18px,4vw,26px)] pl-[clamp(40px,8vw,70px)]">
-          {art && (
-            // eslint-disable-next-line @next/next/no-img-element -- static SVG in /public, no optimisation needed
-            <img
-              src={art}
-              alt={meaning}
-              loading="lazy"
-              decoding="async"
-              className="block mb-2.5"
-              style={{ width: "clamp(72px, 20vw, 96px)", height: "clamp(72px, 20vw, 96px)" }}
-            />
+          {/* The word's hero, laid out like the restructure mockup's card:
+              picture, word, romanization, meaning, then the listen pill —
+              centred, one under the other. Its px are the mockup's scaled
+              1.45× from its 268px phone frame to a real 390px one. A word
+              with no picture (people/roles) grows into the picture's slot
+              instead, so both cards are the same height. */}
+          {hanja && (
+            <span
+              className="kr absolute top-6 right-[clamp(18px,4vw,26px)] font-black text-[clamp(36px,6vw,52px)] leading-none text-[#A08F4E] opacity-55 tracking-[.04em] select-none"
+              aria-label={t("session.hanjaAria", { hanja })}
+            >
+              {hanja}
+            </span>
           )}
-          <div
-            className="grid grid-cols-[1fr_auto] gap-4 items-start mb-1 pr-16"
-            style={badge ? { minHeight: "calc(clamp(72px, 20vw, 96px) + 10px + 68px)" } : undefined}
-          >
-            <div className={badge ? "self-center" : undefined}>
+
+          <div className="flex flex-col items-center text-center gap-[9px] mb-[13px]">
+            {art && (
+              // eslint-disable-next-line @next/next/no-img-element -- static SVG in /public, no optimisation needed
+              <img
+                src={art}
+                alt={meaning}
+                loading="lazy"
+                decoding="async"
+                className="block"
+                style={{ width: "clamp(96px, 29vw, 120px)", height: "clamp(96px, 29vw, 120px)" }}
+              />
+            )}
+            <div className="flex flex-col items-center">
               <p
                 className={`kr font-black leading-[1.1] tracking-[-0.01em] ${
-                  badge ? "text-[clamp(48px,11vw,64px)]" : "text-[clamp(34px,6vw,44px)]"
+                  badge ? "text-[clamp(52px,15vw,68px)]" : "text-[clamp(38px,11vw,46px)]"
                 }`}
+                style={badge ? { minHeight: "clamp(96px, 29vw, 120px)", display: "flex", alignItems: "center" } : undefined}
               >
-                <button
-                  type="button"
-                  onClick={() => speakKorean(word.korean)}
-                  title={t("session.hearIt")}
-                  className="inline-flex items-baseline gap-2 hover:text-[var(--tint-violet-ink)] transition-colors text-left"
-                >
-                  {word.korean}
-                  <span aria-hidden="true" className="text-[16px] translate-y-[-6px] opacity-70">🔊</span>
-                </button>
+                {word.korean}
               </p>
-              <p className="text-[13px] text-faint mt-0.5">{word.romanization}</p>
+              <p className="text-[15px] text-faint mt-0.5">{word.romanization}</p>
             </div>
-            {hanja && (
-              <span
-                className="kr font-black text-[clamp(36px,6vw,52px)] leading-none text-[#A08F4E] opacity-55 tracking-[.04em] select-none"
-                aria-label={t("session.hanjaAria", { hanja })}
-              >
-                {hanja}
-              </span>
+
+            <p className="text-[18px] font-extrabold leading-snug">{meaning}</p>
+
+            {badge && (
+              <p className="kr text-[14px] text-muted leading-[1.5] bg-cream border border-line rounded-[12px] px-[13px] py-[6px] max-w-[34ch]">
+                {badge}
+              </p>
             )}
+
+            <button
+              type="button"
+              onClick={() => speakKorean(word.korean)}
+              className="rounded-full border border-line px-[15px] py-[5px] text-[14.5px] font-bold text-success hover:border-success transition-colors"
+            >
+              🔊 {t("session.hearIt")}
+            </button>
           </div>
 
-          <p className="text-[20px] font-extrabold mt-2.5 mb-1.5">{meaning}</p>
-
-          {badge && (
-            <p className="kr text-[13px] text-muted leading-[1.5] bg-cream border border-line rounded-[10px] px-3 py-1.5 mb-2.5 inline-block">
-              {badge}
-            </p>
-          )}
+          {/* write it — the Hangul tab lives here now: trace the word
+              syllable by syllable on the /hangul paper. It sits directly
+              under the word, as in the restructure mockup (picture · word ·
+              meaning · listen · trace); open by default on A1/A2 (first
+              meeting = write it), folded on B1+. */}
+          {traceable && <WordTrace key={word.key} korean={word.korean} defaultOpen={level === "A1" || level === "A2"} />}
 
           {note?.parts && (
             <p className="text-[12.5px] text-muted leading-[1.65] mb-3">
@@ -513,11 +525,6 @@ export default function WordDetailCard({
 
         </div>
       </div>
-
-      {/* write it — the Hangul tab lives here now: trace the word syllable by
-          syllable on the /hangul paper. Open by default on A1/A2 (first
-          meeting = write it), folded on B1+. */}
-      {traceable && <WordTrace key={word.key} korean={word.korean} defaultOpen={level === "A1" || level === "A2"} />}
 
       {/* actions — a bar under the page, full card width, so the thumb
           doesn't have to reach into the card and the screen isn't half empty */}

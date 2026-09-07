@@ -180,13 +180,13 @@ html[data-mode="dark"] {
   --c-success-deep: #2E5B41;
   --c-success-bg: #EAF3EC;
   --c-success-line: #C9E4D0;
-  --c-teal: #2A7F72;
-  --c-amber-line: #EBD9A3;
+  --c-teal: #3E7C59;
+  --c-amber-line: #C9E4D0;
   --c-dash: #DDD6C8;
-  --c-amber: #B07A2A;
-  --c-amber-deep: #9A5F18;
-  --c-sky-line: #C7DCE3;
-  --c-sky-deep: #2F6F8F;
+  --c-amber: #3E7C59;
+  --c-amber-deep: #2E5B41;
+  --c-sky-line: #C9E4D0;
+  --c-sky-deep: #3E7C59;
   --c-danger: #DC2626;
   --c-danger-bg: #FEF2F2;
   /* Chart palette (account analytics). One data colour for every bar —
@@ -204,16 +204,16 @@ html[data-mode="dark"] {
      every ink is desaturated a step — one warm family instead of eleven
      Tailwind swatches sitting on a garden. The `-ink` tokens are the
      module accents that used to be hardcoded hex in each component. */
-  --tint-sky: #EEF4F6;    --tint-sky-line: #C7DCE3;
-  --tint-teal: #EAF5F1;   --tint-teal-line: #B9DDD0;
-  --tint-amber: #FBF3E0;
-  --tint-pink: #FAEFF0;   --tint-pink-line: #E9C9CE;   --tint-pink-ink: #A9485F;  --tint-pink-ink-deep: #8F3A50;  --tint-pink-ink-soft: #8C7078;
-  --tint-violet: #F2F0F6; --tint-violet-line: #D2CBE2; --tint-violet-ink: #6A4FA8;
-  --tint-indigo: #EFF0F6; --tint-indigo-line: #C9CDE0; --tint-indigo-ink: #4B4E9A;
-  --tint-slate: #F1F2EF;  --tint-slate-line: #CCD1CB;  --tint-slate-ink: #4A5450;
-  --tint-stone: #F5F3EE;  --tint-stone-line: #E2DDD3;
-  --tint-rose: #FAEFEE;   --tint-rose-line: #E8C7C5;   --tint-rose-ink: #B04A5E;
-  --tint-green: #E4F2E7;  --tint-green-line: #A9D6B6;
+  --tint-sky: #FFFDF6;    --tint-sky-line: #E3DDD0;
+  --tint-teal: #FFFDF6;   --tint-teal-line: #E3DDD0;
+  --tint-amber: #FFFDF6;
+  --tint-pink: #FFFDF6;   --tint-pink-line: #E3DDD0;   --tint-pink-ink: #3E7C59;  --tint-pink-ink-deep: #2E5B41;  --tint-pink-ink-soft: #6B6560;
+  --tint-violet: #FFFDF6; --tint-violet-line: #E3DDD0; --tint-violet-ink: #3E7C59;
+  --tint-indigo: #FFFDF6; --tint-indigo-line: #E3DDD0; --tint-indigo-ink: #3E7C59;
+  --tint-slate: #FFFDF6;  --tint-slate-line: #E3DDD0;  --tint-slate-ink: #4A4237;
+  --tint-stone: #FFFDF6;  --tint-stone-line: #E3DDD0;
+  --tint-rose: #FFFDF6;   --tint-rose-line: #E3DDD0;   --tint-rose-ink: #3E7C59;
+  --tint-green: #EAF3EC;  --tint-green-line: #C9E4D0;
 }
 
 @theme inline {

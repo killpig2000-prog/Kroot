@@ -30,6 +30,13 @@ export default function TodaysQuestCard({
   const known = ["writing", "vocabulary", "listening", "reading", "pronunciation"].includes(quest.skill_key);
   const detail = known ? t(`descriptions.${quest.skill_key}`) : quest.description;
 
+  // The mockup's card: eyebrow, the task as the headline, the details under
+  // it, then a full-width button — its px scaled 1.45× from the 268px frame.
+  // The stored description is one "skill · what · how long" string; its first
+  // segment is the headline and the rest is the meta line.
+  const [head, ...restParts] = detail.split("·").map((x) => x.trim());
+  const meta = restParts.join(" · ");
+
   const inner = (
     <>
       <span className="flex-none w-12 h-12 rounded-[12px] bg-cream border border-success-line flex items-center justify-center text-[22px] transition-transform group-hover:scale-110">
@@ -58,11 +65,13 @@ export default function TodaysQuestCard({
       <Link
         href={target}
         onClick={playTap}
-        className="group flex items-center gap-4 rounded-[16px] border-[1.5px] border-success bg-success-bg px-4 py-3.5 transition-all hover:-translate-y-0.5 hover:bg-[var(--tint-green)]"
+        className="group flex flex-col gap-[8px] rounded-[23px] border-[1.5px] border-success bg-success-bg px-[17px] py-[17px] transition-all hover:-translate-y-0.5 hover:bg-[var(--tint-green)]"
       >
-        {inner}
-        <span className="flex-none rounded-full bg-success text-white text-[13px] font-bold px-4 py-2 transition-transform group-hover:translate-x-0.5">
-          {t("go")}
+        <span className="text-[11px] font-bold uppercase tracking-[.09em] text-success-deep/70">{t("title")}</span>
+        <span className="block font-extrabold text-[24px] leading-[1.2] text-charcoal">{head}</span>
+        {meta && <span className="block text-[15px] text-success-deep -mt-[3px]">{meta}</span>}
+        <span className="mt-[2px] block rounded-[16px] bg-success text-white text-[18px] font-bold text-center py-[11px] transition-transform group-hover:translate-y-[-1px]">
+          {t("start")}
         </span>
       </Link>
     </div>

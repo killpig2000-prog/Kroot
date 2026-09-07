@@ -109,9 +109,9 @@
     "thanksBody": "Your feedback has been received. We read every message and use it to decide what to improve next."
   },
   "modules": {
-    "vocabulary": "Write to remember",
+    "vocabulary": "Write it",
     "writing": "Order · particles",
-    "slang": "Today's word",
+    "slang": "Today’s word",
     "levelDone": "{level} · {done}/{total}"
   }
 }

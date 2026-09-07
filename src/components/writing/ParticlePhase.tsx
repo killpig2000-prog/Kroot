@@ -5,8 +5,10 @@ import { useTranslations } from "next-intl";
 import { playCorrect, playWrong } from "@/lib/sfx";
 import { explainWrong, PARTICLE_OPTIONS, type Particle, type ParticleItem } from "@/lib/particles";
 
+// Metrics follow the restructure mockup, scaled 1.45× from its 268px phone
+// frame to a real 390px one (2026-09-07 fidelity pass).
 const BTN_INK =
-  "rounded-[11px] px-5 py-[11px] text-sm font-bold text-white bg-success hover:bg-success-deep transition-colors disabled:bg-line disabled:text-faint";
+  "rounded-[16px] px-5 py-[11px] text-[18px] font-bold text-white bg-success hover:bg-success-deep transition-colors disabled:bg-line disabled:text-faint";
 // The wrong-pick ink: one coral, not a token — this is the only place the
 // writing flow says "no" in colour, and it must read the same on every theme.
 const CORAL = "#D4705C";
@@ -71,8 +73,8 @@ export default function ParticlePhase({
       </div>
 
       {/* the sentence, the blank underlined — coral while it's empty or wrong, green once right */}
-      <div className="border border-line bg-cream rounded-[14px] px-4 py-[18px] text-center">
-        <p className="kr font-bold text-[clamp(18px,4.6vw,21px)] tracking-[-0.01em] leading-[1.5]">
+      <div className="border border-line bg-cream rounded-[20px] px-[17px] py-[19px] text-center">
+        <p className="kr font-bold text-[clamp(23px,7vw,29px)] tracking-[-0.01em] leading-[1.45]">
           {before}
           <span
             className="inline-block min-w-[34px] border-b-2 px-0.5 mx-px"
@@ -82,13 +84,13 @@ export default function ParticlePhase({
           </span>
           {after}
         </p>
-        <p className="text-[12.5px] text-muted mt-1.5">{item.en}</p>
+        <p className="text-[15px] text-muted mt-[7px]">{item.en}</p>
       </div>
 
-      <p className="text-[12.5px] text-muted -mt-1">{picked === null ? t("prompt") : isRight ? t("right") : t("wrong")}</p>
+      <p className="text-[15px] text-muted -mt-1">{picked === null ? t("prompt") : isRight ? t("right") : t("wrong")}</p>
 
       {/* four tiles — always the same four, in the same order, so the hand learns them */}
-      <div className="grid grid-cols-4 gap-2" role="group" aria-label={t("prompt")}>
+      <div className="grid grid-cols-4 gap-[9px]" role="group" aria-label={t("prompt")}>
         {PARTICLE_OPTIONS.map((p) => {
           const isPick = picked === p;
           const isAnswer = picked !== null && p === item.answer;
@@ -106,7 +108,7 @@ export default function ParticlePhase({
               onClick={() => pick(p)}
               disabled={picked !== null}
               aria-pressed={isPick}
-              className={`kr min-h-[48px] rounded-[12px] border-[1.5px] text-[18px] font-bold transition-colors disabled:cursor-default ${cls}`}
+              className={`kr min-h-[52px] rounded-[15px] border-[1.5px] text-[20px] font-bold transition-colors disabled:cursor-default ${cls}`}
               style={style}
             >
               {p}
@@ -118,10 +120,10 @@ export default function ParticlePhase({
       {/* why — the grammar lesson, only when it's needed */}
       {picked !== null && (
         <div
-          className="rounded-r-[12px] bg-cream border border-line border-l-[3px] px-4 py-3 text-[13px] leading-[1.65]"
+          className="rounded-r-[17px] bg-cream border border-line border-l-[3px] px-[16px] py-[13px] text-[15px] leading-[1.65]"
           style={{ borderLeftColor: why ? CORAL : "var(--c-success)" }}
         >
-          <b className="block text-[11px] font-extrabold tracking-[.08em] uppercase mb-1" style={{ color: why ? CORAL : "var(--c-success-deep)" }}>
+          <b className="block text-[14.5px] font-extrabold tracking-[.08em] uppercase mb-[5px]" style={{ color: why ? CORAL : "var(--c-success-deep)" }}>
             {why ? t("whyWrong") : t("whyRight")}
           </b>
           {why && <p className="mb-1.5 text-charcoal">{why.headline}</p>}

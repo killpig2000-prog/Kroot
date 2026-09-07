@@ -296,7 +296,7 @@ export default async function DashboardPage() {
           {/* the six doors — 2×3 per the restructure mockup. Vocabulary
               carries Hangul (trace-to-write on the card), Writing carries
               Grammar (particle blanks); the rest are the same four rooms. */}
-          <div className="grid grid-cols-3 gap-2 mb-3">
+          <div className="grid grid-cols-3 gap-[9px] mb-3">
             {MODULES.map((m) => {
               const key = m.href === "/speaking" ? "pronunciation" : m.href.slice(1);
               const p = skillProgress[key];
@@ -311,13 +311,13 @@ export default async function DashboardPage() {
                   key={m.href}
                   href={m.href}
                   data-tour={m.tourId}
-                  className="relative flex flex-col items-center justify-center gap-1 min-h-[76px] rounded-[14px] border border-line bg-cream px-1.5 py-3 text-center transition-all hover:-translate-y-0.5 hover:border-success"
+                  className="relative flex flex-col items-center justify-center gap-[4px] min-h-[92px] rounded-[17px] border border-line bg-cream px-[6px] py-[13px] text-center transition-all hover:-translate-y-0.5 hover:border-success"
                 >
-                  <span className="text-[20px] leading-none" aria-hidden="true">
+                  <span className="text-[25px] leading-none" aria-hidden="true">
                     {m.icon}
                   </span>
-                  <span className="text-[12.5px] font-bold text-charcoal leading-tight">{tn(m.label.toLowerCase())}</span>
-                  {caption && <span className="text-[10.5px] font-semibold text-muted tabular-nums leading-tight">{caption}</span>}
+                  <span className="text-[14.5px] font-bold text-charcoal leading-tight">{tn(m.label.toLowerCase())}</span>
+                  {caption && <span className="w-full truncate text-[12px] font-semibold text-muted tabular-nums leading-tight">{caption}</span>}
                 </Link>
               );
             })}
@@ -330,11 +330,11 @@ export default async function DashboardPage() {
           {dueCount > 0 && (
             <Link
               href="/review"
-              className="flex items-center gap-3 border border-line bg-cream rounded-[14px] px-4 py-2.5 mb-3 transition-all hover:-translate-y-0.5 hover:border-success group"
+              className="flex items-center gap-[13px] border border-line bg-cream rounded-[19px] px-[16px] py-[13px] mb-3 transition-all hover:-translate-y-0.5 hover:border-success group"
             >
-              <span className="flex-none text-[18px] transition-transform group-hover:scale-110">💧</span>
-              <b className="flex-1 min-w-0 truncate text-[14px] font-bold text-charcoal">{t("review.due", { count: dueCount })}</b>
-              <span className="flex-none text-[13px] font-semibold text-success transition-transform group-hover:translate-x-0.5">
+              <span className="flex-none text-[20px] transition-transform group-hover:scale-110">💧</span>
+              <b className="flex-1 min-w-0 truncate text-[16px] font-bold text-charcoal">{t("review.due", { count: dueCount })}</b>
+              <span className="flex-none text-[15px] font-semibold text-success transition-transform group-hover:translate-x-0.5">
                 {t("review.short")}
               </span>
             </Link>

@@ -85,7 +85,7 @@ export default function WordTrace({
   const total = scored.length === syllables.length ? Math.round(scored.reduce((a, b) => a + b, 0) / syllables.length) : null;
 
   return (
-    <section className="mt-3.5 rounded-[14px] border-[1.5px] border-dashed border-line bg-cream">
+    <section className="mt-3.5 rounded-[20px] border-[1.5px] border-dashed border-line bg-cream">
       <button
         type="button"
         aria-expanded={open}
@@ -93,7 +93,7 @@ export default function WordTrace({
         className="w-full flex items-center gap-2.5 px-4 py-3 text-left"
       >
         <span aria-hidden="true" className="text-[17px]">✍️</span>
-        <b className="flex-1 min-w-0 text-[14px] font-bold text-charcoal">{t("title")}</b>
+        <b className="flex-1 min-w-0 text-[16px] font-bold text-charcoal">{t("title")}</b>
         {total !== null && !open ? <Stars n={total} size={13} /> : null}
         <span className={`text-[11px] text-muted transition-transform ${open ? "rotate-180" : ""}`} aria-hidden="true">
           ▾
@@ -131,7 +131,7 @@ export default function WordTrace({
                 role="tab"
                 aria-selected={mode === m}
                 onClick={() => switchMode(m)}
-                className={`py-2 rounded-[9px] text-[12.5px] font-bold transition-all ${
+                className={`py-2 rounded-[9px] text-[14px] font-bold transition-all ${
                   mode === m ? "bg-cream text-charcoal shadow-sm" : "text-muted hover:text-charcoal"
                 }`}
               >
@@ -156,7 +156,7 @@ export default function WordTrace({
             }}
           />
 
-          <p className="text-center text-[11.5px] text-muted -mt-1">{t("caption")}</p>
+          <p className="text-center text-[13.5px] text-muted -mt-1">{t("caption")}</p>
 
           <div className="flex items-center justify-center gap-2 min-h-[22px]" aria-live="polite">
             {stars[idx] !== null ? (
@@ -173,7 +173,7 @@ export default function WordTrace({
             <button
               type="button"
               onClick={reset}
-              className="flex-1 min-h-[44px] rounded-[12px] border-[1.5px] border-line text-[13px] font-bold text-muted hover:border-faint"
+              className="flex-1 min-h-[44px] rounded-[12px] border-[1.5px] border-line text-[15px] font-bold text-muted hover:border-faint"
             >
               {t("reset")}
             </button>
@@ -182,7 +182,7 @@ export default function WordTrace({
                 type="button"
                 onClick={score}
                 disabled={drawnCount === 0}
-                className="flex-1 min-h-[44px] rounded-[12px] text-white text-[13px] font-bold disabled:opacity-40"
+                className="flex-1 min-h-[44px] rounded-[12px] text-white text-[15px] font-bold disabled:opacity-40"
                 style={{ background: HANGUL_ACCENT }}
               >
                 {t("check")}
@@ -191,12 +191,12 @@ export default function WordTrace({
               <button
                 type="button"
                 onClick={() => go(idx + 1)}
-                className="flex-1 min-h-[44px] rounded-[12px] bg-success text-white text-[13px] font-bold"
+                className="flex-1 min-h-[44px] rounded-[12px] bg-success text-white text-[15px] font-bold"
               >
                 {t("nextSyllable")}
               </button>
             ) : total !== null ? (
-              <span className="flex-1 min-h-[44px] rounded-[12px] bg-success-bg border border-success-line text-success-deep text-[13px] font-bold flex items-center justify-center gap-2">
+              <span className="flex-1 min-h-[44px] rounded-[12px] bg-success-bg border border-success-line text-success-deep text-[15px] font-bold flex items-center justify-center gap-2">
                 <span className="kr">{korean}</span> <Stars n={total} size={13} />
               </span>
             ) : null}
