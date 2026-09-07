@@ -133,7 +133,9 @@ const COMPOUND_VOWELS: Record<string, StrokeAnchors[]> = {
   ㅔ: [[C(90, 160), C(136, 160)], [C(136, 52), C(136, 268)], [C(166, 52), C(166, 268)]],
   ㅖ: [[C(86, 124), C(138, 124)], [C(86, 196), C(138, 196)], [C(138, 52), C(138, 268)], [C(170, 52), C(170, 268)]],
   // ㅗ's own vertical trimmed short so the consonant above can sit lower, closer to the bar.
-  ㅘ: [[C(122, 180), C(122, 232)], [C(63, 232), C(181, 232)], [C(198, 52), C(198, 268)], [C(198, 150), C(252, 150)]],
+  // ㅘ's ㅗ part is shorter than ㅙ/ㅚ's on purpose: stem trimmed and the bar
+  // lifted with it, so the ㅗ reads as a small mark under the consonant.
+  ㅘ: [[C(122, 180), C(122, 214)], [C(63, 214), C(181, 214)], [C(198, 52), C(198, 268)], [C(198, 150), C(252, 150)]],
   ㅙ: [[C(110, 180), C(110, 232)], [C(51, 232), C(169, 232)], [C(182, 52), C(182, 268)], [C(182, 150), C(222, 150)], [C(228, 52), C(228, 268)]],
   ㅚ: [[C(126, 180), C(126, 232)], [C(68, 232), C(186, 232)], [C(220, 52), C(220, 268)]],
   // ㅝ ㅞ: the ㅓ/ㅔ tick sits BELOW ㅜ's bar, as in print (워, 웨).
