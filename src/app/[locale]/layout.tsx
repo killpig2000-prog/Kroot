@@ -61,7 +61,9 @@ const instrumentSans = Instrument_Sans({
 // toggle. "only light" opts out of Chrome Android's forced Auto Dark Theme.
 export const viewport: Viewport = {
   colorScheme: "only light",
-  themeColor: "#6BBF8A",
+  // Status-bar colour for installed/standalone use — cream to match the sky
+  // the app now opens on (see manifest.ts theme_color).
+  themeColor: "#FFF9EC",
 };
 
 // Generated rather than static so the homepage can declare a canonical that

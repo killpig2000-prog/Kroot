@@ -17,7 +17,12 @@ export default function manifest(): MetadataRoute.Manifest {
     display: "standalone",
     orientation: "portrait",
     background_color: "#FFF9EC",
-    theme_color: "#6BBF8A",
+    // The phone's status bar takes this colour. Cream, not leaf green: the
+    // first screen and the dashboard both open on a cream/dawn sky now, and a
+    // green strip above them read as a stray bar. Light colour → the OS draws
+    // the clock and icons dark. (The installed TWA bakes its own value at
+    // build time — rebuild the APK to pick this up.)
+    theme_color: "#FFF9EC",
     lang: "en",
     categories: ["education"],
     icons: [
