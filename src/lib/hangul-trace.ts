@@ -113,9 +113,9 @@ const VOWELS: Record<string, StrokeAnchors[]> = {
   ㅓ: [[C(127, 160), C(170, 160)], [C(170, 52), C(170, 268)]],
   ㅕ: [[C(132, 124), C(176, 124)], [C(132, 196), C(176, 196)], [C(176, 52), C(176, 268)]],
   ㅗ: [[C(160, 90), C(160, 190)], [C(60, 190), C(260, 190)]],
-  ㅛ: [[C(118, 90), C(118, 190)], [C(173, 90), C(173, 190)], [C(60, 190), C(260, 190)]],
+  ㅛ: [[C(130, 75), C(130, 190)], [C(190, 75), C(190, 190)], [C(60, 190), C(260, 190)]],
   ㅜ: [[C(90, 130), C(230, 130)], [C(160, 130), C(160, 240)]],
-  ㅠ: [[C(60, 130), C(260, 130)], [C(128, 130), C(128, 240)], [C(192, 130), C(192, 240)]],
+  ㅠ: [[C(60, 130), C(260, 130)], [C(128, 130), C(128, 260)], [C(192, 130), C(192, 260)]],
   ㅡ: [[C(60, 160), C(260, 160)]],
   ㅣ: [[C(160, 52), C(160, 268)]],
 };
@@ -133,11 +133,11 @@ const COMPOUND_VOWELS: Record<string, StrokeAnchors[]> = {
   ㅔ: [[C(90, 160), C(136, 160)], [C(136, 52), C(136, 268)], [C(166, 52), C(166, 268)]],
   ㅖ: [[C(86, 124), C(138, 124)], [C(86, 196), C(138, 196)], [C(138, 52), C(138, 268)], [C(170, 52), C(170, 268)]],
   // ㅗ's own vertical trimmed short so the consonant above can sit lower, closer to the bar.
-  ㅘ: [[C(122, 197), C(122, 232)], [C(68, 232), C(176, 232)], [C(198, 52), C(198, 268)], [C(198, 150), C(252, 150)]],
-  ㅙ: [[C(110, 180), C(110, 232)], [C(62, 232), C(158, 232)], [C(182, 52), C(182, 268)], [C(182, 150), C(222, 150)], [C(228, 52), C(228, 268)]],
+  ㅘ: [[C(122, 180), C(122, 232)], [C(63, 232), C(181, 232)], [C(198, 52), C(198, 268)], [C(198, 150), C(252, 150)]],
+  ㅙ: [[C(110, 180), C(110, 232)], [C(51, 232), C(169, 232)], [C(182, 52), C(182, 268)], [C(182, 150), C(222, 150)], [C(228, 52), C(228, 268)]],
   ㅚ: [[C(126, 180), C(126, 232)], [C(68, 232), C(186, 232)], [C(220, 52), C(220, 268)]],
   // ㅝ ㅞ: the ㅓ/ㅔ tick sits BELOW ㅜ's bar, as in print (워, 웨).
-  ㅝ: [[C(58, 184), C(170, 184)], [C(114, 184), C(114, 268)], [C(168, 226), C(206, 226)], [C(206, 52), C(206, 268)]],
+  ㅝ: [[C(58, 184), C(170, 184)], [C(114, 184), C(114, 268)], [C(176, 226), C(214, 226)], [C(214, 40), C(214, 280)]],
   ㅞ: [[C(58, 184), C(162, 184)], [C(110, 184), C(110, 268)], [C(172, 226), C(192, 226)], [C(192, 52), C(192, 268)], [C(238, 52), C(238, 268)]],
   ㅟ: [[C(78, 196), C(200, 196)], [C(138, 196), C(138, 268)], [C(234, 52), C(234, 268)]],
   ㅢ: [[C(64, 200), C(202, 200)], [C(224, 52), C(224, 268)]],
@@ -163,7 +163,7 @@ const JONG_CLUSTERS: Record<string, [string, string]> = {
   ㄽ: ["ㄹ","ㅅ"], ㄾ: ["ㄹ","ㅌ"], ㄿ: ["ㄹ","ㅍ"], ㅀ: ["ㄹ","ㅎ"], ㅄ: ["ㅂ","ㅅ"],
 };
 /** y where a w-vowel's ㅗ/ㅜ/ㅡ part begins — the consonant above must stop short of it. */
-const W_VOWEL_BAR_TOP: Record<string, number> = { ㅘ: 196, ㅙ: 180, ㅚ: 180, ㅝ: 184, ㅞ: 184, ㅟ: 196, ㅢ: 200 };
+const W_VOWEL_BAR_TOP: Record<string, number> = { ㅘ: 180, ㅙ: 180, ㅚ: 180, ㅝ: 184, ㅞ: 184, ㅟ: 196, ㅢ: 200 };
 /** x of that part's own vertical stroke — the consonant above centres on this, not the block. */
 const W_VOWEL_BAR_MID: Record<string, number> = { ㅘ: 122, ㅙ: 110, ㅚ: 126, ㅝ: 114, ㅞ: 110, ㅟ: 138, ㅢ: 133 };
 const VERTICAL_VOWELS = new Set(["ㅏ","ㅐ","ㅑ","ㅒ","ㅓ","ㅔ","ㅕ","ㅖ","ㅣ"]);
@@ -215,14 +215,15 @@ function translateX(strokes: StrokeAnchors[], dx: number): StrokeAnchors[] {
 const LEFT_I_STROKE: Record<string, number> = { ㅐ: 0, ㅒ: 0, ㅓ: 1, ㅔ: 1, ㅕ: 2, ㅖ: 2 };
 /** The consonant in a block reads noticeably smaller than the vowel beside it. */
 const CHO_SHRINK = 0.74;
-/** ㅗ through ㅣ (everything except ㅏㅐㅑㅒㅓㅔㅕㅖ): consonant reads ~30% bigger. */
+/** ㅗㅛㅜㅣ and the w-vowels ㅘㅙㅚㅝㅞㅟㅢ: consonant reads ~30% bigger. */
 const CHO_SHRINK_BIG = CHO_SHRINK * 1.3;
-/** ㅘㅙㅚㅝㅞㅟㅢ: another 40% on top of CHO_SHRINK_BIG. */
+/** ㅡ alone: consonant reads bigger still — matches what ㅘ~ㅢ briefly used. */
 const CHO_SHRINK_W = CHO_SHRINK_BIG * 1.4;
-const CHO_NORMAL_VOWELS = new Set(["ㅏ", "ㅐ", "ㅑ", "ㅒ", "ㅓ", "ㅔ", "ㅕ", "ㅖ"]);
-const W_VOWEL_SET = new Set(["ㅘ", "ㅙ", "ㅚ", "ㅝ", "ㅞ", "ㅟ", "ㅢ"]);
+/** ㅠ reads at plain size, same as ㅏ's ㄱ — not grouped with the rest of ㅗ~ㅣ. */
+const CHO_NORMAL_VOWELS = new Set(["ㅏ", "ㅐ", "ㅑ", "ㅒ", "ㅓ", "ㅔ", "ㅕ", "ㅖ", "ㅠ"]);
+const CHO_EXTRA_BIG_VOWELS = new Set(["ㅡ"]);
 const choShrinkFor = (jung: string): number =>
-  CHO_NORMAL_VOWELS.has(jung) ? CHO_SHRINK : W_VOWEL_SET.has(jung) ? CHO_SHRINK_W : CHO_SHRINK_BIG;
+  CHO_NORMAL_VOWELS.has(jung) ? CHO_SHRINK : CHO_EXTRA_BIG_VOWELS.has(jung) ? CHO_SHRINK_W : CHO_SHRINK_BIG;
 
 type Box = [x0: number, x1: number, y0: number, y1: number];
 
@@ -294,7 +295,7 @@ function syllableAnchors(char: string): StrokeAnchors[] {
     const jungSrc = barY !== undefined ? squashToward(TRACE_ANCHORS[jung], barY, BAR_SQUASH[jung]) : TRACE_ANCHORS[jung];
     const choBox: Box = hasJong ? [92, 228, 40, 92] : [86, 234, 56, 120];
     choPart = shrinkAt(fitBox(choSrc, choBox), (choBox[0] + choBox[1]) / 2, (choBox[2] + choBox[3]) / 2, choShrinkFor(jung));
-    jungPart = fitBox(jungSrc, hasJong ? [76, 244, 136, 182] : [76, 244, 196, 262]);
+    jungPart = fitBox(jungSrc, hasJong ? [76, 244, 122, 168] : [76, 244, 182, 248]);
   } else if (hasJong) {
     choPart = shrinkAt(fitBox(TRACE_ANCHORS[cho], [44, 134, 34, 112]), 89, 73, choShrinkFor(jung));
     jungPart = fitBox(TRACE_ANCHORS[jung], [52, 292, 34, 178]);
