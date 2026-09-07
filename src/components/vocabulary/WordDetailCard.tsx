@@ -15,7 +15,7 @@ import { saveToBank } from "@/lib/word-bank";
 import { speakKorean, prefetchKorean } from "@/lib/tts";
 import { getWordNote, hanjaOf } from "@/lib/word-notes";
 import { getLocalizedMeaning, getLocalizedExampleEn } from "@/lib/vocabulary-i18n";
-import { wordArtFor } from "@/lib/word-art";
+import { textBadgeFor, wordArtFor } from "@/lib/word-art";
 import WordTrace, { canTraceWord } from "@/components/vocabulary/WordTrace";
 
 const BTN_INK = buttonClassName("ink");
@@ -112,6 +112,10 @@ export default function WordDetailCard({
   // A1/A2 get a hand-drawn picture above the word (public/word-art); B1+ is
   // text only. Either way the first meeting ends with writing the word.
   const art = wordArtFor(word.korean, level);
+  // No picture on purpose (people/roles): the word itself grows into the
+  // picture's slot and a one-line note sits under the meaning, so the card
+  // is as tall as a pictured one and doesn't look unfinished next to it.
+  const badge = art ? null : textBadgeFor(word.korean, level);
   const traceable = canTraceWord(word.korean);
   const meaning = getLocalizedMeaning(word, locale);
   // Which button is mid-save, so it can say so instead of just greying out.
@@ -414,9 +418,16 @@ export default function WordDetailCard({
               style={{ width: "clamp(72px, 20vw, 96px)", height: "clamp(72px, 20vw, 96px)" }}
             />
           )}
-          <div className="grid grid-cols-[1fr_auto] gap-4 items-start mb-1 pr-16">
-            <div>
-              <p className="kr font-black text-[clamp(34px,6vw,44px)] leading-[1.1] tracking-[-0.01em]">
+          <div
+            className="grid grid-cols-[1fr_auto] gap-4 items-start mb-1 pr-16"
+            style={badge ? { minHeight: "calc(clamp(72px, 20vw, 96px) + 10px + 68px)" } : undefined}
+          >
+            <div className={badge ? "self-center" : undefined}>
+              <p
+                className={`kr font-black leading-[1.1] tracking-[-0.01em] ${
+                  badge ? "text-[clamp(48px,11vw,64px)]" : "text-[clamp(34px,6vw,44px)]"
+                }`}
+              >
                 <button
                   type="button"
                   onClick={() => speakKorean(word.korean)}
@@ -440,6 +451,12 @@ export default function WordDetailCard({
           </div>
 
           <p className="text-[20px] font-extrabold mt-2.5 mb-1.5">{meaning}</p>
+
+          {badge && (
+            <p className="kr text-[13px] text-muted leading-[1.5] bg-cream border border-line rounded-[10px] px-3 py-1.5 mb-2.5 inline-block">
+              {badge}
+            </p>
+          )}
 
           {note?.parts && (
             <p className="text-[12.5px] text-muted leading-[1.65] mb-3">
