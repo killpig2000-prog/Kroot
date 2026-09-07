@@ -108,13 +108,13 @@ const DOUBLE_CONSONANTS: Record<string, StrokeAnchors[]> = {
 };
 
 const VOWELS: Record<string, StrokeAnchors[]> = {
-  ㅏ: [[C(150, 52), C(150, 268)], [C(150, 160), C(236, 160)]],
+  ㅏ: [[C(150, 52), C(150, 268)], [C(150, 160), C(193, 160)]],
   ㅑ: [[C(144, 52), C(144, 268)], [C(144, 124), C(204, 124)], [C(144, 196), C(204, 196)]],
-  ㅓ: [[C(84, 160), C(170, 160)], [C(170, 52), C(170, 268)]],
-  ㅕ: [[C(88, 124), C(176, 124)], [C(88, 196), C(176, 196)], [C(176, 52), C(176, 268)]],
+  ㅓ: [[C(127, 160), C(170, 160)], [C(170, 52), C(170, 268)]],
+  ㅕ: [[C(132, 124), C(176, 124)], [C(132, 196), C(176, 196)], [C(176, 52), C(176, 268)]],
   ㅗ: [[C(160, 90), C(160, 190)], [C(60, 190), C(260, 190)]],
-  ㅛ: [[C(118, 90), C(118, 190)], [C(202, 90), C(202, 190)], [C(60, 190), C(260, 190)]],
-  ㅜ: [[C(60, 130), C(260, 130)], [C(160, 130), C(160, 240)]],
+  ㅛ: [[C(118, 90), C(118, 190)], [C(173, 90), C(173, 190)], [C(60, 190), C(260, 190)]],
+  ㅜ: [[C(90, 130), C(230, 130)], [C(160, 130), C(160, 240)]],
   ㅠ: [[C(60, 130), C(260, 130)], [C(118, 130), C(118, 240)], [C(202, 130), C(202, 240)]],
   ㅡ: [[C(60, 160), C(260, 160)]],
   ㅣ: [[C(160, 52), C(160, 268)]],
@@ -129,17 +129,18 @@ const VOWELS: Record<string, StrokeAnchors[]> = {
 const COMPOUND_VOWELS: Record<string, StrokeAnchors[]> = {
   // ㅐ ㅒ ㅔ ㅖ (and ㅙ): the two stems sit a touch closer than a full letter apart.
   ㅐ: [[C(126, 52), C(126, 268)], [C(126, 160), C(155, 160)], [C(165, 52), C(165, 268)]],
-  ㅒ: [[C(120, 52), C(120, 268)], [C(120, 124), C(165, 124)], [C(120, 196), C(165, 196)], [C(172, 52), C(172, 268)]],
+  ㅒ: [[C(120, 52), C(120, 268)], [C(120, 124), C(150, 124)], [C(120, 196), C(150, 196)], [C(158, 52), C(158, 268)]],
   ㅔ: [[C(90, 160), C(136, 160)], [C(136, 52), C(136, 268)], [C(166, 52), C(166, 268)]],
   ㅖ: [[C(86, 124), C(138, 124)], [C(86, 196), C(138, 196)], [C(138, 52), C(138, 268)], [C(170, 52), C(170, 268)]],
-  ㅘ: [[C(106, 180), C(106, 232)], [C(52, 232), C(160, 232)], [C(182, 52), C(182, 268)], [C(182, 150), C(236, 150)]],
-  ㅙ: [[C(94, 180), C(94, 232)], [C(46, 232), C(142, 232)], [C(166, 52), C(166, 268)], [C(166, 150), C(228, 150)], [C(232, 52), C(232, 268)]],
-  ㅚ: [[C(110, 180), C(110, 232)], [C(52, 232), C(170, 232)], [C(204, 52), C(204, 268)]],
+  // ㅗ's own vertical trimmed short so the consonant above can sit lower, closer to the bar.
+  ㅘ: [[C(122, 197), C(122, 232)], [C(68, 232), C(176, 232)], [C(198, 52), C(198, 268)], [C(198, 150), C(252, 150)]],
+  ㅙ: [[C(110, 180), C(110, 232)], [C(62, 232), C(158, 232)], [C(182, 52), C(182, 268)], [C(182, 150), C(222, 150)], [C(228, 52), C(228, 268)]],
+  ㅚ: [[C(126, 180), C(126, 232)], [C(68, 232), C(186, 232)], [C(220, 52), C(220, 268)]],
   // ㅝ ㅞ: the ㅓ/ㅔ tick sits BELOW ㅜ's bar, as in print (워, 웨).
-  ㅝ: [[C(48, 184), C(160, 184)], [C(104, 184), C(104, 268)], [C(170, 226), C(196, 226)], [C(196, 52), C(196, 268)]],
-  ㅞ: [[C(42, 184), C(146, 184)], [C(94, 184), C(94, 268)], [C(156, 226), C(176, 226)], [C(176, 52), C(176, 268)], [C(222, 52), C(222, 268)]],
-  ㅟ: [[C(48, 196), C(170, 196)], [C(108, 196), C(108, 268)], [C(204, 52), C(204, 268)]],
-  ㅢ: [[C(48, 200), C(186, 200)], [C(208, 52), C(208, 268)]],
+  ㅝ: [[C(58, 184), C(170, 184)], [C(114, 184), C(114, 268)], [C(168, 226), C(206, 226)], [C(206, 52), C(206, 268)]],
+  ㅞ: [[C(58, 184), C(162, 184)], [C(110, 184), C(110, 268)], [C(172, 226), C(192, 226)], [C(192, 52), C(192, 268)], [C(238, 52), C(238, 268)]],
+  ㅟ: [[C(78, 196), C(200, 196)], [C(138, 196), C(138, 268)], [C(234, 52), C(234, 268)]],
+  ㅢ: [[C(64, 200), C(202, 200)], [C(224, 52), C(224, 268)]],
 };
 
 export const TRACE_ANCHORS: Record<string, StrokeAnchors[]> = {
@@ -162,9 +163,9 @@ const JONG_CLUSTERS: Record<string, [string, string]> = {
   ㄽ: ["ㄹ","ㅅ"], ㄾ: ["ㄹ","ㅌ"], ㄿ: ["ㄹ","ㅍ"], ㅀ: ["ㄹ","ㅎ"], ㅄ: ["ㅂ","ㅅ"],
 };
 /** y where a w-vowel's ㅗ/ㅜ/ㅡ part begins — the consonant above must stop short of it. */
-const W_VOWEL_BAR_TOP: Record<string, number> = { ㅘ: 180, ㅙ: 180, ㅚ: 180, ㅝ: 184, ㅞ: 184, ㅟ: 196, ㅢ: 200 };
+const W_VOWEL_BAR_TOP: Record<string, number> = { ㅘ: 196, ㅙ: 180, ㅚ: 180, ㅝ: 184, ㅞ: 184, ㅟ: 196, ㅢ: 200 };
 /** x of that part's own vertical stroke — the consonant above centres on this, not the block. */
-const W_VOWEL_BAR_MID: Record<string, number> = { ㅘ: 106, ㅙ: 94, ㅚ: 110, ㅝ: 104, ㅞ: 94, ㅟ: 108, ㅢ: 117 };
+const W_VOWEL_BAR_MID: Record<string, number> = { ㅘ: 122, ㅙ: 110, ㅚ: 126, ㅝ: 114, ㅞ: 110, ㅟ: 138, ㅢ: 133 };
 const VERTICAL_VOWELS = new Set(["ㅏ","ㅐ","ㅑ","ㅒ","ㅓ","ㅔ","ㅕ","ㅖ","ㅣ"]);
 const HORIZONTAL_VOWELS = new Set(["ㅗ","ㅛ","ㅜ","ㅠ","ㅡ"]);
 const DOUBLE_SET = new Set(Object.keys(DOUBLE_CONSONANTS));
@@ -187,6 +188,17 @@ function squashToward(strokes: StrokeAnchors[], anchorY: number, factor: number)
     return out;
   });
 }
+
+/** Shrink a glyph in both directions by `factor`, keeping (anchorX, anchorY) fixed. */
+function shrinkAt(strokes: StrokeAnchors[], anchorX: number, anchorY: number, factor: number): StrokeAnchors[] {
+  return strokes.map((s) => {
+    const out: StrokeAnchors = s.map(([x, y]) => [anchorX + (x - anchorX) * factor, anchorY + (y - anchorY) * factor] as Pt);
+    out.circle = s.circle;
+    return out;
+  });
+}
+/** The consonant in a block reads noticeably smaller than the vowel beside it. */
+const CHO_SHRINK = 0.7;
 
 type Box = [x0: number, x1: number, y0: number, y1: number];
 
@@ -239,27 +251,31 @@ function syllableAnchors(char: string): StrokeAnchors[] {
     // 가: consonant fills the left of the centre line, vowel the right —
     // both span the same height so the block reads as one symmetric letter.
     const top = hasJong ? 36 : 52, bottom = hasJong ? 166 : 268;
-    choPart = fitBox(TRACE_ANCHORS[cho], [36, CENTER - 24, top, bottom]);
-    jungPart = fitBox(TRACE_ANCHORS[jung], [CENTER + 26, 284, top, bottom]);
+    choPart = shrinkAt(fitBox(TRACE_ANCHORS[cho], [44, CENTER, top, bottom]), CENTER, (top + bottom) / 2, CHO_SHRINK);
+    jungPart = fitBox(TRACE_ANCHORS[jung], [CENTER + 6, CENTER + 86, top, bottom]);
   } else if (HORIZONTAL_VOWELS.has(jung)) {
     // 고: consonant above the centre line, vowel below it. A double consonant
     // reads shorter (top edge lower); ㅗ/ㅛ/ㅜ/ㅠ's ㅣ leg is squashed toward
     // the bar so the vowel doesn't look taller than the consonant above it.
+    // Both parts read smaller here than a standalone jamo — a tight block.
     const choSrc = DOUBLE_SET.has(cho) ? squashToward(TRACE_ANCHORS[cho], boundsY(TRACE_ANCHORS[cho])[1], 0.72) : TRACE_ANCHORS[cho];
     const barY = BAR_Y[jung];
     const jungSrc = barY !== undefined ? squashToward(TRACE_ANCHORS[jung], barY, BAR_SQUASH[jung]) : TRACE_ANCHORS[jung];
-    choPart = fitBox(choSrc, hasJong ? [76, 244, 30, 106] : [60, 260, 40, CENTER - 12]);
-    jungPart = fitBox(jungSrc, hasJong ? [44, 276, 128, 190] : [40, 280, CENTER + 26, 274]);
+    const choBox: Box = hasJong ? [92, 228, 40, 92] : [86, 234, 56, 120];
+    choPart = shrinkAt(fitBox(choSrc, choBox), (choBox[0] + choBox[1]) / 2, (choBox[2] + choBox[3]) / 2, CHO_SHRINK);
+    jungPart = fitBox(jungSrc, hasJong ? [64, 256, 136, 182] : [64, 256, 196, 262]);
   } else if (hasJong) {
-    choPart = fitBox(TRACE_ANCHORS[cho], [44, 134, 34, 112]);
+    choPart = shrinkAt(fitBox(TRACE_ANCHORS[cho], [44, 134, 34, 112]), 89, 73, CHO_SHRINK);
     jungPart = fitBox(TRACE_ANCHORS[jung], [40, 280, 34, 178]);
   } else {
     // 뒤: the w-vowel keeps its own coordinates (its ㅗ/ㅜ part is drawn low
     // on purpose), and the consonant fills the space above that bar, its top
-    // on the same line as the ㅣ's top so all three parts line up.
+    // on the same line as the ㅣ's top so all three parts line up — pulled
+    // down close to the bar so the two read as one attached letter.
     const barTop = W_VOWEL_BAR_TOP[jung] ?? 184;
     const cx = W_VOWEL_BAR_MID[jung] ?? 88;
-    choPart = fitBox(TRACE_ANCHORS[cho], [cx - 32, cx + 32, 68, barTop - 28]);
+    const choBox: Box = [cx - 32, cx + 32, 84, barTop - 14];
+    choPart = shrinkAt(fitBox(TRACE_ANCHORS[cho], choBox), cx, (choBox[2] + choBox[3]) / 2, CHO_SHRINK);
     jungPart = TRACE_ANCHORS[jung];
   }
   const jongBox: Box = [74, 246, 190, 282];
