@@ -48,7 +48,6 @@ export default function WordDetailCard({
   correctCount,
   incorrectCount,
   box,
-  topicLabel,
   level,
   prevHref,
   nextHref,
@@ -73,7 +72,6 @@ export default function WordDetailCard({
   correctCount: number;
   incorrectCount: number;
   box: number;
-  topicLabel: string;
   level: string;
   prevHref: string | null;
   nextHref: string | null;
@@ -104,7 +102,6 @@ export default function WordDetailCard({
   const t = useTranslations("vocabulary");
   const tn = useTranslations("nav");
   const tu = useTranslations("ui");
-  const tw = useTranslations("words");
   const [inBank, setInBank] = useState(initialInBank);
   const [savedCount, setSavedCount] = useState(initialSavedCount);
   const [adding, setAdding] = useState(false);
@@ -316,7 +313,7 @@ export default function WordDetailCard({
 
   return (
     <div className="max-w-[600px]">
-      <div className="flex items-center justify-between gap-3 mb-3.5">
+      <div className="flex items-center gap-3 mb-3.5">
         {backHref ? (
           <Link href={backHref} className="text-[12.5px] text-muted hover:text-charcoal transition-colors">
             ← {backLabel ?? t("detail.back")}
@@ -344,9 +341,6 @@ export default function WordDetailCard({
             ← {t("detail.backToUnit")}
           </button>
         )}
-        <span className="text-[12.5px] text-muted flex-none">
-          {topicLabel} · {level}
-        </span>
       </div>
 
       {/* The guided tour spotlights this whole card for the "read it" step —
@@ -417,14 +411,25 @@ export default function WordDetailCard({
               instead, so both cards are the same height. */}
           {hanja && (
             <span
-              className="kr absolute top-6 right-[clamp(18px,4vw,26px)] font-black text-[clamp(36px,6vw,52px)] leading-none text-[#A08F4E] opacity-55 tracking-[.04em] select-none"
+              className={`kr absolute top-6 ${answered ? "right-[58px]" : "right-[clamp(18px,4vw,26px)]"} font-black text-[clamp(36px,6vw,52px)] leading-none text-[#A08F4E] opacity-55 tracking-[.04em] select-none`}
               aria-label={t("session.hanjaAria", { hanja })}
             >
               {hanja}
             </span>
           )}
 
-          <div className="flex flex-col items-center text-center gap-[9px] mb-[13px]">
+          {/* Picture on the left, the word beside it — the stacked version
+              spent 276px on five centred rows (2026-09-08 measurement at
+              390px) for the same five things. Hearing the word belongs to
+              the word, so the speaker sits on its line rather than in a pill
+              of its own underneath. A word with no picture (people, roles)
+              keeps the wide centred treatment: it has nothing to sit next
+              to, and its own letters are the picture. */}
+          <div
+            className={`mb-[13px] ${
+              art ? "flex items-center gap-[14px] text-left" : "flex flex-col items-center text-center gap-[9px]"
+            }`}
+          >
             {art && (
               // eslint-disable-next-line @next/next/no-img-element -- static SVG in /public, no optimisation needed
               <img
@@ -432,37 +437,38 @@ export default function WordDetailCard({
                 alt={meaning}
                 loading="lazy"
                 decoding="async"
-                className="block"
-                style={{ width: "clamp(96px, 29vw, 120px)", height: "clamp(96px, 29vw, 120px)" }}
+                className="block flex-none"
+                style={{ width: "clamp(96px, 29vw, 124px)", height: "clamp(96px, 29vw, 124px)" }}
               />
             )}
-            <div className="flex flex-col items-center">
-              <p
-                className={`kr font-black leading-[1.1] tracking-[-0.01em] ${
-                  badge ? "text-[clamp(52px,15vw,68px)]" : "text-[clamp(38px,11vw,46px)]"
-                }`}
-                style={badge ? { minHeight: "clamp(96px, 29vw, 120px)", display: "flex", alignItems: "center" } : undefined}
-              >
-                {word.korean}
-              </p>
+            <div className={art ? "min-w-0 flex-1" : "flex flex-col items-center gap-[9px]"}>
+              <div className={`flex items-center gap-[9px] ${art ? "" : "justify-center"}`}>
+                <p
+                  className={`kr font-black leading-[1.1] tracking-[-0.01em] ${
+                    badge ? "text-[clamp(52px,15vw,68px)]" : "text-[clamp(38px,11vw,46px)]"
+                  }`}
+                  style={badge ? { minHeight: "clamp(96px, 29vw, 120px)", display: "flex", alignItems: "center" } : undefined}
+                >
+                  {word.korean}
+                </p>
+                <button
+                  type="button"
+                  onClick={() => speakKorean(word.korean)}
+                  aria-label={t("session.hearIt")}
+                  title={t("session.hearIt")}
+                  className="flex-none w-9 h-9 rounded-full border border-line bg-cream text-[16px] leading-none flex items-center justify-center text-success hover:border-success transition-colors"
+                >
+                  🔊
+                </button>
+              </div>
               <p className="text-[15px] text-faint mt-0.5">{word.romanization}</p>
+              <p className="text-[18px] font-extrabold leading-snug mt-1">{meaning}</p>
+              {badge && (
+                <p className="kr text-[14px] text-muted leading-[1.5] bg-cream border border-line rounded-[12px] px-[13px] py-[6px] max-w-[34ch] mt-2">
+                  {badge}
+                </p>
+              )}
             </div>
-
-            <p className="text-[18px] font-extrabold leading-snug">{meaning}</p>
-
-            {badge && (
-              <p className="kr text-[14px] text-muted leading-[1.5] bg-cream border border-line rounded-[12px] px-[13px] py-[6px] max-w-[34ch]">
-                {badge}
-              </p>
-            )}
-
-            <button
-              type="button"
-              onClick={() => speakKorean(word.korean)}
-              className="rounded-full border border-line px-[15px] py-[5px] text-[14.5px] font-bold text-success hover:border-success transition-colors"
-            >
-              🔊 {t("session.hearIt")}
-            </button>
           </div>
 
           {/* write it — the Hangul tab lives here now: trace the word
@@ -499,31 +505,21 @@ export default function WordDetailCard({
             <p className="text-[12.5px] text-muted">{getLocalizedExampleEn(word, locale)}</p>
           </div>
 
-          {word.moreExamples.length > 0 && (
-            <div className="grid gap-2 mb-2">
-              {word.moreExamples.map((ex, i) => (
-                <div
-                  key={i}
-                  className="bg-[var(--tint-amber)] border border-amber-line rounded-[6px] px-3 py-2.5 text-left"
+          {word.moreExamples.map((ex, i) => (
+            <div key={i} className="border-l-[3px] border-[var(--tint-violet-line)] pl-3.5 py-1 my-2 mb-3.5">
+              <p className="kr text-[16px] font-medium">
+                <button
+                  type="button"
+                  onClick={() => speakKorean(ex.kr)}
+                  title={t("session.hearSentence")}
+                  className="text-left hover:text-[var(--tint-violet-ink)] transition-colors"
                 >
-                  <p className="text-[10px] font-bold tracking-[0.07em] uppercase text-[#A08F4E] mb-1">
-                    {ex.source === "reading" ? tw("seenInReading") : tw("seenInListening")}
-                  </p>
-                  <p className="kr text-[13px] font-medium text-charcoal leading-[1.45]">
-                    <button
-                      type="button"
-                      onClick={() => speakKorean(ex.kr)}
-                      title={t("session.hearSentence")}
-                      className="text-left hover:text-[var(--tint-violet-ink)] transition-colors"
-                    >
-                      {ex.kr}
-                    </button>
-                  </p>
-                  <p className="text-[11.5px] text-muted leading-[1.45]">{ex.en}</p>
-                </div>
-              ))}
+                  {ex.kr} <span aria-hidden="true" className="text-[11px] opacity-70">🔊</span>
+                </button>
+              </p>
+              <p className="text-[12.5px] text-muted">{ex.en}</p>
             </div>
-          )}
+          ))}
 
         </div>
       </div>

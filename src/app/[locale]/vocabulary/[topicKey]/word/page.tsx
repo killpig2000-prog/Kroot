@@ -108,7 +108,7 @@ export default async function VocabWordPage({
   ).length;
   const othersGotIt = others.filter((r) => (r.box ?? 1) > 1).length;
 
-  const moreExamples = findMoreExamples(word.korean, word.example_kr);
+  const moreExamples = findMoreExamples(word.korean, word.example_kr, 1);
 
   // "&from=..." survives prev/next, so stepping through words keeps the way
   // back to wherever the learner came from — the word bank, or the line of a
@@ -151,19 +151,6 @@ export default async function VocabWordPage({
           <GuidedStep step="word-read" />
           <GuidedStep step="word-goti" />
           <GuidedStep step="word-bank" />
-          {/* Shop moved off the global nav into My room (2026-09-07
-              restructure); this page's own quick link is now the guided
-              tour's shop-nav target too — the next step after "add to bank"
-              only actually navigates once the learner clicks it. */}
-          <GuidedStep step="shop-nav" />
-          <Link
-            href="/shop"
-            data-tour="guided-nav-shop"
-            className="inline-flex items-center gap-1.5 text-[13.5px] font-semibold text-success hover:underline mb-2"
-          >
-            🛍️ {tn("shop")} →
-          </Link>
-
           <WordDetailCard
             // Remount per word: without a key the card keeps its "saving"
             // state across the search-param navigation and the next word's
@@ -183,7 +170,6 @@ export default async function VocabWordPage({
             correctCount={progress?.correct_count ?? 0}
             incorrectCount={progress?.incorrect_count ?? 0}
             box={progress?.box ?? 1}
-            topicLabel={topic.label}
             level={level}
             prevHref={prevHref}
             nextHref={nextHref}
@@ -202,6 +188,24 @@ export default async function VocabWordPage({
             othersGotIt={othersGotIt}
             hasNextDay={chapterIndex + 1 < chapters.length}
           />
+
+          {/* Shop moved off the global nav into My room (2026-09-07
+              restructure); this page's own quick link is the guided tour's
+              shop-nav target — the next step after "add to bank" only
+              actually navigates once the learner clicks it. It sits at the
+              foot of the page rather than above the word (2026-09-08): a
+              screen for memorising a word shouldn't open with a door out of
+              it. Same target, same step. */}
+          <GuidedStep step="shop-nav" />
+          <div className="mt-5 text-right">
+            <Link
+              href="/shop"
+              data-tour="guided-nav-shop"
+              className="inline-flex items-center gap-1.5 text-[12.5px] font-semibold text-muted hover:text-success transition-colors"
+            >
+              🛍️ {tn("shop")} →
+            </Link>
+          </div>
         </main>
       </div>
 
