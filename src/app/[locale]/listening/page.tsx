@@ -138,7 +138,7 @@ export default async function ListeningPage({
                 <Link
                   key={s.key}
                   href={href}
-                  className="flex flex-col border border-line rounded-[16px] bg-cream overflow-hidden text-left transition-all duration-150 hover:border-[var(--tint-teal-line)] hover:-translate-y-0.5 group"
+                  className="flex flex-col border border-line rounded-[16px] bg-cream overflow-hidden text-left transition-all duration-150 hover:border-[var(--tint-teal-line)] hover:-translate-y-0.5 active:translate-y-[1px] active:scale-[.99] group"
                 >
                   <div
                     className="relative h-[84px] sm:h-[96px] flex items-end p-2.5 sm:p-3 overflow-hidden"

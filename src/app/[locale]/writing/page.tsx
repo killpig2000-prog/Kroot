@@ -137,7 +137,7 @@ export default async function WritingMapPage({
           {continueChapter && (
             <Link
               href={`/writing/session?chapter=${continueIndex}&level=${level}`}
-              className="flex items-center gap-3.5 border-[1.5px] border-amber-line bg-[var(--tint-amber)] rounded-[14px] px-5 py-4 mb-6 max-w-[720px] transition-all hover:-translate-y-0.5 group"
+              className="flex items-center gap-3.5 border-[1.5px] border-amber-line bg-[var(--tint-amber)] rounded-[14px] px-5 py-4 mb-6 max-w-[720px] transition-all hover:-translate-y-0.5 active:translate-y-[1px] active:scale-[.99] group"
             >
               <span className="flex-none w-10 h-10 rounded-[10px] bg-cream border border-amber-line flex items-center justify-center text-lg transition-transform group-hover:scale-110">
                 ✏️

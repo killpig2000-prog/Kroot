@@ -132,7 +132,7 @@ export default async function ListeningGuideDialoguePage({ params }: Props) {
                 <li key={d.id}>
                   <Link
                     href={`/korean-listening/${d.situationKey}/${d.id}`}
-                    className="block rounded-2xl bg-cream px-4 py-3 border border-line hover:-translate-y-0.5 transition"
+                    className="block rounded-2xl bg-cream px-4 py-3 border border-line hover:-translate-y-0.5 active:translate-y-[1px] active:scale-[.99] transition"
                   >
                     <span className="font-bold">{getLocalizedDialogueTitle(d.title, locale)}</span>
                   </Link>

@@ -152,7 +152,7 @@ export default function Comments({
                 type="button"
                 onClick={submit}
                 disabled={!draft.trim() || busy}
-                className="ml-auto rounded-[9px] px-4 py-1.5 text-[12.5px] font-semibold text-white bg-[#334155] transition-all hover:-translate-y-0.5 disabled:opacity-40 disabled:translate-y-0"
+                className="ml-auto rounded-[9px] px-4 py-1.5 text-[12.5px] font-semibold text-white bg-[#334155] transition-all hover:-translate-y-0.5 active:translate-y-[1px] active:scale-[.99] disabled:opacity-40 disabled:translate-y-0"
               >
                 {busy ? t("posting") : t("submit")}
               </button>

@@ -227,7 +227,9 @@ html[data-mode="dark"] {
   --color-blue: var(--blue);
   --color-ink: var(--ink);
   --color-soft: var(--soft);
-  --font-hand: var(--font-fredoka), var(--font-noto-kr), sans-serif;
+  /* Kept as a name so the two `.hand` call sites read the same; it is the
+     body face now that Fredoka is gone (2026-09-09). */
+  --font-hand: var(--font-nunito), var(--font-noto-kr), sans-serif;
   --font-kr: var(--font-noto-kr), sans-serif;
   --font-body: var(--font-nunito), var(--font-noto-kr), sans-serif;
 
@@ -262,7 +264,7 @@ html[data-mode="dark"] {
    hexes as the mockup's --paper/--ink/--leaf*) — the one real visual
    difference is the font stack, so that's the only thing scoped here. */
 [data-landing] {
-  --font-body: var(--font-instrument), var(--font-noto-kr), sans-serif;
+  --font-body: var(--font-nunito), var(--font-noto-kr), sans-serif;
 }
 [data-landing] h1,
 [data-landing] h2,

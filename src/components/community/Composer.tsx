@@ -112,7 +112,7 @@ export default function Composer({
           type="button"
           onClick={post}
           disabled={!canPost}
-          className="ml-auto rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold text-white bg-[#334155] border border-[var(--tint-slate-line)] transition-all hover:-translate-y-0.5 disabled:opacity-40 disabled:translate-y-0"
+          className="ml-auto rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold text-white bg-[#334155] border border-[var(--tint-slate-line)] transition-all hover:-translate-y-0.5 active:translate-y-[1px] active:scale-[.99] disabled:opacity-40 disabled:translate-y-0"
         >
           {busy ? t("composer.posting") : t("composer.post")}
         </button>

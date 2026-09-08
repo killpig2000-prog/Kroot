@@ -128,7 +128,7 @@ export default async function SlangSharePage({ params }: Props) {
               <li key={e.slug}>
                 <Link
                   href={`/slang/${e.slug}`}
-                  className="block rounded-2xl border border-line bg-cream px-4 py-3 shadow-[0_3px_10px_-6px_rgba(219,39,119,.25)] hover:-translate-y-0.5 hover:border-[var(--tint-pink-line)] transition"
+                  className="block rounded-2xl border border-line bg-cream px-4 py-3 shadow-[0_3px_10px_-6px_rgba(219,39,119,.25)] hover:-translate-y-0.5 active:translate-y-[1px] active:scale-[.99] hover:border-[var(--tint-pink-line)] transition"
                 >
                   <span className="kr font-bold">{e.kr}</span>{" "}
                   <span className="text-sm text-muted">

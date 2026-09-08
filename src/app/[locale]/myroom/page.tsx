@@ -61,7 +61,7 @@ export default async function MyRoomPage({ params }: { params: Promise<{ locale:
 
   // Row metrics are the restructure mockup's, scaled 1.45× from its 268px
   // phone frame to a real 390px one (2026-09-07 fidelity pass).
-  const row = "flex items-center gap-[13px] border border-line bg-cream rounded-[19px] px-[16px] py-[13px] transition-all hover:-translate-y-0.5 hover:border-success group";
+  const row = "flex items-center gap-[13px] border border-line bg-cream rounded-[19px] px-[16px] py-[13px] transition-all hover:-translate-y-0.5 active:translate-y-[1px] active:scale-[.99] hover:border-success group";
 
   return (
     <div className="min-h-screen bg-warm text-charcoal">

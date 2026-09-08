@@ -83,7 +83,7 @@ export default async function ListeningSituationIndexPage({ params }: Props) {
                 <li key={d.id}>
                   <Link
                     href={`/korean-listening/${situation.key}/${d.id}`}
-                    className="flex items-baseline gap-2 rounded-xl bg-cream px-3.5 py-2 border border-line hover:-translate-y-0.5 transition"
+                    className="flex items-baseline gap-2 rounded-xl bg-cream px-3.5 py-2 border border-line hover:-translate-y-0.5 active:translate-y-[1px] active:scale-[.99] transition"
                   >
                     <span className="font-bold">{getLocalizedDialogueTitle(d.title, locale)}</span>
                   </Link>

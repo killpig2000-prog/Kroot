@@ -105,7 +105,7 @@ export default async function WritingLevelIndexPage({ params }: Props) {
                   <li key={p.slug}>
                     <Link
                       href={`/korean-writing/${p.slug}`}
-                      className="block rounded-xl bg-cream px-3.5 py-2.5 border border-line hover:-translate-y-0.5 transition kr"
+                      className="block rounded-xl bg-cream px-3.5 py-2.5 border border-line hover:-translate-y-0.5 active:translate-y-[1px] active:scale-[.99] transition kr"
                     >
                       {p.example_kr}
                     </Link>

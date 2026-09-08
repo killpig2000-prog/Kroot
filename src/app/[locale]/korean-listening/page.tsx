@@ -52,7 +52,7 @@ export default async function ListeningGuideHub({ params }: Props) {
               <li key={situation.key}>
                 <Link
                   href={`/korean-listening/${situation.key}`}
-                  className="block h-full rounded-3xl bg-cream p-6 border border-line hover:-translate-y-0.5 transition"
+                  className="block h-full rounded-3xl bg-cream p-6 border border-line hover:-translate-y-0.5 active:translate-y-[1px] active:scale-[.99] transition"
                 >
                   <h2 className="text-2xl font-bold text-success">
                     {situation.icon} {situation.label}

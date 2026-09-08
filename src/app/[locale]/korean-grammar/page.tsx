@@ -61,7 +61,7 @@ export default async function GrammarGuideHub({ params }: Props) {
                   <li key={lesson.key}>
                     <Link
                       href={`/korean-grammar/${lesson.key}`}
-                      className="flex items-baseline gap-2 rounded-xl bg-cream px-3.5 py-2 border border-line hover:-translate-y-0.5 transition"
+                      className="flex items-baseline gap-2 rounded-xl bg-cream px-3.5 py-2 border border-line hover:-translate-y-0.5 active:translate-y-[1px] active:scale-[.99] transition"
                     >
                       <span className="font-bold flex-none">{lesson.title}</span>
                       <span className="min-w-0 truncate text-sm text-muted kr">{lesson.krTitle}</span>

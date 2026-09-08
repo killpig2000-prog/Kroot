@@ -340,7 +340,7 @@ export default async function DashboardPage() {
                   key={m.href}
                   href={m.href}
                   data-tour={m.tourId}
-                  className="group relative overflow-hidden flex flex-col items-center justify-center gap-[7px] min-h-[86px] rounded-[20px] xl:rounded-[17px] border border-line bg-cream px-[6px] py-[13px] text-center transition-all hover:-translate-y-0.5 hover:border-success"
+                  className="group relative overflow-hidden flex flex-col items-center justify-center gap-[7px] min-h-[86px] rounded-[20px] xl:rounded-[17px] border border-line bg-cream px-[6px] py-[13px] text-center transition-all hover:-translate-y-0.5 active:translate-y-[1px] active:scale-[.99] hover:border-success"
                 >
                   {/* the drawn icons everywhere now (2026-09-08 user call):
                       the emoji fallback the desktop grid kept for one pass is
@@ -376,7 +376,7 @@ export default async function DashboardPage() {
           {dueCount > 0 && (
             <Link
               href="/review"
-              className="group flex items-center gap-3 border-0 border-t border-line bg-transparent px-[4px] py-[13px] mb-0 transition-all xl:mb-3 xl:gap-[13px] xl:border xl:rounded-[19px] xl:bg-cream xl:px-[16px] xl:hover:-translate-y-0.5 xl:hover:border-success"
+              className="group flex items-center gap-3 border-0 border-t border-line bg-transparent px-[4px] py-[13px] mb-0 transition-all xl:mb-3 xl:gap-[13px] xl:border xl:rounded-[19px] xl:bg-cream xl:px-[16px] xl:hover:-translate-y-0.5 active:translate-y-[1px] active:scale-[.99] xl:hover:border-success"
             >
               <Glyph name="drop" className="w-[21px] h-[21px] text-success transition-transform group-hover:scale-110" />
               <b className="flex-1 min-w-0 truncate text-[15px] xl:text-[16px] font-bold text-charcoal">{t("review.due", { count: dueCount })}</b>

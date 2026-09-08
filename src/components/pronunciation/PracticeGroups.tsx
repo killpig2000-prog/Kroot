@@ -27,7 +27,7 @@ function Stone({ chapter }: { chapter: ChapterProgress }) {
       href={`/speaking?chapter=${chapter.key}`}
       title={chapter.title}
       aria-label={t("openChapter", { title: chapter.title })}
-      className="relative rounded-[12px] border-[1.5px] bg-cream px-2 pt-2.5 pb-3 text-center transition-transform hover:-translate-y-0.5"
+      className="relative rounded-[12px] border-[1.5px] bg-cream px-2 pt-2.5 pb-3 text-center transition-transform hover:-translate-y-0.5 active:translate-y-[1px] active:scale-[.99]"
       style={{ borderColor: allPerfect ? "#D9A23B" : done ? "var(--c-success-line)" : "var(--c-line)" }}
     >
       {chapter.coinAvailable && (

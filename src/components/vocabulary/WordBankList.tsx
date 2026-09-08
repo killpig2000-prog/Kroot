@@ -203,7 +203,7 @@ export default function WordBankList({
             );
             const cell = `${SLOT_BASE} border border-line bg-cream px-[13px] pt-3 pb-[11px] shadow-[0_1px_2px_rgba(74,66,55,.04),0_8px_20px_-14px_rgba(74,66,55,.28)] transition-all group`;
             return (
-              <div key={item.wordKey} className={`${cell} hover:-translate-y-0.5 hover:border-success-line`}>
+              <div key={item.wordKey} className={`${cell} hover:-translate-y-0.5 active:translate-y-[1px] active:scale-[.99] hover:border-success-line`}>
                 {item.href ? (
                   <Link href={item.href} className="flex flex-1 flex-col min-w-0">
                     {inner}

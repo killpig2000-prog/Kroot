@@ -132,7 +132,7 @@ export default async function LevelIndexPage({ params }: Props) {
                 <li key={w.slug}>
                   <Link
                     href={`/words/${w.slug}`}
-                    className="flex items-baseline gap-2 rounded-xl bg-[var(--cream)] px-3.5 py-2 shadow-[0_2px_0_var(--card-shadow)] hover:-translate-y-0.5 transition"
+                    className="flex items-baseline gap-2 rounded-xl bg-[var(--cream)] px-3.5 py-2 shadow-[0_2px_0_var(--card-shadow)] hover:-translate-y-0.5 active:translate-y-[1px] active:scale-[.99] transition"
                   >
                     <span className="font-bold flex-none">{w.korean}</span>
                     <span className="min-w-0 truncate text-sm text-[var(--soft)]">

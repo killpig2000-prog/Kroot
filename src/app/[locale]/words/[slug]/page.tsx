@@ -135,7 +135,7 @@ export default async function WordPage({ params }: Props) {
               <li key={w.slug}>
                 <Link
                   href={`/words/${w.slug}`}
-                  className="block rounded-2xl bg-[var(--cream)] px-4 py-3 shadow-[0_3px_0_var(--card-shadow)] hover:-translate-y-0.5 transition"
+                  className="block rounded-2xl bg-[var(--cream)] px-4 py-3 shadow-[0_3px_0_var(--card-shadow)] hover:-translate-y-0.5 active:translate-y-[1px] active:scale-[.99] transition"
                 >
                   <span className="font-bold">{w.korean}</span>{" "}
                   <span className="text-sm text-[var(--soft)]">

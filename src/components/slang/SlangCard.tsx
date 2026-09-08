@@ -50,7 +50,7 @@ export default function SlangCard({
           flip();
         }
       }}
-      className="w-full h-[210px] [perspective:1200px] block cursor-pointer transition-transform duration-150 hover:-translate-y-0.5"
+      className="w-full h-[210px] [perspective:1200px] block cursor-pointer transition-transform duration-150 hover:-translate-y-0.5 active:translate-y-[1px] active:scale-[.99]"
     >
       <div
         className="relative w-full h-full transition-transform duration-500 [transform-style:preserve-3d]"

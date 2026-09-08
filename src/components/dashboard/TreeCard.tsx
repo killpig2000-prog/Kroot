@@ -211,7 +211,7 @@ export default function TreeCard({
         {/* the creature — centred on phones, left of centre once the scene is wide */}
         <div className="absolute bottom-[58px] left-1/2 sm:left-[36%] -translate-x-1/2 z-[3]">
           {linkToShop ? (
-            <Link href="/shop" aria-label={t("openShop")} className="block transition-transform hover:-translate-y-0.5">
+            <Link href="/shop" aria-label={t("openShop")} className="block transition-transform hover:-translate-y-0.5 active:translate-y-[1px] active:scale-[.99]">
               {treeImage}
             </Link>
           ) : (

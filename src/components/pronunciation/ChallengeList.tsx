@@ -115,7 +115,7 @@ export default function ChallengeList({ items }: { items: ChallengeState[] }) {
             <Link
               key={c.key}
               href={`/speaking?challenge=${c.key}`}
-              className={`${cls} hover:-translate-y-0.5 hover:border-[var(--tint-rose-line)]`}
+              className={`${cls} hover:-translate-y-0.5 active:translate-y-[1px] active:scale-[.99] hover:border-[var(--tint-rose-line)]`}
             >
               {body}
             </Link>

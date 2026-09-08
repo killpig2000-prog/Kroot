@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Bricolage_Grotesque, Fredoka, Instrument_Sans, Noto_Sans_KR, Nunito } from "next/font/google";
+import { Bricolage_Grotesque, Noto_Sans_KR, Nunito } from "next/font/google";
 import { notFound } from "next/navigation";
 import { Analytics } from "@vercel/analytics/next";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
@@ -13,12 +13,6 @@ import { SITE_URL } from "@/lib/site";
 import SeasonalEffects from "@/components/ui/SeasonalEffects";
 import PwaRegister from "@/components/pwa/PwaRegister";
 import SplashScreen from "@/components/pwa/SplashScreen";
-
-const fredoka = Fredoka({
-  variable: "--font-fredoka",
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-});
 
 // Learning content must stay legible to absolute beginners, so all Korean
 // renders in a textbook-shape sans (Noto Sans KR) rather than a display font.
@@ -42,19 +36,20 @@ const nunito = Nunito({
   weight: ["400", "600", "700"],
 });
 
-// Landing-only chrome fonts — the "Kroot 자연 스크롤판" mockup's typography,
-// scoped to the marketing page via [data-landing] in globals.css. Everything
-// past the landing page keeps Nunito/Fredoka.
+// The landing page's display face, and the only third family the site
+// loads — scoped to marketing headings via [data-landing] in globals.css.
+//
+// Five families were loading before 2026-09-09 (Bricolage, Fredoka,
+// Instrument Sans, Nunito, Noto KR). Two of them were doing almost nothing:
+// Fredoka backed a `.hand` class used twice and a `.btn` rule nothing
+// rendered, and Instrument Sans set landing body text Nunito already covers.
+// Five hands on one product is the loudest amateur signal a screen gives off,
+// so the app is Nunito + Noto Sans KR, and the landing adds this one for its
+// headings. Korean stays Noto Sans KR everywhere (AGENTS.md).
 const bricolage = Bricolage_Grotesque({
   variable: "--font-bricolage",
   subsets: ["latin"],
   weight: ["400", "600", "800"],
-});
-
-const instrumentSans = Instrument_Sans({
-  variable: "--font-instrument",
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
 });
 
 // The palette is light-only; dark is our own invert filter behind the in-app
@@ -146,7 +141,7 @@ export default async function RootLayout({ children, params }: Props) {
     <html
       lang={locale}
       data-mode={DEFAULT_MODE}
-      className={`${fredoka.variable} ${notoSansKr.variable} ${nunito.variable} ${bricolage.variable} ${instrumentSans.variable}`}
+      className={`${notoSansKr.variable} ${nunito.variable} ${bricolage.variable}`}
     >
       <body>
         {/* Applies the visitor's saved theme and seasonal-effects preference

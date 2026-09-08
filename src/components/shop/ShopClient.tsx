@@ -305,7 +305,7 @@ export default function ShopClient({
                 setTab(featured.slot);
                 setPreview((p) => ({ ...p, [featured.slot]: featured.id }));
               }}
-              className="w-full text-left grid grid-cols-[auto_1fr_auto] gap-3.5 items-center border border-amber-line rounded-[10px] px-3.5 py-3 mb-3.5 transition-all hover:-translate-y-0.5"
+              className="w-full text-left grid grid-cols-[auto_1fr_auto] gap-3.5 items-center border border-amber-line rounded-[10px] px-3.5 py-3 mb-3.5 transition-all hover:-translate-y-0.5 active:translate-y-[1px] active:scale-[.99]"
               style={{ background: "linear-gradient(90deg,#FFF8E6,transparent)" }}
             >
               <span className="w-14 h-14 rounded-[10px] overflow-hidden flex-none">
@@ -407,7 +407,7 @@ export default function ShopClient({
               return (
                 <div
                   key={c.id}
-                  className={`relative flex flex-col border rounded-[12px] overflow-hidden bg-cream transition-all hover:-translate-y-0.5 ${
+                  className={`relative flex flex-col border rounded-[12px] overflow-hidden bg-cream transition-all hover:-translate-y-0.5 active:translate-y-[1px] active:scale-[.99] ${
                     on ? "border-success shadow-[0_0_0_2px_#BBF7D0]" : "border-line hover:border-faint"
                   }`}
                 >

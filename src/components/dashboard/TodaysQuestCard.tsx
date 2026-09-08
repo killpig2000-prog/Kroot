@@ -158,7 +158,7 @@ export default function TodaysQuestCard({
       <Link
         href={target}
         onClick={playTap}
-        className={`${shell} transition-all hover:-translate-y-0.5`}
+        className={`${shell} transition-all hover:-translate-y-0.5 active:translate-y-[1px] active:scale-[.99]`}
         style={{
           background: "linear-gradient(105deg, var(--c-success) 0%, var(--c-success) 34%, var(--c-success-deep) 92%)",
         }}

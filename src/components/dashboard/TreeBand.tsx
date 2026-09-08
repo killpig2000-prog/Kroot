@@ -43,7 +43,7 @@ export default function TreeBand({
       aria-label={t("openMyRoom")}
       // sizes are the restructure mockup's, scaled 1.45× from its 268px
       // phone frame to a real 390px one (2026-09-07 fidelity pass)
-      className="flex items-center gap-[11px] border border-line rounded-[20px] px-[14px] py-[11px] mb-3 transition-all hover:-translate-y-0.5 hover:border-success"
+      className="flex items-center gap-[11px] border border-line rounded-[20px] px-[14px] py-[11px] mb-3 transition-all hover:-translate-y-0.5 active:translate-y-[1px] active:scale-[.99] hover:border-success"
       // a touch more garden at the left edge, and it holds longer before it
       // fades — the band was reading as one more cream card (2026-09-08)
       style={{ background: "linear-gradient(100deg, #D3EBDC, var(--c-card, #FFFDF6) 62%)" }}

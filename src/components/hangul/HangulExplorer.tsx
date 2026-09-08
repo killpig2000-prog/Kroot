@@ -100,7 +100,7 @@ function JamoTile({
       }}
       aria-pressed={selected}
       aria-label={`${jamo.char} · ${jamo.rom}`}
-      className={`group relative flex flex-col items-center rounded-[14px] border bg-cream px-1.5 pt-3 pb-2 text-center transition-all duration-150 hover:-translate-y-0.5 ${
+      className={`group relative flex flex-col items-center rounded-[14px] border bg-cream px-1.5 pt-3 pb-2 text-center transition-all duration-150 hover:-translate-y-0.5 active:translate-y-[1px] active:scale-[.99] ${
         selected ? "border-success bg-success-bg shadow-[0_0_0_3px_#DCFCE7]" : "border-line hover:border-success-line"
       }`}
     >
@@ -219,7 +219,7 @@ function SyllableBuilder({
             className={`kr w-9 h-9 rounded-[9px] text-[17px] border transition-all ${
               i === cho
                 ? "bg-success border-success text-white"
-                : "bg-cream border-line text-muted hover:border-success hover:-translate-y-0.5"
+                : "bg-cream border-line text-muted hover:border-success hover:-translate-y-0.5 active:translate-y-[1px] active:scale-[.99]"
             }`}
           >
             {c}
@@ -236,7 +236,7 @@ function SyllableBuilder({
             className={`kr w-9 h-9 rounded-[9px] text-[17px] border transition-all ${
               i === jung
                 ? "bg-success border-success text-white"
-                : "bg-cream border-line text-muted hover:border-success hover:-translate-y-0.5"
+                : "bg-cream border-line text-muted hover:border-success hover:-translate-y-0.5 active:translate-y-[1px] active:scale-[.99]"
             }`}
           >
             {v}
@@ -256,7 +256,7 @@ function PracticeWordCard({ kr, rom, en }: { kr: string; rom: string; en: string
         setShown(true);
         speak(kr);
       }}
-      className={`border rounded-[14px] px-4 py-4 text-center transition-all duration-150 hover:-translate-y-0.5 ${
+      className={`border rounded-[14px] px-4 py-4 text-center transition-all duration-150 hover:-translate-y-0.5 active:translate-y-[1px] active:scale-[.99] ${
         shown ? "border-success-line bg-success-bg" : "border-line bg-cream hover:border-success"
       }`}
     >

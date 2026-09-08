@@ -57,7 +57,7 @@ export default async function PronunciationGuideHub({ params }: Props) {
                   <li key={g.key}>
                     <Link
                       href={`/korean-pronunciation/${g.key}`}
-                      className="block rounded-xl bg-cream px-3.5 py-2.5 border border-line hover:-translate-y-0.5 transition"
+                      className="block rounded-xl bg-cream px-3.5 py-2.5 border border-line hover:-translate-y-0.5 active:translate-y-[1px] active:scale-[.99] transition"
                     >
                       <span className="font-bold">{g.title}</span>
                       <span className="ml-2 text-sm text-muted kr">

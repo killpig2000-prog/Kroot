@@ -133,7 +133,7 @@ export default async function ReadingGuidePassagePage({ params }: Props) {
                 <li key={p.slug}>
                   <Link
                     href={`/korean-reading/${p.slug}`}
-                    className="block rounded-2xl bg-cream px-4 py-3 border border-line hover:-translate-y-0.5 transition"
+                    className="block rounded-2xl bg-cream px-4 py-3 border border-line hover:-translate-y-0.5 active:translate-y-[1px] active:scale-[.99] transition"
                   >
                     <span className="font-bold">{p.title_en}</span>
                   </Link>

@@ -55,7 +55,7 @@ export default async function WordsHubPage({ params }: Props) {
               <li key={level}>
                 <Link
                   href={`/words/level/${level.toLowerCase()}`}
-                  className="block h-full rounded-3xl bg-[var(--cream)] p-6 shadow-[0_5px_0_var(--card-shadow)] hover:-translate-y-0.5 transition"
+                  className="block h-full rounded-3xl bg-[var(--cream)] p-6 shadow-[0_5px_0_var(--card-shadow)] hover:-translate-y-0.5 active:translate-y-[1px] active:scale-[.99] transition"
                 >
                   <h2 className="text-2xl font-bold text-[var(--deep)]">{t("levelN", { level })}</h2>
                   <p className="mt-1 text-sm text-[var(--soft)]">{t("wordCount", { count: words.length })}</p>

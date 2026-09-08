@@ -356,7 +356,7 @@ export default async function ProfilePage() {
             {weakest && (
               <Link
                 href={SKILL_HREF[weakest.key] ?? "/dashboard"}
-                className="flex items-center gap-3 border border-line bg-cream rounded-[14px] px-4 py-2.5 transition-all hover:-translate-y-0.5 hover:border-success group"
+                className="flex items-center gap-3 border border-line bg-cream rounded-[14px] px-4 py-2.5 transition-all hover:-translate-y-0.5 active:translate-y-[1px] active:scale-[.99] hover:border-success group"
               >
                 <span className="flex-none text-[18px]" aria-hidden="true">
                   {PRACTICE_SKILLS.find((s) => s.key === weakest.key)?.kr ?? "·"}

@@ -105,7 +105,7 @@ export default async function CommunityPage({
             </h1>
             <Link
               href="/community/new"
-              className="rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold text-white bg-[#334155] border border-[var(--tint-slate-line)] transition-all hover:-translate-y-0.5"
+              className="rounded-[9px] px-[18px] py-2 text-[13.5px] font-semibold text-white bg-[#334155] border border-[var(--tint-slate-line)] transition-all hover:-translate-y-0.5 active:translate-y-[1px] active:scale-[.99]"
             >
               {t("newPostCta")}
             </Link>

@@ -129,7 +129,7 @@ export default async function GrammarGuideLessonPage({ params }: Props) {
                 <li key={l.key}>
                   <Link
                     href={`/korean-grammar/${l.key}`}
-                    className="block rounded-2xl bg-cream px-4 py-3 border border-line hover:-translate-y-0.5 transition"
+                    className="block rounded-2xl bg-cream px-4 py-3 border border-line hover:-translate-y-0.5 active:translate-y-[1px] active:scale-[.99] transition"
                   >
                     <span className="font-bold">{l.title}</span>{" "}
                     <span className="text-sm text-muted kr">{l.krTitle}</span>

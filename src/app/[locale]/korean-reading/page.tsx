@@ -52,7 +52,7 @@ export default async function ReadingGuideHub({ params }: Props) {
               <li key={level}>
                 <Link
                   href={`/korean-reading/level/${level.toLowerCase()}`}
-                  className="block h-full rounded-3xl bg-cream p-6 border border-line hover:-translate-y-0.5 transition"
+                  className="block h-full rounded-3xl bg-cream p-6 border border-line hover:-translate-y-0.5 active:translate-y-[1px] active:scale-[.99] transition"
                 >
                   <h2 className="text-2xl font-bold text-success">{t("levelN", { level })}</h2>
                   <p className="mt-1 text-sm text-muted">{t("passageCount", { count: passages.length })}</p>

@@ -23,7 +23,7 @@ type Status =
 
 const BTN =
   "inline-flex items-center justify-center rounded-full px-6 py-3 font-semibold transition disabled:cursor-default";
-const BTN_PRIMARY = `${BTN} bg-[var(--leaf)] text-[var(--leaf-ink)] shadow-[0_3px_0_var(--leaf-shadow)] hover:-translate-y-0.5 disabled:translate-y-0 disabled:opacity-70`;
+const BTN_PRIMARY = `${BTN} bg-[var(--leaf)] text-[var(--leaf-ink)] shadow-[0_3px_0_var(--leaf-shadow)] hover:-translate-y-0.5 active:translate-y-[1px] active:scale-[.99] disabled:translate-y-0 disabled:opacity-70`;
 const BTN_QUIET = `${BTN} bg-[var(--mint)] text-[var(--deep)] shadow-[0_3px_0_var(--mint-shadow)]`;
 
 export default function AddToMyWords({

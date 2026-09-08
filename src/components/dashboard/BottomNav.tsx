@@ -32,7 +32,7 @@ export default function BottomNav() {
             href={item.href}
             data-tour={item.tourId}
             onClick={playTap}
-            className={`flex flex-col items-center justify-center gap-0.5 min-h-[56px] py-1 text-[13px] transition-colors ${
+            className={`flex flex-col items-center justify-center gap-0.5 min-h-[56px] py-1 text-[13px] select-none touch-manipulation transition-[color,transform] duration-100 active:scale-[.92] ${
               on ? "text-success-deep font-bold" : "text-faint font-medium hover:text-muted"
             }`}
           >
