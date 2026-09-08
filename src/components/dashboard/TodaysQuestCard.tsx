@@ -113,7 +113,7 @@ export default function TodaysQuestCard({
           />
           <svg
             viewBox="0 0 220 230"
-            className="absolute right-[1px] bottom-[-24px] w-auto origin-bottom transition-transform duration-300 group-hover:rotate-[-5deg]"
+            className="absolute right-[7px] xl:right-[2px] bottom-[-24px] w-auto origin-bottom transition-transform duration-300 group-hover:rotate-[-5deg]"
             style={{ height: "var(--quest-tree)" }}
           >
             <LevelCreature level="C1" species="C2" hideGround />
@@ -123,7 +123,7 @@ export default function TodaysQuestCard({
         <span className="relative text-[11px] font-bold uppercase tracking-[.09em] text-white/70">{t("title")}</span>
         <span className="relative block font-extrabold text-[24px] leading-[1.2] text-white">{head}</span>
         {meta && <span className="relative block text-[15px] text-white/80 -mt-[3px] [text-wrap:balance]">{meta}</span>}
-        <span className="relative mt-[6px] inline-flex w-fit min-w-[170px] xl:min-w-[196px] items-center justify-center rounded-[14px] bg-cream px-[26px] py-[11px] text-[17px] font-bold text-success-deep transition-transform group-hover:translate-y-[-1px]">
+        <span className="relative mt-[6px] inline-flex w-fit min-w-[clamp(144px,40vw,178px)] xl:min-w-[196px] items-center justify-center rounded-[14px] bg-cream px-[26px] py-[11px] text-[17px] font-bold text-success-deep transition-transform group-hover:translate-y-[-1px]">
           {t("start")}
         </span>
       </Link>
