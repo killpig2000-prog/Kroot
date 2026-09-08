@@ -14,7 +14,19 @@ const TOP_Y = 14;
 const GUIDE_MIN = 15;
 const BAR_W = 16;
 
-export default async function WeekChart({ days, avgPerDay }: { days: WeekDay[]; avgPerDay: number }) {
+export default async function WeekChart({
+  days,
+  avgPerDay,
+  streakDays = 0,
+  bestStreak = null,
+}: {
+  days: WeekDay[];
+  avgPerDay: number;
+  /** Habit lives in this card too: the streak reads next to the week it made. */
+  streakDays?: number;
+  /** Only passed when the record actually beats the current run. */
+  bestStreak?: number | null;
+}) {
   const t = await getTranslations("profile.learn");
   const max = Math.max(GUIDE_MIN, ...days.map((d) => d.minutes));
   const y = (m: number) => BASE_Y - ((BASE_Y - TOP_Y) * m) / max;
@@ -26,6 +38,12 @@ export default async function WeekChart({ days, avgPerDay }: { days: WeekDay[]; 
         <b className="font-semibold text-[14px]">{t("thisWeek")}</b>
         <span className="text-[12.5px] text-muted">{t("avgPerDay", { n: avgPerDay })}</span>
       </div>
+      {streakDays > 0 && (
+        <p className="text-[12.5px] text-muted mb-1.5 tabular-nums">
+          {t("statStreakLine", { n: streakDays })}
+          {bestStreak != null && <span className="text-faint"> · {t("statStreakBest", { n: bestStreak })}</span>}
+        </p>
+      )}
       <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={t("thisWeek")} className="block w-full h-auto">
         <line x1="8" y1={BASE_Y} x2={W - 8} y2={BASE_Y} stroke="var(--c-line)" strokeWidth="1" />
         <line x1="8" y1={y(GUIDE_MIN)} x2={W - 8} y2={y(GUIDE_MIN)} stroke="var(--c-line)" strokeWidth="1" strokeDasharray="3 4" />

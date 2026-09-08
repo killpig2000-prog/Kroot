@@ -49,7 +49,8 @@
     "start": "Start →",
     "details": "Details →",
     "checkWordsHeld": "Words held",
-    "checkReading": "Reading"
+    "checkReading": "Reading",
+    "pace": "about {n} days at this pace"
   },
   "tree": {
     "levelBadge": "Lv. {level}",

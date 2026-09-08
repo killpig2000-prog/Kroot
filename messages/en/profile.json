@@ -109,6 +109,26 @@
     "behind": "{skill} is furthest behind",
     "fillIn": "Fill it in",
     "radarTitle": "Skill shape",
-    "radarAria": "Radar of your skill scores"
+    "radarAria": "Radar of your skill scores",
+    "periodLabel": "Period",
+    "period30": "30 days",
+    "period90": "3 months",
+    "periodAll": "All time",
+    "knownTitle": "Words you know",
+    "knownUnit": "words",
+    "knownSource": "by review stage",
+    "knownDelta": "+{n} this period",
+    "knownCurveAria": "Words known, from {from} to {to}",
+    "knownBox1": "just met",
+    "knownBox2": "still shaky",
+    "knownBox3": "solid",
+    "knownBox4": "second nature",
+    "ledgerTitle": "What grew your tree",
+    "ledgerTotal": "{n} XP",
+    "ledgerOther": "other",
+    "ledgerQuest": "daily quest",
+    "ledgerEmpty": "Nothing earned in this period yet.",
+    "statStreakLine": "{n}-day streak",
+    "skillBalance": "Skill balance"
   }
 }

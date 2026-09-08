@@ -49,7 +49,8 @@
     "start": "Bắt đầu →",
     "details": "Chi tiết →",
     "checkWordsHeld": "Từ đã nhớ",
-    "checkReading": "Đọc"
+    "checkReading": "Đọc",
+    "pace": "khoảng {n} ngày với tốc độ này"
   },
   "tree": {
     "levelBadge": "Cấp {level}",

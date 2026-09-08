@@ -15,12 +15,15 @@ export default function LevelMap({
   checks,
   eligible,
   overallPct,
+  paceDays = null,
 }: {
   current: CefrLevel;
   checks: LevelCheck[];
   eligible: boolean;
   /** 0-100: average completion across skills at the current level. */
   overallPct: number;
+  /** Words still needed ÷ the pace actually observed — arithmetic, not a promise. */
+  paceDays?: number | null;
 }) {
   const t = useTranslations("dashboard.levelMap");
   const idx = LEVEL_ORDER.indexOf(current);
@@ -90,6 +93,9 @@ export default function LevelMap({
                 </small>
               ))}
             </span>
+            {!eligible && paceDays != null && (
+              <small className="block text-[12px] text-muted mt-1 tabular-nums">{t("pace", { n: paceDays })}</small>
+            )}
           </span>
           <span className="flex-none text-[13px] font-bold text-success">{eligible ? t("start") : t("details")}</span>
         </Link>

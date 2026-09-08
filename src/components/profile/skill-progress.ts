@@ -69,3 +69,17 @@ export function computeSkillProgress(input: SkillProgressInput): Record<string, 
     })(),
   };
 }
+
+// Shape of one skill's row on the Learn tab. These lived in SkillAccuracy
+// until that card was retired (2026-09-09); the page still builds the rows.
+export type SkillScore = {
+  /** nav.json key, so the label matches the sidebar wording */
+  key: string;
+  percent: number;
+  /** honest, per-metric basis: "18 of 24 right", "6 lessons", ... */
+  basis: string;
+  /** level progress, e.g. "5 of 150 words · A1" */
+  progress: string;
+};
+
+export type SkillPending = { key: string; progress: string };

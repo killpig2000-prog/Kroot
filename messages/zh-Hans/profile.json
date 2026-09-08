@@ -109,6 +109,26 @@
     "behind": "{skill} 落后最多",
     "fillIn": "补一补",
     "radarTitle": "技能轮廓",
-    "radarAria": "技能得分雷达图"
+    "radarAria": "技能得分雷达图",
+    "periodLabel": "时间范围",
+    "period30": "30 天",
+    "period90": "3 个月",
+    "periodAll": "全部",
+    "knownTitle": "你认识的词",
+    "knownUnit": "个词",
+    "knownSource": "按复习阶段",
+    "knownDelta": "本期 +{n}",
+    "knownCurveAria": "认识的词，从 {from} 到 {to}",
+    "knownBox1": "刚学会",
+    "knownBox2": "还不牢",
+    "knownBox3": "已掌握",
+    "knownBox4": "非常熟练",
+    "ledgerTitle": "让树长大的",
+    "ledgerTotal": "{n} XP",
+    "ledgerOther": "其他",
+    "ledgerQuest": "每日任务",
+    "ledgerEmpty": "这段时间还没有记录。",
+    "statStreakLine": "连续 {n} 天",
+    "skillBalance": "技能平衡"
   }
 }

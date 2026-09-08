@@ -49,7 +49,8 @@
     "start": "开始 →",
     "details": "详情 →",
     "checkWordsHeld": "掌握的单词",
-    "checkReading": "阅读"
+    "checkReading": "阅读",
+    "pace": "按当前速度约 {n} 天"
   },
   "tree": {
     "levelBadge": "Lv. {level}",

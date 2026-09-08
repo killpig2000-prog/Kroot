@@ -109,6 +109,26 @@
     "behind": "{skill} đang tụt lại nhiều nhất",
     "fillIn": "Bù vào",
     "radarTitle": "Hình dạng kỹ năng",
-    "radarAria": "Biểu đồ radar điểm kỹ năng"
+    "radarAria": "Biểu đồ radar điểm kỹ năng",
+    "periodLabel": "Khoảng thời gian",
+    "period30": "30 ngày",
+    "period90": "3 tháng",
+    "periodAll": "Tất cả",
+    "knownTitle": "Từ bạn đã biết",
+    "knownUnit": "từ",
+    "knownSource": "theo giai đoạn ôn",
+    "knownDelta": "+{n} kỳ này",
+    "knownCurveAria": "Số từ đã biết, từ {from} đến {to}",
+    "knownBox1": "vừa học",
+    "knownBox2": "còn chưa chắc",
+    "knownBox3": "đã vững",
+    "knownBox4": "thuộc lòng",
+    "ledgerTitle": "Điều làm cây lớn lên",
+    "ledgerTotal": "{n} XP",
+    "ledgerOther": "khác",
+    "ledgerQuest": "nhiệm vụ hôm nay",
+    "ledgerEmpty": "Kỳ này chưa có gì.",
+    "statStreakLine": "chuỗi {n} ngày",
+    "skillBalance": "Cân bằng kỹ năng"
   }
 }

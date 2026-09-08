@@ -49,7 +49,8 @@
     "start": "始める →",
     "details": "詳しく →",
     "checkWordsHeld": "覚えた単語",
-    "checkReading": "リーディング"
+    "checkReading": "リーディング",
+    "pace": "この調子なら約{n}日"
   },
   "tree": {
     "levelBadge": "Lv. {level}",

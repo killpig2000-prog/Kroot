@@ -109,6 +109,26 @@
     "behind": "{skill} es lo que más se queda atrás",
     "fillIn": "Reforzar",
     "radarTitle": "Forma de habilidades",
-    "radarAria": "Radar de tus puntuaciones por habilidad"
+    "radarAria": "Radar de tus puntuaciones por habilidad",
+    "periodLabel": "Periodo",
+    "period30": "30 días",
+    "period90": "3 meses",
+    "periodAll": "Todo",
+    "knownTitle": "Palabras que sabes",
+    "knownUnit": "palabras",
+    "knownSource": "por etapa de repaso",
+    "knownDelta": "+{n} en este periodo",
+    "knownCurveAria": "Palabras que sabes, de {from} a {to}",
+    "knownBox1": "recién vistas",
+    "knownBox2": "aún inseguras",
+    "knownBox3": "firmes",
+    "knownBox4": "dominadas",
+    "ledgerTitle": "Lo que hizo crecer tu árbol",
+    "ledgerTotal": "{n} XP",
+    "ledgerOther": "otros",
+    "ledgerQuest": "misión diaria",
+    "ledgerEmpty": "Aún no hay nada en este periodo.",
+    "statStreakLine": "racha de {n} días",
+    "skillBalance": "Equilibrio de destrezas"
   }
 }

@@ -6,13 +6,20 @@ import LevelMap from "@/components/dashboard/LevelMap";
 import { computeEligibility } from "@/lib/promotion-server";
 import { testForGrade } from "@/lib/promotion-test";
 import { Link } from "@/i18n/navigation";
-import { type SkillScore, type SkillPending } from "@/components/profile/SkillAccuracy";
 import WordsToReview from "@/components/profile/WordsToReview";
 import WeekChart, { type WeekDay } from "@/components/profile/WeekChart";
 import SkillBars, { type SkillBar } from "@/components/profile/SkillBars";
 import SkillRadar from "@/components/profile/SkillRadar";
 import MonthlyGrass from "@/components/profile/MonthlyGrass";
-import { computeSkillProgress, PRACTICE_SKILLS } from "@/components/profile/skill-progress";
+import KnownWords, { type WordBand } from "@/components/profile/KnownWords";
+import TreeLedger, { type LedgerRow } from "@/components/profile/TreeLedger";
+import PeriodTabs, { asPeriod, periodDays } from "@/components/profile/PeriodTabs";
+import {
+  computeSkillProgress,
+  PRACTICE_SKILLS,
+  type SkillScore,
+  type SkillPending,
+} from "@/components/profile/skill-progress";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { dailyReviewCap } from "@/lib/srs";
 import { iso } from "@/lib/study-garden";
@@ -32,9 +39,17 @@ type VocabRow = {
   correct_count: number | null;
   incorrect_count: number | null;
   next_review_at: string | null;
+  box: number | null;
+  created_at: string | null;
 };
 
-export default async function ProfilePage() {
+type XpRow = { points: number | null; skill: string | null; created_at: string };
+
+export default async function ProfilePage({
+  searchParams,
+}: {
+  searchParams: Promise<{ p?: string }>;
+}) {
   const t = await getTranslations("ui.account");
   const tn = await getTranslations("nav");
   const tl = await getTranslations("profile.learn");
@@ -47,6 +62,13 @@ export default async function ProfilePage() {
 
   const now = new Date();
   const nowIso = now.toISOString();
+
+  // The window every card reads. It lives in the URL (?p=90), so the page
+  // stays a server component and a shared link keeps its period.
+  const period = asPeriod((await searchParams).p);
+  const windowDays = periodDays(period);
+  const windowStart = windowDays == null ? null : new Date(now.getTime() - windowDays * 864e5);
+  const windowStartIso = windowStart?.toISOString() ?? null;
 
   // One parallel batch: from Korea to us-east-1 each round trip is ~300ms,
   // so sequential awaits are the whole difference between fast and sluggish.
@@ -61,6 +83,7 @@ export default async function ProfilePage() {
     grammarRes,
     activityRes,
     growthRes,
+    xpRes,
   ] = await Promise.all([
     supabase
       .from("profiles")
@@ -75,7 +98,7 @@ export default async function ProfilePage() {
       .maybeSingle(),
     supabase
       .from("vocabulary_progress")
-      .select("word_key, correct_count, incorrect_count, next_review_at")
+      .select("word_key, correct_count, incorrect_count, next_review_at, box, created_at")
       .eq("user_id", user.id),
     supabase.from("reading_progress").select("passage_key, correct_count, incorrect_count").eq("user_id", user.id),
     // score / quiz_correct arrive with migration 0037; both selects are
@@ -94,10 +117,25 @@ export default async function ProfilePage() {
     // same daily_activity rows fetched above — tolerant of an unapplied
     // migration, same as every other query on this page.
     supabase.rpc("get_my_growth_stats").maybeSingle(),
+    // What grew the tree: XP with its source. `skill` is null on ~8% of
+    // rows (older award_xp calls), which the ledger folds into "other"
+    // rather than dropping — the total has to keep adding up.
+    (() => {
+      const q = supabase.from("xp_events").select("points, skill, created_at").eq("user_id", user.id);
+      return windowStartIso ? q.gte("created_at", windowStartIso) : q;
+    })(),
   ]);
 
   const extras = extrasRes.error ? null : extrasRes.data;
-  const vocabRows = (vocabRes.error ? [] : (vocabRes.data as VocabRow[] | null) ?? []) as VocabRow[];
+  let vocabRows = (vocabRes.error ? [] : (vocabRes.data as VocabRow[] | null) ?? []) as VocabRow[];
+  if (vocabRes.error) {
+    const retry = await supabase
+      .from("vocabulary_progress")
+      .select("word_key, correct_count, incorrect_count, next_review_at")
+      .eq("user_id", user.id);
+    vocabRows = retry.error ? [] : ((retry.data ?? []) as VocabRow[]).map((r) => ({ ...r, box: null, created_at: null }));
+  }
+  const xpRows = (xpRes.error ? [] : (xpRes.data as XpRow[] | null) ?? []) as XpRow[];
   const readingRows = readingRes.error ? [] : readingRes.data ?? [];
   const speakingRows = speakingRes.error ? [] : speakingRes.data ?? [];
   const grammarRows = grammarRes.error ? [] : grammarRes.data ?? [];
@@ -249,9 +287,9 @@ export default async function ProfilePage() {
 
   const ranked = [...scores].sort((a, b) => b.percent - a.percent);
   const weakest = ranked.length >= 2 ? ranked[ranked.length - 1] : null;
-  // Overall accuracy: the mean of the per-skill scores — each skill on its own
-  // basis, so averaging the bases together would mix answers with scores.
-  const overallAccuracy = scores.length ? avg(scores.map((s) => s.percent)) : null;
+  // Overall accuracy is deliberately not shown any more (2026-09-09): a bare
+  // "81%" says nothing without a direction, and the skill bars below carry
+  // the same numbers where they can be compared.
   // Grammar folds into Writing under the restructure, so its "fill it in"
   // sends the learner to /writing rather than a page on its way out.
   const SKILL_HREF: Record<string, string> = Object.fromEntries(PRACTICE_SKILLS.map((s) => [s.key, s.href]));
@@ -280,6 +318,88 @@ export default async function ProfilePage() {
   const avgPerDay = Math.round(weekTotal / weekDays.length);
   const wordsLearned = vocabRows.filter((r) => (r.correct_count ?? 0) + (r.incorrect_count ?? 0) > 0).length;
   const nextLevel = LEVEL_ORDER[LEVEL_ORDER.indexOf(level) + 1] ?? null;
+
+  // ── words you know ──────────────────────────────────────────────────────
+  // "Known" means answered at least once — the same rule the old stat tile
+  // used, now the headline. The four bands are the SRS boxes: 1 just met,
+  // 2 still shaky, 3 solid, 4-5 second nature (lib/srs.ts intervals).
+  const studied = vocabRows.filter((r) => (r.correct_count ?? 0) + (r.incorrect_count ?? 0) > 0);
+  const inBox = (lo: number, hi: number) => studied.filter((r) => (r.box ?? 1) >= lo && (r.box ?? 1) <= hi).length;
+  const bands: WordBand[] = [
+    { label: tl("knownBox1"), count: inBox(1, 1), fill: "var(--tint-green)" },
+    { label: tl("knownBox2"), count: inBox(2, 2), fill: "var(--c-success-line)" },
+    { label: tl("knownBox3"), count: inBox(3, 3), fill: "var(--c-success)" },
+    { label: tl("knownBox4"), count: inBox(4, 5), fill: "var(--c-success-deep)" },
+  ];
+
+  // The curve is reconstructed from when each word was first opened
+  // (created_at) — the only per-word history the table keeps. It is
+  // therefore "words started", counted cumulatively; box changes have no
+  // log, so no line here pretends to know when a word became solid.
+  const firstSeen = studied
+    .map((r) => r.created_at)
+    .filter((v): v is string => v != null)
+    .sort();
+  const curveStart = windowStart ?? (firstSeen[0] ? new Date(firstSeen[0]) : now);
+  const before = firstSeen.filter((d) => new Date(d) < curveStart).length;
+  const knownDelta = firstSeen.length - before;
+  const STEPS = 12;
+  const stepMs = Math.max(1, (now.getTime() - curveStart.getTime()) / STEPS);
+  const series =
+    firstSeen.length === 0
+      ? []
+      : Array.from({ length: STEPS + 1 }, (_, i) => {
+          const at = curveStart.getTime() + stepMs * i;
+          return firstSeen.filter((d) => new Date(d).getTime() <= at).length;
+        });
+
+  // ── what grew the tree ──────────────────────────────────────────────────
+  const bySkill = new Map<string, number>();
+  for (const r of xpRows) {
+    const key = r.skill ?? "other";
+    bySkill.set(key, (bySkill.get(key) ?? 0) + (r.points ?? 0));
+  }
+  const skillLabel = (key: string) => {
+    if (key === "other") return tl("ledgerOther");
+    if (key === "quest") return tl("ledgerQuest");
+    // nav has a name for every practice skill; anything else prints its key
+    // rather than a missing-message crash.
+    try {
+      return tn(key as Parameters<typeof tn>[0]);
+    } catch {
+      return key;
+    }
+  };
+  const LEDGER_ROWS = 6;
+  const ledgerAll = [...bySkill.entries()]
+    .filter(([, points]) => points > 0)
+    .sort((a, b) => b[1] - a[1]);
+  const ledgerHead = ledgerAll.slice(0, LEDGER_ROWS);
+  const ledgerTail = ledgerAll.slice(LEDGER_ROWS);
+  const tailPoints = ledgerTail.reduce((a, [, p]) => a + p, 0);
+  const ledgerRows: LedgerRow[] = [
+    ...ledgerHead.map(([key, points]) => ({ key, label: skillLabel(key), points })),
+    ...(tailPoints > 0 ? [{ key: "rest", label: tl("ledgerOther"), points: tailPoints }] : []),
+  ];
+  const ledgerTotal = ledgerAll.reduce((a, [, p]) => a + p, 0);
+
+  // ── how close the next door is ──────────────────────────────────────────
+  // Words still needed, divided by the pace actually observed in this
+  // window. Arithmetic, not a promise — so it only shows when there is a
+  // real pace to divide by.
+  // The pace comes from words STARTED in the window, which is the only
+  // per-word history the table keeps — a word entering the box ladder has no
+  // log. It stands in for the mastering pace, so the line only appears once
+  // some words are actually mastered, and it is dropped past PACE_MAX_DAYS:
+  // "about 635 days" is arithmetic, but it tells a beginner nothing except
+  // to give up.
+  const PACE_MAX_DAYS = 90;
+  const wordsLeft = Math.max(0, elig.wordsRequired - elig.wordsMastered);
+  const paceRaw =
+    windowDays != null && knownDelta > 0 && wordsLeft > 0 && elig.wordsMastered > 0
+      ? Math.max(1, Math.ceil((wordsLeft / knownDelta) * windowDays))
+      : null;
+  const paceDays = paceRaw != null && paceRaw <= PACE_MAX_DAYS ? paceRaw : null;
 
   // ── study calendar (this year) ──────────────────────────────────────────
   const yearPrefix = `${now.getFullYear()}-`;
@@ -325,33 +445,51 @@ export default async function ProfilePage() {
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] xl:pb-[60px]">
 
-          <h1 className="font-bold text-[clamp(22px,5vw,26px)] tracking-[-0.02em] mb-[18px]">
-            {nextLevel ? tl("heading", { level: nextLevel }) : tl("atTop")}
-          </h1>
+          <div className="max-w-[560px] flex flex-wrap items-baseline justify-between gap-x-3 gap-y-2 mb-[18px]">
+            <h1 className="font-bold text-[clamp(22px,5vw,26px)] tracking-[-0.02em]">
+              {nextLevel ? tl("heading", { level: nextLevel }) : tl("atTop")}
+            </h1>
+            {hasAnything && <PeriodTabs current={period} />}
+          </div>
 
           {/* grid-cols-1 pins the track to minmax(0,1fr); a bare auto track
               grows to the widest card's max-content and overflows on mobile */}
           <div className="max-w-[560px] grid grid-cols-1 gap-3">
-            {hasAnything && (
-              <div className="grid grid-cols-3 gap-2">
-                {[
-                  { v: String(streakDays), l: tl("statStreak"), sub: showBestStreak ? tl("statStreakBest", { n: bestStreak }) : null },
-                  { v: overallAccuracy === null ? "–" : `${overallAccuracy}%`, l: tl("statAccuracy"), sub: null },
-                  { v: String(wordsLearned), l: tl("statWords"), sub: null },
-                ].map((s) => (
-                  <div key={s.l} className="border border-line rounded-[14px] bg-cream px-2 py-3 text-center">
-                    <b className="block font-extrabold text-[clamp(18px,4.5vw,22px)] tabular-nums leading-tight">{s.v}</b>
-                    <span className="block text-[11.5px] text-muted mt-0.5">{s.l}</span>
-                    {s.sub && <span className="block text-[10px] text-faint mt-0.5 tabular-nums">{s.sub}</span>}
-                  </div>
-                ))}
-              </div>
+            {/* 1 · what the learner actually knows — the page's headline */}
+            {hasVocab && (
+              <KnownWords
+                total={wordsLearned}
+                delta={knownDelta}
+                bands={bands}
+                series={series}
+                startLabel={format.dateTime(curveStart, { month: "short", day: "numeric" })}
+                endLabel={tl("today")}
+              />
             )}
 
-            {hasAnything && <WeekChart days={weekDays} avgPerDay={avgPerDay} />}
+            {/* 2 · the door being opened right now, and what is left of it */}
+            {promo && (
+              <LevelMap
+                current={level}
+                checks={promoChecks}
+                eligible={elig.eligible}
+                overallPct={overallPct}
+                paceDays={paceDays}
+              />
+            )}
 
-            {skillBars.length > 0 && <SkillRadar rows={skillBars} />}
-            {skillBars.length > 0 && <SkillBars rows={skillBars} weakestLabel={weakest ? tn(weakest.key) : null} />}
+            {/* 3 · the tree's ledger: which skills paid for this period's growth */}
+            {hasAnything && <TreeLedger rows={ledgerRows} total={ledgerTotal} />}
+
+            {/* habit is a different question from growth, so it sits apart */}
+            {hasAnything && (
+              <WeekChart
+                days={weekDays}
+                avgPerDay={avgPerDay}
+                streakDays={streakDays}
+                bestStreak={showBestStreak ? bestStreak : null}
+              />
+            )}
 
             {weakest && (
               <Link
@@ -366,6 +504,18 @@ export default async function ProfilePage() {
                   {tl("fillIn")}
                 </span>
               </Link>
+            )}
+
+            {skillBars.length > 0 && (
+              <details className="border border-line rounded-[14px] bg-cream px-4 py-3 [&_svg]:mt-2">
+                <summary className="text-[14px] font-semibold cursor-pointer marker:text-faint">
+                  {tl("skillBalance")}
+                </summary>
+                <div className="grid gap-3 mt-3">
+                  <SkillRadar rows={skillBars} />
+                  <SkillBars rows={skillBars} weakestLabel={weakest ? tn(weakest.key) : null} />
+                </div>
+              </details>
             )}
 
             {hasAnything && (
@@ -383,12 +533,6 @@ export default async function ProfilePage() {
               <div className="border border-dashed border-dash rounded-[14px] bg-cream px-[22px] py-5 text-[13px] text-muted">
                 {t("noStatsYet")}
               </div>
-            )}
-
-            {/* curriculum map: A1 → C2 stepper + level-up checks — the one
-                promotion nudge the app keeps */}
-            {promo && (
-              <LevelMap current={level} checks={promoChecks} eligible={elig.eligible} overallPct={overallPct} />
             )}
 
             {hasVocab && (
