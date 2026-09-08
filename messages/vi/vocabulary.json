@@ -157,7 +157,13 @@
     "reset": "Làm lại",
     "check": "Chấm điểm",
     "nextSyllable": "Chữ tiếp theo →",
-    "allLetters": "Tất cả chữ cái"
+    "allLetters": "Tất cả chữ cái",
+    "open": "Mở",
+    "close": "Đóng",
+    "again": "Viết lại",
+    "doneSub": "Bạn đã viết trọn từ này",
+    "blocks": "{count, plural, other {# chữ}}",
+    "strokes": "{count, plural, other {# nét}}"
   },
   "slangRowSub": "tiếng Hàn đời thường · sách giáo khoa không dạy"
 }

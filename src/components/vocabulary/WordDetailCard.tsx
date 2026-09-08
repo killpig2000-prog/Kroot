@@ -472,11 +472,13 @@ export default function WordDetailCard({
           </div>
 
           {/* write it — the Hangul tab lives here now: trace the word
-              syllable by syllable on the /hangul paper. It sits directly
-              under the word, as in the restructure mockup (picture · word ·
-              meaning · listen · trace); open by default on A1/A2 (first
-              meeting = write it), folded on B1+. */}
-          {traceable && <WordTrace key={word.key} korean={word.korean} defaultOpen={level === "A1" || level === "A2"} />}
+              syllable by syllable on the /hangul paper. Only the opener sits
+              in the card; the paper itself is a sheet (phone) / modal
+              (desktop), because in the card it was 505px of an 882px card
+              and the one reason this page scrolled past a screen. */}
+          {traceable && (
+            <WordTrace key={word.key} korean={word.korean} rom={word.romanization} meaning={meaning} />
+          )}
 
           {note?.parts && (
             <p className="text-[12.5px] text-muted leading-[1.65] mb-3">

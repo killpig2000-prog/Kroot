@@ -157,7 +157,13 @@
     "reset": "重来",
     "check": "评分",
     "nextSyllable": "下一个字 →",
-    "allLetters": "全部字母"
+    "allLetters": "全部字母",
+    "open": "打开",
+    "close": "关闭",
+    "again": "再写一次",
+    "doneSub": "整个词都写完了",
+    "blocks": "{count, plural, other {#个字}}",
+    "strokes": "{count, plural, other {#笔}}"
   },
   "slangRowSub": "日常韩语 · 课本上没有的说法"
 }

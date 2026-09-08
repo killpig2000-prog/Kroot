@@ -157,7 +157,13 @@
     "reset": "Reset",
     "check": "Score it",
     "nextSyllable": "Next block →",
-    "allLetters": "All letters"
+    "allLetters": "All letters",
+    "open": "Open",
+    "close": "Close",
+    "again": "Write it again",
+    "doneSub": "You wrote the whole word",
+    "blocks": "{count, plural, one {# block} other {# blocks}}",
+    "strokes": "{count, plural, one {# stroke} other {# strokes}}"
   },
   "slangRowSub": "everyday Korean · what textbooks skip"
 }
