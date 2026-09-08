@@ -11,6 +11,7 @@ export default function SpeechBubble({
   large = false,
   firstHoldMs,
   wrap = false,
+  variant = "default",
 }: {
   phrases: { kr: string; en: string }[];
   className?: string;
@@ -22,6 +23,10 @@ export default function SpeechBubble({
       of running off a 360px phone. Callers that centre the bubble with
       left-1/2 must also give the wrapper `w-max`, or it wraps at half width. */
   wrap?: boolean;
+  /** "card": the Garden card's bubble — two stacked lines (Korean over its
+      gloss) with the tail on the left edge, pointing back at the tree.
+      "default" is the garden scenes' one-line bubble with a bottom tail. */
+  variant?: "default" | "card";
 }) {
   const [index, setIndex] = useState(0);
   const [visible, setVisible] = useState(true);
@@ -45,18 +50,33 @@ export default function SpeechBubble({
   const current = phrases[index];
   if (!current) return null;
 
+  const fade = `pointer-events-none transition-all duration-500 ease-out ${
+    visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-1.5"
+  } ${className}`;
+
+  if (variant === "card") {
+    return (
+      <div className={fade}>
+        <div className="relative rounded-[14px] border border-line bg-cream px-3 py-[7px] shadow-[0_6px_14px_-10px_rgba(60,50,30,.35)] whitespace-nowrap">
+          <span className="kr block text-[14px] font-bold leading-tight text-success-deep">{current.kr}</span>
+          <span className="block text-[11px] font-semibold leading-tight text-muted">{current.en}</span>
+          <span
+            aria-hidden="true"
+            className="absolute left-[-6px] bottom-3 w-[10px] h-[10px] rotate-45 border-b border-l border-line bg-cream"
+          />
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div
-      className={`pointer-events-none transition-all duration-500 ease-out ${
-        visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-1.5"
-      } ${className}`}
-    >
+    <div className={fade}>
       <div
         className={`relative bg-cream shadow-[0_3px_0_var(--card-shadow)] ${
           wrap ? "text-center leading-snug max-w-[min(86vw,420px)]" : "whitespace-nowrap"
         } ${large ? "rounded-3xl px-6 py-3.5" : "rounded-2xl px-3.5 py-2"}`}
       >
-        <span className={`kr text-deep ${large ? "text-[20px] mr-3" : "text-[13px] mr-2"}`}>
+        <span className={`kr text-deep ${large ? "text-[20px] mr-3" : "text-[12.5px] mr-2"}`}>
           {current.kr}
         </span>
         <span className={`text-soft font-semibold opacity-80 ${large ? "text-[14px]" : "text-[11px]"}`}>

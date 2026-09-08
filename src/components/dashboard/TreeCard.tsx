@@ -13,16 +13,9 @@ import SpeechBubble from "@/components/ui/SpeechBubble";
 import LevelCreature from "@/components/dashboard/LevelCreature";
 import Glyph from "@/components/dashboard/Glyph";
 import TreeGrowthPopup from "@/components/dashboard/TreeGrowthPopup";
+import { GREETING_KR, TREE_PHRASES, greetingKey, lowerGloss } from "@/lib/tree-phrases";
 import AvatarUploader from "@/components/profile/AvatarUploader";
 import NameEditor from "@/components/profile/NameEditor";
-
-// Korean stays as-is everywhere; only the gloss follows the UI language.
-const TREE_PHRASES = [
-  { kr: "화이팅!", key: "fighting" },
-  { kr: "오늘도 좋아요!", key: "goodToday" },
-  { kr: "물 줘서 고마워요", key: "thanksWater" },
-  { kr: "같이 자라요", key: "growTogether" },
-];
 
 // One label per 10-level tree stage; from 50 the tree only grows taller.
 const STAGE_RANGES = ["1-9", "10-19", "20-29", "30-39", "40-49", "50+"];
@@ -31,21 +24,6 @@ const STAGE_RANGES = ["1-9", "10-19", "20-29", "30-39", "40-49", "50+"];
 // <h1> above the garden while the tree said something else underneath, two
 // speakers for one moment. Korean stays Korean in every UI language; the
 // gloss comes from the same ui.* strings the old heading used.
-type GreetingKey = "upLate" | "goodMorning" | "goodAfternoon" | "goodEvening" | "welcome";
-const GREETING_KR: Record<GreetingKey, string> = {
-  upLate: "아직 안 자요?",
-  goodMorning: "좋은 아침이에요",
-  goodAfternoon: "좋은 오후예요",
-  goodEvening: "좋은 저녁이에요",
-  welcome: "어서 오세요",
-};
-function greetingKey(hour: number): GreetingKey {
-  if (hour < 0) return "welcome";
-  if (hour < 5) return "upLate";
-  if (hour < 12) return "goodMorning";
-  if (hour < 18) return "goodAfternoon";
-  return "goodEvening";
-}
 const emptySubscribe = () => () => {};
 // How long the greeting stays before the tree moves on to its usual lines.
 const GREETING_HOLD_MS = 5000;
@@ -104,8 +82,7 @@ export default function TreeCard({
   const phrases = [
     {
       kr: `${GREETING_KR[gk]}, ${displayName}!`,
-      // the tree's glosses are lower-case asides ("looking good today!")
-      en: /^[A-Z]/.test(gloss) ? gloss.charAt(0).toLowerCase() + gloss.slice(1) : gloss,
+      en: lowerGloss(gloss),
     },
     ...TREE_PHRASES.map((p) => ({ kr: p.kr, en: t(`phrases.${p.key}`) })),
   ];
@@ -178,13 +155,13 @@ export default function TreeCard({
           md+: the same scene as a bordered card inside the column. */}
       <GardenScene
         clouds={!sky}
-        className="-mx-[clamp(18px,3vw,36px)] -mt-[26px] rounded-b-[22px] border-b border-line md:mx-0 md:mt-0 md:rounded-[18px] md:border"
+        className="-mx-[clamp(18px,3vw,36px)] -mt-[24px] rounded-b-[22px] border-b border-line md:mx-0 md:mt-0 md:rounded-[20px] md:border"
         style={{ minHeight: `${sceneMin}px`, ...(sky ? { background: sky } : {}) }}
       >
 
         {/* level + stage, streak + coins — two pills, nothing else up top */}
         <span
-          className={`absolute top-3 left-3 z-[4] inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[12px] font-extrabold backdrop-blur-[6px] ${
+          className={`absolute top-3 left-3 z-[4] inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[12.5px] font-extrabold backdrop-blur-[6px] ${
             veteran ? "border-amber-line text-[#B7791F]" : "border-success-line text-success-deep"
           }`}
           style={{ background: "rgba(255,253,246,.8)" }}
@@ -195,7 +172,7 @@ export default function TreeCard({
           </span>
         </span>
         <span
-          className="absolute top-3 right-3 z-[4] inline-flex items-center gap-1.5 rounded-full border border-success-line px-2.5 py-1 text-[12px] font-extrabold text-success-deep backdrop-blur-[6px]"
+          className="absolute top-3 right-3 z-[4] inline-flex items-center gap-1.5 rounded-full border border-success-line px-2.5 py-1 text-[12.5px] font-extrabold text-success-deep backdrop-blur-[6px]"
           style={{ background: "rgba(255,253,246,.8)" }}
         >
           {/* phones: coins only — the header already shows the streak
@@ -209,7 +186,7 @@ export default function TreeCard({
         </span>
 
         {/* the creature — centred on phones, left of centre once the scene is wide */}
-        <div className="absolute bottom-[58px] left-1/2 sm:left-[36%] -translate-x-1/2 z-[3]">
+        <div className="absolute bottom-[56px] left-1/2 sm:left-[36%] -translate-x-1/2 z-[3]">
           {linkToShop ? (
             <Link href="/shop" aria-label={t("openShop")} className="block transition-transform hover:-translate-y-0.5 active:translate-y-[1px] active:scale-[.99]">
               {treeImage}
@@ -230,7 +207,7 @@ export default function TreeCard({
 
         {/* one XP line on the grass */}
         <div className="absolute left-4 right-4 bottom-3 z-[4]">
-          <div className="flex items-center justify-between text-[11.5px] font-extrabold text-success-deep">
+          <div className="flex items-center justify-between text-[11px] font-extrabold text-success-deep">
             <span>
               {sp.name} <span className="kr font-semibold text-muted">{sp.krName}</span>
             </span>
@@ -250,10 +227,10 @@ export default function TreeCard({
           carries the name and the two toggles and nothing taller */}
       <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1.5 mt-2.5 px-1">
         <AvatarUploader userId={userId} avatarUrl={avatarUrl} />
-        <h2 className="font-semibold text-[16px] tracking-[-0.01em] flex items-center gap-2 min-w-0 flex-1 basis-[140px]">
+        <h2 className="font-semibold text-[15px] tracking-[-0.01em] flex items-center gap-2 min-w-0 flex-1 basis-[140px]">
           <NameEditor userId={userId} name={displayName} />
           {species && (
-            <span className="flex-none text-[11.5px] font-extrabold tracking-[.03em] text-success bg-success-bg border border-success-line rounded-md px-1.5 py-px">
+            <span className="flex-none text-[11px] font-extrabold tracking-[.03em] text-success bg-success-bg border border-success-line rounded-md px-1.5 py-px">
               {species}
             </span>
           )}
@@ -265,7 +242,7 @@ export default function TreeCard({
             aria-expanded={openTab === "growth"}
             aria-label={t("growthTab")}
             onClick={() => setOpenTab(openTab === "growth" ? null : "growth")}
-            className={`text-[12px] font-semibold rounded-full px-2.5 py-1 border transition-colors ${
+            className={`text-[12.5px] font-semibold rounded-full px-2.5 py-1 border transition-colors ${
               openTab === "growth"
                 ? "bg-success-bg border-success-line text-success"
                 : "bg-warm border-line text-muted hover:text-success hover:border-success-line"
@@ -274,7 +251,7 @@ export default function TreeCard({
             {/* phones show the icon only so the name row stays one line */}
             <Glyph name="sprout" className="w-[13px] h-[13px] -mt-[1px]" />{" "}
             <span className="hidden sm:inline">{t("growthTab")}</span>{" "}
-            <span className={`inline-block text-[10px] transition-transform ${openTab === "growth" ? "rotate-180" : ""}`}>▾</span>
+            <span className={`inline-block text-[11px] transition-transform ${openTab === "growth" ? "rotate-180" : ""}`}>▾</span>
           </button>
           {veteran && (
             <button
@@ -282,14 +259,14 @@ export default function TreeCard({
               aria-expanded={openTab === "keepsakes"}
               aria-label={t("keepsakesTab")}
               onClick={() => setOpenTab(openTab === "keepsakes" ? null : "keepsakes")}
-              className={`text-[12px] font-semibold rounded-full px-2.5 py-1 border transition-colors ${
+              className={`text-[12.5px] font-semibold rounded-full px-2.5 py-1 border transition-colors ${
                 openTab === "keepsakes"
                   ? "bg-[var(--tint-amber)] border-amber-line text-[#B7791F]"
                   : "bg-warm border-line text-muted hover:text-[#B7791F] hover:border-amber-line"
               }`}
             >
               🏅 <span className="hidden sm:inline">{t("keepsakesTab")}</span>{" "}
-              <span className={`inline-block text-[10px] transition-transform ${openTab === "keepsakes" ? "rotate-180" : ""}`}>▾</span>
+              <span className={`inline-block text-[11px] transition-transform ${openTab === "keepsakes" ? "rotate-180" : ""}`}>▾</span>
             </button>
           )}
         </div>
@@ -302,7 +279,7 @@ export default function TreeCard({
             return (
               <div
                 key={lv}
-                className={`flex-1 rounded-lg py-[7px] px-1 text-center text-sm border transition-all ${
+                className={`flex-1 rounded-lg py-[8px] px-1 text-center text-sm border transition-all ${
                   state === "now"
                     ? "bg-success-bg border-success-line"
                     : state === "done"
@@ -312,7 +289,7 @@ export default function TreeCard({
               >
                 <span className={state === "now" ? "inline-block bob" : undefined}>{LEVEL_PATH[lv].icon}</span>
                 <small
-                  className={`block text-[10.5px] font-semibold mt-px ${
+                  className={`block text-[11px] font-semibold mt-px ${
                     state === "now" ? "text-success" : state === "done" ? "text-muted" : "text-faint"
                   }`}
                 >
@@ -332,7 +309,7 @@ export default function TreeCard({
             return (
               <span
                 key={m.level}
-                className={`text-[12px] font-semibold rounded-full px-2.5 py-1 border ${
+                className={`text-[12.5px] font-semibold rounded-full px-2.5 py-1 border ${
                   on
                     ? "bg-[var(--tint-amber)] border-amber-line text-[#B7791F]"
                     : next

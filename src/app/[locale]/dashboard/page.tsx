@@ -1,12 +1,14 @@
 import { getTranslations } from "next-intl/server";
 import { Link, redirect } from "@/i18n/navigation";
-import TreeBand from "@/components/dashboard/TreeBand";
 import TreeCard from "@/components/dashboard/TreeCard";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import Widgets from "@/components/dashboard/Widgets";
 import FeedbackWidget, { FeedbackButton } from "@/components/dashboard/FeedbackWidget";
 import TodaysQuestCard from "@/components/dashboard/TodaysQuestCard";
+import GardenHeader from "@/components/dashboard/GardenHeader";
+import GardenCard from "@/components/dashboard/GardenCard";
+import QuestSunButton from "@/components/dashboard/QuestSunButton";
 import { MODULES } from "@/components/dashboard/navItems";
 import ModuleIcon from "@/components/dashboard/ModuleIcon";
 import Glyph from "@/components/dashboard/Glyph";
@@ -25,6 +27,7 @@ import { hashString } from "@/lib/writing-builder";
 import { chapterClearStats } from "@/lib/pronunciation";
 import { dailyReviewCap } from "@/lib/srs";
 import { getWordsForTopic } from "@/lib/vocabulary-words";
+import { BASIC_CONSONANTS, BASIC_VOWELS, COMPOUND_VOWELS, DOUBLE_CONSONANTS } from "@/lib/hangul";
 import { slangOfTheDay } from "@/lib/slang";
 import type { CefrLevel } from "@/lib/tree";
 
@@ -38,6 +41,22 @@ const QUEST_ROTATION = [
   { skill_key: "writing", title: "Today's quest", description: "Writing · one chapter, a few questions · ~8 min" },
   { skill_key: "reading", title: "Today's quest", description: "Reading · one short passage · ~4 min" },
 ];
+
+// The doors' Korean names — learning content, not UI chrome, so they stay
+// Korean in every locale (see ui-language-english-first).
+const MODULE_KR: Record<string, string> = {
+  "/hangul": "한글",
+  "/vocabulary": "단어",
+  "/writing": "쓰기",
+  "/reading": "읽기",
+  "/listening": "듣기",
+  "/speaking": "발음",
+};
+
+// Every letter the Hangul explorer teaches — the denominator of that door's
+// progress ring.
+const HANGUL_TOTAL =
+  BASIC_CONSONANTS.length + DOUBLE_CONSONANTS.length + BASIC_VOWELS.length + COMPOUND_VOWELS.length;
 
 function todayISO() {
   return iso(new Date());
@@ -162,7 +181,7 @@ export default async function DashboardPage() {
   // (/profile) 2026-09-03 — the Garden is a "what do I do today" page, and a
   // once-eligible learner had no way to stop it nagging them here every visit.
   const todayStartIso = `${today}T00:00:00.000Z`;
-  const [coinsRes, { count: reviewedTodayCount }] = await Promise.all([
+  const [coinsRes, { count: reviewedTodayCount }, { count: hangulPracticed }] = await Promise.all([
     // coins isn't in the snapshot RPC's profile row; a parallel read here
     // beats a function migration for one integer (see 0041's rationale).
     // review_capacity_bonus and is_admin ride along for the same reason —
@@ -178,6 +197,15 @@ export default async function DashboardPage() {
       .select("id", { count: "exact", head: true })
       .eq("user_id", user.id)
       .gte("last_reviewed_at", todayStartIso),
+    // The Hangul door is the one stone whose progress the snapshot RPC
+    // doesn't carry — /hangul keeps its own per-jamo table, read there by a
+    // client hook. A head count is cheaper than pulling that hook (and its
+    // Supabase client) onto the dashboard for one percentage.
+    supabase
+      .from("hangul_progress")
+      .select("jamo", { count: "exact", head: true })
+      .eq("user_id", user.id)
+      .not("practiced_at", "is", null),
   ]);
   const coins = coinsRes.error ? 0 : coinsRes.data?.coins ?? 0;
   const reviewCapacityBonus = coinsRes.error ? 0 : coinsRes.data?.review_capacity_bonus ?? 0;
@@ -208,6 +236,10 @@ export default async function DashboardPage() {
     return { done: Math.min(done, total), total, percent: total ? Math.round((Math.min(done, total) / total) * 100) : 0 };
   };
   const skillProgress: Record<string, { done: number; total: number; percent: number }> = {
+    hangul: (() => {
+      const done = Math.min(hangulPracticed ?? 0, HANGUL_TOTAL);
+      return { done, total: HANGUL_TOTAL, percent: Math.round((done / HANGUL_TOTAL) * 100) };
+    })(),
     vocabulary: tally(
       new Set((vocabRows ?? []).map((r) => r.word_key)),
       getWordsForTopic("daily-life", cefr).map((w) => w.key),
@@ -264,7 +296,7 @@ export default async function DashboardPage() {
 
         {/* phone bottom padding = BottomNav (64px) + a little; the page is
             meant to fit one screen there, so no more slack than that */}
-        <main className="min-w-0 px-[clamp(18px,3vw,36px)] pt-[26px] pb-[76px] xl:pb-[60px]">
+        <main className="min-w-0 px-[20px] xl:px-[clamp(18px,3vw,36px)] pt-[24px] pb-[76px] xl:pb-[60px]">
           <OnboardingTour startsGuidedTour guidedTrack={guidedTrack} isAdmin={isAdmin} userId={user.id} serverSeen={tourSeen} />
           <GuidedStep step="hangul-nav-vocab" />
           <GuidedStep step="writing-nav" />
@@ -276,23 +308,26 @@ export default async function DashboardPage() {
           {snapshotError && (
             <div
               role="status"
-              className="mb-5 rounded-[10px] border border-amber-line bg-[var(--tint-amber)] px-4 py-3 text-sm text-charcoal"
+              className="mb-5 rounded-[12px] border border-amber-line bg-[var(--tint-amber)] px-4 py-3 text-sm text-charcoal"
             >
               {t("loadError")}
             </div>
           )}
 
-          {/* Phone and tablet (below xl): the tree is one line here — the
-              full garden moved to My room (2026-09-07 restructure); tap the
-              band to get there. */}
+          {/* Phone and tablet (below xl): the greeting and the two numbers,
+              then the tree standing in an inset garden card — option 2a of
+              the 2026-09-09 handoff. TreeBand's cream one-liner is gone; the
+              card is still one tap to My room, where the full garden (avatar,
+              growth stages, keepsakes) lives. */}
           <div className="xl:hidden">
-            <TreeBand
+            <GardenHeader displayName={displayName} streakDays={streakDays} coins={coins} />
+            <GardenCard
               level={level}
               progressPct={pct}
+              xpInto={into}
+              xpNeeded={needed}
               costumeIds={equippedIds}
               species={cefr}
-              streakDays={streakDays}
-              coins={coins}
             />
           </div>
 
@@ -323,24 +358,56 @@ export default async function DashboardPage() {
           {/* today's quest — the one big button. Resuming a specific
               in-progress session was removed (product decision: one clear
               "what to do today" beats a resume shortcut). */}
+          {/* One wrapper carries the tour target so it measures whichever of
+              the two is actually on screen. */}
           <div data-tour="quest">
-            <TodaysQuestCard quest={questForCard} href={quest ? questHref : "/vocabulary"} />
+            <div className="xl:hidden">
+              <QuestSunButton quest={questForCard} href={quest ? questHref : "/vocabulary"} />
+            </div>
+            <div className="hidden xl:block">
+              <TodaysQuestCard quest={questForCard} href={quest ? questHref : "/vocabulary"} />
+            </div>
           </div>
 
-          {/* the six doors. Two columns × three rows on phones (portrait —
-              user call 2026-09-07), three across from sm up. Vocabulary
-              carries Hangul (trace-to-write on the card), Writing carries
-              Grammar (particle blanks); the rest are the same four rooms. */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-[9px] mb-3">
+          {/* the six doors, below xl: stepping stones, 3 × 2 (option 2a).
+              Each drawn icon sits inside its own progress ring — the same
+              per-module numbers the page already computed and used to spend
+              on a 34px hairline. Ring, not a percentage: the tile stays a
+              door, not a report. */}
+          <div className="grid grid-cols-3 gap-[10px] mb-3 xl:hidden">
             {MODULES.map((m) => {
               const key = m.href === "/speaking" ? "pronunciation" : m.href.slice(1);
-              const p = skillProgress[key];
+              const percent = skillProgress[key]?.percent ?? 0;
               return (
                 <Link
                   key={m.href}
                   href={m.href}
                   data-tour={m.tourId}
-                  className="group relative overflow-hidden flex flex-col items-center justify-center gap-[7px] min-h-[86px] rounded-[20px] xl:rounded-[17px] border border-line bg-cream px-[6px] py-[13px] text-center transition-all hover:-translate-y-0.5 active:translate-y-[1px] active:scale-[.99] hover:border-success"
+                  className="group flex flex-col items-center gap-[7px] px-1.5 pt-[13px] pb-[11px] rounded-[22px] border border-line bg-cream text-center transition-all hover:-translate-y-0.5 active:translate-y-[1px] active:scale-[.99] hover:border-success"
+                >
+                  <span
+                    className="grid place-items-center w-[52px] h-[52px] rounded-full"
+                    style={{ background: `conic-gradient(var(--leaf) ${percent}%, var(--c-warm-3) 0)` }}
+                  >
+                    <span className="grid place-items-center w-[44px] h-[44px] rounded-full bg-cream text-success-deep transition-transform group-hover:scale-110">
+                      <ModuleIcon href={m.href} />
+                    </span>
+                  </span>
+                  <span className="text-[13px] font-extrabold text-charcoal leading-[1.1]">{tn(m.label.toLowerCase())}</span>
+                  <span className="kr text-[11px] text-muted -mt-1">{MODULE_KR[m.href]}</span>
+                </Link>
+              );
+            })}
+          </div>
+
+          {/* Desktop (xl+) keeps the tile grid it has had since 839b57c. */}
+          <div className="hidden xl:grid grid-cols-3 gap-[8px] mb-3">
+            {MODULES.map((m) => (
+                <Link
+                  key={m.href}
+                  href={m.href}
+                  data-tour={m.tourId}
+                  className="group relative overflow-hidden flex flex-col items-center justify-center gap-[8px] min-h-[86px] rounded-[20px] xl:rounded-[20px] border border-line bg-cream px-[8px] py-[12px] text-center transition-all hover:-translate-y-0.5 active:translate-y-[1px] active:scale-[.99] hover:border-success"
                 >
                   {/* the drawn icons everywhere now (2026-09-08 user call):
                       the emoji fallback the desktop grid kept for one pass is
@@ -349,24 +416,12 @@ export default async function DashboardPage() {
                   <span className="text-success-deep transition-transform group-hover:scale-110">
                     <ModuleIcon href={m.href} />
                   </span>
-                  <span className="text-[14.5px] font-bold text-charcoal leading-tight">{tn(m.label.toLowerCase())}</span>
-                  {/* the per-module progress the page already computes — it was
-                      being calculated and thrown away. A hairline, not a
-                      number: the tile stays a door, not a report. */}
-                  {p && p.done > 0 && (
-                    <span
-                      className="xl:hidden block h-[3px] w-[34px] rounded-full bg-line overflow-hidden"
-                      aria-hidden="true"
-                    >
-                      <i
-                        className="not-italic block h-full rounded-full bg-success"
-                        style={{ width: `${Math.max(8, p.percent)}%` }}
-                      />
-                    </span>
-                  )}
+                  <span className="text-[14px] font-bold text-charcoal leading-tight">{tn(m.label.toLowerCase())}</span>
+                  {/* the phone hairline that used to hang here was already
+                      `xl:hidden`; the progress ring on the stones above is
+                      where that number lives now. */}
                 </Link>
-              );
-            })}
+            ))}
           </div>
 
           <InstallBanner streakDays={streakDays} />
@@ -376,10 +431,10 @@ export default async function DashboardPage() {
           {dueCount > 0 && (
             <Link
               href="/review"
-              className="group flex items-center gap-3 border-0 border-t border-line bg-transparent px-[4px] py-[13px] mb-0 transition-all xl:mb-3 xl:gap-[13px] xl:border xl:rounded-[19px] xl:bg-cream xl:px-[16px] xl:hover:-translate-y-0.5 active:translate-y-[1px] active:scale-[.99] xl:hover:border-success"
+              className="group flex items-center gap-3 border-0 border-t border-line bg-transparent px-[4px] py-[12px] mb-0 transition-all xl:mb-3 xl:gap-[12px] xl:border xl:rounded-[20px] xl:bg-cream xl:px-[16px] xl:hover:-translate-y-0.5 active:translate-y-[1px] active:scale-[.99] xl:hover:border-success"
             >
               <Glyph name="drop" className="w-[21px] h-[21px] text-success transition-transform group-hover:scale-110" />
-              <b className="flex-1 min-w-0 truncate text-[15px] xl:text-[16px] font-bold text-charcoal">{t("review.due", { count: dueCount })}</b>
+              <b className="flex-1 min-w-0 truncate text-[15px] xl:text-[15px] font-bold text-charcoal">{t("review.due", { count: dueCount })}</b>
               <span className="flex-none text-[15px] font-semibold text-success transition-transform group-hover:translate-x-0.5">
                 {t("review.short")}
               </span>
@@ -392,7 +447,7 @@ export default async function DashboardPage() {
               tokens, not the old pink literals the palette pass retired. */}
           <Link
             href="/slang"
-            className="xl:hidden group flex items-center gap-3 border-0 border-t border-line px-[4px] py-[13px] mb-0 transition-all"
+            className="xl:hidden group flex items-center gap-3 border-0 border-t border-line px-[4px] py-[12px] mb-0 transition-all"
           >
             <Glyph name="bubble" className="w-[19px] h-[19px] text-success transition-transform group-hover:scale-110" />
             <span className="flex-1 min-w-0 truncate text-[14px]">
@@ -400,9 +455,9 @@ export default async function DashboardPage() {
                 <span className="kr">{slang.kr}</span>{" "}
                 <span className="font-medium text-muted">({slang.romanization})</span>
               </b>
-              <span className="text-[13px] text-muted"> · {slang.meaning}</span>
+              <span className="text-[12.5px] text-muted"> · {slang.meaning}</span>
             </span>
-            <span className="flex-none text-[13px] font-semibold text-success transition-transform group-hover:translate-x-0.5">
+            <span className="flex-none text-[12.5px] font-semibold text-success transition-transform group-hover:translate-x-0.5">
               {t("slang.short")}
             </span>
           </Link>
