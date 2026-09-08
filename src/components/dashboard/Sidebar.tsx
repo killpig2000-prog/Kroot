@@ -58,10 +58,10 @@ function NavItem({
     <Link
       href={href}
       data-tour={tourId}
-      className={`flex items-center gap-2 px-2.5 py-[7px] text-[14.5px] transition-colors ${
+      className={`flex items-center gap-2 px-2.5 py-[8px] text-[14px] transition-colors ${
         on
           ? "bg-cream border border-dashed border-dash border-r-0 rounded-l-[10px] -mr-3.5 text-success-deep font-bold"
-          : "rounded-[9px] text-charcoal font-medium hover:bg-cream hover:text-success-deep"
+          : "rounded-[12px] text-charcoal font-medium hover:bg-cream hover:text-success-deep"
       }`}
     >
       <span className="flex-1 min-w-0 truncate">{tn(navKey(label))}</span>
@@ -82,14 +82,26 @@ type Props = {
 
 function Brand() {
   return (
-    <Link href="/dashboard" className="flex items-center gap-[9px] font-extrabold text-[17px] tracking-[-0.01em] text-charcoal">
+    <Link href="/dashboard" className="flex items-center gap-[8px] font-extrabold text-[17px] tracking-[-0.01em] text-charcoal">
       <BrandMark size={30} />
       Kroot
     </Link>
   );
 }
 
-export function LanguageSwitcher({ pathname, locale }: { pathname: string; locale: string }) {
+export function LanguageSwitcher({
+  pathname,
+  locale,
+  variant = "sidebar",
+}: {
+  pathname: string;
+  locale: string;
+  /** "sidebar" sits at the bottom of the nav column, so its list opens
+   *  upward and the button reads "Language" above the nav it belongs to.
+   *  "row" is the Settings page, where the row is already labelled and the
+   *  useful thing to show is which language is on. */
+  variant?: "sidebar" | "row";
+}) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   // The locale re-render is a full RSC round-trip, so it can take a beat —
@@ -123,7 +135,7 @@ export function LanguageSwitcher({ pathname, locale }: { pathname: string; local
         onClick={() => !isPending && setOpen(!open)}
         disabled={isPending}
         aria-busy={isPending}
-        className="w-full flex items-center justify-between gap-2 px-2.5 py-2 text-[13.5px] rounded-[9px] text-charcoal font-medium hover:bg-cream transition-colors text-left disabled:opacity-70"
+        className="w-full flex items-center justify-between gap-2 px-2.5 py-2 text-[14px] rounded-[12px] text-charcoal font-medium hover:bg-cream transition-colors text-left disabled:opacity-70"
       >
         <span className="truncate flex items-center gap-1.5">
           {isPending && (
@@ -132,21 +144,25 @@ export function LanguageSwitcher({ pathname, locale }: { pathname: string; local
               aria-hidden="true"
             />
           )}
-          {isPending ? `${pendingLabel}…` : "Language"}
+          {isPending ? `${pendingLabel}…` : variant === "row" ? currentLang.label : "Language"}
         </span>
         <span className="text-xs">▼</span>
       </button>
 
       {open && (
-        <div className="absolute bottom-full left-0 right-0 mb-1 bg-cream border border-dash rounded-[9px] shadow-lg z-50">
-          <div className="text-[12px] text-muted px-2.5 py-1.5 font-semibold uppercase tracking-[.06em]">
+        <div
+          className={`absolute left-0 right-0 bg-cream border border-dash rounded-[12px] shadow-lg z-50 ${
+            variant === "row" ? "top-full mt-1" : "bottom-full mb-1"
+          }`}
+        >
+          <div className="text-[12.5px] text-muted px-2.5 py-1.5 font-semibold uppercase tracking-[.06em]">
             {currentLang.label}
           </div>
           {LANGUAGES.map((lang) => (
             <button
               key={lang.code}
               onClick={() => handleLanguageChange(lang.code, lang.label)}
-              className={`w-full text-left px-2.5 py-2 text-[13px] rounded-[9px] transition-colors ${
+              className={`w-full text-left px-2.5 py-2 text-[12.5px] rounded-[12px] transition-colors ${
                 locale === lang.code
                   ? "bg-success-deep/10 text-success-deep font-bold"
                   : "text-charcoal hover:bg-warm"
@@ -175,7 +191,7 @@ function SidebarBody({
   const tn = useTranslations("nav");
   return (
     <>
-      <div className="flex items-center px-2.5 pb-[18px]">
+      <div className="flex items-center px-2.5 pb-[16px]">
         <Brand />
         {onClose && (
           <button
@@ -191,7 +207,7 @@ function SidebarBody({
 
       {/* Garden / Learn / My room — the whole nav, same three tabs the phone
           uses. No label needed, three items read fine unlabelled. */}
-      <div className="flex flex-col gap-0.5 bg-cream border border-dash rounded-[10px] p-1 mb-2">
+      <div className="flex flex-col gap-0.5 bg-cream border border-dash rounded-[12px] p-1 mb-2">
         {MAIN_ITEMS.map((item) => (
           <NavItem key={item.label} {...item} on={item.href === "/dashboard" ? pathname === item.href : pathname.startsWith(item.href)} />
         ))}
@@ -222,10 +238,10 @@ function SidebarBody({
       </div>
 
       <div className="mt-auto flex flex-col gap-1 pt-4">
-        <div className="flex items-center gap-2.5 border border-[#ECD98A] bg-[#FEF9C3] px-[13px] py-[11px] mb-1.5 rotate-[-1deg] shadow-[0_8px_18px_-12px_rgba(120,100,30,.4)]">
+        <div className="flex items-center gap-2.5 border border-[#ECD98A] bg-[#FEF9C3] px-[12px] py-[12px] mb-1.5 rotate-[-1deg] shadow-[0_8px_18px_-12px_rgba(120,100,30,.4)]">
           <Glyph name="flame" className="w-[19px] h-[19px]" />
           <div>
-            <b className="block text-[13.5px] font-semibold leading-tight text-[#5C4A0E]">{tn("dayStreak", { n: streakDays })}</b>
+            <b className="block text-[14px] font-semibold leading-tight text-[#5C4A0E]">{tn("dayStreak", { n: streakDays })}</b>
           </div>
         </div>
 

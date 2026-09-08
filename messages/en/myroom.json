@@ -2,7 +2,7 @@
   "wardrobe": "Wardrobe",
   "fair": "Garden Fair",
   "settings": "Settings",
-  "settingsSub": "reminders · sound · language",
+  "settingsSub": "account · reminders · sound",
   "shopSub": "{n} coins",
   "wardrobeSub": "{n, plural, one {# item} other {# items}}",
   "fairSub": "#{rank} this week",

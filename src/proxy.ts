@@ -27,6 +27,7 @@ const PROTECTED_PREFIXES = [
   "/dashboard",
   "/profile",
   "/myroom",
+  "/settings",
   "/vocabulary",
   "/listening",
   "/reading",

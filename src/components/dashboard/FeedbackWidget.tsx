@@ -14,7 +14,9 @@ import { usePathname } from "@/i18n/navigation";
 // into the corner of the study-garden card instead — see FeedbackButton,
 // which the dashboard passes to MonthlyGrass. Both open this same dialog
 // through one event, so the trigger can live anywhere in the tree.
-const OPEN_EVENT = "kroot:feedback-open";
+// Exported so any trigger (the phone button below, the Settings row) names
+// the same event instead of re-typing the string.
+export const OPEN_EVENT = "kroot:feedback-open";
 
 /** The phone-side trigger: sits in the study garden's bottom-right corner. */
 export function FeedbackButton() {
@@ -90,7 +92,7 @@ export default function FeedbackWidget() {
       <button
         type="button"
         onClick={() => setView("form")}
-        className="hidden xl:inline-flex fixed z-[50] xl:right-6 xl:bottom-6 items-center gap-2 rounded-full bg-[#221F1B] text-white font-semibold text-[14px] pl-4 pr-[18px] py-3 shadow-[0_10px_30px_-10px_rgba(40,35,25,.5)] hover:bg-[#3A3530] transition-colors"
+        className="hidden xl:inline-flex fixed z-[50] xl:right-6 xl:bottom-6 items-center gap-2 rounded-full bg-[#221F1B] text-white font-semibold text-[14px] pl-4 pr-[16px] py-3 shadow-[0_10px_30px_-10px_rgba(40,35,25,.5)] hover:bg-[#3A3530] transition-colors"
       >
         <span aria-hidden="true" className="text-[17px] leading-none">💬</span>
         {t("send")}
@@ -110,14 +112,14 @@ export default function FeedbackWidget() {
           role="dialog"
           aria-modal="true"
           aria-label={t("dialogAria")}
-          className="pointer-events-auto w-full max-w-[380px] bg-cream rounded-[24px] shadow-[0_30px_70px_-20px_rgba(40,35,25,.35)] px-6 py-6"
+          className="pointer-events-auto w-full max-w-[380px] bg-cream rounded-[20px] shadow-[0_30px_70px_-20px_rgba(40,35,25,.35)] px-6 py-6"
         >
           {view === "form" && (
             <>
               <b className="block text-[15px] font-extrabold text-charcoal mb-1.5">
                 {t("send")}
               </b>
-              <p className="text-[13px] text-muted mb-3.5">
+              <p className="text-[12.5px] text-muted mb-3.5">
                 {t("formSub")}
               </p>
               <textarea
@@ -127,10 +129,10 @@ export default function FeedbackWidget() {
                 placeholder={t("placeholder")}
                 rows={5}
                 maxLength={2000}
-                className="w-full resize-none rounded-[11px] border border-line bg-cream px-3.5 py-3 text-[13.5px] text-charcoal placeholder:text-[#B7AE9C] focus:outline-none focus:border-success"
+                className="w-full resize-none rounded-[12px] border border-line bg-cream px-3.5 py-3 text-[14px] text-charcoal placeholder:text-[#B7AE9C] focus:outline-none focus:border-success"
               />
               {error && (
-                <p className="text-[12px] text-danger mt-2">
+                <p className="text-[12.5px] text-danger mt-2">
                   {t("error")}
                 </p>
               )}
@@ -138,13 +140,13 @@ export default function FeedbackWidget() {
                 <button
                   onClick={submit}
                   disabled={!message.trim() || sending}
-                  className="flex-1 rounded-[11px] bg-success text-white font-semibold text-[13.5px] py-2.5 hover:bg-success-deep transition-colors disabled:opacity-50 disabled:hover:bg-success"
+                  className="flex-1 rounded-[12px] bg-success text-white font-semibold text-[14px] py-2.5 hover:bg-success-deep transition-colors disabled:opacity-50 disabled:hover:bg-success"
                 >
                   {sending ? t("sending") : t("submit")}
                 </button>
                 <button
                   onClick={close}
-                  className="rounded-[11px] border border-line bg-cream text-muted font-semibold text-[13.5px] px-4 py-2.5 hover:border-dash transition-colors"
+                  className="rounded-[12px] border border-line bg-cream text-muted font-semibold text-[14px] px-4 py-2.5 hover:border-dash transition-colors"
                 >
                   {t("cancel")}
                 </button>
@@ -154,13 +156,13 @@ export default function FeedbackWidget() {
 
           {view === "sent" && (
             <>
-              <b className="block text-[16px] font-extrabold text-charcoal mb-1.5">{t("thanksTitle")}</b>
-              <p className="text-[13.5px] text-muted leading-relaxed mb-5">
+              <b className="block text-[15px] font-extrabold text-charcoal mb-1.5">{t("thanksTitle")}</b>
+              <p className="text-[14px] text-muted leading-relaxed mb-5">
                 {t("thanksBody")}
               </p>
               <button
                 onClick={close}
-                className="w-full rounded-[11px] bg-success text-white font-semibold text-[13.5px] py-2.5 hover:bg-success-deep transition-colors"
+                className="w-full rounded-[12px] bg-success text-white font-semibold text-[14px] py-2.5 hover:bg-success-deep transition-colors"
               >
                 {t("close")}
               </button>

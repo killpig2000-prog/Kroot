@@ -1,0 +1,43 @@
+{
+  "title": "Settings",
+  "subtitle": "Your account, reminders and how the app looks.",
+  "back": "My room",
+
+  "groupAccount": "Account",
+  "groupLearning": "Learning",
+  "groupSound": "Sound & display",
+  "groupAbout": "About",
+
+  "noEmail": "No email on this account",
+  "changePassword": "Change password",
+  "changePasswordDesc": "Pick a new one for signing in.",
+  "signOut": "Sign out",
+  "signingOut": "Signing out…",
+
+  "deleteAccount": "Delete account",
+  "deleteDesc": "Your garden, your words and your streak go with it.",
+  "deleteConfirmTitle": "Delete your account?",
+  "deleteConfirmBody": "Your tree, your saved words, your {streak, plural, =0 {streak} =1 {1-day streak} other {#-day streak}} and every lesson you've finished go away for good. We can't bring them back.",
+  "deleteTypePrompt": "Type {word} to confirm.",
+  "deleteWord": "DELETE",
+  "deleteCancel": "Keep my account",
+  "deleteGo": "Delete forever",
+  "deleting": "Deleting…",
+  "deleteFailed": "That didn't go through. Try again in a moment.",
+
+  "language": "Interface language",
+  "languageDesc": "The language the app speaks to you in.",
+  "levelTitle": "My level",
+  "levelDesc": "{level} · progress and the next test",
+
+  "darkMode": "Dark mode",
+  "darkModeDesc": "A night ground for the whole app.",
+  "seasonalTheme": "Seasonal theme",
+  "seasonalThemeDesc": "{season} colours in the garden.",
+
+  "privacy": "Privacy policy",
+  "privacyDesc": "What we store, and what we don't.",
+  "feedback": "Send feedback",
+  "feedbackDesc": "Tell us what's broken or missing.",
+  "version": "Version"
+}

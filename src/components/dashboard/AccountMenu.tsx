@@ -2,12 +2,16 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
-import { SEASONS, applySeasonToDocument, seasonForDate } from "@/lib/seasons";
-import { applyModeToDocument, type ModeKey } from "@/lib/mode";
 
-// The sidebar account button: opens a small settings menu with profile,
-// the dark-mode and seasonal theme switches, and logout.
+// The sidebar account button: opens a small menu with the two things you come
+// to it for — Settings and logout.
+//
+// The dark-mode and seasonal-theme switches used to live here too, one row
+// above a destructive action, and they were the *second* copy of controls that
+// also folded open at the bottom of My room. Both sets now live on /settings,
+// which this menu links to.
 export default function AccountMenu({
   displayName,
   email,
@@ -22,17 +26,9 @@ export default function AccountMenu({
   compact?: boolean;
 }) {
   const t = useTranslations("dashboard.account");
+  const ts = useTranslations("settings");
   const supabase = useMemo(() => createClient(), []);
   const [open, setOpen] = useState(false);
-  // Initial values come off the <html> attributes the layout rendered.
-  const [seasonOn, setSeasonOn] = useState<boolean>(
-    () => typeof document !== "undefined" && document.documentElement.hasAttribute("data-season"),
-  );
-  const [mode, setMode] = useState<ModeKey>(
-    () => (typeof document !== "undefined" && document.documentElement.getAttribute("data-mode") === "dark"
-      ? "dark"
-      : "light"),
-  );
   const [leaving, setLeaving] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -44,20 +40,6 @@ export default function AccountMenu({
     document.addEventListener("mousedown", close);
     return () => document.removeEventListener("mousedown", close);
   }, [open]);
-
-  function toggleMode() {
-    const next: ModeKey = mode === "dark" ? "light" : "dark";
-    setMode(next);
-    applyModeToDocument(next);
-  }
-
-  function toggleSeason() {
-    const next = !seasonOn;
-    setSeasonOn(next);
-    applySeasonToDocument(next);
-    // The always-mounted SeasonalEffects layer fades in/out on this event.
-    window.dispatchEvent(new CustomEvent("kroot-season", { detail: { enabled: next } }));
-  }
 
   async function logout() {
     setLeaving(true);
@@ -74,53 +56,22 @@ export default function AccountMenu({
         <div
           className={`absolute ${
             compact ? "top-full right-0 mt-2 w-[240px]" : "bottom-full left-0 right-0 mb-2"
-          } bg-cream border border-line rounded-[14px] shadow-[0_8px_24px_rgba(0,0,0,.10)] p-2 z-50`}
+          } bg-cream border border-line rounded-[12px] shadow-[0_8px_24px_rgba(0,0,0,.10)] p-2 z-50`}
         >
-          <button
-            onClick={toggleMode}
-            className="w-full flex items-center justify-between rounded-[9px] px-3 py-2 text-[13px] font-medium text-charcoal hover:bg-warm"
+          <Link
+            href="/settings"
+            onClick={() => setOpen(false)}
+            className="w-full flex items-center gap-2 rounded-[12px] px-3 py-2 text-[12.5px] font-medium text-charcoal hover:bg-warm"
           >
-            <span>{mode === "dark" ? "🌙" : "☀️"} {t("darkMode")}</span>
-            <span
-              className={`w-9 h-5 rounded-full relative transition-colors ${
-                mode === "dark" ? "bg-success" : "bg-line"
-              }`}
-              aria-hidden="true"
-            >
-              <span
-                className={`absolute top-0.5 w-4 h-4 rounded-full bg-white shadow transition-all ${
-                  mode === "dark" ? "left-[18px]" : "left-0.5"
-                }`}
-              />
-            </span>
-          </button>
-
-          <button
-            onClick={toggleSeason}
-            className="w-full flex items-center justify-between rounded-[9px] px-3 py-2 text-[13px] font-medium text-charcoal hover:bg-warm"
-          >
-            <span>
-              {SEASONS[seasonForDate(new Date())].emoji} {t("seasonalTheme")}
-            </span>
-            <span
-              className={`w-9 h-5 rounded-full relative transition-colors ${
-                seasonOn ? "bg-success" : "bg-line"
-              }`}
-              aria-hidden="true"
-            >
-              <span
-                className={`absolute top-0.5 w-4 h-4 rounded-full bg-white shadow transition-all ${
-                  seasonOn ? "left-[18px]" : "left-0.5"
-                }`}
-              />
-            </span>
-          </button>
+            <span aria-hidden="true">⚙️</span>
+            {ts("title")}
+          </Link>
 
           <div className="border-t border-line mt-1.5 pt-1.5">
             <button
               onClick={logout}
               disabled={leaving}
-              className="w-full text-left rounded-[9px] px-3 py-2 text-[13px] font-medium text-[#EF4444] hover:bg-danger-bg disabled:opacity-60"
+              className="w-full text-left rounded-[12px] px-3 py-2 text-[12.5px] font-medium text-[#EF4444] hover:bg-danger-bg disabled:opacity-60"
             >
               {leaving ? t("leaving") : `🚪 ${t("logout")}`}
             </button>
@@ -135,7 +86,7 @@ export default function AccountMenu({
         className={
           compact
             ? "w-9 h-9 rounded-full bg-warm border border-line flex items-center justify-center text-base overflow-hidden flex-none"
-            : `w-full flex items-center gap-2.5 rounded-[9px] px-3 py-[9px] text-left transition-colors ${
+            : `w-full flex items-center gap-2.5 rounded-[12px] px-3 py-[8px] text-left transition-colors ${
                 open ? "bg-warm" : "hover:bg-warm"
               }`
         }
@@ -158,8 +109,8 @@ export default function AccountMenu({
               )}
             </span>
             <span className="min-w-0 flex-1">
-              <b className="block text-[13.5px] font-semibold leading-tight truncate">{displayName}</b>
-              <small className="block text-[11.5px] text-muted truncate">{email}</small>
+              <b className="block text-[14px] font-semibold leading-tight truncate">{displayName}</b>
+              <small className="block text-[11px] text-muted truncate">{email}</small>
             </span>
             <span className="flex-none text-[11px] text-faint">⚙️</span>
           </>

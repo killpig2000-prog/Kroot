@@ -1,10 +1,8 @@
 import { getTranslations } from "next-intl/server";
 import { Link, redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
-import Sidebar, { LanguageSwitcher } from "@/components/dashboard/Sidebar";
+import Sidebar from "@/components/dashboard/Sidebar";
 import TreeCard from "@/components/dashboard/TreeCard";
-import ReminderSettings from "@/components/profile/ReminderSettings";
-import SoundSettings from "@/components/profile/SoundSettings";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { levelProgress } from "@/lib/level";
 import { countSavedWords, getWordBankSlots } from "@/lib/word-bank";
@@ -13,12 +11,14 @@ import type { CefrLevel } from "@/lib/tree";
 // My room — the learner's own things (2026-09-07 restructure, mockup screen
 // 5): the full garden up top (tree, greeting bubble, avatar, growth stages —
 // everything that used to be the dashboard hero), then one row each for the
-// Shop, the wardrobe, the weekly Garden Fair and the word bank, and a
-// settings block at the bottom (reminders, sound, language). The dashboard
-// keeps only a one-line band about the tree.
+// Shop, the wardrobe, the weekly Garden Fair, the word bank and Settings.
+//
+// Settings used to fold open in place at the bottom of this list. It is a
+// page of its own now (/settings) — the same three controls were also
+// reachable from the sidebar account menu, and one of the two copies was
+// always the stale one.
 
-export default async function MyRoomPage({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale } = await params;
+export default async function MyRoomPage() {
   const tn = await getTranslations("nav");
   const t = await getTranslations("myroom");
   const supabase = await createClient();
@@ -31,7 +31,7 @@ export default async function MyRoomPage({ params }: { params: Promise<{ locale:
       .select("display_name, current_level, xp, streak_days, avatar_url, coins")
       .eq("id", user.id)
       .single(),
-    supabase.from("profiles").select("reminder_push, reminder_email, streak_freezes").eq("id", user.id).maybeSingle(),
+    supabase.from("profiles").select("streak_freezes").eq("id", user.id).maybeSingle(),
     supabase.from("user_costumes").select("costume_id, equipped").eq("user_id", user.id),
     // Weekly fair rank (migration 0026 RPC). Absent row = no XP this week yet.
     supabase.rpc("get_my_weekly_rank"),
@@ -57,11 +57,12 @@ export default async function MyRoomPage({ params }: { params: Promise<{ locale:
     { icon: "🎁", label: t("wardrobe"), sub: t("wardrobeSub", { n: costumes.length }), href: "/shop" },
     { icon: "🏅", label: t("fair"), sub: rank ? t("fairSub", { rank }) : t("fairNone"), href: "/ranking" },
     { icon: "📒", label: tn("myWords"), sub: t("bankSub", { n: savedCount, slots }), href: "/review/words" },
+    { icon: "⚙️", label: t("settings"), sub: t("settingsSub"), href: "/settings" },
   ];
 
   // Row metrics are the restructure mockup's, scaled 1.45× from its 268px
   // phone frame to a real 390px one (2026-09-07 fidelity pass).
-  const row = "flex items-center gap-[13px] border border-line bg-cream rounded-[19px] px-[16px] py-[13px] transition-all hover:-translate-y-0.5 active:translate-y-[1px] active:scale-[.99] hover:border-success group";
+  const row = "flex items-center gap-[12px] border border-line bg-cream rounded-[20px] px-[16px] py-[12px] transition-all hover:-translate-y-0.5 active:translate-y-[1px] active:scale-[.99] hover:border-success group";
 
   return (
     <div className="min-h-screen bg-warm text-charcoal">
@@ -70,7 +71,7 @@ export default async function MyRoomPage({ params }: { params: Promise<{ locale:
 
         {/* same padding as the dashboard so TreeCard's full-bleed negative
             margins line up with the header edge on phones */}
-        <main className="min-w-0 px-[clamp(18px,3vw,36px)] pt-[26px] pb-[100px] xl:pb-[60px]">
+        <main className="min-w-0 px-[clamp(18px,3vw,36px)] pt-[24px] pb-[100px] xl:pb-[60px]">
           <TreeCard
             level={level}
             progressPct={pct}
@@ -87,7 +88,7 @@ export default async function MyRoomPage({ params }: { params: Promise<{ locale:
             linkToShop
           />
 
-          <div className="max-w-[560px] flex flex-col gap-[11px] mt-[11px]">
+          <div className="max-w-[560px] flex flex-col gap-[12px] mt-[12px]">
             {rows.map((r) => (
               <Link key={r.label} href={r.href} className={row}>
                 <span className="flex-none text-[20px] transition-transform group-hover:scale-110" aria-hidden="true">
@@ -103,36 +104,6 @@ export default async function MyRoomPage({ params }: { params: Promise<{ locale:
               </Link>
             ))}
 
-            <div className="border-t border-line mt-[6px] pt-[10px]" />
-
-            {/* settings fold open in place — one row on the list, the
-                controls underneath it */}
-            <details className="group/set">
-              <summary className={`${row} cursor-pointer list-none`}>
-                <span className="flex-none text-[20px]" aria-hidden="true">
-                  ⚙️
-                </span>
-                <span className="flex-1 min-w-0 truncate text-[17px]">
-                  <b className="font-bold text-charcoal">{t("settings")}</b>
-                  <span className="text-[15px] text-muted"> · {t("settingsSub")}</span>
-                </span>
-                <span className="flex-none text-[15px] text-muted transition-transform group-open/set:rotate-90" aria-hidden="true">
-                  ›
-                </span>
-              </summary>
-              <div className="flex flex-col gap-2.5 pt-2.5">
-                <div className="max-w-[280px]">
-                  <LanguageSwitcher pathname="/myroom" locale={locale} />
-                </div>
-                <ReminderSettings
-                  userId={user.id}
-                  initialPush={extras?.reminder_push ?? false}
-                  initialEmail={extras?.reminder_email ?? false}
-                  hasEmail={!!user.email}
-                />
-                <SoundSettings />
-              </div>
-            </details>
           </div>
         </main>
       </div>
