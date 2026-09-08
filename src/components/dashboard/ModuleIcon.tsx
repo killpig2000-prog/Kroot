@@ -5,9 +5,9 @@
 // stroke width, one cap style, one colour (currentColor), so the grid finally
 // looks drawn by one hand.
 //
-// Phone and tablet only — the desktop sidebar and its module list still use
-// the emoji from navItems.ts, and the xl dashboard was left untouched
-// (2026-09-08 user call: nothing on PC changes).
+// Everywhere, not just the phone: the desktop grid kept emoji for one pass
+// and the user asked for the drawn set there too (839b57c). navItems' `icon`
+// stays for the sidebar's own list and anywhere else that reads it.
 
 const STROKE = {
   fill: "none",

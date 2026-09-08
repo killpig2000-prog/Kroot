@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import LevelCreature from "@/components/dashboard/LevelCreature";
+import Glyph from "@/components/dashboard/Glyph";
 import { treeStageForLevel, MAX_LEVEL } from "@/lib/level";
 import type { CefrLevel } from "@/lib/tree";
 
@@ -57,11 +58,20 @@ export default function TreeBand({
           style={{ width: `${level >= MAX_LEVEL ? 100 : fill}%` }}
         />
       </span>
-      <span className="flex-none text-[14.5px] font-bold text-muted tabular-nums" aria-label={ti("streak", { n: streakDays })}>
-        🔥 {streakDays}
+      {/* drawn, not typed — the band sits directly above the six drawn
+          doors, and a full-colour 🔥/🪙 pair was the only thing on the phone
+          home still rendering in the system font (2026-09-08) */}
+      <span
+        className="flex-none inline-flex items-center gap-[4px] text-[14.5px] font-bold text-muted tabular-nums"
+        aria-label={ti("streak", { n: streakDays })}
+      >
+        <Glyph name="flame" /> {streakDays}
       </span>
-      <span className="flex-none text-[14.5px] font-bold text-muted tabular-nums" aria-label={ti("coins", { n: coins })}>
-        🪙 {coins}
+      <span
+        className="flex-none inline-flex items-center gap-[4px] text-[14.5px] font-bold text-muted tabular-nums"
+        aria-label={ti("coins", { n: coins })}
+      >
+        <Glyph name="coin" /> {coins}
       </span>
       <span className="flex-none text-[15px] text-muted" aria-hidden="true">›</span>
     </Link>

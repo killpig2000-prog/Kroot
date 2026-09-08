@@ -2,6 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import Glyph from "@/components/dashboard/Glyph";
 
 export type SlangTeaser = {
   kr: string;
@@ -11,7 +12,7 @@ export type SlangTeaser = {
 
 const TAPE = { background: "rgba(190,227,248,.65)", borderColor: "rgba(150,200,230,.45)" };
 
-function WCard({ title, tag, children }: { title: string; tag: string; children: React.ReactNode }) {
+function WCard({ title, tag, children }: { title: string; tag: React.ReactNode; children: React.ReactNode }) {
   // A note taped to the rail.
   return (
     <div className="relative bg-cream border border-line px-[18px] py-4 shadow-[0_10px_22px_-14px_rgba(60,50,30,.3)] rotate-[0.8deg]">
@@ -39,7 +40,7 @@ export default function Widgets({ slang }: { slang?: SlangTeaser | null }) {
   if (!slang) return null;
   return (
     <aside className="hidden xl:flex flex-col gap-5 border-l border-dashed border-dash bg-warm px-5 py-[26px] sticky top-0 h-screen overflow-y-auto">
-      <WCard title={t("slang.title")} tag="💬">
+      <WCard title={t("slang.title")} tag={<Glyph name="bubble" className="w-[14px] h-[14px]" />}>
         <Link href="/slang" className="block group">
           <p className="kr text-[21px] font-bold text-[var(--tint-pink-ink-deep)] mb-0.5">
             {slang.kr}{" "}

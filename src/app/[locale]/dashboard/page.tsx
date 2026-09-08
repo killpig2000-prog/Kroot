@@ -9,6 +9,7 @@ import FeedbackWidget, { FeedbackButton } from "@/components/dashboard/FeedbackW
 import TodaysQuestCard from "@/components/dashboard/TodaysQuestCard";
 import { MODULES } from "@/components/dashboard/navItems";
 import ModuleIcon from "@/components/dashboard/ModuleIcon";
+import Glyph from "@/components/dashboard/Glyph";
 import InstallBanner from "@/components/pwa/InstallBanner";
 import OnboardingTour from "@/components/onboarding/OnboardingTour";
 import TutorialFinishBanner from "@/components/onboarding/TutorialFinishBanner";
@@ -377,7 +378,7 @@ export default async function DashboardPage() {
               href="/review"
               className="group flex items-center gap-3 border-0 border-t border-line bg-transparent px-[4px] py-[13px] mb-0 transition-all xl:mb-3 xl:gap-[13px] xl:border xl:rounded-[19px] xl:bg-cream xl:px-[16px] xl:hover:-translate-y-0.5 xl:hover:border-success"
             >
-              <span className="flex-none text-[20px] transition-transform group-hover:scale-110">💧</span>
+              <Glyph name="drop" className="w-[21px] h-[21px] text-success transition-transform group-hover:scale-110" />
               <b className="flex-1 min-w-0 truncate text-[15px] xl:text-[16px] font-bold text-charcoal">{t("review.due", { count: dueCount })}</b>
               <span className="flex-none text-[15px] font-semibold text-success transition-transform group-hover:translate-x-0.5">
                 {t("review.short")}
@@ -393,7 +394,7 @@ export default async function DashboardPage() {
             href="/slang"
             className="xl:hidden group flex items-center gap-3 border-0 border-t border-line px-[4px] py-[13px] mb-0 transition-all"
           >
-            <span className="flex-none text-[18px] transition-transform group-hover:scale-110">💬</span>
+            <Glyph name="bubble" className="w-[19px] h-[19px] text-success transition-transform group-hover:scale-110" />
             <span className="flex-1 min-w-0 truncate text-[14px]">
               <b className="font-bold text-charcoal">
                 <span className="kr">{slang.kr}</span>{" "}

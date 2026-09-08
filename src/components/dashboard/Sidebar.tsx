@@ -9,6 +9,7 @@ import { Link } from "@/i18n/navigation";
 import { MAIN_ITEMS, MODULES, MY_ROOM_ITEMS, type NavColor } from "@/components/dashboard/navItems";
 
 import BrandMark from "@/components/ui/BrandMark";
+import Glyph from "@/components/dashboard/Glyph";
 
 // Nav labels map 1:1 to nav.json keys, except the two-word ones.
 const navKey = (label: string) =>
@@ -222,7 +223,7 @@ function SidebarBody({
 
       <div className="mt-auto flex flex-col gap-1 pt-4">
         <div className="flex items-center gap-2.5 border border-[#ECD98A] bg-[#FEF9C3] px-[13px] py-[11px] mb-1.5 rotate-[-1deg] shadow-[0_8px_18px_-12px_rgba(120,100,30,.4)]">
-          <span className="text-lg">🔥</span>
+          <Glyph name="flame" className="w-[19px] h-[19px]" />
           <div>
             <b className="block text-[13.5px] font-semibold leading-tight text-[#5C4A0E]">{tn("dayStreak", { n: streakDays })}</b>
           </div>
@@ -261,7 +262,7 @@ export default function Sidebar(props: Props) {
           aria-label={`${props.streakDays} day streak`}
           className="flex items-center gap-1 h-8 px-2.5 rounded-full border border-[#ECD98A] bg-[#FEF9C3] text-[#5C4A0E] text-[12.5px] font-bold tabular-nums"
         >
-          🔥 {props.streakDays}
+          <Glyph name="flame" className="w-[14px] h-[14px]" /> {props.streakDays}
         </span>
         <AccountMenu displayName={props.displayName} email={props.email} avatarUrl={props.avatarUrl} compact />
       </header>

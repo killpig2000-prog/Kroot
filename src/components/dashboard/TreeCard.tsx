@@ -11,6 +11,7 @@ import VeteranTree, { VETERAN_MILESTONES, veteranFrameHeight } from "@/component
 import GardenScene from "@/components/ui/GardenScene";
 import SpeechBubble from "@/components/ui/SpeechBubble";
 import LevelCreature from "@/components/dashboard/LevelCreature";
+import Glyph from "@/components/dashboard/Glyph";
 import TreeGrowthPopup from "@/components/dashboard/TreeGrowthPopup";
 import AvatarUploader from "@/components/profile/AvatarUploader";
 import NameEditor from "@/components/profile/NameEditor";
@@ -197,10 +198,10 @@ export default function TreeCard({
           className="absolute top-3 right-3 z-[4] inline-flex items-center gap-1.5 rounded-full border border-success-line px-2.5 py-1 text-[12px] font-extrabold text-success-deep backdrop-blur-[6px]"
           style={{ background: "rgba(255,253,246,.8)" }}
         >
-          {/* phones: coins only — the header already shows the 🔥 streak
+          {/* phones: coins only — the header already shows the streak
               two rows up, and the pair ran into the level pill at 360px */}
-          <span className="sm:hidden tabular-nums" aria-label={ti("coins", { n: coins })}>
-            🪙 {coins}
+          <span className="sm:hidden inline-flex items-center gap-[3px] tabular-nums" aria-label={ti("coins", { n: coins })}>
+            <Glyph name="coin" className="w-[13px] h-[13px]" /> {coins}
           </span>
           <span className="hidden sm:inline">
             {ti("streak", { n: streakDays })} <span className="text-faint">·</span> {ti("coins", { n: coins })}
@@ -271,7 +272,8 @@ export default function TreeCard({
             }`}
           >
             {/* phones show the icon only so the name row stays one line */}
-            🌱 <span className="hidden sm:inline">{t("growthTab")}</span>{" "}
+            <Glyph name="sprout" className="w-[13px] h-[13px] -mt-[1px]" />{" "}
+            <span className="hidden sm:inline">{t("growthTab")}</span>{" "}
             <span className={`inline-block text-[10px] transition-transform ${openTab === "growth" ? "rotate-180" : ""}`}>▾</span>
           </button>
           {veteran && (
