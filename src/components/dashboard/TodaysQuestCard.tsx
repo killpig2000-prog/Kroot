@@ -36,7 +36,9 @@ export default function TodaysQuestCard({
   // The stored description is one "skill · what · how long" string; its first
   // segment is the headline and the rest is the meta line.
   const [head, ...restParts] = detail.split("·").map((x) => x.trim());
-  const meta = restParts.join(" · ");
+  // A no-break space before each "·" so a wrapped meta line never starts
+  // with a dangling separator (360px: "…questions ·" / "~8 min").
+  const meta = restParts.join("\u00A0· ");
 
   const inner = (
     <>
@@ -66,36 +68,63 @@ export default function TodaysQuestCard({
       <Link
         href={target}
         onClick={playTap}
-        className="group flex flex-col gap-[8px] rounded-[20px] xl:rounded-[23px] border-[1.5px] border-success bg-success-bg px-[17px] py-[17px] transition-all hover:-translate-y-0.5 hover:bg-[var(--tint-green)]"
+        // The whole card is the deep green now, not just the button inside it
+        // (user call 2026-09-08): the fill runs success -> success-deep across
+        // the box, a pine stands at the right edge, and the type is white.
+        // The Start pill flips to cream-on-green so it still reads as the
+        // thing to press.
+        className="group relative flex flex-col gap-[8px] overflow-hidden rounded-[20px] xl:rounded-[23px] border-[1.5px] border-[var(--c-success-deep)] pl-[17px] pr-[128px] py-[17px] xl:pr-[196px] transition-all hover:-translate-y-0.5"
+        style={{
+          background: "linear-gradient(105deg, var(--c-success) 0%, var(--c-success) 34%, var(--c-success-deep) 92%)",
+        }}
       >
-        <span className="text-[11px] font-bold uppercase tracking-[.09em] text-success-deep/70">{t("title")}</span>
-        <span className="block font-extrabold text-[24px] leading-[1.2] text-charcoal">{head}</span>
-        {meta && <span className="block text-[15px] text-success-deep -mt-[3px]">{meta}</span>}
-        {/* The button carries a tree on its right, the deep green closing
-            around it so the illustration reads as part of the button rather
-            than a sticker on top of it: the fill runs from success to
-            success-deep left→right, and a soft darker pool sits right under
-            the tree. */}
+        {/* Paper grain + a light from the top edge, so the green reads as a
+            printed card rather than a flat fill. Soft-light keeps the noise
+            from muddying the gradient underneath. */}
         <span
-          className="relative mt-[2px] flex items-center overflow-hidden rounded-[16px] pl-[18px] pr-[104px] py-[15px] transition-transform group-hover:translate-y-[-1px]"
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 opacity-[.19] mix-blend-soft-light"
           style={{
-            background: "linear-gradient(90deg, var(--c-success) 0%, var(--c-success) 38%, var(--c-success-deep) 88%)",
+            backgroundImage:
+              "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/></filter><rect width='140' height='140' filter='url(%23n)'/></svg>\")",
+            backgroundSize: "140px 140px",
           }}
+        />
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0"
+          style={{ background: "linear-gradient(180deg, rgba(255,255,255,.13), rgba(255,255,255,0) 46%)" }}
+        />
+
+        {/* The pine stands upright at the right edge, its trunk running off
+            the bottom of the card so it reads as a tree standing behind the
+            card rather than a sticker on it. Stage C1 (not C2) on purpose:
+            the C2 stage wears the mastery crown + sparkles, which would claim
+            something about the learner that this card isn't saying. Height is
+            clamp()ed off the viewport — the min fits a 360px phone, the max
+            is reached by 430 and tablets don't get a bigger one. */}
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-y-0 right-0 w-[148px] [--quest-tree:clamp(146px,39vw,168px)] xl:w-[196px] xl:[--quest-tree:204px]"
         >
-          <span className="text-[18px] font-bold text-white">{t("start")}</span>
-          <span aria-hidden="true" className="pointer-events-none absolute inset-y-0 right-0 w-[112px]">
-            <span
-              className="absolute inset-0"
-              style={{ background: "radial-gradient(64% 92% at 56% 56%, rgba(14,42,28,.72), rgba(14,42,28,0) 74%)" }}
-            />
-            <svg
-              viewBox="0 0 220 230"
-              className="absolute right-[10px] top-1/2 -translate-y-1/2 w-auto"
-              style={{ height: "clamp(54px, 15vw, 68px)" }}
-            >
-              <LevelCreature level="B1" hideGround />
-            </svg>
-          </span>
+          <span
+            className="absolute inset-0"
+            style={{ background: "radial-gradient(66% 88% at 54% 58%, rgba(12,38,25,.62), rgba(12,38,25,0) 76%)" }}
+          />
+          <svg
+            viewBox="0 0 220 230"
+            className="absolute right-[1px] bottom-[-24px] w-auto origin-bottom transition-transform duration-300 group-hover:rotate-[-5deg]"
+            style={{ height: "var(--quest-tree)" }}
+          >
+            <LevelCreature level="C1" species="C2" hideGround />
+          </svg>
+        </span>
+
+        <span className="relative text-[11px] font-bold uppercase tracking-[.09em] text-white/70">{t("title")}</span>
+        <span className="relative block font-extrabold text-[24px] leading-[1.2] text-white">{head}</span>
+        {meta && <span className="relative block text-[15px] text-white/80 -mt-[3px] [text-wrap:balance]">{meta}</span>}
+        <span className="relative mt-[6px] inline-flex w-fit min-w-[170px] xl:min-w-[196px] items-center justify-center rounded-[14px] bg-cream px-[26px] py-[11px] text-[17px] font-bold text-success-deep transition-transform group-hover:translate-y-[-1px]">
+          {t("start")}
         </span>
       </Link>
     </div>
