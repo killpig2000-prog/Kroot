@@ -40,25 +40,115 @@ export default function TodaysQuestCard({
   // with a dangling separator (360px: "…questions ·" / "~8 min").
   const meta = restParts.join("\u00A0· ");
 
-  const inner = (
+  // One card, two states. Done doesn't swap in a different, smaller card
+  // (user call 2026-09-08): the day's one big thing keeps its shape, its
+  // headline and its pine, and the colour inverts — deep green with cream
+  // type becomes pale green with deep-green type, and the Start pill becomes
+  // a filled "Done ✓". So it reads as the same card, finished, rather than
+  // as something that vanished.
+  const body = (
     <>
-      <span className="flex-none w-12 h-12 rounded-[12px] bg-cream border border-success-line flex items-center justify-center text-[22px] transition-transform group-hover:scale-110">
-        🎯
+      {/* Paper grain + a light from the top edge, so the fill reads as a
+          printed card rather than flat colour. Soft-light keeps the noise
+          from muddying the gradient underneath. */}
+      <span
+        aria-hidden="true"
+        className={`pointer-events-none absolute inset-0 mix-blend-soft-light ${completed ? "opacity-[.10]" : "opacity-[.19]"}`}
+        style={{
+          backgroundImage:
+            "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/></filter><rect width='140' height='140' filter='url(%23n)'/></svg>\")",
+          backgroundSize: "140px 140px",
+        }}
+      />
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0"
+        style={{ background: "linear-gradient(180deg, rgba(255,255,255,.13), rgba(255,255,255,0) 46%)" }}
+      />
+
+      {/* The pine stands upright at the right edge, its trunk running off
+          the bottom of the card so it reads as a tree standing behind the
+          card rather than a sticker on it. Stage C1 (not C2) on purpose:
+          the C2 stage wears the mastery crown + sparkles, which would claim
+          something about the learner that this card isn't saying. Height is
+          clamp()ed off the viewport — the min fits a 360px phone, the max
+          is reached by 430 and tablets don't get a bigger one. */}
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-y-0 right-0 w-[148px] [--quest-tree:clamp(146px,39vw,168px)] xl:w-[196px] xl:[--quest-tree:204px]"
+      >
+        <span
+          className="absolute inset-0"
+          style={{
+            // The pool behind the pine darkens the green card and lightens
+            // the pale one — either way it lifts the tree off the fill.
+            background: completed
+              ? "radial-gradient(66% 88% at 54% 58%, rgba(255,255,255,.52), rgba(255,255,255,0) 74%)"
+              : "radial-gradient(66% 88% at 54% 58%, rgba(12,38,25,.62), rgba(12,38,25,0) 76%)",
+          }}
+        />
+        <svg
+          viewBox="0 0 220 230"
+          className="absolute right-[7px] xl:right-[2px] bottom-[-24px] w-auto origin-bottom transition-transform duration-300 group-hover:rotate-[-5deg]"
+          style={{ height: "var(--quest-tree)" }}
+        >
+          <LevelCreature level="C1" species="C2" hideGround />
+        </svg>
       </span>
-      <span className="flex-1 min-w-0">
-        <b className="block font-bold text-[17px] leading-tight text-charcoal">{t("title")}</b>
-        <span className="block text-[12.5px] font-semibold text-success-deep truncate mt-0.5">{detail}</span>
+
+      <span
+        className={`relative text-[11px] font-bold uppercase tracking-[.09em] ${
+          completed ? "text-success-deep/70" : "text-white/70"
+        }`}
+      >
+        {t("title")}
+      </span>
+      <span
+        className={`relative block font-extrabold text-[24px] leading-[1.2] ${
+          completed ? "text-success-deep" : "text-white"
+        }`}
+      >
+        {head}
+      </span>
+      {meta && (
+        <span
+          className={`relative block text-[15px] -mt-[3px] [text-wrap:balance] ${
+            completed ? "text-success-deep/75" : "text-white/80"
+          }`}
+        >
+          {meta}
+        </span>
+      )}
+      <span
+        className={`relative mt-[6px] inline-flex w-fit min-w-[clamp(144px,40vw,178px)] xl:min-w-[196px] items-center justify-center rounded-[14px] px-[26px] py-[11px] text-[17px] font-bold ${
+          completed
+            ? "bg-success-deep text-cream"
+            : "bg-cream text-success-deep transition-transform group-hover:translate-y-[-1px]"
+        }`}
+      >
+        {completed ? t("done") : t("start")}
       </span>
     </>
   );
 
+  // No border on either state: on the deep green the outline only added a
+  // hairline a shade off the fill, and the pale card holds its own shape
+  // against the cream page.
+  const shell =
+    "group relative flex flex-col gap-[8px] overflow-hidden rounded-[20px] xl:rounded-[23px] pl-[17px] pr-[128px] py-[17px] xl:pr-[196px]";
+
   if (completed) {
     return (
-      <div className="mb-3 flex items-center gap-4 rounded-[16px] border-[1.5px] border-success bg-success-bg px-4 py-3.5">
-        {inner}
-        <span className="flex-none rounded-full bg-cream text-success text-[13px] font-bold px-4 py-2 border border-success-line">
-          {t("done")}
-        </span>
+      <div className="mb-3">
+        <div
+          className={shell}
+          style={{
+            background:
+              "linear-gradient(105deg, var(--c-success-bg) 0%, var(--c-success-bg) 38%, var(--c-success-line) 96%)",
+          }}
+        >
+          {body}
+        </div>
       </div>
     );
   }
@@ -68,64 +158,12 @@ export default function TodaysQuestCard({
       <Link
         href={target}
         onClick={playTap}
-        // The whole card is the deep green now, not just the button inside it
-        // (user call 2026-09-08): the fill runs success -> success-deep across
-        // the box, a pine stands at the right edge, and the type is white.
-        // The Start pill flips to cream-on-green so it still reads as the
-        // thing to press.
-        className="group relative flex flex-col gap-[8px] overflow-hidden rounded-[20px] xl:rounded-[23px] border-[1.5px] border-[var(--c-success-deep)] pl-[17px] pr-[128px] py-[17px] xl:pr-[196px] transition-all hover:-translate-y-0.5"
+        className={`${shell} transition-all hover:-translate-y-0.5`}
         style={{
           background: "linear-gradient(105deg, var(--c-success) 0%, var(--c-success) 34%, var(--c-success-deep) 92%)",
         }}
       >
-        {/* Paper grain + a light from the top edge, so the green reads as a
-            printed card rather than a flat fill. Soft-light keeps the noise
-            from muddying the gradient underneath. */}
-        <span
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 opacity-[.19] mix-blend-soft-light"
-          style={{
-            backgroundImage:
-              "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/></filter><rect width='140' height='140' filter='url(%23n)'/></svg>\")",
-            backgroundSize: "140px 140px",
-          }}
-        />
-        <span
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0"
-          style={{ background: "linear-gradient(180deg, rgba(255,255,255,.13), rgba(255,255,255,0) 46%)" }}
-        />
-
-        {/* The pine stands upright at the right edge, its trunk running off
-            the bottom of the card so it reads as a tree standing behind the
-            card rather than a sticker on it. Stage C1 (not C2) on purpose:
-            the C2 stage wears the mastery crown + sparkles, which would claim
-            something about the learner that this card isn't saying. Height is
-            clamp()ed off the viewport — the min fits a 360px phone, the max
-            is reached by 430 and tablets don't get a bigger one. */}
-        <span
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-y-0 right-0 w-[148px] [--quest-tree:clamp(146px,39vw,168px)] xl:w-[196px] xl:[--quest-tree:204px]"
-        >
-          <span
-            className="absolute inset-0"
-            style={{ background: "radial-gradient(66% 88% at 54% 58%, rgba(12,38,25,.62), rgba(12,38,25,0) 76%)" }}
-          />
-          <svg
-            viewBox="0 0 220 230"
-            className="absolute right-[7px] xl:right-[2px] bottom-[-24px] w-auto origin-bottom transition-transform duration-300 group-hover:rotate-[-5deg]"
-            style={{ height: "var(--quest-tree)" }}
-          >
-            <LevelCreature level="C1" species="C2" hideGround />
-          </svg>
-        </span>
-
-        <span className="relative text-[11px] font-bold uppercase tracking-[.09em] text-white/70">{t("title")}</span>
-        <span className="relative block font-extrabold text-[24px] leading-[1.2] text-white">{head}</span>
-        {meta && <span className="relative block text-[15px] text-white/80 -mt-[3px] [text-wrap:balance]">{meta}</span>}
-        <span className="relative mt-[6px] inline-flex w-fit min-w-[clamp(144px,40vw,178px)] xl:min-w-[196px] items-center justify-center rounded-[14px] bg-cream px-[26px] py-[11px] text-[17px] font-bold text-success-deep transition-transform group-hover:translate-y-[-1px]">
-          {t("start")}
-        </span>
+        {body}
       </Link>
     </div>
   );
