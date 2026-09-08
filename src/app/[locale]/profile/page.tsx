@@ -11,6 +11,7 @@ import WordsToReview from "@/components/profile/WordsToReview";
 import WeekChart, { type WeekDay } from "@/components/profile/WeekChart";
 import SkillBars, { type SkillBar } from "@/components/profile/SkillBars";
 import SkillRadar from "@/components/profile/SkillRadar";
+import MonthlyGrass from "@/components/profile/MonthlyGrass";
 import { computeSkillProgress, PRACTICE_SKILLS } from "@/components/profile/skill-progress";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { dailyReviewCap } from "@/lib/srs";
@@ -59,6 +60,7 @@ export default async function ProfilePage() {
     speakingRes,
     grammarRes,
     activityRes,
+    growthRes,
   ] = await Promise.all([
     supabase
       .from("profiles")
@@ -88,6 +90,10 @@ export default async function ProfilePage() {
     supabase.from("speaking_progress").select("prompt_key, best_score").eq("user_id", user.id),
     supabase.from("grammar_progress").select("lesson_key, score").eq("user_id", user.id),
     supabase.from("daily_activity").select("activity_date, minutes").eq("user_id", user.id),
+    // best_streak: computed server-side (0019_growth_stats.sql) from the
+    // same daily_activity rows fetched above — tolerant of an unapplied
+    // migration, same as every other query on this page.
+    supabase.rpc("get_my_growth_stats").maybeSingle(),
   ]);
 
   const extras = extrasRes.error ? null : extrasRes.data;
@@ -118,6 +124,10 @@ export default async function ProfilePage() {
 
   const level = (profile?.current_level ?? "A1") as CefrLevel;
   const streakDays = profile?.streak_days ?? 0;
+  // Only worth a line when it's actually a different number — "best 18"
+  // next to a current streak of 18 tells the learner nothing new.
+  const bestStreak = growthRes.error ? null : ((growthRes.data as { best_streak: number } | null)?.best_streak ?? null);
+  const showBestStreak = bestStreak != null && bestStreak > streakDays;
 
   // ── level progress: the grey line under each skill name ──────────────────
   const skillProgress = computeSkillProgress({
@@ -271,6 +281,12 @@ export default async function ProfilePage() {
   const wordsLearned = vocabRows.filter((r) => (r.correct_count ?? 0) + (r.incorrect_count ?? 0) > 0).length;
   const nextLevel = LEVEL_ORDER[LEVEL_ORDER.indexOf(level) + 1] ?? null;
 
+  // ── study calendar (this year) ──────────────────────────────────────────
+  const yearPrefix = `${now.getFullYear()}-`;
+  const yearRows = activityRows.filter((r) => r.activity_date.startsWith(yearPrefix) && (r.minutes ?? 0) > 0);
+  const yearMinutes = yearRows.reduce((a, r) => a + (r.minutes ?? 0), 0);
+  const yearDays = yearRows.length;
+
   // ── words to review ──────────────────────────────────────────────────────
   // Only the due queue. No box distribution, no stage labels, no intervals:
   // the learner wants this card to manage what needs reviewing, and a
@@ -319,13 +335,14 @@ export default async function ProfilePage() {
             {hasAnything && (
               <div className="grid grid-cols-3 gap-2">
                 {[
-                  { v: String(streakDays), l: tl("statStreak") },
-                  { v: overallAccuracy === null ? "–" : `${overallAccuracy}%`, l: tl("statAccuracy") },
-                  { v: String(wordsLearned), l: tl("statWords") },
+                  { v: String(streakDays), l: tl("statStreak"), sub: showBestStreak ? tl("statStreakBest", { n: bestStreak }) : null },
+                  { v: overallAccuracy === null ? "–" : `${overallAccuracy}%`, l: tl("statAccuracy"), sub: null },
+                  { v: String(wordsLearned), l: tl("statWords"), sub: null },
                 ].map((s) => (
                   <div key={s.l} className="border border-line rounded-[14px] bg-cream px-2 py-3 text-center">
                     <b className="block font-extrabold text-[clamp(18px,4.5vw,22px)] tabular-nums leading-tight">{s.v}</b>
                     <span className="block text-[11.5px] text-muted mt-0.5">{s.l}</span>
+                    {s.sub && <span className="block text-[10px] text-faint mt-0.5 tabular-nums">{s.sub}</span>}
                   </div>
                 ))}
               </div>
@@ -349,6 +366,16 @@ export default async function ProfilePage() {
                   {tl("fillIn")}
                 </span>
               </Link>
+            )}
+
+            {hasAnything && (
+              <MonthlyGrass
+                minutesByDate={minutesByDate}
+                headline={[
+                  { label: tl("yearDays"), value: String(yearDays) },
+                  { label: tl("yearMinutes"), value: String(yearMinutes) },
+                ]}
+              />
             )}
 
             {/* nothing studied yet: one line instead of a stack of empty cards */}
