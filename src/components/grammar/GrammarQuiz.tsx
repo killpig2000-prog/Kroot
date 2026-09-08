@@ -123,7 +123,11 @@ export default function GrammarQuizBlock({
   const answered = useRef(new Set<number>());
   const correctCount = useRef(0);
   const [levelUp, setLevelUp] = useState<ProgressResult | null>(null);
-  const [done, setDone] = useState(false);
+  // The number the result ring shows is taken once, when the quiz ends,
+  // rather than read off the ref while rendering: a ref is not render state,
+  // and reading one mid-render is how a screen ends up showing a stale score
+  // under React's concurrent rendering (react-hooks/refs).
+  const [finalCorrect, setFinalCorrect] = useState<number | null>(null);
 
   useSaveResume(
     userId,
@@ -143,7 +147,7 @@ export default function GrammarQuizBlock({
     const uid = userId ?? (await getClientUserId(supabase));
     if (!uid) return;
 
-    setDone(true);
+    setFinalCorrect(correctCount.current);
     if (lessonKey) {
       const { error } = await supabase.from("grammar_progress").upsert(
         {
@@ -188,7 +192,7 @@ export default function GrammarQuizBlock({
         />
       ))}
 
-      {done && (
+      {finalCorrect !== null && (
         <div className="mt-3.5">
           <ResultShell
             color={GRAMMAR_COLOR}
@@ -196,8 +200,8 @@ export default function GrammarQuizBlock({
             meta={lessonTitle}
             ring={
               <ResultRing
-                pct={(correctCount.current / quiz.length) * 100}
-                center={correctCount.current}
+                pct={(finalCorrect / quiz.length) * 100}
+                center={finalCorrect}
                 unit={`/${quiz.length}`}
                 label="correct"
                 color={GRAMMAR_COLOR}

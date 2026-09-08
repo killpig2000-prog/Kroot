@@ -50,7 +50,10 @@ export default function ReviewSession({
   // enough to score a perfect review 90% and cost it the coins.
   const correctRef = useRef(0);
   const [missed, setMissed] = useState<VocabWordWithProgress[]>([]);
-  const [done, setDone] = useState(false);
+  // The boxes each word landed in are snapshotted when the session ends —
+  // the summary below reads this, not the ref it was accumulated in, so no
+  // render depends on a value React isn't tracking (react-hooks/refs).
+  const [finalBoxes, setFinalBoxes] = useState<Record<string, number> | null>(null);
   const [levelUp, setLevelUp] = useState<ProgressResult | null>(null);
   const [navigating, setNavigating] = useState(false);
   const [saveFailed, setSaveFailed] = useState(false);
@@ -107,7 +110,7 @@ export default function ReviewSession({
       if (index + 1 < questions.length) {
         setIndex((i) => i + 1);
       } else {
-        setDone(true);
+        setFinalBoxes({ ...boxes.current });
         void logOnce();
       }
     }, 700);
@@ -176,14 +179,14 @@ export default function ReviewSession({
     router.refresh();
   }
 
-  if (done) {
+  if (finalBoxes) {
     const kept = correct;
     const slipped = missed.length;
-    const movedUp = words.filter((w) => (boxes.current[w.key] ?? 1) > (w.box ?? 1)).length;
-    const movedDown = words.filter((w) => (boxes.current[w.key] ?? 1) < (w.box ?? 1)).length;
+    const movedUp = words.filter((w) => (finalBoxes[w.key] ?? 1) > (w.box ?? 1)).length;
+    const movedDown = words.filter((w) => (finalBoxes[w.key] ?? 1) < (w.box ?? 1)).length;
     const dueBuckets = SRS_INTERVALS_DAYS.map((days, i) => ({
       days,
-      count: words.filter((w) => (boxes.current[w.key] ?? 1) === i + 1).length,
+      count: words.filter((w) => (finalBoxes[w.key] ?? 1) === i + 1).length,
     }));
 
     return (
