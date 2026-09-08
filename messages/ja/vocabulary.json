@@ -163,7 +163,8 @@
     "again": "もう一度書く",
     "doneSub": "単語をぜんぶ書けました",
     "blocks": "{count, plural, other {#文字}}",
-    "strokes": "{count, plural, other {#画}}"
+    "strokes": "{count, plural, other {#画}}",
+    "nudge": "ここをタップ"
   },
   "slangRowSub": "日常の韓国語 · 教科書にない言い回し"
 }

@@ -163,7 +163,8 @@
     "again": "Viết lại",
     "doneSub": "Bạn đã viết trọn từ này",
     "blocks": "{count, plural, other {# chữ}}",
-    "strokes": "{count, plural, other {# nét}}"
+    "strokes": "{count, plural, other {# nét}}",
+    "nudge": "Chạm vào đây"
   },
   "slangRowSub": "tiếng Hàn đời thường · sách giáo khoa không dạy"
 }

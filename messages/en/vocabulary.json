@@ -163,7 +163,8 @@
     "again": "Write it again",
     "doneSub": "You wrote the whole word",
     "blocks": "{count, plural, one {# block} other {# blocks}}",
-    "strokes": "{count, plural, one {# stroke} other {# strokes}}"
+    "strokes": "{count, plural, one {# stroke} other {# strokes}}",
+    "nudge": "Tap here"
   },
   "slangRowSub": "everyday Korean · what textbooks skip"
 }

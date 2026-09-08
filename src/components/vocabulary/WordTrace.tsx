@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { anchorsFor, isSyllable, scoreAttempt } from "@/lib/hangul-trace";
@@ -10,6 +10,47 @@ import TraceCanvas, { type TraceCanvasHandle, type TraceMode } from "@/component
 import { Stars } from "@/components/hangul/TracePanel";
 
 const HANGUL_ACCENT = "#B04A5E";
+/** How many words a learner has opened the paper on — the "tap here" cue rides on it. */
+const OPENS_KEY = "kroot-wordtrace-opens";
+/** After this many opens the learner knows where the paper is; the pill goes quiet. */
+const NUDGE_UNTIL = 3;
+
+// The open count as a tiny external store, so every word card in the session
+// agrees and the cue stops the moment the paper is opened. Read through
+// useSyncExternalStore rather than an effect: the server (and the hydrating
+// client) see NUDGE_UNTIL, i.e. no cue, and never a markup mismatch.
+let opensCache: number | null = null;
+const opensListeners = new Set<() => void>();
+
+function readOpens(): number {
+  if (opensCache === null) {
+    try {
+      opensCache = Number(localStorage.getItem(OPENS_KEY)) || 0;
+    } catch {
+      // private mode / storage blocked: no cue rather than a permanent one
+      opensCache = NUDGE_UNTIL;
+    }
+  }
+  return opensCache;
+}
+
+function countOpen() {
+  const n = readOpens() + 1;
+  opensCache = n;
+  try {
+    localStorage.setItem(OPENS_KEY, String(n));
+  } catch {
+    // nothing to persist to; the cue still goes quiet for this session
+  }
+  opensListeners.forEach((l) => l());
+}
+
+function subscribeOpens(l: () => void) {
+  opensListeners.add(l);
+  return () => {
+    opensListeners.delete(l);
+  };
+}
 
 /** Words the trace paper can take: pure Hangul syllables, no spaces or punctuation. */
 export function canTraceWord(korean: string): boolean {
@@ -153,9 +194,20 @@ export default function WordTrace({
   const [stars, setStars] = useState<(number | null)[]>(() => syllables.map(() => null));
   const canvas = useRef<TraceCanvasHandle | null>(null);
   const blocks = useRef<(HTMLElement | null)[]>([]);
+  // The pill asks to be tapped until the learner has opened the paper a few
+  // times — the writing step is the point of the card, and folded into one
+  // quiet line it reads as a footnote. It stops asking on its own rather than
+  // opening itself: an overlay that appears unasked covers the word the
+  // learner came to read.
+  const opens = useSyncExternalStore(subscribeOpens, readOpens, () => NUDGE_UNTIL);
 
   const char = syllables[idx];
   const last = idx === syllables.length - 1;
+
+  const openSheet = () => {
+    setOpen(true);
+    if (opens < NUDGE_UNTIL) countOpen();
+  };
 
   const close = useCallback(() => setOpen(false), []);
   const dismiss = useBackToClose(open, close);
@@ -223,22 +275,43 @@ export default function WordTrace({
   const total = allScored ? Math.round(scored.reduce((a, b) => a + b, 0) / syllables.length) : null;
   // One-syllable words have nothing to gather — they end on the stars alone.
   const finale = allScored && syllables.length > 1;
+  // Don't ask for a tap on a word that has already been written.
+  const cue = opens < NUDGE_UNTIL && total === null;
 
   return (
     <>
       <button
         type="button"
-        onClick={() => setOpen(true)}
-        className="mt-3.5 w-full flex items-center gap-2.5 rounded-[16px] border-[1.5px] border-dashed border-line bg-cream px-4 py-3 text-left hover:border-success transition-colors"
+        onClick={openSheet}
+        className={`mt-3.5 w-full flex items-center gap-2 rounded-[16px] border-[1.5px] px-3.5 py-3 text-left transition-colors ${
+          cue
+            ? "guided-tap-ring border-solid border-[#E8C25A] bg-[#FFF8E6]"
+            : "border-dashed border-line bg-cream hover:border-success"
+        }`}
       >
         <span aria-hidden="true" className="text-[17px]">✍️</span>
-        <b className="text-[16px] font-bold text-charcoal">{t("title")}</b>
+        <b className="text-[16px] font-bold text-charcoal whitespace-nowrap">{t("title")}</b>
         {total !== null ? (
           <Stars n={total} size={13} />
         ) : (
-          <span className="text-[13px] font-semibold text-muted">{t("blocks", { count: syllables.length })}</span>
+          <span className="text-[13px] font-semibold text-muted whitespace-nowrap">
+            {t("blocks", { count: syllables.length })}
+          </span>
         )}
-        <span className="ml-auto text-[13px] font-bold text-muted">{t("open")} ▸</span>
+        <span
+          className={`ml-auto flex items-center gap-1.5 text-[13px] font-bold whitespace-nowrap ${
+            cue ? "text-[#8A6A16]" : "text-muted"
+          }`}
+        >
+          {cue ? (
+            <>
+              <span aria-hidden="true" className="guided-tap-hand text-[15px] leading-none">👆</span>
+              {t("nudge")}
+            </>
+          ) : (
+            `${t("open")} ▸`
+          )}
+        </span>
       </button>
 
       {open ? (

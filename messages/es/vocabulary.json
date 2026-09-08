@@ -163,7 +163,8 @@
     "again": "Escribirla otra vez",
     "doneSub": "Escribiste la palabra entera",
     "blocks": "{count, plural, one {# bloque} other {# bloques}}",
-    "strokes": "{count, plural, one {# trazo} other {# trazos}}"
+    "strokes": "{count, plural, one {# trazo} other {# trazos}}",
+    "nudge": "Toca aquí"
   },
   "slangRowSub": "coreano del día a día · lo que los libros omiten"
 }
