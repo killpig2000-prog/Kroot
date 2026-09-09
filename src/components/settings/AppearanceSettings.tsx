@@ -5,7 +5,6 @@ import { useTranslations } from "next-intl";
 import { SEASONS, applySeasonToDocument, seasonForDate } from "@/lib/seasons";
 import { applyModeToDocument, type ModeKey } from "@/lib/mode";
 import { SettingsRow, Switch } from "@/components/settings/SettingsCard";
-import Glyph from "@/components/dashboard/Glyph";
 
 // Dark mode and the seasonal theme. Both used to be squeezed into the sidebar
 // account menu, where they sat next to Log out — a destructive action one row
@@ -44,13 +43,11 @@ export default function AppearanceSettings() {
   return (
     <>
       <SettingsRow
-        icon={<Glyph name={mode === "dark" ? "moon" : "sun"} className="w-[18px] h-[18px]" />}
         title={t("darkMode")}
         desc={t("darkModeDesc")}
         trailing={<Switch on={mode === "dark"} onToggle={toggleMode} label={t("darkMode")} />}
       />
       <SettingsRow
-        icon={<Glyph name="leaf" className="w-[18px] h-[18px]" />}
         title={t("seasonalTheme")}
         desc={t("seasonalThemeDesc", { season: season.label })}
         trailing={<Switch on={seasonOn} onToggle={toggleSeason} label={t("seasonalTheme")} />}

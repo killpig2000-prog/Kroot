@@ -5,9 +5,12 @@ import { Link } from "@/i18n/navigation";
 // and row metrics ReminderSettings and SoundSettings already use, since those
 // two render themselves and sit in the same stack — a second set of paddings
 // would show as a step between neighbouring cards.
-
-export const ICON_BOX =
-  "flex-none w-9 h-9 rounded-[12px] bg-warm border border-line flex items-center justify-center text-base";
+//
+// 2026-09-10, user call: no icons here at all. A column of fourteen identical
+// bordered boxes was a second, louder column beside the labels — every row
+// carrying a picture means none of them points anywhere. The words carry the
+// rows now, and the only marks left are the chevron on a row that goes
+// somewhere and the switch on a row that toggles.
 
 export function SettingsCard({
   title,
@@ -29,14 +32,12 @@ export function SettingsCard({
 /** A row that shows something and hands its control (a switch, a select, a
  *  value) in as `trailing`. */
 export function SettingsRow({
-  icon,
   title,
   desc,
   trailing,
   danger = false,
   wrap = false,
 }: {
-  icon: ReactNode;
   title: string;
   desc?: string;
   trailing?: ReactNode;
@@ -48,9 +49,6 @@ export function SettingsRow({
 }) {
   return (
     <div className={`flex items-center gap-3 ${wrap ? "flex-wrap" : ""}`}>
-      <span className={ICON_BOX} aria-hidden="true">
-        {icon}
-      </span>
       <span className={`flex-1 ${wrap ? "min-w-[180px]" : "min-w-0"}`}>
         <b className={`block text-[14px] font-semibold ${danger ? "text-danger" : ""}`}>{title}</b>
         {desc && <span className="block text-[12.5px] text-muted leading-snug">{desc}</span>}
@@ -63,13 +61,11 @@ export function SettingsRow({
 /** The same row, as a link. `external` skips the locale-prefixing Link for
  *  routes that live outside the [locale] tree. */
 export function SettingsLinkRow({
-  icon,
   title,
   desc,
   href,
   external = false,
 }: {
-  icon: ReactNode;
   title: string;
   desc?: string;
   href: string;
@@ -77,9 +73,6 @@ export function SettingsLinkRow({
 }) {
   const inner = (
     <>
-      <span className={ICON_BOX} aria-hidden="true">
-        {icon}
-      </span>
       <span className="flex-1 min-w-0">
         <b className="block text-[14px] font-semibold">{title}</b>
         {desc && <span className="block text-[12.5px] text-muted leading-snug">{desc}</span>}
@@ -109,14 +102,12 @@ export function SettingsLinkRow({
 /** The same row, as a button. Sign out and Delete account are the row, not a
  *  label with a button beside it repeating the label back. */
 export function SettingsButtonRow({
-  icon,
   title,
   desc,
   onClick,
   disabled = false,
   danger = false,
 }: {
-  icon: ReactNode;
   title: string;
   desc?: string;
   onClick: () => void;
@@ -132,9 +123,6 @@ export function SettingsButtonRow({
         danger ? "hover:bg-danger-bg" : "hover:bg-warm"
       }`}
     >
-      <span className={ICON_BOX} aria-hidden="true">
-        {icon}
-      </span>
       <span className="flex-1 min-w-0">
         <b className={`block text-[14px] font-semibold ${danger ? "text-danger" : ""}`}>{title}</b>
         {desc && <span className="block text-[12.5px] text-muted leading-snug">{desc}</span>}

@@ -3,7 +3,6 @@
 import { useSyncExternalStore } from "react";
 import { useTranslations } from "next-intl";
 import { playCorrect, setSfxEnabled, sfxEnabled, subscribeSfx } from "@/lib/sfx";
-import Glyph from "@/components/dashboard/Glyph";
 
 // One switch for the app's feedback chimes (right, wrong, water, coins,
 // level up…). Stored per device — sound is a device preference, not an
@@ -27,9 +26,6 @@ export function SfxRow() {
 
   return (
     <div className="flex items-center gap-3">
-      <span className="flex-none w-9 h-9 rounded-[12px] bg-warm border border-line flex items-center justify-center">
-        <Glyph name="bell" className="w-[18px] h-[18px]" />
-      </span>
       <span className="flex-1 min-w-0">
         <b className="block text-[14px] font-semibold">{t("sfxTitle")}</b>
         <span className="block text-[12.5px] text-muted leading-snug">{t("sfxDesc")}</span>

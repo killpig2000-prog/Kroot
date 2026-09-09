@@ -15,7 +15,6 @@ import SignOutRow from "@/components/settings/SignOutRow";
 import { SettingsCard, SettingsLinkRow, SettingsRow } from "@/components/settings/SettingsCard";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { APP_VERSION } from "@/lib/version";
-import Glyph from "@/components/dashboard/Glyph";
 
 // Settings — one page for everything that used to be scattered across three
 // places: the fold-open block at the bottom of My room (language, reminders,
@@ -83,7 +82,6 @@ export default async function SettingsPage({ params }: { params: Promise<{ local
 
               {user.email && (
                 <SettingsLinkRow
-                  icon={<Glyph name="key" className="w-[18px] h-[18px]" />}
                   title={t("changePassword")}
                   desc={t("changePasswordDesc")}
                   href="/auth/update-password"
@@ -96,7 +94,6 @@ export default async function SettingsPage({ params }: { params: Promise<{ local
 
             <SettingsCard title={t("groupLearning")}>
               <SettingsRow
-                icon={<Glyph name="globe" className="w-[18px] h-[18px]" />}
                 title={t("language")}
                 desc={t("languageDesc")}
                 wrap
@@ -110,7 +107,6 @@ export default async function SettingsPage({ params }: { params: Promise<{ local
                 }
               />
               <SettingsLinkRow
-                icon={<Glyph name="cap" className="w-[18px] h-[18px]" />}
                 title={t("levelTitle")}
                 desc={t("levelDesc", { level })}
                 href="/profile"
@@ -135,14 +131,12 @@ export default async function SettingsPage({ params }: { params: Promise<{ local
 
             <SettingsCard title={t("groupAbout")}>
               <SettingsLinkRow
-                icon={<Glyph name="doc" className="w-[18px] h-[18px]" />}
                 title={t("privacy")}
                 desc={t("privacyDesc")}
                 href="/privacy"
               />
               <FeedbackRow />
               <SettingsRow
-                icon={<Glyph name="sprout" className="w-[18px] h-[18px]" />}
                 title={t("version")}
                 trailing={
                   <span className="flex-none text-[12.5px] font-semibold text-muted tabular-nums">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState, useSyncExternalStore, type ReactNode } from "react";
+import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 import { track } from "@/lib/analytics";
@@ -12,7 +12,6 @@ import {
   subscribeToPush,
   unsubscribeFromPush,
 } from "@/lib/push-client";
-import Glyph from "@/components/dashboard/Glyph";
 
 // There used to be a "send it around" picker here with four local-hour presets
 // (Morning/Midday/Evening/Late) written into profiles.reminder_hour. The cron
@@ -121,7 +120,6 @@ export default function ReminderSettings({ userId, initialPush, initialEmail, ha
 
       <div className="grid grid-cols-1 gap-3">
         <Row
-          icon={<Glyph name="phone" className="w-[18px] h-[18px]" />}
           title={t("pushTitle")}
           desc={
             support === "ios-install"
@@ -136,7 +134,6 @@ export default function ReminderSettings({ userId, initialPush, initialEmail, ha
           onToggle={togglePush}
         />
         <Row
-          icon={<Glyph name="mail" className="w-[18px] h-[18px]" />}
           title={t("emailTitle")}
           desc={hasEmail ? t("emailDesc") : t("emailNone")}
           on={email}
@@ -152,7 +149,6 @@ export default function ReminderSettings({ userId, initialPush, initialEmail, ha
 }
 
 function Row({
-  icon,
   title,
   desc,
   on,
@@ -160,7 +156,6 @@ function Row({
   busy,
   onToggle,
 }: {
-  icon: ReactNode;
   title: string;
   desc: string;
   on: boolean;
@@ -170,9 +165,6 @@ function Row({
 }) {
   return (
     <div className="flex items-center gap-3">
-      <span className="flex-none w-9 h-9 rounded-[12px] bg-warm border border-line flex items-center justify-center text-base">
-        {icon}
-      </span>
       <span className="flex-1 min-w-0">
         <b className="block text-[14px] font-semibold">{title}</b>
         <span className="block text-[12.5px] text-muted leading-snug">{desc}</span>

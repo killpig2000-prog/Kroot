@@ -4,7 +4,6 @@ import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 import { SettingsButtonRow } from "@/components/settings/SettingsCard";
-import Glyph from "@/components/dashboard/Glyph";
 
 // Same two-step sign-out the sidebar menu used: clear the browser's own copy
 // of the session, then let the server expire the auth cookies — the browser
@@ -24,7 +23,6 @@ export default function SignOutRow() {
 
   return (
     <SettingsButtonRow
-      icon={<Glyph name="door" className="w-[18px] h-[18px]" />}
       title={leaving ? t("signingOut") : t("signOut")}
       onClick={() => void signOut()}
       disabled={leaving}
