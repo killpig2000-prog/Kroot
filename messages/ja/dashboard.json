@@ -5,6 +5,8 @@
   "quest": {
     "title": "今日のクエスト",
     "done": "完了 ✓",
+    "thirsty": "のどが渇いた",
+    "watered": "水をあげた",
     "go": "始める →",
     "start": "開始 ▸",
     "descriptions": {

@@ -1,31 +1,23 @@
 "use client";
 
+import { useId } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { SKILL_HREF } from "@/components/dashboard/QuestButton";
-import ModuleIcon from "@/components/dashboard/ModuleIcon";
 import { playTap } from "@/lib/sfx";
 
-// Which door's icon stands for a quest skill.
-const SKILL_ICON: Record<string, string> = {
-  hangul: "/hangul",
-  vocabulary: "/vocabulary",
-  writing: "/writing",
-  reading: "/reading",
-  listening: "/listening",
-  pronunciation: "/speaking",
-};
-
-// Today's quest on the phone: the app's own primary button, made wide. Same
-// fill, corners and 3px press the session "Next" buttons use
-// (Button.tsx's success tone: 2px edge, 2px drop), so the one big thing on the
-// home page is the same thing you press everywhere else — one row with the
-// skill's drawn icon, two lines, and "Start ▸".
+// Today's quest on the phone is the watering can. Until it's done the
+// button is dry ground — the app's warm sand with a cracked-earth pattern
+// over it, an empty drop, "목말라요" — and once it's done it is watered
+// ground: the same green every other primary button in the app is, a
+// filled drop, "물 줬어요", "Done ✓". So green stops being the button's
+// colour and becomes the reward's, and Done is the end of a story rather
+// than the button with the colour taken out (2026-09-10, user call; the
+// green-then-pale version lasted a day).
 //
-// It was a yellow `.btn-sun` pill for one day (option 2a, 2026-09-09); the
-// user asked for corners and the green already in use instead, so the page
-// is one family — green, cream, sky — and the quest says "press me" by size
-// rather than by being the only yellow thing on the screen.
+// The two words are the tree's — Korean first, a small gloss after, the
+// way its speech bubble talks. The cracks are solid line-coloured strokes,
+// no alpha: a translucent texture has no fixed colour (see 8acea24).
 export default function TodaysQuestButton({
   quest,
   href,
@@ -35,8 +27,9 @@ export default function TodaysQuestButton({
   href?: string;
 }) {
   const t = useTranslations("dashboard.quest");
+  const patternId = useId();
   if (!quest) return null;
-  const completed = !!quest.completed_at;
+  const done = !!quest.completed_at;
   const target = href ?? SKILL_HREF[quest.skill_key] ?? "/dashboard";
   const known = ["writing", "vocabulary", "listening", "reading", "pronunciation"].includes(quest.skill_key);
   const detail = known ? t(`descriptions.${quest.skill_key}`) : quest.description;
@@ -49,18 +42,44 @@ export default function TodaysQuestButton({
 
   const body = (
     <>
-      {/* The icon's lid is a solid step between the fill and white — not a
-          translucent white, which came out as a washed #FFECBC on the old
-          yellow and would be a muddy mint here. */}
+      {/* dry ground: a cracked-earth pattern in the line colour, solid */}
+      {!done && (
+        <svg className="pointer-events-none absolute inset-0 h-full w-full" aria-hidden="true">
+          <defs>
+            <pattern id={patternId} width="46" height="40" patternUnits="userSpaceOnUse">
+              <path
+                d="M2 6 L10 9 L14 17 M10 9 L19 4 M14 17 L9 26 M26 2 L30 12 L40 15 M30 12 L24 22 L28 33 M40 15 L45 24 M9 26 L2 31 M24 22 L15 24"
+                fill="none"
+                stroke="var(--c-line)"
+                strokeWidth="1"
+                strokeLinecap="round"
+              />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill={`url(#${patternId})`} />
+        </svg>
+      )}
       <span
-        className={`flex-none grid place-items-center w-9 h-9 rounded-[8px] ${
-          completed ? "bg-success-line text-success-deep" : "bg-[#5D9174] text-white"
+        className={`relative flex-none grid place-items-center w-9 h-9 rounded-[8px] ${
+          done ? "bg-[#5D9174] text-white" : "bg-cream border border-line text-[#7A5A12]"
         }`}
       >
-        <ModuleIcon href={SKILL_ICON[quest.skill_key] ?? "/vocabulary"} size={22} />
+        {/* the drop fills when the ground is watered */}
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" className="flex-none">
+          <path
+            d="M12 4.1c3.2 3.7 5 6.2 5 8.4a5 5 0 0 1-10 0c0-2.2 1.8-4.7 5-8.4z"
+            fill={done ? "currentColor" : "none"}
+            stroke="currentColor"
+            strokeWidth="1.7"
+            strokeLinejoin="round"
+          />
+        </svg>
       </span>
-      <span className="flex-1 min-w-0 leading-[1.15]">
-        <span className="block text-[10.5px] font-extrabold uppercase tracking-[.08em] opacity-75">{t("title")}</span>
+      <span className="relative flex-1 min-w-0 leading-[1.15]">
+        <span className="block text-[10.5px] font-extrabold uppercase tracking-[.08em] opacity-80">
+          {t("title")} · <span className="kr normal-case tracking-normal">{done ? "물 줬어요" : "목말라요"}</span>{" "}
+          <span className="normal-case tracking-normal font-bold opacity-80">{done ? t("watered") : t("thirsty")}</span>
+        </span>
         {/* Two lines at most, and the type steps down with the viewport: the
             writing quest's string ran to three lines at 360px and the button
             stopped reading as one. */}
@@ -71,29 +90,30 @@ export default function TodaysQuestButton({
           {title}
         </span>
       </span>
-      <span className="flex-none font-semibold" style={{ fontSize: "clamp(15px, 4.3vw, 17px)" }}>
-        {completed ? t("done") : t("start")}
+      <span className="relative flex-none font-semibold" style={{ fontSize: "clamp(15px, 4.3vw, 17px)" }}>
+        {done ? t("done") : t("start")}
       </span>
     </>
   );
 
-  const shell = "flex items-center gap-3 pl-4 pr-[14px] py-3 rounded-[12px] mb-3";
+  const shell = "relative overflow-hidden flex items-center gap-3 pl-4 pr-[14px] py-3 rounded-[12px] mb-3";
 
-  // Done keeps the shape and the headline and only inverts — pale green
-  // with deep-green type — so it reads as the same button, finished.
-  if (completed) {
+  // watered: the app's success tone — the reward is the colour every
+  // primary button has, and it is not a link any more
+  if (done) {
     return (
-      <div className={`${shell} bg-success-bg text-success-deep shadow-[0_2px_0_var(--c-success-line)]`}>
+      <div className={`${shell} bg-success text-white shadow-[0_2px_0_var(--c-success-deep)]`}>
         {body}
       </div>
     );
   }
 
+  // dry: warm sand on the line edge, the storybook press
   return (
     <Link
       href={target}
       onClick={playTap}
-      className={`${shell} bg-success text-white shadow-[0_2px_0_var(--c-success-deep)] transition-[transform,box-shadow,background-color] duration-100 ease-out hover:bg-success-deep active:translate-y-[2px] active:shadow-[0_0_0_var(--c-success-deep)]`}
+      className={`${shell} bg-warm-3 text-[#7A5A12] border border-line shadow-[0_2px_0_var(--c-line)] transition-[transform,box-shadow] duration-100 ease-out active:translate-y-[2px] active:shadow-[0_0_0_var(--c-line)]`}
     >
       {body}
     </Link>
