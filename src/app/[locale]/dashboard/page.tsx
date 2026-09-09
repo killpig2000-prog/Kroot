@@ -223,6 +223,7 @@ export default async function DashboardPage() {
             streakDays={streakDays}
             avatarUrl={profile?.avatar_url}
             streakFreezes={extras?.streak_freezes ?? 0}
+            coins={coins}
           />
         </div>
 
@@ -252,7 +253,7 @@ export default async function DashboardPage() {
               card is still one tap to My room, where the full garden (avatar,
               growth stages, keepsakes) lives. */}
           <div className="xl:hidden">
-            <GardenHeader displayName={displayName} streakDays={streakDays} coins={coins} />
+            <GardenHeader displayName={displayName} />
             <GardenCard
               level={level}
               progressPct={pct}

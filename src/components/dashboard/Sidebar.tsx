@@ -75,6 +75,9 @@ type Props = {
   avatarUrl?: string | null;
   /** Streak freezes held (shop consumable, migration 0035). */
   streakFreezes?: number;
+  /** Coin balance. Only the Garden passes it (the one page that reads
+      `profiles.coins`); the phone header shows a second pill when it does. */
+  coins?: number;
 };
 
 function Brand() {
@@ -272,12 +275,24 @@ export default function Sidebar(props: Props) {
       <header className="xl:hidden sticky top-0 z-30 h-[52px] flex items-center gap-2 pl-3 pr-3 bg-warm/90 backdrop-blur-[10px] border-b-[1.5px] border-dashed border-dash">
         <Brand />
         <span className="flex-1" />
+        {/* Streak, and on the Garden the coins too — the two numbers the
+            greeting row used to carry (2026-09-10, user call: they belong in
+            the status bar, not beside the learner's name). Same pill for
+            both so they read as one set. */}
         <span
           aria-label={`${props.streakDays} day streak`}
           className="flex items-center gap-1 h-8 px-2.5 rounded-full border border-[#ECD98A] bg-[#FEF9C3] text-[#5C4A0E] text-[12.5px] font-bold tabular-nums"
         >
           <Glyph name="flame" className="w-[14px] h-[14px]" /> {props.streakDays}
         </span>
+        {props.coins !== undefined && (
+          <span
+            aria-label={`${props.coins} coins`}
+            className="flex items-center gap-1 h-8 px-2.5 rounded-full border border-[#ECD98A] bg-[#FEF9C3] text-[#5C4A0E] text-[12.5px] font-bold tabular-nums"
+          >
+            <Glyph name="coin" className="w-[14px] h-[14px]" /> {props.coins}
+          </span>
+        )}
         <AccountMenu displayName={props.displayName} email={props.email} avatarUrl={props.avatarUrl} compact />
       </header>
     </>
