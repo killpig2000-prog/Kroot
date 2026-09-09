@@ -30,10 +30,10 @@
   },
   "reminders": {
     "title": "Daily reminder",
-    "scheduleKnown": "Once a day, around {time} — only if you haven't studied yet",
-    "scheduleUnknown": "Once a day — only if you haven't studied yet",
+    "scheduleKnown": "Around {time}, only on days you haven't studied.",
+    "scheduleUnknown": "Once a day, only on days you haven't studied.",
     "pushTitle": "Push notification",
-    "pushDesc": "Works on this device even when the tab is closed.",
+    "pushDesc": "Works even when the tab is closed.",
     "pushIos": "On iPhone, add Kroot to your Home Screen first (Share → Add to Home Screen), then turn this on.",
     "pushUnsupported": "Not supported in this browser — try Chrome, Edge, or Firefox.",
     "emailTitle": "Email",
@@ -88,7 +88,7 @@
   "sound": {
     "title": "Sound",
     "sfxTitle": "Sound effects",
-    "sfxDesc": "Chimes for right answers, watering, coins and level-ups. The Korean voice always plays."
+    "sfxDesc": "Chimes for answers, watering and level-ups. The Korean voice always plays."
   },
   "learn": {
     "heading": "Heading to {level}",

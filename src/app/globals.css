@@ -3,6 +3,10 @@
 :root {
   --sky: #FFF9EC;
   --cream: #FFFDF6;
+  /* The Settings list is one sheet of white on the warm ground — plain
+     white in light mode so it reads as paper, the dark cream in dark mode
+     so it doesn't glow. */
+  --sheet: #FFFFFF;
   --mint: #DFF3E4;
   --leaf: #6BBF8A;
   --deep: #3E7C59;
@@ -106,6 +110,7 @@
 html[data-mode="dark"] {
   --sky: #12201A;
   --cream: #16241D;
+  --sheet: #16241D;
   --mint: #1B3327;
   --leaf: #7FD9A0;
   --deep: #9FE8BE;
@@ -219,6 +224,7 @@ html[data-mode="dark"] {
 @theme inline {
   --color-sky: var(--sky);
   --color-cream: var(--cream);
+  --color-sheet: var(--sheet);
   --color-mint: var(--mint);
   --color-leaf: var(--leaf);
   --color-deep: var(--deep);

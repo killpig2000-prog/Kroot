@@ -33,7 +33,7 @@
     "scheduleKnown": "1日1回、{time}ごろ — その日まだ学習していない場合だけ",
     "scheduleUnknown": "1日1回 — その日まだ学習していない場合だけ",
     "pushTitle": "プッシュ通知",
-    "pushDesc": "タブを閉じていても、この端末に届きます。",
+    "pushDesc": "タブを閉じていても届きます。",
     "pushIos": "iPhoneではまずKrootをホーム画面に追加し（共有 → ホーム画面に追加）、そのあとオンにしてください。",
     "pushUnsupported": "このブラウザでは使えません — Chrome、Edge、Firefox をお試しください。",
     "emailTitle": "メール",
@@ -88,7 +88,7 @@
   "sound": {
     "title": "サウンド",
     "sfxTitle": "効果音",
-    "sfxDesc": "正解・水やり・コイン・レベルアップの音。韓国語の音声は常に再生されます。"
+    "sfxDesc": "正解・水やり・レベルアップの効果音。韓国語の音声は常に再生されます。"
   },
   "learn": {
     "heading": "{level} に向かって",

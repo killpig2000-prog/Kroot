@@ -1,157 +1,74 @@
 import { getTranslations } from "next-intl/server";
-import { redirect } from "@/i18n/navigation";
-import BottomNav from "@/components/dashboard/BottomNav";
-import Sidebar, { LanguageSwitcher } from "@/components/dashboard/Sidebar";
-import FeedbackWidget from "@/components/dashboard/FeedbackWidget";
-import AvatarUploader from "@/components/profile/AvatarUploader";
-import NameEditor from "@/components/profile/NameEditor";
-import ReminderSettings from "@/components/profile/ReminderSettings";
-import ReviewCapacityButton from "@/components/profile/ReviewCapacityButton";
-import { SfxRow } from "@/components/profile/SoundSettings";
-import AppearanceSettings from "@/components/settings/AppearanceSettings";
-import DeleteAccountRow from "@/components/settings/DeleteAccountRow";
-import FeedbackRow from "@/components/settings/FeedbackRow";
+import { Link } from "@/i18n/navigation";
+import { LANGUAGES } from "@/i18n/locale";
+import DisplaySummary from "@/components/settings/DisplaySummary";
+import SettingsShell from "@/components/settings/SettingsShell";
 import SignOutRow from "@/components/settings/SignOutRow";
-import { SettingsCard, SettingsLinkRow, SettingsRow } from "@/components/settings/SettingsCard";
-import { createClient, getClaimsUser } from "@/lib/supabase/server";
+import { Chevron, LinkRow, Sheet } from "@/components/settings/SettingsList";
+import { dailyReviewCap } from "@/lib/srs";
 import { APP_VERSION } from "@/lib/version";
+import { loadSettings } from "./_data";
 
-// Settings — one page for everything that used to be scattered across three
-// places: the fold-open block at the bottom of My room (language, reminders,
-// sound), the sidebar account menu (dark mode, seasonal theme, log out) and
-// the name/avatar editors buried inside the tree card.
+// Settings, first screen (2026-09-10 restructure, user call): one white
+// sheet, six rows. Who you are, then the four groups — each with a one-line
+// summary of what it currently holds, so "is my reminder on?" is answered
+// here — then Sign out. The version is a caption underneath, not a row.
 //
-// Order is by how often a learner comes for it, not by how the code is
-// organised: account first, then what they study, then the two sets of
-// switches, then the things you read once.
+// Everything a row leads to is a screen of its own under /settings/…, on
+// the same sheet, with "‹ Settings" above its title.
 
 export default async function SettingsPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const t = await getTranslations("settings");
-  const supabase = await createClient();
-  const user = await getClaimsUser(supabase);
-  if (!user) redirect("/onboarding");
+  const tr = await getTranslations("profile.reminders");
+  const { shell, level, capacityBonus, reminderPush, reminderEmail } = await loadSettings();
 
-  const [{ data: profile }, extrasRes] = await Promise.all([
-    supabase
-      .from("profiles")
-      .select("display_name, current_level, streak_days, avatar_url, review_capacity_bonus")
-      .eq("id", user.id)
-      .single(),
-    supabase
-      .from("profiles")
-      .select("reminder_push, reminder_email")
-      .eq("id", user.id)
-      .maybeSingle(),
-  ]);
-  const extras = extrasRes.error ? null : extrasRes.data;
-
-  const displayName = profile?.display_name ?? "there";
-  const streakDays = profile?.streak_days ?? 0;
-  const level = profile?.current_level ?? "A1";
+  const language = LANGUAGES.find((l) => l.code === locale)?.label ?? LANGUAGES[0].label;
+  const reminders =
+    reminderPush && reminderEmail
+      ? t("reminderBoth")
+      : reminderPush
+        ? t("reminderPush")
+        : reminderEmail
+          ? t("reminderEmail")
+          : t("reminderOff");
 
   return (
-    <div className="min-h-screen bg-warm text-charcoal">
-      <div className="grid grid-cols-1 xl:grid-cols-[clamp(216px,18%,280px)_minmax(0,1fr)] w-full min-h-screen content-start xl:content-stretch">
-        <Sidebar
-          displayName={displayName}
-          email={user.email ?? ""}
-          streakDays={streakDays}
-          avatarUrl={profile?.avatar_url}
+    <SettingsShell user={shell} title={t("title")}>
+      <Sheet>
+        {/* Who these settings belong to. Tapping goes to the Account screen. */}
+        <Link
+          href="/settings/account"
+          className="group flex items-center gap-3.5 min-h-[78px] px-[18px] py-3.5 transition-colors hover:bg-warm-4 active:bg-warm-3"
+        >
+          <span className="flex-none w-12 h-12 rounded-full overflow-hidden bg-success-bg border border-line flex items-center justify-center text-[22px]">
+            {shell.avatarUrl ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={shell.avatarUrl} alt="" className="w-full h-full object-cover" />
+            ) : (
+              "🦊"
+            )}
+          </span>
+          <span className="flex-1 min-w-0">
+            <b className="block text-[16px] font-bold text-charcoal leading-snug truncate">{shell.displayName}</b>
+            <span className="block text-[12.5px] text-muted truncate">{shell.email || t("noEmail")}</span>
+          </span>
+          <Chevron />
+        </Link>
+
+        <LinkRow
+          tall
+          title={t("groupLearning")}
+          desc={t("learningSummary", { language, count: dailyReviewCap(capacityBonus), level })}
+          href="/settings/learning"
         />
+        <LinkRow tall title={tr("title")} desc={reminders} href="/settings/reminders" />
+        <LinkRow tall title={t("groupSound")} desc={<DisplaySummary />} href="/settings/display" />
+        <LinkRow tall title={t("groupAbout")} desc={`${t("privacy")} · ${t("feedback")}`} href="/settings/about" />
+        <SignOutRow />
+      </Sheet>
 
-        <main className="min-w-0 px-[clamp(18px,3vw,36px)] pt-[24px] pb-[100px] xl:pb-[60px]">
-          <div className="max-w-[560px] flex flex-col gap-[12px]">
-            <header>
-              <h1 className="text-[clamp(22px,5vw,28px)] font-bold leading-tight">{t("title")}</h1>
-              <p className="text-[13px] text-muted mt-1">{t("subtitle")}</p>
-            </header>
-
-            <SettingsCard title={t("groupAccount")}>
-              <div className="flex items-center gap-3">
-                <AvatarUploader userId={user.id} avatarUrl={profile?.avatar_url ?? null} />
-                <span className="flex-1 min-w-0">
-                  <b className="block text-[14px] font-semibold">
-                    <NameEditor userId={user.id} name={displayName} />
-                  </b>
-                  <small className="block text-[12.5px] text-muted truncate">
-                    {user.email ?? t("noEmail")}
-                  </small>
-                </span>
-              </div>
-
-              {user.email && (
-                <SettingsLinkRow
-                  title={t("changePassword")}
-                  desc={t("changePasswordDesc")}
-                  href="/auth/update-password"
-                />
-              )}
-
-              <SignOutRow />
-              <DeleteAccountRow streakDays={streakDays} />
-            </SettingsCard>
-
-            <SettingsCard title={t("groupLearning")}>
-              <SettingsRow
-                title={t("language")}
-                desc={t("languageDesc")}
-                wrap
-                trailing={
-                  // Wide enough for "Tiếng Việt" and "日本語" alike; on a 360px
-                  // phone `wrap` drops it under the label rather than shaving
-                  // the label down to two words a line.
-                  <span className="w-[148px] ml-auto">
-                    <LanguageSwitcher pathname="/settings" locale={locale} variant="row" />
-                  </span>
-                }
-              />
-              <SettingsLinkRow
-                title={t("levelTitle")}
-                desc={t("levelDesc", { level })}
-                href="/profile"
-              />
-              {/* Free daily-cap picker. It had been left off every screen when
-                  the account page was trimmed, so there was no way to change
-                  how many words come back a day. */}
-              <ReviewCapacityButton capacityBonus={profile?.review_capacity_bonus ?? 0} />
-            </SettingsCard>
-
-            <ReminderSettings
-              userId={user.id}
-              initialPush={extras?.reminder_push ?? false}
-              initialEmail={extras?.reminder_email ?? false}
-              hasEmail={!!user.email}
-            />
-
-            <SettingsCard title={t("groupSound")} id="sound">
-              <SfxRow />
-              <AppearanceSettings />
-            </SettingsCard>
-
-            <SettingsCard title={t("groupAbout")}>
-              <SettingsLinkRow
-                title={t("privacy")}
-                desc={t("privacyDesc")}
-                href="/privacy"
-              />
-              <FeedbackRow />
-              <SettingsRow
-                title={t("version")}
-                trailing={
-                  <span className="flex-none text-[12.5px] font-semibold text-muted tabular-nums">
-                    {APP_VERSION}
-                  </span>
-                }
-              />
-            </SettingsCard>
-          </div>
-        </main>
-      </div>
-
-      {/* The feedback row above opens this. */}
-      <FeedbackWidget />
-      <BottomNav />
-    </div>
+      <p className="text-center text-[12px] text-faint pt-2">{t("versionLine", { version: APP_VERSION })}</p>
+    </SettingsShell>
   );
 }

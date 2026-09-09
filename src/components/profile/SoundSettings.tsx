@@ -3,6 +3,7 @@
 import { useSyncExternalStore } from "react";
 import { useTranslations } from "next-intl";
 import { playCorrect, setSfxEnabled, sfxEnabled, subscribeSfx } from "@/lib/sfx";
+import { Row, Switch } from "@/components/settings/SettingsList";
 
 // One switch for the app's feedback chimes (right, wrong, water, coins,
 // level up…). Stored per device — sound is a device preference, not an
@@ -25,26 +26,11 @@ export function SfxRow() {
   }
 
   return (
-    <div className="flex items-center gap-3">
-      <span className="flex-1 min-w-0">
-        <b className="block text-[14px] font-semibold">{t("sfxTitle")}</b>
-        <span className="block text-[12.5px] text-muted leading-snug">{t("sfxDesc")}</span>
-      </span>
-      <button
-        type="button"
-        role="switch"
-        aria-checked={on}
-        aria-label={t("sfxTitle")}
-        onClick={toggle}
-        className={`relative flex-none w-11 h-6 rounded-full transition-colors ${on ? "bg-success" : "bg-line"}`}
-      >
-        <span
-          className={`absolute top-0.5 w-5 h-5 rounded-full bg-white shadow transition-all ${
-            on ? "left-[22px]" : "left-0.5"
-          }`}
-        />
-      </button>
-    </div>
+    <Row
+      title={t("sfxTitle")}
+      desc={t("sfxDesc")}
+      trailing={<Switch on={on} onToggle={toggle} label={t("sfxTitle")} />}
+    />
   );
 }
 

@@ -33,7 +33,7 @@
     "scheduleKnown": "Mỗi ngày một lần, khoảng {time} — chỉ khi bạn chưa học hôm đó",
     "scheduleUnknown": "Mỗi ngày một lần — chỉ khi bạn chưa học hôm đó",
     "pushTitle": "Thông báo đẩy",
-    "pushDesc": "Vẫn đến được thiết bị này ngay cả khi bạn đã đóng tab.",
+    "pushDesc": "Hoạt động cả khi đã đóng tab.",
     "pushIos": "Trên iPhone, hãy thêm Kroot vào Màn hình chính trước (Chia sẻ → Thêm vào MH chính), rồi mới bật mục này.",
     "pushUnsupported": "Trình duyệt này không hỗ trợ — hãy thử Chrome, Edge hoặc Firefox.",
     "emailTitle": "Email",
@@ -88,7 +88,7 @@
   "sound": {
     "title": "Âm thanh",
     "sfxTitle": "Hiệu ứng âm thanh",
-    "sfxDesc": "Âm báo khi trả lời đúng, tưới cây, nhận xu và lên cấp. Giọng tiếng Hàn luôn phát."
+    "sfxDesc": "Âm báo khi trả lời, tưới cây và lên cấp. Giọng tiếng Hàn luôn phát."
   },
   "learn": {
     "heading": "Hướng tới {level}",

@@ -12,6 +12,7 @@ import {
   subscribeToPush,
   unsubscribeFromPush,
 } from "@/lib/push-client";
+import { Row, Sheet, Switch } from "@/components/settings/SettingsList";
 
 // There used to be a "send it around" picker here with four local-hour presets
 // (Morning/Midday/Evening/Late) written into profiles.reminder_hour. The cron
@@ -40,7 +41,9 @@ type Props = {
   hasEmail: boolean;
 };
 
-// Reminders card on /profile: push toggle (Web Push) and email toggle (Brevo).
+// The Daily reminder screen in Settings: push toggle (Web Push) and email
+// toggle (Brevo), on the shared white sheet. The screen draws the title; this
+// draws the schedule line and the two rows.
 export default function ReminderSettings({ userId, initialPush, initialEmail, hasEmail }: Props) {
   const t = useTranslations("profile.reminders");
   const locale = useLocale();
@@ -105,20 +108,17 @@ export default function ReminderSettings({ userId, initialPush, initialEmail, ha
   const pushDisabled = busy !== null || support === "none" || support === "ios-install" || !keyConfigured;
 
   return (
-    <div id="reminders" className="border border-line rounded-[12px] px-[24px] py-5">
-      <div className="flex items-baseline justify-between gap-3 mb-4 flex-wrap">
-        <b className="font-semibold text-[15px]">{t("title")}</b>
-        <small className="text-[12.5px] text-faint font-medium">
-          {sendHour === null
-            ? t("scheduleUnknown")
-            : t("scheduleKnown", {
-                // client-only branch, so a locale-formatted hour can't desync hydration
-                time: new Date(2000, 0, 1, sendHour).toLocaleTimeString(locale, { hour: "numeric" }),
-              })}
-        </small>
-      </div>
+    <div id="reminders" className="flex flex-col gap-2">
+      <p className="text-[12.5px] text-muted -mt-1 mb-1">
+        {sendHour === null
+          ? t("scheduleUnknown")
+          : t("scheduleKnown", {
+              // client-only branch, so a locale-formatted hour can't desync hydration
+              time: new Date(2000, 0, 1, sendHour).toLocaleTimeString(locale, { hour: "numeric" }),
+            })}
+      </p>
 
-      <div className="grid grid-cols-1 gap-3">
+      <Sheet>
         <Row
           title={t("pushTitle")}
           desc={
@@ -128,64 +128,20 @@ export default function ReminderSettings({ userId, initialPush, initialEmail, ha
                 ? t("pushUnsupported")
                 : t("pushDesc")
           }
-          on={push}
-          disabled={pushDisabled}
-          busy={busy === "push"}
-          onToggle={togglePush}
+          trailing={
+            <Switch on={push} onToggle={togglePush} label={t("pushTitle")} disabled={pushDisabled || busy === "push"} />
+          }
         />
         <Row
           title={t("emailTitle")}
-          desc={hasEmail ? t("emailDesc") : t("emailNone")}
-          on={email}
-          disabled={busy !== null || !hasEmail}
-          busy={busy === "email"}
-          onToggle={toggleEmail}
+          desc={hasEmail ? undefined : t("emailNone")}
+          trailing={
+            <Switch on={email} onToggle={toggleEmail} label={t("emailTitle")} disabled={busy !== null || !hasEmail} />
+          }
         />
-      </div>
+      </Sheet>
 
-      {note && <p className="mt-3 text-[12.5px] text-danger">{note}</p>}
-    </div>
-  );
-}
-
-function Row({
-  title,
-  desc,
-  on,
-  disabled,
-  busy,
-  onToggle,
-}: {
-  title: string;
-  desc: string;
-  on: boolean;
-  disabled: boolean;
-  busy: boolean;
-  onToggle: () => void;
-}) {
-  return (
-    <div className="flex items-center gap-3">
-      <span className="flex-1 min-w-0">
-        <b className="block text-[14px] font-semibold">{title}</b>
-        <span className="block text-[12.5px] text-muted leading-snug">{desc}</span>
-      </span>
-      <button
-        type="button"
-        role="switch"
-        aria-checked={on}
-        aria-label={title}
-        disabled={disabled}
-        onClick={onToggle}
-        className={`relative flex-none w-11 h-6 rounded-full transition-colors disabled:opacity-50 ${
-          on ? "bg-success" : "bg-line"
-        }`}
-      >
-        <span
-          className={`absolute top-0.5 w-5 h-5 rounded-full bg-white shadow transition-all ${
-            on ? "left-[22px]" : "left-0.5"
-          } ${busy ? "animate-pulse" : ""}`}
-        />
-      </button>
+      {note && <p className="text-[12.5px] text-danger px-1">{note}</p>}
     </div>
   );
 }

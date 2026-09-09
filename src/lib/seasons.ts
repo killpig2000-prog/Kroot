@@ -21,6 +21,18 @@ export function seasonForDate(date: Date): SeasonKey {
   return "winter";
 }
 
+/** The last day of the season `date` falls in — the Settings row says
+ *  "Autumn Maple, until Nov 30" rather than describing the colours. */
+export function seasonEndsOn(date: Date): Date {
+  const m = date.getMonth() + 1;
+  const y = date.getFullYear();
+  // Last day of the season's final month (month index is 0-based, day 0 = previous month's last day).
+  if (m >= 3 && m <= 5) return new Date(y, 5, 0);
+  if (m >= 6 && m <= 8) return new Date(y, 8, 0);
+  if (m >= 9 && m <= 11) return new Date(y, 11, 0);
+  return new Date(m === 12 ? y + 1 : y, 2, 0);
+}
+
 export function applySeasonToDocument(enabled: boolean) {
   if (enabled) {
     document.documentElement.setAttribute("data-season", seasonForDate(new Date()));

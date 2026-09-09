@@ -2,13 +2,17 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { SettingsButtonRow } from "@/components/settings/SettingsCard";
+import { ButtonRow, Sheet } from "@/components/settings/SettingsList";
 
-// Deleting an account is the one control on this page that can't be undone,
+// Deleting an account is the one control in Settings that can't be undone,
 // so it asks twice: once to open the panel, and once by making the learner
 // type the word. The confirmation word is translated, but the string the
 // server checks is always "DELETE" — a locale mismatch must never be the
 // thing standing between someone and their own data.
+//
+// It lives at the bottom of the Account screen in a sheet of its own, a gap
+// away from anything else — nothing sits beside it to be tapped by mistake,
+// and the first Settings screen doesn't show it at all.
 export default function DeleteAccountRow({ streakDays }: { streakDays: number }) {
   const t = useTranslations("settings");
   const [open, setOpen] = useState(false);
@@ -44,8 +48,8 @@ export default function DeleteAccountRow({ streakDays }: { streakDays: number })
   }
 
   return (
-    <div className="border-t border-dashed border-line pt-3.5">
-      <SettingsButtonRow
+    <Sheet className="mt-[10px]">
+      <ButtonRow
         title={t("deleteAccount")}
         desc={t("deleteDesc")}
         onClick={() => setOpen((o) => !o)}
@@ -54,7 +58,7 @@ export default function DeleteAccountRow({ streakDays }: { streakDays: number })
       />
 
       {open && (
-        <div className="mt-3 rounded-[12px] border border-danger/40 bg-danger-bg p-4">
+        <div className="mx-[18px] mb-4 rounded-[12px] border border-danger/40 bg-danger-bg p-4">
           <b className="block text-[14px] font-bold text-danger">{t("deleteConfirmTitle")}</b>
           <p className="mt-1 text-[12.5px] text-charcoal leading-snug">
             {t("deleteConfirmBody", { streak: streakDays })}
@@ -97,6 +101,6 @@ export default function DeleteAccountRow({ streakDays }: { streakDays: number })
           </div>
         </div>
       )}
-    </div>
+    </Sheet>
   );
 }

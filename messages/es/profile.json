@@ -33,7 +33,7 @@
     "scheduleKnown": "Una vez al día, sobre las {time} — solo si aún no has estudiado",
     "scheduleUnknown": "Una vez al día — solo si aún no has estudiado",
     "pushTitle": "Notificación push",
-    "pushDesc": "Funciona en este dispositivo aunque la pestaña esté cerrada.",
+    "pushDesc": "Funciona aunque la pestaña esté cerrada.",
     "pushIos": "En el iPhone, añade Kroot a la pantalla de inicio (Compartir → Añadir a pantalla de inicio) y luego actívalo.",
     "pushUnsupported": "No es compatible con este navegador — prueba con Chrome, Edge o Firefox.",
     "emailTitle": "Correo",
@@ -88,7 +88,7 @@
   "sound": {
     "title": "Sonido",
     "sfxTitle": "Efectos de sonido",
-    "sfxDesc": "Tonos al acertar, regar, ganar monedas y subir de nivel. La voz coreana siempre suena."
+    "sfxDesc": "Sonidos al responder, regar y subir de nivel. La voz coreana siempre suena."
   },
   "learn": {
     "heading": "Rumbo a {level}",

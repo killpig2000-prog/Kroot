@@ -33,7 +33,7 @@
     "scheduleKnown": "每天一次，约 {time} — 仅在你当天还没学习时发送",
     "scheduleUnknown": "每天一次 — 仅在你当天还没学习时发送",
     "pushTitle": "推送通知",
-    "pushDesc": "即使标签页已关闭，也能送达这台设备。",
+    "pushDesc": "关闭标签页也能收到。",
     "pushIos": "在 iPhone 上请先把 Kroot 添加到主屏幕（分享 → 添加到主屏幕），然后再开启。",
     "pushUnsupported": "此浏览器不支持 — 请试试 Chrome、Edge 或 Firefox。",
     "emailTitle": "邮件",
@@ -88,7 +88,7 @@
   "sound": {
     "title": "声音",
     "sfxTitle": "音效",
-    "sfxDesc": "答对、浇水、金币和升级的提示音。韩语语音始终播放。"
+    "sfxDesc": "答题、浇水和升级的提示音。韩语语音始终播放。"
   },
   "learn": {
     "heading": "迈向 {level}",
