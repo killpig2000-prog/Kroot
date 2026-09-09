@@ -18,7 +18,7 @@ const SKILL_ICON: Record<string, string> = {
 
 // Today's quest on the phone: the app's own primary button, made wide. Same
 // fill, corners and 3px press the session "Next" buttons use
-// (WritingBoards / WritePhase / WritingSession), so the one big thing on the
+// (Button.tsx's success tone: 2px edge, 2px drop), so the one big thing on the
 // home page is the same thing you press everywhere else — one row with the
 // skill's drawn icon, two lines, and "Start ▸".
 //
@@ -83,7 +83,7 @@ export default function TodaysQuestButton({
   // with deep-green type — so it reads as the same button, finished.
   if (completed) {
     return (
-      <div className={`${shell} bg-success-bg text-success-deep shadow-[0_3px_0_var(--c-success-line)]`}>
+      <div className={`${shell} bg-success-bg text-success-deep shadow-[0_2px_0_var(--c-success-line)]`}>
         {body}
       </div>
     );
@@ -93,7 +93,7 @@ export default function TodaysQuestButton({
     <Link
       href={target}
       onClick={playTap}
-      className={`${shell} bg-success text-white shadow-[0_3px_0_var(--c-success-deep)] transition-all hover:bg-success-deep active:translate-y-px active:shadow-[0_1px_0_var(--c-success-deep)]`}
+      className={`${shell} bg-success text-white shadow-[0_2px_0_var(--c-success-deep)] transition-[transform,box-shadow,background-color] duration-100 ease-out hover:bg-success-deep active:translate-y-[2px] active:shadow-[0_0_0_var(--c-success-deep)]`}
     >
       {body}
     </Link>

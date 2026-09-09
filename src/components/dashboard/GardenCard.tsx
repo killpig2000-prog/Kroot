@@ -53,7 +53,7 @@ export default function GardenCard({
       href="/myroom"
       data-tour="tree"
       aria-label={t("openMyRoom")}
-      className="relative block h-[214px] rounded-[12px] border border-line overflow-hidden mb-3 transition-all hover:-translate-y-0.5 active:translate-y-[1px] active:scale-[.99] hover:border-success"
+      className="relative block h-[214px] rounded-[12px] border border-line overflow-hidden mb-3 shadow-[0_2px_0_var(--c-line)] transition-[transform,box-shadow,border-color] duration-100 ease-out hover:border-success active:translate-y-[2px] active:shadow-[0_0_0_var(--c-line)]"
     >
       <GardenScene hillsHeight="46%" className="absolute inset-0 w-full h-full">
         {/* level + stage name, then the species — the two things the band

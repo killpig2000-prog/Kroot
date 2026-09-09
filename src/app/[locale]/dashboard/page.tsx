@@ -302,15 +302,18 @@ export default async function DashboardPage() {
           </div>
 
           {/* the six doors, below xl: 3 × 2, one drawn icon and one word
-              each. 12px corners like the rest of the app (372 uses) — the
-              22px this grid shipped with was the outlier. */}
+              each. Line-tone buttons in Button.tsx's sense — the 2px edge
+              they sit on and the 2px drop when pressed — because a door is
+              pressed, and a bordered box that doesn't move under the thumb
+              was the one thing on this page still missing the 2026-09-09
+              press feel. 12px corners like the rest of the app (372 uses). */}
           <div className="grid grid-cols-3 gap-[10px] mb-3 xl:hidden">
             {MODULES.map((m) => (
               <Link
                 key={m.href}
                 href={m.href}
                 data-tour={m.tourId}
-                className="group flex flex-col items-center gap-[8px] px-1.5 pt-[14px] pb-[12px] rounded-[12px] border border-line bg-cream text-center transition-all hover:-translate-y-0.5 active:translate-y-[1px] active:scale-[.99] hover:border-success"
+                className="group flex flex-col items-center gap-[8px] px-1.5 pt-[14px] pb-[12px] rounded-[12px] border border-line bg-cream text-center shadow-[0_2px_0_var(--c-line)] transition-[transform,box-shadow,border-color] duration-100 ease-out hover:border-success active:translate-y-[2px] active:shadow-[0_0_0_var(--c-line)]"
               >
                 <span className="text-success-deep transition-transform group-hover:scale-110">
                   <ModuleIcon href={m.href} size={28} />
@@ -348,10 +351,16 @@ export default async function DashboardPage() {
 
           {/* spaced-repetition review — one slim row, only when words are
               due, so a new learner's home has nothing to scroll past */}
+          {/* Below xl the review row and the slang line share one cream list
+              card — two bare hairline rows under a column of cards read as a
+              different page starting halfway down. A list, not a button, so
+              no 2px edge; each row presses on its own. At xl the wrapper is
+              display: contents and the review row is its own card as before. */}
+          <div className="mb-3 rounded-[12px] border border-line bg-cream overflow-hidden divide-y divide-line xl:contents">
           {dueCount > 0 && (
             <Link
               href="/review"
-              className="group flex items-center gap-3 border-0 border-t border-line bg-transparent px-[4px] py-[12px] mb-0 transition-all xl:mb-3 xl:gap-[12px] xl:border xl:rounded-[20px] xl:bg-cream xl:px-[16px] xl:hover:-translate-y-0.5 active:translate-y-[1px] active:scale-[.99] xl:hover:border-success"
+              className="group flex items-center gap-3 px-[14px] py-[13px] transition-all active:bg-warm xl:mb-3 xl:gap-[12px] xl:border xl:border-line xl:rounded-[20px] xl:bg-cream xl:px-[16px] xl:hover:-translate-y-0.5 xl:active:translate-y-[1px] xl:active:scale-[.99] xl:hover:border-success"
             >
               <Glyph name="drop" className="w-[21px] h-[21px] text-success transition-transform group-hover:scale-110" />
               <b className="flex-1 min-w-0 truncate text-[15px] xl:text-[15px] font-bold text-charcoal">{t("review.due", { count: dueCount })}</b>
@@ -367,7 +376,7 @@ export default async function DashboardPage() {
               tokens, not the old pink literals the palette pass retired. */}
           <Link
             href="/slang"
-            className="xl:hidden group flex items-center gap-3 border-0 border-t border-line px-[4px] py-[12px] mb-0 transition-all"
+            className="xl:hidden group flex items-center gap-3 px-[14px] py-[13px] transition-all active:bg-warm"
           >
             <Glyph name="bubble" className="w-[19px] h-[19px] text-success transition-transform group-hover:scale-110" />
             <span className="flex-1 min-w-0 truncate text-[14px]">
@@ -381,6 +390,7 @@ export default async function DashboardPage() {
               {t("slang.short")}
             </span>
           </Link>
+          </div>
 
           {/* Learning progress moved to My account (/profile) 2026-08-30 — the
               Garden answers "what do I do today", the account page "how am I
@@ -389,7 +399,7 @@ export default async function DashboardPage() {
           {/* The year grass (Study garden) moved to My progress 2026-09-07 —
               the phone home is one screen now. Its footer used to park the
               phone-only feedback button; that button sits here instead. */}
-          <div className="flex justify-end pt-1 xl:hidden">
+          <div className="flex justify-end xl:hidden">
             <FeedbackButton />
           </div>
         </main>
