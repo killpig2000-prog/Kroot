@@ -1,9 +1,9 @@
 import { getLocale, getTranslations } from "next-intl/server";
-import LevelTabs from "@/components/ui/LevelTabs";
 import { Link, redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import ChapterPathGroup from "@/components/chapters/ChapterPathGroup";
+import LessonBar from "@/components/ui/LessonBar";
 import { createClient, getClaimsUser, getDashboardProfile } from "@/lib/supabase/server";
 import { getChapterStatuses, getChaptersForLevel } from "@/lib/reading";
 import { getLocalizedTitle } from "@/lib/reading-i18n";
@@ -85,7 +85,6 @@ export default async function ReadingMapPage({
 
   const completedKeys = new Set((progress ?? []).map((p) => p.passage_key));
   const statuses = getChapterStatuses(chapters, completedKeys);
-  const doneCount = statuses.filter((s) => s === "done").length;
 
   // 160 flat chapter rows is an endless scroll — group into one collapsible
   // set per genre (a run of consecutive chapters sharing a genre), with the
@@ -111,39 +110,22 @@ export default async function ReadingMapPage({
           email={user.email ?? ""}
           streakDays={profile?.streak_days ?? 0}
           avatarUrl={profile?.avatar_url}
+          lessonBar
         />
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] xl:pb-[60px]">
 
-          {/* head */}
-          <div className="flex items-center justify-between gap-4 mb-[18px] flex-wrap">
-            <h1 className="font-bold text-[22px] tracking-[-0.02em] flex items-center">
-              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[var(--tint-sky)] text-sky-deep border border-sky-line items-center justify-center kr text-[15px] mr-[9px]">
-                읽
-              </span>
-              {tn("reading")}
-              <span className="ml-2.5 text-[12.5px] font-semibold text-sky-deep bg-[var(--tint-sky)] border border-sky-line rounded-full px-2.5 py-[2px] tracking-normal">
-                {tn("storyGrove")}
-              </span>
-            </h1>
-            <span className="text-[13px] text-muted">
-              {t.rich("map.progress", {
-                level,
-                done: doneCount,
-                total: chapters.length,
-                b: (chunks) => <b className="text-sky-deep">{chunks}</b>,
-              })}
-            </span>
-          </div>
-
-          <LevelTabs
-            className="mb-6"
-            levels={LEVEL_ORDER}
-            current={level}
-            mine={myLevel}
-            unlocked={(lv) => isDifficultyUnlocked(lv, myLevel)}
-            href={(lv) => `/reading?level=${lv}`}
-            accent="bg-sky-deep border-sky-deep text-white"
+          <LessonBar
+            href="/reading"
+            title={tn("reading")}
+            locale={locale}
+            level={{
+              current: level,
+              mine: myLevel,
+              levels: LEVEL_ORDER,
+              unlocked: LEVEL_ORDER.filter((lv) => isDifficultyUnlocked(lv, myLevel)),
+              hrefTemplate: "/reading?level={lv}",
+            }}
           />
 
           {/* continue card: one obvious next step above the chapter groups */}

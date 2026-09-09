@@ -106,5 +106,11 @@
   "coinAvailable": "🪙 Làm lại để nhận xu",
   "scoreForCoin": "Đạt {n}%+ để nhận +{coins} 🪙",
   "coinsCappedToday": "Bạn đã nhận hết xu từ vựng hôm nay — mai có thêm nhé.",
-  "coinsBelowLevel": "Nội dung này dưới trình độ của bạn nên tính là luyện tập — không có xu."
+  "coinsBelowLevel": "Nội dung này dưới trình độ của bạn nên tính là luyện tập — không có xu.",
+  "lessonBar": {
+    "back": "Về khu vườn",
+    "language": "Ngôn ngữ",
+    "level": "Trình độ",
+    "languageNote": "Nghĩa và hướng dẫn sẽ chuyển sang ngôn ngữ này. Tiếng Hàn vẫn giữ nguyên."
+  }
 }

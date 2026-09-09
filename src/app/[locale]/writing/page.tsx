@@ -1,10 +1,10 @@
-import LevelTabs from "@/components/ui/LevelTabs";
 import { Link, redirect } from "@/i18n/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import ChapterPathGroup from "@/components/chapters/ChapterPathGroup";
 import GuidedStep from "@/components/onboarding/GuidedStep";
+import LessonBar from "@/components/ui/LessonBar";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import {
   getChapterStatuses,
@@ -33,9 +33,8 @@ export default async function WritingMapPage({
 
   if (!user) redirect("/onboarding");
 
-  const [t, tn, tu, locale, { data: profile }, { data: progress }, sp, unpaidKeys] = await Promise.all([
+  const [t, tu, locale, { data: profile }, { data: progress }, sp, unpaidKeys] = await Promise.all([
     getTranslations("writing"),
-    getTranslations("nav"),
     getTranslations("ui"),
     getLocale(),
     supabase
@@ -55,7 +54,6 @@ export default async function WritingMapPage({
 
   const completedKeys = new Set((progress ?? []).map((p) => p.prompt_key));
   const statuses = getChapterStatuses(chapters, completedKeys);
-  const doneCount = statuses.filter((s) => s === "done").length;
 
   // 40 chapters is a long scroll — group into one collapsible set per genre
   // (a run of consecutive chapters sharing a genre), with the set containing
@@ -81,57 +79,26 @@ export default async function WritingMapPage({
           email={user.email ?? ""}
           streakDays={profile?.streak_days ?? 0}
           avatarUrl={profile?.avatar_url}
+          lessonBar
         />
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] xl:pb-[60px]">
-          {/* breadcrumb */}
-          <div className="flex gap-2 text-[13px] text-faint mb-[18px]">
-            <Link href="/dashboard" className="hover:text-charcoal transition-colors">
-              {tn("garden")}
-            </Link>
-            <span>/</span>
-            <b className="text-charcoal font-semibold">{t("crumb")}</b>
-          </div>
-
-          {/* head */}
-          <div className="flex items-center justify-between gap-4 mb-[18px] flex-wrap">
-            <h1 className="font-bold text-[22px] tracking-[-0.02em] flex items-center">
-              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[var(--tint-amber)] text-amber border border-amber-line items-center justify-center kr text-[15px] mr-[9px]">
-                쓰
-              </span>
-              {t("crumb")}
-            </h1>
-            <span className="text-[13px] text-muted">{t("map.levelSub", { level })}</span>
-          </div>
-
+          <LessonBar
+            href="/writing"
+            title={t("crumb")}
+            locale={locale}
+            level={{
+              current: level,
+              mine: myLevel,
+              levels: LEVEL_ORDER,
+              unlocked: LEVEL_ORDER.filter((lv) => isDifficultyUnlocked(lv, myLevel)),
+              hrefTemplate: "/writing?level={lv}",
+              tourId: "guided-writing-level",
+            }}
+          />
 
           <GuidedStep step="writing-level" />
           <GuidedStep step="writing-chapter" />
-
-          <LevelTabs
-            className="mb-6"
-            tourId="guided-writing-level"
-            levels={LEVEL_ORDER}
-            current={level}
-            mine={myLevel}
-            unlocked={(lv) => isDifficultyUnlocked(lv, myLevel)}
-            href={(lv) => `/writing?level=${lv}`}
-            accent="bg-amber border-amber text-white"
-          />
-
-          {/* progress */}
-          <div className="max-w-[720px] mb-6">
-            <div className="flex flex-col gap-0.5 sm:flex-row sm:items-center sm:justify-between text-[12.5px] text-muted mb-2">
-              <span>{t("map.progress", { done: doneCount, total: chapters.length })}</span>
-              <span className="text-faint">{t("map.genresNote")}</span>
-            </div>
-            <div className="h-1.5 rounded-full bg-line overflow-hidden">
-              <div
-                className="h-full rounded-full bg-amber transition-all"
-                style={{ width: `${chapters.length ? (doneCount / chapters.length) * 100 : 0}%` }}
-              />
-            </div>
-          </div>
 
           {/* continue card: one obvious next step above the chapter groups */}
           {continueChapter && (

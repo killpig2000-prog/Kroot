@@ -106,5 +106,11 @@
   "coinAvailable": "🪙 再挑戦でコイン",
   "scoreForCoin": "{n}%以上でコイン+{coins}枚",
   "coinsCappedToday": "今日の単語コインはすべて獲得済みです。続きは明日に。",
-  "coinsBelowLevel": "自分のレベルより下の内容なので、練習扱いでコインはつきません。"
+  "coinsBelowLevel": "自分のレベルより下の内容なので、練習扱いでコインはつきません。",
+  "lessonBar": {
+    "back": "庭にもどる",
+    "language": "言語",
+    "level": "レベル",
+    "languageNote": "意味と説明がこの言語になります。韓国語はそのままです。"
+  }
 }

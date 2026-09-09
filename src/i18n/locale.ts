@@ -27,3 +27,14 @@ export function rememberLocale(locale: string) {
   if (typeof document === "undefined") return;
   document.cookie = `${LOCALE_COOKIE}=${locale}; Path=/; Max-Age=31536000; SameSite=Lax`;
 }
+
+// The interface languages a learner can pick, in the order the pickers list
+// them. One list for the sidebar switcher and the lesson bar's pill, so the
+// two can never offer different sets.
+export const LANGUAGES: { code: AppLocale; label: string }[] = [
+  { code: "en", label: "English" },
+  { code: "es", label: "Español" },
+  { code: "ja", label: "日本語" },
+  { code: "zh-Hans", label: "中文" },
+  { code: "vi", label: "Tiếng Việt" },
+];

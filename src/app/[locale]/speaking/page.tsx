@@ -1,4 +1,4 @@
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { Link, redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
@@ -6,6 +6,7 @@ import PronunciationChallenge from "@/components/pronunciation/PronunciationChal
 import PracticeGroups, { type ChapterProgress } from "@/components/pronunciation/PracticeGroups";
 import ChallengeList, { type ChallengeState } from "@/components/pronunciation/ChallengeList";
 import ChallengePlay from "@/components/pronunciation/ChallengePlay";
+import LessonBar from "@/components/ui/LessonBar";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { isAdminEmail } from "@/lib/admin";
 import { isTableMissing } from "@/lib/resume";
@@ -35,7 +36,7 @@ export default async function SpeakingPage({
   if (!user) redirect("/onboarding");
 
   const t = await getTranslations("pronunciation");
-  const tn = await getTranslations("nav");
+  const locale = await getLocale();
 
   const [{ data: profile }, { data: progressRows }, challengeRes, unpaidKeys] = await Promise.all([
     supabase
@@ -110,8 +111,6 @@ export default async function SpeakingPage({
   const onChallengeTab = sp.tab === "challenge" || !!openChallenge;
   const playing = !!openChapter || !!openChallenge;
 
-  const perfectCount = chapters.filter((c) => c.total > 0 && c.perfect === c.total).length;
-  const starsEarned = challengeStates.reduce((n, s) => n + s.stars, 0);
 
   return (
     <div className="min-h-screen bg-warm text-charcoal">
@@ -121,32 +120,11 @@ export default async function SpeakingPage({
           email={user.email ?? ""}
           streakDays={profile?.streak_days ?? 0}
           avatarUrl={profile?.avatar_url}
+          lessonBar
         />
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] xl:pb-[60px]">
-          <div className="flex gap-2 text-[13px] text-faint mb-[18px]">
-            <Link href="/dashboard" className="hover:text-charcoal transition-colors">
-              {tn("garden")}
-            </Link>
-            <span>/</span>
-            <b className="text-charcoal font-semibold">{t("title")}</b>
-          </div>
-
-          <div className="flex items-center justify-between gap-4 mb-[18px] flex-wrap">
-            <h1 className="font-bold text-[22px] tracking-[-0.02em] flex items-center">
-              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[var(--tint-teal)] text-teal border border-[var(--tint-teal-line)] items-center justify-center kr text-[15px] mr-[9px]">
-                발
-              </span>
-              {t("title")}
-            </h1>
-            <span className="text-[13px] text-muted tabular-nums">
-              {onChallengeTab
-                ? t("headerStars", { n: starsEarned })
-                : perfectCount > 0
-                  ? t("headerPerfect", { done: chaptersDone.length, total: chapters.length, perfect: perfectCount })
-                  : t("headerPractice", { done: chaptersDone.length, total: chapters.length })}
-            </span>
-          </div>
+          <LessonBar href="/speaking" title={t("title")} locale={locale} />
 
           {!playing && (
             <div className="inline-flex bg-warm-2 border border-line rounded-[12px] p-1 gap-1 mb-6">

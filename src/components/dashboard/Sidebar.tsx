@@ -3,7 +3,7 @@
 import { useState, useTransition } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter, usePathname } from "@/i18n/navigation";
-import { rememberLocale } from "@/i18n/locale";
+import { LANGUAGES, rememberLocale } from "@/i18n/locale";
 import AccountMenu from "@/components/dashboard/AccountMenu";
 import { Link } from "@/i18n/navigation";
 import { MAIN_ITEMS, MODULES, MY_ROOM_ITEMS, type NavColor } from "@/components/dashboard/navItems";
@@ -15,13 +15,7 @@ import Glyph from "@/components/dashboard/Glyph";
 // (i18nKey), which the two-word ones do.
 const navKey = (label: string) => label.toLowerCase();
 
-const LANGUAGES = [
-  { code: "en", label: "English" },
-  { code: "es", label: "Español" },
-  { code: "ja", label: "日本語" },
-  { code: "zh-Hans", label: "中文" },
-  { code: "vi", label: "Tiếng Việt" },
-];
+// LANGUAGES lives in @/i18n/locale — the lesson bar's pill lists the same set.
 // Reachable by URL only (pilot, partial translations) — shown as the current
 // language when you're on it, but not offered in the list.
 const HIDDEN_LANGUAGES: { code: string; label: string }[] = [];
@@ -78,6 +72,10 @@ type Props = {
   /** Coin balance. Only the Garden passes it (the one page that reads
       `profiles.coins`); the phone header shows a second pill when it does. */
   coins?: number;
+  /** A lesson index page renders its own LessonBar in place of the phone
+   *  header (← · name · language · level) — the identity bar stands down
+   *  below xl so the two don't stack. The desktop column is unaffected. */
+  lessonBar?: boolean;
 };
 
 function Brand() {
@@ -272,6 +270,7 @@ export default function Sidebar(props: Props) {
           the sole nav surface down here, no slide-in drawer duplicating it.
           Account settings and the language switcher live in AccountMenu
           (avatar below) and BottomNav's "More" sheet respectively. */}
+      {!props.lessonBar && (
       <header className="xl:hidden sticky top-0 z-30 h-[52px] flex items-center gap-2 pl-3 pr-3 bg-warm/90 backdrop-blur-[10px] border-b-[1.5px] border-dashed border-dash">
         <Brand />
         <span className="flex-1" />
@@ -295,6 +294,7 @@ export default function Sidebar(props: Props) {
         )}
         <AccountMenu displayName={props.displayName} email={props.email} avatarUrl={props.avatarUrl} compact />
       </header>
+      )}
     </>
   );
 }

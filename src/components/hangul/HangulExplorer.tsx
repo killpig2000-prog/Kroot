@@ -280,46 +280,30 @@ const ALL_SPOKEN = [
   ...PRACTICE_WORDS.map((w) => w.kr),
 ];
 
-/** Progress pills + the challenge-run button, above the tabs. */
+/** The challenge-run button, above the tabs.
+ *
+ *  Two progress cards used to sit beside it — "Practiced 0/40" and
+ *  "Stars ★0/120". Every tile in the grid below already wears its own
+ *  dot or stars, so the cards summed up forty markers that were on screen
+ *  anyway, and cost 78px of the first phone screen to do it (2026-09-10). */
 function ProgressHeader({
   practiced,
-  stars,
   canRun,
   onRun,
 }: {
   practiced: number;
-  stars: number;
   canRun: boolean;
   onRun: () => void;
 }) {
   const t = useTranslations("hangul");
-  const total = ALL_JAMO.length;
   return (
-    <div className="flex items-stretch gap-2 sm:gap-2.5 flex-wrap mb-5">
-      <div className="flex-1 min-w-[120px] sm:flex-none sm:min-w-[150px] rounded-[12px] border border-line bg-cream px-3 py-2 flex flex-col gap-1">
-        <span className="text-[10.5px] font-bold text-faint">{t("trace.practiced")}</span>
-        <span className="text-[14px] font-extrabold tabular-nums">
-          {practiced} <span className="text-faint font-semibold text-[11px]">/ {total}</span>
-        </span>
-        <span className="h-[5px] rounded-full bg-line overflow-hidden">
-          <i className="block h-full rounded-full bg-success" style={{ width: `${(practiced / total) * 100}%` }} />
-        </span>
-      </div>
-      <div className="flex-1 min-w-[120px] sm:flex-none sm:min-w-[150px] rounded-[12px] border border-line bg-cream px-3 py-2 flex flex-col gap-1">
-        <span className="text-[10.5px] font-bold text-faint">{t("trace.stars")}</span>
-        <span className="text-[14px] font-extrabold tabular-nums">
-          ★ {stars} <span className="text-faint font-semibold text-[11px]">/ {total * 3}</span>
-        </span>
-        <span className="h-[5px] rounded-full bg-line overflow-hidden">
-          <i className="block h-full rounded-full" style={{ width: `${(stars / (total * 3)) * 100}%`, background: "#E2A93B" }} />
-        </span>
-      </div>
+    <div className="flex mb-5">
       <button
         type="button"
         onClick={onRun}
         disabled={!canRun}
         title={canRun ? undefined : t("trace.challengeNeed", { n: Math.max(0, RUN_MIN - practiced) })}
-        className="w-full sm:w-auto sm:ml-auto rounded-[12px] px-4 py-2.5 text-[13px] font-bold text-white disabled:opacity-40 self-center"
+        className="w-full sm:w-auto rounded-[12px] px-4 py-2.5 text-[13px] font-bold text-white disabled:opacity-40"
         style={{ background: HANGUL_ACCENT }}
       >
         {t("trace.startChallenge")}
@@ -346,7 +330,6 @@ export default function HangulExplorer({ userId }: { userId?: string | null }) {
 
   const practicedChars = useMemo(() => ALL_JAMO.filter((j) => get(j.char).practiced).map((j) => j.char), [get]);
   const practicedCount = practicedChars.length;
-  const starsTotal = useMemo(() => ALL_JAMO.reduce((s, j) => s + get(j.char).bestStars, 0), [get]);
 
   const closeSheet = useCallback(() => { setSelected(null); setSyllableTarget(null); }, []);
   // Only the mobile sheet uses Back-to-close; on desktop the panel just sits there.
@@ -516,7 +499,7 @@ export default function HangulExplorer({ userId }: { userId?: string | null }) {
 
   return (
     <div>
-      <ProgressHeader practiced={practicedCount} stars={starsTotal} canRun={loaded && practicedCount >= RUN_MIN} onRun={startRun} />
+      <ProgressHeader practiced={practicedCount} canRun={loaded && practicedCount >= RUN_MIN} onRun={startRun} />
       {tabs}
 
       <div

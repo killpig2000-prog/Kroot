@@ -1,14 +1,15 @@
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
-import { Link } from "@/i18n/navigation";
 import HangulExplorer from "@/components/hangul/HangulExplorer";
+import LessonBar from "@/components/ui/LessonBar";
 import GuidedStep from "@/components/onboarding/GuidedStep";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 
 export default async function HangulPage() {
   const tn = await getTranslations("nav");
+  const locale = await getLocale();
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
 
@@ -28,29 +29,12 @@ export default async function HangulPage() {
           email={user.email ?? ""}
           streakDays={profile?.streak_days ?? 0}
           avatarUrl={profile?.avatar_url}
+          lessonBar
         />
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] xl:pb-[60px]">
 
-          {/* head */}
-          <div className="flex items-center justify-between gap-4 mb-[18px] flex-wrap">
-            <h1 className="font-bold text-[22px] tracking-[-0.02em] flex items-center">
-              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-success-bg text-success border border-success-line items-center justify-center kr text-[15px] mr-[9px]">
-                ㄱ
-              </span>
-              {tn("hangul")}
-            </h1>
-            {/* Vocabulary moved off the global nav (2026-09-07 My Room
-                restructure) — this is also the guided tour's hangul→vocab
-                hop target, so it has to be reachable from this page itself. */}
-            <Link
-              href="/vocabulary"
-              data-tour="guided-nav-vocabulary"
-              className="text-[13.5px] font-semibold text-success hover:underline"
-            >
-              {tn("vocabulary")} →
-            </Link>
-          </div>
+          <LessonBar href="/hangul" title={tn("hangul")} locale={locale} />
 
           <GuidedStep step="hangul-pick" />
           <GuidedStep step="hangul-stroke" />

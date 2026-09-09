@@ -8,6 +8,7 @@ import { getChaptersForTopic } from "@/lib/vocabulary-words";
 import { WORD_STATUSES, wordStatus } from "@/lib/word-notes";
 import ChapterDays, { type ChapterDay } from "@/components/vocabulary/ChapterDays";
 import GuidedStep from "@/components/onboarding/GuidedStep";
+import LessonBar from "@/components/ui/LessonBar";
 import { LEVEL_ORDER, isCefrLevel, type CefrLevel } from "@/lib/tree";
 import { getLocalizedMeaning } from "@/lib/vocabulary-i18n";
 
@@ -62,7 +63,6 @@ export default async function VocabularyPage({
   const unlockedTiers = unlockedVocabTiers(myLevel);
   const requested = isCefrLevel(sp.level) ? sp.level : myLevel;
   const level = unlockedTiers.has(requested) ? requested : myLevel;
-  const otherLevels = LEVEL_ORDER.filter((lv) => unlockedTiers.has(lv) && lv !== level);
 
   const unitWords = getChaptersForTopic(TOPIC_KEY, level);
   const units = unitWords.map((words, i) => {
@@ -144,39 +144,25 @@ export default async function VocabularyPage({
           email={user.email ?? ""}
           streakDays={profile?.streak_days ?? 0}
           avatarUrl={profile?.avatar_url}
+          lessonBar
         />
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[170px] xl:pb-[60px] max-w-[980px]">
           <GuidedStep step="vocab-chapter" />
           <GuidedStep step="vocab-word" />
 
-          {/* head */}
-          <div className="flex items-end justify-between gap-4 mb-5 flex-wrap">
-            <div>
-              <h1 className="font-bold text-[22px] tracking-[-0.02em] flex items-center">
-                <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[var(--tint-violet)] text-[var(--tint-violet-ink)] border border-[var(--tint-violet-line)] items-center justify-center kr text-[15px] mr-[9px]">
-                  단
-                </span>
-                {tn("vocabulary")} · {level}
-              </h1>
-              <p className="text-[13px] text-muted mt-1 tabular-nums">
-                {chapters.length} chapter{chapters.length === 1 ? "" : "s"} · {totalWords} words
-                {otherLevels.length > 0 && (
-                  <span className="text-faint">
-                    {" · "}
-                    {otherLevels.map((lv, i) => (
-                      <span key={lv}>
-                        {i > 0 && " "}
-                        <Link href={`/vocabulary?level=${lv}`} className="underline hover:text-charcoal">
-                          {lv}
-                        </Link>
-                      </span>
-                    ))}
-                  </span>
-                )}
-              </p>
-            </div>
-          </div>
+          <LessonBar
+            href="/vocabulary"
+            title={tn("vocabulary")}
+            locale={locale}
+            level={{
+              current: level,
+              mine: myLevel,
+              levels: LEVEL_ORDER,
+              unlocked: LEVEL_ORDER.filter((lv) => unlockedTiers.has(lv)),
+              hrefTemplate: "/vocabulary?level={lv}",
+            }}
+          />
 
           {/* ── chapter chip bar ── */}
           <nav

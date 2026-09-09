@@ -1,9 +1,9 @@
 import { getTranslations, getLocale } from "next-intl/server";
-import LevelTabs from "@/components/ui/LevelTabs";
 import { Link, redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import ContinueHero, { type HeroClip } from "@/components/listening/ContinueHero";
+import LessonBar from "@/components/ui/LessonBar";
 import ProgressRing from "@/components/listening/ProgressRing";
 import { createClient, getClaimsUser, getDashboardProfile } from "@/lib/supabase/server";
 import { LEVEL_ORDER, isCefrLevel, type CefrLevel } from "@/lib/tree";
@@ -85,28 +85,22 @@ export default async function ListeningPage({
           email={user.email ?? ""}
           streakDays={profile?.streak_days ?? 0}
           avatarUrl={profile?.avatar_url}
+          lessonBar
         />
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] xl:pb-[60px]">
 
-          {/* head */}
-          <div className="flex items-center justify-between gap-4 mb-[18px] flex-wrap">
-            <h1 className="font-bold text-[22px] tracking-[-0.02em] flex items-center">
-              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[var(--tint-teal)] text-teal border border-[var(--tint-teal-line)] items-center justify-center kr text-[15px] mr-[9px]">
-                듣
-              </span>
-              {t("title")}
-            </h1>
-          </div>
-
-          <LevelTabs
-            className="mb-5"
-            levels={LEVEL_ORDER}
-            current={level}
-            mine={myLevel}
-            unlocked={(lv) => isDifficultyUnlocked(lv, myLevel)}
-            href={(lv) => `/listening?level=${lv}`}
-            accent="bg-teal border-teal text-white"
+          <LessonBar
+            href="/listening"
+            title={t("title")}
+            locale={locale}
+            level={{
+              current: level,
+              mine: myLevel,
+              levels: LEVEL_ORDER,
+              unlocked: LEVEL_ORDER.filter((lv) => isDifficultyUnlocked(lv, myLevel)),
+              hrefTemplate: "/listening?level={lv}",
+            }}
           />
 
           <ContinueHero

@@ -106,5 +106,11 @@
   "coinAvailable": "🪙 重做可得金币",
   "scoreForCoin": "得分{n}%以上可得{coins}金币",
   "coinsCappedToday": "今天的词汇金币已全部获得——明天再来。",
-  "coinsBelowLevel": "这低于你的等级，算作练习——没有金币。"
+  "coinsBelowLevel": "这低于你的等级，算作练习——没有金币。",
+  "lessonBar": {
+    "back": "回到花园",
+    "language": "语言",
+    "level": "等级",
+    "languageNote": "释义和说明会切换成这种语言，韩语保持不变。"
+  }
 }

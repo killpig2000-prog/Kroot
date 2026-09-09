@@ -106,5 +106,11 @@
   "coinAvailable": "🪙 Retry for coin",
   "scoreForCoin": "Score {n}%+ for +{coins} 🪙",
   "coinsCappedToday": "Today's word coins are all earned — more tomorrow.",
-  "coinsBelowLevel": "This is below your level, so it counts as practice — no coins."
+  "coinsBelowLevel": "This is below your level, so it counts as practice — no coins.",
+  "lessonBar": {
+    "back": "Back to the garden",
+    "language": "Language",
+    "level": "Level",
+    "languageNote": "Meanings and instructions switch to this language. Korean stays Korean."
+  }
 }
