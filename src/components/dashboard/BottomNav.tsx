@@ -4,11 +4,17 @@ import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { MAIN_ITEMS } from "@/components/dashboard/navItems";
 import { playTap } from "@/lib/sfx";
+import ModuleIcon from "@/components/dashboard/ModuleIcon";
 
 // Five flat tabs (2026-09-10, see navItems.ts). At 360px a tab is 72px
 // wide, so labels come from shortKey where the full one wouldn't fit, the
 // type drops to 11px, and every label is one clipped line — a tab that
 // wraps would push the bar taller than the 56px tap target it sits in.
+//
+// Icons are drawn (ModuleIcon), not the emoji in navItems: the bar sits
+// right under the Garden's grid of drawn doors, and five system emoji there
+// read as a different app. currentColor also lets a tab's icon go green
+// with its label when it's the active one.
 export default function BottomNav() {
   const pathname = usePathname();
   const tn = useTranslations("nav");
@@ -31,9 +37,7 @@ export default function BottomNav() {
               on ? "text-success-deep font-bold" : "text-faint font-medium hover:text-muted"
             }`}
           >
-            <span className="text-[16px] leading-none" aria-hidden="true">
-              {item.icon}
-            </span>
+            <ModuleIcon href={item.href} size={20} />
             <span className="max-w-full truncate leading-tight">
               {tn(item.shortKey ?? item.i18nKey ?? item.label.toLowerCase())}
             </span>

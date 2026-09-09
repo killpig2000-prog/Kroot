@@ -1,4 +1,5 @@
-// The six Garden doors' icons, drawn instead of typed. Emoji were the one
+// The Garden doors' icons — and, since 2026-09-10, the five nav tabs' —
+// drawn instead of typed. Emoji were the one
 // thing on the phone home we couldn't control: 🃏 renders as a star on some
 // Androids, 🌶️ arrives full-colour next to a flat grey 📰, and none of them
 // share a weight — six icons that never read as one set. These are one
@@ -8,6 +9,11 @@
 // Everywhere, not just the phone: the desktop grid kept emoji for one pass
 // and the user asked for the drawn set there too (839b57c). navItems' `icon`
 // stays for the sidebar's own list and anywhere else that reads it.
+//
+// 2026-09-10: the phone tab bar joined them. Five emoji sat directly under
+// a grid of drawn icons — 🏡 and 🌳 arrive full-colour, ⚙️ is grey, and none
+// of them take the active tab's green — so the bar read as a different app
+// than the page above it. Same stroke, same box, currentColor.
 
 const STROKE = {
   fill: "none",
@@ -71,7 +77,56 @@ const Pronunciation = (
   </>
 );
 
+// A tree on its patch of ground — the Garden itself. The crown was an open
+// arc for one pass and read as a magnifying glass at 20px; it closes now.
+const Garden = (
+  <>
+    <circle cx="12" cy="8.6" r="5.2" />
+    <path d="M12 13.8v6.6" />
+    <path d="M9.2 20.4h5.6" />
+  </>
+);
+
+// A line climbing three steps — progress, not a chart's axes.
+const Progress = (
+  <>
+    <path d="M4 19.4h16" />
+    <path d="M4.6 15.8 9.4 11l3.3 3.3 6-6.4" />
+    <path d="M14.6 7.9h4.3v4.2" />
+  </>
+);
+
+// A drop — the same one the dashboard's "words are due" row uses (Glyph's
+// drop): review is watering what's already planted. A card with a circular
+// arrow was the first try and read as a reload badge at 20px.
+const Review = <path d="M12 4.1c3.2 3.7 5 6.2 5 8.4a5 5 0 0 1-10 0c0-2.2 1.8-4.7 5-8.4z" />;
+
+// A door with its knob, standing on the floor line — the room's way in. A
+// door drawn ajar in perspective was the first try; the flap turned to mush
+// at 20px, so this one faces you square.
+const MyRoom = (
+  <>
+    <rect x="6.2" y="3.4" width="11.6" height="16.8" rx="2.4" />
+    <circle cx="14.9" cy="12" r="0.95" />
+    <path d="M4.2 20.4h15.6" />
+  </>
+);
+
+// Two sliders — a gear's teeth turn to porridge at 20px.
+const Settings = (
+  <>
+    <path d="M4.2 8.6h15.6M4.2 15.4h15.6" />
+    <circle cx="9.4" cy="8.6" r="2.3" />
+    <circle cx="15" cy="15.4" r="2.3" />
+  </>
+);
+
 const ICONS: Record<string, React.ReactNode> = {
+  "/dashboard": Garden,
+  "/profile": Progress,
+  "/review/words": Review,
+  "/myroom": MyRoom,
+  "/settings": Settings,
   "/hangul": Hangul,
   "/vocabulary": Vocabulary,
   "/writing": Writing,
