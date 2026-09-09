@@ -57,13 +57,17 @@ export default function GardenCard({
     >
       <GardenScene hillsHeight="46%" className="absolute inset-0 w-full h-full">
         {/* level + stage name, then the species — the two things the band
-            had no room for. Fixed inks, not tokens: they sit on the sky
-            (see GardenScene's own note). */}
-        <span className="absolute top-3 left-3 inline-flex items-center gap-1 rounded-full border border-success-line px-[9px] py-1 text-[11.5px] font-extrabold text-success-deep bg-[rgba(255,253,246,.85)]">
+            had no room for.
+            Solid cream, not a translucent one: at 85% over this sky the
+            result was #FEFCF5, a channel off #FFFDF6 and invisible, so the
+            alpha bought nothing and cost the pill a fixed colour — a
+            translucent fill changes shade as it moves across the gradient,
+            which is the one thing a flat storybook palette can't have. */}
+        <span className="absolute top-3 left-3 inline-flex items-center gap-1 rounded-full border border-success-line bg-cream px-[9px] py-1 text-[11.5px] font-extrabold text-success-deep">
           {t("levelBadge", { level })}
           <span className="font-bold text-charcoal">· {LEVEL_PATH[stage].treeName}</span>
         </span>
-        <span className="absolute top-3 right-3 inline-flex items-center gap-1 rounded-full border border-success-line px-[9px] py-1 text-[11.5px] font-extrabold text-success-deep bg-[rgba(255,253,246,.85)]">
+        <span className="absolute top-3 right-3 inline-flex items-center gap-1 rounded-full border border-success-line bg-cream px-[9px] py-1 text-[11.5px] font-extrabold text-success-deep">
           {sp.name}
           <span className="kr font-semibold text-muted">{sp.krName}</span>
         </span>
@@ -96,7 +100,9 @@ export default function GardenCard({
             <span>{maxed ? t("maxed") : `${xpInto}/${xpNeeded} XP`}</span>
             {!maxed && <span>{t("levelBadge", { level: level + 1 })} →</span>}
           </div>
-          <span className="mt-[3px] block h-[6px] rounded-full overflow-hidden bg-[rgba(255,253,246,.7)]">
+          {/* 70% cream over the hills resolved to #F5FAF1 — a pale mint with
+              its green channel above its red, i.e. not cream at all. Solid. */}
+          <span className="mt-[3px] block h-[6px] rounded-full overflow-hidden bg-cream">
             <i
               className="not-italic block h-full rounded-full bg-success transition-[width] duration-1000"
               style={{ width: `${maxed ? 100 : fill}%` }}

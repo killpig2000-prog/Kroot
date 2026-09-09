@@ -51,10 +51,11 @@ export default function QuestSunButton({
 
   const body = (
     <>
-      <span
-        className="flex-none grid place-items-center w-9 h-9 rounded-full"
-        style={{ background: completed ? "rgba(255,255,255,.6)" : "rgba(255,255,255,.55)" }}
-      >
+      {/* Cream, solid. White at 55% over #FFD66B came out #FFECBC — a bare
+          washed yellow sitting next to the doors' solid #FFFDF6, which read
+          as colour missing rather than colour chosen. This app's white is
+          cream. */}
+      <span className="flex-none grid place-items-center w-9 h-9 rounded-full bg-cream">
         <ModuleIcon href={SKILL_ICON[quest.skill_key] ?? "/vocabulary"} size={22} />
       </span>
       <span className="flex-1 min-w-0 leading-[1.15]">
