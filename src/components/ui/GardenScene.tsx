@@ -2,12 +2,20 @@ import type { CSSProperties, ReactNode } from "react";
 
 // The one garden every "moment" screen shares — first open (SeedIntro), the
 // dashboard hero (TreeCard), session results, the growth popup, sign-up.
-// Sky gradient + two hills + either clouds (dawn) or stars and a glow
-// (night). Children are positioned by the caller; this only paints the
+// Sky gradient + a far ridge + two hills + either clouds, a sun and a
+// meadow (dawn) or stars and a glow (night). Children are positioned by the caller; this only paints the
 // backdrop, so a scene is never a different garden by accident.
 //
 // Light-only on purpose: it's a picture, not chrome. Text placed on it must
 // use fixed inks (#2E5B41 / #4A4237 on dawn, cream on night), not tokens.
+
+// Where the meadow's pieces stand: [left %, bottom %] on the middle hill,
+// birds as [left %, top %]. Ratios, so the same meadow fits a 214px card
+// and a 960px hero.
+const SUN_RAYS = [0, 45, 90, 135, 180, 225, 270, 315];
+const TUFTS: [number, number, boolean][] = [[7, 22, false], [24, 17, true], [41, 25, false], [58, 18, false], [73, 24, true], [88, 16, false], [96, 23, false]];
+const FLOWERS: [number, number, string][] = [[14, 20, "#F4A7B9"], [31, 25, "#FFD66B"], [49, 17, "#FFFDF6"], [64, 23, "#F4A7B9"], [80, 19, "#FFD66B"], [92, 26, "#FFFDF6"]];
+const BIRDS: [number, number][] = [[28, 17], [35, 24]];
 
 export const DAWN_SKY = "linear-gradient(180deg,#FFF9EC 0%,#EAF4F3 40%,#BEE3F0 62%,#DFF3E4 100%)";
 export const NIGHT_SKY = "linear-gradient(180deg,#1B2A36 0%,#2B4358 38%,#7FB6C9 62%,#DFF3E4 100%)";
@@ -45,14 +53,56 @@ export default function GardenScene({
             aria-hidden="true"
           />
         </>
-      ) : clouds && (
-        <svg className="absolute top-[14%] left-0 w-full h-[16%]" viewBox="0 0 400 60" preserveAspectRatio="none" aria-hidden="true">
-          <g fill="#FFFFFF" opacity=".8">
-            <ellipse cx="62" cy="30" rx="26" ry="9" />
-            <ellipse cx="84" cy="24" rx="17" ry="7" />
-            <ellipse cx="318" cy="38" rx="22" ry="7.5" opacity=".7" />
-          </g>
-        </svg>
+      ) : (
+        <>
+          {/* a far ridge, one solid step between the hills and the sky */}
+          <svg
+            className="absolute left-[-4%] right-[-4%] bottom-0 w-[108%]"
+            style={{ height: `calc(${hillsHeight} + 10%)` }}
+            viewBox="0 0 800 200"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+          >
+            <path d="M0 96 C120 70 210 88 330 78 C450 68 540 90 660 74 C720 66 760 72 800 70 L800 200 L0 200Z" fill="#D6E8DD" />
+          </svg>
+          {clouds && (
+            <>
+              <svg className="absolute top-[14%] left-0 w-full h-[16%]" viewBox="0 0 400 60" preserveAspectRatio="none" aria-hidden="true">
+                <g fill="#FFFFFF" opacity=".8">
+                  <ellipse cx="62" cy="30" rx="26" ry="9" />
+                  <ellipse cx="84" cy="24" rx="17" ry="7" />
+                  <ellipse cx="318" cy="38" rx="22" ry="7.5" opacity=".7" />
+                </g>
+              </svg>
+              {/* The sun — what made this "dawn" rather than a pretty sky
+                  (2026-09-10). A picture, so sized like the tree: clamp()ed
+                  off the container, the min fits a 360px card, the max is
+                  reached by 430 and a desktop hero gets more sky, not a
+                  bigger sun. A solid halo stands in for glow: no alpha. Goes
+                  with the clouds, so a sky costume that paints its own
+                  weather drops both. */}
+              <svg
+                className="absolute left-[47%] top-[3%]"
+                style={{ width: "clamp(60px, 17%, 80px)" }}
+                viewBox="0 0 100 100"
+                aria-hidden="true"
+              >
+                <g fill="#FFF3CF">
+                  {SUN_RAYS.map((a, i) => (
+                    <path
+                      key={a}
+                      transform={`rotate(${a} 50 50)`}
+                      d={i % 2 ? "M48.6 17 L51.4 17 L51.6 7 Q50 5 48.4 7 Z" : "M48.6 17 L51.4 17 L52.2 3 Q50 1 47.8 3 Z"}
+                    />
+                  ))}
+                </g>
+                <circle cx="50" cy="50" r="31" fill="#FFF3CF" />
+                <circle cx="50" cy="50" r="22" fill="#FFE9A3" />
+                <circle cx="50" cy="50" r="22" fill="none" stroke="#FFE1A0" strokeWidth="1.4" />
+              </svg>
+            </>
+          )}
+        </>
       )}
       <svg
         className="absolute left-[-4%] right-[-4%] bottom-0 w-[108%]"
@@ -65,6 +115,55 @@ export default function GardenScene({
         <path d="M0 150 C160 120 300 140 440 132 C600 122 700 140 800 128 L800 200 L0 200Z" fill="#B9DDC3" />
         <path d="M0 176 C200 160 400 172 800 164 L800 200 L0 200Z" fill="#DFF3E4" />
       </svg>
+      {/* The meadow: grass tufts, wildflowers and two birds, so the tree
+          stands in a place rather than on a colour. Small fixed-size pieces
+          placed by ratio — a wide hero gets more meadow, not a stretched
+          one — behind whatever the caller stands on the hills. Dawn only:
+          the night scene has its own stars. */}
+      {!night && (
+        <>
+          {TUFTS.map(([x, b, tall]) => (
+            <svg
+              key={`t${x}`}
+              className="absolute -translate-x-1/2"
+              style={{ left: `${x}%`, bottom: `${b}%`, width: "clamp(16px, 4.5%, 20px)" }}
+              viewBox="0 0 24 16"
+              aria-hidden="true"
+            >
+              <path
+                d={`M12 15 q-3 -6 -8 -9 M12 15 q0 -8 ${tall ? 2 : 1} -13 M12 15 q3 -5 8 -8`}
+                fill="none"
+                stroke="#9CCBAA"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+              />
+            </svg>
+          ))}
+          {FLOWERS.map(([x, b, c]) => (
+            <svg
+              key={`f${x}`}
+              className="absolute -translate-x-1/2"
+              style={{ left: `${x}%`, bottom: `${b}%`, width: "clamp(5px, 1.5%, 7px)" }}
+              viewBox="0 0 10 10"
+              aria-hidden="true"
+            >
+              <circle cx="5" cy="5" r="4.6" fill={c} />
+              <circle cx="5" cy="5" r="1.6" fill="#FFF3CF" />
+            </svg>
+          ))}
+          {BIRDS.map(([x, t]) => (
+            <svg
+              key={`b${x}`}
+              className="absolute"
+              style={{ left: `${x}%`, top: `${t}%`, width: "clamp(12px, 3.5%, 16px)" }}
+              viewBox="0 0 20 8"
+              aria-hidden="true"
+            >
+              <path d="M1 6 q4 -5 9 0 q4 -5 9 0" fill="none" stroke="#7FA98F" strokeWidth="1.4" strokeLinecap="round" />
+            </svg>
+          ))}
+        </>
+      )}
       {children}
     </div>
   );
