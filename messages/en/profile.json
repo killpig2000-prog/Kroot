@@ -29,7 +29,7 @@
     "more": "more"
   },
   "reminders": {
-    "title": "⏰ Daily reminder",
+    "title": "Daily reminder",
     "scheduleKnown": "Once a day, around {time} — only if you haven't studied yet",
     "scheduleUnknown": "Once a day — only if you haven't studied yet",
     "pushTitle": "Push notification",

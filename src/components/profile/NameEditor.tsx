@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
+import Glyph from "@/components/dashboard/Glyph";
 
 export default function NameEditor({ userId, name }: { userId: string; name: string }) {
   const t = useTranslations("profile.name");
@@ -46,9 +47,9 @@ export default function NameEditor({ userId, name }: { userId: string; name: str
           onClick={() => setEditing(true)}
           aria-label={t("edit")}
           title={t("edit")}
-          className="text-[12px] text-faint hover:text-success transition-colors"
+          className="text-[12.5px] text-faint hover:text-success transition-colors"
         >
-          ✏️
+          <Glyph name="pencil" className="w-[13px] h-[13px]" />
         </button>
       </span>
     );
@@ -74,7 +75,7 @@ export default function NameEditor({ userId, name }: { userId: string; name: str
         type="button"
         onClick={() => void save()}
         disabled={saving}
-        className="rounded-lg bg-success px-2.5 py-1 text-[12px] font-bold text-white hover:bg-success-deep transition-colors disabled:opacity-60"
+        className="rounded-lg bg-success px-2.5 py-1 text-[12.5px] font-bold text-white hover:bg-success-deep transition-colors disabled:opacity-60"
       >
         {saving ? "…" : t("save")}
       </button>

@@ -29,7 +29,7 @@
     "more": "多"
   },
   "reminders": {
-    "title": "⏰ 毎日のリマインダー",
+    "title": "毎日のリマインダー",
     "scheduleKnown": "1日1回、{time}ごろ — その日まだ学習していない場合だけ",
     "scheduleUnknown": "1日1回 — その日まだ学習していない場合だけ",
     "pushTitle": "プッシュ通知",

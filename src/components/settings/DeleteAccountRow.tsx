@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { SettingsButtonRow } from "@/components/settings/SettingsCard";
+import Glyph from "@/components/dashboard/Glyph";
 
 // Deleting an account is the one control on this page that can't be undone,
 // so it asks twice: once to open the panel, and once by making the learner
@@ -46,7 +47,7 @@ export default function DeleteAccountRow({ streakDays }: { streakDays: number })
   return (
     <div className="border-t border-dashed border-line pt-3.5">
       <SettingsButtonRow
-        icon="⚠️"
+        icon={<Glyph name="warning" className="w-[18px] h-[18px] text-danger" />}
         title={t("deleteAccount")}
         desc={t("deleteDesc")}
         onClick={() => setOpen((o) => !o)}

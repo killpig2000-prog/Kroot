@@ -29,7 +29,7 @@
     "more": "多"
   },
   "reminders": {
-    "title": "⏰ 每日提醒",
+    "title": "每日提醒",
     "scheduleKnown": "每天一次，约 {time} — 仅在你当天还没学习时发送",
     "scheduleUnknown": "每天一次 — 仅在你当天还没学习时发送",
     "pushTitle": "推送通知",

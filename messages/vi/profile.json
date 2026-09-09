@@ -29,7 +29,7 @@
     "more": "nhiều"
   },
   "reminders": {
-    "title": "⏰ Nhắc nhở hằng ngày",
+    "title": "Nhắc nhở hằng ngày",
     "scheduleKnown": "Mỗi ngày một lần, khoảng {time} — chỉ khi bạn chưa học hôm đó",
     "scheduleUnknown": "Mỗi ngày một lần — chỉ khi bạn chưa học hôm đó",
     "pushTitle": "Thông báo đẩy",

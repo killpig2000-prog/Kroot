@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
+import { useEffect, useMemo, useState, useSyncExternalStore, type ReactNode } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 import { track } from "@/lib/analytics";
@@ -12,6 +12,7 @@ import {
   subscribeToPush,
   unsubscribeFromPush,
 } from "@/lib/push-client";
+import Glyph from "@/components/dashboard/Glyph";
 
 // There used to be a "send it around" picker here with four local-hour presets
 // (Morning/Midday/Evening/Late) written into profiles.reminder_hour. The cron
@@ -105,7 +106,7 @@ export default function ReminderSettings({ userId, initialPush, initialEmail, ha
   const pushDisabled = busy !== null || support === "none" || support === "ios-install" || !keyConfigured;
 
   return (
-    <div id="reminders" className="border border-line rounded-[14px] px-[22px] py-5">
+    <div id="reminders" className="border border-line rounded-[12px] px-[24px] py-5">
       <div className="flex items-baseline justify-between gap-3 mb-4 flex-wrap">
         <b className="font-semibold text-[15px]">{t("title")}</b>
         <small className="text-[12.5px] text-faint font-medium">
@@ -120,7 +121,7 @@ export default function ReminderSettings({ userId, initialPush, initialEmail, ha
 
       <div className="grid grid-cols-1 gap-3">
         <Row
-          icon="📱"
+          icon={<Glyph name="phone" className="w-[18px] h-[18px]" />}
           title={t("pushTitle")}
           desc={
             support === "ios-install"
@@ -135,7 +136,7 @@ export default function ReminderSettings({ userId, initialPush, initialEmail, ha
           onToggle={togglePush}
         />
         <Row
-          icon="✉️"
+          icon={<Glyph name="mail" className="w-[18px] h-[18px]" />}
           title={t("emailTitle")}
           desc={hasEmail ? t("emailDesc") : t("emailNone")}
           on={email}
@@ -159,7 +160,7 @@ function Row({
   busy,
   onToggle,
 }: {
-  icon: string;
+  icon: ReactNode;
   title: string;
   desc: string;
   on: boolean;
@@ -169,11 +170,11 @@ function Row({
 }) {
   return (
     <div className="flex items-center gap-3">
-      <span className="flex-none w-9 h-9 rounded-[10px] bg-warm border border-line flex items-center justify-center text-base">
+      <span className="flex-none w-9 h-9 rounded-[12px] bg-warm border border-line flex items-center justify-center text-base">
         {icon}
       </span>
       <span className="flex-1 min-w-0">
-        <b className="block text-[13.5px] font-semibold">{title}</b>
+        <b className="block text-[14px] font-semibold">{title}</b>
         <span className="block text-[12.5px] text-muted leading-snug">{desc}</span>
       </span>
       <button
