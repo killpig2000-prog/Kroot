@@ -7,6 +7,7 @@ import GardenScene from "@/components/ui/GardenScene";
 import SpeechBubble from "@/components/ui/SpeechBubble";
 import LevelCreature from "@/components/dashboard/LevelCreature";
 import { TREE_PHRASES } from "@/lib/tree-phrases";
+import { playWater } from "@/lib/sfx";
 import { MAX_LEVEL, treeStageForLevel } from "@/lib/level";
 import { LEVEL_PATH, SPECIES, type CefrLevel } from "@/lib/tree";
 
@@ -27,6 +28,7 @@ export default function GardenCard({
   xpNeeded,
   costumeIds = [],
   species,
+  celebrateKey = null,
 }: {
   level: number;
   progressPct: number;
@@ -35,6 +37,9 @@ export default function GardenCard({
   costumeIds?: string[];
   /** CEFR grade — decides the tree species; promotion transforms the garden. */
   species?: CefrLevel;
+  /** Today's quest row id once it is done — the tree says thank you once
+      per watered quest, the first time the Garden opens afterwards. */
+  celebrateKey?: string | null;
 }) {
   const t = useTranslations("dashboard.tree");
   const [fill, setFill] = useState(0);
@@ -43,10 +48,41 @@ export default function GardenCard({
     return () => clearTimeout(timer);
   }, [progressPct]);
 
+  // The thank-you plays once per watered quest, the first time the Garden
+  // opens after it: the quest row's id is the latch (localStorage), so a
+  // reload or a second visit that day doesn't replay it, and tomorrow's
+  // quest gets its own. Four wider sways, the "thanks for the water" line
+  // held up front, two sparkles by the crown, the watering-can sound.
+  const [party, setParty] = useState(false);
+  useEffect(() => {
+    if (!celebrateKey) return;
+    const key = `kroot:quest-cheered:${celebrateKey}`;
+    try {
+      if (localStorage.getItem(key)) return;
+      localStorage.setItem(key, "1");
+    } catch {
+      /* private mode etc. — cheer anyway, just not latched */
+    }
+    // a beat after the card paints, so the cheer is seen starting rather
+    // than already under way (and setState stays out of the effect body)
+    const start = setTimeout(() => {
+      setParty(true);
+      playWater();
+    }, 400);
+    const stop = setTimeout(() => setParty(false), 4600);
+    return () => {
+      clearTimeout(start);
+      clearTimeout(stop);
+    };
+  }, [celebrateKey]);
+
   const stage = treeStageForLevel(level);
   const sp = SPECIES[species ?? stage];
   const maxed = level >= MAX_LEVEL;
-  const phrases = TREE_PHRASES.map((p) => ({ kr: p.kr, en: t(`phrases.${p.key}`) }));
+  const lines = TREE_PHRASES.map((p) => ({ kr: p.kr, en: t(`phrases.${p.key}`) }));
+  // While the tree is thanking you, that line leads and stays up.
+  const thanks = lines.filter((p) => p.kr === "물 줘서 고마워요");
+  const phrases = party ? [...thanks, ...lines.filter((p) => !thanks.includes(p))] : lines;
 
   return (
     <Link
@@ -83,15 +119,32 @@ export default function GardenCard({
               get a bigger tree. */}
           <svg
             viewBox="0 0 220 230"
-            className="absolute left-[10%] bottom-[34px] h-auto"
+            className={`absolute left-[10%] bottom-[34px] h-auto ${party ? "cheer" : ""}`}
             style={{ width: "clamp(112px, 32vw, 128px)" }}
             aria-hidden="true"
           >
             <LevelCreature level={stage} costumeIds={costumeIds} species={species} />
           </svg>
+          {party && (
+            <>
+              <svg className="bob absolute left-[26%] top-[26%] w-[14px] h-[14px]" viewBox="0 0 20 20" aria-hidden="true">
+                <path d="M10 1 L12.2 7.8 L19 10 L12.2 12.2 L10 19 L7.8 12.2 L1 10 L7.8 7.8 Z" fill="#FFD66B" stroke="#E8B93E" strokeWidth="1" />
+              </svg>
+              <svg className="bob2 absolute left-[44%] top-[44%] w-[10px] h-[10px]" viewBox="0 0 20 20" aria-hidden="true">
+                <path d="M10 1 L12.2 7.8 L19 10 L12.2 12.2 L10 19 L7.8 12.2 L1 10 L7.8 7.8 Z" fill="#FFD66B" stroke="#E8B93E" strokeWidth="1" />
+              </svg>
+            </>
+          )}
 
-          {/* the tail points back at the tree */}
-          <SpeechBubble phrases={phrases} variant="card" className="absolute top-[58px] right-[22px]" />
+          {/* the tail points back at the tree; keyed so the thank-you
+              restarts the cycle from its first line */}
+          <SpeechBubble
+            key={party ? "cheer" : "calm"}
+            phrases={phrases}
+            firstHoldMs={party ? 4200 : undefined}
+            variant="card"
+            className="absolute top-[58px] right-[22px]"
+          />
         </div>
 
         {/* XP, pinned to the card's own bottom edge */}

@@ -599,6 +599,20 @@ html.js-reveal .reveal:not(.in) {
   transform-box: fill-box;
   transform-origin: 50% 100%;
 }
+/* the tree's thank-you: four quick, wider sways from the roots, then back
+   to the ambient one — played once, when the day's quest has just been
+   watered (GardenCard) */
+@keyframes cheer {
+  0% { transform: rotate(0deg); }
+  20% { transform: rotate(-7deg); }
+  50% { transform: rotate(7deg); }
+  80% { transform: rotate(-4deg); }
+  100% { transform: rotate(0deg); }
+}
+.cheer {
+  animation: cheer 0.7s ease-in-out 4;
+  transform-origin: 50% 100%;
+}
 @keyframes sway {
   0%, 100% {
     transform: rotate(0deg) translateY(0);
@@ -635,7 +649,7 @@ html.js-reveal .reveal:not(.in) {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .sway, .sway-slow, .blink {
+  .sway, .sway-slow, .blink, .cheer {
     animation: none;
   }
 }

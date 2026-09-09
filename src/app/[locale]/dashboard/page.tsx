@@ -261,6 +261,7 @@ export default async function DashboardPage() {
               xpNeeded={needed}
               costumeIds={equippedIds}
               species={cefr}
+              celebrateKey={quest?.completed_at ? quest.id : null}
             />
           </div>
 
