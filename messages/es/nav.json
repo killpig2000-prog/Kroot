@@ -31,5 +31,8 @@
   "menu": "Menú",
   "review": "Repaso",
   "ranking": "Ranking",
-  "myRoom": "Mi rincón"
+  "myRoom": "Mi rincón",
+  "settings": "Ajustes",
+  "progressShort": "Progreso",
+  "myRoomShort": "Mi rincón"
 }

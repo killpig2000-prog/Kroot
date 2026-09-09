@@ -23,17 +23,33 @@ export type NavItem = {
   isNew?: boolean;
   /** data-tour id — spotlit by the onboarding tour and/or guided walkthrough. */
   tourId?: string;
+  /** nav.json key. Absent = derived from the label (see navKey). */
+  i18nKey?: string;
+  /** nav.json key for the phone tab bar, where a label gets ~72px at 360px.
+   *  Absent = i18nKey/label. */
+  shortKey?: string;
 };
 
-// The three flat destinations — same set on the phone BottomNav and the
-// desktop Sidebar. "Garden" also carries tourId "guided-nav-home": once
-// Shop moved off the sidebar (into My room), the guided tour's
-// "there's more to explore" step (practice-more) points back at this
-// always-present tab instead of a section that no longer exists.
+// The five flat destinations — same set on the phone BottomNav and the
+// desktop Sidebar. 2026-09-10, user call: the three-tab set hid two things
+// the learner needs often. Review was two taps deep inside My room, and
+// Settings (built 2026-09-09) was reachable only from the avatar menu and a
+// My room row, so on desktop it was effectively invisible.
+//
+// "Learn" is now "My progress": the label used to collide with the LEARN
+// section header above the six modules in the sidebar — same word, two
+// different destinations.
+//
+// "Garden" also carries tourId "guided-nav-home": once Shop moved off the
+// sidebar (into My room), the guided tour's "there's more to explore" step
+// (practice-more) points back at this always-present tab instead of a
+// section that no longer exists.
 export const MAIN_ITEMS: NavItem[] = [
   { icon: "🏡", label: "Garden", href: "/dashboard", tourId: "guided-nav-home" },
-  { icon: "📊", label: "Learn", href: "/profile" },
-  { icon: "🌳", label: "My room", href: "/myroom" },
+  { icon: "📊", label: "My progress", href: "/profile", i18nKey: "myProgress", shortKey: "progressShort" },
+  { icon: "📒", label: "Review", href: "/review/words" },
+  { icon: "🌳", label: "My room", href: "/myroom", i18nKey: "myRoom", shortKey: "myRoomShort" },
+  { icon: "⚙️", label: "Settings", href: "/settings" },
 ];
 
 // The six lesson modules — rendered as a 2×3 grid on the Garden page
@@ -54,7 +70,10 @@ export const MODULES: NavItem[] = [
   { icon: "🌶️", label: "Pronunciation", href: "/speaking" },
 ];
 
-// My room's own list — the learner's things, not lessons. Shop carries
+// My room's own list — the learner's things, not lessons. The word bank
+// left this list on 2026-09-10: it became the top-level "Review" tab, and a
+// sidebar column linking the same page twice reads like a mistake. The
+// /myroom page keeps its own row for it. Shop carries
 // tourId "guided-nav-shop" for the dashboard-only case (nothing else needs
 // it here); the guided tour's two other shop-nav steps, reached from
 // /hangul and mid-writing, use their own contextual links on those pages
@@ -62,5 +81,4 @@ export const MODULES: NavItem[] = [
 export const MY_ROOM_ITEMS: NavItem[] = [
   { icon: "🛍️", label: "Shop", href: "/shop", color: { text: "#B14F27", bg: "#FFF7ED", border: "#FED7AA" } },
   { icon: "🏅", label: "Ranking", href: "/ranking", color: { text: "#C47A25", bg: "#FFFBEB", border: "#FDE68A" } },
-  { icon: "📚", label: "My word bank", href: "/review/words", color: { text: "#2563EB", bg: "#EFF6FF", border: "#BFDBFE" } },
 ];

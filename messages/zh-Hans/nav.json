@@ -31,5 +31,8 @@
   "menu": "菜单",
   "review": "复习",
   "ranking": "排行榜",
-  "myRoom": "我的小屋"
+  "myRoom": "我的小屋",
+  "settings": "设置",
+  "progressShort": "进度",
+  "myRoomShort": "我的小屋"
 }

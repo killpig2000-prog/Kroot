@@ -11,15 +11,9 @@ import { MAIN_ITEMS, MODULES, MY_ROOM_ITEMS, type NavColor } from "@/components/
 import BrandMark from "@/components/ui/BrandMark";
 import Glyph from "@/components/dashboard/Glyph";
 
-// Nav labels map 1:1 to nav.json keys, except the two-word ones.
-const navKey = (label: string) =>
-  label === "Learn"
-    ? "learn"
-    : label === "My room"
-      ? "myRoom"
-      : label === "My word bank"
-        ? "myWords"
-        : label.toLowerCase();
+// Nav labels map 1:1 to nav.json keys unless the item names its own
+// (i18nKey), which the two-word ones do.
+const navKey = (label: string) => label.toLowerCase();
 
 const LANGUAGES = [
   { code: "en", label: "English" },
@@ -41,6 +35,7 @@ function NavItem({
   href,
   on,
   tourId,
+  i18nKey,
 }: {
   icon: string;
   label: string;
@@ -50,6 +45,8 @@ function NavItem({
   popular?: boolean;
   isNew?: boolean;
   tourId?: string;
+  i18nKey?: string;
+  shortKey?: string;
 }) {
   const tn = useTranslations("nav");
   // Active item reads like a notebook index tab: white paper, dashed edge,
@@ -64,7 +61,7 @@ function NavItem({
           : "rounded-[12px] text-charcoal font-medium hover:bg-cream hover:text-success-deep"
       }`}
     >
-      <span className="flex-1 min-w-0 truncate">{tn(navKey(label))}</span>
+      <span className="flex-1 min-w-0 truncate">{tn(i18nKey ?? navKey(label))}</span>
     </Link>
   );
 
@@ -205,8 +202,9 @@ function SidebarBody({
         )}
       </div>
 
-      {/* Garden / Learn / My room — the whole nav, same three tabs the phone
-          uses. No label needed, three items read fine unlabelled. */}
+      {/* Garden / My progress / Review / My room / Settings — the same five
+          tabs the phone bar has. Unlabelled on purpose: the group's shape
+          (the app's own places, above the lesson list) says enough. */}
       <div className="flex flex-col gap-0.5 bg-cream border border-dash rounded-[12px] p-1 mb-2">
         {MAIN_ITEMS.map((item) => (
           <NavItem key={item.label} {...item} on={item.href === "/dashboard" ? pathname === item.href : pathname.startsWith(item.href)} />

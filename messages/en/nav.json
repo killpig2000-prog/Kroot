@@ -31,5 +31,8 @@
   "menu": "Menu",
   "review": "Review",
   "ranking": "Ranking",
-  "myRoom": "My room"
+  "myRoom": "My room",
+  "settings": "Settings",
+  "progressShort": "Progress",
+  "myRoomShort": "My room"
 }

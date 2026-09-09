@@ -31,5 +31,8 @@
   "menu": "メニュー",
   "review": "復習",
   "ranking": "ランキング",
-  "myRoom": "マイルーム"
+  "myRoom": "マイルーム",
+  "settings": "設定",
+  "progressShort": "学習",
+  "myRoomShort": "マイルーム"
 }
