@@ -210,7 +210,7 @@ function SidebarBody({
         )}
       </div>
 
-      {/* Garden / My progress / Review / My room / Settings — the same five
+      {/* Garden / My progress / My room / Ranking / Settings — the same five
           tabs the phone bar has. Unlabelled on purpose: the group's shape
           (the app's own places, above the lesson list) says enough. */}
       <div className="flex flex-col gap-0.5 bg-cream border border-dash rounded-[12px] p-1 mb-2">

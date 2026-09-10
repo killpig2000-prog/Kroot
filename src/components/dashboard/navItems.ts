@@ -48,10 +48,15 @@ export const MAIN_ITEMS: NavItem[] = [
   { icon: "🏡", label: "Garden", href: "/dashboard", tourId: "guided-nav-home" },
   { icon: "📊", label: "My progress", href: "/profile", i18nKey: "myProgress", shortKey: "progressShort" },
   // My room sits third (2026-09-11, user call): the learner's own things
-  // are the tab they open after a lesson; Review is the one they open when
-  // words are due, which the Garden row already points at.
+  // are the tab they open after a lesson.
   { icon: "🌳", label: "My room", href: "/myroom", i18nKey: "myRoom", shortKey: "myRoomShort" },
-  { icon: "📒", label: "Review", href: "/review/words" },
+  // Ranking took the fourth tab from "Review" (2026-09-10, user call). That
+  // tab opened the word bank, not a review — the review itself starts from
+  // the Garden's "Review · N due" row — so its name promised the wrong page.
+  // The weekly Garden Fair is a place you visit for itself, which a tab
+  // should be; the word bank is a tool and went back into My room. No
+  // rank number or dot on the tab: that would be a nudge.
+  { icon: "🏅", label: "Ranking", href: "/ranking", shortKey: "rankingShort" },
   { icon: "⚙️", label: "Settings", href: "/settings" },
 ];
 
@@ -73,15 +78,15 @@ export const MODULES: NavItem[] = [
   { icon: "🌶️", label: "Pronunciation", href: "/speaking" },
 ];
 
-// My room's own list — the learner's things, not lessons. The word bank
-// left this list on 2026-09-10: it became the top-level "Review" tab, and a
-// sidebar column linking the same page twice reads like a mistake. The
-// /myroom page keeps its own row for it. Shop carries
+// My room's own list — the learner's things, not lessons. Ranking and the
+// word bank traded places on 2026-09-10: Ranking became a top-level tab, so
+// it leaves this list (a sidebar linking one page twice reads like a
+// mistake), and the word bank, no longer a tab, comes back. Shop carries
 // tourId "guided-nav-shop" for the dashboard-only case (nothing else needs
 // it here); the guided tour's two other shop-nav steps, reached from
 // /hangul and mid-writing, use their own contextual links on those pages
 // instead, since My room isn't a page those flows pass through.
 export const MY_ROOM_ITEMS: NavItem[] = [
   { icon: "🛍️", label: "Shop", href: "/shop", color: { text: "#B14F27", bg: "#FFF7ED", border: "#FED7AA" } },
-  { icon: "🏅", label: "Ranking", href: "/ranking", color: { text: "#C47A25", bg: "#FFFBEB", border: "#FDE68A" } },
+  { icon: "📒", label: "My word bank", href: "/review/words", i18nKey: "myWords", color: { text: "#2E5B41", bg: "#EAF3EC", border: "#C9E4D0" } },
 ];

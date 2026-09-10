@@ -112,6 +112,18 @@ const MyRoom = (
   </>
 );
 
+// The Garden Fair's podium — three blocks, the tallest in the middle, on
+// the floor line. A trophy's handles and a medal's ribbon both turned to
+// porridge at 20px; three boxes don't.
+const Ranking = (
+  <>
+    <path d="M8.9 20.4V9.6a1 1 0 0 1 1-1h4.2a1 1 0 0 1 1 1v10.8" />
+    <path d="M8.9 13.4H5.3a1 1 0 0 0-1 1v6" />
+    <path d="M15.1 15.6h3.6a1 1 0 0 1 1 1v3.8" />
+    <path d="M3.4 20.4h17.2" />
+  </>
+);
+
 // Two sliders — a gear's teeth turn to porridge at 20px.
 const Settings = (
   <>
@@ -126,6 +138,7 @@ const ICONS: Record<string, React.ReactNode> = {
   "/profile": Progress,
   "/review/words": Review,
   "/myroom": MyRoom,
+  "/ranking": Ranking,
   "/settings": Settings,
   "/hangul": Hangul,
   "/vocabulary": Vocabulary,
