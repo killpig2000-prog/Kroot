@@ -50,7 +50,6 @@
     "savedWithCount": "已在单词本 · {used}/{slots}",
     "fullShort": "单词本已满（{used}/{slots}）— 请先移除一个",
     "addFailed": "没能保存，请再试一次。",
-    "backToMyBank": "返回我的单词本",
     "seeAll": "查看全部单词 →",
     "budgetLine": "单词本 {used}/{slots}",
     "saveThisWord": "保存这个词",
@@ -107,10 +106,7 @@
     "notInDeck": "词库里还没有这个词。"
   },
   "detail": {
-    "back": "返回",
     "prev": "上一个",
-    "backToUnit": "返回单元",
-    "backToStory": "返回课文",
     "backToVocab": "全部章节",
     "next": "下一个词 →"
   },

@@ -50,7 +50,6 @@
     "savedWithCount": "In your word bank · {used}/{slots}",
     "fullShort": "Bank full ({used}/{slots}) — remove one first",
     "addFailed": "Couldn't save that. Try again.",
-    "backToMyBank": "back to my word bank",
     "seeAll": "See all my words →",
     "budgetLine": "{used}/{slots} in your word bank",
     "saveThisWord": "Save this word",
@@ -107,10 +106,7 @@
     "notInDeck": "Not in the word deck yet."
   },
   "detail": {
-    "back": "Back",
     "prev": "Prev",
-    "backToUnit": "Back to unit",
-    "backToStory": "Back to the story",
     "backToVocab": "All chapters",
     "next": "Next word →"
   },

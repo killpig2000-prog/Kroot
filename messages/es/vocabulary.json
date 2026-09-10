@@ -50,7 +50,6 @@
     "savedWithCount": "En tu lista · {used}/{slots}",
     "fullShort": "Lista llena ({used}/{slots}): quita una primero",
     "addFailed": "No se pudo guardar. Inténtalo de nuevo.",
-    "backToMyBank": "volver a mi lista de palabras",
     "seeAll": "Ver todas mis palabras →",
     "budgetLine": "{used}/{slots} en tu lista de palabras",
     "saveThisWord": "Guardar esta palabra",
@@ -107,10 +106,7 @@
     "notInDeck": "Todavía no está en el mazo de palabras."
   },
   "detail": {
-    "back": "Volver",
     "prev": "Anterior",
-    "backToUnit": "Volver a la unidad",
-    "backToStory": "Volver a la historia",
     "backToVocab": "Todos los capítulos",
     "next": "Siguiente palabra →"
   },

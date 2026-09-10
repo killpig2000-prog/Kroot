@@ -54,9 +54,7 @@ export default function WordDetailCard({
   inBank: initialInBank,
   savedCount: initialSavedCount,
   slots,
-  fromBank,
   backHref,
-  backLabel,
   unitHref,
   unitLabel,
   topicKey,
@@ -80,12 +78,10 @@ export default function WordDetailCard({
   /** How many words the bank holds right now, and how many it can hold. */
   savedCount: number;
   slots: number;
-  /** Opened from /review/words — show the way back to it. */
-  fromBank: boolean;
   /** Where the learner came from, when it wasn't a vocabulary unit (e.g. a
-      reading passage). Overrides the unit link at the top of the card. */
+      reading passage, or the word bank) — the lesson bar's back arrow uses
+      it instead of the unit link. */
   backHref?: string | null;
-  backLabel?: string;
   unitHref: string;
   unitLabel: string;
   topicKey: string;
@@ -313,36 +309,6 @@ export default function WordDetailCard({
 
   return (
     <div className="max-w-[600px]">
-      <div className="flex items-center gap-3 mb-3.5">
-        {backHref ? (
-          <Link href={backHref} className="text-[12.5px] text-muted hover:text-charcoal transition-colors">
-            ← {backLabel ?? t("detail.back")}
-          </Link>
-        ) : fromBank ? (
-          <Link href="/review/words" className="text-[12.5px] text-muted hover:text-charcoal transition-colors">
-            ← {t("bank.backToMyBank")}
-          </Link>
-        ) : (
-          // The browser Back button used to be the only way out of a word
-          // mid-unit (the "back to unit" link at the bottom only appears on
-          // the unit's last word) — and Back serves the vocab page straight
-          // from the Router Cache, so a just-recorded Got it/Still learning
-          // didn't show there until a manual reload. router.refresh() right
-          // after the push forces that page to refetch instead of trusting
-          // the cache.
-          <button
-            type="button"
-            onClick={() => {
-              router.push(unitHref);
-              router.refresh();
-            }}
-            className="text-[12.5px] text-muted hover:text-charcoal transition-colors"
-          >
-            ← {t("detail.backToUnit")}
-          </button>
-        )}
-      </div>
-
       {/* The guided tour spotlights this whole card for the "read it" step —
           the copy talks about the word, its meaning and the example, so the
           ring has to cover them rather than just the Got it button. */}

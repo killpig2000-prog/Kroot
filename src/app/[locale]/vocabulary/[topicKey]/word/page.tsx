@@ -186,9 +186,7 @@ export default async function VocabWordPage({
             inBank={progress?.saved ?? false}
             savedCount={savedCount}
             slots={slots}
-            fromBank={fromBank}
             backHref={backTo}
-            backLabel={tv("detail.backToStory")}
             unitHref={unitHref}
             unitLabel={tv("unitN", { n: chapterIndex + 1 })}
             topicKey={topicKey}

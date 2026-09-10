@@ -50,7 +50,6 @@
     "savedWithCount": "Đã có trong sổ từ · {used}/{slots}",
     "fullShort": "Sổ từ đã đầy ({used}/{slots}) — bỏ bớt một từ",
     "addFailed": "Không lưu được. Thử lại nhé.",
-    "backToMyBank": "quay lại sổ từ của tôi",
     "seeAll": "Xem tất cả từ của tôi →",
     "budgetLine": "{used}/{slots} trong sổ từ",
     "saveThisWord": "Lưu từ này",
@@ -107,10 +106,7 @@
     "notInDeck": "Từ này chưa có trong bộ từ."
   },
   "detail": {
-    "back": "Quay lại",
     "prev": "Trước",
-    "backToUnit": "Quay lại bài học",
-    "backToStory": "Quay lại bài đọc",
     "backToVocab": "Tất cả chương",
     "next": "Từ tiếp theo →"
   },

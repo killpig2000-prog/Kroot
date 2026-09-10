@@ -50,7 +50,6 @@
     "savedWithCount": "単語帳に登録済み · {used}/{slots}",
     "fullShort": "単語帳が満杯（{used}/{slots}）— 1語外してください",
     "addFailed": "保存できませんでした。もう一度お試しください。",
-    "backToMyBank": "単語帳に戻る",
     "seeAll": "単語帳をすべて見る →",
     "budgetLine": "単語帳 {used}/{slots}",
     "saveThisWord": "この単語を保存",
@@ -107,10 +106,7 @@
     "notInDeck": "まだ単語デッキにありません。"
   },
   "detail": {
-    "back": "戻る",
     "prev": "前へ",
-    "backToUnit": "ユニットに戻る",
-    "backToStory": "本文に戻る",
     "backToVocab": "全チャプター",
     "next": "次の単語 →"
   },
