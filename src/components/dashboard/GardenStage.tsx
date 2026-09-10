@@ -69,7 +69,7 @@ export default function GardenStage({
             meadow is the ground now; the frame draws past its edges. */}
         {/* sky details (moon, stars, snow, rain) are drawn over the whole
             garden by SkyLayer, not in this frame */}
-        <SceneLayer costumeIds={costumeIds} layer="behind" omitSlots={["sky"]} />
+        <SceneLayer costumeIds={costumeIds} layer="behind" omitSlots={["sky", "aura"]} />
         {veteran && species ? (
           <VeteranTree level={level} species={species} costumeIds={costumeIds} />
         ) : (
@@ -139,6 +139,33 @@ export function SkyLayer({ costumeIds }: { costumeIds: string[] }) {
               </svg>
             )}
           </span>
+        );
+      })}
+    </>
+  );
+}
+
+/** An aura item's effect across the whole garden (2026-09-11, user: "이펙트
+ *  (오로라)같은것들은 나무근처에서맴돌아" — a rainbow or aurora drawn in the
+ *  tree's own 220-wide frame only ever spanned the tree, never the garden
+ *  around it). Same shape as SkyLayer: an item with `auraScene.field` gets
+ *  an 800x400 field over the whole scene; one without falls back to its
+ *  `scene` draw stretched to cover the scene the same way, so every aura
+ *  reads as background, not as something orbiting the trunk. Place it as a
+ *  direct child of the GardenScene, before the tree (z-0, under it and its
+ *  friends) — same spot SkyLayer takes. */
+export function AuraLayer({ costumeIds }: { costumeIds: string[] }) {
+  const auras = costumeIds.map(costumeById).filter((c) => c?.slot === "aura" && (c.auraScene?.field || c.scene));
+  if (auras.length === 0) return null;
+  return (
+    <>
+      {auras.map((c) => {
+        const field = c!.auraScene?.field ?? c!.scene?.draw;
+        if (!field) return null;
+        return (
+          <svg key={c!.id} className="absolute inset-0 w-full h-full pointer-events-none z-0" viewBox={c!.auraScene?.field ? "0 0 800 400" : "0 0 220 230"} preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            {field()}
+          </svg>
         );
       })}
     </>

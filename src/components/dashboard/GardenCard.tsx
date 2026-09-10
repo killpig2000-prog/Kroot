@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import GardenScene from "@/components/ui/GardenScene";
 import SpeechBubble from "@/components/ui/SpeechBubble";
-import GardenStage, { SkyLayer, gardenFrame } from "@/components/dashboard/GardenStage";
+import GardenStage, { AuraLayer, SkyLayer, gardenFrame } from "@/components/dashboard/GardenStage";
 import WateringCan from "@/components/dashboard/WateringCan";
 import { TREE_PHRASES } from "@/lib/tree-phrases";
 import { playWater } from "@/lib/sfx";
@@ -127,6 +127,8 @@ export default function GardenCard({
 
         {/* a sky costume's moon, stars, snow or rain, over the whole garden */}
         <SkyLayer costumeIds={costumeIds} />
+        {/* an aura's rainbow, aurora or glow, over the whole garden */}
+        <AuraLayer costumeIds={costumeIds} />
 
         {/* Tree and bubble share one stage, capped at a phone's width and
             centred: at 430px and below it fills the card, and on a tablet

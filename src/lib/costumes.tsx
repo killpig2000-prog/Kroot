@@ -75,6 +75,14 @@ export type Costume = {
     orb?: () => ReactNode;
   };
   skyGround?: () => ReactNode;
+  // Aura items, in the gardens: like skyScene, an 800x400 field drawn across
+  // the whole scene instead of the tree's narrow frame (2026-09-11, user:
+  // "무지개면... 끝에서 끝까지" — the frame-sized draw only spanned the tree's
+  // own ~220px width, so a rainbow or aurora hugged the trunk instead of the
+  // sky). Items without one fall back to `scene`, stretched to cover the
+  // full scene the same way (AuraLayer). Small frames — shop preview,
+  // TreePeek — keep `scene` at its original tree-frame scale.
+  auraScene?: { field?: () => ReactNode };
   // Skins: the full-body character drawn into the 220x230 frame *instead of*
   // the tree (LevelCreature returns this when a skin is equipped).
   creature?: () => ReactNode;
@@ -979,6 +987,18 @@ export const COSTUMES: Costume[] = [
         </>
       ),
     },
+    // 2026-09-11, user: "무지개면 나무 바로뒤가아니라 나무 위에 무지개가 쫙 크게
+    // 있어야하고 끝에서 끝까지" — one arc from edge to edge of the whole
+    // garden, not the tree's own frame.
+    auraScene: {
+      field: () => (
+        <>
+          {["#F87171", "#FBBF24", "#4ADE80", "#60A5FA", "#A78BFA"].map((c, i) => (
+            <path key={c} d="M0 340 A417 417 0 0 1 800 340" fill="none" stroke={c} strokeWidth="15" opacity=".55" transform={`translate(0 ${-i * 15})`} />
+          ))}
+        </>
+      ),
+    },
   },
   {
     id: "aurora-veil",
@@ -1012,6 +1032,27 @@ export const COSTUMES: Costume[] = [
             <circle cx="30" cy="30" r="1.8" fill="#fff" />
             <circle cx="150" cy="18" r="1.4" fill="#fff" />
             <circle cx="200" cy="40" r="1.2" fill="#fff" />
+          </g>
+        </>
+      ),
+    },
+    // 2026-09-11, user: "오로라면 하늘전체에 오로라가있어야하고" — ribbons across
+    // the whole sky, not a glow orbiting the tree.
+    auraScene: {
+      field: () => (
+        <>
+          <g className="aura-sway">
+            <path d="M20 220 Q220 40 420 190 Q560 290 780 170 Q560 150 420 210 Q220 300 20 220Z" fill="#7DD3C0" opacity=".4" />
+          </g>
+          <g className="aura-sway-2">
+            <path d="M40 260 Q260 100 460 220 Q600 300 760 210 Q600 210 440 250 Q240 320 40 260Z" fill="#A78BFA" opacity=".32" />
+          </g>
+          <g className="aura-twinkle">
+            <circle cx="60" cy="60" r="2.4" fill="#fff" />
+            <circle cx="380" cy="30" r="1.8" fill="#fff" />
+            <circle cx="620" cy="70" r="1.6" fill="#fff" />
+            <circle cx="160" cy="120" r="1.5" fill="#fff" />
+            <circle cx="720" cy="140" r="1.4" fill="#fff" />
           </g>
         </>
       ),

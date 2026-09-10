@@ -3,7 +3,7 @@
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import GardenStage, { SkyLayer, gardenFrame } from "@/components/dashboard/GardenStage";
+import GardenStage, { AuraLayer, SkyLayer, gardenFrame } from "@/components/dashboard/GardenStage";
 import WateringCan from "@/components/dashboard/WateringCan";
 import { LEVEL_ORDER, LEVEL_PATH, type CefrLevel } from "@/lib/tree";
 import { MAX_LEVEL, treeHeightMetres, treeStageForLevel } from "@/lib/level";
@@ -167,6 +167,8 @@ export default function TreeCard({
 
         {/* a sky costume's moon, stars, snow or rain, over the whole garden */}
         <SkyLayer costumeIds={equipped} />
+        {/* an aura's rainbow, aurora or glow, over the whole garden */}
+        <AuraLayer costumeIds={equipped} />
 
         {/* the creature — centred at every width (2026-09-10), the bubble over it */}
         <div className="absolute bottom-[56px] left-1/2 -translate-x-1/2 z-[3]">
