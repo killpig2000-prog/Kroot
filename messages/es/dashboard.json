@@ -117,5 +117,24 @@
     "writing": "Orden · partículas",
     "slang": "Palabra de hoy",
     "levelDone": "{level} · {done}/{total}"
+  },
+  "rings": {
+    "title": "Anillos de crecimiento",
+    "thisWeek": "Esta semana {n} de 7",
+    "avgPerDay": "media {n} min/día",
+    "open": "Abrir anillos de crecimiento",
+    "ariaWeek": "{n} de 7 días esta semana",
+    "toastTitle": "El anillo del {day} ya está",
+    "toastSub": "{n} de 7 esta semana · día {streak}",
+    "sheetTitle": "Anillos de crecimiento · {n} semanas",
+    "rowThis": "Esta semana",
+    "rowLast": "Semana pasada",
+    "rowAgo": "Hace {n} semanas",
+    "legendAway": "Ausente",
+    "legendShowed": "Presente",
+    "legendLesson": "Una lección",
+    "legendReview": "Lección + repaso",
+    "grown": "{n} semanas de crecimiento",
+    "firstWeek": "Tu primer anillo se está formando"
   }
 }

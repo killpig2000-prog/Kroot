@@ -10,6 +10,8 @@ import { MAIN_ITEMS, MODULES, MY_ROOM_ITEMS, type NavColor } from "@/components/
 
 import BrandMark from "@/components/ui/BrandMark";
 import Glyph from "@/components/dashboard/Glyph";
+import StreakRingPill from "@/components/dashboard/StreakRingPill";
+import type { DayDepth } from "@/lib/growth-rings";
 
 // Nav labels map 1:1 to nav.json keys unless the item names its own
 // (i18nKey), which the two-word ones do.
@@ -72,6 +74,11 @@ type Props = {
   /** Coin balance. Only the Garden passes it (the one page that reads
       `profiles.coins`); the phone header shows a second pill when it does. */
   coins?: number;
+  /** Growth rings (Garden only): this week's Mon..Sun depths — when passed,
+      the phone streak pill draws the week ring where the flame was. */
+  weekRing?: DayDepth[];
+  /** 0 = Monday … 6 = Sunday, the segment that is today */
+  ringToday?: number;
   /** A lesson index page renders its own LessonBar in place of the phone
    *  header (← · name · language · level) — the identity bar stands down
    *  below xl so the two don't stack. The desktop column is unaffected. */
@@ -278,12 +285,23 @@ export default function Sidebar(props: Props) {
             greeting row used to carry (2026-09-10, user call: they belong in
             the status bar, not beside the learner's name). Same pill for
             both so they read as one set. */}
-        <span
-          aria-label={`${props.streakDays} day streak`}
-          className="flex items-center gap-1 h-8 px-2.5 rounded-full border border-[#ECD98A] bg-[#FEF9C3] text-[#5C4A0E] text-[12.5px] font-bold tabular-nums"
-        >
-          <Glyph name="flame" className="w-[14px] h-[14px]" /> {props.streakDays}
-        </span>
+        {/* On the Garden the flame gives way to this week's growth ring
+            (2026-09-10): same pill, same number, the icon is now the week. */}
+        {props.weekRing ? (
+          <StreakRingPill
+            week={props.weekRing}
+            today={props.ringToday ?? 0}
+            streakDays={props.streakDays}
+            label={`${props.streakDays} day streak`}
+          />
+        ) : (
+          <span
+            aria-label={`${props.streakDays} day streak`}
+            className="flex items-center gap-1 h-8 px-2.5 rounded-full border border-[#ECD98A] bg-[#FEF9C3] text-[#5C4A0E] text-[12.5px] font-bold tabular-nums"
+          >
+            <Glyph name="flame" className="w-[14px] h-[14px]" /> {props.streakDays}
+          </span>
+        )}
         {props.coins !== undefined && (
           <span
             aria-label={`${props.coins} coins`}

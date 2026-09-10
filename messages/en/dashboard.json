@@ -117,5 +117,24 @@
     "writing": "Order · particles",
     "slang": "Today’s word",
     "levelDone": "{level} · {done}/{total}"
+  },
+  "rings": {
+    "title": "Growth rings",
+    "thisWeek": "This week {n} of 7",
+    "avgPerDay": "avg {n} min/day",
+    "open": "Open growth rings",
+    "ariaWeek": "{n} of 7 days this week",
+    "toastTitle": "{day}'s ring is in",
+    "toastSub": "{n} of 7 this week · day {streak}",
+    "sheetTitle": "Growth rings · {n} weeks",
+    "rowThis": "This week",
+    "rowLast": "Last week",
+    "rowAgo": "{n} weeks ago",
+    "legendAway": "Away",
+    "legendShowed": "Showed up",
+    "legendLesson": "A lesson",
+    "legendReview": "Lesson + review",
+    "grown": "{n} weeks grown",
+    "firstWeek": "Your first ring is forming"
   }
 }

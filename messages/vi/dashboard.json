@@ -117,5 +117,24 @@
     "writing": "Trật tự · trợ từ",
     "slang": "Từ hôm nay",
     "levelDone": "{level} · {done}/{total}"
+  },
+  "rings": {
+    "title": "Vòng sinh trưởng",
+    "thisWeek": "Tuần này {n}/7",
+    "avgPerDay": "TB {n} phút/ngày",
+    "open": "Mở vòng sinh trưởng",
+    "ariaWeek": "{n}/7 ngày tuần này",
+    "toastTitle": "Vòng của {day} đã được ghi",
+    "toastSub": "{n}/7 tuần này · ngày {streak}",
+    "sheetTitle": "Vòng sinh trưởng · {n} tuần",
+    "rowThis": "Tuần này",
+    "rowLast": "Tuần trước",
+    "rowAgo": "{n} tuần trước",
+    "legendAway": "Vắng",
+    "legendShowed": "Có mặt",
+    "legendLesson": "Một bài học",
+    "legendReview": "Bài học + ôn tập",
+    "grown": "{n} tuần đã lớn",
+    "firstWeek": "Vòng đầu tiên của bạn đang hình thành"
   }
 }

@@ -117,5 +117,24 @@
     "writing": "語順・助詞",
     "slang": "今日の一語",
     "levelDone": "{level} · {done}/{total}"
+  },
+  "rings": {
+    "title": "成長の年輪",
+    "thisWeek": "今週 {n}/7",
+    "avgPerDay": "平均 {n} 分/日",
+    "open": "成長の年輪を開く",
+    "ariaWeek": "今週 7日中 {n} 日",
+    "toastTitle": "{day}の年輪が刻まれました",
+    "toastSub": "今週 {n}/7 · {streak} 日目",
+    "sheetTitle": "成長の年輪 · {n} 週",
+    "rowThis": "今週",
+    "rowLast": "先週",
+    "rowAgo": "{n} 週前",
+    "legendAway": "休み",
+    "legendShowed": "ログイン",
+    "legendLesson": "レッスン",
+    "legendReview": "レッスン + 復習",
+    "grown": "{n} 週分の年輪",
+    "firstWeek": "最初の年輪ができつつあります"
   }
 }

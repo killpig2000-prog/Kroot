@@ -12,6 +12,8 @@ import TodaysQuestButton from "@/components/dashboard/TodaysQuestButton";
 import { MODULES } from "@/components/dashboard/navItems";
 import ModuleIcon from "@/components/dashboard/ModuleIcon";
 import Glyph from "@/components/dashboard/Glyph";
+import GrowthRingsCard from "@/components/dashboard/GrowthRingsCard";
+import { buildWeeks, ringsSince } from "@/lib/growth-rings";
 import InstallBanner from "@/components/pwa/InstallBanner";
 import OnboardingTour from "@/components/onboarding/OnboardingTour";
 import TutorialFinishBanner from "@/components/onboarding/TutorialFinishBanner";
@@ -157,7 +159,8 @@ export default async function DashboardPage() {
   // (/profile) 2026-09-03 — the Garden is a "what do I do today" page, and a
   // once-eligible learner had no way to stop it nagging them here every visit.
   const todayStartIso = `${today}T00:00:00.000Z`;
-  const [coinsRes, { count: reviewedTodayCount }] = await Promise.all([
+  const now = new Date();
+  const [coinsRes, { count: reviewedTodayCount }, attendRes, activityRes, reviewRes] = await Promise.all([
     // coins isn't in the snapshot RPC's profile row; a parallel read here
     // beats a function migration for one integer (see 0041's rationale).
     // review_capacity_bonus and is_admin ride along for the same reason —
@@ -173,7 +176,26 @@ export default async function DashboardPage() {
       .select("id", { count: "exact", head: true })
       .eq("user_id", user.id)
       .gte("last_reviewed_at", todayStartIso),
+    // Growth rings (2026-09-10): twelve weeks of "was here" — days the app
+    // was opened (attendance_days, from migration 0079 on), days with study
+    // minutes, days a word was reviewed. Three cheap reads; the ring's tone
+    // per day comes out of the union in lib/growth-rings.
+    supabase.from("attendance_days").select("day").eq("user_id", user.id).gte("day", ringsSince(now)),
+    supabase.from("daily_activity").select("activity_date, minutes").eq("user_id", user.id).gte("activity_date", ringsSince(now)),
+    supabase.from("vocabulary_progress").select("last_reviewed_at").eq("user_id", user.id).gte("last_reviewed_at", `${ringsSince(now)}T00:00:00.000Z`),
   ]);
+  const attendedDays = new Set((attendRes.error ? [] : attendRes.data ?? []).map((r) => r.day as string));
+  const minutesByDate = new Map((activityRes.error ? [] : activityRes.data ?? []).map((r) => [r.activity_date as string, r.minutes ?? 0]));
+  const studiedDays = new Set([...minutesByDate].filter(([, m]) => m > 0).map(([d]) => d));
+  const reviewedDays = new Set((reviewRes.error ? [] : reviewRes.data ?? []).map((r) => String(r.last_reviewed_at).slice(0, 10)));
+  const weeks = buildWeeks(now, { attended: attendedDays, studied: studiedDays, reviewed: reviewedDays });
+  const ringToday = (now.getDay() + 6) % 7; // 0 = Monday
+  const weekMinutes = weeks[0].days.reduce((sum, _, i) => {
+    const d = new Date(now);
+    d.setDate(now.getDate() - (ringToday - i));
+    return i <= ringToday ? sum + (minutesByDate.get(iso(d)) ?? 0) : sum;
+  }, 0);
+  const avgPerDay = Math.round(weekMinutes / (ringToday + 1));
   const coins = coinsRes.error ? 0 : coinsRes.data?.coins ?? 0;
   const reviewCapacityBonus = coinsRes.error ? 0 : coinsRes.data?.review_capacity_bonus ?? 0;
   const isAdmin = coinsRes.error ? false : coinsRes.data?.is_admin ?? false;
@@ -224,6 +246,8 @@ export default async function DashboardPage() {
             avatarUrl={profile?.avatar_url}
             streakFreezes={extras?.streak_freezes ?? 0}
             coins={coins}
+            weekRing={weeks[0].days}
+            ringToday={ringToday}
           />
         </div>
 
@@ -409,6 +433,14 @@ export default async function DashboardPage() {
               the Garden stays one screen; the week lives on My progress. The
               phone-only feedback pill that used to end the page is gone too;
               Settings still has a Send-feedback row. */}
+
+          {/* Growth rings (2026-09-10, user approved the mockup): the week
+              as a tree ring, filled a segment per day the Garden is opened.
+              Phone only — the desktop rail has its own week. One compact row
+              so the Garden still reads as one screen. */}
+          <div className="xl:hidden mb-3">
+            <GrowthRingsCard weeks={weeks} today={ringToday} todayIso={today} avgPerDay={avgPerDay} streakDays={streakDays} />
+          </div>
         </main>
 
         <Widgets slang={{ kr: slang.kr, romanization: slang.romanization, meaning: slang.meaning }} />

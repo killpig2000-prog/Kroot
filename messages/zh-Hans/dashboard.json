@@ -117,5 +117,24 @@
     "writing": "语序 · 助词",
     "slang": "今日一词",
     "levelDone": "{level} · {done}/{total}"
+  },
+  "rings": {
+    "title": "成长年轮",
+    "thisWeek": "本周 {n}/7",
+    "avgPerDay": "平均 {n} 分钟/天",
+    "open": "打开成长年轮",
+    "ariaWeek": "本周 7 天中的 {n} 天",
+    "toastTitle": "{day}的年轮已刻下",
+    "toastSub": "本周 {n}/7 · 第 {streak} 天",
+    "sheetTitle": "成长年轮 · {n} 周",
+    "rowThis": "本周",
+    "rowLast": "上周",
+    "rowAgo": "{n} 周前",
+    "legendAway": "缺席",
+    "legendShowed": "已登录",
+    "legendLesson": "一节课",
+    "legendReview": "课程 + 复习",
+    "grown": "已生长 {n} 周",
+    "firstWeek": "你的第一圈年轮正在形成"
   }
 }
