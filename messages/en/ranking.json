@@ -1,44 +1,37 @@
 {
   "title": "Ranking",
-  "bed": "{tier} bed",
-  "tierName": {
-    "Sprout": "Sprout",
-    "Bronze": "Bronze",
-    "Silver": "Silver",
-    "Gold": "Gold",
-    "Diamond": "Diamond"
-  },
   "head": {
     "gardeners": "{n, plural, one {# gardener} other {# gardeners}}",
-    "endsSunday": "ends Sunday",
-    "daysLeft": "{n, plural, one {# day left} other {# days left}}"
+    "daysLeft": "{n, plural, one {# day left} other {# days left}}",
+    "byXp": "Everyone, by total XP",
+    "sundayCoins": "to Sunday coins"
   },
   "fair": {
-    "fresh": "Fresh week — everyone starts at ☀️ 0. The first session takes the blue ribbon.",
-    "sun": "☀️ {n}"
+    "sun": "☀️ {n}",
+    "xp": "☀️ {n}",
+    "empty": "No trees on the board yet — one session plants yours."
   },
   "zone": {
-    "up": "Moves up to the {tier} bed · top {n}",
-    "stay": "Stays in the {tier} bed",
-    "down": "Moves to the {tier} bed",
     "loading": "Loading the fair…",
     "empty": "Nobody has sunlight this week yet — the blue ribbon is wide open."
   },
   "row": {
     "you": "you",
-    "level": "Lv.{n}"
+    "level": "Lv.{n}",
+    "thisWeek": "+{n} this week"
   },
   "nudge": {
     "noXp": "One session puts your tree on the board.",
     "pass": "+{n} ☀️ passes {name}.",
     "oneSession": "One session does it.",
     "fewSessions": "A couple of sessions do it.",
-    "lead": "You hold the blue ribbon — {n} ☀️ ahead of {name}.",
-    "leadAlone": "You hold the blue ribbon. Keep the lead.",
+    "lead": "You lead — {n} ☀️ ahead of {name}.",
+    "leadAlone": "You lead the garden. Keep growing.",
     "learn": "Learn →"
   },
   "bar": {
-    "place": "{rank} of {total}"
+    "place": "{rank} of {total}",
+    "toNext": "+{n} ☀️ → #{rank}"
   },
   "reward": {
     "popupEyebrow": "Last week's coins",
@@ -46,10 +39,6 @@
     "ok": "Nice!",
     "closeAria": "Close",
     "dialogAria": "Last week's coin reward"
-  },
-  "movement": {
-    "up": "↑ moved up this week",
-    "down": "↓ moved down this week"
   },
   "unavailable": "The fair opens once the database is updated. Check back in a moment.",
   "peek": {

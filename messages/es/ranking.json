@@ -1,44 +1,37 @@
 {
   "title": "Ranking",
-  "bed": "Parcela {tier}",
-  "tierName": {
-    "Sprout": "Brote",
-    "Bronze": "Bronce",
-    "Silver": "Plata",
-    "Gold": "Oro",
-    "Diamond": "Diamante"
-  },
   "head": {
     "gardeners": "{n, plural, one {# jardinero} other {# jardineros}}",
-    "endsSunday": "termina el domingo",
-    "daysLeft": "{n, plural, one {queda # día} other {quedan # días}}"
+    "daysLeft": "{n, plural, one {queda # día} other {quedan # días}}",
+    "byXp": "Todos, por XP total",
+    "sundayCoins": "para las monedas del domingo"
   },
   "fair": {
-    "fresh": "Semana nueva: todos empiezan en ☀️ 0. La primera sesión se lleva la cinta azul.",
-    "sun": "☀️ {n}"
+    "sun": "☀️ {n}",
+    "xp": "☀️ {n}",
+    "empty": "Aún no hay árboles en el tablero: una sesión planta el tuyo."
   },
   "zone": {
-    "up": "Sube a la parcela {tier} · top {n}",
-    "stay": "Se queda en la parcela {tier}",
-    "down": "Pasa a la parcela {tier}",
     "loading": "Cargando la feria…",
     "empty": "Nadie tiene luz solar esta semana todavía: la cinta azul está libre."
   },
   "row": {
     "you": "tú",
-    "level": "Nv.{n}"
+    "level": "Nv.{n}",
+    "thisWeek": "+{n} esta semana"
   },
   "nudge": {
     "noXp": "Una sesión pone tu árbol en el tablero.",
     "pass": "+{n} ☀️ y superas a {name}.",
     "oneSession": "Con una sesión basta.",
     "fewSessions": "Con un par de sesiones basta.",
-    "lead": "Tienes la cinta azul: {n} ☀️ por delante de {name}.",
-    "leadAlone": "Tienes la cinta azul. Mantén la ventaja.",
+    "lead": "Vas primero: {n} ☀️ por delante de {name}.",
+    "leadAlone": "Lideras el jardín. Sigue creciendo.",
     "learn": "Aprender →"
   },
   "bar": {
-    "place": "{rank} de {total}"
+    "place": "{rank} de {total}",
+    "toNext": "+{n} ☀️ → N.º {rank}"
   },
   "reward": {
     "popupEyebrow": "Monedas de la semana pasada",
@@ -46,10 +39,6 @@
     "ok": "¡Genial!",
     "closeAria": "Cerrar",
     "dialogAria": "Recompensa de monedas de la semana pasada"
-  },
-  "movement": {
-    "up": "↑ subiste esta semana",
-    "down": "↓ bajaste esta semana"
   },
   "unavailable": "La feria abre cuando se actualice la base de datos. Vuelve en un momento.",
   "peek": {

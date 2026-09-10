@@ -1,44 +1,37 @@
 {
   "title": "Bảng xếp hạng",
-  "bed": "Luống {tier}",
-  "tierName": {
-    "Sprout": "Mầm",
-    "Bronze": "Đồng",
-    "Silver": "Bạc",
-    "Gold": "Vàng",
-    "Diamond": "Kim cương"
-  },
   "head": {
     "gardeners": "{n} người làm vườn",
-    "endsSunday": "kết thúc Chủ nhật",
-    "daysLeft": "còn {n} ngày"
+    "daysLeft": "còn {n} ngày",
+    "byXp": "Mọi người, theo tổng XP",
+    "sundayCoins": "đến xu Chủ nhật"
   },
   "fair": {
-    "fresh": "Tuần mới — mọi người bắt đầu từ ☀️ 0. Buổi học đầu tiên giành dải ruy băng xanh.",
-    "sun": "☀️ {n}"
+    "sun": "☀️ {n}",
+    "xp": "☀️ {n}",
+    "empty": "Chưa có cây nào trên bảng — một buổi học là trồng cây của bạn."
   },
   "zone": {
-    "up": "Lên luống {tier} · top {n}",
-    "stay": "Ở lại luống {tier}",
-    "down": "Chuyển sang luống {tier}",
     "loading": "Đang tải hội chợ…",
     "empty": "Tuần này chưa ai có ánh nắng — dải ruy băng xanh đang chờ."
   },
   "row": {
     "you": "bạn",
-    "level": "Cấp {n}"
+    "level": "Cấp {n}",
+    "thisWeek": "+{n} tuần này"
   },
   "nudge": {
     "noXp": "Một buổi học là cây của bạn lên bảng.",
     "pass": "+{n} ☀️ là vượt {name}.",
     "oneSession": "Một buổi học là đủ.",
     "fewSessions": "Vài buổi học là đủ.",
-    "lead": "Bạn đang giữ ruy băng xanh — hơn {name} {n} ☀️.",
-    "leadAlone": "Bạn đang giữ ruy băng xanh. Giữ vững vị trí nhé.",
+    "lead": "Bạn dẫn đầu — hơn {name} {n} ☀️.",
+    "leadAlone": "Bạn dẫn đầu khu vườn. Cứ lớn tiếp nhé.",
     "learn": "Học ngay →"
   },
   "bar": {
-    "place": "Hạng {rank}/{total}"
+    "place": "Hạng {rank}/{total}",
+    "toNext": "+{n} ☀️ → hạng {rank}"
   },
   "reward": {
     "popupEyebrow": "Xu của tuần trước",
@@ -46,10 +39,6 @@
     "ok": "Tuyệt!",
     "closeAria": "Đóng",
     "dialogAria": "Phần thưởng xu của tuần trước"
-  },
-  "movement": {
-    "up": "↑ lên luống tuần này",
-    "down": "↓ xuống luống tuần này"
   },
   "unavailable": "Hội chợ sẽ mở sau khi cập nhật cơ sở dữ liệu. Vui lòng quay lại sau.",
   "peek": {

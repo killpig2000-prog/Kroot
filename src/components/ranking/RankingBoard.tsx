@@ -9,37 +9,32 @@ import LevelCreature from "@/components/dashboard/LevelCreature";
 import VeteranTree, { BASE_HEIGHT, veteranFrameHeight } from "@/components/dashboard/VeteranTree";
 import { FULLY_GROWN_LEVEL, treeStageForLevel } from "@/lib/level";
 import { SceneLayer, skyFor } from "@/lib/costumes";
-import { daysUntilWeekEnd, leagueTier, LEAGUE_TIERS } from "@/lib/league";
+import { buildWeeks, xpByDayFrom, type WeekRing } from "@/lib/growth-rings";
+import { daysUntilWeekEnd } from "@/lib/league";
 import TreePeek from "@/components/ranking/TreePeek";
 import GardenScene from "@/components/ui/GardenScene";
 import type { CefrLevel } from "@/lib/tree";
 
 type Row = {
   rank: number;
+  total_players: number;
   user_id: string;
   display_name: string;
   avatar_url: string | null;
   level: number;
+  xp: number;
   xp_week: number;
   is_me: boolean;
   costume_ids?: string[];
 };
-type MyRank = {
-  rank: number;
-  total_players: number;
-  xp_week: number;
-  tier: number;
-  movement: number; // last week: +1 promoted · -1 demoted · 0 stayed
-};
+type RingDay = { day: string; attended: boolean; studied: boolean; reviewed: boolean; xp: number };
 type Reward = { coins: number; rank: number; total_players: number; already_claimed: boolean };
 
-// Podium steps and medals: gold · silver · bronze, flat like the rest of the
-// app — one fill, one edge, no gloss. The medal is a small pin on the corner
-// of the tree box; the step under the tree carries the same colour.
+// Podium medals: gold · silver · bronze, flat like the rest of the app.
 const STEP = [
-  { fill: "#F2C94C", edge: "#B7861A", ink: "#5C4A0E", h: 26 },
-  { fill: "#D3D8E0", edge: "#8E96A3", ink: "#374151", h: 18 },
-  { fill: "#D08A55", edge: "#8F5A32", ink: "#4A2E14", h: 12 },
+  { fill: "#F2C94C", edge: "#B7861A", ink: "#5C4A0E" },
+  { fill: "#D3D8E0", edge: "#8E96A3", ink: "#374151" },
+  { fill: "#D08A55", edge: "#8F5A32", ink: "#4A2E14" },
 ] as const;
 
 function Medal({ place, rank }: { place: 0 | 1 | 2; rank: number }) {
@@ -64,7 +59,6 @@ const SESSION_XP = 30;
 // A thumbnail draws the whole tree to scale — a Lv.120 tree is more than
 // twice the height of a Lv.50 one, so it comes out narrow and small in the
 // same box, which is exactly what says "that one is tall" at a glance.
-// Every thumbnail is a button that opens TreePeek with the tree at full size.
 function Tree({
   row,
   species,
@@ -75,10 +69,8 @@ function Tree({
 }: {
   row: Row;
   species: CefrLevel;
-  /** Box side — a px number, or any CSS length (the podium uses clamp()). */
   size: number | string;
   className?: string;
-  /** No box at all — the tree stands in the podium garden, which paints the sky. */
   bare?: boolean;
   onOpen: (row: Row) => void;
 }) {
@@ -96,8 +88,6 @@ function Tree({
       } ${className}`}
       style={{ width: size, height: size, ...(sky && !bare ? { background: sky } : {}) }}
     >
-      {/* Full frame (220 × the level's height), fitted by height: the SVG keeps
-          its aspect, so a taller tree draws smaller inside the same box. */}
       <svg viewBox={`0 0 220 ${frameH}`} style={{ height: "calc(100% - 4px)", width: "auto", maxWidth: "calc(100% - 4px)" }}>
         <SceneLayer costumeIds={ids} layer="behind" />
         {veteran ? (
@@ -111,72 +101,61 @@ function Tree({
   );
 }
 
-// The fair page, one column: a header line (bed chip with last week's move,
-// gardeners, days left), last week's coins when they are due, a compact
-// podium for the top 3, the board with promotion / stay / demotion dividers,
-// and one pinned you-bar (place · the smallest thing that changes it · Learn).
-// Data comes from migration 0026's SECURITY DEFINER RPCs; the board only ever
-// sees the top 10 plus a ±3 window around the caller.
+// The board, one column (2026-09-10, "누적 XP로, 리그 없이, 메이플처럼
+// 당분간"): everyone, ranked by lifetime XP — the axis the tree grows on, so
+// the tallest tree on the podium really is the top gardener. No beds, no
+// promotion zones, no rules. What's left:
+//   · a head line: title, gardeners, and the Sunday coin countdown
+//   · the podium garden, top three by XP
+//   · the list, every row with a sunlight bar (leader = full) and this
+//     week's XP as the movement
+//   · one pinned you-bar: place · the smallest thing that changes it · Learn
+// Sunday coins still come from the weekly league functions, on this week's
+// XP — a lifetime board would hand the same people the coins every week.
 export default function RankingBoard({ species }: { species: CefrLevel }) {
   const t = useTranslations("ranking");
   const supabase = useMemo(() => createClient(), []);
   const [rows, setRows] = useState<Row[] | null>(null);
-  const [my, setMy] = useState<MyRank | null>(null);
   const [reward, setReward] = useState<Reward | null>(null);
-  // Shown once, the moment claim_weekly_reward() actually pays something out
-  // for the first time — never again for the same week (already_claimed
-  // flips true server-side the instant that call returns), and never on a
-  // plain page reload, which used to bring back a "Collect" button that
-  // looked unclaimed even though the RPC had already paid it.
   const [showRewardPopup, setShowRewardPopup] = useState(false);
-  // Garden beds (tiers) are switched off while the player base is small —
-  // one board for everyone, no bed chip, no move-up/down zones. The switch
-  // lives in league_settings (migration 0069); true is assumed until read so
-  // an environment without the table behaves as before.
-  const [bedsEnabled, setBedsEnabled] = useState(true);
   const [peek, setPeek] = useState<Row | null>(null);
+  const [peekRings, setPeekRings] = useState<{ weeks: WeekRing[]; today: number } | null>(null);
   const [unavailable, setUnavailable] = useState(false);
   const meRef = useRef<HTMLDivElement>(null);
+  // Opening a tree clears the last one's rings so they never show under
+  // the wrong name while the new read is in flight.
+  const openPeek = (r: Row | null) => {
+    setPeekRings(null);
+    setPeek(r);
+  };
 
   // Once the board is in, bring the learner's own row on screen if it sits
-  // below the fold (the RPC's top-10 + ±3 window can put it well down the
-  // list). Centre it so the zone header above and a neighbour below both
-  // show; the podium stays where it was for anyone who scrolls back up.
-  // One-shot and instant: an animated scroll would fight a drag that starts
-  // mid-animation, and the user asked that nothing hold focus after load.
+  // below the fold. One-shot and instant.
   useEffect(() => {
     if (!rows || !meRef.current) return;
     const el = meRef.current;
     const rect = el.getBoundingClientRect();
-    if (rect.bottom <= window.innerHeight - 90) return; // already visible above the you-bar
+    if (rect.bottom <= window.innerHeight - 90) return;
     el.scrollIntoView({ block: "center", behavior: "auto" });
   }, [rows]);
 
   useEffect(() => {
     let cancelled = false;
     void (async () => {
-      // Settle any elapsed weeks first so tiers and rankings are this week's.
+      // Settle any elapsed weeks first so the Sunday coins are current.
       const settle = await supabase.rpc("settle_league_weeks");
       if (cancelled) return;
       if (settle.error) {
         setUnavailable(true);
         return;
       }
-      const [league, mine, auth, settings] = await Promise.all([
-        supabase.rpc("get_weekly_league"),
-        supabase.rpc("get_my_weekly_rank"),
-        supabase.auth.getUser(),
-        supabase.from("league_settings").select("beds_enabled").maybeSingle(),
-      ]);
+      const [board, auth] = await Promise.all([supabase.rpc("get_xp_ranking"), supabase.auth.getUser()]);
       if (cancelled) return;
-      if (league.error || mine.error) {
+      if (board.error) {
         setUnavailable(true);
         return;
       }
-      if (!settings.error && settings.data) setBedsEnabled(!!settings.data.beds_enabled);
-      setRows((league.data ?? []) as Row[]);
-      const m = Array.isArray(mine.data) ? mine.data[0] : mine.data;
-      setMy(m as MyRank);
+      setRows((board.data ?? []) as Row[]);
 
       // Accounts younger than the week have no "last week" to collect.
       const createdAt = auth.data.user?.created_at;
@@ -187,13 +166,8 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
         monday.setUTCDate(monday.getUTCDate() - ((monday.getUTCDay() + 6) % 7));
         justJoined = new Date(createdAt) >= monday;
       }
-
-      // claim_weekly_reward() is idempotent — the first call for a week pays
-      // out and returns already_claimed: false; every call after that just
-      // reports the same row with already_claimed: true and pays nothing
-      // twice. Calling it here, on every board load, replaces the old
-      // "Collect" button: there's nothing left to press, and nothing that
-      // can go stale across a refresh.
+      // claim_weekly_reward() is idempotent: first call for a week pays out,
+      // every later call reports already_claimed and pays nothing twice.
       if (!justJoined) {
         const { data, error } = await supabase.rpc("claim_weekly_reward");
         if (cancelled) return;
@@ -205,9 +179,6 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
             playPromote();
           }
         } else {
-          // Best effort: a failed call here just means next load tries
-          // again, not a stuck flow — there's no button whose state would
-          // otherwise get stranded.
           console.error("claim_weekly_reward failed:", error.message);
         }
       }
@@ -217,6 +188,29 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
     };
   }, [supabase]);
 
+  // The popup's rings: one small read per open, so the list itself stays
+  // one call. Rings arrive after the popup — the tree shows at once.
+  useEffect(() => {
+    if (!peek) return;
+    let cancelled = false;
+    void (async () => {
+      const { data, error } = await supabase.rpc("get_gardener_rings", { p_user_id: peek.user_id });
+      if (cancelled || error) return;
+      const days = (data ?? []) as RingDay[];
+      const now = new Date();
+      const weeks = buildWeeks(now, {
+        attended: new Set(days.filter((d) => d.attended).map((d) => d.day)),
+        studied: new Set(days.filter((d) => d.studied).map((d) => d.day)),
+        reviewed: new Set(days.filter((d) => d.reviewed).map((d) => d.day)),
+        xpByDay: xpByDayFrom(days.map((d) => ({ points: d.xp, created_at: `${d.day}T12:00:00` }))),
+      });
+      setPeekRings({ weeks, today: (now.getDay() + 6) % 7 });
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [peek, supabase]);
+
   if (unavailable) {
     return (
       <div className="border border-amber-line bg-[var(--tint-amber)] rounded-[14px] px-5 py-4 text-[13.5px] max-w-[560px]">
@@ -225,37 +219,26 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
     );
   }
 
-  const tierIdx = Math.min(Math.max(my?.tier ?? 0, 0), LEAGUE_TIERS.length - 1);
-  const tier = leagueTier(tierIdx);
-  const tierLabel = (i: number) => t(`tierName.${LEAGUE_TIERS[i].name}`);
-  const total = my?.total_players ?? 0;
-  // Mirrors settle_league_weeks: ceil for promotion, floor for demotion.
-  const promoteCut = tierIdx < LEAGUE_TIERS.length - 1 ? Math.ceil(total * 0.2) : 0;
-  const demoteFrom = tierIdx > 0 ? total - Math.floor(total * 0.2) : Number.POSITIVE_INFINITY;
-  const zoneOf = (r: Row): "up" | "stay" | "down" =>
-    r.xp_week <= 0 ? "stay" : r.rank <= promoteCut ? "up" : r.rank > demoteFrom ? "down" : "stay";
-
-  const active = (rows ?? []).filter((r) => r.xp_week > 0);
-  const podium = active.slice(0, 3);
-  // The board below starts where the podium ends — a top-3 gardener is on
-  // the podium, not repeated as a row.
-  const listRows = rows ? rows.filter((r) => !podium.some((p) => p.rank === r.rank)) : null;
-  const freshWeek = rows !== null && active.length === 0;
+  const total = rows?.[0]?.total_players ?? 0;
+  const podium = (rows ?? []).filter((r) => r.xp > 0).slice(0, 3);
+  const leaderXp = rows?.[0]?.xp ?? 0;
   const meRow = rows?.find((r) => r.is_me) ?? null;
   const meIdx = rows?.findIndex((r) => r.is_me) ?? -1;
   const above = meIdx > 0 && rows ? rows[meIdx - 1] : null;
   const below = meIdx >= 0 && rows && meIdx + 1 < rows.length ? rows[meIdx + 1] : null;
-  const gapUp = above && meRow ? Math.max(1, above.xp_week - meRow.xp_week + 1) : null;
-  const gapDown = below && meRow ? Math.max(0, meRow.xp_week - below.xp_week) : null;
+  const gapUp = above && meRow ? Math.max(1, above.xp - meRow.xp + 1) : null;
+  const gapDown = below && meRow ? Math.max(0, meRow.xp - below.xp) : null;
   const daysLeft = daysUntilWeekEnd();
-  const placed = !!my && my.xp_week > 0;
+  const placed = !!meRow && meRow.xp > 0;
 
   // The nudge: the smallest thing that changes your place.
   let nudge: string;
   if (!placed) nudge = t("nudge.noXp");
+  // Lifetime gaps run into the thousands; the session estimate is only
+  // honest when it is really one or a few sessions away.
   else if (above && gapUp !== null)
-    nudge = `${t("nudge.pass", { n: gapUp, name: above.display_name })} ${
-      gapUp <= SESSION_XP ? t("nudge.oneSession") : t("nudge.fewSessions")
+    nudge = `${t("nudge.pass", { n: gapUp, name: above.display_name })}${
+      gapUp <= SESSION_XP ? ` ${t("nudge.oneSession")}` : gapUp <= SESSION_XP * 4 ? ` ${t("nudge.fewSessions")}` : ""
     }`;
   else if (below && gapDown !== null) nudge = t("nudge.lead", { n: gapDown, name: below.display_name });
   else nudge = t("nudge.leadAlone");
@@ -272,63 +255,43 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
           species={species}
           costumeIds={peek.costume_ids ?? []}
           isMe={peek.is_me}
-          onClose={() => setPeek(null)}
+          rings={peekRings ?? undefined}
+          onClose={() => openPeek(null)}
         />
       )}
-      {/* head: title · bed chip (with last week's move) · gardeners · days left */}
-      <div className="grid gap-2">
-        <h1 className="font-bold text-[22px] tracking-[-0.02em] flex items-center">
-          <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[var(--tint-amber)] border border-amber-line items-center justify-center text-[15px] mr-[9px]">
-            🏅
-          </span>
-          {t("title")}
-        </h1>
-        <div className="flex items-center gap-x-2 gap-y-1.5 flex-wrap text-[12.5px] font-semibold text-faint">
-          {bedsEnabled && (
-            <span
-              className="inline-flex items-center gap-1.5 rounded-full border-[1.5px] px-2.5 py-0.5 text-[12.5px] font-bold"
-              style={{ borderColor: tier.border, background: tier.bg, color: tier.accent }}
-            >
-              <span aria-hidden="true">{tier.emoji}</span>
-              {t("bed", { tier: tierLabel(tierIdx) })}
-            </span>
-          )}
-          {bedsEnabled && my && my.movement !== 0 && (
-            <span
-              className={`inline-flex items-center rounded-full border px-2 py-0.5 text-[11px] font-black ${
-                my.movement > 0 ? "bg-success-bg border-success-line text-success-deep" : "bg-warm border-line text-danger"
-              }`}
-            >
-              {my.movement > 0 ? t("movement.up") : t("movement.down")}
-            </span>
-          )}
-          {total > 0 && <span>{t("head.gardeners", { n: total })}</span>}
-          <span className="ml-auto tabular-nums">
-            {t("head.daysLeft", { n: daysLeft })} · {t("head.endsSunday")}
-          </span>
+
+      {/* head: title · gardeners · Sunday coins countdown */}
+      <div className="flex items-end justify-between gap-3">
+        <div className="min-w-0">
+          <h1 className="font-bold text-[22px] tracking-[-0.02em] leading-none">{t("title")}</h1>
+          <p className="text-[12.5px] font-semibold text-faint mt-1.5">
+            {t("head.byXp")}
+            {total > 0 && <> · {t("head.gardeners", { n: total })}</>}
+          </p>
         </div>
+        <p className="flex-none text-right text-[11.5px] font-bold text-muted leading-tight tabular-nums">
+          <span className="block text-[13px] text-[#B7791F]">{t("head.daysLeft", { n: daysLeft })}</span>
+          {t("head.sundayCoins")}
+        </p>
       </div>
 
-      {/* the podium is a garden: the week's top three trees stand on the
-          hills — 1st centre and tallest, 2nd left, 3rd right — each with its
-          medal pinned to the canopy and a name · ☀️ pill at its feet. Same
-          sky as the dashboard and the first screen; no boxes, no steps. */}
+      {/* the podium is a garden: the top three trees stand on the hills —
+          1st centre and tallest, 2nd left, 3rd right — medal on the canopy,
+          name · XP pill at the feet. */}
       <GardenScene className="rounded-[18px] border border-line h-[clamp(236px,62vw,290px)]" hillsHeight="48%">
         {rows !== null && podium.length === 0 && (
           <div className="absolute left-3 right-3 top-3 flex items-center gap-2.5 border border-amber-line bg-[var(--tint-amber)]/95 rounded-[12px] px-4 py-2.5 text-[12.5px] font-semibold text-[var(--c-amber-deep)] z-[4]">
-            🌅 {t("fair.fresh")}
+            🌱 {t("fair.empty")}
           </div>
         )}
         {[podium[0], podium[1], podium[2]].map((r, place) => {
           if (!r) return null;
-          // Where each place stands and how big it draws; the winner is the
-          // one tree that scales with the phone, the others follow it.
           const spot =
             place === 0
               ? { left: "50%", bottom: "26%", size: "clamp(104px, 30vw, 136px)", z: 3 }
               : place === 1
-              ? { left: "22%", bottom: "19%", size: "clamp(80px, 23vw, 106px)", z: 2 }
-              : { left: "78%", bottom: "15%", size: "clamp(72px, 21vw, 96px)", z: 2 };
+                ? { left: "22%", bottom: "19%", size: "clamp(80px, 23vw, 106px)", z: 2 }
+                : { left: "78%", bottom: "15%", size: "clamp(72px, 21vw, 96px)", z: 2 };
           return (
             <div
               key={r.rank}
@@ -338,7 +301,7 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
               <span className="absolute -top-1 right-[4%] z-10 leading-none drop-shadow-[0_1px_1px_rgba(0,0,0,.2)]" aria-label={`#${r.rank}`}>
                 <Medal place={place as 0 | 1 | 2} rank={r.rank} />
               </span>
-              <Tree row={r} species={species} size={spot.size} bare className={r.is_me ? "rounded-[14px] ring-2 ring-[#ECD98A]" : ""} onOpen={setPeek} />
+              <Tree row={r} species={species} size={spot.size} bare className={r.is_me ? "rounded-[14px] ring-2 ring-[#ECD98A]" : ""} onOpen={openPeek} />
               <span
                 className="mt-1 max-w-[calc(100%+24px)] inline-flex items-center gap-1 rounded-full border px-2 py-[3px] text-[11px] font-bold leading-none whitespace-nowrap"
                 style={{ background: "rgba(255,253,246,.9)", borderColor: "#E3DDD0", color: "#4A4237" }}
@@ -346,7 +309,7 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
                 <span className="truncate max-w-[9ch]">{r.display_name}</span>
                 {r.is_me && <span className="text-success">{t("row.you")}</span>}
                 <span className="tabular-nums" style={{ color: "#6B6560" }}>
-                  · {t("fair.sun", { n: r.xp_week })}
+                  · {t("fair.xp", { n: r.xp })}
                 </span>
               </span>
             </div>
@@ -354,66 +317,56 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
         })}
       </GardenScene>
 
-      {/* the board */}
-      <div className="grid gap-1">
-        {listRows === null ? (
+      {/* the board: every row, a sunlight bar against the leader, this
+          week's XP as the movement */}
+      <div className="grid gap-1.5">
+        {rows === null ? (
           <p className="px-2 py-5 text-[13.5px] text-faint">{t("zone.loading")}</p>
-        ) : rows && rows.length === 0 ? (
+        ) : rows.length === 0 ? (
           <p className="px-2 py-5 text-[13.5px] text-faint">{t("zone.empty")}</p>
         ) : (
-          listRows.map((r, i) => {
-            const zone = zoneOf(r);
-            const prevZone = i > 0 ? zoneOf(listRows[i - 1]) : null;
-            const gap = i > 0 && r.rank - listRows[i - 1].rank > 1;
-            const showZone = bedsEnabled && !freshWeek && (i === 0 || zone !== prevZone);
+          rows.map((r, i) => {
+            const gap = i > 0 && r.rank - rows[i - 1].rank > 1;
+            const pct = leaderXp > 0 ? Math.max(r.xp > 0 ? 3 : 0, Math.round((r.xp / leaderXp) * 100)) : 0;
+            const top = r.rank <= 3 && r.xp > 0;
             return (
-              <div key={`${r.rank}-${r.display_name}`} className="grid gap-1">
+              <div key={r.user_id} className="grid gap-1.5">
                 {gap && (
                   <div className="py-0.5 text-center text-[13px] tracking-[0.3em] text-faint" aria-hidden="true">
                     ⋯
                   </div>
                 )}
-                {showZone && (
-                  <p
-                    className={`flex items-center gap-2 px-1 pt-2 pb-0.5 text-[10.5px] font-black tracking-[.08em] uppercase ${
-                      zone === "up" ? "text-success-deep" : zone === "down" ? "text-danger" : "text-faint"
-                    }`}
-                  >
-                    {zone === "up"
-                      ? t("zone.up", { tier: tierLabel(Math.min(tierIdx + 1, LEAGUE_TIERS.length - 1)), n: promoteCut })
-                      : zone === "down"
-                        ? t("zone.down", { tier: tierLabel(Math.max(tierIdx - 1, 0)) })
-                        : t("zone.stay", { tier: tierLabel(tierIdx) })}
-                    <span
-                      className={`flex-1 border-t-[1.5px] border-dashed ${
-                        zone === "up" ? "border-success-line" : zone === "down" ? "border-danger/40" : "border-line"
-                      }`}
-                    />
-                  </p>
-                )}
                 <div
                   ref={r.is_me ? meRef : undefined}
-                  className={`grid grid-cols-[22px_66px_minmax(0,1fr)_auto] items-center gap-2.5 px-2.5 py-1.5 rounded-[11px] border text-[13.5px] scroll-mt-24 ${
+                  className={`grid grid-cols-[22px_48px_minmax(0,1fr)_auto] items-center gap-2.5 px-2.5 py-2 rounded-[12px] border text-[13.5px] scroll-mt-24 ${
                     r.is_me
                       ? "bg-[#FEF9C3] border-[#ECD98A] -rotate-[0.4deg] shadow-[0_8px_18px_-12px_rgba(120,100,30,.4)] text-[#2A2622]"
                       : "bg-cream border-line"
                   }`}
                 >
-                  <span className={`font-black tabular-nums text-[12.5px] ${r.is_me ? "" : "text-faint"}`}>{r.rank}</span>
-                  <Tree row={r} species={species} size={66} onOpen={setPeek} />
+                  <span className={`font-black tabular-nums text-[12.5px] text-center ${top ? "text-[#B7791F]" : r.is_me ? "" : "text-faint"}`}>
+                    {r.rank}
+                  </span>
+                  <Tree row={r} species={species} size={48} onOpen={openPeek} />
                   <span className="min-w-0">
-                    <b className="block truncate">
+                    <b className="block truncate leading-tight">
                       {r.display_name}
                       {r.is_me && <span className="text-success text-[11.5px] font-bold ml-1.5">{t("row.you")}</span>}
                     </b>
-                    <small className="block text-[11px] text-faint font-semibold">
+                    <span className="mt-1.5 block h-[7px] rounded-full overflow-hidden" style={{ background: "var(--c-warm-2)" }} aria-hidden="true">
+                      <i
+                        className="not-italic block h-full rounded-full"
+                        style={{ width: `${pct}%`, background: "linear-gradient(90deg,#F2C94C,#F7DC85)", boxShadow: "inset 0 -1px 0 #B7861A" }}
+                      />
+                    </span>
+                  </span>
+                  <span className="text-right">
+                    <b className="block tabular-nums text-[13px] text-success-deep leading-tight">{t("fair.xp", { n: r.xp })}</b>
+                    <small className="block text-[11px] text-faint font-semibold tabular-nums">
                       {t("row.level", { n: r.level })}
-                      {r.is_me && above && gapUp !== null && (
-                        <> · {t("nudge.pass", { n: gapUp, name: above.display_name })}</>
-                      )}
+                      {r.xp_week > 0 && <> · {t("row.thisWeek", { n: r.xp_week })}</>}
                     </small>
                   </span>
-                  <b className="tabular-nums text-[13px] text-success-deep">{t("fair.sun", { n: r.xp_week })}</b>
                 </div>
               </div>
             );
@@ -423,24 +376,28 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
 
       {/* the you-bar — place · nudge · Learn, pinned above the phone's bottom nav */}
       {rows !== null && (
-        <div className="sticky bottom-[72px] md:bottom-3 z-10 flex items-center gap-2.5 bg-cream/95 backdrop-blur-[6px] border border-line rounded-[12px] px-3.5 py-2.5 text-[12.5px] shadow-[0_10px_24px_-16px_rgba(50,40,20,.5)]">
-          {placed && my ? (
-            <b className="flex-none tabular-nums text-[13px] text-charcoal">{t("bar.place", { rank: my.rank, total: my.total_players })}</b>
+        <div className="sticky bottom-[72px] md:bottom-3 z-10 grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2.5 bg-[#FEF9C3] border border-[#ECD98A] rounded-[12px] px-3.5 py-2.5 text-[12.5px] shadow-[0_10px_24px_-16px_rgba(50,40,20,.5)]">
+          {placed && meRow ? (
+            <b className="tabular-nums text-[13px] text-[#2A2622] leading-tight">
+              {t("bar.place", { rank: meRow.rank, total })}
+              {above && gapUp !== null && (
+                <small className="block text-[10.5px] font-bold text-muted">{t("bar.toNext", { n: gapUp, rank: above.rank })}</small>
+              )}
+            </b>
           ) : (
             <span aria-hidden="true">🌱</span>
           )}
-          <span className="flex-1 min-w-0 font-semibold text-muted">{nudge}</span>
+          <span className="min-w-0 font-semibold text-muted leading-snug">{nudge}</span>
           <Link
             href="/vocabulary"
-            className="flex-none rounded-[9px] bg-success px-3 py-1.5 text-[12.5px] font-bold text-white shadow-[0_3px_0_#2E5B41] hover:translate-y-px hover:shadow-[0_2px_0_#2E5B41] transition-all"
+            className="rounded-[9px] bg-success px-3 py-1.5 text-[12.5px] font-bold text-white shadow-[0_3px_0_#2E5B41] hover:translate-y-px hover:shadow-[0_2px_0_#2E5B41] transition-all whitespace-nowrap"
           >
             {t("nudge.learn")}
           </Link>
         </div>
       )}
 
-      {/* One-time popup: last week's board just paid out, right now. Same
-          full-screen dialog treatment as TreeGrowthPopup. */}
+      {/* One-time popup: last week's board just paid out, right now. */}
       {showRewardPopup && reward && (
         <>
           <button

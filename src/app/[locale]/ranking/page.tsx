@@ -1,16 +1,13 @@
-import { getTranslations } from "next-intl/server";
-import { Link, redirect } from "@/i18n/navigation";
+import { redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import RankingBoard from "@/components/ranking/RankingBoard";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { LEVEL_ORDER, type CefrLevel } from "@/lib/tree";
 
-// Weekly "garden fair": everyone in the learner's tier (a "bed") ranked by XP
-// earned this week. Reads go through the migration 0026 RPCs from the client
-// component; this shell only paints the page chrome.
+// The ranking: everyone, by total XP (2026-09-10; migration 0080's RPCs).
+// This shell only paints the page chrome — the board is the client component.
 export default async function RankingPage() {
-  const [tn, t] = await Promise.all([getTranslations("nav"), getTranslations("ranking")]);
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
   if (!user) redirect("/onboarding");
@@ -35,15 +32,6 @@ export default async function RankingPage() {
         />
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] xl:pb-[60px]">
-          {/* breadcrumb */}
-          <div className="flex gap-2 text-[13px] text-faint mb-[18px]">
-            <Link href="/dashboard" className="hover:text-charcoal transition-colors">
-              {tn("garden")}
-            </Link>
-            <span>/</span>
-            <b className="text-charcoal font-semibold">{t("title")}</b>
-          </div>
-
           <RankingBoard species={species} />
         </main>
       </div>

@@ -1,44 +1,37 @@
 {
   "title": "ランキング",
-  "bed": "{tier}の花壇",
-  "tierName": {
-    "Sprout": "スプラウト",
-    "Bronze": "ブロンズ",
-    "Silver": "シルバー",
-    "Gold": "ゴールド",
-    "Diamond": "ダイヤモンド"
-  },
   "head": {
     "gardeners": "{n}人のガーデナー",
-    "endsSunday": "日曜日に終了",
-    "daysLeft": "残り{n}日"
+    "daysLeft": "残り{n}日",
+    "byXp": "全員、累計XP順",
+    "sundayCoins": "日曜のコインまで"
   },
   "fair": {
-    "fresh": "新しい週の始まり。全員 ☀️ 0 から。最初のセッションが青いリボンを手にします。",
-    "sun": "☀️ {n}"
+    "sun": "☀️ {n}",
+    "xp": "☀️ {n}",
+    "empty": "まだボードに木がありません。1セッションであなたの木が植わります。"
   },
   "zone": {
-    "up": "{tier}の花壇へ昇格 · 上位{n}人",
-    "stay": "{tier}の花壇に残留",
-    "down": "{tier}の花壇へ移動",
     "loading": "品評会を読み込み中…",
     "empty": "今週はまだ誰も日光を集めていません。青いリボンは空いています。"
   },
   "row": {
     "you": "あなた",
-    "level": "Lv.{n}"
+    "level": "Lv.{n}",
+    "thisWeek": "今週 +{n}"
   },
   "nudge": {
     "noXp": "1セッションで、あなたの木がボードに並びます。",
     "pass": "+{n} ☀️ で {name} を抜けます。",
     "oneSession": "1セッションで十分。",
     "fewSessions": "2〜3セッションで届きます。",
-    "lead": "青いリボンはあなたのもの。{name} に {n} ☀️ 差でリード中。",
-    "leadAlone": "青いリボンはあなたのもの。リードを守ろう。",
+    "lead": "あなたが1位。{name} に {n} ☀️ 差でリード中。",
+    "leadAlone": "あなたが1位。このまま育てよう。",
     "learn": "学ぶ →"
   },
   "bar": {
-    "place": "{total}人中 {rank}位"
+    "place": "{total}人中 {rank}位",
+    "toNext": "+{n} ☀️ で {rank}位"
   },
   "reward": {
     "popupEyebrow": "先週分のコイン",
@@ -46,10 +39,6 @@
     "ok": "やった!",
     "closeAria": "閉じる",
     "dialogAria": "先週分のコイン報酬"
-  },
-  "movement": {
-    "up": "↑ 今週昇格",
-    "down": "↓ 今週降格"
   },
   "unavailable": "データベースの更新後に品評会が開きます。少し待ってから再度お試しください。",
   "peek": {
