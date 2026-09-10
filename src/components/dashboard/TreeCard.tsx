@@ -49,6 +49,7 @@ export default function TreeCard({
   linkToShop = false,
   onTreeTap,
   review,
+  showOwner = true,
 }: {
   level: number;
   progressPct: number;
@@ -69,6 +70,8 @@ export default function TreeCard({
   onTreeTap?: () => void;
   /** Today's review, for the watering can on the grass; no can when absent. */
   review?: { due: number; cap: number; doneToday: boolean };
+  /** My room hides the avatar/name row — the status bar already shows who you are. */
+  showOwner?: boolean;
 }) {
   const t = useTranslations("dashboard.tree");
   // Identity chips reuse the /profile strings — the card absorbed that page's
@@ -224,6 +227,7 @@ export default function TreeCard({
       {/* ── who this garden belongs to ─────────────────────────────── */}
       {/* one slim line: the phone dashboard fits one screen, so this row
           carries the name and the two toggles and nothing taller */}
+      {showOwner && (
       <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1.5 mt-2.5 px-1">
         <AvatarUploader userId={userId} avatarUrl={avatarUrl} />
         <h2 className="font-semibold text-[15px] tracking-[-0.01em] flex items-center gap-2 min-w-0 flex-1 basis-[140px]">
@@ -270,6 +274,7 @@ export default function TreeCard({
           )}
         </div>
       </div>
+      )}
 
       {openTab === "growth" && (
         <div className="flex gap-2 mt-3">

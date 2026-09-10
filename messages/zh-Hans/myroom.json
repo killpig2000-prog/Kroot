@@ -3,5 +3,10 @@
   "shop": "商店",
   "seeAll": "查看全部",
   "tryingOn": "· 正在试穿 {name}",
-  "takeAllOff": "全部脱下"
+  "takeAllOff": "全部脱下",
+  "mine": "我的",
+  "tapToTry": "点击试穿",
+  "forSale": "{n} 件在售",
+  "mineEmpty": "这里还没有东西。",
+  "toShop": "去商店看看 ›"
 }

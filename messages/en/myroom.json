@@ -3,5 +3,10 @@
   "shop": "Shop",
   "seeAll": "See all",
   "tryingOn": "· trying on {name}",
-  "takeAllOff": "Take everything off"
+  "takeAllOff": "Take everything off",
+  "mine": "Mine",
+  "tapToTry": "Tap to try",
+  "forSale": "{n} for sale",
+  "mineEmpty": "Nothing here yet.",
+  "toShop": "Browse the shop ›"
 }

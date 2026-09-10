@@ -3,5 +3,10 @@
   "shop": "ショップ",
   "seeAll": "すべて見る",
   "tryingOn": "· {name} を試着中",
-  "takeAllOff": "すべて脱ぐ"
+  "takeAllOff": "すべて脱ぐ",
+  "mine": "持ち物",
+  "tapToTry": "タップで試着",
+  "forSale": "{n}点販売中",
+  "mineEmpty": "まだ何もありません。",
+  "toShop": "ショップを見る ›"
 }

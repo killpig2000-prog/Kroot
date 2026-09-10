@@ -85,13 +85,21 @@ export default function MyRoomStage({
   const shelf = useRef<HTMLDivElement>(null);
   const [peek, setPeek] = useState(false);
 
+  // Mine and Shop never share a shelf (2026-09-11): owned cards looked the
+  // same as ones for sale. Slot chips only list slots that have something.
+  const [view, setView] = useState<"mine" | "shop">(() => (shop.owned.length > 0 ? "mine" : "shop"));
+  const mine = view === "mine";
+  const inView = (slot: CostumeSlot, m: boolean) => w.listFor(slot, COSTUMES).filter((c) => w.ownedSet.has(c.id) === m);
+  const countFor = (m: boolean) => TABS.reduce((n, s) => n + inView(s, m).length, 0);
+  const slots = TABS.filter((s) => inView(s, mine).length > 0);
+  const activeTab = slots.includes(tab) ? tab : (slots[0] ?? tab);
+  const items = slots.length ? inView(activeTab, mine) : [];
+
   // A new tab starts the shelf at its left edge — the previous tab's scroll
   // position would otherwise land you mid-row in a different list.
   useEffect(() => {
     shelf.current?.scrollTo({ left: 0 });
-  }, [tab]);
-
-  const items = w.listFor(tab, COSTUMES);
+  }, [activeTab, view]);
   const fmtDay = (iso: string) =>
     new Intl.DateTimeFormat(locale, { month: "short", day: "numeric", timeZone: "UTC" }).format(new Date(`${iso}T00:00:00Z`));
 
@@ -148,6 +156,7 @@ export default function MyRoomStage({
         streakFreezes={tree.streakFreezes}
         onTreeTap={() => setPeek(true)}
         review={tree.review}
+        showOwner={false}
       />
       {peek && (
         <TreePeek
@@ -162,24 +171,44 @@ export default function MyRoomStage({
         />
       )}
 
-      <section className="max-w-[560px] xl:max-w-[760px] mt-1" aria-labelledby="myroom-shop">
-        {/* head: name · coins · the full shop */}
-        <div className="flex items-center gap-2.5 mb-2.5">
-          <h2 id="myroom-shop" className="flex-1 min-w-0 text-[17px] font-extrabold tracking-[-0.01em]">
-            {tm("shop")}
-            {w.dirty && w.selected && (
-              <span className="ml-2 text-[13px] font-bold text-success">
-                {tm("tryingOn", { name: w.selected.name })}
+      <section className="max-w-[560px] xl:max-w-[760px] mt-3" aria-label={tm("shop")}>
+        {/* Mine | Shop */}
+        <div role="tablist" className="grid grid-cols-2 gap-[3px] p-[3px] rounded-[12px] bg-line/50 mb-2.5">
+          {(["mine", "shop"] as const).map((v) => {
+            const on = view === v;
+            return (
+              <button
+                key={v}
+                type="button"
+                role="tab"
+                aria-selected={on}
+                onClick={() => setView(v)}
+                className={`h-[44px] rounded-[9px] inline-flex items-center justify-center gap-1.5 text-[14.5px] font-extrabold transition-colors ${
+                  on ? "bg-cream text-charcoal shadow-[0_1px_0_var(--c-line)]" : "text-muted hover:text-charcoal"
+                }`}
+              >
+                {v === "mine" ? tm("mine") : tm("shop")}
+                <span className="text-[12px] font-bold text-faint tabular-nums">{countFor(v === "mine")}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* what you're trying on, and — only where you spend them — coins */}
+        {(!mine || (w.dirty && w.selected)) && (
+          <div className="flex items-center gap-2 mb-2 min-h-[26px]">
+            <span className="flex-1 min-w-0 truncate text-[13px] font-bold text-muted">
+              {w.dirty && w.selected
+                ? tm("tryingOn", { name: w.selected.name }).replace(/^·\s*/, "")
+                : slots.length > 0 && tm("forSale", { n: items.length })}
+            </span>
+            {!mine && (
+              <span className="flex-none text-[12.5px] font-bold text-[#8F3D1B] bg-[var(--tint-amber)] border border-amber-line rounded-full px-2.5 py-0.5 tabular-nums">
+                {t("coins", { coins: shop.isAdmin ? "∞" : String(w.balance) })}
               </span>
             )}
-          </h2>
-          <span className="text-[12.5px] font-bold text-success bg-success-bg border border-success-line rounded-full px-2.5 py-0.5 tabular-nums">
-            {t("coins", { coins: shop.isAdmin ? "∞" : String(w.balance) })}
-          </span>
-          <Link href="/shop" className="text-[13px] font-bold text-success hover:text-success-deep whitespace-nowrap">
-            {tm("seeAll")} ›
-          </Link>
-        </div>
+          </div>
+        )}
 
         {/* slot chips — scroll sideways, never wrap */}
         <div
@@ -187,8 +216,8 @@ export default function MyRoomStage({
           role="tablist"
           aria-label={t("categories")}
         >
-          {TABS.map((slot) => {
-            const on = slot === tab;
+          {slots.map((slot) => {
+            const on = slot === activeTab;
             const wornHere = !!w.worn[slot];
             return (
               <button
@@ -218,29 +247,43 @@ export default function MyRoomStage({
         >
           {items.map((c) => {
             const on = w.preview[c.slot] === c.id;
-            const isOwned = w.ownedSet.has(c.id);
             const wearing = w.worn[c.slot] === c.id;
             const locked = isLevelLocked(c, shop.playerLevel);
             const ids = Object.values({ ...w.preview, [c.slot]: c.id }).filter((v): v is string => !!v);
             let price: React.ReactNode;
-            if (isOwned)
-              price = <span className="text-[12px] font-extrabold text-success">{wearing ? t("card.wearing") : t("card.owned")}</span>;
+            if (mine)
+              price = <span className="text-[12px] font-extrabold text-success whitespace-nowrap">{wearing ? t("card.wearing") : tm("tapToTry")}</span>;
             else if (isUpcoming(c, w.now) && c.availableFrom)
               price = <span className="text-[11px] font-extrabold text-[#B7791F] whitespace-nowrap">{t("card.opens")}</span>;
             else if (locked)
               price = <span className="text-[12px] font-extrabold text-faint whitespace-nowrap">{t("card.locked", { level: c.minPlayerLevel ?? 0 })}</span>;
             else
-              price = <span className="text-[12px] font-extrabold tabular-nums whitespace-nowrap">{c.price === 0 ? t("card.free") : t("card.price", { price: c.price })}</span>;
+              price = (
+                <span className="rounded-full border border-amber-line bg-[var(--tint-amber)] px-2 py-px text-[12px] font-extrabold text-[#8F3D1B] tabular-nums whitespace-nowrap">
+                  {c.price === 0 ? t("card.free") : t("card.price", { price: c.price })}
+                </span>
+              );
             return (
               <button
                 key={c.id}
                 type="button"
                 onClick={() => w.toggle(c)}
                 aria-pressed={on}
-                className={`flex-none snap-start w-[clamp(134px,38vw,150px)] text-left border rounded-[12px] overflow-hidden bg-cream transition-all active:translate-y-[1px] ${
-                  on ? "border-success shadow-[0_2px_0_var(--c-success)]" : "border-line shadow-[0_2px_0_var(--c-line)] hover:border-faint"
+                className={`relative flex-none snap-start w-[clamp(134px,38vw,150px)] text-left border rounded-[12px] overflow-hidden transition-all active:translate-y-[1px] ${
+                  mine ? "bg-success-bg" : "bg-cream"
+                } ${
+                  on
+                    ? "border-success shadow-[0_2px_0_var(--c-success)]"
+                    : mine
+                    ? "border-success-line shadow-[0_2px_0_var(--c-success-line)] hover:border-success"
+                    : "border-line shadow-[0_2px_0_var(--c-line)] hover:border-faint"
                 }`}
               >
+                {mine && wearing && (
+                  <span aria-hidden="true" className="absolute top-1.5 right-1.5 z-[1] w-5 h-5 rounded-full bg-success text-white text-[11px] font-black grid place-items-center">
+                    ✓
+                  </span>
+                )}
                 <Scene ids={ids} stage={shop.stage} species={tree.species} className="h-[92px]" />
                 <span className="block px-2.5 pt-2 pb-2.5">
                   <b className="block text-[13px] leading-tight truncate">{c.name}</b>
@@ -255,7 +298,26 @@ export default function MyRoomStage({
               </button>
             );
           })}
-          {items.length === 0 && <p className="text-[13px] text-muted py-6">{t("empty")}</p>}
+          {/* See all = the shelf's last tile, not a header link */}
+          {!mine && items.length > 0 && (
+            <Link
+              href="/shop"
+              className="flex-none snap-start w-[clamp(96px,26vw,112px)] grid place-items-center text-center rounded-[12px] border-[1.5px] border-dashed border-line px-2 text-[13px] font-extrabold text-success hover:border-success hover:text-success-deep"
+            >
+              {tm("seeAll")} ›
+            </Link>
+          )}
+          {items.length === 0 &&
+            (mine ? (
+              <p className="text-[13px] text-muted py-6">
+                {tm("mineEmpty")}{" "}
+                <button type="button" onClick={() => setView("shop")} className="font-extrabold text-success hover:text-success-deep">
+                  {tm("toShop")}
+                </button>
+              </p>
+            ) : (
+              <p className="text-[13px] text-muted py-6">{t("empty")}</p>
+            ))}
         </div>
 
         {/* one button makes the tree's outfit real (wear / buy / take off),

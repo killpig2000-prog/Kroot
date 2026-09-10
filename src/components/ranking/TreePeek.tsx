@@ -6,16 +6,16 @@ import LevelCreature from "@/components/dashboard/LevelCreature";
 import VeteranTree, { BASE_HEIGHT, veteranFrameHeight } from "@/components/dashboard/VeteranTree";
 import GrowthRing from "@/components/dashboard/GrowthRing";
 import { FULLY_GROWN_LEVEL, treeHeightMetres, treeStageForLevel } from "@/lib/level";
-import { SceneLayer, costumeById, skyFor } from "@/lib/costumes";
+import { SceneLayer, skyFor } from "@/lib/costumes";
 import type { WeekRing } from "@/lib/growth-rings";
 import type { CefrLevel } from "@/lib/tree";
 
 // Tapping a tree — on the ranking, or your own in My room — opens the whole
-// thing. Two halves (2026-09-10, user's layout): the tree on the left, and on
-// the right its growth rings above what it is wearing and whose it is. A
-// Lv.50+ tree grows past any thumbnail, so the stage is a fixed height and
-// the SVG scales to fit — a taller tree draws smaller, which is what makes
-// "look how tall theirs is" readable at a glance.
+// thing. Two halves (2026-09-11, user's layout): the tree on the left, and on
+// the right a large growth ring above whose it is. A Lv.50+ tree grows past
+// any thumbnail, so the stage is a fixed height and the SVG scales to fit —
+// a taller tree draws smaller, which is what makes "look how tall theirs is"
+// readable at a glance.
 //
 // Rings are optional: My room has the learner's own twelve weeks; the
 // ranking passes them once the board's RPC returns other gardeners' weeks.
@@ -49,7 +49,6 @@ export default function TreePeek({
   const veteran = level >= FULLY_GROWN_LEVEL;
   const frameH = veteran ? veteranFrameHeight(level) : BASE_HEIGHT;
   const sky = skyFor(costumeIds);
-  const worn = costumeIds.map((id) => costumeById(id)).filter((c): c is NonNullable<typeof c> => !!c && c.slot !== "ribbon");
   const grown = rings ? rings.weeks.filter((w) => w.attended > 0).length : 0;
 
   useEffect(() => {
@@ -100,10 +99,10 @@ export default function TreePeek({
             </svg>
           </div>
 
-          {/* ── right: rings over wearing over who ── */}
+          {/* ── right: a big growth ring over who ── */}
           <div className="min-w-0 flex flex-col gap-2.5">
             {rings && (
-              <div className="flex flex-col items-start gap-1.5 sm:flex-row sm:items-center sm:gap-2.5 pr-7">
+              <div className="flex flex-col items-center text-center gap-1.5 pr-7">
                 <GrowthRing
                   week={rings.weeks[0]?.days ?? [0, 0, 0, 0, 0, 0, 0]}
                   today={rings.today}
@@ -111,7 +110,7 @@ export default function TreePeek({
                   ring="sheet"
                   level={level}
                   className="flex-none"
-                  style={{ width: "clamp(64px, 18vw, 84px)", height: "clamp(64px, 18vw, 84px)" }}
+                  style={{ width: "clamp(112px, 30vw, 168px)", height: "clamp(112px, 30vw, 168px)" }}
                   label={tr("ariaWeek", { n: rings.weeks[0]?.attended ?? 0 })}
                 />
                 <span className="min-w-0">
@@ -122,22 +121,6 @@ export default function TreePeek({
                 </span>
               </div>
             )}
-
-            <div className="min-w-0">
-              <b className="block text-[11px] font-extrabold tracking-[.06em] uppercase text-faint mb-1">{t("peek.wearing")}</b>
-              {worn.length ? (
-                <span className="flex flex-wrap gap-1">
-                  {worn.map((c) => (
-                    <span key={c.id} className="inline-flex items-center gap-1 rounded-full border border-line bg-warm px-2 py-[2px] text-[11.5px] font-bold max-w-full">
-                      {c.icon && <span aria-hidden="true">{c.icon}</span>}
-                      <span className="truncate">{c.name}</span>
-                    </span>
-                  ))}
-                </span>
-              ) : (
-                <span className="text-[12px] text-faint">{t("peek.nothingOn")}</span>
-              )}
-            </div>
 
             <div className="mt-auto flex items-center gap-2 min-w-0">
               {avatarUrl ? (
