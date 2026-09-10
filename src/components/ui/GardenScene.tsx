@@ -13,8 +13,15 @@ import type { CSSProperties, ReactNode } from "react";
 // birds as [left %, top %]. Ratios, so the same meadow fits a 214px card
 // and a 960px hero.
 const SUN_RAYS = [0, 45, 90, 135, 180, 225, 270, 315];
-const TUFTS: [number, number, boolean][] = [[7, 22, false], [24, 17, true], [41, 25, false], [58, 18, false], [73, 24, true], [88, 16, false], [96, 23, false]];
-const FLOWERS: [number, number, string][] = [[14, 20, "#F4A7B9"], [31, 25, "#FFD66B"], [49, 17, "#FFFDF6"], [64, 23, "#F4A7B9"], [80, 19, "#FFD66B"], [92, 26, "#FFFDF6"]];
+// Solid ground (2026-09-10, user call: "단색 하나 크룻색 좍 칠하고 그 위에 잔디·꽃"):
+// the three pale hill bands are gone. One meadow green with a single curved
+// top edge, and the grass is what sits on it — tufts and wildflowers —
+// all drawn darker than the ground, the way grass reads on a lawn. No
+// vines (user call), so the flowers took their spots.
+const GROUND = "#5FA976";
+const GRASS = "#2E5B41";
+const TUFTS: [number, number, boolean][] = [[7, 24, false], [24, 19, true], [41, 27, false], [58, 20, false], [73, 26, true], [88, 18, false], [96, 25, false], [20, 11, false], [36, 9, true], [70, 12, false], [94, 8, false]];
+const FLOWERS: [number, number, string][] = [[14, 22, "#F4A7B9"], [31, 27, "#FFD66B"], [49, 19, "#FFFDF6"], [64, 25, "#F4A7B9"], [80, 21, "#FFD66B"], [92, 28, "#FFFDF6"], [12, 8, "#FFD66B"], [62, 6, "#F4A7B9"], [86, 10, "#FFFDF6"]];
 const BIRDS: [number, number][] = [[28, 17], [35, 24]];
 
 export const DAWN_SKY = "linear-gradient(180deg,#FFF9EC 0%,#EAF4F3 40%,#BEE3F0 62%,#DFF3E4 100%)";
@@ -55,16 +62,6 @@ export default function GardenScene({
         </>
       ) : (
         <>
-          {/* a far ridge, one solid step between the hills and the sky */}
-          <svg
-            className="absolute left-[-4%] right-[-4%] bottom-0 w-[108%]"
-            style={{ height: `calc(${hillsHeight} + 10%)` }}
-            viewBox="0 0 800 200"
-            preserveAspectRatio="none"
-            aria-hidden="true"
-          >
-            <path d="M0 96 C120 70 210 88 330 78 C450 68 540 90 660 74 C720 66 760 72 800 70 L800 200 L0 200Z" fill="#D6E8DD" />
-          </svg>
           {clouds && (
             <>
               <svg className="absolute top-[14%] left-0 w-full h-[16%]" viewBox="0 0 400 60" preserveAspectRatio="none" aria-hidden="true">
@@ -111,9 +108,16 @@ export default function GardenScene({
         preserveAspectRatio="none"
         aria-hidden="true"
       >
-        <path d="M0 110 C140 60 260 90 400 96 C540 102 660 50 800 92 L800 200 L0 200Z" fill={night ? "#9FCDB0" : "#CFE9D6"} />
-        <path d="M0 150 C160 120 300 140 440 132 C600 122 700 140 800 128 L800 200 L0 200Z" fill="#B9DDC3" />
-        <path d="M0 176 C200 160 400 172 800 164 L800 200 L0 200Z" fill="#DFF3E4" />
+        {night ? (
+          <>
+            <path d="M0 110 C140 60 260 90 400 96 C540 102 660 50 800 92 L800 200 L0 200Z" fill="#9FCDB0" />
+            <path d="M0 150 C160 120 300 140 440 132 C600 122 700 140 800 128 L800 200 L0 200Z" fill="#B9DDC3" />
+            <path d="M0 176 C200 160 400 172 800 164 L800 200 L0 200Z" fill="#DFF3E4" />
+          </>
+        ) : (
+          /* one ground, one colour; the top edge is the only terrain */
+          <path d="M0 40 C150 10 300 34 420 30 C560 26 680 6 800 30 L800 200 L0 200Z" fill={GROUND} />
+        )}
       </svg>
       {/* The meadow: grass tufts, wildflowers and two birds, so the tree
           stands in a place rather than on a colour. Small fixed-size pieces
@@ -126,15 +130,15 @@ export default function GardenScene({
             <svg
               key={`t${x}`}
               className="absolute -translate-x-1/2"
-              style={{ left: `${x}%`, bottom: `${b}%`, width: "clamp(16px, 4.5%, 20px)" }}
+              style={{ left: `${x}%`, bottom: `${b}%`, width: "clamp(18px, 5%, 24px)" }}
               viewBox="0 0 24 16"
               aria-hidden="true"
             >
               <path
                 d={`M12 15 q-3 -6 -8 -9 M12 15 q0 -8 ${tall ? 2 : 1} -13 M12 15 q3 -5 8 -8`}
                 fill="none"
-                stroke="#9CCBAA"
-                strokeWidth="1.8"
+                stroke={GRASS}
+                strokeWidth="2"
                 strokeLinecap="round"
               />
             </svg>
@@ -143,7 +147,7 @@ export default function GardenScene({
             <svg
               key={`f${x}`}
               className="absolute -translate-x-1/2"
-              style={{ left: `${x}%`, bottom: `${b}%`, width: "clamp(5px, 1.5%, 7px)" }}
+              style={{ left: `${x}%`, bottom: `${b}%`, width: "clamp(7px, 2%, 9px)" }}
               viewBox="0 0 10 10"
               aria-hidden="true"
             >
@@ -159,7 +163,7 @@ export default function GardenScene({
               viewBox="0 0 20 8"
               aria-hidden="true"
             >
-              <path d="M1 6 q4 -5 9 0 q4 -5 9 0" fill="none" stroke="#7FA98F" strokeWidth="1.4" strokeLinecap="round" />
+              <path d="M1 6 q4 -5 9 0 q4 -5 9 0" fill="none" stroke="#5E9E74" strokeWidth="1.4" strokeLinecap="round" />
             </svg>
           ))}
         </>
