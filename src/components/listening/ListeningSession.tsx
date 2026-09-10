@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, type ReactNode } from "react";
+import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { createClient, getClientUserId } from "@/lib/supabase/client";
 import { playChapterClear, playCoin, playLevelUp } from "@/lib/sfx";
@@ -35,7 +35,6 @@ export default function ListeningSession({
   completedIds,
   initialOpenId = null,
   userId,
-  levelTabs,
 }: {
   dialogues: Dialogue[];
   level: CefrLevel;
@@ -44,8 +43,6 @@ export default function ListeningSession({
   /** Open this clip straight away (from `?clip=`). */
   initialOpenId?: string | null;
   userId: string | null;
-  /** Level switcher — hidden while a clip plays so the player sits at the top. */
-  levelTabs?: ReactNode;
 }) {
   const supabase = useMemo(() => createClient(), []);
   const [completed, setCompleted] = useState<Set<string>>(() => new Set(completedIds));
@@ -230,17 +227,13 @@ export default function ListeningSession({
   }
 
   return (
-    <>
-      {levelTabs}
-      <ClipList
-        dialogues={dialogues}
-        situation={situation}
-        level={level}
-        completed={completed}
-        doneCount={doneCount}
-        newLevel={newLevel}
-        onOpenClip={setOpenId}
-      />
-    </>
+    <ClipList
+      dialogues={dialogues}
+      situation={situation}
+      completed={completed}
+      doneCount={doneCount}
+      newLevel={newLevel}
+      onOpenClip={setOpenId}
+    />
   );
 }

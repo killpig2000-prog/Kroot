@@ -1,9 +1,9 @@
 import { notFound } from "next/navigation";
-import { getTranslations } from "next-intl/server";
-import LevelTabs from "@/components/ui/LevelTabs";
-import { Link, redirect } from "@/i18n/navigation";
+import { getLocale, getTranslations } from "next-intl/server";
+import { redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
+import LessonBar from "@/components/ui/LessonBar";
 import ListeningSession from "@/components/listening/ListeningSession";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { LEVEL_ORDER, isCefrLevel, type CefrLevel } from "@/lib/tree";
@@ -30,11 +30,11 @@ export default async function SituationPage({
 
   const { situationKey } = await params;
   const sp = await searchParams;
-  const [t, ts, th, tl] = await Promise.all([
+  const [t, ts, th, locale] = await Promise.all([
     getTranslations("listening.situation"),
     getTranslations("listening.situations"),
     getTranslations("listening.home"),
-    getTranslations("listening"),
+    getLocale(),
   ]);
   const myLevel = (profile?.current_level ?? "A1") as CefrLevel;
   const level = isCefrLevel(sp.level) ? sp.level : myLevel;
@@ -61,18 +61,6 @@ export default async function SituationPage({
 
   const meta = { ...situation, label: ts(`${situation.key}.label`), sub: "" };
 
-  const levelTabs = (
-    <LevelTabs
-      className="mb-5"
-      levels={LEVEL_ORDER}
-      current={level}
-      mine={myLevel}
-      unlocked={() => true}
-      href={(lv) => `/listening/${situationKey}?level=${lv}`}
-      accent="bg-teal border-teal text-white"
-    />
-  );
-
   return (
     <div className="min-h-screen bg-warm text-charcoal">
       <div className="grid grid-cols-1 xl:grid-cols-[clamp(216px,18%,280px)_minmax(0,1fr)] w-full min-h-screen content-start xl:content-stretch">
@@ -81,29 +69,31 @@ export default async function SituationPage({
           email={user.email ?? ""}
           streakDays={profile?.streak_days ?? 0}
           avatarUrl={profile?.avatar_url}
+          lessonBar
         />
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] xl:pb-[60px]">
-          {/* breadcrumb */}
-          <div className="flex gap-2 text-[13px] text-faint mb-[18px] flex-wrap">
-            <Link href="/dashboard" className="hover:text-charcoal transition-colors">
-              {tl("crumbGarden")}
-            </Link>
-            <span>/</span>
-            <Link href={`/listening?level=${level}`} className="hover:text-charcoal transition-colors">
-              {th("title")}
-            </Link>
-            <span>/</span>
-            <b className="text-charcoal font-semibold">{meta.label}</b>
-          </div>
+          <LessonBar
+            href="/listening"
+            title={th("title")}
+            sub={meta.label}
+            backHref={`/listening?level=${level}`}
+            locale={locale}
+            level={{
+              current: level,
+              mine: myLevel,
+              levels: LEVEL_ORDER,
+              // Every level is open once you're inside a situation — the
+              // gate is on the index page, not on switching level here.
+              unlocked: LEVEL_ORDER,
+              hrefTemplate: `/listening/${situationKey}?level={lv}`,
+            }}
+          />
 
           {dialogues.length === 0 ? (
-            <>
-              {levelTabs}
-              <div className="max-w-[720px] border border-line rounded-[14px] p-8 text-center bg-cream">
-                <p className="text-sm text-muted">{t("noClips")}</p>
-              </div>
-            </>
+            <div className="max-w-[720px] border border-line rounded-[14px] p-8 text-center bg-cream">
+              <p className="text-sm text-muted">{t("noClips")}</p>
+            </div>
           ) : (
             <ListeningSession
               key={level}
@@ -113,7 +103,6 @@ export default async function SituationPage({
               completedIds={completedIds}
               initialOpenId={initialOpenId}
               userId={user.id}
-              levelTabs={levelTabs}
             />
           )}
         </main>

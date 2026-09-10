@@ -4,7 +4,6 @@ import { estMinutes } from "@/lib/listening-resume";
 import { waveHeights, type Situation } from "@/lib/listening";
 import { getLocalizedDialogueTitle } from "@/lib/listening-i18n";
 import type { Dialogue } from "@/lib/listening-dialogues";
-import type { CefrLevel } from "@/lib/tree";
 
 // Situation page: hero (icon, name, big progress ring) and the clips as a
 // playlist table — #, title + Korean key phrase, length, status pill. Every
@@ -12,7 +11,6 @@ import type { CefrLevel } from "@/lib/tree";
 export default function ClipList({
   dialogues,
   situation,
-  level,
   completed,
   doneCount,
   newLevel,
@@ -20,7 +18,6 @@ export default function ClipList({
 }: {
   dialogues: Dialogue[];
   situation: Situation;
-  level: CefrLevel;
   completed: Set<string>;
   doneCount: number;
   newLevel: number | null;
@@ -47,12 +44,14 @@ export default function ClipList({
               {situation.icon}
             </span>
             <div className="min-w-0">
-              <h1 className="font-extrabold text-[22px] tracking-[-0.02em] leading-tight">
+              {/* h2: the lesson bar above is the page h1 ("Listening / Café"). The
+                  level lives on the bar's pill, so it isn't repeated here. */}
+              <h2 className="font-extrabold text-[22px] tracking-[-0.02em] leading-tight">
                 {situation.label}
                 <small className="kr text-[13px] text-muted font-semibold ml-2">
-                  {situation.krLabel} · {level}
+                  {situation.krLabel}
                 </small>
-              </h1>
+              </h2>
               <p className="text-[13px] text-muted mt-0.5">
                 {situation.sub && <>{situation.sub} · </>}
                 {t("clipsMin", { n: dialogues.length, min: estMinutes(totalLines) })}
