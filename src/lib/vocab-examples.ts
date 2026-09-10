@@ -83,17 +83,27 @@ function hasWord(line: string, word: string): boolean {
  * passages and listening dialogues (interleaved), excluding `excludeKr`
  * (the word's own hand-authored example) and any exact-duplicate sentence.
  */
+// A card shows this sentence on one line (2026-09-11, user call), so a
+// corpus line long enough to wrap isn't "shortest available" — it's the
+// wrong example. ~22 characters is what a 360px phone's card fits at the
+// example's font size without wrapping (measured against the narrowest
+// AGENTS.md reference width), generous enough that most short corpus
+// sentences still qualify.
+const MAX_KR_LEN = 22;
+
 export function findMoreExamples(korean: string, excludeKr: string, limit = 2): MoreExample[] {
   const seen = new Set([excludeKr.trim()]);
   const out: MoreExample[] = [];
 
-  // Shortest first. The corpus is written for reading and listening
-  // practice, so a word like 물 can turn up in a B-level sentence about
-  // coffee grind size — true, but not a second example an A1 learner can
-  // use. Length is the cheap stand-in for "simple enough to read twice".
+  // Shortest first, and never longer than one line. The corpus is written
+  // for reading and listening practice, so a word like 물 can turn up in a
+  // B-level sentence about coffee grind size — true, but not a second
+  // example an A1 learner can use. Length is the cheap stand-in for
+  // "simple enough to read twice".
   const byLength = (a: MoreExample, b: MoreExample) => a.kr.length - b.kr.length;
-  const reading = allReadingLines().filter((l) => hasWord(l.kr, korean)).sort(byLength);
-  const listening = allListeningLines().filter((l) => hasWord(l.kr, korean)).sort(byLength);
+  const fits = (l: MoreExample) => l.kr.length <= MAX_KR_LEN;
+  const reading = allReadingLines().filter((l) => hasWord(l.kr, korean) && fits(l)).sort(byLength);
+  const listening = allListeningLines().filter((l) => hasWord(l.kr, korean) && fits(l)).sort(byLength);
 
   // Interleave so a word doesn't end up all-reading or all-listening.
   const max = Math.max(reading.length, listening.length);

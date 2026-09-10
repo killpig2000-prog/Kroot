@@ -149,7 +149,7 @@ export default async function VocabWordPage({
           lessonBar
         />
 
-        <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] xl:pb-[60px]">
+        <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] xl:pb-[60px] min-h-screen flex flex-col">
           {/* "Vocabulary / Day N", ← to the chapter (or where you came from) */}
           <LessonBar
             href="/vocabulary"
@@ -161,6 +161,11 @@ export default async function VocabWordPage({
           <GuidedStep step="word-read" />
           <GuidedStep step="word-goti" />
           <GuidedStep step="word-bank" />
+          {/* the card box centres in whatever room is left under the lesson
+              bar (2026-09-11, user call) — a short card no longer sits
+              pinned to the top with empty page below it; a card taller
+              than the screen just grows this block and scrolls as before */}
+          <div className="flex-1 flex flex-col justify-center">
           <WordDetailCard
             // Remount per word: without a key the card keeps its "saving"
             // state across the search-param navigation and the next word's
@@ -213,6 +218,7 @@ export default async function VocabWordPage({
             >
               🛍️ {tn("shop")} →
             </Link>
+          </div>
           </div>
         </main>
       </div>

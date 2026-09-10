@@ -459,18 +459,23 @@ export default function WordDetailCard({
           )}
           {note?.origin && <p className="text-[12.5px] text-muted leading-[1.65] mb-3">{t("session.origin", { origin: note.origin })}</p>}
 
+          {/* One line each (2026-09-11, user call): a sentence that wraps
+              reads as a paragraph, not a phrase to repeat. Truncated with an
+              ellipsis rather than shrunk or wrapped — the speaker button
+              still plays the whole sentence, so nothing spoken is lost,
+              only what's shown for a sentence too long to fit. */}
           <div className="border-l-[3px] border-[var(--tint-violet-line)] pl-3.5 py-1 my-2 mb-3.5">
             <p className="kr text-[16px] font-medium">
               <button
                 type="button"
                 onClick={() => speakKorean(word.example_kr)}
                 title={t("session.hearSentence")}
-                className="text-left hover:text-[var(--tint-violet-ink)] transition-colors"
+                className="block w-full truncate text-left hover:text-[var(--tint-violet-ink)] transition-colors"
               >
                 {word.example_kr} <span aria-hidden="true" className="text-[11px] opacity-70">🔊</span>
               </button>
             </p>
-            <p className="text-[12.5px] text-muted">{getLocalizedExampleEn(word, locale)}</p>
+            <p className="text-[12.5px] text-muted truncate">{getLocalizedExampleEn(word, locale)}</p>
           </div>
 
           {word.moreExamples.map((ex, i) => (
@@ -480,12 +485,12 @@ export default function WordDetailCard({
                   type="button"
                   onClick={() => speakKorean(ex.kr)}
                   title={t("session.hearSentence")}
-                  className="text-left hover:text-[var(--tint-violet-ink)] transition-colors"
+                  className="block w-full truncate text-left hover:text-[var(--tint-violet-ink)] transition-colors"
                 >
                   {ex.kr} <span aria-hidden="true" className="text-[11px] opacity-70">🔊</span>
                 </button>
               </p>
-              <p className="text-[12.5px] text-muted">{ex.en}</p>
+              <p className="text-[12.5px] text-muted truncate">{ex.en}</p>
             </div>
           ))}
 
