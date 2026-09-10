@@ -59,6 +59,41 @@ export default function TodaysQuestButton({
           <rect width="100%" height="100%" fill={`url(#${patternId})`} />
         </svg>
       )}
+      {/* watered ground: a vine wraps the button (2026-09-10, user call) —
+          one 1.5px stem along the bottom edge that climbs both corners,
+          five leaves, and a fine dot grain over the green. All in the lid
+          colour, solid: decoration, not state, so nothing here is alpha. */}
+      {done && (
+        <svg className="pointer-events-none absolute inset-0 h-full w-full" aria-hidden="true">
+          <defs>
+            <pattern id={`${patternId}d`} width="5" height="5" patternUnits="userSpaceOnUse">
+              <circle cx="1" cy="1" r=".65" fill="#468660" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill={`url(#${patternId}d)`} />
+        </svg>
+      )}
+      {done && (
+        <svg
+          className="pointer-events-none absolute inset-0 h-full w-full"
+          viewBox="0 0 358 66"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+        >
+          <g fill="none" stroke="#5D9174" strokeWidth="1.5" strokeLinecap="round" vectorEffect="non-scaling-stroke">
+            <path d="M0 62 C60 58 90 66 140 60 S230 54 300 60 S340 64 358 60" />
+            <path d="M4 60 C-2 48 6 36 2 20" />
+            <path d="M354 60 C362 46 350 34 356 14" />
+          </g>
+          <g fill="#5D9174">
+            <ellipse cx="96" cy="58" rx="6" ry="3" transform="rotate(-30 96 58)" />
+            <ellipse cx="212" cy="55" rx="6" ry="3" transform="rotate(25 212 55)" />
+            <ellipse cx="318" cy="57" rx="6" ry="3" transform="rotate(-20 318 57)" />
+            <ellipse cx="5" cy="34" rx="5" ry="2.6" transform="rotate(60 5 34)" />
+            <ellipse cx="353" cy="30" rx="5" ry="2.6" transform="rotate(-60 353 30)" />
+          </g>
+        </svg>
+      )}
       <span
         className={`relative flex-none grid place-items-center w-9 h-9 rounded-[8px] ${
           done ? "bg-[#5D9174] text-white" : "bg-cream border border-line text-[#7A5A12]"
