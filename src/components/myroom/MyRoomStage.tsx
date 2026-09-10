@@ -105,6 +105,9 @@ export default function MyRoomStage({
     case "wear":
       ctaLabel = t("cta.wear");
       break;
+    case "takeOff":
+      ctaLabel = t("cta.takeOff");
+      break;
     case "claimAdmin":
       ctaLabel = t("cta.claimAdmin");
       break;
@@ -232,7 +235,7 @@ export default function MyRoomStage({
               <button
                 key={c.id}
                 type="button"
-                onClick={() => (isOwned ? void w.wearOrTakeOff(c) : w.toggle(c))}
+                onClick={() => w.toggle(c)}
                 aria-pressed={on}
                 className={`flex-none snap-start w-[clamp(134px,38vw,150px)] text-left border rounded-[12px] overflow-hidden bg-cream transition-all active:translate-y-[1px] ${
                   on ? "border-success shadow-[0_2px_0_var(--c-success)]" : "border-line shadow-[0_2px_0_var(--c-line)] hover:border-faint"
@@ -255,9 +258,12 @@ export default function MyRoomStage({
           {items.length === 0 && <p className="text-[13px] text-muted py-6">{t("empty")}</p>}
         </div>
 
-        {/* buy / wear the tried-on item, or put things back */}
-        {w.dirty && (
-          <div className="flex gap-2 mt-1">
+        {/* one button makes the tree's outfit real (wear / buy / take off),
+            Reset puts the preview back, and Take everything off previews the
+            bare tree — nothing is worn or removed until the first button. */}
+        {(w.dirty || w.previewIds.length > 0) && (
+          <div className="flex flex-wrap gap-2 mt-1">
+            {w.dirty && (
             <button
               type="button"
               onClick={() => void w.act()}
@@ -266,6 +272,8 @@ export default function MyRoomStage({
             >
               {w.busy ? "…" : ctaLabel}
             </button>
+            )}
+            {w.dirty && (
             <button
               type="button"
               onClick={w.reset}
@@ -273,6 +281,16 @@ export default function MyRoomStage({
             >
               {t("tryOn.reset")}
             </button>
+            )}
+            {w.previewIds.length > 0 && (
+              <button
+                type="button"
+                onClick={w.takeAllOff}
+                className="rounded-[12px] px-3.5 py-2.5 text-[13.5px] font-extrabold border border-line bg-cream text-muted shadow-[0_2px_0_var(--c-line)] hover:border-faint hover:text-charcoal active:translate-y-[1px] active:shadow-none transition-all"
+              >
+                {tm("takeAllOff")}
+              </button>
+            )}
           </div>
         )}
         {w.message && (

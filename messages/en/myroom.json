@@ -2,5 +2,6 @@
   "bankSub": "{n} / {slots}",
   "shop": "Shop",
   "seeAll": "See all",
-  "tryingOn": "· trying on {name}"
+  "tryingOn": "· trying on {name}",
+  "takeAllOff": "Take everything off"
 }

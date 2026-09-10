@@ -2,5 +2,6 @@
   "bankSub": "{n} / {slots}",
   "shop": "Tienda",
   "seeAll": "Ver todo",
-  "tryingOn": "· probando {name}"
+  "tryingOn": "· probando {name}",
+  "takeAllOff": "Quitar todo"
 }

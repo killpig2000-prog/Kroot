@@ -2,5 +2,6 @@
   "bankSub": "{n} / {slots}",
   "shop": "Cửa hàng",
   "seeAll": "Xem tất cả",
-  "tryingOn": "· đang thử {name}"
+  "tryingOn": "· đang thử {name}",
+  "takeAllOff": "Cởi hết"
 }

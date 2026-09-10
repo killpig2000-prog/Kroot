@@ -2,5 +2,6 @@
   "bankSub": "{n} / {slots}",
   "shop": "ショップ",
   "seeAll": "すべて見る",
-  "tryingOn": "· {name} を試着中"
+  "tryingOn": "· {name} を試着中",
+  "takeAllOff": "すべて脱ぐ"
 }

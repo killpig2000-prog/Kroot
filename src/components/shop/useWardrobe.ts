@@ -20,7 +20,12 @@ import {
 // copy — the two are meant to converge when /shop folds into My room.
 //
 // `worn` is what the database says is equipped; `preview` is what the tree
-// is showing right now (worn + whatever was tapped). Buying wears the item.
+// is showing right now. Tapping a card only changes the preview — owned or
+// not, worn or not (2026-09-10, user call: "착용 누르기 전까지 착용하면 안
+// 됨"). Nothing reaches the database until act(): it applies every slot
+// where preview differs from worn — takes off what was removed, wears what
+// was added, buying first where needed. "Take everything off" is just a
+// preview of nothing, so it goes through the same button.
 
 export const RARITY_ORDER: Record<Rarity, number> = { common: 0, rare: 1, epic: 2, legendary: 3 };
 
@@ -47,6 +52,7 @@ function toMap(ids: string[]): Slots {
 
 export type CtaKind =
   | { kind: "pick" }
+  | { kind: "takeOff"; n: number }
   | { kind: "wear" }
   | { kind: "claimAdmin" }
   | { kind: "locked"; level: number }
@@ -83,11 +89,27 @@ export function useWardrobe({
   const [message, setMessage] = useState<{ key: string; params?: Record<string, string | number>; good: boolean } | null>(null);
 
   const previewIds = Object.values(preview).filter((v): v is string => !!v);
-  // The one item the CTA acts on: the tried-on item that isn't worn yet, or
-  // (nothing tried on) nothing — a wearing item is handled by its own card.
-  const changed = (Object.keys(preview) as CostumeSlot[]).find((s) => preview[s] && preview[s] !== worn[s]);
-  const selected = changed ? costumeById(preview[changed]!) : undefined;
-  const dirty = !!changed;
+  const wornIds = Object.values(worn).filter((v): v is string => !!v);
+  // Every slot the preview changes: added (an item the tree isn't wearing)
+  // or removed (worn, but taken off in the preview).
+  const slots = new Set<CostumeSlot>([...Object.keys(preview), ...Object.keys(worn)] as CostumeSlot[]);
+  const added: Costume[] = [];
+  const removed: Costume[] = [];
+  for (const s of slots) {
+    if (preview[s] === worn[s]) continue;
+    if (preview[s]) {
+      const c = costumeById(preview[s]!);
+      if (c) added.push(c);
+    } else if (worn[s]) {
+      const c = costumeById(worn[s]!);
+      if (c) removed.push(c);
+    }
+  }
+  const dirty = added.length + removed.length > 0;
+  /** The item the head line names — the first thing being tried on. */
+  const selected = added[0];
+  const toBuy = added.filter((c) => !ownedSet.has(c.id));
+  const buyTotal = toBuy.reduce((sum, c) => sum + c.price, 0);
 
   function listFor(slot: CostumeSlot, all: readonly Costume[]): Costume[] {
     return all
@@ -95,19 +117,21 @@ export function useWardrobe({
       .sort((a, b) => RARITY_ORDER[a.rarity] - RARITY_ORDER[b.rarity] || a.price - b.price);
   }
 
+  /** Tap a card: on the tree if it isn't, off if it is. Preview only. */
   function toggle(c: Costume) {
     setMessage(null);
-    setPreview((p) => {
-      if (p[c.slot] === c.id) {
-        if (worn[c.slot] === c.id) return p;
-        return { ...p, [c.slot]: undefined };
-      }
-      return { ...p, [c.slot]: c.id };
-    });
+    setPreview((p) => (p[c.slot] === c.id ? { ...p, [c.slot]: undefined } : { ...p, [c.slot]: c.id }));
   }
 
+  /** Back to what the database says is worn. */
   function reset() {
     setPreview(worn);
+    setMessage(null);
+  }
+
+  /** Preview the bare tree; act() then takes everything off for real. */
+  function takeAllOff() {
+    setPreview({});
     setMessage(null);
   }
 
@@ -133,19 +157,40 @@ export function useWardrobe({
     return true;
   }
 
-  /** Wear / take off an item you own, straight from its card. */
-  async function wearOrTakeOff(c: Costume) {
-    if (busy || !ownedSet.has(c.id)) return;
+  /** Make the database match the preview. */
+  async function act() {
+    if (!dirty || busy) return;
     setBusy(true);
     setMessage(null);
     try {
-      const wearing = worn[c.slot] === c.id;
-      const ok = wearing ? await unequip(c) : await equip(c);
-      if (!ok) {
-        setMessage({ key: "errors.generic", good: false });
-        return;
+      for (const c of removed) {
+        if (!(await unequip(c))) {
+          setMessage({ key: "errors.generic", good: false });
+          return;
+        }
       }
-      setPreview((p) => ({ ...p, [c.slot]: wearing ? undefined : c.id }));
+      let boughtName: string | null = null;
+      let boughtWorn = true;
+      for (const c of added) {
+        if (!ownedSet.has(c.id)) {
+          const { data, error } = await supabase.rpc("buy_costume", { p_costume_id: c.id });
+          if (error) {
+            setMessage({ key: `errors.${errorKey(error.message)}`, good: false });
+            return;
+          }
+          if (typeof data === "number") setBalance(data);
+          playBuy();
+          setOwnedSet((s) => new Set(s).add(c.id));
+          boughtName = c.name;
+          // The purchase stands whatever happens next; only the "worn" claim
+          // depends on the equip write landing.
+          if (!(await equip(c))) boughtWorn = false;
+        } else if (!(await equip(c))) {
+          setMessage({ key: "errors.generic", good: false });
+          return;
+        }
+      }
+      if (boughtName) setMessage({ key: boughtWorn ? "bought" : "boughtNotWorn", params: { name: boughtName }, good: boughtWorn });
       router.refresh();
     } catch (err) {
       console.error("wardrobe action failed:", err instanceof Error ? err.message : err);
@@ -155,46 +200,17 @@ export function useWardrobe({
     }
   }
 
-  async function act() {
-    if (!selected || busy) return;
-    setBusy(true);
-    setMessage(null);
-    try {
-      if (ownedSet.has(selected.id)) {
-        const ok = await equip(selected);
-        if (!ok) {
-          setMessage({ key: "errors.generic", good: false });
-          return;
-        }
-      } else {
-        const { data, error } = await supabase.rpc("buy_costume", { p_costume_id: selected.id });
-        if (error) {
-          setMessage({ key: `errors.${errorKey(error.message)}`, good: false });
-          return;
-        }
-        if (typeof data === "number") setBalance(data);
-        playBuy();
-        setOwnedSet((s) => new Set(s).add(selected.id));
-        const wearing = await equip(selected);
-        setMessage({ key: wearing ? "bought" : "boughtNotWorn", params: { name: selected.name }, good: wearing });
-      }
-      router.refresh();
-    } catch (err) {
-      console.error("shop action failed:", err instanceof Error ? err.message : err);
-      setMessage({ key: "errors.generic", good: false });
-    } finally {
-      setBusy(false);
-    }
-  }
-
+  // What the one button does for the whole preview.
   let cta: CtaKind = { kind: "pick" };
-  if (selected) {
-    if (ownedSet.has(selected.id)) cta = { kind: "wear" };
+  if (dirty) {
+    const locked = toBuy.find((c) => isLevelLocked(c, playerLevel));
+    const upcoming = toBuy.find((c) => isUpcoming(c, now) && c.availableFrom);
+    if (toBuy.length === 0) cta = added.length ? { kind: "wear" } : { kind: "takeOff", n: removed.length };
     else if (isAdmin) cta = { kind: "claimAdmin" };
-    else if (isLevelLocked(selected, playerLevel)) cta = { kind: "locked", level: selected.minPlayerLevel ?? 0 };
-    else if (isUpcoming(selected, now) && selected.availableFrom) cta = { kind: "upcoming", date: selected.availableFrom };
-    else if (balance < selected.price) cta = { kind: "needMore", n: selected.price - balance };
-    else cta = selected.price === 0 ? { kind: "claim" } : { kind: "buy", price: selected.price };
+    else if (locked) cta = { kind: "locked", level: locked.minPlayerLevel ?? 0 };
+    else if (upcoming) cta = { kind: "upcoming", date: upcoming.availableFrom! };
+    else if (balance < buyTotal) cta = { kind: "needMore", n: buyTotal - balance };
+    else cta = buyTotal === 0 ? { kind: "claim" } : { kind: "buy", price: buyTotal };
   }
 
   return {
@@ -202,6 +218,7 @@ export function useWardrobe({
     balance,
     ownedSet,
     worn,
+    wornIds,
     preview,
     previewIds,
     selected,
@@ -212,7 +229,7 @@ export function useWardrobe({
     listFor,
     toggle,
     reset,
+    takeAllOff,
     act,
-    wearOrTakeOff,
   };
 }

@@ -2,5 +2,6 @@
   "bankSub": "{n} / {slots}",
   "shop": "商店",
   "seeAll": "查看全部",
-  "tryingOn": "· 正在试穿 {name}"
+  "tryingOn": "· 正在试穿 {name}",
+  "takeAllOff": "全部脱下"
 }
