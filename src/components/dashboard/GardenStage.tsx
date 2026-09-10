@@ -1,6 +1,6 @@
 "use client";
 
-import { SceneLayer, skinFor, skyFor } from "@/lib/costumes";
+import { SceneLayer, costumeById, skinFor, skyFor } from "@/lib/costumes";
 import RoamingFriends from "@/components/dashboard/RoamingFriends";
 import VeteranTree, { veteranFrameHeight } from "@/components/dashboard/VeteranTree";
 import LevelCreature from "@/components/dashboard/LevelCreature";
@@ -61,22 +61,20 @@ export default function GardenStage({
         style={{ width }}
         aria-hidden="true"
       >
-        <defs>
-          <linearGradient id="tc-hill" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#CDE8C2" />
-            <stop offset="100%" stopColor="#BBDCAE" />
-          </linearGradient>
-        </defs>
-        {/* a soft mound under the soil so costume ground items still sit on grass */}
-        <ellipse cx="110" cy={frameH + 4} rx="150" ry="34" fill="url(#tc-hill)" />
-        <SceneLayer costumeIds={costumeIds} layer="behind" />
+        {/* a mound under the soil so costume ground items still sit on grass —
+            the same green as GardenScene's ground (2026-09-10), so it vanishes
+            into the meadow instead of showing as a paler patch */}
+        <ellipse cx="110" cy={frameH + 4} rx="150" ry="34" fill="#5FA976" />
+        {/* sky details (moon, stars, snow, rain) are drawn over the whole
+            garden by SkyLayer, not in this frame */}
+        <SceneLayer costumeIds={costumeIds} layer="behind" omitSlots={["sky"]} />
         {veteran && species ? (
           <VeteranTree level={level} species={species} costumeIds={costumeIds} />
         ) : (
           <LevelCreature level={stage} costumeIds={costumeIds} species={species} />
         )}
         {/* friends wander the garden instead (RoamingFriends), unless a skin hides the tree */}
-        <SceneLayer costumeIds={costumeIds} layer="front" groundShift={groundShift} omitSlots={skin ? undefined : ["friend"]} />
+        <SceneLayer costumeIds={costumeIds} layer="front" groundShift={groundShift} omitSlots={skin ? ["sky"] : ["friend", "sky"]} />
         <g className="bob">
           <circle cx="60" cy="78" r="6" fill="#FACC15" />
         </g>
@@ -88,5 +86,29 @@ export default function GardenStage({
           stay on the same ground line while they wander sideways */}
       {!skin && <RoamingFriends costumeIds={costumeIds} frameH={frameH} groundShift={groundShift} width={width} span={roamSpan} />}
     </div>
+  );
+}
+
+/** A sky costume's details — the moon and stars, the snow, the rain and its
+ *  clouds — across the whole garden (2026-09-10, user call: "박스 해제").
+ *  Its gradient already filled the scene, but the details were drawn in the
+ *  tree's 220x230 frame, so a night sky was a box of stars around the tree.
+ *  Same drawing, same coordinates, scaled to cover the scene from the top
+ *  (slice), so the moon sits top-right and snow falls over every hill.
+ *  Place it as a direct child of the GardenScene, before the tree. */
+export function SkyLayer({ costumeIds }: { costumeIds: string[] }) {
+  const sky = costumeIds.map(costumeById).filter((c) => c?.slot === "sky" && c.scene);
+  if (sky.length === 0) return null;
+  return (
+    <svg
+      className="absolute inset-0 w-full h-full pointer-events-none z-[1]"
+      viewBox="0 0 220 230"
+      preserveAspectRatio="xMidYMin slice"
+      aria-hidden="true"
+    >
+      {sky.map((c) => (
+        <g key={c!.id}>{c!.scene!.draw()}</g>
+      ))}
+    </svg>
   );
 }

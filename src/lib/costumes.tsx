@@ -1043,8 +1043,13 @@ export const COSTUMES: Costume[] = [
       layer: "behind",
       draw: () => (
         <>
-          <circle cx="176" cy="40" r="16" fill="#FDE68A" />
-          <circle cx="168" cy="34" r="14" fill="#2B3C55" />
+          {/* a real crescent: the bite is cut out, not painted over in one
+              navy that only matched the sky inside the small tree frame */}
+          <mask id="moonlit-bite">
+            <circle cx="176" cy="40" r="16" fill="#fff" />
+            <circle cx="168" cy="34" r="14" fill="#000" />
+          </mask>
+          <circle cx="176" cy="40" r="16" fill="#FDE68A" mask="url(#moonlit-bite)" />
           <g className="aura-twinkle">
             <circle cx="40" cy="30" r="1.8" fill="#fff" />
             <circle cx="90" cy="18" r="1.3" fill="#fff" />

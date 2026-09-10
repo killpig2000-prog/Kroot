@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import GardenScene from "@/components/ui/GardenScene";
 import SpeechBubble from "@/components/ui/SpeechBubble";
-import GardenStage, { gardenFrame } from "@/components/dashboard/GardenStage";
+import GardenStage, { SkyLayer, gardenFrame } from "@/components/dashboard/GardenStage";
 import WateringCan from "@/components/dashboard/WateringCan";
 import { TREE_PHRASES } from "@/lib/tree-phrases";
 import { playWater } from "@/lib/sfx";
@@ -124,6 +124,9 @@ export default function GardenCard({
           {t("levelBadge", { level })}
           <span className="font-bold text-charcoal tabular-nums">· {veteran ? `${metres} ${t("metresTall")}` : LEVEL_PATH[stage].treeName}</span>
         </span>
+
+        {/* a sky costume's moon, stars, snow or rain, over the whole garden */}
+        <SkyLayer costumeIds={costumeIds} />
 
         {/* Tree and bubble share one stage, capped at a phone's width and
             centred: at 430px and below it fills the card, and on a tablet

@@ -3,7 +3,7 @@
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import GardenStage, { gardenFrame } from "@/components/dashboard/GardenStage";
+import GardenStage, { SkyLayer, gardenFrame } from "@/components/dashboard/GardenStage";
 import WateringCan from "@/components/dashboard/WateringCan";
 import { LEVEL_ORDER, LEVEL_PATH, type CefrLevel } from "@/lib/tree";
 import { MAX_LEVEL, treeHeightMetres, treeStageForLevel } from "@/lib/level";
@@ -159,6 +159,9 @@ export default function TreeCard({
             {ti("streak", { n: streakDays })} <span className="text-faint">·</span> {ti("coins", { n: coins })}
           </span>
         </span>
+
+        {/* a sky costume's moon, stars, snow or rain, over the whole garden */}
+        <SkyLayer costumeIds={equipped} />
 
         {/* the creature — centred on phones, left of centre once the scene is wide */}
         <div className="absolute bottom-[56px] left-1/2 sm:left-[36%] -translate-x-1/2 z-[3]">
