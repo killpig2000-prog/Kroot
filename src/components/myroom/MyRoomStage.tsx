@@ -53,6 +53,8 @@ export default function MyRoomStage({
     coins: number;
     streakDays: number;
     streakFreezes: number;
+    /** Today's review, for the watering can. */
+    review?: { due: number; cap: number; doneToday: boolean };
   };
   shop: {
     isAdmin: boolean;
@@ -142,6 +144,7 @@ export default function MyRoomStage({
         streakDays={tree.streakDays}
         streakFreezes={tree.streakFreezes}
         onTreeTap={() => setPeek(true)}
+        review={tree.review}
       />
       {peek && (
         <TreePeek

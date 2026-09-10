@@ -7,6 +7,7 @@ import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { levelProgress, treeStageForLevel } from "@/lib/level";
 import { buildWeeks, ringsSince, xpByDayFrom } from "@/lib/growth-rings";
 import { countSavedWords, getWordBankSlots } from "@/lib/word-bank";
+import { dailyReviewCap } from "@/lib/srs";
 import type { CefrLevel } from "@/lib/tree";
 
 // My room — the dressing room (2026-09-10, mockup A). The garden up top is
@@ -28,10 +29,10 @@ export default async function MyRoomPage() {
 
   const now = new Date();
   const since = ringsSince(now);
-  const [{ data: profile }, extrasRes, costumesRes, savedCount, slots, attendRes, activityRes, reviewRes, xpRes] = await Promise.all([
+  const [{ data: profile }, extrasRes, costumesRes, savedCount, slots, attendRes, activityRes, reviewRes, xpRes, dueRes, reviewedTodayRes] = await Promise.all([
     supabase
       .from("profiles")
-      .select("display_name, current_level, xp, streak_days, avatar_url, coins, is_admin")
+      .select("display_name, current_level, xp, streak_days, avatar_url, coins, is_admin, review_capacity_bonus")
       .eq("id", user.id)
       .single(),
     supabase.from("profiles").select("streak_freezes").eq("id", user.id).maybeSingle(),
@@ -44,7 +45,17 @@ export default async function MyRoomPage() {
     supabase.from("daily_activity").select("activity_date, minutes").eq("user_id", user.id).gte("activity_date", since),
     supabase.from("vocabulary_progress").select("last_reviewed_at").eq("user_id", user.id).gte("last_reviewed_at", `${since}T00:00:00.000Z`),
     supabase.from("xp_events").select("points, created_at").eq("user_id", user.id).gte("created_at", `${since}T00:00:00.000Z`),
+    // The watering can: the same due count and daily-cap accounting as the
+    // Garden (dashboard_snapshot's due_count), so both gardens show one number.
+    supabase.from("vocabulary_progress").select("id", { count: "exact", head: true }).eq("user_id", user.id).lte("next_review_at", now.toISOString()),
+    supabase.from("vocabulary_progress").select("id", { count: "exact", head: true }).eq("user_id", user.id).gte("last_reviewed_at", `${now.toISOString().slice(0, 10)}T00:00:00.000Z`),
   ]);
+  const reviewCap = dailyReviewCap(profile?.review_capacity_bonus ?? 0);
+  const reviewDoneToday = (reviewedTodayRes.count ?? 0) >= reviewCap;
+  // a failed read hides the can rather than showing "nothing due"
+  const review = dueRes.error
+    ? undefined
+    : { due: reviewDoneToday ? 0 : Math.min(dueRes.count ?? 0, reviewCap), cap: reviewCap, doneToday: reviewDoneToday };
   const weeks = buildWeeks(now, {
     attended: new Set((attendRes.error ? [] : attendRes.data ?? []).map((r) => r.day as string)),
     studied: new Set((activityRes.error ? [] : activityRes.data ?? []).filter((r) => (r.minutes ?? 0) > 0).map((r) => r.activity_date as string)),
@@ -85,6 +96,7 @@ export default async function MyRoomPage() {
               coins,
               streakDays,
               streakFreezes: extras?.streak_freezes ?? 0,
+              review,
             }}
             shop={{
               isAdmin: profile?.is_admin ?? false,

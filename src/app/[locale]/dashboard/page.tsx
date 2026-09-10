@@ -287,6 +287,7 @@ export default async function DashboardPage() {
               costumeIds={equippedIds}
               species={cefr}
               celebrateKey={quest?.completed_at ? quest.id : null}
+              review={{ due: dueCount, cap: reviewCap, doneToday: reviewDoneForToday }}
             />
           </div>
 
@@ -311,6 +312,7 @@ export default async function DashboardPage() {
               coins={coins}
               streakDays={streakDays}
               streakFreezes={extras?.streak_freezes ?? 0}
+              review={{ due: dueCount, cap: reviewCap, doneToday: reviewDoneForToday }}
             />
           </div>
 
@@ -384,24 +386,8 @@ export default async function DashboardPage() {
               no 2px edge; each row presses on its own. At xl the wrapper is
               display: contents and the review row is its own card as before. */}
           <div className="mb-3 rounded-[12px] border border-line bg-cream overflow-hidden divide-y divide-line xl:contents">
-          {dueCount > 0 && (
-            <Link
-              href="/review"
-              className="group flex items-center gap-3 px-[14px] py-[13px] transition-all active:bg-warm xl:mb-3 xl:gap-[12px] xl:border xl:border-line xl:rounded-[20px] xl:bg-cream xl:px-[16px] xl:hover:-translate-y-0.5 xl:active:translate-y-[1px] xl:active:scale-[.99] xl:hover:border-success"
-            >
-              <Glyph name="drop" className="w-[21px] h-[21px] text-success transition-transform group-hover:scale-110" />
-              {/* "Review · 12 due" (2026-09-11, user: shorter). The long
-                  sentence wrapped or clipped at 360px; the count now trails
-                  the verb, so the part that matters is never the part cut. */}
-              <b className="flex-1 min-w-0 truncate text-[15px] font-bold text-charcoal">
-                {t("review.label")}
-                <span className="font-medium text-muted"> · {t("review.dueShort", { count: dueCount })}</span>
-              </b>
-              <span className="flex-none text-[15px] font-semibold text-success transition-transform group-hover:translate-x-0.5">
-                →
-              </span>
-            </Link>
-          )}
+          {/* the "Review · N due" row is gone (2026-09-10): review is the
+              watering can in the garden above */}
 
           {/* today's slang — one line here below xl, a rail note at xl+.
               Moved back out of /vocabulary 2026-09-08 (user call): the

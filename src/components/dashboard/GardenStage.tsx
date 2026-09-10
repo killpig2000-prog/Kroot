@@ -54,7 +54,7 @@ export default function GardenStage({
   const { veteran, frameH, groundShift, skin } = gardenFrame(level, costumeIds);
   const stage = treeStageForLevel(level);
   return (
-    <div className="relative" style={{ width }}>
+    <div className="relative" style={{ width }} data-garden-tree>
       <svg
         viewBox={`0 0 220 ${frameH}`}
         className={`block h-auto transition-[height] duration-500 ${svgClassName}`}

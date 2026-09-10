@@ -4,7 +4,8 @@ import { useEffect, useState, useSyncExternalStore } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import GardenStage, { gardenFrame } from "@/components/dashboard/GardenStage";
-import { LEVEL_ORDER, LEVEL_PATH, SPECIES, type CefrLevel } from "@/lib/tree";
+import WateringCan from "@/components/dashboard/WateringCan";
+import { LEVEL_ORDER, LEVEL_PATH, type CefrLevel } from "@/lib/tree";
 import { MAX_LEVEL, treeHeightMetres, treeStageForLevel } from "@/lib/level";
 import { VETERAN_MILESTONES } from "@/components/dashboard/VeteranTree";
 import GardenScene from "@/components/ui/GardenScene";
@@ -47,6 +48,7 @@ export default function TreeCard({
   streakDays,
   linkToShop = false,
   onTreeTap,
+  review,
 }: {
   level: number;
   progressPct: number;
@@ -65,6 +67,8 @@ export default function TreeCard({
   linkToShop?: boolean;
   /** My room: tapping the tree opens it big, with its growth rings. */
   onTreeTap?: () => void;
+  /** Today's review, for the watering can on the grass; no can when absent. */
+  review?: { due: number; cap: number; doneToday: boolean };
 }) {
   const t = useTranslations("dashboard.tree");
   // Identity chips reuse the /profile strings — the card absorbed that page's
@@ -73,6 +77,8 @@ export default function TreeCard({
   const tu = useTranslations("ui");
   const [fill, setFill] = useState(0);
   const [openTab, setOpenTab] = useState<"growth" | "keepsakes" | null>(null);
+  // the watering can's pour: the tree sways and thanks you, as for a done quest
+  const [watering, setWatering] = useState(false);
   const equipped = costumeIds;
   // The server can't know the visitor's clock: it renders "어서 오세요" and
   // the local-time greeting swaps in right after hydration (same trick the
@@ -94,7 +100,6 @@ export default function TreeCard({
   }, [progressPct]);
 
   const stage = treeStageForLevel(level);
-  const sp = SPECIES[species ?? stage];
   const stageIdx = LEVEL_ORDER.indexOf(stage);
   const maxed = level >= MAX_LEVEL;
   // The frame's shape (veteran height, sky costume) comes from the shared
@@ -108,7 +113,11 @@ export default function TreeCard({
   const treeHeightMax = Math.round((230 * frameH) / 220);
   const sceneMin = Math.max(320, treeHeightMax + 96);
 
-  const treeImage = <GardenStage level={level} species={species} costumeIds={equipped} width={treeWidth} />;
+  const treeImage = (
+    <div className={watering ? "cheer" : undefined}>
+      <GardenStage level={level} species={species} costumeIds={equipped} width={treeWidth} />
+    </div>
+  );
 
   return (
     <section className="relative mb-3.5">
@@ -169,15 +178,33 @@ export default function TreeCard({
         {/* what the tree says — the greeting first, then its usual lines;
             above it on phones, beside it on wide screens */}
         <div className="absolute z-[4] w-max left-1/2 -translate-x-1/2 top-[15%] sm:left-[58%] sm:translate-x-0 sm:top-[30%]">
-          <SpeechBubble phrases={phrases} firstHoldMs={GREETING_HOLD_MS} wrap />
+          {/* while it's being watered the tree says thanks first, as the
+              Garden card does; keyed so the line restarts from the top */}
+          <SpeechBubble
+            key={watering ? "thanks" : "calm"}
+            phrases={watering ? [...phrases.filter((p) => p.kr === "물 줘서 고마워요"), ...phrases.filter((p) => p.kr !== "물 줘서 고마워요")] : phrases}
+            firstHoldMs={watering ? 4200 : GREETING_HOLD_MS}
+            wrap
+          />
         </div>
+
+        {/* review: the watering can on the grass, bottom-right — a direct
+            child of the scene so it can find the tree it waters */}
+        {review && (
+          <WateringCan
+            due={review.due}
+            cap={review.cap}
+            doneToday={review.doneToday}
+            onPour={() => setWatering(true)}
+            className="absolute right-[clamp(18px,6vw,34px)] bottom-[48px]"
+            style={{ width: "clamp(66px, 18vw, 84px)" }}
+          />
+        )}
 
         {/* one XP line on the grass */}
         <div className="absolute left-4 right-4 bottom-3 z-[4]">
-          <div className="flex items-center justify-between text-[11px] font-extrabold text-success-deep">
-            <span>
-              {sp.name} <span className="kr font-semibold text-muted">{sp.krName}</span>
-            </span>
+          {/* the species name left the garden (2026-09-10, user call) */}
+          <div className="flex items-center justify-end text-[11px] font-extrabold text-success-deep">
             <span className="tabular-nums">{maxed ? t("maxed") : t("xpToNext", { into: xpInto, needed: xpNeeded, next: level + 1 })}</span>
           </div>
           <div className="mt-1 h-[7px] rounded-full overflow-hidden" style={{ background: "rgba(255,253,246,.7)" }}>

@@ -6,10 +6,11 @@ import { Link } from "@/i18n/navigation";
 import GardenScene from "@/components/ui/GardenScene";
 import SpeechBubble from "@/components/ui/SpeechBubble";
 import GardenStage, { gardenFrame } from "@/components/dashboard/GardenStage";
+import WateringCan from "@/components/dashboard/WateringCan";
 import { TREE_PHRASES } from "@/lib/tree-phrases";
 import { playWater } from "@/lib/sfx";
 import { MAX_LEVEL, treeHeightMetres, treeStageForLevel } from "@/lib/level";
-import { LEVEL_PATH, SPECIES, type CefrLevel } from "@/lib/tree";
+import { LEVEL_PATH, type CefrLevel } from "@/lib/tree";
 
 // The phone Garden's tree, option 2a (2026-09-09): an inset garden card
 // where TreeBand's one line used to be. The band gave the tree a 48px
@@ -29,6 +30,7 @@ export default function GardenCard({
   costumeIds = [],
   species,
   celebrateKey = null,
+  review,
 }: {
   level: number;
   progressPct: number;
@@ -40,6 +42,8 @@ export default function GardenCard({
   /** Today's quest row id once it is done — the tree says thank you once
       per watered quest, the first time the Garden opens afterwards. */
   celebrateKey?: string | null;
+  /** Today's review, for the watering can; no can when absent. */
+  review?: { due: number; cap: number; doneToday: boolean };
 }) {
   const t = useTranslations("dashboard.tree");
   const [fill, setFill] = useState(0);
@@ -77,7 +81,6 @@ export default function GardenCard({
   }, [celebrateKey]);
 
   const stage = treeStageForLevel(level);
-  const sp = SPECIES[species ?? stage];
   const maxed = level >= MAX_LEVEL;
   // Same stage My room draws (GardenStage): veteran trunk, sky costume,
   // ground items, friends. The tree's width is clamp()ed off the viewport
@@ -94,13 +97,15 @@ export default function GardenCard({
   const phrases = party ? [...thanks, ...lines.filter((p) => !thanks.includes(p))] : lines;
 
   return (
-    <Link
-      href="/myroom"
+    <div
       data-tour="tree"
-      aria-label={t("openMyRoom")}
-      className="relative block rounded-[12px] border border-line overflow-hidden mb-3 shadow-[0_2px_0_var(--c-line)] transition-[transform,box-shadow,border-color] duration-100 ease-out hover:border-success active:translate-y-[2px] active:shadow-[0_0_0_var(--c-line)]"
+      className="relative block rounded-[12px] border border-line overflow-hidden mb-3 shadow-[0_2px_0_var(--c-line)] transition-[transform,box-shadow,border-color] duration-100 ease-out has-[>a:hover]:border-success has-[>a:active]:translate-y-[2px] has-[>a:active]:shadow-[0_0_0_var(--c-line)]"
       style={{ height: cardHeight }}
     >
+      {/* The whole card still opens My room, but through a link laid over
+          it rather than wrapped around it — the watering can is a button,
+          and a button inside a link is invalid and double-fires. */}
+      <Link href="/myroom" aria-label={t("openMyRoom")} className="absolute inset-0 z-[5]" />
       <GardenScene hillsHeight="46%" clouds={!sky} className="absolute inset-0 w-full h-full" style={sky ? { background: sky } : undefined}>
         {/* level + stage name, then the species — the two things the band
             had no room for.
@@ -116,10 +121,6 @@ export default function GardenCard({
         >
           {t("levelBadge", { level })}
           <span className="font-bold text-charcoal tabular-nums">· {veteran ? `${metres} ${t("metresTall")}` : LEVEL_PATH[stage].treeName}</span>
-        </span>
-        <span className="absolute top-3 right-3 z-[4] inline-flex items-center gap-1 rounded-full border border-success-line bg-cream px-[9px] py-1 text-[11.5px] font-extrabold text-success-deep">
-          {sp.name}
-          <span className="kr font-semibold text-muted">{sp.krName}</span>
         </span>
 
         {/* Tree and bubble share one stage, capped at a phone's width and
@@ -143,6 +144,19 @@ export default function GardenCard({
             </>
           )}
 
+          {/* review: a watering can on the grass, bottom-right; tapping it
+              waters this tree (the same sway and thank-you a done quest
+              gets) and opens /review */}
+          {review && (
+            <WateringCan
+              due={review.due}
+              cap={review.cap}
+              doneToday={review.doneToday}
+              onPour={() => setParty(true)}
+              className="absolute right-[clamp(12px,3.5vw,18px)] bottom-[36px]"
+              style={{ width: "clamp(50px, 14vw, 60px)" }}
+            />
+          )}
           {/* the tail points back at the tree; keyed so the thank-you
               restarts the cycle from its first line */}
           <SpeechBubble
@@ -170,6 +184,6 @@ export default function GardenCard({
           </span>
         </div>
       </GardenScene>
-    </Link>
+    </div>
   );
 }

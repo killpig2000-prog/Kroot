@@ -1064,3 +1064,16 @@ html.js-reveal .tree-garden.in .tree {
 @media (prefers-reduced-motion: reduce) {
   .eq-bar, .avatar-on { animation: none; }
 }
+
+/* WateringCan (2026-09-10): the three drops that fall from the spout to
+   the trunk, and the ripple where they land. --fall is set per drop from
+   the tree's measured height. */
+@keyframes wcDrop {
+  0% { transform: translateY(0); opacity: 0; }
+  15% { opacity: .9; }
+  100% { transform: translateY(var(--fall, 90px)); opacity: 0; }
+}
+@keyframes wcRing {
+  0% { opacity: .9; transform: translateX(-50%) scale(1); }
+  100% { opacity: 0; transform: translateX(-50%) scale(12, 9); }
+}
