@@ -6,8 +6,9 @@ export default function Loading() {
     <div className="min-h-screen bg-warm">
       <div className="grid grid-cols-1 xl:grid-cols-[clamp(216px,18%,280px)_minmax(0,1fr)] w-full min-h-screen content-start xl:content-stretch">
         <div className="hidden md:block border-r border-dashed border-dash bg-warm" />
-        <div className="md:hidden h-[52px] border-b-[1.5px] border-dashed border-dash bg-warm" />
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] xl:pb-[60px]">
+          {/* the lesson bar's shape, so the swap doesn't jump (2026-09-10) */}
+          <div className="h-[52px] -mx-[clamp(18px,4vw,44px)] -mt-6 mb-4 border-b-[1.5px] border-dashed border-dash xl:h-9 xl:mx-0 xl:mt-0 xl:mb-5 xl:border-0" />
           <div className="animate-pulse">
             <div className="h-3.5 w-40 rounded-full bg-warm-3 mb-[18px]" />
             <div className="flex items-center justify-between gap-4 mb-5">

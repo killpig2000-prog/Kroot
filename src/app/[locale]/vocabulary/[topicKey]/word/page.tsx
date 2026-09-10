@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { Link, redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
+import LessonBar from "@/components/ui/LessonBar";
 import WordDetailCard from "@/components/vocabulary/WordDetailCard";
 import GuidedStep from "@/components/onboarding/GuidedStep";
 import { createClient, getClaimsUser, getDashboardProfile } from "@/lib/supabase/server";
@@ -145,9 +146,18 @@ export default async function VocabWordPage({
           email={user.email ?? ""}
           streakDays={profile?.streak_days ?? 0}
           avatarUrl={profile?.avatar_url}
+          lessonBar
         />
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] xl:pb-[60px]">
+          {/* "Vocabulary / Day N", ← to the chapter (or where you came from) */}
+          <LessonBar
+            href="/vocabulary"
+            title={tn("vocabulary")}
+            sub={tv("dayN", { n: chapterIndex + 1 })}
+            backHref={backTo ?? (fromBank ? "/review/words" : unitHref)}
+            locale={locale}
+          />
           <GuidedStep step="word-read" />
           <GuidedStep step="word-goti" />
           <GuidedStep step="word-bank" />

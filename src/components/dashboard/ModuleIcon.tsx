@@ -133,7 +133,31 @@ const Settings = (
   </>
 );
 
+// Lesson-bar pages that aren't Garden doors (2026-09-10): grammar is a line
+// of text with the particle picked out, slang the day's speech bubble (the
+// same one Glyph draws), the promotion test a rosette with a tick.
+const Grammar = (
+  <>
+    <path d="M4.5 7.2h15" />
+    <path d="M4.5 12h6.2M15.6 12h3.9" />
+    <rect x="11.6" y="9.6" width="3.2" height="4.8" rx="1" />
+    <path d="M4.5 16.8h11" />
+  </>
+);
+const Slang = <path d="M12 4.8c-4.4 0-8 2.6-8 5.9 0 1.9 1.2 3.6 3 4.7l-.8 3.6 4-2.2c.6.1 1.2.1 1.8.1 4.4 0 8-2.6 8-5.9s-3.6-6.2-8-6.2z" />;
+const LevelTest = (
+  <>
+    <circle cx="12" cy="10.2" r="6.2" />
+    <path d="M9.4 10.4l1.8 1.8 3.5-3.8" />
+    <path d="M8.8 15.6 7.6 20.4l4.4-2.2 4.4 2.2-1.2-4.8" />
+  </>
+);
+
 const ICONS: Record<string, React.ReactNode> = {
+  "/grammar": Grammar,
+  "/slang": Slang,
+  "/review": Review,
+  "/level-test": LevelTest,
   "/dashboard": Garden,
   "/profile": Progress,
   "/review/words": Review,

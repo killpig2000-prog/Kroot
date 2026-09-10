@@ -17,11 +17,12 @@ const SUN_RAYS = [0, 45, 90, 135, 180, 225, 270, 315];
 // the three pale hill bands are gone. One meadow green with a single curved
 // top edge, and the grass is what sits on it — tufts and wildflowers —
 // all drawn darker than the ground, the way grass reads on a lawn. No
-// vines (user call), so the flowers took their spots.
+// vines (user call), so the flowers took their spots. Nothing stands in
+// the bottom 14%: that is where the XP line sits on the Garden card.
 const GROUND = "#5FA976";
 const GRASS = "#2E5B41";
-const TUFTS: [number, number, boolean][] = [[7, 24, false], [24, 19, true], [41, 27, false], [58, 20, false], [73, 26, true], [88, 18, false], [96, 25, false], [20, 11, false], [36, 9, true], [70, 12, false], [94, 8, false]];
-const FLOWERS: [number, number, string][] = [[14, 22, "#F4A7B9"], [31, 27, "#FFD66B"], [49, 19, "#FFFDF6"], [64, 25, "#F4A7B9"], [80, 21, "#FFD66B"], [92, 28, "#FFFDF6"], [12, 8, "#FFD66B"], [62, 6, "#F4A7B9"], [86, 10, "#FFFDF6"]];
+const TUFTS: [number, number, boolean][] = [[7, 24, false], [24, 19, true], [41, 27, false], [58, 20, false], [73, 26, true], [88, 18, false], [96, 25, false], [20, 16, false], [36, 15, true], [70, 16, false], [94, 15, false]];
+const FLOWERS: [number, number, string][] = [[14, 22, "#F4A7B9"], [31, 27, "#FFD66B"], [49, 19, "#FFFDF6"], [64, 25, "#F4A7B9"], [80, 21, "#FFD66B"], [92, 28, "#FFFDF6"], [12, 15, "#FFD66B"], [62, 14, "#F4A7B9"], [86, 16, "#FFFDF6"]];
 const BIRDS: [number, number][] = [[28, 17], [35, 24]];
 
 export const DAWN_SKY = "linear-gradient(180deg,#FFF9EC 0%,#EAF4F3 40%,#BEE3F0 62%,#DFF3E4 100%)";

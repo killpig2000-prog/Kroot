@@ -1,7 +1,8 @@
-import { getFormatter, getTranslations } from "next-intl/server";
+import { getFormatter, getLocale, getTranslations } from "next-intl/server";
 import { Link, redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
+import LessonBar from "@/components/ui/LessonBar";
 import TestRunner from "@/components/level-test/TestRunner";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { computeEligibility, getLastServedKeys } from "@/lib/promotion-server";
@@ -13,7 +14,7 @@ import type { CefrLevel } from "@/lib/tree";
 // once every requirement is met, the actual four-skill test.
 export default async function LevelTestPage() {
   const t = await getTranslations("levelTest");
-  const tn = await getTranslations("nav");
+  const locale = await getLocale();
   const format = await getFormatter();
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
@@ -46,21 +47,11 @@ export default async function LevelTestPage() {
           email={user.email ?? ""}
           streakDays={profile?.streak_days ?? 0}
           avatarUrl={profile?.avatar_url}
+          lessonBar
         />
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] xl:pb-[60px] max-w-[680px]">
-          {/* breadcrumb */}
-          <div className="flex gap-2 text-[13px] text-faint mb-[18px]">
-            <Link href="/dashboard" className="hover:text-charcoal transition-colors">
-              {tn("garden")}
-            </Link>
-            <span>/</span>
-            <b className="text-charcoal font-semibold">{t("breadcrumb")}</b>
-          </div>
-
-          <h1 className="font-bold text-[22px] tracking-[-0.02em] mb-1">
-            🎯 {t("title")} {spec && t("titleLevels", { from: spec.from, to: spec.to })}
-          </h1>
+          <LessonBar href="/level-test" title={t("title")} sub={spec ? `${spec.from} → ${spec.to}` : undefined} locale={locale} />
           <p className="text-[13.5px] text-muted mb-6">
             {t("intro")}
           </p>

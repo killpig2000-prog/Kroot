@@ -7,25 +7,10 @@ export default function GrammarLoading() {
     <div className="min-h-screen bg-warm text-charcoal">
       <div className="grid grid-cols-1 xl:grid-cols-[clamp(216px,18%,280px)_minmax(0,1fr)] w-full min-h-screen content-start xl:content-stretch">
         <div className="hidden md:block border-r border-dashed border-dash bg-warm" />
-        <div className="md:hidden h-[52px] border-b-[1.5px] border-dashed border-dash bg-warm" />
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] xl:pb-[60px] animate-pulse">
-          {/* breadcrumb */}
-          <div className="flex gap-2 mb-[18px]">
-            <div className="h-[13px] w-[50px] rounded-full bg-warm-2" />
-            <div className="h-[13px] w-[10px] rounded-full bg-warm-2" />
-            <div className="h-[13px] w-[55px] rounded-full bg-warm-2" />
-          </div>
-
-          {/* head */}
-          <div className="flex items-center justify-between gap-4 mb-[18px] flex-wrap">
-            <div className="flex items-center gap-[9px]">
-              <div className="w-[30px] h-[30px] rounded-lg bg-warm-3" />
-              <div className="h-[22px] w-[110px] rounded-full bg-warm-3" />
-            </div>
-            <div className="h-[13px] w-[220px] rounded-full bg-warm-2" />
-          </div>
-
+          {/* the lesson bar's shape, so the swap doesn't jump (2026-09-10) */}
+          <div className="h-[52px] -mx-[clamp(18px,4vw,44px)] -mt-6 mb-4 border-b-[1.5px] border-dashed border-dash xl:h-9 xl:mx-0 xl:mt-0 xl:mb-5 xl:border-0" />
           {/* intro callout */}
           <div className="max-w-[820px] bg-warm border border-dashed border-line rounded-[14px] px-[18px] py-4 mb-7">
             <div className="h-[13.5px] w-[95%] rounded-full bg-warm-2 mb-2" />

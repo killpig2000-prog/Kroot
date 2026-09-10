@@ -1,7 +1,8 @@
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { Link, redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
+import LessonBar from "@/components/ui/LessonBar";
 import ReviewSession from "@/components/review/ReviewSession";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { MAX_REVIEW_CAPACITY_BONUS, REVIEW_SESSION_SIZE, dailyReviewCap } from "@/lib/srs";
@@ -48,6 +49,7 @@ function mixDue(oldest: DueRow[], newest: DueRow[], cap: number): DueRow[] {
 export default async function ReviewPage() {
   const tn = await getTranslations("nav");
   const t = await getTranslations("vocabulary.practice");
+  const locale = await getLocale();
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
 
@@ -192,33 +194,11 @@ export default async function ReviewPage() {
           email={user.email ?? ""}
           streakDays={profile?.streak_days ?? 0}
           avatarUrl={profile?.avatar_url}
+          lessonBar
         />
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] xl:pb-[60px]">
-          {/* breadcrumb */}
-          <div className="flex gap-2 text-[13px] text-faint mb-[18px]">
-            <Link href="/dashboard" className="hover:text-charcoal transition-colors">
-              {tn("garden")}
-            </Link>
-            <span>/</span>
-            <b className="text-charcoal font-semibold">{tn("review")}</b>
-          </div>
-
-          {/* head */}
-          <div className="flex items-center justify-between gap-4 mb-6 flex-wrap">
-            <h1 className="font-bold text-[22px] tracking-[-0.02em] flex items-center">
-              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[var(--tint-sky)] text-sky-deep border border-sky-line items-center justify-center text-[15px] mr-[9px]">
-                💧
-              </span>
-              {tn("review")}
-              <span className="ml-2 text-[13px] font-medium text-faint">{t("reviewTime")}</span>
-            </h1>
-            <span className="flex items-center gap-3 flex-wrap text-[13px] text-muted">
-              <Link href="/review/words" className="font-semibold text-sky-deep hover:underline">
-                📚 {tn("myWords")} →
-              </Link>
-            </span>
-          </div>
+          <LessonBar href="/review" title={tn("review")} locale={locale} />
 
           {migrationMissing ? (
             <div className="max-w-[560px] border border-[var(--tint-slate-line)] rounded-[14px] bg-[var(--tint-slate)] p-[18px]">
