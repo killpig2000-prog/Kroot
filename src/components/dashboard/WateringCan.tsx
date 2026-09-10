@@ -8,14 +8,15 @@ import { playWater } from "@/lib/sfx";
 // Review is watering what's already planted (2026-09-10, user call: option 3
 // of four — not a header orb, not a second decorated button under the
 // quest). A watering can rests on the grass at the garden's bottom-right, in
-// My room and in the Garden card alike. Drawn in the garden's own hand: flat
-// two-tone fills and one ink line, like the tree beside it — a shaded, "3D"
-// can was mocked and dropped because it looked like it came from another
-// picture book.
+// My room and in the Garden card alike. Drawn in the garden's own hand: a
+// round jug, a long spout with a big rose, flat two-tone fills and an edge
+// in its own darker blue, like the tree beside it — a shaded, "3D" can was
+// mocked and dropped because it looked like it came from another picture
+// book, and the first boxy draft read as a bucket.
 //
-// It says how much is due without nagging: the water inside is the share of
-// today's cap still to go and a small count sits on it; nothing due, it is
-// full and quiet; done for today, it lies tipped over and empty. It moves on
+// It says how much is due without nagging: a small count sits on it when
+// words are due; nothing due, it stands quiet; done for today, it lies
+// tipped over. It moves on
 // its own exactly once — one wobble when the garden opens with words due —
 // then keeps still (the zero-nudge rule, promotion-eligibility 2026-09-05).
 //
@@ -24,13 +25,17 @@ import { playWater } from "@/lib/sfx";
 // ripple keeps growing until it covers the garden and /review opens. With
 // reduced motion it just goes.
 
-const INK = "#2E5B41";
+// Sky-blue enamel (2026-09-10, user pick of three: terracotta, sage, sky).
+// The tree's own rules: flat fills, one shade step, a thin edge in the
+// can's darker hue, one highlight — no ink line, no gradient.
+const BASE = "#B5DCEA";
+const SHADE = "#8EC4D8";
+const EDGE = "#4E93AC";
 const WATER = "#7FB6C9";
 const WATER_DEEP = "#4E93AC";
 
 export default function WateringCan({
   due,
-  cap,
   doneToday,
   onPour,
   className = "",
@@ -38,8 +43,8 @@ export default function WateringCan({
 }: {
   /** Words due now, already capped at today's review cap. */
   due: number;
-  /** Today's review cap — the water level is due / cap. */
-  cap: number;
+  /** Today's review cap (kept for callers; the drawing no longer shows a level). */
+  cap?: number;
   /** Today's cap is reached: the can lies empty. */
   doneToday: boolean;
   /** Called as the water starts to fall — the caller sways its tree. */
@@ -56,8 +61,6 @@ export default function WateringCan({
   const busy = useRef(false);
 
   const state: "due" | "none" | "done" = doneToday ? "done" : due > 0 ? "due" : "none";
-  // water height in the can's 0..1 belly; a sliver when empty so the line reads
-  const level = state === "done" ? 0.08 : state === "none" ? 1 : Math.min(1, Math.max(0.25, due / Math.max(cap, 1)));
 
   // the one wobble, on arrival, only when something is due
   useEffect(() => {
@@ -118,31 +121,36 @@ export default function WateringCan({
         className={`z-[6] min-w-[44px] cursor-pointer origin-[70%_85%] transition-transform hover:-translate-y-0.5 active:translate-y-[1px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-success rounded-[10px] ${className}`}
         style={style}
       >
-        <svg viewBox="0 0 64 56" className="block w-full h-auto overflow-visible" aria-hidden="true">
-          <g style={state === "done" ? { transform: "rotate(-24deg) translate(2px, 8px)", transformOrigin: "30px 50px" } : undefined}>
+        <svg viewBox="0 0 96 80" className="block w-full h-auto overflow-visible" aria-hidden="true">
+          <g style={state === "done" ? { transform: "rotate(-24deg) translate(2px, 8px)", transformOrigin: "40px 72px" } : undefined}>
             {/* the shadow on the grass */}
-            <ellipse cx="28" cy="52" rx="20" ry="3" fill={INK} opacity=".14" />
-            {/* spout, behind the body */}
-            <path d="M44 34 L58 20" stroke={INK} strokeWidth="6.4" strokeLinecap="round" />
-            <path d="M44 34 L58 20" stroke="#DDEBDF" strokeWidth="3" strokeLinecap="round" />
-            <path d="M55 15.5 l6 6" stroke={INK} strokeWidth="5.4" strokeLinecap="round" />
-            <path d="M55 15.5 l6 6" stroke="#EAF3EC" strokeWidth="2.2" strokeLinecap="round" />
-            {/* handle */}
-            <path d="M16 20 Q28 3 40 20" stroke={INK} strokeWidth="2.2" fill="none" strokeLinecap="round" />
-            {/* body: lit left, one step of shade right, water inside */}
-            <clipPath id="wc-belly">
-              <path d="M10 22 Q10 19 13 19 L43 19 Q46 19 46 22 L47 46 Q47 49 44 49 L12 49 Q9 49 9 46 Z" />
-            </clipPath>
-            <g clipPath="url(#wc-belly)">
-              <rect x="8" y="18" width="40" height="32" fill="#EAF3EC" />
-              <rect x="31" y="18" width="17" height="32" fill="#D3E6D8" />
-              <rect x="8" y={19 + 30 * (1 - level)} width="40" height={31 * level + 1} fill={WATER} />
-              <rect x="31" y={19 + 30 * (1 - level)} width="17" height={31 * level + 1} fill={WATER_DEEP} opacity=".35" />
-              <path d={`M8 ${19 + 30 * (1 - level)} q5 -1.6 10 0 t10 0 t10 0 t10 0`} stroke="#FFFDF6" strokeWidth="1.2" fill="none" opacity=".8" />
+            <ellipse cx="42" cy="74" rx="30" ry="4" fill="#2E5B41" opacity=".13" />
+            {/* spout: long, curving up, thicker at the body */}
+            <path d="M58 52 C70 48 76 36 82 22" stroke={EDGE} strokeWidth="9" fill="none" strokeLinecap="round" />
+            <path d="M58 52 C70 48 76 36 82 22" stroke={SHADE} strokeWidth="6" fill="none" strokeLinecap="round" />
+            <path d="M59 50 C69 46 74 36 79 24" stroke={BASE} strokeWidth="2.2" fill="none" strokeLinecap="round" opacity=".9" />
+            {/* the rose — the part that says "watering can" at 55px */}
+            <g transform="rotate(-28 84 18)">
+              <path d="M76 18 L92 12 L92 26 Z" fill={SHADE} stroke={EDGE} strokeWidth="1.6" strokeLinejoin="round" />
+              <ellipse cx="92" cy="19" rx="4.2" ry="8.6" fill={BASE} stroke={EDGE} strokeWidth="1.6" />
+              {[[92.4, 14.5], [92.4, 19], [92.4, 23.5], [90.6, 16.8], [90.6, 21.2]].map(([x, y]) => (
+                <circle key={`${x}-${y}`} cx={x} cy={y} r="0.95" fill={EDGE} />
+              ))}
             </g>
-            <path d="M10 22 Q10 19 13 19 L43 19 Q46 19 46 22 L47 46 Q47 49 44 49 L12 49 Q9 49 9 46 Z" fill="none" stroke={INK} strokeWidth="2.2" strokeLinejoin="round" />
-            {/* the rim */}
-            <path d="M11 19.5 L45 19.5" stroke={INK} strokeWidth="3.2" strokeLinecap="round" />
+            {/* handle, a band over the top */}
+            <path d="M22 30 C22 8 56 8 58 30" stroke={EDGE} strokeWidth="8" fill="none" strokeLinecap="round" />
+            <path d="M22 30 C22 8 56 8 58 30" stroke={BASE} strokeWidth="4.6" fill="none" strokeLinecap="round" />
+            {/* body: a round jug, wider at the hips, one shade step on the right */}
+            <path d="M18 34 C16 30 20 26 26 26 L54 26 C60 26 64 30 62 34 L66 62 C67 70 60 72 54 72 L26 72 C18 72 12 70 13 62 Z" fill={BASE} stroke={EDGE} strokeWidth="1.8" strokeLinejoin="round" />
+            <path d="M48 26 L54 26 C60 26 64 30 62 34 L66 62 C67 70 60 72 54 72 L46 72 C54 64 55 44 48 26 Z" fill={SHADE} />
+            <path d="M14.5 56 C28 60 52 60 65.2 56" stroke={SHADE} strokeWidth="3" fill="none" />
+            <path d="M14.5 56 C28 60 52 60 65.2 56" stroke={EDGE} strokeWidth="1" fill="none" opacity=".55" />
+            {/* the opening */}
+            <ellipse cx="40" cy="27" rx="15" ry="3.6" fill={SHADE} stroke={EDGE} strokeWidth="1.6" />
+            <ellipse cx="40" cy="27.4" rx="10" ry="2" fill={EDGE} opacity=".45" />
+            {/* one highlight */}
+            <path d="M22 36 C20 44 20 52 22 60" stroke="#FFFDF6" strokeWidth="3.2" fill="none" strokeLinecap="round" opacity=".7" />
+            <circle cx="23" cy="32.5" r="1.8" fill="#FFFDF6" opacity=".7" />
           </g>
         </svg>
         {state === "due" && (
