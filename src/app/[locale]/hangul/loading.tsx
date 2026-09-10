@@ -1,44 +1,5 @@
-// Mirrors HangulPage: sidebar placeholder, breadcrumb, icon+title header,
-// the green intro callout, the explorer's tab pills, and a jamo-card grid —
-// so the route swap doesn't flash blank while the profile/user fetch runs.
+import TreeLoading from "@/components/ui/TreeLoading";
+
 export default function Loading() {
-  return (
-    <div className="min-h-screen bg-warm text-charcoal">
-      <div className="grid grid-cols-1 xl:grid-cols-[clamp(216px,18%,280px)_minmax(0,1fr)] w-full min-h-screen content-start xl:content-stretch">
-        <div className="hidden md:block border-r border-dashed border-dash bg-warm" />
-
-        <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] xl:pb-[60px]">
-          {/* the lesson bar's shape, so the swap doesn't jump (2026-09-10) */}
-          <div className="h-[52px] -mx-[clamp(18px,4vw,44px)] -mt-6 mb-4 border-b-[1.5px] border-dashed border-dash xl:h-9 xl:mx-0 xl:mt-0 xl:mb-5 xl:border-0" />
-          <div className="animate-pulse">
-            {/* intro callout */}
-            <div className="max-w-[820px] bg-warm border border-dashed border-line rounded-[14px] px-[18px] py-4 mb-6">
-              <div className="h-3.5 w-full rounded-full bg-warm-4 mb-2" />
-              <div className="h-3.5 w-full rounded-full bg-warm-4 mb-2" />
-              <div className="h-3.5 w-2/3 rounded-full bg-warm-4" />
-            </div>
-
-            {/* section label */}
-            <div className="h-3 w-48 rounded-full bg-warm-2 mb-2.5" />
-
-            {/* jamo card grid */}
-            <div className="grid grid-cols-[repeat(auto-fill,minmax(210px,1fr))] gap-3 max-w-[980px] mb-8">
-              {Array.from({ length: 8 }).map((_, i) => (
-                <div
-                  key={i}
-                  className="border border-line rounded-[14px] bg-cream px-4 py-[15px] flex items-center gap-3.5"
-                >
-                  <div className="flex-none w-[52px] h-[52px] rounded-xl bg-warm-2" />
-                  <div className="min-w-0 flex-1">
-                    <div className="h-3.5 w-14 rounded-full bg-warm-3 mb-2" />
-                    <div className="h-3 w-20 rounded-full bg-warm-4" />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </main>
-      </div>
-    </div>
-  );
+  return <TreeLoading />;
 }

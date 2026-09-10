@@ -1,5 +1,5 @@
-import PlainSkeleton from "@/components/ui/PlainSkeleton";
+import TreeLoading from "@/components/ui/TreeLoading";
 
 export default function Loading() {
-  return <PlainSkeleton rows={5} />;
+  return <TreeLoading plain />;
 }

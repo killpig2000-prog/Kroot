@@ -1,5 +1,5 @@
-import PageSkeleton from "@/components/ui/PageSkeleton";
+import TreeLoading from "@/components/ui/TreeLoading";
 
 export default function Loading() {
-  return <PageSkeleton rows={6} />;
+  return <TreeLoading plain />;
 }
