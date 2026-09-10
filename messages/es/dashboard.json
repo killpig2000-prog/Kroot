@@ -19,6 +19,7 @@
   },
   "review": {
     "due": "{count, plural, =1 {1 palabra lista para repasar} other {# palabras listas para repasar}}",
+    "label": "Repaso",
     "dueShort": "{count, plural, =1 {1 pendiente} other {# pendientes}}",
     "now": "Repasar ahora →",
     "short": "Repasar →",

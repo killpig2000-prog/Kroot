@@ -1,10 +1,10 @@
-import { getTranslations } from "next-intl/server";
+import { getFormatter, getTranslations } from "next-intl/server";
 import { Link, redirect } from "@/i18n/navigation";
 import TreeCard from "@/components/dashboard/TreeCard";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import Widgets from "@/components/dashboard/Widgets";
-import FeedbackWidget, { FeedbackButton } from "@/components/dashboard/FeedbackWidget";
+import FeedbackWidget from "@/components/dashboard/FeedbackWidget";
 import TodaysQuestCard from "@/components/dashboard/TodaysQuestCard";
 import GardenHeader from "@/components/dashboard/GardenHeader";
 import GardenCard from "@/components/dashboard/GardenCard";
@@ -12,6 +12,7 @@ import TodaysQuestButton from "@/components/dashboard/TodaysQuestButton";
 import { MODULES } from "@/components/dashboard/navItems";
 import ModuleIcon from "@/components/dashboard/ModuleIcon";
 import Glyph from "@/components/dashboard/Glyph";
+import WeekChart, { type WeekDay } from "@/components/profile/WeekChart";
 import InstallBanner from "@/components/pwa/InstallBanner";
 import OnboardingTour from "@/components/onboarding/OnboardingTour";
 import TutorialFinishBanner from "@/components/onboarding/TutorialFinishBanner";
@@ -157,7 +158,13 @@ export default async function DashboardPage() {
   // (/profile) 2026-09-03 — the Garden is a "what do I do today" page, and a
   // once-eligible learner had no way to stop it nagging them here every visit.
   const todayStartIso = `${today}T00:00:00.000Z`;
-  const [coinsRes, { count: reviewedTodayCount }] = await Promise.all([
+  const format = await getFormatter();
+  const now = new Date();
+  const weekDow = (now.getDay() + 6) % 7; // 0 = Monday
+  const weekStart = new Date(now);
+  weekStart.setDate(now.getDate() - weekDow);
+  const weekStartIso = iso(weekStart);
+  const [coinsRes, { count: reviewedTodayCount }, activityRes] = await Promise.all([
     // coins isn't in the snapshot RPC's profile row; a parallel read here
     // beats a function migration for one integer (see 0041's rationale).
     // review_capacity_bonus and is_admin ride along for the same reason —
@@ -173,7 +180,19 @@ export default async function DashboardPage() {
       .select("id", { count: "exact", head: true })
       .eq("user_id", user.id)
       .gte("last_reviewed_at", todayStartIso),
+    // This week's minutes (Monday..today) for the phone's week card below —
+    // same rows and same Monday-start rule as /profile's WeekChart.
+    supabase.from("daily_activity").select("activity_date, minutes").eq("user_id", user.id).gte("activity_date", weekStartIso),
   ]);
+  const minutesByDate = new Map((activityRes.error ? [] : activityRes.data ?? []).map((r) => [r.activity_date, r.minutes ?? 0]));
+  const weekDays: WeekDay[] = Array.from({ length: weekDow + 1 }, (_, i) => {
+    const d = new Date(now);
+    d.setDate(now.getDate() - (weekDow - i));
+    const key = iso(d);
+    return { iso: key, label: format.dateTime(d, { weekday: "short" }), minutes: minutesByDate.get(key) ?? 0, today: key === today };
+  });
+  const weekTotal = weekDays.reduce((a, d) => a + d.minutes, 0);
+  const avgPerDay = Math.round(weekTotal / weekDays.length);
   const coins = coinsRes.error ? 0 : coinsRes.data?.coins ?? 0;
   const reviewCapacityBonus = coinsRes.error ? 0 : coinsRes.data?.review_capacity_bonus ?? 0;
   const isAdmin = coinsRes.error ? false : coinsRes.data?.is_admin ?? false;
@@ -365,9 +384,15 @@ export default async function DashboardPage() {
               className="group flex items-center gap-3 px-[14px] py-[13px] transition-all active:bg-warm xl:mb-3 xl:gap-[12px] xl:border xl:border-line xl:rounded-[20px] xl:bg-cream xl:px-[16px] xl:hover:-translate-y-0.5 xl:active:translate-y-[1px] xl:active:scale-[.99] xl:hover:border-success"
             >
               <Glyph name="drop" className="w-[21px] h-[21px] text-success transition-transform group-hover:scale-110" />
-              <b className="flex-1 min-w-0 truncate text-[15px] xl:text-[15px] font-bold text-charcoal">{t("review.due", { count: dueCount })}</b>
+              {/* "Review · 12 due" (2026-09-11, user: shorter). The long
+                  sentence wrapped or clipped at 360px; the count now trails
+                  the verb, so the part that matters is never the part cut. */}
+              <b className="flex-1 min-w-0 truncate text-[15px] font-bold text-charcoal">
+                {t("review.label")}
+                <span className="font-medium text-muted"> · {t("review.dueShort", { count: dueCount })}</span>
+              </b>
               <span className="flex-none text-[15px] font-semibold text-success transition-transform group-hover:translate-x-0.5">
-                {t("review.short")}
+                →
               </span>
             </Link>
           )}
@@ -398,12 +423,15 @@ export default async function DashboardPage() {
               Garden answers "what do I do today", the account page "how am I
               doing". */}
 
-          {/* The year grass (Study garden) moved to My progress 2026-09-07 —
-              the phone home is one screen now. Its footer used to park the
-              phone-only feedback button; that button sits here instead. */}
-          <div className="flex justify-end xl:hidden">
-            <FeedbackButton />
-          </div>
+          {/* This week, phone only (2026-09-11, user call): the one chart
+              from My progress, sitting under the day's list so the home
+              answers "how is the week going" without a tab switch. Tapping
+              it opens the full page. Desktop keeps its rail and is unchanged.
+              The phone-only feedback pill that used to end the page is gone
+              (user call); Settings still has a Send-feedback row. */}
+          <Link href="/profile" className="block xl:hidden mb-3 active:opacity-80 transition-opacity">
+            <WeekChart days={weekDays} avgPerDay={avgPerDay} streakDays={streakDays} />
+          </Link>
         </main>
 
         <Widgets slang={{ kr: slang.kr, romanization: slang.romanization, meaning: slang.meaning }} />

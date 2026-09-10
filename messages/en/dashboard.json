@@ -19,6 +19,7 @@
   },
   "review": {
     "due": "{count, plural, =1 {1 word is due for review} other {# words are due for review}}",
+    "label": "Review",
     "dueShort": "{count, plural, =1 {1 due} other {# due}}",
     "now": "Review now →",
     "short": "Review →",

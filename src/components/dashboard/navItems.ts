@@ -47,8 +47,11 @@ export type NavItem = {
 export const MAIN_ITEMS: NavItem[] = [
   { icon: "🏡", label: "Garden", href: "/dashboard", tourId: "guided-nav-home" },
   { icon: "📊", label: "My progress", href: "/profile", i18nKey: "myProgress", shortKey: "progressShort" },
-  { icon: "📒", label: "Review", href: "/review/words" },
+  // My room sits third (2026-09-11, user call): the learner's own things
+  // are the tab they open after a lesson; Review is the one they open when
+  // words are due, which the Garden row already points at.
   { icon: "🌳", label: "My room", href: "/myroom", i18nKey: "myRoom", shortKey: "myRoomShort" },
+  { icon: "📒", label: "Review", href: "/review/words" },
   { icon: "⚙️", label: "Settings", href: "/settings" },
 ];
 

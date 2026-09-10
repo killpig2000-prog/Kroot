@@ -19,6 +19,7 @@
   },
   "review": {
     "due": "有 {count} 个单词该复习了",
+    "label": "复习",
     "dueShort": "{count} 个待复习",
     "now": "现在复习 →",
     "short": "复习 →",

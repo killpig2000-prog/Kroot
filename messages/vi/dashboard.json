@@ -19,6 +19,7 @@
   },
   "review": {
     "due": "{count} từ đã đến hạn ôn tập",
+    "label": "Ôn tập",
     "dueShort": "{count} từ đến hạn",
     "now": "Ôn ngay →",
     "short": "Ôn tập →",

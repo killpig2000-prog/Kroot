@@ -44,7 +44,10 @@ export default async function WeekChart({
           {bestStreak != null && <span className="text-faint"> · {t("statStreakBest", { n: bestStreak })}</span>}
         </p>
       )}
-      <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={t("thisWeek")} className="block w-full h-auto">
+      {/* Capped at 420px: this is a picture, so it stops growing by 430px
+          (responsive rule 2) — on the tablet-width Garden the full-width
+          version blew the 7px labels up to headline size. */}
+      <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={t("thisWeek")} className="block w-full h-auto max-w-[420px]">
         <line x1="8" y1={BASE_Y} x2={W - 8} y2={BASE_Y} stroke="var(--c-line)" strokeWidth="1" />
         <line x1="8" y1={y(GUIDE_MIN)} x2={W - 8} y2={y(GUIDE_MIN)} stroke="var(--c-line)" strokeWidth="1" strokeDasharray="3 4" />
         <text x="8" y={y(GUIDE_MIN) - 3} fontSize="7" fill="var(--c-muted)">

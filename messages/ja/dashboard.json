@@ -19,6 +19,7 @@
   },
   "review": {
     "due": "{count}語が復習の時期です",
+    "label": "復習",
     "dueShort": "{count}語",
     "now": "いま復習する →",
     "short": "復習 →",

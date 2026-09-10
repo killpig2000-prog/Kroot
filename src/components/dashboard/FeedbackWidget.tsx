@@ -10,28 +10,12 @@ import { usePathname } from "@/i18n/navigation";
 //
 // Where that button sits depends on the screen. On desktop it floats in the
 // bottom-right corner, which is out of the way. On a phone a floating button
-// covered the page no matter where the learner scrolled, so there it moves
-// into the corner of the study-garden card instead — see FeedbackButton,
-// which the dashboard passes to MonthlyGrass. Both open this same dialog
-// through one event, so the trigger can live anywhere in the tree.
-// Exported so any trigger (the phone button below, the Settings row) names
-// the same event instead of re-typing the string.
+// covered the page no matter where the learner scrolled; the Garden's own
+// pill that replaced it went too (2026-09-11, user call), so on a phone the
+// only trigger is the Settings row. It opens this same dialog through one
+// event, so the trigger can live anywhere in the tree — exported so the
+// Settings row names the event instead of re-typing the string.
 export const OPEN_EVENT = "kroot:feedback-open";
-
-/** The phone-side trigger: sits in the study garden's bottom-right corner. */
-export function FeedbackButton() {
-  const t = useTranslations("dashboard.feedback");
-  return (
-    <button
-      type="button"
-      onClick={() => window.dispatchEvent(new Event(OPEN_EVENT))}
-      className="xl:hidden inline-flex items-center gap-1.5 rounded-full border border-line bg-warm px-2.5 py-1 text-[11px] font-semibold text-muted hover:text-charcoal hover:border-dash transition-colors"
-    >
-      <span aria-hidden="true">💬</span>
-      {t("send")}
-    </button>
-  );
-}
 
 type View = "closed" | "form" | "sent";
 
@@ -87,8 +71,7 @@ export default function FeedbackWidget() {
   if (view === "closed") {
     return (
       // Desktop only. On a phone this floated over whatever the learner was
-      // reading; the study garden's corner holds the trigger there instead
-      // (FeedbackButton above).
+      // reading; there the Settings row is the trigger.
       <button
         type="button"
         onClick={() => setView("form")}
