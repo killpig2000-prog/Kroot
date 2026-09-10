@@ -128,8 +128,6 @@
     "toastSub": "{n} of 7 this week · day {streak}",
     "sheetTitle": "Growth rings · {n} weeks",
     "rowThis": "This week",
-    "rowLast": "Last week",
-    "rowAgo": "{n} weeks ago",
     "legendAway": "Away",
     "legendShowed": "Showed up",
     "legendLesson": "A lesson",

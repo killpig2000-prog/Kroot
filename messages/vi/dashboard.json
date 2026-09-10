@@ -128,8 +128,6 @@
     "toastSub": "{n}/7 tuần này · ngày {streak}",
     "sheetTitle": "Vòng sinh trưởng · {n} tuần",
     "rowThis": "Tuần này",
-    "rowLast": "Tuần trước",
-    "rowAgo": "{n} tuần trước",
     "legendAway": "Vắng",
     "legendShowed": "Có mặt",
     "legendLesson": "Một bài học",

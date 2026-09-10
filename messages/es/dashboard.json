@@ -128,8 +128,6 @@
     "toastSub": "{n} de 7 esta semana · día {streak}",
     "sheetTitle": "Anillos de crecimiento · {n} semanas",
     "rowThis": "Esta semana",
-    "rowLast": "Semana pasada",
-    "rowAgo": "Hace {n} semanas",
     "legendAway": "Ausente",
     "legendShowed": "Presente",
     "legendLesson": "Una lección",

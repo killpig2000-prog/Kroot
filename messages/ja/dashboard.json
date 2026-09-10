@@ -128,8 +128,6 @@
     "toastSub": "今週 {n}/7 · {streak} 日目",
     "sheetTitle": "成長の年輪 · {n} 週",
     "rowThis": "今週",
-    "rowLast": "先週",
-    "rowAgo": "{n} 週前",
     "legendAway": "休み",
     "legendShowed": "ログイン",
     "legendLesson": "レッスン",

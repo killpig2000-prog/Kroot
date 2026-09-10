@@ -69,6 +69,14 @@ export default function GrowthRingsCard({
   const grown = weeks.filter((w) => w.attended > 0).length;
   const past = weeks.slice(1);
   const dayName = format.dateTime(new Date(`${todayIso}T12:00:00`), { weekday: "long" });
+  // Mon..Sun of a ring as "Sep 1 – 7" in the viewer's locale; noon keeps
+  // the date stable across time zones the way dayName does.
+  const weekLabel = (monday: string) => {
+    const a = new Date(`${monday}T12:00:00`);
+    const b = new Date(a);
+    b.setDate(a.getDate() + 6);
+    return format.dateTimeRange(a, b, { month: "short", day: "numeric" });
+  };
   const legend: { depth: DayDepth; key: "legendAway" | "legendShowed" | "legendLesson" | "legendReview" }[] = [
     { depth: 0, key: "legendAway" },
     { depth: 1, key: "legendShowed" },
@@ -155,8 +163,11 @@ export default function GrowthRingsCard({
           <div className="border border-line rounded-[12px] overflow-hidden max-h-[34vh] overflow-y-auto">
             {weeks.map((w, i) => (
               <div key={w.start} className={`flex items-center gap-2.5 px-3 py-2 text-[12.5px] ${i ? "border-t border-line" : ""}`}>
-                <b className="w-[88px] flex-none font-bold text-success-deep">
-                  {i === 0 ? t("rowThis") : i === 1 ? t("rowLast") : t("rowAgo", { n: i })}
+                {/* Past rows carry their dates ("Sep 1 – 7") rather than
+                    "N weeks ago" (2026-09-10, user call): the sheet reads
+                    as a calendar, and a row is findable again next month. */}
+                <b className="w-[108px] flex-none whitespace-nowrap font-bold text-success-deep tabular-nums">
+                  {i === 0 ? t("rowThis") : weekLabel(w.start)}
                 </b>
                 <span className="flex gap-[3px] flex-1" aria-hidden="true">
                   {(i === 0 ? week : w.days).map((v, j) => (

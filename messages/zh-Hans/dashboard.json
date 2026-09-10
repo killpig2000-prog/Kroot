@@ -128,8 +128,6 @@
     "toastSub": "本周 {n}/7 · 第 {streak} 天",
     "sheetTitle": "成长年轮 · {n} 周",
     "rowThis": "本周",
-    "rowLast": "上周",
-    "rowAgo": "{n} 周前",
     "legendAway": "缺席",
     "legendShowed": "已登录",
     "legendLesson": "一节课",
