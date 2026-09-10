@@ -5,10 +5,10 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import GardenScene from "@/components/ui/GardenScene";
 import SpeechBubble from "@/components/ui/SpeechBubble";
-import LevelCreature from "@/components/dashboard/LevelCreature";
+import GardenStage, { gardenFrame } from "@/components/dashboard/GardenStage";
 import { TREE_PHRASES } from "@/lib/tree-phrases";
 import { playWater } from "@/lib/sfx";
-import { MAX_LEVEL, treeStageForLevel } from "@/lib/level";
+import { MAX_LEVEL, treeHeightMetres, treeStageForLevel } from "@/lib/level";
 import { LEVEL_PATH, SPECIES, type CefrLevel } from "@/lib/tree";
 
 // The phone Garden's tree, option 2a (2026-09-09): an inset garden card
@@ -79,6 +79,15 @@ export default function GardenCard({
   const stage = treeStageForLevel(level);
   const sp = SPECIES[species ?? stage];
   const maxed = level >= MAX_LEVEL;
+  // Same stage My room draws (GardenStage): veteran trunk, sky costume,
+  // ground items, friends. The tree's width is clamp()ed off the viewport
+  // (AGENTS.md rule 2); the card grows with a veteran's taller frame so
+  // the crown never leaves the picture — 214px until about Lv.60, then a
+  // few px per level, measured 329px at 360 and 359px at 430 for Lv.120.
+  const { veteran, frameH, sky } = gardenFrame(level, costumeIds);
+  const metres = treeHeightMetres(level);
+  const treeWidth = "clamp(112px, 32vw, 128px)";
+  const cardHeight = `max(214px, calc(${treeWidth} * ${(frameH / 220).toFixed(3)} + 62px))`;
   const lines = TREE_PHRASES.map((p) => ({ kr: p.kr, en: t(`phrases.${p.key}`) }));
   // While the tree is thanking you, that line leads and stays up.
   const thanks = lines.filter((p) => p.kr === "물 줘서 고마워요");
@@ -89,9 +98,10 @@ export default function GardenCard({
       href="/myroom"
       data-tour="tree"
       aria-label={t("openMyRoom")}
-      className="relative block h-[214px] rounded-[12px] border border-line overflow-hidden mb-3 shadow-[0_2px_0_var(--c-line)] transition-[transform,box-shadow,border-color] duration-100 ease-out hover:border-success active:translate-y-[2px] active:shadow-[0_0_0_var(--c-line)]"
+      className="relative block rounded-[12px] border border-line overflow-hidden mb-3 shadow-[0_2px_0_var(--c-line)] transition-[transform,box-shadow,border-color] duration-100 ease-out hover:border-success active:translate-y-[2px] active:shadow-[0_0_0_var(--c-line)]"
+      style={{ height: cardHeight }}
     >
-      <GardenScene hillsHeight="46%" className="absolute inset-0 w-full h-full">
+      <GardenScene hillsHeight="46%" clouds={!sky} className="absolute inset-0 w-full h-full" style={sky ? { background: sky } : undefined}>
         {/* level + stage name, then the species — the two things the band
             had no room for.
             Solid cream, not a translucent one: at 85% over this sky the
@@ -99,11 +109,15 @@ export default function GardenCard({
             alpha bought nothing and cost the pill a fixed colour — a
             translucent fill changes shade as it moves across the gradient,
             which is the one thing a flat storybook palette can't have. */}
-        <span className="absolute top-3 left-3 inline-flex items-center gap-1 rounded-full border border-success-line bg-cream px-[9px] py-1 text-[11.5px] font-extrabold text-success-deep">
+        <span
+          className={`absolute top-3 left-3 z-[4] inline-flex items-center gap-1 rounded-full border bg-cream px-[9px] py-1 text-[11.5px] font-extrabold ${
+            veteran ? "border-amber-line text-[#B7791F]" : "border-success-line text-success-deep"
+          }`}
+        >
           {t("levelBadge", { level })}
-          <span className="font-bold text-charcoal">· {LEVEL_PATH[stage].treeName}</span>
+          <span className="font-bold text-charcoal tabular-nums">· {veteran ? `${metres} ${t("metresTall")}` : LEVEL_PATH[stage].treeName}</span>
         </span>
-        <span className="absolute top-3 right-3 inline-flex items-center gap-1 rounded-full border border-success-line bg-cream px-[9px] py-1 text-[11.5px] font-extrabold text-success-deep">
+        <span className="absolute top-3 right-3 z-[4] inline-flex items-center gap-1 rounded-full border border-success-line bg-cream px-[9px] py-1 text-[11.5px] font-extrabold text-success-deep">
           {sp.name}
           <span className="kr font-semibold text-muted">{sp.krName}</span>
         </span>
@@ -113,18 +127,11 @@ export default function GardenCard({
             the pair stays together in the middle instead of the tree
             drifting left and the bubble's tail pointing at empty sky. */}
         <div className="absolute inset-0 mx-auto w-full max-w-[400px]">
-          {/* The tree stands a tenth of the way in, on the hills. Its width
-              is clamp()ed off the viewport (AGENTS.md rule 2): the min fits
-              a 360px phone, the max is reached by 430 and a tablet doesn't
-              get a bigger tree. */}
-          <svg
-            viewBox="0 0 220 230"
-            className={`absolute left-[10%] bottom-[34px] h-auto ${party ? "cheer" : ""}`}
-            style={{ width: "clamp(112px, 32vw, 128px)" }}
-            aria-hidden="true"
-          >
-            <LevelCreature level={stage} costumeIds={costumeIds} species={species} />
-          </svg>
+          {/* The tree stands a tenth of the way in, on the hills; friends
+              wander a shorter way than in My room so they stay in frame. */}
+          <div className={`absolute left-[10%] bottom-[34px] ${party ? "cheer" : ""}`}>
+            <GardenStage level={level} species={species} costumeIds={costumeIds} width={treeWidth} roamSpan="clamp(40px, 12vw, 64px)" />
+          </div>
           {party && (
             <>
               <svg className="bob absolute left-[26%] top-[26%] w-[14px] h-[14px]" viewBox="0 0 20 20" aria-hidden="true">
@@ -148,7 +155,7 @@ export default function GardenCard({
         </div>
 
         {/* XP, pinned to the card's own bottom edge */}
-        <div className="absolute left-[14px] right-[14px] bottom-[10px]">
+        <div className="absolute left-[14px] right-[14px] bottom-[10px] z-[4]">
           <div className="flex items-center justify-between text-[11px] font-extrabold text-success-deep tabular-nums">
             <span>{maxed ? t("maxed") : `${xpInto}/${xpNeeded} XP`}</span>
             {!maxed && <span>{t("levelBadge", { level: level + 1 })} →</span>}
@@ -157,7 +164,7 @@ export default function GardenCard({
               its green channel above its red, i.e. not cream at all. Solid. */}
           <span className="mt-[3px] block h-[6px] rounded-full overflow-hidden bg-cream">
             <i
-              className="not-italic block h-full rounded-full bg-success transition-[width] duration-1000"
+              className={`not-italic block h-full rounded-full transition-[width] duration-1000 ${veteran ? "bg-[#B7791F]" : "bg-success"}`}
               style={{ width: `${maxed ? 100 : fill}%` }}
             />
           </span>

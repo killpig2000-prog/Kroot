@@ -3,14 +3,12 @@
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { SceneLayer, skinFor, skyFor } from "@/lib/costumes";
-import RoamingFriends from "@/components/dashboard/RoamingFriends";
+import GardenStage, { gardenFrame } from "@/components/dashboard/GardenStage";
 import { LEVEL_ORDER, LEVEL_PATH, SPECIES, type CefrLevel } from "@/lib/tree";
-import { FULLY_GROWN_LEVEL, MAX_LEVEL, treeHeightMetres, treeStageForLevel } from "@/lib/level";
-import VeteranTree, { VETERAN_MILESTONES, veteranFrameHeight } from "@/components/dashboard/VeteranTree";
+import { MAX_LEVEL, treeHeightMetres, treeStageForLevel } from "@/lib/level";
+import { VETERAN_MILESTONES } from "@/components/dashboard/VeteranTree";
 import GardenScene from "@/components/ui/GardenScene";
 import SpeechBubble from "@/components/ui/SpeechBubble";
-import LevelCreature from "@/components/dashboard/LevelCreature";
 import Glyph from "@/components/dashboard/Glyph";
 import TreeGrowthPopup from "@/components/dashboard/TreeGrowthPopup";
 import { GREETING_KR, TREE_PHRASES, greetingKey, lowerGloss } from "@/lib/tree-phrases";
@@ -96,53 +94,18 @@ export default function TreeCard({
   const sp = SPECIES[species ?? stage];
   const stageIdx = LEVEL_ORDER.indexOf(stage);
   const maxed = level >= MAX_LEVEL;
-  // Lv.50+: the trunk keeps growing, so the drawing gets taller. A skin
-  // hides the tree, trunk included, so the frame stays 230 tall.
-  const veteran = level >= FULLY_GROWN_LEVEL && !skinFor(equipped);
-  const frameH = veteran ? veteranFrameHeight(level) : 230;
+  // The frame's shape (veteran height, sky costume) comes from the shared
+  // stage so the pills and the scene agree with the drawing.
+  const { veteran, frameH, sky } = gardenFrame(level, equipped);
   const metres = treeHeightMetres(level);
   const nextKeepsake = VETERAN_MILESTONES.find((m) => m.level > level);
-  // Garden items: a sky costume swaps the scene's gradient (and hides the
-  // default clouds); ground/friends ride down with the taller veteran frame.
-  const sky = skyFor(equipped);
-  const groundShift = frameH - 230;
   // The creature's drawn width; its height follows the frame. The scene is
   // at least tall enough for the tallest veteran plus the XP line under it.
   const treeWidth = "clamp(170px, 44vw, 230px)";
   const treeHeightMax = Math.round((230 * frameH) / 220);
   const sceneMin = Math.max(320, treeHeightMax + 96);
 
-  const treeImage = (
-    <svg
-      viewBox={`0 0 220 ${frameH}`}
-      className="block h-auto transition-[height] duration-500"
-      style={{ width: treeWidth }}
-      aria-hidden="true"
-    >
-      <defs>
-        <linearGradient id="tc-hill" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#CDE8C2" />
-          <stop offset="100%" stopColor="#BBDCAE" />
-        </linearGradient>
-      </defs>
-      {/* a soft mound under the soil so costume ground items still sit on grass */}
-      <ellipse cx="110" cy={frameH + 4} rx="150" ry="34" fill="url(#tc-hill)" />
-      <SceneLayer costumeIds={equipped} layer="behind" />
-      {veteran && species ? (
-        <VeteranTree level={level} species={species} costumeIds={equipped} />
-      ) : (
-        <LevelCreature level={stage} costumeIds={equipped} species={species} />
-      )}
-      {/* friends wander the garden instead (RoamingFriends), unless a skin hides the tree */}
-      <SceneLayer costumeIds={equipped} layer="front" groundShift={groundShift} omitSlots={skinFor(equipped) ? undefined : ["friend"]} />
-      <g className="bob">
-        <circle cx="60" cy="78" r="6" fill="#FACC15" />
-      </g>
-      <g className="bob2">
-        <circle cx="164" cy="72" r="6" fill="#FB7185" />
-      </g>
-    </svg>
-  );
+  const treeImage = <GardenStage level={level} species={species} costumeIds={equipped} width={treeWidth} />;
 
   return (
     <section className="relative mb-3.5">
@@ -194,9 +157,6 @@ export default function TreeCard({
           ) : (
             treeImage
           )}
-          {/* the friends, in a box the same size as the tree's so their feet
-              stay on the same ground line while they wander sideways */}
-          {!skinFor(equipped) && <RoamingFriends costumeIds={equipped} frameH={frameH} groundShift={groundShift} width={treeWidth} />}
         </div>
 
         {/* what the tree says — the greeting first, then its usual lines;

@@ -17,12 +17,16 @@ export default function RoamingFriends({
   frameH,
   groundShift,
   width,
+  span: spanLength,
 }: {
   costumeIds: string[];
   frameH: number;
   groundShift: number;
   /** CSS width of the tree's frame. */
   width: string;
+  /** How far a friend walks, as a CSS length; the default suits the hero,
+   *  a small card passes something shorter so nobody leaves the picture. */
+  span?: string;
 }) {
   const friends = roamingFriends(costumeIds);
   if (friends.length === 0) return null;
@@ -33,7 +37,7 @@ export default function RoamingFriends({
         const dir = roam.dir === "left" ? -1 : 1;
         // How far it goes: a good part of the garden on a phone, capped so a
         // wide screen doesn't send it across the whole card.
-        const span = `calc(${dir} * clamp(70px, 22vw, 130px))`;
+        const span = `calc(${dir} * ${spanLength ?? "clamp(70px, 22vw, 130px)"})`;
         const dur = `${26 + i * 7}s`;
         const delay = `${i * 9}s`;
         return (
