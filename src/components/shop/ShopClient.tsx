@@ -52,8 +52,9 @@ function errorKey(raw: string): string {
   return "generic";
 }
 
-/** The tree with a set of costumes, exactly as TreeCard draws it. */
-function Scene({ ids, stage, species, className }: { ids: string[]; stage: CefrLevel; species: CefrLevel; className?: string }) {
+/** The tree with a set of costumes, exactly as TreeCard draws it. Also the
+ *  thumbnail on My room's shop rail. */
+export function Scene({ ids, stage, species, className }: { ids: string[]; stage: CefrLevel; species: CefrLevel; className?: string }) {
   const sky = skyFor(ids);
   return (
     <div className={className} style={{ background: sky ?? DEFAULT_SKY }}>

@@ -1,11 +1,6 @@
 {
-  "wardrobe": "Wardrobe",
-  "fair": "Garden Fair",
-  "settings": "Settings",
-  "settingsSub": "account · reminders · sound",
-  "shopSub": "{n} coins",
-  "wardrobeSub": "{n, plural, one {# item} other {# items}}",
-  "fairSub": "#{rank} this week",
-  "fairNone": "not in this week yet",
-  "bankSub": "{n} / {slots}"
+  "bankSub": "{n} / {slots}",
+  "shop": "Shop",
+  "seeAll": "See all",
+  "tryingOn": "· trying on {name}"
 }
