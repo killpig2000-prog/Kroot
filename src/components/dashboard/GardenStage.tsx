@@ -53,6 +53,7 @@ export default function GardenStage({
 }) {
   const { veteran, frameH, groundShift, skin } = gardenFrame(level, costumeIds);
   const stage = treeStageForLevel(level);
+  const skyGrounds = costumeIds.map(costumeById).filter((c) => c?.slot === "sky" && c.skyGround);
   return (
     <div className="relative" style={{ width }} data-garden-tree>
       <svg
@@ -73,6 +74,10 @@ export default function GardenStage({
         ) : (
           <LevelCreature level={stage} costumeIds={costumeIds} species={species} />
         )}
+        {/* what a sky costume leaves on the ground at the tree's feet */}
+        {skyGrounds.map((c) => (
+          <g key={c!.id}>{c!.skyGround!()}</g>
+        ))}
         {/* friends wander the garden instead (RoamingFriends), unless a skin hides the tree */}
         <SceneLayer costumeIds={costumeIds} layer="front" groundShift={groundShift} omitSlots={skin ? ["sky"] : ["friend", "sky"]} />
         <g className="bob">
@@ -90,25 +95,51 @@ export default function GardenStage({
 }
 
 /** A sky costume's details — the moon and stars, the snow, the rain and its
- *  clouds — across the whole garden (2026-09-10, user call: "박스 해제").
- *  Its gradient already filled the scene, but the details were drawn in the
- *  tree's 220x230 frame, so a night sky was a box of stars around the tree.
- *  Same drawing, same coordinates, scaled to cover the scene from the top
- *  (slice), so the moon sits top-right and snow falls over every hill.
+ *  clouds — across the whole garden (2026-09-10, user call: "박스 해제",
+ *  then "배경 전체 다 쓰도록"). The gradient already filled the scene; the
+ *  details used to sit in the tree's 220x230 frame, a box of stars around
+ *  the tree. Each sky item draws its own `skyScene`: a wide field (stars, clouds, snow,
+ *  rain) cropped to the scene's shape, and an orb (moon, sun) pinned
+ *  top-right at a capped size — big on a phone, never huge on a desktop. Items
+ *  without one fall back to their frame drawing, scaled to cover.
  *  Place it as a direct child of the GardenScene, before the tree. */
 export function SkyLayer({ costumeIds }: { costumeIds: string[] }) {
-  const sky = costumeIds.map(costumeById).filter((c) => c?.slot === "sky" && c.scene);
+  const sky = costumeIds.map(costumeById).filter((c) => c?.slot === "sky" && (c.skyScene || c.scene));
   if (sky.length === 0) return null;
+  // z-0, before the tree in the DOM: over the hills, under the tree and its
+  // friends (z-[1] put the Garden card's mist over the cat).
   return (
-    <svg
-      className="absolute inset-0 w-full h-full pointer-events-none z-[1]"
-      viewBox="0 0 220 230"
-      preserveAspectRatio="xMidYMin slice"
-      aria-hidden="true"
-    >
-      {sky.map((c) => (
-        <g key={c!.id}>{c!.scene!.draw()}</g>
-      ))}
-    </svg>
+    <>
+      {sky.map((c) => {
+        const ss = c!.skyScene;
+        if (!ss) {
+          return (
+            <svg key={c!.id} className="absolute inset-0 w-full h-full pointer-events-none z-0" viewBox="0 0 220 230" preserveAspectRatio="xMidYMin slice" aria-hidden="true">
+              {c!.scene!.draw()}
+            </svg>
+          );
+        }
+        return (
+          <span key={c!.id} className="contents">
+            {ss.field && (
+              <svg className="absolute inset-0 w-full h-full pointer-events-none z-0" viewBox="0 0 800 400" preserveAspectRatio="xMidYMin slice" aria-hidden="true">
+                {ss.field()}
+              </svg>
+            )}
+            {ss.orb && (
+              // top-right, under the pill row; a picture, so clamp()ed —
+              // the min fits a 360px card, the max is reached by 430
+              <svg
+                className="absolute pointer-events-none z-0 right-[clamp(12px,4%,64px)] top-[clamp(52px,15%,76px)] w-[clamp(56px,17vw,84px)] h-auto"
+                viewBox="0 0 100 100"
+                aria-hidden="true"
+              >
+                {ss.orb()}
+              </svg>
+            )}
+          </span>
+        );
+      })}
+    </>
   );
 }

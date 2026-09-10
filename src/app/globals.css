@@ -1077,3 +1077,22 @@ html.js-reveal .tree-garden.in .tree {
   0% { opacity: .9; transform: translateX(-50%) scale(1); }
   100% { opacity: 0; transform: translateX(-50%) scale(12, 9); }
 }
+
+/* Sky costumes across the whole garden (SkyLayer, 2026-09-10): the same
+   idea as aura-fall but in the 800x400 sky field, so snow and rain cross the
+   full height. Staggered starts above the top keep the fall continuous. */
+.sky-fall { animation: sky-fall 9s linear infinite; }
+.sky-fall-2 { animation: sky-fall 12s linear 3s infinite; }
+@keyframes sky-fall {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-40px, 460px); }
+}
+.sky-rain { animation: sky-rain 1.6s linear infinite; }
+.sky-rain-2 { animation: sky-rain 2.1s linear .5s infinite; }
+@keyframes sky-rain {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-24px, 460px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sky-fall, .sky-fall-2, .sky-rain, .sky-rain-2 { animation: none; }
+}

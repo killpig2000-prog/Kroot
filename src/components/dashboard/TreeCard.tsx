@@ -111,7 +111,9 @@ export default function TreeCard({
   // at least tall enough for the tallest veteran plus the XP line under it.
   const treeWidth = "clamp(170px, 44vw, 230px)";
   const treeHeightMax = Math.round((230 * frameH) / 220);
-  const sceneMin = Math.max(320, treeHeightMax + 96);
+  // Tall enough for the pill row, the bubble over the crown, the tree and
+  // the XP line: 320px on a phone, taller once the tree reaches 230px wide.
+  const sceneMin = `max(320px, calc(${treeWidth} * ${(frameH / 220).toFixed(3)} + 150px), ${Math.max(320, treeHeightMax + 96)}px)`;
 
   const treeImage = (
     <div className={watering ? "cheer" : undefined}>
@@ -131,7 +133,7 @@ export default function TreeCard({
       <GardenScene
         clouds={!sky}
         className="-mx-[clamp(18px,3vw,36px)] -mt-[24px] rounded-b-[22px] border-b border-line md:mx-0 md:mt-0 md:rounded-[20px] md:border"
-        style={{ minHeight: `${sceneMin}px`, ...(sky ? { background: sky } : {}) }}
+        style={{ minHeight: sceneMin, ...(sky ? { background: sky } : {}) }}
       >
 
         {/* level + stage, streak + coins — two pills, nothing else up top */}
@@ -163,8 +165,8 @@ export default function TreeCard({
         {/* a sky costume's moon, stars, snow or rain, over the whole garden */}
         <SkyLayer costumeIds={equipped} />
 
-        {/* the creature — centred on phones, left of centre once the scene is wide */}
-        <div className="absolute bottom-[56px] left-1/2 sm:left-[36%] -translate-x-1/2 z-[3]">
+        {/* the creature — centred at every width (2026-09-10), the bubble over it */}
+        <div className="absolute bottom-[56px] left-1/2 -translate-x-1/2 z-[3]">
           {onTreeTap ? (
             <button type="button" onClick={onTreeTap} aria-label={t("openPeek")} className="block cursor-zoom-in transition-transform hover:-translate-y-0.5 active:translate-y-[1px] active:scale-[.99]">
               {treeImage}
@@ -179,8 +181,8 @@ export default function TreeCard({
         </div>
 
         {/* what the tree says — the greeting first, then its usual lines;
-            above it on phones, beside it on wide screens */}
-        <div className="absolute z-[4] w-max left-1/2 -translate-x-1/2 top-[15%] sm:left-[58%] sm:translate-x-0 sm:top-[30%]">
+            always over the tree */}
+        <div className="absolute z-[4] w-max left-1/2 -translate-x-1/2 top-[44px]">
           {/* while it's being watered the tree says thanks first, as the
               Garden card does; keyed so the line restarts from the top */}
           <SpeechBubble

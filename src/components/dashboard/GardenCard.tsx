@@ -134,10 +134,10 @@ export default function GardenCard({
             drifting left and the bubble's tail pointing at empty sky. */}
         <div className="absolute inset-0 mx-auto w-full max-w-[400px]">
           {/* The tree stands in the middle, on the hills, as in My room; friends
-              wander a shorter way than in My room so they stay in frame. */}
+              wander most of the card's width, as in My room. */}
           <div className="absolute left-1/2 bottom-[34px] -translate-x-1/2">
             <div className={party ? "cheer" : undefined}>
-              <GardenStage level={level} species={species} costumeIds={costumeIds} width={treeWidth} roamSpan="clamp(40px, 12vw, 64px)" />
+              <GardenStage level={level} species={species} costumeIds={costumeIds} width={treeWidth} roamSpan="clamp(64px, 22vw, 112px)" />
             </div>
           </div>
           {party && (

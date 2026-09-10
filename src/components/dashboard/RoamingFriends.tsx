@@ -35,9 +35,9 @@ export default function RoamingFriends({
       {friends.map((c, i) => {
         const roam = c.roam!;
         const dir = roam.dir === "left" ? -1 : 1;
-        // How far it goes: a good part of the garden on a phone, capped so a
-        // wide screen doesn't send it across the whole card.
-        const span = `calc(${dir} * ${spanLength ?? "clamp(70px, 22vw, 130px)"})`;
+        // How far it goes: most of the garden (2026-09-10, user: "펫을 자유롭게"),
+        // from beside the tree out toward that side's edge and back.
+        const span = `calc(${dir} * ${spanLength ?? "clamp(96px, 30vw, 220px)"})`;
         const dur = `${26 + i * 7}s`;
         const delay = `${i * 9}s`;
         return (

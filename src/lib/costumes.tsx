@@ -60,6 +60,21 @@ export type Costume = {
   roam?: { dir: "left" | "right"; x: number; y: number; air?: boolean };
   // Sky items also swap the frame's background gradient (CSS value).
   sky?: string;
+  // Sky items, in the gardens (My room, the Garden card, the desktop hero):
+  // the details drawn across the whole sky instead of the 220x230 frame, in
+  // a wide field plus a pinned orb (see the type below). Small frames — shop cards, TreePeek — keep
+  // `scene`. `skyGround` is what lies on the ground at the tree's feet, drawn
+  // in the tree frame so it never gets cropped (first snow's white patch).
+  skyScene?: {
+    /** Stars, clouds, snow, rain, mist — an 800x400 field laid over the scene
+     *  from the top and cropped to its shape (slice), so it covers a square
+     *  phone garden and a wide desktop one at nearly the same scale. */
+    field?: () => ReactNode;
+    /** The moon or the sun — a 100x100 drawing pinned top-right at a capped
+     *  size, so it is big on a phone and never a billboard on a desktop. */
+    orb?: () => ReactNode;
+  };
+  skyGround?: () => ReactNode;
   // Skins: the full-body character drawn into the 220x230 frame *instead of*
   // the tree (LevelCreature returns this when a skin is equipped).
   creature?: () => ReactNode;
@@ -1027,6 +1042,20 @@ export const COSTUMES: Costume[] = [
     rarity: "common",
     icon: "🌇",
     sky: "linear-gradient(180deg,#FDBA74 0%,#FDE68A 45%,#E4F3DA 100%)",
+    skyScene: {
+      field: () => (
+        <g fill="#FFE7C2" opacity=".85">
+          <ellipse cx="150" cy="70" rx="60" ry="13" /><ellipse cx="190" cy="60" rx="34" ry="10" />
+          <ellipse cx="470" cy="110" rx="46" ry="10" /><ellipse cx="660" cy="56" rx="40" ry="9" />
+        </g>
+      ),
+      orb: () => (
+        <>
+          <circle cx="50" cy="50" r="46" fill="#FDBA74" opacity=".28" />
+          <circle cx="50" cy="50" r="34" fill="#FB923C" />
+        </>
+      ),
+    },
     scene: { layer: "behind", draw: () => <circle cx="182" cy="60" r="16" fill="#FB923C" /> },
   },
   {
@@ -1039,6 +1068,57 @@ export const COSTUMES: Costume[] = [
     minPlayerLevel: 20,
     icon: "🌙",
     sky: "linear-gradient(180deg,#1E2A44 0%,#2B3C55 60%,#2A3B2A 100%)",
+    skyScene: {
+      field: () => (
+        <>
+          <g className="aura-twinkle" fill="#FFFDF6">
+              <circle cx="339" cy="48" r="1.7" />
+              <circle cx="57" cy="28" r="1.6" />
+              <circle cx="382" cy="159" r="1.9" />
+              <circle cx="227" cy="19" r="2.1" />
+              <circle cx="436" cy="27" r="1.3" />
+              <circle cx="572" cy="118" r="1.9" />
+              <circle cx="587" cy="41" r="1.4" />
+              <circle cx="650" cy="159" r="1.4" />
+              <circle cx="607" cy="111" r="1.7" />
+              <circle cx="55" cy="152" r="1.6" />
+              <circle cx="437" cy="46" r="1.4" />
+              <circle cx="592" cy="88" r="1.5" />
+              <circle cx="706" cy="56" r="1.1" />
+              <circle cx="592" cy="173" r="1.9" />
+              <circle cx="107" cy="150" r="1.4" />
+          </g>
+          <g className="aura-twinkle-2" fill="#FFFDF6">
+              <circle cx="412" cy="176" r="1.7" />
+              <circle cx="556" cy="34" r="1.6" />
+              <circle cx="67" cy="139" r="1.6" />
+              <circle cx="96" cy="121" r="1.4" />
+              <circle cx="254" cy="33" r="1.2" />
+              <circle cx="68" cy="221" r="1.1" />
+              <circle cx="236" cy="171" r="1.6" />
+              <circle cx="71" cy="157" r="1.5" />
+              <circle cx="58" cy="66" r="1.1" />
+              <circle cx="144" cy="84" r="1.2" />
+              <circle cx="561" cy="40" r="2.1" />
+              <circle cx="581" cy="218" r="2.2" />
+              <circle cx="113" cy="158" r="1.7" />
+              <circle cx="200" cy="105" r="2.0" />
+              <circle cx="737" cy="26" r="1.4" />
+          </g>
+        </>
+      ),
+      orb: () => (
+        <>
+          {/* the bite is cut out, not painted in a navy that only matches
+              the sky at one height */}
+          <mask id="moonlit-orb-bite">
+            <circle cx="52" cy="52" r="38" fill="#fff" />
+            <circle cx="32" cy="38" r="33" fill="#000" />
+          </mask>
+          <circle cx="52" cy="52" r="38" fill="#FDE68A" mask="url(#moonlit-orb-bite)" />
+        </>
+      ),
+    },
     scene: {
       layer: "behind",
       draw: () => (
@@ -1071,6 +1151,49 @@ export const COSTUMES: Costume[] = [
     availableUntil: "2027-02-28",
     icon: "❄️",
     sky: "linear-gradient(180deg,#DCE7F5 0%,#EEF3F8 60%,#F4F7F4 100%)",
+    skyScene: {
+      field: () => (
+        <>
+          <g className="sky-fall" fill="#fff">
+              <circle cx="508" cy="-104" r="3.2" />
+              <circle cx="467" cy="-365" r="3.2" />
+              <circle cx="95" cy="-262" r="3.2" />
+              <circle cx="485" cy="-44" r="3.2" />
+              <circle cx="680" cy="-367" r="3.2" />
+              <circle cx="62" cy="-26" r="3.2" />
+              <circle cx="718" cy="-242" r="3.2" />
+              <circle cx="662" cy="-105" r="3.2" />
+              <circle cx="697" cy="-172" r="3.2" />
+              <circle cx="291" cy="-34" r="3.2" />
+              <circle cx="395" cy="-58" r="3.2" />
+              <circle cx="355" cy="-389" r="3.2" />
+              <circle cx="472" cy="-219" r="3.2" />
+              <circle cx="172" cy="-88" r="3.2" />
+              <circle cx="119" cy="-148" r="3.2" />
+              <circle cx="60" cy="-289" r="3.2" />
+              <circle cx="786" cy="-253" r="3.2" />
+              <circle cx="132" cy="-22" r="3.2" />
+          </g>
+          <g className="sky-fall-2" fill="#fff" opacity=".85">
+              <circle cx="253" cy="-197" r="2.4" />
+              <circle cx="400" cy="-146" r="2.4" />
+              <circle cx="82" cy="-315" r="2.4" />
+              <circle cx="459" cy="-195" r="2.4" />
+              <circle cx="562" cy="-258" r="2.4" />
+              <circle cx="140" cy="-180" r="2.4" />
+              <circle cx="563" cy="-258" r="2.4" />
+              <circle cx="723" cy="-188" r="2.4" />
+              <circle cx="367" cy="-51" r="2.4" />
+              <circle cx="389" cy="-282" r="2.4" />
+              <circle cx="154" cy="-358" r="2.4" />
+              <circle cx="180" cy="-323" r="2.4" />
+              <circle cx="237" cy="-63" r="2.4" />
+              <circle cx="238" cy="-394" r="2.4" />
+          </g>
+        </>
+      ),
+    },
+    skyGround: () => <ellipse cx="110" cy="212" rx="96" ry="10" fill="#fff" opacity=".92" />,
     scene: {
       layer: "front",
       draw: () => (
@@ -1100,6 +1223,56 @@ export const COSTUMES: Costume[] = [
     minPlayerLevel: 20,
     icon: "🌧",
     sky: "linear-gradient(180deg,#94A3B8 0%,#CBD5E1 55%,#D9E4D3 100%)",
+    skyScene: {
+      field: () => (
+        <>
+          <g fill="#F1F5F9" opacity=".92">
+            <ellipse cx="90" cy="46" rx="70" ry="17" /><ellipse cx="134" cy="32" rx="42" ry="15" />
+            <ellipse cx="330" cy="30" rx="60" ry="15" /><ellipse cx="372" cy="44" rx="44" ry="13" />
+            <ellipse cx="560" cy="56" rx="66" ry="16" /><ellipse cx="604" cy="42" rx="38" ry="13" />
+            <ellipse cx="750" cy="34" rx="56" ry="14" />
+          </g>
+          <g className="sky-rain" stroke="#93C5FD" strokeWidth="2.4" strokeLinecap="round">
+              <line x1="496" y1="-99" x2="493" y2="-83" />
+              <line x1="186" y1="-266" x2="183" y2="-250" />
+              <line x1="288" y1="-398" x2="285" y2="-382" />
+              <line x1="149" y1="-186" x2="146" y2="-170" />
+              <line x1="547" y1="-211" x2="544" y2="-195" />
+              <line x1="624" y1="-111" x2="621" y2="-95" />
+              <line x1="326" y1="-336" x2="323" y2="-320" />
+              <line x1="707" y1="-137" x2="704" y2="-121" />
+              <line x1="632" y1="-65" x2="629" y2="-49" />
+              <line x1="692" y1="-22" x2="689" y2="-6" />
+              <line x1="55" y1="-167" x2="52" y2="-151" />
+              <line x1="798" y1="-52" x2="795" y2="-36" />
+              <line x1="572" y1="-200" x2="569" y2="-184" />
+              <line x1="407" y1="-196" x2="404" y2="-180" />
+              <line x1="403" y1="-347" x2="400" y2="-331" />
+              <line x1="493" y1="-76" x2="490" y2="-60" />
+              <line x1="410" y1="-369" x2="407" y2="-353" />
+              <line x1="195" y1="-366" x2="192" y2="-350" />
+          </g>
+          <g className="sky-rain-2" stroke="#BFDBFE" strokeWidth="2" strokeLinecap="round">
+              <line x1="213" y1="-175" x2="210" y2="-162" />
+              <line x1="166" y1="-344" x2="163" y2="-331" />
+              <line x1="348" y1="-93" x2="345" y2="-80" />
+              <line x1="53" y1="-348" x2="50" y2="-335" />
+              <line x1="0" y1="-110" x2="-3" y2="-97" />
+              <line x1="154" y1="-126" x2="151" y2="-113" />
+              <line x1="103" y1="-214" x2="100" y2="-201" />
+              <line x1="628" y1="-387" x2="625" y2="-374" />
+              <line x1="72" y1="-294" x2="69" y2="-281" />
+              <line x1="628" y1="-208" x2="625" y2="-195" />
+              <line x1="152" y1="-76" x2="149" y2="-63" />
+              <line x1="258" y1="-223" x2="255" y2="-210" />
+              <line x1="616" y1="-214" x2="613" y2="-201" />
+              <line x1="485" y1="-338" x2="482" y2="-325" />
+              <line x1="118" y1="-151" x2="115" y2="-138" />
+              <line x1="477" y1="-155" x2="474" y2="-142" />
+          </g>
+        </>
+      ),
+    },
     scene: {
       layer: "front",
       draw: () => (
@@ -1133,6 +1306,18 @@ export const COSTUMES: Costume[] = [
     minPlayerLevel: 50,
     icon: "🌫",
     sky: "linear-gradient(180deg,#E9D8FD 0%,#F3E8FF 50%,#E4F3DA 100%)",
+    skyScene: {
+      field: () => (
+        <g fill="#fff">
+          {/* mist drifting along the far hills, the whole width */}
+          <ellipse cx="160" cy="150" rx="190" ry="14" opacity=".45" />
+          <ellipse cx="560" cy="138" rx="200" ry="13" opacity=".42" />
+          <ellipse cx="380" cy="176" rx="330" ry="12" opacity=".35" />
+          <ellipse cx="240" cy="96" rx="120" ry="8" opacity=".3" />
+          <ellipse cx="640" cy="86" rx="110" ry="8" opacity=".3" />
+        </g>
+      ),
+    },
     scene: {
       layer: "front",
       draw: () => (
@@ -1153,6 +1338,16 @@ export const COSTUMES: Costume[] = [
     minPlayerLevel: 50,
     icon: "📜",
     sky: "linear-gradient(180deg,#F7F1E3 0%,#F3EBD8 60%,#E9E3CF 100%)",
+    skyScene: {
+      field: () => (
+        <g stroke="#D8CDB4" strokeWidth="1.6" fill="none" opacity=".8">
+          <path d="M-10 60 q50 -10 100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0" />
+          <path d="M-10 104 q50 10 100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0" />
+          <path d="M-10 148 q50 -8 100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0" />
+        </g>
+      ),
+      orb: () => <circle cx="50" cy="50" r="34" fill="#D9534F" opacity=".85" />,
+    },
     scene: {
       layer: "behind",
       draw: () => (
