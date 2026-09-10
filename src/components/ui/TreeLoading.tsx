@@ -1,3 +1,5 @@
+import BottomNav from "@/components/dashboard/BottomNav";
+
 // Route-level loading state: the page's chrome (sidebar rail on xl, the
 // 52px top band under it) and one small tree growing out of the ground in
 // the middle. It replaces the grey-block skeletons every route carried
@@ -12,8 +14,13 @@
 // grown tree, still. Sized with clamp so 360px and 430px both get a tree
 // that reads as a picture, not an icon (AGENTS.md rule 2).
 //
-// `plain` is for pages without the dashboard sidebar (admin, onboarding,
-// community, review): same tree, no rail or band.
+// The phone tab bar is part of the chrome too: it is mounted per page, so
+// without it here a tab tap made the bar vanish for the whole wait and pop
+// back with the page. Rendered here it stays put and the tapped tab turns
+// green at once (usePathname already points at the destination).
+//
+// `plain` is for pages without the dashboard sidebar or tab bar (admin,
+// onboarding): same tree, no rail, band or tabs.
 export default function TreeLoading({ plain = false }: { plain?: boolean }) {
   const tree = (
     <div className="flex items-center justify-center min-h-[62svh]" role="status" aria-busy="true">
@@ -54,6 +61,7 @@ export default function TreeLoading({ plain = false }: { plain?: boolean }) {
         <div className="xl:hidden h-[52px] border-b-[1.5px] border-dashed border-dash bg-warm" />
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pb-[100px] xl:pb-[60px]">{tree}</main>
       </div>
+      <BottomNav />
     </div>
   );
 }
