@@ -85,12 +85,14 @@ export default function GardenCard({
   // Same stage My room draws (GardenStage): veteran trunk, sky costume,
   // ground items, friends. The tree's width is clamp()ed off the viewport
   // (AGENTS.md rule 2); the card grows with a veteran's taller frame so
-  // the crown never leaves the picture — 214px until about Lv.60, then a
-  // few px per level, measured 329px at 360 and 359px at 430 for Lv.120.
+  // the crown never leaves the picture. Laid out like My room shrunk
+  // (2026-09-10, user call): tree centred, the bubble over it, so the card
+  // keeps ~120px above the tree's feet for the pill and the bubble
+  // (240px at 360 so the phone Garden still ends above the tab bar).
   const { veteran, frameH, sky } = gardenFrame(level, costumeIds);
   const metres = treeHeightMetres(level);
   const treeWidth = "clamp(112px, 32vw, 128px)";
-  const cardHeight = `max(214px, calc(${treeWidth} * ${(frameH / 220).toFixed(3)} + 62px))`;
+  const cardHeight = `max(240px, calc(${treeWidth} * ${(frameH / 220).toFixed(3)} + 120px))`;
   const lines = TREE_PHRASES.map((p) => ({ kr: p.kr, en: t(`phrases.${p.key}`) }));
   // While the tree is thanking you, that line leads and stays up.
   const thanks = lines.filter((p) => p.kr === "물 줘서 고마워요");
@@ -128,17 +130,19 @@ export default function GardenCard({
             the pair stays together in the middle instead of the tree
             drifting left and the bubble's tail pointing at empty sky. */}
         <div className="absolute inset-0 mx-auto w-full max-w-[400px]">
-          {/* The tree stands a tenth of the way in, on the hills; friends
+          {/* The tree stands in the middle, on the hills, as in My room; friends
               wander a shorter way than in My room so they stay in frame. */}
-          <div className={`absolute left-[10%] bottom-[34px] ${party ? "cheer" : ""}`}>
-            <GardenStage level={level} species={species} costumeIds={costumeIds} width={treeWidth} roamSpan="clamp(40px, 12vw, 64px)" />
+          <div className="absolute left-1/2 bottom-[34px] -translate-x-1/2">
+            <div className={party ? "cheer" : undefined}>
+              <GardenStage level={level} species={species} costumeIds={costumeIds} width={treeWidth} roamSpan="clamp(40px, 12vw, 64px)" />
+            </div>
           </div>
           {party && (
             <>
-              <svg className="bob absolute left-[26%] top-[26%] w-[14px] h-[14px]" viewBox="0 0 20 20" aria-hidden="true">
+              <svg className="bob absolute left-[34%] top-[40%] w-[14px] h-[14px]" viewBox="0 0 20 20" aria-hidden="true">
                 <path d="M10 1 L12.2 7.8 L19 10 L12.2 12.2 L10 19 L7.8 12.2 L1 10 L7.8 7.8 Z" fill="#FFD66B" stroke="#E8B93E" strokeWidth="1" />
               </svg>
-              <svg className="bob2 absolute left-[44%] top-[44%] w-[10px] h-[10px]" viewBox="0 0 20 20" aria-hidden="true">
+              <svg className="bob2 absolute left-[62%] top-[52%] w-[10px] h-[10px]" viewBox="0 0 20 20" aria-hidden="true">
                 <path d="M10 1 L12.2 7.8 L19 10 L12.2 12.2 L10 19 L7.8 12.2 L1 10 L7.8 7.8 Z" fill="#FFD66B" stroke="#E8B93E" strokeWidth="1" />
               </svg>
             </>
@@ -157,15 +161,11 @@ export default function GardenCard({
               style={{ width: "clamp(50px, 14vw, 60px)" }}
             />
           )}
-          {/* the tail points back at the tree; keyed so the thank-you
+          {/* over the tree, tail down, as in My room; keyed so the thank-you
               restarts the cycle from its first line */}
-          <SpeechBubble
-            key={party ? "cheer" : "calm"}
-            phrases={phrases}
-            firstHoldMs={party ? 4200 : undefined}
-            variant="card"
-            className="absolute top-[58px] right-[22px]"
-          />
+          <div className="absolute z-[4] w-max left-1/2 -translate-x-1/2 top-[40px]">
+            <SpeechBubble key={party ? "cheer" : "calm"} phrases={phrases} firstHoldMs={party ? 4200 : undefined} wrap />
+          </div>
         </div>
 
         {/* XP, pinned to the card's own bottom edge */}
