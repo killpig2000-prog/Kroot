@@ -13,14 +13,19 @@ import type { CSSProperties, ReactNode } from "react";
 // birds as [left %, top %]. Ratios, so the same meadow fits a 214px card
 // and a 960px hero.
 const SUN_RAYS = [0, 45, 90, 135, 180, 225, 270, 315];
-// Solid ground (2026-09-10, user call: "단색 하나 크룻색 좍 칠하고 그 위에 잔디·꽃"):
-// the three pale hill bands are gone. One meadow green with a single curved
-// top edge, and the grass is what sits on it — tufts and wildflowers —
-// all drawn darker than the ground, the way grass reads on a lawn. No
-// vines (user call), so the flowers took their spots. Nothing stands in
+// Ground (2026-09-10, user call: "단색 하나 크룻색 좍 칠하고 그 위에 잔디·꽃"),
+// then two tones of it (2026-09-11, user: "잔디가 너무 초록해서 퀄리티가
+//안좋은 느낌" — option B of three). One saturated #5FA976 slab under a
+// pastel sky read as a flat green board, and its near-black tufts as
+// clip-art. Now a pale far band toward the horizon and one step deeper in
+// front: distance, not a board. Both lean yellow-green on purpose — the
+// tree's leaves are light mint, and a ground that were merely paler green
+// would swallow it. The tufts are one step darker than the ground they
+// stand on, not black, and all stand in the near band. Nothing stands in
 // the bottom 14%: that is where the XP line sits on the Garden card.
-const GROUND = "#5FA976";
-const GRASS = "#2E5B41";
+const GROUND_FAR = "#C9E3AE";
+const GROUND_NEAR = "#9FCB88";
+const GRASS = "#6E9A58";
 const TUFTS: [number, number, boolean][] = [[7, 24, false], [24, 19, true], [41, 27, false], [58, 20, false], [73, 26, true], [88, 18, false], [96, 25, false], [20, 16, false], [36, 15, true], [70, 16, false], [94, 15, false]];
 const FLOWERS: [number, number, string][] = [[14, 22, "#F4A7B9"], [31, 27, "#FFD66B"], [49, 19, "#FFFDF6"], [64, 25, "#F4A7B9"], [80, 21, "#FFD66B"], [92, 28, "#FFFDF6"], [12, 15, "#FFD66B"], [62, 14, "#F4A7B9"], [86, 16, "#FFFDF6"]];
 const BIRDS: [number, number][] = [[28, 17], [35, 24]];
@@ -116,8 +121,11 @@ export default function GardenScene({
             <path d="M0 176 C200 160 400 172 800 164 L800 200 L0 200Z" fill="#DFF3E4" />
           </>
         ) : (
-          /* one ground, one colour; the top edge is the only terrain */
-          <path d="M0 40 C150 10 300 34 420 30 C560 26 680 6 800 30 L800 200 L0 200Z" fill={GROUND} />
+          /* the far meadow, then the near one — two tones of one green */
+          <>
+            <path d="M0 40 C150 10 300 34 420 30 C560 26 680 6 800 30 L800 200 L0 200Z" fill={GROUND_FAR} />
+            <path d="M0 74 C160 58 300 82 440 72 C580 62 700 52 800 68 L800 200 L0 200Z" fill={GROUND_NEAR} />
+          </>
         )}
       </svg>
       {/* The meadow: grass tufts, wildflowers and two birds, so the tree
