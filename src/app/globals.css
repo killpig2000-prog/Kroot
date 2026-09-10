@@ -943,6 +943,14 @@ html.js-reveal .tree-garden.in .tree {
   100% { transform: translate(-30px, 240px) rotate(300deg); }
 }
 
+/* the aurora's ribbons drift sideways, like a curtain in the air */
+.aura-sway { animation: aura-sway 6s ease-in-out infinite; }
+.aura-sway-2 { animation: aura-sway 7.5s ease-in-out 1s infinite reverse; }
+@keyframes aura-sway {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(10px); }
+}
+
 /* friend companions: a slow drifting bob beside the tree, not a fixed sticker */
 .friend-float {
   animation: friend-float 3.8s ease-in-out infinite;
@@ -964,7 +972,7 @@ html.js-reveal .tree-garden.in .tree {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .aura-spin, .aura-twinkle, .aura-twinkle-2, .aura-fall, .aura-fall-2,
+  .aura-spin, .aura-twinkle, .aura-twinkle-2, .aura-fall, .aura-fall-2, .aura-sway, .aura-sway-2,
   .friend-float, .friend-float-2 { animation: none; }
 }
 

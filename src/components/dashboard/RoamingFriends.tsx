@@ -47,7 +47,7 @@ export default function RoamingFriends({
             style={{ "--span": span, "--dur": dur, animationDelay: delay } as CSSProperties}
             aria-hidden="true"
           >
-            <svg viewBox={`0 0 220 ${frameH}`} className="block h-auto" style={{ width }}>
+            <svg viewBox={`0 0 220 ${frameH}`} className="block h-auto overflow-visible" style={{ width }}>
               <g
                 className="motion-safe:animate-[roamFace_var(--dur)_steps(1,end)_infinite]"
                 style={{ transformOrigin: `${roam.x}px ${roam.y + groundShift}px`, transformBox: "view-box", animationDelay: delay } as CSSProperties}

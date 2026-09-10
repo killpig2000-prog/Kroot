@@ -992,11 +992,22 @@ export const COSTUMES: Costume[] = [
     icon: "🌌",
     sky: "linear-gradient(180deg,#1E2A44 0%,#2B3C55 55%,#3A4A3A 100%)",
     scene: {
+      // Ribbons, not a rectangle (2026-09-11): the old shape closed on a
+      // straight top/left/right edge that only read as a soft glow because
+      // the tree's frame used to clip it there — once auras were let draw
+      // past that edge (so they no longer wall off at the frame), the
+      // straight edges showed as a box. Each ribbon now tapers to a point
+      // at both ends, like the others' round glows, so there is nothing
+      // straight left to reveal.
       layer: "behind",
       draw: () => (
         <>
-          <path d="M-10 90 Q60 20 120 70 T230 60 L230 -10 L-10 -10Z" fill="#7DD3C0" opacity=".5" />
-          <path d="M-10 120 Q70 50 130 95 T230 90 L230 -10 L-10 -10Z" fill="#A78BFA" opacity=".4" />
+          <g className="aura-sway">
+            <path d="M10 70 Q60 10 110 55 Q160 100 210 50 Q160 40 110 75 Q60 110 10 70Z" fill="#7DD3C0" opacity=".45" />
+          </g>
+          <g className="aura-sway-2">
+            <path d="M20 105 Q75 45 130 90 Q175 125 205 85 Q160 85 120 110 Q70 140 20 105Z" fill="#A78BFA" opacity=".38" />
+          </g>
           <g className="aura-twinkle">
             <circle cx="30" cy="30" r="1.8" fill="#fff" />
             <circle cx="150" cy="18" r="1.4" fill="#fff" />

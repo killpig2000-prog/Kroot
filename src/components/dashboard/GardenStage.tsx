@@ -58,14 +58,15 @@ export default function GardenStage({
     <div className="relative" style={{ width }} data-garden-tree>
       <svg
         viewBox={`0 0 220 ${frameH}`}
-        className={`block h-auto transition-[height] duration-500 ${svgClassName}`}
+        className={`block h-auto overflow-visible transition-[height] duration-500 ${svgClassName}`}
         style={{ width }}
         aria-hidden="true"
       >
-        {/* a mound under the soil so costume ground items still sit on grass —
-            the same green as GardenScene's ground (2026-09-10), so it vanishes
-            into the meadow instead of showing as a paler patch */}
-        <ellipse cx="110" cy={frameH + 4} rx="150" ry="34" fill="#5FA976" />
+        {/* No mound and no clipping (2026-09-11, user: "나무를 둘러싸는 정사각형
+            벽"): the frame used to cut everything at its 220-wide edge, so
+            the mound under the soil showed as a box on the meadow and auras
+            and friends stopped at an invisible wall. The garden's own
+            meadow is the ground now; the frame draws past its edges. */}
         {/* sky details (moon, stars, snow, rain) are drawn over the whole
             garden by SkyLayer, not in this frame */}
         <SceneLayer costumeIds={costumeIds} layer="behind" omitSlots={["sky"]} />
