@@ -53,12 +53,19 @@ type SheetKind = "language" | "level" | null;
 export default function LessonBar({
   href,
   title,
+  sub,
+  backHref = "/dashboard",
   locale,
   level,
 }: {
   /** The module route — picks the door icon. */
   href: string;
   title: string;
+  /** Where inside the module — "Chapter 1". Session pages (2026-09-10):
+   *  the bar reads "Writing / Chapter 1" and ← goes to the module's list,
+   *  so the body can open on the first question. */
+  sub?: string;
+  backHref?: string;
   locale: string;
   level?: LessonLevel;
 }) {
@@ -73,8 +80,8 @@ export default function LessonBar({
         data-lesson-bar
       >
         <Link
-          href="/dashboard"
-          aria-label={t("back")}
+          href={backHref}
+          aria-label={sub ? t("backTo", { name: title }) : t("back")}
           className="flex-none w-9 h-9 rounded-[10px] border border-line bg-cream text-charcoal flex items-center justify-center text-[17px] font-bold leading-none hover:bg-warm-2 active:translate-y-[1px] transition-colors"
         >
           ←
@@ -84,7 +91,10 @@ export default function LessonBar({
           <span className="flex-none text-success-deep">
             <ModuleIcon href={href} size={20} />
           </span>
-          <span className="truncate">{title}</span>
+          <span className="truncate">
+            {title}
+            {sub && <span className="font-semibold text-faint"> / {sub}</span>}
+          </span>
         </h1>
 
         <div className="flex-none flex items-center gap-1.5">

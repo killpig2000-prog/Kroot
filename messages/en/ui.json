@@ -109,6 +109,7 @@
   "coinsBelowLevel": "This is below your level, so it counts as practice — no coins.",
   "lessonBar": {
     "back": "Back to the garden",
+    "backTo": "Back to {name}",
     "language": "Language",
     "level": "Level",
     "languageNote": "Meanings and instructions switch to this language. Korean stays Korean."

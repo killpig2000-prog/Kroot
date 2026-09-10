@@ -109,6 +109,7 @@
   "coinsBelowLevel": "这低于你的等级，算作练习——没有金币。",
   "lessonBar": {
     "back": "回到花园",
+    "backTo": "返回{name}",
     "language": "语言",
     "level": "等级",
     "languageNote": "释义和说明会切换成这种语言，韩语保持不变。"

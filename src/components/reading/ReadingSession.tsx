@@ -171,7 +171,6 @@ export default function ReadingSession({
     return (
       <ReadPhase
         passage={passage}
-        chapterIndex={chapterIndex}
         level={level}
         lines={lines}
         glossary={glossary}

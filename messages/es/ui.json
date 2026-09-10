@@ -109,6 +109,7 @@
   "coinsBelowLevel": "Esto está por debajo de tu nivel, así que cuenta como práctica: sin monedas.",
   "lessonBar": {
     "back": "Volver al jardín",
+    "backTo": "Volver a {name}",
     "language": "Idioma",
     "level": "Nivel",
     "languageNote": "Los significados y las instrucciones cambian a este idioma. El coreano sigue en coreano."

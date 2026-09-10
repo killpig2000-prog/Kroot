@@ -109,6 +109,7 @@
   "coinsBelowLevel": "自分のレベルより下の内容なので、練習扱いでコインはつきません。",
   "lessonBar": {
     "back": "庭にもどる",
+    "backTo": "{name}に戻る",
     "language": "言語",
     "level": "レベル",
     "languageNote": "意味と説明がこの言語になります。韓国語はそのままです。"

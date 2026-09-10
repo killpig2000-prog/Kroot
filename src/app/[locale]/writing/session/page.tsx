@@ -1,12 +1,14 @@
 import { notFound } from "next/navigation";
-import { Link, redirect } from "@/i18n/navigation";
-import { getTranslations } from "next-intl/server";
+import { redirect } from "@/i18n/navigation";
+import { getLocale, getTranslations } from "next-intl/server";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
+import LessonBar from "@/components/ui/LessonBar";
 import WritingSession, { WritingEmpty } from "@/components/writing/WritingSession";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { getChaptersForLevel, getSiblingPrompts } from "@/lib/writing";
-import { isCefrLevel, type CefrLevel } from "@/lib/tree";
+import { LEVEL_ORDER, isCefrLevel, type CefrLevel } from "@/lib/tree";
+import { isDifficultyUnlocked } from "@/lib/level";
 
 export default async function WritingChapterSessionPage({
   searchParams,
@@ -21,9 +23,9 @@ export default async function WritingChapterSessionPage({
 
   if (!user) redirect("/onboarding");
 
-  const [t, tn, { data: profile }] = await Promise.all([
+  const [t, locale, { data: profile }] = await Promise.all([
     getTranslations("writing"),
-    getTranslations("nav"),
+    getLocale(),
     supabase
       .from("profiles")
       .select("display_name, current_level, streak_days, avatar_url")
@@ -49,34 +51,24 @@ export default async function WritingChapterSessionPage({
           email={user.email ?? ""}
           streakDays={profile?.streak_days ?? 0}
           avatarUrl={profile?.avatar_url}
+          lessonBar
         />
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] xl:pb-[60px]">
-          {/* breadcrumb */}
-          <div className="flex gap-2 text-[13px] text-faint mb-[18px] flex-wrap">
-            <Link href="/dashboard" className="hover:text-charcoal transition-colors">
-              {tn("garden")}
-            </Link>
-            <span>/</span>
-            <Link href={`/writing?level=${level}`} className="hover:text-charcoal transition-colors">
-              {t("crumb")}
-            </Link>
-            <span>/</span>
-            <b className="text-charcoal font-semibold">{t("session.chapterN", { n: chapterIndex + 1 })}</b>
-          </div>
-
-          {/* head */}
-          <div className="flex items-center justify-between gap-4 mb-5 flex-wrap">
-            <h1 className="font-bold text-[22px] tracking-[-0.02em] flex items-center">
-              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[var(--tint-amber)] text-amber border border-amber-line items-center justify-center kr text-[15px] mr-[9px]">
-                쓰
-              </span>
-              {t("crumb")}
-            </h1>
-            <span className="text-[13px] text-muted">
-              {t("session.levelChapterOf", { level, n: chapterIndex + 1, total: chapters.length })}
-            </span>
-          </div>
+          <LessonBar
+            href="/writing"
+            title={t("crumb")}
+            sub={t("session.chapterN", { n: chapterIndex + 1 })}
+            backHref={`/writing?level=${level}`}
+            locale={locale}
+            level={{
+              current: level,
+              mine: myLevel,
+              levels: LEVEL_ORDER,
+              unlocked: LEVEL_ORDER.filter((lv) => isDifficultyUnlocked(lv, myLevel)),
+              hrefTemplate: "/writing?level={lv}",
+            }}
+          />
 
           {!prompts ? (
             <WritingEmpty />

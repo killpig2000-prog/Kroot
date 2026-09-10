@@ -1,14 +1,15 @@
 import { notFound } from "next/navigation";
-import { Link, redirect } from "@/i18n/navigation";
+import { redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
+import LessonBar from "@/components/ui/LessonBar";
 import ReadingSession, { ReadingEmpty } from "@/components/reading/ReadingSession";
 import { getLocale, getTranslations } from "next-intl/server";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { getChaptersForLevel } from "@/lib/reading";
-import { getLocalizedTitle } from "@/lib/reading-i18n";
 import { buildGlossary, glossaryWords } from "@/lib/word-links";
-import { isCefrLevel, type CefrLevel } from "@/lib/tree";
+import { LEVEL_ORDER, isCefrLevel, type CefrLevel } from "@/lib/tree";
+import { isDifficultyUnlocked } from "@/lib/level";
 
 export default async function ReadingChapterSessionPage({
   searchParams,
@@ -17,7 +18,7 @@ export default async function ReadingChapterSessionPage({
 }) {
   const sp = await searchParams;
   const chapterIndex = Number(sp.chapter ?? 0);
-  const [t, tn] = await Promise.all([getTranslations("reading"), getTranslations("nav")]);
+  const t = await getTranslations("reading");
 
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
@@ -55,31 +56,24 @@ export default async function ReadingChapterSessionPage({
           email={user.email ?? ""}
           streakDays={profile?.streak_days ?? 0}
           avatarUrl={profile?.avatar_url}
+          lessonBar
         />
 
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] xl:pb-[60px]">
-          {/* breadcrumb */}
-          <div className="flex gap-2 text-[13px] text-faint mb-[18px] flex-wrap">
-            <Link href="/dashboard" className="hover:text-charcoal transition-colors">
-              {tn("garden")}
-            </Link>
-            <span>/</span>
-            <Link href={`/reading?level=${level}`} className="hover:text-charcoal transition-colors">
-              {t("crumb")}
-            </Link>
-            <span>/</span>
-            <b className="text-charcoal font-semibold">{t("session.chapterN", { n: chapterIndex + 1 })}</b>
-          </div>
-
-          {/* head */}
-          <div className="mb-6">
-            <h1 className="font-bold text-[22px] tracking-[-0.02em] flex items-center">
-              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-[var(--tint-sky)] text-sky-deep border border-sky-line items-center justify-center kr text-[15px] mr-[9px]">
-                읽
-              </span>
-              {passage ? getLocalizedTitle(passage, locale) : tn("storyGrove")}
-            </h1>
-          </div>
+          <LessonBar
+            href="/reading"
+            title={t("crumb")}
+            sub={t("session.chapterN", { n: chapterIndex + 1 })}
+            backHref={`/reading?level=${level}`}
+            locale={locale}
+            level={{
+              current: level,
+              mine: myLevel,
+              levels: LEVEL_ORDER,
+              unlocked: LEVEL_ORDER.filter((lv) => isDifficultyUnlocked(lv, myLevel)),
+              hrefTemplate: "/reading?level={lv}",
+            }}
+          />
 
           {passage ? (
             <ReadingSession

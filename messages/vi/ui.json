@@ -109,6 +109,7 @@
   "coinsBelowLevel": "Nội dung này dưới trình độ của bạn nên tính là luyện tập — không có xu.",
   "lessonBar": {
     "back": "Về khu vườn",
+    "backTo": "Quay lại {name}",
     "language": "Ngôn ngữ",
     "level": "Trình độ",
     "languageNote": "Nghĩa và hướng dẫn sẽ chuyển sang ngôn ngữ này. Tiếng Hàn vẫn giữ nguyên."

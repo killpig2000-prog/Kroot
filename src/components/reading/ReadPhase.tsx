@@ -77,14 +77,12 @@ function splitSpeaker(line: string): [string, string] {
 
 export default function ReadPhase({
   passage,
-  chapterIndex,
   level,
   lines,
   glossary,
   onContinue,
 }: {
   passage: Passage;
-  chapterIndex: number;
   level: string;
   lines: PassageLine[];
   /** Surface form → vocabulary entry, resolved on the server. */
@@ -250,9 +248,6 @@ export default function ReadPhase({
 
   const toolbar = (
     <div className="flex items-center gap-2 flex-wrap bg-cream border border-line rounded-[12px] px-2.5 py-2 mb-3.5">
-      <span className={`${CHIP} bg-[var(--tint-sky)] border-sky-line text-sky-deep`}>
-        {t("chapterN", { n: chapterIndex + 1 })}
-      </span>
       {GENRE_ICONS[genre] && (
         <span className={`${CHIP} bg-[var(--tint-amber)] border-amber-line text-amber`}>
           {GENRE_ICONS[genre]} {tg(genre)}

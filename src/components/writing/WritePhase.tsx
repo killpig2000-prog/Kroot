@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { WRITING_GENRE_META, type Prompt } from "@/lib/writing";
+import type { Prompt } from "@/lib/writing";
 import { playCorrect, playWrong } from "@/lib/sfx";
 import { getLocalizedExample, getLocalizedPrompt, getLocalizedStimulus } from "@/lib/writing-i18n";
 import { checkTiles, tileMatchScore, tilesText, wrongTilePositions, type Board } from "@/lib/writing-builder";
@@ -41,7 +41,6 @@ export function entryDone(entry: Entry): boolean {
 
 export default function WritePhase({
   prompts,
-  chapterIndex,
   entries,
   boards,
   update,
@@ -52,7 +51,6 @@ export default function WritePhase({
   onSubmit,
 }: {
   prompts: Prompt[];
-  chapterIndex: number;
   entries: Entry[];
   boards: Board[];
   update: (index: number, patch: Partial<Entry>) => void;
@@ -64,8 +62,6 @@ export default function WritePhase({
 }) {
   const t = useTranslations("writing");
   const locale = useLocale();
-  const genre = prompts[0].genre;
-  const genreMeta = WRITING_GENRE_META[genre];
 
   // One question on screen at a time — with N tile boards stacked, the page
   // was a wall of buttons (a Check per board, a shuffle per board, tiles on
@@ -95,23 +91,8 @@ export default function WritePhase({
 
   return (
     <div className={CARD}>
-      {/* head */}
-      <div className="p-[clamp(20px,3vw,32px)] pb-5 border-b border-dashed border-line bg-cream grid gap-5 sm:grid-cols-[1fr_auto] sm:items-end">
-        <div>
-          <span className="inline-flex items-center gap-1.5 text-xs font-bold text-amber bg-[var(--tint-amber)] border border-amber-line px-2.5 py-1 rounded-full mb-2.5">
-            {genreMeta.icon} {t(`genres.${genre}.label`)}
-          </span>
-          <h1 className="font-extrabold text-[22px] sm:text-[24px] tracking-[-0.02em]" style={{ textWrap: "balance" }}>
-            {t("session.chapterN", { n: chapterIndex + 1 })}
-          </h1>
-          <p className="text-[13.5px] text-muted mt-1">{t("phase.answersHint", { n: prompts.length })}</p>
-        </div>
-        <div className="max-w-[260px] text-[12.5px] leading-[1.55] text-success bg-success-bg border border-success-line rounded-[12px] px-3 py-2.5">
-          <b className="block text-[13px] text-success-deep mb-0.5">{t("phase.holdTipTitle")}</b>
-          {t("phase.holdTipBody")}
-        </div>
-      </div>
-
+      {/* No card head (2026-09-10): the lesson bar above already reads
+          "Writing / Chapter 1", so the first thing here is question 1. */}
       {/* one question */}
       <div key={prompt.key} className="px-5 sm:px-[clamp(20px,3vw,32px)] py-[22px]">
         <div className="flex items-center gap-2 mb-3">

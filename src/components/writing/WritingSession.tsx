@@ -224,7 +224,6 @@ export default function WritingSession({
       {guided}
       <WritePhase
         prompts={prompts}
-        chapterIndex={chapterIndex}
         entries={entries}
         boards={boards}
         update={update}
