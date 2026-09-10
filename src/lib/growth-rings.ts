@@ -22,6 +22,9 @@ export type WeekRing = {
   attended: number;
   /** mean depth over attended days, 0 when none */
   avg: number;
+  /** XP earned that week — a good week leaves a thicker ring, like a real
+   *  tree in a good year (2026-09-10). 0 when the caller has no XP rows. */
+  xp: number;
 };
 
 /** How many closed weeks the sheet shows behind the current one. */
@@ -54,7 +57,7 @@ function shift(d: Date, days: number) {
  */
 export function buildWeeks(
   now: Date,
-  sets: { attended: Set<string>; studied: Set<string>; reviewed: Set<string> },
+  sets: { attended: Set<string>; studied: Set<string>; reviewed: Set<string>; xpByDay?: Map<string, number> },
   weeks = RING_WEEKS,
 ): WeekRing[] {
   const today = iso(now);
@@ -64,9 +67,11 @@ export function buildWeeks(
   for (let w = 0; w < weeks; w++) {
     const start = shift(monday, -7 * w);
     const days: DayDepth[] = [];
+    let xp = 0;
     for (let i = 0; i < 7; i++) {
       const key = iso(shift(start, i));
       days.push(key > today ? 0 : depthFor(key, sets.attended, sets.studied, sets.reviewed));
+      xp += sets.xpByDay?.get(key) ?? 0;
     }
     const hit = days.filter((d) => d > 0);
     out.push({
@@ -74,6 +79,7 @@ export function buildWeeks(
       days,
       attended: hit.length,
       avg: hit.length ? hit.reduce<number>((a, d) => a + d, 0) / hit.length : 0,
+      xp,
     });
   }
   return out;
@@ -83,4 +89,14 @@ export function buildWeeks(
 export function ringsSince(now: Date, weeks = RING_WEEKS) {
   const dow = (now.getDay() + 6) % 7;
   return iso(shift(now, -dow - 7 * (weeks - 1)));
+}
+
+/** Sum of XP per local day from xp_events rows, for buildWeeks. */
+export function xpByDayFrom(rows: { points: number | null; created_at: string }[]): Map<string, number> {
+  const m = new Map<string, number>();
+  for (const r of rows) {
+    const key = iso(new Date(r.created_at));
+    m.set(key, (m.get(key) ?? 0) + (r.points ?? 0));
+  }
+  return m;
 }

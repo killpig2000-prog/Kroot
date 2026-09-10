@@ -78,7 +78,8 @@
     "growthTab": "成長ステージ",
     "keepsakesTab": "記念品",
     "openShop": "ショップ・衣装部屋を開く",
-    "openMyRoom": "マイルームを開く"
+    "openMyRoom": "マイルームを開く",
+    "openPeek": "木を大きく見る"
   },
   "growth": {
     "closeAria": "閉じる",

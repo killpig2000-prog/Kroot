@@ -78,7 +78,8 @@
     "growthTab": "Growth stages",
     "keepsakesTab": "Keepsakes",
     "openShop": "Open your shop & wardrobe",
-    "openMyRoom": "Open My room"
+    "openMyRoom": "Open My room",
+    "openPeek": "See your tree up close"
   },
   "growth": {
     "closeAria": "Close",

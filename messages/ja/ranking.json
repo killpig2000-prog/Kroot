@@ -54,6 +54,8 @@
   "unavailable": "データベースの更新後に品評会が開きます。少し待ってから再度お試しください。",
   "peek": {
     "close": "閉じる",
-    "height": "{m} m"
+    "height": "{m} m",
+    "wearing": "着ているもの",
+    "nothingOn": "まだ何も"
   }
 }

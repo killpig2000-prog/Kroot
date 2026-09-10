@@ -46,6 +46,7 @@ export default function TreeCard({
   coins,
   streakDays,
   linkToShop = false,
+  onTreeTap,
 }: {
   level: number;
   progressPct: number;
@@ -62,6 +63,8 @@ export default function TreeCard({
   streakFreezes: number;
   /** Dashboard only: tapping the tree image opens the shop/wardrobe. */
   linkToShop?: boolean;
+  /** My room: tapping the tree opens it big, with its growth rings. */
+  onTreeTap?: () => void;
 }) {
   const t = useTranslations("dashboard.tree");
   // Identity chips reuse the /profile strings — the card absorbed that page's
@@ -150,7 +153,11 @@ export default function TreeCard({
 
         {/* the creature — centred on phones, left of centre once the scene is wide */}
         <div className="absolute bottom-[56px] left-1/2 sm:left-[36%] -translate-x-1/2 z-[3]">
-          {linkToShop ? (
+          {onTreeTap ? (
+            <button type="button" onClick={onTreeTap} aria-label={t("openPeek")} className="block cursor-zoom-in transition-transform hover:-translate-y-0.5 active:translate-y-[1px] active:scale-[.99]">
+              {treeImage}
+            </button>
+          ) : linkToShop ? (
             <Link href="/shop" aria-label={t("openShop")} className="block transition-transform hover:-translate-y-0.5 active:translate-y-[1px] active:scale-[.99]">
               {treeImage}
             </Link>

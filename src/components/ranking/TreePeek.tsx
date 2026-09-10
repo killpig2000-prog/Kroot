@@ -4,16 +4,22 @@ import { useEffect } from "react";
 import { useTranslations } from "next-intl";
 import LevelCreature from "@/components/dashboard/LevelCreature";
 import VeteranTree, { BASE_HEIGHT, veteranFrameHeight } from "@/components/dashboard/VeteranTree";
+import GrowthRing from "@/components/dashboard/GrowthRing";
 import { FULLY_GROWN_LEVEL, treeHeightMetres, treeStageForLevel } from "@/lib/level";
-import { SceneLayer, skyFor } from "@/lib/costumes";
+import { SceneLayer, costumeById, skyFor } from "@/lib/costumes";
+import type { WeekRing } from "@/lib/growth-rings";
 import type { CefrLevel } from "@/lib/tree";
 
-// Tapping a tree on the ranking opens the whole thing: a Lv.50+ tree grows
-// past any thumbnail, so the row shows the crown and this shows the tree.
-// The frame is fixed and the SVG scales to fit — a taller tree draws smaller,
-// which is what makes "look how tall theirs is" readable at a glance. Kept
-// to about a third of the phone's height: at two thirds it read as a whole
-// screen, not a card.
+// Tapping a tree — on the ranking, or your own in My room — opens the whole
+// thing. Two halves (2026-09-10, user's layout): the tree on the left, and on
+// the right its growth rings above what it is wearing and whose it is. A
+// Lv.50+ tree grows past any thumbnail, so the stage is a fixed height and
+// the SVG scales to fit — a taller tree draws smaller, which is what makes
+// "look how tall theirs is" readable at a glance.
+//
+// Rings are optional: My room has the learner's own twelve weeks; the
+// ranking passes them once the board's RPC returns other gardeners' weeks.
+
 export default function TreePeek({
   name,
   rank,
@@ -23,22 +29,29 @@ export default function TreePeek({
   species,
   costumeIds,
   isMe,
+  rings,
   onClose,
 }: {
   name: string;
-  rank: number;
+  rank?: number;
   avatarUrl: string | null;
   level: number;
-  xpWeek: number;
+  xpWeek?: number;
   species: CefrLevel;
   costumeIds: string[];
   isMe: boolean;
+  /** newest first, [0] the current week; `today` 0 = Monday */
+  rings?: { weeks: WeekRing[]; today: number };
   onClose: () => void;
 }) {
   const t = useTranslations("ranking");
+  const tr = useTranslations("dashboard.rings");
   const veteran = level >= FULLY_GROWN_LEVEL;
   const frameH = veteran ? veteranFrameHeight(level) : BASE_HEIGHT;
   const sky = skyFor(costumeIds);
+  const worn = costumeIds.map((id) => costumeById(id)).filter((c): c is NonNullable<typeof c> => !!c && c.slot !== "ribbon");
+  const grown = rings ? rings.weeks.filter((w) => w.attended > 0).length : 0;
+
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -60,50 +73,21 @@ export default function TreePeek({
           role="dialog"
           aria-modal="true"
           aria-label={name}
-          className="pointer-events-auto w-full max-w-[300px] bg-cream rounded-[20px] shadow-[0_30px_70px_-20px_rgba(40,35,25,.4)] overflow-hidden"
+          className="pointer-events-auto relative w-full max-w-[440px] bg-cream rounded-[20px] shadow-[0_30px_70px_-20px_rgba(40,35,25,.4)] p-3 grid grid-cols-2 gap-3"
         >
-          <div className="flex items-start justify-between gap-3 px-5 pt-4 pb-3">
-            <div className="min-w-0 flex items-center gap-3">
-              {avatarUrl ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={avatarUrl} alt="" className="w-10 h-10 rounded-full border border-line object-cover flex-none" />
-              ) : (
-                <span className="w-10 h-10 rounded-full bg-success-bg border border-success-line grid place-items-center text-[15px] font-black text-success-deep flex-none">
-                  {name.slice(0, 1).toUpperCase()}
-                </span>
-              )}
-              <div className="min-w-0">
-              <b className="block text-[16px] truncate">
-                <span className="inline-grid place-items-center min-w-[24px] h-[22px] px-1.5 mr-1.5 rounded-full bg-[var(--tint-amber)] border border-amber-line text-[11.5px] font-black text-[#B7791F] tabular-nums align-[-3px]">
-                  #{rank}
-                </span>
-                {name}
-                {isMe && <span className="text-success text-[11.5px] font-bold ml-1.5">{t("row.you")}</span>}
-              </b>
-              <span className="text-[12.5px] text-muted tabular-nums">
-                {t("row.level", { n: level })} · {t("fair.sun", { n: xpWeek })}
-              </span>
-              {veteran && (
-                <b className="block text-[14px] font-black text-success-deep tabular-nums mt-0.5">
-                  {t("peek.height", { m: treeHeightMetres(level) })}
-                </b>
-              )}
-              </div>
-            </div>
-            <button
-              type="button"
-              onClick={onClose}
-              aria-label={t("peek.close")}
-              className="flex-none w-8 h-8 rounded-full bg-warm text-muted hover:text-charcoal text-[15px] leading-none"
-            >
-              ✕
-            </button>
-          </div>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label={t("peek.close")}
+            className="absolute top-2 right-2 z-[2] w-8 h-8 rounded-full bg-warm/90 text-muted hover:text-charcoal text-[15px] leading-none"
+          >
+            ✕
+          </button>
 
-          {/* fixed-height stage; the SVG keeps its aspect and fits inside */}
+          {/* ── left: the tree, full height of the card ── */}
           <div
-            className="mx-5 rounded-[16px] border border-success-line flex items-end justify-center overflow-hidden"
-            style={{ height: "min(36vh, 300px)", background: sky ?? "linear-gradient(180deg, #EAF6FF 0%, #EAF3EC 70%)" }}
+            className="rounded-[16px] border border-success-line flex items-end justify-center overflow-hidden min-h-[240px]"
+            style={{ background: sky ?? "linear-gradient(180deg, #EAF6FF 0%, #EAF3EC 70%)" }}
           >
             <svg viewBox={`0 0 220 ${frameH}`} className="h-full w-auto max-w-full" aria-hidden="true">
               <SceneLayer costumeIds={costumeIds} layer="behind" />
@@ -116,7 +100,72 @@ export default function TreePeek({
             </svg>
           </div>
 
-          <div className="pb-5" />
+          {/* ── right: rings over wearing over who ── */}
+          <div className="min-w-0 flex flex-col gap-2.5">
+            {rings && (
+              <div className="flex flex-col items-start gap-1.5 sm:flex-row sm:items-center sm:gap-2.5 pr-7">
+                <GrowthRing
+                  week={rings.weeks[0]?.days ?? [0, 0, 0, 0, 0, 0, 0]}
+                  today={rings.today}
+                  past={rings.weeks.slice(1)}
+                  ring="sheet"
+                  level={level}
+                  className="flex-none"
+                  style={{ width: "clamp(64px, 18vw, 84px)", height: "clamp(64px, 18vw, 84px)" }}
+                  label={tr("ariaWeek", { n: rings.weeks[0]?.attended ?? 0 })}
+                />
+                <span className="min-w-0">
+                  <b className="block text-[12.5px] font-bold text-success-deep">{tr("title")}</b>
+                  <span className="block text-[11.5px] text-muted tabular-nums leading-tight">
+                    {grown > 1 ? tr("grown", { n: grown }) : tr("firstWeek")}
+                  </span>
+                </span>
+              </div>
+            )}
+
+            <div className="min-w-0">
+              <b className="block text-[11px] font-extrabold tracking-[.06em] uppercase text-faint mb-1">{t("peek.wearing")}</b>
+              {worn.length ? (
+                <span className="flex flex-wrap gap-1">
+                  {worn.map((c) => (
+                    <span key={c.id} className="inline-flex items-center gap-1 rounded-full border border-line bg-warm px-2 py-[2px] text-[11.5px] font-bold max-w-full">
+                      {c.icon && <span aria-hidden="true">{c.icon}</span>}
+                      <span className="truncate">{c.name}</span>
+                    </span>
+                  ))}
+                </span>
+              ) : (
+                <span className="text-[12px] text-faint">{t("peek.nothingOn")}</span>
+              )}
+            </div>
+
+            <div className="mt-auto flex items-center gap-2 min-w-0">
+              {avatarUrl ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={avatarUrl} alt="" className="w-9 h-9 rounded-full border border-line object-cover flex-none" />
+              ) : (
+                <span className="w-9 h-9 rounded-full bg-success-bg border border-success-line grid place-items-center text-[14px] font-black text-success-deep flex-none">
+                  {name.slice(0, 1).toUpperCase()}
+                </span>
+              )}
+              <span className="min-w-0">
+                <b className="block text-[14px] truncate leading-tight">
+                  {rank !== undefined && (
+                    <span className="inline-grid place-items-center min-w-[22px] h-[20px] px-1.5 mr-1 rounded-full bg-[var(--tint-amber)] border border-amber-line text-[11px] font-black text-[#B7791F] tabular-nums align-[-3px]">
+                      #{rank}
+                    </span>
+                  )}
+                  {name}
+                  {isMe && <span className="text-success text-[11px] font-bold ml-1">{t("row.you")}</span>}
+                </b>
+                <span className="block text-[11.5px] text-muted tabular-nums leading-tight">
+                  {t("row.level", { n: level })}
+                  {xpWeek !== undefined && <> · {t("fair.sun", { n: xpWeek })}</>}
+                  {veteran && <> · {t("peek.height", { m: treeHeightMetres(level) })}</>}
+                </span>
+              </span>
+            </div>
+          </div>
         </div>
       </div>
     </>

@@ -78,7 +78,8 @@
     "growthTab": "成长阶段",
     "keepsakesTab": "纪念品",
     "openShop": "打开商店与衣柜",
-    "openMyRoom": "打开我的小屋"
+    "openMyRoom": "打开我的小屋",
+    "openPeek": "放大看你的树"
   },
   "growth": {
     "closeAria": "关闭",

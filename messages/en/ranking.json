@@ -54,6 +54,8 @@
   "unavailable": "The fair opens once the database is updated. Check back in a moment.",
   "peek": {
     "close": "Close",
-    "height": "{m} m"
+    "height": "{m} m",
+    "wearing": "Wearing",
+    "nothingOn": "Nothing on yet"
   }
 }

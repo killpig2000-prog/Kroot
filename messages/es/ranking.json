@@ -54,6 +54,8 @@
   "unavailable": "La feria abre cuando se actualice la base de datos. Vuelve en un momento.",
   "peek": {
     "close": "Cerrar",
-    "height": "{m} m"
+    "height": "{m} m",
+    "wearing": "Lleva puesto",
+    "nothingOn": "Aún nada"
   }
 }

@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import TreeCard from "@/components/dashboard/TreeCard";
+import TreePeek from "@/components/ranking/TreePeek";
+import type { WeekRing } from "@/lib/growth-rings";
 import { Scene } from "@/components/shop/ShopClient";
 import { useWardrobe } from "@/components/shop/useWardrobe";
 import {
@@ -37,6 +39,7 @@ const RARITY_CHIP: Record<Rarity, string> = {
 export default function MyRoomStage({
   tree,
   shop,
+  rings,
 }: {
   tree: {
     level: number;
@@ -59,6 +62,8 @@ export default function MyRoomStage({
     equipped: string[];
     today: string;
   };
+  /** The learner's own growth rings, for the tree popup. */
+  rings: { weeks: WeekRing[]; today: number };
 }) {
   const t = useTranslations("shop");
   const tm = useTranslations("myroom");
@@ -76,6 +81,7 @@ export default function MyRoomStage({
   // hat, so Hats when nothing else is worn, else the first worn garden slot.
   const [tab, setTab] = useState<CostumeSlot>(() => (shop.equipped.length > 1 ? "aura" : "hat"));
   const shelf = useRef<HTMLDivElement>(null);
+  const [peek, setPeek] = useState(false);
 
   // A new tab starts the shelf at its left edge — the previous tab's scroll
   // position would otherwise land you mid-row in a different list.
@@ -135,7 +141,20 @@ export default function MyRoomStage({
         coins={w.balance}
         streakDays={tree.streakDays}
         streakFreezes={tree.streakFreezes}
+        onTreeTap={() => setPeek(true)}
       />
+      {peek && (
+        <TreePeek
+          name={tree.displayName}
+          avatarUrl={tree.avatarUrl}
+          level={tree.level}
+          species={tree.species}
+          costumeIds={w.previewIds}
+          isMe
+          rings={rings}
+          onClose={() => setPeek(false)}
+        />
+      )}
 
       <section className="max-w-[560px] xl:max-w-[760px] mt-1" aria-labelledby="myroom-shop">
         {/* head: name · coins · the full shop */}

@@ -13,7 +13,7 @@ import { MODULES } from "@/components/dashboard/navItems";
 import ModuleIcon from "@/components/dashboard/ModuleIcon";
 import Glyph from "@/components/dashboard/Glyph";
 import GrowthRingsCard from "@/components/dashboard/GrowthRingsCard";
-import { buildWeeks, ringsSince } from "@/lib/growth-rings";
+import { buildWeeks, ringsSince, xpByDayFrom } from "@/lib/growth-rings";
 import InstallBanner from "@/components/pwa/InstallBanner";
 import OnboardingTour from "@/components/onboarding/OnboardingTour";
 import TutorialFinishBanner from "@/components/onboarding/TutorialFinishBanner";
@@ -160,7 +160,7 @@ export default async function DashboardPage() {
   // once-eligible learner had no way to stop it nagging them here every visit.
   const todayStartIso = `${today}T00:00:00.000Z`;
   const now = new Date();
-  const [coinsRes, { count: reviewedTodayCount }, attendRes, activityRes, reviewRes] = await Promise.all([
+  const [coinsRes, { count: reviewedTodayCount }, attendRes, activityRes, reviewRes, xpRes] = await Promise.all([
     // coins isn't in the snapshot RPC's profile row; a parallel read here
     // beats a function migration for one integer (see 0041's rationale).
     // review_capacity_bonus and is_admin ride along for the same reason —
@@ -183,12 +183,13 @@ export default async function DashboardPage() {
     supabase.from("attendance_days").select("day").eq("user_id", user.id).gte("day", ringsSince(now)),
     supabase.from("daily_activity").select("activity_date, minutes").eq("user_id", user.id).gte("activity_date", ringsSince(now)),
     supabase.from("vocabulary_progress").select("last_reviewed_at").eq("user_id", user.id).gte("last_reviewed_at", `${ringsSince(now)}T00:00:00.000Z`),
+    supabase.from("xp_events").select("points, created_at").eq("user_id", user.id).gte("created_at", `${ringsSince(now)}T00:00:00.000Z`),
   ]);
   const attendedDays = new Set((attendRes.error ? [] : attendRes.data ?? []).map((r) => r.day as string));
   const minutesByDate = new Map((activityRes.error ? [] : activityRes.data ?? []).map((r) => [r.activity_date as string, r.minutes ?? 0]));
   const studiedDays = new Set([...minutesByDate].filter(([, m]) => m > 0).map(([d]) => d));
   const reviewedDays = new Set((reviewRes.error ? [] : reviewRes.data ?? []).map((r) => String(r.last_reviewed_at).slice(0, 10)));
-  const weeks = buildWeeks(now, { attended: attendedDays, studied: studiedDays, reviewed: reviewedDays });
+  const weeks = buildWeeks(now, { attended: attendedDays, studied: studiedDays, reviewed: reviewedDays, xpByDay: xpByDayFrom(xpRes.error ? [] : (xpRes.data ?? [])) });
   const ringToday = (now.getDay() + 6) % 7; // 0 = Monday
   const weekMinutes = weeks[0].days.reduce((sum, _, i) => {
     const d = new Date(now);
@@ -439,7 +440,7 @@ export default async function DashboardPage() {
               Phone only — the desktop rail has its own week. One compact row
               so the Garden still reads as one screen. */}
           <div className="xl:hidden mb-3">
-            <GrowthRingsCard weeks={weeks} today={ringToday} todayIso={today} avgPerDay={avgPerDay} streakDays={streakDays} />
+            <GrowthRingsCard weeks={weeks} today={ringToday} todayIso={today} avgPerDay={avgPerDay} streakDays={streakDays} level={level} />
           </div>
         </main>
 

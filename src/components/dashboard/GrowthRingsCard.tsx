@@ -26,6 +26,7 @@ export default function GrowthRingsCard({
   todayIso,
   avgPerDay,
   streakDays,
+  level = 0,
 }: {
   /** newest first; [0] is the current week */
   weeks: WeekRing[];
@@ -34,6 +35,8 @@ export default function GrowthRingsCard({
   todayIso: string;
   avgPerDay: number;
   streakDays: number;
+  /** the tree's level — decides the heartwood colour */
+  level?: number;
 }) {
   const t = useTranslations("dashboard.rings");
   const format = useFormatter();
@@ -97,6 +100,7 @@ export default function GrowthRingsCard({
           week={week}
           today={today}
           past={past.slice(0, 4)}
+          level={level}
           ring="card"
           animateToday={first}
           markToday={first}
@@ -146,6 +150,7 @@ export default function GrowthRingsCard({
               week={week}
               today={today}
               past={past}
+              level={level}
               ring="sheet"
               markToday
               style={{ width: "clamp(176px, 50vw, 220px)", height: "clamp(176px, 50vw, 220px)" }}

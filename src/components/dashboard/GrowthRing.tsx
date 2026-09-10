@@ -28,6 +28,12 @@ function arc(r: number, a0: number, a1: number) {
   return `M${x0.toFixed(2)} ${y0.toFixed(2)} A${r} ${r} 0 ${a1 - a0 > 180 ? 1 : 0} 1 ${x1.toFixed(2)} ${y1.toFixed(2)}`;
 }
 
+// A week's band: two units for existing at all, one per day shown up, and
+// up to six more for the XP earned — the wide rings are the good weeks.
+function bandUnits(w: { attended: number; xp?: number }) {
+  return 2 + w.attended + Math.min(6, Math.floor((w.xp ?? 0) / 100));
+}
+
 function mixTone(v: number) {
   const lo = Math.max(0, Math.min(3, Math.floor(v))) as DayDepth;
   const hi = Math.min(3, lo + 1) as DayDepth;
@@ -51,13 +57,18 @@ export default function GrowthRing({
   className = "",
   style,
   label,
+  level = 0,
 }: {
   /** Mon..Sun depths for the outer ring */
   week: DayDepth[];
   /** 0 = Monday … 6 = Sunday */
   today: number;
   /** closed weeks, newest first, drawn inward */
-  past?: Pick<WeekRing, "attended" | "avg">[];
+  past?: Pick<WeekRing, "attended" | "avg" | "xp">[];
+  /** The tree's level decides the heartwood: a Lv.50+ veteran has a dark
+   *  heart, a Lv.100+ elder a gold one — so two twelve-week trees at
+   *  different levels don't cut the same (2026-09-10). */
+  level?: number;
   /** stroke proportions per placement */
   ring?: "icon" | "card" | "sheet";
   /** draw today's segment in (the first open of the day) */
@@ -84,15 +95,16 @@ export default function GrowthRing({
   }, [animateToday]);
 
   const innerR = R - outerW / 2 - 2;
-  const pith = 5;
+  const pith = level >= 50 ? 6 : 5;
+  const heart = level >= 100 ? { fill: "#4A3320", gold: true } : level >= 50 ? { fill: "#5C4228", gold: false } : { fill: "#8A6A45", gold: false };
   let rings: { r: number; band: number; tone: string }[] = [];
   if (past.length) {
-    const total = past.reduce((a, w) => a + 2 + w.attended, 0);
+    const total = past.reduce((a, w) => a + bandUnits(w), 0);
     const scale = (innerR - pith) / total;
     let r = pith;
     // oldest innermost
     rings = [...past].reverse().map((w) => {
-      const band = (2 + w.attended) * scale;
+      const band = bandUnits(w) * scale;
       r += band;
       return { r, band, tone: w.attended ? mixTone(w.avg) : TONE[0] };
     });
@@ -116,10 +128,11 @@ export default function GrowthRing({
               <circle cx={C} cy={C} r={k.r} fill="none" stroke="#5C4228" strokeWidth={0.5} opacity={0.28} />
             </g>
           ))}
-          <circle cx={C} cy={C} r={pith} fill="#8A6A45" />
+          <circle cx={C} cy={C} r={pith} fill={heart.fill} />
+          {heart.gold && <circle cx={C} cy={C} r={pith + 1.2} fill="none" stroke="#B7791F" strokeWidth={0.9} />}
         </>
       ) : ring !== "icon" ? (
-        <circle cx={C} cy={C} r={8} fill="#8A6A45" />
+        <circle cx={C} cy={C} r={8} fill={heart.fill} />
       ) : null}
 
       {week.map((v, i) => {

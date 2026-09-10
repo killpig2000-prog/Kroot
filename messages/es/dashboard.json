@@ -78,7 +78,8 @@
     "growthTab": "Etapas de crecimiento",
     "keepsakesTab": "Recuerdos",
     "openShop": "Abrir tu tienda y armario",
-    "openMyRoom": "Abrir Mi rincón"
+    "openMyRoom": "Abrir Mi rincón",
+    "openPeek": "Ver tu árbol de cerca"
   },
   "growth": {
     "closeAria": "Cerrar",

@@ -5,6 +5,7 @@ import Sidebar from "@/components/dashboard/Sidebar";
 import MyRoomStage from "@/components/myroom/MyRoomStage";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { levelProgress, treeStageForLevel } from "@/lib/level";
+import { buildWeeks, ringsSince, xpByDayFrom } from "@/lib/growth-rings";
 import { countSavedWords, getWordBankSlots } from "@/lib/word-bank";
 import type { CefrLevel } from "@/lib/tree";
 
@@ -25,7 +26,9 @@ export default async function MyRoomPage() {
   const user = await getClaimsUser(supabase);
   if (!user) redirect("/onboarding");
 
-  const [{ data: profile }, extrasRes, costumesRes, savedCount, slots] = await Promise.all([
+  const now = new Date();
+  const since = ringsSince(now);
+  const [{ data: profile }, extrasRes, costumesRes, savedCount, slots, attendRes, activityRes, reviewRes, xpRes] = await Promise.all([
     supabase
       .from("profiles")
       .select("display_name, current_level, xp, streak_days, avatar_url, coins, is_admin")
@@ -35,7 +38,20 @@ export default async function MyRoomPage() {
     supabase.from("user_costumes").select("costume_id, equipped").eq("user_id", user.id),
     countSavedWords(supabase, user.id),
     getWordBankSlots(supabase, user.id),
+    // Growth rings for the tree popup — the same three reads the Garden
+    // makes, plus XP per day so a good week draws a thicker ring.
+    supabase.from("attendance_days").select("day").eq("user_id", user.id).gte("day", since),
+    supabase.from("daily_activity").select("activity_date, minutes").eq("user_id", user.id).gte("activity_date", since),
+    supabase.from("vocabulary_progress").select("last_reviewed_at").eq("user_id", user.id).gte("last_reviewed_at", `${since}T00:00:00.000Z`),
+    supabase.from("xp_events").select("points, created_at").eq("user_id", user.id).gte("created_at", `${since}T00:00:00.000Z`),
   ]);
+  const weeks = buildWeeks(now, {
+    attended: new Set((attendRes.error ? [] : attendRes.data ?? []).map((r) => r.day as string)),
+    studied: new Set((activityRes.error ? [] : activityRes.data ?? []).filter((r) => (r.minutes ?? 0) > 0).map((r) => r.activity_date as string)),
+    reviewed: new Set((reviewRes.error ? [] : reviewRes.data ?? []).map((r) => String(r.last_reviewed_at).slice(0, 10))),
+    xpByDay: xpByDayFrom(xpRes.error ? [] : (xpRes.data ?? [])),
+  });
+  const ringToday = (now.getDay() + 6) % 7;
   const extras = extrasRes.error ? null : extrasRes.data;
   const costumes = costumesRes.error ? [] : (costumesRes.data ?? []);
   const owned = costumes.map((c) => c.costume_id);
@@ -46,7 +62,7 @@ export default async function MyRoomPage() {
   const cefr = (profile?.current_level ?? "A1") as CefrLevel;
   const displayName = profile?.display_name ?? "there";
   const { level, into, needed, pct } = levelProgress(profile?.xp ?? 0);
-  const today = new Date().toISOString().slice(0, 10);
+  const today = now.toISOString().slice(0, 10);
 
   return (
     <div className="min-h-screen bg-warm text-charcoal">
@@ -78,6 +94,7 @@ export default async function MyRoomPage() {
               equipped,
               today,
             }}
+            rings={{ weeks, today: ringToday }}
           />
 
           <div className="max-w-[560px] mt-4">
