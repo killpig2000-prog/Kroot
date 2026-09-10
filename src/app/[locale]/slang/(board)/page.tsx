@@ -6,7 +6,7 @@ import Sidebar from "@/components/dashboard/Sidebar";
 import LessonBar from "@/components/ui/LessonBar";
 import SlangBoard from "@/components/slang/SlangBoard";
 import SlangHero from "@/components/slang/SlangHero";
-import SlangQuiz from "@/components/slang/SlangQuiz";
+import SlangRound from "@/components/slang/SlangRound";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { seoAlternates } from "@/lib/seo";
 import { SLANG, slangOfTheDay } from "@/lib/slang";
@@ -91,9 +91,11 @@ export default async function SlangPage() {
         <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] xl:pb-[60px]">
           <LessonBar href="/slang" title={tn("slang")} locale={locale} />
 
-          <SlangHero entry={daily} />
-          <SlangQuiz />
-          <SlangBoard entries={SLANG} />
+          {/* Signed in, the page is one round at a time: five random cards,
+              then a quiz on them (2026-09-11). The banner, the separate daily
+              challenge and the 153-card grid stay on the public page above,
+              which search engines index. */}
+          <SlangRound entries={SLANG} today={daily} />
         </main>
       </div>
 

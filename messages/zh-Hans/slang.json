@@ -25,18 +25,6 @@
   "hero": {
     "ofTheDay": "今日俚语"
   },
-  "quiz": {
-    "title": "每日俚语挑战",
-    "doneToday": "今天已完成 — 答对 {score}/{total}。明天再来新一轮！",
-    "intro": "猜出 {n} 个表达的意思 · +{xp} XP",
-    "start": "开始 ▶",
-    "result": "答对 {score}/{total} · +{xp} XP",
-    "praise": "街头韩语说得很溜 — 明天见！",
-    "encourage": "翻翻下面的卡片，明天再来。",
-    "prompt": "这是什么意思？ · {n}/{total}",
-    "score": "得分 {n}",
-    "close": "关闭"
-  },
   "share": {
     "eyebrow": "Kroot · 街头韩语 🇰🇷",
     "startLearning": "开始学习",
@@ -44,5 +32,22 @@
     "related": "更多类似俚语",
     "ctaTitle": "还有 {n} 个像 {kr} 这样的俚语，全部免费",
     "ctaBody": "全部翻一遍，听听怎么读，学习今天真正在说的韩语 — 而不只是教科书韩语。"
+  },
+  "round": {
+    "cardOf": "第 {n}/{total} 张卡",
+    "quizOf": "测验 {n}/{total}",
+    "roundDone": "本轮结束",
+    "next": "下一张 →",
+    "prev": "上一张",
+    "quizTime": "测验时间 →",
+    "whatMeans": "这是什么意思？",
+    "nextQuestion": "下一题 →",
+    "seeResults": "查看结果 →",
+    "outOf": "/ {total} 答对",
+    "reward": "+{xp} XP · 今天的第一次测验",
+    "practice": "练习轮 · XP 每天一次",
+    "newRound": "再来 {n} 张 ↻",
+    "today": "今天",
+    "new": "新"
   }
 }

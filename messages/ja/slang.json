@@ -25,18 +25,6 @@
   "hero": {
     "ofTheDay": "今日のスラング"
   },
-  "quiz": {
-    "title": "毎日のスラングチャレンジ",
-    "doneToday": "今日は達成 — {score}/{total}問正解。明日また新しい問題！",
-    "intro": "{n}個の表現の意味を当てよう · +{xp} XP",
-    "start": "開始 ▶",
-    "result": "{score}/{total}問正解 · +{xp} XP",
-    "praise": "ストリートトークもばっちり — また明日！",
-    "encourage": "下のカードをめくって、明日また挑戦しよう。",
-    "prompt": "これはどんな意味？ · {n}/{total}",
-    "score": "スコア {n}",
-    "close": "閉じる"
-  },
   "share": {
     "eyebrow": "Kroot · ストリートトーク 🇰🇷",
     "startLearning": "学習を始める",
@@ -44,5 +32,22 @@
     "related": "似ているスラング",
     "ctaTitle": "{kr}のようなスラングがあと{n}語、すべて無料",
     "ctaBody": "全部めくって、音を聞いて、今まさに話されている韓国語を学ぼう — 教科書の韓国語だけじゃなく。"
+  },
+  "round": {
+    "cardOf": "カード {n}/{total}",
+    "quizOf": "クイズ {n}/{total}",
+    "roundDone": "ラウンド終了",
+    "next": "次へ →",
+    "prev": "前のカード",
+    "quizTime": "クイズタイム →",
+    "whatMeans": "どんな意味？",
+    "nextQuestion": "次の問題 →",
+    "seeResults": "結果を見る →",
+    "outOf": "/ {total}問正解",
+    "reward": "+{xp} XP · 今日はじめてのクイズ",
+    "practice": "練習ラウンド · XPは1日1回",
+    "newRound": "新しいカード{n}枚 ↻",
+    "today": "今日",
+    "new": "NEW"
   }
 }

@@ -25,18 +25,6 @@
   "hero": {
     "ofTheDay": "Slang of the day"
   },
-  "quiz": {
-    "title": "Daily slang challenge",
-    "doneToday": "Done today — {score}/{total} correct. New round tomorrow!",
-    "intro": "{n, plural, one {Guess the meaning of # expression} other {Guess the meaning of # expressions}} · +{xp} XP",
-    "start": "Start ▶",
-    "result": "{score}/{total} correct · +{xp} XP",
-    "praise": "Fluent in Street Talk — see you tomorrow!",
-    "encourage": "Flip the cards below and come back tomorrow.",
-    "prompt": "What does it mean? · {n}/{total}",
-    "score": "score {n}",
-    "close": "Close"
-  },
   "share": {
     "eyebrow": "Kroot · Street Talk 🇰🇷",
     "startLearning": "Start learning",
@@ -44,5 +32,22 @@
     "related": "More slang like this",
     "ctaTitle": "{n} more slang words like {kr}, free",
     "ctaBody": "Flip through them all, hear how they sound, and start learning the Korean that’s actually spoken today — not just textbook Korean."
+  },
+  "round": {
+    "cardOf": "Card {n} of {total}",
+    "quizOf": "Quiz {n} of {total}",
+    "roundDone": "Round done",
+    "next": "Next →",
+    "prev": "Previous card",
+    "quizTime": "Quiz time →",
+    "whatMeans": "What does it mean?",
+    "nextQuestion": "Next question →",
+    "seeResults": "See results →",
+    "outOf": "/ {total} correct",
+    "reward": "+{xp} XP · today's first quiz",
+    "practice": "Practice round · XP comes once a day",
+    "newRound": "New {n} cards ↻",
+    "today": "Today",
+    "new": "New"
   }
 }

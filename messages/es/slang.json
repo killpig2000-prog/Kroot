@@ -25,18 +25,6 @@
   "hero": {
     "ofTheDay": "Jerga del día"
   },
-  "quiz": {
-    "title": "Reto diario de jerga",
-    "doneToday": "Hecho hoy — {score}/{total} correctas. ¡Mañana hay ronda nueva!",
-    "intro": "{n, plural, one {Adivina el significado de # expresión} other {Adivina el significado de # expresiones}} · +{xp} XP",
-    "start": "Empezar ▶",
-    "result": "{score}/{total} correctas · +{xp} XP",
-    "praise": "Dominas la jerga de la calle — ¡hasta mañana!",
-    "encourage": "Gira las tarjetas de abajo y vuelve mañana.",
-    "prompt": "¿Qué significa? · {n}/{total}",
-    "score": "puntos {n}",
-    "close": "Cerrar"
-  },
   "share": {
     "eyebrow": "Kroot · Jerga de la calle 🇰🇷",
     "startLearning": "Empezar a aprender",
@@ -44,5 +32,22 @@
     "related": "Más jerga como esta",
     "ctaTitle": "{n} palabras de jerga más como {kr}, gratis",
     "ctaBody": "Pásalas todas, escucha cómo suenan y empieza a aprender el coreano que se habla de verdad hoy — no solo el de los libros."
+  },
+  "round": {
+    "cardOf": "Tarjeta {n} de {total}",
+    "quizOf": "Pregunta {n} de {total}",
+    "roundDone": "Ronda terminada",
+    "next": "Siguiente →",
+    "prev": "Tarjeta anterior",
+    "quizTime": "¡Hora del quiz! →",
+    "whatMeans": "¿Qué significa?",
+    "nextQuestion": "Siguiente pregunta →",
+    "seeResults": "Ver resultados →",
+    "outOf": "/ {total} correctas",
+    "reward": "+{xp} XP · primer quiz de hoy",
+    "practice": "Ronda de práctica · los XP son una vez al día",
+    "newRound": "{n} tarjetas nuevas ↻",
+    "today": "Hoy",
+    "new": "Nueva"
   }
 }
