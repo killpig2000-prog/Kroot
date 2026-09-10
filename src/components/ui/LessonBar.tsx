@@ -87,23 +87,25 @@ export default function LessonBar({
           ←
         </Link>
 
-        <h1 className="flex-1 min-w-0 flex items-center gap-2 text-[15px] xl:text-[22px] font-bold tracking-[-0.01em] text-charcoal">
+        <h1 className="flex-1 min-w-0 flex items-center gap-1.5 text-[15px] xl:text-[22px] font-bold tracking-[-0.01em] text-charcoal">
           <span className="flex-none text-success-deep">
             <ModuleIcon href={href} size={20} />
           </span>
-          <span className="truncate">
-            {title}
-            {sub && <span className="font-semibold text-faint"> / {sub}</span>}
-          </span>
+          {/* The name truncates, the chapter never does: at 360px "Writing /
+              Chapter 1" is ~12px over the slot, and the door icon already
+              says which module this is, so the name is the safe thing to
+              cut (2026-09-11, seen in the 5-width sweep). */}
+          <span className="min-w-0 truncate">{title}</span>
+          {sub && <span className="flex-none ml-1 font-semibold text-faint">/ {sub}</span>}
         </h1>
 
-        <div className="flex-none flex items-center gap-1.5">
+        <div className="flex-none flex items-center gap-1 sm:gap-1.5">
           <button
             type="button"
             onClick={() => setSheet("language")}
             aria-haspopup="dialog"
             aria-expanded={sheet === "language"}
-            className="h-8 rounded-full border border-line bg-cream px-2.5 text-[12.5px] font-bold text-muted hover:bg-warm-2 active:translate-y-[1px] transition-colors whitespace-nowrap"
+            className="h-8 rounded-full border border-line bg-cream px-2 sm:px-2.5 text-[12.5px] font-bold text-muted hover:bg-warm-2 active:translate-y-[1px] transition-colors whitespace-nowrap"
           >
             🌐 {currentLang.code.toUpperCase().slice(0, 2)} ▾
           </button>
@@ -115,7 +117,7 @@ export default function LessonBar({
               aria-expanded={sheet === "level"}
               data-tour={level.tourId}
               data-tour-level={level.tourId ? level.mine : undefined}
-              className="h-8 rounded-full border border-success bg-success px-3 text-[12.5px] font-extrabold text-white hover:bg-success-deep active:translate-y-[1px] transition-colors whitespace-nowrap"
+              className="h-8 rounded-full border border-success bg-success px-2.5 sm:px-3 text-[12.5px] font-extrabold text-white hover:bg-success-deep active:translate-y-[1px] transition-colors whitespace-nowrap"
             >
               {level.current} ▾
             </button>
