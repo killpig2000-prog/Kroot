@@ -87,9 +87,12 @@ function pickDistractors(answer: string[], pool: string[], want: number, rand: (
 export function buildBoard(prompt: Prompt, pool: string[], seed: number): Board {
   const rand = rng(seed);
   const answer = words(prompt.example_kr);
-  // Short sentences (the new one-clause content) only need 1-2 distractors
-  // to stay tappable; longer ones can take a couple more.
-  const want = answer.length <= 4 ? 1 : answer.length <= 6 ? 2 : 3;
+  // 2026-09-11 (user: "단어가 너무 많아서 눈으로 찾기가 어려워"): B2/C1/C2
+  // sentences run 7-16 words, and the old scale (up to +3 distractors past
+  // 6 words) meant a C2 board could show 19 tiles at once — a wall to scan
+  // for one wrong tap. Capped at 2 across every level, never 3, regardless
+  // of how long the sentence is.
+  const want = answer.length <= 5 ? 1 : 2;
   const distractors = pickDistractors(answer, pool, want, rand);
   const all = [...answer, ...distractors].map((text, i) => ({ id: `t${i}`, text }));
   return { answer, tiles: shuffle(all, rand) };

@@ -57,10 +57,10 @@ describe("buildBoard", () => {
     expect(b.tiles.length).toBe(b.answer.length + 1);
   });
 
-  it("scales up to 3 distractors for a longer answer", () => {
+  it("caps at 2 distractors even for a long answer — never 3", () => {
     const long = p({ example_kr: "저는 어제 친구랑 바다에 가서 고기를 먹었어요." });
     const b = buildBoard(long, siblings.flatMap((s) => s.example_kr.split(" ")), 1);
-    expect(b.tiles.length).toBe(b.answer.length + 3);
+    expect(b.tiles.length).toBe(b.answer.length + 2);
   });
 });
 
