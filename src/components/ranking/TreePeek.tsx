@@ -102,24 +102,27 @@ export default function TreePeek({
           {/* ── right: a big growth ring over who ── */}
           <div className="min-w-0 flex flex-col gap-2.5">
             {rings && (
-              <div className="flex flex-col items-center text-center gap-1.5 pr-7">
-                <GrowthRing
-                  week={rings.weeks[0]?.days ?? [0, 0, 0, 0, 0, 0, 0]}
-                  today={rings.today}
-                  past={rings.weeks.slice(1)}
-                  ring="sheet"
-                  level={level}
-                  className="flex-none"
-                  style={{ width: "clamp(112px, 30vw, 168px)", height: "clamp(112px, 30vw, 168px)" }}
-                  label={tr("ariaWeek", { n: rings.weeks[0]?.attended ?? 0 })}
-                />
-                <span className="min-w-0">
-                  <b className="block text-[12.5px] font-bold text-success-deep">{tr("title")}</b>
-                  <span className="block text-[11.5px] text-muted tabular-nums leading-tight">
-                    {grown > 1 ? tr("grown", { n: grown }) : tr("firstWeek")}
+              <>
+                <div className="flex flex-col items-center text-center gap-1.5 pt-7">
+                  <GrowthRing
+                    week={rings.weeks[0]?.days ?? [0, 0, 0, 0, 0, 0, 0]}
+                    today={rings.today}
+                    past={rings.weeks.slice(1)}
+                    ring="sheet"
+                    level={level}
+                    className="flex-none"
+                    style={{ width: "clamp(112px, 30vw, 168px)", height: "clamp(112px, 30vw, 168px)" }}
+                    label={tr("ariaWeek", { n: rings.weeks[0]?.attended ?? 0 })}
+                  />
+                  <span className="min-w-0">
+                    <b className="block text-[12.5px] font-bold text-success-deep">{tr("title")}</b>
+                    <span className="block text-[11.5px] text-muted tabular-nums leading-tight">
+                      {grown > 1 ? tr("grown", { n: grown }) : tr("firstWeek")}
+                    </span>
                   </span>
-                </span>
-              </div>
+                </div>
+                <div className="border-t border-line" />
+              </>
             )}
 
             <div className="mt-auto flex items-center gap-2 min-w-0">
