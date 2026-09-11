@@ -53,10 +53,10 @@ export function levelProgress(xp: number): { level: number; into: number; needed
 // 🌸40-49 → 🍎50+. Reuses the 6 visual stages keyed by CEFR (LevelCreature).
 // From 50 on the stage stays put and the tree grows taller instead (VeteranTree).
 export const STAGE_SPAN = 10;
-// The oak's eight looks, by first level: seed, young tree, sapling, sturdy
-// young tree, youth, common oak, mature, spirit. Early looks come quickly,
-// later ones take longer (2026-09-11 first pass).
-export const ART_STAGE_STARTS = [1, 4, 8, 14, 22, 33, 48, 70] as const;
+// The oak's seven looks, by first level: seed, sprout, young tree, sturdy
+// tree, young tree II, uncle, spirit. Early looks come quickly, later ones
+// take longer (2026-09-11).
+export const ART_STAGE_STARTS = [1, 4, 10, 18, 30, 48, 70] as const;
 
 export function artStageForLevel(level: number): number {
   let stage = 0;
@@ -66,7 +66,7 @@ export function artStageForLevel(level: number): number {
 
 // The six named stages (growth popup, shop, stage-only callers) start on
 // look boundaries so a stage change is always a visible change.
-export const STAGE_STARTS = [1, 4, 14, 22, 48, 70] as const;
+export const STAGE_STARTS = [1, 4, 10, 18, 48, 70] as const;
 
 export function treeStageForLevel(level: number): CefrLevel {
   let stage = 0;

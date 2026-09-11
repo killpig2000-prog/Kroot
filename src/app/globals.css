@@ -648,8 +648,29 @@ html.js-reveal .reveal:not(.in) {
   }
 }
 
+/* the illustrated tree's eyelids: hidden, then dropped over the painted
+   eyes on the same beat .blink uses (both eyes together — .d2 is the same
+   delay, kept so a look can offset one lid if its art is tilted) */
+.lid {
+  animation: lid 4.6s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: 50% 0;
+  transform: scaleY(0);
+}
+@keyframes lid {
+  0%, 90%, 100% {
+    transform: scaleY(0);
+  }
+  93% {
+    transform: scaleY(1);
+  }
+  96% {
+    transform: scaleY(0);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .sway, .sway-slow, .blink, .cheer {
+  .sway, .sway-slow, .blink, .cheer, .lid {
     animation: none;
   }
 }

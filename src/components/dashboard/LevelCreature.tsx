@@ -281,19 +281,22 @@ type Look = {
   height: number;
   /** Soil mound under the look; the seed brings its own. */
   ground: boolean;
+  /** Each eye's box in the art, and the bark colour its lid is painted in. */
+  lids: [number, number, number, number][];
+  bark: string;
 };
+// Seed, sprout, young, sturdy, young II, uncle, spirit.
 const LOOKS: Look[] = [
-  { src: "/tree/oak-seed.png", w: 191, h: 140, hat: [96, 8], crown: 100, eye: [110, 51], spread: 24, height: 60, ground: false },
-  { src: "/tree/oak-stem.png", w: 152, h: 157, hat: [77, 12], crown: 60, eye: [92, 64], spread: 17, height: 85, ground: true },
-  { src: "/tree/oak-sapling.png", w: 128, h: 162, hat: [64, 18], crown: 90, eye: [71, 106], spread: 8, height: 105, ground: true },
-  { src: "/tree/oak-young.png", w: 154, h: 165, hat: [80, 12], crown: 150, eye: [80, 108], spread: 15, height: 125, ground: true },
-  { src: "/tree/oak-youth.png", w: 150, h: 168, hat: [78, 12], crown: 150, eye: [92, 106], spread: 14, height: 145, ground: true },
-  { src: "/tree/oak-common.png", w: 208, h: 227, hat: [104, 14], crown: 200, eye: [106, 162], spread: 15, height: 170, ground: true },
-  { src: "/tree/oak-mature.png", w: 196, h: 198, hat: [98, 12], crown: 190, eye: [109, 121], spread: 17, height: 195, ground: true },
-  { src: "/tree/oak-spirit.png", w: 224, h: 232, hat: [112, 20], crown: 200, eye: [127, 149], spread: 14, height: 218, ground: true },
+  { src: "/tree/oak-seed.webp", w: 726, h: 523, hat: [363, 10], crown: 338, eye: [411, 175], spread: 86, height: 60, ground: false, lids: [[325, 184, 45, 51], [497, 166, 39, 46]], bark: "#A06F45" },
+  { src: "/tree/oak-sprout.webp", w: 730, h: 900, hat: [395, 40], crown: 400, eye: [395, 581], spread: 37, height: 90, ground: true, lids: [[358, 582, 19, 27], [432, 580, 19, 27]], bark: "#8E6038" },
+  { src: "/tree/oak-young.webp", w: 715, h: 772, hat: [405, 15], crown: 500, eye: [420, 501], spread: 54, height: 120, ground: true, lids: [[366, 502, 29, 30], [474, 500, 27, 30]], bark: "#8F5E3A" },
+  { src: "/tree/oak-sturdy.webp", w: 908, h: 985, hat: [499, 20], crown: 687, eye: [534, 620], spread: 67, height: 145, ground: true, lids: [[467, 622, 36, 36], [601, 619, 28, 34]], bark: "#91643F" },
+  { src: "/tree/oak-young2.webp", w: 860, h: 937, hat: [422, 19], crown: 630, eye: [470, 672], spread: 50, height: 170, ground: true, lids: [[420, 673, 27, 32], [521, 670, 21, 29]], bark: "#8D5F3A" },
+  { src: "/tree/oak-uncle.webp", w: 809, h: 858, hat: [460, 17], crown: 570, eye: [477, 540], spread: 60, height: 195, ground: true, lids: [[418, 542, 32, 26], [537, 538, 27, 26]], bark: "#865836" },
+  { src: "/tree/oak-spirit.webp", w: 903, h: 930, hat: [452, 40], crown: 600, eye: [535, 608], spread: 66, height: 218, ground: true, lids: [[469, 610, 50, 30], [602, 607, 40, 32]], bark: "#9C8370" },
 ];
 // Stage-only callers (shop, growth popup, landing) show their stage's look.
-const STAGE_LOOK: Record<CefrLevel, number> = { A1: 0, A2: 1, B1: 3, B2: 4, C1: 6, C2: 7 };
+const STAGE_LOOK: Record<CefrLevel, number> = { A1: 0, A2: 1, B1: 2, B2: 3, C1: 5, C2: 6 };
 
 function place(l: Look) {
   const s = l.height / l.h;
@@ -380,6 +383,22 @@ export default function LevelCreature({
         {p.groundRx !== null && !hideGround && <Ground id={id} rx={p.groundRx} cy={214} />}
         <g className="sway" style={{ transformOrigin: "110px 212px" }}>
           <image href={look.src} x={p.x} y={p.y} width={p.w} height={p.h} />
+          {/* the art's eyes are painted open — bark-coloured lids drop over
+              them now and then so the character blinks */}
+          {look.lids.map(([ex, ey, rx, ry], i) => {
+            const s = p.h / look.h;
+            return (
+              <ellipse
+                key={i}
+                className={`lid ${i ? "d2" : ""}`}
+                cx={p.x + ex * s}
+                cy={p.y + ey * s}
+                rx={rx * s}
+                ry={ry * s}
+                fill={look.bark}
+              />
+            );
+          })}
           <CostumeLayer level={level} costumeIds={costumeIds} anchors={p.anchors} />
         </g>
       </>
