@@ -93,7 +93,7 @@ export default function TreePeek({
               {veteran ? (
                 <VeteranTree level={level} species={species} costumeIds={costumeIds} />
               ) : (
-                <LevelCreature level={treeStageForLevel(level)} costumeIds={costumeIds} species={species} />
+                <LevelCreature level={treeStageForLevel(level)} playerLevel={level} costumeIds={costumeIds} species={species} />
               )}
               <SceneLayer costumeIds={costumeIds} layer="front" />
             </svg>

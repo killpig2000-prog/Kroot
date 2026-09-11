@@ -1878,13 +1878,22 @@ export const COSTUME_ANCHORS: Record<CefrLevel, Record<WearableSlot, { x: number
 
 // Renders equipped costumes at the right spot for the level. Place inside the
 // creature's swaying <g> so outfits move with the tree.
-export function CostumeLayer({ level, costumeIds }: { level: CefrLevel; costumeIds: string[] }) {
+export function CostumeLayer({
+  level,
+  costumeIds,
+  anchors,
+}: {
+  level: CefrLevel;
+  costumeIds: string[];
+  /** Overrides the stage anchors — the illustrated character has its face on the trunk. */
+  anchors?: Record<WearableSlot, { x: number; y: number; s: number }>;
+}) {
   return (
     <>
       {costumeIds.map((id) => {
         const costume = costumeById(id);
         if (!costume?.render) return null;
-        const a = COSTUME_ANCHORS[level][costume.slot as WearableSlot];
+        const a = (anchors ?? COSTUME_ANCHORS[level])[costume.slot as WearableSlot];
         return (
           <g key={id} transform={`translate(${a.x} ${a.y}) scale(${a.s})`}>
             {costume.render()}

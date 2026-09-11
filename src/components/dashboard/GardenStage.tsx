@@ -73,7 +73,7 @@ export default function GardenStage({
         {veteran && species ? (
           <VeteranTree level={level} species={species} costumeIds={costumeIds} />
         ) : (
-          <LevelCreature level={stage} costumeIds={costumeIds} species={species} />
+          <LevelCreature level={stage} playerLevel={level} costumeIds={costumeIds} species={species} />
         )}
         {/* what a sky costume leaves on the ground at the tree's feet */}
         {skyGrounds.map((c) => (

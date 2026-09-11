@@ -219,7 +219,7 @@ export default function ResultShell({
         <div className="absolute left-1/2 -translate-x-1/2 bottom-[54px] z-[3] w-[clamp(140px,36vw,190px)]">
           {stage ? (
             <svg viewBox="0 0 220 230" className="w-full h-auto" aria-hidden="true">
-              <LevelCreature level={stage} />
+              <LevelCreature level={stage} playerLevel={levelUp?.new_level} />
             </svg>
           ) : (
             <div className="aspect-[220/230]" />

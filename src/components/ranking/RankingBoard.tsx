@@ -93,7 +93,7 @@ function Tree({
         {veteran ? (
           <VeteranTree level={row.level} species={species} costumeIds={ids} />
         ) : (
-          <LevelCreature level={treeStageForLevel(row.level)} costumeIds={ids} species={species} />
+          <LevelCreature level={treeStageForLevel(row.level)} playerLevel={row.level} costumeIds={ids} species={species} />
         )}
         <SceneLayer costumeIds={ids} layer="front" />
       </svg>

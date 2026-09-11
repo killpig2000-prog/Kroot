@@ -1,6 +1,7 @@
 import type { CefrLevel } from "@/lib/tree";
 import { SPECIES, type TreeSpecies } from "@/lib/tree";
 import { CostumeLayer, skinFor } from "@/lib/costumes";
+import { artStageForLevel } from "@/lib/level";
 
 /** Shift a #rrggbb color toward black (f<0) or white (f>0). */
 function shade(hex: string, f: number): string {
@@ -260,14 +261,64 @@ const STAGE_ZOOM: Record<CefrLevel, { s: number; cy: number }> = {
   C2: { s: 1, cy: 216 },
 };
 
+// Trial of the illustrated oak (2026-09-11): every stage is the reference
+// character art instead of the drawn tree.
+export const CHARACTER_ART = true;
+
+type Anchor = { x: number; y: number; s: number };
+// One look per art stage, measured in the art's own pixels: where a hat sits
+// on the crown and how wide that crown is, where the eyes are and how far
+// apart, and how tall the look stands in the 220x230 frame (feet at y=212).
+// Each look stands taller than the last, so the grown trees fill the frame.
+type Look = {
+  src: string;
+  w: number;
+  h: number;
+  hat: [number, number];
+  crown: number;
+  eye: [number, number];
+  spread: number;
+  height: number;
+  /** Soil mound under the look; the seed brings its own. */
+  ground: boolean;
+};
+const LOOKS: Look[] = [
+  { src: "/tree/oak-seed.png", w: 191, h: 140, hat: [96, 8], crown: 100, eye: [110, 51], spread: 24, height: 60, ground: false },
+  { src: "/tree/oak-stem.png", w: 152, h: 157, hat: [77, 12], crown: 60, eye: [92, 64], spread: 17, height: 85, ground: true },
+  { src: "/tree/oak-sapling.png", w: 128, h: 162, hat: [64, 18], crown: 90, eye: [71, 106], spread: 8, height: 105, ground: true },
+  { src: "/tree/oak-young.png", w: 154, h: 165, hat: [80, 12], crown: 150, eye: [80, 108], spread: 15, height: 125, ground: true },
+  { src: "/tree/oak-youth.png", w: 150, h: 168, hat: [78, 12], crown: 150, eye: [92, 106], spread: 14, height: 145, ground: true },
+  { src: "/tree/oak-common.png", w: 208, h: 227, hat: [104, 14], crown: 200, eye: [106, 162], spread: 15, height: 170, ground: true },
+  { src: "/tree/oak-mature.png", w: 196, h: 198, hat: [98, 12], crown: 190, eye: [109, 121], spread: 17, height: 195, ground: true },
+  { src: "/tree/oak-spirit.png", w: 224, h: 232, hat: [112, 20], crown: 200, eye: [127, 149], spread: 14, height: 218, ground: true },
+];
+// Stage-only callers (shop, growth popup, landing) show their stage's look.
+const STAGE_LOOK: Record<CefrLevel, number> = { A1: 0, A2: 1, B1: 3, B2: 4, C1: 6, C2: 7 };
+
+function place(l: Look) {
+  const s = l.height / l.h;
+  const w = l.w * s;
+  const x = 110 - w / 2;
+  const y = 212 - l.height;
+  // Hat, glasses and neckwear scale with the crown and the eyes (a 16-wide
+  // pair of eyes wears glasses at 1.7, as the drawn tree did).
+  const hat: Anchor = { x: x + l.hat[0] * s, y: y + l.hat[1] * s, s: l.crown * s * 0.0157 };
+  const face: Anchor = { x: x + l.eye[0] * s, y: y + l.eye[1] * s, s: (l.spread * s) / 9.4 };
+  const neck: Anchor = { x: face.x, y: face.y + (face.y - hat.y) * 0.28, s: face.s * 1.18 };
+  return { x, y, w, h: l.height, groundRx: l.ground ? w * 0.42 : null, anchors: { hat, face, neck } };
+}
+
 export default function LevelCreature({
   level,
   costumeIds = [],
   species,
   hideGround = false,
+  playerLevel,
 }: {
   /** Growth stage (player level band) — how big the tree is. */
   level: CefrLevel;
+  /** The player's level, when known — picks the exact one of the oak's eight looks. */
+  playerLevel?: number;
   costumeIds?: string[];
   /** Tree species (CEFR grade) — what kind of tree it is. Defaults to the stage. */
   species?: CefrLevel;
@@ -319,6 +370,21 @@ export default function LevelCreature({
       </radialGradient>
     </defs>
   );
+
+  if (CHARACTER_ART) {
+    const look = LOOKS[playerLevel !== undefined ? artStageForLevel(playerLevel) : STAGE_LOOK[level]];
+    const p = place(look);
+    return (
+      <>
+        {defs}
+        {p.groundRx !== null && !hideGround && <Ground id={id} rx={p.groundRx} cy={214} />}
+        <g className="sway" style={{ transformOrigin: "110px 212px" }}>
+          <image href={look.src} x={p.x} y={p.y} width={p.w} height={p.h} />
+          <CostumeLayer level={level} costumeIds={costumeIds} anchors={p.anchors} />
+        </g>
+      </>
+    );
+  }
 
   const frame = (children: React.ReactNode) => (
     <>

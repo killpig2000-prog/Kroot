@@ -1,7 +1,7 @@
 import type { CefrLevel } from "@/lib/tree";
 import { SPECIES } from "@/lib/tree";
-import { FULLY_GROWN_LEVEL, MAX_LEVEL, VETERAN_TIER_SPAN, treeHeightMetres, veteranTiers } from "@/lib/level";
-import LevelCreature, { Pad } from "@/components/dashboard/LevelCreature";
+import { FULLY_GROWN_LEVEL, MAX_LEVEL, VETERAN_TIER_SPAN, treeHeightMetres, treeStageForLevel, veteranTiers } from "@/lib/level";
+import LevelCreature, { CHARACTER_ART, Pad } from "@/components/dashboard/LevelCreature";
 
 // Keepsakes hung on the tree, one per canopy tier past fully grown.
 // `name` is rendered from messages (dashboard.tree.keepsakes.<level>).
@@ -24,6 +24,8 @@ const KEEPSAKE_SCALE = 1.7;
 
 /** viewBox height for a given player level — TreeCard sizes the frame with this. */
 export function veteranFrameHeight(level: number): number {
+  // The illustrated character stands on its own feet — no trunk to stretch.
+  if (CHARACTER_ART) return BASE_HEIGHT;
   const lv = Math.min(Math.max(level, FULLY_GROWN_LEVEL), MAX_LEVEL);
   return BASE_HEIGHT + (lv - FULLY_GROWN_LEVEL) * PX_PER_LEVEL;
 }
@@ -149,6 +151,7 @@ export default function VeteranTree({
   species: CefrLevel;
   costumeIds?: string[];
 }) {
+  if (CHARACTER_ART) return <LevelCreature level={treeStageForLevel(level)} playerLevel={level} species={species} costumeIds={costumeIds} />;
   const theme = SPECIES[species];
   const conifer = theme.shape === "conifer";
   const H = veteranFrameHeight(level);

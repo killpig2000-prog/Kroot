@@ -7,6 +7,7 @@ import {
   levelProgress,
   treeHeightMetres,
   treeStageForLevel,
+  artStageForLevel,
   veteranTiers,
   xpForNext,
   xpToReach,
@@ -108,15 +109,24 @@ describe("levelProgress", () => {
 });
 
 describe("treeStageForLevel", () => {
-  it("evolves every 10 levels and parks at the last stage from 50", () => {
+  it("evolves at 4 / 14 / 22 / 48 / 70 and parks at the last stage", () => {
     expect(treeStageForLevel(1)).toBe("A1");
-    expect(treeStageForLevel(9)).toBe("A1");
-    expect(treeStageForLevel(10)).toBe("A2");
-    expect(treeStageForLevel(29)).toBe("B1");
-    expect(treeStageForLevel(30)).toBe("B2");
-    expect(treeStageForLevel(40)).toBe("C1");
-    expect(treeStageForLevel(50)).toBe("C2");
+    expect(treeStageForLevel(3)).toBe("A1");
+    expect(treeStageForLevel(4)).toBe("A2");
+    expect(treeStageForLevel(13)).toBe("A2");
+    expect(treeStageForLevel(14)).toBe("B1");
+    expect(treeStageForLevel(22)).toBe("B2");
+    expect(treeStageForLevel(47)).toBe("B2");
+    expect(treeStageForLevel(48)).toBe("C1");
+    expect(treeStageForLevel(69)).toBe("C1");
+    expect(treeStageForLevel(70)).toBe("C2");
     expect(treeStageForLevel(120)).toBe("C2");
+  });
+
+  it("gives the oak eight looks, each starting on its own level", () => {
+    expect([1, 3, 4, 7, 8, 13, 14, 21, 22, 32, 33, 47, 48, 69, 70, 120].map(artStageForLevel)).toEqual([
+      0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7,
+    ]);
   });
 
   it("clamps weird inputs to the first/last stage", () => {
