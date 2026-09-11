@@ -5,15 +5,24 @@ import type { CefrLevel } from "@/lib/tree";
 // its 은/는 vs 이/가 lesson lives on here as the *reason* shown when a pick is
 // wrong, right under the sentence. Rules and examples follow lib/grammar.ts
 // `topic-vs-subject` so nothing here contradicts what the app taught before.
+// 2026-09-11 (user: "목적어 뒤에는 을를... 있어야 하는데 없어"): this only ever
+// blanked 은/는/이/가 — every writing example sentence has objects taking
+// 을/를 right there in the text, but the closing quiz never once asked about
+// them. Added a matching object-marker set so the blank now covers all
+// three families a learner actually needs: topic, subject, object.
 //
 // Every sentence is chosen so that its context FORCES one particle: an
 // answer to "who?/what?", 있다/없다/아니다/되다, a question word, a clause
 // under 아무리, a contrast pair — never a bare "X는 Y예요" where 이/가 would
 // also pass. 은/는 both fit far too many sentences; a blank that has two
-// right answers would make "why it's wrong" a lie.
+// right answers would make "why it's wrong" a lie. The same bar applies to
+// the object items: a topicalized object can drop 을/를 for 은/는 in real
+// Korean ("이 책은 읽었어요"), so every object sentence here answers a
+// question word or states a plain fact with no contrast set up — nothing
+// that would make 은/는 sound natural in the blank.
 
-export type Particle = "은" | "는" | "이" | "가";
-export const PARTICLE_OPTIONS: Particle[] = ["은", "는", "이", "가"];
+export type Particle = "은" | "는" | "이" | "가" | "을" | "를";
+export const PARTICLE_OPTIONS: Particle[] = ["은", "는", "이", "가", "을", "를"];
 
 export type ParticleItem = {
   id: string;
@@ -28,6 +37,7 @@ export type ParticleItem = {
 const SHAPE = "After a consonant (받침) the particle is 은 / 이; after a vowel it is 는 / 가.";
 const TOPIC = "은/는 marks the topic — \"as for…\" — and hints at a contrast with something else.";
 const SUBJECT = "이/가 points at the subject itself: new information, the answer to \"who?\" or \"what?\", and the word before 있다/없다/아니다/되다 and feeling words like 좋다/아프다.";
+const OBJECT = "을/를 marks the object — the thing a verb like 먹다/마시다/좋아하다/만나다/보다/사다/배우다 directly acts on. After a consonant it's 을; after a vowel it's 를.";
 
 export const PARTICLE_ITEMS: ParticleItem[] = [
   // ── A1 ────────────────────────────────────────────────────────────────
@@ -217,12 +227,162 @@ export const PARTICLE_ITEMS: ParticleItem[] = [
     why: { rule: `Picking one thing over another with -보다 identifies the subject: 이/가. 과정 ends in a consonant → 이. ${SUBJECT}`,
       examples: ["결과보다 과정이 더 중요하다고 생각해요.", "어느 게 더 싸요? — 이 가방이 더 싸요.", "무엇이 가장 중요한지 다시 생각해 봐야 해요."] },
   },
+
+  // ── A1 objects (을/를) ───────────────────────────────────────────────
+  {
+    id: "a1-o1", level: "A1", kr: "뭐 마셔요? — 저는 물__ 마셔요.", en: "What do you drink? — I drink water.", answer: "을",
+    why: { rule: `The answer to "what?" names the thing acted on — the object takes 을/를. 물 ends in a consonant → 을. ${OBJECT}`,
+      examples: ["뭐 마셔요? — 저는 물을 마셔요.", "뭐 먹어요? — 저는 빵을 먹어요.", "뭐 읽어요? — 저는 책을 읽어요."] },
+  },
+  {
+    id: "a1-o2", level: "A1", kr: "뭐 좋아해요? — 저는 사과__ 좋아해요.", en: "What do you like? — I like apples.", answer: "를",
+    why: { rule: `좋아하다 needs an object — the thing liked takes 을/를. 사과 ends in a vowel → 를. ${OBJECT}`,
+      examples: ["뭐 좋아해요? — 저는 사과를 좋아해요.", "뭐 봐요? — 저는 영화를 봐요.", "뭘 마시고 싶어요? — 저는 커피를 마시고 싶어요."] },
+  },
+  {
+    id: "a1-o3", level: "A1", kr: "뭐 읽어요? — 저는 책__ 읽어요.", en: "What are you reading? — I'm reading a book.", answer: "을",
+    why: { rule: `읽다 takes an object — the thing read. 책 ends in a consonant → 을. ${OBJECT}`,
+      examples: ["뭐 읽어요? — 저는 책을 읽어요.", "뭐 먹어요? — 저는 빵을 먹어요.", "뭐 마셔요? — 저는 물을 마셔요."] },
+  },
+  {
+    id: "a1-o4", level: "A1", kr: "뭐 봐요? — 저는 영화__ 봐요.", en: "What are you watching? — I'm watching a movie.", answer: "를",
+    why: { rule: `보다 takes an object — the thing watched. 영화 ends in a vowel → 를. ${OBJECT}`,
+      examples: ["뭐 봐요? — 저는 영화를 봐요.", "뭐 좋아해요? — 저는 사과를 좋아해요.", "뭘 마시고 싶어요? — 저는 커피를 마시고 싶어요."] },
+  },
+  {
+    id: "a1-o5", level: "A1", kr: "뭐 먹어요? — 저는 빵__ 먹어요.", en: "What are you eating? — I'm eating bread.", answer: "을",
+    why: { rule: `먹다 takes an object — the thing eaten. 빵 ends in a consonant → 을. ${OBJECT}`,
+      examples: ["뭐 먹어요? — 저는 빵을 먹어요.", "뭐 읽어요? — 저는 책을 읽어요.", "뭐 마셔요? — 저는 물을 마셔요."] },
+  },
+  {
+    id: "a1-o6", level: "A1", kr: "뭘 마시고 싶어요? — 저는 커피__ 마시고 싶어요.", en: "What do you want to drink? — I want to drink coffee.", answer: "를",
+    why: { rule: `마시다 takes an object — the thing drunk. 커피 ends in a vowel → 를. ${OBJECT}`,
+      examples: ["뭘 마시고 싶어요? — 저는 커피를 마시고 싶어요.", "뭐 좋아해요? — 저는 사과를 좋아해요.", "뭐 봐요? — 저는 영화를 봐요."] },
+  },
+
+  // ── A2 objects (을/를) ───────────────────────────────────────────────
+  {
+    id: "a2-o1", level: "A2", kr: "뭘 만들었어요? — 저는 케이크__ 만들었어요.", en: "What did you make? — I made a cake.", answer: "를",
+    why: { rule: `만들다 takes an object — the thing made. 케이크 ends in a vowel → 를. ${OBJECT}`,
+      examples: ["뭘 만들었어요? — 저는 케이크를 만들었어요.", "뭘 찾아요? — 저는 열쇠를 찾아요.", "뭘 정리했어요? — 저는 가구를 정리했어요."] },
+  },
+  {
+    id: "a2-o2", level: "A2", kr: "뭘 샀어요? — 저는 신발__ 샀어요.", en: "What did you buy? — I bought shoes.", answer: "을",
+    why: { rule: `사다 takes an object — the thing bought. 신발 ends in a consonant → 을. ${OBJECT}`,
+      examples: ["뭘 샀어요? — 저는 신발을 샀어요.", "뭘 잃어버렸어요? — 저는 지갑을 잃어버렸어요.", "뭘 배웠어요? — 저는 한국말을 배웠어요."] },
+  },
+  {
+    id: "a2-o3", level: "A2", kr: "뭘 찾아요? — 저는 열쇠__ 찾아요.", en: "What are you looking for? — I'm looking for my keys.", answer: "를",
+    why: { rule: `찾다 takes an object — the thing looked for. 열쇠 ends in a vowel → 를. ${OBJECT}`,
+      examples: ["뭘 찾아요? — 저는 열쇠를 찾아요.", "뭘 만들었어요? — 저는 케이크를 만들었어요.", "뭘 정리했어요? — 저는 가구를 정리했어요."] },
+  },
+  {
+    id: "a2-o4", level: "A2", kr: "뭘 배웠어요? — 저는 한국말__ 배웠어요.", en: "What did you learn? — I learned Korean.", answer: "을",
+    why: { rule: `배우다 takes an object — the thing learned. 한국말 ends in a consonant → 을. ${OBJECT}`,
+      examples: ["뭘 배웠어요? — 저는 한국말을 배웠어요.", "뭘 샀어요? — 저는 신발을 샀어요.", "뭘 잃어버렸어요? — 저는 지갑을 잃어버렸어요."] },
+  },
+  {
+    id: "a2-o5", level: "A2", kr: "뭘 잃어버렸어요? — 저는 지갑__ 잃어버렸어요.", en: "What did you lose? — I lost my wallet.", answer: "을",
+    why: { rule: `잃어버리다 takes an object — the thing lost. 지갑 ends in a consonant → 을. ${OBJECT}`,
+      examples: ["뭘 잃어버렸어요? — 저는 지갑을 잃어버렸어요.", "뭘 배웠어요? — 저는 한국말을 배웠어요.", "뭘 샀어요? — 저는 신발을 샀어요."] },
+  },
+  {
+    id: "a2-o6", level: "A2", kr: "뭘 정리했어요? — 저는 가구__ 정리했어요.", en: "What did you organize? — I organized the furniture.", answer: "를",
+    why: { rule: `정리하다 takes an object — the thing organized. 가구 ends in a vowel → 를. ${OBJECT}`,
+      examples: ["뭘 정리했어요? — 저는 가구를 정리했어요.", "뭘 찾아요? — 저는 열쇠를 찾아요.", "뭘 만들었어요? — 저는 케이크를 만들었어요."] },
+  },
+
+  // ── B1 objects (을/를) ───────────────────────────────────────────────
+  {
+    id: "b1-o1", level: "B1", kr: "저는 어제 새로 나온 영화__ 봤어요.", en: "Yesterday I watched a newly released movie.", answer: "를",
+    why: { rule: `보다 takes an object — a plain statement with no contrast set up, so it stays 을/를, never 은/는. 영화 ends in a vowel → 를. ${OBJECT}`,
+      examples: ["저는 어제 새로 나온 영화를 봤어요.", "저는 이번 학기에 새로운 언어를 배우고 있어요.", "저는 주말에 어려운 문제를 풀었어요."] },
+  },
+  {
+    id: "b1-o2", level: "B1", kr: "저는 지난주에 친구 생일 선물__ 준비했어요.", en: "Last week I prepared a birthday gift for my friend.", answer: "을",
+    why: { rule: `준비하다 takes an object — the thing prepared. 선물 ends in a consonant → 을. ${OBJECT}`,
+      examples: ["저는 지난주에 친구 생일 선물을 준비했어요.", "저는 아침에 중요한 이메일을 확인했어요.", "저는 방학 동안 재미있는 책을 여러 권 읽었어요."] },
+  },
+  {
+    id: "b1-o3", level: "B1", kr: "저는 이번 학기에 새로운 언어__ 배우고 있어요.", en: "This semester I'm learning a new language.", answer: "를",
+    why: { rule: `배우다 takes an object — the thing learned. 언어 ends in a vowel → 를. ${OBJECT}`,
+      examples: ["저는 이번 학기에 새로운 언어를 배우고 있어요.", "저는 어제 새로 나온 영화를 봤어요.", "저는 주말에 어려운 문제를 풀었어요."] },
+  },
+  {
+    id: "b1-o4", level: "B1", kr: "저는 아침에 중요한 이메일__ 확인했어요.", en: "In the morning I checked an important email.", answer: "을",
+    why: { rule: `확인하다 takes an object — the thing checked. 이메일 ends in a consonant → 을. ${OBJECT}`,
+      examples: ["저는 아침에 중요한 이메일을 확인했어요.", "저는 지난주에 친구 생일 선물을 준비했어요.", "저는 방학 동안 재미있는 책을 여러 권 읽었어요."] },
+  },
+  {
+    id: "b1-o5", level: "B1", kr: "저는 주말에 어려운 문제__ 풀었어요.", en: "On the weekend I solved a difficult problem.", answer: "를",
+    why: { rule: `풀다 takes an object — the thing solved. 문제 ends in a vowel → 를. ${OBJECT}`,
+      examples: ["저는 주말에 어려운 문제를 풀었어요.", "저는 이번 학기에 새로운 언어를 배우고 있어요.", "저는 어제 새로 나온 영화를 봤어요."] },
+  },
+  {
+    id: "b1-o6", level: "B1", kr: "저는 방학 동안 재미있는 책__ 여러 권 읽었어요.", en: "During the vacation I read several interesting books.", answer: "을",
+    why: { rule: `읽다 takes an object — the thing read. 책 ends in a consonant → 을. ${OBJECT}`,
+      examples: ["저는 방학 동안 재미있는 책을 여러 권 읽었어요.", "저는 아침에 중요한 이메일을 확인했어요.", "저는 지난주에 친구 생일 선물을 준비했어요."] },
+  },
+
+  // ── B2 objects (을/를, C1/C2 draw from this pool too) ────────────────
+  {
+    id: "b2-o1", level: "B2", kr: "정부는 새로운 정책__ 발표했어요.", en: "The government announced a new policy.", answer: "을",
+    why: { rule: `발표하다 takes an object — the thing announced; the topic slot is already taken by 정부는. 정책 ends in a consonant → 을. ${OBJECT}`,
+      examples: ["정부는 새로운 정책을 발표했어요.", "위원회는 그 제안을 검토하고 있어요.", "그는 마침내 오랜 꿈을 이루었어요."] },
+  },
+  {
+    id: "b2-o2", level: "B2", kr: "회사는 이번 분기에 좋은 성과__ 거두었어요.", en: "The company achieved good results this quarter.", answer: "를",
+    why: { rule: `거두다 takes an object — the thing achieved. 성과 ends in a vowel → 를. ${OBJECT}`,
+      examples: ["회사는 이번 분기에 좋은 성과를 거두었어요.", "연구팀은 흥미로운 결과를 발견했어요.", "학생들은 발표 자료를 준비했어요."] },
+  },
+  {
+    id: "b2-o3", level: "B2", kr: "연구팀은 흥미로운 결과__ 발견했어요.", en: "The research team discovered an interesting result.", answer: "를",
+    why: { rule: `발견하다 takes an object — the thing discovered. 결과 ends in a vowel → 를. ${OBJECT}`,
+      examples: ["연구팀은 흥미로운 결과를 발견했어요.", "회사는 이번 분기에 좋은 성과를 거두었어요.", "학생들은 발표 자료를 준비했어요."] },
+  },
+  {
+    id: "b2-o4", level: "B2", kr: "위원회는 그 제안__ 검토하고 있어요.", en: "The committee is reviewing that proposal.", answer: "을",
+    why: { rule: `검토하다 takes an object — the thing reviewed. 제안 ends in a consonant (안 has 받침 ㄴ) → 을. ${OBJECT}`,
+      examples: ["위원회는 그 제안을 검토하고 있어요.", "정부는 새로운 정책을 발표했어요.", "그는 마침내 오랜 꿈을 이루었어요."] },
+  },
+  {
+    id: "b2-o5", level: "B2", kr: "그는 마침내 오랜 꿈__ 이루었어요.", en: "He finally achieved his long-held dream.", answer: "을",
+    why: { rule: `이루다 takes an object — the thing achieved. 꿈 ends in a consonant → 을. ${OBJECT}`,
+      examples: ["그는 마침내 오랜 꿈을 이루었어요.", "정부는 새로운 정책을 발표했어요.", "위원회는 그 제안을 검토하고 있어요."] },
+  },
+  {
+    id: "b2-o6", level: "B2", kr: "학생들은 발표 자료__ 준비했어요.", en: "The students prepared presentation materials.", answer: "를",
+    why: { rule: `준비하다 takes an object — the thing prepared. 자료 ends in a vowel → 를. ${OBJECT}`,
+      examples: ["학생들은 발표 자료를 준비했어요.", "회사는 이번 분기에 좋은 성과를 거두었어요.", "연구팀은 흥미로운 결과를 발견했어요."] },
+  },
 ];
+
+const isObjectAnswer = (p: Particle) => p === "을" || p === "를";
+
+/** Spread the object items evenly through the rest so a run of `count`
+ * consecutive items (one chapter) usually includes one of each kind,
+ * instead of every object item landing in the same handful of chapters. */
+function interleaveByFamily(items: ParticleItem[]): ParticleItem[] {
+  const rest = items.filter((i) => !isObjectAnswer(i.answer));
+  const objects = items.filter((i) => isObjectAnswer(i.answer));
+  if (objects.length === 0) return rest;
+  const ratio = rest.length / objects.length;
+  const out: ParticleItem[] = [];
+  let taken = 0;
+  objects.forEach((o, i) => {
+    const want = Math.round((i + 1) * ratio) - taken;
+    for (let k = 0; k < want; k++) out.push(rest[taken + k]);
+    taken += want;
+    out.push(o);
+  });
+  while (taken < rest.length) out.push(rest[taken++]);
+  return out;
+}
 
 /** C1/C2 have no items of their own — the B2 pool is the hardest one. */
 export function particlePool(level: CefrLevel): ParticleItem[] {
   const own = PARTICLE_ITEMS.filter((p) => p.level === level);
-  return own.length ? own : PARTICLE_ITEMS.filter((p) => p.level === "B2");
+  return interleaveByFamily(own.length ? own : PARTICLE_ITEMS.filter((p) => p.level === "B2"));
 }
 
 /** The chapter's three items — deterministic per (level, chapter) so a reload shows the same set. */
@@ -249,32 +409,47 @@ export function stemBefore(kr: string): string {
   return m ? m[0] : before.trim();
 }
 
-const isTopic = (p: Particle) => p === "은" || p === "는";
-const afterConsonant = (p: Particle) => p === "은" || p === "이";
+type Family = "topic" | "subject" | "object";
+function family(p: Particle): Family {
+  if (p === "은" || p === "는") return "topic";
+  if (p === "이" || p === "가") return "subject";
+  return "object";
+}
+// The one particle each family takes after a consonant vs a vowel — used
+// both for the shape check and to name "the right one" in an explanation.
+const CONSONANT_FORM: Record<Family, Particle> = { topic: "은", subject: "이", object: "을" };
+const VOWEL_FORM: Record<Family, Particle> = { topic: "는", subject: "가", object: "를" };
+const FAMILY_ROLE: Record<Family, string> = {
+  topic: 'the topic ("as for…")',
+  subject: "the subject",
+  object: "the object — the thing a verb acts on",
+};
 
 export type WrongExplanation = { headline: string; rule: string; examples: string[] };
 
 /**
  * Why the learner's pick is wrong, in the order a person would say it: the
- * shape mismatch first when they had the right *kind* of particle (은 for 는),
- * otherwise the topic-vs-subject point — then the sentence's own rule.
+ * shape mismatch first when they had the right *kind* of particle (은 for
+ * 는), otherwise which of topic/subject/object this sentence actually needs
+ * — then the sentence's own rule.
  */
 export function explainWrong(item: ParticleItem, picked: Particle): WrongExplanation {
   const stem = stemBefore(item.kr);
   const last = stem.slice(-1);
   const consonant = hasBatchim(last);
-  const shapeNote = `${stem} ends in a ${consonant ? "consonant (받침)" : "vowel"}, so it takes ${consonant ? "은 / 이" : "는 / 가"}.`;
+  const pickedFamily = family(picked);
+  const answerFamily = family(item.answer);
+  const rightForm = consonant ? CONSONANT_FORM[answerFamily] : VOWEL_FORM[answerFamily];
+  const shapeNote = `${stem} ends in a ${consonant ? "consonant (받침)" : "vowel"}, so here it's ${rightForm}.`;
 
   let headline: string;
-  if (isTopic(picked) === isTopic(item.answer)) {
+  if (pickedFamily === answerFamily) {
     // right family, wrong shape
     headline = `${picked} is the right kind of particle but the wrong shape. ${shapeNote}`;
-  } else if (isTopic(picked)) {
-    headline = `${picked} makes ${stem} the topic ("as for ${stem}"), but this sentence needs the subject marker ${item.answer}.`;
-    if (afterConsonant(picked) !== consonant) headline += ` (${shapeNote})`;
   } else {
-    headline = `${picked} points at ${stem} as new information, but here ${stem} is the topic — it takes ${item.answer}.`;
-    if (afterConsonant(picked) !== consonant) headline += ` (${shapeNote})`;
+    headline = `${picked} marks ${stem} as ${FAMILY_ROLE[pickedFamily]}, but this sentence needs it as ${FAMILY_ROLE[answerFamily]} — ${item.answer}.`;
+    const pickedShapeMatches = (consonant ? CONSONANT_FORM[pickedFamily] : VOWEL_FORM[pickedFamily]) === picked;
+    if (!pickedShapeMatches) headline += ` (also: ${shapeNote})`;
   }
   return { headline, rule: item.why.rule, examples: item.why.examples };
 }
@@ -282,5 +457,6 @@ export function explainWrong(item: ParticleItem, picked: Particle): WrongExplana
 /** Wrong-pick sanity: every item's answer must match its stem's 받침. Used by tests/dev only. */
 export function itemShapeOk(item: ParticleItem): boolean {
   const consonant = hasBatchim(stemBefore(item.kr).slice(-1));
-  return afterConsonant(item.answer) === consonant;
+  const expected = consonant ? CONSONANT_FORM[family(item.answer)] : VOWEL_FORM[family(item.answer)];
+  return expected === item.answer;
 }

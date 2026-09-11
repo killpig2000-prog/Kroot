@@ -89,8 +89,10 @@ export default function ParticlePhase({
 
       <p className="text-[15px] text-muted -mt-1">{picked === null ? t("prompt") : isRight ? t("right") : t("wrong")}</p>
 
-      {/* four tiles — always the same four, in the same order, so the hand learns them */}
-      <div className="grid grid-cols-4 gap-[9px]" role="group" aria-label={t("prompt")}>
+      {/* six tiles (2026-09-11: 을/를 joined 은/는/이/가) — always the same
+          six, in the same order, so the hand learns them; 3 columns keeps
+          each button comfortably above the 44px tap-target minimum. */}
+      <div className="grid grid-cols-3 gap-[9px]" role="group" aria-label={t("prompt")}>
         {PARTICLE_OPTIONS.map((p) => {
           const isPick = picked === p;
           const isAnswer = picked !== null && p === item.answer;
