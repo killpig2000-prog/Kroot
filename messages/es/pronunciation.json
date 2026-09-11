@@ -96,6 +96,8 @@
     "hearItFirst": "🔊 Escúchalo primero",
     "playing": "🔊 reproduciendo…",
     "tapAndSay": "Toca y di la frase",
+    "listening": "Escuchando…",
+    "listeningStop": "Escuchando — toca para parar",
     "tapPrompt": "Toca una vez y di la frase entera — el reloj arranca cuando empiezas a hablar",
     "noMic": "Tu navegador no admite reconocimiento de voz — escribe la frase (sin puntuación de tiempo).",
     "typeInstead": "Escríbelo en vez de decirlo",
@@ -112,6 +114,7 @@
     "tryForMore": "A por más estrellas",
     "allChallenges": "Todos los desafíos",
     "saveError": "No se pudo guardar esa ronda — revisa tu conexión.",
-    "placeholder": "한국어로 입력하세요…"
+    "placeholder": "한국어로 입력하세요…",
+    "recording": "Grabando"
   }
 }

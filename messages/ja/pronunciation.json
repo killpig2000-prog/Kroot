@@ -96,6 +96,8 @@
     "hearItFirst": "🔊 まず聞いてみる",
     "playing": "🔊 再生中…",
     "tapAndSay": "タップして文を言う",
+    "listening": "聞き取り中…",
+    "listeningStop": "聞き取り中 — タップで停止",
     "tapPrompt": "一度タップして最後まで言おう — 話し始めた瞬間から計測します",
     "noMic": "お使いのブラウザは音声認識に対応していません — 代わりに入力してください（タイムは記録されません）。",
     "typeInstead": "代わりに入力する",
@@ -112,6 +114,7 @@
     "tryForMore": "★を狙ってもう一度",
     "allChallenges": "チャレンジ一覧",
     "saveError": "記録を保存できませんでした — 接続を確認してください。",
-    "placeholder": "한국어로 입력하세요…"
+    "placeholder": "한국어로 입력하세요…",
+    "recording": "録音中"
   }
 }

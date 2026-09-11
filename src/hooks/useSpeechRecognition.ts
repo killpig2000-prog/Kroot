@@ -45,11 +45,22 @@ export function useSpeechRecognition(lang = "ko-KR", maxDurationMs?: number, con
   const recRef = useRef<SpeechRecognitionLike | null>(null);
   const onFinalRef = useRef<((t: string, meta: SpeechTiming) => void) | null>(null);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // Continuous mode (Challenge play) keeps the mic open through mid-sentence
+  // pauses, but with nothing else watching it that same openness let the
+  // recognizer keep listening for the full maxDurationMs after the learner
+  // was actually done — picking up room noise/echo as extra "final" segments
+  // that got appended onto the real sentence, reading as several sentences
+  // said back to back. This timer stops the mic itself a beat after the
+  // last result, long enough for a natural breath but well short of the
+  // full timeout.
+  const silenceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const SILENCE_STOP_MS = 2200;
 
   useEffect(() => {
     return () => {
       recRef.current?.abort();
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
+      if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current);
     };
   }, []);
 
@@ -65,6 +76,7 @@ export function useSpeechRecognition(lang = "ko-KR", maxDurationMs?: number, con
 
       recRef.current?.abort();
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
+      if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current);
       onFinalRef.current = onFinal;
       setInterim("");
       setError(null);
@@ -106,6 +118,17 @@ export function useSpeechRecognition(lang = "ko-KR", maxDurationMs?: number, con
         }
         if (live) lastInterim = live;
         setInterim(live || finalText);
+
+        if (continuous) {
+          if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current);
+          silenceTimerRef.current = setTimeout(() => {
+            try {
+              rec.stop();
+            } catch {
+              // already stopped
+            }
+          }, SILENCE_STOP_MS);
+        }
       };
       rec.onerror = (e) => {
         setError(
@@ -118,6 +141,7 @@ export function useSpeechRecognition(lang = "ko-KR", maxDurationMs?: number, con
       };
       rec.onend = () => {
         if (timeoutRef.current) clearTimeout(timeoutRef.current);
+        if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current);
         setIsListening(false);
         setListenStartedAt(null);
         const heard = (finalText || lastInterim).trim();

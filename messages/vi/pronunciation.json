@@ -96,6 +96,8 @@
     "hearItFirst": "🔊 Nghe trước đã",
     "playing": "🔊 đang phát…",
     "tapAndSay": "Chạm rồi đọc cả câu",
+    "listening": "Đang nghe…",
+    "listeningStop": "Đang nghe — chạm để dừng",
     "tapPrompt": "Chạm một lần, đọc hết câu — đồng hồ bắt đầu khi bạn cất tiếng",
     "noMic": "Trình duyệt của bạn không hỗ trợ nhận dạng giọng nói — hãy gõ câu này (không tính thời gian).",
     "typeInstead": "Gõ thay vì nói",
@@ -112,6 +114,7 @@
     "tryForMore": "Thử lấy thêm sao",
     "allChallenges": "Tất cả thử thách",
     "saveError": "Không lưu được lần chạy này — hãy kiểm tra kết nối.",
-    "placeholder": "한국어로 입력하세요…"
+    "placeholder": "한국어로 입력하세요…",
+    "recording": "Đang ghi âm"
   }
 }

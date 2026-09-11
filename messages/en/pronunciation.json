@@ -96,6 +96,8 @@
     "hearItFirst": "🔊 Hear it first",
     "playing": "🔊 playing…",
     "tapAndSay": "Tap and say the line",
+    "listening": "Listening…",
+    "listeningStop": "Listening — tap to stop",
     "tapPrompt": "Tap once, say the whole line — the clock starts when you do",
     "noMic": "Your browser doesn't support speech recognition — type the line instead (no time score).",
     "typeInstead": "Type it instead",
@@ -112,6 +114,7 @@
     "tryForMore": "Try for more stars",
     "allChallenges": "All challenges",
     "saveError": "Couldn't save that run — check your connection.",
-    "placeholder": "한국어로 입력하세요…"
+    "placeholder": "한국어로 입력하세요…",
+    "recording": "Recording"
   }
 }

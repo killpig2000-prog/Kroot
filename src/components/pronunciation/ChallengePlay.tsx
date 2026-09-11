@@ -201,20 +201,26 @@ export default function ChallengePlay({
               {micOk && (
                 <>
                   <button
-                    aria-label={t("tapAndSay")}
+                    aria-label={isListening ? t("listeningStop") : t("tapAndSay")}
                     onClick={() => listen((text, meta) => void score(text, meta.ms))}
                     disabled={isListening}
-                    className={`w-24 h-24 rounded-full text-[34px] grid place-items-center transition-all ${
+                    className={`w-24 h-24 rounded-full text-[34px] grid place-items-center border-[3px] transition-all ${
                       isListening
-                        ? "bg-[var(--c-danger)] text-white wave-on"
-                        : "bg-[var(--c-danger)] text-white hover:scale-105 shadow-[0_8px_24px_rgba(220,38,38,.35)]"
+                        ? "bg-[var(--c-danger)] border-transparent text-white scale-105 mic-pulse"
+                        : "bg-[var(--c-danger-bg)] border-[var(--c-danger)]/30 text-[var(--c-danger)] hover:scale-105 hover:bg-[var(--c-danger)] hover:text-white"
                     }`}
                   >
                     🎤
                   </button>
                   <p className="text-[13px] text-muted min-h-[20px] text-center">
                     {isListening ? (
-                      <span className="kr text-[15px] text-charcoal">{interim || "…"}</span>
+                      <>
+                        <span className="kr text-[15px] text-charcoal">{interim || t("listening")}</span>
+                        <span className="inline-flex items-center gap-1.5 text-[11.5px] font-bold text-[var(--c-danger)] ml-1.5 align-middle">
+                          <span className="w-[6px] h-[6px] rounded-full bg-[var(--c-danger)] motion-safe:animate-[tryitDot_1.2s_ease-in-out_infinite]" />
+                          {t("recording")}
+                        </span>
+                      </>
                     ) : (
                       t("tapPrompt")
                     )}

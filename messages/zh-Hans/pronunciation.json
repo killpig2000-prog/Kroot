@@ -96,6 +96,8 @@
     "hearItFirst": "🔊 先听一遍",
     "playing": "🔊 播放中…",
     "tapAndSay": "点击后读出整句",
+    "listening": "正在听…",
+    "listeningStop": "正在听 — 点击停止",
     "tapPrompt": "点一下，把整句读完——从你开口那一刻开始计时",
     "noMic": "你的浏览器不支持语音识别——请改用打字（不计时）。",
     "typeInstead": "改用打字",
@@ -112,6 +114,7 @@
     "tryForMore": "再冲一颗星",
     "allChallenges": "全部挑战",
     "saveError": "这次成绩没能保存——请检查网络连接。",
-    "placeholder": "한국어로 입력하세요…"
+    "placeholder": "한국어로 입력하세요…",
+    "recording": "录音中"
   }
 }
