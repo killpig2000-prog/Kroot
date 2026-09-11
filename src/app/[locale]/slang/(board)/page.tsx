@@ -88,14 +88,16 @@ export default async function SlangPage() {
           lessonBar
         />
 
-        <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] xl:pb-[60px]">
+        <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] xl:pb-[60px] min-h-screen flex flex-col">
           <LessonBar href="/slang" title={tn("slang")} locale={locale} />
 
           {/* Signed in, the page is one round at a time: five random cards,
               then a quiz on them (2026-09-11). The banner, the separate daily
               challenge and the 153-card grid stay on the public page above,
               which search engines index. */}
-          <SlangRound entries={SLANG} today={daily} />
+          <div className="flex-1 flex flex-col justify-center">
+            <SlangRound entries={SLANG} today={daily} />
+          </div>
         </main>
       </div>
 
