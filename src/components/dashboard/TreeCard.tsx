@@ -112,8 +112,13 @@ export default function TreeCard({
   const nextKeepsake = VETERAN_MILESTONES.find((m) => m.level > level);
   // The creature's drawn width; its height follows the frame. The scene is
   // at least tall enough for the tallest veteran plus the XP line under it.
-  const treeWidth = "clamp(170px, 44vw, 230px)";
-  const treeHeightMax = Math.round((230 * frameH) / 220);
+  // 2026-09-11 (user: "나무크기가 좀 작은거 같아"): the old clamp(170px, 44vw,
+  // 230px) never actually reached its own max within the phone range — at
+  // 430px (AGENTS.md's largest phone reference width) 44vw is only 189px,
+  // so the tree sat well under "max" everywhere from 360 to 430. Re-picked
+  // the vw factor so 430px hits the max exactly, and raised both ends.
+  const treeWidth = "clamp(218px, 60.5vw, 260px)";
+  const treeHeightMax = Math.round((260 * frameH) / 220);
   // Tall enough for the pill row, the bubble over the crown, the tree and
   // the XP line: 320px on a phone, taller once the tree reaches 230px wide.
   const sceneMin = `max(320px, calc(${treeWidth} * ${(frameH / 220).toFixed(3)} + 150px), ${Math.max(320, treeHeightMax + 96)}px)`;
