@@ -203,6 +203,11 @@ export default function WordTrace({
 
   const char = syllables[idx];
   const last = idx === syllables.length - 1;
+  // Syllables must be written in order: only a scored block or the one right
+  // after the last scored block is reachable — no skipping ahead to write
+  // out of sequence.
+  const firstUnscored = stars.findIndex((s) => s === null);
+  const maxReachable = firstUnscored === -1 ? syllables.length - 1 : firstUnscored;
 
   const openSheet = () => {
     setOpen(true);
@@ -367,26 +372,33 @@ export default function WordTrace({
                     stays on screen after the last block is done. */}
                 {syllables.length > 1 && (
                   <div className="flex gap-1.5" role="tablist" aria-label={t("title")}>
-                    {syllables.map((s, i) => (
-                      <button
-                        key={`${s}-${i}`}
-                        type="button"
-                        role="tab"
-                        aria-selected={!finale && i === idx}
-                        ref={(el) => {
-                          blocks.current[i] = el;
-                        }}
-                        onClick={() => go(i)}
-                        className={`kr flex-1 min-w-[44px] min-h-[46px] rounded-[11px] border px-1 text-[18px] font-black leading-none flex flex-col items-center justify-center gap-0.5 transition-opacity ${
-                          !finale && i === idx
-                            ? "border-success bg-success-bg text-success-deep"
-                            : "border-line bg-cream text-charcoal hover:border-faint"
-                        } ${finale ? "opacity-25" : ""}`}
-                      >
-                        {s}
-                        {stars[i] !== null ? <Stars n={stars[i]!} size={9} /> : null}
-                      </button>
-                    ))}
+                    {syllables.map((s, i) => {
+                      const locked = i > maxReachable;
+                      return (
+                        <button
+                          key={`${s}-${i}`}
+                          type="button"
+                          role="tab"
+                          aria-selected={!finale && i === idx}
+                          aria-disabled={locked}
+                          disabled={locked}
+                          ref={(el) => {
+                            blocks.current[i] = el;
+                          }}
+                          onClick={() => go(i)}
+                          className={`kr flex-1 min-w-[44px] min-h-[46px] rounded-[11px] border px-1 text-[18px] font-black leading-none flex flex-col items-center justify-center gap-0.5 transition-opacity ${
+                            !finale && i === idx
+                              ? "border-success bg-success-bg text-success-deep"
+                              : locked
+                                ? "border-line bg-cream text-faint cursor-not-allowed"
+                                : "border-line bg-cream text-charcoal hover:border-faint"
+                          } ${finale ? "opacity-25" : ""}`}
+                        >
+                          {s}
+                          {stars[i] !== null ? <Stars n={stars[i]!} size={9} /> : null}
+                        </button>
+                      );
+                    })}
                   </div>
                 )}
 
@@ -480,7 +492,8 @@ export default function WordTrace({
                         <button
                           type="button"
                           onClick={() => go(idx + 1)}
-                          className="flex-1 min-h-[44px] rounded-[12px] bg-success text-white text-[15px] font-bold"
+                          disabled={stars[idx] === null}
+                          className="flex-1 min-h-[44px] rounded-[12px] bg-success text-white text-[15px] font-bold disabled:opacity-40"
                         >
                           {t("nextSyllable")}
                         </button>
