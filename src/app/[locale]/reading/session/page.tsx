@@ -59,7 +59,7 @@ export default async function ReadingChapterSessionPage({
           lessonBar
         />
 
-        <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] xl:pb-[60px] min-h-screen flex flex-col">
+        <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] xl:pb-[60px]">
           <LessonBar
             href="/reading"
             title={t("crumb")}
@@ -75,9 +75,6 @@ export default async function ReadingChapterSessionPage({
             }}
           />
 
-          {/* centres under the lesson bar when it fits the screen; a long
-              passage grows this block and starts at the top (2026-09-11) */}
-          <div className="flex-1 flex flex-col justify-center">
           {passage ? (
             <ReadingSession
               // Remount when the chapter changes — otherwise React reuses the
@@ -94,7 +91,6 @@ export default async function ReadingChapterSessionPage({
           ) : (
             <ReadingEmpty />
           )}
-          </div>
         </main>
       </div>
 

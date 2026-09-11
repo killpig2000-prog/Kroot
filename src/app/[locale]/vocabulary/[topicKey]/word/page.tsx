@@ -149,7 +149,7 @@ export default async function VocabWordPage({
           lessonBar
         />
 
-        <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] xl:pb-[60px] min-h-screen flex flex-col">
+        <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] xl:pb-[60px] min-h-dvh flex flex-col">
           {/* "Vocabulary / Day N", ← to the chapter (or where you came from) */}
           <LessonBar
             href="/vocabulary"

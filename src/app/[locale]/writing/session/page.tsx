@@ -54,7 +54,7 @@ export default async function WritingChapterSessionPage({
           lessonBar
         />
 
-        <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] xl:pb-[60px] min-h-screen flex flex-col">
+        <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] xl:pb-[60px]">
           <LessonBar
             href="/writing"
             title={t("crumb")}
@@ -70,10 +70,6 @@ export default async function WritingChapterSessionPage({
             }}
           />
 
-          {/* centres under the lesson bar when it fits the screen; taller
-              content grows this block and starts at the top (2026-09-11,
-              same as the vocab word card) */}
-          <div className="flex-1 flex flex-col justify-center">
           {!prompts ? (
             <WritingEmpty />
           ) : (
@@ -89,7 +85,6 @@ export default async function WritingChapterSessionPage({
               hasNextChapter={hasNextChapter}
             />
           )}
-          </div>
         </main>
       </div>
 

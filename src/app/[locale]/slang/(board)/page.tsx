@@ -88,7 +88,7 @@ export default async function SlangPage() {
           lessonBar
         />
 
-        <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] xl:pb-[60px] min-h-screen flex flex-col">
+        <main className="min-w-0 px-[clamp(18px,4vw,44px)] pt-6 pb-[100px] xl:pb-[60px] min-h-dvh flex flex-col">
           <LessonBar href="/slang" title={tn("slang")} locale={locale} />
 
           {/* Signed in, the page is one round at a time: five random cards,
