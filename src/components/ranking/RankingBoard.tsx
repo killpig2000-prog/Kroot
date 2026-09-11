@@ -278,43 +278,54 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
       {/* the podium is a garden: the top three trees stand on the hills —
           1st centre and tallest, 2nd left, 3rd right — medal on the canopy,
           name · XP pill at the feet. */}
-      <GardenScene className="rounded-[18px] border border-line h-[clamp(236px,62vw,290px)]" hillsHeight="48%">
+      {/* 2026-09-11 (user: "top 3 배경카드 … 너무 못생겼어"): the three trees
+          used to float at three different heights by absolute %, their name
+          pills ran into each other ("Re…" clipped under Ronnie's), your own
+          tree got a yellow square frame, and the sun sat behind the gold
+          medal. Now three equal columns on one ground line — 2nd, 1st, 3rd
+          — size alone says the order, every pill sits on the same baseline
+          inside its own column, no frame (your pill is the marker), and no
+          sun or clouds competing with the medals. */}
+      {/* 54vw reaches the 232px max right at 430px (62vw never reached its
+          old 290px max on any phone, and left half the card as empty sky). */}
+      <GardenScene clouds={false} className="rounded-[18px] border border-line h-[clamp(200px,54vw,232px)]" hillsHeight="44%">
         {rows !== null && podium.length === 0 && (
           <div className="absolute left-3 right-3 top-3 flex items-center gap-2.5 border border-amber-line bg-[var(--tint-amber)]/95 rounded-[12px] px-4 py-2.5 text-[12.5px] font-semibold text-[var(--c-amber-deep)] z-[4]">
             🌱 {t("fair.empty")}
           </div>
         )}
-        {[podium[0], podium[1], podium[2]].map((r, place) => {
-          if (!r) return null;
-          const spot =
-            place === 0
-              ? { left: "50%", bottom: "26%", size: "clamp(104px, 30vw, 136px)", z: 3 }
-              : place === 1
-                ? { left: "22%", bottom: "19%", size: "clamp(80px, 23vw, 106px)", z: 2 }
-                : { left: "78%", bottom: "15%", size: "clamp(72px, 21vw, 96px)", z: 2 };
-          return (
-            <div
-              key={r.rank}
-              className="absolute -translate-x-1/2 flex flex-col items-center"
-              style={{ left: spot.left, bottom: spot.bottom, zIndex: spot.z, width: spot.size }}
-            >
-              <span className="absolute -top-1 right-[4%] z-10 leading-none drop-shadow-[0_1px_1px_rgba(0,0,0,.2)]" aria-label={`#${r.rank}`}>
-                <Medal place={place as 0 | 1 | 2} rank={r.rank} />
-              </span>
-              <Tree row={r} species={species} size={spot.size} bare className={r.is_me ? "rounded-[14px] ring-2 ring-[#ECD98A]" : ""} onOpen={openPeek} />
-              <span
-                className="mt-1 max-w-[calc(100%+24px)] inline-flex items-center gap-1 rounded-full border px-2 py-[3px] text-[11px] font-bold leading-none whitespace-nowrap"
-                style={{ background: "rgba(255,253,246,.9)", borderColor: "#E3DDD0", color: "#4A4237" }}
-              >
-                <span className="truncate max-w-[9ch]">{r.display_name}</span>
-                {r.is_me && <span className="text-success">{t("row.you")}</span>}
-                <span className="tabular-nums" style={{ color: "#6B6560" }}>
-                  · {t("fair.xp", { n: r.xp })}
-                </span>
-              </span>
-            </div>
-          );
-        })}
+        {podium.length > 0 && (
+          <div className="absolute inset-x-2 bottom-3 z-[3] grid grid-cols-3 items-end gap-1">
+            {[1, 0, 2].map((place) => {
+              const r = podium[place];
+              if (!r) return <div key={`empty-${place}`} />;
+              const size =
+                place === 0 ? "clamp(104px, 30vw, 132px)" : place === 1 ? "clamp(82px, 23vw, 104px)" : "clamp(74px, 21vw, 94px)";
+              return (
+                <div key={r.rank} className="min-w-0 flex flex-col items-center">
+                  <div className="relative">
+                    <span className="absolute -top-1 -right-1 z-10 leading-none drop-shadow-[0_1px_1px_rgba(0,0,0,.2)]" aria-label={`#${r.rank}`}>
+                      <Medal place={place as 0 | 1 | 2} rank={r.rank} />
+                    </span>
+                    <Tree row={r} species={species} size={size} bare onOpen={openPeek} />
+                  </div>
+                  {/* name over score, so a 360px column shows the whole name */}
+                  <span
+                    className={`mt-1 max-w-full flex flex-col items-center rounded-[10px] border px-2.5 py-1 text-center leading-tight ${
+                      r.is_me ? "border-[#ECD98A]" : "border-[#E3DDD0]"
+                    }`}
+                    style={{ background: r.is_me ? "#FEF9C3" : "#FFFDF6", color: "#4A4237" }}
+                  >
+                    <span className="block max-w-full truncate text-[11.5px] font-bold">{r.display_name}</span>
+                    <span className="block text-[10.5px] font-bold tabular-nums" style={{ color: "#6B6560" }}>
+                      {t("fair.xp", { n: r.xp })}
+                    </span>
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+        )}
       </GardenScene>
 
       {/* the board: every row, a sunlight bar against the leader, this
