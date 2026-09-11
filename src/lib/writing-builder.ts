@@ -49,6 +49,34 @@ export function words(text: string): string[] {
   return text.trim().split(/\s+/).filter(Boolean);
 }
 
+// 2026-09-11 (user: "A는 3~6개, B는 6~8개, C는 8~10개면 될거같은데" — a
+// total-tile budget per CEFR tier, not just a distractor cap): C-level
+// sentences run 9-16 words on their own, already past any of these
+// ceilings before a single distractor is added. Long answers are grouped
+// into a handful of multi-word tiles ("좀더 큼직하게 묶거나") instead of one
+// tile per word, so a 16-word C2 sentence still lands inside its tier's
+// budget.
+const TIER_MAX: Record<string, number> = { A1: 6, A2: 6, B1: 8, B2: 8, C1: 10, C2: 10 };
+
+/** Merge `words` down to at most `groups` tiles, splitting as evenly as
+ * possible and keeping every word in its original order — group N joins
+ * back to the exact original text with `.join(" ")`, so nothing downstream
+ * (the "correct sentence" readout, scoring) needs to know tiles can now
+ * hold more than one word. */
+function groupWords(list: string[], groups: number): string[] {
+  if (groups >= list.length) return list;
+  const base = Math.floor(list.length / groups);
+  const extra = list.length % groups;
+  const out: string[] = [];
+  let i = 0;
+  for (let g = 0; g < groups; g++) {
+    const size = base + (g < extra ? 1 : 0);
+    out.push(list.slice(i, i + size).join(" "));
+    i += size;
+  }
+  return out;
+}
+
 const HANGUL = /[가-힣]/;
 
 /** Strip trailing punctuation for comparisons ("먹었어요." → "먹었어요"). */
@@ -86,13 +114,13 @@ function pickDistractors(answer: string[], pool: string[], want: number, rand: (
  */
 export function buildBoard(prompt: Prompt, pool: string[], seed: number): Board {
   const rand = rng(seed);
-  const answer = words(prompt.example_kr);
-  // 2026-09-11 (user: "단어가 너무 많아서 눈으로 찾기가 어려워"): B2/C1/C2
-  // sentences run 7-16 words, and the old scale (up to +3 distractors past
-  // 6 words) meant a C2 board could show 19 tiles at once — a wall to scan
-  // for one wrong tap. Capped at 2 across every level, never 3, regardless
-  // of how long the sentence is.
-  const want = answer.length <= 5 ? 1 : 2;
+  const rawWords = words(prompt.example_kr);
+  // Whole-board budget for this tier (answer tiles + distractors together),
+  // not just a distractor cap — see groupWords above for the long-sentence
+  // half of this.
+  const tierMax = TIER_MAX[prompt.level] ?? 8;
+  const answer = groupWords(rawWords, tierMax);
+  const want = Math.max(0, Math.min(2, tierMax - answer.length));
   const distractors = pickDistractors(answer, pool, want, rand);
   const all = [...answer, ...distractors].map((text, i) => ({ id: `t${i}`, text }));
   return { answer, tiles: shuffle(all, rand) };
