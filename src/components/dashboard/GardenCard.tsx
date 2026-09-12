@@ -91,7 +91,10 @@ export default function GardenCard({
   // (240px at 360 so the phone Garden still ends above the tab bar).
   const { veteran, frameH, sky } = gardenFrame(level, costumeIds);
   const metres = treeHeightMetres(level);
-  const treeWidth = "clamp(112px, 32vw, 128px)";
+  // 2026-09-12 (user: "마이룸은 좋은데 대쉬보드에서 캐릭터가 좀 작아"): was
+  // 112-128px, about half My room's 218-260. 42vw reaches the 180px cap at
+  // 430 and gives 151px at 360; the card height below follows it.
+  const treeWidth = "clamp(150px, 42vw, 180px)";
   const cardHeight = `max(240px, calc(${treeWidth} * ${(frameH / 220).toFixed(3)} + 120px))`;
   const lines = TREE_PHRASES.map((p) => ({ kr: p.kr, en: t(`phrases.${p.key}`) }));
   // While the tree is thanking you, that line leads and stays up.
