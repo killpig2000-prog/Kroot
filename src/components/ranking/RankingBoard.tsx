@@ -83,12 +83,15 @@ function Tree({
       type="button"
       onClick={() => onOpen(row)}
       aria-label={row.display_name}
-      className={`flex-none overflow-hidden flex items-end justify-center cursor-zoom-in hover:brightness-105 active:scale-95 transition ${
-        bare ? "" : "rounded-[12px] bg-success-bg border border-success-line"
+      className={`flex-none flex items-end justify-center cursor-zoom-in hover:brightness-105 active:scale-95 transition ${
+        bare ? "overflow-visible" : "overflow-hidden rounded-[12px] bg-success-bg border border-success-line"
       } ${className}`}
       style={{ width: size, height: size, ...(sky && !bare ? { background: sky } : {}) }}
     >
-      <svg viewBox={`0 0 220 ${frameH}`} style={{ height: "calc(100% - 4px)", width: "auto", maxWidth: "calc(100% - 4px)" }}>
+      {/* The tallest looks (spirit tree, 218 tall on a 212 ground line) rise
+          above the 230-unit frame; on the bare podium let them, or the
+          canopy's top gets cut off (2026-09-12). Boxed rows still clip. */}
+      <svg viewBox={`0 0 220 ${frameH}`} className={bare ? "overflow-visible" : ""} style={{ height: "calc(100% - 4px)", width: "auto", maxWidth: "calc(100% - 4px)" }}>
         <SceneLayer costumeIds={ids} layer="behind" />
         {veteran ? (
           <VeteranTree level={row.level} species={species} costumeIds={ids} />
@@ -288,7 +291,9 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
           sun or clouds competing with the medals. */}
       {/* 54vw reaches the 232px max right at 430px (62vw never reached its
           old 290px max on any phone, and left half the card as empty sky). */}
-      <GardenScene clouds={false} className="rounded-[18px] border border-line h-[clamp(200px,54vw,232px)]" hillsHeight="44%">
+      {/* 2026-09-12: a little taller so the tallest looks (spirit tree) keep
+          their canopy inside the card instead of touching the top edge. */}
+      <GardenScene clouds={false} className="rounded-[18px] border border-line h-[clamp(216px,58vw,252px)]" hillsHeight="44%">
         {rows !== null && podium.length === 0 && (
           <div className="absolute left-3 right-3 top-3 flex items-center gap-2.5 border border-amber-line bg-[var(--tint-amber)]/95 rounded-[12px] px-4 py-2.5 text-[12.5px] font-semibold text-[var(--c-amber-deep)] z-[4]">
             🌱 {t("fair.empty")}
@@ -336,8 +341,10 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
         ) : rows.length === 0 ? (
           <p className="px-2 py-5 text-[13.5px] text-faint">{t("zone.empty")}</p>
         ) : (
-          rows.map((r, i) => {
-            const gap = i > 0 && r.rank - rows[i - 1].rank > 1;
+          // the top three already stand on the podium — the rows start at
+          // 4th (2026-09-12, user: "4,5등부터 행으로")
+          rows.filter((r) => !podium.includes(r)).map((r, i, board) => {
+            const gap = i > 0 && r.rank - board[i - 1].rank > 1;
             const pct = leaderXp > 0 ? Math.max(r.xp > 0 ? 3 : 0, Math.round((r.xp / leaderXp) * 100)) : 0;
             const top = r.rank <= 3 && r.xp > 0;
             return (
