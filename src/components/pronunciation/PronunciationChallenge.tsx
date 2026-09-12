@@ -73,6 +73,8 @@ export default function PronunciationChallenge({
     listenStartedAt,
     interim,
     error,
+    errorCode,
+    errorKey,
     listen,
     setError,
   } = useSpeechRecognition("ko-KR", MAX_LISTEN_MS);
@@ -328,8 +330,11 @@ export default function PronunciationChallenge({
             micElapsedMs={micElapsedMs}
             interim={interim}
             error={error}
+            errorCode={errorCode}
+            errorKey={errorKey}
             onListen={() => listen(grade)}
             onSkip={skip}
+            onTyped={grade}
           />
         )}
 

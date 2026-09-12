@@ -13,6 +13,32 @@ import { LEVEL_ORDER, isCefrLevel, type CefrLevel } from "@/lib/tree";
 import { getLocalizedMeaning } from "@/lib/vocabulary-i18n";
 
 const TOPIC_KEY = "daily-life";
+const PAGE = 1000;
+
+type ProgressRow = {
+  word_key: string;
+  correct_count: number | null;
+  incorrect_count: number | null;
+  next_review_at: string | null;
+};
+
+// Paged: PostgREST caps a response at 1,000 rows, so past that many reviewed
+// words the rest silently read as never studied.
+async function reviewedProgress(supabase: Awaited<ReturnType<typeof createClient>>, userId: string) {
+  const rows: ProgressRow[] = [];
+  for (let from = 0; ; from += PAGE) {
+    const { data, error } = await supabase
+      .from("vocabulary_progress")
+      .select("word_key, correct_count, incorrect_count, next_review_at")
+      .eq("user_id", userId)
+      .not("last_reviewed_at", "is", null)
+      .order("word_key")
+      .range(from, from + PAGE - 1);
+    if (error || !data) return rows;
+    rows.push(...(data as ProgressRow[]));
+    if (data.length < PAGE) return rows;
+  }
+}
 
 // One tier only: chapters. Units still exist underneath as the session-sized
 // bite (10 words), but the page never asks the user to pick one — a chapter
@@ -33,20 +59,15 @@ export default async function VocabularyPage({
 
   if (!user) redirect("/onboarding");
 
-  // select("*") stays valid whether or not migration 0022 (box columns) is applied.
-  const [profile, { data: progressRows }, sp] = await Promise.all([
+  const [profile, progressRows, sp] = await Promise.all([
     getDashboardProfile(supabase, user.id),
-    supabase
-      .from("vocabulary_progress")
-      .select("*")
-      .eq("user_id", user.id)
-      .not("last_reviewed_at", "is", null),
+    reviewedProgress(supabase, user.id),
     searchParams,
   ]);
 
   const myLevel = (profile?.current_level ?? "A1") as CefrLevel;
   const reviewsByKey = new Map(
-    (progressRows ?? []).map((r) => [r.word_key as string, (r.correct_count ?? 0) + (r.incorrect_count ?? 0)])
+    progressRows.map((r) => [r.word_key, (r.correct_count ?? 0) + (r.incorrect_count ?? 0)])
   );
   // Words past their review date have "wilted" — chapters containing them show 💧.
   // A word the word bank merely bookmarked (see plantWord/saveToBank) has
@@ -55,7 +76,7 @@ export default async function VocabularyPage({
   // correct_count + incorrect_count sum computed above).
   const now = new Date();
   const thirstyKeys = new Set(
-    (progressRows ?? [])
+    progressRows
       .filter((r) => r.next_review_at && new Date(r.next_review_at) <= now && (reviewsByKey.get(r.word_key) ?? 0) > 0)
       .map((r) => r.word_key)
   );
@@ -130,17 +151,15 @@ export default async function VocabularyPage({
     return wordHref(unit.index, at >= 0 ? at : 0);
   };
   const ctaLabel = (c: { status: string; known: number; index: number }) =>
-    c.status === "done"
-      ? `Review Chapter ${c.index + 1} →`
-      : c.known > 0
-      ? `Continue Chapter ${c.index + 1} →`
-      : `Study Chapter ${c.index + 1} →`;
+    t(c.status === "done" ? "index.ctaReview" : c.known > 0 ? "index.ctaContinue" : "index.ctaStudy", {
+      n: c.index + 1,
+    });
 
   return (
     <div className="min-h-screen bg-warm text-charcoal">
       <div className="grid grid-cols-1 xl:grid-cols-[clamp(216px,18%,280px)_minmax(0,1fr)] w-full min-h-screen content-start xl:content-stretch">
         <Sidebar
-          displayName={profile?.display_name ?? "there"}
+          displayName={profile?.display_name ?? ""}
           email={user.email ?? ""}
           streakDays={profile?.streak_days ?? 0}
           avatarUrl={profile?.avatar_url}
@@ -186,7 +205,7 @@ export default async function VocabularyPage({
                     }`}
                   >
                     {c.status === "done" && !current && <span className="text-success text-[11px]">✓</span>}
-                    Chapter {c.index + 1}
+                    {t("index.chapterN", { n: c.index + 1 })}
                     <span
                       className={`text-[10.5px] tabular-nums font-semibold ${
                         current ? "text-white/80" : c.thirsty > 0 ? "text-sky-deep" : "text-faint"
@@ -210,10 +229,12 @@ export default async function VocabularyPage({
               <>
                 <div className="flex items-start justify-between gap-4 pb-3.5 mb-1 border-b border-line">
                   <div className="min-w-0 flex-1">
-                    <h2 className="font-bold text-[22px] tracking-[-0.02em]">Chapter {selected.index + 1}</h2>
+                    <h2 className="font-bold text-[22px] tracking-[-0.02em]">
+                      {t("index.chapterN", { n: selected.index + 1 })}
+                    </h2>
                     <p className="text-[12.5px] text-muted mt-0.5 tabular-nums">
-                      {selected.known}/{selected.words.length} words
-                      {selected.thirsty > 0 && ` · 💧 ${selected.thirsty} due`}
+                      {t("index.knownOfTotal", { known: selected.known, total: selected.words.length })}
+                      {selected.thirsty > 0 && ` · ${t("index.dueCount", { n: selected.thirsty })}`}
                     </p>
                     <span
                       className="block relative h-[5px] max-w-[320px] rounded-full bg-warm-3 mt-2"
@@ -221,7 +242,7 @@ export default async function VocabularyPage({
                       aria-valuemin={0}
                       aria-valuemax={selected.words.length}
                       aria-valuenow={selected.known}
-                      aria-label={`${selected.known} of ${selected.words.length} words rooted`}
+                      aria-label={t("index.rootedAria", { known: selected.known, total: selected.words.length })}
                     >
                       <span
                         className="absolute inset-y-0 left-0 rounded-full bg-[var(--tint-violet-ink)]"
@@ -288,7 +309,7 @@ export default async function VocabularyPage({
                           korean: w.korean,
                           meaning: getLocalizedMeaning(w, locale),
                           status,
-                          statusLabel: `${WORD_STATUSES[status].label}${thirsty ? " · due" : ""}`,
+                          statusLabel: `${t(WORD_STATUSES[status].key)}${thirsty ? ` · ${t("index.due")}` : ""}`,
                         };
                       }),
                     };
@@ -311,7 +332,11 @@ export default async function VocabularyPage({
             {/* growth legend + tally */}
             <div className="mt-7 pt-4 border-t border-line flex items-center justify-end text-[12px] text-muted">
               <span className="tabular-nums">
-                <b className="text-charcoal">{rootedWords}</b> of {totalWords} words rooted
+                {t.rich("index.rootedTally", {
+                  known: rootedWords,
+                  total: totalWords,
+                  b: (chunks) => <b className="text-charcoal">{chunks}</b>,
+                })}
               </span>
             </div>
           </section>
@@ -331,7 +356,7 @@ export default async function VocabularyPage({
             {waterCount > 0 && (
               <Link
                 href="/review"
-                aria-label={`Review ${waterCount} due words`}
+                aria-label={t("index.reviewDueAria", { n: waterCount })}
                 className="inline-flex items-center justify-center rounded-[9px] px-3 py-3 text-[13px] font-bold text-sky-deep bg-[var(--tint-sky)] border border-sky-line tabular-nums"
               >
                 💧 {waterCount}

@@ -8,6 +8,7 @@ import { createClient } from "@/lib/supabase/client";
 import { recordCompletion } from "@/lib/activity";
 import { challengeKey } from "@/lib/reward-keys";
 import { useKoreanSpeaker, useSpeechRecognition } from "@/hooks/useSpeechRecognition";
+import { TypedAnswer } from "@/components/pronunciation/AnswerCapture";
 import { bestSimilarity } from "@/lib/speech-match";
 import { isTableMissing } from "@/lib/resume";
 import { playCorrect, playWrong, playChapterClear } from "@/lib/sfx";
@@ -56,7 +57,8 @@ export default function ChallengePlay({
   const loggedRef = useRef(false);
 
   const { speak, isSpeaking, isSupported: ttsOk } = useKoreanSpeaker();
-  const { isSupported: micOk, isListening, interim, error, listen, setError } = useSpeechRecognition(
+  const tc = useTranslations("pronunciation.capture");
+  const { isSupported: micOk, isListening, interim, error, errorCode, errorKey, listen, setError } = useSpeechRecognition(
     "ko-KR",
     MAX_LISTEN_MS,
     true,
@@ -227,9 +229,16 @@ export default function ChallengePlay({
                   </p>
                 </>
               )}
-              {error && <p className="text-[12.5px] text-[var(--c-danger)] text-center max-w-[420px]">{error}</p>}
+              {(errorCode || error) && (
+                <p key={errorKey} className="text-[12.5px] text-[var(--c-danger)] text-center max-w-[420px]" style={{ animation: "fadeUp .3s ease" }}>
+                  {errorCode ? tc(`errors.${errorCode}`) : error}
+                </p>
+              )}
               {!micOk && (
                 <p className="text-[12.5px] text-muted text-center max-w-[420px]">{t("noMic")}</p>
+              )}
+              {(!micOk || errorCode === "blocked") && (
+                <TypedAnswer placeholder={tc("placeholder")} label={t("check")} onSubmit={(text) => void score(text, 0)} />
               )}
             </div>
           ) : (

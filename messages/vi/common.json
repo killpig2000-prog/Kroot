@@ -13,5 +13,7 @@
   "delete": "Xóa",
   "edit": "Chỉnh sửa",
   "search": "Tìm kiếm",
-  "noResults": "Không tìm thấy kết quả"
+  "noResults": "Không tìm thấy kết quả",
+  "tookExtraTries": "{n} từ cần thử lại",
+  "offline": "Bạn đang ngoại tuyến — hãy kiểm tra kết nối."
 }

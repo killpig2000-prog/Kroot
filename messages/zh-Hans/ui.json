@@ -113,5 +113,8 @@
     "language": "语言",
     "level": "等级",
     "languageNote": "释义和说明会切换成这种语言，韩语保持不变。"
-  }
+  },
+  "retry": "重试",
+  "xpNotSaved": "XP 未保存",
+  "lookupFailed": "无法加载词典。"
 }

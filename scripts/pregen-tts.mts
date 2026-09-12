@@ -65,6 +65,10 @@ function add(raw: string, voice: "f" | "m") {
   jobs.set(`${voice}|${spoken}`, { spoken, voice });
 }
 
+// Translations (title_ja, body_zh, …) quote the odd Korean word but aren't
+// Korean: synthesizing them wastes quota, and Chirp rejects some outright.
+const TRANSLATION_KEY = /^(en|es|ja|vi|zh|zh-Hans)$|_(en|es|ja|vi|zh)$/;
+
 function isDialogue(a: unknown[]): a is { speaker: string; kr: string }[] {
   return (
     a.length > 0 &&
@@ -90,7 +94,7 @@ function walk(v: unknown, seen: Set<unknown>) {
     for (const item of v) walk(item, seen);
     return;
   }
-  for (const val of Object.values(v)) walk(val, seen);
+  for (const [key, val] of Object.entries(v)) if (!TRANSLATION_KEY.test(key)) walk(val, seen);
 }
 
 const seen = new Set<unknown>();
@@ -137,7 +141,8 @@ let done = 0;
 let failed = 0;
 
 async function synth(text: string, voice: GoogleVoiceKey): Promise<Buffer> {
-  return synthesizeGoogle(text, voice);
+  // the worker loop below already retries with its own backoff
+  return synthesizeGoogle(text, voice, { retries: 0 });
 }
 
 async function worker() {

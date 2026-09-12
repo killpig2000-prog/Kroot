@@ -23,6 +23,9 @@ function loadDict(): Promise<Map<string, VocabWord>> {
         }
       }
       return map;
+    }).catch((err) => {
+      dictPromise = null;
+      throw err;
     });
   }
   return dictPromise;

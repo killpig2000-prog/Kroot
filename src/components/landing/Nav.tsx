@@ -39,7 +39,7 @@ function LanguageSwitcher() {
         aria-label="Change language"
         className="inline-flex items-center gap-1 rounded-full border-[1.5px] border-line bg-cream px-[10px] py-[7px] text-[12.5px] font-bold text-charcoal hover:bg-warm transition-colors"
       >
-        <span>{currentLang.label.slice(0, 2)}</span>
+        <span>{currentLang.label.split(" ")[0]}</span>
         <span className="text-[10px] text-[#7A746A]">▼</span>
       </button>
 
@@ -93,13 +93,15 @@ export default function Nav() {
 
   return (
     <nav className="sticky top-0 z-50 border-b border-dashed border-dash bg-cream/95 backdrop-blur-sm">
-      <div className="max-w-[1160px] mx-auto flex items-center justify-between gap-4 px-[clamp(18px,5vw,56px)] py-3">
+      <div className="max-w-[1160px] mx-auto flex items-center justify-between gap-2 sm:gap-4 px-[clamp(18px,5vw,56px)] py-3">
         <Link
           href="/"
-          className="flex items-center gap-[9px] font-extrabold text-[17px] tracking-[-0.01em] text-charcoal"
+          aria-label="Kroot"
+          className="flex flex-none items-center gap-[9px] font-extrabold text-[17px] tracking-[-0.01em] text-charcoal"
         >
           <BrandMark size={30} />
-          Kroot
+          {/* Icon only on phones: with the wordmark the three pills didn't fit a 360px row in es/vi. */}
+          <span className="hidden sm:inline">Kroot</span>
         </Link>
 
         <div className="hidden md:flex gap-7 text-[13px] font-semibold text-[#7A746A]">
@@ -107,12 +109,12 @@ export default function Nav() {
           <a href="#grow" className="hover:text-charcoal transition-colors">{t("howItGrows")}</a>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex min-w-0 items-center gap-1.5 sm:gap-2">
           <LanguageSwitcher />
           {loggedIn ? (
             <Link
               href="/dashboard"
-              className="inline-flex rounded-full bg-success px-[16px] sm:px-[18px] py-[8px] text-[12.5px] font-bold text-white hover:bg-success-deep transition-colors"
+              className="inline-flex whitespace-nowrap rounded-full bg-success px-[14px] sm:px-[18px] py-[8px] text-[12px] sm:text-[12.5px] font-bold text-white hover:bg-success-deep transition-colors"
             >
               {t("myGarden")}
             </Link>
@@ -120,13 +122,13 @@ export default function Nav() {
             <>
               <Link
                 href="/auth/login"
-                className="inline-flex rounded-full border-[1.5px] border-line bg-cream px-[14px] sm:px-[16px] py-[7px] text-[12.5px] font-bold text-charcoal hover:bg-warm transition-colors"
+                className="inline-flex whitespace-nowrap rounded-full border-[1.5px] border-line bg-cream px-[11px] sm:px-[16px] py-[7px] text-[12px] sm:text-[12.5px] font-bold text-charcoal hover:bg-warm transition-colors"
               >
                 {t("login")}
               </Link>
               <Link
                 href="/onboarding"
-                className="inline-flex rounded-full bg-success px-[14px] sm:px-[17px] py-[8px] text-[12.5px] font-bold text-white hover:bg-success-deep transition-colors"
+                className="inline-flex whitespace-nowrap rounded-full bg-success px-[11px] sm:px-[17px] py-[8px] text-[12px] sm:text-[12.5px] font-bold text-white hover:bg-success-deep transition-colors"
               >
                 {t("startFree")}
               </Link>

@@ -58,7 +58,7 @@ function PronunciationCard({ onDone }: { onDone: () => void }) {
   const ts = useTranslations("pronunciation.score");
   const router = useRouter();
   const { speak, isSpeaking, isSupported: ttsOk } = useKoreanSpeaker();
-  const { isSupported: micOk, isListening, listenStartedAt, interim, error, listen } = useSpeechRecognition(
+  const { isSupported: micOk, isListening, listenStartedAt, interim, error, errorCode, errorKey, listen } = useSpeechRecognition(
     "ko-KR",
     MAX_LISTEN_MS
   );
@@ -181,8 +181,11 @@ function PronunciationCard({ onDone }: { onDone: () => void }) {
               micElapsedMs={micElapsedMs}
               interim={interim}
               error={error}
+              errorCode={errorCode}
+              errorKey={errorKey}
               onListen={() => listen(grade)}
               onSkip={() => {}}
+              onTyped={grade}
             />
           </div>
         </>

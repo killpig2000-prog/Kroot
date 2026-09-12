@@ -10,7 +10,7 @@ import { wrongTilePositions, type Board, type Tile } from "@/lib/writing-builder
 // the picks so a submitted chapter can rebuild the answer text.
 
 const TILE =
-  "kr text-[15.5px] font-medium px-3.5 py-2 rounded-[12px] border bg-cream text-charcoal border-line shadow-[0_1px_0_var(--c-line),0_3px_6px_rgba(0,0,0,.06)] transition-[transform,border-color,opacity] hover:border-success hover:-translate-y-px active:scale-95 focus-visible:outline-2 focus-visible:outline-success focus-visible:outline-offset-2 select-none leading-[1.3] touch-none";
+  "kr text-[15.5px] font-medium px-3.5 py-2 rounded-[12px] border bg-cream text-charcoal border-line shadow-[0_1px_0_var(--c-line),0_3px_6px_rgba(0,0,0,.06)] transition-[transform,border-color,opacity] hover:border-success hover:-translate-y-px active:scale-95 focus-visible:outline-2 focus-visible:outline-success focus-visible:outline-offset-2 select-none leading-[1.3]";
 const TILE_USED = "opacity-35 border-dashed";
 /** Legacy (checked-per-question) mode only — see the TileBoard doc comment. */
 const TILE_USED_LOCKED = "opacity-20 pointer-events-none shadow-none";
@@ -20,9 +20,12 @@ const ZONE =
   "min-h-[78px] rounded-[16px] p-2.5 flex flex-wrap gap-2 content-start mb-3 bg-warm border-[1.5px] border-dashed border-dash transition-colors";
 const BTN_CHECK =
   "rounded-[12px] px-5 py-[10px] text-sm font-extrabold text-white bg-success hover:bg-success-deep transition-colors disabled:bg-line disabled:text-faint shadow-[0_3px_0_var(--c-success-deep)] active:translate-y-px active:shadow-[0_1px_0_var(--c-success-deep)] disabled:shadow-none";
-const BTN_GHOST = "text-[12.5px] font-semibold text-muted hover:text-charcoal underline decoration-dotted underline-offset-4";
+const BTN_GHOST =
+  "relative text-[12.5px] font-semibold text-muted hover:text-charcoal underline decoration-dotted underline-offset-4 before:absolute before:-inset-x-2 before:-inset-y-3";
+// Hit area grows outward and into its own tile's corner only: the row above
+// sits 8px up, and a later tile on the right paints over any overlap.
 const BTN_REMOVE =
-  "absolute -top-1.5 -right-1.5 w-[18px] h-[18px] rounded-full bg-charcoal text-cream text-[11px] leading-none flex items-center justify-center shadow-[0_1px_2px_rgba(0,0,0,.25)]";
+  "absolute -top-1.5 -right-1.5 w-[18px] h-[18px] rounded-full bg-charcoal text-cream text-[11px] leading-none flex items-center justify-center shadow-[0_1px_2px_rgba(0,0,0,.25)] before:absolute before:-top-[2px] before:-inset-x-[13px] before:-bottom-[13px]";
 
 /** Tap = pick, hold ≈450ms = hear it. */
 function useHoldToSpeak() {
@@ -139,7 +142,7 @@ function DraggableZoneTile({
     <span ref={(el) => setRef(id, el)} className="relative inline-block">
       <button
         type="button"
-        className={`${TILE} ${dragging ? "opacity-0" : ""} ${
+        className={`${TILE} touch-none ${dragging ? "opacity-0" : ""} ${
           selected ? "border-success ring-2 ring-success/40 -translate-y-px" : ""
         } ${wrong ? "border-danger bg-danger-bg shadow-[0_2px_0_var(--c-danger)]" : ""}`}
         aria-pressed={selected}

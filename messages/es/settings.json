@@ -21,6 +21,7 @@
   "deleteGo": "Eliminar para siempre",
   "deleting": "Eliminando…",
   "deleteFailed": "No se pudo completar. Inténtalo de nuevo en un momento.",
+  "saveFailed": "No se pudo guardar. Inténtalo de nuevo.",
   "language": "Idioma de la interfaz",
   "languageDesc": "El idioma en que la app te habla.",
   "levelTitle": "Mi nivel",

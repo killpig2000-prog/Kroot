@@ -1,6 +1,12 @@
 import type { Metadata } from "next";
+import { Noto_Sans_KR, Nunito } from "next/font/google";
 import Link from "next/link";
 import "./globals.css";
+
+// Same faces as [locale]/layout.tsx — this page renders outside that layout,
+// so without them the body fell back to the browser's default font.
+const notoSansKr = Noto_Sans_KR({ variable: "--font-noto-kr", subsets: ["latin"], weight: ["400", "600", "700"] });
+const nunito = Nunito({ variable: "--font-nunito", subsets: ["latin"], weight: ["400", "600", "700"] });
 
 // The 404 for URLs that match no route at all.
 //
@@ -23,7 +29,7 @@ export const metadata: Metadata = {
 
 export default function GlobalNotFound() {
   return (
-    <html lang="en">
+    <html lang="en" className={`${notoSansKr.variable} ${nunito.variable}`}>
       <body>
         <main className="min-h-dvh flex items-center justify-center px-5 bg-cream">
           <div className="text-center max-w-[420px]">

@@ -38,7 +38,8 @@
     "listeningTitle": "1 · Listening — tap 🔊, then answer",
     "readingTitle": "2 · Reading — passage {n}/{total}",
     "writingProgress": "3 · Writing — {done} / {total} done",
-    "seeResults": "See results →"
+    "seeResults": "See results →",
+    "scoring": "Scoring…"
   },
   "mcq": {
     "progress": "{title} · {n}/{total}",
@@ -62,6 +63,7 @@
     "startLevel": "Start with {level}",
     "sampleReading": "Reading passage about {topic}",
     "sampleListening": "Listening conversation at {level} pace",
-    "sampleWriting": "Write a short response"
+    "sampleWriting": "Write a short response",
+    "retryPromotion": "Try the promotion again"
   }
 }

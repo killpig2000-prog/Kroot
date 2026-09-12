@@ -7,7 +7,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: "Kroot — Grow your Korean",
     short_name: "Kroot",
     description:
-      "A cozy garden where your Korean grows every day — tiny lessons, an AI tutor, and a tree that grows with you.",
+      "A cozy garden where your Korean grows every day — short listening, reading and writing lessons, and a tree that grows as you study.",
     id: "/dashboard",
     // Opens on the garden intro, not a login form: /onboarding sends a
     // signed-in, placed learner straight to /dashboard on the server, and

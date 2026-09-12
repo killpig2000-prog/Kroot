@@ -51,6 +51,7 @@ export default function TestRunner({
   const [writingEntries, setWritingEntries] = useState<WritingEntry[]>(() => spec.writing.map(() => emptyWritingEntry()));
   const [scores, setScores] = useState<SkillScores | null>(null);
   const [promoted, setPromoted] = useState(false);
+  const [finishing, setFinishing] = useState(false);
 
   const poolWords = useMemo(() => spec.writing.flatMap((p) => p.example_kr.split(/\s+/)), [spec.writing]);
   const writingBoards = useMemo<Board[]>(
@@ -71,6 +72,8 @@ export default function TestRunner({
   const writingDone = writingEntries.filter((e) => e.checked === true).length;
 
   async function finish() {
+    if (finishing) return;
+    setFinishing(true);
     const writingScore = Math.round(
       writingEntries.reduce((s, e) => s + localScore(e.checks), 0) / writingEntries.length
     );
@@ -95,31 +98,35 @@ export default function TestRunner({
         servedKeys: servedKeysOf(spec),
       },
     };
-    // details column arrives with migration 0014; fall back without it.
-    const ins = await supabase.from("level_test_results").insert(row);
-    if (ins.error) {
-      const { details: _details, ...basic } = row;
-      void _details;
-      await supabase.from("level_test_results").insert(basic);
-    }
-
-    track("level_test_finished", { from: spec.from, to: spec.to, passed: verdict.passed, score: verdict.avg });
-
-    if (verdict.passed) {
-      const { error: applyErr } = await supabase.rpc("apply_level_test", { p_level: spec.to });
-      if (!applyErr) {
-        setPromoted(true);
-        // The big evolution moment happens right here — don't repeat the
-        // dashboard's promotion banner on top of it. Guarded because storage
-        // throws in private mode: worst case the learner sees the banner
-        // twice, which is far better than losing a passed promotion.
-        try {
-          localStorage.setItem("kroot-tree-species", spec.to);
-        } catch {
-          // storage blocked — the dashboard will just congratulate them again
-        }
+    try {
+      // details column arrives with migration 0014; fall back without it.
+      const ins = await supabase.from("level_test_results").insert(row);
+      if (ins.error) {
+        const { details: _details, ...basic } = row;
+        void _details;
+        await supabase.from("level_test_results").insert(basic);
       }
-      router.refresh();
+
+      track("level_test_finished", { from: spec.from, to: spec.to, passed: verdict.passed, score: verdict.avg });
+
+      if (verdict.passed) {
+        const { error: applyErr } = await supabase.rpc("apply_level_test", { p_level: spec.to });
+        if (!applyErr) {
+          setPromoted(true);
+          // The big evolution moment happens right here — don't repeat the
+          // dashboard's promotion banner on top of it. Guarded because storage
+          // throws in private mode: worst case the learner sees the banner
+          // twice, which is far better than losing a passed promotion.
+          try {
+            localStorage.setItem("kroot-tree-species", spec.to);
+          } catch {
+            // storage blocked — the dashboard will just congratulate them again
+          }
+        }
+        router.refresh();
+      }
+    } catch {
+      // offline — the result screen offers the promotion again
     }
     setStage("result");
   }
@@ -207,8 +214,8 @@ export default function TestRunner({
           ))}
         </div>
         <div className="mt-5">
-          <button onClick={finish} disabled={writingDone < spec.writing.length} className={BTN_GREEN}>
-            {t("seeResults")}
+          <button onClick={finish} disabled={finishing || writingDone < spec.writing.length} className={BTN_GREEN}>
+            {finishing ? t("scoring") : t("seeResults")}
           </button>
         </div>
       </div>

@@ -59,6 +59,16 @@ export default function WateringCan({
   const [fx, setFx] = useState<null | { x: number; top: number; ground: number }>(null);
   const [wash, setWash] = useState(false);
   const busy = useRef(false);
+  const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
+
+  useEffect(() => {
+    const pending = timers.current;
+    return () => pending.forEach(clearTimeout);
+  }, []);
+
+  useEffect(() => {
+    if (!doneToday && due > 0) router.prefetch("/review");
+  }, [doneToday, due, router]);
 
   const state: "due" | "none" | "done" = doneToday ? "done" : due > 0 ? "due" : "none";
 
@@ -102,13 +112,15 @@ export default function WateringCan({
       ],
       { duration: 1900, easing: "cubic-bezier(.45,.05,.3,1)", fill: "forwards" },
     );
-    setTimeout(() => {
-      setFx({ x: tr.left + tr.width * 0.5 - g.left, top: tr.top + tr.height * 0.12 - g.top, ground: tr.bottom - g.top });
-      playWater();
-      onPour?.();
-    }, 700);
-    setTimeout(() => setWash(true), 2150);
-    setTimeout(go, 2500);
+    timers.current.push(
+      setTimeout(() => {
+        setFx({ x: tr.left + tr.width * 0.5 - g.left, top: tr.top + tr.height * 0.12 - g.top, ground: tr.bottom - g.top });
+        playWater();
+        onPour?.();
+      }, 700),
+      setTimeout(() => setWash(true), 2150),
+      setTimeout(go, 2500),
+    );
   };
 
   return (

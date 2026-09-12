@@ -27,6 +27,13 @@ const CRON_UTC_HOUR = 18;
 const localSendHour = () =>
   (((CRON_UTC_HOUR + Math.round(-new Date().getTimezoneOffset() / 60)) % 24) + 24) % 24;
 
+// navigator.serviceWorker.ready never settles when no worker activates, which
+// used to leave both switches disabled for good.
+const PUSH_TIMEOUT_MS = 15_000;
+function withTimeout<T>(p: Promise<T>): Promise<T | null> {
+  return Promise.race([p, new Promise<null>((resolve) => setTimeout(() => resolve(null), PUSH_TIMEOUT_MS))]);
+}
+
 type Support = "unknown" | "ok" | "ios-install" | "none";
 const subscribeNever = () => () => {};
 function detectSupport(): Support {
@@ -68,41 +75,55 @@ export default function ReminderSettings({ userId, initialPush, initialEmail, ha
   async function togglePush() {
     setBusy("push");
     setNote(null);
-    if (push) {
-      await unsubscribeFromPush();
-      await supabase.from("profiles").update({ reminder_push: false }).eq("id", userId);
-      setPush(false);
-    } else {
-      const r = await subscribeToPush();
-      if (r.ok) {
-        setPush(true);
-        track("reminder_optin", { channel: "push" });
+    try {
+      if (push) {
+        await withTimeout(unsubscribeFromPush());
+        await supabase.from("profiles").update({ reminder_push: false }).eq("id", userId);
+        setPush(false);
       } else {
-        setNote(
-          r.reason === "denied"
-            ? t("errBlocked")
-            : r.reason === "no_key"
-              ? t("errNoKey")
-              : r.reason === "unsupported"
-                ? t("errUnsupported")
-                : t("errSubscribe")
-        );
+        const r = await withTimeout(subscribeToPush());
+        if (r?.ok) {
+          setPush(true);
+          track("reminder_optin", { channel: "push" });
+          await supabase.from("profiles").update({ ui_locale: locale }).eq("id", userId);
+        } else {
+          setNote(
+            r?.reason === "denied"
+              ? t("errBlocked")
+              : r?.reason === "no_key"
+                ? t("errNoKey")
+                : r?.reason === "unsupported"
+                  ? t("errUnsupported")
+                  : t("errSubscribe")
+          );
+        }
       }
+    } catch {
+      setNote(push ? t("errSave") : t("errSubscribe"));
+    } finally {
+      setBusy(null);
     }
-    setBusy(null);
   }
 
   async function toggleEmail() {
     setBusy("email");
     setNote(null);
     const next = !email;
-    const { error } = await supabase.from("profiles").update({ reminder_email: next }).eq("id", userId);
-    if (error) setNote(t("errSave"));
-    else {
-      setEmail(next);
-      if (next) track("reminder_optin", { channel: "email" });
+    try {
+      const { error } = await supabase.from("profiles").update({ reminder_email: next }).eq("id", userId);
+      if (error) setNote(t("errSave"));
+      else {
+        setEmail(next);
+        if (next) {
+          track("reminder_optin", { channel: "email" });
+          await supabase.from("profiles").update({ ui_locale: locale }).eq("id", userId);
+        }
+      }
+    } catch {
+      setNote(t("errSave"));
+    } finally {
+      setBusy(null);
     }
-    setBusy(null);
   }
 
   const pushDisabled = busy !== null || support === "none" || support === "ios-install" || !keyConfigured;

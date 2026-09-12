@@ -9,6 +9,7 @@ import { getPassagesForLevel } from "@/lib/reading";
 import { CHAPTER_SIZE, getPromptsForLevel } from "@/lib/writing";
 import { chapterBlurb, groupsForFamily } from "@/lib/pronunciation";
 import { computeEligibility, type Eligibility } from "@/lib/promotion-server";
+import { selectAll } from "@/lib/select-all";
 
 // "You are here" for the Guide roadmaps. Each station on a roadmap has ONE
 // completion condition, read from the tables the feature pages already write
@@ -71,11 +72,15 @@ export async function getGuideProgress(
   // One parallel batch — each query is a ~300ms round trip from Korea to us-east-1.
   // Every read degrades to "no rows" on error (e.g. a migration not yet applied).
   const [vocab, listening, grammar, reading, writing, speaking, slangXp, eligibility] = await Promise.all([
-    supabase
-      .from("vocabulary_progress")
-      .select("word_key, created_at")
-      .eq("user_id", userId)
-      .not("last_reviewed_at", "is", null),
+    selectAll<{ word_key: string; created_at: string }>((from, to) =>
+      supabase
+        .from("vocabulary_progress")
+        .select("word_key, created_at")
+        .eq("user_id", userId)
+        .not("last_reviewed_at", "is", null)
+        .order("id")
+        .range(from, to),
+    ),
     supabase
       .from("listening_progress")
       .select("dialogue_id, completed_at")

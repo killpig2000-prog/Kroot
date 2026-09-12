@@ -103,7 +103,7 @@ export default function WritePhase({
               aria-label={t("phase.qOf", { n: i + 1, total: prompts.length })}
               aria-current={i === step}
               onClick={() => setStep(i)}
-              className={`w-2.5 h-2.5 rounded-full transition-colors ${
+              className={`relative w-2.5 h-2.5 rounded-full transition-colors before:absolute before:-inset-x-1 before:-inset-y-[17px] ${
                 i === step ? "bg-amber" : entryDone(entries[i]) ? "bg-success" : "bg-line"
               }`}
             />

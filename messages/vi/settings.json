@@ -21,6 +21,7 @@
   "deleteGo": "Xoá vĩnh viễn",
   "deleting": "Đang xoá…",
   "deleteFailed": "Chưa xong được. Hãy thử lại sau giây lát.",
+  "saveFailed": "Không lưu được — hãy thử lại.",
   "language": "Ngôn ngữ giao diện",
   "languageDesc": "Ngôn ngữ ứng dụng dùng để nói với bạn.",
   "levelTitle": "Trình độ của tôi",

@@ -23,7 +23,8 @@
   },
   "empty": {
     "title": "Ở đây chưa có gì cả",
-    "sub": "Hãy là người đầu tiên đăng bài trên bảng này."
+    "sub": "Hãy là người đầu tiên đăng bài trên bảng này.",
+    "allSub": "Chưa có bài viết nào từ người học — hãy là người đầu tiên."
   },
   "comments": {
     "heading": "Bình luận",
@@ -59,5 +60,20 @@
     "minutes": "{n} phút trước",
     "hours": "{n} giờ trước",
     "days": "{n} ngày trước"
+  },
+  "moderation": {
+    "menu": "Tùy chọn khác",
+    "report": "Báo cáo",
+    "block": "Chặn người học này",
+    "why": "Nội dung này có vấn đề gì?",
+    "reasons": {
+      "spam": "Spam hoặc quảng cáo",
+      "harassment": "Quấy rối hoặc thù ghét",
+      "sexual": "Nội dung tình dục",
+      "other": "Lý do khác"
+    },
+    "reported": "Cảm ơn bạn — chúng tôi sẽ xem xét.",
+    "blockConfirm": "Chặn người học này? Bạn sẽ không còn thấy bài viết hay bình luận của họ nữa.",
+    "failed": "Không thực hiện được. Vui lòng thử lại sau giây lát."
   }
 }

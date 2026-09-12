@@ -83,7 +83,7 @@
     "readAgain": "Đọc lại truyện",
     "missedCount": "Sai {n} câu",
     "nothingMissed": "Không sai câu nào — bạn đã hiểu trọn câu chuyện.",
-    "wordsWithPage": "từ ở đây có trang từ vựng",
+    "wordsWithPage": "{n} từ ở đây có trang từ vựng",
     "openToSave": "Mở một từ để lưu lại.",
     "openToSaveMore": "+{n} từ nữa · mở một từ để lưu lại.",
     "earned": "đã nhận",

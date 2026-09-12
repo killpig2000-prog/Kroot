@@ -128,6 +128,8 @@ export default function GrammarQuizBlock({
   // and reading one mid-render is how a screen ends up showing a stale score
   // under React's concurrent rendering (react-hooks/refs).
   const [finalCorrect, setFinalCorrect] = useState<number | null>(null);
+  const [saveFailed, setSaveFailed] = useState(false);
+  const [retrying, setRetrying] = useState(false);
 
   useSaveResume(
     userId,
@@ -135,6 +137,34 @@ export default function GrammarQuizBlock({
       ? { skill: "grammar", href: `/grammar/${lessonKey}`, label: lessonTitle ?? lessonKey, detail: `${t("resumeDetail")}${level ? ` · ${level}` : ""}` }
       : null
   );
+
+  // 42P01 (table missing before migration 0035) counts as saved on purpose.
+  async function saveLesson(uid: string): Promise<boolean> {
+    if (!lessonKey) return true;
+    try {
+      const { error } = await supabase.from("grammar_progress").upsert(
+        {
+          user_id: uid,
+          lesson_key: lessonKey,
+          score: Math.round((correctCount.current / quiz.length) * 100),
+          completed_at: new Date().toISOString(),
+        },
+        { onConflict: "user_id,lesson_key" }
+      );
+      return !error || isTableMissing(error);
+    } catch {
+      return false;
+    }
+  }
+
+  async function retrySave() {
+    const uid = userId ?? (await getClientUserId(supabase));
+    if (!uid || retrying) return;
+    setRetrying(true);
+    const ok = await saveLesson(uid);
+    setRetrying(false);
+    setSaveFailed(!ok);
+  }
 
   async function markAnswered(i: number, correct: boolean) {
     answered.current.add(i);
@@ -149,23 +179,7 @@ export default function GrammarQuizBlock({
 
     setFinalCorrect(correctCount.current);
     if (lessonKey) {
-      const { error } = await supabase.from("grammar_progress").upsert(
-        {
-          user_id: uid,
-          lesson_key: lessonKey,
-          score: Math.round((correctCount.current / quiz.length) * 100),
-          completed_at: new Date().toISOString(),
-        },
-        { onConflict: "user_id,lesson_key" }
-      );
-      // 42P01 (table missing before migration 0035) stays ignored on purpose.
-      // Anything else means the lesson was not recorded, so release the guard:
-      // answering the last question again is then able to retry it, instead of
-      // the lesson silently staying incomplete on the grammar list.
-      if (error && !isTableMissing(error)) {
-        recorded.current = false;
-        answered.current.delete(i);
-      }
+      setSaveFailed(!(await saveLesson(uid)));
       void clearResume(supabase, uid, `/grammar/${lessonKey}`);
     }
     const res = await recordCompletion(
@@ -211,7 +225,21 @@ export default function GrammarQuizBlock({
             levelUp={levelUp}
             xpValue={XP_POINTS.grammar}
             xpLabel={tu("xpEarned", { skill: "Grammar" })}
-          />
+          >
+            {saveFailed && (
+              <div className="flex items-center justify-between gap-3">
+                <p role="status" className="text-[13px] text-danger">{t("quiz.saveFailed")}</p>
+                <button
+                  type="button"
+                  onClick={() => void retrySave()}
+                  disabled={retrying}
+                  className="flex-none min-h-[44px] rounded-[9px] px-4 text-[13px] font-semibold text-charcoal bg-cream border border-line hover:bg-warm transition-colors disabled:opacity-60"
+                >
+                  {retrying ? tu("saving") : tu("retry")}
+                </button>
+              </div>
+            )}
+          </ResultShell>
         </div>
       )}
     </div>

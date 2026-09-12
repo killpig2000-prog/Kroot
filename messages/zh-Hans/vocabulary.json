@@ -108,7 +108,9 @@
   "detail": {
     "prev": "上一个",
     "backToVocab": "全部章节",
-    "next": "下一个词 →"
+    "next": "下一个词 →",
+    "backToChapter": "返回本章 →",
+    "lastWord": "这是这一天的最后一个词 ✓"
   },
   "practice": {
     "reviewTime": "复习时间",
@@ -162,5 +164,17 @@
     "strokes": "{count, plural, other {#笔}}",
     "nudge": "点这里"
   },
-  "slangRowSub": "日常韩语 · 课本上没有的说法"
+  "slangRowSub": "日常韩语 · 课本上没有的说法",
+  "index": {
+    "chapterN": "第{n}章",
+    "ctaReview": "复习第{n}章 →",
+    "ctaContinue": "继续第{n}章 →",
+    "ctaStudy": "学习第{n}章 →",
+    "knownOfTotal": "{known}/{total}个单词",
+    "dueCount": "💧 {n}个待复习",
+    "rootedAria": "{total}个单词中已掌握{known}个",
+    "rootedTally": "{total}个单词中已掌握 <b>{known}</b> 个",
+    "due": "待复习",
+    "reviewDueAria": "复习{n}个到期单词"
+  }
 }

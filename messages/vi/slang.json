@@ -48,6 +48,8 @@
     "practice": "Vòng luyện tập · XP chỉ một lần mỗi ngày",
     "newRound": "{n} thẻ mới ↻",
     "today": "Hôm nay",
-    "new": "Mới"
+    "new": "Mới",
+    "notSaved": "Chưa lưu được XP",
+    "retry": "Thử lại"
   }
 }

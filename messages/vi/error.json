@@ -4,5 +4,7 @@
   "body": "Có gì đó trục trặc ở phía chúng tôi — tiến độ của bạn vẫn an toàn. Tưới chút nước là thường ổn lại ngay.",
   "retry": "Thử lại",
   "backToGarden": "Về vườn của tôi",
-  "errorId": "mã lỗi: {id}"
+  "errorId": "mã lỗi: {id}",
+  "offlineTitle": "Bạn đang ngoại tuyến",
+  "offlineBody": "Không kết nối được với Kroot. Hãy kiểm tra kết nối rồi thử lại — tiến độ của bạn vẫn an toàn."
 }

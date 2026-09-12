@@ -3,6 +3,7 @@ import type { CefrLevel } from "@/lib/tree";
 import { VOCAB_TOPICS } from "@/lib/vocabulary";
 import { getWordsForTopic } from "@/lib/vocabulary-words";
 import { COOLDOWN_HOURS, ELIGIBILITY, type ExcludeKeys } from "@/lib/promotion-test";
+import { selectAll } from "@/lib/select-all";
 
 export type Eligibility = {
   wordsMastered: number; // words of this grade sitting at box >= masteryBox
@@ -36,15 +37,20 @@ export async function computeEligibility(
   );
 
   const [vocab, reading, attempts] = await Promise.all([
-    supabase
-      .from("vocabulary_progress")
-      .select("word_key, box")
-      .eq("user_id", userId)
-      .not("last_reviewed_at", "is", null),
+    selectAll<{ word_key: string; box: number | null }>((from, to) =>
+      supabase
+        .from("vocabulary_progress")
+        .select("word_key, box")
+        .eq("user_id", userId)
+        .not("last_reviewed_at", "is", null)
+        .order("id")
+        .range(from, to),
+    ),
     supabase
       .from("reading_progress")
-      .select("passage_key")
-      .eq("user_id", userId),
+      .select("*", { count: "exact", head: true })
+      .eq("user_id", userId)
+      .like("passage_key", `%:${grade}:%`),
     supabase
       .from("level_test_results")
       .select("created_at, details")
@@ -55,15 +61,13 @@ export async function computeEligibility(
 
   let mastered = 0;
   let seen = 0;
-  for (const row of vocab.data ?? []) {
+  for (const row of vocab.data) {
     if (!gradeWordKeys.has(row.word_key)) continue;
     seen += 1;
     if ((row.box ?? 1) >= ELIGIBILITY.masteryBox) mastered += 1;
   }
 
-  const readingDone = (reading.data ?? []).filter((r) =>
-    String(r.passage_key).includes(`:${grade}:`),
-  ).length;
+  const readingDone = reading.count ?? 0;
 
   // Cooldown: the most recent PROMOTION attempt (details present) that failed.
   let cooldownUntil: string | null = null;

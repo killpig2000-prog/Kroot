@@ -58,10 +58,15 @@ export default function InstallBanner({ streakDays }: { streakDays: number }) {
     const w = window as unknown as { __krootInstallPrompt?: Deferred };
     const deferred = w.__krootInstallPrompt;
     if (!deferred) return;
-    await deferred.prompt();
-    const { outcome } = await deferred.userChoice;
+    try {
+      await deferred.prompt();
+      const { outcome } = await deferred.userChoice;
+      if (outcome === "accepted") setClosed(true);
+    } catch {
+      // A spent or revoked prompt can't be shown again — hide the button.
+      setClosed(true);
+    }
     w.__krootInstallPrompt = undefined;
-    if (outcome === "accepted") setClosed(true);
     window.dispatchEvent(new CustomEvent(CHANGE_EVENT));
   }
 

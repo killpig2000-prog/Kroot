@@ -96,7 +96,9 @@ export default function ClipDone({
         savedKeys = new Set((data ?? []).map((r) => r.word_key as string));
       }
       if (!cancelled) setWords(found.map((word) => ({ word, saved: savedKeys.has(word.key), saving: false })));
-    })();
+    })().catch(() => {
+      if (!cancelled) setWords([]);
+    });
     return () => {
       cancelled = true;
     };
@@ -105,7 +107,12 @@ export default function ClipDone({
   async function save(key: string) {
     if (!userId) return;
     setWords((ws) => ws && ws.map((w) => (w.word.key === key ? { ...w, saving: true } : w)));
-    const error = await plantWord(supabase, userId, key);
+    let error: string | null;
+    try {
+      error = await plantWord(supabase, userId, key);
+    } catch {
+      error = "failed";
+    }
     if (!error) track("word_saved", { source: "listening", level });
     setWords((ws) => ws && ws.map((w) => (w.word.key === key ? { ...w, saving: false, saved: !error } : w)));
   }

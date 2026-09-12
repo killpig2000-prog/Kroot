@@ -8,11 +8,13 @@ import Glyph from "@/components/dashboard/Glyph";
 
 export default function NameEditor({ userId, name }: { userId: string; name: string }) {
   const t = useTranslations("profile.name");
+  const ts = useTranslations("settings");
   const supabase = useMemo(() => createClient(), []);
   const router = useRouter();
   const [editing, setEditing] = useState(false);
   const [value, setValue] = useState(name);
   const [saving, setSaving] = useState(false);
+  const [failed, setFailed] = useState(false);
 
   const save = async () => {
     const next = value.trim().slice(0, 30);
@@ -22,17 +24,20 @@ export default function NameEditor({ userId, name }: { userId: string; name: str
       return;
     }
     setSaving(true);
+    setFailed(false);
     try {
       const { error } = await supabase
         .from("profiles")
         .update({ display_name: next })
         .eq("id", userId);
-      if (!error) {
+      if (error) setFailed(true);
+      else {
         setEditing(false);
         router.refresh();
       }
     } catch {
       // Stay in edit mode with the draft intact so the save can be retried.
+      setFailed(true);
     } finally {
       setSaving(false);
     }
@@ -79,6 +84,11 @@ export default function NameEditor({ userId, name }: { userId: string; name: str
       >
         {saving ? "…" : t("save")}
       </button>
+      {failed && (
+        <span role="alert" className="text-[12px] font-semibold text-danger">
+          {ts("saveFailed")}
+        </span>
+      )}
     </span>
   );
 }

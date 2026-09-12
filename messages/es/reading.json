@@ -83,7 +83,7 @@
     "readAgain": "Leer el relato otra vez",
     "missedCount": "{n, plural, one {# fallada} other {# falladas}}",
     "nothingMissed": "Nada fallado: entendiste todo el relato.",
-    "wordsWithPage": "{n, plural, one {palabra de aquí tiene página de vocabulario} other {palabras de aquí tienen página de vocabulario}}",
+    "wordsWithPage": "{n, plural, one {# palabra de aquí tiene página de vocabulario} other {# palabras de aquí tienen página de vocabulario}}",
     "openToSave": "Abre una para guardarla.",
     "openToSaveMore": "+{n} más · abre una para guardarla.",
     "earned": "ganados",

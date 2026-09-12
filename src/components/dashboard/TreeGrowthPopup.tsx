@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
+import { useBackToClose } from "@/hooks/useBackToClose";
 import TreeEvolution from "@/components/level-test/TreeEvolution";
 import GardenScene from "@/components/ui/GardenScene";
 import { LEVEL_ORDER, type CefrLevel } from "@/lib/tree";
@@ -90,6 +91,12 @@ export default function TreeGrowthPopup({
 export function GrowthDialog({ growth, level, onClose }: { growth: Growth; level: number; onClose: () => void }) {
   const t = useTranslations("dashboard.growth");
   const tt = useTranslations("dashboard.tree");
+  const closeRef = useRef(onClose);
+  useEffect(() => {
+    closeRef.current = onClose;
+  });
+  const close = useCallback(() => closeRef.current(), []);
+  const dismiss = useBackToClose(true, close);
 
   useEffect(() => {
     const prev = document.body.style.overflow;
@@ -104,7 +111,7 @@ export function GrowthDialog({ growth, level, onClose }: { growth: Growth; level
 
   return (
     <>
-      <button aria-label={t("closeAria")} onClick={onClose} className="fixed inset-0 z-[60] bg-[#282319]/55 cursor-default" />
+      <button aria-label={t("closeAria")} onClick={dismiss} className="fixed inset-0 z-[60] bg-[#282319]/55 cursor-default" />
       <div className="fixed inset-0 z-[70] flex items-center justify-center sm:px-4 pointer-events-none">
         <div
           role="dialog"
@@ -136,7 +143,7 @@ export function GrowthDialog({ growth, level, onClose }: { growth: Growth; level
           <div className="px-6 pt-4 pb-[max(20px,env(safe-area-inset-bottom))] text-center">
             <p className="text-[13.5px] text-muted leading-relaxed mb-4">{t("note", { level })}</p>
             <button
-              onClick={onClose}
+              onClick={dismiss}
               className="w-full rounded-[13px] bg-success text-white font-bold text-[14.5px] py-3.5 hover:bg-success-deep transition-colors"
             >
               {t("ok")}

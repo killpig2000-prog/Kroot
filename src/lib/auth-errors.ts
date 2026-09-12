@@ -14,20 +14,25 @@ export type AuthErrorKey =
   | "badCredentials"
   | "notConfirmed"
   | "noAccount"
+  | "network" // the request never reached the server (offline, DNS, dropped connection)
   | "generic";
 
-export function authErrorKey(err: { message?: string; code?: string } | null | undefined): AuthErrorKey {
+export function authErrorKey(
+  err: { message?: string; code?: string; name?: string } | null | undefined
+): AuthErrorKey {
   const m = err?.message ?? "";
   const c = err?.code ?? "";
+  if (err?.name === "AuthRetryableFetchError" || /failed to fetch|fetch failed|networkerror|load failed|network request failed/i.test(m)) return "network";
   if (c === "over_email_send_rate_limit" || /for security purposes|only request this after/i.test(m)) return "tooSoon";
   if (c === "over_request_rate_limit" || /request rate limit reached/i.test(m)) return "tooManyTries";
   if (/rate limit/i.test(m)) return "rateLimit";
-  if (c === "otp_expired" || /token has expired|otp|invalid|expired|not found/i.test(m)) return "badCode";
+  // Before badCode: "Invalid login credentials" and "Signups not allowed for otp" both match its /invalid|otp/.
+  if (c === "invalid_credentials" || /invalid login credentials/i.test(m)) return "badCredentials";
+  if (c === "otp_disabled" || c === "user_not_found" || /signups not allowed|user not found/i.test(m)) return "noAccount";
+  if (c === "email_not_confirmed" || /email not confirmed/i.test(m)) return "notConfirmed";
   if (c === "user_already_exists" || /already registered|already exists/i.test(m)) return "exists";
   if (c === "weak_password" || /password should|weak password|at least \d+ characters/i.test(m)) return "weakPassword";
-  if (c === "invalid_credentials" || /invalid login credentials/i.test(m)) return "badCredentials";
-  if (c === "email_not_confirmed" || /email not confirmed/i.test(m)) return "notConfirmed";
-  if (/signups not allowed|user not found/i.test(m)) return "noAccount";
+  if (c === "otp_expired" || /token has expired|otp|invalid|expired|not found/i.test(m)) return "badCode";
   console.error("auth error:", c || "(no code)", m);
   return "generic";
 }

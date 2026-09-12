@@ -92,7 +92,7 @@
     "email": "Email",
     "nameLabel": "Chúng tôi nên gọi bạn là gì?",
     "namePlaceholder": "Linh",
-    "agree": "Tôi đồng ý với <link>Điều khoản và Chính sách bảo mật</link>.",
+    "agree": "Tôi đồng ý với <terms>Điều khoản</terms> và <privacy>Chính sách bảo mật</privacy>.",
     "sending": "Đang gửi…",
     "login": "Đăng nhập",
     "alreadyHere": "Đã có tài khoản rồi?",

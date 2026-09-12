@@ -13,6 +13,7 @@
     "correct": "🌱 Chính xác!",
     "wrong": "💧 Chưa đúng — đáp án là {letter}. {text}",
     "done": "🌱 Xong bài kiểm tra — số phút hôm nay đã ghi vào cây của bạn.",
-    "levelUp": "🎉 Lên cấp! Giờ là Lv. {n}"
+    "levelUp": "🎉 Lên cấp! Giờ là Lv. {n}",
+    "saveFailed": "Bài học này chưa được lưu."
   }
 }

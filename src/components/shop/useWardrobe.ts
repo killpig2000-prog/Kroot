@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { playBuy } from "@/lib/sfx";
@@ -86,6 +86,9 @@ export function useWardrobe({
   const [worn, setWorn] = useState<Slots>(() => toMap(equipped));
   const [preview, setPreview] = useState<Slots>(() => toMap(equipped));
   const [busy, setBusy] = useState(false);
+  // busy is a render behind a fast double tap; the second act() would buy again
+  // and overwrite the "bought" message with an error.
+  const acting = useRef(false);
   const [message, setMessage] = useState<{ key: string; params?: Record<string, string | number>; good: boolean } | null>(null);
 
   const previewIds = Object.values(preview).filter((v): v is string => !!v);
@@ -159,7 +162,8 @@ export function useWardrobe({
 
   /** Make the database match the preview. */
   async function act() {
-    if (!dirty || busy) return;
+    if (!dirty || acting.current) return;
+    acting.current = true;
     setBusy(true);
     setMessage(null);
     try {
@@ -196,6 +200,7 @@ export function useWardrobe({
       console.error("wardrobe action failed:", err instanceof Error ? err.message : err);
       setMessage({ key: "errors.generic", good: false });
     } finally {
+      acting.current = false;
       setBusy(false);
     }
   }

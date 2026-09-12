@@ -2,6 +2,7 @@
   "welcome": "Chào mừng, {name}",
   "day": "Ngày {n}",
   "loadError": "Hiện chưa tải được tiến độ của bạn — không mất gì cả. Hãy tải lại sau giây lát.",
+  "loadRetry": "Thử lại",
   "quest": {
     "title": "Nhiệm vụ hôm nay",
     "done": "Xong ✓",

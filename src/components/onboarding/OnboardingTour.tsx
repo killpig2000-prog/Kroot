@@ -82,7 +82,16 @@ function markSeen(userId?: string | null) {
   // either used to bring the tour back for someone who'd already finished
   // it. Best effort; a failed write just means one more re-run, not a
   // stuck flow, so it isn't awaited or retried.
-  if (userId) void createClient().from("profiles").update({ onboarding_tour_seen: true }).eq("id", userId);
+  // A Supabase builder only sends when awaited or then'd.
+  if (userId)
+    void createClient()
+      .from("profiles")
+      .update({ onboarding_tour_seen: true })
+      .eq("id", userId)
+      .then(
+        () => undefined,
+        () => undefined,
+      );
 }
 
 // First-visit walkthrough: a dark scrim with a cut-out spotlight over one
@@ -143,7 +152,11 @@ export default function OnboardingTour({
       return;
     }
     const r = el.getBoundingClientRect();
-    setRect({ top: r.top, left: r.left, width: r.width, height: r.height });
+    setRect((p) =>
+      p && p.top === r.top && p.left === r.left && p.width === r.width && p.height === r.height
+        ? p
+        : { top: r.top, left: r.left, width: r.width, height: r.height },
+    );
   }, [target]);
 
   // navigate=false is for a learner explicitly bailing out via "Skip" — only

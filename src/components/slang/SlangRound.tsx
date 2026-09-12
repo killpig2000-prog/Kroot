@@ -19,15 +19,15 @@ import { VIBES, type SlangEntry } from "@/lib/slang";
 //   its first card. Later rounds are random and prefer cards not yet flipped.
 // · Flipping a card "collects" it — the same localStorage set the public
 //   board uses, so the two views agree.
-// · XP: the first quiz finished each day pays, exactly like the old daily
-//   challenge (same key, same once-a-day, same server call). Rounds after
-//   that are practice — a round per tap would otherwise be an XP tap.
+// · XP: the first quiz finished each day pays. The server enforces the
+//   once-a-day through a per-day reward key, so a second device or a cleared
+//   browser doesn't pay again. Rounds after that are practice — a round per
+//   tap would otherwise be an XP tap.
 
 const ROUND = 5;
 const OPTIONS = 4;
 const QUIZ_XP = 4;
 const COLLECTED_KEY = "kroot-slang-collected";
-const DONE_KEY = "kroot-slang-quiz";
 
 type Question = { entry: SlangEntry; options: string[]; answer: number };
 type Round = { cards: SlangEntry[]; quiz: Question[] };
@@ -118,7 +118,8 @@ export default function SlangRound({ entries, today }: { entries: SlangEntry[]; 
   const [flipped, setFlipped] = useState(false);
   const [q, setQ] = useState(0);
   const [picks, setPicks] = useState<(number | undefined)[]>([]);
-  const [reward, setReward] = useState<"paid" | "practice" | null>(null);
+  const [reward, setReward] = useState<"pending" | "paid" | "practice" | "failed" | null>(null);
+  const [earned, setEarned] = useState(QUIZ_XP);
   // null until the browser has read it — "New" only shows once we know.
   const [collected, setCollected] = useState<Set<string> | null>(null);
   const swiped = useRef(false);
@@ -185,28 +186,32 @@ export default function SlangRound({ entries, today }: { entries: SlangEntry[]; 
 
   async function finish() {
     setMode("done");
-    const score = round.quiz.filter((qq, i) => picks[i] === qq.answer).length;
-    const day = todayKey();
-    let doneToday = false;
+    await claimReward();
+  }
+
+  async function claimReward() {
+    setReward("pending");
     try {
-      doneToday = window.localStorage.getItem(DONE_KEY)?.split(":")[0] === day;
+      // Imported on completion, not at module scope: /slang is also a public
+      // SEO page, and a top-level import put all of supabase-js in its chunk.
+      const { createClient, getClientUserId } = await import("@/lib/supabase/client");
+      const supabase = createClient();
+      if (!(await getClientUserId(supabase))) {
+        setReward(null);
+        return;
+      }
+      const res = await recordCompletion(supabase, "slang", 2, 0, `slang:${todayKey()}`);
+      if (!res) {
+        setReward("failed");
+      } else if (res.already_earned || res.points_awarded === 0) {
+        setReward("practice");
+      } else {
+        setEarned(res.points_awarded ?? QUIZ_XP);
+        setReward("paid");
+      }
     } catch {
-      // storage blocked — treat as the first quiz of the day
+      setReward("failed");
     }
-    if (doneToday) {
-      setReward("practice");
-      return;
-    }
-    setReward("paid");
-    try {
-      window.localStorage.setItem(DONE_KEY, `${day}:${score}`);
-    } catch {
-      // ignore
-    }
-    // Imported on completion, not at module scope: /slang is also a public
-    // SEO page, and a top-level import put all of supabase-js in its chunk.
-    const { createClient } = await import("@/lib/supabase/client");
-    await recordCompletion(createClient(), "slang", 2);
   }
 
   function newRound() {
@@ -270,6 +275,7 @@ export default function SlangRound({ entries, today }: { entries: SlangEntry[]; 
           className="py-2 [perspective:1200px] touch-pan-y"
           onPointerDown={(e) => {
             startX.current = e.clientX;
+            swiped.current = false;
           }}
           onPointerUp={(e) => {
             if (startX.current === null) return;
@@ -425,14 +431,23 @@ export default function SlangRound({ entries, today }: { entries: SlangEntry[]; 
             {score}
             <span className="text-[18px] text-faint font-bold ml-1.5">{t("outOf", { total: ROUND })}</span>
           </p>
-          {reward && (
-            <span
-              className={`self-start inline-flex items-center rounded-full border px-3 py-1 text-[13px] font-extrabold ${
-                reward === "paid" ? "border-success-line bg-success-bg text-success-deep" : "border-line bg-warm-2 text-muted"
-              }`}
-            >
-              {reward === "paid" ? t("reward", { xp: QUIZ_XP }) : t("practice")}
+          {reward === "failed" ? (
+            <span className="self-start inline-flex items-center gap-2 rounded-full border border-[var(--tint-rose-line)] bg-danger-bg pl-3 text-[13px] font-extrabold text-danger">
+              {t("notSaved")}
+              <button type="button" onClick={() => void claimReward()} className="min-h-[44px] rounded-full px-3 underline underline-offset-4">
+                {t("retry")}
+              </button>
             </span>
+          ) : (
+            reward && (
+              <span
+                className={`self-start inline-flex items-center rounded-full border px-3 py-1 text-[13px] font-extrabold ${
+                  reward === "paid" ? "border-success-line bg-success-bg text-success-deep" : "border-line bg-warm-2 text-muted"
+                }`}
+              >
+                {reward === "paid" ? t("reward", { xp: earned }) : reward === "pending" ? "…" : t("practice")}
+              </span>
+            )
           )}
           <div className="grid">
             {round.quiz.map((qq, i) => {

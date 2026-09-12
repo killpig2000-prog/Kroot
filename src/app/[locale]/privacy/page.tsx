@@ -18,7 +18,7 @@ export async function generateMetadata({
   };
 }
 
-const EFFECTIVE_DATE = "September 6, 2026";
+const EFFECTIVE_DATE = "September 12, 2026";
 const CONTACT_EMAIL = "killpig2000@gmail.com";
 
 function Section({ id, title, children }: { id: string; title: string; children: React.ReactNode }) {
@@ -53,11 +53,12 @@ export default function PrivacyPage() {
         <Section id="what-we-collect" title="What Kroot collects">
           <p>Kroot collects only what&apos;s needed to run your account and track your learning progress:</p>
           <ul>
-            <li><b>Account info</b> — the email address and password you sign up with (Kroot never sees your password itself; it&apos;s handled by our auth provider, Supabase), plus a display name and, if you choose to add one, a profile photo.</li>
+            <li><b>Account info</b> — the email address and password you sign up with (Kroot never sees your password itself; it&apos;s handled by our auth provider, Supabase) — or, if you choose &ldquo;Continue with Google&rdquo;, the name and email address on your Google account — plus a display name and, if you choose to add one, a profile photo.</li>
             <li><b>Learning data</b> — your level, streak, XP, which words and lessons you&apos;ve studied, quiz answers, spaced-repetition history, and any writing you submit for correction.</li>
             <li><b>Usage events</b> — which pages and features you use, so we know what&apos;s actually helping people learn. These are tied to your account (or an anonymous ID before you sign up), never sold, and never shared with advertisers.</li>
             <li><b>Support messages</b> — anything you send through the in-app feedback form, along with the page you sent it from.</li>
-            <li><b>Push notification token</b> — only if you turn on streak reminders. You can turn this off at any time in <Link href="/profile#reminders">Settings</Link>.</li>
+            <li><b>Community posts</b> — posts and comments you write on the community board, shown with your display name to other signed-in learners. If you report a post or comment, we keep the report and a copy of the reported text; if you block a learner, we keep that block so their posts stay hidden from you.</li>
+            <li><b>Push notification token</b> — only if you turn on streak reminders. You can turn this off at any time in <Link href="/settings/reminders">Settings → Reminders</Link>.</li>
           </ul>
           <p>Kroot doesn&apos;t knowingly collect precise location, contacts, or any data beyond what&apos;s listed above, and doesn&apos;t run third-party ad tracking.</p>
         </Section>
@@ -79,6 +80,7 @@ export default function PrivacyPage() {
           </p>
           <ul>
             <li><b>Supabase</b> — hosts the database and handles login (stores your account, progress, and password securely).</li>
+            <li><b>Google Sign-In</b> — only if you choose &ldquo;Continue with Google&rdquo;: Google confirms who you are and shares your name and email address with Kroot.</li>
             <li><b>Vercel</b> — hosts the app and provides privacy-focused, cookie-free traffic analytics.</li>
             <li><b>Brevo</b> — sends transactional emails (sign-up confirmation, password reset, reminders).</li>
             <li><b>Google Cloud</b> — converts Korean text to speech audio for pronunciation playback. Only the text being read is sent, not your identity.</li>
@@ -95,10 +97,16 @@ export default function PrivacyPage() {
 
         <Section id="retention-deletion" title="Data retention & deletion">
           <p>
-            Your data is kept for as long as your account is active. To delete your account and all
-            associated data, email <a href={`mailto:${CONTACT_EMAIL}?subject=Delete%20my%20Kroot%20account`}>{CONTACT_EMAIL}</a>{" "}
-            from the address you signed up with — it&apos;s handled within 30 days. Anonymized, aggregated
-            usage statistics that can no longer be tied to you may be kept for product improvement.
+            Your data is kept for as long as your account is active. You can delete your account
+            yourself at any time in <Link href="/settings/account">Settings → Account</Link> → Delete
+            account: your account, learning progress, posts and comments are deleted right away. If you
+            can&apos;t sign in, email <a href={`mailto:${CONTACT_EMAIL}?subject=Delete%20my%20Kroot%20account`}>{CONTACT_EMAIL}</a>{" "}
+            from the address you signed up with and it&apos;s handled within 30 days.
+          </p>
+          <p>
+            A report someone filed about one of your posts may keep a copy of the reported text for
+            moderation. Anonymized, aggregated usage statistics that can no longer be tied to you may be
+            kept for product improvement.
           </p>
         </Section>
 

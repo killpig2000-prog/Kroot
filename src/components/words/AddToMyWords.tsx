@@ -155,7 +155,9 @@ export default function AddToMyWords({
         setStatus({ kind: "unsaved", userId });
         if (wantsSave) void save(userId);
       }
-    })();
+    })().catch(() => {
+      if (!cancelled) setStatus({ kind: "anon" });
+    });
     return () => {
       cancelled = true;
       if (toastTimer.current) clearTimeout(toastTimer.current);

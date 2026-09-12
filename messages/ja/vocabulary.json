@@ -108,7 +108,9 @@
   "detail": {
     "prev": "前へ",
     "backToVocab": "全チャプター",
-    "next": "次の単語 →"
+    "next": "次の単語 →",
+    "backToChapter": "章に戻る →",
+    "lastWord": "この日の最後の単語です ✓"
   },
   "practice": {
     "reviewTime": "復習の時間",
@@ -162,5 +164,17 @@
     "strokes": "{count, plural, other {#画}}",
     "nudge": "ここをタップ"
   },
-  "slangRowSub": "日常の韓国語 · 教科書にない言い回し"
+  "slangRowSub": "日常の韓国語 · 教科書にない言い回し",
+  "index": {
+    "chapterN": "第{n}章",
+    "ctaReview": "第{n}章を復習 →",
+    "ctaContinue": "第{n}章の続き →",
+    "ctaStudy": "第{n}章を学ぶ →",
+    "knownOfTotal": "{known}/{total}語",
+    "dueCount": "💧 復習{n}語",
+    "rootedAria": "{total}語中{known}語が定着",
+    "rootedTally": "{total}語中 <b>{known}</b>語が定着",
+    "due": "復習",
+    "reviewDueAria": "{n}語を復習する"
+  }
 }

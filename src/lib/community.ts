@@ -1,3 +1,5 @@
+import type { SupabaseClient } from "@supabase/supabase-js";
+
 export type BoardKey = "question" | "free" | "exchange";
 
 export type CommunityPost = {
@@ -29,6 +31,13 @@ export type CommunityComment = {
 // schema cache first and reports the miss as PGRST205.
 export function isTableMissing(error: { code?: string } | null): boolean {
   return error?.code === "42P01" || error?.code === "PGRST205";
+}
+
+// Authors the viewer has blocked. A missing table (migration 0083 not applied)
+// just means nobody is blocked.
+export async function fetchBlockedIds(supabase: SupabaseClient, userId: string): Promise<Set<string>> {
+  const { data } = await supabase.from("user_blocks").select("blocked_id").eq("blocker_id", userId);
+  return new Set((data ?? []).map((r: { blocked_id: string }) => r.blocked_id));
 }
 
 // A post has no title column — the first line doubles as the title and the
@@ -106,7 +115,7 @@ Failed a promotion test? Totally normal — practice your weakest skill and reta
 
 3. Water your tree daily — the Review tab resurfaces words right before you'd forget them (spaced repetition). Five minutes a day beats two hours on Sunday.
 
-4. Add one skill at a time — Listening and Reading first, then Writing and Speaking when you're comfortable. The AI teacher grades your writing and speaking with feedback.
+4. Add one skill at a time — Listening and Reading first, then Writing and Speaking when you're comfortable. Writing checks your sentences as you build them, and Speaking lets you compare your voice with native audio.
 
 5. Keep the streak — your tree notices. 화이팅! 🔥`,
   },

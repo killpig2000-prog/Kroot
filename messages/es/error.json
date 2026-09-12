@@ -4,5 +4,7 @@
   "body": "Algo salió mal por nuestra parte — tu progreso está a salvo y bien enraizado. Un poco de agua suele arreglarlo.",
   "retry": "Intentar de nuevo",
   "backToGarden": "Volver a mi jardín",
-  "errorId": "id del error: {id}"
+  "errorId": "id del error: {id}",
+  "offlineTitle": "Estás sin conexión",
+  "offlineBody": "No pudimos conectar con Kroot. Revisa tu conexión e inténtalo de nuevo; tu progreso está a salvo."
 }

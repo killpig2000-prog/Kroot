@@ -33,6 +33,7 @@ export default function Composer({
     if (!canPost) return;
     setBusy(true);
     setError(null);
+    let posted = false;
 
     try {
       const content = [title.trim().replace(/\n/g, " "), body.trim()].filter(Boolean).join("\n");
@@ -53,13 +54,16 @@ export default function Composer({
         setError(t("composer.err"));
         return;
       }
+      posted = true;
       router.push(`/community/${data.id}`);
       router.refresh();
     } catch {
       setError(t("composer.err"));
     } finally {
       // A throw used to leave the post button disabled with the draft trapped.
-      setBusy(false);
+      // After a successful post it stays disabled until the page changes, or a
+      // second tap during the navigation posts the same thing twice.
+      if (!posted) setBusy(false);
     }
   }
 

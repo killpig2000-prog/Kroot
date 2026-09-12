@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
+import { useBackToClose } from "@/hooks/useBackToClose";
 import LevelCreature from "@/components/dashboard/LevelCreature";
 import GrowthRing from "@/components/dashboard/GrowthRing";
 import { treeStageForLevel } from "@/lib/level";
@@ -45,10 +46,17 @@ export default function TreePeek({
   const tr = useTranslations("dashboard.rings");
   const sky = skyFor(costumeIds);
   const grown = rings ? rings.weeks.filter((w) => w.attended > 0).length : 0;
+  // Callers pass an inline onClose; useBackToClose needs a stable one.
+  const closeRef = useRef(onClose);
+  useEffect(() => {
+    closeRef.current = onClose;
+  });
+  const close = useCallback(() => closeRef.current(), []);
+  const dismiss = useBackToClose(true, close);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") dismiss();
     };
     window.addEventListener("keydown", onKey);
     const prev = document.body.style.overflow;
@@ -57,11 +65,11 @@ export default function TreePeek({
       window.removeEventListener("keydown", onKey);
       document.body.style.overflow = prev;
     };
-  }, [onClose]);
+  }, [dismiss]);
 
   return (
     <>
-      <button aria-label={t("peek.close")} onClick={onClose} className="fixed inset-0 z-[60] bg-[#282319]/50 cursor-default" />
+      <button aria-label={t("peek.close")} onClick={dismiss} className="fixed inset-0 z-[60] bg-[#282319]/50 cursor-default" />
       <div className="fixed inset-0 z-[70] flex items-center justify-center px-4 pointer-events-none">
         <div
           role="dialog"
@@ -71,7 +79,7 @@ export default function TreePeek({
         >
           <button
             type="button"
-            onClick={onClose}
+            onClick={dismiss}
             aria-label={t("peek.close")}
             className="absolute top-2 right-2 z-[2] w-8 h-8 rounded-full bg-warm/90 text-muted hover:text-charcoal text-[15px] leading-none"
           >

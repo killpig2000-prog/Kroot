@@ -48,6 +48,8 @@
     "practice": "练习轮 · XP 每天一次",
     "newRound": "再来 {n} 张 ↻",
     "today": "今天",
-    "new": "新"
+    "new": "新",
+    "notSaved": "XP 未保存",
+    "retry": "重试"
   }
 }

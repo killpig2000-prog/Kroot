@@ -113,5 +113,8 @@
     "language": "言語",
     "level": "レベル",
     "languageNote": "意味と説明がこの言語になります。韓国語はそのままです。"
-  }
+  },
+  "retry": "もう一度",
+  "xpNotSaved": "XPが保存されませんでした",
+  "lookupFailed": "辞書を読み込めませんでした。"
 }

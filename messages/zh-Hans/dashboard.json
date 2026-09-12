@@ -2,6 +2,7 @@
   "welcome": "欢迎，{name}",
   "day": "第 {n} 天",
   "loadError": "暂时没能加载你的进度——什么都没丢。稍后刷新一下。",
+  "loadRetry": "重试",
   "quest": {
     "title": "今日任务",
     "done": "完成 ✓",

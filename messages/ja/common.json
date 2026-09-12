@@ -13,5 +13,7 @@
   "delete": "削除",
   "edit": "編集",
   "search": "検索",
-  "noResults": "結果が見つかりません"
+  "noResults": "結果が見つかりません",
+  "tookExtraTries": "{n}語はやり直しが必要でした",
+  "offline": "オフラインです — 接続を確認してください。"
 }

@@ -5,9 +5,11 @@ import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import Comments from "@/components/community/Comments";
 import DeletePostButton from "@/components/community/DeletePostButton";
+import ReportMenu from "@/components/community/ReportMenu";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import {
   SAMPLE_POSTS,
+  fetchBlockedIds,
   findNotice,
   isBoardKey,
   isTableMissing,
@@ -94,15 +96,18 @@ export default async function CommunityPostPage({
     );
   }
 
-  const { data: row, error } = await supabase
-    .from("community_posts")
-    .select("id, user_id, author_name, author_emoji, author_plus, country, board, content, created_at")
-    .eq("id", id)
-    .maybeSingle();
+  const [{ data: row, error }, blocked] = await Promise.all([
+    supabase
+      .from("community_posts")
+      .select("id, user_id, author_name, author_emoji, author_plus, country, board, content, created_at")
+      .eq("id", id)
+      .maybeSingle(),
+    fetchBlockedIds(supabase, user.id),
+  ]);
 
   const tableMissing = isTableMissing(error);
   const post = tableMissing ? SAMPLE_POSTS.find((p) => p.id === id) ?? null : row;
-  if (!post) notFound();
+  if (!post || ("user_id" in post && blocked.has(post.user_id))) notFound();
   const mine = !tableMissing && "user_id" in post && post.user_id === user.id;
 
   let comments: CommunityComment[] = [];
@@ -117,7 +122,7 @@ export default async function CommunityPostPage({
     if (isTableMissing(commentsError)) {
       commentsAvailable = false;
     } else {
-      comments = (commentRows ?? []).map(({ user_id, ...c }) => ({
+      comments = (commentRows ?? []).filter((c) => !blocked.has(c.user_id)).map(({ user_id, ...c }) => ({
         ...c,
         mine: user_id === user.id,
       }));
@@ -169,10 +174,16 @@ export default async function CommunityPostPage({
               <span className="text-[12px] text-faint">
                 {formatTimeAgo(post.created_at, (k, v) => t(`timeAgo.${k}`, v), locale)}
               </span>
-              {mine && (
+              {mine ? (
                 <span className="ml-auto">
                   <DeletePostButton postId={post.id} />
                 </span>
+              ) : (
+                !tableMissing && (
+                  <span className="ml-auto">
+                    <ReportMenu kind="post" id={post.id} />
+                  </span>
+                )
               )}
             </div>
             <h1 className="font-bold text-[20px] tracking-[-0.01em] mb-2.5">{title}</h1>

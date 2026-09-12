@@ -13,7 +13,7 @@ import { createClient } from "@/lib/supabase/client";
 // also folded open at the bottom of My room. Both sets now live on /settings,
 // which this menu links to.
 export default function AccountMenu({
-  displayName,
+  displayName: rawName,
   email,
   avatarUrl,
   compact = false,
@@ -25,6 +25,7 @@ export default function AccountMenu({
    * which (unlike the sidebar column this was built for) has no room above it. */
   compact?: boolean;
 }) {
+  const displayName = rawName || email.split("@")[0];
   const t = useTranslations("dashboard.account");
   const ts = useTranslations("settings");
   const supabase = useMemo(() => createClient(), []);

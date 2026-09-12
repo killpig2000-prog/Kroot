@@ -23,7 +23,7 @@ export type TapSource = "listening" | "reading" | "grammar" | "slang";
 type Popover = {
   token: string;
   rect: DOMRect;
-  word: VocabWord | null | "loading";
+  word: VocabWord | null | "loading" | "error";
   saved: boolean;
   saving: boolean;
 };
@@ -44,6 +44,7 @@ export default function TapText({
   className?: string;
 }) {
   const t = useTranslations("vocabulary.tap");
+  const tu = useTranslations("ui");
   const supabase = useMemo(() => createClient(), []);
   const tokens = useMemo(() => tokenizeKorean(text), [text]);
   const [pop, setPop] = useState<Popover | null>(null);
@@ -98,33 +99,46 @@ export default function TapText({
     }
     closeAll();
     setPop({ token, rect, word: "loading", saved: false, saving: false });
+    await resolve(token);
+  }
 
-    let uid = resolvedUser;
-    if (uid === undefined) {
-      uid = await getClientUserId(supabase);
-      setSessionUser(uid);
-    }
+  async function resolve(token: string) {
+    setPop((p) => (p && p.token === token ? { ...p, word: "loading" } : p));
+    try {
+      let uid = resolvedUser;
+      if (uid === undefined) {
+        uid = await getClientUserId(supabase);
+        setSessionUser(uid);
+      }
 
-    const word = await lookupWord(token);
-    let saved = false;
-    if (word && uid) {
-      const { data } = await supabase
-        .from("vocabulary_progress")
-        .select("id")
-        .eq("user_id", uid)
-        .eq("word_key", word.key)
-        .maybeSingle();
-      saved = !!data;
+      const word = await lookupWord(token);
+      let saved = false;
+      if (word && uid) {
+        const { data } = await supabase
+          .from("vocabulary_progress")
+          .select("id")
+          .eq("user_id", uid)
+          .eq("word_key", word.key)
+          .maybeSingle();
+        saved = !!data;
+      }
+      setPop((p) => (p && p.token === token ? { ...p, word, saved } : p));
+    } catch {
+      setPop((p) => (p && p.token === token ? { ...p, word: "error" } : p));
     }
-    setPop((p) => (p && p.token === token ? { ...p, word, saved } : p));
   }
 
   async function save() {
-    if (!pop || pop.word === "loading" || !pop.word || !resolvedUser || pop.saving || pop.saved) return;
+    if (!pop || pop.word === "loading" || pop.word === "error" || !pop.word || !resolvedUser || pop.saving || pop.saved) return;
     const word = pop.word;
     setPop((p) => (p ? { ...p, saving: true } : p));
     // An already-learned word keeps its box + counts (see plantWord).
-    const error = await plantWord(supabase, resolvedUser, word.key);
+    let error: string | null;
+    try {
+      error = await plantWord(supabase, resolvedUser, word.key);
+    } catch {
+      error = "failed";
+    }
     if (error) console.error("save word failed:", error);
     else track("word_saved", { source, level: word.level });
     setPop((p) => (p ? { ...p, saving: false, saved: !error } : p));
@@ -179,6 +193,17 @@ export default function TapText({
           >
             {pop.word === "loading" ? (
               <p className="text-[13px] text-muted">{t("lookingUp")}</p>
+            ) : pop.word === "error" ? (
+              <div className="flex items-center justify-between gap-2">
+                <p className="text-[13px] text-muted leading-snug">{tu("lookupFailed")}</p>
+                <button
+                  type="button"
+                  onClick={() => void resolve(pop.token)}
+                  className="flex-none min-h-[44px] rounded-[9px] px-3 bg-warm border border-line text-[12.5px] font-semibold hover:border-faint transition-colors"
+                >
+                  {tu("retry")}
+                </button>
+              </div>
             ) : pop.word ? (
               <>
                 <div className="flex items-start justify-between gap-2">

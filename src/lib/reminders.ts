@@ -18,7 +18,125 @@ export type ReminderProfile = {
   reminder_hour?: number;
   last_reminded_at: string | null;
   streak_freezes: number;
+  ui_locale?: string | null;
 };
+
+type Copy = { title: string; body: string };
+
+type ReminderStrings = {
+  streak: (days: number, name: string, due: number) => Copy;
+  due: (due: number) => Copy;
+  waiting: (name: string) => Copy;
+  open: string;
+  streakLine: (days: number) => string;
+  dueLine: (due: number) => string;
+  off: string;
+};
+
+const STRINGS: Record<string, ReminderStrings> = {
+  en: {
+    streak: (days, name, due) => ({
+      title: `🔥 ${days}-day streak on the line`,
+      body: `${name ? `Hey ${name} — one` : "One"} 5-minute lesson tonight keeps it alive.${
+        due ? ` ${due === 1 ? "1 word is" : `${due} words are`} due 💧` : ""
+      }`,
+    }),
+    due: (due) => ({
+      title: "💧 You have words due for review",
+      body: `${due} ${due === 1 ? "word" : "words"} due for review — five minutes keeps them fresh.`,
+    }),
+    waiting: (name) => ({
+      title: "🌱 Your tree is waiting",
+      body: `${name ? `Hi ${name}!` : "Hi!"} A tiny lesson today — listening, a few words, anything counts.`,
+    }),
+    open: "Open my garden →",
+    streakLine: (days) => `Streak: ${days} days`,
+    dueLine: (due) => `${due} words due`,
+    off: "Turn off reminders",
+  },
+  es: {
+    streak: (days, name, due) => ({
+      title: `🔥 Tu racha de ${days} días está en juego`,
+      body: `${name ? `Hola, ${name}: una` : "Una"} lección de 5 minutos esta noche la mantiene viva.${
+        due ? ` Tienes ${due === 1 ? "1 palabra" : `${due} palabras`} para repasar 💧` : ""
+      }`,
+    }),
+    due: (due) => ({
+      title: "💧 Tienes palabras para repasar",
+      body: `${due === 1 ? "1 palabra" : `${due} palabras`} para repasar: cinco minutos bastan para no olvidarlas.`,
+    }),
+    waiting: (name) => ({
+      title: "🌱 Tu árbol te espera",
+      body: `¡Hola${name ? `, ${name}` : ""}! Una lección cortita hoy: escuchar, unas palabras, todo cuenta.`,
+    }),
+    open: "Abrir mi jardín →",
+    streakLine: (days) => `Racha: ${days} días`,
+    dueLine: (due) => `${due} palabras para repasar`,
+    off: "Desactivar recordatorios",
+  },
+  ja: {
+    streak: (days, name, due) => ({
+      title: `🔥 ${days}日連続の記録がピンチです`,
+      body: `${name ? `${name}さん、` : ""}今夜5分だけレッスンすれば記録が続きます。${
+        due ? `復習する単語が${due}語あります 💧` : ""
+      }`,
+    }),
+    due: (due) => ({
+      title: "💧 復習する単語があります",
+      body: `${due}語が復習のタイミングです。5分でしっかり定着します。`,
+    }),
+    waiting: (name) => ({
+      title: "🌱 あなたの木が待っています",
+      body: `こんにちは${name ? `、${name}さん` : ""}！今日は少しだけ — リスニングでも単語いくつかでも、何でもOKです。`,
+    }),
+    open: "マイガーデンを開く →",
+    streakLine: (days) => `連続：${days}日`,
+    dueLine: (due) => `復習：${due}語`,
+    off: "リマインダーをオフにする",
+  },
+  vi: {
+    streak: (days, name, due) => ({
+      title: `🔥 Chuỗi ${days} ngày sắp bị đứt`,
+      body: `${name ? `Chào ${name} — một` : "Một"} bài học 5 phút tối nay sẽ giữ chuỗi của bạn.${
+        due ? ` Có ${due} từ cần ôn 💧` : ""
+      }`,
+    }),
+    due: (due) => ({
+      title: "💧 Bạn có từ cần ôn tập",
+      body: `${due} từ cần ôn tập — năm phút là đủ để nhớ lâu.`,
+    }),
+    waiting: (name) => ({
+      title: "🌱 Cây của bạn đang chờ",
+      body: `Chào ${name || "bạn"}! Một bài học nhỏ hôm nay — nghe, vài từ, gì cũng được.`,
+    }),
+    open: "Mở khu vườn của tôi →",
+    streakLine: (days) => `Chuỗi: ${days} ngày`,
+    dueLine: (due) => `${due} từ cần ôn`,
+    off: "Tắt nhắc nhở",
+  },
+  "zh-Hans": {
+    streak: (days, name, due) => ({
+      title: `🔥 你的 ${days} 天连续记录快断了`,
+      body: `${name ? `${name}，` : ""}今晚学 5 分钟就能保住它。${due ? `还有 ${due} 个词待复习 💧` : ""}`,
+    }),
+    due: (due) => ({
+      title: "💧 有单词待复习",
+      body: `${due} 个单词待复习 — 五分钟就能巩固。`,
+    }),
+    waiting: (name) => ({
+      title: "🌱 你的树在等你",
+      body: `你好${name ? `，${name}` : ""}！今天来一节小课 — 听力、几个单词，什么都算。`,
+    }),
+    open: "打开我的花园 →",
+    streakLine: (days) => `连续：${days} 天`,
+    dueLine: (due) => `${due} 个词待复习`,
+    off: "关闭提醒",
+  },
+};
+
+function reminderStrings(locale?: string | null): ReminderStrings {
+  return (locale && STRINGS[locale]) || STRINGS.en;
+}
 
 export function vapidConfigured(): boolean {
   return !!(process.env.VAPID_PUBLIC_KEY && process.env.VAPID_PRIVATE_KEY);
@@ -36,24 +154,16 @@ function ensureVapid() {
 }
 
 /** Copy for the nudge — varies by streak so it doesn't read like spam. */
-export function reminderCopy(p: Pick<ReminderProfile, "display_name" | "streak_days">, dueWords: number) {
-  const name = p.display_name?.trim() || "there";
-  if (p.streak_days >= 3) {
-    return {
-      title: `🔥 ${p.streak_days}-day streak on the line`,
-      body: `Hey ${name} — one 5-minute lesson tonight keeps it alive.${dueWords ? ` ${dueWords} words are due 💧` : ""}`,
-    };
-  }
-  if (dueWords > 0) {
-    return {
-      title: "💧 You have words due for review",
-      body: `${dueWords} ${dueWords === 1 ? "word" : "words"} due for review — five minutes keeps them fresh.`,
-    };
-  }
-  return {
-    title: "🌱 Your tree is waiting",
-    body: `Hi ${name}! A tiny lesson today — listening, a few words, anything counts.`,
-  };
+export function reminderCopy(
+  p: Pick<ReminderProfile, "display_name" | "streak_days">,
+  dueWords: number,
+  locale?: string | null
+): Copy {
+  const s = reminderStrings(locale);
+  const name = p.display_name?.trim() ?? "";
+  if (p.streak_days >= 3) return s.streak(p.streak_days, name, dueWords);
+  if (dueWords > 0) return s.due(dueWords);
+  return s.waiting(name);
 }
 
 export type PushSendResult = { sent: number; removed: number };
@@ -101,22 +211,23 @@ export function emailConfigured(): boolean {
 
 export async function sendReminderEmail(
   to: string,
-  copy: { title: string; body: string },
-  opts: { name: string; streakDays: number; dueWords: number }
+  copy: Copy,
+  opts: { name: string; streakDays: number; dueWords: number; locale?: string | null }
 ): Promise<boolean> {
   if (!emailConfigured()) return false;
+  const s = reminderStrings(opts.locale);
   const from = process.env.BREVO_FROM_EMAIL ?? "hello@kroot.app";
   const dashboard = `${SITE_URL}/dashboard?source=email`;
-  const settings = `${SITE_URL}/profile#reminders`;
+  const settings = `${SITE_URL}/settings/reminders`;
   const html = `
 <div style="font-family:Nunito,Segoe UI,Arial,sans-serif;max-width:520px;margin:0 auto;padding:28px 20px;color:#4A4237;background:#FFF9EC;border-radius:16px">
   <div style="font-size:30px;margin-bottom:6px">🌱</div>
   <h1 style="font-size:22px;margin:0 0 8px">${escapeHtml(copy.title)}</h1>
   <p style="font-size:15px;line-height:1.6;margin:0 0 18px">${escapeHtml(copy.body)}</p>
-  <a href="${dashboard}" style="display:inline-block;background:#6BBF8A;color:#fff;font-weight:700;text-decoration:none;padding:12px 22px;border-radius:99px;font-size:15px">Open my garden →</a>
+  <a href="${dashboard}" style="display:inline-block;background:#6BBF8A;color:#fff;font-weight:700;text-decoration:none;padding:12px 22px;border-radius:99px;font-size:15px">${escapeHtml(s.open)}</a>
   <p style="font-size:12px;color:#8C8272;margin:26px 0 0;line-height:1.5">
-    ${opts.streakDays > 0 ? `Streak: ${opts.streakDays} days · ` : ""}${opts.dueWords > 0 ? `${opts.dueWords} words due · ` : ""}
-    <a href="${settings}" style="color:#8C8272">Turn off reminders</a>
+    ${opts.streakDays > 0 ? `${escapeHtml(s.streakLine(opts.streakDays))} · ` : ""}${opts.dueWords > 0 ? `${escapeHtml(s.dueLine(opts.dueWords))} · ` : ""}
+    <a href="${settings}" style="color:#8C8272">${escapeHtml(s.off)}</a>
   </p>
 </div>`;
 
@@ -128,7 +239,7 @@ export async function sendReminderEmail(
       to: [{ email: to, name: opts.name }],
       subject: copy.title,
       htmlContent: html,
-      textContent: `${copy.title}\n\n${copy.body}\n\n${dashboard}\n\nTurn off reminders: ${settings}`,
+      textContent: `${copy.title}\n\n${copy.body}\n\n${dashboard}\n\n${s.off}: ${settings}`,
       tags: ["streak-reminder"],
     }),
   });

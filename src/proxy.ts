@@ -3,6 +3,7 @@ import createIntlMiddleware from "next-intl/middleware";
 import { NextResponse, type NextRequest } from "next/server";
 import { routing } from "@/i18n/routing";
 import { LOCALE_COOKIE, isAppLocale } from "@/i18n/locale";
+import { LOGGED_IN_PREFIXES } from "@/lib/seo";
 
 // The one proxy (Next 16's middleware). It does two things, in order:
 //
@@ -22,27 +23,6 @@ import { LOCALE_COOKIE, isAppLocale } from "@/i18n/locale";
 const handleI18n = createIntlMiddleware(routing);
 
 const LOCALE_PREFIX = new RegExp(`^/(${routing.locales.join("|")})(?=/|$)`);
-
-const PROTECTED_PREFIXES = [
-  "/dashboard",
-  "/profile",
-  "/myroom",
-  "/settings",
-  "/vocabulary",
-  "/listening",
-  "/reading",
-  "/writing",
-  "/shop",
-  "/ranking",
-  "/speaking",
-  "/grammar",
-  "/hangul",
-  "/community",
-  "/review",
-  "/guide",
-  "/level-test",
-  "/admin",
-];
 
 // Next fires a speculative RSC prefetch for every link in the viewport, so a
 // page full of /ja/* links keeps re-requesting them long after the learner has
@@ -110,13 +90,14 @@ export async function proxy(request: NextRequest) {
   const localeMatch = pathname.match(LOCALE_PREFIX);
   const prefix = localeMatch ? localeMatch[0] : "";
   const bare = pathname.slice(prefix.length) || "/";
-  const isProtected = PROTECTED_PREFIXES.some((p) => bare === p || bare.startsWith(`${p}/`));
+  const isProtected = LOGGED_IN_PREFIXES.some((p) => bare === p || bare.startsWith(`${p}/`));
 
   // A URL without a prefix means "default locale" to next-intl, so every
   // server redirect("/x"), typed URL or old bookmark dropped a ja/zh/vi user
   // back into English. Send them to the language they last chose instead;
   // the switcher rewrites the cookie before navigating so picking English
-  // still works. (localeDetection stays off — Accept-Language is ignored.)
+  // still works. Accept-Language (next-intl's localeDetection) only decides a
+  // first visit that has no cookie yet.
   const remembered = request.cookies.get(LOCALE_COOKIE)?.value;
   const resolvedLocale = localeMatch ? localeMatch[1] : routing.defaultLocale;
 
@@ -128,7 +109,7 @@ export async function proxy(request: NextRequest) {
   } else if (!user && isProtected) {
     const url = request.nextUrl.clone();
     url.pathname = `${prefix}/auth/login`;
-    url.search = `?next=${encodeURIComponent(pathname)}`;
+    url.search = `?next=${encodeURIComponent(pathname + request.nextUrl.search)}`;
     response = NextResponse.redirect(url);
   } else {
     response = handleI18n(request);

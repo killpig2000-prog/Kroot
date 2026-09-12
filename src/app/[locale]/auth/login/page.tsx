@@ -77,10 +77,23 @@ export default function LoginPage() {
     // Already signed in? Straight to the app. Hard navigation for the same
     // reason as handleEmailLogin below: a soft router.replace() can serve a
     // stale signed-out router-cache entry for `next`.
-    supabase.auth.getUser().then(({ data: { user } }) => {
-      if (user) window.location.assign(next);
-    });
+    supabase.auth
+      .getUser()
+      .then(({ data: { user } }) => {
+        if (user) window.location.assign(next);
+      })
+      .catch(() => {});
   }, [supabase, next]);
+
+  // Back from Google's page restores this one from the bfcache with the
+  // button still busy; that is the one case the Google flow must release it.
+  useEffect(() => {
+    const onShow = (e: PageTransitionEvent) => {
+      if (e.persisted) setSubmitting(false);
+    };
+    window.addEventListener("pageshow", onShow);
+    return () => window.removeEventListener("pageshow", onShow);
+  }, []);
 
   async function handleGoogleLogin() {
     if (submitting) return;
@@ -96,14 +109,14 @@ export default function LoginPage() {
           queryParams: { prompt: "select_account" },
         },
       });
-      if (error) setError(t(`errors.${authErrorKey(error)}`));
+      if (error) {
+        setError(t(`errors.${authErrorKey(error)}`));
+        setSubmitting(false);
+      }
     } catch {
       // Offline, this rejected unhandled: the tap did nothing, said nothing,
       // and the button stayed live as if it had never been pressed.
       setError(t("errors.network"));
-    } finally {
-      // On success the browser is already navigating to Google; releasing the
-      // flag costs nothing and keeps a cancelled redirect from freezing it.
       setSubmitting(false);
     }
   }
@@ -231,7 +244,12 @@ export default function LoginPage() {
                 {t("login.sub")} <span className="kr text-success">다시 만나서 반가워요!</span>
               </p>
 
-              <button type="button" className={`${BTN_OUTLINE} w-full mb-4`} onClick={handleGoogleLogin}>
+              <button
+                type="button"
+                className={`${BTN_OUTLINE} w-full mb-4 disabled:opacity-60`}
+                onClick={handleGoogleLogin}
+                disabled={busy}
+              >
                 {t("login.google")}
               </button>
               <div className="flex items-center gap-3 mb-5 text-[11.5px] font-medium text-faint">

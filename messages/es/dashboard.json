@@ -2,6 +2,7 @@
   "welcome": "Bienvenido, {name}",
   "day": "Día {n}",
   "loadError": "No pudimos cargar tu progreso ahora mismo — no se ha perdido nada. Actualiza en un momento.",
+  "loadRetry": "Reintentar",
   "quest": {
     "title": "Misión de hoy",
     "done": "Hecho ✓",

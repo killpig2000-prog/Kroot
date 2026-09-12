@@ -190,7 +190,7 @@ export default async function ReviewPage() {
     <div className="min-h-screen bg-warm text-charcoal">
       <div className="grid grid-cols-1 xl:grid-cols-[clamp(216px,18%,280px)_minmax(0,1fr)] w-full min-h-screen content-start xl:content-stretch">
         <Sidebar
-          displayName={profile?.display_name ?? "there"}
+          displayName={profile?.display_name ?? ""}
           email={user.email ?? ""}
           streakDays={profile?.streak_days ?? 0}
           avatarUrl={profile?.avatar_url}

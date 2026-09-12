@@ -23,7 +23,8 @@
   },
   "empty": {
     "title": "这里还什么都没有",
-    "sub": "来做这个版块的第一个发帖人吧。"
+    "sub": "来做这个版块的第一个发帖人吧。",
+    "allSub": "还没有学习者发帖，来发第一帖吧。"
   },
   "comments": {
     "heading": "评论",
@@ -59,5 +60,20 @@
     "minutes": "{n} 分钟前",
     "hours": "{n} 小时前",
     "days": "{n} 天前"
+  },
+  "moderation": {
+    "menu": "更多选项",
+    "report": "举报",
+    "block": "屏蔽此用户",
+    "why": "有什么问题？",
+    "reasons": {
+      "spam": "垃圾信息或广告",
+      "harassment": "骚扰或仇恨言论",
+      "sexual": "色情内容",
+      "other": "其他"
+    },
+    "reported": "谢谢，我们会尽快查看。",
+    "blockConfirm": "要屏蔽此用户吗？你将不再看到 TA 的帖子和评论。",
+    "failed": "操作失败，请稍后再试。"
   }
 }

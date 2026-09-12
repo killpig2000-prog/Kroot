@@ -216,17 +216,19 @@ export default function WordBankList({
                     control takes the same corner. */}
                 <span
                   aria-hidden="true"
-                  className="absolute top-[9px] right-[11px] text-[10.5px] font-bold text-faint tabular-nums transition-opacity group-hover:opacity-0"
+                  className="absolute top-[9px] right-[11px] text-[10.5px] font-bold text-faint tabular-nums transition-opacity group-hover:opacity-0 [@media(hover:none)]:opacity-0"
                 >
                   {index + 1}
                 </span>
+                {/* Touch screens have no hover, so there the ✕ is always shown;
+                    the 44px button keeps the 26px circle as its visible part. */}
                 <button
                   type="button"
                   onClick={() => void remove(item, index)}
                   aria-label={t("bank.remove", { word: item.korean })}
-                  className="absolute top-[5px] right-[5px] w-[26px] h-[26px] inline-flex items-center justify-center rounded-full text-[13px] text-faint opacity-0 transition-all hover:text-danger hover:bg-warm-2 group-hover:opacity-100 focus-visible:opacity-100 focus-visible:outline-2 focus-visible:outline-success"
+                  className="absolute -top-1 -right-1 w-11 h-11 inline-flex items-center justify-center rounded-full text-[13px] text-faint opacity-0 transition-all hover:text-danger group-hover:opacity-100 focus-visible:opacity-100 focus-visible:outline-2 focus-visible:outline-success [@media(hover:none)]:opacity-100"
                 >
-                  <span aria-hidden="true">✕</span>
+                  <span aria-hidden="true" className="w-[26px] h-[26px] inline-flex items-center justify-center rounded-full hover:bg-warm-2">✕</span>
                 </button>
               </div>
             );

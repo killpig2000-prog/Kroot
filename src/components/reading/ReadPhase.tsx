@@ -165,6 +165,10 @@ export default function ReadPhase({
       pitch: speakers.indexOf(speaker) % 2 === 1 ? 0.85 : 1,
       onend: () => playFrom(index + 1),
       onerror: () => playFrom(index + 1),
+      oncancel: () => {
+        playing.current = false;
+        setSpeaking(null);
+      },
     });
   }
 

@@ -38,7 +38,8 @@
     "listeningTitle": "1 · 听力 — 点 🔊 后作答",
     "readingTitle": "2 · 阅读 — 第 {n}/{total} 篇",
     "writingProgress": "3 · 写作 — 已完成 {done} / {total}",
-    "seeResults": "查看结果 →"
+    "seeResults": "查看结果 →",
+    "scoring": "评分中…"
   },
   "mcq": {
     "progress": "{title} · {n}/{total}",
@@ -62,6 +63,7 @@
     "startLevel": "从 {level} 开始",
     "sampleReading": "关于 {topic} 的阅读文章",
     "sampleListening": "{level} 速度的听力对话",
-    "sampleWriting": "写一个简短的回应"
+    "sampleWriting": "写一个简短的回应",
+    "retryPromotion": "再次尝试升级"
   }
 }

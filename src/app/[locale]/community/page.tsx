@@ -8,6 +8,7 @@ import {
   BOARDS,
   NOTICES,
   SAMPLE_POSTS,
+  fetchBlockedIds,
   isBoardKey,
   isTableMissing,
   type CommunityPost,
@@ -41,7 +42,7 @@ export default async function CommunityPage({
     .limit(50);
   if (board) query = query.eq("board", board);
 
-  const { data: rows, error } = await query;
+  const [{ data: rows, error }, blocked] = await Promise.all([query, fetchBlockedIds(supabase, user.id)]);
 
   // Only the "table hasn't been migrated yet" case gets the sample board; any
   // other failure shows a real notice rather than posts that don't exist.
@@ -50,7 +51,7 @@ export default async function CommunityPage({
   // Strip user_id before it reaches the client — ownership becomes a boolean.
   const posts: CommunityPost[] = tableMissing
     ? SAMPLE_POSTS.filter((p) => !board || p.board === board)
-    : (rows ?? []).map(({ user_id, ...post }) => ({
+    : (rows ?? []).filter((r) => !blocked.has(r.user_id)).map(({ user_id, ...post }) => ({
         ...post,
         mine: user_id === user.id,
       })) as CommunityPost[];
@@ -168,7 +169,7 @@ export default async function CommunityPage({
             ))}
           </div>
 
-          <PostList posts={posts} commentCounts={commentCounts} />
+          <PostList posts={posts} commentCounts={commentCounts} onAllBoard={!board} />
         </main>
       </div>
 

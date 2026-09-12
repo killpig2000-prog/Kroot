@@ -38,7 +38,14 @@
     "typeInstead": "Type your answer instead",
     "noMic": "Your browser doesn't support speech recognition — type your answer instead.",
     "placeholder": "한국어로 입력하세요…",
-    "check": "Check it"
+    "check": "Check it",
+    "errors": {
+      "blocked": "Microphone access is blocked — allow it in your browser settings, or type your answer below.",
+      "noSpeech": "Didn't catch that — for a short word, hold the sound a beat longer.",
+      "notCaught": "Didn't catch that. Try again.",
+      "nothingHeard": "Nothing heard — try speaking a little louder.",
+      "startFailed": "Couldn't start the microphone. Try again."
+    }
   },
   "score": {
     "great": "🔥 Nailed it!",

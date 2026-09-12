@@ -13,5 +13,7 @@
   "delete": "Eliminar",
   "edit": "Editar",
   "search": "Buscar",
-  "noResults": "No se encontraron resultados"
+  "noResults": "No se encontraron resultados",
+  "tookExtraTries": "{n} necesitaron más intentos",
+  "offline": "Sin conexión: revisa tu internet."
 }

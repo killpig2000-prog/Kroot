@@ -8,6 +8,7 @@ import {
   vapidConfigured,
   type ReminderProfile,
 } from "@/lib/reminders";
+import { ATTEMPTED_FILTER } from "@/lib/word-bank";
 
 // Daily streak nudge. Scheduled in vercel.json — Hobby allows exactly one run
 // a day, and everybody gets that one run. There used to be a per-user
@@ -63,6 +64,7 @@ async function dueWordCounts(db: Admin, ids: string[], nowIso: string): Promise<
       .select("user_id")
       .in("user_id", ids.slice(i, i + ID_CHUNK))
       .lte("next_review_at", nowIso)
+      .or(ATTEMPTED_FILTER)
       .limit(DUE_ROW_CAP);
     if (error) {
       console.error("due-word tally failed:", error.message);
@@ -115,7 +117,7 @@ export async function GET(request: Request) {
   const { data: rows, error } = await db
     .from("profiles")
     .select(
-      "id, display_name, streak_days, last_active_date, reminder_push, reminder_email, last_reminded_at, streak_freezes"
+      "id, display_name, streak_days, last_active_date, reminder_push, reminder_email, last_reminded_at, streak_freezes, ui_locale"
     )
     .or("reminder_push.eq.true,reminder_email.eq.true")
     .neq("last_active_date", today)
@@ -145,7 +147,7 @@ export async function GET(request: Request) {
 
   async function deliver(p: ReminderProfile): Promise<boolean> {
     const dueWords = counts.get(p.id) ?? 0;
-    const copy = reminderCopy(p, dueWords);
+    const copy = reminderCopy(p, dueWords, p.ui_locale);
     let delivered = false;
 
     if (p.reminder_push && pushOn) {
@@ -161,7 +163,7 @@ export async function GET(request: Request) {
       emailBudget--;
       const to = addresses.get(p.id) ?? (await db.auth.admin.getUserById(p.id)).data?.user?.email;
       const ok = to
-        ? await sendReminderEmail(to, copy, { name: p.display_name, streakDays: p.streak_days, dueWords })
+        ? await sendReminderEmail(to, copy, { name: p.display_name, streakDays: p.streak_days, dueWords, locale: p.ui_locale })
         : false;
       if (ok) {
         email++;

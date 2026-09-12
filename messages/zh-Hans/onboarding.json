@@ -92,7 +92,7 @@
     "email": "邮箱",
     "nameLabel": "我们该怎么称呼你？",
     "namePlaceholder": "小明",
-    "agree": "我同意<link>服务条款和隐私政策</link>。",
+    "agree": "我同意<terms>服务条款</terms>和<privacy>隐私政策</privacy>。",
     "sending": "发送中…",
     "login": "登录",
     "alreadyHere": "已经有账号了？",

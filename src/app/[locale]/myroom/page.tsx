@@ -6,8 +6,9 @@ import MyRoomStage from "@/components/myroom/MyRoomStage";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { levelProgress, treeStageForLevel } from "@/lib/level";
 import { buildWeeks, ringsSince, xpByDayFrom } from "@/lib/growth-rings";
-import { countSavedWords, getWordBankSlots } from "@/lib/word-bank";
+import { ATTEMPTED_FILTER, countSavedWords, getWordBankSlots } from "@/lib/word-bank";
 import { dailyReviewCap } from "@/lib/srs";
+import { selectAll } from "@/lib/select-all";
 import type { CefrLevel } from "@/lib/tree";
 
 // My room — the dressing room (2026-09-10, mockup A). The garden up top is
@@ -43,11 +44,15 @@ export default async function MyRoomPage() {
     // makes, plus XP per day so a good week draws a thicker ring.
     supabase.from("attendance_days").select("day").eq("user_id", user.id).gte("day", since),
     supabase.from("daily_activity").select("activity_date, minutes").eq("user_id", user.id).gte("activity_date", since),
-    supabase.from("vocabulary_progress").select("last_reviewed_at").eq("user_id", user.id).gte("last_reviewed_at", `${since}T00:00:00.000Z`),
-    supabase.from("xp_events").select("points, created_at").eq("user_id", user.id).gte("created_at", `${since}T00:00:00.000Z`),
-    // The watering can: the same due count and daily-cap accounting as the
-    // Garden (dashboard_snapshot's due_count), so both gardens show one number.
-    supabase.from("vocabulary_progress").select("id", { count: "exact", head: true }).eq("user_id", user.id).lte("next_review_at", now.toISOString()),
+    selectAll<{ last_reviewed_at: string }>((from, to) =>
+      supabase.from("vocabulary_progress").select("last_reviewed_at").eq("user_id", user.id).gte("last_reviewed_at", `${since}T00:00:00.000Z`).order("id").range(from, to),
+    ),
+    selectAll<{ points: number; created_at: string }>((from, to) =>
+      supabase.from("xp_events").select("points, created_at").eq("user_id", user.id).gte("created_at", `${since}T00:00:00.000Z`).order("id").range(from, to),
+    ),
+    // The watering can: the same due queue as /review and the Garden —
+    // answered words only, since a bare bookmark is planted as due.
+    supabase.from("vocabulary_progress").select("id", { count: "exact", head: true }).eq("user_id", user.id).lte("next_review_at", now.toISOString()).or(ATTEMPTED_FILTER),
     supabase.from("vocabulary_progress").select("id", { count: "exact", head: true }).eq("user_id", user.id).gte("last_reviewed_at", `${now.toISOString().slice(0, 10)}T00:00:00.000Z`),
   ]);
   const reviewCap = dailyReviewCap(profile?.review_capacity_bonus ?? 0);

@@ -21,6 +21,7 @@
   "deleteGo": "永久删除",
   "deleting": "正在删除…",
   "deleteFailed": "没有成功，请稍后再试。",
+  "saveFailed": "保存失败，请重试。",
   "language": "界面语言",
   "languageDesc": "应用与你交流时使用的语言。",
   "levelTitle": "我的等级",

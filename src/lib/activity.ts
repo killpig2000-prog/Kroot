@@ -57,6 +57,32 @@ export type ProgressResult = {
  */
 export const REVIEW_ITEM_KEY = "review";
 
+/**
+ * The latest award_xp call's outcome, so a result screen can tell "still
+ * landing" from "failed" (and retry it) without every session threading that
+ * state through.
+ */
+export type XpStatus = {
+  state: "pending" | "failed" | "done";
+  at: number;
+  retry?: () => Promise<ProgressResult | null>;
+};
+let xpStatus: XpStatus | null = null;
+const xpListeners = new Set<() => void>();
+function setXpStatus(next: XpStatus) {
+  xpStatus = next;
+  xpListeners.forEach((l) => l());
+}
+export function subscribeXpStatus(listener: () => void): () => void {
+  xpListeners.add(listener);
+  return () => {
+    xpListeners.delete(listener);
+  };
+}
+export function getXpStatus(): XpStatus | null {
+  return xpStatus;
+}
+
 /** Add study minutes to today's daily_activity row (server-side, atomic). */
 export async function logActivity(supabase: SupabaseClient, minutes: number): Promise<void> {
   const { error } = await supabase.rpc("log_activity", { p_minutes: Math.max(1, Math.round(minutes)) });
@@ -92,6 +118,7 @@ export async function awardPoints(
   reviewCount?: number | null,
 ): Promise<ProgressResult | null> {
   if (points <= 0) return null;
+  setXpStatus({ state: "pending", at: Date.now() });
   let { data, error } = await supabase.rpc("award_xp", {
     p_points: points,
     p_skill: skill,
@@ -129,8 +156,14 @@ export async function awardPoints(
   }
   if (error) {
     console.error("award_xp failed:", error.message);
+    setXpStatus({
+      state: "failed",
+      at: Date.now(),
+      retry: () => awardPoints(supabase, points, skill, itemKey, score, level, reviewCount),
+    });
     return null;
   }
+  setXpStatus({ state: "done", at: Date.now() });
   const row = Array.isArray(data) ? data[0] : data;
   return (row as ProgressResult) ?? null;
 }

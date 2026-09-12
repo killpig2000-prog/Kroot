@@ -113,5 +113,8 @@
     "language": "Idioma",
     "level": "Nivel",
     "languageNote": "Los significados y las instrucciones cambian a este idioma. El coreano sigue en coreano."
-  }
+  },
+  "retry": "Reintentar",
+  "xpNotSaved": "XP no guardada",
+  "lookupFailed": "No se pudo cargar el diccionario."
 }

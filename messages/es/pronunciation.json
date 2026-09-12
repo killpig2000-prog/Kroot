@@ -38,7 +38,14 @@
     "typeInstead": "Escríbelo en vez de decirlo",
     "noMic": "Tu navegador no admite reconocimiento de voz — escribe la respuesta.",
     "placeholder": "한국어로 입력하세요…",
-    "check": "Comprobar"
+    "check": "Comprobar",
+    "errors": {
+      "blocked": "El micrófono está bloqueado: permítelo en la configuración del navegador o escribe tu respuesta abajo.",
+      "noSpeech": "No se oyó bien: en palabras cortas, alarga un poco el sonido.",
+      "notCaught": "No se oyó bien. Inténtalo de nuevo.",
+      "nothingHeard": "No se oyó nada: habla un poco más alto.",
+      "startFailed": "No se pudo iniciar el micrófono. Inténtalo de nuevo."
+    }
   },
   "score": {
     "great": "🔥 ¡Bordado!",

@@ -37,7 +37,7 @@ export default function OpengraphImage() {
           Grow your Korean, one little sprout at a time 🌱
         </div>
         <div style={{ fontSize: 27, color: "#6B6560" }}>
-          Tiny lessons · AI writing feedback · 4,000+ words · Free forever
+          Tiny lessons · Listening, reading & writing · 4,000+ words · Free forever
         </div>
       </div>
     ),

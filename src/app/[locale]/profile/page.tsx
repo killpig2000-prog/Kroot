@@ -22,6 +22,7 @@ import {
 } from "@/components/profile/skill-progress";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { dailyReviewCap } from "@/lib/srs";
+import { selectAll } from "@/lib/select-all";
 import { iso } from "@/lib/study-garden";
 import { LEVEL_ORDER, type CefrLevel } from "@/lib/tree";
 
@@ -96,10 +97,14 @@ export default async function ProfilePage({
       .select("reminder_push, reminder_email, streak_freezes, coins, review_capacity_bonus, is_admin")
       .eq("id", user.id)
       .maybeSingle(),
-    supabase
-      .from("vocabulary_progress")
-      .select("word_key, correct_count, incorrect_count, next_review_at, box, created_at")
-      .eq("user_id", user.id),
+    selectAll<VocabRow>((from, to) =>
+      supabase
+        .from("vocabulary_progress")
+        .select("word_key, correct_count, incorrect_count, next_review_at, box, created_at")
+        .eq("user_id", user.id)
+        .order("id")
+        .range(from, to),
+    ),
     supabase.from("reading_progress").select("passage_key, correct_count, incorrect_count").eq("user_id", user.id),
     // score / quiz_correct arrive with migration 0037; both selects are
     // retried below without them so an unapplied migration costs the score,
@@ -120,22 +125,26 @@ export default async function ProfilePage({
     // What grew the tree: XP with its source. `skill` is null on ~8% of
     // rows (older award_xp calls), which the ledger folds into "other"
     // rather than dropping — the total has to keep adding up.
-    (() => {
+    selectAll<XpRow>((from, to) => {
       const q = supabase.from("xp_events").select("points, skill, created_at").eq("user_id", user.id);
-      return windowStartIso ? q.gte("created_at", windowStartIso) : q;
-    })(),
+      return (windowStartIso ? q.gte("created_at", windowStartIso) : q).order("id").range(from, to);
+    }),
   ]);
 
   const extras = extrasRes.error ? null : extrasRes.data;
-  let vocabRows = (vocabRes.error ? [] : (vocabRes.data as VocabRow[] | null) ?? []) as VocabRow[];
+  let vocabRows = vocabRes.error ? [] : vocabRes.data;
   if (vocabRes.error) {
-    const retry = await supabase
-      .from("vocabulary_progress")
-      .select("word_key, correct_count, incorrect_count, next_review_at")
-      .eq("user_id", user.id);
-    vocabRows = retry.error ? [] : ((retry.data ?? []) as VocabRow[]).map((r) => ({ ...r, box: null, created_at: null }));
+    const retry = await selectAll<Omit<VocabRow, "box" | "created_at">>((from, to) =>
+      supabase
+        .from("vocabulary_progress")
+        .select("word_key, correct_count, incorrect_count, next_review_at")
+        .eq("user_id", user.id)
+        .order("id")
+        .range(from, to),
+    );
+    vocabRows = retry.error ? [] : retry.data.map((r) => ({ ...r, box: null, created_at: null }));
   }
-  const xpRows = (xpRes.error ? [] : (xpRes.data as XpRow[] | null) ?? []) as XpRow[];
+  const xpRows = xpRes.error ? [] : xpRes.data;
   const readingRows = readingRes.error ? [] : readingRes.data ?? [];
   const speakingRows = speakingRes.error ? [] : speakingRes.data ?? [];
   const grammarRows = grammarRes.error ? [] : grammarRes.data ?? [];
@@ -362,13 +371,9 @@ export default async function ProfilePage({
   const skillLabel = (key: string) => {
     if (key === "other") return tl("ledgerOther");
     if (key === "quest") return tl("ledgerQuest");
-    // nav has a name for every practice skill; anything else prints its key
-    // rather than a missing-message crash.
-    try {
-      return tn(key as Parameters<typeof tn>[0]);
-    } catch {
-      return key;
-    }
+    // nav has a name for every practice skill; anything else prints its key.
+    // next-intl doesn't throw on a missing key, so check rather than catch.
+    return tn.has(key as Parameters<typeof tn.has>[0]) ? tn(key as Parameters<typeof tn>[0]) : key;
   };
   const LEDGER_ROWS = 6;
   const ledgerAll = [...bySkill.entries()]
@@ -437,7 +442,7 @@ export default async function ProfilePage({
     <div className="min-h-screen bg-warm text-charcoal">
       <div className="grid grid-cols-1 xl:grid-cols-[clamp(216px,18%,280px)_minmax(0,1fr)] w-full min-h-screen content-start xl:content-stretch">
         <Sidebar
-          displayName={profile?.display_name ?? "there"}
+          displayName={profile?.display_name ?? ""}
           email={user.email ?? ""}
           streakDays={streakDays}
           avatarUrl={profile?.avatar_url}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
@@ -22,16 +22,38 @@ const REVIEW_MINUTES = 5;
 const CARD = "max-w-[560px] border border-line rounded-[14px] p-[clamp(20px,3vw,28px)]";
 const COLOR = "#3E7C59";
 
-export default function ReviewSession({
-  words,
-  pool,
-  userId,
-}: {
+type ReviewProps = {
   words: VocabWordWithProgress[];
   /** Same-level words the quiz draws its wrong answers from. */
   pool?: VocabWord[];
   userId: string;
-}) {
+};
+
+// "More to review?" stays on /review, where a push is a no-op and the old
+// round never unmounts — so refresh the due list and start a fresh round
+// once it has landed.
+export default function ReviewSession(props: ReviewProps) {
+  const router = useRouter();
+  const [round, setRound] = useState(0);
+  const [wantMore, setWantMore] = useState(false);
+  const [refreshing, startRefresh] = useTransition();
+  if (wantMore && !refreshing) {
+    setWantMore(false);
+    setRound((r) => r + 1);
+  }
+  return (
+    <ReviewRound
+      key={round}
+      {...props}
+      onMore={() => {
+        setWantMore(true);
+        startRefresh(() => router.refresh());
+      }}
+    />
+  );
+}
+
+function ReviewRound({ words, pool, userId, onMore }: ReviewProps & { onMore: () => void }) {
   const router = useRouter();
   const t = useTranslations("vocabulary.practice");
   const tu = useTranslations("ui");
@@ -61,8 +83,9 @@ export default function ReviewSession({
     Object.fromEntries(words.map((w) => [w.key, w.box ?? 1]))
   );
   const logged = useRef(false);
+  const pendingSaves = useRef<Promise<void>[]>([]);
 
-  async function answer(option: string) {
+  function answer(option: string) {
     if (selected) return;
     setSelected(option);
 
@@ -86,24 +109,27 @@ export default function ReviewSession({
 
     // Interrupting the quiz over a failed write would be worse than finishing
     // it, but the learner still has to be told at the end — otherwise the
-    // words come back undone with nothing to explain it.
-    try {
-      const { error } = await supabase.from("vocabulary_progress").upsert(
-        {
-          user_id: userId,
-          word_key: q.word.key,
-          correct_count: (word?.correct_count ?? 0) + (gotIt ? 1 : 0),
-          incorrect_count: (word?.incorrect_count ?? 0) + (gotIt ? 0 : 1),
-          last_reviewed_at: new Date().toISOString(),
-          box,
-          next_review_at: nextReviewAt(box),
-        },
-        { onConflict: "user_id,word_key" }
-      );
-      if (error) setSaveFailed(true);
-    } catch {
-      setSaveFailed(true);
-    }
+    // words come back undone with nothing to explain it. The quiz doesn't
+    // wait on the write either; the finish waits for all of them instead.
+    const row = {
+      user_id: userId,
+      word_key: q.word.key,
+      correct_count: (word?.correct_count ?? 0) + (gotIt ? 1 : 0),
+      incorrect_count: (word?.incorrect_count ?? 0) + (gotIt ? 0 : 1),
+      last_reviewed_at: new Date().toISOString(),
+      box,
+      next_review_at: nextReviewAt(box),
+    };
+    pendingSaves.current.push(
+      (async () => {
+        try {
+          const { error } = await supabase.from("vocabulary_progress").upsert(row, { onConflict: "user_id,word_key" });
+          if (error) setSaveFailed(true);
+        } catch {
+          setSaveFailed(true);
+        }
+      })()
+    );
 
     setTimeout(() => {
       setSelected(null);
@@ -119,6 +145,7 @@ export default function ReviewSession({
   async function logOnce() {
     if (logged.current) return;
     logged.current = true;
+    await Promise.all(pendingSaves.current);
     // One paid review per calendar day (the server stamps the date onto this
     // key) — repetition is the point of SRS, so this can't be "once ever",
     // but it also can't pay per lap of the same due queue.
@@ -145,6 +172,7 @@ export default function ReviewSession({
     setExiting(true);
     logged.current = true;
     try {
+      await Promise.all(pendingSaves.current);
       if (index > 0) {
         await awardPartialCredit(
           supabase,
@@ -174,6 +202,10 @@ export default function ReviewSession({
       await logOnce();
     } catch {
       // best effort — the session is over either way
+    }
+    if (href === "/review") {
+      onMore();
+      return;
     }
     router.push(href);
     router.refresh();

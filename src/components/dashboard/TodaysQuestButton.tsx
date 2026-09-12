@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { SKILL_HREF } from "@/components/dashboard/QuestButton";
 import { playTap } from "@/lib/sfx";
+import LinkPendingLabel from "@/components/dashboard/LinkPendingLabel";
 
 // Today's quest on the phone is the watering can. Until it's done the
 // button is dry ground — the app's warm sand with a cracked-earth pattern
@@ -126,7 +127,7 @@ export default function TodaysQuestButton({
         </span>
       </span>
       <span className="relative flex-none font-semibold" style={{ fontSize: "clamp(15px, 4.3vw, 17px)" }}>
-        {done ? t("done") : t("start")}
+        {done ? t("done") : <LinkPendingLabel>{t("start")}</LinkPendingLabel>}
       </span>
     </>
   );

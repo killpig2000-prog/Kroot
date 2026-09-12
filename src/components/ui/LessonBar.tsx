@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import ModuleIcon from "@/components/dashboard/ModuleIcon";
 import { LANGUAGES, rememberLocale } from "@/i18n/locale";
+import { useBackToClose } from "@/hooks/useBackToClose";
 import type { CefrLevel } from "@/lib/tree";
 
 // The bar at the top of the six lesson index pages (Hangul, Vocabulary,
@@ -71,6 +72,7 @@ export default function LessonBar({
 }) {
   const t = useTranslations("ui.lessonBar");
   const [sheet, setSheet] = useState<SheetKind>(null);
+  const closeSheet = useCallback(() => setSheet(null), []);
   const currentLang = LANGUAGES.find((l) => l.code === locale) ?? LANGUAGES[0];
 
   return (
@@ -125,14 +127,14 @@ export default function LessonBar({
         </div>
       </div>
 
-      <Sheet open={sheet === "language"} onClose={() => setSheet(null)} title={t("language")}>
-        <LanguageList locale={locale} onDone={() => setSheet(null)} />
+      <Sheet open={sheet === "language"} onClose={closeSheet} title={t("language")}>
+        <LanguageList locale={locale} onDone={closeSheet} />
         <p className="mt-3 text-[12.5px] text-muted leading-snug">{t("languageNote")}</p>
       </Sheet>
 
       {level && (
-        <Sheet open={sheet === "level"} onClose={() => setSheet(null)} title={t("level")}>
-          <LevelList level={level} onDone={() => setSheet(null)} />
+        <Sheet open={sheet === "level"} onClose={closeSheet} title={t("level")}>
+          <LevelList level={level} onDone={closeSheet} />
         </Sheet>
       )}
     </>
@@ -270,12 +272,15 @@ function Sheet({
   children: React.ReactNode;
 }) {
   const panel = useRef<HTMLDivElement>(null);
+  // Scrim, Escape and Android Back go through history; a pick in the list
+  // closes directly, so it never undoes the navigation it starts.
+  const dismiss = useBackToClose(open, onClose);
 
   const onKey = useCallback(
     (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") dismiss();
     },
-    [onClose],
+    [dismiss],
   );
   useEffect(() => {
     if (!open) return;
@@ -292,7 +297,7 @@ function Sheet({
   return (
     <div className={`fixed inset-0 z-[60] ${open ? "" : "pointer-events-none"}`} role="presentation">
       <div
-        onClick={onClose}
+        onClick={dismiss}
         aria-hidden="true"
         className={`absolute inset-0 bg-[rgba(40,35,25,.38)] transition-[opacity,visibility] duration-200 ${
           open ? "opacity-100 visible" : "opacity-0 invisible"

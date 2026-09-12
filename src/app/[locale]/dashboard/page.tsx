@@ -9,6 +9,7 @@ import TodaysQuestCard from "@/components/dashboard/TodaysQuestCard";
 import GardenHeader from "@/components/dashboard/GardenHeader";
 import GardenCard from "@/components/dashboard/GardenCard";
 import TodaysQuestButton from "@/components/dashboard/TodaysQuestButton";
+import LoadErrorNotice from "@/components/dashboard/LoadErrorNotice";
 import { MODULES } from "@/components/dashboard/navItems";
 import ModuleIcon from "@/components/dashboard/ModuleIcon";
 import Glyph from "@/components/dashboard/Glyph";
@@ -25,6 +26,8 @@ import { getChaptersForLevel as getReadingChapters } from "@/lib/reading";
 import { getChaptersForLevel as getWritingChapters } from "@/lib/writing";
 import { hashString } from "@/lib/writing-builder";
 import { dailyReviewCap } from "@/lib/srs";
+import { selectAll } from "@/lib/select-all";
+import { ATTEMPTED_FILTER } from "@/lib/word-bank";
 import { slangOfTheDay } from "@/lib/slang";
 import type { CefrLevel } from "@/lib/tree";
 
@@ -57,15 +60,8 @@ type Snapshot = {
   streak: number;
   costumes: { costume_id: string; equipped: boolean }[];
   quest: { id: string; skill_key: string; title: string; description: string; completed_at: string | null } | null;
-  listening: string[];
-  reading: string[];
-  writing: string[];
-  speaking: { prompt_key: string; best_score: number | null }[];
   due_count: number;
-  activity: { activity_date: string; minutes: number | null }[];
   level_tests: number;
-  grammar: string[];
-  vocab_keys: string[];
 };
 
 export default async function DashboardPage() {
@@ -86,27 +82,17 @@ export default async function DashboardPage() {
   // every read still goes through the caller's RLS).
   const { data: snapshotRaw, error: snapshotError } = await supabase.rpc("dashboard_snapshot", { p_today: today });
   if (snapshotError) console.error("dashboard_snapshot failed:", snapshotError.message);
-  const snapshot = (snapshotError ? null : (snapshotRaw as Snapshot | null)) ?? {
+  const snapshot: Snapshot = (snapshotError ? null : (snapshotRaw as Snapshot | null)) ?? {
     profile: null,
     extras: null,
     streak: 0,
     costumes: [],
     quest: null,
-    listening: [],
-    reading: [],
-    writing: [],
-    speaking: [],
     due_count: 0,
-    activity: [],
     level_tests: 1, // don't bounce a signed-in learner to /onboarding on a query error
-    grammar: [],
-    vocab_keys: [],
   };
   const profile = snapshot.profile;
   const extras = snapshot.extras;
-  // snapshot.listening/reading/writing/speaking/vocab_keys/activity are still
-  // returned by the RPC; nothing on this page reads them any more (the door
-  // gauges that did are gone — see the doors below). My progress has its own.
 
   // Confirmed-email signups land here without ever picking a starting level
   // (the confirmation link used to skip onboarding). Send them back; a query
@@ -118,13 +104,24 @@ export default async function DashboardPage() {
 
   let quest = snapshot.quest;
   const questOfTheDay = QUEST_ROTATION[Math.floor(Date.parse(today) / 86_400_000) % QUEST_ROTATION.length];
-  if (!quest) {
-    const { data: created } = await supabase
+  // A failed snapshot means today's quest is unknown, not missing.
+  if (!quest && !snapshotError) {
+    const { data: created, error: insertError } = await supabase
       .from("daily_quests")
       .insert({ user_id: user.id, quest_date: today, ...questOfTheDay })
       .select("id, skill_key, title, description, completed_at")
       .single();
     quest = created ?? null;
+    // unique (user_id, quest_date): another tab inserted it first
+    if (insertError?.code === "23505") {
+      const { data: existing } = await supabase
+        .from("daily_quests")
+        .select("id, skill_key, title, description, completed_at")
+        .eq("user_id", user.id)
+        .eq("quest_date", today)
+        .maybeSingle();
+      quest = existing ?? null;
+    }
   }
 
   // Real per-skill progress: completed items at the user's difficulty tier.
@@ -160,7 +157,7 @@ export default async function DashboardPage() {
   // once-eligible learner had no way to stop it nagging them here every visit.
   const todayStartIso = `${today}T00:00:00.000Z`;
   const now = new Date();
-  const [coinsRes, { count: reviewedTodayCount }, attendRes, activityRes, reviewRes, xpRes] = await Promise.all([
+  const [coinsRes, { count: reviewedTodayCount }, attendRes, activityRes, reviewRes, xpRes, dueRes] = await Promise.all([
     // coins isn't in the snapshot RPC's profile row; a parallel read here
     // beats a function migration for one integer (see 0041's rationale).
     // review_capacity_bonus and is_admin ride along for the same reason —
@@ -182,8 +179,20 @@ export default async function DashboardPage() {
     // per day comes out of the union in lib/growth-rings.
     supabase.from("attendance_days").select("day").eq("user_id", user.id).gte("day", ringsSince(now)),
     supabase.from("daily_activity").select("activity_date, minutes").eq("user_id", user.id).gte("activity_date", ringsSince(now)),
-    supabase.from("vocabulary_progress").select("last_reviewed_at").eq("user_id", user.id).gte("last_reviewed_at", `${ringsSince(now)}T00:00:00.000Z`),
-    supabase.from("xp_events").select("points, created_at").eq("user_id", user.id).gte("created_at", `${ringsSince(now)}T00:00:00.000Z`),
+    selectAll<{ last_reviewed_at: string }>((from, to) =>
+      supabase.from("vocabulary_progress").select("last_reviewed_at").eq("user_id", user.id).gte("last_reviewed_at", `${ringsSince(now)}T00:00:00.000Z`).order("id").range(from, to),
+    ),
+    selectAll<{ points: number; created_at: string }>((from, to) =>
+      supabase.from("xp_events").select("points, created_at").eq("user_id", user.id).gte("created_at", `${ringsSince(now)}T00:00:00.000Z`).order("id").range(from, to),
+    ),
+    // The watering can's number: the same queue /review draws from, so a
+    // bookmarked-but-never-answered word (planted as due) isn't counted.
+    supabase
+      .from("vocabulary_progress")
+      .select("id", { count: "exact", head: true })
+      .eq("user_id", user.id)
+      .lte("next_review_at", now.toISOString())
+      .or(ATTEMPTED_FILTER),
   ]);
   const attendedDays = new Set((attendRes.error ? [] : attendRes.data ?? []).map((r) => r.day as string));
   const minutesByDate = new Map((activityRes.error ? [] : activityRes.data ?? []).map((r) => [r.activity_date as string, r.minutes ?? 0]));
@@ -213,7 +222,8 @@ export default async function DashboardPage() {
   // whatever was already done" (a session always fills to the full cap).
   const reviewCap = dailyReviewCap(reviewCapacityBonus);
   const reviewDoneForToday = (reviewedTodayCount ?? 0) >= reviewCap;
-  const dueCount = reviewDoneForToday ? 0 : Math.min(snapshot.due_count, reviewCap);
+  const dueTotal = dueRes.error ? snapshot.due_count : dueRes.count ?? 0;
+  const dueCount = reviewDoneForToday ? 0 : Math.min(dueTotal, reviewCap);
 
   // No per-door progress any more (2026-09-10, user call). The number this
   // page used to compute for each door was six different things: Hangul was
@@ -264,31 +274,26 @@ export default async function DashboardPage() {
           {/* The snapshot RPC failed, so everything below is the empty
               fallback. Say so: an empty garden otherwise reads as "all my
               progress is gone" rather than "we couldn't load it". */}
-          {snapshotError && (
-            <div
-              role="status"
-              className="mb-5 rounded-[12px] border border-amber-line bg-[var(--tint-amber)] px-4 py-3 text-sm text-charcoal"
-            >
-              {t("loadError")}
-            </div>
-          )}
+          {snapshotError && <LoadErrorNotice />}
 
           {/* Phone and tablet (below xl): the greeting and the two numbers,
               then the tree standing in an inset garden card — option 2a of
               the 2026-09-09 handoff. TreeBand's cream one-liner is gone; the
               card is still one tap to My room, where the full garden (avatar,
               growth stages, keepsakes) lives. */}
-          <div className="xl:hidden">
-            <GardenHeader displayName={displayName} />
-            <GardenCard
-              level={level}
-              xp={xp}
-              costumeIds={equippedIds}
-              species={cefr}
-              celebrateKey={quest?.completed_at ? quest.id : null}
-              review={{ due: dueCount, cap: reviewCap, doneToday: reviewDoneForToday }}
-            />
-          </div>
+          {!snapshotError && (
+            <div className="xl:hidden">
+              <GardenHeader displayName={displayName} />
+              <GardenCard
+                level={level}
+                xp={xp}
+                costumeIds={equippedIds}
+                species={cefr}
+                celebrateKey={quest?.completed_at ? quest.id : null}
+                review={{ due: dueCount, cap: reviewCap, doneToday: reviewDoneForToday }}
+              />
+            </div>
+          )}
 
           {/* Desktop (xl+): the full garden hero is back on the Garden page
               itself instead of tucked one tap away in My room — 2026-09-08,
@@ -297,6 +302,7 @@ export default async function DashboardPage() {
               already frees up. Same component My room's hero uses; not
               wired to the shop tap-through since Shop already has its own
               sidebar row up here. */}
+          {!snapshotError && (
           <div className="hidden xl:block mb-3">
             <TreeCard
               level={level}
@@ -312,6 +318,7 @@ export default async function DashboardPage() {
               review={{ due: dueCount, cap: reviewCap, doneToday: reviewDoneForToday }}
             />
           </div>
+          )}
 
           {/* today's quest — the one big button. Resuming a specific
               in-progress session was removed (product decision: one clear
@@ -422,9 +429,11 @@ export default async function DashboardPage() {
               as a tree ring, filled a segment per day the Garden is opened.
               Phone only — the desktop rail has its own week. One compact row
               so the Garden still reads as one screen. */}
-          <div className="xl:hidden mb-3">
-            <GrowthRingsCard weeks={weeks} today={ringToday} todayIso={today} avgPerDay={avgPerDay} streakDays={streakDays} level={level} />
-          </div>
+          {!snapshotError && (
+            <div className="xl:hidden mb-3">
+              <GrowthRingsCard weeks={weeks} today={ringToday} todayIso={today} avgPerDay={avgPerDay} streakDays={streakDays} level={level} />
+            </div>
+          )}
         </main>
 
         <Widgets slang={{ kr: slang.kr, romanization: slang.romanization, meaning: slang.meaning }} />

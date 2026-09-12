@@ -5,6 +5,7 @@ import { Link } from "@/i18n/navigation";
 import { SKILL_HREF } from "@/components/dashboard/QuestButton";
 import LevelCreature from "@/components/dashboard/LevelCreature";
 import { playTap } from "@/lib/sfx";
+import LinkPendingLabel from "@/components/dashboard/LinkPendingLabel";
 
 // The one "what to do today" card — the only big button on the phone
 // dashboard since the one-screen trim (2026-09-07). Icon square, title with
@@ -126,7 +127,7 @@ export default function TodaysQuestCard({
             : "bg-cream text-success-deep transition-transform group-hover:translate-y-[-1px]"
         }`}
       >
-        {completed ? t("done") : t("start")}
+        {completed ? t("done") : <LinkPendingLabel>{t("start")}</LinkPendingLabel>}
       </span>
     </>
   );

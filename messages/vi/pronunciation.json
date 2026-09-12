@@ -38,7 +38,14 @@
     "typeInstead": "Gõ câu trả lời thay vì nói",
     "noMic": "Trình duyệt của bạn không hỗ trợ nhận dạng giọng nói — hãy gõ câu trả lời.",
     "placeholder": "한국어로 입력하세요…",
-    "check": "Kiểm tra"
+    "check": "Kiểm tra",
+    "errors": {
+      "blocked": "Micrô đang bị chặn — hãy cho phép trong cài đặt trình duyệt, hoặc nhập câu trả lời bên dưới.",
+      "noSpeech": "Chưa nghe rõ — với từ ngắn, hãy kéo dài âm thêm một chút.",
+      "notCaught": "Chưa nghe rõ. Hãy thử lại.",
+      "nothingHeard": "Không nghe thấy gì — hãy nói to hơn một chút.",
+      "startFailed": "Không khởi động được micrô. Hãy thử lại."
+    }
   },
   "score": {
     "great": "🔥 Chuẩn luôn!",

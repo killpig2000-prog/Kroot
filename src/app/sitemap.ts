@@ -14,7 +14,7 @@ import { SOUND_GROUPS } from "@/lib/pronunciation";
 // Every public page, plus the hreflang cluster for the ones that are really
 // translated.
 //
-// Nothing under PROTECTED_PREFIXES in src/proxy.ts belongs here: /guide,
+// Nothing under LOGGED_IN_PREFIXES in src/lib/seo.ts belongs here: /guide,
 // /hangul and /level-test look public but redirect a signed-out visitor (and
 // every crawler) to /auth/login.
 
@@ -100,6 +100,7 @@ const PUBLIC_PAGES: PublicPage[] = [
     priority: 0.6,
   })),
   { path: "/privacy", changeFrequency: "yearly", priority: 0.3 },
+  { path: "/terms", changeFrequency: "yearly", priority: 0.3 },
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {

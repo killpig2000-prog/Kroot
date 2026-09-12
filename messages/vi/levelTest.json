@@ -38,7 +38,8 @@
     "listeningTitle": "1 · Nghe — chạm 🔊 rồi trả lời",
     "readingTitle": "2 · Đọc — bài {n}/{total}",
     "writingProgress": "3 · Viết — xong {done} / {total}",
-    "seeResults": "Xem kết quả →"
+    "seeResults": "Xem kết quả →",
+    "scoring": "Đang chấm điểm…"
   },
   "mcq": {
     "progress": "{title} · {n}/{total}",
@@ -62,6 +63,7 @@
     "startLevel": "Bắt đầu với {level}",
     "sampleReading": "Bài đọc về {topic}",
     "sampleListening": "Cuộc hội thoại nghe ở tốc độ {level}",
-    "sampleWriting": "Viết một phản hồi ngắn"
+    "sampleWriting": "Viết một phản hồi ngắn",
+    "retryPromotion": "Thử thăng cấp lại"
   }
 }

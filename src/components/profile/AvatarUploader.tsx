@@ -96,7 +96,10 @@ export default function AvatarUploader({
         ) : (
           "🦊"
         )}
-        <span className="absolute inset-0 bg-black/35 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-[10px] font-bold">
+        <span className="absolute inset-0 bg-black/35 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-[10px] font-bold [@media(hover:none)]:hidden">
+          {uploading ? "…" : t("edit")}
+        </span>
+        <span className="absolute bottom-0 inset-x-0 h-[17px] hidden [@media(hover:none)]:flex items-center justify-center bg-success text-white text-[9.5px] font-bold">
           {uploading ? "…" : t("edit")}
         </span>
       </button>

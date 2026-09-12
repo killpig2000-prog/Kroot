@@ -83,7 +83,7 @@
     "readAgain": "再读一遍故事",
     "missedCount": "答错 {n} 题",
     "nothingMissed": "全部答对 — 整个故事都读懂了。",
-    "wordsWithPage": "个词有词汇页",
+    "wordsWithPage": "{n}个词有词汇页",
     "openToSave": "点开一个把它收藏。",
     "openToSaveMore": "还有 {n} 个 · 点开一个把它收藏。",
     "earned": "已获得",

@@ -212,7 +212,11 @@ export default function GuidedStep({ step }: { step: GuidedStepKey }) {
       }
       if (boundEl) {
         const r = boundEl.getBoundingClientRect();
-        setRect({ top: r.top, left: r.left, width: r.width, height: r.height });
+        setRect((p) =>
+          p && p.top === r.top && p.left === r.left && p.width === r.width && p.height === r.height
+            ? p
+            : { top: r.top, left: r.left, width: r.width, height: r.height },
+        );
       } else {
         setRect(null);
       }

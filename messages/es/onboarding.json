@@ -92,7 +92,7 @@
     "email": "Correo electrónico",
     "nameLabel": "¿Cómo te llamamos?",
     "namePlaceholder": "María",
-    "agree": "Acepto los <link>Términos y la Política de privacidad</link>.",
+    "agree": "Acepto los <terms>Términos</terms> y la <privacy>Política de privacidad</privacy>.",
     "sending": "Enviando…",
     "login": "Iniciar sesión",
     "alreadyHere": "¿Ya tienes cuenta?",

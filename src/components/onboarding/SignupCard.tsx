@@ -108,9 +108,15 @@ export function SignupCard({
         <label className="flex gap-2 items-start text-[12px] text-muted mb-3.5">
           <input type="checkbox" className="mt-[3px] accent-[var(--c-success)]" checked={agreed} onChange={(e) => setAgreed(e.target.checked)} />
           <span>
+            {/* New tab: following a link in the same tab lost the placement this card is carrying. */}
             {t.rich("agree", {
-              link: (chunks) => (
-                <Link href="/privacy" className="text-charcoal font-semibold hover:underline">
+              terms: (chunks) => (
+                <Link href="/terms" target="_blank" rel="noopener" className="text-charcoal font-semibold hover:underline">
+                  {chunks}
+                </Link>
+              ),
+              privacy: (chunks) => (
+                <Link href="/privacy" target="_blank" rel="noopener" className="text-charcoal font-semibold hover:underline">
                   {chunks}
                 </Link>
               ),

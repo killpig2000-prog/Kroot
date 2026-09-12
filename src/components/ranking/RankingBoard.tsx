@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import { useBackToClose } from "@/hooks/useBackToClose";
 import { createClient } from "@/lib/supabase/client";
 import { playPromote } from "@/lib/sfx";
 import LevelCreature from "@/components/dashboard/LevelCreature";
@@ -116,6 +117,8 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
   const [peek, setPeek] = useState<Row | null>(null);
   const [peekRings, setPeekRings] = useState<{ weeks: WeekRing[]; today: number } | null>(null);
   const [unavailable, setUnavailable] = useState(false);
+  const closeReward = useCallback(() => setShowRewardPopup(false), []);
+  const dismissReward = useBackToClose(showRewardPopup, closeReward);
   const meRef = useRef<HTMLDivElement>(null);
   // Opening a tree clears the last one's rings so they never show under
   // the wrong name while the new read is in flight.
@@ -140,10 +143,8 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
       // Settle any elapsed weeks first so the Sunday coins are current.
       const settle = await supabase.rpc("settle_league_weeks");
       if (cancelled) return;
-      if (settle.error) {
-        setUnavailable(true);
-        return;
-      }
+      // Only the Sunday coins depend on it — the board itself still reads fine.
+      if (settle.error) console.error("settle_league_weeks failed:", settle.error.message);
       const [board, auth] = await Promise.all([supabase.rpc("get_xp_ranking"), supabase.auth.getUser()]);
       if (cancelled) return;
       if (board.error) {
@@ -255,21 +256,6 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
         />
       )}
 
-      {/* head: title · gardeners · Sunday coins countdown */}
-      <div className="flex items-end justify-between gap-3">
-        <div className="min-w-0">
-          <h1 className="font-bold text-[22px] tracking-[-0.02em] leading-none">{t("title")}</h1>
-          <p className="text-[12.5px] font-semibold text-faint mt-1.5">
-            {t("head.byXp")}
-            {total > 0 && <> · {t("head.gardeners", { n: total })}</>}
-          </p>
-        </div>
-        <p className="flex-none text-right text-[11.5px] font-bold text-muted leading-tight tabular-nums">
-          <span className="block text-[13px] text-[#B7791F]">{t("head.daysLeft", { n: daysLeft })}</span>
-          {t("head.sundayCoins")}
-        </p>
-      </div>
-
       {/* the podium is a garden: the top three trees stand on the hills —
           1st centre and tallest, 2nd left, 3rd right — medal on the canopy,
           name · XP pill at the feet. */}
@@ -324,6 +310,19 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
           </div>
         )}
       </GardenScene>
+
+      {/* The title lives in the status bar (2026-09-12, user) so the podium
+          opens the page; the counts sit here, between podium and rows. */}
+      <div className="flex items-end justify-between gap-3 px-1">
+        <p className="min-w-0 text-[12.5px] font-semibold text-faint">
+          {t("head.byXp")}
+          {total > 0 && <> · {t("head.gardeners", { n: total })}</>}
+        </p>
+        <p className="flex-none text-right text-[11.5px] font-bold text-muted leading-tight tabular-nums">
+          <span className="block text-[13px] text-[#B7791F]">{t("head.daysLeft", { n: daysLeft })}</span>
+          {t("head.sundayCoins")}
+        </p>
+      </div>
 
       {/* the board: every row, a sunlight bar against the leader, this
           week's XP as the movement */}
@@ -412,7 +411,7 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
         <>
           <button
             aria-label={t("reward.closeAria")}
-            onClick={() => setShowRewardPopup(false)}
+            onClick={dismissReward}
             className="fixed inset-0 z-[60] bg-[#282319]/45 cursor-default"
           />
           <div className="fixed inset-0 z-[70] flex items-center justify-center px-4 pointer-events-none">
@@ -432,7 +431,7 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
                 {t("reward.earned", { coins: reward.coins })}
               </p>
               <button
-                onClick={() => setShowRewardPopup(false)}
+                onClick={dismissReward}
                 className="w-full rounded-[13px] bg-success text-white font-bold text-[14.5px] py-3.5 hover:bg-success-deep transition-colors"
               >
                 {t("reward.ok")}

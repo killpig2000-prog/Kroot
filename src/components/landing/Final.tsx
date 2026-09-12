@@ -54,9 +54,9 @@ export default function Final() {
             Kroot
           </span>
           <div className="flex gap-5 font-medium">
-            <a href="#" className="hover:text-charcoal transition-colors">{t("about")}</a>
+            <Link href="/terms" className="hover:text-charcoal transition-colors">{t("terms")}</Link>
             <Link href="/privacy" className="hover:text-charcoal transition-colors">{t("privacy")}</Link>
-            <a href="#" className="hover:text-charcoal transition-colors">{t("contact")}</a>
+            <a href="mailto:killpig2000@gmail.com" className="hover:text-charcoal transition-colors">{t("contact")}</a>
           </div>
           <span>{t("copyright")}</span>
         </div>

@@ -7,7 +7,7 @@
     "sundayCoins": "para las monedas del domingo"
   },
   "fair": {
-    "sun": "☀️ {n}",
+    "sun": "☀️ {n} esta semana",
     "xp": "☀️ {n}",
     "empty": "Aún no hay árboles en el tablero: una sesión planta el tuyo."
   },

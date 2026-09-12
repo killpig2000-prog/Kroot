@@ -6,6 +6,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 import { type CommunityComment } from "@/lib/community";
 import { formatTimeAgo } from "./time-ago";
+import ReportMenu from "./ReportMenu";
 
 export default function Comments({
   postId,
@@ -118,7 +119,7 @@ export default function Comments({
                       {c.author_plus && " 🌟"}
                     </span>
                     <span className="text-[11.5px] text-faint">{formatTimeAgo(c.created_at, (k, v) => tt(k, v), locale)}</span>
-                    {c.mine && (
+                    {c.mine ? (
                       <button
                         type="button"
                         onClick={() => remove(c.id)}
@@ -127,6 +128,10 @@ export default function Comments({
                       >
                         {deletingId === c.id ? t("deleting") : t("delete")}
                       </button>
+                    ) : (
+                      <span className="ml-auto">
+                        <ReportMenu kind="comment" id={c.id} />
+                      </span>
                     )}
                   </div>
                   <p className="text-[13.5px] leading-[1.6] whitespace-pre-wrap break-words">

@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { usePathname } from "@/i18n/navigation";
+import { useBackToClose } from "@/hooks/useBackToClose";
 
 // Feedback lives behind one button. It used to open itself as a launch notice
 // on every load; that interrupted the page, so now nothing appears until the
@@ -42,10 +43,11 @@ export default function FeedbackWidget() {
     };
   }, [view]);
 
-  const close = () => {
+  const close = useCallback(() => {
     setView("closed");
     setError(false);
-  };
+  }, []);
+  const dismiss = useBackToClose(view !== "closed", close);
 
   const submit = async () => {
     const trimmed = message.trim();
@@ -87,7 +89,7 @@ export default function FeedbackWidget() {
     <>
       <button
         aria-label={t("closeAria")}
-        onClick={close}
+        onClick={dismiss}
         className="fixed inset-0 z-[60] bg-[#282319]/45 cursor-default"
       />
       <div className="fixed inset-0 z-[70] flex items-center justify-center px-4 pointer-events-none">
@@ -128,7 +130,7 @@ export default function FeedbackWidget() {
                   {sending ? t("sending") : t("submit")}
                 </button>
                 <button
-                  onClick={close}
+                  onClick={dismiss}
                   className="rounded-[12px] border border-line bg-cream text-muted font-semibold text-[14px] px-4 py-2.5 hover:border-dash transition-colors"
                 >
                   {t("cancel")}
@@ -144,7 +146,7 @@ export default function FeedbackWidget() {
                 {t("thanksBody")}
               </p>
               <button
-                onClick={close}
+                onClick={dismiss}
                 className="w-full rounded-[12px] bg-success text-white font-semibold text-[14px] py-2.5 hover:bg-success-deep transition-colors"
               >
                 {t("close")}

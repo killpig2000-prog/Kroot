@@ -18,6 +18,15 @@ const ENGINE = "chirp3-hd";
 const MAX_CHARS = 300;
 const RATE_LIMIT = 60;
 const RATE_WINDOW_MS = 60_000;
+// Billed syntheses (cache misses) per learner per rolling 24h. The whole
+// library is pre-generated, so a real learner rarely misses more than a few.
+const DAILY_SYNTH_LIMIT = 150;
+
+function serviceDb() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  return url && serviceKey ? createServiceClient(url, serviceKey, { auth: { persistSession: false } }) : null;
+}
 
 async function synthesize(text: string, voice: GoogleVoiceKey): Promise<Buffer | null> {
   try {
@@ -54,6 +63,20 @@ export async function POST(request: Request) {
   const cached = await fetch(publicUrl, { method: "HEAD" }).catch(() => null);
   if (cached?.ok) return NextResponse.json({ url: publicUrl });
 
+  // The in-memory limiter above resets with every serverless instance; this
+  // one (migration 0084) holds across them. Fails open until it's applied.
+  const db = serviceDb();
+  if (db) {
+    const { count, error } = await db
+      .from("tts_usage")
+      .select("id", { count: "exact", head: true })
+      .eq("user_id", user.id)
+      .gte("created_at", new Date(Date.now() - 86_400_000).toISOString());
+    if (!error && (count ?? 0) >= DAILY_SYNTH_LIMIT) {
+      return NextResponse.json({ error: "daily_limit" }, { status: 429 });
+    }
+  }
+
   const audio = await synthesize(text, voice);
   if (!audio) return NextResponse.json({ error: "tts_failed" }, { status: 502 });
 
@@ -70,17 +93,21 @@ export async function POST(request: Request) {
   // drops that policy, so this is now the only writer — and the name it writes
   // under is derived from the text it just synthesized, right here.
   after(async () => {
-    const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-    if (!url || !serviceKey) {
+    if (!db) {
       console.error("tts cache write skipped: service role key not configured");
       return;
     }
-    const db = createServiceClient(url, serviceKey, { auth: { persistSession: false } });
-    const { error } = await db.storage
-      .from("tts")
-      .upload(objectPath, audio, { contentType: "audio/mpeg", cacheControl: "31536000", upsert: true });
-    if (error) console.error("tts cache write failed:", error.message);
+    const [upload, usage] = await Promise.all([
+      db.storage
+        .from("tts")
+        .upload(objectPath, audio, { contentType: "audio/mpeg", cacheControl: "31536000", upsert: true }),
+      db.from("tts_usage").insert({ user_id: user.id, chars: text.length }),
+    ]);
+    if (upload.error) console.error("tts cache write failed:", upload.error.message);
+    // 42P01 / PGRST205: table not created yet (0084 unapplied)
+    if (usage.error && !["42P01", "PGRST205"].includes(usage.error.code)) {
+      console.error("tts usage write failed:", usage.error.message);
+    }
   });
   return new NextResponse(new Uint8Array(audio), { headers: { "Content-Type": "audio/mpeg" } });
 }

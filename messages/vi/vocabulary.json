@@ -108,7 +108,9 @@
   "detail": {
     "prev": "Trước",
     "backToVocab": "Tất cả chương",
-    "next": "Từ tiếp theo →"
+    "next": "Từ tiếp theo →",
+    "backToChapter": "Quay lại chương →",
+    "lastWord": "Đây là từ cuối cùng của ngày này ✓"
   },
   "practice": {
     "reviewTime": "giờ ôn tập",
@@ -162,5 +164,17 @@
     "strokes": "{count, plural, other {# nét}}",
     "nudge": "Chạm vào đây"
   },
-  "slangRowSub": "tiếng Hàn đời thường · sách giáo khoa không dạy"
+  "slangRowSub": "tiếng Hàn đời thường · sách giáo khoa không dạy",
+  "index": {
+    "chapterN": "Chương {n}",
+    "ctaReview": "Ôn chương {n} →",
+    "ctaContinue": "Tiếp tục chương {n} →",
+    "ctaStudy": "Học chương {n} →",
+    "knownOfTotal": "{known}/{total} từ",
+    "dueCount": "💧 {n} từ cần ôn",
+    "rootedAria": "Đã nhớ {known}/{total} từ",
+    "rootedTally": "Đã nhớ <b>{known}</b>/{total} từ",
+    "due": "cần ôn",
+    "reviewDueAria": "Ôn {n} từ đến hạn"
+  }
 }

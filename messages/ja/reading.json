@@ -83,7 +83,7 @@
     "readAgain": "もう一度読む",
     "missedCount": "{n}問 間違い",
     "nothingMissed": "全問正解 — 物語をしっかり読み取れました。",
-    "wordsWithPage": "語に語彙ページがあります",
+    "wordsWithPage": "{n}語に語彙ページがあります",
     "openToSave": "開いて保存しよう。",
     "openToSaveMore": "他{n}語 · 開いて保存しよう。",
     "earned": "獲得",

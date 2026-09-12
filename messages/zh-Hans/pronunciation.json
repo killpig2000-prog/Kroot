@@ -38,7 +38,14 @@
     "typeInstead": "改用打字",
     "noMic": "你的浏览器不支持语音识别——请改用打字。",
     "placeholder": "한국어로 입력하세요…",
-    "check": "检查"
+    "check": "检查",
+    "errors": {
+      "blocked": "麦克风权限被阻止——请在浏览器设置中允许，或在下方输入答案。",
+      "noSpeech": "没听清——短词请把音稍微拖长一点。",
+      "notCaught": "没听清，请再试一次。",
+      "nothingHeard": "什么也没听到——请大声一点。",
+      "startFailed": "无法启动麦克风，请重试。"
+    }
   },
   "score": {
     "great": "🔥 完全正确！",

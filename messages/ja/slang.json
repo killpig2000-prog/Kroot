@@ -48,6 +48,8 @@
     "practice": "練習ラウンド · XPは1日1回",
     "newRound": "新しいカード{n}枚 ↻",
     "today": "今日",
-    "new": "NEW"
+    "new": "NEW",
+    "notSaved": "XPが保存されませんでした",
+    "retry": "もう一度"
   }
 }

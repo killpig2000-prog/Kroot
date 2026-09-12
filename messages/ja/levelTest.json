@@ -38,7 +38,8 @@
     "listeningTitle": "1 · リスニング — 🔊 をタップして答える",
     "readingTitle": "2 · リーディング — 文章 {n}/{total}",
     "writingProgress": "3 · ライティング — {done} / {total} 完了",
-    "seeResults": "結果を見る →"
+    "seeResults": "結果を見る →",
+    "scoring": "採点中…"
   },
   "mcq": {
     "progress": "{title} · {n}/{total}",
@@ -62,6 +63,7 @@
     "startLevel": "{level}で開始",
     "sampleReading": "{topic}についての読解文",
     "sampleListening": "{level}ペースのリスニング会話",
-    "sampleWriting": "短い応答を作成"
+    "sampleWriting": "短い応答を作成",
+    "retryPromotion": "昇級をもう一度試す"
   }
 }

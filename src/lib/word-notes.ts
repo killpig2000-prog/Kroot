@@ -31,11 +31,7 @@ export function hanjaOf(korean: string): string | null {
 // the study card's stamp and the unit preview's per-word markers. Three plain
 // states (not a growth metaphor) so a glance tells you what to do: nothing
 // yet, still coming back to it, or done.
-export const WORD_STATUSES = [
-  { key: "new", label: "New" },
-  { key: "learning", label: "Learning" },
-  { key: "known", label: "Known" },
-] as const;
+export const WORD_STATUSES = [{ key: "new" }, { key: "learning" }, { key: "known" }] as const;
 
 export function wordStatus(reviews: number): number {
   if (reviews <= 0) return 0;

@@ -113,5 +113,8 @@
     "language": "Ngôn ngữ",
     "level": "Trình độ",
     "languageNote": "Nghĩa và hướng dẫn sẽ chuyển sang ngôn ngữ này. Tiếng Hàn vẫn giữ nguyên."
-  }
+  },
+  "retry": "Thử lại",
+  "xpNotSaved": "Chưa lưu được XP",
+  "lookupFailed": "Không tải được từ điển."
 }

@@ -113,5 +113,8 @@
     "language": "Language",
     "level": "Level",
     "languageNote": "Meanings and instructions switch to this language. Korean stays Korean."
-  }
+  },
+  "retry": "Retry",
+  "xpNotSaved": "XP not saved",
+  "lookupFailed": "Couldn't load the dictionary."
 }

@@ -35,6 +35,7 @@ export default function FinishedCard({
   const t = useTranslations("pronunciation.finished");
   const tn = useTranslations("nav");
   const tu = useTranslations("ui");
+  const tc = useTranslations("common");
   const weak = words
     .filter((w) => (attempts[w.id]?.count ?? 0) > 1)
     .sort((a, b) => (attempts[a.id]?.best ?? 0) - (attempts[b.id]?.best ?? 0));
@@ -42,7 +43,7 @@ export default function FinishedCard({
   return (
     <ResultShell
       color={COLOR}
-      categoryLabel={tn("speaking")}
+      categoryLabel={tn("pronunciation")}
       ring={
         <ResultRing
           pct={perfect ? 100 : (nailed.length / words.length) * 100}
@@ -57,12 +58,12 @@ export default function FinishedCard({
       tags={
         <>
           <ResultTag tone="good">🔥 {bestStreak}</ResultTag>
-          {weak.length > 0 && <ResultTag tone="warn">{weak.length} took extra tries</ResultTag>}
+          {weak.length > 0 && <ResultTag tone="warn">{tc("tookExtraTries", { n: weak.length })}</ResultTag>}
         </>
       }
       levelUp={levelUp}
       xpValue={XP_POINTS.pronunciation}
-      xpLabel={tu("xpEarned", { skill: tn("speaking") })}
+      xpLabel={tu("xpEarned", { skill: tn("pronunciation") })}
       actions={
         <>
           <Link href="/speaking" className={BTN_TEAL}>

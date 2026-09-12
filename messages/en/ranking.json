@@ -7,7 +7,7 @@
     "sundayCoins": "to Sunday coins"
   },
   "fair": {
-    "sun": "☀️ {n}",
+    "sun": "☀️ {n} this week",
     "xp": "☀️ {n}",
     "empty": "No trees on the board yet — one session plants yours."
   },

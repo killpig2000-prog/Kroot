@@ -6,14 +6,20 @@ import { formatTimeAgo } from "./time-ago";
 export default async function PostList({
   posts,
   commentCounts = {},
+  onAllBoard = false,
 }: {
   posts: CommunityPost[];
   commentCounts?: Record<string, number>;
+  /** The All tab always has the pinned notices above it, so it's never truly empty. */
+  onAllBoard?: boolean;
 }) {
   const t = await getTranslations("community");
   const locale = await getLocale();
 
   if (posts.length === 0) {
+    if (onAllBoard) {
+      return <p className="text-[13px] text-faint px-1 max-w-[980px]">{t("empty.allSub")}</p>;
+    }
     return (
       <div className="border border-line rounded-[14px] bg-warm p-8 text-center max-w-[980px]">
         <span className="text-[26px] block mb-2">🌱</span>

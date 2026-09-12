@@ -386,7 +386,12 @@ export default function HangulExplorer({ userId }: { userId?: string | null }) {
   };
   const onRunGraded = useCallback(async (char: string, score: TraceScore): Promise<GradedInfo> => {
     const info = await recordChallenge(char, score.score, score.stars);
-    setRun((r) => (r ? { ...r, stars: [...r.stars, score.stars], xp: r.xp + (info.xp ? info.xp.points_awarded ?? XP_POINTS.hangul : 0) } : r));
+    setRun((r) => {
+      if (!r) return r;
+      const stars = [...r.stars];
+      stars[r.idx] = Math.max(stars[r.idx] ?? 0, score.stars);
+      return { ...r, stars, xp: r.xp + (info.xp ? info.xp.points_awarded ?? XP_POINTS.hangul : 0) };
+    });
     return info;
   }, [recordChallenge]);
   const runNext = () => {

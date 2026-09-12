@@ -48,6 +48,8 @@
     "practice": "Ronda de práctica · los XP son una vez al día",
     "newRound": "{n} tarjetas nuevas ↻",
     "today": "Hoy",
-    "new": "Nueva"
+    "new": "Nueva",
+    "notSaved": "XP no guardada",
+    "retry": "Reintentar"
   }
 }

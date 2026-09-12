@@ -70,16 +70,16 @@ self.addEventListener("push", (event) => {
 
 self.addEventListener("notificationclick", (event) => {
   event.notification.close();
-  const url = (event.notification.data && event.notification.data.url) || "/dashboard";
+  const url = new URL((event.notification.data && event.notification.data.url) || "/dashboard", self.location.origin).href;
   event.waitUntil(
-    self.clients.matchAll({ type: "window", includeUncontrolled: true }).then((list) => {
-      for (const client of list) {
-        if ("focus" in client) {
-          client.navigate(url);
-          return client.focus();
-        }
-      }
+    (async () => {
+      const list = await self.clients.matchAll({ type: "window", includeUncontrolled: true });
+      const client = list.find((c) => "navigate" in c);
+      // navigate() rejects for a window this worker doesn't control yet; that
+      // used to throw before focus(), so the tap did nothing at all.
+      const moved = client ? await client.navigate(url).catch(() => null) : null;
+      if (moved) return moved.focus();
       return self.clients.openWindow(url);
-    })
+    })()
   );
 });

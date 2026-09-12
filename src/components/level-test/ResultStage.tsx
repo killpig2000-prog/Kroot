@@ -37,26 +37,37 @@ export default function ResultStage({
 
   const [selectedLevel, setSelectedLevel] = useState<CefrLevel>(spec.to);
   const [busy, setBusy] = useState(false);
+  const [applied, setApplied] = useState(promoted);
 
-  async function applyLevel() {
-    if (selectedLevel === spec.to) {
-      router.push("/dashboard");
-      return;
-    }
+  async function apply(level: CefrLevel): Promise<boolean> {
     setBusy(true);
     try {
-      const { error } = await supabase.rpc("apply_level_test", { p_level: selectedLevel });
-      if (!error) {
-        try {
-          localStorage.setItem("kroot-tree-species", selectedLevel);
-        } catch {
-          // storage blocked
-        }
-        router.refresh();
+      const { error } = await supabase.rpc("apply_level_test", { p_level: level });
+      if (error) return false;
+      try {
+        localStorage.setItem("kroot-tree-species", level);
+      } catch {
+        // storage blocked
       }
+      router.refresh();
+      return true;
+    } catch {
+      return false;
     } finally {
       setBusy(false);
     }
+  }
+
+  async function applyLevel() {
+    if (selectedLevel === spec.to && applied) {
+      router.push("/dashboard");
+      return;
+    }
+    if ((await apply(selectedLevel)) && selectedLevel === spec.to) setApplied(true);
+  }
+
+  async function retryPromotion() {
+    if (await apply(spec.to)) setApplied(true);
   }
   const passed = verdict?.passed ?? false;
   useEffect(() => {
@@ -74,10 +85,15 @@ export default function ResultStage({
               to: t(`species.${spec.to}`),
               b: (chunks) => <b>{chunks}</b>,
             })}{" "}
-            {promoted
+            {applied
               ? t("result.contentOpen", { level: spec.to })
               : t("result.promotionFailed")}
           </p>
+          {!applied && (
+            <button type="button" onClick={retryPromotion} disabled={busy} className={`mt-3 min-h-[44px] ${BTN_GREEN}`}>
+              {busy ? "..." : t("result.retryPromotion")}
+            </button>
+          )}
         </div>
       ) : (
         <div className="text-center mb-5">

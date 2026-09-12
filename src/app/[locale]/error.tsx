@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import { useOffline } from "@/lib/use-offline";
 
 // Something threw at runtime = the tree wilted a little. Watering (retry)
 // usually perks it right back up.
@@ -17,6 +18,9 @@ export default function Error({
   // provider is above it — it was the one screen still hardcoded in English,
   // shown to a learner at the worst possible moment.
   const t = useTranslations("error");
+  // A dropped connection lands here too, and "went wrong on our side" blamed
+  // the server for the learner's own Wi-Fi.
+  const offline = useOffline();
 
   useEffect(() => {
     console.error(error);
@@ -49,9 +53,9 @@ export default function Error({
         </div>
 
         <h1 className="font-bold text-[clamp(20px,4vw,25px)] tracking-[-0.02em] mb-2">
-          {t("title")}
+          {t(offline ? "offlineTitle" : "title")}
         </h1>
-        <p className="text-[14px] text-muted leading-[1.65] mb-7">{t("body")}</p>
+        <p className="text-[14px] text-muted leading-[1.65] mb-7">{t(offline ? "offlineBody" : "body")}</p>
 
         <div className="flex justify-center gap-2.5 flex-wrap">
           <button

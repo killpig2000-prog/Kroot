@@ -23,7 +23,8 @@
   },
   "empty": {
     "title": "Nothing here yet",
-    "sub": "Be the first to post on this board."
+    "sub": "Be the first to post on this board.",
+    "allSub": "No posts from learners yet — be the first."
   },
   "comments": {
     "heading": "Comments",
@@ -59,5 +60,20 @@
     "minutes": "{n}m ago",
     "hours": "{n}h ago",
     "days": "{n}d ago"
+  },
+  "moderation": {
+    "menu": "More options",
+    "report": "Report",
+    "block": "Block this learner",
+    "why": "What's wrong with it?",
+    "reasons": {
+      "spam": "Spam or ads",
+      "harassment": "Harassment or hate",
+      "sexual": "Sexual content",
+      "other": "Something else"
+    },
+    "reported": "Thanks — we'll take a look.",
+    "blockConfirm": "Block this learner? You won't see their posts or comments any more.",
+    "failed": "Couldn't do that. Try again in a moment."
   }
 }

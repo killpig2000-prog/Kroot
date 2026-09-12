@@ -1,9 +1,50 @@
+"use client";
+
+import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { NAILED_THRESHOLD } from "@/lib/pronunciation";
+import type { SpeechErrorCode } from "@/hooks/useSpeechRecognition";
 
 const MAX_LISTEN_MS = 6000;
 const RING_R = 47;
 const RING_C = 2 * Math.PI * RING_R;
+
+export function TypedAnswer({
+  placeholder,
+  label,
+  onSubmit,
+}: {
+  placeholder: string;
+  label: string;
+  onSubmit: (text: string) => void;
+}) {
+  const [text, setText] = useState("");
+  return (
+    <form
+      className="flex w-full max-w-[420px] gap-2"
+      onSubmit={(e) => {
+        e.preventDefault();
+        const value = text.trim();
+        if (value) onSubmit(value);
+      }}
+    >
+      <input
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        placeholder={placeholder}
+        lang="ko"
+        className="kr flex-1 min-w-0 min-h-[44px] rounded-[10px] border border-line bg-cream px-3 text-[15px]"
+      />
+      <button
+        type="submit"
+        disabled={!text.trim()}
+        className="flex-none min-h-[44px] rounded-[10px] px-4 text-[13.5px] font-bold text-white bg-teal disabled:opacity-45"
+      >
+        {label}
+      </button>
+    </form>
+  );
+}
 
 // The mic input for the current word, shown until a grade comes back
 // (heard === null in the parent).
@@ -14,8 +55,11 @@ export default function AnswerCapture({
   micElapsedMs,
   interim,
   error,
+  errorCode,
+  errorKey,
   onListen,
   onSkip,
+  onTyped,
 }: {
   bestScore: number;
   micOk: boolean;
@@ -23,8 +67,12 @@ export default function AnswerCapture({
   micElapsedMs: number;
   interim: string;
   error: string | null;
+  errorCode?: SpeechErrorCode | null;
+  errorKey?: number;
   onListen: () => void;
   onSkip: () => void;
+  /** Grades typed text — offered when there's no usable mic. */
+  onTyped?: (text: string) => void;
 }) {
   const t = useTranslations("pronunciation.capture");
   return (
@@ -98,10 +146,18 @@ export default function AnswerCapture({
         </>
       )}
 
-      {error && <p className="text-[12.5px] text-[#B04A5E] text-center max-w-[420px]">{error}</p>}
+      {(errorCode || error) && (
+        <p key={errorKey} className="text-[12.5px] text-[#B04A5E] text-center max-w-[420px]" style={{ animation: "fadeUp .3s ease" }}>
+          {errorCode ? t(`errors.${errorCode}`) : error}
+        </p>
+      )}
 
       {!micOk && (
         <p className="text-[12.5px] text-muted text-center max-w-[420px]">{t("noMic")}</p>
+      )}
+
+      {onTyped && (!micOk || errorCode === "blocked") && (
+        <TypedAnswer placeholder={t("placeholder")} label={t("check")} onSubmit={onTyped} />
       )}
     </div>
   );

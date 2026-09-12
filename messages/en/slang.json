@@ -48,6 +48,8 @@
     "practice": "Practice round · XP comes once a day",
     "newRound": "New {n} cards ↻",
     "today": "Today",
-    "new": "New"
+    "new": "New",
+    "notSaved": "XP not saved",
+    "retry": "Retry"
   }
 }

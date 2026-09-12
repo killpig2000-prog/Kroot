@@ -13,6 +13,7 @@
     "correct": "🌱 ¡Correcto!",
     "wrong": "💧 Casi — la respuesta es {letter}. {text}",
     "done": "🌱 Cuestionario terminado: los minutos de hoy ya están en tu árbol.",
-    "levelUp": "🎉 ¡Has subido de nivel! Ahora Lv. {n}"
+    "levelUp": "🎉 ¡Has subido de nivel! Ahora Lv. {n}",
+    "saveFailed": "Esta lección no se guardó."
   }
 }

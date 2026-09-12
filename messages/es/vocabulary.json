@@ -108,7 +108,9 @@
   "detail": {
     "prev": "Anterior",
     "backToVocab": "Todos los capítulos",
-    "next": "Siguiente palabra →"
+    "next": "Siguiente palabra →",
+    "backToChapter": "Volver al capítulo →",
+    "lastWord": "Es la última palabra de este día ✓"
   },
   "practice": {
     "reviewTime": "hora de repasar",
@@ -162,5 +164,17 @@
     "strokes": "{count, plural, one {# trazo} other {# trazos}}",
     "nudge": "Toca aquí"
   },
-  "slangRowSub": "coreano del día a día · lo que los libros omiten"
+  "slangRowSub": "coreano del día a día · lo que los libros omiten",
+  "index": {
+    "chapterN": "Capítulo {n}",
+    "ctaReview": "Repasar capítulo {n} →",
+    "ctaContinue": "Seguir con el capítulo {n} →",
+    "ctaStudy": "Estudiar capítulo {n} →",
+    "knownOfTotal": "{known}/{total} palabras",
+    "dueCount": "💧 {n} para repasar",
+    "rootedAria": "{known} de {total} palabras aprendidas",
+    "rootedTally": "<b>{known}</b> de {total} palabras aprendidas",
+    "due": "para repasar",
+    "reviewDueAria": "Repasar {n} palabras pendientes"
+  }
 }

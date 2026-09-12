@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
 import GardenScene from "@/components/ui/GardenScene";
 import LevelCreature from "@/components/dashboard/LevelCreature";
 import { levelProgress, treeStageForLevel } from "@/lib/level";
 import { useTranslations } from "next-intl";
-import type { ProgressResult } from "@/lib/activity";
+import { getXpStatus, subscribeXpStatus, type ProgressResult } from "@/lib/activity";
 import { playChapterClear, playCoin, playDayComplete, playLevelUp, playWater } from "@/lib/sfx";
 
 // Shared shell for every "session finished" screen: category ribbon, hero
@@ -103,7 +103,7 @@ export default function ResultShell({
   headline,
   sub,
   tags,
-  levelUp,
+  levelUp: reported,
   xpValue,
   xpLabel,
   actions,
@@ -132,6 +132,25 @@ export default function ResultShell({
   sound?: "chapter" | "water" | "day" | "none";
 }) {
   const tu = useTranslations("ui");
+  // The caller's result stays null both while award_xp is in flight and when
+  // it failed; the shared status tells the two apart. Only a status from
+  // around this screen's own finish counts — an older one belongs to
+  // something else.
+  const [mountedAt] = useState(() => Date.now());
+  const xpStatus = useSyncExternalStore(subscribeXpStatus, getXpStatus, () => null);
+  const [retried, setRetried] = useState<ProgressResult | null>(null);
+  const [retrying, setRetrying] = useState(false);
+  const levelUp = reported ?? retried;
+  const recent = xpStatus && xpStatus.at >= mountedAt - 15_000 ? xpStatus : null;
+  const xpFailed = !levelUp && recent?.state === "failed";
+  const waiting = !levelUp && (recent?.state === "pending" || (recent?.state === "done" && recent.at >= mountedAt));
+  async function retryXp() {
+    if (!recent?.retry || retrying) return;
+    setRetrying(true);
+    const res = await recent.retry().catch(() => null);
+    setRetrying(false);
+    if (res) setRetried(res);
+  }
   const played = useRef(false);
   useEffect(() => {
     if (played.current || sound === "none" || !levelUp) return;
@@ -263,9 +282,13 @@ export default function ResultShell({
         {/* one XP line on the grass */}
         <div className="absolute left-4 right-4 bottom-3 z-[4]">
           <div className="flex items-center justify-between gap-3 text-[11.5px] font-extrabold tabular-nums" style={{ color: "#2E5B41" }}>
-            <span className={xpAwarded === 0 ? "opacity-60" : ""}>
-              +{xpAwarded ?? xpValue} XP <span className="font-bold" style={{ color: "#6B6560" }}>· {levelUp?.already_earned ? tu("alreadyEarned") : xpLabel}</span>
-            </span>
+            {xpFailed ? (
+              <span className="opacity-60">{tu("xpNotSaved")}</span>
+            ) : (
+              <span className={xpAwarded === 0 ? "opacity-60" : ""}>
+                +{xpAwarded ?? xpValue} XP <span className="font-bold" style={{ color: "#6B6560" }}>· {levelUp?.already_earned ? tu("alreadyEarned") : xpLabel}</span>
+              </span>
+            )}
             {after && (
               <span>
                 {after.into}/{after.needed} · Lv.{after.level}
@@ -291,9 +314,26 @@ export default function ResultShell({
       {/* tags + coins, one quiet row under the scene */}
       <div className="flex flex-wrap items-center gap-1.5 px-[18px] py-3">
         {tags}
-        <span className="ml-auto inline-flex items-center gap-1.5 text-[12px] font-bold px-2.5 py-1 rounded-full border whitespace-nowrap bg-[var(--tint-amber)] border-amber-line text-[#B7791F]">
-          {(levelUp?.coins_earned ?? 0) > 0 ? tu("coinsEarned", { n: levelUp!.coins_earned }) : <span className="text-faint">{tu("noCoinsThisTime")}</span>}
-        </span>
+        {xpFailed ? (
+          <button
+            type="button"
+            onClick={() => void retryXp()}
+            disabled={retrying}
+            className="ml-auto min-h-[44px] inline-flex items-center gap-1.5 text-[12px] font-bold px-3.5 rounded-full border whitespace-nowrap bg-danger-bg border-[var(--tint-rose-line)] text-danger disabled:opacity-60"
+          >
+            {tu("xpNotSaved")} · {retrying ? tu("saving") : tu("retry")}
+          </button>
+        ) : (
+          <span className="ml-auto inline-flex items-center gap-1.5 text-[12px] font-bold px-2.5 py-1 rounded-full border whitespace-nowrap bg-[var(--tint-amber)] border-amber-line text-[#B7791F]">
+            {(levelUp?.coins_earned ?? 0) > 0 ? (
+              tu("coinsEarned", { n: levelUp!.coins_earned })
+            ) : waiting ? (
+              <span className="text-faint">🪙 …</span>
+            ) : (
+              <span className="text-faint">{tu("noCoinsThisTime")}</span>
+            )}
+          </span>
+        )}
       </div>
 
       {levelUp?.leveled_up && (

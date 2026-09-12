@@ -2,8 +2,10 @@ import type { Metadata, Viewport } from "next";
 import { Bricolage_Grotesque, Noto_Sans_KR, Nunito } from "next/font/google";
 import { notFound } from "next/navigation";
 import { Analytics } from "@vercel/analytics/next";
-import { NextIntlClientProvider, hasLocale } from "next-intl";
-import { getMessages, setRequestLocale } from "next-intl/server";
+import { hasLocale } from "next-intl";
+import { getMessages, getTimeZone, setRequestLocale } from "next-intl/server";
+import IntlClientProvider from "@/components/i18n/IntlClientProvider";
+import OfflineNotice from "@/components/pwa/OfflineNotice";
 import "../globals.css";
 import { routing } from "@/i18n/routing";
 import { DARK_MODE_ENABLED, DEFAULT_MODE, MODE_COOKIE } from "@/lib/mode";
@@ -81,7 +83,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     metadataBase: new URL(SITE_URL),
     title: "Kroot — Grow your Korean, one little sprout at a time",
     description:
-      "Kroot is a cozy garden where your Korean grows every day — with a friendly AI tutor, tiny lessons, and friends from all over the world.",
+      "Kroot is a cozy garden where your Korean grows every day — tiny listening, reading, writing and word lessons, and a tree that grows as you study.",
     alternates: seoAlternates(locale, "/"),
     verification: {
       google: "9_zaAq2WS5tU8bwdzzy7MF64LuKXCwJThp-S2V5ObPM",
@@ -136,6 +138,7 @@ export default async function RootLayout({ children, params }: Props) {
   // component calling getTranslations("ns") without a locale stays static too.
   setRequestLocale(locale);
   const messages = await getMessages({ locale });
+  const timeZone = await getTimeZone({ locale });
 
   return (
     <html
@@ -181,12 +184,13 @@ export default async function RootLayout({ children, params }: Props) {
               `}catch(e){}})()`,
           }}
         />
-        <NextIntlClientProvider locale={locale} messages={messages}>
+        <IntlClientProvider locale={locale} messages={messages} timeZone={timeZone}>
           {children}
           <SeasonalEffects />
           <PwaRegister />
           <SplashScreen />
-        </NextIntlClientProvider>
+          <OfflineNotice />
+        </IntlClientProvider>
         <Analytics />
       </body>
     </html>

@@ -92,7 +92,7 @@
     "email": "Email",
     "nameLabel": "What should we call you?",
     "namePlaceholder": "Maria",
-    "agree": "I agree to the <link>Terms and Privacy Policy</link>.",
+    "agree": "I agree to the <terms>Terms</terms> and <privacy>Privacy Policy</privacy>.",
     "sending": "Sending…",
     "login": "Log in",
     "alreadyHere": "Already growing here?",

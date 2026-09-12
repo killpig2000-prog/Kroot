@@ -108,7 +108,9 @@
   "detail": {
     "prev": "Prev",
     "backToVocab": "All chapters",
-    "next": "Next word →"
+    "next": "Next word →",
+    "backToChapter": "Back to chapter →",
+    "lastWord": "That's the last word of this Day ✓"
   },
   "practice": {
     "reviewTime": "review time",
@@ -162,5 +164,17 @@
     "strokes": "{count, plural, one {# stroke} other {# strokes}}",
     "nudge": "Tap here"
   },
-  "slangRowSub": "everyday Korean · what textbooks skip"
+  "slangRowSub": "everyday Korean · what textbooks skip",
+  "index": {
+    "chapterN": "Chapter {n}",
+    "ctaReview": "Review Chapter {n} →",
+    "ctaContinue": "Continue Chapter {n} →",
+    "ctaStudy": "Study Chapter {n} →",
+    "knownOfTotal": "{known}/{total} words",
+    "dueCount": "💧 {n} due",
+    "rootedAria": "{known} of {total} words rooted",
+    "rootedTally": "<b>{known}</b> of {total} words rooted",
+    "due": "due",
+    "reviewDueAria": "Review {n} due words"
+  }
 }

@@ -23,7 +23,8 @@
   },
   "empty": {
     "title": "Aquí todavía no hay nada",
-    "sub": "Sé la primera persona en publicar en este tablón."
+    "sub": "Sé la primera persona en publicar en este tablón.",
+    "allSub": "Aún no hay publicaciones de estudiantes. ¡Sé el primero!"
   },
   "comments": {
     "heading": "Comentarios",
@@ -59,5 +60,20 @@
     "minutes": "hace {n} min",
     "hours": "hace {n} h",
     "days": "hace {n} d"
+  },
+  "moderation": {
+    "menu": "Más opciones",
+    "report": "Denunciar",
+    "block": "Bloquear a este usuario",
+    "why": "¿Qué problema tiene?",
+    "reasons": {
+      "spam": "Spam o publicidad",
+      "harassment": "Acoso u odio",
+      "sexual": "Contenido sexual",
+      "other": "Otra cosa"
+    },
+    "reported": "Gracias, lo revisaremos.",
+    "blockConfirm": "¿Bloquear a este usuario? Ya no verás sus publicaciones ni comentarios.",
+    "failed": "No se pudo completar. Inténtalo de nuevo en un momento."
   }
 }

@@ -43,13 +43,10 @@ export function seoAlternates(locale: string, path: string): SeoAlternates {
   return { canonical: localeUrl(locale, path), languages: languageAlternates(path) };
 }
 
-// Everything that only ever renders for a signed-in visitor. A crawler that
-// follows one of these gets a redirect to /auth/login, so it burns crawl
-// budget to reach nothing indexable — hence the robots.txt block.
-//
-// This mirrors PROTECTED_PREFIXES in src/proxy.ts; the two lists have to stay
-// in step, and the proxy should eventually import this one rather than keep
-// its own copy.
+// Everything that only ever renders for a signed-in visitor: src/proxy.ts
+// sends a signed-out visit to any of these to /auth/login, and robots.txt
+// blocks them, since a crawler would burn crawl budget to reach nothing
+// indexable.
 export const LOGGED_IN_PREFIXES = [
   "/admin",
   "/community",
@@ -59,10 +56,12 @@ export const LOGGED_IN_PREFIXES = [
   "/hangul",
   "/level-test",
   "/listening",
-  "/pronunciation",
+  "/myroom",
   "/profile",
+  "/ranking",
   "/reading",
   "/review",
+  "/settings",
   "/shop",
   "/speaking",
   "/vocabulary",

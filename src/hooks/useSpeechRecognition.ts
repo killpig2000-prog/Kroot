@@ -36,12 +36,44 @@ function getCtor(): SpeechRecognitionCtor | null {
   return w.SpeechRecognition ?? w.webkitSpeechRecognition ?? null;
 }
 
+export type SpeechErrorCode = "blocked" | "noSpeech" | "notCaught" | "nothingHeard" | "startFailed";
+
+const ERROR_TEXT: Record<SpeechErrorCode, string> = {
+  blocked: "Microphone access was blocked — allow it in your browser settings.",
+  noSpeech: "Didn't catch that — for a short word, hold the sound a beat longer.",
+  notCaught: "Didn't catch that. Try again.",
+  nothingHeard: "Nothing heard — try speaking a little louder.",
+  startFailed: "Couldn't start the microphone. Try again.",
+};
+
+// An aborted recognizer still fires onend with whatever it half-heard; with
+// its handlers left on, that partial transcript got graded.
+function detach(rec: SpeechRecognitionLike | null) {
+  if (!rec) return;
+  rec.onresult = null;
+  rec.onerror = null;
+  rec.onend = null;
+  rec.abort();
+}
+
 export function useSpeechRecognition(lang = "ko-KR", maxDurationMs?: number, continuous = false) {
   const isSupported = useBrowserSupport(() => getCtor() !== null);
   const [isListening, setIsListening] = useState(false);
   const [listenStartedAt, setListenStartedAt] = useState<number | null>(null);
   const [interim, setInterim] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [errorCode, setErrorCode] = useState<SpeechErrorCode | null>(null);
+  // Bumps on every failure, so a repeat of the same message can replay.
+  const [errorKey, setErrorKey] = useState(0);
+  const fail = useCallback((code: SpeechErrorCode) => {
+    setError(ERROR_TEXT[code]);
+    setErrorCode(code);
+    setErrorKey((k) => k + 1);
+  }, []);
+  const clearError = useCallback((value: string | null) => {
+    setError(value);
+    if (value === null) setErrorCode(null);
+  }, []);
   const recRef = useRef<SpeechRecognitionLike | null>(null);
   const onFinalRef = useRef<((t: string, meta: SpeechTiming) => void) | null>(null);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -58,7 +90,7 @@ export function useSpeechRecognition(lang = "ko-KR", maxDurationMs?: number, con
 
   useEffect(() => {
     return () => {
-      recRef.current?.abort();
+      detach(recRef.current);
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
       if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current);
     };
@@ -74,12 +106,14 @@ export function useSpeechRecognition(lang = "ko-KR", maxDurationMs?: number, con
       const Ctor = getCtor();
       if (!Ctor) return; // isSupported already reflects this
 
-      recRef.current?.abort();
+      detach(recRef.current);
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
       if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current);
       onFinalRef.current = onFinal;
       setInterim("");
       setError(null);
+      setErrorCode(null);
+      let hadError = false;
 
       const rec = new Ctor();
       rec.lang = lang;
@@ -131,12 +165,13 @@ export function useSpeechRecognition(lang = "ko-KR", maxDurationMs?: number, con
         }
       };
       rec.onerror = (e) => {
-        setError(
-          e.error === "not-allowed"
-            ? "Microphone access was blocked — allow it in your browser, or type instead."
+        hadError = true;
+        fail(
+          e.error === "not-allowed" || e.error === "service-not-allowed"
+            ? "blocked"
             : e.error === "no-speech"
-              ? "Didn't catch that — for a short word, hold the sound a beat longer, or type it instead."
-              : "Didn't catch that. Try again, or type your answer."
+              ? "noSpeech"
+              : "notCaught"
         );
       };
       rec.onend = () => {
@@ -148,7 +183,7 @@ export function useSpeechRecognition(lang = "ko-KR", maxDurationMs?: number, con
         const ms =
           firstResultAt !== null && lastResultAt !== null ? Math.round(lastResultAt - firstResultAt) : 0;
         if (heard) onFinalRef.current?.(heard, { ms });
-        else setError((prev) => prev ?? "Nothing heard — try speaking a little louder.");
+        else if (!hadError) fail("nothingHeard");
       };
 
       recRef.current = rec;
@@ -168,13 +203,24 @@ export function useSpeechRecognition(lang = "ko-KR", maxDurationMs?: number, con
       } catch {
         setIsListening(false);
         setListenStartedAt(null);
-        setError("Couldn't start the microphone. Try again.");
+        fail("startFailed");
       }
     },
-    [lang, maxDurationMs, continuous]
+    [lang, maxDurationMs, continuous, fail]
   );
 
-  return { isSupported, isListening, listenStartedAt, interim, error, listen, stop, setError };
+  return {
+    isSupported,
+    isListening,
+    listenStartedAt,
+    interim,
+    error,
+    errorCode,
+    errorKey,
+    listen,
+    stop,
+    setError: clearError,
+  };
 }
 
 /** Speaks a single Korean string with the Web Speech API. */

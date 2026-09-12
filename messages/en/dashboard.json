@@ -2,6 +2,7 @@
   "welcome": "Welcome, {name}",
   "day": "Day {n}",
   "loadError": "We couldn't load your progress just now — nothing is lost. Refresh in a moment.",
+  "loadRetry": "Try again",
   "quest": {
     "title": "Today's quest",
     "done": "Done ✓",

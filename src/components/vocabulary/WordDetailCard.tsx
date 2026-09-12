@@ -523,13 +523,16 @@ export default function WordDetailCard({
           nextHref is always null and unitHref would just dump the learner
           into an unrelated vocab unit. The back-to-story link above already
           covers "done here". */}
+      {!backHref && !nextHref && (
+        <p className="mt-3 text-center text-[12.5px] font-semibold text-muted">{t("detail.lastWord")}</p>
+      )}
       {!backHref && (
         <button
           type="button"
           onClick={goNext}
           className={`${BTN_INK} w-full justify-center mt-2`}
         >
-          {t("detail.next")}
+          {nextHref ? t("detail.next") : t("detail.backToChapter")}
         </button>
       )}
 
@@ -585,20 +588,6 @@ export default function WordDetailCard({
         )}
       </div>
 
-      {!nextHref && !backHref && (
-        <div className="mt-2.5 text-right text-[12.5px]">
-          <button
-            type="button"
-            onClick={() => {
-              router.push(unitHref);
-              router.refresh();
-            }}
-            className="font-semibold text-muted hover:text-charcoal transition-colors"
-          >
-            {t("detail.backToUnit")} →
-          </button>
-        </div>
-      )}
     </div>
   );
 }

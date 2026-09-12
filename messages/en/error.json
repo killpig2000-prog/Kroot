@@ -4,5 +4,7 @@
   "body": "Something went wrong on our side — your progress is safe and rooted. A splash of water usually fixes it.",
   "retry": "Try again",
   "backToGarden": "Back to my garden",
-  "errorId": "error id: {id}"
+  "errorId": "error id: {id}",
+  "offlineTitle": "You're offline",
+  "offlineBody": "We couldn't reach Kroot. Check your connection and try again — your progress is safe."
 }

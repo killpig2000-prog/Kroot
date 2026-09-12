@@ -32,7 +32,7 @@ export default function SplashScreen() {
     // effect runs, so this isn't the render-derivable state the rule expects.
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setPhase("visible");
-    const leave = setTimeout(() => setPhase("leaving"), HOLD_MS);
+    const leave = setTimeout(() => setPhase((p) => (p === "hidden" ? p : "leaving")), HOLD_MS);
     const remove = setTimeout(() => setPhase("hidden"), HOLD_MS + FADE_MS);
     return () => {
       clearTimeout(leave);
@@ -42,8 +42,13 @@ export default function SplashScreen() {
 
   if (phase === "hidden") return null;
 
+  // A tap skips it: the hold used to swallow every touch for 1.3s.
   return (
-    <div className={`splash${phase === "leaving" ? " splash-leave" : ""}`} aria-hidden="true">
+    <div
+      className={`splash${phase === "leaving" ? " splash-leave" : ""}`}
+      aria-hidden="true"
+      onClick={() => setPhase("hidden")}
+    >
       <div className="splash-mark">
         <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
           <rect width="64" height="64" rx="15" fill="#FFF9EC" />
