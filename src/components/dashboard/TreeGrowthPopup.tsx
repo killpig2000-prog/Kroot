@@ -19,7 +19,7 @@ export type Growth = {
 };
 
 // Celebrates the tree getting visibly bigger — the level crossing into the
-// oak's next look (Lv.3 / 7 / 13 / 21 / 33 / 50) or a CEFR promotion changing
+// oak's next look (Lv.3 / 7 / 13 / 21 / 38 / 50) or a CEFR promotion changing
 // the species. Fires once per transition via a localStorage diff; the scene
 // itself is GrowthDialog. It used to watch the six named stages, so the grown
 // tree (a look inside the B2 stage) arrived without a word, and past Lv.50 it

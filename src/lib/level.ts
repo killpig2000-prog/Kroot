@@ -4,21 +4,23 @@ import { LEVEL_ORDER, type CefrLevel } from "@/lib/tree";
 // content difficulty, while this level tracks effort, grows the tree, and
 // drives rewards.
 //
-// Curve v3 (2026-09-12, user call) — max Lv.50, and reaching it costs about
+// Curve v4 (2026-09-12, user call) — max Lv.50, and reaching it costs about
 // 70% of one grade's content. A grade is ~5,700-6,100 XP (160 reading
 // passages, 52 writing chapters, 160 listening dialogues, its grammar and its
-// vocab Days); Lv.50 is 4,144 XP, 68-73% of any of them. Early levels come
-// quickly; from Lv.30 each level costs clearly more, and from Lv.40 more again.
+// vocab Days); Lv.50 is 4,131 XP, 68-73% of any of them. The first four
+// looks come quickly; from Lv.21 (the fifth look, the grown tree) each level
+// costs a little more, and keeps climbing to the Guardian Tree.
 //
 // Mirror of public.level_from_xp() in
-// supabase/migrations/0081_level_curve_max_50.sql — change both together.
+// supabase/migrations/0082_level_curve_bend_at_21.sql — change both together.
+// Integer-only on purpose: 4.1 per level is written as (41n + 5) / 10 so JS
+// and Postgres round the same way.
 export const MAX_LEVEL = 50;
 
 // XP needed to go from level n to n+1.
 export function xpForNext(level: number): number {
-  if (level < 30) return 8 + 2 * (level - 1);
-  if (level < 40) return 85 + 5 * (level - 30);
-  return 180 + 5 * (level - 40);
+  if (level < 21) return 10 + 2 * (level - 1);
+  return 65 + Math.floor((41 * (level - 21) + 5) / 10);
 }
 
 // Cumulative XP needed to *reach* a level. Tiny table, computed once.
@@ -48,8 +50,9 @@ export function levelProgress(xp: number): { level: number; into: number; needed
 
 // The oak's seven looks, by first level: seed, sprout, young tree, sturdy
 // tree, grown tree, elder tree, Guardian Tree. The Guardian Tree is the max
-// level — the tree is finished when the level is.
-export const ART_STAGE_STARTS = [1, 3, 7, 13, 21, 33, 50] as const;
+// level — the tree is finished when the level is. The elder tree sits at
+// Lv.38 so the last two stretches take about as long as each other.
+export const ART_STAGE_STARTS = [1, 3, 7, 13, 21, 38, 50] as const;
 /** Message keys for the seven looks (dashboard.tree.looks.<key>). */
 export const LOOK_KEYS = ["seed", "sprout", "young", "sturdy", "grown", "elder", "guardian"] as const;
 
@@ -85,7 +88,7 @@ export function evolutionProgress(xp: number): {
 // The six named stages (growth popup art, shop, stage-only callers) start on
 // look boundaries so a stage change is always a visible change. They skip the
 // grown tree, as LevelCreature's STAGE_LOOK does.
-export const STAGE_STARTS = [1, 3, 7, 13, 33, 50] as const;
+export const STAGE_STARTS = [1, 3, 7, 13, 38, 50] as const;
 
 export function treeStageForLevel(level: number): CefrLevel {
   let stage = 0;

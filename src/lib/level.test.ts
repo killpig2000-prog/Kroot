@@ -12,20 +12,21 @@ import {
   xpToReach,
 } from "@/lib/level";
 
-describe("xpForNext (curve v3, max Lv.50)", () => {
-  it("starts at 8 and rises by 2 a level up to Lv.29", () => {
-    expect(xpForNext(1)).toBe(8);
-    expect(xpForNext(10)).toBe(26);
-    expect(xpForNext(29)).toBe(64);
+describe("xpForNext (curve v4, max Lv.50)", () => {
+  it("starts at 10 and rises by 2 a level up to Lv.20", () => {
+    expect(xpForNext(1)).toBe(10);
+    expect(xpForNext(10)).toBe(28);
+    expect(xpForNext(20)).toBe(48);
   });
 
-  it("gets clearly harder from Lv.30, and again from Lv.40", () => {
-    expect(xpForNext(30)).toBe(85);
-    expect(xpForNext(39)).toBe(130);
-    expect(xpForNext(40)).toBe(180);
-    expect(xpForNext(49)).toBe(225);
-    expect(xpForNext(30) / xpForNext(29)).toBeGreaterThan(1.3);
-    expect(xpForNext(40) / xpForNext(39)).toBeGreaterThan(1.3);
+  it("bends up a little at Lv.21, the fifth look, and keeps climbing", () => {
+    expect(xpForNext(21)).toBe(65);
+    expect(xpForNext(21) / xpForNext(20)).toBeGreaterThan(1.3);
+    expect(xpForNext(21) / xpForNext(20)).toBeLessThan(1.4);
+    expect(xpForNext(30)).toBe(102);
+    expect(xpForNext(40)).toBe(143);
+    expect(xpForNext(49)).toBe(180);
+    for (let l = 1; l < MAX_LEVEL - 1; l++) expect(xpForNext(l + 1)).toBeGreaterThan(xpForNext(l));
   });
 });
 
@@ -34,17 +35,14 @@ describe("xpToReach", () => {
     expect(xpToReach(1)).toBe(0);
   });
 
-  it("is the cumulative sum of xpForNext and strictly increasing", () => {
-    for (let n = 1; n < MAX_LEVEL; n++) {
-      expect(xpToReach(n + 1) - xpToReach(n)).toBe(xpForNext(n));
-      expect(xpToReach(n + 1)).toBeGreaterThan(xpToReach(n));
-    }
+  it("is the cumulative sum of xpForNext", () => {
+    for (let n = 1; n < MAX_LEVEL; n++) expect(xpToReach(n + 1) - xpToReach(n)).toBe(xpForNext(n));
   });
 
-  it("puts Lv.30 / 40 / 50 at 1,044 / 2,119 / 4,144 XP", () => {
-    expect(xpToReach(30)).toBe(1044);
-    expect(xpToReach(40)).toBe(2119);
-    expect(xpToReach(MAX_LEVEL)).toBe(4144);
+  it("puts Lv.21 / 38 / 50 at 580 / 2,243 / 4,131 XP", () => {
+    expect(xpToReach(21)).toBe(580);
+    expect(xpToReach(38)).toBe(2243);
+    expect(xpToReach(MAX_LEVEL)).toBe(4131);
   });
 
   it("max level is about 70% of one grade's content XP", () => {
@@ -92,14 +90,14 @@ describe("levelProgress", () => {
 });
 
 describe("the oak's looks", () => {
-  it("changes look at Lv.3 / 7 / 13 / 21 / 33 / 50", () => {
-    expect([1, 2, 3, 6, 7, 12, 13, 20, 21, 32, 33, 49, 50, 999].map(artStageForLevel)).toEqual([
+  it("changes look at Lv.3 / 7 / 13 / 21 / 38 / 50", () => {
+    expect([1, 2, 3, 6, 7, 12, 13, 20, 21, 37, 38, 49, 50, 999].map(artStageForLevel)).toEqual([
       0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6,
     ]);
   });
 
   it("names six stages on look boundaries, skipping the grown tree", () => {
-    expect([1, 3, 7, 13, 21, 32, 33, 49, 50].map(treeStageForLevel)).toEqual([
+    expect([1, 3, 7, 13, 21, 37, 38, 49, 50].map(treeStageForLevel)).toEqual([
       "A1", "A2", "B1", "B2", "B2", "B2", "C1", "C1", "C2",
     ]);
     expect(treeStageForLevel(0)).toBe("A1");

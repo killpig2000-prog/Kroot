@@ -65,7 +65,7 @@ export default function GrowthRing({
   today: number;
   /** closed weeks, newest first, drawn inward */
   past?: Pick<WeekRing, "attended" | "avg" | "xp">[];
-  /** The tree's level decides the heartwood: an elder tree (Lv.33+) has a
+  /** The tree's level decides the heartwood: an elder tree (Lv.38+) has a
    *  dark heart, the Guardian Tree (Lv.50, the max) a gold one — so two
    *  twelve-week trees at different levels don't cut the same (2026-09-10;
    *  thresholds moved to the looks with the max-Lv.50 curve, 2026-09-12). */
@@ -96,8 +96,8 @@ export default function GrowthRing({
   }, [animateToday]);
 
   const innerR = R - outerW / 2 - 2;
-  const pith = level >= 33 ? 6 : 5;
-  const heart = level >= 50 ? { fill: "#4A3320", gold: true } : level >= 33 ? { fill: "#5C4228", gold: false } : { fill: "#8A6A45", gold: false };
+  const pith = level >= 38 ? 6 : 5;
+  const heart = level >= 50 ? { fill: "#4A3320", gold: true } : level >= 38 ? { fill: "#5C4228", gold: false } : { fill: "#8A6A45", gold: false };
   let rings: { r: number; band: number; tone: string }[] = [];
   if (past.length) {
     const total = past.reduce((a, w) => a + bandUnits(w), 0);
