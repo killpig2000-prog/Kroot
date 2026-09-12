@@ -122,7 +122,11 @@ export default function WateringCan({
         style={style}
       >
         <svg viewBox="0 0 96 80" className="block w-full h-auto overflow-visible" aria-hidden="true">
+          {/* Mirrored (2026-09-12, user: "호스가 나무를 향해야"): the can stands
+              at the garden's right, so the spout points left, at the tree,
+              instead of off the edge of the picture. */}
           <g style={state === "done" ? { transform: "rotate(-24deg) translate(2px, 8px)", transformOrigin: "40px 72px" } : undefined}>
+          <g transform="translate(96 0) scale(-1 1)">
             {/* the shadow on the grass */}
             <ellipse cx="42" cy="74" rx="30" ry="4" fill="#2E5B41" opacity=".13" />
             {/* spout: long, curving up, thicker at the body */}
@@ -151,6 +155,7 @@ export default function WateringCan({
             {/* one highlight */}
             <path d="M22 36 C20 44 20 52 22 60" stroke="#FFFDF6" strokeWidth="3.2" fill="none" strokeLinecap="round" opacity=".7" />
             <circle cx="23" cy="32.5" r="1.8" fill="#FFFDF6" opacity=".7" />
+          </g>
           </g>
         </svg>
         {state === "due" && (

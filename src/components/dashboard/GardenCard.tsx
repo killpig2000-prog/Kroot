@@ -10,6 +10,7 @@ import WateringCan from "@/components/dashboard/WateringCan";
 import { TREE_PHRASES } from "@/lib/tree-phrases";
 import { playWater } from "@/lib/sfx";
 import { LOOK_KEYS, evolutionProgress } from "@/lib/level";
+import { lookHeightForLevel } from "@/components/dashboard/LevelCreature";
 import type { CefrLevel } from "@/lib/tree";
 
 // The phone Garden's tree, option 2a (2026-09-09): an inset garden card
@@ -93,8 +94,20 @@ export default function GardenCard({
   // 2026-09-12 (user: "마이룸은 좋은데 대쉬보드에서 캐릭터가 좀 작아"): was
   // 112-128px, about half My room's 218-260. 42vw reaches the 180px cap at
   // 430 and gives 151px at 360; the card height below follows it.
-  const treeWidth = "clamp(150px, 42vw, 180px)";
+  // 2026-09-12 (user, from the store-screenshot mock: "나무 크기 위치는 실제
+  // 적용"): 150-180 → 200-240px, so the tree fills the card's width the way
+  // the mock did; 56vw reaches the cap at 430 and gives 200px at 360.
+  const treeWidth = "clamp(200px, 56vw, 240px)";
   const cardHeight = `max(240px, calc(${treeWidth} * ${(frameH / 220).toFixed(3)} + 120px))`;
+  // The tree's feet, above the XP line at the card's bottom.
+  const feet = 26;
+  // Where the bubble hangs: just over this look's crown, not at a fixed
+  // height — a seed gets its bubble low, the guardian gets it high. In the
+  // 230-tall frame the ground line is at 212, so the crown's top sits
+  // (230 - 212 + look height) units above the frame's bottom; the frame
+  // is treeWidth * 230/220 tall, so one unit is treeWidth / 220.
+  const crownUnits = 230 - 212 + lookHeightForLevel(level);
+  const bubbleBottom = `calc(${feet + 6}px + ${treeWidth} * ${(crownUnits / 220).toFixed(3)})`;
   const lines = TREE_PHRASES.map((p) => ({ kr: p.kr, en: t(`phrases.${p.key}`) }));
   // While the tree is thanking you, that line leads and stays up.
   const thanks = lines.filter((p) => p.kr === "물 줘서 고마워요");
@@ -135,7 +148,7 @@ export default function GardenCard({
         <div className="absolute inset-0 mx-auto w-full max-w-[400px]">
           {/* The tree stands in the middle, on the hills, as in My room; friends
               wander most of the card's width, as in My room. */}
-          <div className="absolute left-1/2 bottom-[34px] -translate-x-1/2">
+          <div className="absolute left-1/2 -translate-x-1/2" style={{ bottom: feet }}>
             <div className={party ? "cheer" : undefined}>
               <GardenStage level={level} species={species} costumeIds={costumeIds} width={treeWidth} roamSpan="clamp(64px, 22vw, 112px)" />
             </div>
@@ -160,13 +173,13 @@ export default function GardenCard({
               cap={review.cap}
               doneToday={review.doneToday}
               onPour={() => setParty(true)}
-              className="absolute right-[clamp(12px,3.5vw,18px)] bottom-[36px]"
-              style={{ width: "clamp(50px, 14vw, 60px)" }}
+              className="absolute right-[clamp(12px,3.5vw,18px)]"
+              style={{ width: "clamp(50px, 14vw, 60px)", bottom: feet + 2 }}
             />
           )}
-          {/* over the tree, tail down, as in My room; keyed so the thank-you
-              restarts the cycle from its first line */}
-          <div className="absolute z-[4] w-max left-1/2 -translate-x-1/2 top-[40px]">
+          {/* over the tree's crown, tail down, as in My room; keyed so the
+              thank-you restarts the cycle from its first line */}
+          <div className="absolute z-[4] w-max left-1/2 -translate-x-1/2" style={{ bottom: bubbleBottom }}>
             <SpeechBubble key={party ? "cheer" : "calm"} phrases={phrases} firstHoldMs={party ? 4200 : undefined} wrap />
           </div>
         </div>

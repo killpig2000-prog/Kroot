@@ -297,6 +297,12 @@ const LOOKS: Look[] = [
 ];
 /** Each look's picture, in ART_STAGE_STARTS order — the growth panel's thumbnails. */
 export const LOOK_SRC = LOOKS.map((l) => l.src);
+/** How tall this level's look stands, in frame units (the ground line is
+ *  at 212 of the 230-tall frame) — so a caller can hang a speech bubble
+ *  just over the crown, whatever the look (2026-09-12). */
+export function lookHeightForLevel(level: number): number {
+  return LOOKS[artStageForLevel(level)].height;
+}
 // Stage-only callers (shop, growth popup, landing) show their stage's look.
 const STAGE_LOOK: Record<CefrLevel, number> = { A1: 0, A2: 1, B1: 2, B2: 3, C1: 5, C2: 6 };
 
