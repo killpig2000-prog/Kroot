@@ -10,7 +10,7 @@
 // is redacted by Vercel).
 // Re-runnable: clips already in the bucket are skipped.
 import { createHash } from "crypto";
-import { readFileSync, appendFileSync } from "fs";
+import { readFileSync, readdirSync, appendFileSync } from "fs";
 import { createClient } from "@supabase/supabase-js";
 import { sanitizeKorean } from "@/lib/tts";
 import { dialogueVoices } from "@/lib/dialogue-voices";
@@ -35,12 +35,24 @@ const JAMO: Record<string, string> = {
   "ㅉ": "쯔",
 };
 
+// The per-level data files matter too (2026-09-12): the list below used to
+// stop at the index modules, so every vocabulary word (아침, 저녁, 사람 …),
+// the per-level reading/writing/listening files and the example sentences
+// were never pre-generated — 8,153 clips / 83k characters that each fell to
+// the runtime route instead.
+const dataDir = (d: string) =>
+  readdirSync(new URL(`../src/lib/${d}`, import.meta.url))
+    .filter((f) => f.endsWith(".ts") && !f.endsWith(".test.ts"))
+    .map((f) => `@/lib/${d}/${f.replace(/\.ts$/, "")}`);
 const MODULES = [
   "@/lib/community", "@/lib/grammar", "@/lib/hangul",
   "@/lib/level-test", "@/lib/listening-dialogues", "@/lib/listening",
   "@/lib/promotion-test", "@/lib/pronunciation", "@/lib/reading-data/daily-life",
   "@/lib/slang", "@/lib/themes", "@/lib/tree",
   "@/lib/vocabulary", "@/lib/writing-data/daily-life",
+  ...dataDir("vocabulary-data"), ...dataDir("reading-data"), ...dataDir("writing-data"), ...dataDir("listening-data"),
+  "@/lib/vocabulary-words", "@/lib/vocab-examples", "@/lib/first-lessons", "@/lib/particles",
+  "@/lib/tree-phrases", "@/lib/reading", "@/lib/writing",
 ];
 
 type Job = { spoken: string; voice: "f" | "m" };
