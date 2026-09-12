@@ -295,6 +295,8 @@ const LOOKS: Look[] = [
   { src: "/tree/oak-uncle.webp", w: 809, h: 858, hat: [460, 17], crown: 570, eye: [477, 540], spread: 60, height: 195, ground: true, lids: [[418, 542, 32, 26], [537, 538, 27, 26]], bark: "#865836" },
   { src: "/tree/oak-spirit.webp", w: 903, h: 930, hat: [452, 40], crown: 600, eye: [535, 608], spread: 66, height: 218, ground: true, lids: [[469, 610, 50, 30], [602, 607, 40, 32]], bark: "#9C8370" },
 ];
+/** Each look's picture, in ART_STAGE_STARTS order — the growth panel's thumbnails. */
+export const LOOK_SRC = LOOKS.map((l) => l.src);
 // Stage-only callers (shop, growth popup, landing) show their stage's look.
 const STAGE_LOOK: Record<CefrLevel, number> = { A1: 0, A2: 1, B1: 2, B2: 3, C1: 5, C2: 6 };
 
@@ -320,7 +322,7 @@ export default function LevelCreature({
 }: {
   /** Growth stage (player level band) — how big the tree is. */
   level: CefrLevel;
-  /** The player's level, when known — picks the exact one of the oak's eight looks. */
+  /** The player's level, when known — picks the exact one of the oak's seven looks. */
   playerLevel?: number;
   costumeIds?: string[];
   /** Tree species (CEFR grade) — what kind of tree it is. Defaults to the stage. */

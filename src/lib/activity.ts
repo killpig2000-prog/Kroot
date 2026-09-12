@@ -2,7 +2,7 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import { track } from "@/lib/analytics";
 
 // XP awarded per completed unit, by skill. Tuned so ~2-3 activities a day
-// (~30-40 XP) reaches the Lv.30 cap (5,800 XP) in roughly 5-6 months.
+// (~30-40 XP) reaches Lv.50, the max (4,144 XP), in about four months.
 export const XP_POINTS: Record<string, number> = {
   reading: 15,
   writing: 15,

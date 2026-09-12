@@ -58,7 +58,7 @@
   "tree": {
     "levelBadge": "Nv. {level}",
     "metresTall": "m de alto",
-    "maxed": "Ha llegado a las estrellas 🌟",
+    "maxed": "Creció del todo: el Árbol guardián 🌳",
     "xpToNext": "{into}/{needed} XP para el Nv. {next}",
     "phrases": {
       "fighting": "¡tú puedes!",
@@ -79,7 +79,17 @@
     "keepsakesTab": "Recuerdos",
     "openShop": "Abrir tu tienda y armario",
     "openMyRoom": "Abrir Mi rincón",
-    "openPeek": "Ver tu árbol de cerca"
+    "openPeek": "Ver tu árbol de cerca",
+    "xpToEvolve": "{xp} XP para {name}",
+    "looks": {
+      "seed": "Semilla",
+      "sprout": "Brote",
+      "young": "Árbol joven",
+      "sturdy": "Árbol robusto",
+      "grown": "Árbol crecido",
+      "elder": "Árbol anciano",
+      "guardian": "Árbol guardián"
+    }
   },
   "growth": {
     "closeAria": "Cerrar",

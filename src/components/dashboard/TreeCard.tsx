@@ -5,9 +5,9 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import GardenStage, { AuraLayer, SkyLayer, gardenFrame } from "@/components/dashboard/GardenStage";
 import WateringCan from "@/components/dashboard/WateringCan";
-import { LEVEL_ORDER, LEVEL_PATH, type CefrLevel } from "@/lib/tree";
-import { MAX_LEVEL, treeHeightMetres, treeStageForLevel } from "@/lib/level";
-import { VETERAN_MILESTONES } from "@/components/dashboard/VeteranTree";
+import type { CefrLevel } from "@/lib/tree";
+import { ART_STAGE_STARTS, LOOK_KEYS, evolutionProgress } from "@/lib/level";
+import { LOOK_SRC } from "@/components/dashboard/LevelCreature";
 import GardenScene from "@/components/ui/GardenScene";
 import SpeechBubble from "@/components/ui/SpeechBubble";
 import Glyph from "@/components/dashboard/Glyph";
@@ -15,9 +15,6 @@ import TreeGrowthPopup from "@/components/dashboard/TreeGrowthPopup";
 import { GREETING_KR, TREE_PHRASES, greetingKey, lowerGloss } from "@/lib/tree-phrases";
 import AvatarUploader from "@/components/profile/AvatarUploader";
 import NameEditor from "@/components/profile/NameEditor";
-
-// One label per 10-level tree stage; from 50 the tree only grows taller.
-const STAGE_RANGES = ["1-9", "10-19", "20-29", "30-39", "40-49", "50+"];
 
 // The tree greets you by your local clock — the page used to do this in an
 // <h1> above the garden while the tree said something else underneath, two
@@ -36,9 +33,7 @@ const GREETING_HOLD_MS = 5000;
 // page's top, not a picture in it); from md up it is a card in the column.
 export default function TreeCard({
   level,
-  progressPct,
-  xpInto,
-  xpNeeded,
+  xp,
   costumeIds = [],
   species,
   userId,
@@ -52,9 +47,8 @@ export default function TreeCard({
   showOwner = true,
 }: {
   level: number;
-  progressPct: number;
-  xpInto: number;
-  xpNeeded: number;
+  /** Total XP — the XP line counts down to the tree's next look. */
+  xp: number;
   costumeIds?: string[];
   /** CEFR grade — decides the tree species; promotion transforms the garden. */
   species?: CefrLevel;
@@ -78,8 +72,10 @@ export default function TreeCard({
   // identity header (2026-09-01), so the copy moved with it.
   const ti = useTranslations("profile.identity");
   const tu = useTranslations("ui");
+  // The XP line counts down to the next look (2026-09-12, user call).
+  const evo = evolutionProgress(xp);
   const [fill, setFill] = useState(0);
-  const [openTab, setOpenTab] = useState<"growth" | "keepsakes" | null>(null);
+  const [openTab, setOpenTab] = useState<"growth" | null>(null);
   // the watering can's pour: the tree sways and thanks you, as for a done quest
   const [watering, setWatering] = useState(false);
   const equipped = costumeIds;
@@ -98,18 +94,13 @@ export default function TreeCard({
   ];
 
   useEffect(() => {
-    const timer = setTimeout(() => setFill(progressPct), 200);
+    const timer = setTimeout(() => setFill(evo.pct), 200);
     return () => clearTimeout(timer);
-  }, [progressPct]);
+  }, [evo.pct]);
 
-  const stage = treeStageForLevel(level);
-  const stageIdx = LEVEL_ORDER.indexOf(stage);
-  const maxed = level >= MAX_LEVEL;
-  // The frame's shape (veteran height, sky costume) comes from the shared
-  // stage so the pills and the scene agree with the drawing.
-  const { veteran, frameH, sky } = gardenFrame(level, equipped);
-  const metres = treeHeightMetres(level);
-  const nextKeepsake = VETERAN_MILESTONES.find((m) => m.level > level);
+  // The frame's shape (sky costume) comes from the shared stage so the pills
+  // and the scene agree with the drawing.
+  const { frameH, sky } = gardenFrame(level, equipped);
   // The creature's drawn width; its height follows the frame. The scene is
   // at least tall enough for the tallest veteran plus the XP line under it.
   // 2026-09-11 (user: "나무크기가 좀 작은거 같아"): the old clamp(170px, 44vw,
@@ -146,15 +137,11 @@ export default function TreeCard({
 
         {/* level + stage, streak + coins — two pills, nothing else up top */}
         <span
-          className={`absolute top-3 left-3 z-[4] inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[12.5px] font-extrabold backdrop-blur-[6px] ${
-            veteran ? "border-amber-line text-[#B7791F]" : "border-success-line text-success-deep"
-          }`}
+          className="absolute top-3 left-3 z-[4] inline-flex items-center gap-1.5 rounded-full border border-success-line px-2.5 py-1 text-[12.5px] font-extrabold text-success-deep backdrop-blur-[6px]"
           style={{ background: "rgba(255,253,246,.8)" }}
         >
           {t("levelBadge", { level })}
-          <span className="font-bold text-charcoal tabular-nums">
-            · {veteran ? `${metres} ${t("metresTall")}` : LEVEL_PATH[stage].treeName}
-          </span>
+          <span className="font-bold text-charcoal">· {t(`looks.${LOOK_KEYS[evo.look]}`)}</span>
         </span>
         <span
           className="absolute top-3 right-3 z-[4] inline-flex items-center gap-1.5 rounded-full border border-success-line px-2.5 py-1 text-[12.5px] font-extrabold text-success-deep backdrop-blur-[6px]"
@@ -220,11 +207,15 @@ export default function TreeCard({
         <div className="absolute left-4 right-4 bottom-3 z-[4]">
           {/* the species name left the garden (2026-09-10, user call) */}
           <div className="flex items-center justify-end text-[11px] font-extrabold text-success-deep">
-            <span className="tabular-nums">{maxed ? t("maxed") : t("xpToNext", { into: xpInto, needed: xpNeeded, next: level + 1 })}</span>
+            <span className="tabular-nums">
+              {evo.nextLook === null
+                ? t("maxed")
+                : t("xpToEvolve", { xp: evo.xpLeft, name: t(`looks.${LOOK_KEYS[evo.nextLook]}`) })}
+            </span>
           </div>
           <div className="mt-1 h-[7px] rounded-full overflow-hidden" style={{ background: "rgba(255,253,246,.7)" }}>
             <i
-              className={`not-italic block h-full rounded-full transition-[width] duration-1000 ${veteran ? "bg-[#B7791F]" : "bg-success"}`}
+              className="not-italic block h-full rounded-full transition-[width] duration-1000 bg-success"
               style={{ width: `${fill}%` }}
             />
           </div>
@@ -263,74 +254,38 @@ export default function TreeCard({
             <span className="hidden sm:inline">{t("growthTab")}</span>{" "}
             <span className={`inline-block text-[11px] transition-transform ${openTab === "growth" ? "rotate-180" : ""}`}>▾</span>
           </button>
-          {veteran && (
-            <button
-              type="button"
-              aria-expanded={openTab === "keepsakes"}
-              aria-label={t("keepsakesTab")}
-              onClick={() => setOpenTab(openTab === "keepsakes" ? null : "keepsakes")}
-              className={`text-[12.5px] font-semibold rounded-full px-2.5 py-1 border transition-colors ${
-                openTab === "keepsakes"
-                  ? "bg-[var(--tint-amber)] border-amber-line text-[#B7791F]"
-                  : "bg-warm border-line text-muted hover:text-[#B7791F] hover:border-amber-line"
-              }`}
-            >
-              🏅 <span className="hidden sm:inline">{t("keepsakesTab")}</span>{" "}
-              <span className={`inline-block text-[11px] transition-transform ${openTab === "keepsakes" ? "rotate-180" : ""}`}>▾</span>
-            </button>
-          )}
         </div>
       </div>
       )}
 
+      {/* the oak's seven looks, each with the level it arrives at; the ones
+          still to come are silhouettes */}
       {openTab === "growth" && (
-        <div className="flex gap-2 mt-3">
-          {LEVEL_ORDER.map((lv, idx) => {
-            const state = idx < stageIdx ? "done" : idx === stageIdx ? "now" : "todo";
+        <div className="grid grid-cols-7 gap-1.5 mt-3">
+          {LOOK_KEYS.map((key, idx) => {
+            const state = idx < evo.look ? "done" : idx === evo.look ? "now" : "todo";
             return (
               <div
-                key={lv}
-                className={`flex-1 rounded-lg py-[8px] px-1 text-center text-sm border transition-all ${
-                  state === "now"
-                    ? "bg-success-bg border-success-line"
-                    : state === "done"
-                    ? "bg-cream border-line"
-                    : "bg-cream border-line grayscale opacity-45"
+                key={key}
+                title={t(`looks.${key}`)}
+                className={`rounded-lg pt-[6px] pb-[5px] px-0.5 text-center border ${
+                  state === "now" ? "bg-success-bg border-success-line" : "bg-cream border-line"
                 }`}
               >
-                <span className={state === "now" ? "inline-block bob" : undefined}>{LEVEL_PATH[lv].icon}</span>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={LOOK_SRC[idx]}
+                  alt={t(`looks.${key}`)}
+                  className={`mx-auto h-[30px] w-auto max-w-full object-contain ${state === "todo" ? "brightness-0 opacity-15" : ""} ${state === "now" ? "bob" : ""}`}
+                />
                 <small
-                  className={`block text-[11px] font-semibold mt-px ${
+                  className={`block text-[11px] font-semibold mt-[3px] tabular-nums ${
                     state === "now" ? "text-success" : state === "done" ? "text-muted" : "text-faint"
                   }`}
                 >
-                  {STAGE_RANGES[idx]}
+                  Lv.{ART_STAGE_STARTS[idx]}
                 </small>
               </div>
-            );
-          })}
-        </div>
-      )}
-
-      {openTab === "keepsakes" && veteran && (
-        <div className="flex flex-wrap gap-1.5 mt-3">
-          {VETERAN_MILESTONES.map((m) => {
-            const on = level >= m.level;
-            const next = nextKeepsake?.level === m.level;
-            return (
-              <span
-                key={m.level}
-                className={`text-[12.5px] font-semibold rounded-full px-2.5 py-1 border ${
-                  on
-                    ? "bg-[var(--tint-amber)] border-amber-line text-[#B7791F]"
-                    : next
-                    ? "bg-cream border-line text-muted"
-                    : "bg-cream border-line text-faint opacity-50"
-                }`}
-              >
-                <span className="tabular-nums">Lv.{m.level}</span> · {t(`keepsakes.${m.level}`)}
-                {on && " ✓"}
-              </span>
             );
           })}
         </div>

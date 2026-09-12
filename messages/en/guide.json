@@ -99,7 +99,7 @@
   "facts": {
     "effort": {
       "kicker": "Effort",
-      "title": "Tree level 1–120",
+      "title": "Tree level 1–50",
       "body": "Every session earns XP. Leveling up means time put in — it doesn't change your grade."
     },
     "ability": {

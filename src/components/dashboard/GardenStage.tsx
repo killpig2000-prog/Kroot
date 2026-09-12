@@ -2,9 +2,8 @@
 
 import { SceneLayer, costumeById, skinFor, skyFor } from "@/lib/costumes";
 import RoamingFriends from "@/components/dashboard/RoamingFriends";
-import VeteranTree, { veteranFrameHeight } from "@/components/dashboard/VeteranTree";
 import LevelCreature from "@/components/dashboard/LevelCreature";
-import { FULLY_GROWN_LEVEL, treeStageForLevel } from "@/lib/level";
+import { treeStageForLevel } from "@/lib/level";
 import type { CefrLevel } from "@/lib/tree";
 
 // One tree, drawn one way (2026-09-10, user call). My room's hero and the
@@ -16,17 +15,15 @@ import type { CefrLevel } from "@/lib/tree";
 
 /** The frame's shape for a level and outfit — shared so the pills, the
  *  scene's sky and the card's height agree with the drawing. */
-export function gardenFrame(level: number, costumeIds: string[]) {
+// The frame is 220x230 at every level: the tree used to keep growing taller
+// past Lv.50, and that ended with the max-Lv.50 curve (2026-09-12).
+export function gardenFrame(_level: number, costumeIds: string[]) {
   const skin = skinFor(costumeIds);
-  // Lv.50+: the trunk keeps growing, so the drawing gets taller. A skin
-  // hides the tree, trunk included, so the frame stays 230 tall.
-  const veteran = level >= FULLY_GROWN_LEVEL && !skin;
-  const frameH = veteran ? veteranFrameHeight(level) : 230;
+  const frameH = 230;
   return {
-    veteran,
     frameH,
-    /** ground items and friends ride down with the taller frame */
-    groundShift: frameH - 230,
+    /** ground items and friends sit on the frame's own ground line */
+    groundShift: 0,
     /** a sky costume swaps the scene's gradient (and hides the clouds) */
     sky: skyFor(costumeIds),
     skin,
@@ -51,7 +48,7 @@ export default function GardenStage({
   /** Extra class on the tree's <svg> — the Garden card's cheer sway. */
   svgClassName?: string;
 }) {
-  const { veteran, frameH, groundShift, skin } = gardenFrame(level, costumeIds);
+  const { frameH, groundShift, skin } = gardenFrame(level, costumeIds);
   const stage = treeStageForLevel(level);
   const skyGrounds = costumeIds.map(costumeById).filter((c) => c?.slot === "sky" && c.skyGround);
   return (
@@ -70,11 +67,7 @@ export default function GardenStage({
         {/* sky details (moon, stars, snow, rain) are drawn over the whole
             garden by SkyLayer, not in this frame */}
         <SceneLayer costumeIds={costumeIds} layer="behind" omitSlots={["sky", "aura"]} />
-        {veteran && species ? (
-          <VeteranTree level={level} species={species} costumeIds={costumeIds} />
-        ) : (
-          <LevelCreature level={stage} playerLevel={level} costumeIds={costumeIds} species={species} />
-        )}
+        <LevelCreature level={stage} playerLevel={level} costumeIds={costumeIds} species={species} />
         {/* what a sky costume leaves on the ground at the tree's feet */}
         {skyGrounds.map((c) => (
           <g key={c!.id}>{c!.skyGround!()}</g>

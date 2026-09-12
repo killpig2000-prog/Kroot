@@ -1,27 +1,24 @@
 import { LEVEL_ORDER, type CefrLevel } from "@/lib/tree";
 
 // Numeric player level, driven by XP. CEFR is a separate axis: it tags
-// content difficulty (and picks the tree species), while this level tracks
-// effort, grows the tree, and drives rewards.
+// content difficulty, while this level tracks effort, grows the tree, and
+// drives rewards.
 //
-// Curve v2 — fast early, open-ended late. One chapter (10-15 XP) is one
-// level-up for the first ten levels, then the cost ramps gently so the tree
-// is fully grown at Lv.50 (~1,065 XP, about 85 chapters). Past 50 the tree
-// only grows *taller*; each level costs a little more than the last with no
-// hard ceiling on XP, and Lv.120 wears the star topper as the display cap.
+// Curve v3 (2026-09-12, user call) — max Lv.50, and reaching it costs about
+// 70% of one grade's content. A grade is ~5,700-6,100 XP (160 reading
+// passages, 52 writing chapters, 160 listening dialogues, its grammar and its
+// vocab Days); Lv.50 is 4,144 XP, 68-73% of any of them. Early levels come
+// quickly; from Lv.30 each level costs clearly more, and from Lv.40 more again.
 //
-// Mirror of public.level_from_xp() in supabase/migrations/0029_level_curve_v2_softer.sql —
-// change both together.
-export const FULLY_GROWN_LEVEL = 50;
-export const MAX_LEVEL = 120;
+// Mirror of public.level_from_xp() in
+// supabase/migrations/0081_level_curve_max_50.sql — change both together.
+export const MAX_LEVEL = 50;
 
 // XP needed to go from level n to n+1.
 export function xpForNext(level: number): number {
-  if (level < 10) return 10;
-  if (level < 20) return 15;
-  if (level < 35) return 25;
-  if (level < FULLY_GROWN_LEVEL) return 30;
-  return 60 + 3 * (level - FULLY_GROWN_LEVEL);
+  if (level < 30) return 8 + 2 * (level - 1);
+  if (level < 40) return 85 + 5 * (level - 30);
+  return 180 + 5 * (level - 40);
 }
 
 // Cumulative XP needed to *reach* a level. Tiny table, computed once.
@@ -49,14 +46,12 @@ export function levelProgress(xp: number): { level: number; into: number; needed
   return { level, into, needed, pct: Math.min(100, Math.round((into / needed) * 100)) };
 }
 
-// The tree evolves every 10 levels: 🌰1-9 → 🌱10-19 → 🪴20-29 → 🌳30-39 →
-// 🌸40-49 → 🍎50+. Reuses the 6 visual stages keyed by CEFR (LevelCreature).
-// From 50 on the stage stays put and the tree grows taller instead (VeteranTree).
-export const STAGE_SPAN = 10;
 // The oak's seven looks, by first level: seed, sprout, young tree, sturdy
-// tree, young tree II, uncle, spirit. Early looks come quickly, later ones
-// take longer (2026-09-11).
-export const ART_STAGE_STARTS = [1, 4, 10, 18, 30, 48, 70] as const;
+// tree, grown tree, elder tree, Guardian Tree. The Guardian Tree is the max
+// level — the tree is finished when the level is.
+export const ART_STAGE_STARTS = [1, 3, 7, 13, 21, 33, 50] as const;
+/** Message keys for the seven looks (dashboard.tree.looks.<key>). */
+export const LOOK_KEYS = ["seed", "sprout", "young", "sturdy", "grown", "elder", "guardian"] as const;
 
 export function artStageForLevel(level: number): number {
   let stage = 0;
@@ -64,25 +59,38 @@ export function artStageForLevel(level: number): number {
   return stage;
 }
 
-// The six named stages (growth popup, shop, stage-only callers) start on
-// look boundaries so a stage change is always a visible change.
-export const STAGE_STARTS = [1, 4, 10, 18, 48, 70] as const;
+/** How far the tree is from its next look — what the garden's XP line shows. */
+export function evolutionProgress(xp: number): {
+  level: number;
+  look: number;
+  /** null once the tree is the Guardian Tree */
+  nextLook: number | null;
+  xpLeft: number;
+  pct: number;
+} {
+  const level = levelFromXp(xp);
+  const look = artStageForLevel(level);
+  if (look >= ART_STAGE_STARTS.length - 1) return { level, look, nextLook: null, xpLeft: 0, pct: 100 };
+  const from = xpToReach(ART_STAGE_STARTS[look]);
+  const to = xpToReach(ART_STAGE_STARTS[look + 1]);
+  return {
+    level,
+    look,
+    nextLook: look + 1,
+    xpLeft: to - xp,
+    pct: Math.min(100, Math.max(0, Math.round(((xp - from) / (to - from)) * 100))),
+  };
+}
+
+// The six named stages (growth popup art, shop, stage-only callers) start on
+// look boundaries so a stage change is always a visible change. They skip the
+// grown tree, as LevelCreature's STAGE_LOOK does.
+export const STAGE_STARTS = [1, 3, 7, 13, 33, 50] as const;
 
 export function treeStageForLevel(level: number): CefrLevel {
   let stage = 0;
   while (stage < STAGE_STARTS.length - 1 && level >= STAGE_STARTS[stage + 1]) stage++;
   return LEVEL_ORDER[stage];
-}
-
-// Veteran growth (Lv.50+): one extra canopy tier per 10 levels, each with a
-// keepsake hung on it. Height in metres is the brag number on the card.
-export const VETERAN_TIER_SPAN = 10;
-export function veteranTiers(level: number): number {
-  return Math.max(0, Math.floor((Math.min(level, MAX_LEVEL) - FULLY_GROWN_LEVEL) / VETERAN_TIER_SPAN));
-}
-export function treeHeightMetres(level: number): number {
-  if (level < FULLY_GROWN_LEVEL) return 0;
-  return Math.round((2 + (Math.min(level, MAX_LEVEL) - FULLY_GROWN_LEVEL) * 0.125) * 10) / 10;
 }
 
 // Content-difficulty gate: harder CEFR tiers open only by proving skill in a

@@ -4,23 +4,26 @@ import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import TreeEvolution from "@/components/level-test/TreeEvolution";
 import GardenScene from "@/components/ui/GardenScene";
-import { LEVEL_ORDER, LEVEL_PATH, type CefrLevel } from "@/lib/tree";
-import { treeStageForLevel, veteranTiers } from "@/lib/level";
+import { LEVEL_ORDER, type CefrLevel } from "@/lib/tree";
+import { ART_STAGE_STARTS, LOOK_KEYS, artStageForLevel, treeStageForLevel } from "@/lib/level";
 
 export type Growth = {
   fromStage: CefrLevel;
   toStage: CefrLevel;
   fromSpecies: CefrLevel;
   toSpecies: CefrLevel;
+  /** The oak's look before and after (0 seed … 6 Guardian Tree). */
+  fromLook: number;
+  toLook: number;
   promoted: boolean;
-  /** Lv.50+: a new canopy tier (and keepsake) rather than a new stage. */
-  grewTaller: boolean;
 };
 
-// Celebrates the tree getting visibly bigger — either a numeric level
-// crossing into the next growth stage (every 10 levels, or a new canopy tier
-// past Lv.50) or a CEFR promotion changing the species. Fires once per
-// transition via a localStorage diff; the scene itself is GrowthDialog.
+// Celebrates the tree getting visibly bigger — the level crossing into the
+// oak's next look (Lv.3 / 7 / 13 / 21 / 33 / 50) or a CEFR promotion changing
+// the species. Fires once per transition via a localStorage diff; the scene
+// itself is GrowthDialog. It used to watch the six named stages, so the grown
+// tree (a look inside the B2 stage) arrived without a word, and past Lv.50 it
+// celebrated a "taller" tree — both went with the max-Lv.50 curve (2026-09-12).
 export default function TreeGrowthPopup({
   level,
   species,
@@ -32,9 +35,7 @@ export default function TreeGrowthPopup({
 
   useEffect(() => {
     if (!species) return;
-    const stage = treeStageForLevel(level);
-
-    const tiers = veteranTiers(level);
+    const look = artStageForLevel(level);
 
     // This runs on the dashboard — the first screen after signing in. Safari's
     // private mode, a browser set to block site data, and a full quota all
@@ -43,35 +44,35 @@ export default function TreeGrowthPopup({
     // "no previous milestone recorded": the celebration silently doesn't fire,
     // which is the right way for an animation to fail.
     let prevSpecies: CefrLevel | null = null;
-    let prevStage: CefrLevel | null = null;
-    let prevTiersRaw: string | null = null;
+    let prevLookRaw: string | null = null;
     try {
       prevSpecies = localStorage.getItem("kroot-tree-species") as CefrLevel | null;
-      prevStage = localStorage.getItem("kroot-tree-stage") as CefrLevel | null;
-      prevTiersRaw = localStorage.getItem("kroot-tree-tiers");
+      prevLookRaw = localStorage.getItem("kroot-tree-look");
       localStorage.setItem("kroot-tree-species", species);
-      localStorage.setItem("kroot-tree-stage", stage);
-      localStorage.setItem("kroot-tree-tiers", String(tiers));
+      localStorage.setItem("kroot-tree-look", String(look));
+      // the retired Lv.50+ "taller" diff and the six-stage diff
+      localStorage.removeItem("kroot-tree-tiers");
+      localStorage.removeItem("kroot-tree-stage");
     } catch {
       return;
     }
 
-    const tiersGrew = prevTiersRaw !== null && tiers > Number(prevTiersRaw);
-
+    const prevLook = prevLookRaw === null ? null : Number(prevLookRaw);
     const speciesGrew =
       !!prevSpecies && prevSpecies !== species && LEVEL_ORDER.indexOf(species) > LEVEL_ORDER.indexOf(prevSpecies);
-    const stageGrew =
-      !!prevStage && prevStage !== stage && LEVEL_ORDER.indexOf(stage) > LEVEL_ORDER.indexOf(prevStage);
-    if (!speciesGrew && !stageGrew && !tiersGrew) return;
+    const lookGrew = prevLook !== null && Number.isFinite(prevLook) && look > prevLook;
+    if (!speciesGrew && !lookGrew) return;
 
+    const fromLook = lookGrew ? (prevLook as number) : look;
     const timer = setTimeout(() => {
       setGrowth({
-        fromStage: prevStage ?? stage,
-        toStage: stage,
+        fromStage: treeStageForLevel(ART_STAGE_STARTS[fromLook]),
+        toStage: treeStageForLevel(level),
         fromSpecies: prevSpecies ?? species,
         toSpecies: species,
+        fromLook,
+        toLook: look,
         promoted: speciesGrew,
-        grewTaller: !speciesGrew && !stageGrew && tiersGrew,
       });
     }, 500);
     return () => clearTimeout(timer);
@@ -88,6 +89,7 @@ export default function TreeGrowthPopup({
 // empty, the dashboard behind it dimmed is enough.
 export function GrowthDialog({ growth, level, onClose }: { growth: Growth; level: number; onClose: () => void }) {
   const t = useTranslations("dashboard.growth");
+  const tt = useTranslations("dashboard.tree");
 
   useEffect(() => {
     const prev = document.body.style.overflow;
@@ -97,8 +99,8 @@ export function GrowthDialog({ growth, level, onClose }: { growth: Growth; level
     };
   }, []);
 
-  const treeName = LEVEL_PATH[growth.toStage].treeName;
-  const nextStage = LEVEL_ORDER[LEVEL_ORDER.indexOf(growth.toStage) + 1];
+  const treeName = tt(`looks.${LOOK_KEYS[growth.toLook]}`);
+  const nextLook = growth.toLook + 1 < LOOK_KEYS.length ? growth.toLook + 1 : null;
 
   return (
     <>
@@ -114,14 +116,21 @@ export function GrowthDialog({ growth, level, onClose }: { growth: Growth; level
           <GardenScene tone="night" className="flex-1 sm:flex-none sm:h-[400px] min-h-[380px]" hillsHeight="34%">
             <div className="absolute left-0 right-0 top-[max(26px,env(safe-area-inset-top))] text-center px-6 z-[4]">
               <b className="block text-[11.5px] font-extrabold tracking-[.12em] uppercase" style={{ color: "#CFE9D6" }}>
-                {growth.promoted ? t("promotion") : growth.grewTaller ? t("taller") : t("grew")}
+                {growth.promoted ? t("promotion") : t("grew")}
               </b>
               <p className="text-[clamp(19px,5vw,22px)] font-extrabold tracking-tight mt-1.5" style={{ color: "#FFFDF6", textWrap: "balance" }}>
-                {growth.promoted ? t("newTree") : growth.grewTaller ? t("newTier") : t("sayHello", { treeName })}
+                {growth.promoted ? t("newTree") : t("sayHello", { treeName })}
               </p>
             </div>
             <div className="absolute left-0 right-0 bottom-3 z-[4] text-center">
-              <TreeEvolution from={growth.fromSpecies} to={growth.toSpecies} stage={growth.toStage} fromStage={growth.fromStage} />
+              <TreeEvolution
+                from={growth.fromSpecies}
+                to={growth.toSpecies}
+                stage={growth.toStage}
+                fromStage={growth.fromStage}
+                level={level}
+                fromLevel={ART_STAGE_STARTS[growth.fromLook]}
+              />
             </div>
           </GardenScene>
           <div className="px-6 pt-4 pb-[max(20px,env(safe-area-inset-bottom))] text-center">
@@ -132,9 +141,9 @@ export function GrowthDialog({ growth, level, onClose }: { growth: Growth; level
             >
               {t("ok")}
             </button>
-            {!growth.promoted && !growth.grewTaller && nextStage && (
-              <p className="text-[11.5px] font-bold text-faint mt-2.5">
-                {LEVEL_PATH[nextStage].icon} {LEVEL_PATH[nextStage].treeName} · Lv.{(LEVEL_ORDER.indexOf(nextStage)) * 10}
+            {!growth.promoted && nextLook !== null && (
+              <p className="text-[11.5px] font-bold text-faint mt-2.5 tabular-nums">
+                {tt(`looks.${LOOK_KEYS[nextLook]}`)} · Lv.{ART_STAGE_STARTS[nextLook]}
               </p>
             )}
           </div>

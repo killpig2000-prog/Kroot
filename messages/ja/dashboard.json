@@ -58,7 +58,7 @@
   "tree": {
     "levelBadge": "Lv. {level}",
     "metresTall": "mの高さ",
-    "maxed": "星まで届きました 🌟",
+    "maxed": "守護の木に育ちました 🌳",
     "xpToNext": "Lv. {next} まで {into}/{needed} XP",
     "phrases": {
       "fighting": "その調子!",
@@ -79,7 +79,17 @@
     "keepsakesTab": "記念品",
     "openShop": "ショップ・衣装部屋を開く",
     "openMyRoom": "マイルームを開く",
-    "openPeek": "木を大きく見る"
+    "openPeek": "木を大きく見る",
+    "xpToEvolve": "{name}まであと {xp} XP",
+    "looks": {
+      "seed": "種",
+      "sprout": "新芽",
+      "young": "若木",
+      "sturdy": "たくましい木",
+      "grown": "大きな木",
+      "elder": "長老の木",
+      "guardian": "守護の木"
+    }
   },
   "growth": {
     "closeAria": "閉じる",

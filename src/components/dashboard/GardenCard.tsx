@@ -9,8 +9,8 @@ import GardenStage, { AuraLayer, SkyLayer, gardenFrame } from "@/components/dash
 import WateringCan from "@/components/dashboard/WateringCan";
 import { TREE_PHRASES } from "@/lib/tree-phrases";
 import { playWater } from "@/lib/sfx";
-import { MAX_LEVEL, treeHeightMetres, treeStageForLevel } from "@/lib/level";
-import { LEVEL_PATH, type CefrLevel } from "@/lib/tree";
+import { LOOK_KEYS, evolutionProgress } from "@/lib/level";
+import type { CefrLevel } from "@/lib/tree";
 
 // The phone Garden's tree, option 2a (2026-09-09): an inset garden card
 // where TreeBand's one line used to be. The band gave the tree a 48px
@@ -24,18 +24,15 @@ import { LEVEL_PATH, type CefrLevel } from "@/lib/tree";
 // Still one tap to My room, and still the tour's "tree" target.
 export default function GardenCard({
   level,
-  progressPct,
-  xpInto,
-  xpNeeded,
+  xp,
   costumeIds = [],
   species,
   celebrateKey = null,
   review,
 }: {
   level: number;
-  progressPct: number;
-  xpInto: number;
-  xpNeeded: number;
+  /** Total XP — the XP line counts down to the tree's next look. */
+  xp: number;
   costumeIds?: string[];
   /** CEFR grade — decides the tree species; promotion transforms the garden. */
   species?: CefrLevel;
@@ -46,11 +43,15 @@ export default function GardenCard({
   review?: { due: number; cap: number; doneToday: boolean };
 }) {
   const t = useTranslations("dashboard.tree");
+  // The XP line shows the way to the next look, not to the next level
+  // (2026-09-12, user call): "213 XP to Sturdy Tree", the bar filling from
+  // the current look to the next.
+  const evo = evolutionProgress(xp);
   const [fill, setFill] = useState(0);
   useEffect(() => {
-    const timer = setTimeout(() => setFill(progressPct), 200);
+    const timer = setTimeout(() => setFill(evo.pct), 200);
     return () => clearTimeout(timer);
-  }, [progressPct]);
+  }, [evo.pct]);
 
   // The thank-you plays once per watered quest, the first time the Garden
   // opens after it: the quest row's id is the latch (localStorage), so a
@@ -80,8 +81,7 @@ export default function GardenCard({
     };
   }, [celebrateKey]);
 
-  const stage = treeStageForLevel(level);
-  const maxed = level >= MAX_LEVEL;
+  const maxed = evo.nextLook === null;
   // Same stage My room draws (GardenStage): veteran trunk, sky costume,
   // ground items, friends. The tree's width is clamp()ed off the viewport
   // (AGENTS.md rule 2); the card grows with a veteran's taller frame so
@@ -89,8 +89,7 @@ export default function GardenCard({
   // (2026-09-10, user call): tree centred, the bubble over it, so the card
   // keeps ~120px above the tree's feet for the pill and the bubble
   // (240px at 360 so the phone Garden still ends above the tab bar).
-  const { veteran, frameH, sky } = gardenFrame(level, costumeIds);
-  const metres = treeHeightMetres(level);
+  const { frameH, sky } = gardenFrame(level, costumeIds);
   // 2026-09-12 (user: "마이룸은 좋은데 대쉬보드에서 캐릭터가 좀 작아"): was
   // 112-128px, about half My room's 218-260. 42vw reaches the 180px cap at
   // 430 and gives 151px at 360; the card height below follows it.
@@ -119,13 +118,9 @@ export default function GardenCard({
             alpha bought nothing and cost the pill a fixed colour — a
             translucent fill changes shade as it moves across the gradient,
             which is the one thing a flat storybook palette can't have. */}
-        <span
-          className={`absolute top-3 left-3 z-[4] inline-flex items-center gap-1 rounded-full border bg-cream px-[9px] py-1 text-[11.5px] font-extrabold ${
-            veteran ? "border-amber-line text-[#B7791F]" : "border-success-line text-success-deep"
-          }`}
-        >
+        <span className="absolute top-3 left-3 z-[4] inline-flex items-center gap-1 rounded-full border border-success-line bg-cream px-[9px] py-1 text-[11.5px] font-extrabold text-success-deep">
           {t("levelBadge", { level })}
-          <span className="font-bold text-charcoal tabular-nums">· {veteran ? `${metres} ${t("metresTall")}` : LEVEL_PATH[stage].treeName}</span>
+          <span className="font-bold text-charcoal">· {t(`looks.${LOOK_KEYS[evo.look]}`)}</span>
         </span>
 
         {/* a sky costume's moon, stars, snow or rain, over the whole garden */}
@@ -178,15 +173,18 @@ export default function GardenCard({
 
         {/* XP, pinned to the card's own bottom edge */}
         <div className="absolute left-[14px] right-[14px] bottom-[10px] z-[4]">
-          <div className="flex items-center justify-between text-[11px] font-extrabold text-success-deep tabular-nums">
-            <span>{maxed ? t("maxed") : `${xpInto}/${xpNeeded} XP`}</span>
-            {!maxed && <span>{t("levelBadge", { level: level + 1 })} →</span>}
+          <div className="flex items-center text-[11px] font-extrabold text-success-deep tabular-nums">
+            <span>
+              {evo.nextLook === null
+                ? t("maxed")
+                : t("xpToEvolve", { xp: evo.xpLeft, name: t(`looks.${LOOK_KEYS[evo.nextLook]}`) })}
+            </span>
           </div>
           {/* 70% cream over the hills resolved to #F5FAF1 — a pale mint with
               its green channel above its red, i.e. not cream at all. Solid. */}
           <span className="mt-[3px] block h-[6px] rounded-full overflow-hidden bg-cream">
             <i
-              className={`not-italic block h-full rounded-full transition-[width] duration-1000 ${veteran ? "bg-[#B7791F]" : "bg-success"}`}
+              className="not-italic block h-full rounded-full transition-[width] duration-1000 bg-success"
               style={{ width: `${maxed ? 100 : fill}%` }}
             />
           </span>

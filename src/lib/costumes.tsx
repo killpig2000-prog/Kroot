@@ -551,7 +551,7 @@ export const COSTUMES: Costume[] = [
     slot: "hat",
     price: 720,
     rarity: "epic",
-    minPlayerLevel: 50,
+    minPlayerLevel: 21,
     render: () => (
       <>
         <path d="M-16 6 L-16 -8 L-8 -1 L0 -12 L8 -1 L16 -8 L16 6 Z" fill="#FFD66B" stroke="#E0B23F" strokeWidth="2" />
@@ -598,7 +598,7 @@ export const COSTUMES: Costume[] = [
     slot: "face",
     price: 290,
     rarity: "rare",
-    minPlayerLevel: 20,
+    minPlayerLevel: 13,
     render: () => (
       <>
         <rect x="-19" y="-6" width="16" height="11" rx="5" fill="#3E3226" />
@@ -631,7 +631,7 @@ export const COSTUMES: Costume[] = [
     slot: "hat",
     price: 320,
     rarity: "rare",
-    minPlayerLevel: 20,
+    minPlayerLevel: 13,
     render: () => (
       <>
         <ellipse cx="0" cy="-12" rx="20" ry="6" fill="none" stroke="#FFD66B" strokeWidth="4" />
@@ -648,7 +648,7 @@ export const COSTUMES: Costume[] = [
     slot: "face",
     price: 310,
     rarity: "rare",
-    minPlayerLevel: 20,
+    minPlayerLevel: 13,
     render: () => (
       <>
         <path d="M-11 -8 L-8.5 -2.5 L-3 -2 L-7 2 L-6 8 L-11 5 L-16 8 L-15 2 L-19 -2 L-13.5 -2.5 Z" fill="#FFD66B" stroke="#E0B23F" strokeWidth="1.5" />
@@ -664,7 +664,7 @@ export const COSTUMES: Costume[] = [
     slot: "neck",
     price: 330,
     rarity: "rare",
-    minPlayerLevel: 20,
+    minPlayerLevel: 13,
     render: () => (
       <>
         <path d="M-16 -3 Q0 6 16 -3 L16 4 Q0 13 -16 4 Z" fill="#FFD66B" />
@@ -682,7 +682,7 @@ export const COSTUMES: Costume[] = [
     slot: "hat",
     price: 760,
     rarity: "epic",
-    minPlayerLevel: 50,
+    minPlayerLevel: 21,
     render: () => (
       <>
         <path d="M-18 2 Q0 -10 18 2" stroke="#7FA86B" strokeWidth="3.5" fill="none" />
@@ -709,7 +709,7 @@ export const COSTUMES: Costume[] = [
     slot: "hat",
     price: 740,
     rarity: "epic",
-    minPlayerLevel: 50,
+    minPlayerLevel: 21,
     render: () => (
       <>
         <ellipse cx="0" cy="5" rx="30" ry="7" fill="#2E2A26" opacity=".92" />
@@ -727,7 +727,7 @@ export const COSTUMES: Costume[] = [
     slot: "face",
     price: 300,
     rarity: "rare",
-    minPlayerLevel: 20,
+    minPlayerLevel: 13,
     render: () => (
       <>
         <path d="M-11 -8 A8 8 0 1 0 -11 8 A6.2 6.2 0 1 1 -11 -8 Z" fill="#FFD66B" stroke="#E0B23F" strokeWidth="1.5" />
@@ -745,7 +745,7 @@ export const COSTUMES: Costume[] = [
     slot: "face",
     price: 750,
     rarity: "epic",
-    minPlayerLevel: 50,
+    minPlayerLevel: 21,
     render: () => (
       <>
         <path d="M-20 -4 C-21 -16 -8 -23 0 -23 C8 -23 21 -16 20 -4 C20 5 13 12 0 12 C-13 12 -20 5 -20 -4Z" fill="#F6DDAA" stroke="#B9863A" strokeWidth="1.5" />
@@ -781,7 +781,7 @@ export const COSTUMES: Costume[] = [
     slot: "neck",
     price: 730,
     rarity: "epic",
-    minPlayerLevel: 50,
+    minPlayerLevel: 21,
     render: () => (
       <>
         <path d="M-16 -3 Q0 5 16 -3 L16 3 Q0 11 -16 3 Z" fill="#FBD5E0" />
@@ -799,7 +799,7 @@ export const COSTUMES: Costume[] = [
     slot: "neck",
     price: 320,
     rarity: "rare",
-    minPlayerLevel: 20,
+    minPlayerLevel: 13,
     render: () => (
       <>
         <path d="M-16 -2 Q0 8 16 -2" stroke="#8A6B4A" strokeWidth="2" fill="none" />
@@ -842,7 +842,7 @@ export const COSTUMES: Costume[] = [
     slot: "hat",
     price: 300,
     rarity: "rare",
-    minPlayerLevel: 20,
+    minPlayerLevel: 13,
     render: () => (
       <>
         <path d="M-20 8 C-20 -12 20 -12 20 8Z" fill="#F5A742" />
@@ -885,7 +885,7 @@ export const COSTUMES: Costume[] = [
     slot: "aura",
     price: 390,
     rarity: "rare",
-    minPlayerLevel: 20,
+    minPlayerLevel: 13,
     icon: "🪲",
     scene: {
       layer: "behind",
@@ -919,7 +919,7 @@ export const COSTUMES: Costume[] = [
     slot: "aura",
     price: 420,
     rarity: "rare",
-    minPlayerLevel: 20,
+    minPlayerLevel: 13,
     icon: "🌸",
     scene: {
       layer: "behind",
@@ -947,7 +947,7 @@ export const COSTUMES: Costume[] = [
     slot: "aura",
     price: 820,
     rarity: "epic",
-    minPlayerLevel: 50,
+    minPlayerLevel: 21,
     icon: "🌟",
     scene: {
       layer: "behind",
@@ -975,7 +975,7 @@ export const COSTUMES: Costume[] = [
     slot: "aura",
     price: 800,
     rarity: "epic",
-    minPlayerLevel: 50,
+    minPlayerLevel: 21,
     icon: "🌈",
     scene: {
       layer: "behind",
@@ -1007,7 +1007,7 @@ export const COSTUMES: Costume[] = [
     slot: "aura",
     price: 1020,
     rarity: "legendary",
-    minPlayerLevel: 80,
+    minPlayerLevel: 33,
     availableUntil: "2026-09-07",
     icon: "🌌",
     sky: "linear-gradient(180deg,#1E2A44 0%,#2B3C55 55%,#3A4A3A 100%)",
@@ -1065,7 +1065,7 @@ export const COSTUMES: Costume[] = [
     slot: "aura",
     price: 980,
     rarity: "legendary",
-    minPlayerLevel: 80,
+    minPlayerLevel: 33,
     icon: "💫",
     scene: {
       layer: "behind",
@@ -1117,7 +1117,7 @@ export const COSTUMES: Costume[] = [
     slot: "sky",
     price: 410,
     rarity: "rare",
-    minPlayerLevel: 20,
+    minPlayerLevel: 13,
     icon: "🌙",
     sky: "linear-gradient(180deg,#1E2A44 0%,#2B3C55 60%,#2A3B2A 100%)",
     skyScene: {
@@ -1198,7 +1198,7 @@ export const COSTUMES: Costume[] = [
     slot: "sky",
     price: 430,
     rarity: "rare",
-    minPlayerLevel: 20,
+    minPlayerLevel: 13,
     availableFrom: "2026-12-01",
     availableUntil: "2027-02-28",
     icon: "❄️",
@@ -1272,7 +1272,7 @@ export const COSTUMES: Costume[] = [
     slot: "sky",
     price: 380,
     rarity: "rare",
-    minPlayerLevel: 20,
+    minPlayerLevel: 13,
     icon: "🌧",
     sky: "linear-gradient(180deg,#94A3B8 0%,#CBD5E1 55%,#D9E4D3 100%)",
     skyScene: {
@@ -1355,7 +1355,7 @@ export const COSTUMES: Costume[] = [
     slot: "sky",
     price: 780,
     rarity: "epic",
-    minPlayerLevel: 50,
+    minPlayerLevel: 21,
     icon: "🌫",
     sky: "linear-gradient(180deg,#E9D8FD 0%,#F3E8FF 50%,#E4F3DA 100%)",
     skyScene: {
@@ -1387,7 +1387,7 @@ export const COSTUMES: Costume[] = [
     slot: "sky",
     price: 790,
     rarity: "epic",
-    minPlayerLevel: 50,
+    minPlayerLevel: 21,
     icon: "📜",
     sky: "linear-gradient(180deg,#F7F1E3 0%,#F3EBD8 60%,#E9E3CF 100%)",
     skyScene: {
@@ -1465,7 +1465,7 @@ export const COSTUMES: Costume[] = [
     slot: "ground",
     price: 370,
     rarity: "rare",
-    minPlayerLevel: 20,
+    minPlayerLevel: 13,
     icon: "🍄",
     scene: {
       layer: "front",
@@ -1490,7 +1490,7 @@ export const COSTUMES: Costume[] = [
     slot: "ground",
     price: 400,
     rarity: "rare",
-    minPlayerLevel: 20,
+    minPlayerLevel: 13,
     icon: "🏺",
     scene: {
       layer: "front",
@@ -1519,7 +1519,7 @@ export const COSTUMES: Costume[] = [
     slot: "ground",
     price: 810,
     rarity: "epic",
-    minPlayerLevel: 50,
+    minPlayerLevel: 21,
     icon: "🐸",
     scene: {
       layer: "front",
@@ -1541,7 +1541,7 @@ export const COSTUMES: Costume[] = [
     slot: "ground",
     price: 400,
     rarity: "rare",
-    minPlayerLevel: 20,
+    minPlayerLevel: 13,
     availableFrom: "2026-10-01",
     availableUntil: "2026-11-30",
     icon: "🍂",
@@ -1563,7 +1563,7 @@ export const COSTUMES: Costume[] = [
     slot: "ground",
     price: 770,
     rarity: "epic",
-    minPlayerLevel: 50,
+    minPlayerLevel: 21,
     icon: "🏮",
     scene: {
       layer: "front",
@@ -1636,7 +1636,7 @@ export const COSTUMES: Costume[] = [
     roam: { dir: "left", x: 168, y: 196 },
     price: 390,
     rarity: "rare",
-    minPlayerLevel: 20,
+    minPlayerLevel: 13,
     icon: "🐿️",
     scene: {
       layer: "front",
@@ -1660,7 +1660,7 @@ export const COSTUMES: Costume[] = [
     roam: { dir: "right", x: 40, y: 194 },
     price: 420,
     rarity: "rare",
-    minPlayerLevel: 20,
+    minPlayerLevel: 13,
     icon: "🐈",
     scene: {
       layer: "front",
@@ -1684,7 +1684,7 @@ export const COSTUMES: Costume[] = [
     roam: { dir: "left", x: 180, y: 190, air: true },
     price: 830,
     rarity: "epic",
-    minPlayerLevel: 50,
+    minPlayerLevel: 21,
     icon: "🐧",
     scene: {
       layer: "front",
@@ -1711,7 +1711,7 @@ export const COSTUMES: Costume[] = [
     roam: { dir: "right", x: 40, y: 188 },
     price: 850,
     rarity: "epic",
-    minPlayerLevel: 60,
+    minPlayerLevel: 21,
     icon: "🦉",
     scene: {
       layer: "front",
@@ -1739,7 +1739,7 @@ export const COSTUMES: Costume[] = [
     roam: { dir: "left", x: 160, y: 200 },
     price: 1050,
     rarity: "legendary",
-    minPlayerLevel: 80,
+    minPlayerLevel: 33,
     icon: "\ud83d\udc79",
     scene: {
       layer: "front",
@@ -1761,7 +1761,7 @@ export const COSTUMES: Costume[] = [
     roam: { dir: "right", x: 42, y: 196 },
     price: 840,
     rarity: "epic",
-    minPlayerLevel: 50,
+    minPlayerLevel: 21,
     icon: "\ud83e\udd8c",
     scene: {
       layer: "front",
@@ -1783,7 +1783,7 @@ export const COSTUMES: Costume[] = [
     roam: { dir: "left", x: 180, y: 205, air: true },
     price: 1080,
     rarity: "legendary",
-    minPlayerLevel: 100,
+    minPlayerLevel: 50,
     icon: "\ud83d\udc09",
     scene: {
       layer: "front",
@@ -1809,7 +1809,7 @@ export const COSTUMES: Costume[] = [
     slot: "skin",
     price: 3000,
     rarity: "legendary",
-    minPlayerLevel: 100,
+    minPlayerLevel: 50,
     icon: "\ud83d\udc51",
     availableFrom: "2026-09-25",
     availableUntil: "2026-10-22",
@@ -1822,7 +1822,7 @@ export const COSTUMES: Costume[] = [
     slot: "skin",
     price: 3000,
     rarity: "legendary",
-    minPlayerLevel: 90,
+    minPlayerLevel: 40,
     icon: "\u2694\ufe0f",
     availableFrom: "2027-04-14",
     availableUntil: "2027-05-11",
@@ -1835,7 +1835,7 @@ export const COSTUMES: Costume[] = [
     slot: "skin",
     price: 3000,
     rarity: "legendary",
-    minPlayerLevel: 80,
+    minPlayerLevel: 33,
     icon: "\ud83d\udd8c\ufe0f",
     availableFrom: "2027-06-02",
     availableUntil: "2027-06-29",

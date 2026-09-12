@@ -9,7 +9,9 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 
 export const QUEST_COINS = 10;
-export const LEVEL_BONUS_COINS = 50;
+// award_xp pays 150 coins at Lv.10, 20, 30, 40 and 50 (this said 50, which
+// was never what the server paid).
+export const LEVEL_BONUS_COINS = 150;
 
 export default function ShopCoins({
   balance,

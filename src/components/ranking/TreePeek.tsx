@@ -3,19 +3,16 @@
 import { useEffect } from "react";
 import { useTranslations } from "next-intl";
 import LevelCreature from "@/components/dashboard/LevelCreature";
-import VeteranTree, { BASE_HEIGHT, veteranFrameHeight } from "@/components/dashboard/VeteranTree";
 import GrowthRing from "@/components/dashboard/GrowthRing";
-import { FULLY_GROWN_LEVEL, treeHeightMetres, treeStageForLevel } from "@/lib/level";
+import { treeStageForLevel } from "@/lib/level";
 import { SceneLayer, skyFor } from "@/lib/costumes";
 import type { WeekRing } from "@/lib/growth-rings";
 import type { CefrLevel } from "@/lib/tree";
 
 // Tapping a tree — on the ranking, or your own in My room — opens the whole
 // thing. Two halves (2026-09-11, user's layout): the tree on the left, and on
-// the right a large growth ring above whose it is. A Lv.50+ tree grows past
-// any thumbnail, so the stage is a fixed height and the SVG scales to fit —
-// a taller tree draws smaller, which is what makes "look how tall theirs is"
-// readable at a glance.
+// the right a large growth ring above whose it is. The stage is a fixed
+// height and the tree's 220x230 frame scales to fit it.
 //
 // Rings are optional: My room has the learner's own twelve weeks; the
 // ranking passes them once the board's RPC returns other gardeners' weeks.
@@ -46,8 +43,6 @@ export default function TreePeek({
 }) {
   const t = useTranslations("ranking");
   const tr = useTranslations("dashboard.rings");
-  const veteran = level >= FULLY_GROWN_LEVEL;
-  const frameH = veteran ? veteranFrameHeight(level) : BASE_HEIGHT;
   const sky = skyFor(costumeIds);
   const grown = rings ? rings.weeks.filter((w) => w.attended > 0).length : 0;
 
@@ -88,13 +83,9 @@ export default function TreePeek({
             className="rounded-[16px] border border-success-line flex items-end justify-center overflow-hidden min-h-[240px]"
             style={{ background: sky ?? "linear-gradient(180deg, #EAF6FF 0%, #EAF3EC 70%)" }}
           >
-            <svg viewBox={`0 0 220 ${frameH}`} className="h-full w-auto max-w-full" aria-hidden="true">
+            <svg viewBox="0 0 220 230" className="h-full w-auto max-w-full" aria-hidden="true">
               <SceneLayer costumeIds={costumeIds} layer="behind" />
-              {veteran ? (
-                <VeteranTree level={level} species={species} costumeIds={costumeIds} />
-              ) : (
-                <LevelCreature level={treeStageForLevel(level)} playerLevel={level} costumeIds={costumeIds} species={species} />
-              )}
+              <LevelCreature level={treeStageForLevel(level)} playerLevel={level} costumeIds={costumeIds} species={species} />
               <SceneLayer costumeIds={costumeIds} layer="front" />
             </svg>
           </div>
@@ -147,7 +138,6 @@ export default function TreePeek({
                 <span className="block text-[11.5px] text-muted tabular-nums leading-tight">
                   {t("row.level", { n: level })}
                   {xpWeek !== undefined && <> · {t("fair.sun", { n: xpWeek })}</>}
-                  {veteran && <> · {t("peek.height", { m: treeHeightMetres(level) })}</>}
                 </span>
               </span>
             </div>

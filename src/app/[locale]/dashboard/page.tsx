@@ -231,7 +231,8 @@ export default async function DashboardPage() {
   const slang = slangOfTheDay();
 
   const displayName = profile?.display_name ?? "there";
-  const { level, into, needed, pct } = levelProgress(profile?.xp ?? 0);
+  const xp = profile?.xp ?? 0;
+  const { level } = levelProgress(xp);
 
   // "Continue" target: the last unit the learner opened (resume_points), or
   // today's quest when nothing is in progress. A finished unit clears itself.
@@ -281,9 +282,7 @@ export default async function DashboardPage() {
             <GardenHeader displayName={displayName} />
             <GardenCard
               level={level}
-              progressPct={pct}
-              xpInto={into}
-              xpNeeded={needed}
+              xp={xp}
               costumeIds={equippedIds}
               species={cefr}
               celebrateKey={quest?.completed_at ? quest.id : null}
@@ -301,9 +300,7 @@ export default async function DashboardPage() {
           <div className="hidden xl:block mb-3">
             <TreeCard
               level={level}
-              progressPct={pct}
-              xpInto={into}
-              xpNeeded={needed}
+              xp={xp}
               costumeIds={equippedIds}
               species={cefr}
               userId={user.id}

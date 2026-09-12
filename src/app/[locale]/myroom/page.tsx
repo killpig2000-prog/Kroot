@@ -72,7 +72,8 @@ export default async function MyRoomPage() {
   const coins = profile?.coins ?? 0;
   const cefr = (profile?.current_level ?? "A1") as CefrLevel;
   const displayName = profile?.display_name ?? "there";
-  const { level, into, needed, pct } = levelProgress(profile?.xp ?? 0);
+  const xp = profile?.xp ?? 0;
+  const { level } = levelProgress(xp);
   const today = now.toISOString().slice(0, 10);
 
   return (
@@ -86,9 +87,7 @@ export default async function MyRoomPage() {
           <MyRoomStage
             tree={{
               level,
-              progressPct: pct,
-              xpInto: into,
-              xpNeeded: needed,
+              xp,
               species: cefr,
               userId: user.id,
               displayName,

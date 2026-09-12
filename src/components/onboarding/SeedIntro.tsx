@@ -15,7 +15,7 @@ import { playCorrect, playDayComplete, playTap } from "@/lib/sfx";
 //   up and the learner traces ㅅ  →  3 the seed hops awake, still a seed.
 // It replaces the old "Can you read this?" Yes/No card: the two buttons on
 // the last beat carry that same answer into the rest of onboarding. Nothing
-// here is saved; the seed stays a seed on purpose (🌱 arrives at Lv.10, see
+// here is saved; the seed stays a seed on purpose (🌱 arrives at Lv.3, see
 // treeStageForLevel) so the dashboard shows exactly what the learner just met.
 //
 // The scene is deliberately light-only — it's a picture, not chrome.
@@ -255,7 +255,7 @@ function LoginLine({ href, label, cta }: { href: string; label: string; cta: str
 
 // LevelCreature's A1 seed (same paths), but with the eyes as a switch and a
 // second leaf + sparkles for the wake beat. Kept local: the dashboard seed
-// must stay asleep with its zzz — that's what "Lv.1–9 = seed" looks like.
+// must stay asleep with its zzz — that's what "Lv.1–2 = seed" looks like.
 function Seed({ beat }: { beat: Beat }) {
   const awake = beat >= 1;
   const woke = beat === 3;

@@ -58,7 +58,7 @@
   "tree": {
     "levelBadge": "Lv. {level}",
     "metresTall": "米高",
-    "maxed": "已经长到星星那里 🌟",
+    "maxed": "长成守护之树了 🌳",
     "xpToNext": "距离 Lv. {next} 还差 {into}/{needed} XP",
     "phrases": {
       "fighting": "加油！",
@@ -79,7 +79,17 @@
     "keepsakesTab": "纪念品",
     "openShop": "打开商店与衣柜",
     "openMyRoom": "打开我的小屋",
-    "openPeek": "放大看你的树"
+    "openPeek": "放大看你的树",
+    "xpToEvolve": "距离{name}还差 {xp} XP",
+    "looks": {
+      "seed": "种子",
+      "sprout": "嫩芽",
+      "young": "小树",
+      "sturdy": "壮实的树",
+      "grown": "成年大树",
+      "elder": "长者之树",
+      "guardian": "守护之树"
+    }
   },
   "growth": {
     "closeAria": "关闭",

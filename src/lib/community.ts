@@ -88,7 +88,7 @@ See you in the garden! 🌳
     title: "Levels, grades & your tree — how progress works",
     body: `Two systems grow side by side, and neither can be bought — only learned.
 
-🌳 Level (Lv 1–120) — every lesson, quiz, and review earns XP. Your tree grows through six stages as you level: seed → sprout → young tree → growing tree → blossoming → fully grown. Every tenth level also drops 50 coins for the shop.
+🌳 Level (Lv 1–50) — every lesson, quiz, and review earns XP. Your tree grows through seven looks as you level: seed → sprout → young tree → sturdy tree → grown tree → elder tree → the Guardian Tree at Lv 50. Levels get harder from Lv 30, and harder again from Lv 40. Every tenth level also drops 150 coins for the shop.
 
 📚 Grade (A1–C2) — your proven skill level. Hold onto enough words of your current grade (they count once they survive their first two spaced reviews), finish some reading, then pass the four-skill promotion test (70+ average, every skill 60+). Pass it and your tree transforms into a new species: azalea → forsythia → cherry blossom → persimmon → ginkgo → pine. 진달래부터 소나무까지!
 

@@ -43,9 +43,7 @@ export default function MyRoomStage({
 }: {
   tree: {
     level: number;
-    progressPct: number;
-    xpInto: number;
-    xpNeeded: number;
+    xp: number;
     species: CefrLevel;
     userId: string;
     displayName: string;
@@ -143,9 +141,7 @@ export default function MyRoomStage({
     <>
       <TreeCard
         level={tree.level}
-        progressPct={tree.progressPct}
-        xpInto={tree.xpInto}
-        xpNeeded={tree.xpNeeded}
+        xp={tree.xp}
         costumeIds={w.previewIds}
         species={tree.species}
         userId={tree.userId}

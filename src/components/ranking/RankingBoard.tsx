@@ -6,8 +6,7 @@ import { Link } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { playPromote } from "@/lib/sfx";
 import LevelCreature from "@/components/dashboard/LevelCreature";
-import VeteranTree, { BASE_HEIGHT, veteranFrameHeight } from "@/components/dashboard/VeteranTree";
-import { FULLY_GROWN_LEVEL, treeStageForLevel } from "@/lib/level";
+import { treeStageForLevel } from "@/lib/level";
 import { SceneLayer, skyFor } from "@/lib/costumes";
 import { buildWeeks, xpByDayFrom, type WeekRing } from "@/lib/growth-rings";
 import { daysUntilWeekEnd } from "@/lib/league";
@@ -56,9 +55,8 @@ function Medal({ place, rank }: { place: 0 | 1 | 2; rank: number }) {
 // used only to phrase the nudge as "one session" vs "a couple of sessions".
 const SESSION_XP = 30;
 
-// A thumbnail draws the whole tree to scale — a Lv.120 tree is more than
-// twice the height of a Lv.50 one, so it comes out narrow and small in the
-// same box, which is exactly what says "that one is tall" at a glance.
+// A thumbnail draws the whole tree in its 220x230 frame; the look itself
+// (seed … Guardian Tree) is what says how far along a gardener is.
 function Tree({
   row,
   species,
@@ -76,8 +74,6 @@ function Tree({
 }) {
   const ids = row.costume_ids ?? [];
   const sky = skyFor(ids);
-  const veteran = row.level >= FULLY_GROWN_LEVEL;
-  const frameH = veteran ? veteranFrameHeight(row.level) : BASE_HEIGHT;
   return (
     <button
       type="button"
@@ -91,13 +87,9 @@ function Tree({
       {/* The tallest looks (spirit tree, 218 tall on a 212 ground line) rise
           above the 230-unit frame; on the bare podium let them, or the
           canopy's top gets cut off (2026-09-12). Boxed rows still clip. */}
-      <svg viewBox={`0 0 220 ${frameH}`} className={bare ? "overflow-visible" : ""} style={{ height: "calc(100% - 4px)", width: "auto", maxWidth: "calc(100% - 4px)" }}>
+      <svg viewBox="0 0 220 230" className={bare ? "overflow-visible" : ""} style={{ height: "calc(100% - 4px)", width: "auto", maxWidth: "calc(100% - 4px)" }}>
         <SceneLayer costumeIds={ids} layer="behind" />
-        {veteran ? (
-          <VeteranTree level={row.level} species={species} costumeIds={ids} />
-        ) : (
-          <LevelCreature level={treeStageForLevel(row.level)} playerLevel={row.level} costumeIds={ids} species={species} />
-        )}
+        <LevelCreature level={treeStageForLevel(row.level)} playerLevel={row.level} costumeIds={ids} species={species} />
         <SceneLayer costumeIds={ids} layer="front" />
       </svg>
     </button>

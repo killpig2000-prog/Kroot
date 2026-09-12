@@ -99,7 +99,7 @@
   "facts": {
     "effort": {
       "kicker": "Esfuerzo",
-      "title": "Nivel del árbol 1–120",
+      "title": "Nivel del árbol 1–50",
       "body": "Cada sesión da XP. Subir de nivel significa tiempo dedicado: no cambia tu grado."
     },
     "ability": {

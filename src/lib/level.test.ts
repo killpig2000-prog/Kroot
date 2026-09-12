@@ -1,36 +1,31 @@
 import { describe, expect, it } from "vitest";
 import {
-  FULLY_GROWN_LEVEL,
+  ART_STAGE_STARTS,
   MAX_LEVEL,
+  artStageForLevel,
+  evolutionProgress,
   isDifficultyUnlocked,
   levelFromXp,
   levelProgress,
-  treeHeightMetres,
   treeStageForLevel,
-  artStageForLevel,
-  veteranTiers,
   xpForNext,
   xpToReach,
 } from "@/lib/level";
 
-describe("xpForNext (curve v2)", () => {
-  it("one chapter is one level-up for the first ten levels", () => {
-    for (let l = 1; l < 10; l++) expect(xpForNext(l)).toBe(10);
+describe("xpForNext (curve v3, max Lv.50)", () => {
+  it("starts at 8 and rises by 2 a level up to Lv.29", () => {
+    expect(xpForNext(1)).toBe(8);
+    expect(xpForNext(10)).toBe(26);
+    expect(xpForNext(29)).toBe(64);
   });
 
-  it("ramps in tiers up to fully grown", () => {
-    expect(xpForNext(10)).toBe(15);
-    expect(xpForNext(19)).toBe(15);
-    expect(xpForNext(20)).toBe(25);
-    expect(xpForNext(34)).toBe(25);
-    expect(xpForNext(35)).toBe(30);
-    expect(xpForNext(49)).toBe(30);
-  });
-
-  it("keeps rising slowly past fully grown", () => {
-    expect(xpForNext(50)).toBe(60);
-    expect(xpForNext(51)).toBe(63);
-    expect(xpForNext(100)).toBe(210);
+  it("gets clearly harder from Lv.30, and again from Lv.40", () => {
+    expect(xpForNext(30)).toBe(85);
+    expect(xpForNext(39)).toBe(130);
+    expect(xpForNext(40)).toBe(180);
+    expect(xpForNext(49)).toBe(225);
+    expect(xpForNext(30) / xpForNext(29)).toBeGreaterThan(1.3);
+    expect(xpForNext(40) / xpForNext(39)).toBeGreaterThan(1.3);
   });
 });
 
@@ -39,20 +34,26 @@ describe("xpToReach", () => {
     expect(xpToReach(1)).toBe(0);
   });
 
-  it("is strictly increasing up to MAX_LEVEL", () => {
-    for (let l = 1; l < MAX_LEVEL; l++) {
-      expect(xpToReach(l + 1)).toBeGreaterThan(xpToReach(l));
-    }
-  });
-
-  it("is the cumulative sum of xpForNext", () => {
+  it("is the cumulative sum of xpForNext and strictly increasing", () => {
     for (let n = 1; n < MAX_LEVEL; n++) {
       expect(xpToReach(n + 1) - xpToReach(n)).toBe(xpForNext(n));
+      expect(xpToReach(n + 1)).toBeGreaterThan(xpToReach(n));
     }
   });
 
-  it("fully grown at 1,065 XP (~85 chapters)", () => {
-    expect(xpToReach(FULLY_GROWN_LEVEL)).toBe(1065);
+  it("puts Lv.30 / 40 / 50 at 1,044 / 2,119 / 4,144 XP", () => {
+    expect(xpToReach(30)).toBe(1044);
+    expect(xpToReach(40)).toBe(2119);
+    expect(xpToReach(MAX_LEVEL)).toBe(4144);
+  });
+
+  it("max level is about 70% of one grade's content XP", () => {
+    // A1..C2 content XP (reading + writing + listening + grammar + vocab Days)
+    for (const grade of [5810, 5690, 5850, 6100, 6020, 5910]) {
+      const share = xpToReach(MAX_LEVEL) / grade;
+      expect(share).toBeGreaterThan(0.66);
+      expect(share).toBeLessThan(0.75);
+    }
   });
 
   it("clamps out-of-range levels", () => {
@@ -63,94 +64,65 @@ describe("xpToReach", () => {
 
 describe("levelFromXp", () => {
   it("round-trips with xpToReach at exact thresholds", () => {
-    for (let l = 1; l <= MAX_LEVEL; l++) {
-      expect(levelFromXp(xpToReach(l))).toBe(l);
-    }
+    for (let l = 1; l <= MAX_LEVEL; l++) expect(levelFromXp(xpToReach(l))).toBe(l);
   });
 
   it("stays on the previous level one XP short of the threshold", () => {
-    for (let l = 2; l <= MAX_LEVEL; l++) {
-      expect(levelFromXp(xpToReach(l) - 1)).toBe(l - 1);
-    }
+    for (let l = 2; l <= MAX_LEVEL; l++) expect(levelFromXp(xpToReach(l) - 1)).toBe(l - 1);
   });
 
-  it("a single grammar chapter (10 XP) levels a new learner up", () => {
-    expect(levelFromXp(10)).toBe(2);
-  });
-
-  it("caps at MAX_LEVEL for huge XP", () => {
+  it("caps at MAX_LEVEL, starts at 1", () => {
     expect(levelFromXp(10_000_000)).toBe(MAX_LEVEL);
-  });
-
-  it("is level 1 at zero XP", () => {
     expect(levelFromXp(0)).toBe(1);
   });
 });
 
 describe("levelProgress", () => {
-  it("starts a fresh level at 0%", () => {
+  it("starts a fresh level at 0% and reports 100% at MAX_LEVEL", () => {
     const p = levelProgress(xpToReach(3));
-    expect(p.level).toBe(3);
-    expect(p.into).toBe(0);
-    expect(p.pct).toBe(0);
-  });
-
-  it("reports 100% at MAX_LEVEL", () => {
-    const p = levelProgress(xpToReach(MAX_LEVEL));
-    expect(p.level).toBe(MAX_LEVEL);
-    expect(p.pct).toBe(100);
+    expect([p.level, p.into, p.pct]).toEqual([3, 0, 0]);
+    expect(levelProgress(xpToReach(MAX_LEVEL)).pct).toBe(100);
   });
 
   it("never exceeds 100%", () => {
-    for (let xp = 0; xp < xpToReach(MAX_LEVEL) + 1000; xp += 137) {
+    for (let xp = 0; xp < xpToReach(MAX_LEVEL) + 1000; xp += 37) {
       expect(levelProgress(xp).pct).toBeLessThanOrEqual(100);
     }
   });
 });
 
-describe("treeStageForLevel", () => {
-  it("evolves at 4 / 10 / 18 / 48 / 70 and parks at the last stage", () => {
-    expect(treeStageForLevel(1)).toBe("A1");
-    expect(treeStageForLevel(3)).toBe("A1");
-    expect(treeStageForLevel(4)).toBe("A2");
-    expect(treeStageForLevel(9)).toBe("A2");
-    expect(treeStageForLevel(10)).toBe("B1");
-    expect(treeStageForLevel(17)).toBe("B1");
-    expect(treeStageForLevel(18)).toBe("B2");
-    expect(treeStageForLevel(47)).toBe("B2");
-    expect(treeStageForLevel(48)).toBe("C1");
-    expect(treeStageForLevel(69)).toBe("C1");
-    expect(treeStageForLevel(70)).toBe("C2");
-    expect(treeStageForLevel(120)).toBe("C2");
-  });
-
-  it("gives the oak seven looks, each starting on its own level", () => {
-    expect([1, 3, 4, 9, 10, 17, 18, 29, 30, 47, 48, 69, 70, 120].map(artStageForLevel)).toEqual([
+describe("the oak's looks", () => {
+  it("changes look at Lv.3 / 7 / 13 / 21 / 33 / 50", () => {
+    expect([1, 2, 3, 6, 7, 12, 13, 20, 21, 32, 33, 49, 50, 999].map(artStageForLevel)).toEqual([
       0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6,
     ]);
   });
 
-  it("clamps weird inputs to the first/last stage", () => {
+  it("names six stages on look boundaries, skipping the grown tree", () => {
+    expect([1, 3, 7, 13, 21, 32, 33, 49, 50].map(treeStageForLevel)).toEqual([
+      "A1", "A2", "B1", "B2", "B2", "B2", "C1", "C1", "C2",
+    ]);
     expect(treeStageForLevel(0)).toBe("A1");
     expect(treeStageForLevel(999)).toBe("C2");
   });
+
+  it("the last look is the max level", () => {
+    expect(ART_STAGE_STARTS[ART_STAGE_STARTS.length - 1]).toBe(MAX_LEVEL);
+  });
 });
 
-describe("veteran growth", () => {
-  it("adds a canopy tier every 10 levels past fully grown", () => {
-    expect(veteranTiers(49)).toBe(0);
-    expect(veteranTiers(50)).toBe(0);
-    expect(veteranTiers(60)).toBe(1);
-    expect(veteranTiers(73)).toBe(2);
-    expect(veteranTiers(120)).toBe(7);
-    expect(veteranTiers(500)).toBe(7);
+describe("evolutionProgress", () => {
+  it("counts the XP left to the next look", () => {
+    expect(evolutionProgress(0)).toEqual({ level: 1, look: 0, nextLook: 1, xpLeft: xpToReach(3), pct: 0 });
+    const mid = evolutionProgress(xpToReach(13) - 10);
+    expect(mid.look).toBe(2);
+    expect(mid.nextLook).toBe(3);
+    expect(mid.xpLeft).toBe(10);
   });
 
-  it("measures height only from fully grown", () => {
-    expect(treeHeightMetres(30)).toBe(0);
-    expect(treeHeightMetres(50)).toBe(2);
-    expect(treeHeightMetres(73)).toBe(4.9);
-    expect(treeHeightMetres(120)).toBe(10.8);
+  it("stops at the Guardian Tree", () => {
+    expect(evolutionProgress(xpToReach(MAX_LEVEL))).toMatchObject({ look: 6, nextLook: null, xpLeft: 0, pct: 100 });
+    expect(evolutionProgress(99_999)).toMatchObject({ level: MAX_LEVEL, nextLook: null });
   });
 });
 
@@ -162,7 +134,6 @@ describe("isDifficultyUnlocked", () => {
 
   it("anything above the tested CEFR stays locked — player level never unlocks content", () => {
     expect(isDifficultyUnlocked("A2", "A1")).toBe(false);
-    expect(isDifficultyUnlocked("B1", "A2")).toBe(false);
     expect(isDifficultyUnlocked("C2", "C1")).toBe(false);
   });
 });

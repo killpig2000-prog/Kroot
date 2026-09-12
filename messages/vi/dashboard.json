@@ -58,7 +58,7 @@
   "tree": {
     "levelBadge": "Cấp {level}",
     "metresTall": "mét",
-    "maxed": "Đã chạm tới các vì sao 🌟",
+    "maxed": "Đã lớn hẳn — Cây hộ vệ 🌳",
     "xpToNext": "{into}/{needed} XP để lên Cấp {next}",
     "phrases": {
       "fighting": "cố lên nhé!",
@@ -79,7 +79,17 @@
     "keepsakesTab": "Kỷ vật",
     "openShop": "Mở cửa hàng & tủ đồ",
     "openMyRoom": "Mở Phòng của tôi",
-    "openPeek": "Xem cây của bạn gần hơn"
+    "openPeek": "Xem cây của bạn gần hơn",
+    "xpToEvolve": "Còn {xp} XP nữa thành {name}",
+    "looks": {
+      "seed": "Hạt giống",
+      "sprout": "Mầm non",
+      "young": "Cây non",
+      "sturdy": "Cây vững chãi",
+      "grown": "Cây trưởng thành",
+      "elder": "Cây cổ thụ",
+      "guardian": "Cây hộ vệ"
+    }
   },
   "growth": {
     "closeAria": "Đóng",

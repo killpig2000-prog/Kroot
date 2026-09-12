@@ -58,7 +58,7 @@
   "tree": {
     "levelBadge": "Lv. {level}",
     "metresTall": "m tall",
-    "maxed": "Reached the stars 🌟",
+    "maxed": "Fully grown — the Guardian Tree 🌳",
     "xpToNext": "{into}/{needed} XP to Lv. {next}",
     "phrases": {
       "fighting": "you got this!",
@@ -79,7 +79,17 @@
     "keepsakesTab": "Keepsakes",
     "openShop": "Open your shop & wardrobe",
     "openMyRoom": "Open My room",
-    "openPeek": "See your tree up close"
+    "openPeek": "See your tree up close",
+    "xpToEvolve": "{xp} XP to {name}",
+    "looks": {
+      "seed": "Seed",
+      "sprout": "Sprout",
+      "young": "Young Tree",
+      "sturdy": "Sturdy Tree",
+      "grown": "Grown Tree",
+      "elder": "Elder Tree",
+      "guardian": "Guardian Tree"
+    }
   },
   "growth": {
     "closeAria": "Close",

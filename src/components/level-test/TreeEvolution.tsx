@@ -11,6 +11,8 @@ export default function TreeEvolution({
   to,
   stage,
   fromStage,
+  level,
+  fromLevel,
 }: {
   from: CefrLevel;
   to: CefrLevel;
@@ -18,6 +20,9 @@ export default function TreeEvolution({
   stage: CefrLevel;
   /** Growth stage for the outgoing creature, if it's also growing bigger — defaults to `stage`. */
   fromStage?: CefrLevel;
+  /** Player levels, when known — pick the exact oak look (a stage can span two looks). */
+  level?: number;
+  fromLevel?: number;
 }) {
   const [phase, setPhase] = useState<"old" | "flash" | "new">("old");
 
@@ -45,13 +50,13 @@ export default function TreeEvolution({
               <text className="confetti-pop d3" x="182" y="180">🎉</text>
             </g>
             <g className="evolve-in">
-              <LevelCreature level={stage} species={to} />
+              <LevelCreature level={stage} playerLevel={level} species={to} />
             </g>
           </>
         ) : (
           <>
             <g className={phase === "flash" ? "evolve-out" : "sway"}>
-              <LevelCreature level={fromStage ?? stage} species={from} />
+              <LevelCreature level={fromStage ?? stage} playerLevel={fromLevel ?? level} species={from} />
             </g>
             {phase === "flash" && (
               <circle className="evolve-glow" cx="110" cy="130" r="86" fill="#FDE68A" opacity="0" />

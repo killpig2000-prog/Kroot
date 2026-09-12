@@ -36,7 +36,7 @@ export default function TestRunner({
 }: {
   userId: string;
   spec: ServedPromotionTest;
-  /** Numeric Lv.1-30 — sizes the tree in the pass animation. */
+  /** Numeric Lv.1-50 — sizes the tree in the pass animation. */
   playerLevel?: number;
 }) {
   const t = useTranslations("levelTest.runner");

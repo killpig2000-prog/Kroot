@@ -1,7 +1,22 @@
 import type { CefrLevel } from "@/lib/tree";
 import { SPECIES } from "@/lib/tree";
-import { FULLY_GROWN_LEVEL, MAX_LEVEL, VETERAN_TIER_SPAN, treeHeightMetres, treeStageForLevel, veteranTiers } from "@/lib/level";
+import { treeStageForLevel } from "@/lib/level";
 import LevelCreature, { CHARACTER_ART, Pad } from "@/components/dashboard/LevelCreature";
+
+// Retired 2026-09-12 with the max-Lv.50 curve: the tree no longer grows
+// taller past fully grown, and nothing renders this component any more. Kept,
+// unused, with the other drawn trees until the user asks for them to go —
+// so its old numbers live here now rather than in lib/level.
+const FULLY_GROWN_LEVEL = 50;
+const MAX_LEVEL = 120;
+const VETERAN_TIER_SPAN = 10;
+function veteranTiers(level: number): number {
+  return Math.max(0, Math.floor((Math.min(level, MAX_LEVEL) - FULLY_GROWN_LEVEL) / VETERAN_TIER_SPAN));
+}
+function treeHeightMetres(level: number): number {
+  if (level < FULLY_GROWN_LEVEL) return 0;
+  return Math.round((2 + (Math.min(level, MAX_LEVEL) - FULLY_GROWN_LEVEL) * 0.125) * 10) / 10;
+}
 
 // Keepsakes hung on the tree, one per canopy tier past fully grown.
 // `name` is rendered from messages (dashboard.tree.keepsakes.<level>).
