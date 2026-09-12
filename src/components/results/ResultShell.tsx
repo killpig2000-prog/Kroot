@@ -167,23 +167,38 @@ export default function ResultShell({
   const after = levelUp ? levelProgress(levelUp.new_xp) : null;
   const gained = xpAwarded ?? (levelUp ? xpValue : 0);
   const before = levelUp ? levelProgress(Math.max(0, levelUp.new_xp - gained)) : null;
-  // The bar first paints where it was (derived, no state), then a beat later
-  // grows to where it is now; water falls only while XP actually landed.
-  const startPct = before && after ? (before.level === after.level ? before.pct : 0) : 0;
-  const [fill, setFill] = useState<number | null>(null);
+  // The bar rests where it was for a second, then shows the XP about to land
+  // as a pale stretch from there to where it's going, then fills along it
+  // (2026-09-12, user call — it used to start filling at once). A level-up
+  // fills to the end first, then the new level starts from empty. Water
+  // falls only while XP actually landed.
+  const leveled = !!before && !!after && before.level !== after.level;
+  const startPct = before ? before.pct : 0;
+  const [bar, setBar] = useState<{ fill: number; ghost: number | null; instant: boolean } | null>(null);
   const [watering, setWatering] = useState(false);
   useEffect(() => {
     if (!levelUp || !after) return;
-    const grow = setTimeout(() => setFill(after.pct), 350);
-    const start = gained > 0 ? setTimeout(() => setWatering(true), 0) : null;
-    const stop = setTimeout(() => setWatering(false), 2000);
-    return () => {
-      clearTimeout(grow);
-      if (start) clearTimeout(start);
-      clearTimeout(stop);
-    };
+    const timers: ReturnType<typeof setTimeout>[] = [];
+    const at = (ms: number, fn: () => void) => timers.push(setTimeout(fn, ms));
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      at(0, () => setBar({ fill: after.pct, ghost: null, instant: true }));
+    } else {
+      const target = leveled ? 100 : after.pct;
+      at(0, () => setBar({ fill: startPct, ghost: null, instant: true }));
+      at(1000, () => setBar({ fill: startPct, ghost: target, instant: false }));
+      at(1400, () => setBar({ fill: target, ghost: target, instant: false }));
+      if (leveled) {
+        at(3000, () => setBar({ fill: 0, ghost: null, instant: true }));
+        at(3100, () => setBar({ fill: 0, ghost: after.pct, instant: false }));
+        at(3400, () => setBar({ fill: after.pct, ghost: after.pct, instant: false }));
+      }
+    }
+    if (gained > 0) at(0, () => setWatering(true));
+    at(2000, () => setWatering(false));
+    return () => timers.forEach(clearTimeout);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [levelUp]);
+  const shown = bar ?? { fill: startPct, ghost: null, instant: true };
 
   return (
     <div
@@ -257,10 +272,17 @@ export default function ResultShell({
               </span>
             )}
           </div>
-          <div className="mt-1 h-[7px] rounded-full overflow-hidden" style={{ background: "rgba(255,253,246,.7)" }}>
+          <div className="relative mt-1 h-[7px] rounded-full overflow-hidden" style={{ background: "rgba(255,253,246,.7)" }}>
+            {/* the XP about to land, pale, from the bar's end to where it's going */}
             <i
-              className="not-italic block h-full rounded-full bg-success transition-[width] duration-[1400ms] ease-[cubic-bezier(.2,.8,.2,1)]"
-              style={{ width: `${fill ?? startPct}%` }}
+              className="not-italic absolute inset-y-0 left-0 rounded-full bg-success transition-opacity duration-300"
+              style={{ width: `${shown.ghost ?? shown.fill}%`, opacity: shown.ghost === null ? 0 : 0.3 }}
+            />
+            <i
+              className={`not-italic relative block h-full rounded-full bg-success ${
+                shown.instant ? "" : "transition-[width] duration-[1400ms] ease-[cubic-bezier(.2,.8,.2,1)]"
+              }`}
+              style={{ width: `${shown.fill}%` }}
             />
           </div>
         </div>

@@ -17,6 +17,15 @@ import { isDifficultyUnlocked } from "@/lib/level";
 import { getUnpaidRewardKeys } from "@/lib/reward-status";
 import { writingChapterKey } from "@/lib/reward-keys";
 
+// A chapter row shows its first prompt's first sentence only (2026-09-12,
+// user call): the C1 journal prompts all end "Write about it in some
+// detail.", which crowded every row and told the learner nothing new. The
+// session itself still shows the whole prompt.
+function firstSentence(text: string): string {
+  const m = text.match(/^.*?(?:[.?!](?=\s|$)|[。？！])/);
+  return m ? m[0] : text;
+}
+
 const STATUS_BADGE: Record<string, string> = {
   done: "bg-success-bg text-success border-success-line",
   current: "bg-[var(--tint-amber)] text-amber border-amber-line",
@@ -114,7 +123,7 @@ export default async function WritingMapPage({
                   {t("map.continueChapter", { n: continueIndex + 1 })}
                 </b>
                 <span className="text-[13px] text-[#92702B] truncate block">
-                  {t("map.questionsOf", { n: continueChapter.length, prompt: getLocalizedPrompt(continueChapter[0], locale) })}
+                  {t("map.questionsOf", { n: continueChapter.length, prompt: firstSentence(getLocalizedPrompt(continueChapter[0], locale)) })}
                 </span>
               </span>
               <span className="text-[13px] font-semibold text-amber transition-transform group-hover:translate-x-0.5">
@@ -179,7 +188,7 @@ export default async function WritingMapPage({
                           title: t("map.chapterN", { n: i + 1 }),
                           // Just the first question's prompt, no "N questions ·"
                           // prefix — keeps this to one line instead of wrapping.
-                          subtitle: getLocalizedPrompt(chapter[0], locale),
+                          subtitle: firstSentence(getLocalizedPrompt(chapter[0], locale)),
                           badgeClassName: STATUS_BADGE[status],
                           badgeLabel:
                             status === "done"
