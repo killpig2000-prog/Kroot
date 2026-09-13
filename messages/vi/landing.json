@@ -32,20 +32,20 @@
     "afterTry": "Mọi bài học đều diễn ra đúng như vậy."
   },
   "levelTest": {
-    "badge": "kiểm tra nhanh",
-    "title": "Tìm trình độ của bạn trong 3 phút",
-    "sub": "Một bài kiểm tra thích ứng ngắn sẽ tìm ra trình độ của bạn (A1–C2) và dừng ngay khi đã chắc chắn. Chưa đọc được Hangul? Cứ nói vậy và bắt đầu từ đó — không cần tài khoản.",
-    "cardTitle": "Kiểm tra trình độ · Câu 3",
-    "cardTag": "từ vựng",
-    "question": "— nghĩa là gì?",
+    "badge": "khảo sát nhanh",
+    "title": "Chọn cấp độ trong một phút",
+    "sub": "Ba câu hỏi nhanh gợi ý cấp độ từ A1 đến C2 — bạn quyết định, và có thể đổi bất cứ lúc nào trong Cài đặt. Chưa đọc được Hangul? Cứ nói vậy và bắt đầu từ đó — không cần tài khoản.",
+    "cardTitle": "Khảo sát cấp độ · C1",
+    "cardTag": "đọc",
+    "question": "Khi đọc tiếng Hàn, câu nào giống bạn nhất?",
     "options": {
-      "ok": "Không sao / Tôi ổn",
-      "expensive": "Đắt quá",
-      "seeYou": "Hẹn gặp lại ngày mai"
+      "a": "Mình vẫn đang học Hangul",
+      "b": "Đọc được biển hiệu và thực đơn ngắn",
+      "c": "Đọc được tin nhắn đơn giản"
     },
-    "tipTitle": "✏️ Cách chấm điểm",
-    "tipBody": "Từ vựng, ngữ pháp và nghe xen kẽ nhau — thường 4 đến 10 câu. Kết quả theo thang CEFR mà người học và nhà tuyển dụng thật sự dùng!",
-    "cta": "Bắt đầu bài kiểm tra"
+    "tipTitle": "✏️ Không thi, không áp lực",
+    "tipBody": "Bạn cho biết mình đang ở đâu; chúng tôi mở cấp độ đó và mọi thứ dễ hơn. Cấp độ theo thang CEFR mà người học và nhà tuyển dụng dùng!",
+    "cta": "Chọn cấp độ"
   },
   "today": {
     "badge": "một ngày trên Kroot",

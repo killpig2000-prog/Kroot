@@ -91,8 +91,6 @@
     "sfxDesc": "Âm báo khi trả lời, tưới cây và lên cấp. Giọng tiếng Hàn luôn phát."
   },
   "learn": {
-    "heading": "Hướng tới {level}",
-    "atTop": "Đã lên đỉnh",
     "statStreak": "ngày liên tiếp",
     "statAccuracy": "độ chính xác",
     "statWords": "từ đã học",
@@ -129,6 +127,11 @@
     "ledgerQuest": "nhiệm vụ hôm nay",
     "ledgerEmpty": "Kỳ này chưa có gì.",
     "statStreakLine": "chuỗi {n} ngày",
-    "skillBalance": "Cân bằng kỹ năng"
+    "skillBalance": "Cân bằng kỹ năng",
+    "levelSub": "cấp độ của bạn · đổi bất cứ lúc nào",
+    "levelWords": "Từ vựng {level}",
+    "levelReadings": "Bài đọc {level}",
+    "levelListening": "Nghe {level}",
+    "levelChange": "Đổi cấp độ trong Cài đặt"
   }
 }

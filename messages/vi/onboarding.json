@@ -2,7 +2,7 @@
   "steps": {
     "hangul": "Hangul",
     "goal": "Mục tiêu",
-    "test": "Kiểm tra",
+    "test": "Khảo sát",
     "level": "Trình độ",
     "account": "Tài khoản"
   },
@@ -10,14 +10,14 @@
     "title": "Bạn đọc được chữ này không?",
     "sub": "Đừng lo — câu này chỉ để chọn bước đầu phù hợp cho bạn.",
     "yesTitle": "Có, tôi đọc được",
-    "yesHint": "Làm bài kiểm tra trình độ 3 phút",
+    "yesHint": "Trả lời 3 câu hỏi nhanh",
     "noTitle": "Chưa đọc được",
     "noHint": "Bắt đầu với Hangul — không cần kiểm tra"
   },
   "goal": {
     "title": "Điều gì đưa bạn đến với tiếng Hàn?",
     "skip": "Bỏ qua",
-    "startTest": "Bắt đầu kiểm tra →",
+    "startTest": "Tiếp →",
     "seePlan": "Xem lộ trình của tôi →"
   },
   "goals": {
@@ -46,24 +46,6 @@
       "hint": "Kết hợp cân bằng"
     }
   },
-  "quiz": {
-    "question": "câu {n}",
-    "stopsEarly": "dừng sớm khi đã rõ trình độ của bạn",
-    "play": "🔊 Phát âm thanh",
-    "audioFailed": "Âm thanh không phát được.",
-    "cantHear": "Không nghe được?",
-    "showText": "Hiện chữ",
-    "or": "· hoặc",
-    "swap": "đổi câu hỏi này",
-    "noPenalty": "(không bị trừ điểm)",
-    "dontKnow": "🤷 Tôi chưa biết",
-    "notNow": "Để sau — bắt đầu từ A1"
-  },
-  "types": {
-    "Words": "Từ vựng",
-    "Grammar": "Ngữ pháp",
-    "Listening": "Nghe"
-  },
   "skills": {
     "hangul": "Hangul",
     "grammar": "Ngữ pháp",
@@ -75,12 +57,13 @@
     "titleHangul": "Hãy bắt đầu với Hangul",
     "title": "Hạt giống của bạn đã được gieo",
     "yourLevel": "Trình độ của bạn",
-    "stoppedAt": "Chúng tôi dừng ở {level} — đó là mục tiêu tiếp theo của bạn.",
     "firstThree": "Ba bài học đầu tiên của bạn",
     "saving": "Đang lưu trình độ…",
     "startLesson": "Bắt đầu bài 1",
     "saveAndStart": "Lưu trình độ & bắt đầu bài 1",
-    "upNext": "Tiếp theo: {label}"
+    "upNext": "Tiếp theo: {label}",
+    "suggested": "Câu trả lời của bạn gợi ý {level}. Chạm vào cấp độ khác nếu thấy chưa đúng.",
+    "pickHint": "Bắt đầu từ A1. Đã biết chút tiếng Hàn? Chạm vào cấp độ của bạn."
   },
   "signup": {
     "title": "Giữ chỗ của bạn",
@@ -122,7 +105,7 @@
     "title": "Đang gieo hạt giống của bạn…",
     "sub": "Đang lưu {level} và mở bài học đầu tiên.",
     "failedTitle": "Chúng tôi chưa lưu được trình độ của bạn",
-    "failedSub": "Kết nối bị ngắt ngay lúc đang gieo hạt. Câu trả lời của bạn vẫn còn — hãy thử lại.",
+    "failedSub": "Mất kết nối đúng lúc đang gieo hạt. Cấp độ của bạn vẫn an toàn — hãy thử lại.",
     "retry": "Thử lại",
     "continueAnyway": "Vào khu vườn của tôi"
   },
@@ -160,5 +143,37 @@
     "findLevel": "Tìm trình độ của mình →",
     "cantRead": "Mình chưa đọc được Hangul — bắt đầu từ Hangul",
     "sproutNote": "Đăng ký ở bước cuối · mầm 🌱 xuất hiện ở Lv.3"
+  },
+  "survey": {
+    "progress": "Câu {n}/{total}",
+    "changeLater": "Chưa chắc? Chọn đáp án gần nhất — bạn có thể đổi bất cứ lúc nào trong Cài đặt.",
+    "skip": "Bỏ qua — bắt đầu từ A1",
+    "reading": {
+      "title": "Khi đọc tiếng Hàn, câu nào giống bạn nhất?",
+      "A1": "Mình vẫn đang học Hangul",
+      "A2": "Đọc được biển hiệu và thực đơn ngắn",
+      "B1": "Đọc được tin nhắn đơn giản và truyện ngắn",
+      "B2": "Theo được webtoon và bài blog",
+      "C1": "Đọc được bài báo",
+      "C2": "Đọc sách và báo cáo dễ dàng"
+    },
+    "listening": {
+      "title": "Còn khi nghe?",
+      "A1": "Chỉ vài từ mình đã biết",
+      "A2": "Câu chậm, đơn giản như chào hỏi và giá cả",
+      "B1": "Hội thoại hằng ngày, nếu nói chậm và rõ",
+      "B2": "Phim truyền hình, có phụ đề tiếng Hàn",
+      "C1": "Phim và show giải trí, hầu như không cần phụ đề",
+      "C2": "Gần như mọi thứ, kể cả nói nhanh và thân mật"
+    },
+    "speaking": {
+      "title": "Còn khi nói?",
+      "A1": "Xin chào và cảm ơn",
+      "A2": "Giới thiệu bản thân và gọi món",
+      "B1": "Kể về một ngày và kế hoạch của mình",
+      "B2": "Duy trì cuộc trò chuyện với bạn bè",
+      "C1": "Thảo luận tin tức và quan điểm",
+      "C2": "Làm việc hoặc học tập bằng tiếng Hàn"
+    }
   }
 }

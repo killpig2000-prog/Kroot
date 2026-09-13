@@ -4,7 +4,6 @@ import { Link, redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
-import { ELIGIBILITY } from "@/lib/promotion-test";
 import {
   getGuideProgress,
   resolveRoute,
@@ -12,7 +11,7 @@ import {
   type GuideStationKey,
   type GuideStationView,
 } from "@/lib/guide-progress";
-import { LEVEL_ORDER, nextLevel, type CefrLevel } from "@/lib/tree";
+import { LEVEL_ORDER, type CefrLevel } from "@/lib/tree";
 import LevelCreature from "@/components/dashboard/LevelCreature";
 
 // Each stop reuses its section's own accent from navItems, so a stop on the
@@ -103,8 +102,6 @@ export default async function GuidePage() {
   } catch (e) {
     console.error("guide progress failed:", e instanceof Error ? e.message : e);
   }
-  const elig = progress?.eligibility ?? null;
-  const gradeUp = nextLevel(grade);
 
   return (
     <div className="min-h-screen bg-warm text-charcoal">
@@ -312,33 +309,6 @@ export default async function GuidePage() {
                   </figure>
                 ))}
               </div>
-            </div>
-
-            {/* level (grade) test: what triggers it */}
-            <div className="rounded-[14px] border border-[var(--tint-violet-line)] bg-[var(--tint-violet)] px-[18px] py-4">
-              <span className="flex items-center gap-3 mb-2">
-                <span className="flex-none w-9 h-9 rounded-[11px] bg-cream border border-[var(--tint-violet-line)] flex items-center justify-center text-[18px]">
-                  🎓
-                </span>
-                <b className="text-[15px] font-black tracking-[-0.015em]">{t("test.title")}</b>
-              </span>
-              <p className="text-[12.5px] text-muted leading-[1.6] mb-2.5">
-                {t("test.unlocksValue", {
-                  words: ELIGIBILITY.targetMasteredWords,
-                  passages: ELIGIBILITY.minReadingPassages,
-                })}
-              </p>
-              {elig && gradeUp && (
-                <p className={`text-[12.5px] mb-1 tabular-nums ${elig.eligible ? "text-success-deep font-semibold" : "text-muted"}`}>
-                  {t("test.youStats", {
-                    wordsHeld: elig.wordsMastered,
-                    wordsRequired: elig.wordsRequired,
-                    readingDone: elig.readingDone,
-                    readingRequired: elig.readingRequired,
-                  })}
-                  {elig.eligible ? t("test.youReady", { from: grade, to: gradeUp }) : ""}
-                </p>
-              )}
             </div>
           </section>
 

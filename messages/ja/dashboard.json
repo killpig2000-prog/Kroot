@@ -43,19 +43,6 @@
     "bestStreak": "最長記録",
     "monthGoal": "{month}の目標"
   },
-  "levelMap": {
-    "title": "あなたの道のり",
-    "checksToward": "{next}まで {done}/{total} 項目",
-    "topOfTree": "てっぺんに到達 🌟",
-    "levelsAria": "レベル",
-    "ready": "{current} → {next} のテストを受けられます",
-    "unlock": "{next}を開放 · {species}",
-    "start": "始める →",
-    "details": "詳しく →",
-    "checkWordsHeld": "覚えた単語",
-    "checkReading": "リーディング",
-    "pace": "この調子なら約{n}日"
-  },
   "tree": {
     "levelBadge": "Lv. {level}",
     "metresTall": "mの高さ",

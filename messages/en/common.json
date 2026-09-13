@@ -15,5 +15,13 @@
   "search": "Search",
   "noResults": "No results found",
   "tookExtraTries": "{n} took extra tries",
-  "offline": "You're offline — check your connection."
+  "offline": "You're offline — check your connection.",
+  "levels": {
+    "A1": "Hangul and first words",
+    "A2": "Simple everyday chats",
+    "B1": "Your day, in slow clear Korean",
+    "B2": "Dramas with Korean subtitles",
+    "C1": "News and articles",
+    "C2": "Work or study in Korean"
+  }
 }

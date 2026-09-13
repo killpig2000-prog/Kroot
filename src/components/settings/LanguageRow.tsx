@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useCallback, useState, useTransition } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { LANGUAGES, rememberLocale } from "@/i18n/locale";
@@ -32,6 +32,8 @@ export default function LanguageRow() {
     });
   }
 
+  const close = useCallback(() => setOpen(false), []);
+
   return (
     <>
       <ButtonRow
@@ -40,7 +42,7 @@ export default function LanguageRow() {
         onClick={() => setOpen(true)}
         disabled={isPending}
       />
-      <BottomSheet open={open} onClose={() => setOpen(false)} title={t("language")}>
+      <BottomSheet open={open} onClose={close} title={t("language")}>
         {LANGUAGES.map((l) => (
           <SheetOption key={l.code} label={l.label} selected={l.code === locale} onPick={() => pick(l.code, l.label)} />
         ))}

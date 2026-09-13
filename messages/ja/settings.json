@@ -52,7 +52,9 @@
   "capacityTitle": "1日に復習する単語数",
   "capacityPick": "1日に何語戻ってきますか？",
   "capacityOption": "1日{count}語",
-  "levelHint": "進み具合と次のテスト",
   "seasonalThemeUntil": "{season}、{date}まで",
-  "versionLine": "Kroot {version}"
+  "versionLine": "Kroot {version}",
+  "levelOpens": "{level}以下のレッスンが開いています",
+  "levelSheetNote": "このレベルと、それより易しいレッスンがすべて開きます。いつでも変更できます。",
+  "levelCoinNote": "自分のレベルより下のレッスンでは、もらえるコインが少なくなります。"
 }

@@ -43,19 +43,6 @@
     "bestStreak": "最长连续",
     "monthGoal": "{month}目标"
   },
-  "levelMap": {
-    "title": "你的路线",
-    "checksToward": "距离 {next} 已完成 {done}/{total} 项",
-    "topOfTree": "已到树顶 🌟",
-    "levelsAria": "等级",
-    "ready": "可以参加 {current} → {next} 测试了",
-    "unlock": "解锁 {next} · {species}",
-    "start": "开始 →",
-    "details": "详情 →",
-    "checkWordsHeld": "掌握的单词",
-    "checkReading": "阅读",
-    "pace": "按当前速度约 {n} 天"
-  },
   "tree": {
     "levelBadge": "Lv. {level}",
     "metresTall": "米高",

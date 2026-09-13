@@ -91,8 +91,6 @@
     "sfxDesc": "Chimes for answers, watering and level-ups. The Korean voice always plays."
   },
   "learn": {
-    "heading": "Heading to {level}",
-    "atTop": "At the top",
     "statStreak": "day streak",
     "statAccuracy": "accuracy",
     "statWords": "words learned",
@@ -129,6 +127,11 @@
     "ledgerQuest": "daily quest",
     "ledgerEmpty": "Nothing earned in this period yet.",
     "statStreakLine": "{n}-day streak",
-    "skillBalance": "Skill balance"
+    "skillBalance": "Skill balance",
+    "levelSub": "your level · change it any time",
+    "levelWords": "{level} words",
+    "levelReadings": "{level} readings",
+    "levelListening": "{level} listening",
+    "levelChange": "Change level in Settings"
   }
 }

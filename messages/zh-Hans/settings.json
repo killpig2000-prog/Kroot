@@ -52,7 +52,9 @@
   "capacityTitle": "每天复习的单词数",
   "capacityPick": "每天回来多少个词？",
   "capacityOption": "每天 {count} 个",
-  "levelHint": "进度与下一次测试",
   "seasonalThemeUntil": "{season}，至 {date}",
-  "versionLine": "Kroot {version}"
+  "versionLine": "Kroot {version}",
+  "levelOpens": "已开放 {level} 及以下的课程",
+  "levelSheetNote": "开放这个级别及所有更简单的课程。你可以随时更改。",
+  "levelCoinNote": "低于你级别的课程获得的金币更少。"
 }

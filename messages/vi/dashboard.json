@@ -43,19 +43,6 @@
     "bestStreak": "chuỗi dài nhất",
     "monthGoal": "mục tiêu {month}"
   },
-  "levelMap": {
-    "title": "Lộ trình của bạn",
-    "checksToward": "{done}/{total} điều kiện để lên {next}",
-    "topOfTree": "Đã lên tới ngọn cây 🌟",
-    "levelsAria": "Trình độ",
-    "ready": "Sẵn sàng cho bài kiểm tra {current} → {next}",
-    "unlock": "Mở khóa {next} · {species}",
-    "start": "Bắt đầu →",
-    "details": "Chi tiết →",
-    "checkWordsHeld": "Từ đã nhớ",
-    "checkReading": "Đọc",
-    "pace": "khoảng {n} ngày với tốc độ này"
-  },
   "tree": {
     "levelBadge": "Cấp {level}",
     "metresTall": "mét",

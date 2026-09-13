@@ -2,7 +2,7 @@
   "steps": {
     "hangul": "Hangul",
     "goal": "Objetivo",
-    "test": "Prueba",
+    "test": "Encuesta",
     "level": "Nivel",
     "account": "Cuenta"
   },
@@ -10,14 +10,14 @@
     "title": "¿Puedes leer esto?",
     "sub": "Sin presión: solo sirve para elegir el primer paso adecuado.",
     "yesTitle": "Sí, puedo leerlo",
-    "yesHint": "Haz la prueba de nivel de 3 minutos",
+    "yesHint": "Responde 3 preguntas rápidas",
     "noTitle": "Todavía no",
     "noHint": "Empieza con el Hangul, sin prueba"
   },
   "goal": {
     "title": "¿Qué te trajo al coreano?",
     "skip": "Omitir",
-    "startTest": "Empezar la prueba →",
+    "startTest": "Siguiente →",
     "seePlan": "Ver mi plan →"
   },
   "goals": {
@@ -46,24 +46,6 @@
       "hint": "Una mezcla equilibrada"
     }
   },
-  "quiz": {
-    "question": "pregunta {n}",
-    "stopsEarly": "termina antes en cuanto tu nivel esté claro",
-    "play": "🔊 Reproducir el audio",
-    "audioFailed": "El audio no se reprodujo.",
-    "cantHear": "¿No lo oyes?",
-    "showText": "Mostrar el texto",
-    "or": "· o",
-    "swap": "cambiar esta pregunta",
-    "noPenalty": "(sin penalización)",
-    "dontKnow": "🤷 Todavía no lo sé",
-    "notNow": "Ahora no: empezar en A1"
-  },
-  "types": {
-    "Words": "Palabras",
-    "Grammar": "Gramática",
-    "Listening": "Escucha"
-  },
   "skills": {
     "hangul": "Hangul",
     "grammar": "Gramática",
@@ -75,12 +57,13 @@
     "titleHangul": "Empecemos con el Hangul",
     "title": "Tu semilla está plantada",
     "yourLevel": "Tu nivel",
-    "stoppedAt": "Nos detuvimos en {level}: ese es tu próximo objetivo.",
     "firstThree": "Tus primeras tres lecciones",
     "saving": "Guardando tu nivel…",
     "startLesson": "Empezar la lección 1",
     "saveAndStart": "Guardar mi nivel y empezar la lección 1",
-    "upNext": "A continuación: {label}"
+    "upNext": "A continuación: {label}",
+    "suggested": "Tus respuestas apuntan a {level}. Toca otro nivel si no te encaja.",
+    "pickHint": "Empiezas en A1. ¿Ya sabes algo de coreano? Toca tu nivel."
   },
   "signup": {
     "title": "Guarda tu lugar",
@@ -122,7 +105,7 @@
     "title": "Plantando tu semilla…",
     "sub": "Guardando {level} y abriendo tu primera lección.",
     "failedTitle": "No pudimos guardar tu nivel",
-    "failedSub": "Se cortó la conexión justo cuando plantábamos. Tus respuestas están a salvo: inténtalo de nuevo.",
+    "failedSub": "Se cortó la conexión justo mientras plantábamos. Tu nivel está a salvo: inténtalo de nuevo.",
     "retry": "Intentar de nuevo",
     "continueAnyway": "Ir a mi jardín"
   },
@@ -160,5 +143,37 @@
     "findLevel": "Descubrir mi nivel →",
     "cantRead": "Aún no sé leer Hangul — empezar por el Hangul",
     "sproutNote": "El registro va al final · el brote 🌱 llega en el Nv.3"
+  },
+  "survey": {
+    "progress": "Pregunta {n} de {total}",
+    "changeLater": "¿No estás seguro? Elige lo más parecido: puedes cambiarlo cuando quieras en Ajustes.",
+    "skip": "Saltar — empezar en A1",
+    "reading": {
+      "title": "¿Qué se parece más a ti cuando lees coreano?",
+      "A1": "Todavía estoy aprendiendo Hangul",
+      "A2": "Puedo leer carteles y menús cortos",
+      "B1": "Puedo leer mensajes sencillos y cuentos cortos",
+      "B2": "Puedo seguir webtoons y blogs",
+      "C1": "Puedo leer noticias",
+      "C2": "Leo libros e informes con facilidad"
+    },
+    "listening": {
+      "title": "¿Y cuando escuchas?",
+      "A1": "Solo algunas palabras que ya conozco",
+      "A2": "Frases lentas y sencillas, como saludos y precios",
+      "B1": "Conversaciones cotidianas, si son lentas y claras",
+      "B2": "Dramas, con subtítulos en coreano",
+      "C1": "Dramas y programas de variedades, casi sin subtítulos",
+      "C2": "Casi todo, incluso el habla rápida e informal"
+    },
+    "speaking": {
+      "title": "¿Y cuando hablas?",
+      "A1": "Hola y gracias",
+      "A2": "Puedo presentarme y pedir comida",
+      "B1": "Puedo hablar de mi día y mis planes",
+      "B2": "Puedo mantener una conversación con un amigo",
+      "C1": "Puedo debatir noticias y opiniones",
+      "C2": "Puedo trabajar o estudiar en coreano"
+    }
   }
 }

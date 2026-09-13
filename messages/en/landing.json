@@ -32,20 +32,20 @@
     "afterTry": "That's exactly how every lesson works."
   },
   "levelTest": {
-    "badge": "pop quiz",
-    "title": "Find your level in 3 minutes",
-    "sub": "A short adaptive test finds your level (A1–C2) and stops as soon as it's sure. Can't read Hangul yet? Say so and start there — no account needed.",
-    "cardTitle": "Level test · Q3",
-    "cardTag": "vocabulary",
-    "question": "— what does it mean?",
+    "badge": "quick survey",
+    "title": "Pick your level in one minute",
+    "sub": "Three quick questions suggest a level from A1 to C2 — you choose, and you can change it any time in Settings. Can't read Hangul yet? Say so and start there — no account needed.",
+    "cardTitle": "Level survey · Q1",
+    "cardTag": "reading",
+    "question": "Which sounds like you when you read Korean?",
     "options": {
-      "ok": "It's okay / I'm fine",
-      "expensive": "It's expensive",
-      "seeYou": "See you tomorrow"
+      "a": "I'm still learning Hangul",
+      "b": "I can read short signs and menus",
+      "c": "I can read simple messages"
     },
-    "tipTitle": "✏️ How it's scored",
-    "tipBody": "Vocabulary, grammar and listening mixed — usually 4 to 10 questions. Results on the CEFR scale learners and employers actually use!",
-    "cta": "Start the level test"
+    "tipTitle": "✏️ No test, no pressure",
+    "tipBody": "You say where you are; we open that level and everything easier. Levels follow the CEFR scale learners and employers actually use!",
+    "cta": "Pick my level"
   },
   "today": {
     "badge": "a day on Kroot",

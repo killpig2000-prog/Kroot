@@ -32,20 +32,20 @@
     "afterTry": "Así funciona cada lección."
   },
   "levelTest": {
-    "badge": "test rápido",
-    "title": "Descubre tu nivel en 3 minutos",
-    "sub": "Un test adaptativo corto encuentra tu nivel (A1–C2) y para en cuanto lo tiene claro. ¿Todavía no lees hangul? Dilo y empieza por ahí, sin crear cuenta.",
-    "cardTitle": "Test de nivel · P3",
-    "cardTag": "vocabulario",
-    "question": "— ¿qué significa?",
+    "badge": "encuesta rápida",
+    "title": "Elige tu nivel en un minuto",
+    "sub": "Tres preguntas rápidas sugieren un nivel de A1 a C2: tú decides, y puedes cambiarlo cuando quieras en Ajustes. ¿Aún no lees Hangul? Dilo y empieza por ahí, sin cuenta.",
+    "cardTitle": "Encuesta de nivel · P1",
+    "cardTag": "lectura",
+    "question": "¿Qué se parece más a ti cuando lees coreano?",
     "options": {
-      "ok": "Está bien / Estoy bien",
-      "expensive": "Es caro",
-      "seeYou": "Hasta mañana"
+      "a": "Todavía estoy aprendiendo Hangul",
+      "b": "Puedo leer carteles y menús cortos",
+      "c": "Puedo leer mensajes sencillos"
     },
-    "tipTitle": "✏️ Cómo se puntúa",
-    "tipBody": "Vocabulario, gramática y comprensión auditiva mezclados: normalmente de 4 a 10 preguntas. ¡El resultado sale en la escala CEFR que de verdad usan estudiantes y empresas!",
-    "cta": "Empezar el test de nivel"
+    "tipTitle": "✏️ Sin examen, sin presión",
+    "tipBody": "Tú dices dónde estás; abrimos ese nivel y todo lo más fácil. Los niveles siguen la escala MCER que usan estudiantes y empresas.",
+    "cta": "Elegir mi nivel"
   },
   "today": {
     "badge": "un día en Kroot",

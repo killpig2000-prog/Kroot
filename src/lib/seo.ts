@@ -54,7 +54,6 @@ export const LOGGED_IN_PREFIXES = [
   "/grammar",
   "/guide",
   "/hangul",
-  "/level-test",
   "/listening",
   "/myroom",
   "/profile",

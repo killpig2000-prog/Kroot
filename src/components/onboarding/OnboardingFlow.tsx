@@ -11,44 +11,44 @@ import { createClient } from "@/lib/supabase/client";
 import { verifyEmailCode } from "@/lib/verify-email-code";
 import { authErrorKey, MAX_CODE_TRIES, MIN_PASSWORD, normalizeEmail } from "@/lib/auth-errors";
 import {
-  answerRun,
-  buildTest,
+  SURVEY_KEYS,
   decodePlacement,
   encodePlacement,
   orderForGoal,
-  placementFromRun,
-  replaceCurrent,
   skippedPlacement,
-  startRun,
+  suggestLevel,
+  surveyPlacement,
   type FirstLessonsMap,
   type Goal,
   type Placement,
-  type Run,
 } from "@/lib/level-test";
+import type { CefrLevel } from "@/lib/tree";
 import { GoalCard } from "./PlacementIntro";
 import SeedIntro from "./SeedIntro";
-import PlacementQuiz from "./PlacementQuiz";
+import SurveyStep from "./SurveyStep";
 import PlacementResult from "./PlacementResult";
 import { ConfirmCard, SignupCard } from "./SignupCard";
 import { BTN_GREEN, BTN_OUTLINE, CARD, FADE } from "./styles";
 
-// Onboarding, test first and account last:
-//   gate (can you read Hangul?) → goal → adaptive test → result → sign-up → inbox
+// Onboarding, level first and account last:
+//   gate (can you read Hangul?) → goal → survey → result → sign-up → inbox
+// The level is self-reported (three "which sounds like you?" questions) and
+// can be changed on the result card, and later in Settings.
 // Nothing is saved until there is a user. The placement survives the sign-up
 // round trip in the callback URL (?p=) with sessionStorage as a same-tab
 // backup, and is written the moment a signed-in learner lands back here.
 
-type Step = "gate" | "goal" | "quiz" | "result" | "signup" | "confirm" | "saving";
+type Step = "gate" | "goal" | "survey" | "result" | "signup" | "confirm" | "saving";
 
 const PLACEMENT_KEY = "kroot-placement";
 const STEPS: { id: Step; label: "hangul" | "goal" | "test" | "level" | "account" }[] = [
   { id: "gate", label: "hangul" },
   { id: "goal", label: "goal" },
-  { id: "quiz", label: "test" },
+  { id: "survey", label: "test" },
   { id: "result", label: "level" },
   { id: "signup", label: "account" },
 ];
-const STEP_INDEX: Record<Step, number> = { gate: 0, goal: 1, quiz: 2, result: 3, signup: 4, confirm: 4, saving: 4 };
+const STEP_INDEX: Record<Step, number> = { gate: 0, goal: 1, survey: 2, result: 3, signup: 4, confirm: 4, saving: 4 };
 
 // Same-site paths only. "//host" is protocol-relative and "/\host" parses
 // the same way in browsers (a backslash is a slash to the URL parser), so
@@ -106,9 +106,7 @@ export default function OnboardingFlow({
   const [userId, setUserId] = useState<string | null>(null);
   const [canRead, setCanRead] = useState<boolean | null>(null);
   const [goal, setGoal] = useState<Goal | null>(null);
-  // Seeded until the learner actually starts, so server and client render the
-  // same markup; startQuiz() then draws a fresh random paper.
-  const [run, setRun] = useState<Run>(() => startRun(buildTest(0)));
+  const [answers, setAnswers] = useState<(CefrLevel | null)[]>(() => SURVEY_KEYS.map(() => null));
   const [placement, setPlacement] = useState<Placement | null>(null);
   const [email, setEmail] = useState("");
   const [resent, setResent] = useState(false);
@@ -126,9 +124,6 @@ export default function OnboardingFlow({
   // The save step failed and the learner is holding a placement we couldn't
   // apply — show a way forward instead of an endless 🌱.
   const [saveFailed, setSaveFailed] = useState(false);
-  // When the currently-shown question first appeared — lets placement_question
-  // report how long each question took, without needing extra state/rerenders.
-  const questionShownAt = useRef(Date.now());
 
   // A tick-down after every magic-link send — stops accidental double-taps
   // from burning into the mailer's hourly rate limit (see errors.rateLimit).
@@ -141,17 +136,17 @@ export default function OnboardingFlow({
   // Every forward move gets its own history entry, so the browser Back button
   // walks back through the wizard. Without this the whole flow lived in one
   // entry and Back ejected the learner to the landing page, losing the level
-  // test they had just sat. The entry carries the quiz run too, so Back works
-  // question-by-question inside the test.
+  // survey they had just answered. The entry carries the answers too, so Back
+  // works question-by-question inside the survey.
   useEffect(() => {
     window.history.replaceState({ ...window.history.state, kroot: { step: stepRef.current } }, "");
     function onPop(e: PopStateEvent) {
       // Once we are off /onboarding the browser has left the flow; let it.
       if (!window.location.pathname.endsWith("/onboarding")) return;
-      const snap = (e.state as { kroot?: { step: Step; run?: Run } } | null)?.kroot;
+      const snap = (e.state as { kroot?: { step: Step; answers?: (CefrLevel | null)[] } } | null)?.kroot;
       stepRef.current = snap?.step ?? "gate";
       setStep(stepRef.current);
-      if (snap?.run) setRun(snap.run);
+      if (snap?.answers) setAnswers(snap.answers);
     }
     window.addEventListener("popstate", onPop);
     return () => window.removeEventListener("popstate", onPop);
@@ -161,10 +156,10 @@ export default function OnboardingFlow({
   // The pushState must stay outside the setState updater: React re-invokes
   // updaters in development, which would push the entry twice and make Back
   // need two presses per step.
-  const goToStep = useCallback((next: Step, snapshotRun?: Run) => {
-    if (stepRef.current === next && !snapshotRun) return;
+  const goToStep = useCallback((next: Step, snapshot?: (CefrLevel | null)[]) => {
+    if (stepRef.current === next && !snapshot) return;
     stepRef.current = next;
-    window.history.pushState({ ...window.history.state, kroot: { step: next, run: snapshotRun } }, "");
+    window.history.pushState({ ...window.history.state, kroot: { step: next, answers: snapshot } }, "");
     setStep(next);
   }, []);
 
@@ -181,14 +176,15 @@ export default function OnboardingFlow({
       stepRef.current = "saving";
       setStep("saving");
       try {
-      // The learner's whole test lives in this row: without it apply_level_test
-      // has nothing recent to trust and silently places them at A1. A failure
-      // here has to stop the flow, not fall through to a wrong level.
+      // The chosen level is recorded in this row: without it apply_level_test
+      // has nothing recent to trust and silently places them at A1. It is also
+      // the "onboarded" marker the dashboard and the mount effect below read.
+      // A failure here has to stop the flow, not fall through to a wrong level.
       const { error: insertErr } = await supabase.from("level_test_results").insert({
         user_id: uid,
         result_level: p.level,
-        score: p.score,
-        total_questions: p.total,
+        score: 0,
+        total_questions: 0,
         skipped: p.skipped,
       });
       if (insertErr) throw new Error(`level_test_results insert failed: ${insertErr.message}`);
@@ -209,8 +205,7 @@ export default function OnboardingFlow({
         level: p.level,
         route: p.route,
         skipped: p.skipped,
-        score: p.score,
-        total: p.total,
+        suggested: p.suggested,
         goal: p.goal,
       });
       writeStored(null);
@@ -286,11 +281,10 @@ export default function OnboardingFlow({
   function afterGoal() {
     if (goal) track("placement_gate", { goal });
     if (canRead) {
-      const fresh = startRun(buildTest());
-      setRun(fresh);
-      questionShownAt.current = Date.now();
-      track("level_test_started", { kind: "placement" });
-      goToStep("quiz", fresh);
+      const fresh = SURVEY_KEYS.map(() => null);
+      setAnswers(fresh);
+      track("level_test_started", { kind: "survey" });
+      goToStep("survey", fresh);
     } else {
       showResult(skippedPlacement(false, goal));
     }
@@ -303,33 +297,33 @@ export default function OnboardingFlow({
       level: p.level,
       route: p.route,
       skipped: p.skipped,
-      questions: p.total,
-      stopped_at: p.stoppedAt,
+      suggested: p.suggested,
     });
     goToStep("result");
   }
 
-  function answer(choice: number) {
-    const q = run.paper[run.index];
-    const next = answerRun(run, choice);
-    const ms = Date.now() - questionShownAt.current;
-    track("placement_question", { band: q.lv, type: q.type, right: choice === q.ans, unknown: choice === -1, ms });
-    questionShownAt.current = Date.now();
-    setRun(next);
-    if (next.done) {
-      showResult(placementFromRun(next, goal));
+  function answer(index: number, level: CefrLevel) {
+    const next = answers.map((a, i) => (i === index ? level : a));
+    track("placement_question", { key: SURVEY_KEYS[index], level });
+    setAnswers(next);
+    if (next.every((a): a is CefrLevel => a !== null)) {
+      const suggested = suggestLevel(next);
+      showResult(surveyPlacement(suggested, suggested, goal));
     } else {
-      window.history.pushState({ ...window.history.state, kroot: { step: "quiz", run: next } }, "");
+      window.history.pushState({ ...window.history.state, kroot: { step: "survey", answers: next } }, "");
     }
   }
 
-  function replaceQuestion() {
-    setRun(replaceCurrent(run));
-    questionShownAt.current = Date.now();
+  function skipSurvey() {
+    showResult(skippedPlacement(canRead ?? true, goal));
   }
 
-  function skipToA1() {
-    showResult(skippedPlacement(canRead ?? true, goal));
+  // The result card's level chips: the survey only suggests, the learner decides.
+  function pickLevel(level: CefrLevel) {
+    if (!placement || placement.route === "hangul") return;
+    const p = { ...placement, level, route: level };
+    setPlacement(p);
+    writeStored(p);
   }
 
   function afterResult() {
@@ -430,7 +424,7 @@ export default function OnboardingFlow({
       setError(t("errors.network"));
     } finally {
       // Sign-up is the one button that must never die on a dropped request:
-      // the learner has just finished the placement test to get here.
+      // the learner has just picked a level to get here.
       setSending(false);
     }
   }
@@ -505,15 +499,17 @@ export default function OnboardingFlow({
     <div className="min-h-screen flex flex-col bg-cream text-charcoal">
       <header className="border-b border-line">
         <div className="max-w-[1160px] mx-auto flex items-center justify-between gap-4 px-[clamp(18px,5vw,44px)] py-3">
-          <Link href="/" className="flex items-center gap-[9px] font-semibold text-[17px] tracking-[-0.01em]">
+          <Link href="/" className="flex-none flex items-center gap-[9px] font-semibold text-[17px] tracking-[-0.01em]">
             <BrandMark size={30} />
             Kroot
           </Link>
-          <div className="flex items-center gap-1.5" aria-label="progress">
+          {/* Five labels run past a 360px phone in longer languages: the row
+              scrolls inside itself rather than pushing the page sideways. */}
+          <div className="min-w-0 flex items-center gap-1 sm:gap-1.5 overflow-x-auto" aria-label="progress">
             {steps.map((s, i) => (
               <span
                 key={s.id}
-                className={`rounded-md px-2 py-[3px] text-[11.5px] font-semibold border transition-colors ${
+                className={`flex-none rounded-md px-1.5 sm:px-2 py-[3px] text-[11.5px] font-semibold border transition-colors ${
                   i <= active ? "bg-success-bg border-success-line text-success" : "bg-cream border-line text-faint"
                 }`}
               >
@@ -528,15 +524,14 @@ export default function OnboardingFlow({
       <main className="flex-1 flex items-center justify-center px-[18px] py-[clamp(24px,4vw,48px)]">
         <div className="w-[min(520px,100%)]">
           {step === "goal" && <GoalCard canRead={!!canRead} goal={goal} onPick={setGoal} onContinue={afterGoal} />}
-          {step === "quiz" && (
-            <PlacementQuiz run={run} onAnswer={answer} onReplace={replaceQuestion} onSkipAll={skipToA1} />
-          )}
+          {step === "survey" && <SurveyStep answers={answers} onAnswer={answer} onSkip={skipSurvey} />}
           {step === "result" && placement && (
             <PlacementResult
               placement={placement}
               lessons={orderedLessons(placement)}
               signedIn={!!userId}
               busy={false}
+              onPickLevel={pickLevel}
               onContinue={afterResult}
             />
           )}

@@ -1,10 +1,11 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 
+// A still of the onboarding survey's first question, the middle answer picked.
 const OPTIONS = [
-  { id: "ok", on: true },
-  { id: "expensive", on: false },
-  { id: "seeYou", on: false },
+  { id: "a", on: false },
+  { id: "b", on: true },
+  { id: "c", on: false },
 ] as const;
 
 export default function LevelTest() {
@@ -17,7 +18,7 @@ export default function LevelTest() {
 
       <div className="text-center mb-1.5">
         <span className="inline-block bg-cream border-[1.5px] border-dashed border-dash rounded-full px-4 py-[5px] text-xs font-extrabold text-success-deep -rotate-1">
-          {t("badge")} · <span className="kr">쪽지시험</span>
+          {t("badge")} · <span className="kr">레벨 고르기</span>
         </span>
       </div>
       <h2 className="text-center font-black text-[clamp(22px,3vw,30px)] tracking-[-0.02em] text-charcoal mb-2 text-balance">
@@ -39,7 +40,7 @@ export default function LevelTest() {
             <span className="text-[11px] text-[#8A8478]">{t("cardTag")}</span>
           </div>
           <p className="text-sm font-bold mb-2.5 text-left">
-            <span className="kr">&quot;괜찮아요&quot;</span> {t("question")}
+            {t("question")}
           </p>
           {OPTIONS.map((o) => (
             <span

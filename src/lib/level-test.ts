@@ -1,303 +1,16 @@
 import { LEVEL_ORDER, isCefrLevel, type CefrLevel } from "@/lib/tree";
 
-export type QuestionType = "Words" | "Grammar" | "Listening";
-export const QUESTION_TYPES: QuestionType[] = ["Words", "Grammar", "Listening"];
+// The starting level is self-reported: three "which sounds like you?"
+// questions, each answered with a level. The learner can still pick any level
+// on the result card, and change it later in Settings.
+export type SurveyKey = "reading" | "listening" | "speaking";
+export const SURVEY_KEYS: SurveyKey[] = ["reading", "listening", "speaking"];
 
-export type Question = {
-  type: QuestionType;
-  lv: number;
-  word?: string;
-  audio?: string;
-  ask: string;
-  opts: string[];
-  ans: number;
-};
-
-// The placement pool. Every attempt draws a fresh balanced test from it via
-// buildTest(), so a retake is never the same paper twice.
-export const QUESTIONS: Question[] = [
-  // ---------- lv 1 (A1) ----------
-  { type: "Words", lv: 1, word: '"안녕하세요"', ask: "What does this mean?", opts: ["Hello 👋", "Goodbye", "Thank you", "Sorry"], ans: 0 },
-  { type: "Words", lv: 1, word: '"물"', ask: "Pick the right meaning!", opts: ["Fire", "Water 💧", "Food", "House"], ans: 1 },
-  { type: "Words", lv: 1, word: '"감사합니다"', ask: "What does this mean?", opts: ["Excuse me", "Thank you 🙏", "Good night", "Welcome"], ans: 1 },
-  { type: "Words", lv: 1, word: '"학교"', ask: "What does this mean?", opts: ["Hospital", "Market", "School 🏫", "Station"], ans: 2 },
-  { type: "Words", lv: 1, word: '"친구"', ask: "What does this mean?", opts: ["Friend 🧑‍🤝‍🧑", "Family", "Teacher", "Neighbour"], ans: 0 },
-  { type: "Words", lv: 1, word: '"사과"', ask: "Pick the right meaning!", opts: ["Grape", "Apple 🍎", "Peach", "Pear"], ans: 1 },
-  { type: "Grammar", lv: 1, word: "저___ 미국 사람이에요.", ask: "Fill in the blank.", opts: ["는", "를", "에", "와"], ans: 0 },
-  { type: "Grammar", lv: 1, word: "이것___ 뭐예요?", ask: "Fill in the blank.", opts: ["은", "가", "를", "도"], ans: 0 },
-  { type: "Grammar", lv: 1, word: "저는 물___ 마셔요.", ask: "Fill in the blank.", opts: ["을", "가", "는", "에"], ans: 0 },
-  { type: "Grammar", lv: 1, word: "안녕히 ___ 세요.", ask: "Fill in the blank (said when someone else is leaving).", opts: ["가", "먹", "자", "보"], ans: 0 },
-  { type: "Listening", lv: 1, audio: "이름이 뭐예요?", ask: "You heard a question — what is being asked?", opts: ["Your name 🙂", "Your age", "Your address", "The time"], ans: 0 },
-  { type: "Listening", lv: 1, audio: "만나서 반가워요.", ask: "What is the speaker doing?", opts: ["Greeting you, glad to meet you", "Saying goodbye", "Apologizing", "Asking a favor"], ans: 0 },
-  { type: "Listening", lv: 1, audio: "화장실이 어디예요?", ask: "What is the speaker asking about?", opts: ["Where the bathroom is 🚻", "What time it is", "How much it costs", "Where the exit is"], ans: 0 },
-  { type: "Listening", lv: 1, audio: "이거 하나 주세요.", ask: "What does the speaker want?", opts: ["One of this, please", "Directions", "A discount", "The bathroom"], ans: 0 },
-
-  // ---------- lv 2 (A2) ----------
-  { type: "Grammar", lv: 2, word: "저는 학생___.", ask: "Fill in the blank.", opts: ["이에요", "예요", "있어요", "해요"], ans: 0 },
-  { type: "Words", lv: 2, word: '"괜찮아요"', ask: "What does this mean?", opts: ["It's okay 😊", "It's expensive", "See you tomorrow", "I don't know"], ans: 0 },
-  { type: "Words", lv: 2, word: '"배고파요"', ask: "What does this mean?", opts: ["I'm tired", "I'm hungry 🍚", "I'm busy", "I'm cold"], ans: 1 },
-  { type: "Words", lv: 2, word: '"빌리다"', ask: "Closest in meaning?", opts: ["To sell", "To borrow", "To carry", "To fix"], ans: 1 },
-  { type: "Grammar", lv: 2, word: "어제 영화를 봤___.", ask: "Fill in the blank (polite past).", opts: ["어요", "아요", "해요", "이에요"], ans: 0 },
-  { type: "Grammar", lv: 2, word: "학교___ 가요.", ask: "Choose the right particle.", opts: ["에", "을", "도", "만"], ans: 0 },
-  { type: "Words", lv: 2, word: '"일찍"', ask: "Closest in meaning?", opts: ["Early", "Late", "Slowly", "Again"], ans: 0 },
-  { type: "Grammar", lv: 2, word: "내일 친구를 만날 ___ 이에요.", ask: "Fill in the blank (simple future).", opts: ["거", "적", "때", "것도"], ans: 0 },
-  { type: "Listening", lv: 2, audio: "이거 얼마예요?", ask: "What is the speaker asking about?", opts: ["The price 💰", "The size", "The way there", "The opening hours"], ans: 0 },
-  { type: "Listening", lv: 2, audio: "주말에 뭐 했어요?", ask: "What is being asked?", opts: ["What you did on the weekend", "Where you're going", "What time it is", "How you feel"], ans: 0 },
-  { type: "Listening", lv: 2, audio: "저는 커피보다 차를 더 좋아해요.", ask: "What does the speaker prefer?", opts: ["Tea over coffee", "Coffee over tea", "Neither", "Both equally"], ans: 0 },
-  { type: "Listening", lv: 2, audio: "몇 시에 만날까요?", ask: "What is the speaker proposing to decide?", opts: ["What time to meet", "Where to eat", "Who is coming", "How to get there"], ans: 0 },
-
-  // ---------- lv 3 (B1) ----------
-  { type: "Listening", lv: 3, audio: "지금 몇 시예요?", ask: "You heard a question — what is being asked?", opts: ["The time ⏰", "The price", "The weather", "Your name"], ans: 0 },
-  { type: "Grammar", lv: 3, word: "비가 와___ 우산을 가져왔어요.", ask: "Choose the right connector.", opts: ["서", "고", "면", "지만"], ans: 0 },
-  { type: "Words", lv: 3, word: '"미리"', ask: "Closest in meaning?", opts: ["In advance", "By accident", "On purpose", "At last"], ans: 0 },
-  { type: "Words", lv: 3, word: '"익숙하다"', ask: "Closest in meaning?", opts: ["To be familiar with", "To be strange", "To be expensive", "To be noisy"], ans: 0 },
-  { type: "Words", lv: 3, word: '"포기하다"', ask: "Closest in meaning?", opts: ["To give up", "To promise", "To prepare", "To succeed"], ans: 0 },
-  { type: "Grammar", lv: 3, word: "친구를 만나기 ___ 카페에 갔어요.", ask: "Fill in the blank.", opts: ["위해", "때문", "대신", "동안"], ans: 0 },
-  { type: "Grammar", lv: 3, word: "한국에 가 ___ 싶어요.", ask: "Fill in the blank.", opts: ["고", "서", "면", "지만"], ans: 0 },
-  { type: "Words", lv: 3, word: '"당연하다"', ask: "Closest in meaning?", opts: ["To be natural / obvious", "To be surprising", "To be rare", "To be forbidden"], ans: 0 },
-  { type: "Grammar", lv: 3, word: "이 책은 읽으면 읽___ 재미있어요.", ask: "Fill in the blank (the more..., the more...).", opts: ["을수록", "자마자", "는데도", "다가"], ans: 0 },
-  { type: "Listening", lv: 3, audio: "다음 주에 시간 괜찮으세요?", ask: "What does the speaker want to know?", opts: ["Whether you're free next week 📅", "Where you live", "What you ate", "How much it costs"], ans: 0 },
-  { type: "Listening", lv: 3, audio: "죄송하지만 조금 늦을 것 같아요.", ask: "What is the speaker saying?", opts: ["They'll probably be a bit late", "They're cancelling", "They arrived early", "They forgot something"], ans: 0 },
-  { type: "Listening", lv: 3, audio: "가는 길에 편의점 좀 들러도 될까요?", ask: "What is the speaker asking?", opts: ["Whether they can stop by a convenience store on the way", "Where the nearest bank is", "If they can borrow money", "If they can leave early"], ans: 0 },
-
-  // ---------- lv 4 (B2) ----------
-  { type: "Words", lv: 4, word: '"번거롭다"', ask: "Closest in meaning?", opts: ["Troublesome", "Delicious", "Peaceful", "Generous"], ans: 0 },
-  { type: "Grammar", lv: 4, word: "그 일은 이미 끝났___ 걱정하지 마세요.", ask: "Fill in the blank.", opts: ["으니까", "는데도", "기 위해", "자마자"], ans: 0 },
-  { type: "Words", lv: 4, word: '"꾸준히"', ask: "Closest in meaning?", opts: ["Steadily, without a break", "Suddenly", "Barely", "Roughly"], ans: 0 },
-  { type: "Words", lv: 4, word: '"어차피"', ask: "Closest in meaning?", opts: ["Anyway, either way", "Perhaps", "Instead", "Almost"], ans: 0 },
-  { type: "Words", lv: 4, word: '"눈치"', ask: "This word refers to…", opts: ["Reading the room, social awareness", "Physical strength", "A written notice", "Table manners"], ans: 0 },
-  { type: "Grammar", lv: 4, word: "비가 올 ___ 우산을 챙기세요.", ask: "Fill in the blank.", opts: ["테니까", "는데도", "기에는", "자마자"], ans: 0 },
-  { type: "Grammar", lv: 4, word: "그 사람은 성실___ 성격도 좋아요.", ask: "Fill in the blank.", opts: ["할 뿐만 아니라", "하기 위해", "하자마자", "하더라도"], ans: 0 },
-  { type: "Listening", lv: 4, audio: "예약을 변경하고 싶은데요.", ask: "What does the speaker want?", opts: ["To change a reservation", "To cancel a payment", "To order more food", "To file a complaint"], ans: 0 },
-  { type: "Grammar", lv: 4, word: "아무리 바빠___ 연락은 해야죠.", ask: "Fill in the blank.", opts: ["도", "면", "니까", "자마자"], ans: 0 },
-  { type: "Listening", lv: 4, audio: "생각보다 훨씬 복잡하네요.", ask: "What is the speaker's reaction?", opts: ["It's more complicated than expected", "It's simpler than expected", "It's exactly as expected", "It's finished already"], ans: 0 },
-  { type: "Listening", lv: 4, audio: "이 서류부터 작성해 주시겠어요?", ask: "What is being requested?", opts: ["To fill out this form first", "To sign at the bottom", "To submit it online", "To make a copy"], ans: 0 },
-  { type: "Listening", lv: 4, audio: "일정이 갑자기 앞당겨졌어요.", ask: "What happened to the schedule?", opts: ["It was moved up earlier than planned", "It was pushed back", "It was cancelled", "It stayed the same"], ans: 0 },
-
-  // ---------- lv 5 (C1) ----------
-  { type: "Listening", lv: 5, audio: "회의가 연기됐다는 소식 들으셨어요?", ask: "What happened to the meeting?", opts: ["It was postponed", "It was cancelled", "It ended early", "It went well"], ans: 0 },
-  { type: "Words", lv: 5, word: '"타당하다"', ask: "Closest in meaning?", opts: ["To be reasonable, well-founded", "To be urgent", "To be unusual", "To be temporary"], ans: 0 },
-  { type: "Words", lv: 5, word: '"불가피하다"', ask: "Closest in meaning?", opts: ["To be unavoidable", "To be optional", "To be regrettable", "To be exaggerated"], ans: 0 },
-  { type: "Words", lv: 5, word: '"일회성"', ask: "This word describes something that is…", opts: ["One-off, not repeated", "Long-running", "Widely shared", "Strictly confidential"], ans: 0 },
-  { type: "Grammar", lv: 5, word: "결과가 어떻___ 최선을 다합시다.", ask: "Fill in the blank.", opts: ["든지", "자마자", "길래", "더니"], ans: 0 },
-  { type: "Grammar", lv: 5, word: "아무리 바쁘___ 밥은 먹어야죠.", ask: "Fill in the blank.", opts: ["더라도", "자마자", "는 바람에", "길래"], ans: 0 },
-  { type: "Grammar", lv: 5, word: "사고가 나는 바람에 늦었어요.", ask: "What does ~는 바람에 express here?", opts: ["An unexpected cause of a bad result", "A purpose", "A polite request", "A future plan"], ans: 0 },
-  { type: "Words", lv: 5, word: '"수긍하다"', ask: "Closest in meaning?", opts: ["To accept, agree with", "To dispute", "To ignore", "To postpone"], ans: 0 },
-  { type: "Grammar", lv: 5, word: "그는 말을 하려다 ___ 그만두었다.", ask: "Fill in the blank.", opts: ["말고", "말며", "마니", "말자"], ans: 0 },
-  { type: "Listening", lv: 5, audio: "이번 정책은 실효성이 떨어진다는 지적이 많습니다.", ask: "What is being said about the policy?", opts: ["Many say it isn't effective", "Many say it costs too much", "It was praised widely", "It takes effect next year"], ans: 0 },
-  { type: "Listening", lv: 5, audio: "협상이 막판까지 진통을 겪었습니다.", ask: "What is being said about the negotiation?", opts: ["It went through difficulty until the very end", "It ended quickly and smoothly", "It was cancelled", "It hasn't started yet"], ans: 0 },
-  { type: "Listening", lv: 5, audio: "이 문제는 근본적인 해결책이 필요해 보입니다.", ask: "What does the speaker think the problem needs?", opts: ["A fundamental solution", "A quick temporary fix", "More funding only", "No action at all"], ans: 0 },
-
-  // ---------- lv 6 (C2) ----------
-  { type: "Words", lv: 6, word: '"미봉책"', ask: "This word refers to…", opts: ["A stopgap measure", "A grand strategy", "A final decision", "An old custom"], ans: 0 },
-  { type: "Words", lv: 6, word: '"아전인수"', ask: "This idiom describes…", opts: ["Twisting things in your own favour", "Sharing credit fairly", "Working without rest", "Learning from a rival"], ans: 0 },
-  { type: "Words", lv: 6, word: '"십시일반"', ask: "This idiom describes…", opts: ["Many people each giving a little to help one", "One person carrying all the blame", "A sudden change of heart", "A long-standing grudge"], ans: 0 },
-  { type: "Words", lv: 6, word: '"괄목상대"', ask: "This idiom describes…", opts: ["Improvement striking enough to deserve a second look", "A rivalry that never ends", "A reputation built on rumour", "A plan doomed from the start"], ans: 0 },
-  { type: "Words", lv: 6, word: '"설상가상"', ask: "This idiom describes…", opts: ["One misfortune piled on another", "An unexpected windfall", "A perfectly timed rescue", "A quiet, uneventful spell"], ans: 0 },
-  { type: "Grammar", lv: 6, word: "그런 실수를 하다니 어처구니가 ___.", ask: "Fill in the blank.", opts: ["없다", "많다", "좋다", "크다"], ans: 0 },
-  { type: "Grammar", lv: 6, word: "논의가 원점으로 ___.", ask: "Fill in the blank (back to square one).", opts: ["돌아갔다", "올라갔다", "넘어갔다", "내려갔다"], ans: 0 },
-  { type: "Grammar", lv: 6, word: "그는 승진은커녕 ___ 위기에 처했다.", ask: "Fill in the blank.", opts: ["해고될", "축하받을", "휴가 갈", "칭찬받을"], ans: 0 },
-  { type: "Listening", lv: 6, audio: "그 사안은 여론의 뭇매를 맞고 결국 백지화됐습니다.", ask: "What happened to the issue?", opts: ["It was scrapped after public backlash", "It passed despite objections", "It was quietly postponed", "It was handed to a committee"], ans: 0 },
-  { type: "Listening", lv: 6, audio: "그 발언이 도화선이 되어 논란이 걷잡을 수 없이 커졌습니다.", ask: "What triggered the growing controversy?", opts: ["That remark sparked it off", "A leaked document", "A court ruling", "A press conference"], ans: 0 },
-  { type: "Listening", lv: 6, audio: "그는 궁지에 몰리자 결국 입장을 번복했습니다.", ask: "What did the person do when cornered?", opts: ["Reversed their position", "Doubled down", "Resigned immediately", "Stayed silent"], ans: 0 },
-  { type: "Grammar", lv: 6, word: "그의 성공은 노력의 산물이라 해도 과언이 ___.", ask: "Fill in the blank.", opts: ["아니다", "맞다", "옳다", "크다"], ans: 0 },
-  { type: "Listening", lv: 6, audio: "정부는 이번 사태의 책임 소재를 규명하겠다고 밝혔습니다.", ask: "What did the government say it would do?", opts: ["Determine who is responsible for the incident", "Cover up the incident", "Ignore public criticism", "Postpone the investigation indefinitely"], ans: 0 },
-];
-
-/** Question levels present in the pool, ascending. */
-export const TEST_BANDS = [1, 2, 3, 4, 5, 6] as const;
-/** How many questions of each skill type a band draws (Words + Grammar + Listening). */
-export const PER_TYPE = 2;
-/** How many questions each band contributes to a served paper. */
-export const PER_BAND = PER_TYPE * QUESTION_TYPES.length;
-/** Correct answers needed to pass a band and move up. */
-export const BAND_PASS = 4;
-
-// Small deterministic PRNG so a seeded test renders identically on the server
-// and the client (avoids a hydration mismatch before the quiz starts).
-function mulberry32(seed: number): () => number {
-  let a = seed >>> 0;
-  return () => {
-    a = (a + 0x6d2b79f5) >>> 0;
-    let t = Math.imul(a ^ (a >>> 15), 1 | a);
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
-
-function pickSome<T>(pool: T[], n: number, rand: () => number): T[] {
-  const rest = [...pool];
-  const out: T[] = [];
-  while (out.length < n && rest.length > 0) {
-    out.push(...rest.splice(Math.floor(rand() * rest.length), 1));
-  }
-  return out;
-}
-
-/**
- * Draw a balanced placement paper: PER_BAND questions from every level band,
- * ordered easiest first. Pass a seed for a reproducible draw.
- */
-/**
- * Shuffle a question's options and re-point `ans`. Most of the pool lists the
- * right answer first, so without this "always pick the first option" would
- * clear every band.
- */
-function shuffleOptions(q: Question, rand: () => number): Question {
-  const order = q.opts.map((_, i) => i);
-  for (let i = order.length - 1; i > 0; i--) {
-    const j = Math.floor(rand() * (i + 1));
-    [order[i], order[j]] = [order[j], order[i]];
-  }
-  return { ...q, opts: order.map((i) => q.opts[i]), ans: order.indexOf(q.ans) };
-}
-
-/**
- * Draw PER_TYPE questions of every skill type within a band, so a paper can
- * never skip a whole skill (e.g. no Listening) the way pure random draw from
- * the band pool could.
- */
-export function buildTest(seed?: number): Question[] {
-  const rand = seed === undefined ? Math.random : mulberry32(seed);
-  return TEST_BANDS.flatMap((lv) => {
-    const drawn = QUESTION_TYPES.flatMap((type) =>
-      pickSome(
-        QUESTIONS.filter((q) => q.lv === lv && q.type === type),
-        PER_TYPE,
-        rand
-      )
-    );
-    return pickSome(drawn, drawn.length, rand).map((q) => shuffleOptions(q, rand));
-  });
-}
-
-export type Level = {
-  code: CefrLevel;
-  desc: string;
-};
-
-export const LEVELS: Level[] = [
-  { code: "A1", desc: "You're at the very first page — the coziest place to start! We'll begin with Hangul, greetings, and little survival phrases." },
-  { code: "A2", desc: "You know the basics! Simple everyday chats are yours. Next we'll grow longer sentences and everyday words." },
-  { code: "B1", desc: "Solid roots! You can hold everyday conversations. Now for connectors, nuance, and real-life listening." },
-  { code: "B2", desc: "Wow — you handle most situations with confidence! Time to polish natural expression and faster listening." },
-  { code: "C1", desc: "Tall branches! You speak fluently across many topics. Let's refine idioms and formal Korean." },
-  { code: "C2", desc: "A mighty tree! Near-native mastery. We'll keep you sharp with fresh media, slang, and pro-level Korean." },
-];
-
-export function levelByCode(code: CefrLevel): Level {
-  return LEVELS.find((l) => l.code === code) ?? LEVELS[0];
-}
-
-/** Band number (1-6) → CEFR code. */
-export function bandCode(band: number): CefrLevel {
-  return LEVEL_ORDER[Math.min(Math.max(band, 1), LEVEL_ORDER.length) - 1];
-}
-
-// ---------------------------------------------------------------------------
-// Adaptive run. The paper is walked band by band, easiest first. A band is
-// passed with BAND_PASS correct answers (the learner moves up as soon as that
-// is certain) and failed as soon as it can no longer be passed — the run ends
-// there. Level = the highest band passed, so a lucky guess on a C2 idiom
-// can't place a beginner at B1 the way a weighted sum could.
-// ---------------------------------------------------------------------------
-
-export type SkillHits = Record<QuestionType, [hit: number, seen: number]>;
-
-export type Run = {
-  paper: Question[];
-  /** Index into paper of the question being shown. */
-  index: number;
-  band: number;
-  bandHits: number;
-  bandSeen: number;
-  passed: number[];
-  /** Band the learner failed on; null if they cleared every band. */
-  stoppedAt: number | null;
-  done: boolean;
-  score: number;
-  answered: number;
-  skills: SkillHits;
-};
-
-export function emptySkills(): SkillHits {
-  return { Words: [0, 0], Grammar: [0, 0], Listening: [0, 0] };
-}
-
-export function startRun(paper: Question[] = buildTest()): Run {
-  return {
-    paper,
-    index: 0,
-    band: paper[0]?.lv ?? 1,
-    bandHits: 0,
-    bandSeen: 0,
-    passed: [],
-    stoppedAt: null,
-    done: paper.length === 0,
-    score: 0,
-    answered: 0,
-    skills: emptySkills(),
-  };
-}
-
-export function currentQuestion(run: Run): Question | undefined {
-  return run.done ? undefined : run.paper[run.index];
-}
-
-function advanceBand(run: Run): Run {
-  const passed = [...run.passed, run.band];
-  const nextIndex = run.paper.findIndex((q) => q.lv > run.band);
-  if (nextIndex === -1) return { ...run, passed, done: true };
-  return { ...run, passed, band: run.paper[nextIndex].lv, bandHits: 0, bandSeen: 0, index: nextIndex };
-}
-
-/** Apply an answer (-1 = "I don't know"). Pure: returns the next run state. */
-export function answerRun(run: Run, choice: number): Run {
-  const q = currentQuestion(run);
-  if (!q) return run;
-  const right = choice === q.ans;
-  const [hit, seen] = run.skills[q.type];
-  const next: Run = {
-    ...run,
-    skills: { ...run.skills, [q.type]: [hit + (right ? 1 : 0), seen + 1] },
-    score: run.score + (right ? 1 : 0),
-    answered: run.answered + 1,
-    bandHits: run.bandHits + (right ? 1 : 0),
-    bandSeen: run.bandSeen + 1,
-  };
-  const bandSize = run.paper.filter((x) => x.lv === run.band).length;
-  if (next.bandHits >= BAND_PASS) return advanceBand(next);
-  const canStillPass = bandSize - next.bandSeen + next.bandHits >= BAND_PASS;
-  if (!canStillPass) return { ...next, stoppedAt: run.band, done: true };
-  return { ...next, index: run.index + 1 };
-}
-
-/**
- * Swap the current question for an unused one from the same band (no
- * penalty) — used when audio fails to play. Falls back to dropping the
- * question when the band's pool is exhausted.
- */
-export function replaceCurrent(run: Run): Run {
-  const q = currentQuestion(run);
-  if (!q) return run;
-  const seen = new Set(run.paper.map((x) => x.word ?? x.audio));
-  const unused = QUESTIONS.filter((x) => x.lv === q.lv && x.type === q.type && !seen.has(x.word ?? x.audio));
-  const paper = [...run.paper];
-  if (unused.length > 0) {
-    paper[run.index] = shuffleOptions(unused[Math.floor(Math.random() * unused.length)], Math.random);
-    return { ...run, paper };
-  }
-  paper.splice(run.index, 1);
-  const bandSize = paper.filter((x) => x.lv === run.band).length;
-  const canStillPass = bandSize - run.bandSeen + run.bandHits >= BAND_PASS;
-  if (!canStillPass) return { ...run, paper, done: true, stoppedAt: run.band };
-  return { ...run, paper, index: Math.min(run.index, paper.length - 1) };
-}
-
-/** Highest band passed → level; nothing passed → A1. */
-export function levelFromRun(run: Pick<Run, "passed">): Level {
-  const top = run.passed.length ? Math.max(...run.passed) : 0;
-  return top === 0 ? LEVELS[0] : levelByCode(bandCode(top));
+/** The middle answer (lower-middle for an even count), so one outlier can't move the suggestion. */
+export function suggestLevel(answers: CefrLevel[]): CefrLevel {
+  if (answers.length === 0) return "A1";
+  const sorted = [...answers].sort((a, b) => LEVEL_ORDER.indexOf(a) - LEVEL_ORDER.indexOf(b));
+  return sorted[Math.floor((sorted.length - 1) / 2)];
 }
 
 // ---------------------------------------------------------------------------
@@ -329,41 +42,18 @@ export type Placement = {
   route: Route;
   canRead: boolean;
   goal: Goal | null;
-  score: number;
-  total: number;
-  /** True when no test was taken (can't read Hangul, or "start at A1"). */
+  /** True when the survey wasn't answered (can't read Hangul, or skipped). */
   skipped: boolean;
-  stoppedAt: CefrLevel | null;
-  skills: SkillHits;
+  /** The level the survey suggested; null when it wasn't answered. */
+  suggested: CefrLevel | null;
 };
 
-export function placementFromRun(run: Run, goal: Goal | null): Placement {
-  const level = levelFromRun(run).code;
-  return {
-    level,
-    route: level,
-    canRead: true,
-    goal,
-    score: run.score,
-    total: run.answered,
-    skipped: false,
-    stoppedAt: run.stoppedAt === null ? null : bandCode(run.stoppedAt),
-    skills: run.skills,
-  };
+export function surveyPlacement(level: CefrLevel, suggested: CefrLevel | null, goal: Goal | null): Placement {
+  return { level, route: level, canRead: true, goal, skipped: suggested === null, suggested };
 }
 
 export function skippedPlacement(canRead: boolean, goal: Goal | null): Placement {
-  return {
-    level: "A1",
-    route: canRead ? "A1" : "hangul",
-    canRead,
-    goal,
-    score: 0,
-    total: 0,
-    skipped: true,
-    stoppedAt: null,
-    skills: emptySkills(),
-  };
+  return { level: "A1", route: canRead ? "A1" : "hangul", canRead, goal, skipped: true, suggested: null };
 }
 
 function toBase64Url(s: string): string {
@@ -384,6 +74,8 @@ export function encodePlacement(p: Placement): string {
   return toBase64Url(JSON.stringify(p));
 }
 
+// Tolerant on purpose: a ?p= minted by the old placement quiz (with score,
+// skills and stoppedAt) can still be in a confirmation email.
 export function decodePlacement(raw: string | null | undefined): Placement | null {
   if (!raw) return null;
   try {
@@ -395,11 +87,8 @@ export function decodePlacement(raw: string | null | undefined): Placement | nul
       route,
       canRead: p.canRead !== false,
       goal: isGoal(p.goal) ? p.goal : null,
-      score: Number(p.score) || 0,
-      total: Number(p.total) || 0,
       skipped: !!p.skipped,
-      stoppedAt: isCefrLevel(p.stoppedAt ?? undefined) ? (p.stoppedAt as CefrLevel) : null,
-      skills: p.skills && typeof p.skills === "object" ? { ...emptySkills(), ...p.skills } : emptySkills(),
+      suggested: isCefrLevel(p.suggested ?? undefined) ? (p.suggested as CefrLevel) : null,
     };
   } catch {
     return null;

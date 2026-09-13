@@ -43,19 +43,6 @@
     "bestStreak": "mejor racha",
     "monthGoal": "meta de {month}"
   },
-  "levelMap": {
-    "title": "Tu camino",
-    "checksToward": "{done}/{total} requisitos hacia {next}",
-    "topOfTree": "En la copa del árbol 🌟",
-    "levelsAria": "Niveles",
-    "ready": "Listo para el examen de {current} → {next}",
-    "unlock": "Desbloquea {next} · {species}",
-    "start": "Empezar →",
-    "details": "Detalles →",
-    "checkWordsHeld": "Palabras dominadas",
-    "checkReading": "Lectura",
-    "pace": "unos {n} días a este ritmo"
-  },
   "tree": {
     "levelBadge": "Nv. {level}",
     "metresTall": "m de alto",

@@ -85,7 +85,7 @@
     "ariaLabel": "Level",
     "lockedTitle": "Pass the promotion test to unlock this level",
     "you": "you",
-    "lockedNote": "🔒 Locked levels open when you pass the promotion test."
+    "lockedNote": "🔒 Higher levels open when you change your level in Settings."
   },
   "languageNav": "Language",
   "install": {

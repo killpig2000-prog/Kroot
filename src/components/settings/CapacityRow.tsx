@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
@@ -49,6 +49,8 @@ export default function CapacityRow({ capacityBonus }: { capacityBonus: number }
     }
   }
 
+  const close = useCallback(() => setOpen(false), []);
+
   return (
     <>
       <ButtonRow
@@ -56,7 +58,7 @@ export default function CapacityRow({ capacityBonus }: { capacityBonus: number }
         value={String(dailyReviewCap(bonus))}
         onClick={() => setOpen(true)}
       />
-      <BottomSheet open={open} onClose={() => setOpen(false)} title={t("capacityPick")}>
+      <BottomSheet open={open} onClose={close} title={t("capacityPick")}>
         {tiers.map((tier) => (
           <SheetOption
             key={tier}

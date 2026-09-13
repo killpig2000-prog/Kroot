@@ -4,13 +4,13 @@ import { getPassagesForLevel } from "@/lib/reading";
 import { getPromptsForLevel } from "@/lib/writing";
 import { chapterClearStats } from "@/lib/pronunciation";
 import { getWordsForTopic } from "@/lib/vocabulary-words";
-import { ELIGIBILITY } from "@/lib/promotion-test";
 import type { CefrLevel } from "@/lib/tree";
+
+const VOCAB_TARGET = 150;
 
 // The six practice skills as compact progress rows. This card used to live on
 // the dashboard; it moved to My account (2026-08-30) because the Garden is a
-// "what do I do today" page and this is a "how am I doing" one. The dashboard
-// keeps its own tally only to feed LevelMap's overall percentage.
+// "what do I do today" page and this is a "how am I doing" one.
 export const PRACTICE_SKILLS = [
   { key: "grammar", href: "/grammar", kr: "문", bg: "#EEF2FF", color: "#423AC5" },
   { key: "vocabulary", href: "/vocabulary", kr: "단", bg: "#F5F3FF", color: "#6B33CC" },
@@ -52,7 +52,7 @@ export function computeSkillProgress(input: SkillProgressInput): Record<string, 
     vocabulary: tally(
       new Set(input.vocabKeys),
       getWordsForTopic("daily-life", cefr).map((w) => w.key),
-      ELIGIBILITY.targetMasteredWords
+      VOCAB_TARGET
     ),
     listening: tally(
       new Set(input.listeningIds),

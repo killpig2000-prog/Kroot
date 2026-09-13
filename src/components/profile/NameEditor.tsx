@@ -9,6 +9,7 @@ import Glyph from "@/components/dashboard/Glyph";
 export default function NameEditor({ userId, name }: { userId: string; name: string }) {
   const t = useTranslations("profile.name");
   const ts = useTranslations("settings");
+  const tc = useTranslations("common");
   const supabase = useMemo(() => createClient(), []);
   const router = useRouter();
   const [editing, setEditing] = useState(false);
@@ -52,7 +53,7 @@ export default function NameEditor({ userId, name }: { userId: string; name: str
           onClick={() => setEditing(true)}
           aria-label={t("edit")}
           title={t("edit")}
-          className="text-[12.5px] text-faint hover:text-success transition-colors"
+          className="inline-flex items-center justify-center w-11 h-11 -my-3 -ml-3 text-[12.5px] text-faint hover:text-success transition-colors"
         >
           <Glyph name="pencil" className="w-[13px] h-[13px]" />
         </button>
@@ -60,8 +61,14 @@ export default function NameEditor({ userId, name }: { userId: string; name: str
     );
   }
 
+  const cancel = () => {
+    setEditing(false);
+    setValue(name);
+    setFailed(false);
+  };
+
   return (
-    <span className="inline-flex items-center gap-1.5">
+    <span className="flex flex-wrap items-center gap-1.5">
       <input
         autoFocus
         value={value}
@@ -69,20 +76,25 @@ export default function NameEditor({ userId, name }: { userId: string; name: str
         onChange={(e) => setValue(e.target.value)}
         onKeyDown={(e) => {
           if (e.key === "Enter") void save();
-          if (e.key === "Escape") {
-            setEditing(false);
-            setValue(name);
-          }
+          if (e.key === "Escape") cancel();
         }}
-        className="w-[160px] rounded-lg border-[1.5px] border-success-line bg-cream px-2 py-0.5 text-sm font-semibold outline-none focus:border-success"
+        className="min-w-0 w-[10rem] max-w-full rounded-lg border-[1.5px] border-success-line bg-cream px-2 py-1.5 text-sm font-semibold outline-none focus:border-success"
       />
       <button
         type="button"
         onClick={() => void save()}
         disabled={saving}
-        className="rounded-lg bg-success px-2.5 py-1 text-[12.5px] font-bold text-white hover:bg-success-deep transition-colors disabled:opacity-60"
+        className="min-h-[44px] rounded-lg bg-success px-3 text-[12.5px] font-bold text-white hover:bg-success-deep transition-colors disabled:opacity-60"
       >
         {saving ? "…" : t("save")}
+      </button>
+      <button
+        type="button"
+        onClick={cancel}
+        disabled={saving}
+        className="min-h-[44px] rounded-lg border border-line px-3 text-[12.5px] font-bold text-muted hover:text-charcoal transition-colors disabled:opacity-60"
+      >
+        {tc("cancel")}
       </button>
       {failed && (
         <span role="alert" className="text-[12px] font-semibold text-danger">

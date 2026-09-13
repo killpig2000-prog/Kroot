@@ -91,8 +91,6 @@
     "sfxDesc": "答题、浇水和升级的提示音。韩语语音始终播放。"
   },
   "learn": {
-    "heading": "迈向 {level}",
-    "atTop": "已到顶级",
     "statStreak": "连续天数",
     "statAccuracy": "正确率",
     "statWords": "已学单词",
@@ -129,6 +127,11 @@
     "ledgerQuest": "每日任务",
     "ledgerEmpty": "这段时间还没有记录。",
     "statStreakLine": "连续 {n} 天",
-    "skillBalance": "技能平衡"
+    "skillBalance": "技能平衡",
+    "levelSub": "你的级别 · 可随时更改",
+    "levelWords": "{level} 单词",
+    "levelReadings": "{level} 阅读",
+    "levelListening": "{level} 听力",
+    "levelChange": "在设置中更改级别"
   }
 }

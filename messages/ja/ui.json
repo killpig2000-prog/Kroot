@@ -85,7 +85,7 @@
     "ariaLabel": "レベル",
     "lockedTitle": "昇級テストに合格すると、このレベルが開きます",
     "you": "あなた",
-    "lockedNote": "🔒 ロックされたレベルは、昇級テストに合格すると開きます。"
+    "lockedNote": "🔒 上のレベルは設定でレベルを変えると開きます。"
   },
   "languageNav": "言語",
   "install": {

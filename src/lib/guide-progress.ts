@@ -8,7 +8,6 @@ import { SITUATIONS } from "@/lib/listening";
 import { getPassagesForLevel } from "@/lib/reading";
 import { CHAPTER_SIZE, getPromptsForLevel } from "@/lib/writing";
 import { chapterBlurb, groupsForFamily } from "@/lib/pronunciation";
-import { computeEligibility, type Eligibility } from "@/lib/promotion-server";
 import { selectAll } from "@/lib/select-all";
 
 // "You are here" for the Guide roadmaps. Each station on a roadmap has ONE
@@ -42,7 +41,6 @@ export type GuideStationView = GuideStationProgress & { status: GuideStationStat
 export type GuideProgress = {
   grade: CefrLevel;
   stations: Record<GuideStationKey, GuideStationProgress>;
-  eligibility: Eligibility;
 };
 
 // Station targets. Vocabulary/reading/writing use a near-term slice of the
@@ -71,7 +69,7 @@ export async function getGuideProgress(
 ): Promise<GuideProgress> {
   // One parallel batch — each query is a ~300ms round trip from Korea to us-east-1.
   // Every read degrades to "no rows" on error (e.g. a migration not yet applied).
-  const [vocab, listening, grammar, reading, writing, speaking, slangXp, eligibility] = await Promise.all([
+  const [vocab, listening, grammar, reading, writing, speaking, slangXp] = await Promise.all([
     selectAll<{ word_key: string; created_at: string }>((from, to) =>
       supabase
         .from("vocabulary_progress")
@@ -97,7 +95,6 @@ export async function getGuideProgress(
     // The daily slang quiz keeps its "done today" flag in localStorage only;
     // its XP award (skill = "slang") is the one server-side trace of it.
     supabase.from("xp_events").select("created_at").eq("user_id", userId).eq("skill", "slang"),
-    computeEligibility(supabase, userId, grade),
   ]);
 
   const vocabRows = (vocab.data ?? []) as { word_key: string; created_at: string }[];
@@ -331,7 +328,6 @@ export async function getGuideProgress(
       read: readStation,
       slang: slangStation,
     },
-    eligibility,
   };
 }
 

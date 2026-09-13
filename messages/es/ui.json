@@ -85,7 +85,7 @@
     "ariaLabel": "Nivel",
     "lockedTitle": "Aprueba el examen de ascenso para desbloquear este nivel",
     "you": "tú",
-    "lockedNote": "🔒 Los niveles bloqueados se abren cuando apruebas el examen de ascenso."
+    "lockedNote": "🔒 Los niveles más altos se abren cuando cambias tu nivel en Ajustes."
   },
   "languageNav": "Idioma",
   "install": {

@@ -43,19 +43,6 @@
     "bestStreak": "best streak",
     "monthGoal": "{month} goal"
   },
-  "levelMap": {
-    "title": "Your path",
-    "checksToward": "{done}/{total} checks toward {next}",
-    "topOfTree": "Top of the tree 🌟",
-    "levelsAria": "Levels",
-    "ready": "Ready for the {current} → {next} test",
-    "unlock": "Unlock {next} · {species}",
-    "start": "Start →",
-    "details": "Details →",
-    "checkWordsHeld": "Words held",
-    "checkReading": "Reading",
-    "pace": "about {n} days at this pace"
-  },
   "tree": {
     "levelBadge": "Lv. {level}",
     "metresTall": "m tall",

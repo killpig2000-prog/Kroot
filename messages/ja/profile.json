@@ -91,8 +91,6 @@
     "sfxDesc": "正解・水やり・レベルアップの効果音。韓国語の音声は常に再生されます。"
   },
   "learn": {
-    "heading": "{level} に向かって",
-    "atTop": "最高レベル到達",
     "statStreak": "連続日数",
     "statAccuracy": "正答率",
     "statWords": "覚えた単語",
@@ -129,6 +127,11 @@
     "ledgerQuest": "今日のクエスト",
     "ledgerEmpty": "この期間の記録はまだありません。",
     "statStreakLine": "{n}日連続",
-    "skillBalance": "スキルのバランス"
+    "skillBalance": "スキルのバランス",
+    "levelSub": "あなたのレベル · いつでも変更できます",
+    "levelWords": "{level}の単語",
+    "levelReadings": "{level}の読解",
+    "levelListening": "{level}のリスニング",
+    "levelChange": "設定でレベルを変更"
   }
 }

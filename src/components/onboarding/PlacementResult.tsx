@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import Pot from "@/components/onboarding/Pot";
-import { LEVEL_ORDER } from "@/lib/tree";
-import { QUESTION_TYPES, type FirstLesson, type Placement } from "@/lib/level-test";
+import { LEVEL_ORDER, type CefrLevel } from "@/lib/tree";
+import type { FirstLesson, Placement } from "@/lib/level-test";
 import { BTN_BIG, CARD, EYEBROW, FADE, H1 } from "./styles";
 
 export function FirstLessonList({ lessons, title }: { lessons: FirstLesson[]; title: string }) {
@@ -33,23 +33,27 @@ export function FirstLessonList({ lessons, title }: { lessons: FirstLesson[]; ti
   );
 }
 
-// Step 4 — the level, what it means, and the first three lessons. The CTA
-// saves straight away for a signed-in learner and opens sign-up otherwise.
+// Step 4 — the level, what it means, and the first three lessons. The survey
+// only suggests: every level chip is tappable, and the pick is what gets
+// saved. The CTA saves straight away for a signed-in learner and opens
+// sign-up otherwise.
 export default function PlacementResult({
   placement,
   lessons,
   signedIn,
   busy,
+  onPickLevel,
   onContinue,
 }: {
   placement: Placement;
   lessons: FirstLesson[];
   signedIn: boolean;
   busy: boolean;
+  onPickLevel: (level: CefrLevel) => void;
   onContinue: () => void;
 }) {
   const t = useTranslations("onboarding.result");
-  const tt = useTranslations("onboarding.types");
+  const tl = useTranslations("common.levels");
   const [grown, setGrown] = useState(false);
   useEffect(() => {
     const t = setTimeout(() => setGrown(true), 250);
@@ -57,7 +61,6 @@ export default function PlacementResult({
   }, []);
 
   const hangul = placement.route === "hangul";
-  const tested = !placement.skipped;
   const first = lessons[0];
 
   return (
@@ -68,40 +71,33 @@ export default function PlacementResult({
         <Pot grown={grown} />
 
         <span className={`${EYEBROW} mb-3`}>{t("yourLevel")}</span>
-        <div className="flex gap-1.5 justify-center flex-wrap mb-4">
-          {LEVEL_ORDER.map((code) => (
-            <span
-              key={code}
-              className={`rounded-[9px] px-3.5 py-1.5 text-[13px] font-semibold border ${
-                code === placement.level ? "bg-success border-success text-white" : "bg-cream border-line text-faint"
-              }`}
-            >
-              {code}
-            </span>
-          ))}
+        <div className="flex gap-1.5 justify-center flex-wrap mb-2.5">
+          {LEVEL_ORDER.map((code) => {
+            const on = code === placement.level;
+            return (
+              <button
+                key={code}
+                type="button"
+                aria-pressed={on}
+                disabled={hangul || busy}
+                onClick={() => onPickLevel(code)}
+                className={`min-w-[44px] min-h-[44px] rounded-[9px] px-3 text-[13px] font-semibold border transition-colors ${
+                  on
+                    ? "bg-success border-success text-white"
+                    : "bg-cream border-line text-faint enabled:hover:border-success enabled:hover:text-success"
+                }`}
+              >
+                {code}
+              </button>
+            );
+          })}
         </div>
 
-        {tested && (
-          <div className="grid gap-2 max-w-[360px] mx-auto mb-[18px]">
-            {QUESTION_TYPES.map((k) => {
-              const [hit, seen] = placement.skills[k];
-              const pct = seen ? Math.round((hit / seen) * 100) : 0;
-              return (
-                <div key={k} className="grid grid-cols-[72px_1fr_34px] items-center gap-2.5 text-[13px]">
-                  <b className="text-left">{tt(k)}</b>
-                  <span className="h-[9px] rounded-full bg-line overflow-hidden">
-                    <span className="block h-full rounded-full bg-success transition-[width] duration-700" style={{ width: `${pct}%` }} />
-                  </span>
-                  <em className="not-italic text-right tabular-nums text-muted">{seen ? `${hit}/${seen}` : "—"}</em>
-                </div>
-              );
-            })}
-          </div>
-        )}
-
-        {tested && placement.stoppedAt && placement.stoppedAt !== placement.level && (
+        {!hangul && (
           <p className="text-[13px] text-muted max-w-[400px] mx-auto mb-[18px] leading-[1.6]">
-            {t("stoppedAt", { level: placement.stoppedAt })}
+            <b className="text-charcoal">{tl(placement.level)}</b>
+            <br />
+            {placement.suggested ? t("suggested", { level: placement.suggested }) : t("pickHint")}
           </p>
         )}
 

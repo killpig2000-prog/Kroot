@@ -2,9 +2,7 @@ import { getFormatter, getTranslations } from "next-intl/server";
 import { redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
-import LevelMap from "@/components/dashboard/LevelMap";
-import { computeEligibility } from "@/lib/promotion-server";
-import { testForGrade } from "@/lib/promotion-test";
+import LevelCard from "@/components/profile/LevelCard";
 import { Link } from "@/i18n/navigation";
 import WordsToReview from "@/components/profile/WordsToReview";
 import WeekChart, { type WeekDay } from "@/components/profile/WeekChart";
@@ -24,13 +22,11 @@ import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { dailyReviewCap } from "@/lib/srs";
 import { selectAll } from "@/lib/select-all";
 import { iso } from "@/lib/study-garden";
-import { LEVEL_ORDER, type CefrLevel } from "@/lib/tree";
+import type { CefrLevel } from "@/lib/tree";
 
-// Learn (2026-09-07, the "학습" tab of the My Room restructure): the
-// analysis page. "Heading to A2", three numbers, this week's minutes, one
-// bar per skill with the weakest called out and a row that sends you there,
-// then the level map (the only promotion nudge) and the review queue.
-// Identity lives on the dashboard TreeCard; settings moved to /myroom.
+// My progress: the analysis page. Words known, the learner's own level and
+// how much of it they've done, what grew the tree, habit, the weakest skill,
+// and the review queue. The level is set in Settings; nothing here unlocks.
 //
 // Every query is unwrapped error-tolerantly: a stats page must degrade to a
 // smaller page, never to a 500.
@@ -54,7 +50,6 @@ export default async function ProfilePage({
   const t = await getTranslations("ui.account");
   const tn = await getTranslations("nav");
   const tl = await getTranslations("profile.learn");
-  const tDash = await getTranslations("dashboard");
   const format = await getFormatter();
   const supabase = await createClient();
   const user = await getClaimsUser(supabase);
@@ -187,26 +182,6 @@ export default async function ProfilePage({
     speakingKeys: speakingRows.map((r) => r.prompt_key),
   });
 
-  // "Your path" — moved here from the Garden 2026-09-03 so a learner who's
-  // eligible but not testing yet isn't nagged by it every dashboard visit.
-  const promo = testForGrade(level);
-  const elig = await computeEligibility(supabase, user.id, level);
-  const promoChecks = [
-    {
-      label: tDash("levelMap.checkWordsHeld"),
-      ok: elig.wordsMastered >= elig.wordsRequired,
-      value: `${elig.wordsMastered}/${elig.wordsRequired}`,
-    },
-    {
-      label: tDash("levelMap.checkReading"),
-      ok: elig.readingDone >= elig.readingRequired,
-      value: `${elig.readingDone}/${elig.readingRequired}`,
-    },
-  ];
-  const overallPct = Math.round(
-    Object.values(skillProgress).reduce((sum, p) => sum + p.percent, 0) / Object.keys(skillProgress).length
-  );
-
   const UNITS: Record<string, string> = {
     grammar: t("unitLessons"),
     vocabulary: t("unitWords"),
@@ -326,7 +301,6 @@ export default async function ProfilePage({
   const weekTotal = weekDays.reduce((a, d) => a + d.minutes, 0);
   const avgPerDay = Math.round(weekTotal / weekDays.length);
   const wordsLearned = vocabRows.filter((r) => (r.correct_count ?? 0) + (r.incorrect_count ?? 0) > 0).length;
-  const nextLevel = LEVEL_ORDER[LEVEL_ORDER.indexOf(level) + 1] ?? null;
 
   // ── words you know ──────────────────────────────────────────────────────
   // "Known" means answered at least once — the same rule the old stat tile
@@ -388,24 +362,6 @@ export default async function ProfilePage({
   ];
   const ledgerTotal = ledgerAll.reduce((a, [, p]) => a + p, 0);
 
-  // ── how close the next door is ──────────────────────────────────────────
-  // Words still needed, divided by the pace actually observed in this
-  // window. Arithmetic, not a promise — so it only shows when there is a
-  // real pace to divide by.
-  // The pace comes from words STARTED in the window, which is the only
-  // per-word history the table keeps — a word entering the box ladder has no
-  // log. It stands in for the mastering pace, so the line only appears once
-  // some words are actually mastered, and it is dropped past PACE_MAX_DAYS:
-  // "about 635 days" is arithmetic, but it tells a beginner nothing except
-  // to give up.
-  const PACE_MAX_DAYS = 90;
-  const wordsLeft = Math.max(0, elig.wordsRequired - elig.wordsMastered);
-  const paceRaw =
-    windowDays != null && knownDelta > 0 && wordsLeft > 0 && elig.wordsMastered > 0
-      ? Math.max(1, Math.ceil((wordsLeft / knownDelta) * windowDays))
-      : null;
-  const paceDays = paceRaw != null && paceRaw <= PACE_MAX_DAYS ? paceRaw : null;
-
   // ── study calendar (this year) ──────────────────────────────────────────
   const yearPrefix = `${now.getFullYear()}-`;
   const yearRows = activityRows.filter((r) => r.activity_date.startsWith(yearPrefix) && (r.minutes ?? 0) > 0);
@@ -452,7 +408,7 @@ export default async function ProfilePage({
 
           <div className="max-w-[560px] flex flex-wrap items-baseline justify-between gap-x-3 gap-y-2 mb-[18px]">
             <h1 className="font-bold text-[clamp(22px,5vw,26px)] tracking-[-0.02em]">
-              {nextLevel ? tl("heading", { level: nextLevel }) : tl("atTop")}
+              {tn("myProgress")}
             </h1>
             {hasAnything && <PeriodTabs current={period} />}
           </div>
@@ -472,16 +428,13 @@ export default async function ProfilePage({
               />
             )}
 
-            {/* 2 · the door being opened right now, and what is left of it */}
-            {promo && (
-              <LevelMap
-                current={level}
-                checks={promoChecks}
-                eligible={elig.eligible}
-                overallPct={overallPct}
-                paceDays={paceDays}
-              />
-            )}
+            {/* 2 · the level the learner picked, and how much of it is done */}
+            <LevelCard
+              level={level}
+              words={skillProgress.vocabulary}
+              readings={skillProgress.reading}
+              listening={skillProgress.listening}
+            />
 
             {/* 3 · the tree's ledger: which skills paid for this period's growth */}
             {hasAnything && <TreeLedger rows={ledgerRows} total={ledgerTotal} />}

@@ -52,7 +52,9 @@
   "capacityTitle": "Palabras a repasar por día",
   "capacityPick": "¿Cuántas palabras vuelven cada día?",
   "capacityOption": "{count} al día",
-  "levelHint": "Progreso y la próxima prueba",
   "seasonalThemeUntil": "{season}, hasta el {date}",
-  "versionLine": "Kroot {version}"
+  "versionLine": "Kroot {version}",
+  "levelOpens": "Lecciones de {level} y más fáciles abiertas",
+  "levelSheetNote": "Abre las lecciones de este nivel y todas las más fáciles. Puedes cambiarlo cuando quieras.",
+  "levelCoinNote": "Las lecciones por debajo de tu nivel dan menos monedas."
 }

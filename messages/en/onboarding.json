@@ -2,7 +2,7 @@
   "steps": {
     "hangul": "Hangul",
     "goal": "Goal",
-    "test": "Test",
+    "test": "Survey",
     "level": "Level",
     "account": "Account"
   },
@@ -10,14 +10,14 @@
     "title": "Can you read this?",
     "sub": "No pressure — this just picks the right first step.",
     "yesTitle": "Yes, I can read it",
-    "yesHint": "Take the 3-minute level test",
+    "yesHint": "Answer 3 quick questions",
     "noTitle": "Not yet",
     "noHint": "Start with Hangul — no test needed"
   },
   "goal": {
     "title": "What brought you to Korean?",
     "skip": "Skip",
-    "startTest": "Start the test →",
+    "startTest": "Next →",
     "seePlan": "See my plan →"
   },
   "goals": {
@@ -46,24 +46,6 @@
       "hint": "A balanced mix"
     }
   },
-  "quiz": {
-    "question": "question {n}",
-    "stopsEarly": "stops early once your level is clear",
-    "play": "🔊 Play the sound",
-    "audioFailed": "Audio didn't play.",
-    "cantHear": "Can't hear it?",
-    "showText": "Show the text",
-    "or": "· or",
-    "swap": "swap this question",
-    "noPenalty": "(no penalty)",
-    "dontKnow": "🤷 I don't know yet",
-    "notNow": "Not now — start at A1"
-  },
-  "types": {
-    "Words": "Words",
-    "Grammar": "Grammar",
-    "Listening": "Listening"
-  },
   "skills": {
     "hangul": "Hangul",
     "grammar": "Grammar",
@@ -75,12 +57,13 @@
     "titleHangul": "Let's start with Hangul",
     "title": "Your seed is planted",
     "yourLevel": "Your level",
-    "stoppedAt": "We stopped at {level} — that's your next goal.",
     "firstThree": "Your first three lessons",
     "saving": "Saving your level…",
     "startLesson": "Start lesson 1",
     "saveAndStart": "Save my level & start lesson 1",
-    "upNext": "Up next: {label}"
+    "upNext": "Up next: {label}",
+    "suggested": "Your answers point to {level}. Tap another level if it feels off.",
+    "pickHint": "Starting at A1. Already know some Korean? Tap your level."
   },
   "signup": {
     "title": "Keep your spot",
@@ -122,7 +105,7 @@
     "title": "Planting your seed…",
     "sub": "Saving {level} and opening your first lesson.",
     "failedTitle": "We couldn't save your level",
-    "failedSub": "Your connection dropped just as we were planting. Your test answers are safe — try again.",
+    "failedSub": "Your connection dropped just as we were planting. Your level is safe — try again.",
     "retry": "Try again",
     "continueAnyway": "Continue to my garden"
   },
@@ -160,5 +143,37 @@
     "findLevel": "Find my level →",
     "cantRead": "I can't read Hangul yet — start with Hangul",
     "sproutNote": "Sign-up comes last · the sprout 🌱 arrives at Lv.3"
+  },
+  "survey": {
+    "progress": "Question {n} of {total}",
+    "changeLater": "Not sure? Pick your best guess — you can change it any time in Settings.",
+    "skip": "Skip — start at A1",
+    "reading": {
+      "title": "Which sounds like you when you read Korean?",
+      "A1": "I'm still learning Hangul",
+      "A2": "I can read short signs and menus",
+      "B1": "I can read simple messages and short stories",
+      "B2": "I can follow webtoons and blog posts",
+      "C1": "I can read news articles",
+      "C2": "I read books and reports with ease"
+    },
+    "listening": {
+      "title": "And when you listen?",
+      "A1": "Only a few words I already know",
+      "A2": "Slow, simple phrases like greetings and prices",
+      "B1": "Everyday talk, if it's slow and clear",
+      "B2": "Dramas, with Korean subtitles",
+      "C1": "Dramas and variety shows, mostly without subtitles",
+      "C2": "Almost anything, even fast casual speech"
+    },
+    "speaking": {
+      "title": "And when you speak?",
+      "A1": "Hello and thank you",
+      "A2": "I can introduce myself and order food",
+      "B1": "I can talk about my day and my plans",
+      "B2": "I can hold a conversation with a friend",
+      "C1": "I can discuss news and opinions",
+      "C2": "I can work or study in Korean"
+    }
   }
 }

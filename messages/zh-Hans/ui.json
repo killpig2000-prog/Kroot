@@ -85,7 +85,7 @@
     "ariaLabel": "等级",
     "lockedTitle": "通过升级测试即可解锁这个等级",
     "you": "你",
-    "lockedNote": "🔒 通过升级测试后，锁定的等级就会开启。"
+    "lockedNote": "🔒 在设置中更改等级后，更高等级就会开放。"
   },
   "languageNav": "语言",
   "install": {

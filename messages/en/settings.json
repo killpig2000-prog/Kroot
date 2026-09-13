@@ -52,7 +52,9 @@
   "capacityTitle": "Words to review a day",
   "capacityPick": "How many words come back each day?",
   "capacityOption": "{count} a day",
-  "levelHint": "Progress and the next test",
   "seasonalThemeUntil": "{season}, until {date}",
-  "versionLine": "Kroot {version}"
+  "versionLine": "Kroot {version}",
+  "levelOpens": "{level} and easier lessons are open",
+  "levelSheetNote": "Opens this level's lessons and everything easier. You can change it any time.",
+  "levelCoinNote": "Lessons below your level earn fewer coins."
 }
