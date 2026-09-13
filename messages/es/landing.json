@@ -35,13 +35,13 @@
     "badge": "encuesta rápida",
     "title": "Elige tu nivel en un minuto",
     "sub": "Tres preguntas rápidas sugieren un nivel de A1 a C2: tú decides, y puedes cambiarlo cuando quieras en Ajustes. ¿Aún no lees Hangul? Dilo y empieza por ahí, sin cuenta.",
-    "cardTitle": "Encuesta de nivel · P1",
+    "cardTitle": "Encuesta rápida · 1/3",
     "cardTag": "lectura",
-    "question": "¿Qué se parece más a ti cuando lees coreano?",
+    "question": "¿Qué puedes leer en coreano?",
     "options": {
-      "a": "Todavía estoy aprendiendo Hangul",
-      "b": "Puedo leer carteles y menús cortos",
-      "c": "Puedo leer mensajes sencillos"
+      "a": "Hangul, despacio, y algunas palabras",
+      "b": "Mensajes cortos, carteles y menús",
+      "c": "Cuentos cortos y publicaciones cotidianas"
     },
     "tipTitle": "✏️ Sin examen, sin presión",
     "tipBody": "Tú dices dónde estás; abrimos ese nivel y todo lo más fácil. Los niveles siguen la escala MCER que usan estudiantes y empresas.",

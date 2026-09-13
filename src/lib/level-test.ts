@@ -1,10 +1,11 @@
 import { LEVEL_ORDER, isCefrLevel, type CefrLevel } from "@/lib/tree";
 
-// The starting level is self-reported: three "which sounds like you?"
-// questions, each answered with a level. The learner can still pick any level
+// The starting level is self-reported: a three-question survey (what can you
+// read, how do conversations go, how do you watch K-dramas). No right answers
+// — every option stands for one level. The learner can still pick any level
 // on the result card, and change it later in Settings.
-export type SurveyKey = "reading" | "listening" | "speaking";
-export const SURVEY_KEYS: SurveyKey[] = ["reading", "listening", "speaking"];
+export type SurveyKey = "reading" | "speaking" | "listening";
+export const SURVEY_KEYS: SurveyKey[] = ["reading", "speaking", "listening"];
 
 /** The middle answer (lower-middle for an even count), so one outlier can't move the suggestion. */
 export function suggestLevel(answers: CefrLevel[]): CefrLevel {

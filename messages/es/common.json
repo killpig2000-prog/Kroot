@@ -18,10 +18,10 @@
   "offline": "Sin conexión: revisa tu internet.",
   "levels": {
     "A1": "Hangul y primeras palabras",
-    "A2": "Charlas sencillas del día a día",
-    "B1": "Tu día, en coreano lento y claro",
-    "B2": "Dramas con subtítulos en coreano",
-    "C1": "Noticias y artículos",
-    "C2": "Trabajo o estudios en coreano"
+    "A2": "Mensajes cortos y carteles",
+    "B1": "Historias y conversación cotidiana",
+    "B2": "Explicar tus ideas con claridad",
+    "C1": "Muy fluido, casi nativo",
+    "C2": "Artículos académicos y textos especializados"
   }
 }

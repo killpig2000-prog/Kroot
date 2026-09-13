@@ -23,7 +23,6 @@ import {
   type Rarity,
 } from "@/lib/costumes";
 import type { CefrLevel } from "@/lib/tree";
-import { SPECIES } from "@/lib/tree";
 import ShopCoins from "@/components/shop/ShopCoins";
 import GuidedStep from "@/components/onboarding/GuidedStep";
 import { currentGuidedStep } from "@/components/onboarding/guidedSteps";
@@ -446,7 +445,7 @@ export default function ShopClient({
           <figure className="relative m-0 mx-auto max-w-[clamp(170px,48vw,230px)] bg-cream border border-line p-1.5 pb-6 rotate-[1deg] shadow-[0_10px_22px_-12px_rgba(60,50,30,.35)] mb-3">
             <Scene ids={previewIds} stage={stage} species={species} className="px-2.5 pt-2.5" />
             <figcaption className="absolute bottom-1 left-0 right-0 text-center text-[10px] font-bold text-[#8A8478]">
-              <span className="kr">{SPECIES[species].krName}</span> · {t("tryOn.caption", { level: playerLevel })}
+              <span className="kr">참나무</span> · {t("tryOn.caption", { level: playerLevel })}
             </figcaption>
           </figure>
 

@@ -35,13 +35,13 @@
     "badge": "quick survey",
     "title": "Pick your level in one minute",
     "sub": "Three quick questions suggest a level from A1 to C2 — you choose, and you can change it any time in Settings. Can't read Hangul yet? Say so and start there — no account needed.",
-    "cardTitle": "Level survey · Q1",
+    "cardTitle": "Quick survey · 1/3",
     "cardTag": "reading",
-    "question": "Which sounds like you when you read Korean?",
+    "question": "What can you read in Korean?",
     "options": {
-      "a": "I'm still learning Hangul",
-      "b": "I can read short signs and menus",
-      "c": "I can read simple messages"
+      "a": "Hangul, slowly — plus a few words",
+      "b": "Short messages, signs and menus",
+      "c": "Short stories and everyday posts"
     },
     "tipTitle": "✏️ No test, no pressure",
     "tipBody": "You say where you are; we open that level and everything easier. Levels follow the CEFR scale learners and employers actually use!",

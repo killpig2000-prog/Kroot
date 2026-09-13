@@ -18,10 +18,10 @@
   "offline": "You're offline — check your connection.",
   "levels": {
     "A1": "Hangul and first words",
-    "A2": "Simple everyday chats",
-    "B1": "Your day, in slow clear Korean",
-    "B2": "Dramas with Korean subtitles",
-    "C1": "News and articles",
-    "C2": "Work or study in Korean"
+    "A2": "Short messages and signs",
+    "B1": "Stories and everyday conversation",
+    "B2": "Explaining your thoughts clearly",
+    "C1": "Very fluent, close to native",
+    "C2": "Academic papers and specialist texts"
   }
 }

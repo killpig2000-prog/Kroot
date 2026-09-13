@@ -18,10 +18,10 @@
   "offline": "Bạn đang ngoại tuyến — hãy kiểm tra kết nối.",
   "levels": {
     "A1": "Hangul và những từ đầu tiên",
-    "A2": "Trò chuyện đơn giản hằng ngày",
-    "B1": "Kể về một ngày, tiếng Hàn chậm và rõ",
-    "B2": "Xem phim có phụ đề tiếng Hàn",
-    "C1": "Tin tức và bài báo",
-    "C2": "Làm việc hoặc học bằng tiếng Hàn"
+    "A2": "Tin nhắn ngắn và biển hiệu",
+    "B1": "Truyện và hội thoại hằng ngày",
+    "B2": "Giải thích suy nghĩ rõ ràng",
+    "C1": "Rất trôi chảy, gần như bản xứ",
+    "C2": "Bài báo khoa học và văn bản chuyên ngành"
   }
 }

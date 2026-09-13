@@ -145,35 +145,35 @@
     "sproutNote": "Đăng ký ở bước cuối · mầm 🌱 xuất hiện ở Lv.3"
   },
   "survey": {
-    "progress": "Câu {n}/{total}",
-    "changeLater": "Chưa chắc? Chọn đáp án gần nhất — bạn có thể đổi bất cứ lúc nào trong Cài đặt.",
+    "eyebrow": "Khảo sát nhanh",
+    "changeLater": "Không có câu trả lời sai — chọn điều gần với bạn nhất. Bạn có thể đổi cấp độ bất cứ lúc nào trong Cài đặt.",
     "skip": "Bỏ qua — bắt đầu từ A1",
     "reading": {
-      "title": "Khi đọc tiếng Hàn, câu nào giống bạn nhất?",
-      "A1": "Mình vẫn đang học Hangul",
-      "A2": "Đọc được biển hiệu và thực đơn ngắn",
-      "B1": "Đọc được tin nhắn đơn giản và truyện ngắn",
-      "B2": "Theo được webtoon và bài blog",
-      "C1": "Đọc được bài báo",
-      "C2": "Đọc sách và báo cáo dễ dàng"
-    },
-    "listening": {
-      "title": "Còn khi nghe?",
-      "A1": "Chỉ vài từ mình đã biết",
-      "A2": "Câu chậm, đơn giản như chào hỏi và giá cả",
-      "B1": "Hội thoại hằng ngày, nếu nói chậm và rõ",
-      "B2": "Phim truyền hình, có phụ đề tiếng Hàn",
-      "C1": "Phim và show giải trí, hầu như không cần phụ đề",
-      "C2": "Gần như mọi thứ, kể cả nói nhanh và thân mật"
+      "title": "Bạn đọc được gì bằng tiếng Hàn?",
+      "A1": "Hangul, đọc chậm — và vài từ",
+      "A2": "Tin nhắn ngắn, biển hiệu và thực đơn",
+      "B1": "Truyện ngắn và bài đăng thường ngày",
+      "B2": "Bài báo và blog về chủ đề mình biết",
+      "C1": "Gần như mọi thứ, với tốc độ người bản xứ",
+      "C2": "Bài báo khoa học và văn bản chuyên ngành"
     },
     "speaking": {
-      "title": "Còn khi nói?",
-      "A1": "Xin chào và cảm ơn",
-      "A2": "Giới thiệu bản thân và gọi món",
+      "title": "Bạn nói chuyện bằng tiếng Hàn thế nào?",
+      "A1": "Xin chào, cảm ơn và vài từ",
+      "A2": "Việc đơn giản: gọi món, hỏi đường",
       "B1": "Kể về một ngày và kế hoạch của mình",
-      "B2": "Duy trì cuộc trò chuyện với bạn bè",
-      "C1": "Thảo luận tin tức và quan điểm",
-      "C2": "Làm việc hoặc học tập bằng tiếng Hàn"
+      "B2": "Giải thích suy nghĩ của mình, có lý lẽ",
+      "C1": "Trôi chảy, tự nhiên, gần như người bản xứ",
+      "C2": "Tranh luận hoặc thuyết trình về chủ đề chuyên môn"
+    },
+    "listening": {
+      "title": "Bạn xem phim Hàn thế nào?",
+      "A1": "Phụ đề tiếng Anh — nghe được vài từ",
+      "A2": "Phụ đề tiếng Anh — nghe được câu đơn giản",
+      "B1": "Có phụ đề tiếng Hàn thì theo kịp",
+      "B2": "Phần lớn không cần phụ đề",
+      "C1": "Không phụ đề, kể cả nói nhanh và đùa",
+      "C2": "Tranh luận thời sự và bài giảng, không vấn đề"
     }
   }
 }

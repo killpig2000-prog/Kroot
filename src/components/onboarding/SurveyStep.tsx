@@ -6,9 +6,11 @@ import { SURVEY_KEYS } from "@/lib/level-test";
 import { BTN_GHOST, CARD, EYEBROW, FADE, H1 } from "./styles";
 
 const OPT =
-  "grid grid-cols-[30px_1fr] gap-2.5 items-start text-left min-h-[44px] px-[14px] py-[10px] rounded-[10px] text-[14px] border transition-colors";
+  "block w-full text-left min-h-[44px] px-[14px] py-[10px] rounded-[10px] text-[14px] border transition-colors";
 
-// Step 3 — three "which sounds like you?" questions, one per screen. The
+// Step 3 — a three-question survey, one per screen. It is a survey, not a
+// test: no right answers and no level codes on the options (each option
+// still stands for one level; the result card names it). The
 // question shown is the first one without an answer, so Back (which restores
 // the answers from history) walks back question by question.
 export default function SurveyStep({
@@ -28,7 +30,7 @@ export default function SurveyStep({
     <section key={key} className={FADE}>
       <div className={CARD}>
         <div className="flex items-center justify-between gap-3 mb-3">
-          <span className={EYEBROW}>{t("progress", { n: index + 1, total: SURVEY_KEYS.length })}</span>
+          <span className={EYEBROW}>{t("eyebrow")}</span>
           <span className="flex gap-1.5" aria-hidden="true">
             {SURVEY_KEYS.map((k, i) => (
               <span
@@ -50,7 +52,6 @@ export default function SurveyStep({
                 onClick={() => onAnswer(index, lv)}
                 className={`${OPT} ${on ? "border-success bg-success-bg" : "bg-cream border-line hover:border-success hover:bg-success-bg"}`}
               >
-                <b className="text-[12px] font-extrabold text-faint pt-[2px]">{lv}</b>
                 <span className="text-charcoal leading-[1.4]">{t(`${key}.${lv}`)}</span>
               </button>
             );

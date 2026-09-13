@@ -145,35 +145,35 @@
     "sproutNote": "Sign-up comes last · the sprout 🌱 arrives at Lv.3"
   },
   "survey": {
-    "progress": "Question {n} of {total}",
-    "changeLater": "Not sure? Pick your best guess — you can change it any time in Settings.",
+    "eyebrow": "Quick survey",
+    "changeLater": "No wrong answers — pick what feels closest. You can change your level any time in Settings.",
     "skip": "Skip — start at A1",
     "reading": {
-      "title": "Which sounds like you when you read Korean?",
-      "A1": "I'm still learning Hangul",
-      "A2": "I can read short signs and menus",
-      "B1": "I can read simple messages and short stories",
-      "B2": "I can follow webtoons and blog posts",
-      "C1": "I can read news articles",
-      "C2": "I read books and reports with ease"
-    },
-    "listening": {
-      "title": "And when you listen?",
-      "A1": "Only a few words I already know",
-      "A2": "Slow, simple phrases like greetings and prices",
-      "B1": "Everyday talk, if it's slow and clear",
-      "B2": "Dramas, with Korean subtitles",
-      "C1": "Dramas and variety shows, mostly without subtitles",
-      "C2": "Almost anything, even fast casual speech"
+      "title": "What can you read in Korean?",
+      "A1": "Hangul, slowly — plus a few words",
+      "A2": "Short messages, signs and menus",
+      "B1": "Short stories and everyday posts",
+      "B2": "Articles and blogs on topics I know",
+      "C1": "Almost anything, at a native pace",
+      "C2": "Academic papers and specialist texts"
     },
     "speaking": {
-      "title": "And when you speak?",
-      "A1": "Hello and thank you",
-      "A2": "I can introduce myself and order food",
-      "B1": "I can talk about my day and my plans",
-      "B2": "I can hold a conversation with a friend",
-      "C1": "I can discuss news and opinions",
-      "C2": "I can work or study in Korean"
+      "title": "How do conversations in Korean go for you?",
+      "A1": "Hello, thank you, and a few words",
+      "A2": "Simple things: ordering food, asking the way",
+      "B1": "I can chat about my day and my plans",
+      "B2": "I can explain what I think, with reasons",
+      "C1": "Fluent and natural, close to a native",
+      "C2": "I can debate or present on specialist topics"
+    },
+    "listening": {
+      "title": "How do you watch K-dramas?",
+      "A1": "English subtitles — I catch a word or two",
+      "A2": "English subtitles — I catch simple phrases",
+      "B1": "With Korean subtitles, I can follow along",
+      "B2": "Mostly without subtitles",
+      "C1": "No subtitles, fast talk and jokes included",
+      "C2": "News debates and lectures, no problem"
     }
   }
 }

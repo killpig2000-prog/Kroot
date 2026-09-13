@@ -145,35 +145,35 @@
     "sproutNote": "El registro va al final · el brote 🌱 llega en el Nv.3"
   },
   "survey": {
-    "progress": "Pregunta {n} de {total}",
-    "changeLater": "¿No estás seguro? Elige lo más parecido: puedes cambiarlo cuando quieras en Ajustes.",
+    "eyebrow": "Encuesta rápida",
+    "changeLater": "No hay respuestas incorrectas: elige lo que más se parezca. Puedes cambiar tu nivel cuando quieras en Ajustes.",
     "skip": "Saltar — empezar en A1",
     "reading": {
-      "title": "¿Qué se parece más a ti cuando lees coreano?",
-      "A1": "Todavía estoy aprendiendo Hangul",
-      "A2": "Puedo leer carteles y menús cortos",
-      "B1": "Puedo leer mensajes sencillos y cuentos cortos",
-      "B2": "Puedo seguir webtoons y blogs",
-      "C1": "Puedo leer noticias",
-      "C2": "Leo libros e informes con facilidad"
-    },
-    "listening": {
-      "title": "¿Y cuando escuchas?",
-      "A1": "Solo algunas palabras que ya conozco",
-      "A2": "Frases lentas y sencillas, como saludos y precios",
-      "B1": "Conversaciones cotidianas, si son lentas y claras",
-      "B2": "Dramas, con subtítulos en coreano",
-      "C1": "Dramas y programas de variedades, casi sin subtítulos",
-      "C2": "Casi todo, incluso el habla rápida e informal"
+      "title": "¿Qué puedes leer en coreano?",
+      "A1": "Hangul, despacio, y algunas palabras",
+      "A2": "Mensajes cortos, carteles y menús",
+      "B1": "Cuentos cortos y publicaciones cotidianas",
+      "B2": "Artículos y blogs sobre temas que conozco",
+      "C1": "Casi todo, a ritmo nativo",
+      "C2": "Artículos académicos y textos especializados"
     },
     "speaking": {
-      "title": "¿Y cuando hablas?",
-      "A1": "Hola y gracias",
-      "A2": "Puedo presentarme y pedir comida",
+      "title": "¿Cómo te va conversando en coreano?",
+      "A1": "Hola, gracias y algunas palabras",
+      "A2": "Cosas sencillas: pedir comida, preguntar el camino",
       "B1": "Puedo hablar de mi día y mis planes",
-      "B2": "Puedo mantener una conversación con un amigo",
-      "C1": "Puedo debatir noticias y opiniones",
-      "C2": "Puedo trabajar o estudiar en coreano"
+      "B2": "Puedo explicar lo que pienso, con razones",
+      "C1": "Con fluidez y naturalidad, casi como un nativo",
+      "C2": "Puedo debatir o presentar sobre temas especializados"
+    },
+    "listening": {
+      "title": "¿Cómo ves los K-dramas?",
+      "A1": "Con subtítulos en inglés; pillo alguna palabra",
+      "A2": "Con subtítulos en inglés; pillo frases sencillas",
+      "B1": "Con subtítulos en coreano puedo seguirlo",
+      "B2": "Casi sin subtítulos",
+      "C1": "Sin subtítulos, incluso habla rápida y bromas",
+      "C2": "Debates de noticias y conferencias, sin problema"
     }
   }
 }

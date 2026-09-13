@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { useBackToClose } from "@/hooks/useBackToClose";
 import TreeEvolution from "@/components/level-test/TreeEvolution";
 import GardenScene from "@/components/ui/GardenScene";
-import { LEVEL_ORDER, type CefrLevel } from "@/lib/tree";
+import type { CefrLevel } from "@/lib/tree";
 import { ART_STAGE_STARTS, LOOK_KEYS, artStageForLevel, treeStageForLevel } from "@/lib/level";
 
 export type Growth = {
@@ -59,8 +59,9 @@ export default function TreeGrowthPopup({
     }
 
     const prevLook = prevLookRaw === null ? null : Number(prevLookRaw);
-    const speciesGrew =
-      !!prevSpecies && prevSpecies !== species && LEVEL_ORDER.indexOf(species) > LEVEL_ORDER.indexOf(prevSpecies);
+    // One tree for everyone, grown by XP only: the level is a free choice in
+    // Settings now, so raising it must not announce a "new tree".
+    const speciesGrew = false;
     const lookGrew = prevLook !== null && Number.isFinite(prevLook) && look > prevLook;
     if (!speciesGrew && !lookGrew) return;
 

@@ -35,13 +35,13 @@
     "badge": "khảo sát nhanh",
     "title": "Chọn cấp độ trong một phút",
     "sub": "Ba câu hỏi nhanh gợi ý cấp độ từ A1 đến C2 — bạn quyết định, và có thể đổi bất cứ lúc nào trong Cài đặt. Chưa đọc được Hangul? Cứ nói vậy và bắt đầu từ đó — không cần tài khoản.",
-    "cardTitle": "Khảo sát cấp độ · C1",
+    "cardTitle": "Khảo sát nhanh · 1/3",
     "cardTag": "đọc",
-    "question": "Khi đọc tiếng Hàn, câu nào giống bạn nhất?",
+    "question": "Bạn đọc được gì bằng tiếng Hàn?",
     "options": {
-      "a": "Mình vẫn đang học Hangul",
-      "b": "Đọc được biển hiệu và thực đơn ngắn",
-      "c": "Đọc được tin nhắn đơn giản"
+      "a": "Hangul, đọc chậm — và vài từ",
+      "b": "Tin nhắn ngắn, biển hiệu và thực đơn",
+      "c": "Truyện ngắn và bài đăng thường ngày"
     },
     "tipTitle": "✏️ Không thi, không áp lực",
     "tipBody": "Bạn cho biết mình đang ở đâu; chúng tôi mở cấp độ đó và mọi thứ dễ hơn. Cấp độ theo thang CEFR mà người học và nhà tuyển dụng dùng!",
