@@ -3,7 +3,7 @@ import { redirect } from "@/i18n/navigation";
 import BottomNav from "@/components/dashboard/BottomNav";
 import Sidebar from "@/components/dashboard/Sidebar";
 import LevelCard from "@/components/profile/LevelCard";
-import MonthlyGrass from "@/components/profile/MonthlyGrass";
+import SkillRadar, { type SkillBar } from "@/components/profile/SkillRadar";
 import KnownWords, { type WordBand } from "@/components/profile/KnownWords";
 import TreeLedger, { type LedgerRow } from "@/components/profile/TreeLedger";
 import PeriodTabs, { asPeriod, periodDays } from "@/components/profile/PeriodTabs";
@@ -13,10 +13,10 @@ import { selectAll } from "@/lib/select-all";
 import type { CefrLevel } from "@/lib/tree";
 
 // My progress: four cards. Words known, the learner's own level and how much
-// of it they've done, what grew the tree, and the year's study garden.
-// (2026-09-13: this-week chart, weakest-skill nudge, skill balance and the
-// review card left — the garden, the dashboard's growth rings and watering
-// can, and Settings already cover them.)
+// of it they've done, what grew the tree (effort), and the skill radar
+// (accuracy per skill — how well, not how much). 2026-09-13: the this-week
+// chart, weakest-skill nudge, review card and year study garden left — the
+// dashboard's growth rings and watering can and Settings cover them.
 //
 // Every query is unwrapped error-tolerantly: a stats page must degrade to a
 // smaller page, never to a 500.
@@ -80,11 +80,15 @@ export default async function ProfilePage({
         .order("id")
         .range(from, to),
     ),
-    supabase.from("reading_progress").select("passage_key").eq("user_id", user.id),
-    supabase.from("writing_progress").select("prompt_key").eq("user_id", user.id),
-    supabase.from("listening_progress").select("dialogue_id").eq("user_id", user.id).not("completed_at", "is", null),
-    supabase.from("speaking_progress").select("prompt_key").eq("user_id", user.id),
-    supabase.from("grammar_progress").select("lesson_key").eq("user_id", user.id),
+    supabase.from("reading_progress").select("passage_key, correct_count, incorrect_count").eq("user_id", user.id),
+    supabase.from("writing_progress").select("prompt_key, score").eq("user_id", user.id),
+    supabase
+      .from("listening_progress")
+      .select("dialogue_id, quiz_correct")
+      .eq("user_id", user.id)
+      .not("completed_at", "is", null),
+    supabase.from("speaking_progress").select("prompt_key, best_score").eq("user_id", user.id),
+    supabase.from("grammar_progress").select("lesson_key, score").eq("user_id", user.id),
     supabase.from("daily_activity").select("activity_date, minutes").eq("user_id", user.id),
     // What grew the tree: XP with its source. `skill` is null on ~8% of
     // rows (older award_xp calls), which the ledger folds into "other"
@@ -131,7 +135,6 @@ export default async function ProfilePage({
   });
 
   const totalMinutes = activityRows.reduce((a, r) => a + (r.minutes ?? 0), 0);
-  const minutesByDate = new Map(activityRows.map((r) => [r.activity_date, r.minutes ?? 0]));
   const wordsLearned = vocabRows.filter((r) => (r.correct_count ?? 0) + (r.incorrect_count ?? 0) > 0).length;
 
   // ── words you know ──────────────────────────────────────────────────────
@@ -194,11 +197,34 @@ export default async function ProfilePage({
   ];
   const ledgerTotal = ledgerAll.reduce((a, [, p]) => a + p, 0);
 
-  // ── study calendar (this year) ──────────────────────────────────────────
-  const yearPrefix = `${now.getFullYear()}-`;
-  const yearRows = activityRows.filter((r) => r.activity_date.startsWith(yearPrefix) && (r.minutes ?? 0) > 0);
-  const yearMinutes = yearRows.reduce((a, r) => a + (r.minutes ?? 0), 0);
-  const yearDays = yearRows.length;
+  // ── skill radar: one honest accuracy per skill, each on its own basis ────
+  // Only skills with real answers get a spoke; the chart needs three.
+  // No "weakest" highlight — the page doesn't push (zero-nudge rule).
+  const pct = (ok: number, all: number) => Math.round((ok / all) * 100);
+  const avg = (xs: number[]) => Math.round(xs.reduce((a, b) => a + b, 0) / xs.length);
+  const nums = (xs: (number | null)[]) => xs.filter((x): x is number => typeof x === "number");
+  const tally = (rows: { correct_count: number | null; incorrect_count: number | null }[]) =>
+    rows.reduce(
+      (acc, r) => ({ ok: acc.ok + (r.correct_count ?? 0), all: acc.all + (r.correct_count ?? 0) + (r.incorrect_count ?? 0) }),
+      { ok: 0, all: 0 }
+    );
+  const vocabT = tally(vocabRows);
+  const readingT = tally(readingRows);
+  const speakingS = nums(speakingRows.map((r) => r.best_score));
+  const grammarS = nums(grammarRows.map((r) => r.score));
+  const writingS = nums(writingRows.map((r) => r.score));
+  // null = the clip had no quiz; it leaves the denominator rather than counting as wrong.
+  const quizzes = listeningRows.map((r) => r.quiz_correct).filter((v): v is boolean => typeof v === "boolean");
+  const radarRows: SkillBar[] = (
+    [
+      ["vocabulary", vocabT.all > 0 ? pct(vocabT.ok, vocabT.all) : null],
+      ["reading", readingT.all > 0 ? pct(readingT.ok, readingT.all) : null],
+      ["listening", quizzes.length > 0 ? pct(quizzes.filter(Boolean).length, quizzes.length) : null],
+      ["writing", writingS.length > 0 ? avg(writingS) : null],
+      ["grammar", grammarS.length > 0 ? avg(grammarS) : null],
+      ["pronunciation", speakingS.length > 0 ? avg(speakingS) : null],
+    ] as const
+  ).flatMap(([key, percent]) => (percent === null ? [] : [{ key, label: tn(key), percent, weakest: false }]));
 
   const hasVocab = vocabRows.length > 0;
   const hasAnything = hasVocab || totalMinutes > 0 || ledgerTotal > 0;
@@ -248,15 +274,8 @@ export default async function ProfilePage({
             {/* 3 · the tree's ledger: which skills paid for this period's growth */}
             {hasAnything && <TreeLedger rows={ledgerRows} total={ledgerTotal} />}
 
-            {hasAnything && (
-              <MonthlyGrass
-                minutesByDate={minutesByDate}
-                headline={[
-                  { label: tl("yearDays"), value: String(yearDays) },
-                  { label: tl("yearMinutes"), value: String(yearMinutes) },
-                ]}
-              />
-            )}
+            {/* 4 · how well, per skill (renders only with three or more skills answered) */}
+            <SkillRadar rows={radarRows} />
 
             {/* nothing studied yet: one line instead of a stack of empty cards */}
             {!hasAnything && (
