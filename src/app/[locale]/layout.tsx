@@ -141,8 +141,13 @@ export default async function RootLayout({ children, params }: Props) {
   const timeZone = await getTimeZone({ locale });
 
   return (
+    // suppressHydrationWarning: the inline script below stamps data-mode /
+    // data-season on this element before hydration, so with a dark or season
+    // cookie its attributes never match the server's. Covers this element's
+    // own attributes only, not its children.
     <html
       lang={locale}
+      suppressHydrationWarning
       data-mode={DEFAULT_MODE}
       className={`${notoSansKr.variable} ${nunito.variable} ${bricolage.variable}`}
     >
