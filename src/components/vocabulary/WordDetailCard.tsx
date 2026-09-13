@@ -16,7 +16,6 @@ import { speakKorean, prefetchKorean } from "@/lib/tts";
 import { getWordNote, hanjaOf } from "@/lib/word-notes";
 import { getLocalizedMeaning, getLocalizedExampleEn } from "@/lib/vocabulary-i18n";
 import { textBadgeFor, wordArtFor } from "@/lib/word-art";
-import WordTrace, { canTraceWord } from "@/components/vocabulary/WordTrace";
 
 const BTN_INK = buttonClassName("ink");
 const BTN_LINE = buttonClassName("line");
@@ -109,7 +108,6 @@ export default function WordDetailCard({
   // picture's slot and a one-line note sits under the meaning, so the card
   // is as tall as a pictured one and doesn't look unfinished next to it.
   const badge = art ? null : textBadgeFor(word.korean, level);
-  const traceable = canTraceWord(word.korean);
   const meaning = getLocalizedMeaning(word, locale);
   // Which button is mid-save, so it can say so instead of just greying out.
   const [saving, setSaving] = useState<"next" | "got-it" | null>(null);
@@ -397,15 +395,6 @@ export default function WordDetailCard({
               )}
             </div>
           </div>
-
-          {/* write it — the Hangul tab lives here now: trace the word
-              syllable by syllable on the /hangul paper. Only the opener sits
-              in the card; the paper itself is a sheet (phone) / modal
-              (desktop), because in the card it was 505px of an 882px card
-              and the one reason this page scrolled past a screen. */}
-          {traceable && (
-            <WordTrace key={word.key} korean={word.korean} rom={word.romanization} meaning={meaning} />
-          )}
 
           {note?.parts && (
             <p className="text-[12.5px] text-muted leading-[1.65] mb-3">

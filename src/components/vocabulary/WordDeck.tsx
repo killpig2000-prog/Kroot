@@ -139,7 +139,7 @@ export default function WordDeck({
       if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
       const el = e.target as HTMLElement | null;
       if (el?.closest("input, textarea, select, [contenteditable='true']")) return;
-      // An open sheet (trace paper, the lesson bar's language picker) keeps
+      // An open sheet (the lesson bar's language picker) keeps
       // its own keys. The lesson bar's sheet stays mounted when closed, marked
       // aria-hidden, so only an unhidden one counts.
       if (document.querySelector('[role="dialog"]:not([aria-hidden="true"])')) return;

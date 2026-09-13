@@ -67,8 +67,8 @@ export const MAIN_ITEMS: NavItem[] = [
 //
 // Hangul leads the grid: it was folded into the vocabulary card for one
 // pass and the user couldn't find it, so it's a door of its own again —
-// and first, since the letters come before the words. Its in-card
-// trace-to-write (WordTrace) stays where it is.
+// and first, since the letters come before the words. The word card's
+// trace-to-write sheet was removed 2026-09-14 (user: strokes looked wrong).
 export const MODULES: NavItem[] = [
   { icon: "🔤", label: "Hangul", href: "/hangul", tourId: "guided-nav-hangul" },
   { icon: "🃏", label: "Vocabulary", href: "/vocabulary", popular: true, tourId: "guided-nav-vocabulary" },
