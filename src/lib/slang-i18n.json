@@ -1,0 +1,3980 @@
+{
+ "꿀잼": {
+  "ja": {
+   "literal": "ハチミツ＋面白さ",
+   "meaning": "すごく面白い、最高に楽しい",
+   "example": "このドラマ、本当にめちゃくちゃ面白い。",
+   "origin": "꿀（ハチミツ）＋재미（面白さ）を縮めて잼にしたもの。"
+  },
+  "zh-Hans": {
+   "literal": "蜂蜜+有趣",
+   "meaning": "超有趣，非常好玩",
+   "example": "这部剧真的超级有意思。",
+   "origin": "꿀（蜂蜜）+ 재미（有趣），缩略成 잼。"
+  },
+  "vi": {
+   "literal": "mật ong + vui",
+   "meaning": "rất vui, cực kỳ thú vị",
+   "example": "Bộ phim này thật sự quá hay.",
+   "origin": "꿀 (mật ong) + 재미 (vui), rút gọn thành 잼."
+  },
+  "es": {
+   "literal": "miel + diversión",
+   "meaning": "Muy divertido, buenísimo",
+   "example": "Este drama es divertidísimo, en serio.",
+   "origin": "꿀 (miel) + 재미 (diversión), acortado a 잼."
+  }
+ },
+ "노잼": {
+  "ja": {
+   "literal": "ノー＋面白さ",
+   "meaning": "つまらない、全然面白くない",
+   "example": "あの映画、ほんと退屈だった。",
+   "origin": "英語の「no」＋재미（面白さ）。꿀잼の対になる言葉。"
+  },
+  "zh-Hans": {
+   "literal": "没有乐趣",
+   "meaning": "很无聊，一点不好玩",
+   "example": "那部电影无聊透顶。",
+   "origin": "英语 no + 재미（有趣）——꿀잼 的反义词。"
+  },
+  "vi": {
+   "literal": "không vui",
+   "meaning": "chán ngắt, chẳng vui chút nào",
+   "example": "Bộ phim đó chán muốn ngủ luôn.",
+   "origin": "Tiếng Anh 'no' + 재미 (vui) — cặp đôi với 꿀잼."
+  },
+  "es": {
+   "literal": "sin diversión",
+   "meaning": "Aburrido, nada gracioso",
+   "example": "Esa película fue un rollo total.",
+   "origin": "'No' del inglés + 재미 (diversión): el gemelo opuesto de 꿀잼."
+  }
+ },
+ "대박": {
+  "ja": {
+   "literal": "大きなひょうたん",
+   "meaning": "すごい！／まさか！（良くも悪くも驚き）",
+   "example": "まじで！満点取ったの？",
+   "origin": "巨大なひょうたんが割れて宝物があふれ出す昔話から。"
+  },
+  "zh-Hans": {
+   "literal": "大葫芦",
+   "meaning": "太棒了／不会吧！（好坏皆可的震惊）",
+   "example": "不会吧！你考了满分？",
+   "origin": "出自民间故事：一个大葫芦裂开，里面装满了财宝。"
+  },
+  "vi": {
+   "literal": "quả bầu lớn",
+   "meaning": "đỉnh thật / không thể nào! (sốc, tốt hay xấu)",
+   "example": "Không thể nào! Cậu được điểm tuyệt đối á?",
+   "origin": "Từ truyện dân gian về quả bầu khổng lồ bổ ra đầy vàng bạc."
+  },
+  "es": {
+   "literal": "gran calabaza",
+   "meaning": "Increíble / ¡no me digas! (sorpresa buena o mala)",
+   "example": "¡No me digas! ¿Sacaste la nota perfecta?",
+   "origin": "De un cuento popular en el que una calabaza gigante se abre llena de tesoros."
+  }
+ },
+ "헐": {
+  "ja": {
+   "literal": "（息をのむ音）",
+   "meaning": "えっ、うそでしょ（呆れるほどの驚き）",
+   "example": "えっ、今外で雪降ってる。",
+   "origin": "鋭く息をのむ音をそのまま文字にしたもの。"
+  },
+  "zh-Hans": {
+   "literal": "（倒吸一口气）",
+   "meaning": "哇／天哪——难以置信",
+   "example": "哇，外面现在在下雪。",
+   "origin": "就是猛吸一口气的声音，被写成了字。"
+  },
+  "vi": {
+   "literal": "(tiếng hít hà)",
+   "meaning": "trời ơi / hả — sững sờ không tin nổi",
+   "example": "Trời ơi, ngoài kia đang có tuyết rơi kìa.",
+   "origin": "Chỉ là âm thanh hít mạnh một hơi, được viết ra thành chữ."
+  },
+  "es": {
+   "literal": "(un grito ahogado)",
+   "meaning": "¡Guau! / ¡Dios mío! — pura incredulidad",
+   "example": "Guau, está nevando afuera ahora mismo.",
+   "origin": "Es simplemente el sonido de tomar aire de golpe, puesto por escrito."
+  }
+ },
+ "짱": {
+  "ja": {
+   "literal": "てっぺん",
+   "meaning": "最高、すごい",
+   "example": "お母さんの料理は最高。",
+   "origin": "1990年代の学校で一番強い子を指した言葉が、今は何でもほめる言葉に。"
+  },
+  "zh-Hans": {
+   "literal": "顶尖",
+   "meaning": "最棒，超厉害",
+   "example": "我妈做的饭最好吃。",
+   "origin": "1990年代校园俚语，指最能打的孩子，如今可用来夸任何东西。"
+  },
+  "vi": {
+   "literal": "đỉnh nhất",
+   "meaning": "nhất, đỉnh của chóp",
+   "example": "Món mẹ tôi nấu là ngon nhất.",
+   "origin": "Tiếng lóng sân trường thập niên 1990 chỉ đứa mạnh nhất lớp, nay dùng để khen mọi thứ."
+  },
+  "es": {
+   "literal": "lo más alto",
+   "meaning": "Lo mejor, genial",
+   "example": "La comida de mi mamá es la mejor.",
+   "origin": "Jerga escolar de los años 90 para el chico más rudo; hoy sirve para elogiar cualquier cosa."
+  }
+ },
+ "멘붕": {
+  "ja": {
+   "literal": "メンタル崩壊",
+   "meaning": "頭が真っ白、完全にパニック",
+   "example": "スライドが消えて頭が真っ白になった。",
+   "origin": "멘탈（メンタル）＋붕괴（崩壊）。"
+  },
+  "zh-Hans": {
+   "literal": "精神崩溃",
+   "meaning": "脑子炸了，彻底崩溃",
+   "example": "我的幻灯片没了，整个人都崩溃了。",
+   "origin": "멘탈（精神）+ 붕괴（崩溃）。"
+  },
+  "vi": {
+   "literal": "sụp đổ tinh thần",
+   "meaning": "hoảng loạn, rối tung đầu óc",
+   "example": "Slide thuyết trình biến mất, tôi hoảng loạn luôn.",
+   "origin": "멘탈 (tinh thần) + 붕괴 (sụp đổ)."
+  },
+  "es": {
+   "literal": "colapso mental",
+   "meaning": "Crisis mental, totalmente superado",
+   "example": "Se me borraron las diapositivas y me volví loco.",
+   "origin": "멘탈 (mental) + 붕괴 (colapso)."
+  }
+ },
+ "심쿵": {
+  "ja": {
+   "literal": "心臓＋ドキッ",
+   "meaning": "胸がキュンとする、ときめく",
+   "example": "あの笑顔、ほんとキュンとする。",
+   "origin": "심장（心臓）＋쿵（ドキッという音）。"
+  },
+  "zh-Hans": {
+   "literal": "心脏咚一下",
+   "meaning": "心动不已，怦然心动",
+   "example": "那个笑容真的让人怦然心动。",
+   "origin": "심장（心脏）+ 쿵（咚）。"
+  },
+  "vi": {
+   "literal": "tim thịch",
+   "meaning": "tim rung rinh, xao xuyến",
+   "example": "Nụ cười đó làm tim tôi rung rinh thật sự.",
+   "origin": "심장 (tim) + 쿵 (thịch)."
+  },
+  "es": {
+   "literal": "golpe en el corazón",
+   "meaning": "Que acelera el corazón, para derretirse",
+   "example": "Esa sonrisa, la verdad, es para derretirse.",
+   "origin": "심장 (corazón) + 쿵 (golpe seco)."
+  }
+ },
+ "최애": {
+  "ja": {
+   "literal": "最も愛する",
+   "meaning": "一番の推し、最推し",
+   "example": "あの人が私の最推しメンバー。",
+   "origin": "최（最も）＋애（愛）。ファンダム用語が一般化したもの。"
+  },
+  "zh-Hans": {
+   "literal": "最爱",
+   "meaning": "最爱的那一个（本命）",
+   "example": "那个成员是我的本命。",
+   "origin": "최（最）+ 애（爱）——饭圈用语，已进入日常。"
+  },
+  "vi": {
+   "literal": "yêu nhất",
+   "meaning": "người/thứ mình thích nhất (bias)",
+   "example": "Người đó là thành viên tôi thích nhất.",
+   "origin": "최 (nhất) + 애 (yêu) — từ vựng của fandom đã phổ biến rộng rãi."
+  },
+  "es": {
+   "literal": "el más amado",
+   "meaning": "Tu favorito absoluto (tu bias)",
+   "example": "Ese es mi miembro favorito.",
+   "origin": "최 (el más) + 애 (amor): vocabulario de fandom que pasó al uso general."
+  }
+ },
+ "불금": {
+  "ja": {
+   "literal": "燃える金曜日",
+   "meaning": "花金、盛り上がる金曜の夜",
+   "example": "今日は花金だけど、何する？",
+   "origin": "불（火）＋금요일（金曜日）。"
+  },
+  "zh-Hans": {
+   "literal": "燃烧的星期五",
+   "meaning": "火热星期五——一周最嗨的夜晚",
+   "example": "今天是火热星期五，你有什么安排？",
+   "origin": "불（火）+ 금요일（星期五）。"
+  },
+  "vi": {
+   "literal": "thứ Sáu rực lửa",
+   "meaning": "tối thứ Sáu bùng cháy",
+   "example": "Thứ Sáu bùng cháy rồi — cậu định làm gì?",
+   "origin": "불 (lửa) + 금요일 (thứ Sáu)."
+  },
+  "es": {
+   "literal": "viernes ardiente",
+   "meaning": "Viernes de fiesta — la noche en que arranca la semana",
+   "example": "Es viernes de fiesta, ¿qué vas a hacer?",
+   "origin": "불 (fuego) + 금요일 (viernes)."
+  }
+ },
+ "치맥": {
+  "ja": {
+   "literal": "チキン＋ビール",
+   "meaning": "フライドチキンとビール、国民的な組み合わせ",
+   "example": "雨の日はチキンとビールに限る。",
+   "origin": "치킨（チキン）＋맥주（ビール）。"
+  },
+  "zh-Hans": {
+   "literal": "炸鸡+啤酒",
+   "meaning": "炸鸡配啤酒，国民组合",
+   "example": "下雨天就该吃炸鸡配啤酒。",
+   "origin": "치킨（炸鸡）+ 맥주（啤酒）。"
+  },
+  "vi": {
+   "literal": "gà + bia",
+   "meaning": "gà rán kèm bia, combo quốc dân",
+   "example": "Ngày mưa thì gà rán với bia là nhất.",
+   "origin": "치킨 (gà rán) + 맥주 (bia)."
+  },
+  "es": {
+   "literal": "pollo-cerveza",
+   "meaning": "Pollo frito con cerveza, el combo nacional",
+   "example": "En un día de lluvia, nada gana al pollo con cerveza.",
+   "origin": "치킨 (pollo) + 맥주 (cerveza)."
+  }
+ },
+ "JMT": {
+  "ja": {
+   "literal": "J・M・T",
+   "meaning": "とんでもなく美味しい",
+   "example": "ここのトッポッキ、ありえないほどうまい。",
+   "origin": "존맛탱をローマ字の頭文字で書いたもの。荒い言葉がやわらぐ。"
+  },
+  "zh-Hans": {
+   "literal": "J-M-T",
+   "meaning": "好吃到离谱",
+   "example": "这家的辣炒年糕好吃到不真实。",
+   "origin": "존맛탱 的罗马字母写法——让粗俗的词听起来温和一些。"
+  },
+  "vi": {
+   "literal": "j-m-t",
+   "meaning": "ngon điên đảo",
+   "example": "Tokbokki ở đây ngon không tưởng.",
+   "origin": "Cách viết bằng chữ Latin của 존맛탱 — làm dịu bớt một từ thô."
+  },
+  "es": {
+   "literal": "j-m-t",
+   "meaning": "Absurdamente delicioso",
+   "example": "El tteokbokki de aquí está buenísimo.",
+   "origin": "Escritura en letras latinas de 존맛탱; suaviza una palabra algo grosera."
+  }
+ },
+ "TMI": {
+  "ja": {
+   "literal": "情報過多",
+   "meaning": "聞かれてもいない余計な情報",
+   "example": "どうでもいい話だけど、今日3回転んだ。",
+   "origin": "英語からの借用だが、韓国では自分の小ネタを話す前置きに使う。"
+  },
+  "zh-Hans": {
+   "literal": "信息过多",
+   "meaning": "没人问的多余细节",
+   "example": "说个TMI，我今天摔了三跤。",
+   "origin": "借自英语，但韩国人常用它来引出自己的琐事。"
+  },
+  "vi": {
+   "literal": "quá nhiều thông tin",
+   "meaning": "chi tiết thừa chẳng ai hỏi",
+   "example": "Kể thừa chút nhé, hôm nay tôi ngã ba lần.",
+   "origin": "Mượn từ tiếng Anh, nhưng người Hàn dùng để mở đầu khi kể chuyện vặt của chính mình."
+  },
+  "es": {
+   "literal": "demasiada información",
+   "meaning": "Más detalles de los que nadie pidió",
+   "example": "Dato innecesario, pero hoy me caí tres veces.",
+   "origin": "Tomado del inglés, pero los coreanos lo usan para introducir sus propias trivialidades."
+  }
+ },
+ "갑분싸": {
+  "ja": {
+   "literal": "急に空気が冷える",
+   "meaning": "滑った冗談のあとの気まずい沈黙",
+   "example": "私の冗談で場が一気に凍りついた。",
+   "origin": "갑자기 분위기 싸해짐を4音節に縮めたもの。"
+  },
+  "zh-Hans": {
+   "literal": "气氛突然变冷",
+   "meaning": "烂笑话后的尴尬冷场",
+   "example": "我的笑话让整个气氛都冷了。",
+   "origin": "갑자기 분위기 싸해짐（气氛突然变冷），压缩成四个音节。"
+  },
+  "vi": {
+   "literal": "bỗng dưng không khí lạnh tanh",
+   "meaning": "im lặng ngượng ngùng sau câu đùa nhạt",
+   "example": "Câu đùa của tôi làm cả không khí đóng băng.",
+   "origin": "갑자기 분위기 싸해짐, nén lại còn bốn âm tiết."
+  },
+  "es": {
+   "literal": "de repente el ambiente se enfría",
+   "meaning": "Ese silencio incómodo tras un mal chiste",
+   "example": "Mi chiste mató todo el ambiente.",
+   "origin": "갑자기 분위기 싸해짐, comprimido en cuatro sílabas."
+  }
+ },
+ "인싸": {
+  "ja": {
+   "literal": "インサイダー",
+   "meaning": "陽キャ、いつも輪の中心にいる人",
+   "example": "あの人はどこへ行っても場の中心だ。",
+   "origin": "英語の「insider」を韓国式に縮めたもの。"
+  },
+  "zh-Hans": {
+   "literal": "局内人",
+   "meaning": "社交达人，总在人群中心",
+   "example": "他走到哪儿都是聚会的焦点。",
+   "origin": "英语 insider 的韩式缩略。"
+  },
+  "vi": {
+   "literal": "người trong cuộc",
+   "meaning": "người hòa đồng, luôn là tâm điểm",
+   "example": "Đi đâu người đó cũng là linh hồn của bữa tiệc.",
+   "origin": "Tiếng Anh 'insider' rút gọn kiểu Hàn."
+  },
+  "es": {
+   "literal": "insider",
+   "meaning": "Alguien muy sociable, siempre en el centro de todo",
+   "example": "Vaya donde vaya, es el alma de la fiesta.",
+   "origin": "'Insider' del inglés, recortado al estilo coreano."
+  }
+ },
+ "아싸": {
+  "ja": {
+   "literal": "アウトサイダー",
+   "meaning": "集まりを避けて一人を楽しむ人、陰キャ",
+   "example": "私はアウトサイダー派だから、家が一番。",
+   "origin": "英語の「outsider」。인싸の対になる言葉。"
+  },
+  "zh-Hans": {
+   "literal": "局外人",
+   "meaning": "不合群却自得其乐的人",
+   "example": "我是局外人类型——家里最好。",
+   "origin": "英语 outsider，与 인싸 相对。"
+  },
+  "vi": {
+   "literal": "người ngoài cuộc",
+   "meaning": "người thích lẻ loi, né hoạt động nhóm",
+   "example": "Tôi thuộc kiểu thích một mình — ở nhà là nhất.",
+   "origin": "Tiếng Anh 'outsider', đối lập với 인싸."
+  },
+  "es": {
+   "literal": "outsider",
+   "meaning": "Solitario feliz que se salta los planes de grupo",
+   "example": "Soy más de quedarme al margen: en casa se está mejor.",
+   "origin": "'Outsider' del inglés, el reflejo de 인싸."
+  }
+ },
+ "솔까말": {
+  "ja": {
+   "literal": "ぶっちゃけて言うと",
+   "meaning": "ぶっちゃけ、正直言うと",
+   "example": "ぶっちゃけ、これちょっと高いよね。",
+   "origin": "솔직히 까놓고 말해서を各語の最初の音節だけに縮めたもの。"
+  },
+  "zh-Hans": {
+   "literal": "坦白讲",
+   "meaning": "说真的，老实说……",
+   "example": "说真的，这个有点贵。",
+   "origin": "솔직히 까놓고 말해서（老实摊开来说）取每个词的首音节。"
+  },
+  "vi": {
+   "literal": "nói thẳng thật lòng",
+   "meaning": "nói thật lòng thì…",
+   "example": "Nói thật lòng thì cái này hơi đắt.",
+   "origin": "솔직히 까놓고 말해서 rút gọn thành các âm tiết đầu."
+  },
+  "es": {
+   "literal": "hablando con franqueza",
+   "meaning": "No voy a mentir, sinceramente…",
+   "example": "No voy a mentir, esto está un poco caro.",
+   "origin": "솔직히 까놓고 말해서, reducido a sus primeras sílabas."
+  }
+ },
+ "혼밥": {
+  "ja": {
+   "literal": "一人＋ご飯",
+   "meaning": "あえて一人でご飯を食べること、ぼっち飯",
+   "example": "今日のお昼は一人で食べた。",
+   "origin": "혼자（一人で）＋밥（ご飯・食事）。"
+  },
+  "zh-Hans": {
+   "literal": "独自+饭",
+   "meaning": "刻意一个人吃饭",
+   "example": "我今天午饭是一个人吃的。",
+   "origin": "혼자（独自）+ 밥（饭）。"
+  },
+  "vi": {
+   "literal": "một mình + cơm",
+   "meaning": "ăn cơm một mình (chủ động)",
+   "example": "Hôm nay tôi ăn trưa một mình.",
+   "origin": "혼자 (một mình) + 밥 (cơm/bữa ăn)."
+  },
+  "es": {
+   "literal": "arroz a solas",
+   "meaning": "Comer solo, por gusto",
+   "example": "Hoy almorcé solo.",
+   "origin": "혼자 (solo) + 밥 (arroz/comida)."
+  }
+ },
+ "혼술": {
+  "ja": {
+   "literal": "一人＋お酒",
+   "meaning": "家で一人で飲むこと、一人飲み",
+   "example": "金曜の夜は一人飲みに限る。",
+   "origin": "혼자（一人で）＋술（お酒）。"
+  },
+  "zh-Hans": {
+   "literal": "独自+酒",
+   "meaning": "一个人在家喝酒",
+   "example": "星期五晚上就该一个人喝一杯。",
+   "origin": "혼자（独自）+ 술（酒）。"
+  },
+  "vi": {
+   "literal": "một mình + rượu",
+   "meaning": "uống rượu một mình ở nhà",
+   "example": "Tối thứ Sáu thì phải làm một ly một mình.",
+   "origin": "혼자 (một mình) + 술 (rượu)."
+  },
+  "es": {
+   "literal": "alcohol a solas",
+   "meaning": "Beber solo en casa",
+   "example": "Un viernes por la noche pide un trago a solas.",
+   "origin": "혼자 (solo) + 술 (alcohol)."
+  }
+ },
+ "존맛": {
+  "ja": {
+   "literal": "めちゃ＋味",
+   "meaning": "めちゃくちゃうまい（少し下品）",
+   "example": "このラーメン、めちゃくちゃうまい。",
+   "origin": "強調の존＋맛（味）。親しい友達同士でだけ使おう。"
+  },
+  "zh-Hans": {
+   "literal": "极其+味道",
+   "meaning": "好吃到爆（有点粗俗）",
+   "example": "这碗拉面好吃到爆。",
+   "origin": "强调词 존 + 맛（味道）。只在好朋友之间用。"
+  },
+  "vi": {
+   "literal": "cực kỳ + vị",
+   "meaning": "ngon kinh khủng (hơi thô)",
+   "example": "Mì ramyeon này ngon kinh khủng.",
+   "origin": "Từ nhấn mạnh 존 + 맛 (vị). Chỉ nên dùng với bạn thân."
+  },
+  "es": {
+   "literal": "sabor extremo",
+   "meaning": "Brutalmente rico (algo vulgar)",
+   "example": "Este ramyeon está brutalmente bueno.",
+   "origin": "Un intensificador, 존 + 맛 (sabor). Úsalo solo con amigos cercanos."
+  }
+ },
+ "케바케": {
+  "ja": {
+   "literal": "ケースバイケース",
+   "meaning": "場合による、ケースバイケース",
+   "example": "それはケースバイケースだね、場合によって違う。",
+   "origin": "케이스 바이 케이스の各語の頭の音節をとったもの。"
+  },
+  "zh-Hans": {
+   "literal": "具体情况",
+   "meaning": "视情况而定",
+   "example": "那要看情况，每次都不一样。",
+   "origin": "케이스 바이 케이스（case by case），取每个词的首音节。"
+  },
+  "vi": {
+   "literal": "tùy trường hợp",
+   "meaning": "tùy tình huống",
+   "example": "Cái đó tùy trường hợp — mỗi lúc mỗi khác.",
+   "origin": "케이스 바이 케이스, lấy âm tiết đầu của mỗi từ."
+  },
+  "es": {
+   "literal": "caso por caso",
+   "meaning": "Depende del caso",
+   "example": "Eso depende del caso; varía.",
+   "origin": "케이스 바이 케이스: la primera sílaba de cada palabra."
+  }
+ },
+ "썸": {
+  "ja": {
+   "literal": "サム（something）",
+   "meaning": "付き合う前の曖昧な関係",
+   "example": "私たち、まだ付き合う一歩手前の段階なの。",
+   "origin": "英語の「something」から。「何かある」関係という意味。"
+  },
+  "zh-Hans": {
+   "literal": "有点什么",
+   "meaning": "暧昧期，还没确定关系",
+   "example": "我们还处在快要交往的暧昧阶段。",
+   "origin": "来自英语 something——意思是“有点什么”。"
+  },
+  "vi": {
+   "literal": "có gì đó",
+   "meaning": "giai đoạn mập mờ trước khi hẹn hò chính thức",
+   "example": "Bọn mình vẫn đang trong giai đoạn mập mờ.",
+   "origin": "Từ tiếng Anh 'something' — kiểu 'có gì đó đang diễn ra'."
+  },
+  "es": {
+   "literal": "algo (something)",
+   "meaning": "La etapa de casi salir, antes de ser oficial",
+   "example": "Todavía estamos en esa fase de casi novios.",
+   "origin": "Del inglés 'something', como en 'algo está pasando'."
+  }
+ },
+ "현타": {
+  "ja": {
+   "literal": "現実タイム",
+   "meaning": "ふと我に返る虚しさ、賢者タイム",
+   "example": "夜中の3時に急に現実に引き戻された。",
+   "origin": "현실 자각 타임（現実を自覚する時間）の略。"
+  },
+  "zh-Hans": {
+   "literal": "现实一击",
+   "meaning": "突然怀疑人生的清醒时刻",
+   "example": "凌晨三点，现实狠狠地砸醒了我。",
+   "origin": "현실 자각 타임——“现实觉醒时间”。"
+  },
+  "vi": {
+   "literal": "cú đánh của hiện thực",
+   "meaning": "chợt tỉnh ngộ 'mình đang làm gì với đời vậy'",
+   "example": "Ba giờ sáng, hiện thực đập thẳng vào mặt tôi.",
+   "origin": "현실 자각 타임 — 'giờ nhận ra hiện thực'."
+  },
+  "es": {
+   "literal": "golpe de realidad",
+   "meaning": "Ese golpe repentino de «¿qué estoy haciendo con mi vida?»",
+   "example": "A las 3 de la mañana me golpeó la realidad.",
+   "origin": "현실 자각 타임: «momento de tomar conciencia de la realidad»."
+  }
+ },
+ "갓생": {
+  "ja": {
+   "literal": "神＋人生",
+   "meaning": "ストイックで模範的な生活",
+   "example": "朝活で筋トレして、最近はストイックな毎日だ。",
+   "origin": "英語の「god」＋인생（人生）。"
+  },
+  "zh-Hans": {
+   "literal": "神级人生",
+   "meaning": "过着令人佩服的自律生活",
+   "example": "我每天清晨去运动，过着自律满满的生活。",
+   "origin": "英语 god + 인생（人生）。"
+  },
+  "vi": {
+   "literal": "cuộc sống thần thánh",
+   "meaning": "sống kỷ luật đáng nể",
+   "example": "Dạo này tôi tập thể dục lúc bình minh, sống kỷ luật hết mức.",
+   "origin": "Tiếng Anh 'god' + 인생 (cuộc đời)."
+  },
+  "es": {
+   "literal": "vida divina",
+   "meaning": "Llevar una vida admirablemente disciplinada",
+   "example": "Estoy en mi mejor etapa disciplinada, entrenando al amanecer.",
+   "origin": "'God' del inglés + 인생 (vida)."
+  }
+ },
+ "억텐": {
+  "ja": {
+   "literal": "無理なテンション",
+   "meaning": "明らかに無理して上げているテンション",
+   "example": "そのリアクション、完全に無理やりテンション上げてる。",
+   "origin": "억지（無理やり）＋텐션（テンション）。"
+  },
+  "zh-Hans": {
+   "literal": "硬撑的兴致",
+   "meaning": "明显硬装出来的热情",
+   "example": "那个反应也太硬凹热情了。",
+   "origin": "억지（勉强）+ 텐션（兴致、能量）。"
+  },
+  "vi": {
+   "literal": "hưng phấn gượng ép",
+   "meaning": "nhiệt tình giả tạo, gồng lên",
+   "example": "Phản ứng đó gượng gạo quá.",
+   "origin": "억지 (gượng ép) + 텐션 (hưng phấn/năng lượng)."
+  },
+  "es": {
+   "literal": "energía forzada",
+   "meaning": "Entusiasmo falso, claramente forzado",
+   "example": "Esa reacción es puro entusiasmo forzado.",
+   "origin": "억지 (forzado) + 텐션 (tensión/energía)."
+  }
+ },
+ "얼죽아": {
+  "ja": {
+   "literal": "凍え死んでもアイスアメリカーノ",
+   "meaning": "一年中アイスアメリカーノを飲む人",
+   "example": "外はマイナス10度なのに、それでもアイスを頼む。",
+   "origin": "얼어 죽어도 아이스 아메리카노を3音節に縮めたもの。"
+  },
+  "zh-Hans": {
+   "literal": "冻死也要冰美式",
+   "meaning": "一年四季都喝冰美式的人",
+   "example": "外面零下十度，我还是点冰的。",
+   "origin": "얼어 죽어도 아이스 아메리카노（冻死也要冰美式），缩成三个音节。"
+  },
+  "vi": {
+   "literal": "chết cóng cũng uống americano đá",
+   "meaning": "người uống americano đá quanh năm",
+   "example": "Ngoài trời âm mười độ mà tôi vẫn gọi đồ đá.",
+   "origin": "얼어 죽어도 아이스 아메리카노, rút còn ba âm tiết."
+  },
+  "es": {
+   "literal": "americano helado aunque me muera de frío",
+   "meaning": "Quien toma americano helado todo el año",
+   "example": "Hace diez bajo cero y lo sigo pidiendo helado.",
+   "origin": "얼어 죽어도 아이스 아메리카노, recortado a tres sílabas."
+  }
+ },
+ "아아": {
+  "ja": {
+   "literal": "アイ・ア",
+   "meaning": "アイスアメリカーノ",
+   "example": "アイスアメリカーノを一つください。",
+   "origin": "아이스 아메리카노の最初の2音節。ホットは따아。"
+  },
+  "zh-Hans": {
+   "literal": "冰+美",
+   "meaning": "冰美式咖啡",
+   "example": "请给我一杯冰美式。",
+   "origin": "아이스 아메리카노 取前两个音节。热的叫 따아。"
+  },
+  "vi": {
+   "literal": "i-a",
+   "meaning": "americano đá",
+   "example": "Cho tôi một ly americano đá.",
+   "origin": "아이스 아메리카노 rút gọn thành hai âm tiết đầu. Loại nóng là 따아."
+  },
+  "es": {
+   "literal": "a-a",
+   "meaning": "Americano helado",
+   "example": "Un americano helado, por favor.",
+   "origin": "아이스 아메리카노, recortado a sus dos primeras sílabas. El caliente es 따아."
+  }
+ },
+ "국룰": {
+  "ja": {
+   "literal": "国民ルール",
+   "meaning": "暗黙の定番、お決まりのやり方",
+   "example": "チキンにはコーラ、それが定番でしょ。",
+   "origin": "국민（国民）＋룰（ルール）。"
+  },
+  "zh-Hans": {
+   "literal": "国民规则",
+   "meaning": "约定俗成的标准做法",
+   "example": "炸鸡就得配可乐，这是国民规矩。",
+   "origin": "국민（国民）+ 룰（规则）。"
+  },
+  "vi": {
+   "literal": "luật quốc dân",
+   "meaning": "quy tắc ngầm ai cũng làm theo",
+   "example": "Gà rán thì phải đi với cola, luật rồi.",
+   "origin": "국민 (quốc dân) + 룰 (luật)."
+  },
+  "es": {
+   "literal": "regla nacional",
+   "meaning": "La norma no escrita de cómo se hace algo",
+   "example": "El pollo con refresco de cola: así se hace y punto.",
+   "origin": "국민 (nacional) + 룰 (regla)."
+  }
+ },
+ "가성비": {
+  "ja": {
+   "literal": "価格性能比",
+   "meaning": "コスパ、値段の割にお得",
+   "example": "このノートパソコンは本当にコスパがいい。",
+   "origin": "가격 대비 성능의 비율（価格に対する性能の比率）。今や日常語。"
+  },
+  "zh-Hans": {
+   "literal": "价格性能比",
+   "meaning": "性价比高，物超所值",
+   "example": "这台笔记本电脑性价比真高。",
+   "origin": "가격 대비 성능의 비율（价格与性能之比），如今家喻户晓。"
+  },
+  "vi": {
+   "literal": "tỷ lệ giá - hiệu năng",
+   "meaning": "đáng đồng tiền, ngon bổ rẻ",
+   "example": "Chiếc laptop này rất đáng đồng tiền.",
+   "origin": "가격 대비 성능의 비율, nay đã thành từ quen thuộc trong mọi nhà."
+  },
+  "es": {
+   "literal": "relación precio-rendimiento",
+   "meaning": "Buena relación calidad-precio",
+   "example": "Esta laptop tiene una relación calidad-precio excelente.",
+   "origin": "가격 대비 성능의 비율; hoy es una palabra de uso cotidiano."
+  }
+ },
+ "가심비": {
+  "ja": {
+   "literal": "価格心理比",
+   "meaning": "値段より満足感で選ぶ価値",
+   "example": "高かったけど、幸せな気分になれたから満足。",
+   "origin": "가성비のもじりで、성능（性能）を심리（心理・気持ち）に替えたもの。"
+  },
+  "zh-Hans": {
+   "literal": "价格心理比",
+   "meaning": "花得开心就值，不看价格",
+   "example": "虽然贵，但买了开心，值了。",
+   "origin": "가성비 的双关，把 성능（性能）换成 심리（心理）。"
+  },
+  "vi": {
+   "literal": "tỷ lệ giá - cảm xúc",
+   "meaning": "đáng tiền vì làm mình vui, chứ không vì giá",
+   "example": "Hơi đắt nhưng mua xong vui, nên đáng.",
+   "origin": "Chơi chữ từ 가성비, đổi 성능 (hiệu năng) thành 심리 (tâm lý)."
+  },
+  "es": {
+   "literal": "relación precio-corazón",
+   "meaning": "Vale la pena por la alegría que da, no por el precio",
+   "example": "Fue caro, pero me hizo feliz, así que valió la pena.",
+   "origin": "Un juego de palabras con 가성비, cambiando 성능 por 심리 (sentimientos)."
+  }
+ },
+ "소확행": {
+  "ja": {
+   "literal": "小さくても確かな幸せ",
+   "meaning": "日常の小さくて確かな幸せ",
+   "example": "帰り道のたい焼きが私の小さな幸せ。",
+   "origin": "소소하지만 확실한 행복——村上春樹のエッセイの言葉をそのまま取り入れたもの。"
+  },
+  "zh-Hans": {
+   "literal": "小而确定的幸福",
+   "meaning": "日常中可以确定的小幸福",
+   "example": "下班路上吃个鲷鱼烧就是我的小确幸。",
+   "origin": "소소하지만 확실한 행복——出自村上春树的随笔，被原样借用。"
+  },
+  "vi": {
+   "literal": "hạnh phúc nhỏ nhưng chắc chắn",
+   "meaning": "niềm vui nhỏ bé thường ngày",
+   "example": "Chiếc bánh cá trên đường về là niềm vui nhỏ của tôi.",
+   "origin": "소소하지만 확실한 행복 — lấy từ một bài tiểu luận của Murakami."
+  },
+  "es": {
+   "literal": "felicidad pequeña pero segura",
+   "meaning": "Un pequeño placer cotidiano con el que puedes contar",
+   "example": "Un pastelito en forma de pez de camino a casa es mi pequeña alegría.",
+   "origin": "소소하지만 확실한 행복: de un ensayo de Murakami, adoptado tal cual."
+  }
+ },
+ "워라밸": {
+  "ja": {
+   "literal": "ワラバル",
+   "meaning": "ワークライフバランス",
+   "example": "私にとっては給料よりワークライフバランスが大事。",
+   "origin": "「work-life balance」を韓国式に縮めたもの。"
+  },
+  "zh-Hans": {
+   "literal": "工作生活平衡",
+   "meaning": "工作与生活的平衡",
+   "example": "对我来说，工作生活平衡比薪水更重要。",
+   "origin": "英语 work-life balance 的韩式缩略。"
+  },
+  "vi": {
+   "literal": "wo-ra-bal",
+   "meaning": "cân bằng công việc - cuộc sống",
+   "example": "Với tôi, cân bằng công việc - cuộc sống quan trọng hơn lương.",
+   "origin": "Cách rút gọn kiểu Hàn của 'work-life balance'."
+  },
+  "es": {
+   "literal": "wo-ra-bal",
+   "meaning": "Equilibrio entre trabajo y vida personal",
+   "example": "Para mí, el equilibrio entre trabajo y vida importa más que el sueldo.",
+   "origin": "Recorte coreano de 'work-life balance'."
+  }
+ },
+ "칼퇴": {
+  "ja": {
+   "literal": "ナイフ退勤",
+   "meaning": "定時ぴったりに退勤すること",
+   "example": "今日は何があっても6時きっかりに帰る。",
+   "origin": "칼같이（ナイフのようにきっちり）＋퇴근（退勤）。"
+  },
+  "zh-Hans": {
+   "literal": "刀一样准时下班",
+   "meaning": "一到点就准时下班",
+   "example": "今天六点我无论如何都要准时走。",
+   "origin": "칼같이（像刀一样利落）+ 퇴근（下班）。"
+  },
+  "vi": {
+   "literal": "tan làm sắc như dao",
+   "meaning": "tan làm đúng giờ răm rắp",
+   "example": "Hôm nay dù thế nào tôi cũng về đúng sáu giờ.",
+   "origin": "칼같이 (sắc như dao) + 퇴근 (tan làm)."
+  },
+  "es": {
+   "literal": "salida de cuchillo",
+   "meaning": "Salir del trabajo a la hora exacta",
+   "example": "Hoy me voy a las seis en punto, pase lo que pase.",
+   "origin": "칼같이 (preciso como un cuchillo) + 퇴근 (salir del trabajo)."
+  }
+ },
+ "월급루팡": {
+  "ja": {
+   "literal": "給料ルパン",
+   "meaning": "仕事をさぼって給料だけもらう人、給料泥棒",
+   "example": "今日は何もしないで給料だけもらった。",
+   "origin": "월급（給料）＋怪盗紳士アルセーヌ・ルパン。"
+  },
+  "zh-Hans": {
+   "literal": "工资鲁邦",
+   "meaning": "上班摸鱼照拿工资的人",
+   "example": "我今天基本是在偷工资——啥也没干。",
+   "origin": "월급（工资）+ 怪盗绅士亚森·罗宾（Lupin）。"
+  },
+  "vi": {
+   "literal": "Lupin ăn trộm lương",
+   "meaning": "người làm biếng mà vẫn lĩnh lương",
+   "example": "Hôm nay tôi chẳng làm gì, coi như trộm lương.",
+   "origin": "월급 (lương) + Arsène Lupin, siêu trộm quý ông."
+  },
+  "es": {
+   "literal": "Lupin del sueldo",
+   "meaning": "Quien no hace nada en el trabajo y aun así cobra",
+   "example": "Hoy prácticamente me robé el sueldo: no hice nada.",
+   "origin": "월급 (sueldo) + Arsène Lupin, el ladrón caballero."
+  }
+ },
+ "열정페이": {
+  "ja": {
+   "literal": "情熱ペイ",
+   "meaning": "「経験になる」と言われる安月給、やりがい搾取",
+   "example": "あのインターン、報酬は「経験」だけ。",
+   "origin": "열정（情熱）＋pay。2010年代の就職難から生まれた皮肉な造語。"
+  },
+  "zh-Hans": {
+   "literal": "热情工资",
+   "meaning": "低薪还被要求为“经验”感恩",
+   "example": "那份实习只拿“经验”当工资，别的什么都没有。",
+   "origin": "열정（热情）+ pay——2010年代求职市场的辛酸新词。"
+  },
+  "vi": {
+   "literal": "lương đam mê",
+   "meaning": "trả lương bèo rồi bảo 'coi như học kinh nghiệm'",
+   "example": "Kỳ thực tập đó chỉ trả bằng 'kinh nghiệm'.",
+   "origin": "열정 (đam mê) + pay — từ châm biếm thị trường việc làm thập niên 2010."
+  },
+  "es": {
+   "literal": "pago en pasión",
+   "meaning": "Cobrar poco y que te pidan agradecer la experiencia",
+   "example": "Esa pasantía paga en 'experiencia' y nada más.",
+   "origin": "열정 (pasión) + pay: un término amargo del mercado laboral de los años 2010."
+  }
+ },
+ "취준생": {
+  "ja": {
+   "literal": "就職準備生",
+   "meaning": "就職活動中の人、就活生",
+   "example": "まだ就活中です。",
+   "origin": "취업 준비생（就職準備生）の略。"
+  },
+  "zh-Hans": {
+   "literal": "求职准备生",
+   "meaning": "正在找工作的人",
+   "example": "我还在找工作。",
+   "origin": "취업 준비생（求职准备生）的缩写。"
+  },
+  "vi": {
+   "literal": "người chuẩn bị xin việc",
+   "meaning": "người đang săn việc",
+   "example": "Tôi vẫn đang đi tìm việc.",
+   "origin": "Rút gọn từ 취업 준비생."
+  },
+  "es": {
+   "literal": "estudiante preparando empleo",
+   "meaning": "Alguien en plena búsqueda de trabajo",
+   "example": "Todavía estoy buscando trabajo.",
+   "origin": "Forma abreviada de 취업 준비생."
+  }
+ },
+ "갑질": {
+  "ja": {
+   "literal": "甲の振る舞い",
+   "meaning": "立場の弱い人への横暴、パワハラ",
+   "example": "客が店員に横暴な態度をとるのは最低だ。",
+   "origin": "갑は契約書の「甲」——力を持つ側のこと。"
+  },
+  "zh-Hans": {
+   "literal": "摆甲方架子",
+   "meaning": "仗势欺压弱势一方",
+   "example": "顾客欺负店员是最恶劣的。",
+   "origin": "갑 是合同里的“甲方”——握有权力的一方。"
+  },
+  "vi": {
+   "literal": "hành xử như bên A",
+   "meaning": "cậy quyền chèn ép người yếu thế",
+   "example": "Khách hàng hạch sách nhân viên là tệ nhất.",
+   "origin": "갑 là 'bên A' trong hợp đồng — bên nắm quyền."
+  },
+  "es": {
+   "literal": "actuar como la parte A",
+   "meaning": "Abusar de tu poder sobre alguien que tiene menos",
+   "example": "Los clientes que maltratan al personal son lo peor.",
+   "origin": "갑 es la 'parte A' de un contrato: la que tiene el poder."
+  }
+ },
+ "꼰대": {
+  "ja": {
+   "literal": "（老人を指す昔の学生言葉）",
+   "meaning": "上から目線で説教する年上、老害",
+   "example": "そんなこと言ったら老害って言われるよ。",
+   "origin": "1960年代に学生が先生を指した言葉。今は考えの古い人全般に使う。"
+  },
+  "zh-Hans": {
+   "literal": "（旧时校园俚语：老头）",
+   "meaning": "居高临下爱说教的长辈",
+   "example": "你那样说，别人会叫你老古板的。",
+   "origin": "1960年代学生对老师的俚语，如今泛指思想僵化的人。"
+  },
+  "vi": {
+   "literal": "(từ lóng cũ gọi ông già)",
+   "meaning": "người lớn tuổi hay dạy đời",
+   "example": "Nói vậy người ta sẽ bảo cậu là đồ cổ hủ đấy.",
+   "origin": "Tiếng lóng học sinh thập niên 1960 gọi thầy giáo, nay dùng cho bất kỳ ai bảo thủ."
+  },
+  "es": {
+   "literal": "(vieja palabra escolar para un anciano)",
+   "meaning": "Persona mayor que sermonea a todos desde arriba",
+   "example": "Si dices eso, te van a llamar anticuado.",
+   "origin": "Jerga estudiantil de los años 60 para los profesores, revivida para cualquiera anclado en sus costumbres."
+  }
+ },
+ "라떼는": {
+  "ja": {
+   "literal": "ラテは",
+   "meaning": "「俺の若い頃は…」という説教の決まり文句",
+   "example": "また「俺の若い頃は」が始まった。",
+   "origin": "ダジャレ：나 때는（私の頃は）が라떼는と同じように聞こえる。"
+  },
+  "zh-Hans": {
+   "literal": "至于拿铁",
+   "meaning": "“想当年……”——꼰대 的经典开场白",
+   "example": "又开始“想当年”那一套了。",
+   "origin": "谐音梗：나 때는（在我那时候）听起来像 라떼는。"
+  },
+  "vi": {
+   "literal": "còn latte thì",
+   "meaning": "'hồi xưa tôi…' — câu mở màn kinh điển của 꼰대",
+   "example": "Lại bắt đầu bài 'hồi xưa tôi' rồi.",
+   "origin": "Chơi chữ: 나 때는 (thời của tôi) nghe giống 라떼는."
+  },
+  "es": {
+   "literal": "en cuanto al latte",
+   "meaning": "«En mis tiempos…» — la frase clásica del 꼰대",
+   "example": "Ahí viene otro discurso de «en mis tiempos».",
+   "origin": "Un juego de palabras: 나 때는 (en mis tiempos) suena como 라떼는."
+  }
+ },
+ "금수저": {
+  "ja": {
+   "literal": "金のスプーン",
+   "meaning": "金持ちの家に生まれた人、親ガチャ当たり",
+   "example": "あの人は金持ちの家に生まれたから心配ない。",
+   "origin": "英語の「銀のスプーンをくわえて生まれる」を金にグレードアップしたもの。"
+  },
+  "zh-Hans": {
+   "literal": "金汤匙",
+   "meaning": "含着金汤匙出生，一辈子不愁",
+   "example": "他生来就有钱，什么都不用愁。",
+   "origin": "源自英语 born with a silver spoon，升级成了金的。"
+  },
+  "vi": {
+   "literal": "thìa vàng",
+   "meaning": "sinh ra đã giàu, cả đời không lo",
+   "example": "Người đó sinh ra đã giàu — chẳng phải lo gì.",
+   "origin": "Từ thành ngữ tiếng Anh 'born with a silver spoon', nâng cấp lên vàng."
+  },
+  "es": {
+   "literal": "cuchara de oro",
+   "meaning": "Nacido rico, con la vida resuelta",
+   "example": "Nació en cuna de oro, no tiene de qué preocuparse.",
+   "origin": "Del inglés 'born with a silver spoon' (nacer en cuna de plata), mejorado a oro."
+  }
+ },
+ "흙수저": {
+  "ja": {
+   "literal": "土のスプーン",
+   "meaning": "貧しい家に生まれゼロから始める人",
+   "example": "何もないところからでも、コツコツやるだけ。",
+   "origin": "수저계급론（スプーン階級論）の一番下。"
+  },
+  "zh-Hans": {
+   "literal": "土汤匙",
+   "meaning": "出身贫寒，从零开始",
+   "example": "就算白手起家，也只能一步步努力。",
+   "origin": "수저계급론（“汤匙阶级论”）中的最底层。"
+  },
+  "vi": {
+   "literal": "thìa đất",
+   "meaning": "sinh ra tay trắng, bắt đầu từ số 0",
+   "example": "Dù bắt đầu từ con số 0, cứ cố gắng là được.",
+   "origin": "Nấc thấp nhất của thang 수저계급론 ('giai cấp thìa')."
+  },
+  "es": {
+   "literal": "cuchara de tierra",
+   "meaning": "Nacido sin nada, empezando desde cero",
+   "example": "Aunque empieces sin nada, hay que seguir trabajando.",
+   "origin": "El escalón más bajo del 수저계급론 (la 'teoría de clases de las cucharas')."
+  }
+ },
+ "영끌": {
+  "ja": {
+   "literal": "魂までかき集める",
+   "meaning": "限界まで借金して大きな買い物をすること",
+   "example": "あの人たちは有り金を全部かき集めて家を買った。",
+   "origin": "영혼까지 끌어모으다（魂までかき集める）から。"
+  },
+  "zh-Hans": {
+   "literal": "掏空灵魂",
+   "meaning": "借光所有钱买大件",
+   "example": "他们掏空一切积蓄买了房。",
+   "origin": "영혼까지 끌어모으다——“连灵魂都搜刮出来”。"
+  },
+  "vi": {
+   "literal": "vét đến tận linh hồn",
+   "meaning": "vay mượn đến đồng cuối cùng để mua món lớn",
+   "example": "Họ vét sạch từng đồng để mua nhà.",
+   "origin": "영혼까지 끌어모으다 — 'gom góp đến cả linh hồn'."
+  },
+  "es": {
+   "literal": "raspar hasta el alma",
+   "meaning": "Pedir prestado hasta el último centavo para una gran compra",
+   "example": "Juntaron hasta el último centavo para comprarse una casa.",
+   "origin": "영혼까지 끌어모으다: «juntarlo todo, hasta el alma»."
+  }
+ },
+ "텅장": {
+  "ja": {
+   "literal": "空っぽ口座",
+   "meaning": "すっからかんの銀行口座",
+   "example": "家賃が引き落とされて、もう口座が空っぽ。",
+   "origin": "텅 비다（空っぽだ）と통장（通帳・口座）を掛け合わせたもの。"
+  },
+  "zh-Hans": {
+   "literal": "空空的账户",
+   "meaning": "被花光的银行账户",
+   "example": "房租一扣，我的账户就空了。",
+   "origin": "텅 비다（空空的）与 통장（存折）的合体。"
+  },
+  "vi": {
+   "literal": "tài khoản rỗng",
+   "meaning": "tài khoản cạn sạch tiền",
+   "example": "Vừa trả tiền nhà xong, tài khoản đã trống trơn.",
+   "origin": "텅 비다 (trống rỗng) ghép với 통장 (sổ tài khoản)."
+  },
+  "es": {
+   "literal": "cuenta vacía",
+   "meaning": "Cuenta bancaria vaciada por completo",
+   "example": "Pagué la renta y ya tengo la cuenta vacía.",
+   "origin": "텅 비다 (estar vacío) cruzado con 통장 (cuenta bancaria)."
+  }
+ },
+ "플렉스": {
+  "ja": {
+   "literal": "フレックス",
+   "meaning": "派手にお金を使って見せびらかすこと",
+   "example": "今日はちょっと散財しちゃった。",
+   "origin": "アメリカのヒップホップ由来。2019年頃に韓国のラッパーが広めた。"
+  },
+  "zh-Hans": {
+   "literal": "炫",
+   "meaning": "大手笔花钱并炫耀",
+   "example": "我今天小小挥霍了一把。",
+   "origin": "来自美国嘻哈，2019年前后由韩国说唱歌手带火。"
+  },
+  "vi": {
+   "literal": "flex",
+   "meaning": "vung tiền rồi khoe",
+   "example": "Hôm nay tôi chi mạnh tay một chút.",
+   "origin": "Từ hip-hop Mỹ, được các rapper Hàn phổ biến khoảng năm 2019."
+  },
+  "es": {
+   "literal": "flex",
+   "meaning": "Derrochar dinero y presumirlo",
+   "example": "Hoy me di un gustito.",
+   "origin": "Del hip-hop estadounidense, popularizado por raperos coreanos hacia 2019."
+  }
+ },
+ "지름신": {
+  "ja": {
+   "literal": "買い物の神",
+   "meaning": "衝動買いさせる神様、物欲の神",
+   "example": "夜中の2時に物欲の神が降りてきた。",
+   "origin": "지르다（衝動買いする）＋신（神）。「강림한다（降臨する）」と言う。"
+  },
+  "zh-Hans": {
+   "literal": "剁手之神",
+   "meaning": "让你冲动购物的“神”",
+   "example": "凌晨两点，剁手之神附体了。",
+   "origin": "지르다（冲动消费）+ 신（神）——人们说它 강림한다（降临）。"
+  },
+  "vi": {
+   "literal": "thần mua sắm",
+   "meaning": "cơn nhập hồn mua sắm bốc đồng",
+   "example": "Thần mua sắm nhập tôi lúc hai giờ sáng.",
+   "origin": "지르다 (vung tiền) + 신 (thần) — thần 강림한다 (giáng xuống)."
+  },
+  "es": {
+   "literal": "el dios de las compras",
+   "meaning": "El espíritu que te posee y te hace comprar por impulso",
+   "example": "El demonio de las compras me atrapó a las 2 de la mañana.",
+   "origin": "지르다 (derrochar) + 신 (dios): «desciende» sobre ti (강림한다)."
+  }
+ },
+ "개이득": {
+  "ja": {
+   "literal": "犬＋得",
+   "meaning": "大儲け、超お得",
+   "example": "半額で買えた、超お得！",
+   "origin": "개は強調（「超」）＋이득（利益）。"
+  },
+  "zh-Hans": {
+   "literal": "超级收益",
+   "meaning": "赚大了，捡到大便宜",
+   "example": "半价买到的——赚翻了！",
+   "origin": "개 作强调（“超”）+ 이득（收益）。"
+  },
+  "vi": {
+   "literal": "lời kiểu chó",
+   "meaning": "lời to, hời quá",
+   "example": "Mua được nửa giá — hời to!",
+   "origin": "개 là từ nhấn mạnh ('siêu') + 이득 (lợi)."
+  },
+  "es": {
+   "literal": "ganancia de perro",
+   "meaning": "Una ganancia enorme, una ganga total",
+   "example": "¡Lo conseguí a mitad de precio, qué ganga!",
+   "origin": "개 como intensificador ('súper') + 이득 (ganancia)."
+  }
+ },
+ "개꿀": {
+  "ja": {
+   "literal": "犬＋ハチミツ",
+   "meaning": "楽で最高、おいしい状況",
+   "example": "在宅勤務って本当に最高。",
+   "origin": "개（超）＋꿀（ハチミツ）。꿀잼の꿀と同じ。"
+  },
+  "zh-Hans": {
+   "literal": "超级蜂蜜",
+   "meaning": "轻松又爽，美滋滋",
+   "example": "在家办公太爽了。",
+   "origin": "개（超）+ 꿀（蜂蜜），和 꿀잼 里的 꿀 一样。"
+  },
+  "vi": {
+   "literal": "mật ong kiểu chó",
+   "meaning": "sướng, nhàn mà quá ngon",
+   "example": "Làm việc ở nhà sướng thật.",
+   "origin": "개 (siêu) + 꿀 (mật ong), cùng chữ 꿀 trong 꿀잼."
+  },
+  "es": {
+   "literal": "miel de perro",
+   "meaning": "Fácil, cómodo, demasiado bueno",
+   "example": "Trabajar desde casa es una maravilla.",
+   "origin": "개 (súper) + 꿀 (miel), el mismo 꿀 de 꿀잼."
+  }
+ },
+ "꿀팁": {
+  "ja": {
+   "literal": "ハチミツ＋ティップ",
+   "meaning": "本当に役立つ裏ワザ",
+   "example": "それ、本当に使える裏ワザだね。",
+   "origin": "꿀（ハチミツ、「すごくいい」の意味）＋英語の「tip」。"
+  },
+  "zh-Hans": {
+   "literal": "蜂蜜小贴士",
+   "meaning": "真正实用的生活妙招",
+   "example": "这个小窍门真的很实用。",
+   "origin": "꿀（蜂蜜，意为“好、棒”）+ 英语 tip。"
+  },
+  "vi": {
+   "literal": "mẹo mật ong",
+   "meaning": "mẹo vặt thật sự hữu ích",
+   "example": "Đây đúng là mẹo có ích thật.",
+   "origin": "꿀 (mật ong, nghĩa là 'ngọt/tuyệt') + tiếng Anh 'tip'."
+  },
+  "es": {
+   "literal": "consejo de miel",
+   "meaning": "Un truco realmente útil",
+   "example": "Ese consejo sí que es útil.",
+   "origin": "꿀 (miel, en el sentido de 'dulce/genial') + 'tip' del inglés."
+  }
+ },
+ "혜자": {
+  "ja": {
+   "literal": "（俳優キム・ヘジャ）",
+   "meaning": "値段以上に量や中身が充実している",
+   "example": "このお弁当、値段の割にボリュームがすごい。",
+   "origin": "俳優김혜자の名を冠したコンビニ弁当のシリーズから。"
+  },
+  "zh-Hans": {
+   "literal": "（演员金惠子）",
+   "meaning": "物超所值，给得比价格多",
+   "example": "这个便当给的分量远超价格。",
+   "origin": "出自演员 김혜자 代言的便利店便当系列。"
+  },
+  "vi": {
+   "literal": "(diễn viên Kim Hye-ja)",
+   "meaning": "hào phóng, được nhiều hơn số tiền bỏ ra",
+   "example": "Hộp cơm này cho nhiều hơn hẳn giá tiền.",
+   "origin": "Từ dòng cơm hộp cửa hàng tiện lợi mang tên diễn viên 김혜자."
+  },
+  "es": {
+   "literal": "(la actriz Kim Hye-ja)",
+   "meaning": "Generoso para su precio — más de lo que pagaste",
+   "example": "Esta vianda te da mucho más de lo que cuesta.",
+   "origin": "De una línea de viandas de tienda de conveniencia con la imagen de la actriz 김혜자."
+  }
+ },
+ "창렬": {
+  "ja": {
+   "literal": "（歌手キム・チャンリョル）",
+   "meaning": "値段の割に中身がしょぼい（혜자の反対）",
+   "example": "値段を見た瞬間、ぼったくりだと思った。",
+   "origin": "ライバルのお菓子シリーズから。혜자との対比は完全にネット上の伝説。"
+  },
+  "zh-Hans": {
+   "literal": "（歌手金昌烈）",
+   "meaning": "又贵又抠——혜자 的反面",
+   "example": "一看价格我就想：这是坑人。",
+   "origin": "出自另一个零食系列；与 혜자 的对比纯属网络传说。"
+  },
+  "vi": {
+   "literal": "(ca sĩ Kim Chang-ryeol)",
+   "meaning": "đắt mà keo kiệt — trái ngược 혜자",
+   "example": "Nhìn giá một cái là tôi nghĩ: chặt chém.",
+   "origin": "Từ một dòng snack đối thủ; việc ghép cặp với 혜자 hoàn toàn là giai thoại mạng."
+  },
+  "es": {
+   "literal": "(el cantante Kim Chang-ryeol)",
+   "meaning": "Caro y tacaño — lo contrario de 혜자",
+   "example": "Vi el precio y pensé: qué estafa.",
+   "origin": "De una línea rival de snacks; el contraste con 혜자 es puro folclore de internet."
+  }
+ },
+ "존버": {
+  "ja": {
+   "literal": "めちゃ＋耐える",
+   "meaning": "状況が好転するまでひたすら耐えること",
+   "example": "とにかく耐えれば、また上がるよ。",
+   "origin": "荒い強調の존＋버티기（耐えること）。親しい間柄でだけ。"
+  },
+  "zh-Hans": {
+   "literal": "死命坚持",
+   "meaning": "咬牙硬撑到转机出现",
+   "example": "撑住就行，会涨回来的。",
+   "origin": "粗俗强调词 존 + 버티기（坚持）。只在随意场合用。"
+  },
+  "vi": {
+   "literal": "cố bám trụ hết mức",
+   "meaning": "cắn răng trụ lại chờ thời",
+   "example": "Cứ trụ đi, rồi nó sẽ lên lại.",
+   "origin": "Từ nhấn mạnh thô 존 + 버티기 (trụ lại). Chỉ dùng khi thân mật."
+  },
+  "es": {
+   "literal": "aguantar al extremo",
+   "meaning": "Aguantar con los dientes apretados hasta que todo mejore",
+   "example": "Tú aguanta y ya volverá a subir.",
+   "origin": "Un intensificador vulgar 존 + 버티기 (aguantar). Solo en confianza."
+  }
+ },
+ "고인물": {
+  "ja": {
+   "literal": "よどんだ水",
+   "meaning": "新参が太刀打ちできない古参、やり込み勢",
+   "example": "このゲーム、もう古参のガチ勢しか残ってない。",
+   "origin": "長くたまった水——長寿ゲームや趣味の古参プレイヤーを指す。"
+  },
+  "zh-Hans": {
+   "literal": "死水",
+   "meaning": "玩太久、新人无法匹敌的老手",
+   "example": "这个游戏只剩下骨灰级老玩家了。",
+   "origin": "放太久的水——用来说运营多年的游戏和爱好圈。"
+  },
+  "vi": {
+   "literal": "nước đọng",
+   "meaning": "lão làng lâu năm, người mới không theo kịp",
+   "example": "Game này giờ chỉ còn toàn lão làng.",
+   "origin": "Nước để quá lâu — nói về các game và thú vui lâu năm."
+  },
+  "es": {
+   "literal": "agua estancada",
+   "meaning": "Veterano tan experto que los nuevos no pueden competir",
+   "example": "En este juego solo quedan los veteranos más hardcore.",
+   "origin": "Agua que lleva demasiado tiempo quieta: se dice de juegos y aficiones con muchos años."
+  }
+ },
+ "뉴비": {
+  "ja": {
+   "literal": "ニュービー",
+   "meaning": "初心者、始めたばかりの人",
+   "example": "完全に初心者なので、まだよくわかりません。",
+   "origin": "英語の「newbie」。韓国のゲーム掲示板で定番の言葉。"
+  },
+  "zh-Hans": {
+   "literal": "新手",
+   "meaning": "刚入门的新人",
+   "example": "我完全是个新手，还不太懂。",
+   "origin": "英语 newbie，韩国游戏论坛的常用词。"
+  },
+  "vi": {
+   "literal": "newbie",
+   "meaning": "người mới, tay mơ",
+   "example": "Tôi là người mới hoàn toàn, chưa biết gì nhiều.",
+   "origin": "Tiếng Anh 'newbie', phổ biến trên diễn đàn game Hàn."
+  },
+  "es": {
+   "literal": "newbie",
+   "meaning": "Un novato, alguien que recién empieza",
+   "example": "Soy totalmente novato, todavía no sé mucho.",
+   "origin": "'Newbie' del inglés, habitual en los foros de videojuegos coreanos."
+  }
+ },
+ "만렙": {
+  "ja": {
+   "literal": "レベル一万",
+   "meaning": "レベルカンスト、その道の達人",
+   "example": "お母さんはキムチ作りの達人。",
+   "origin": "만（一万）＋레벨を縮めた렙。RPGのレベル上限から。"
+  },
+  "zh-Hans": {
+   "literal": "一万级",
+   "meaning": "满级——某方面的顶尖高手",
+   "example": "我妈做泡菜已经是满级了。",
+   "origin": "만（一万）+ 레벨 缩成 렙——源自角色扮演游戏的等级上限。"
+  },
+  "vi": {
+   "literal": "cấp mười nghìn",
+   "meaning": "max level, cao thủ tuyệt đối",
+   "example": "Mẹ tôi làm kimchi thì max level.",
+   "origin": "만 (mười nghìn) + 레벨 rút gọn thành 렙 — từ giới hạn cấp trong game nhập vai."
+  },
+  "es": {
+   "literal": "nivel diez mil",
+   "meaning": "Nivel máximo — experto absoluto en algo",
+   "example": "Mi mamá tiene nivel máximo haciendo kimchi.",
+   "origin": "만 (diez mil) + 레벨 recortado a 렙: de los topes de nivel de los RPG."
+  }
+ },
+ "본캐": {
+  "ja": {
+   "literal": "本キャラ",
+   "meaning": "本来の自分、本業の顔",
+   "example": "私の本業は会社員です。",
+   "origin": "본（本来の）＋캐릭터（キャラクター）。複数アカウントのゲーム文化から。"
+  },
+  "zh-Hans": {
+   "literal": "主角色",
+   "meaning": "真实的自己／本职身份",
+   "example": "我的本职身份是上班族。",
+   "origin": "본（主）+ 캐릭터（角色），来自游戏多账号。"
+  },
+  "vi": {
+   "literal": "nhân vật chính",
+   "meaning": "con người thật / danh tính công việc chính",
+   "example": "Danh tính chính của tôi là dân văn phòng.",
+   "origin": "본 (chính) + 캐릭터 (nhân vật), từ việc chơi game nhiều tài khoản."
+  },
+  "es": {
+   "literal": "personaje principal",
+   "meaning": "Tu yo real / tu identidad del trabajo diario",
+   "example": "Mi identidad principal es la de oficinista.",
+   "origin": "본 (principal) + 캐릭터 (personaje), de jugar con varias cuentas."
+  }
+ },
+ "부캐": {
+  "ja": {
+   "literal": "サブキャラ",
+   "meaning": "もう一つの顔、副業や別人格",
+   "example": "週末の私は、別の顔でパン屋をやっている。",
+   "origin": "부（副）＋캐릭터。バラエティ番組で一般に広まった。"
+  },
+  "zh-Hans": {
+   "literal": "副角色",
+   "meaning": "第二人格——副业或另一个身份",
+   "example": "周末我的另一个身份是面包店老板。",
+   "origin": "부（副）+ 캐릭터；通过综艺节目流行开来。"
+  },
+  "vi": {
+   "literal": "nhân vật phụ",
+   "meaning": "danh tính thứ hai — nghề tay trái hay bản ngã khác",
+   "example": "Cuối tuần, bản ngã thứ hai của tôi mở tiệm bánh.",
+   "origin": "부 (phụ) + 캐릭터; phổ biến nhờ các show giải trí."
+  },
+  "es": {
+   "literal": "personaje secundario",
+   "meaning": "Tu segunda identidad — un proyecto paralelo o alter ego",
+   "example": "Los fines de semana, mi alter ego tiene una panadería.",
+   "origin": "부 (secundario) + 캐릭터; se popularizó gracias a los programas de variedades."
+  }
+ },
+ "현생": {
+  "ja": {
+   "literal": "現実の人生",
+   "meaning": "楽しみを邪魔するリアルの生活",
+   "example": "リアルが忙しいから、もう行かなきゃ。",
+   "origin": "현실（現実）＋인생（人生）。ゲームの世界の対になる言葉。"
+  },
+  "zh-Hans": {
+   "literal": "现实人生",
+   "meaning": "总来打扰你娱乐的现实生活",
+   "example": "现实生活在召唤——我得走了。",
+   "origin": "현실（现实）+ 인생（人生），与游戏人生相对。"
+  },
+  "vi": {
+   "literal": "đời thực",
+   "meaning": "đời sống ngoài đời, cứ chen ngang cuộc vui",
+   "example": "Đời thực gọi rồi — tôi phải đi đây.",
+   "origin": "현실 (hiện thực) + 인생 (cuộc đời), đối lập với đời trong game."
+  },
+  "es": {
+   "literal": "vida real",
+   "meaning": "Tu vida fuera de línea, la que siempre interrumpe la diversión",
+   "example": "La vida real me llama, me tengo que ir.",
+   "origin": "현실 (realidad) + 인생 (vida), lo opuesto a la vida en el juego."
+  }
+ },
+ "덕후": {
+  "ja": {
+   "literal": "（オタクから）",
+   "meaning": "一つの趣味に深くハマった熱狂的ファン、オタク",
+   "example": "実は私、鉄道オタクなんだ。",
+   "origin": "日本語のオタク→오타쿠→오덕후→덕후。もう悪口ではない。"
+  },
+  "zh-Hans": {
+   "literal": "（源自 otaku）",
+   "meaning": "超级粉丝，沉迷某个爱好",
+   "example": "其实我是个铁道迷。",
+   "origin": "日语 오타쿠 → 오덕후 → 덕후。已不再是贬义词。"
+  },
+  "vi": {
+   "literal": "(từ otaku)",
+   "meaning": "fan cuồng, mê một thú vui",
+   "example": "Thật ra tôi là dân mê tàu hỏa.",
+   "origin": "Tiếng Nhật 오타쿠 → 오덕후 → 덕후. Không còn là từ miệt thị."
+  },
+  "es": {
+   "literal": "(de otaku)",
+   "meaning": "Superfán, muy metido en un hobby",
+   "example": "La verdad es que soy fanático de los trenes.",
+   "origin": "Del japonés 오타쿠 → 오덕후 → 덕후. Ya no es un insulto."
+  }
+ },
+ "덕질": {
+  "ja": {
+   "literal": "ファン活動",
+   "meaning": "推し活、ファンとしての活動全般",
+   "example": "最近は推し活で忙しい。",
+   "origin": "덕후＋行為を表す接尾辞〜질。"
+  },
+  "zh-Hans": {
+   "literal": "追星行为",
+   "meaning": "为自己的爱好所做的一切",
+   "example": "我最近忙着追星。",
+   "origin": "덕후 + 表示行为的后缀 ~질。"
+  },
+  "vi": {
+   "literal": "làm fan",
+   "meaning": "mọi hoạt động theo đuổi fandom",
+   "example": "Dạo này tôi bận chuyện đu idol.",
+   "origin": "덕후 + hậu tố hoạt động ~질."
+  },
+  "es": {
+   "literal": "fanear",
+   "meaning": "Todo lo que haces por tu fandom",
+   "example": "Últimamente he estado ocupado con cosas de mi fandom.",
+   "origin": "덕후 + el sufijo de actividad ~질."
+  }
+ },
+ "입덕": {
+  "ja": {
+   "literal": "ファンダム入り",
+   "meaning": "初めて沼にハマること、ファンになること",
+   "example": "あのステージを一目見て、沼に落ちた。",
+   "origin": "입（入る）＋덕후。抜けるのは탈덕。"
+  },
+  "zh-Hans": {
+   "literal": "进入粉圈",
+   "meaning": "第一次入坑成为粉丝",
+   "example": "看了那场舞台，我一下就入坑了。",
+   "origin": "입（进入）+ 덕후。退出叫 탈덕。"
+  },
+  "vi": {
+   "literal": "vào fandom",
+   "meaning": "lần đầu sa vào một fandom",
+   "example": "Xem sân khấu đó một lần là tôi đổ luôn.",
+   "origin": "입 (vào) + 덕후. Rời đi là 탈덕."
+  },
+  "es": {
+   "literal": "entrar al fandom",
+   "meaning": "Caer en un fandom por primera vez",
+   "example": "Vi esa presentación y quedé enganchado.",
+   "origin": "입 (entrar) + 덕후. La salida es 탈덕."
+  }
+ },
+ "탈덕": {
+  "ja": {
+   "literal": "ファンダム脱退",
+   "meaning": "ファンをやめること、推し活卒業",
+   "example": "あのファンダムは去年卒業した。",
+   "origin": "탈（抜け出す）＋덕후。"
+  },
+  "zh-Hans": {
+   "literal": "离开粉圈",
+   "meaning": "不再追了，退坑",
+   "example": "我去年退坑了。",
+   "origin": "탈（脱离）+ 덕후。"
+  },
+  "vi": {
+   "literal": "rời fandom",
+   "meaning": "thoát fan, hết mê",
+   "example": "Năm ngoái tôi đã thoát fandom đó.",
+   "origin": "탈 (thoát) + 덕후."
+  },
+  "es": {
+   "literal": "salir del fandom",
+   "meaning": "Dejar de ser fan de algo",
+   "example": "Dejé ese fandom el año pasado.",
+   "origin": "탈 (escapar) + 덕후."
+  }
+ },
+ "성덕": {
+  "ja": {
+   "literal": "成功したオタク",
+   "meaning": "推しに会えた・推し側になれた夢が叶ったファン",
+   "example": "サインもらえた、これで晴れて勝ち組オタク。",
+   "origin": "성공한 덕후（成功したオタク）の略。"
+  },
+  "zh-Hans": {
+   "literal": "成功的粉丝",
+   "meaning": "梦想成真的粉丝——见到偶像或自己成了偶像",
+   "example": "我拿到签名了——正式成为成功的粉丝。",
+   "origin": "성공한 덕후（成功的粉丝）的缩写。"
+  },
+  "vi": {
+   "literal": "fan thành công",
+   "meaning": "fan đạt ước mơ — gặp được idol hoặc thành idol",
+   "example": "Xin được chữ ký rồi — chính thức là fan thành công.",
+   "origin": "Rút gọn từ 성공한 덕후."
+  },
+  "es": {
+   "literal": "fan exitoso",
+   "meaning": "Fan que cumplió su sueño — conoció a su ídolo o se volvió uno",
+   "example": "Conseguí el autógrafo: oficialmente soy un fan que lo logró.",
+   "origin": "Forma abreviada de 성공한 덕후."
+  }
+ },
+ "인생템": {
+  "ja": {
+   "literal": "人生アイテム",
+   "meaning": "生活が変わるほどの神アイテム",
+   "example": "このクリームは私の神アイテム。",
+   "origin": "인생（人生）＋아이템を縮めた템。"
+  },
+  "zh-Hans": {
+   "literal": "人生单品",
+   "meaning": "好用到改变日常的神物",
+   "example": "这款面霜是我的人生单品。",
+   "origin": "인생（人生）+ 아이템 缩成 템。"
+  },
+  "vi": {
+   "literal": "món đồ của đời",
+   "meaning": "món đồ tốt đến mức thay đổi thói quen",
+   "example": "Kem này là món 'chân ái' của tôi.",
+   "origin": "인생 (cuộc đời) + 아이템 rút gọn thành 템."
+  },
+  "es": {
+   "literal": "artículo de la vida",
+   "meaning": "Un producto tan bueno que cambió tu rutina",
+   "example": "Esta crema es mi producto estrella.",
+   "origin": "인생 (vida) + 아이템 recortado a 템."
+  }
+ },
+ "인생샷": {
+  "ja": {
+   "literal": "人生ショット",
+   "meaning": "人生で一番の奇跡の一枚",
+   "example": "ここで人生最高の一枚が撮れた。",
+   "origin": "인생（人生）＋샷（ショット）。"
+  },
+  "zh-Hans": {
+   "literal": "人生照片",
+   "meaning": "有史以来拍得最好的一张照片",
+   "example": "我在这里拍到了人生照。",
+   "origin": "인생（人生）+ 샷（照片）。"
+  },
+  "vi": {
+   "literal": "tấm ảnh của đời",
+   "meaning": "bức ảnh đẹp nhất đời",
+   "example": "Ở đây tôi chụp được bức ảnh đẹp nhất đời.",
+   "origin": "인생 (cuộc đời) + 샷 (tấm ảnh)."
+  },
+  "es": {
+   "literal": "foto de la vida",
+   "meaning": "La mejor foto que te hayan tomado jamás",
+   "example": "Aquí me tomaron la foto de mi vida.",
+   "origin": "인생 (vida) + 샷 (toma, foto)."
+  }
+ },
+ "짤": {
+  "ja": {
+   "literal": "切り抜き",
+   "meaning": "ネタ画像、ミーム画像",
+   "example": "そのネタ画像、どこで拾ったの？",
+   "origin": "짤림 방지から——文字だけの投稿が削除されないように貼った画像。"
+  },
+  "zh-Hans": {
+   "literal": "截图",
+   "meaning": "表情包，梗图",
+   "example": "那张梗图你从哪儿弄的？",
+   "origin": "源自 짤림 방지（防止被删）——为防纯文字帖被删而配的图。"
+  },
+  "vi": {
+   "literal": "mẩu cắt",
+   "meaning": "ảnh meme",
+   "example": "Cậu lấy cái ảnh meme đó ở đâu vậy?",
+   "origin": "Từ 짤림 방지 — ảnh đăng kèm để bài chỉ có chữ không bị xóa."
+  },
+  "es": {
+   "literal": "recorte",
+   "meaning": "Imagen de meme",
+   "example": "¿De dónde sacaste ese meme?",
+   "origin": "De 짤림 방지: imágenes que se publicaban para que no borraran un post de solo texto."
+  }
+ },
+ "움짤": {
+  "ja": {
+   "literal": "動く切り抜き",
+   "meaning": "GIF、動くネタ画像",
+   "example": "GIFにして送って。",
+   "origin": "움직이는（動く）＋짤。"
+  },
+  "zh-Hans": {
+   "literal": "会动的截图",
+   "meaning": "动图，GIF",
+   "example": "做成动图发给我吧。",
+   "origin": "움직이는（会动的）+ 짤。"
+  },
+  "vi": {
+   "literal": "mẩu cắt chuyển động",
+   "meaning": "ảnh GIF",
+   "example": "Làm thành GIF rồi gửi qua đây.",
+   "origin": "움직이는 (chuyển động) + 짤."
+  },
+  "es": {
+   "literal": "recorte en movimiento",
+   "meaning": "Un GIF",
+   "example": "Hazlo GIF y mándamelo.",
+   "origin": "움직이는 (que se mueve) + 짤."
+  }
+ },
+ "어그로": {
+  "ja": {
+   "literal": "アグロ",
+   "meaning": "わざと注目や喧嘩を煽ること、釣り",
+   "example": "注目されたくて煽るのはやめて。",
+   "origin": "ゲームの「アグロ」（モンスターの注意を引く）を人に当てはめたもの。"
+  },
+  "zh-Hans": {
+   "literal": "仇恨值",
+   "meaning": "故意挑事博关注",
+   "example": "别为了博关注故意挑事了。",
+   "origin": "游戏术语 aggro（吸引怪物仇恨），用在人身上。"
+  },
+  "vi": {
+   "literal": "aggro",
+   "meaning": "cố tình câu chú ý hoặc gây sự",
+   "example": "Đừng khuấy động để câu chú ý nữa.",
+   "origin": "Từ 'aggro' trong game (thu hút sự chú ý của quái), áp dụng cho người."
+  },
+  "es": {
+   "literal": "aggro",
+   "meaning": "Provocar a propósito para llamar la atención o buscar pelea",
+   "example": "Deja de provocar para llamar la atención.",
+   "origin": "Del 'aggro' de los videojuegos (atraer la atención de un monstruo), aplicado a personas."
+  }
+ },
+ "관종": {
+  "ja": {
+   "literal": "関心種",
+   "meaning": "目立ちたがり屋、かまってちゃん",
+   "example": "ほんと、かまってちゃんだね。",
+   "origin": "관심 종자（関心を欲しがるタイプ）の略。やや失礼。"
+  },
+  "zh-Hans": {
+   "literal": "关注种子",
+   "meaning": "渴望被关注的人",
+   "example": "真是个关注狂。",
+   "origin": "관심 종자——“渴望关注的类型”。略带贬义。"
+  },
+  "vi": {
+   "literal": "giống loài thèm chú ý",
+   "meaning": "kẻ thích gây chú ý",
+   "example": "Đúng là đồ thích gây chú ý.",
+   "origin": "관심 종자 — 'loại người thèm được chú ý'. Hơi bất lịch sự."
+  },
+  "es": {
+   "literal": "especie de atención",
+   "meaning": "Alguien que busca atención",
+   "example": "Qué ganas de llamar la atención.",
+   "origin": "관심 종자: «tipo ansioso de atención». Algo grosero."
+  }
+ },
+ "뇌피셜": {
+  "ja": {
+   "literal": "脳＋オフィシャル",
+   "meaning": "頭の中の想像を事実のように言うこと",
+   "example": "それ、ただの妄想じゃない？",
+   "origin": "뇌（脳）＋official。공식（公式）をもじった偽の反対語。"
+  },
+  "zh-Hans": {
+   "literal": "大脑官方",
+   "meaning": "自己脑补却当成事实说",
+   "example": "那不就是你自己脑补的吗？",
+   "origin": "뇌（大脑）+ official——与 공식（官方）相对的“伪官方”。"
+  },
+  "vi": {
+   "literal": "chính thức từ não",
+   "meaning": "chuyện tự bịa trong đầu rồi nói như thật",
+   "example": "Chẳng phải đó là cậu tự nghĩ ra sao?",
+   "origin": "뇌 (não) + official — cái 'chính thức' giả, đối lập với 공식."
+  },
+  "es": {
+   "literal": "oficial del cerebro",
+   "meaning": "Algo que te inventaste y afirmas como un hecho",
+   "example": "¿Eso no es algo que te inventaste?",
+   "origin": "뇌 (cerebro) + 'official': lo contrario falso de 공식 (oficial)."
+  }
+ },
+ "팩폭": {
+  "ja": {
+   "literal": "ファクト爆撃",
+   "meaning": "否定できない痛い真実を突きつけること",
+   "example": "友達に容赦ない正論をぶつけられた。",
+   "origin": "팩트（ファクト）＋폭행/폭격（暴行・爆撃）。"
+  },
+  "zh-Hans": {
+   "literal": "事实轰炸",
+   "meaning": "用无法反驳的扎心真相打击人",
+   "example": "朋友用扎心的事实把我怼得哑口无言。",
+   "origin": "팩트（事实）+ 폭행/폭격（殴打、轰炸）。"
+  },
+  "vi": {
+   "literal": "bom sự thật",
+   "meaning": "tung sự thật phũ phàng không cãi được",
+   "example": "Bạn tôi phang cho một tràng sự thật phũ phàng.",
+   "origin": "팩트 (sự thật) + 폭행/폭격 (hành hung, oanh tạc)."
+  },
+  "es": {
+   "literal": "bomba de hechos",
+   "meaning": "Soltarle a alguien una verdad innegable y dolorosa",
+   "example": "Mi amigo me soltó unas verdades brutales.",
+   "origin": "팩트 (hecho) + 폭행/폭격 (agresión, bombardeo)."
+  }
+ },
+ "답정너": {
+  "ja": {
+   "literal": "答えは決まってる、君は",
+   "meaning": "答えが決まっていて同意だけを求める人",
+   "example": "言ってほしい答え、もう決まってるでしょ。",
+   "origin": "답은 정해져 있고 너는 대답만 하면 돼（答えは決まってるから、君は答えるだけでいい）。"
+  },
+  "zh-Hans": {
+   "literal": "答案已定，你",
+   "meaning": "提问却只想听一种答案的人",
+   "example": "你早就想好要我说什么了吧。",
+   "origin": "답은 정해져 있고 너는 대답만 하면 돼（答案已定，你照答就行）。"
+  },
+  "vi": {
+   "literal": "đáp án định sẵn, cậu",
+   "meaning": "hỏi nhưng chỉ muốn nghe một câu trả lời",
+   "example": "Cậu đã quyết sẵn muốn tôi nói gì rồi còn gì.",
+   "origin": "답은 정해져 있고 너는 대답만 하면 돼."
+  },
+  "es": {
+   "literal": "la respuesta ya está decidida, tú",
+   "meaning": "Quien pregunta pero solo acepta una respuesta",
+   "example": "Ya decidiste qué quieres que te diga.",
+   "origin": "답은 정해져 있고 너는 대답만 하면 돼."
+  }
+ },
+ "안물안궁": {
+  "ja": {
+   "literal": "聞いてない、興味ない",
+   "meaning": "誰も聞いてない",
+   "example": "誰も聞いてないのに、なんで話すの？",
+   "origin": "안 물어봤고 안 궁금해を4音節に縮めたもの。キツいので友達同士だけ。"
+  },
+  "zh-Hans": {
+   "literal": "没问也不好奇",
+   "meaning": "没人问你",
+   "example": "没人问你，干嘛告诉我？",
+   "origin": "안 물어봤고 안 궁금해（没问也不好奇），压缩成四个音节。说法很直接——只对朋友用。"
+  },
+  "vi": {
+   "literal": "không hỏi, không tò mò",
+   "meaning": "chẳng ai hỏi",
+   "example": "Chẳng ai hỏi, sao cậu lại kể?",
+   "origin": "안 물어봤고 안 궁금해, nén lại còn bốn âm tiết. Khá phũ — chỉ dùng với bạn bè."
+  },
+  "es": {
+   "literal": "no pregunté, no me interesa",
+   "meaning": "Nadie te preguntó",
+   "example": "Nadie te preguntó, ¿para qué me lo cuentas?",
+   "origin": "안 물어봤고 안 궁금해, comprimido en cuatro sílabas. Es brusco: solo entre amigos."
+  }
+ },
+ "낄끼빠빠": {
+  "ja": {
+   "literal": "入る時は入り、引く時は引け",
+   "meaning": "空気を読んで出る時と引く時をわきまえること",
+   "example": "空気読んで、引き際をわきまえて。",
+   "origin": "낄 때 끼고 빠질 때 빠져라（入る時は入り、抜ける時は抜けろ）。"
+  },
+  "zh-Hans": {
+   "literal": "该加入就加入，该退出就退出",
+   "meaning": "懂得何时该进、何时该退",
+   "example": "看看气氛——要懂得适时退出。",
+   "origin": "낄 때 끼고 빠질 때 빠져라（该插就插，该退就退）。"
+  },
+  "vi": {
+   "literal": "lúc nên vào thì vào, lúc nên rút thì rút",
+   "meaning": "biết lúc nào nên góp mặt, lúc nào nên rút",
+   "example": "Biết nhìn không khí đi — biết lúc nào nên lùi.",
+   "origin": "낄 때 끼고 빠질 때 빠져라."
+  },
+  "es": {
+   "literal": "entra cuando toca, sal cuando toca",
+   "meaning": "Saber cuándo te quieren y cuándo retirarte",
+   "example": "Lee el ambiente: hay que saber cuándo hacerse a un lado.",
+   "origin": "낄 때 끼고 빠질 때 빠져라."
+  }
+ },
+ "사바사": {
+  "ja": {
+   "literal": "パーソンバイパーソン",
+   "meaning": "人それぞれ、人による",
+   "example": "それは本当に人によるね。",
+   "origin": "사람 바이 사람。先にあった케바케をもとにした言葉。"
+  },
+  "zh-Hans": {
+   "literal": "因人而异",
+   "meaning": "每个人都不一样",
+   "example": "那真的因人而异。",
+   "origin": "사람 바이 사람（person by person），仿照更早的 케바케。"
+  },
+  "vi": {
+   "literal": "tùy người",
+   "meaning": "mỗi người mỗi khác",
+   "example": "Cái đó thật sự tùy người.",
+   "origin": "사람 바이 사람, dựa trên từ cũ hơn là 케바케."
+  },
+  "es": {
+   "literal": "persona por persona",
+   "meaning": "Varía de persona a persona",
+   "example": "Eso realmente depende de la persona.",
+   "origin": "사람 바이 사람, basado en el más antiguo 케바케."
+  }
+ },
+ "취존": {
+  "ja": {
+   "literal": "好み尊重",
+   "meaning": "人の好みを尊重しよう",
+   "example": "チョコミント好きな人のことは、そっとしておいて。",
+   "origin": "취향 존중（好みの尊重）の略。"
+  },
+  "zh-Hans": {
+   "literal": "尊重喜好",
+   "meaning": "尊重别人的口味",
+   "example": "让喜欢薄荷巧克力的人安心喜欢吧。",
+   "origin": "취향 존중（尊重喜好）的缩写。"
+  },
+  "vi": {
+   "literal": "tôn trọng sở thích",
+   "meaning": "tôn trọng gu của người khác",
+   "example": "Để yên cho người ta thích kem bạc hà sô-cô-la đi.",
+   "origin": "Rút gọn từ 취향 존중."
+  },
+  "es": {
+   "literal": "respeto al gusto",
+   "meaning": "Respetar los gustos ajenos",
+   "example": "Deja que a la gente le guste el helado de menta con chocolate en paz.",
+   "origin": "Forma abreviada de 취향 존중."
+  }
+ },
+ "열일": {
+  "ja": {
+   "literal": "熱い仕事",
+   "meaning": "しっかり働く、大活躍する",
+   "example": "今日はエアコンが大活躍してる。",
+   "origin": "열심히 일하다の略。人だけでなく物にもよく使う。"
+  },
+  "zh-Hans": {
+   "literal": "热情工作",
+   "meaning": "卖力干活，尽职尽责",
+   "example": "空调今天真是卖力工作。",
+   "origin": "열심히 일하다（努力工作）的缩写；常用来说物品，不只是人。"
+  },
+  "vi": {
+   "literal": "làm việc hăng",
+   "meaning": "làm việc hết mình, gánh tốt phần việc",
+   "example": "Hôm nay máy lạnh làm việc hết công suất.",
+   "origin": "Rút gọn từ 열심히 일하다; thường nói về đồ vật, không chỉ người."
+  },
+  "es": {
+   "literal": "trabajo ardiente",
+   "meaning": "Trabajar duro, cumplir con creces",
+   "example": "El aire acondicionado sí que está trabajando duro hoy.",
+   "origin": "열심히 일하다 abreviado; se dice a menudo de objetos, no solo de personas."
+  }
+ },
+ "흑역사": {
+  "ja": {
+   "literal": "黒歴史",
+   "meaning": "消したい恥ずかしい過去、黒歴史",
+   "example": "中学時代の写真は私の黒歴史。",
+   "origin": "ガンダムの用語から来て、今は日常語。"
+  },
+  "zh-Hans": {
+   "literal": "黑色历史",
+   "meaning": "想删掉的丢脸过去，黑历史",
+   "example": "我初中的照片就是我的黑历史。",
+   "origin": "源自动画《高达》的术语，现已是日常韩语。"
+  },
+  "vi": {
+   "literal": "lịch sử đen",
+   "meaning": "quá khứ xấu hổ muốn xóa đi",
+   "example": "Ảnh hồi cấp hai là thời kỳ đen tối của tôi.",
+   "origin": "Từ một thuật ngữ trong anime Gundam, nay là tiếng Hàn thường ngày."
+  },
+  "es": {
+   "literal": "historia negra",
+   "meaning": "Un pasado vergonzoso que preferirías borrar",
+   "example": "Mis fotos de la secundaria son mi época oscura.",
+   "origin": "De un término del anime Gundam, hoy parte del coreano cotidiano."
+  }
+ },
+ "웃프다": {
+  "ja": {
+   "literal": "笑える＋悲しい",
+   "meaning": "笑えるけどちょっと悲しい",
+   "example": "笑えるけど切ない話、聞きたい？",
+   "origin": "웃기다（笑える）＋슬프다（悲しい）を一つの形容詞にしたもの。"
+  },
+  "zh-Hans": {
+   "literal": "好笑+悲伤",
+   "meaning": "好笑又有点心酸",
+   "example": "这是个又好笑又心酸的故事——想听吗？",
+   "origin": "웃기다（好笑）+ 슬프다（悲伤），合成一个形容词。"
+  },
+  "vi": {
+   "literal": "buồn cười + buồn",
+   "meaning": "vừa buồn cười vừa chua xót",
+   "example": "Chuyện vừa buồn cười vừa buồn — muốn nghe không?",
+   "origin": "웃기다 (buồn cười) + 슬프다 (buồn), gộp thành một tính từ."
+  },
+  "es": {
+   "literal": "gracioso-triste",
+   "meaning": "Gracioso pero un poco trágico",
+   "example": "Es una historia entre graciosa y triste, ¿quieres oírla?",
+   "origin": "웃기다 (gracioso) + 슬프다 (triste), fusionados en un solo adjetivo."
+  }
+ },
+ "병맛": {
+  "ja": {
+   "literal": "ばかげた味",
+   "meaning": "くだらなすぎて逆に面白い",
+   "example": "このウェブトゥーン、くだらないのに読むのをやめられない。",
+   "origin": "병신 같은 맛から。時とともに和らいでジャンル名になった。"
+  },
+  "zh-Hans": {
+   "literal": "荒诞的味道",
+   "meaning": "烂得离谱反而好笑",
+   "example": "这部网漫很无厘头，但我停不下来。",
+   "origin": "源自 병신 같은 맛——久而久之被弱化成一种风格标签。"
+  },
+  "vi": {
+   "literal": "vị vô lý",
+   "meaning": "dở và nhảm đến mức thành buồn cười",
+   "example": "Truyện tranh mạng này nhảm nhí mà tôi không dừng đọc được.",
+   "origin": "Từ 병신 같은 맛 — theo thời gian dịu đi thành tên một thể loại."
+  },
+  "es": {
+   "literal": "sabor absurdo",
+   "meaning": "Tan absurdo y mal hecho que termina siendo gracioso",
+   "example": "Este webtoon es absurdo, pero no puedo dejar de leerlo.",
+   "origin": "De 병신 같은 맛; con el tiempo se suavizó hasta volverse la etiqueta de un género."
+  }
+ },
+ "드립": {
+  "ja": {
+   "literal": "アドリブ",
+   "meaning": "とっさのギャグ、ネタ",
+   "example": "もう冗談はいいって。",
+   "origin": "애드리브（アドリブ）を縮めて드립。動詞は드립 치다。"
+  },
+  "zh-Hans": {
+   "literal": "即兴",
+   "meaning": "临场抖的包袱，即兴玩笑",
+   "example": "别再抖机灵了。",
+   "origin": "源自 애드리브（即兴），缩成 드립。动词：드립 치다。"
+  },
+  "vi": {
+   "literal": "ứng khẩu",
+   "meaning": "câu đùa ứng biến, pha chọc cười",
+   "example": "Đùa đủ rồi đấy.",
+   "origin": "Từ 애드리브 (ad-lib), rút gọn thành 드립. Động từ: 드립 치다."
+  },
+  "es": {
+   "literal": "improvisación",
+   "meaning": "Un chiste rápido o una ocurrencia improvisada",
+   "example": "Ya basta de chistes.",
+   "origin": "De 애드리브 (ad-lib), recortado a 드립. Verbo: 드립 치다."
+  }
+ },
+ "뇌절": {
+  "ja": {
+   "literal": "脳切れ",
+   "meaning": "同じネタをしつこく繰り返してスベること",
+   "example": "そのネタ3回目だよ、もう寒い。",
+   "origin": "漫画の技名から。「一回多すぎる繰り返し」の意味に。"
+  },
+  "zh-Hans": {
+   "literal": "脑断",
+   "meaning": "把一个梗玩烂",
+   "example": "这个梗第三次了——被你玩坏了。",
+   "origin": "源自漫画中的招式名；现指重复过头。"
+  },
+  "vi": {
+   "literal": "não gãy",
+   "meaning": "lặp lại câu đùa đến nhàm",
+   "example": "Lần thứ ba rồi — câu đùa đó chết hẳn rồi.",
+   "origin": "Từ tên một chiêu thức trong manga; nay nghĩa là lặp lại quá một lần."
+  },
+  "es": {
+   "literal": "corte cerebral",
+   "meaning": "Estirar un chiste hasta arruinarlo",
+   "example": "Tercera vez con ese chiste: ya lo mataste.",
+   "origin": "Del nombre de un movimiento de un manga; hoy significa repetir algo una vez de más."
+  }
+ },
+ "아무말 대잔치": {
+  "ja": {
+   "literal": "適当な言葉の大宴会",
+   "meaning": "支離滅裂なことを延々と言うこと",
+   "example": "夜遅いから、もう適当なことしか言ってない。",
+   "origin": "아무 말（何でもいい言葉）＋대잔치（大宴会）。"
+  },
+  "zh-Hans": {
+   "literal": "胡话盛宴",
+   "meaning": "一连串的胡言乱语",
+   "example": "太晚了，我在胡说八道。",
+   "origin": "아무 말（随便什么话）+ 대잔치（盛宴）。"
+  },
+  "vi": {
+   "literal": "lễ hội nói bừa",
+   "meaning": "một tràng toàn chuyện tào lao",
+   "example": "Khuya rồi nên tôi toàn nói nhảm.",
+   "origin": "아무 말 (lời nói bất kỳ) + 대잔치 (đại tiệc)."
+  },
+  "es": {
+   "literal": "festival de hablar por hablar",
+   "meaning": "Una sarta de puras tonterías",
+   "example": "Ya es tarde, así que estoy diciendo puras tonterías.",
+   "origin": "아무 말 (cualquier cosa) + 대잔치 (gran banquete)."
+  }
+ },
+ "노답": {
+  "ja": {
+   "literal": "ノー＋答え",
+   "meaning": "どうしようもない、お手上げ",
+   "example": "この状況、本当にお手上げだ。",
+   "origin": "英語の「no」＋답（答え）。"
+  },
+  "zh-Hans": {
+   "literal": "没有答案",
+   "meaning": "没救了，无药可救",
+   "example": "这个情况真的没救了。",
+   "origin": "英语 no + 답（答案）。"
+  },
+  "vi": {
+   "literal": "không có đáp án",
+   "meaning": "hết cứu, bó tay",
+   "example": "Tình hình này đúng là hết cứu.",
+   "origin": "Tiếng Anh 'no' + 답 (đáp án)."
+  },
+  "es": {
+   "literal": "sin respuesta",
+   "meaning": "Sin remedio, imposible de arreglar",
+   "example": "Esta situación de verdad no tiene remedio.",
+   "origin": "'No' del inglés + 답 (respuesta)."
+  }
+ },
+ "킹받다": {
+  "ja": {
+   "literal": "キングを受ける",
+   "meaning": "めちゃくちゃムカつく",
+   "example": "その言い方、ほんとムカつく。",
+   "origin": "열받다（頭にくる）の열を「king」に替えた、強力版のイライラ。"
+  },
+  "zh-Hans": {
+   "literal": "受到王",
+   "meaning": "气得要命，烦死人",
+   "example": "那种语气真让人火大。",
+   "origin": "열받다（生气）把 열 换成 king——加强版的烦躁。"
+  },
+  "vi": {
+   "literal": "nhận king",
+   "meaning": "bực mình phát điên",
+   "example": "Cái giọng điệu đó làm tôi tức điên.",
+   "origin": "열받다 (nóng máu) với 열 được thay bằng 'king' — bực mình phiên bản cực mạnh."
+  },
+  "es": {
+   "literal": "recibir rey",
+   "meaning": "Estar furioso por algo exasperante",
+   "example": "Ese tono de voz me saca de quicio.",
+   "origin": "열받다 (acalorarse) cambiando 열 por 'king': un enojo extrafuerte."
+  }
+ },
+ "킹정": {
+  "ja": {
+   "literal": "キング認定",
+   "meaning": "完全に同意、激しく同意",
+   "example": "それには百パーセント同意。",
+   "origin": "인정（認める）を「king」で強化したもの。킹받다と同じ系統のジョーク。"
+  },
+  "zh-Hans": {
+   "literal": "王认同",
+   "meaning": "百分之百同意",
+   "example": "这个我百分之百同意。",
+   "origin": "인정（认同）用 king 升级，与 킹받다 属同一类玩笑。"
+  },
+  "vi": {
+   "literal": "king công nhận",
+   "meaning": "đồng ý tuyệt đối",
+   "example": "Cái đó thì tôi đồng ý một trăm phần trăm.",
+   "origin": "인정 (công nhận) nâng cấp bằng 'king', cùng họ với 킹받다."
+  },
+  "es": {
+   "literal": "rey de acuerdo",
+   "meaning": "Totalmente de acuerdo",
+   "example": "En eso estoy cien por ciento de acuerdo.",
+   "origin": "인정 (reconocer, estar de acuerdo) potenciado con 'king', de la misma familia de bromas que 킹받다."
+  }
+ },
+ "인정": {
+  "ja": {
+   "literal": "認定",
+   "meaning": "認める、確かに",
+   "example": "うん、たしかに。",
+   "origin": "よくㅇㅈとだけ打たれる。"
+  },
+  "zh-Hans": {
+   "literal": "认可",
+   "meaning": "认同，确实如此",
+   "example": "嗯，有道理。",
+   "origin": "常常只打成 ㅇㅈ。"
+  },
+  "vi": {
+   "literal": "sự công nhận",
+   "meaning": "công nhận, chuẩn",
+   "example": "Ừ, công nhận.",
+   "origin": "Thường được gõ tắt là ㅇㅈ."
+  },
+  "es": {
+   "literal": "reconocimiento",
+   "meaning": "Cierto, tienes razón",
+   "example": "Sí, es justo.",
+   "origin": "A menudo se escribe solo ㅇㅈ."
+  }
+ },
+ "실화냐": {
+  "ja": {
+   "literal": "実話か？",
+   "meaning": "これって現実？！",
+   "example": "この値段、マジで？",
+   "origin": "실화（実話）＋くだけた疑問の語尾〜냐。"
+  },
+  "zh-Hans": {
+   "literal": "是真事吗？",
+   "meaning": "这是真的吗？！",
+   "example": "这个价格是真的吗？",
+   "origin": "실화（真事）+ 随意的疑问语尾 ~냐。"
+  },
+  "vi": {
+   "literal": "chuyện thật à?",
+   "meaning": "chuyện này có thật à?!",
+   "example": "Giá này là thật à?",
+   "origin": "실화 (chuyện có thật) + đuôi câu hỏi thân mật ~냐."
+  },
+  "es": {
+   "literal": "¿es una historia real?",
+   "meaning": "¡¿Esto está pasando de verdad?!",
+   "example": "¿Este precio es en serio?",
+   "origin": "실화 (historia real) + la terminación de pregunta informal ~냐."
+  }
+ },
+ "이왜진": {
+  "ja": {
+   "literal": "これなんで本当",
+   "meaning": "ありえないのに本当だったときの反応",
+   "example": "なんで本当なの…マジで売り切れてる。",
+   "origin": "이게 왜 진짜야を3音節に縮めたもの。"
+  },
+  "zh-Hans": {
+   "literal": "这为什么是真的",
+   "meaning": "离谱到不像真的——偏偏是真的",
+   "example": "这怎么会是真的——居然真的卖光了。",
+   "origin": "이게 왜 진짜야（这为什么是真的）压缩成三个音节。"
+  },
+  "vi": {
+   "literal": "sao lại là thật",
+   "meaning": "vô lý mà lại có thật",
+   "example": "Sao lại có thật được — hết hàng thật rồi.",
+   "origin": "이게 왜 진짜야 nén lại còn ba âm tiết."
+  },
+  "es": {
+   "literal": "por qué esto es real",
+   "meaning": "Reacción ante algo demasiado absurdo para ser cierto — pero lo es",
+   "example": "¿Cómo que es real? Se agotó de verdad.",
+   "origin": "이게 왜 진짜야, comprimido en tres sílabas."
+  }
+ },
+ "오조오억": {
+  "ja": {
+   "literal": "五兆五億",
+   "meaning": "とんでもなく大きな数、何億回",
+   "example": "あのシーン、もう何億回も見返した。",
+   "origin": "バラエティ番組のセリフから来た、わざとばかげた数字。"
+  },
+  "zh-Hans": {
+   "literal": "五兆五亿",
+   "meaning": "夸张到离谱的数字，无数次",
+   "example": "那个场景我看了无数遍。",
+   "origin": "出自综艺节目台词的一个故意荒唐的数字。"
+  },
+  "vi": {
+   "literal": "năm nghìn tỷ năm trăm triệu",
+   "meaning": "con số lớn vô lý — 'hàng tỉ tỉ'",
+   "example": "Tôi đã xem lại cảnh đó hàng tỉ tỉ lần.",
+   "origin": "Một con số cố tình vô lý từ một câu thoại trong show giải trí."
+  },
+  "es": {
+   "literal": "cinco billones quinientos millones",
+   "meaning": "Una cifra absurdamente grande — «un millón de veces»",
+   "example": "He vuelto a ver esa escena un millón de veces.",
+   "origin": "Una cifra deliberadamente ridícula salida de una frase de un programa de variedades."
+  }
+ },
+ "쩐다": {
+  "ja": {
+   "literal": "ずぶ濡れだ",
+   "meaning": "やばい、すごすぎる",
+   "example": "あの人たちの実力、やばすぎる。",
+   "origin": "쩔다から。口調次第で「すごい」にも「ひどい」にもなる。"
+  },
+  "zh-Hans": {
+   "literal": "湿透了",
+   "meaning": "太猛了／绝了",
+   "example": "他们的技术强到不真实。",
+   "origin": "来自 쩔다；根据语气可以是厉害，也可以是糟透了。"
+  },
+  "vi": {
+   "literal": "ướt đẫm",
+   "meaning": "đỉnh thật / kinh khủng",
+   "example": "Kỹ năng của họ đỉnh không tưởng.",
+   "origin": "Từ 쩔다; có thể là ấn tượng hoặc tệ hại tùy giọng điệu."
+  },
+  "es": {
+   "literal": "está empapado",
+   "meaning": "¡Qué locura! / impresionante",
+   "example": "Su nivel es de otro mundo.",
+   "origin": "De 쩔다; según el tono, puede significar impresionante o espantoso."
+  }
+ },
+ "오지다": {
+  "ja": {
+   "literal": "激しい",
+   "meaning": "半端ない、ものすごい",
+   "example": "今日の天気、半端ない。",
+   "origin": "「ひどい」を意味する方言が、ラッパーによってスラングに。"
+  },
+  "zh-Hans": {
+   "literal": "猛烈",
+   "meaning": "极端，太夸张",
+   "example": "今天的天气太夸张了。",
+   "origin": "方言中表示“严重”的词，被说唱歌手带成了俚语。"
+  },
+  "vi": {
+   "literal": "dữ dội",
+   "meaning": "cực độ, quá đà",
+   "example": "Thời tiết hôm nay khủng khiếp thật.",
+   "origin": "Một từ địa phương nghĩa là 'dữ dội', được các rapper đưa thành tiếng lóng."
+  },
+  "es": {
+   "literal": "ser intenso",
+   "meaning": "Extremo, brutal, exagerado",
+   "example": "El clima de hoy está brutal.",
+   "origin": "Una palabra dialectal que significa 'severo', convertida en jerga por los raperos."
+  }
+ },
+ "각": {
+  "ja": {
+   "literal": "角度",
+   "meaning": "何かにぴったりの状況、〜する流れ",
+   "example": "今日はチキン一択の夜になりそう。",
+   "origin": "ゲーム由来——技を決めるための正しい「角度」を合わせることから。"
+  },
+  "zh-Hans": {
+   "literal": "角度",
+   "meaning": "做某事的绝佳时机／条件",
+   "example": "今天看来是吃炸鸡的节奏。",
+   "origin": "源自游戏——为出招找准“角度”。"
+  },
+  "vi": {
+   "literal": "góc",
+   "meaning": "thời cơ chín muồi để làm gì đó",
+   "example": "Tối nay đúng là 'kèo' gà rán rồi.",
+   "origin": "Từ game — canh đúng 'góc' để ra chiêu."
+  },
+  "es": {
+   "literal": "ángulo",
+   "meaning": "El momento o las condiciones perfectas para algo",
+   "example": "Hoy pinta para noche de pollo frito.",
+   "origin": "De los videojuegos: alinear el 'ángulo' correcto para una jugada."
+  }
+ },
+ "억까": {
+  "ja": {
+   "literal": "無理なこき下ろし",
+   "meaning": "不当な叩き、言いがかり",
+   "example": "その批判はちょっと言いがかりだと思う。",
+   "origin": "억지（無理やり）＋까다（けなす）。反対は쉴드。"
+  },
+  "zh-Hans": {
+   "literal": "硬黑",
+   "meaning": "不公平、不应得的批评",
+   "example": "我觉得那个批评有点硬黑。",
+   "origin": "억지（勉强）+ 까다（贬低）。反义是 쉴드。"
+  },
+  "vi": {
+   "literal": "chê bai gượng ép",
+   "meaning": "chỉ trích vô lý, không đáng",
+   "example": "Tôi thấy lời chê đó không công bằng.",
+   "origin": "억지 (gượng ép) + 까다 (chê bai). Trái nghĩa là 쉴드."
+  },
+  "es": {
+   "literal": "crítica forzada",
+   "meaning": "Crítica injusta o inmerecida",
+   "example": "Esa crítica me parece injusta.",
+   "origin": "억지 (forzado) + 까다 (criticar, poner verde). Lo contrario es 쉴드."
+  }
+ },
+ "쉴드": {
+  "ja": {
+   "literal": "シールド",
+   "meaning": "行き過ぎた擁護、かばうこと",
+   "example": "今回ばかりはかばえない。",
+   "origin": "英語の「shield」。動詞は쉴드 치다。"
+  },
+  "zh-Hans": {
+   "literal": "盾牌",
+   "meaning": "替人辩护，常常护得毫无道理",
+   "example": "这次我实在没法替他说话。",
+   "origin": "英语 shield。动词：쉴드 치다。"
+  },
+  "vi": {
+   "literal": "khiên",
+   "meaning": "bênh vực ai đó, đôi khi quá mức",
+   "example": "Lần này tôi không bênh nổi họ.",
+   "origin": "Tiếng Anh 'shield'. Động từ: 쉴드 치다."
+  },
+  "es": {
+   "literal": "escudo",
+   "meaning": "Defender a alguien, muchas veces más de lo razonable",
+   "example": "En esto no los puedo defender.",
+   "origin": "'Shield' del inglés. Verbo: 쉴드 치다."
+  }
+ },
+ "국뽕": {
+  "ja": {
+   "literal": "国のヒロポン",
+   "meaning": "過剰な愛国心、自国びいき",
+   "example": "この映画、愛国心が強すぎる。",
+   "origin": "국가（国家）＋히로뽕——「国に酔う」。自虐的に使うことが多い。"
+  },
+  "zh-Hans": {
+   "literal": "国家兴奋剂",
+   "meaning": "过头的爱国自豪感",
+   "example": "这部电影爱国情绪太浓了。",
+   "origin": "국가（国家）+ 히로뽕——“沉醉于国家”。常带自嘲。"
+  },
+  "vi": {
+   "literal": "phê vì nước",
+   "meaning": "tự hào dân tộc thái quá",
+   "example": "Bộ phim này tô đậm lòng yêu nước quá mức.",
+   "origin": "국가 (quốc gia) + 히로뽕 — 'say vì đất nước'. Thường là tự giễu."
+  },
+  "es": {
+   "literal": "subidón nacional",
+   "meaning": "Orgullo patriótico exagerado",
+   "example": "Esta película se pasa de patriótica.",
+   "origin": "국가 (nación) + 히로뽕: «borracho de país». Suele usarse con autoironía."
+  }
+ },
+ "발연기": {
+  "ja": {
+   "literal": "足の演技",
+   "meaning": "見ていられないほど下手な演技",
+   "example": "主演の演技がひどすぎて見ていられない。",
+   "origin": "발（足）を「不器用」の意味で＋연기（演技）。"
+  },
+  "zh-Hans": {
+   "literal": "用脚演戏",
+   "meaning": "烂到让人看不下去的演技",
+   "example": "男主演技太烂了，我看不下去。",
+   "origin": "발（脚）表示“笨拙”+ 연기（演技）。"
+  },
+  "vi": {
+   "literal": "diễn bằng chân",
+   "meaning": "diễn xuất dở tệ",
+   "example": "Nam chính diễn dở đến mức tôi không xem nổi.",
+   "origin": "발 (chân) mang nghĩa 'vụng về' + 연기 (diễn xuất)."
+  },
+  "es": {
+   "literal": "actuar con los pies",
+   "meaning": "Actuación terriblemente mala",
+   "example": "El protagonista actúa tan mal que no lo puedo ver.",
+   "origin": "발 (pie) en el sentido de 'torpe' + 연기 (actuación)."
+  }
+ },
+ "먹방": {
+  "ja": {
+   "literal": "食べる放送",
+   "meaning": "大食いやおいしそうに食べる動画、モッパン",
+   "example": "寝る前にモッパンを見るのはいつも失敗。",
+   "origin": "먹는 방송——英語の「mukbang」になった韓国発の文化。"
+  },
+  "zh-Hans": {
+   "literal": "吃的直播",
+   "meaning": "大吃特吃的吃播视频",
+   "example": "睡前看吃播总是个错误。",
+   "origin": "먹는 방송（吃的节目）——韩国输出，让英语有了 mukbang 一词。"
+  },
+  "vi": {
+   "literal": "phát sóng ăn",
+   "meaning": "video ăn uống thật nhiều, thật ngon",
+   "example": "Xem mukbang trước khi ngủ lúc nào cũng là sai lầm.",
+   "origin": "먹는 방송 — món xuất khẩu của Hàn Quốc tạo ra từ tiếng Anh 'mukbang'."
+  },
+  "es": {
+   "literal": "transmisión comiendo",
+   "meaning": "Video de alguien comiendo mucho y con ganas",
+   "example": "Ver mukbang antes de dormir siempre es un error.",
+   "origin": "먹는 방송: la exportación coreana que dio al inglés la palabra 'mukbang'."
+  }
+ },
+ "쿡방": {
+  "ja": {
+   "literal": "料理放送",
+   "meaning": "料理番組や料理配信",
+   "example": "最近、料理配信を見て料理を覚えている。",
+   "origin": "英語の「cook」＋방송。먹방にならった言葉。"
+  },
+  "zh-Hans": {
+   "literal": "做饭直播",
+   "meaning": "烹饪节目或直播",
+   "example": "我最近在跟着做饭直播学做菜。",
+   "origin": "英语 cook + 방송（节目），仿照 먹방。"
+  },
+  "vi": {
+   "literal": "phát sóng nấu",
+   "meaning": "chương trình/livestream nấu ăn",
+   "example": "Dạo này tôi học nấu ăn qua các kênh nấu ăn.",
+   "origin": "Tiếng Anh 'cook' + 방송, theo mẫu 먹방."
+  },
+  "es": {
+   "literal": "transmisión cocinando",
+   "meaning": "Programa o transmisión de cocina",
+   "example": "He estado aprendiendo a cocinar con transmisiones de cocina.",
+   "origin": "'Cook' del inglés + 방송, a imitación de 먹방."
+  }
+ },
+ "좋댓구알": {
+  "ja": {
+   "literal": "いいね・コメント・登録・ベル",
+   "meaning": "YouTubeのお決まりのお願い（高評価・コメント・登録・通知）",
+   "example": "高評価、コメント、チャンネル登録、通知オンお願いします！",
+   "origin": "좋아요 · 댓글 · 구독 · 알림설정の1音節ずつ。"
+  },
+  "zh-Hans": {
+   "literal": "赞-评-订-铃",
+   "meaning": "YouTube全套请求：点赞、评论、订阅、开提醒",
+   "example": "请点赞、评论、订阅并打开小铃铛！",
+   "origin": "좋아요 · 댓글 · 구독 · 알림설정，各取一个音节。"
+  },
+  "vi": {
+   "literal": "thích-bình luận-đăng ký-chuông",
+   "meaning": "trọn bộ lời xin của YouTuber: thích, bình luận, đăng ký, bật chuông",
+   "example": "Nhớ thích, bình luận, đăng ký và bấm chuông nhé!",
+   "origin": "좋아요 · 댓글 · 구독 · 알림설정, mỗi từ một âm tiết."
+  },
+  "es": {
+   "literal": "me gusta-comentario-suscripción-campanita",
+   "meaning": "El pedido completo de YouTube: me gusta, comenta, suscríbete, notificaciones",
+   "example": "¡Denle me gusta, comenten, suscríbanse y activen la campanita!",
+   "origin": "좋아요 · 댓글 · 구독 · 알림설정, una sílaba de cada uno."
+  }
+ },
+ "인급동": {
+  "ja": {
+   "literal": "人気急上昇動画",
+   "meaning": "YouTubeの急上昇ページ",
+   "example": "あの動画、急上昇で1位だよ。",
+   "origin": "인기 급상승 동영상——YouTubeの急上昇の韓国語名。"
+  },
+  "zh-Hans": {
+   "literal": "人气飙升视频",
+   "meaning": "YouTube热门榜",
+   "example": "那个视频在热门榜排第一。",
+   "origin": "인기 급상승 동영상——YouTube Trending 的韩文名称。"
+  },
+  "vi": {
+   "literal": "video tăng hạng nhanh",
+   "meaning": "trang Thịnh hành của YouTube",
+   "example": "Video đó đang đứng số một trên Thịnh hành.",
+   "origin": "인기 급상승 동영상 — tên tiếng Hàn của mục Thịnh hành trên YouTube."
+  },
+  "es": {
+   "literal": "video en ascenso popular",
+   "meaning": "La sección de tendencias de YouTube",
+   "example": "Ese video está en el número uno de tendencias.",
+   "origin": "인기 급상승 동영상: el nombre coreano de Tendencias de YouTube."
+  }
+ },
+ "광클": {
+  "ja": {
+   "literal": "狂クリック",
+   "meaning": "チケットや限定品を狙った連打",
+   "example": "チケットを必死に連打したのに取れなかった。",
+   "origin": "광（狂）＋클릭（クリック）。"
+  },
+  "zh-Hans": {
+   "literal": "疯狂点击",
+   "meaning": "为抢票或限量品疯狂点击",
+   "example": "我疯狂点击抢票，还是没抢到。",
+   "origin": "광（疯狂）+ 클릭（点击）。"
+  },
+  "vi": {
+   "literal": "click điên cuồng",
+   "meaning": "bấm chuột lia lịa để giành vé hay hàng giới hạn",
+   "example": "Tôi bấm như điên để săn vé mà vẫn trượt.",
+   "origin": "광 (điên cuồng) + 클릭 (click)."
+  },
+  "es": {
+   "literal": "clic frenético",
+   "meaning": "Hacer clic como loco para conseguir entradas o algo limitado",
+   "example": "Hice clic como loco para las entradas y aun así me quedé sin ellas.",
+   "origin": "광 (frenético) + 클릭 (clic)."
+  }
+ },
+ "프사": {
+  "ja": {
+   "literal": "プロ写",
+   "meaning": "プロフィール写真、アイコン",
+   "example": "アイコン変えた？",
+   "origin": "프로필 사진の略。"
+  },
+  "zh-Hans": {
+   "literal": "头像照",
+   "meaning": "个人头像",
+   "example": "你换头像了？",
+   "origin": "프로필 사진（个人资料照片）的缩写。"
+  },
+  "vi": {
+   "literal": "ảnh-prof",
+   "meaning": "ảnh đại diện",
+   "example": "Cậu đổi ảnh đại diện à?",
+   "origin": "Rút gọn từ 프로필 사진."
+  },
+  "es": {
+   "literal": "foto-perfil",
+   "meaning": "Foto de perfil",
+   "example": "¿Cambiaste tu foto de perfil?",
+   "origin": "Recorte de 프로필 사진."
+  }
+ },
+ "셀카": {
+  "ja": {
+   "literal": "セルフカメラ",
+   "meaning": "自撮り",
+   "example": "自撮りしよう。",
+   "origin": "셀프 카메라——「selfie」より古い韓国製英語。"
+  },
+  "zh-Hans": {
+   "literal": "自拍相机",
+   "meaning": "自拍照",
+   "example": "我们来自拍吧。",
+   "origin": "셀프 카메라——韩式英语，比 selfie 一词还早。"
+  },
+  "vi": {
+   "literal": "máy ảnh tự chụp",
+   "meaning": "ảnh selfie",
+   "example": "Mình chụp selfie đi.",
+   "origin": "셀프 카메라 — tiếng Anh 'made in Korea', có trước cả từ 'selfie'."
+  },
+  "es": {
+   "literal": "cámara propia",
+   "meaning": "Una selfie",
+   "example": "Tomémonos una selfie.",
+   "origin": "셀프 카메라: inglés hecho en Corea, más antiguo que 'selfie'."
+  }
+ },
+ "얼공": {
+  "ja": {
+   "literal": "顔公開",
+   "meaning": "ネットで初めて顔出しすること",
+   "example": "登録者1万人になったら顔出しします。",
+   "origin": "얼굴 공개（顔公開）の略。"
+  },
+  "zh-Hans": {
+   "literal": "公开脸",
+   "meaning": "第一次在网上露脸",
+   "example": "订阅满一万我就露脸。",
+   "origin": "얼굴 공개（公开脸）的缩写。"
+  },
+  "vi": {
+   "literal": "công khai mặt",
+   "meaning": "lần đầu lộ mặt trên mạng",
+   "example": "Đủ mười nghìn người đăng ký tôi sẽ lộ mặt.",
+   "origin": "Rút gọn từ 얼굴 공개."
+  },
+  "es": {
+   "literal": "revelación de cara",
+   "meaning": "Mostrar tu cara en internet por primera vez",
+   "example": "Mostraré mi cara cuando llegue a diez mil suscriptores.",
+   "origin": "Forma abreviada de 얼굴 공개."
+  }
+ },
+ "귀요미": {
+  "ja": {
+   "literal": "かわいこちゃん",
+   "meaning": "かわいい人やペット",
+   "example": "うちの子犬、ほんとにかわいい。",
+   "origin": "귀엽다（かわいい）を名詞にしたもの。"
+  },
+  "zh-Hans": {
+   "literal": "小可爱",
+   "meaning": "可爱的人或宠物",
+   "example": "我家小狗真是个小可爱。",
+   "origin": "귀엽다（可爱）变成的名词。"
+  },
+  "vi": {
+   "literal": "bé cưng",
+   "meaning": "người hoặc thú cưng đáng yêu",
+   "example": "Cún nhà tôi đáng yêu hết sức.",
+   "origin": "귀엽다 (dễ thương) biến thành danh từ."
+  },
+  "es": {
+   "literal": "cosita linda",
+   "meaning": "Una persona o mascota adorable",
+   "example": "Mi cachorro es una ternura.",
+   "origin": "귀엽다 (lindo, tierno) convertido en sustantivo."
+  }
+ },
+ "훈남": {
+  "ja": {
+   "literal": "ほっこり男",
+   "meaning": "優しい雰囲気のイケメン",
+   "example": "新しく来た人、優しそうなイケメンなんだよね。",
+   "origin": "훈훈한（心温まる）＋남자（男）。女性形は훈녀。"
+  },
+  "zh-Hans": {
+   "literal": "暖心男",
+   "meaning": "温暖亲切型的帅哥，暖男",
+   "example": "新来的那个人是温暖型帅哥。",
+   "origin": "훈훈한（暖心的）+ 남자（男人）。女性叫 훈녀。"
+  },
+  "vi": {
+   "literal": "chàng trai ấm áp",
+   "meaning": "anh chàng đẹp trai kiểu ấm áp, hiền lành",
+   "example": "Anh chàng mới đến đẹp trai kiểu ấm áp lắm.",
+   "origin": "훈훈한 (ấm áp) + 남자 (đàn ông). Dạng nữ là 훈녀."
+  },
+  "es": {
+   "literal": "chico que da calidez",
+   "meaning": "Un chico guapo de forma cálida y amable",
+   "example": "El nuevo tiene ese encanto cálido y atractivo.",
+   "origin": "훈훈한 (reconfortante) + 남자 (hombre). La forma femenina es 훈녀."
+  }
+ },
+ "몸짱": {
+  "ja": {
+   "literal": "体＋最高",
+   "meaning": "体が鍛え抜かれた人、ナイスバディ",
+   "example": "あの人、3か月でバキバキになった。",
+   "origin": "몸（体）＋짱（最高）。얼짱の兄弟分。"
+  },
+  "zh-Hans": {
+   "literal": "身材最棒",
+   "meaning": "身材超好的人",
+   "example": "他三个月就练出了一身肌肉。",
+   "origin": "몸（身体）+ 짱（最棒）。和 얼짱 是一对。"
+  },
+  "vi": {
+   "literal": "thân hình đỉnh",
+   "meaning": "người có thân hình cực chuẩn",
+   "example": "Chỉ ba tháng mà người đó đã lên cơ cuồn cuộn.",
+   "origin": "몸 (cơ thể) + 짱 (nhất). Anh em với 얼짱."
+  },
+  "es": {
+   "literal": "el mejor cuerpo",
+   "meaning": "Alguien con un físico espectacular",
+   "example": "Se puso marcadísimo en tres meses.",
+   "origin": "몸 (cuerpo) + 짱 (lo mejor). Hermano de 얼짱."
+  }
+ },
+ "얼짱": {
+  "ja": {
+   "literal": "顔＋最高",
+   "meaning": "顔がとびきり美しい人",
+   "example": "学校一の美形だったらしいよ。",
+   "origin": "얼굴（顔）＋짱。2000年代初めの写真掲示板から。"
+  },
+  "zh-Hans": {
+   "literal": "脸蛋最棒",
+   "meaning": "颜值超高的人",
+   "example": "听说他以前是学校里最好看的。",
+   "origin": "얼굴（脸）+ 짱，出自2000年代初的照片论坛。"
+  },
+  "vi": {
+   "literal": "mặt đỉnh",
+   "meaning": "người có gương mặt cực đẹp",
+   "example": "Nghe nói hồi đi học người đó đẹp nhất trường.",
+   "origin": "얼굴 (mặt) + 짱, từ các diễn đàn ảnh đầu những năm 2000."
+  },
+  "es": {
+   "literal": "la mejor cara",
+   "meaning": "Alguien con una cara preciosa",
+   "example": "Dicen que era el más guapo de la escuela.",
+   "origin": "얼굴 (cara) + 짱, de los foros de fotos de principios de los 2000."
+  }
+ },
+ "썸남": {
+  "ja": {
+   "literal": "サム＋男",
+   "meaning": "付き合う一歩手前の相手の男性",
+   "example": "いい感じの彼からメッセージが来た。",
+   "origin": "썸＋남자。女性の場合は썸녀。"
+  },
+  "zh-Hans": {
+   "literal": "暧昧男",
+   "meaning": "正在暧昧中的男生",
+   "example": "我的暧昧对象给我发消息了。",
+   "origin": "썸 + 남자。女性叫 썸녀。"
+  },
+  "vi": {
+   "literal": "chàng mập mờ",
+   "meaning": "chàng trai đang trong giai đoạn mập mờ với mình",
+   "example": "Anh chàng đang mập mờ với tôi vừa nhắn tin.",
+   "origin": "썸 + 남자. Dạng nữ là 썸녀."
+  },
+  "es": {
+   "literal": "chico del 'algo'",
+   "meaning": "El chico con quien estás en la etapa de casi salir",
+   "example": "Me escribió el chico con el que estoy medio saliendo.",
+   "origin": "썸 + 남자. La contraparte femenina es 썸녀."
+  }
+ },
+ "삼귀다": {
+  "ja": {
+   "literal": "三付き合う",
+   "meaning": "付き合う一歩手前の関係でいること",
+   "example": "まだ付き合ってない——今は3.9段階くらい。",
+   "origin": "ダジャレ：사귀다（付き合う）の사（四）を삼（三）に一段下げたもの。"
+  },
+  "zh-Hans": {
+   "literal": "“三”往",
+   "meaning": "差一步就交往了",
+   "example": "我们还没交往——还在3.9的阶段。",
+   "origin": "谐音梗：사귀다（交往）的 사 与“四”同音，降成 삼（三）。"
+  },
+  "vi": {
+   "literal": "'ba'-quen",
+   "meaning": "chỉ còn một bước là hẹn hò",
+   "example": "Chưa hẹn hò đâu — mới ở mức ba phẩy chín thôi.",
+   "origin": "Chơi chữ: 사귀다 (hẹn hò) có 사 (bốn) bị hạ xuống 삼 (ba)."
+  },
+  "es": {
+   "literal": "'tresear'",
+   "meaning": "Estar a un paso de ser pareja",
+   "example": "Todavía no somos novios: vamos por la etapa tres punto nueve.",
+   "origin": "Un juego de palabras: 사귀다 (salir con alguien), con 사 (cuatro) rebajado a 삼 (tres)."
+  }
+ },
+ "밀당": {
+  "ja": {
+   "literal": "押し引き",
+   "meaning": "恋の駆け引き",
+   "example": "駆け引きはやめて、はっきり言って。",
+   "origin": "밀고 당기기（押したり引いたり）。"
+  },
+  "zh-Hans": {
+   "literal": "推拉",
+   "meaning": "恋爱中忽冷忽热的拉扯",
+   "example": "别玩推拉游戏了，直说吧。",
+   "origin": "밀고 당기기——“推和拉”。"
+  },
+  "vi": {
+   "literal": "đẩy - kéo",
+   "meaning": "lúc nóng lúc lạnh trong tình yêu",
+   "example": "Đừng làm màu nữa, nói thẳng đi.",
+   "origin": "밀고 당기기 — 'đẩy và kéo'."
+  },
+  "es": {
+   "literal": "tira y afloja",
+   "meaning": "Hacerse el difícil en el amor, frío y caliente",
+   "example": "Deja de jugar y dilo de una vez.",
+   "origin": "밀고 당기기: «empujar y tirar»."
+  }
+ },
+ "모쏠": {
+  "ja": {
+   "literal": "母胎ソロ",
+   "meaning": "一度も恋人がいたことがない人",
+   "example": "実は誰とも付き合ったことがないんだ。",
+   "origin": "모태 솔로——「母のお腹の中からずっと独り身」。"
+  },
+  "zh-Hans": {
+   "literal": "母胎单身",
+   "meaning": "从来没谈过恋爱的人",
+   "example": "我其实从来没谈过恋爱。",
+   "origin": "모태 솔로——“从娘胎起就单身”。"
+  },
+  "vi": {
+   "literal": "độc thân từ trong bụng mẹ",
+   "meaning": "người chưa từng yêu ai",
+   "example": "Thật ra tôi chưa từng hẹn hò ai.",
+   "origin": "모태 솔로 — 'độc thân từ trong bụng mẹ'."
+  },
+  "es": {
+   "literal": "soltero de nacimiento",
+   "meaning": "Alguien que nunca ha tenido pareja",
+   "example": "La verdad es que nunca he salido con nadie.",
+   "origin": "모태 솔로: «soltero desde el vientre materno»."
+  }
+ },
+ "금사빠": {
+  "ja": {
+   "literal": "すぐ恋に落ちる人",
+   "meaning": "すぐ恋に落ちる惚れっぽい人",
+   "example": "あの人はすぐ好きになるから、また恋してる。",
+   "origin": "금방 사랑에 빠지는 사람（すぐ恋に落ちる人）の略。"
+  },
+  "zh-Hans": {
+   "literal": "秒坠爱河的人",
+   "meaning": "动不动就爱上别人的人",
+   "example": "他一下就爱上了——又被迷住了。",
+   "origin": "금방 사랑에 빠지는 사람（很快就坠入爱河的人）。"
+  },
+  "vi": {
+   "literal": "người mau phải lòng",
+   "meaning": "người dễ phải lòng ngay tức khắc",
+   "example": "Người đó yêu nhanh lắm — lại say nắng nữa rồi.",
+   "origin": "금방 사랑에 빠지는 사람."
+  },
+  "es": {
+   "literal": "se enamora rápido",
+   "meaning": "Alguien que se enamora a la primera",
+   "example": "Se enamora al instante: ya cayó otra vez.",
+   "origin": "금방 사랑에 빠지는 사람."
+  }
+ },
+ "남사친": {
+  "ja": {
+   "literal": "男の人の友達",
+   "meaning": "恋愛感情のない男友達",
+   "example": "彼はただの友達だよ、誤解しないで。",
+   "origin": "남자 사람 친구——남자친구（彼氏）ではないと強調するための言い方。女性は여사친。"
+  },
+  "zh-Hans": {
+   "literal": "男性人类朋友",
+   "meaning": "纯友谊的男性朋友",
+   "example": "他只是朋友，别误会。",
+   "origin": "남자 사람 친구——特意说全，强调不是 남자친구（男朋友）。女性叫 여사친。"
+  },
+  "vi": {
+   "literal": "bạn là người nam",
+   "meaning": "bạn nam thuần túy, không phải người yêu",
+   "example": "Anh ấy chỉ là bạn thôi, đừng hiểu lầm.",
+   "origin": "남자 사람 친구 — nói rõ ra để nhấn mạnh không phải 남자친구. Dạng nữ: 여사친."
+  },
+  "es": {
+   "literal": "amigo-persona masculino",
+   "meaning": "Un amigo hombre, estrictamente platónico",
+   "example": "Es solo un amigo, no te hagas ideas.",
+   "origin": "남자 사람 친구: se dice completo para dejar claro que no es 남자친구 (novio). Femenino: 여사친."
+  }
+ },
+ "품절남": {
+  "ja": {
+   "literal": "売り切れ男",
+   "meaning": "結婚した・相手がいる男性",
+   "example": "あの俳優はもう売り切れだよ。",
+   "origin": "품절（品切れ）＋남자。お店の在庫にたとえたもの。女性は품절녀。"
+  },
+  "zh-Hans": {
+   "literal": "售罄男",
+   "meaning": "已婚或名草有主的男人",
+   "example": "那个演员现在已经名草有主了。",
+   "origin": "품절（售罄）+ 남자，好像他是店里的商品。女性叫 품절녀。"
+  },
+  "vi": {
+   "literal": "người đàn ông hết hàng",
+   "meaning": "người đàn ông đã có chủ hoặc đã kết hôn",
+   "example": "Nam diễn viên đó giờ đã có chủ rồi.",
+   "origin": "품절 (hết hàng) + 남자, như thể anh ta là hàng trong cửa hàng. Dạng nữ: 품절녀."
+  },
+  "es": {
+   "literal": "hombre agotado",
+   "meaning": "Hombre que ya está casado o comprometido",
+   "example": "Ese actor ya no está disponible.",
+   "origin": "품절 (agotado) + 남자, como si fuera mercancía de tienda. Femenino: 품절녀."
+  }
+ },
+ "애교": {
+  "ja": {
+   "literal": "愛嬌",
+   "meaning": "わざとかわいく振る舞って甘えること",
+   "example": "ぶりっ子しても無駄だよ、効かないから。",
+   "origin": "昔からある言葉だが、現代の恋愛やアイドル文化の中心にある。"
+  },
+  "zh-Hans": {
+   "literal": "撒娇表演",
+   "meaning": "故意卖萌撒娇讨人欢心",
+   "example": "别撒娇了——没用的。",
+   "origin": "一个老词，但在现代恋爱和偶像文化中很重要。"
+  },
+  "vi": {
+   "literal": "màn làm duyên",
+   "meaning": "cố tình làm nũng đáng yêu để lấy lòng",
+   "example": "Đừng làm nũng — vô ích thôi.",
+   "origin": "Một từ có từ lâu, nhưng là trung tâm của văn hóa hẹn hò và idol hiện đại."
+  },
+  "es": {
+   "literal": "actuación encantadora",
+   "meaning": "Hacerse el tierno a propósito para conquistar a alguien",
+   "example": "No te hagas el tierno, no va a funcionar.",
+   "origin": "Una palabra de toda la vida, pero central en las citas y la cultura idol de hoy."
+  }
+ },
+ "심멎": {
+  "ja": {
+   "literal": "心臓停止",
+   "meaning": "心臓が止まりそうなほど衝撃的に素敵",
+   "example": "あのシーンで心臓が止まるかと思った。",
+   "origin": "심장 멎다（心臓が止まる）の略。심쿵の強力版。"
+  },
+  "zh-Hans": {
+   "literal": "心脏停止",
+   "meaning": "美到让人心跳漏一拍",
+   "example": "那一幕让我心跳都停了。",
+   "origin": "심장 멎다（心脏停止）的缩写。比 심쿵 更强烈。"
+  },
+  "vi": {
+   "literal": "tim ngừng",
+   "meaning": "đẹp đến mức tim ngừng đập",
+   "example": "Cảnh đó làm tim tôi ngừng đập.",
+   "origin": "Rút gọn từ 심장 멎다. Mạnh hơn 심쿵."
+  },
+  "es": {
+   "literal": "paro del corazón",
+   "meaning": "Tan impactante que el corazón se detiene",
+   "example": "Con esa escena se me paró el corazón.",
+   "origin": "심장 멎다 abreviado. Un primo más fuerte de 심쿵."
+  }
+ },
+ "안구정화": {
+  "ja": {
+   "literal": "眼球浄化",
+   "meaning": "目が浄化されるほど見ていて癒される",
+   "example": "この写真、見てるだけで目が浄化される。",
+   "origin": "안구（眼球）＋정화（浄化）。"
+  },
+  "zh-Hans": {
+   "literal": "眼球净化",
+   "meaning": "赏心悦目到洗眼睛",
+   "example": "这张照片真是洗眼睛。",
+   "origin": "안구（眼球）+ 정화（净化）。"
+  },
+  "vi": {
+   "literal": "thanh lọc nhãn cầu",
+   "meaning": "đẹp đến mức 'rửa mắt'",
+   "example": "Bức ảnh này đúng là rửa mắt.",
+   "origin": "안구 (nhãn cầu) + 정화 (thanh lọc)."
+  },
+  "es": {
+   "literal": "purificación ocular",
+   "meaning": "Algo tan lindo de ver que te limpia la vista",
+   "example": "Esta foto es un regalo para la vista.",
+   "origin": "안구 (globo ocular) + 정화 (purificación)."
+  }
+ },
+ "눈호강": {
+  "ja": {
+   "literal": "目の贅沢",
+   "meaning": "目の保養",
+   "example": "夜景がまさに目の保養だった。",
+   "origin": "눈（目）＋호강（贅沢に暮らすこと）。耳の場合は귀호강。"
+  },
+  "zh-Hans": {
+   "literal": "眼睛享福",
+   "meaning": "一场视觉盛宴",
+   "example": "那片夜景真是一场视觉盛宴。",
+   "origin": "눈（眼睛）+ 호강（享福）。耳朵版叫 귀호강。"
+  },
+  "vi": {
+   "literal": "đôi mắt được hưởng xa hoa",
+   "meaning": "bữa tiệc cho đôi mắt",
+   "example": "Cảnh đêm đúng là bữa tiệc cho đôi mắt.",
+   "origin": "눈 (mắt) + 호강 (sống sung sướng). Phiên bản cho tai là 귀호강."
+  },
+  "es": {
+   "literal": "lujo para los ojos",
+   "meaning": "Un banquete para los ojos",
+   "example": "La vista nocturna fue un banquete para los ojos.",
+   "origin": "눈 (ojos) + 호강 (vivir con lujos). La versión para los oídos es 귀호강."
+  }
+ },
+ "오글거리다": {
+  "ja": {
+   "literal": "縮こまる",
+   "meaning": "痛すぎて鳥肌が立つ、共感性羞恥",
+   "example": "そのセリフ、痛すぎて耐えられない。",
+   "origin": "손발이 오그라들다（手足が縮こまる）から。"
+  },
+  "zh-Hans": {
+   "literal": "蜷缩起来",
+   "meaning": "尴尬到脚趾抠地",
+   "example": "那句台词尴尬得让人受不了。",
+   "origin": "出自 손발이 오그라들다——“手脚都蜷起来了”。"
+  },
+  "vi": {
+   "literal": "co quắp lại",
+   "meaning": "sến súa đến nổi da gà",
+   "example": "Câu thoại đó sến không chịu nổi.",
+   "origin": "Từ 손발이 오그라들다 — 'tay chân co quắp lại'."
+  },
+  "es": {
+   "literal": "encogerse",
+   "meaning": "Dar tanta vergüenza ajena que se te encogen los dedos",
+   "example": "Esa frase da una vergüenza ajena insoportable.",
+   "origin": "De 손발이 오그라들다: «se me encogen las manos y los pies»."
+  }
+ },
+ "짠내": {
+  "ja": {
+   "literal": "しょっぱい匂い",
+   "meaning": "哀れだけど憎めない、涙ぐましい感じ",
+   "example": "その話、なんだか泣けるほど切ない。",
+   "origin": "짜다（しょっぱい、涙のように）＋내（匂い）。"
+  },
+  "zh-Hans": {
+   "literal": "咸味",
+   "meaning": "有点可怜又惹人心疼的感觉",
+   "example": "那个故事有点让人心酸。",
+   "origin": "짜다（咸，像眼泪一样）+ 내（味道）。"
+  },
+  "vi": {
+   "literal": "mùi mặn",
+   "meaning": "chút đáng thương mà đáng mến",
+   "example": "Câu chuyện đó nghe mà thấy thương.",
+   "origin": "짜다 (mặn, như nước mắt) + 내 (mùi)."
+  },
+  "es": {
+   "literal": "olor salado",
+   "meaning": "Un aire de algo un poco lastimoso pero entrañable",
+   "example": "Esa historia es un poco triste, de partir el corazón.",
+   "origin": "짜다 (salado, como las lágrimas) + 내 (olor)."
+  }
+ },
+ "정색": {
+  "ja": {
+   "literal": "真顔",
+   "meaning": "急に笑顔が消えて真顔になること",
+   "example": "冗談なのに、なんで急に真顔になるの？",
+   "origin": "普通の言葉だが、冗談にマジになる意味でスラング化した。"
+  },
+  "zh-Hans": {
+   "literal": "板起脸",
+   "meaning": "收起笑容突然变严肃",
+   "example": "开个玩笑而已——怎么突然这么严肃？",
+   "origin": "一个标准词，后来变成俚语，指对玩笑反应过度。"
+  },
+  "vi": {
+   "literal": "mặt nghiêm",
+   "meaning": "bỗng tắt nụ cười, nghiêm mặt lại",
+   "example": "Đùa thôi mà — sao tự dưng nghiêm mặt vậy?",
+   "origin": "Một từ chuẩn trở thành tiếng lóng chỉ việc phản ứng thái quá với câu đùa."
+  },
+  "es": {
+   "literal": "cara seria",
+   "meaning": "Borrar la sonrisa y ponerse serio de golpe",
+   "example": "Era una broma, ¿por qué te pones tan serio de repente?",
+   "origin": "Una palabra estándar que se volvió jerga para reaccionar exageradamente a una broma."
+  }
+ },
+ "아재개그": {
+  "ja": {
+   "literal": "おじさんギャグ",
+   "meaning": "親父ギャグ",
+   "example": "また親父ギャグ？",
+   "origin": "아재（中年男性、아저씨の方言）＋ギャグ。"
+  },
+  "zh-Hans": {
+   "literal": "大叔笑话",
+   "meaning": "大叔式冷笑话，谐音梗",
+   "example": "又是大叔冷笑话？",
+   "origin": "아재（中年男人，아저씨 的方言）+ gag（笑话）。"
+  },
+  "vi": {
+   "literal": "câu đùa của chú",
+   "meaning": "câu đùa kiểu 'ông chú', đùa nhạt",
+   "example": "Lại đùa kiểu ông chú nữa à?",
+   "origin": "아재 (đàn ông trung niên, phương ngữ của 아저씨) + gag."
+  },
+  "es": {
+   "literal": "chiste de tío",
+   "meaning": "Un chiste de papá",
+   "example": "¿Otro chiste de papá?",
+   "origin": "아재 (hombre de mediana edad, forma dialectal de 아저씨) + gag (chiste)."
+  }
+ },
+ "초딩": {
+  "ja": {
+   "literal": "小学生",
+   "meaning": "小学生、または子どもっぽい大人",
+   "example": "子どもみたいなことしないで。",
+   "origin": "초등학생＋接尾辞〜딩。중딩、고딩、대딩もある。"
+  },
+  "zh-Hans": {
+   "literal": "小学生",
+   "meaning": "小学生——或像小学生的大人",
+   "example": "别像小孩子一样。",
+   "origin": "초등학생 + 后缀 ~딩。还有 중딩、고딩、대딩。"
+  },
+  "vi": {
+   "literal": "học sinh tiểu học",
+   "meaning": "học sinh tiểu học — hoặc người lớn cư xử như con nít",
+   "example": "Đừng cư xử như con nít.",
+   "origin": "초등학생 + hậu tố ~딩. Còn có 중딩, 고딩, 대딩."
+  },
+  "es": {
+   "literal": "niño de primaria",
+   "meaning": "Un niño de primaria — o un adulto que actúa como tal",
+   "example": "No te portes como un niño.",
+   "origin": "초등학생 + el sufijo ~딩. También 중딩, 고딩, 대딩."
+  }
+ },
+ "어른이": {
+  "ja": {
+   "literal": "大人子ども",
+   "meaning": "子ども向けのものが大好きな大人",
+   "example": "私はいまだにレゴを買う大人です。",
+   "origin": "어른（大人）＋어린이（子ども）を合わせたもの。"
+  },
+  "zh-Hans": {
+   "literal": "大人+小孩",
+   "meaning": "仍然爱玩儿童玩意的大人",
+   "example": "我是个还在买乐高的大人。",
+   "origin": "어른（大人）+ 어린이（儿童）的合体。"
+  },
+  "vi": {
+   "literal": "người lớn - trẻ con",
+   "meaning": "người lớn vẫn mê đồ trẻ con",
+   "example": "Tôi là người lớn mà vẫn mua Lego.",
+   "origin": "어른 (người lớn) + 어린이 (trẻ em), ghép lại."
+  },
+  "es": {
+   "literal": "adulto-niño",
+   "meaning": "Un adulto al que aún le encantan las cosas de niños",
+   "example": "Soy un adulto que todavía compra Lego.",
+   "origin": "어른 (adulto) + 어린이 (niño), fusionados."
+  }
+ },
+ "혼코노": {
+  "ja": {
+   "literal": "一人コインカラオケ",
+   "meaning": "一人でコインカラオケに行くこと、ヒトカラ",
+   "example": "ストレスがたまると一人でカラオケに行く。",
+   "origin": "혼자 코인 노래방の1音節ずつ——혼밥の仲間。"
+  },
+  "zh-Hans": {
+   "literal": "独自投币K歌",
+   "meaning": "一个人去投币式KTV",
+   "example": "压力大的时候我就一个人去唱歌。",
+   "origin": "혼자 코인 노래방，各取一个音节——属于 혼밥 一族。"
+  },
+  "vi": {
+   "literal": "một mình + karaoke xu",
+   "meaning": "đi karaoke xu một mình",
+   "example": "Khi căng thẳng, tôi đi hát một mình.",
+   "origin": "혼자 코인 노래방, mỗi từ một âm tiết — cùng họ với 혼밥."
+  },
+  "es": {
+   "literal": "karaoke de monedas a solas",
+   "meaning": "Ir solo a una cabina de karaoke de monedas",
+   "example": "Cuando estoy estresado, me voy a cantar solo.",
+   "origin": "혼자 코인 노래방, una sílaba de cada palabra: de la familia de 혼밥."
+  }
+ },
+ "카공족": {
+  "ja": {
+   "literal": "カフェ勉族",
+   "meaning": "カフェで何時間も勉強する人たち",
+   "example": "試験期間はカフェが勉強する人でいっぱい。",
+   "origin": "카페 공부＋족（族）。とてもよく使われる接尾辞。"
+  },
+  "zh-Hans": {
+   "literal": "咖啡馆学习族",
+   "meaning": "在咖啡馆一坐几小时学习的人",
+   "example": "考试期间咖啡馆里坐满了学习的人。",
+   "origin": "카페 공부 + 족（族），一个非常能产的后缀。"
+  },
+  "vi": {
+   "literal": "tộc học ở cà phê",
+   "meaning": "những người ngồi học hàng giờ ở quán cà phê",
+   "example": "Mùa thi, quán cà phê kín người ngồi học.",
+   "origin": "카페 공부 + 족 (tộc), một hậu tố rất hay dùng."
+  },
+  "es": {
+   "literal": "tribu de estudiar en cafés",
+   "meaning": "Gente que pasa horas estudiando en cafeterías",
+   "example": "En época de exámenes, las cafeterías se llenan de gente estudiando.",
+   "origin": "카페 공부 + 족 (tribu), un sufijo muy productivo."
+  }
+ },
+ "파이어족": {
+  "ja": {
+   "literal": "FIRE族",
+   "meaning": "早期リタイアを目指して貯金に励む人たち",
+   "example": "早期リタイアのために必死で貯金している。",
+   "origin": "FIRE（経済的自立と早期リタイア）＋족。"
+  },
+  "zh-Hans": {
+   "literal": "FIRE族",
+   "meaning": "拼命存钱想提前退休的人",
+   "example": "我在拼命存钱，想提前退休。",
+   "origin": "FIRE（financial independence, retire early，财务独立、提前退休）+ 족。"
+  },
+  "vi": {
+   "literal": "tộc FIRE",
+   "meaning": "những người tiết kiệm mạnh để nghỉ hưu sớm",
+   "example": "Tôi đang tiết kiệm hết sức để nghỉ hưu sớm.",
+   "origin": "FIRE (độc lập tài chính, nghỉ hưu sớm) + 족."
+  },
+  "es": {
+   "literal": "tribu FIRE",
+   "meaning": "Gente que ahorra a tope para jubilarse joven",
+   "example": "Estoy ahorrando a tope para jubilarme temprano.",
+   "origin": "FIRE (financial independence, retire early: independencia financiera, jubilación anticipada) + 족."
+  }
+ },
+ "슬세권": {
+  "ja": {
+   "literal": "スリッパ圏",
+   "meaning": "何でもスリッパで行ける距離にそろう街",
+   "example": "ここは何でもスリッパで行ける距離にあって、すごく便利。",
+   "origin": "슬리퍼（スリッパ）＋역세권（駅勢圏、駅から近いエリア）。"
+  },
+  "zh-Hans": {
+   "literal": "拖鞋圈",
+   "meaning": "穿拖鞋就能走到一切的街区",
+   "example": "这里穿着拖鞋就什么都能买到——太方便了。",
+   "origin": "슬리퍼（拖鞋）+ 역세권（地铁站辐射圈）。"
+  },
+  "vi": {
+   "literal": "vùng đi dép lê",
+   "meaning": "khu phố mọi thứ chỉ cách vài bước đi dép lê",
+   "example": "Ở đây đi dép lê là tới mọi thứ — tiện thật.",
+   "origin": "슬리퍼 (dép lê) + 역세권 (vùng quanh ga tàu)."
+  },
+  "es": {
+   "literal": "zona de chanclas",
+   "meaning": "Barrio donde todo queda a un paseo en chanclas",
+   "example": "Aquí todo queda a un paseo en chanclas, qué comodidad.",
+   "origin": "슬리퍼 (chanclas) + 역세권 (zona de influencia de una estación)."
+  }
+ },
+ "소맥": {
+  "ja": {
+   "literal": "焼酎＋ビール",
+   "meaning": "焼酎をビールで割ったお酒",
+   "example": "今夜はソメクにしよう。",
+   "origin": "소주＋맥주。치맥と同じ作り。"
+  },
+  "zh-Hans": {
+   "literal": "烧酒+啤酒",
+   "meaning": "烧酒兑啤酒",
+   "example": "今晚来喝烧啤吧。",
+   "origin": "소주（烧酒）+ 맥주（啤酒），构词同 치맥。"
+  },
+  "vi": {
+   "literal": "soju + bia",
+   "meaning": "soju pha bia",
+   "example": "Tối nay làm soju pha bia nhé.",
+   "origin": "소주 + 맥주, ghép theo kiểu 치맥."
+  },
+  "es": {
+   "literal": "soju-cerveza",
+   "meaning": "Soju mezclado con cerveza",
+   "example": "Esta noche toca soju con cerveza.",
+   "origin": "소주 + 맥주, formado igual que 치맥."
+  }
+ },
+ "편맥": {
+  "ja": {
+   "literal": "コンビニ＋ビール",
+   "meaning": "コンビニの前で飲む安いビール",
+   "example": "仕事終わりにコンビニでビールでもどう？",
+   "origin": "편의점（コンビニ）＋맥주（ビール）。"
+  },
+  "zh-Hans": {
+   "literal": "便利店啤酒",
+   "meaning": "在便利店门口喝的便宜啤酒",
+   "example": "下班后去便利店喝杯啤酒？",
+   "origin": "편의점（便利店）+ 맥주（啤酒）。"
+  },
+  "vi": {
+   "literal": "bia cửa hàng tiện lợi",
+   "meaning": "lon bia rẻ uống trước cửa hàng tiện lợi",
+   "example": "Tan làm làm lon bia ở cửa hàng tiện lợi không?",
+   "origin": "편의점 + 맥주."
+  },
+  "es": {
+   "literal": "cerveza de tienda",
+   "meaning": "Una cerveza barata frente a una tienda de conveniencia",
+   "example": "¿Una cerveza en la tienda después del trabajo?",
+   "origin": "편의점 (tienda de conveniencia) + 맥주 (cerveza)."
+  }
+ },
+ "술찌": {
+  "ja": {
+   "literal": "酒の弱虫",
+   "meaning": "すぐ酔ってしまうお酒に弱い人",
+   "example": "お酒弱いんだ、一杯でもう限界。",
+   "origin": "술（お酒）＋찌질이（弱虫）。愛情のこもった言い方。"
+  },
+  "zh-Hans": {
+   "literal": "酒量弱鸡",
+   "meaning": "不胜酒力的人，一杯倒",
+   "example": "我酒量很差——一杯就倒。",
+   "origin": "술（酒）+ 찌질이（弱鸡），带亲昵意味。"
+  },
+  "vi": {
+   "literal": "yếu rượu",
+   "meaning": "người tửu lượng kém",
+   "example": "Tôi yếu rượu lắm — một ly là gục.",
+   "origin": "술 (rượu) + 찌질이 (kẻ yếu), mang sắc thái thân mật."
+  },
+  "es": {
+   "literal": "debilucho del alcohol",
+   "meaning": "Alguien que no aguanta nada el alcohol",
+   "example": "Aguanto poquísimo: con una copa ya estoy.",
+   "origin": "술 (alcohol) + 찌질이 (debilucho), en tono cariñoso."
+  }
+ },
+ "부먹": {
+  "ja": {
+   "literal": "かけて食べる",
+   "meaning": "ソースをかけて食べる派（酢豚）",
+   "example": "私は断然ソースかける派。",
+   "origin": "부어 먹다（かけて食べる）——찍먹と永遠に争う탕수육論争。"
+  },
+  "zh-Hans": {
+   "literal": "浇着吃",
+   "meaning": "浇汁派（锅包肉／糖醋肉）",
+   "example": "我坚定地站浇汁派。",
+   "origin": "부어 먹다（浇着吃）——与 찍먹 就 탕수육 的永恒之争。"
+  },
+  "vi": {
+   "literal": "rưới rồi ăn",
+   "meaning": "phe rưới sốt lên thịt chua ngọt",
+   "example": "Tôi kiên định theo phe rưới sốt.",
+   "origin": "부어 먹다 — cuộc tranh cãi muôn thuở về 탕수육 với phe 찍먹."
+  },
+  "es": {
+   "literal": "verter y comer",
+   "meaning": "Equipo «salsa por encima» (cerdo agridulce)",
+   "example": "Soy totalmente del equipo de echarle la salsa encima.",
+   "origin": "부어 먹다: el eterno debate del 탕수육 contra 찍먹."
+  }
+ },
+ "찍먹": {
+  "ja": {
+   "literal": "つけて食べる",
+   "meaning": "ソースにつけて食べる派",
+   "example": "どう考えてもつけて食べるのが正解。",
+   "origin": "찍어 먹다（つけて食べる）——韓国で最も議論される食の問題のもう一方。"
+  },
+  "zh-Hans": {
+   "literal": "蘸着吃",
+   "meaning": "蘸汁派",
+   "example": "蘸着吃才是正确吃法。",
+   "origin": "찍어 먹다（蘸着吃）——韩国争论最多的饮食问题的另一方。"
+  },
+  "vi": {
+   "literal": "chấm rồi ăn",
+   "meaning": "phe chấm sốt",
+   "example": "Chấm sốt rõ ràng mới là cách đúng.",
+   "origin": "찍어 먹다 — nửa còn lại của câu hỏi ẩm thực gây tranh cãi nhất Hàn Quốc."
+  },
+  "es": {
+   "literal": "mojar y comer",
+   "meaning": "Equipo «mojar en la salsa»",
+   "example": "Mojar es, obviamente, la forma correcta.",
+   "origin": "찍어 먹다: la otra mitad de la pregunta gastronómica más discutida de Corea."
+  }
+ },
+ "겉바속촉": {
+  "ja": {
+   "literal": "外カリ中しっとり",
+   "meaning": "外はカリッと中はジューシー、理想の食感",
+   "example": "このクロワッサン、外はサクサク中はふわふわ。",
+   "origin": "겉은 바삭하고 속은 촉촉하다の1音節ずつ。"
+  },
+  "zh-Hans": {
+   "literal": "外脆内嫩",
+   "meaning": "外酥里嫩——理想口感",
+   "example": "这个可颂外酥里软。",
+   "origin": "겉은 바삭하고 속은 촉촉하다（外面酥脆，里面湿润），各取一个音节。"
+  },
+  "vi": {
+   "literal": "ngoài giòn, trong mềm",
+   "meaning": "ngoài giòn trong mọng — kết cấu lý tưởng",
+   "example": "Bánh sừng bò này ngoài giòn trong mềm.",
+   "origin": "겉은 바삭하고 속은 촉촉하다, mỗi vế một âm tiết."
+  },
+  "es": {
+   "literal": "crujiente por fuera, húmedo por dentro",
+   "meaning": "Crujiente por fuera, jugoso por dentro — la textura ideal",
+   "example": "Este cruasán está crujiente por fuera y suave por dentro.",
+   "origin": "겉은 바삭하고 속은 촉촉하다, una sílaba de cada parte."
+  }
+ },
+ "단짠": {
+  "ja": {
+   "literal": "甘い＋しょっぱい",
+   "meaning": "止まらない甘じょっぱい組み合わせ",
+   "example": "甘い、しょっぱいの無限ループ、最強。",
+   "origin": "단맛（甘味）＋짠맛（塩味）。よく단짠단짠と繰り返す。"
+  },
+  "zh-Hans": {
+   "literal": "甜+咸",
+   "meaning": "甜咸交替、停不下来的组合",
+   "example": "甜完再咸，循环往复——无敌。",
+   "origin": "단맛（甜味）+ 짠맛（咸味），常叠用成 단짠단짠。"
+  },
+  "vi": {
+   "literal": "ngọt - mặn",
+   "meaning": "combo ngọt mặn ăn mãi không dừng",
+   "example": "Ngọt rồi mặn, cứ thế xoay vòng — không gì bằng.",
+   "origin": "단맛 + 짠맛, thường nói lặp thành 단짠단짠."
+  },
+  "es": {
+   "literal": "dulce-salado",
+   "meaning": "La combinación dulce y salada que no puedes dejar de comer",
+   "example": "Dulce y luego salado, una y otra vez: imbatible.",
+   "origin": "단맛 + 짠맛; suele duplicarse como 단짠단짠."
+  }
+ },
+ "맛점": {
+  "ja": {
+   "literal": "おいしいお昼",
+   "meaning": "「お昼ごはん楽しんで！」というあいさつ",
+   "example": "お昼ごはん、楽しんでね！",
+   "origin": "맛있는 점심（おいしいお昼ごはん）の略。夕食版は맛저。"
+  },
+  "zh-Hans": {
+   "literal": "美味午餐",
+   "meaning": "“午饭吃好哦！”",
+   "example": "午饭吃好哦！",
+   "origin": "맛있는 점심（美味的午餐）的缩写。晚餐版叫 맛저。"
+  },
+  "vi": {
+   "literal": "bữa trưa ngon",
+   "meaning": "'ăn trưa ngon miệng nhé!'",
+   "example": "Ăn trưa ngon miệng nhé!",
+   "origin": "Rút gọn từ 맛있는 점심. Phiên bản bữa tối: 맛저."
+  },
+  "es": {
+   "literal": "almuerzo sabroso",
+   "meaning": "«¡Buen provecho en el almuerzo!»",
+   "example": "¡Que disfrutes tu almuerzo!",
+   "origin": "맛있는 점심 abreviado. La versión de la cena es 맛저."
+  }
+ },
+ "해장": {
+  "ja": {
+   "literal": "内臓をほぐす",
+   "meaning": "二日酔いを覚ますこと（主に熱いスープで）",
+   "example": "二日酔い覚ましにスープ食べに行こう。",
+   "origin": "해정（解酲）——何百年も前からある言葉で、今も毎日使われる。"
+  },
+  "zh-Hans": {
+   "literal": "舒缓肠胃",
+   "meaning": "解酒，通常喝热汤",
+   "example": "去喝碗汤解解酒吧。",
+   "origin": "해정（解酲）——一个沿用了几百年、至今天天在用的词。"
+  },
+  "vi": {
+   "literal": "làm dịu ruột gan",
+   "meaning": "giải rượu, thường bằng canh nóng",
+   "example": "Đi ăn canh giải rượu thôi.",
+   "origin": "해정 (解酲) — một từ có từ hàng thế kỷ vẫn dùng hằng ngày."
+  },
+  "es": {
+   "literal": "aflojar las entrañas",
+   "meaning": "Curar la resaca, normalmente con sopa caliente",
+   "example": "Vamos a tomar sopa para quitarnos esta resaca.",
+   "origin": "해정 (解酲): una palabra de hace siglos que todavía se usa a diario."
+  }
+ },
+ "오운완": {
+  "ja": {
+   "literal": "今日の運動完了",
+   "meaning": "今日のトレーニング完了を投稿すること",
+   "example": "トレ完了——今日もやりきった。",
+   "origin": "오늘 운동 완료（今日の運動完了）。ジムの自撮りの定番ハッシュタグ。"
+  },
+  "zh-Hans": {
+   "literal": "今日运动完成",
+   "meaning": "晒出今天运动完成的证明",
+   "example": "运动完成——今天也坚持了。",
+   "origin": "오늘 운동 완료（今天运动完成），健身自拍的常用标签。"
+  },
+  "vi": {
+   "literal": "hôm nay tập xong",
+   "meaning": "khoe bằng chứng đã tập xong hôm nay",
+   "example": "Tập xong — hôm nay lại hoàn thành.",
+   "origin": "오늘 운동 완료, hashtag quen thuộc của ảnh selfie phòng gym."
+  },
+  "es": {
+   "literal": "ejercicio de hoy completado",
+   "meaning": "Publicar la prueba de que hiciste el ejercicio del día",
+   "example": "Ejercicio hecho: hoy también cumplí.",
+   "origin": "오늘 운동 완료, un hashtag infaltable en las selfies de gimnasio."
+  }
+ },
+ "홈트": {
+  "ja": {
+   "literal": "ホームトレーニング",
+   "meaning": "家での筋トレ、宅トレ",
+   "example": "最近は宅トレでなんとかやってる。",
+   "origin": "홈 트레이닝の略。コロナ禍で一気に広まった。"
+  },
+  "zh-Hans": {
+   "literal": "居家训练",
+   "meaning": "在家健身",
+   "example": "我最近靠在家健身撑着。",
+   "origin": "홈 트레이닝（home training）的缩写；疫情期间爆火。"
+  },
+  "vi": {
+   "literal": "tập tại nhà",
+   "meaning": "tập thể dục tại nhà",
+   "example": "Dạo này tôi chỉ tập ở nhà thôi.",
+   "origin": "홈 트레이닝 rút gọn; bùng nổ trong đại dịch."
+  },
+  "es": {
+   "literal": "entrenamiento en casa",
+   "meaning": "Hacer ejercicio en casa",
+   "example": "Me las he estado arreglando con ejercicios en casa.",
+   "origin": "홈 트레이닝 recortado; se disparó durante la pandemia."
+  }
+ },
+ "치팅데이": {
+  "ja": {
+   "literal": "チーティングデイ",
+   "meaning": "好きなものを何でも食べていい日、チートデイ",
+   "example": "明日はチートデイだから、あと少し頑張って。",
+   "origin": "英語の「cheat day」。韓国のフィットネス界で定番の言葉。"
+  },
+  "zh-Hans": {
+   "literal": "欺骗日",
+   "meaning": "可以放开吃任何东西的日子",
+   "example": "明天是我的放纵日，再坚持一下。",
+   "origin": "英语 cheat day，韩国健身圈的标准说法。"
+  },
+  "vi": {
+   "literal": "ngày gian lận",
+   "meaning": "ngày cho phép ăn thả ga",
+   "example": "Mai là ngày ăn thả ga rồi, cố lên.",
+   "origin": "Tiếng Anh 'cheat day', phổ biến trong giới thể hình Hàn."
+  },
+  "es": {
+   "literal": "día de trampa",
+   "meaning": "El día en que te permites comer de todo",
+   "example": "Mañana es mi día libre de dieta, así que aguanta.",
+   "origin": "'Cheat day' del inglés, habitual en el mundo fitness coreano."
+  }
+ },
+ "케미": {
+  "ja": {
+   "literal": "ケミ（ストリー）",
+   "meaning": "二人の間の相性、化学反応",
+   "example": "あの二人の俳優の相性、すごすぎる。",
+   "origin": "케미스트리（ケミストリー）を2音節に縮めたもの。"
+  },
+  "zh-Hans": {
+   "literal": "化学（反应）",
+   "meaning": "两人之间的火花与默契",
+   "example": "那两位演员的化学反应太棒了。",
+   "origin": "케미스트리（chemistry）缩成两个音节。"
+  },
+  "vi": {
+   "literal": "hóa học",
+   "meaning": "phản ứng hóa học giữa hai người",
+   "example": "Hai diễn viên đó có phản ứng hóa học tuyệt vời.",
+   "origin": "케미스트리 rút gọn còn hai âm tiết."
+  },
+  "es": {
+   "literal": "quími(ca)",
+   "meaning": "La chispa entre dos personas, en pantalla o fuera de ella",
+   "example": "La química entre esos dos actores es increíble.",
+   "origin": "케미스트리 recortado a dos sílabas."
+  }
+ },
+ "반모": {
+  "ja": {
+   "literal": "タメ口モード",
+   "meaning": "お互い敬語をやめてタメ口にすること",
+   "example": "タメ口にする？",
+   "origin": "반말 모드（タメ口モード）——子ども向けチャットアプリで生まれ、今は大人も冗談で使う。"
+  },
+  "zh-Hans": {
+   "literal": "半语模式",
+   "meaning": "约定和对方改说非敬语",
+   "example": "我们要不要改说半语？",
+   "origin": "반말 모드（半语模式）——起源于儿童聊天软件，现在大人也拿来开玩笑。"
+  },
+  "vi": {
+   "literal": "chế độ nói trống không",
+   "meaning": "thỏa thuận bỏ kính ngữ với ai đó",
+   "example": "Mình chuyển sang nói chuyện thân mật nhé?",
+   "origin": "반말 모드 — ra đời trên app chat của trẻ em, nay người lớn dùng để đùa."
+  },
+  "es": {
+   "literal": "modo habla informal",
+   "meaning": "Acordar dejar el trato formal con alguien",
+   "example": "¿Nos hablamos de tú?",
+   "origin": "반말 모드: nació en apps de chat infantiles y hoy los adultos lo usan en broma."
+  }
+ },
+ "밥약": {
+  "ja": {
+   "literal": "ご飯の約束",
+   "meaning": "誰かと食事に行く約束",
+   "example": "先輩とご飯の約束をした。",
+   "origin": "밥 약속（ご飯の約束）の略。大学でよく使われる。"
+  },
+  "zh-Hans": {
+   "literal": "吃饭约定",
+   "meaning": "约人一起吃饭",
+   "example": "我和学长约了一起吃饭。",
+   "origin": "밥 약속（吃饭约定）的缩写；大学校园里用得很多。"
+  },
+  "vi": {
+   "literal": "hẹn ăn cơm",
+   "meaning": "hẹn đi ăn với ai đó",
+   "example": "Tôi đã hẹn đi ăn với anh khóa trên.",
+   "origin": "Rút gọn từ 밥 약속; dùng rất nhiều trong trường đại học."
+  },
+  "es": {
+   "literal": "cita para comer",
+   "meaning": "Quedar para comer con alguien",
+   "example": "Quedé para comer con alguien de un curso superior.",
+   "origin": "밥 약속 abreviado; muy usado en la universidad."
+  }
+ },
+ "N포세대": {
+  "ja": {
+   "literal": "N放世代",
+   "meaning": "人生の節目をいくつも諦める世代",
+   "example": "私たちが「全部諦めた世代」と呼ばれるのには理由がある。",
+   "origin": "삼포세대（恋愛・結婚・出産を諦めた世代）から発展——Nは「いくつでも」。"
+  },
+  "zh-Hans": {
+   "literal": "N抛世代",
+   "meaning": "放弃了N项人生里程碑的一代",
+   "example": "人们叫我们“N抛世代”是有原因的。",
+   "origin": "源自 삼포세대（放弃恋爱、结婚、生子的三抛世代）——N 表示“不管多少项”。"
+  },
+  "vi": {
+   "literal": "thế hệ từ bỏ N thứ",
+   "meaning": "thế hệ từ bỏ vô số cột mốc cuộc đời",
+   "example": "Người ta gọi bọn mình là thế hệ từ bỏ tất cả là có lý do.",
+   "origin": "Phát triển từ 삼포세대 (từ bỏ hẹn hò, kết hôn, sinh con) — N là 'bao nhiêu cũng được'."
+  },
+  "es": {
+   "literal": "generación que renuncia a N cosas",
+   "meaning": "Generación que renuncia a vaya a saber cuántas metas de vida",
+   "example": "Por algo nos llaman la generación que renuncia a todo.",
+   "origin": "Surgió de 삼포세대 (renunciar a salir con alguien, al matrimonio y a los hijos); N significa 'las que sean'."
+  }
+ },
+ "ㅇㅈ": {
+  "ja": {
+   "literal": "イ・ジ",
+   "meaning": "同意／それな（略語）",
+   "example": "それな、私もそう思う。",
+   "origin": "인정（認める）の頭文字——초성체と呼ばれる略し方。"
+  },
+  "zh-Hans": {
+   "literal": "a-g",
+   "meaning": "同意（认同的首字母缩写）",
+   "example": "同意，我也这么想。",
+   "origin": "인정（认同）的首辅音——一种 초성체（首辅音体）缩写。"
+  },
+  "vi": {
+   "literal": "i-j",
+   "meaning": "đồng ý / đúng (viết tắt phụ âm)",
+   "example": "Đồng ý. Tôi cũng nghĩ vậy.",
+   "origin": "Phụ âm đầu của 인정 (công nhận) — kiểu viết tắt 초성체."
+  },
+  "es": {
+   "literal": "i-j",
+   "meaning": "De acuerdo (abreviado)",
+   "example": "De acuerdo. Yo también lo creo.",
+   "origin": "Las iniciales de 인정 (reconocido): una abreviatura 초성체."
+  }
+ },
+ "ㅇㅋ": {
+  "ja": {
+   "literal": "オ・ケ",
+   "meaning": "オッケー",
+   "example": "オッケー、またあとでね。",
+   "origin": "「OK」の子音を韓国語キーボードで打ったもの。"
+  },
+  "zh-Hans": {
+   "literal": "o-k",
+   "meaning": "好的，OK",
+   "example": "OK，回头见。",
+   "origin": "在韩文键盘上打出的 OK 的辅音。"
+  },
+  "vi": {
+   "literal": "o-k",
+   "meaning": "ok",
+   "example": "Ok, gặp sau nhé.",
+   "origin": "Phụ âm của chữ 'OK' gõ trên bàn phím tiếng Hàn."
+  },
+  "es": {
+   "literal": "o-k",
+   "meaning": "Okey",
+   "example": "Okey, nos vemos luego.",
+   "origin": "Las consonantes de 'OK' escritas en un teclado coreano."
+  }
+ },
+ "ㄱㅅ": {
+  "ja": {
+   "literal": "カ・サ",
+   "meaning": "ありがとう（略）",
+   "example": "助けてくれてありがと！",
+   "origin": "감사（感謝）の頭文字。"
+  },
+  "zh-Hans": {
+   "literal": "g-s",
+   "meaning": "谢谢",
+   "example": "谢谢帮忙！",
+   "origin": "감사（感谢）的首辅音。"
+  },
+  "vi": {
+   "literal": "g-s",
+   "meaning": "cảm ơn",
+   "example": "Cảm ơn đã giúp nhé!",
+   "origin": "Phụ âm đầu của 감사 (cảm ơn)."
+  },
+  "es": {
+   "literal": "g-s",
+   "meaning": "Gracias",
+   "example": "¡Gracias por la ayuda!",
+   "origin": "Las iniciales de 감사 (gracias)."
+  }
+ },
+ "ㅈㅅ": {
+  "ja": {
+   "literal": "チェ・ソ",
+   "meaning": "ごめん（略）",
+   "example": "遅れてごめん。",
+   "origin": "죄송（申し訳ない）の頭文字。友達同士でだけ使おう。"
+  },
+  "zh-Hans": {
+   "literal": "j-s",
+   "meaning": "对不起，抱歉",
+   "example": "对不起，我来晚了。",
+   "origin": "죄송（抱歉）的首辅音。只对朋友用。"
+  },
+  "vi": {
+   "literal": "j-s",
+   "meaning": "xin lỗi",
+   "example": "Xin lỗi, tôi đến muộn.",
+   "origin": "Phụ âm đầu của 죄송 (xin lỗi). Chỉ dùng với bạn bè."
+  },
+  "es": {
+   "literal": "j-s",
+   "meaning": "Perdón",
+   "example": "Perdón por llegar tarde.",
+   "origin": "Las iniciales de 죄송 (perdón). Solo entre amigos."
+  }
+ },
+ "ㅇㅇ": {
+  "ja": {
+   "literal": "ウン・ウン",
+   "meaning": "うん／うんうん",
+   "example": "うん、わかった。",
+   "origin": "응응の子音だけ。「いいえ」はㄴㄴ。"
+  },
+  "zh-Hans": {
+   "literal": "ng-ng",
+   "meaning": "嗯嗯，好",
+   "example": "嗯嗯，知道了。",
+   "origin": "응응 的辅音。表示“不”的是 ㄴㄴ。"
+  },
+  "vi": {
+   "literal": "ng-ng",
+   "meaning": "ừ / ừ ừ",
+   "example": "Ừ, hiểu rồi.",
+   "origin": "Phụ âm trơn của 응응. Phiên bản 'không' là ㄴㄴ."
+  },
+  "es": {
+   "literal": "ng-ng",
+   "meaning": "Sí / ajá",
+   "example": "Sí, entendido.",
+   "origin": "Las consonantes desnudas de 응응. La versión para decir no es ㄴㄴ."
+  }
+ },
+ "ㅋㅋㅋ": {
+  "ja": {
+   "literal": "ク・ク・ク",
+   "meaning": "ハハハ、笑（ｗｗｗ）",
+   "example": "ｗｗｗ、それマジで面白い。",
+   "origin": "笑い声크크크から。ㅋが多いほど大笑い。ㅋ一つだけだと冷たく感じることも。"
+  },
+  "zh-Hans": {
+   "literal": "k-k-k",
+   "meaning": "哈哈哈",
+   "example": "哈哈哈，这真好笑。",
+   "origin": "来自笑声 크크크。ㅋ 越多笑得越厉害；单个 ㅋ 可能显得冷淡。"
+  },
+  "vi": {
+   "literal": "k-k-k",
+   "meaning": "hahaha",
+   "example": "Hahaha, buồn cười thật đấy.",
+   "origin": "Từ tiếng cười 크크크. Càng nhiều ㅋ càng cười nhiều; một chữ ㅋ đơn lẻ có thể nghe lạnh lùng."
+  },
+  "es": {
+   "literal": "k-k-k",
+   "meaning": "Jajaja",
+   "example": "Jajaja, eso sí que es gracioso.",
+   "origin": "De la risa 크크크. Más ㅋ significa más risa; una sola ㅋ puede sonar fría."
+  }
+ },
+ "ㅠㅠ": {
+  "ja": {
+   "literal": "（泣いている目）",
+   "meaning": "泣き顔——悲しい、感極まる",
+   "example": "試験ボロボロだった😭",
+   "origin": "ㅠの字が涙の流れる目に見える。ㅜㅜとも書く。"
+  },
+  "zh-Hans": {
+   "literal": "（流泪的眼睛）",
+   "meaning": "哭哭——难过或激动",
+   "example": "考试考砸了 😭",
+   "origin": "字母 ㅠ 看起来像流着泪的眼睛。也写作 ㅜㅜ。"
+  },
+  "vi": {
+   "literal": "(mắt khóc)",
+   "meaning": "khóc — buồn hoặc xúc động",
+   "example": "Tôi thi trượt rồi 😭",
+   "origin": "Chữ ㅠ trông như đôi mắt đang chảy nước mắt. Cũng viết ㅜㅜ."
+  },
+  "es": {
+   "literal": "(ojos llorando)",
+   "meaning": "Llorando — triste o abrumado",
+   "example": "Me fue fatal en el examen 😭",
+   "origin": "La letra ㅠ parece unos ojos con lágrimas cayendo. También ㅜㅜ."
+  }
+ },
+ "ㄷㄷ": {
+  "ja": {
+   "literal": "ド・ド",
+   "meaning": "ガクブル、震えるほどの衝撃",
+   "example": "値段を見て震えた。",
+   "origin": "震える音덜덜から。"
+  },
+  "zh-Hans": {
+   "literal": "d-d",
+   "meaning": "哇——吓得发抖",
+   "example": "看到价格我都抖了。",
+   "origin": "来自 덜덜，发抖的声音。"
+  },
+  "vi": {
+   "literal": "d-d",
+   "meaning": "run cầm cập vì sốc",
+   "example": "Nhìn thấy giá mà tôi run cả người.",
+   "origin": "Từ 덜덜, âm thanh run rẩy."
+  },
+  "es": {
+   "literal": "d-d",
+   "meaning": "Guau — temblando del susto",
+   "example": "Vi el precio y me dio escalofríos.",
+   "origin": "De 덜덜, el sonido de temblar."
+  }
+ },
+ "ㅇㄱㄹㅇ": {
+  "ja": {
+   "literal": "イ・ゴ・レ・オ",
+   "meaning": "これはガチ",
+   "example": "ガチで、これめっちゃいい。",
+   "origin": "이거 레알（これリアル、スペイン語の「real」）の頭文字。"
+  },
+  "zh-Hans": {
+   "literal": "i-g-r-o",
+   "meaning": "这是真的，不骗你",
+   "example": "说真的，这个太好吃了。",
+   "origin": "이거 레알（这是真的，레알 取自西班牙语 real）的首辅音。"
+  },
+  "vi": {
+   "literal": "i-g-r-o",
+   "meaning": "cái này là thật đấy",
+   "example": "Thật đấy, cái này ngon lắm.",
+   "origin": "Phụ âm đầu của 이거 레알 ('cái này là thật', với 'real' tiếng Tây Ban Nha)."
+  },
+  "es": {
+   "literal": "i-g-r-o",
+   "meaning": "Esto va en serio",
+   "example": "En serio, esto está buenísimo.",
+   "origin": "Las iniciales de 이거 레알 ('esto es real', con el 'real' del español)."
+  }
+ }
+}

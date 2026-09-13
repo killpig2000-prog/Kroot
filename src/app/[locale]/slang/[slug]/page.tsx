@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { jsonLd as jsonLdScript, localeUrl, seoAlternates } from "@/lib/seo";
 import { VIBES } from "@/lib/slang";
 import { PUBLIC_SLANG, getSlangBySlug, relatedSlang } from "@/lib/slang-slugs";
+import { localizeSlang } from "@/lib/slang-i18n";
 import ShareCta from "@/components/slang/ShareCta";
 
 // Public share page — one statically generated page per slang term, no
@@ -25,8 +26,9 @@ export const dynamicParams = true;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, slug } = await params;
-  const entry = getSlangBySlug(slug);
-  if (!entry) return {};
+  const found = getSlangBySlug(slug);
+  if (!found) return {};
+  const entry = localizeSlang(found, locale);
   const title = `${entry.kr} (${entry.romanization}) — what does it mean? | Kroot`;
   const description = `${entry.kr} (${entry.romanization}) means "${entry.meaning}" — real Korean slang, explained. Example: ${entry.example.kr} — ${entry.example.en}`;
   return {
@@ -46,8 +48,9 @@ export default async function SlangSharePage({ params }: Props) {
   // Docs ask for this in every layout AND page: the layout's copy is not
   // guaranteed to be set before a sibling page renders.
   setRequestLocale(locale);
-  const entry = getSlangBySlug(slug);
-  if (!entry) notFound();
+  const found = getSlangBySlug(slug);
+  if (!found) notFound();
+  const entry = localizeSlang(found, locale);
 
   // Locale passed explicitly: the implicit form reads the proxy's header and
   // would drag this page back off the prerender.
@@ -56,7 +59,7 @@ export default async function SlangSharePage({ params }: Props) {
     getTranslations({ locale, namespace: "slang.vibes" }),
   ]);
   const vibe = VIBES.find((v) => v.key === entry.vibe);
-  const related = relatedSlang(entry, 6);
+  const related = relatedSlang(entry, 6).map((e) => localizeSlang(e, locale));
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -142,7 +145,7 @@ export default async function SlangSharePage({ params }: Props) {
 
         <section className="mt-12 rounded-[24px] bg-[var(--tint-pink)] border border-[var(--tint-pink-line)] p-8 text-center">
           <h2 className="text-2xl font-bold text-[#7C2A4B]">
-            {t("share.ctaTitle", { n: 106, kr: entry.kr })}
+            {t("share.ctaTitle", { n: PUBLIC_SLANG.length, kr: entry.kr })}
           </h2>
           <p className="mt-2 text-muted">{t("share.ctaBody")}</p>
           <ShareCta

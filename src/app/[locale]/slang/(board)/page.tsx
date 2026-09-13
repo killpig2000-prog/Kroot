@@ -10,6 +10,7 @@ import SlangRound from "@/components/slang/SlangRound";
 import { createClient, getClaimsUser } from "@/lib/supabase/server";
 import { seoAlternates } from "@/lib/seo";
 import { SLANG, slangOfTheDay } from "@/lib/slang";
+import { localizeSlang } from "@/lib/slang-i18n";
 
 // The board was in nobody's sitemap and declared no canonical at all, even
 // though it is the hub every /slang/[slug] page links back to.
@@ -43,7 +44,8 @@ export default async function SlangPage() {
         .single()
     : { data: null };
 
-  const daily = slangOfTheDay();
+  const entries = SLANG.map((e) => localizeSlang(e, locale));
+  const daily = localizeSlang(slangOfTheDay(), locale);
 
   if (!user) {
     return (
@@ -71,7 +73,7 @@ export default async function SlangPage() {
               {t("startFreeArrow")}
             </Link>
           </div>
-          <SlangBoard entries={SLANG} />
+          <SlangBoard entries={entries} />
         </main>
       </div>
     );
@@ -96,7 +98,7 @@ export default async function SlangPage() {
               challenge and the 153-card grid stay on the public page above,
               which search engines index. */}
           <div className="flex-1 flex flex-col justify-center">
-            <SlangRound entries={SLANG} today={daily} />
+            <SlangRound entries={entries} today={daily} />
           </div>
         </main>
       </div>

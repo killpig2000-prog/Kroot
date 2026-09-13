@@ -1,4 +1,4 @@
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { Link, redirect } from "@/i18n/navigation";
 import TreeCard from "@/components/dashboard/TreeCard";
 import BottomNav from "@/components/dashboard/BottomNav";
@@ -29,6 +29,7 @@ import { dailyReviewCap } from "@/lib/srs";
 import { selectAll } from "@/lib/select-all";
 import { ATTEMPTED_FILTER } from "@/lib/word-bank";
 import { slangOfTheDay } from "@/lib/slang";
+import { localizeSlang } from "@/lib/slang-i18n";
 import type { CefrLevel } from "@/lib/tree";
 
 // One quest per day, alternating Reading and Writing only — the two skills
@@ -253,7 +254,7 @@ export default async function DashboardPage() {
   // The word of the day is gone from the dashboard (2026-09-07) and the year
   // grass moved to My progress — the phone home is one screen: the garden,
   // today's quest, the review when words are due, and one slang line.
-  const slang = slangOfTheDay();
+  const slang = localizeSlang(slangOfTheDay(), await getLocale());
 
   const displayName = profile?.display_name ?? "there";
   const xp = profile?.xp ?? 0;
