@@ -6,6 +6,8 @@ import { Link, useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { playBuy } from "@/lib/sfx";
 import LevelCreature from "@/components/dashboard/LevelCreature";
+import { StudioDisc } from "@/components/dashboard/GardenStage";
+import { STUDIO_BG } from "@/components/ui/GardenScene";
 import {
   COSTUMES,
   GARDEN_SLOTS,
@@ -28,7 +30,6 @@ import GuidedStep from "@/components/onboarding/GuidedStep";
 import { currentGuidedStep } from "@/components/onboarding/guidedSteps";
 
 const WELCOME_GIFT_ID = "welcome-bow";
-const DEFAULT_SKY = "linear-gradient(180deg,#DFF1FF 0%,#F0FBF1 62%,#E4F3DA 100%)";
 const RARITY_STYLE: Record<Rarity, { chip: string }> = {
   common: { chip: "bg-warm text-muted" },
   rare: { chip: "bg-[var(--tint-sky)] text-[#1E4FB0]" },
@@ -56,19 +57,10 @@ function errorKey(raw: string): string {
 export function Scene({ ids, stage, species, className }: { ids: string[]; stage: CefrLevel; species: CefrLevel; className?: string }) {
   const sky = skyFor(ids);
   return (
-    <div className={className} style={{ background: sky ?? DEFAULT_SKY }}>
+    <div className={className} style={{ background: sky ?? STUDIO_BG }}>
       <svg viewBox="0 0 220 230" className="w-full h-full block" aria-hidden="true">
-        <ellipse cx="110" cy="234" rx="150" ry="34" fill="#CDE8C2" />
+        <StudioDisc />
         <SceneLayer costumeIds={ids} layer="behind" />
-        {!sky && (
-          <>
-            <circle cx="182" cy="34" r="12" fill="#FFDE7A" />
-            <g fill="#FFFFFF" opacity=".85">
-              <ellipse cx="46" cy="36" rx="16" ry="6" />
-              <ellipse cx="60" cy="32" rx="11" ry="5" />
-            </g>
-          </>
-        )}
         <LevelCreature level={stage} costumeIds={ids} species={species} />
         <SceneLayer costumeIds={ids} layer="front" />
       </svg>

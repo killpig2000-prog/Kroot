@@ -1,5 +1,6 @@
 "use client";
 
+import { useId } from "react";
 import { SceneLayer, costumeById, skinFor, skyFor } from "@/lib/costumes";
 import RoamingFriends from "@/components/dashboard/RoamingFriends";
 import LevelCreature from "@/components/dashboard/LevelCreature";
@@ -28,6 +29,27 @@ export function gardenFrame(_level: number, costumeIds: string[]) {
     sky: skyFor(costumeIds),
     skin,
   };
+}
+
+/** The studio disc (2026-09-13): the backdrop is a plain studio ground now
+ *  (GardenScene), so the tree stands on a round sand disc of its own — wider
+ *  than the soil mound LevelCreature draws, on the same ground line, so
+ *  ground items sit on it. For a 220x230 frame; the shop's Scene uses it too
+ *  so a thumbnail is the same tree as the card. */
+export function StudioDisc() {
+  const id = useId();
+  return (
+    <>
+      <defs>
+        <linearGradient id={`${id}-disc`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#EBD3AE" />
+          <stop offset="1" stopColor="#DCBF93" />
+        </linearGradient>
+      </defs>
+      <ellipse cx="110" cy="219" rx="116" ry="17" fill="#BF956A" />
+      <ellipse cx="110" cy="213" rx="114" ry="15" fill={`url(#${id}-disc)`} />
+    </>
+  );
 }
 
 export default function GardenStage({
@@ -66,6 +88,7 @@ export default function GardenStage({
             meadow is the ground now; the frame draws past its edges. */}
         {/* sky details (moon, stars, snow, rain) are drawn over the whole
             garden by SkyLayer, not in this frame */}
+        <StudioDisc />
         <SceneLayer costumeIds={costumeIds} layer="behind" omitSlots={["sky", "aura"]} />
         <LevelCreature level={stage} playerLevel={level} costumeIds={costumeIds} species={species} />
         {/* what a sky costume leaves on the ground at the tree's feet */}
