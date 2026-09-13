@@ -1,9 +1,10 @@
 "use client";
 
-import { useMemo, useRef, useState, useTransition } from "react";
+import { useEffect, useMemo, useRef, useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { track } from "@/lib/analytics";
 import { playCorrect, playWrong } from "@/lib/sfx";
 import { awardPartialCredit, recordCompletion, XP_POINTS, type ProgressResult } from "@/lib/activity";
 import { reviewSessionKey } from "@/lib/reward-keys";
@@ -78,6 +79,15 @@ function ReviewRound({ words, pool, userId, onMore }: ReviewProps & { onMore: ()
   const [finalBoxes, setFinalBoxes] = useState<Record<string, number> | null>(null);
   const [levelUp, setLevelUp] = useState<ProgressResult | null>(null);
   const [navigating, setNavigating] = useState(false);
+
+  // One review_started per round (ReviewSession re-keys a round for "more").
+  // The ref survives StrictMode's double effect run in development.
+  const started = useRef(false);
+  useEffect(() => {
+    if (started.current) return;
+    started.current = true;
+    track("review_started", { count: words.length });
+  }, [words.length]);
   const [saveFailed, setSaveFailed] = useState(false);
   const boxes = useRef<Record<string, number>>(
     Object.fromEntries(words.map((w) => [w.key, w.box ?? 1]))
@@ -145,6 +155,7 @@ function ReviewRound({ words, pool, userId, onMore }: ReviewProps & { onMore: ()
   async function logOnce() {
     if (logged.current) return;
     logged.current = true;
+    track("review_completed", { count: questions.length, correct: correctRef.current });
     await Promise.all(pendingSaves.current);
     // One paid review per calendar day (the server stamps the date onto this
     // key) — repetition is the point of SRS, so this can't be "once ever",

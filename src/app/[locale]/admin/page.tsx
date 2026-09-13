@@ -61,7 +61,23 @@ async function loadStats() {
   // admin_overview() (migration 0047) replaces several separate reads: the
   // total and push counts, the six-query N+1 over LEVELS, the streak
   // histogram, and the reminder health check.
-  const [overviewRes, cohortRes, recentRes, activityRes, usageRes, eventsRes] = await Promise.all([
+  // Retention reads a longer window than the 30-day charts: a D7 cohort
+  // needs its signup day plus two weeks of visits to look back on.
+  const since45Day = iso(daysAgo(44));
+  const since7 = daysAgo(6).toISOString();
+  const [
+    overviewRes,
+    cohortRes,
+    recentRes,
+    activityRes,
+    usageRes,
+    eventsRes,
+    retCohortRes,
+    retActivityRes,
+    attendanceRes,
+    reviewGrantsRes,
+    reviewEventsRes,
+  ] = await Promise.all([
     db.rpc("admin_overview", { p_today: today }),
     db.from("profiles").select("id, created_at").gte("created_at", since30Day),
     db
@@ -76,6 +92,17 @@ async function loadStats() {
       .select("user_id, skill, points, created_at")
       .gte("created_at", daysAgo(6).toISOString())
       .order("created_at", { ascending: false })
+      .limit(5000),
+    db.from("profiles").select("id, created_at").gte("created_at", since45Day),
+    db.from("daily_activity").select("user_id, activity_date").gte("activity_date", since45Day).limit(20000),
+    // Garden opens (0079) — the "came back" signal even on a day with no lesson.
+    db.from("attendance_days").select("user_id, day").gte("day", since45Day).limit(20000),
+    db.from("reward_grants").select("user_id").like("item_key", "review:%").gte("created_at", since7).limit(5000),
+    db
+      .from("analytics_events")
+      .select("user_id, event")
+      .in("event", ["review_started", "review_completed"])
+      .gte("created_at", since7)
       .limit(5000),
   ]);
 
@@ -126,20 +153,42 @@ async function loadStats() {
     .map(([skill, e]) => ({ label: SKILL_LABELS[skill] ?? skill, c7: e.c7, u7: e.u7.size, c30: e.c30, u30: e.u30.size }))
     .sort((a, b) => b.c30 - a.c30);
 
-  // Retention: D7 return, over the last-30d signup cohort
-  const activeDays = new Map<string, Set<string>>();
-  for (const a of activity) {
-    if (!activeDays.has(a.user_id)) activeDays.set(a.user_id, new Set());
-    activeDays.get(a.user_id)!.add(a.activity_date);
-  }
-  let d7 = 0;
-  for (const p of cohortRows) {
-    const days = activeDays.get(p.id);
-    const base = new Date(iso(new Date(p.created_at))).getTime();
-    if (!days) continue;
-    const offsets = [...days].map((d) => Math.round((new Date(d).getTime() - base) / 86_400_000));
-    if (offsets.some((o) => o >= 7 && o <= 13)) d7++;
-  }
+  // Retention (UTC dates, like every date column here). A visit is a Garden
+  // open or a logged activity. D1 = came back the day after signing up; D7 =
+  // came back on any of days 7–13. Only signups whose day has already come
+  // are counted — a learner who joined yesterday can't have a D7 yet.
+  const visits = new Map<string, Set<string>>();
+  const addVisit = (uid: string | null, day: string) => {
+    if (!uid) return;
+    if (!visits.has(uid)) visits.set(uid, new Set());
+    visits.get(uid)!.add(day);
+  };
+  for (const a of retActivityRes.data ?? []) addVisit(a.user_id, a.activity_date);
+  for (const a of attendanceRes.data ?? []) addVisit(a.user_id, a.day);
+  const todayMs = new Date(today).getTime();
+  const retention = (from: number, to: number) => {
+    let eligible = 0;
+    let back = 0;
+    for (const p of retCohortRes.data ?? []) {
+      const base = new Date(p.created_at.slice(0, 10)).getTime();
+      if ((todayMs - base) / 86_400_000 < from) continue;
+      eligible++;
+      const days = visits.get(p.id);
+      if (!days) continue;
+      const offsets = [...days].map((d) => Math.round((new Date(d).getTime() - base) / 86_400_000));
+      if (offsets.some((o) => o >= from && o <= to)) back++;
+    }
+    return { eligible, back, pct: eligible ? Math.round((back / eligible) * 100) : 0 };
+  };
+  const d1 = retention(1, 1);
+  const d7 = retention(7, 13);
+
+  // Review use, last 7 days: who got a paid review (one per day per learner)
+  // and how many review rounds were started/finished (tracked from 2026-09-13).
+  const reviewers7d = new Set((reviewGrantsRes.data ?? []).map((r) => r.user_id)).size;
+  const reviewEvents = reviewEventsRes.data ?? [];
+  const reviewStarts7d = reviewEvents.filter((e) => e.event === "review_started").length;
+  const reviewDone7d = reviewEvents.filter((e) => e.event === "review_completed").length;
 
   // Who used what + recent feed (7d)
   const events = (eventsRes.data ?? []) as { user_id: string; skill: string | null; points: number; created_at: string }[];
@@ -166,7 +215,11 @@ async function loadStats() {
     dauToday,
     wau,
     minutes7d,
-    d7Pct: cohortRows.length ? Math.round((d7 / cohortRows.length) * 100) : 0,
+    d1,
+    d7,
+    reviewers7d,
+    reviewStarts7d,
+    reviewDone7d,
     avgStreak: String(buckets.avg ?? "0.0"),
     recent: recentRes.data ?? [],
     byLevel: LEVELS.map((lvl) => ({ level: lvl, count: Number(overview.level_counts?.[lvl] ?? 0) })),
@@ -274,7 +327,9 @@ export default async function AdminPage() {
             <StatTile label="오늘 가입" value={s.signupsToday} />
             <StatTile label="오늘 활성" value={s.dauToday} sub={`이번주 ${s.wau}명`} trend="up" />
             <StatTile label="7일 학습시간" value={`${s.minutes7d.toLocaleString()}분`} />
-            <StatTile label="D7 리텐션" value={`${s.d7Pct}%`} sub="30일 코호트 기준" />
+            <StatTile label="D1 리텐션" value={`${s.d1.pct}%`} sub={`${s.d1.eligible}명 중 ${s.d1.back}명 · 다음날 재방문`} />
+            <StatTile label="D7 리텐션" value={`${s.d7.pct}%`} sub={`${s.d7.eligible}명 중 ${s.d7.back}명 · 7–13일차`} />
+            <StatTile label="7일 복습" value={`${s.reviewers7d}명`} sub={`시작 ${s.reviewStarts7d} · 완료 ${s.reviewDone7d}`} />
             <StatTile label="평균 스트릭" value={`${s.avgStreak}일`} sub="스트릭 보유자 기준" />
           </div>
           <Panel title="가입 추이 · 최근 30일">

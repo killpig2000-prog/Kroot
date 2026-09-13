@@ -255,7 +255,9 @@ export async function recordCompletion(
   const full = XP_POINTS[skill] ?? 5;
   const remaining = Math.max(0, full - Math.round(full * Math.max(0, Math.min(1, alreadyAwardedRatio))));
   const result = await awardPoints(supabase, remaining, skill, itemKey, score, level, reviewCount);
-  await completeMatchingQuest(supabase, skill);
+  // A vocabulary quest is the review quest: a vocab Day (also "vocabulary")
+  // must not tick it off — only the review session, whose item key is "review".
+  if (skill !== "vocabulary" || itemKey === REVIEW_ITEM_KEY) await completeMatchingQuest(supabase, skill);
   track("activity_completed", { skill, minutes, leveled_up: !!result?.leveled_up });
   return result;
 }

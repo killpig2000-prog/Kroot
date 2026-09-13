@@ -18,6 +18,7 @@ export type AnalyticsEvent =
   | "session_started"
   | "activity_completed"
   | "review_started"
+  | "review_completed"
   | "word_saved"
   | "reminder_optin"
   | "push_subscribed"

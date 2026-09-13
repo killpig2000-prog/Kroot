@@ -8,6 +8,7 @@ import { playCorrect, playWrong } from "@/lib/sfx";
 import { buttonClassName } from "@/components/ui/Button";
 import { Link, useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { MISSED_WORDS_PER_QUESTION, plantMissedWords, tokenizeKorean, wordBankKey } from "@/lib/word-bank";
 import { recordCompletion, type ProgressResult } from "@/lib/activity";
 import { readingPassageKey } from "@/lib/reward-keys";
 import { findEvidenceLine, MINUTES_PER_PASSAGE, splitPassageLines, type Passage } from "@/lib/reading";
@@ -110,6 +111,20 @@ export default function ReadingSession({
     void clearResume(supabase, userId);
 
     const final = answersRef.current;
+
+    // Deck words from the line that answers each missed question go into
+    // tomorrow's review. A question with no evidence line plants nothing.
+    const missedKeys = final.flatMap((ok, q) => {
+      const line = ok === false ? evidence[q] : null;
+      if (line == null || !lines[line]) return [];
+      const keys: string[] = [];
+      for (const tok of tokenizeKorean(lines[line].kr)) {
+        const g = tok.isWord ? glossary[tok.text] : undefined;
+        if (g && keys.length < MISSED_WORDS_PER_QUESTION) keys.push(wordBankKey("daily-life", g.level, g.korean));
+      }
+      return keys;
+    });
+    if (missedKeys.length > 0) void plantMissedWords(supabase, userId, missedKeys);
     // Released in `finally` unless the whole write went through. Only the
     // returned `{ error }` used to un-latch, so a *thrown* request (offline, a
     // DNS blip) left the latch stuck: goTo()'s retry then returned early and

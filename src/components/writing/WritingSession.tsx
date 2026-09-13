@@ -6,6 +6,7 @@ import { useSaveResume } from "@/hooks/useSaveResume";
 import { clearResume, isColumnMissing } from "@/lib/resume";
 import { Link, useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { lookupWord, MISSED_WORDS_PER_QUESTION, plantMissedWords, tokenizeKorean } from "@/lib/word-bank";
 import { recordCompletion, type ProgressResult } from "@/lib/activity";
 import { writingChapterKey } from "@/lib/reward-keys";
 import { track } from "@/lib/analytics";
@@ -118,6 +119,27 @@ export default function WritingSession({
       questions: prompts.length,
       correct: answers.filter((a) => a.correct).length,
     });
+
+    // Words from the answer sentence of each question the learner got wrong
+    // go into tomorrow's review. Fire-and-forget: the result never waits on it.
+    const missed = prompts.filter((_, i) => !answers[i].correct);
+    if (missed.length > 0) {
+      void (async () => {
+        const keys: string[] = [];
+        for (const p of missed) {
+          let found = 0;
+          for (const tok of tokenizeKorean(p.example_kr)) {
+            if (!tok.isWord || found >= MISSED_WORDS_PER_QUESTION) continue;
+            const w = await lookupWord(tok.text);
+            if (w) {
+              keys.push(w.key);
+              found++;
+            }
+          }
+        }
+        await plantMissedWords(supabase, userId, keys);
+      })();
+    }
 
     const completedAt = new Date().toISOString();
     const rows = answers.map((a, i) => ({

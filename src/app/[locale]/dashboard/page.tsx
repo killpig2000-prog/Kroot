@@ -41,6 +41,7 @@ const QUEST_ROTATION = [
   { skill_key: "writing", title: "Today's quest", description: "Writing · one chapter, a few questions · ~8 min" },
   { skill_key: "reading", title: "Today's quest", description: "Reading · one short passage · ~4 min" },
 ];
+const REVIEW_QUEST = { skill_key: "vocabulary", title: "Today's quest", description: "Review · your due words · ~5 min" };
 
 function todayISO() {
   return iso(new Date());
@@ -102,55 +103,11 @@ export default async function DashboardPage() {
   const streakDays = snapshot.streak || profile?.streak_days || 0;
   const equippedIds = snapshot.costumes.filter((r) => r.equipped).map((r) => r.costume_id);
 
-  let quest = snapshot.quest;
-  const questOfTheDay = QUEST_ROTATION[Math.floor(Date.parse(today) / 86_400_000) % QUEST_ROTATION.length];
-  // A failed snapshot means today's quest is unknown, not missing.
-  if (!quest && !snapshotError) {
-    const { data: created, error: insertError } = await supabase
-      .from("daily_quests")
-      .insert({ user_id: user.id, quest_date: today, ...questOfTheDay })
-      .select("id, skill_key, title, description, completed_at")
-      .single();
-    quest = created ?? null;
-    // unique (user_id, quest_date): another tab inserted it first
-    if (insertError?.code === "23505") {
-      const { data: existing } = await supabase
-        .from("daily_quests")
-        .select("id, skill_key, title, description, completed_at")
-        .eq("user_id", user.id)
-        .eq("quest_date", today)
-        .maybeSingle();
-      quest = existing ?? null;
-    }
-  }
-
   // Real per-skill progress: completed items at the user's difficulty tier.
   const cefr = (profile?.current_level ?? "A1") as CefrLevel;
   // A1 placements tour Vocabulary (the card now carries Hangul); anyone who
   // placed higher gets the Writing walkthrough instead.
   const guidedTrack = cefr === "A1" ? "basics" : "practice";
-
-  // Today's quest deep-links straight into one specific chapter — a random
-  // pull from the learner's whole level pool, not "go pick your own" — so
-  // finishing the quest is exactly one tap plus the activity itself. Seeded
-  // by date + user + level + skill: stable for this learner all day (a
-  // reload doesn't reshuffle it), but different learners at the same level
-  // get different chapters, not one shared pick for everyone. Reading's
-  // chapters are already one passage each; writing's are the normal
-  // 3-question chapter — deliberately NOT a single prompt, since the
-  // per-chapter coin/XP reward is keyed by (level, chapterIndex) and a
-  // random index reused outside the learner's real progression would risk
-  // double-paying or skipping pay entirely if that scheme ever changed to
-  // key by prompt instead.
-  const questChapters = quest?.skill_key === "reading" ? getReadingChapters(cefr) : getWritingChapters(cefr);
-  const questChapterIdx = questChapters.length
-    ? hashString(`${today}:${user.id}:${cefr}:${quest?.skill_key}`) % questChapters.length
-    : 0;
-  const questHref = quest && questChapters.length ? `/${quest.skill_key}/session?level=${cefr}&chapter=${questChapterIdx}` : undefined;
-  // The card is the page's one big button, so it never disappears: if the
-  // daily row couldn't be created (RPC/insert failure) it points at the
-  // vocabulary review instead of leaving a hole (user: "없으면 밋밋하려나").
-  const questForCard = quest ?? { skill_key: "vocabulary", description: "Review · your due words · ~5 min", completed_at: null };
 
   // "Your path" (promotion eligibility + LevelMap) moved to My progress
   // (/profile) 2026-09-03 — the Garden is a "what do I do today" page, and a
@@ -224,6 +181,64 @@ export default async function DashboardPage() {
   const reviewDoneForToday = (reviewedTodayCount ?? 0) >= reviewCap;
   const dueTotal = dueRes.error ? snapshot.due_count : dueRes.count ?? 0;
   const dueCount = reviewDoneForToday ? 0 : Math.min(dueTotal, reviewCap);
+
+  let quest = snapshot.quest;
+  // Words waiting to be reviewed win the day: the quest becomes "water
+  // yesterday's words" (skill_key vocabulary — only the review session
+  // completes it, see completeMatchingQuest). Decided on the day's first
+  // visit, after the review cap, so a learner who already finished today's
+  // review isn't handed a quest they can't do.
+  const questOfTheDay =
+    dueCount > 0
+      ? REVIEW_QUEST
+      : QUEST_ROTATION[Math.floor(Date.parse(today) / 86_400_000) % QUEST_ROTATION.length];
+  // A failed snapshot means today's quest is unknown, not missing.
+  if (!quest && !snapshotError) {
+    const { data: created, error: insertError } = await supabase
+      .from("daily_quests")
+      .insert({ user_id: user.id, quest_date: today, ...questOfTheDay })
+      .select("id, skill_key, title, description, completed_at")
+      .single();
+    quest = created ?? null;
+    // unique (user_id, quest_date): another tab inserted it first
+    if (insertError?.code === "23505") {
+      const { data: existing } = await supabase
+        .from("daily_quests")
+        .select("id, skill_key, title, description, completed_at")
+        .eq("user_id", user.id)
+        .eq("quest_date", today)
+        .maybeSingle();
+      quest = existing ?? null;
+    }
+  }
+
+  // Today's quest deep-links straight into one specific chapter — a random
+  // pull from the learner's whole level pool, not "go pick your own" — so
+  // finishing the quest is exactly one tap plus the activity itself. Seeded
+  // by date + user + level + skill: stable for this learner all day (a
+  // reload doesn't reshuffle it), but different learners at the same level
+  // get different chapters, not one shared pick for everyone. Reading's
+  // chapters are already one passage each; writing's are the normal
+  // 3-question chapter — deliberately NOT a single prompt, since the
+  // per-chapter coin/XP reward is keyed by (level, chapterIndex) and a
+  // random index reused outside the learner's real progression would risk
+  // double-paying or skipping pay entirely if that scheme ever changed to
+  // key by prompt instead.
+  const questChapters = quest?.skill_key === "reading" ? getReadingChapters(cefr) : getWritingChapters(cefr);
+  const questChapterIdx = questChapters.length
+    ? hashString(`${today}:${user.id}:${cefr}:${quest?.skill_key}`) % questChapters.length
+    : 0;
+  const questHref =
+    quest?.skill_key === "vocabulary"
+      ? "/review"
+      : quest && questChapters.length
+        ? `/${quest.skill_key}/session?level=${cefr}&chapter=${questChapterIdx}`
+        : undefined;
+  // The card is the page's one big button, so it never disappears: if the
+  // daily row couldn't be created (RPC/insert failure) it points at the
+  // vocabulary review instead of leaving a hole (user: "없으면 밋밋하려나").
+  const questForCard = quest ?? { skill_key: "vocabulary", description: "Review · your due words · ~5 min", completed_at: null };
+
 
   // No per-door progress any more (2026-09-10, user call). The number this
   // page used to compute for each door was six different things: Hangul was

@@ -148,6 +148,61 @@ export async function plantWord(
 }
 
 /**
+ * Words behind a wrong answer in writing or reading go into the review
+ * queue, unlike a bookmark (plantWord): they arrive already attempted
+ * (incorrect_count 1, box 1, due now), which is what /review requires. A word
+ * the learner already has drops back to box 1 and is due now, with one more
+ * miss counted. `saved` (word bank) and `last_reviewed_at` are never touched —
+ * the latter counts toward "reviewed today" and would end the review day early.
+ * Best-effort: a failure is logged, never shown.
+ */
+export async function plantMissedWords(supabase: SupabaseClient, userId: string, wordKeys: string[]): Promise<void> {
+  const keys = [...new Set(wordKeys)].slice(0, MISSED_WORDS_MAX);
+  if (keys.length === 0) return;
+  try {
+    const now = new Date().toISOString();
+    const { data: existing, error } = await supabase
+      .from("vocabulary_progress")
+      .select("word_key, incorrect_count")
+      .eq("user_id", userId)
+      .in("word_key", keys);
+    if (error) throw error;
+    const have = new Map((existing ?? []).map((r) => [r.word_key as string, r.incorrect_count ?? 0]));
+    const fresh = keys.filter((k) => !have.has(k));
+    if (fresh.length > 0) {
+      const { error: insErr } = await supabase.from("vocabulary_progress").upsert(
+        fresh.map((k) => ({
+          user_id: userId,
+          word_key: k,
+          correct_count: 0,
+          incorrect_count: 1,
+          box: 1,
+          next_review_at: now,
+          last_reviewed_at: null,
+        })),
+        { onConflict: "user_id,word_key", ignoreDuplicates: true }
+      );
+      if (insErr) throw insErr;
+    }
+    await Promise.all(
+      [...have].map(([k, misses]) =>
+        supabase
+          .from("vocabulary_progress")
+          .update({ incorrect_count: misses + 1, box: 1, next_review_at: now })
+          .eq("user_id", userId)
+          .eq("word_key", k)
+      )
+    );
+  } catch (err) {
+    console.error("plantMissedWords failed:", err instanceof Error ? err.message : err);
+  }
+}
+
+/** Per wrong question, and per session — keeps one bad chapter from flooding the queue. */
+export const MISSED_WORDS_PER_QUESTION = 3;
+const MISSED_WORDS_MAX = 8;
+
+/**
  * Words due for review — the Review tab badge number. Requires at least one
  * real attempt (see ATTEMPTED_FILTER) so a word merely bookmarked into the
  * word bank, never studied, doesn't inflate this count.
