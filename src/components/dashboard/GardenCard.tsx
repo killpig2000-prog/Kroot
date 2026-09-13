@@ -97,8 +97,12 @@ export default function GardenCard({
   // 2026-09-12 (user, from the store-screenshot mock: "나무 크기 위치는 실제
   // 적용"): 150-180 → 200-240px, so the tree fills the card's width the way
   // the mock did; 56vw reaches the cap at 430 and gives 200px at 360.
-  const treeWidth = "clamp(200px, 56vw, 240px)";
-  const cardHeight = `max(240px, calc(${treeWidth} * ${(frameH / 220).toFixed(3)} + 120px))`;
+  // 2026-09-14 (user, from the card-size mock: "큰 사각형이 너무 커" →
+  // "묘목 조금 더 키우고 위아래 70px"): 200-240 → 180-215px and the room
+  // above the tree 120 → 70px, so the card drops from ~348 to ~275px at 390.
+  // 50vw reaches the cap at 430 and gives 180px at 360.
+  const treeWidth = "clamp(180px, 50vw, 215px)";
+  const cardHeight = `calc(${treeWidth} * ${(frameH / 220).toFixed(3)} + 70px)`;
   // The tree's feet, above the XP line at the card's bottom.
   const feet = 26;
   // Where the bubble hangs: just over this look's crown, not at a fixed
@@ -107,7 +111,10 @@ export default function GardenCard({
   // (230 - 212 + look height) units above the frame's bottom; the frame
   // is treeWidth * 230/220 tall, so one unit is treeWidth / 220.
   const crownUnits = 230 - 212 + lookHeightForLevel(level);
-  const bubbleBottom = `calc(${feet + 6}px + ${treeWidth} * ${(crownUnits / 220).toFixed(3)})`;
+  // With only 70px above the tree, the tallest looks (uncle, guardian) would
+  // push the bubble into the level pill or out of the card, so it stops
+  // 84px under the card's top and rests on the crown instead.
+  const bubbleBottom = `min(calc(${feet + 6}px + ${treeWidth} * ${(crownUnits / 220).toFixed(3)}), calc(${cardHeight} - 84px))`;
   const lines = TREE_PHRASES.map((key) => ({ key, text: t(`phrases.${key}`) }));
   // While the tree is thanking you, that line leads and stays up.
   const thanks = lines.filter((p) => p.key === "thanksWater");
