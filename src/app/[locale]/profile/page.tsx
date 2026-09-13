@@ -263,19 +263,20 @@ export default async function ProfilePage({
               />
             )}
 
-            {/* 2 · the level the learner picked, and how much of it is done */}
+            {/* 2 · the tree's ledger: which skills paid for this period's growth */}
+            {hasAnything && <TreeLedger rows={ledgerRows} total={ledgerTotal} />}
+
+            {/* 3 · how well, per skill (renders only with three or more skills answered) */}
+            <SkillRadar rows={radarRows} />
+
+            {/* last · the level the learner picked, and how much of it is done
+                (2026-09-14, user: moved to the bottom of the page) */}
             <LevelCard
               level={level}
               words={skillProgress.vocabulary}
               readings={skillProgress.reading}
               listening={skillProgress.listening}
             />
-
-            {/* 3 · the tree's ledger: which skills paid for this period's growth */}
-            {hasAnything && <TreeLedger rows={ledgerRows} total={ledgerTotal} />}
-
-            {/* 4 · how well, per skill (renders only with three or more skills answered) */}
-            <SkillRadar rows={radarRows} />
 
             {/* nothing studied yet: one line instead of a stack of empty cards */}
             {!hasAnything && (

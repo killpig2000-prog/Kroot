@@ -268,7 +268,7 @@ export const CHARACTER_ART = true;
 type Anchor = { x: number; y: number; s: number };
 // One look per art stage, measured in the art's own pixels: where a hat sits
 // on the crown and how wide that crown is, where the eyes are and how far
-// apart, and how tall the look stands in the 220x230 frame (feet at y=212).
+// apart, and how tall the look stands in the 220x230 frame (feet at y=FEET).
 // Each look stands taller than the last, so the grown trees fill the frame.
 type Look = {
   src: string;
@@ -286,6 +286,12 @@ type Look = {
   bark: string;
 };
 // Seed, sprout, young, sturdy, young II, uncle, spirit.
+/** Where the look's feet land in the 220x230 frame. 212 put the roots on
+ *  the sand disc's back rim (GardenStage's StudioDisc, top face y 198-228),
+ *  so the tree read as hovering behind it (2026-09-14, user: "공중에 떠있는
+ *  느낌"); 221 stands it in the middle of the disc. */
+const FEET = 221;
+
 const LOOKS: Look[] = [
   { src: "/tree/oak-seed.webp", w: 726, h: 523, hat: [363, 10], crown: 338, eye: [411, 175], spread: 86, height: 60, ground: false, lids: [[325, 184, 45, 51], [497, 166, 39, 46]], bark: "#A06F45" },
   { src: "/tree/oak-sprout.webp", w: 730, h: 900, hat: [395, 40], crown: 400, eye: [395, 581], spread: 37, height: 90, ground: true, lids: [[358, 582, 19, 27], [432, 580, 19, 27]], bark: "#8E6038" },
@@ -298,7 +304,7 @@ const LOOKS: Look[] = [
 /** Each look's picture, in ART_STAGE_STARTS order — the growth panel's thumbnails. */
 export const LOOK_SRC = LOOKS.map((l) => l.src);
 /** How tall this level's look stands, in frame units (the ground line is
- *  at 212 of the 230-tall frame) — so a caller can hang a speech bubble
+ *  at FEET of the 230-tall frame) — so a caller can hang a speech bubble
  *  just over the crown, whatever the look (2026-09-12). */
 export function lookHeightForLevel(level: number): number {
   return LOOKS[artStageForLevel(level)].height;
@@ -310,7 +316,7 @@ function place(l: Look) {
   const s = l.height / l.h;
   const w = l.w * s;
   const x = 110 - w / 2;
-  const y = 212 - l.height;
+  const y = FEET - l.height;
   // Hat, glasses and neckwear scale with the crown and the eyes (a 16-wide
   // pair of eyes wears glasses at 1.7, as the drawn tree did).
   const hat: Anchor = { x: x + l.hat[0] * s, y: y + l.hat[1] * s, s: l.crown * s * 0.0157 };
@@ -388,8 +394,8 @@ export default function LevelCreature({
     return (
       <>
         {defs}
-        {p.groundRx !== null && !hideGround && <Ground id={id} rx={p.groundRx} cy={214} />}
-        <g className="sway" style={{ transformOrigin: "110px 212px" }}>
+        {p.groundRx !== null && !hideGround && <Ground id={id} rx={p.groundRx} cy={FEET + 2} />}
+        <g className="sway" style={{ transformOrigin: `110px ${FEET}px` }}>
           <image href={look.src} x={p.x} y={p.y} width={p.w} height={p.h} />
           {/* the art's eyes are painted open — bark-coloured lids drop over
               them now and then so the character blinks */}

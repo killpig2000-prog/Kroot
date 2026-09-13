@@ -24,8 +24,14 @@ import {
 // not, worn or not (2026-09-10, user call: "착용 누르기 전까지 착용하면 안
 // 됨"). Nothing reaches the database until act(): it applies every slot
 // where preview differs from worn — takes off what was removed, wears what
-// was added, buying first where needed. "Take everything off" is just a
-// preview of nothing, so it goes through the same button.
+// was added, buying first where needed.
+//
+// One change at a time (2026-09-14, user: "새로운 코스튬 클릭하면 wear it만,
+// 입고있는거 클릭하면 take off, 빈 공간 클릭하면 take everything off"):
+// tapping a card previews that one change against what is worn — a new
+// item on, or a worn item off — and the one button names it. Tapping the
+// same card again, or empty space, drops the preview. "Take everything off"
+// is a real action, not a preview; there is no Reset button any more.
 
 export const RARITY_ORDER: Record<Rarity, number> = { common: 0, rare: 1, epic: 2, legendary: 3 };
 
@@ -40,6 +46,25 @@ export function errorKey(raw: string): string {
 }
 
 type Slots = Partial<Record<CostumeSlot, string>>;
+
+/** What `target` changes against `worn`: added (an item the tree isn't
+ *  wearing) or removed (worn, but not in the target). */
+function diff(target: Slots, worn: Slots) {
+  const slots = new Set<CostumeSlot>([...Object.keys(target), ...Object.keys(worn)] as CostumeSlot[]);
+  const added: Costume[] = [];
+  const removed: Costume[] = [];
+  for (const s of slots) {
+    if (target[s] === worn[s]) continue;
+    if (target[s]) {
+      const c = costumeById(target[s]!);
+      if (c) added.push(c);
+    } else if (worn[s]) {
+      const c = costumeById(worn[s]!);
+      if (c) removed.push(c);
+    }
+  }
+  return { added, removed };
+}
 
 function toMap(ids: string[]): Slots {
   const m: Slots = {};
@@ -93,21 +118,7 @@ export function useWardrobe({
 
   const previewIds = Object.values(preview).filter((v): v is string => !!v);
   const wornIds = Object.values(worn).filter((v): v is string => !!v);
-  // Every slot the preview changes: added (an item the tree isn't wearing)
-  // or removed (worn, but taken off in the preview).
-  const slots = new Set<CostumeSlot>([...Object.keys(preview), ...Object.keys(worn)] as CostumeSlot[]);
-  const added: Costume[] = [];
-  const removed: Costume[] = [];
-  for (const s of slots) {
-    if (preview[s] === worn[s]) continue;
-    if (preview[s]) {
-      const c = costumeById(preview[s]!);
-      if (c) added.push(c);
-    } else if (worn[s]) {
-      const c = costumeById(worn[s]!);
-      if (c) removed.push(c);
-    }
-  }
+  const { added, removed } = diff(preview, worn);
   const dirty = added.length + removed.length > 0;
   /** The item the head line names — the first thing being tried on. */
   const selected = added[0];
@@ -120,22 +131,27 @@ export function useWardrobe({
       .sort((a, b) => RARITY_ORDER[a.rarity] - RARITY_ORDER[b.rarity] || a.price - b.price);
   }
 
-  /** Tap a card: on the tree if it isn't, off if it is. Preview only. */
+  /** Tap a card: preview this one change against what is worn — on if it
+   *  isn't worn, off if it is. The same card again drops the preview. */
   function toggle(c: Costume) {
     setMessage(null);
-    setPreview((p) => (p[c.slot] === c.id ? { ...p, [c.slot]: undefined } : { ...p, [c.slot]: c.id }));
+    const wearing = worn[c.slot] === c.id;
+    const change: Slots = { ...worn, [c.slot]: wearing ? undefined : c.id };
+    const d = diff(preview, change);
+    const already = d.added.length + d.removed.length === 0;
+    setPreview(already ? worn : change);
   }
 
-  /** Back to what the database says is worn. */
+  /** Back to what the database says is worn (a tap on empty space). */
   function reset() {
     setPreview(worn);
     setMessage(null);
   }
 
-  /** Preview the bare tree; act() then takes everything off for real. */
+  /** Take everything off — for real, no second button. */
   function takeAllOff() {
     setPreview({});
-    setMessage(null);
+    void act({});
   }
 
   async function equip(c: Costume) {
@@ -160,9 +176,10 @@ export function useWardrobe({
     return true;
   }
 
-  /** Make the database match the preview. */
-  async function act() {
-    if (!dirty || acting.current) return;
+  /** Make the database match the preview (or the given outfit). */
+  async function act(target: Slots = preview) {
+    const { added, removed } = diff(target, worn);
+    if (added.length + removed.length === 0 || acting.current) return;
     acting.current = true;
     setBusy(true);
     setMessage(null);
@@ -194,6 +211,7 @@ export function useWardrobe({
           return;
         }
       }
+      setPreview(target);
       if (boughtName) setMessage({ key: boughtWorn ? "bought" : "boughtNotWorn", params: { name: boughtName }, good: boughtWorn });
       router.refresh();
     } catch (err) {

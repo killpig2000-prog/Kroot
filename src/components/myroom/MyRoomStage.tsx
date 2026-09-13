@@ -23,7 +23,7 @@ import type { CefrLevel } from "@/lib/tree";
 
 // My room = the dressing room (2026-09-10 mockup A). The garden up top is
 // the try-on: tap a card on the shelf below and the big tree wears it, with
-// one Buy/Wear button and Reset under the shelf. The shop page's polaroid
+// one Buy/Wear/Take off button under the shelf. The shop page's polaroid
 // preview and the old five rows (Shop · Wardrobe · Garden Fair · Word bank ·
 // Settings) are what this replaces — Ranking and Settings are tabs of their
 // own now, and Wardrobe was the same URL as Shop.
@@ -167,7 +167,14 @@ export default function MyRoomStage({
         />
       )}
 
-      <section className="max-w-[560px] xl:max-w-[760px] mt-3" aria-label={tm("shop")}>
+      {/* a tap on empty space (not a card, tab or button) drops the preview */}
+      <section
+        className="max-w-[560px] xl:max-w-[760px] mt-3"
+        aria-label={tm("shop")}
+        onClick={(e) => {
+          if (!(e.target as HTMLElement).closest("button, a")) w.reset();
+        }}
+      >
         {/* Mine | Shop */}
         <div role="tablist" className="grid grid-cols-2 gap-[3px] p-[3px] rounded-[12px] bg-line/50 mb-2.5">
           {(["mine", "shop"] as const).map((v) => {
@@ -315,12 +322,11 @@ export default function MyRoomStage({
             ))}
         </div>
 
-        {/* one button makes the tree's outfit real (wear / buy / take off),
-            Reset puts the preview back, and Take everything off previews the
-            bare tree — nothing is worn or removed until the first button. */}
-        {(w.dirty || w.previewIds.length > 0) && (
-          <div className="flex flex-wrap gap-2 mt-1">
-            {w.dirty && (
+        {/* one button, named for the one change being previewed (2026-09-14,
+            user): a new item shows Wear it (or Buy), a worn item Take off.
+            With nothing picked, Take everything off — and it acts at once. */}
+        {w.dirty ? (
+          <div className="flex mt-1">
             <button
               type="button"
               onClick={() => void w.act()}
@@ -329,26 +335,20 @@ export default function MyRoomStage({
             >
               {w.busy ? "…" : ctaLabel}
             </button>
-            )}
-            {w.dirty && (
-            <button
-              type="button"
-              onClick={w.reset}
-              className="rounded-[12px] px-3.5 py-2.5 text-[13.5px] font-extrabold border border-line bg-cream shadow-[0_2px_0_var(--c-line)] hover:border-faint active:translate-y-[1px] active:shadow-none transition-all"
-            >
-              {t("tryOn.reset")}
-            </button>
-            )}
-            {w.previewIds.length > 0 && (
+          </div>
+        ) : (
+          w.wornIds.length > 0 && (
+            <div className="flex mt-1">
               <button
                 type="button"
                 onClick={w.takeAllOff}
-                className="rounded-[12px] px-3.5 py-2.5 text-[13.5px] font-extrabold border border-line bg-cream text-muted shadow-[0_2px_0_var(--c-line)] hover:border-faint hover:text-charcoal active:translate-y-[1px] active:shadow-none transition-all"
+                disabled={w.busy}
+                className="flex-1 rounded-[12px] px-3.5 py-2.5 text-[13.5px] font-extrabold border border-line bg-cream text-muted shadow-[0_2px_0_var(--c-line)] hover:border-faint hover:text-charcoal active:translate-y-[1px] active:shadow-none transition-all disabled:opacity-50"
               >
-                {tm("takeAllOff")}
+                {w.busy ? "…" : tm("takeAllOff")}
               </button>
-            )}
-          </div>
+            </div>
+          )
         )}
         {w.message && (
           <p role="status" className={`text-[12.5px] mt-2 ${w.message.good ? "text-success font-semibold" : "text-muted"}`}>
