@@ -171,7 +171,12 @@ export default function WritePhase({
                 else playWrong();
                 update(step, { checked });
               }}
-              disabled={entry.picked.length === 0}
+              // The guided tour waits for the whole sentence (2026-09-14, user:
+              // one tap jumped straight to Check): while its board step runs,
+              // Check stays off until every answer slot is filled, and
+              // data-full is what the step watches for.
+              disabled={entry.picked.length === 0 || (tourHint && entry.picked.length < board.answer.length)}
+              data-full={entry.picked.length >= board.answer.length ? "" : undefined}
             >
               {t("board.check")}
             </button>

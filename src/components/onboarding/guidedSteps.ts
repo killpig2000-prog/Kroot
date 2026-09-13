@@ -109,10 +109,11 @@ export const GUIDED_TARGET: Record<GuidedStepKey, string | null> = {
 // (ㄱ's stroke + the audio is well under 2s) instead of the next card
 // snapping in over it.
 // "watch" steps: advance once this selector matches anything in the DOM.
-// writing-board is done when the Check button under it stops being disabled,
-// i.e. every slot is filled — then the next step rings Check itself.
+// writing-board is done when every answer slot is filled (Check carries
+// data-full) — then the next step rings Check itself. "Check enabled" alone
+// isn't enough: Check takes a partial answer, so it lights up after one tile.
 export const GUIDED_ADVANCE_WHEN: Partial<Record<GuidedStepKey, string>> = {
-  "writing-board": '[data-tour="guided-writing-check"]:not([disabled])',
+  "writing-board": '[data-tour="guided-writing-check"][data-full]:not([disabled])',
 };
 
 export const GUIDED_ADVANCE_DELAY_MS: Partial<Record<GuidedStepKey, number>> = {
