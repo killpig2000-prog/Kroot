@@ -331,13 +331,18 @@ export default function WordDetailCard({
               1.45× from its 268px phone frame to a real 390px one. A word
               with no picture (people/roles) grows into the picture's slot
               instead, so both cards are the same height. */}
+          {/* Its own row, not floated over the hero: floated, a three-letter
+              hanja slid left under the rating badge and into the word and 🔊.
+              The row keeps clear of the badge's corner once one is showing. */}
           {hanja && (
-            <span
-              className={`kr absolute top-6 ${answered ? "right-[58px]" : "right-[clamp(18px,4vw,26px)]"} font-black text-[clamp(36px,6vw,52px)] leading-none text-[#A08F4E] opacity-55 tracking-[.04em] select-none`}
-              aria-label={t("session.hanjaAria", { hanja })}
-            >
-              {hanja}
-            </span>
+            <div className={`flex justify-end -mt-2 mb-1 ${answered ? "pr-[44px]" : ""}`}>
+              <span
+                className="kr font-black text-[clamp(28px,5vw,40px)] leading-none text-[#A08F4E] opacity-55 tracking-[.04em] select-none"
+                aria-label={t("session.hanjaAria", { hanja })}
+              >
+                {hanja}
+              </span>
+            </div>
           )}
 
           {/* Picture on the left, the word beside it — the stacked version

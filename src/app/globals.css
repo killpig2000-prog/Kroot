@@ -233,11 +233,16 @@ html[data-mode="dark"] {
   --color-blue: var(--blue);
   --color-ink: var(--ink);
   --color-soft: var(--soft);
+  /* Noto Sans KR carries the Korean forms of shared ideographs only, so a
+     Japanese-only one (渇 against Korean 渴) needs a system CJK face before
+     the generic sans-serif, which is not guaranteed to have it. */
+  --font-cjk: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans JP",
+    "Noto Sans CJK JP", "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
   /* Kept as a name so the two `.hand` call sites read the same; it is the
      body face now that Fredoka is gone (2026-09-09). */
-  --font-hand: var(--font-nunito), var(--font-noto-kr), sans-serif;
-  --font-kr: var(--font-noto-kr), sans-serif;
-  --font-body: var(--font-nunito), var(--font-noto-kr), sans-serif;
+  --font-hand: var(--font-nunito), var(--font-noto-kr), var(--font-cjk);
+  --font-kr: var(--font-noto-kr), var(--font-cjk);
+  --font-body: var(--font-nunito), var(--font-noto-kr), var(--font-cjk);
 
   --color-line: var(--c-line);
   --color-muted: var(--c-muted);
@@ -270,12 +275,12 @@ html[data-mode="dark"] {
    hexes as the mockup's --paper/--ink/--leaf*) — the one real visual
    difference is the font stack, so that's the only thing scoped here. */
 [data-landing] {
-  --font-body: var(--font-nunito), var(--font-noto-kr), sans-serif;
+  --font-body: var(--font-nunito), var(--font-noto-kr), var(--font-cjk);
 }
 [data-landing] h1,
 [data-landing] h2,
 [data-landing] h3 {
-  font-family: var(--font-bricolage), var(--font-noto-kr), sans-serif;
+  font-family: var(--font-bricolage), var(--font-noto-kr), var(--font-cjk);
 }
 
 * {
