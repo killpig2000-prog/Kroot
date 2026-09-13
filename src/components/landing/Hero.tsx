@@ -24,14 +24,6 @@ export default function Hero() {
   const t = useTranslations("landing.hero");
   return (
     <header className="relative overflow-hidden bg-cream text-center px-6 pt-[clamp(56px,9vw,96px)] pb-[clamp(72px,10vw,120px)]">
-      {/* giant hangul letterforms in the paper */}
-      <span aria-hidden="true" className="absolute font-black text-[#F0EBDD] leading-none select-none top-[12px] left-[38%] text-[clamp(90px,15vw,170px)]">
-        한
-      </span>
-      <span aria-hidden="true" className="absolute font-black text-[#F0EBDD] leading-none select-none bottom-[-26px] right-[36%] text-[clamp(72px,12vw,140px)]">
-        글
-      </span>
-
       {/* polaroids framing the copy on all sides */}
       <Polaroid scene="hanok" caption={t("photos.hanok")} tape="blue" className="hidden sm:block absolute left-[2%] top-[52px] w-[166px] h-[156px] -rotate-6" />
       <Polaroid scene="night" caption={t("photos.night")} tape="yellow" className="hidden sm:block absolute left-[6%] bottom-[44px] w-[148px] h-[140px] rotate-3" />

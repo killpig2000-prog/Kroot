@@ -37,7 +37,7 @@
     "autoStops": "tự dừng sau {s} giây",
     "typeInstead": "Gõ câu trả lời thay vì nói",
     "noMic": "Trình duyệt của bạn không hỗ trợ nhận dạng giọng nói — hãy gõ câu trả lời.",
-    "placeholder": "한국어로 입력하세요…",
+    "placeholder": "Nhập bằng tiếng Hàn…",
     "check": "Kiểm tra",
     "errors": {
       "blocked": "Micrô đang bị chặn — hãy cho phép trong cài đặt trình duyệt, hoặc nhập câu trả lời bên dưới.",
@@ -121,7 +121,7 @@
     "tryForMore": "Thử lấy thêm sao",
     "allChallenges": "Tất cả thử thách",
     "saveError": "Không lưu được lần chạy này — hãy kiểm tra kết nối.",
-    "placeholder": "한국어로 입력하세요…",
+    "placeholder": "Nhập bằng tiếng Hàn…",
     "recording": "Đang ghi âm"
   }
 }

@@ -4,25 +4,13 @@
 // dragged the whole desktop hero — VeteranTree, costumes, the growth
 // popup, the avatar uploader — into the phone bundle for four strings.
 //
-// Korean stays as-is in every UI language; the gloss comes from
-// dashboard.tree.phrases.* (and ui.* for the greeting).
+// English only (2026-09-13, user call: Korean appears only where it is
+// being taught). The lines come from dashboard.tree.phrases.* and the
+// greeting from ui.*, in the learner's UI language.
 
-export const TREE_PHRASES = [
-  { kr: "화이팅!", key: "fighting" },
-  { kr: "오늘도 좋아요!", key: "goodToday" },
-  { kr: "물 줘서 고마워요", key: "thanksWater" },
-  { kr: "같이 자라요", key: "growTogether" },
-];
+export const TREE_PHRASES = ["fighting", "goodToday", "thanksWater", "growTogether"] as const;
 
 export type GreetingKey = "upLate" | "goodMorning" | "goodAfternoon" | "goodEvening" | "welcome";
-
-export const GREETING_KR: Record<GreetingKey, string> = {
-  upLate: "아직 안 자요?",
-  goodMorning: "좋은 아침이에요",
-  goodAfternoon: "좋은 오후예요",
-  goodEvening: "좋은 저녁이에요",
-  welcome: "어서 오세요",
-};
 
 /** `hour < 0` means "the server doesn't know the visitor's clock yet". */
 export function greetingKey(hour: number): GreetingKey {
@@ -31,9 +19,4 @@ export function greetingKey(hour: number): GreetingKey {
   if (hour < 12) return "goodMorning";
   if (hour < 18) return "goodAfternoon";
   return "goodEvening";
-}
-
-/** The tree's glosses are lower-case asides ("looking good today!"). */
-export function lowerGloss(gloss: string): string {
-  return /^[A-Z]/.test(gloss) ? gloss.charAt(0).toLowerCase() + gloss.slice(1) : gloss;
 }

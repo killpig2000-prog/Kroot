@@ -9,7 +9,7 @@ export default async function NotFound() {
       <div className="text-center max-w-[420px]">
         <div className="inline-block border border-line rounded-[14px] bg-warm px-8 pt-7 pb-4 mb-5 relative">
           <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 bg-cream border border-line rounded-full px-3 py-1 text-[11.5px] font-semibold whitespace-nowrap">
-            <span className="kr">어디지?</span> <span className="text-faint">{t("bubble")}</span>
+            {t("bubble")}
           </span>
           {/* A little sprout peeking around with a magnifying glass */}
           <svg className="bob w-[92px] h-[92px]" viewBox="0 0 100 100" aria-hidden="true">
@@ -40,9 +40,6 @@ export default async function NotFound() {
         </h1>
         <p className="text-[14px] text-muted leading-[1.65] mb-7">
           {t("body")}
-          <br />
-          <span className="kr font-medium text-success">여기엔 아무것도 없어요!</span>{" "}
-          <span className="text-faint">— {t("krGloss")}</span>
         </p>
 
         <div className="flex justify-center gap-2.5 flex-wrap">

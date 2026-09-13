@@ -66,7 +66,7 @@
     "none": "—",
     "reset": "Đặt lại",
     "hint": "Chạm vào một thẻ để thử",
-    "selected": "{name} · {krName}",
+    "selected": "{name}",
     "outfitTotal": "{n} món chưa sở hữu để hoàn thiện trang phục này · tổng cộng 🪙 {price}"
   },
   "goal": {

@@ -19,7 +19,7 @@ export default function Growth() {
     <section id="grow" className="relative bg-cream border-t border-dashed border-dash py-[clamp(52px,8vw,88px)] px-6 overflow-hidden">
       <div className="text-center mb-1.5">
         <span className="inline-block bg-cream border-[1.5px] border-dashed border-dash rounded-full px-4 py-[5px] text-xs font-extrabold text-success-deep -rotate-1">
-          {t("badge")} · <span className="kr">성장 앨범</span>
+          {t("badge")}
         </span>
       </div>
       <h2 className="text-center font-black text-[clamp(22px,3vw,30px)] tracking-[-0.02em] text-charcoal mb-2 text-balance">

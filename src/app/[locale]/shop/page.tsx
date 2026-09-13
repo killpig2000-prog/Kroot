@@ -71,9 +71,6 @@ export default async function ShopPage({
           {/* head */}
           <div className="flex items-center justify-between gap-4 mb-[18px] flex-wrap max-w-[1040px]">
             <h1 className="font-bold text-[22px] tracking-[-0.02em] flex items-center">
-              <span className="inline-flex w-[30px] h-[30px] rounded-lg bg-success-bg text-success border border-success-line items-center justify-center kr text-[15px] mr-[9px]">
-                정
-              </span>
               {tn("gardenShop")}
             </h1>
             <div className="flex items-center gap-2">

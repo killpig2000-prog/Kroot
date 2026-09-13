@@ -12,7 +12,7 @@ import GardenScene from "@/components/ui/GardenScene";
 import SpeechBubble from "@/components/ui/SpeechBubble";
 import Glyph from "@/components/dashboard/Glyph";
 import TreeGrowthPopup from "@/components/dashboard/TreeGrowthPopup";
-import { GREETING_KR, TREE_PHRASES, greetingKey, lowerGloss } from "@/lib/tree-phrases";
+import { TREE_PHRASES, greetingKey } from "@/lib/tree-phrases";
 import AvatarUploader from "@/components/profile/AvatarUploader";
 import NameEditor from "@/components/profile/NameEditor";
 
@@ -79,18 +79,14 @@ export default function TreeCard({
   // the watering can's pour: the tree sways and thanks you, as for a done quest
   const [watering, setWatering] = useState(false);
   const equipped = costumeIds;
-  // The server can't know the visitor's clock: it renders "어서 오세요" and
+  // The server can't know the visitor's clock: it renders "Welcome" and
   // the local-time greeting swaps in right after hydration (same trick the
   // old Greeting heading used; a useState initializer would be discarded).
   const hour = useSyncExternalStore(emptySubscribe, () => new Date().getHours(), () => -1);
   const gk = greetingKey(hour);
-  const gloss = tu(gk);
   const phrases = [
-    {
-      kr: `${GREETING_KR[gk]}, ${displayName}!`,
-      en: lowerGloss(gloss),
-    },
-    ...TREE_PHRASES.map((p) => ({ kr: p.kr, en: t(`phrases.${p.key}`) })),
+    { key: "greeting", text: `${tu(gk)}, ${displayName}!` },
+    ...TREE_PHRASES.map((key) => ({ key, text: t(`phrases.${key}`) })),
   ];
 
   useEffect(() => {
@@ -184,7 +180,7 @@ export default function TreeCard({
               Garden card does; keyed so the line restarts from the top */}
           <SpeechBubble
             key={watering ? "thanks" : "calm"}
-            phrases={watering ? [...phrases.filter((p) => p.kr === "물 줘서 고마워요"), ...phrases.filter((p) => p.kr !== "물 줘서 고마워요")] : phrases}
+            phrases={(watering ? [...phrases.filter((p) => p.key === "thanksWater"), ...phrases.filter((p) => p.key !== "thanksWater")] : phrases).map((p) => p.text)}
             firstHoldMs={watering ? 4200 : GREETING_HOLD_MS}
             wrap
           />

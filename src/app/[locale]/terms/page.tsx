@@ -11,7 +11,7 @@ export async function generateMetadata({
   const { locale } = await params;
   return {
     title: "Terms of Service — Kroot",
-    description: "The rules for using Kroot and its community.",
+    description: "The rules for using Kroot.",
     alternates: seoAlternates(locale, "/terms"),
   };
 }
@@ -50,8 +50,7 @@ export default function TermsPage() {
         <Section id="the-service" title="The service">
           <p>
             Kroot offers Korean lessons — Hangul, vocabulary, listening, reading, writing and
-            pronunciation practice — plus a garden, a tree that grows as you study, rankings and a
-            community board. Features may change, be added or be removed as the app develops.
+            pronunciation practice — plus a garden, a tree that grows as you study, and rankings. Features may change, be added or be removed as the app develops.
           </p>
         </Section>
 
@@ -61,27 +60,6 @@ export default function TermsPage() {
             <li>Give a real email address you can access, and keep your password to yourself. You&apos;re responsible for what happens under your account.</li>
             <li>One person per account. Don&apos;t create accounts to get around a suspension or to inflate rankings.</li>
           </ul>
-        </Section>
-
-        <Section id="community" title="Community rules">
-          <p>The community board is for learners helping learners. When you post or comment, don&apos;t share:</p>
-          <ul>
-            <li>harassment, bullying, threats or hate speech against anyone;</li>
-            <li>spam, advertising, or links to scams or malware;</li>
-            <li>sexual or graphically violent content;</li>
-            <li>anyone&apos;s personal information without their permission;</li>
-            <li>anything illegal, or content you don&apos;t have the right to share.</li>
-          </ul>
-          <p>
-            If you see something that breaks these rules, tap <b>⋯</b> on the post or comment and
-            choose <b>Report</b>. You can also <b>Block</b> a learner, and you won&apos;t see their posts
-            or comments again. Kroot reviews reports and may remove content, and suspend or delete
-            accounts that break these rules, with or without notice.
-          </p>
-          <p>
-            You keep ownership of what you post. By posting, you let Kroot display it to other
-            signed-in learners inside the app. You can delete your own posts and comments at any time.
-          </p>
         </Section>
 
         <Section id="virtual-items" title="Coins, costumes and XP">
@@ -103,7 +81,7 @@ export default function TermsPage() {
         <Section id="ending" title="Deleting your account">
           <p>
             You can delete your account at any time in <Link href="/settings/account">Settings → Account</Link>.
-            It&apos;s deleted right away, together with your progress, posts and comments. Kroot may
+            It&apos;s deleted right away, together with your progress. Kroot may
             suspend or close accounts that break these terms.
           </p>
         </Section>

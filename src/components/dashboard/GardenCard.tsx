@@ -108,10 +108,10 @@ export default function GardenCard({
   // is treeWidth * 230/220 tall, so one unit is treeWidth / 220.
   const crownUnits = 230 - 212 + lookHeightForLevel(level);
   const bubbleBottom = `calc(${feet + 6}px + ${treeWidth} * ${(crownUnits / 220).toFixed(3)})`;
-  const lines = TREE_PHRASES.map((p) => ({ kr: p.kr, en: t(`phrases.${p.key}`) }));
+  const lines = TREE_PHRASES.map((key) => ({ key, text: t(`phrases.${key}`) }));
   // While the tree is thanking you, that line leads and stays up.
-  const thanks = lines.filter((p) => p.kr === "물 줘서 고마워요");
-  const phrases = party ? [...thanks, ...lines.filter((p) => !thanks.includes(p))] : lines;
+  const thanks = lines.filter((p) => p.key === "thanksWater");
+  const phrases = (party ? [...thanks, ...lines.filter((p) => !thanks.includes(p))] : lines).map((p) => p.text);
 
   return (
     <div

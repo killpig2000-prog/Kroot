@@ -66,7 +66,7 @@
     "none": "—",
     "reset": "リセット",
     "hint": "カードをタップすると試着できます",
-    "selected": "{name} · {krName}",
+    "selected": "{name}",
     "outfitTotal": "この見た目を完成させるには未所持アイテムが{n}個 · 合計 🪙 {price}"
   },
   "goal": {

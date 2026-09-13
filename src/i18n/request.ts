@@ -9,7 +9,7 @@ type RequestConfig = Awaited<ReturnType<Parameters<typeof getRequestConfig>[0]>>
 type Messages = NonNullable<RequestConfig['messages']>;
 type Tree = Record<string, Messages[string]>;
 
-const namespaces = ['common', 'nav', 'onboarding', 'vocabulary', 'words', 'ui', 'listening', 'writing', 'pronunciation', 'landing', 'dashboard', 'reading', 'slang', 'tree', 'profile', 'shop', 'community', 'levelTest', 'grammarUi', 'grammarGuide', 'readingGuide', 'listeningGuide', 'hangulGuide', 'writingGuide', 'pronunciationGuide', 'hangul', 'auth', 'notFound', 'guide', 'error', 'tour', 'ranking', 'myroom', 'settings'];
+const namespaces = ['common', 'nav', 'onboarding', 'vocabulary', 'words', 'ui', 'listening', 'writing', 'pronunciation', 'landing', 'dashboard', 'reading', 'slang', 'tree', 'profile', 'shop', 'levelTest', 'grammarUi', 'grammarGuide', 'readingGuide', 'listeningGuide', 'hangulGuide', 'writingGuide', 'pronunciationGuide', 'hangul', 'auth', 'notFound', 'guide', 'error', 'tour', 'ranking', 'myroom', 'settings'];
 
 // Pattern: messages/{locale}/{namespace}.json
 async function loadMessages(locale: string): Promise<Tree> {

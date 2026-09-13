@@ -241,7 +241,7 @@ export default function LoginPage() {
                 {t("login.title")}
               </h1>
               <p className="text-center text-muted text-[13.5px] mb-6">
-                {t("login.sub")} <span className="kr text-success">다시 만나서 반가워요!</span>
+                {t("login.sub")}
               </p>
 
               <button

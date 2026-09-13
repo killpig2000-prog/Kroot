@@ -3,10 +3,7 @@ import SpeechBubble from "@/components/ui/SpeechBubble";
 
 export default function Mascot() {
   const t = useTranslations("onboarding.mascot");
-  const phrases = [
-    { kr: "환영해요!", en: t("welcome") },
-    { kr: "같이 해봐요", en: t("together") },
-  ];
+  const phrases = [t("welcome"), t("together")];
 
   return (
     <div className="relative flex justify-center mb-4">

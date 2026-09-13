@@ -316,7 +316,7 @@ export default function ShopClient({
                   {t("featured.badge")}
                 </span>
                 <b className="block text-[14px] truncate">
-                  {featured.name} <span className="kr text-muted font-semibold">{featured.krName}</span>
+                  {featured.name}
                 </b>
                 <small className="block text-[12.5px] text-muted">
                   {t("featured.meta", {
@@ -421,7 +421,6 @@ export default function ShopClient({
                     <Scene ids={ids} stage={stage} species={species} className="h-[96px]" />
                     <span className="block px-2.5 pt-2 pb-2.5">
                       <b className="block text-[13px] leading-tight">{c.name}</b>
-                      <small className="block kr text-[11.5px] text-muted">{c.krName}</small>
                       <span className="flex items-center justify-between gap-1.5 mt-1.5">
                         <span className={`text-[10px] font-extrabold tracking-[.06em] uppercase rounded px-1.5 py-px ${rs.chip}`}>
                           {t(`rarity.${c.rarity}`)}
@@ -445,7 +444,7 @@ export default function ShopClient({
           <figure className="relative m-0 mx-auto max-w-[clamp(170px,48vw,230px)] bg-cream border border-line p-1.5 pb-6 rotate-[1deg] shadow-[0_10px_22px_-12px_rgba(60,50,30,.35)] mb-3">
             <Scene ids={previewIds} stage={stage} species={species} className="px-2.5 pt-2.5" />
             <figcaption className="absolute bottom-1 left-0 right-0 text-center text-[10px] font-bold text-[#8A8478]">
-              <span className="kr">참나무</span> · {t("tryOn.caption", { level: playerLevel })}
+              {t("tryOn.caption", { level: playerLevel })}
             </figcaption>
           </figure>
 
@@ -495,7 +494,7 @@ export default function ShopClient({
           </div>
           <p className={`text-[11.5px] mt-2 text-center ${message?.good ? "text-success font-semibold" : "text-muted"}`}>
             {message?.text ??
-              (selected ? t("tryOn.selected", { name: selected.name, krName: selected.krName }) : t("tryOn.hint"))}
+              (selected ? t("tryOn.selected", { name: selected.name }) : t("tryOn.hint"))}
           </p>
           {unownedPreview.length > 1 && (
             <p className="text-[12px] mt-2 text-center font-bold text-[#B7791F]">

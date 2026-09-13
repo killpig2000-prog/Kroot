@@ -114,8 +114,8 @@ export default function SeedIntro({
           }`}
           aria-live="polite"
         >
-          <b className="kr block text-[clamp(19px,5.4vw,22px)] font-bold" style={{ color: "#2E5B41" }}>
-            첫 글자 완성! 씨앗이 깨어났어
+          <b className="block text-[clamp(19px,5.4vw,22px)] font-bold" style={{ color: "#2E5B41" }}>
+            {t("seedAwake")}
           </b>
           <span className="block text-[12.5px] font-bold mt-1 tracking-[.03em]" style={{ color: "#8C8272" }}>
             {t("cheer")}
@@ -145,10 +145,7 @@ export default function SeedIntro({
             boxShadow: "0 10px 24px -16px rgba(74,66,55,.5)",
           }}
         >
-          <span className="kr block text-[14px] font-semibold leading-[1.5]">안녕! 난 씨앗이야.<br />한글 한 글자만 같이 써볼래?</span>
-          <span className="block text-[11.5px] font-bold mt-1" style={{ color: "#8C8272" }}>
-            {t("greeting")}
-          </span>
+          <span className="block text-[14px] font-semibold leading-[1.5]">{t("greeting")}</span>
           <span
             className="absolute left-1/2 -translate-x-1/2 -bottom-[8px] w-[14px] h-[14px] rotate-45"
             style={{ background: "#FFFDF6", borderRight: "1.5px solid #E3DDD0", borderBottom: "1.5px solid #E3DDD0" }}

@@ -7,17 +7,11 @@ export default function Final() {
   return (
     <>
       <section className="relative bg-cream border-t border-dashed border-dash text-center py-[clamp(56px,9vw,92px)] px-6 overflow-hidden">
-        <span aria-hidden="true" className="absolute font-black text-[#F0EBDD] leading-none select-none top-[-8px] left-[8%] text-[clamp(70px,10vw,120px)]">
-          가
-        </span>
-        <span aria-hidden="true" className="absolute font-black text-[#F0EBDD] leading-none select-none bottom-[-16px] right-[8%] text-[clamp(60px,9vw,100px)]">
-          요
-        </span>
         <h2 className="relative z-10 font-black text-[clamp(24px,3.4vw,34px)] tracking-[-0.02em] text-charcoal mb-2 text-balance">
           {t("title")}
         </h2>
         <p className="relative z-10 text-[15px] font-extrabold text-success-deep mb-5">
-          <span className="kr">오늘, 뿌리를 내리세요</span> — {t("tagline")}
+          {t("tagline")}
         </p>
         <Link
           href="/onboarding"

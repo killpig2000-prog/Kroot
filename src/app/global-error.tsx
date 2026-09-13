@@ -54,7 +54,7 @@ export default function GlobalError({
             The whole garden hiccuped
           </h1>
           <p style={{ fontSize: 14, color: "#6B6560", lineHeight: 1.65, margin: "0 0 28px" }}>
-            앗! Something went really wrong — but your progress is safe.
+            Something went really wrong — but your progress is safe.
             <br />
             One splash of water should bring everything back.
           </p>

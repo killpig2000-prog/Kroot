@@ -30,7 +30,7 @@ export default function CuteError({ children }: { children: React.ReactNode }) {
       </svg>
       <div className="text-[12.5px] leading-[1.55] pt-0.5">
         <b className="block text-[#BE123C] font-bold mb-px">
-          <span className="kr">앗!</span> {t("error.title")}
+          {t("error.title")}
         </b>
         <span className="text-[#9F1239] font-medium">{children}</span>
       </div>

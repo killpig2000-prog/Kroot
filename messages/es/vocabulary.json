@@ -91,7 +91,7 @@
   "search": {
     "trigger": "Buscar una palabra",
     "dialogLabel": "Buscar en el vocabulario",
-    "placeholder": "Busca entre más de 4000 palabras: 한국어, romanización o inglés",
+    "placeholder": "Busca entre más de 4000 palabras: coreano, romanización o inglés",
     "hint": "Cualquier nivel, cualquier unidad: los resultados abren la unidad que enseña la palabra.",
     "loading": "Cargando el mazo…",
     "noMatch": "Ningún resultado para «{query}»: prueba con la escritura coreana o el significado en inglés."

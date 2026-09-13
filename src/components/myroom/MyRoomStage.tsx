@@ -283,7 +283,6 @@ export default function MyRoomStage({
                 <Scene ids={ids} stage={shop.stage} species={tree.species} className="h-[92px]" />
                 <span className="block px-2.5 pt-2 pb-2.5">
                   <b className="block text-[13px] leading-tight truncate">{c.name}</b>
-                  <small className="block kr text-[11.5px] text-muted truncate">{c.krName}</small>
                   <span className="flex items-center justify-between gap-1.5 mt-1.5">
                     <span className={`text-[9.5px] font-extrabold tracking-[.04em] uppercase rounded px-1 py-px whitespace-nowrap ${RARITY_CHIP[c.rarity]}`}>
                       {t(`rarity.${c.rarity}`)}

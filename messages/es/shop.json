@@ -66,7 +66,7 @@
     "none": "—",
     "reset": "Restablecer",
     "hint": "Toca una tarjeta para probártela",
-    "selected": "{name} · {krName}",
+    "selected": "{name}",
     "outfitTotal": "{n, plural, one {# artículo sin comprar} other {# artículos sin comprar}} para completar este look · 🪙 {price} en total"
   },
   "goal": {

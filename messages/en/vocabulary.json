@@ -91,7 +91,7 @@
   "search": {
     "trigger": "Find a word",
     "dialogLabel": "Search vocabulary",
-    "placeholder": "Search 4,000+ words — 한국어, romanization, or English",
+    "placeholder": "Search 4,000+ words — Korean, romanization, or English",
     "hint": "Any level, any unit — results open the unit that teaches the word.",
     "loading": "Loading the deck…",
     "noMatch": "No match for “{query}” — try the Korean spelling or the English meaning."

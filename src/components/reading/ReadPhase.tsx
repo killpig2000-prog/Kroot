@@ -285,7 +285,7 @@ export default function ReadPhase({
           large ? "bg-success-bg border-success text-success-deep" : "bg-warm border-line text-muted hover:text-charcoal"
         }`}
       >
-        <span className="kr">가</span> {large ? t("smaller") : t("larger")}
+        <span aria-hidden="true">Aa</span> {large ? t("smaller") : t("larger")}
       </button>
       <div className="flex border border-line rounded-[9px] overflow-hidden bg-warm" role="group" aria-label={t("translationLabel")}>
         {(["off", "tap", "all"] as TranslationMode[]).map((m) => (

@@ -113,7 +113,7 @@ export default function TodaysQuestButton({
       </span>
       <span className="relative flex-1 min-w-0 leading-[1.15]">
         <span className="block text-[10.5px] font-extrabold uppercase tracking-[.08em] opacity-80">
-          {t("title")} · <span className="kr normal-case tracking-normal">{done ? "물 줬어요" : "목말라요"}</span>{" "}
+          {t("title")} ·{" "}
           <span className="normal-case tracking-normal font-bold opacity-80">{done ? t("watered") : t("thirsty")}</span>
         </span>
         {/* Two lines at most, and the type steps down with the viewport: the

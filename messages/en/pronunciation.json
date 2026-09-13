@@ -37,7 +37,7 @@
     "autoStops": "auto-stops in {s}s",
     "typeInstead": "Type your answer instead",
     "noMic": "Your browser doesn't support speech recognition — type your answer instead.",
-    "placeholder": "한국어로 입력하세요…",
+    "placeholder": "Type in Korean…",
     "check": "Check it",
     "errors": {
       "blocked": "Microphone access is blocked — allow it in your browser settings, or type your answer below.",
@@ -121,7 +121,7 @@
     "tryForMore": "Try for more stars",
     "allChallenges": "All challenges",
     "saveError": "Couldn't save that run — check your connection.",
-    "placeholder": "한국어로 입력하세요…",
+    "placeholder": "Type in Korean…",
     "recording": "Recording"
   }
 }

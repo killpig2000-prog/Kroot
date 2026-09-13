@@ -1,12 +1,12 @@
 import { useTranslations } from "next-intl";
 
 const CATEGORIES = [
-  { id: "listening", kr: "듣", sticker: "🎧", bg: "#3E7C59" },
-  { id: "pronunciation", kr: "발", sticker: "🎤", bg: "#2A7F72" },
-  { id: "writing", kr: "쓰", sticker: "✍️", bg: "#B07A2A" },
-  { id: "reading", kr: "읽", sticker: "📖", bg: "#2F6F8F" },
-  { id: "vocabulary", kr: "단", sticker: "🃏", bg: "#6A4FA8" },
-  { id: "slang", kr: "슬", sticker: "💬", bg: "#A9485F" },
+  { id: "listening", sticker: "🎧", bg: "#3E7C59" },
+  { id: "pronunciation", sticker: "🎤", bg: "#2A7F72" },
+  { id: "writing", sticker: "✍️", bg: "#B07A2A" },
+  { id: "reading", sticker: "📖", bg: "#2F6F8F" },
+  { id: "vocabulary", sticker: "🃏", bg: "#6A4FA8" },
+  { id: "slang", sticker: "💬", bg: "#A9485F" },
 ] as const;
 
 export default function Categories() {
@@ -15,7 +15,7 @@ export default function Categories() {
     <section id="learn" className="bg-warm border-t border-dashed border-dash py-[clamp(52px,8vw,88px)] px-6">
       <div className="text-center mb-1.5">
         <span className="inline-block bg-cream border-[1.5px] border-dashed border-dash rounded-full px-4 py-[5px] text-xs font-extrabold text-success-deep rotate-1">
-          {t("badge")} · <span className="kr">준비물</span>
+          {t("badge")}
         </span>
       </div>
       <h2 className="text-center font-black text-[clamp(22px,3vw,30px)] tracking-[-0.02em] text-charcoal mb-2 text-balance">
@@ -33,12 +33,12 @@ export default function Categories() {
               i % 2 ? "rotate-1" : "-rotate-1"
             }`}
           >
-            <span aria-hidden="true" className="absolute -top-2 -right-1.5 text-base rotate-12">{c.sticker}</span>
             <span
-              className="kr w-[34px] h-[34px] rounded-[9px] grid place-items-center font-extrabold text-[15px] text-white mb-2"
+              aria-hidden="true"
+              className="w-[34px] h-[34px] rounded-[9px] grid place-items-center text-[17px] mb-2"
               style={{ background: c.bg }}
             >
-              {c.kr}
+              {c.sticker}
             </span>
             <b className="block text-sm text-charcoal mb-0.5">{t(`items.${c.id}.label`)}</b>
             <span className="block text-[11.5px] text-[#8A8478] leading-[1.5]">{t(`items.${c.id}.desc`)}</span>

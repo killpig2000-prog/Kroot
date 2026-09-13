@@ -49,7 +49,6 @@ export function seoAlternates(locale: string, path: string): SeoAlternates {
 // indexable.
 export const LOGGED_IN_PREFIXES = [
   "/admin",
-  "/community",
   "/dashboard",
   "/grammar",
   "/guide",

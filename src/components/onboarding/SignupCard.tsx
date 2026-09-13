@@ -68,10 +68,7 @@ export function SignupCard({
           className="absolute left-1/2 -translate-x-1/2 top-[14px] z-[4] rounded-[14px] px-3.5 py-2 text-center whitespace-nowrap"
           style={{ background: "#FFFDF6", border: "1.5px solid #E3DDD0", boxShadow: "0 8px 20px -14px rgba(74,66,55,.5)" }}
         >
-          <span className="kr block text-[12.5px] font-bold" style={{ color: "#4A4237" }}>
-            나 여기서 기다릴게. 저장해 줄래?
-          </span>
-          <span className="block text-[10.5px] font-bold" style={{ color: "#8C8272" }}>
+          <span className="block text-[12.5px] font-bold" style={{ color: "#4A4237" }}>
             {t("seedBubble")}
           </span>
           <span

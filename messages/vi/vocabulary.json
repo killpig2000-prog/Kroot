@@ -91,7 +91,7 @@
   "search": {
     "trigger": "Tìm một từ",
     "dialogLabel": "Tìm trong từ vựng",
-    "placeholder": "Tìm trong hơn 4.000 từ — 한국어, phiên âm hoặc tiếng Anh",
+    "placeholder": "Tìm trong hơn 4.000 từ — tiếng Hàn, phiên âm hoặc tiếng Anh",
     "hint": "Mọi cấp độ, mọi bài học — kết quả sẽ mở bài học dạy từ đó.",
     "loading": "Đang tải bộ từ…",
     "noMatch": "Không có kết quả cho “{query}” — thử cách viết tiếng Hàn hoặc nghĩa tiếng Anh."

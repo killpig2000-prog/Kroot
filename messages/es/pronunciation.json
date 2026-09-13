@@ -37,7 +37,7 @@
     "autoStops": "se para solo en {s} s",
     "typeInstead": "Escríbelo en vez de decirlo",
     "noMic": "Tu navegador no admite reconocimiento de voz — escribe la respuesta.",
-    "placeholder": "한국어로 입력하세요…",
+    "placeholder": "Escribe en coreano…",
     "check": "Comprobar",
     "errors": {
       "blocked": "El micrófono está bloqueado: permítelo en la configuración del navegador o escribe tu respuesta abajo.",
@@ -121,7 +121,7 @@
     "tryForMore": "A por más estrellas",
     "allChallenges": "Todos los desafíos",
     "saveError": "No se pudo guardar esa ronda — revisa tu conexión.",
-    "placeholder": "한국어로 입력하세요…",
+    "placeholder": "Escribe en coreano…",
     "recording": "Grabando"
   }
 }
