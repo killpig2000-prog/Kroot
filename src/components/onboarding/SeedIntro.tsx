@@ -5,6 +5,8 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import BrandMark from "@/components/ui/BrandMark";
 import LanguageLinks from "@/components/ui/LanguageLinks";
+import { STUDIO_BG } from "@/components/ui/GardenScene";
+import { StudioDisc } from "@/components/dashboard/GardenStage";
 import TraceCanvas from "@/components/hangul/TraceCanvas";
 import { speakKorean } from "@/lib/tts";
 import { playCorrect, playDayComplete, playTap } from "@/lib/sfx";
@@ -76,7 +78,7 @@ export default function SeedIntro({
     <div className="min-h-[100dvh] bg-cream md:flex md:items-center md:justify-center md:px-6 md:py-8">
     <div
       className="relative min-h-[100dvh] overflow-hidden select-none md:min-h-0 md:h-[min(760px,88dvh)] md:w-full md:max-w-[520px] md:rounded-[26px] md:border md:border-line md:shadow-[0_24px_48px_-26px_rgba(74,66,55,.45)]"
-      style={{ background: "linear-gradient(180deg,#FFF9EC 0%,#EAF4F3 42%,#BEE3F0 62%,#DFF3E4 100%)", color: "#4A4237" }}
+      style={{ background: STUDIO_BG, color: "#4A4237" }}
       onClick={wake}
       onKeyDown={(e) => {
         if ((e.key === "Enter" || e.key === " ") && beat === 0) {
@@ -88,12 +90,8 @@ export default function SeedIntro({
       tabIndex={beat === 0 ? 0 : -1}
       aria-label={beat === 0 ? t("tapToWake") : undefined}
     >
-      {/* hills — the width of the scene: the phone screen, or the desktop card */}
-      <svg className="absolute left-[-4%] right-[-4%] bottom-0 w-[108%] h-[42%]" viewBox="0 0 800 200" preserveAspectRatio="none" aria-hidden="true">
-        <path d="M0 110 C140 60 260 90 400 96 C540 102 660 50 800 92 L800 200 L0 200Z" fill="#CFE9D6" />
-        <path d="M0 150 C160 120 300 140 440 132 C600 122 700 140 800 128 L800 200 L0 200Z" fill="#B9DDC3" />
-        <path d="M0 176 C200 160 400 172 800 164 L800 200 L0 200Z" fill="#DFF3E4" />
-      </svg>
+      {/* Studio backdrop (2026-09-13), same as the dashboard's GardenScene:
+          no hills — the seed stands on the shared sand disc instead. */}
 
       {/* everything the learner reads or taps sits in one phone-width column */}
       <div className="relative mx-auto w-full max-w-[420px] min-h-[100dvh] md:min-h-0 md:h-full">
@@ -259,7 +257,7 @@ function Seed({ beat }: { beat: Beat }) {
   return (
     <svg
       viewBox="0 0 220 230"
-      className={`absolute inset-0 w-full h-full ${woke ? "motion-safe:animate-[seedHop_.75s_cubic-bezier(.3,1.6,.4,1)_both]" : ""}`}
+      className={`absolute inset-0 w-full h-full overflow-visible ${woke ? "motion-safe:animate-[seedHop_.75s_cubic-bezier(.3,1.6,.4,1)_both]" : ""}`}
       style={woke ? { transform: "translateY(-10px)" } : undefined}
     >
       <defs>
@@ -273,6 +271,7 @@ function Seed({ beat }: { beat: Beat }) {
           <stop offset="100%" stopColor="#A88F66" />
         </linearGradient>
       </defs>
+      <StudioDisc />
       <ellipse cx="110" cy="206" rx="46" ry="7.4" fill="url(#si-soil)" />
       <g stroke="#7BA05B" strokeWidth="2" strokeLinecap="round" fill="none">
         <path d="M76 203 q-1 -6 3 -9 M80 204 q2 -5 6 -6" />
