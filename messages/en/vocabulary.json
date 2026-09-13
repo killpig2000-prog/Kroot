@@ -106,11 +106,12 @@
     "notInDeck": "Not in the word deck yet."
   },
   "detail": {
-    "prev": "Prev",
     "backToVocab": "All chapters",
-    "next": "Next word →",
     "backToChapter": "Back to chapter →",
-    "lastWord": "That's the last word of this Day ✓"
+    "swipeHint": "Swipe for the next word",
+    "prevWord": "Previous word",
+    "nextWord": "Next word",
+    "wordOf": "Word {n} of {total}"
   },
   "practice": {
     "reviewTime": "review time",

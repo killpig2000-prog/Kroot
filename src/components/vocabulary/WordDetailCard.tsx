@@ -23,11 +23,6 @@ const BTN_LINE = buttonClassName("line");
 const BTN_AMBER = buttonClassName("amber");
 const VIOLET = "var(--tint-violet-ink)";
 
-// Ruled notebook paper: a faint line every 32px, plus a red margin rule.
-// Brought back 2026-09-08 (user call: the memo-pad card read better than
-// the plain one the fidelity pass replaced it with).
-const RULED = "repeating-linear-gradient(180deg, transparent 0 31px, #EEF0F6 31px 32px)";
-
 export type DetailWord = {
   key: string;
   korean: string;
@@ -37,6 +32,8 @@ export type DetailWord = {
   example_en: string;
   moreExamples: { kr: string; en: string; source: "reading" | "listening" }[];
 };
+
+export type DayResultData = { known: number; levelUp: ProgressResult | null };
 
 // A dictionary entry for a single word — the one way words are studied.
 // "Got it" / "Still learning" record SRS progress, and marking the last
@@ -49,20 +46,19 @@ export default function WordDetailCard({
   incorrectCount,
   box,
   level,
-  prevHref,
-  nextHref,
   inBank: initialInBank,
   savedCount: initialSavedCount,
   slots,
-  backHref,
-  unitHref,
-  unitLabel,
   topicKey,
   dayIndex,
   dayTotal,
   othersMarked,
   othersGotIt,
   hasNextDay,
+  active = true,
+  onRated,
+  onDayResult,
+  onSavedCount,
 }: {
   word: DetailWord;
   locale: string;
@@ -71,19 +67,11 @@ export default function WordDetailCard({
   incorrectCount: number;
   box: number;
   level: string;
-  prevHref: string | null;
-  nextHref: string | null;
   /** Whether this word is one of the learner's picked words. */
   inBank: boolean;
   /** How many words the bank holds right now, and how many it can hold. */
   savedCount: number;
   slots: number;
-  /** Where the learner came from, when it wasn't a vocabulary unit (e.g. a
-      reading passage, or the word bank) — the lesson bar's back arrow uses
-      it instead of the unit link. */
-  backHref?: string | null;
-  unitHref: string;
-  unitLabel: string;
   topicKey: string;
   /** Which Day (10-word unit) this word belongs to. */
   dayIndex: number;
@@ -93,13 +81,23 @@ export default function WordDetailCard({
   othersMarked: number;
   othersGotIt: number;
   hasNextDay: boolean;
+  /** Deck mode (WordDeck: the Day's words side by side). Only the card in
+      view is `active` — it alone warms audio and carries the guided tour's
+      targets. The deck also owns the bank count, the Day's progress and its
+      result screen, so the card reports to it instead of keeping its own. */
+  active?: boolean;
+  onRated?: (gotIt: boolean) => void;
+  onDayResult?: (result: DayResultData) => void;
+  onSavedCount?: (n: number) => void;
 }) {
   const router = useRouter();
   const t = useTranslations("vocabulary");
-  const tn = useTranslations("nav");
   const tu = useTranslations("ui");
   const [inBank, setInBank] = useState(initialInBank);
-  const [savedCount, setSavedCount] = useState(initialSavedCount);
+  // In a deck the bank count is shared by all ten cards, so the deck holds it.
+  const [ownSavedCount, setOwnSavedCount] = useState(initialSavedCount);
+  const savedCount = onSavedCount ? initialSavedCount : ownSavedCount;
+  const setSavedCount = onSavedCount ?? setOwnSavedCount;
   const [adding, setAdding] = useState(false);
   const [addError, setAddError] = useState<"full" | "error" | null>(null);
   const note = getWordNote(word.korean);
@@ -141,20 +139,24 @@ export default function WordDetailCard({
   const [answered, setAnswered] = useState(correctCount + incorrectCount > 0);
   // Set when marking this word is what completed the Day — the card gives way
   // to the Day's result screen.
-  const [dayResult, setDayResult] = useState<{ known: number; levelUp: ProgressResult | null } | null>(null);
+  const [dayResult, setDayResult] = useState<DayResultData | null>(null);
 
   // This word counts as studied once it has been answered either way. Only
   // the *transition* into a full Day pays: a word already marked before this
   // visit can be re-answered as often as the learner likes without
-  // re-triggering the payout.
+  // re-triggering the payout. Keyed on `answered`, not the counts the card
+  // started from: in a deck the card stays mounted, so a word marked a
+  // moment ago must not pay the Day out again.
   const alreadyStudied = correctCount + incorrectCount > 0;
-  const finishesDay = !alreadyStudied && othersMarked === dayTotal - 1;
+  const finishesDay = !answered && othersMarked === dayTotal - 1;
 
   // Warm the audio cache for every 🔊 on this page as soon as it loads, so
   // the first tap plays instantly instead of waiting on a cold TTS synthesis.
+  // In a deck only the card in view does, or ten cards would all fetch at once.
   useEffect(() => {
+    if (!active) return;
     prefetchKorean([word.korean, word.example_kr, ...word.moreExamples.map((ex) => ex.kr)]);
-  }, [word.korean, word.example_kr, word.moreExamples]);
+  }, [active, word.korean, word.example_kr, word.moreExamples]);
 
   // Tapping "Got it" while already checked undoes it (back to still
   // learning); any other tap sets the state the button says.
@@ -185,6 +187,7 @@ export default function WordDetailCard({
       }
       setMarked(next);
       setAnswered(true);
+      onRated?.(next);
       if (next) playCorrect();
       else playWrong();
       if (finishesDay) await payOutDay(next);
@@ -219,11 +222,8 @@ export default function WordDetailCard({
       // The word itself is already saved; a failed payout must not take the
       // learner's progress or the result screen down with it.
     }
-    setDayResult({ known, levelUp });
-  }
-
-  function goNext() {
-    router.push(nextHref ?? unitHref);
+    if (onDayResult) onDayResult({ known, levelUp });
+    else setDayResult({ known, levelUp });
   }
 
   // Add-to-word-bank: flags the row saved with untouched counts, so picking a
@@ -240,7 +240,7 @@ export default function WordDetailCard({
         setAddError(res.reason);
         return;
       }
-      setSavedCount((n) => n + 1);
+      setSavedCount(savedCount + 1);
       setInBank(true);
     } catch {
       setAddError("error");
@@ -254,55 +254,14 @@ export default function WordDetailCard({
   }
 
   if (dayResult) {
-    const tricky = dayTotal - dayResult.known;
     return (
-      <ResultShell
-        sound="day"
-        color={VIOLET}
-        categoryLabel={tn("vocabulary")}
-        meta={t("dayN", { n: dayIndex + 1 })}
-        ring={
-          <ResultRing
-            pct={Math.round((dayResult.known / dayTotal) * 100)}
-            center={dayResult.known}
-            unit={`/${dayTotal}`}
-            label={t("summary.markedKnown")}
-            color={VIOLET}
-          />
-        }
-        headline={t("summary.title", { count: dayTotal })}
-        sub={t("summary.sub")}
-        tags={
-          <>
-            {tricky > 0 && (
-              <ResultTag tone="warn">
-                {t("stillLearning")} · {tricky}
-              </ResultTag>
-            )}
-            <ResultTag>{t("dayN", { n: dayIndex + 1 })}</ResultTag>
-          </>
-        }
-        levelUp={dayResult.levelUp}
-        xpValue={XP_POINTS.vocabulary}
-        xpLabel={tu("xpEarned", { skill: tn("vocabulary") })}
-        actions={
-          <>
-            <Link
-              href={`/vocabulary?level=${level}`}
-              className="rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-success hover:bg-success-deep transition-colors"
-            >
-              {tu("chooseAnother")}
-            </Link>
-            {hasNextDay && (
-              <Link
-                href={`/vocabulary/${topicKey}/word?level=${level}&chapter=${dayIndex + 1}&i=0`}
-                className={BTN_LINE}
-              >
-                {t("summary.moreWords", { count: dayTotal })}
-              </Link>
-            )}
-          </>
-        }
+      <DayResult
+        result={dayResult}
+        level={level}
+        topicKey={topicKey}
+        dayIndex={dayIndex}
+        dayTotal={dayTotal}
+        hasNextDay={hasNextDay}
       />
     );
   }
@@ -312,15 +271,12 @@ export default function WordDetailCard({
       {/* The guided tour spotlights this whole card for the "read it" step —
           the copy talks about the word, its meaning and the example, so the
           ring has to cover them rather than just the Got it button. */}
+      {/* Plain paper since 2026-09-13 (user call): the ruled lines and red
+          margin rule came off when the Day became a side-scrolling deck. */}
       <div
-        data-tour="guided-word-card"
+        data-tour={active ? "guided-word-card" : undefined}
         className="relative bg-cream border border-line rounded-[6px] shadow-[0_20px_40px_-28px_rgba(60,50,30,.6)] overflow-hidden"
       >
-        <div className="absolute inset-0 pointer-events-none" style={{ background: RULED }} aria-hidden="true" />
-        <span
-          className="absolute top-0 bottom-0 left-[clamp(28px,6vw,52px)] w-px bg-[var(--tint-rose-line)] opacity-70 pointer-events-none"
-          aria-hidden="true"
-        />
         {marked && (
           <span
             aria-label={t("gotIt")}
@@ -368,7 +324,7 @@ export default function WordDetailCard({
           </span>
         )}
 
-        <div className="relative pt-6 pb-5 pr-[clamp(18px,4vw,26px)] pl-[clamp(40px,8vw,70px)]">
+        <div className="relative pt-6 pb-5 pr-[clamp(18px,4vw,26px)] pl-[clamp(18px,4vw,26px)]">
           {/* The word's hero, laid out like the restructure mockup's card:
               picture, word, romanization, meaning, then the listen pill —
               centred, one under the other. Its px are the mockup's scaled
@@ -510,7 +466,7 @@ export default function WordDetailCard({
         </button>
         <button
           type="button"
-          data-tour="guided-word-goti"
+          data-tour={active ? "guided-word-goti" : undefined}
           className={`${answered ? BTN_LINE : BTN_INK} w-full justify-center`}
           disabled={saving !== null}
           onClick={() => mark(true)}
@@ -519,37 +475,13 @@ export default function WordDetailCard({
         </button>
       </div>
 
-      {/* Looked up from a reading passage, there's no next word to page to —
-          nextHref is always null and unitHref would just dump the learner
-          into an unrelated vocab unit. The back-to-story link above already
-          covers "done here". */}
-      {!backHref && !nextHref && (
-        <p className="mt-3 text-center text-[12.5px] font-semibold text-muted">{t("detail.lastWord")}</p>
-      )}
-      {!backHref && (
-        <button
-          type="button"
-          onClick={goNext}
-          className={`${BTN_INK} w-full justify-center mt-2`}
-        >
-          {nextHref ? t("detail.next") : t("detail.backToChapter")}
-        </button>
-      )}
-
       {saveFailed && (
         <p role="status" className="mt-2 text-[12.5px] text-danger text-center">
           {t("saveFailed")}
         </p>
       )}
 
-      <div className="flex items-center justify-between gap-3 mt-3 text-[12.5px]">
-        {prevHref ? (
-          <Link href={prevHref} className="font-semibold text-muted hover:text-charcoal transition-colors whitespace-nowrap">
-            ← {t("detail.prev")}
-          </Link>
-        ) : (
-          <span />
-        )}
+      <div className="flex items-center justify-end gap-3 mt-3 text-[12.5px]">
         {/* The add button swaps into this saved state in place — a fast tap's
             trailing click used to land after that swap and fire whatever was
             now underneath, so this stayed a static status. It's a real
@@ -559,7 +491,7 @@ export default function WordDetailCard({
         {inBank ? (
           <button
             type="button"
-            data-tour="guided-word-bank"
+            data-tour={active ? "guided-word-bank" : undefined}
             onClick={() => router.push("/review/words")}
             className="min-w-0 inline-flex items-center gap-1.5 rounded-[10px] border border-success-line bg-success-bg px-3 py-2 font-semibold text-success-deep hover:bg-success-line transition-colors"
           >
@@ -567,7 +499,7 @@ export default function WordDetailCard({
           </button>
         ) : addError === "full" ? (
           <span
-            data-tour="guided-word-bank"
+            data-tour={active ? "guided-word-bank" : undefined}
             className="min-w-0 inline-flex items-center gap-1.5 rounded-[10px] border border-amber-line bg-[var(--tint-amber)] px-3 py-2 font-semibold text-[#B7791F]"
           >
             <span className="truncate">{t("bank.fullShort", { used: savedCount, slots })}</span>
@@ -575,7 +507,7 @@ export default function WordDetailCard({
         ) : (
           <button
             type="button"
-            data-tour="guided-word-bank"
+            data-tour={active ? "guided-word-bank" : undefined}
             onClick={() => void addToBank()}
             disabled={adding}
             aria-busy={adding}
@@ -589,5 +521,79 @@ export default function WordDetailCard({
       </div>
 
     </div>
+  );
+}
+
+/** The Day's result screen: all ten words answered, XP (and, past the
+    accuracy gate, coins) paid out. The card shows it for a word looked up
+    on its own; WordDeck shows it when a deck finishes the Day. */
+export function DayResult({
+  result,
+  level,
+  topicKey,
+  dayIndex,
+  dayTotal,
+  hasNextDay,
+}: {
+  result: DayResultData;
+  level: string;
+  topicKey: string;
+  dayIndex: number;
+  dayTotal: number;
+  hasNextDay: boolean;
+}) {
+  const t = useTranslations("vocabulary");
+  const tn = useTranslations("nav");
+  const tu = useTranslations("ui");
+  const tricky = dayTotal - result.known;
+  return (
+    <ResultShell
+      sound="day"
+      color={VIOLET}
+      categoryLabel={tn("vocabulary")}
+      meta={t("dayN", { n: dayIndex + 1 })}
+      ring={
+        <ResultRing
+          pct={Math.round((result.known / dayTotal) * 100)}
+          center={result.known}
+          unit={`/${dayTotal}`}
+          label={t("summary.markedKnown")}
+          color={VIOLET}
+        />
+      }
+      headline={t("summary.title", { count: dayTotal })}
+      sub={t("summary.sub")}
+      tags={
+        <>
+          {tricky > 0 && (
+            <ResultTag tone="warn">
+              {t("stillLearning")} · {tricky}
+            </ResultTag>
+          )}
+          <ResultTag>{t("dayN", { n: dayIndex + 1 })}</ResultTag>
+        </>
+      }
+      levelUp={result.levelUp}
+      xpValue={XP_POINTS.vocabulary}
+      xpLabel={tu("xpEarned", { skill: tn("vocabulary") })}
+      actions={
+        <>
+          <Link
+            href={`/vocabulary?level=${level}`}
+            className="rounded-[9px] px-[22px] py-2.5 text-sm font-semibold text-white bg-success hover:bg-success-deep transition-colors"
+          >
+            {tu("chooseAnother")}
+          </Link>
+          {hasNextDay && (
+            <Link
+              href={`/vocabulary/${topicKey}/word?level=${level}&chapter=${dayIndex + 1}&i=0`}
+              className={BTN_LINE}
+            >
+              {t("summary.moreWords", { count: dayTotal })}
+            </Link>
+          )}
+        </>
+      }
+    />
   );
 }

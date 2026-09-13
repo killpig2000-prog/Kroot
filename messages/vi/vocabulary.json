@@ -106,11 +106,12 @@
     "notInDeck": "Từ này chưa có trong bộ từ."
   },
   "detail": {
-    "prev": "Trước",
     "backToVocab": "Tất cả chương",
-    "next": "Từ tiếp theo →",
     "backToChapter": "Quay lại chương →",
-    "lastWord": "Đây là từ cuối cùng của ngày này ✓"
+    "swipeHint": "Vuốt để sang từ tiếp theo",
+    "prevWord": "Từ trước",
+    "nextWord": "Từ tiếp theo",
+    "wordOf": "Từ {n} / {total}"
   },
   "practice": {
     "reviewTime": "giờ ôn tập",

@@ -106,11 +106,12 @@
     "notInDeck": "词库里还没有这个词。"
   },
   "detail": {
-    "prev": "上一个",
     "backToVocab": "全部章节",
-    "next": "下一个词 →",
     "backToChapter": "返回本章 →",
-    "lastWord": "这是这一天的最后一个词 ✓"
+    "swipeHint": "滑动查看下一个词",
+    "prevWord": "上一个词",
+    "nextWord": "下一个词",
+    "wordOf": "第 {n} 个，共 {total} 个"
   },
   "practice": {
     "reviewTime": "复习时间",

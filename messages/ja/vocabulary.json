@@ -106,11 +106,12 @@
     "notInDeck": "まだ単語デッキにありません。"
   },
   "detail": {
-    "prev": "前へ",
     "backToVocab": "全チャプター",
-    "next": "次の単語 →",
     "backToChapter": "章に戻る →",
-    "lastWord": "この日の最後の単語です ✓"
+    "swipeHint": "スワイプで次の単語へ",
+    "prevWord": "前の単語",
+    "nextWord": "次の単語",
+    "wordOf": "{total}語中{n}語目"
   },
   "practice": {
     "reviewTime": "復習の時間",

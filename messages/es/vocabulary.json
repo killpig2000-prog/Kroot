@@ -106,11 +106,12 @@
     "notInDeck": "Todavía no está en el mazo de palabras."
   },
   "detail": {
-    "prev": "Anterior",
     "backToVocab": "Todos los capítulos",
-    "next": "Siguiente palabra →",
     "backToChapter": "Volver al capítulo →",
-    "lastWord": "Es la última palabra de este día ✓"
+    "swipeHint": "Desliza para ver la siguiente palabra",
+    "prevWord": "Palabra anterior",
+    "nextWord": "Siguiente palabra",
+    "wordOf": "Palabra {n} de {total}"
   },
   "practice": {
     "reviewTime": "hora de repasar",
