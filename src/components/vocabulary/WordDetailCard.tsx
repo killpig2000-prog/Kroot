@@ -381,16 +381,6 @@ export default function WordDetailCard({
             </div>
           </div>
 
-          {note?.parts && (
-            <p className="text-[12.5px] text-muted leading-[1.65] mb-3">
-              {note.parts.map((p, i) => (
-                <span key={p.syllable + i}>
-                  {i > 0 && <span className="mx-1.5 text-faint">+</span>}
-                  <b className="kr text-charcoal">{p.syllable}</b> {p.gloss}
-                </span>
-              ))}
-            </p>
-          )}
           {note?.origin && <p className="text-[12.5px] text-muted leading-[1.65] mb-3">{t("session.origin", { origin: note.origin })}</p>}
 
           {/* One line each (2026-09-11, user call): a sentence that wraps

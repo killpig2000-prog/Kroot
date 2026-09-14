@@ -1,19 +1,15 @@
 import WORD_NOTES from "@/lib/vocabulary-data/word-notes.json";
 
-// Generated per-word memos (scripts/gen-word-notes.mts): either a hanja
-// breakdown like "시(試 to test) + 험(驗 to examine)" for Sino-Korean words,
-// a loanword origin like "from English \"coffee\"", or "" for native words.
-export type Morpheme = { syllable: string; hanja: string; gloss: string };
-export type WordNote = { parts: Morpheme[]; origin?: never } | { origin: string; parts?: never };
+// Generated per-word memos (scripts/gen-word-notes.mts): a loanword origin
+// like "from English \"coffee\"", a hanja breakdown like "시(試 to test) +
+// 험(驗 to examine)" for Sino-Korean words, or "" for native words. Only the
+// loanword origin is shown in the app (2026-09-15, user: no hanja anywhere in
+// vocab, including the Sino-Korean etymology line) — the hanja breakdown
+// half of this data is generated but unused.
+export type WordNote = { origin: string };
 
 export function parseMorphemeNote(note: string): WordNote | null {
-  if (note.startsWith("from ")) return { origin: note.slice(5) };
-  const parts = Array.from(note.matchAll(/([가-힣]+)\(([^\s)]+) ([^)]+)\)/g)).map((m) => ({
-    syllable: m[1],
-    hanja: m[2],
-    gloss: m[3],
-  }));
-  return parts.length >= 2 ? { parts } : null;
+  return note.startsWith("from ") ? { origin: note.slice(5) } : null;
 }
 
 export function getWordNote(korean: string): WordNote | null {
