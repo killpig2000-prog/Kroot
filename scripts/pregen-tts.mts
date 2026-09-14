@@ -45,7 +45,7 @@ const dataDir = (d: string) =>
     .filter((f) => f.endsWith(".ts") && !f.endsWith(".test.ts"))
     .map((f) => `@/lib/${d}/${f.replace(/\.ts$/, "")}`);
 const MODULES = [
-  "@/lib/community", "@/lib/grammar", "@/lib/hangul",
+  "@/lib/grammar", "@/lib/hangul",
   "@/lib/level-test", "@/lib/listening-dialogues", "@/lib/listening",
   "@/lib/promotion-test", "@/lib/pronunciation", "@/lib/reading-data/daily-life",
   "@/lib/slang", "@/lib/themes", "@/lib/tree",
