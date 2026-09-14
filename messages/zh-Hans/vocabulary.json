@@ -78,7 +78,6 @@
   "session": {
     "hearIt": "朗读单词",
     "hearSentence": "朗读句子",
-    "hanjaAria": "汉字：{hanja}",
     "origin": "来自 {origin}"
   },
   "summary": {

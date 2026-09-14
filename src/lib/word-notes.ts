@@ -21,12 +21,6 @@ export function getWordNote(korean: string): WordNote | null {
   return raw ? parseMorphemeNote(raw) : null;
 }
 
-/** The word's hanja spelling ("책상" → "冊床"), or null for native/loan words. */
-export function hanjaOf(korean: string): string | null {
-  const note = getWordNote(korean);
-  return note?.parts ? note.parts.map((p) => p.hanja).join("") : null;
-}
-
 // A word's study status, from how many times it's been reviewed — shared by
 // the study card's stamp and the unit preview's per-word markers. Three plain
 // states (not a growth metaphor) so a glance tells you what to do: nothing

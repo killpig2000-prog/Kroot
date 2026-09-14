@@ -13,7 +13,7 @@ import { nextBox, nextReviewAt } from "@/lib/srs";
 import { MINUTES_PER_SESSION } from "@/lib/vocabulary";
 import { saveToBank } from "@/lib/word-bank";
 import { speakKorean, prefetchKorean } from "@/lib/tts";
-import { getWordNote, hanjaOf } from "@/lib/word-notes";
+import { getWordNote } from "@/lib/word-notes";
 import { getLocalizedMeaning, getLocalizedExampleEn } from "@/lib/vocabulary-i18n";
 import { textBadgeFor, wordArtFor } from "@/lib/word-art";
 
@@ -100,7 +100,6 @@ export default function WordDetailCard({
   const [adding, setAdding] = useState(false);
   const [addError, setAddError] = useState<"full" | "error" | null>(null);
   const note = getWordNote(word.korean);
-  const hanja = hanjaOf(word.korean);
   // A1/A2 get a hand-drawn picture above the word (public/word-art); B1+ is
   // text only. Either way the first meeting ends with writing the word.
   const art = wordArtFor(word.korean, level);
@@ -329,20 +328,6 @@ export default function WordDetailCard({
               1.45× from its 268px phone frame to a real 390px one. A word
               with no picture (people/roles) grows into the picture's slot
               instead, so both cards are the same height. */}
-          {/* Its own row, not floated over the hero: floated, a three-letter
-              hanja slid left under the rating badge and into the word and 🔊.
-              The row keeps clear of the badge's corner once one is showing. */}
-          {hanja && (
-            <div className={`flex justify-end -mt-2 mb-1 ${answered ? "pr-[44px]" : ""}`}>
-              <span
-                className="kr font-black text-[clamp(28px,5vw,40px)] leading-none text-[#A08F4E] opacity-55 tracking-[.04em] select-none"
-                aria-label={t("session.hanjaAria", { hanja })}
-              >
-                {hanja}
-              </span>
-            </div>
-          )}
-
           {/* Picture on the left, the word beside it — the stacked version
               spent 276px on five centred rows (2026-09-08 measurement at
               390px) for the same five things. Hearing the word belongs to
@@ -399,10 +384,9 @@ export default function WordDetailCard({
           {note?.parts && (
             <p className="text-[12.5px] text-muted leading-[1.65] mb-3">
               {note.parts.map((p, i) => (
-                <span key={p.syllable + p.hanja}>
+                <span key={p.syllable + i}>
                   {i > 0 && <span className="mx-1.5 text-faint">+</span>}
-                  <b className="kr text-charcoal">{p.syllable}</b>{" "}
-                  <span className="kr text-[#A08F4E]">{p.hanja}</span> {p.gloss}
+                  <b className="kr text-charcoal">{p.syllable}</b> {p.gloss}
                 </span>
               ))}
             </p>
