@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
-import Pot from "@/components/onboarding/Pot";
+import GardenStage from "@/components/dashboard/GardenStage";
 import { LEVEL_ORDER, type CefrLevel } from "@/lib/tree";
 import type { FirstLesson, Placement } from "@/lib/level-test";
 import { BTN_BIG, CARD, EYEBROW, FADE, H1 } from "./styles";
@@ -54,11 +53,6 @@ export default function PlacementResult({
 }) {
   const t = useTranslations("onboarding.result");
   const tl = useTranslations("common.levels");
-  const [grown, setGrown] = useState(false);
-  useEffect(() => {
-    const t = setTimeout(() => setGrown(true), 250);
-    return () => clearTimeout(t);
-  }, []);
 
   const hangul = placement.route === "hangul";
   const first = lessons[0];
@@ -68,7 +62,13 @@ export default function PlacementResult({
       <div className={`${CARD} text-center`}>
         <h1 className={H1}>{hangul ? t("titleHangul") : t("title")}</h1>
 
-        <Pot grown={grown} />
+        {/* The same tree GardenStage draws everywhere else (dashboard, My
+            room) — not a bespoke drawing. Always the seed (playerLevel=1):
+            the level pick here doesn't change the tree, XP does, and every
+            new account starts at Lv.1 regardless of what level it opens at. */}
+        <div className="mx-auto mb-5 w-[150px] border border-line rounded-[12px] bg-warm p-3">
+          <GardenStage level={1} costumeIds={[]} width="118px" />
+        </div>
 
         <span className={`${EYEBROW} mb-3`}>{t("yourLevel")}</span>
         <div className="flex gap-1.5 justify-center flex-wrap mb-2.5">
