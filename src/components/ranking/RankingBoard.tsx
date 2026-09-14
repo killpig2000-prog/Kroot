@@ -1,16 +1,13 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { useBackToClose } from "@/hooks/useBackToClose";
 import { createClient } from "@/lib/supabase/client";
-import { playPromote } from "@/lib/sfx";
 import LevelCreature from "@/components/dashboard/LevelCreature";
 import { treeStageForLevel } from "@/lib/level";
 import { SceneLayer, skyFor } from "@/lib/costumes";
 import { buildWeeks, xpByDayFrom, type WeekRing } from "@/lib/growth-rings";
-import { daysUntilWeekEnd } from "@/lib/league";
 import TreePeek from "@/components/ranking/TreePeek";
 import GardenScene from "@/components/ui/GardenScene";
 import type { CefrLevel } from "@/lib/tree";
@@ -28,7 +25,6 @@ type Row = {
   costume_ids?: string[];
 };
 type RingDay = { day: string; attended: boolean; studied: boolean; reviewed: boolean; xp: number };
-type Reward = { coins: number; rank: number; total_players: number; already_claimed: boolean };
 
 // Podium medals: gold · silver · bronze, flat like the rest of the app.
 const STEP = [
@@ -101,24 +97,21 @@ function Tree({
 // 당분간"): everyone, ranked by lifetime XP — the axis the tree grows on, so
 // the tallest tree on the podium really is the top gardener. No beds, no
 // promotion zones, no rules. What's left:
-//   · a head line: title, gardeners, and the Sunday coin countdown
 //   · the podium garden, top three by XP
 //   · the list, every row with a sunlight bar (leader = full) and this
 //     week's XP as the movement
 //   · one pinned you-bar: place · the smallest thing that changes it · Learn
-// Sunday coins still come from the weekly league functions, on this week's
-// XP — a lifetime board would hand the same people the coins every week.
+// No weekly reward any more (2026-09-15, user: "어차피 전체 xp기준이라" — a
+// lifetime board resets never, so a weekly payout kept handing the same
+// leaders coins every week): settle_league_weeks/claim_weekly_reward are no
+// longer called from here, same as the league itself — see [[league-paused]].
 export default function RankingBoard({ species }: { species: CefrLevel }) {
   const t = useTranslations("ranking");
   const supabase = useMemo(() => createClient(), []);
   const [rows, setRows] = useState<Row[] | null>(null);
-  const [reward, setReward] = useState<Reward | null>(null);
-  const [showRewardPopup, setShowRewardPopup] = useState(false);
   const [peek, setPeek] = useState<Row | null>(null);
   const [peekRings, setPeekRings] = useState<{ weeks: WeekRing[]; today: number } | null>(null);
   const [unavailable, setUnavailable] = useState(false);
-  const closeReward = useCallback(() => setShowRewardPopup(false), []);
-  const dismissReward = useBackToClose(showRewardPopup, closeReward);
   const meRef = useRef<HTMLDivElement>(null);
   // Opening a tree clears the last one's rings so they never show under
   // the wrong name while the new read is in flight.
@@ -140,44 +133,13 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
   useEffect(() => {
     let cancelled = false;
     void (async () => {
-      // Settle any elapsed weeks first so the Sunday coins are current.
-      const settle = await supabase.rpc("settle_league_weeks");
-      if (cancelled) return;
-      // Only the Sunday coins depend on it — the board itself still reads fine.
-      if (settle.error) console.error("settle_league_weeks failed:", settle.error.message);
-      const [board, auth] = await Promise.all([supabase.rpc("get_xp_ranking"), supabase.auth.getUser()]);
+      const board = await supabase.rpc("get_xp_ranking");
       if (cancelled) return;
       if (board.error) {
         setUnavailable(true);
         return;
       }
       setRows((board.data ?? []) as Row[]);
-
-      // Accounts younger than the week have no "last week" to collect.
-      const createdAt = auth.data.user?.created_at;
-      let justJoined = false;
-      if (createdAt) {
-        const monday = new Date();
-        monday.setUTCHours(0, 0, 0, 0);
-        monday.setUTCDate(monday.getUTCDate() - ((monday.getUTCDay() + 6) % 7));
-        justJoined = new Date(createdAt) >= monday;
-      }
-      // claim_weekly_reward() is idempotent: first call for a week pays out,
-      // every later call reports already_claimed and pays nothing twice.
-      if (!justJoined) {
-        const { data, error } = await supabase.rpc("claim_weekly_reward");
-        if (cancelled) return;
-        if (!error) {
-          const r = Array.isArray(data) ? data[0] : data;
-          setReward(r as Reward);
-          if (r && !r.already_claimed && r.coins > 0) {
-            setShowRewardPopup(true);
-            playPromote();
-          }
-        } else {
-          console.error("claim_weekly_reward failed:", error.message);
-        }
-      }
     })();
     return () => {
       cancelled = true;
@@ -224,7 +186,6 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
   const below = meIdx >= 0 && rows && meIdx + 1 < rows.length ? rows[meIdx + 1] : null;
   const gapUp = above && meRow ? Math.max(1, above.xp - meRow.xp + 1) : null;
   const gapDown = below && meRow ? Math.max(0, meRow.xp - below.xp) : null;
-  const daysLeft = daysUntilWeekEnd();
   const placed = !!meRow && meRow.xp > 0;
 
   // The nudge: the smallest thing that changes your place.
@@ -311,19 +272,6 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
         )}
       </GardenScene>
 
-      {/* The title lives in the status bar (2026-09-12, user) so the podium
-          opens the page; the counts sit here, between podium and rows. */}
-      <div className="flex items-end justify-between gap-3 px-1">
-        <p className="min-w-0 text-[12.5px] font-semibold text-faint">
-          {t("head.byXp")}
-          {total > 0 && <> · {t("head.gardeners", { n: total })}</>}
-        </p>
-        <p className="flex-none text-right text-[11.5px] font-bold text-muted leading-tight tabular-nums">
-          <span className="block text-[13px] text-[#B7791F]">{t("head.daysLeft", { n: daysLeft })}</span>
-          {t("head.sundayCoins")}
-        </p>
-      </div>
-
       {/* the board: every row, a sunlight bar against the leader, this
           week's XP as the movement */}
       <div className="grid gap-1.5">
@@ -404,41 +352,6 @@ export default function RankingBoard({ species }: { species: CefrLevel }) {
             {t("nudge.learn")}
           </Link>
         </div>
-      )}
-
-      {/* One-time popup: last week's board just paid out, right now. */}
-      {showRewardPopup && reward && (
-        <>
-          <button
-            aria-label={t("reward.closeAria")}
-            onClick={dismissReward}
-            className="fixed inset-0 z-[60] bg-[#282319]/45 cursor-default"
-          />
-          <div className="fixed inset-0 z-[70] flex items-center justify-center px-4 pointer-events-none">
-            <div
-              role="dialog"
-              aria-modal="true"
-              aria-label={t("reward.dialogAria")}
-              className="pointer-events-auto w-full max-w-[380px] bg-cream rounded-[24px] shadow-[0_30px_70px_-20px_rgba(40,35,25,.35)] px-8 pt-9 pb-8 text-center"
-            >
-              <span aria-hidden="true" className="block text-[44px] mb-2">
-                🪙
-              </span>
-              <b className="block text-[13px] font-extrabold tracking-[.08em] uppercase text-success mb-1">
-                {t("reward.popupEyebrow")}
-              </b>
-              <p className="text-[21px] font-extrabold text-charcoal mb-5 tracking-tight">
-                {t("reward.earned", { coins: reward.coins })}
-              </p>
-              <button
-                onClick={dismissReward}
-                className="w-full rounded-[13px] bg-success text-white font-bold text-[14.5px] py-3.5 hover:bg-success-deep transition-colors"
-              >
-                {t("reward.ok")}
-              </button>
-            </div>
-          </div>
-        </>
       )}
     </div>
   );

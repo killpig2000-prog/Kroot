@@ -1,11 +1,5 @@
 {
   "title": "Ranking",
-  "head": {
-    "gardeners": "{n, plural, one {# gardener} other {# gardeners}}",
-    "daysLeft": "{n, plural, one {# day left} other {# days left}}",
-    "byXp": "Everyone, by total XP",
-    "sundayCoins": "to Sunday coins"
-  },
   "fair": {
     "sun": "☀️ {n} this week",
     "xp": "☀️ {n}",
@@ -32,13 +26,6 @@
   "bar": {
     "place": "{rank} of {total}",
     "toNext": "+{n} ☀️ → #{rank}"
-  },
-  "reward": {
-    "popupEyebrow": "Last week's coins",
-    "earned": "+{coins} 🪙 earned!",
-    "ok": "Nice!",
-    "closeAria": "Close",
-    "dialogAria": "Last week's coin reward"
   },
   "unavailable": "The fair opens once the database is updated. Check back in a moment.",
   "peek": {

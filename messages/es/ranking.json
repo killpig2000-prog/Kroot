@@ -1,11 +1,5 @@
 {
   "title": "Ranking",
-  "head": {
-    "gardeners": "{n, plural, one {# jardinero} other {# jardineros}}",
-    "daysLeft": "{n, plural, one {queda # día} other {quedan # días}}",
-    "byXp": "Todos, por XP total",
-    "sundayCoins": "para las monedas del domingo"
-  },
   "fair": {
     "sun": "☀️ {n} esta semana",
     "xp": "☀️ {n}",
@@ -32,13 +26,6 @@
   "bar": {
     "place": "{rank} de {total}",
     "toNext": "+{n} ☀️ → N.º {rank}"
-  },
-  "reward": {
-    "popupEyebrow": "Monedas de la semana pasada",
-    "earned": "¡+{coins} 🪙 ganadas!",
-    "ok": "¡Genial!",
-    "closeAria": "Cerrar",
-    "dialogAria": "Recompensa de monedas de la semana pasada"
   },
   "unavailable": "La feria abre cuando se actualice la base de datos. Vuelve en un momento.",
   "peek": {

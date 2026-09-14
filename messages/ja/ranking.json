@@ -1,11 +1,5 @@
 {
   "title": "ランキング",
-  "head": {
-    "gardeners": "{n}人のガーデナー",
-    "daysLeft": "残り{n}日",
-    "byXp": "全員、累計XP順",
-    "sundayCoins": "日曜のコインまで"
-  },
   "fair": {
     "sun": "今週 ☀️ {n}",
     "xp": "☀️ {n}",
@@ -32,13 +26,6 @@
   "bar": {
     "place": "{total}人中 {rank}位",
     "toNext": "+{n} ☀️ で {rank}位"
-  },
-  "reward": {
-    "popupEyebrow": "先週分のコイン",
-    "earned": "+{coins} 🪙 獲得！",
-    "ok": "やった!",
-    "closeAria": "閉じる",
-    "dialogAria": "先週分のコイン報酬"
   },
   "unavailable": "データベースの更新後に品評会が開きます。少し待ってから再度お試しください。",
   "peek": {

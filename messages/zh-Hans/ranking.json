@@ -1,11 +1,5 @@
 {
   "title": "排行榜",
-  "head": {
-    "gardeners": "{n} 位园丁",
-    "daysLeft": "剩余 {n} 天",
-    "byXp": "所有人，按累计 XP",
-    "sundayCoins": "距周日金币"
-  },
   "fair": {
     "sun": "本周 ☀️ {n}",
     "xp": "☀️ {n}",
@@ -32,13 +26,6 @@
   "bar": {
     "place": "第 {rank} / {total}",
     "toNext": "再 +{n} ☀️ → 第 {rank}"
-  },
-  "reward": {
-    "popupEyebrow": "上周的金币",
-    "earned": "获得 +{coins} 🪙！",
-    "ok": "太棒了!",
-    "closeAria": "关闭",
-    "dialogAria": "上周的金币奖励"
   },
   "unavailable": "数据库更新后花展即将开放，请稍后再来。",
   "peek": {

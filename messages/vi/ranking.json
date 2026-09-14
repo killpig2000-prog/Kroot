@@ -1,11 +1,5 @@
 {
   "title": "Bảng xếp hạng",
-  "head": {
-    "gardeners": "{n} người làm vườn",
-    "daysLeft": "còn {n} ngày",
-    "byXp": "Mọi người, theo tổng XP",
-    "sundayCoins": "đến xu Chủ nhật"
-  },
   "fair": {
     "sun": "☀️ {n} tuần này",
     "xp": "☀️ {n}",
@@ -32,13 +26,6 @@
   "bar": {
     "place": "Hạng {rank}/{total}",
     "toNext": "+{n} ☀️ → hạng {rank}"
-  },
-  "reward": {
-    "popupEyebrow": "Xu của tuần trước",
-    "earned": "+{coins} 🪙!",
-    "ok": "Tuyệt!",
-    "closeAria": "Đóng",
-    "dialogAria": "Phần thưởng xu của tuần trước"
   },
   "unavailable": "Hội chợ sẽ mở sau khi cập nhật cơ sở dữ liệu. Vui lòng quay lại sau.",
   "peek": {
