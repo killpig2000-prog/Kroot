@@ -6,19 +6,22 @@ import { Link } from "@/i18n/navigation";
 import { SKILL_HREF } from "@/components/dashboard/QuestButton";
 import { playTap } from "@/lib/sfx";
 import LinkPendingLabel from "@/components/dashboard/LinkPendingLabel";
+import SpeechBubble from "@/components/ui/SpeechBubble";
 
 // Today's quest on the phone is the watering can. Until it's done the
 // button is dry ground — the app's warm sand with a cracked-earth pattern
-// over it, an empty drop, "목말라요" — and once it's done it is watered
-// ground: the same green every other primary button in the app is, a
-// filled drop, "물 줬어요", "Done ✓". So green stops being the button's
-// colour and becomes the reward's, and Done is the end of a story rather
-// than the button with the colour taken out (2026-09-10, user call; the
-// green-then-pale version lasted a day).
+// over it, an empty drop — and once it's done it is watered ground: the
+// same green every other primary button in the app is, a filled drop,
+// "Done ✓". So green stops being the button's colour and becomes the
+// reward's, and Done is the end of a story rather than the button with the
+// colour taken out (2026-09-10, user call; the green-then-pale version
+// lasted a day).
 //
-// The two words are the tree's — Korean first, a small gloss after, the
-// way its speech bubble talks. The cracks are solid line-coloured strokes,
-// no alpha: a translucent texture has no fixed colour (see 8acea24).
+// The button itself just says "Today's quest" + the skill (2026-09-15,
+// user call — chapter/duration was more than the button needed to say);
+// "thirsty" moved out to a speech bubble over the drop, the same idiom the
+// tree's own bubble uses elsewhere. The cracks are solid line-coloured
+// strokes, no alpha: a translucent texture has no fixed colour (see 8acea24).
 export default function TodaysQuestButton({
   quest,
   href,
@@ -34,12 +37,11 @@ export default function TodaysQuestButton({
   const target = href ?? SKILL_HREF[quest.skill_key] ?? "/dashboard";
   const known = ["writing", "vocabulary", "listening", "reading", "pronunciation"].includes(quest.skill_key);
   const detail = known ? t(`descriptions.${quest.skill_key}`) : quest.description;
-  // One "skill · what · how long" string; a no-break space before each "·"
-  // so a wrapped line never starts with a dangling separator at 360px.
-  const title = detail
-    .split("·")
-    .map((x) => x.trim())
-    .join(" · ");
+  // Just the skill name (2026-09-15, user: the button only needs "Today's
+  // quest" + the skill — chapter/duration was more than the button needed
+  // to say). Every description leads with the name before its first "·"
+  // ("Writing · one chapter…", "Review · your due words…").
+  const title = detail.split("·")[0].trim();
 
   const body = (
     <>
@@ -112,10 +114,7 @@ export default function TodaysQuestButton({
         </svg>
       </span>
       <span className="relative flex-1 min-w-0 leading-[1.15]">
-        <span className="block text-[10.5px] font-extrabold uppercase tracking-[.08em] opacity-80">
-          {t("title")} ·{" "}
-          <span className="normal-case tracking-normal font-bold opacity-80">{done ? t("watered") : t("thirsty")}</span>
-        </span>
+        <span className="block text-[10.5px] font-extrabold uppercase tracking-[.08em] opacity-80">{t("title")}</span>
         {/* Two lines at most, and the type steps down with the viewport: the
             writing quest's string ran to three lines at 360px and the button
             stopped reading as one. */}
@@ -132,26 +131,34 @@ export default function TodaysQuestButton({
     </>
   );
 
-  const shell = "relative overflow-hidden flex items-center gap-3 pl-4 pr-[14px] py-3 rounded-[12px] mb-3";
+  const shell = "relative overflow-hidden flex items-center gap-3 pl-4 pr-[14px] py-3 rounded-[12px]";
 
   // watered: the app's success tone — the reward is the colour every
   // primary button has, and it is not a link any more
   if (done) {
     return (
-      <div className={`${shell} bg-success text-white shadow-[0_2px_0_var(--c-success-deep)]`}>
+      <div className={`${shell} mb-3 bg-success text-white shadow-[0_2px_0_var(--c-success-deep)]`}>
         {body}
       </div>
     );
   }
 
-  // dry: warm sand on the line edge, the storybook press
+  // dry: warm sand on the line edge, the storybook press. A bubble over the
+  // drop, tail down, says the same "thirsty" the tree's own bubble says
+  // elsewhere — outside the shell (which clips for the crack pattern) so it
+  // isn't cut off (2026-09-15, user call).
   return (
-    <Link
-      href={target}
-      onClick={playTap}
-      className={`${shell} bg-warm-3 text-[#7A5A12] border border-line shadow-[0_2px_0_var(--c-line)] transition-[transform,box-shadow] duration-100 ease-out active:translate-y-[2px] active:shadow-[0_0_0_var(--c-line)]`}
-    >
-      {body}
-    </Link>
+    <div className="relative mb-3">
+      <div className="absolute z-[4] left-4 bottom-full mb-1 w-max">
+        <SpeechBubble phrases={[t("thirsty")]} />
+      </div>
+      <Link
+        href={target}
+        onClick={playTap}
+        className={`${shell} bg-warm-3 text-[#7A5A12] border border-line shadow-[0_2px_0_var(--c-line)] transition-[transform,box-shadow] duration-100 ease-out active:translate-y-[2px] active:shadow-[0_0_0_var(--c-line)]`}
+      >
+        {body}
+      </Link>
+    </div>
   );
 }

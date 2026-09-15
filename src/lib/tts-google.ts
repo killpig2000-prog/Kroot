@@ -6,6 +6,21 @@ const VOICE_NAMES = { f: "ko-KR-Chirp3-HD-Kore", m: "ko-KR-Chirp3-HD-Charon" } a
 export const GOOGLE_VOICES = VOICE_NAMES;
 export type GoogleVoiceKey = keyof typeof VOICE_NAMES;
 
+// Chirp 3 HD reads a comma as barely a hitch — a listener hears "네," run
+// straight into the next clause with no breath (2026-09-15, user: listening
+// dialogue lines feel rushed at the comma). Plain `input.text` gives Google
+// no say over that; wrapping the same text as SSML and inserting a real
+// <break> after each comma does. Chirp 3 HD ignores most SSML (no
+// <prosody>), but <break> works — confirmed against the API directly
+// (a synthesized "네,<break time="400ms"/>알겠습니다." ran ~50% longer than
+// the plain-text version).
+const COMMA_BREAK = 250;
+function toSsml(text: string): string {
+  const escaped = text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  const withBreaks = escaped.replace(/,/g, `,<break time="${COMMA_BREAK}ms"/>`);
+  return `<speak>${withBreaks}</speak>`;
+}
+
 export async function synthesizeGoogle(
   text: string,
   voice: GoogleVoiceKey,
@@ -19,7 +34,7 @@ export async function synthesizeGoogle(
       method: "POST",
       headers: { "Content-Type": "application/json", "X-goog-api-key": apiKey },
       body: JSON.stringify({
-        input: { text },
+        input: text.includes(",") ? { ssml: toSsml(text) } : { text },
         voice: { languageCode: "ko-KR", name: VOICE_NAMES[voice] },
         // Chirp 3 HD synthesizes at 24 kHz (naturalSampleRateHertz). Asking for
         // 48 kHz doesn't add fidelity — the MP3 encoder still spends the same
